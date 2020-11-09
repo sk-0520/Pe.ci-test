@@ -5630,6 +5630,42 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   アンインストールの取消(_U) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_State_Uninstall_Cancel_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_State_Uninstall_Cancel_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再起動前であればアンインストールを取消できます に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_State_Uninstall_Cancel_Message {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_State_Uninstall_Cancel_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アンインストールの予約(_U) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_State_Uninstall_Execute_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_State_Uninstall_Execute_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アンインストールには再起動が必要です に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_State_Uninstall_Execute_Message {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_State_Uninstall_Execute_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   自動スクロール に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_StandardInputOutput_AutoScroll_A {

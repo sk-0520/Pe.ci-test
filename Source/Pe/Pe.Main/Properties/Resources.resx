@@ -2037,4 +2037,16 @@
   <data name="String_Setting_Generals_Note_CaptionPosition_A" xml:space="preserve">
     <value>タイトルバー位置(_C)</value>
   </data>
+  <data name="String_Setting_Plugins_State_Uninstall_Cancel_A" xml:space="preserve">
+    <value>アンインストールの取消(_U)</value>
+  </data>
+  <data name="String_Setting_Plugins_State_Uninstall_Cancel_Message" xml:space="preserve">
+    <value>再起動前であればアンインストールを取消できます</value>
+  </data>
+  <data name="String_Setting_Plugins_State_Uninstall_Execute_A" xml:space="preserve">
+    <value>アンインストールの予約(_U)</value>
+  </data>
+  <data name="String_Setting_Plugins_State_Uninstall_Execute_Message" xml:space="preserve">
+    <value>アンインストールには再起動が必要です</value>
+  </data>
 </root>

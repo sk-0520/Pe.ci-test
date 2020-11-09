@@ -35,8 +35,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
+
             return Context.QueryFirst<Guid>(statement, parameter);
         }
+
+        public IEnumerable<Guid> SelectLauncherItemIdsByPluginId(Guid pluginId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                PluginId = pluginId,
+            };
+
+            return Context.Query<Guid>(statement, parameter);
+        }
+
 
         public bool InsertAddonPluginId(Guid launcherItemId, Guid pluginId, IDatabaseCommonStatus databaseCommonStatus)
         {
@@ -46,6 +58,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.PluginId] = pluginId;
 
             return Context.Execute(statement, parameter) == 1;
+        }
+
+        public int DeleteLauncherAddonsByPluginId(Guid pluginId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                PluginId = pluginId,
+            };
+
+            return Context.Execute(statement, parameter);
         }
 
         #endregion

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -14,6 +15,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
@@ -40,6 +42,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             } else {
                 SupportedPreferences = false;
             }
+
+            var appPluginIds = new[] {
+                DefaultTheme.Informations.PluginIdentifiers.PluginId
+            };
+            CanUninstall = !appPluginIds.Any(i => i == Plugin?.PluginInformations.PluginIdentifiers.PluginId);
+
+            if(CanUninstall) {
+                using(var context = MainDatabaseBarrier.WaitRead()) {
+                    var pluginsEntityDao = new PluginsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                    var data = pluginsEntityDao.SelectePlguinStateDataByPLuginId(PluginId);
+                    if(data != null) {
+                        MarkedUninstall = data.State == Data.PluginState.Uninstall;
+                    }
+                }
+            }
         }
 
         #region property
@@ -61,6 +78,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public bool StartedPreferences { get; private set; }
 
         public Version PluginVersion { get; private set; } = new Version();
+
+        /// <summary>
+        /// アンイントール対象とするか。
+        /// </summary>
+        public bool MarkedUninstall { get; private set; }
+
+        /// <summary>
+        /// そもそもアンインストール可能か。
+        /// <para>Pe 提供プラグインが偽になる。</para>
+        /// </summary>
+        public bool CanUninstall { get; private set; }
 
         #endregion
 
@@ -104,6 +132,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             return hasError;
         }
 
+        /// <summary>
+        /// プラグイン側の保存処理。
+        /// </summary>
+        /// <param name="databaseContextsPack"></param>
         public void SavePreferences(IDatabaseContextsPack databaseContextsPack)
         {
             if(!SupportedPreferences) {
@@ -131,6 +163,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             using(var reader = PreferencesContextFactory.BarrierRead()) {
                 using var context = PreferencesContextFactory.CreateEndContext(Plugin.PluginInformations, reader);
                 Preferences.EndPreferences(context);
+            }
+        }
+
+        public void ToggleUninstallMark()
+        {
+            MarkedUninstall = !MarkedUninstall;
+        }
+
+        /// <summary>
+        /// プラグイン設定ではなくプラグイン状態に対する保存処理。
+        /// <para>アンインストールとかね。将来的には非活性もここでやる。</para>
+        /// </summary>
+        /// <param name="contextsPack"></param>
+        public void Save(IDatabaseContextsPack contextsPack)
+        {
+            var pluginsEntityDao = new PluginsEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
+
+            if(CanUninstall && MarkedUninstall) {
+                var pluginState = new PluginStateData() {
+                    PluginId = PluginState.PluginId,
+                    PluginName = PluginState.PluginName,
+                    State = ContentTypeTextNet.Pe.Main.Models.Data.PluginState.Uninstall,
+                };
+                pluginsEntityDao.UpdatePluginStateData(pluginState, contextsPack.CommonStatus);
+            } else if(!MarkedUninstall) {
+                var pluginState = new PluginStateData() {
+                    PluginId = PluginState.PluginId,
+                    PluginName = PluginState.PluginName,
+                    State = ContentTypeTextNet.Pe.Main.Models.Data.PluginState.Enable, // TODO: 無効化処理を入れた際には変更が必要
+                };
+                pluginsEntityDao.UpdatePluginStateData(pluginState, contextsPack.CommonStatus);
             }
         }
 

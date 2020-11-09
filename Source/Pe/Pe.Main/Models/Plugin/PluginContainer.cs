@@ -10,7 +10,6 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
@@ -107,14 +106,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="pluginFile"></param>
         /// <returns>読み込み結果。</returns>
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public PluginLoadStateData LoadPlugin(FileInfo pluginFile, List<PluginStateData> pluginStateItems, Version applicationVersion, PluginConstructorContext pluginConstructorContext, Func<IDisposable> pauseReceiveLog)
+        public PluginLoadStateData LoadPlugin(FileInfo pluginFile, IReadOnlyList<PluginStateData> pluginStateItems, Version applicationVersion, PluginConstructorContext pluginConstructorContext, Func<IDisposable> pauseReceiveLog)
         {
             var pluginBaseName = Path.GetFileNameWithoutExtension(pluginFile.Name);
-            var currentPlugin = pluginStateItems.FirstOrDefault(i => string.Equals(pluginBaseName, i.Name, StringComparison.InvariantCultureIgnoreCase));
+            var currentPlugin = pluginStateItems.FirstOrDefault(i => string.Equals(pluginBaseName, i.PluginName, StringComparison.InvariantCultureIgnoreCase));
             if(currentPlugin != null) {
                 if(currentPlugin.State == PluginState.Disable) {
-                    Logger.LogInformation("(名前判定)プラグイン読み込み停止中: {0}, {1}", currentPlugin.Name, currentPlugin.PluginId);
-                    return new PluginLoadStateData(currentPlugin.PluginId, currentPlugin.Name, new Version(), PluginState.Disable, null, null);
+                    Logger.LogInformation("(名前判定)プラグイン読み込み停止中: {0}, {1}", currentPlugin.PluginName, currentPlugin.PluginId);
+                    return new PluginLoadStateData(currentPlugin.PluginId, currentPlugin.PluginName, new Version(), PluginState.Disable, null, null);
                 }
             }
             var libraryDirectories = new[] {
@@ -127,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインアセンブリ読み込み失敗: {0}", pluginFile.Name);
                 loadContext.Unload();
-                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
             }
 
             Type? pluginInterfaceImpl = null;
@@ -153,13 +152,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインアセンブリ リフレクション失敗: {0}", pluginFile.Name);
                 loadContext.Unload();
-                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
             }
 
             if(pluginInterfaceImpl == null) {
                 Logger.LogError("プラグインアセンブリからプラグインインターフェイス取得できず: {0}, {1}", pluginAssembly.FullName, pluginFile.FullName);
                 loadContext.Unload();
-                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
             }
 
             Logger.LogDebug("[{0}]", pluginInterfaceImpl.FullName);
@@ -179,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインインターフェイスを生成できず: {0}, {1}, {2}", ex.Message, pluginAssembly.FullName, pluginFile.FullName);
                 loadContext.Unload();
-                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
             }
 
             IPluginInformations info;
@@ -193,7 +192,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             var loadedCurrentPlugin = pluginStateItems.FirstOrDefault(i => i.PluginId == pluginId);
             if(loadedCurrentPlugin != null) {
                 if(loadedCurrentPlugin.State == PluginState.Disable) {
-                    Logger.LogInformation("(ID判定)プラグイン読み込み停止中: {0}({1}), {2}", loadedCurrentPlugin.Name, pluginName, loadedCurrentPlugin.PluginId);
+                    Logger.LogInformation("(ID判定)プラグイン読み込み停止中: {0}({1}), {2}", loadedCurrentPlugin.PluginName, pluginName, loadedCurrentPlugin.PluginId);
                     loadContext.Unload();
                     return new PluginLoadStateData(loadedCurrentPlugin.PluginId, pluginName, new Version(), PluginState.Disable, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
                 }

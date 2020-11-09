@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             // 標準テーマがなければ追加
             if(!pluginStates.Any(i => i.PluginId == DefaultTheme.Informations.PluginIdentifiers.PluginId)) {
                 pluginStates.Insert(0, new Data.PluginStateData() {
-                    Name = DefaultTheme.Informations.PluginIdentifiers.PluginName,
+                    PluginName = DefaultTheme.Informations.PluginIdentifiers.PluginName,
                     PluginId = DefaultTheme.Informations.PluginIdentifiers.PluginId,
                     State = Data.PluginState.Enable,
                 });
@@ -80,6 +80,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 if(element.SupportedPreferences && element.StartedPreferences) {
                     element.SavePreferences(commandPack);
                 }
+
+                element.Save(commandPack);
             }
         }
 

@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
             pluginsEntityDao.InsertPluginStateData(
                 new Main.Models.Data.PluginStateData() {
                     PluginId = this.Informations.PluginIdentifiers.PluginId,
-                    Name = this.Informations.PluginIdentifiers.PluginName,
+                    PluginName = this.Informations.PluginIdentifiers.PluginName,
                     State = Main.Models.Data.PluginState.Enable,
                 },
                 DatabaseCommonStatus.CreateCurrentAccount()

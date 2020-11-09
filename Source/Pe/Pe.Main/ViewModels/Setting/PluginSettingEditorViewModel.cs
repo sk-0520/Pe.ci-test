@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Automation.Text;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -15,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
@@ -38,12 +40,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         IImageLoader ImageLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
-        public string PluginName => Model.PluginState.Name;
+        public string PluginName => Model.PluginState.PluginName;
         public string PluginVersion => Model.PluginVersion.ToString();
         public Guid PluginId => Model.PluginId;
         public string? PrimaryCategory => Model.Plugin?.PluginInformations.PluginCategory.PluginPrimaryCategory;
         public IReadOnlyList<string> SecondaryCategories => Model.Plugin?.PluginInformations.PluginCategory.PluginSecondaryCategories ?? new List<string>();
         public bool HasSecondaryCategories => SecondaryCategories.Count != 0;
+
+        public bool MarkedUninstall => Model.MarkedUninstall;
+        public bool CanUninstall => Model.CanUninstall;
+        public bool IsEnabledPlugin => !MarkedUninstall;
 
         public DependencyObject PluginIcon
         {
@@ -109,6 +115,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region command
+
+        public ICommand ToggleUninstallMarkCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.ToggleUninstallMark();
+                RaisePropertyChanged(nameof(MarkedUninstall));
+                RaisePropertyChanged(nameof(IsEnabledPlugin));
+            }
+        ));
+
         #endregion
 
         #region function

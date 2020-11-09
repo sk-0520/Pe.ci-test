@@ -288,7 +288,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             {
                 foreach(var element in settingElement.PluginsSettingEditor.PluginItems) {
                     if(element.SupportedPreferences && element.StartedPreferences) {
-                        logger.LogTrace("プラグイン処理設定完了: {0}({1})", element.PluginState.Name, element.PluginState.PluginId);
+                        logger.LogTrace("プラグイン処理設定完了: {0}({1})", element.PluginState.PluginName, element.PluginState.PluginId);
                         element.EndPreferences();
                     }
                 }
@@ -615,14 +615,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
 
-            // プラグインディレクトリからプラグインDLL列挙
-            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.Extentions);
-
             // プラグイン情報取得
             var pluginStateItems = ApplicationDiContainer.Build<IMainDatabaseBarrier>().ReadData(c => {
                 var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(c, c.Implementation);
                 return pluginsEntityDao.SelectePlguinStateData().ToList();
             });
+
+            // アンインストール対象を消しちゃう
+            var uninstallPlugins = pluginStateItems.Where(i => i.State == PluginState.Uninstall);
+            var uninstalledPlugins = new List<PluginStateData>();
+            foreach(var uninstallPlugin in uninstallPlugins) {
+                // なんかが失敗したときに後続を続けたいので毎度ロールバックする
+                using var pack = PersistentHelper.WaitWritePack(
+                    ApplicationDiContainer.Build<IMainDatabaseBarrier>(),
+                    ApplicationDiContainer.Build<IFileDatabaseBarrier>(),
+                    ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>(),
+                    DatabaseCommonStatus.CreateCurrentAccount()
+                );
+                try {
+                    var uninstaller = ApplicationDiContainer.Build<PluginUninstaller>(pack, environmentParameters.MachinePluginModuleDirectory);
+                    uninstaller.Uninstall(uninstallPlugin);
+                    pack.Commit();
+                    uninstalledPlugins.Add(uninstallPlugin);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
+            }
+
+            var enabledPlugins = pluginStateItems.Except(uninstalledPlugins).ToArray();
+
+            // プラグインディレクトリからプラグインDLL列挙
+            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.Extentions);
 
             FileInfo? testPluginFile = null;
             if(TestPluginDirectory != null) {
@@ -634,13 +657,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var pluginLoadStateItems = new List<PluginLoadStateData>();
             var pluginConstructorContext = ApplicationDiContainer.Build<PluginConstructorContext>();
             foreach(var pluginFile in pluginFiles) {
-                var loadStateData = PluginContainer.LoadPlugin(pluginFile, pluginStateItems, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
+                var loadStateData = PluginContainer.LoadPlugin(pluginFile, enabledPlugins, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
                 pluginLoadStateItems.Add(loadStateData);
             }
 
             PluginLoadStateData? testPluginLoadState = null;
             if(testPluginFile != null) {
-                testPluginLoadState = PluginContainer.LoadPlugin(testPluginFile, pluginStateItems, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
+                testPluginLoadState = PluginContainer.LoadPlugin(testPluginFile, enabledPlugins, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
                 pluginLoadStateItems.Add(testPluginLoadState);
             }
 
@@ -665,7 +688,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     var pluginStateData = new PluginStateData() {
                         PluginId = pluginLoadStateItem.PluginId,
-                        Name = pluginLoadStateItem.PluginName,
+                        PluginName = pluginLoadStateItem.PluginName,
                         State = pluginLoadStateItem.LoadState
                     };
 

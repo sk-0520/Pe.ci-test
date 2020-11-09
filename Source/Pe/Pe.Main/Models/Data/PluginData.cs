@@ -28,6 +28,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         IllegalVersion,
 
         /// <summary>
+        /// アンインストール対象。
+        /// <para>次回起動時に該当プラグインは破棄する。</para>
+        /// </summary>
+        Uninstall,
+
+        /// <summary>
         /// なんかもうダメダメ。
         /// <para>プラグインの読み込み失敗時に発生するのでこの状態が状態として保存されることはない。</para>
         /// </summary>
@@ -43,17 +49,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class PluginStateData: DataBase
+    public class PluginStateData: DataBase, IPluginIdentifiers
     {
         #region property
 
         public Guid PluginId { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+        public string PluginName { get; set; } = string.Empty;
         public PluginState State { get; set; }
 
         #endregion
     }
+
 
     public class PluginLoadStateData: DataBase
     {

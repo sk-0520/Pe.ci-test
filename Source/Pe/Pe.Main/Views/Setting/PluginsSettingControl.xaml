@@ -69,7 +69,6 @@
 
       <GroupBox Style="{StaticResource HeaderGroupBox}" DataContext="{Binding SelectedItem, ElementName=listPlugins}" Header="{Binding PluginName, Mode=OneTime, Converter={StaticResource EscapeAccessKeyConverter}}">
         <StackPanel>
-
           <GroupBox Grid.IsSharedSizeScope="True" Header="{Binding Resources.String_Setting_Plugins_Item_Information_Header, Source={x:Static app_main:CultureService.Instance}}">
             <StackPanel>
               <Grid>
@@ -102,6 +101,19 @@
                 <TextBox Grid.Column="1" IsReadOnly="True" Style="{StaticResource Vertical-TextBox}" Text="{Binding SupportVersions, Mode=OneTime}" />
               </Grid>
 
+              <StackPanel IsEnabled="{Binding CanUninstall}" >
+                <!-- アンインストール 実行 -->
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Visibility="{Binding IsEnabledPlugin, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  <TextBlock VerticalAlignment="Center" Margin="{StaticResource RightMargin}" Text="{Binding Resources.String_Setting_Plugins_State_Uninstall_Execute_Message, Source={x:Static app_main:CultureService.Instance}}" />
+                  <Button Command="{Binding ToggleUninstallMarkCommand}" Content="{Binding Resources.String_Setting_Plugins_State_Uninstall_Execute_A, Source={x:Static app_main:CultureService.Instance}}" />
+                </StackPanel>
+
+                <!-- アンインストール キャンセル -->
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Visibility="{Binding MarkedUninstall, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  <TextBlock VerticalAlignment="Center" Margin="{StaticResource RightMargin}" Text="{Binding Resources.String_Setting_Plugins_State_Uninstall_Cancel_Message, Source={x:Static app_main:CultureService.Instance}}" />
+                  <Button Command="{Binding ToggleUninstallMarkCommand}" Content="{Binding Resources.String_Setting_Plugins_State_Uninstall_Cancel_A, Source={x:Static app_main:CultureService.Instance}}" />
+                </StackPanel>
+              </StackPanel>
             </StackPanel>
           </GroupBox>
 

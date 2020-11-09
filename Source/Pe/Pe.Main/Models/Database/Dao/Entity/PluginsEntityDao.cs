@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var dto = new PluginStateDto() {
                 PluginId = data.PluginId,
-                Name = data.Name,
+                Name = data.PluginName,
                 State = pluginStateTransfer.ToString(data.State),
             };
             databaseCommonStatus.WriteCommon(dto);
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var data = new PluginStateData() {
                 PluginId = dto.PluginId,
-                Name = dto.Name,
+                PluginName = dto.Name,
                 State = pluginStateTransfer.ToEnum(dto.State),
             };
 
@@ -86,6 +86,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 .Query<PluginStateDto>(statement)
                 .Select(i => ConvertFromDto(i))
             ;
+        }
+
+        public PluginStateData? SelectePlguinStateDataByPLuginId(Guid pluginId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                PluginId = pluginId
+            };
+            var dto = Context.QueryFirstOrDefault<PluginStateDto>(statement, parameter);
+            if(dto == null) {
+                return null;
+            }
+
+            return ConvertFromDto(dto);
         }
 
         public Version? SelectLastUsePluginVersion(Guid pluginId)
@@ -128,6 +142,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.LastUseTimestamp] = DateTime.UtcNow; // DAO層でまぁいっかぁ
             parameter[Column.LastUsePluginVersion] = pluginVersion;
             parameter[Column.LastUseAppVersion] = applicationVersio;
+            return Context.Execute(statement, parameter) == 1;
+        }
+
+        public bool DeletePlugin(Guid pluginId)
+        {
+            var statement = LoadStatement();
+            var parameter = new PluginSettingDto() {
+                PluginId = pluginId,
+            };
+
             return Context.Execute(statement, parameter) == 1;
         }
 
