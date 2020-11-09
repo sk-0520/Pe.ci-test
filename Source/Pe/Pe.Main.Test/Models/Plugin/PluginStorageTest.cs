@@ -213,7 +213,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
                 } else {
                     Assert.Fail();
                 }
-                //Assert.ThrowsException<InvalidOperationException>(() => persistentNormal.Set("", "test!", PluginPersistentFormat.Text));
+                Assert.ThrowsException<InvalidOperationException>(() => persistentNormal.Set("", "test!", PluginPersistentFormat.Text));
                 Assert.ThrowsException<InvalidOperationException>(() => persistentNormal.Delete(""));
             }
 
