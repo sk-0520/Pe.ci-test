@@ -69,7 +69,6 @@
 
       <GroupBox Style="{StaticResource HeaderGroupBox}" DataContext="{Binding SelectedItem, ElementName=listPlugins}" Header="{Binding PluginName, Mode=OneTime, Converter={StaticResource EscapeAccessKeyConverter}}">
         <StackPanel>
-
           <GroupBox Grid.IsSharedSizeScope="True" Header="{Binding Resources.String_Setting_Plugins_Item_Information_Header, Source={x:Static app_main:CultureService.Instance}}">
             <StackPanel>
               <Grid>
@@ -102,6 +101,20 @@
                 <TextBox Grid.Column="1" IsReadOnly="True" Style="{StaticResource Vertical-TextBox}" Text="{Binding SupportVersions, Mode=OneTime}" />
               </Grid>
 
+              <StackPanel>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding IsEnabledPlugin, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  <Button Command="{Binding ToggleUninstallMarkCommand}" IsEnabled="{Binding CanUninstall}">uninstall</Button>
+                  <TextBlock></TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Visibility="{Binding MarkedUninstall, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  <Button Command="{Binding ToggleUninstallMarkCommand}">cancel uninstall</Button>
+                  <TextBlock></TextBlock>
+                </StackPanel>
+
+
+
+              </StackPanel>
             </StackPanel>
           </GroupBox>
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -14,6 +15,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
@@ -40,6 +42,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             } else {
                 SupportedPreferences = false;
             }
+
+            var appPluginIds = new[] {
+                DefaultTheme.Informations.PluginIdentifiers.PluginId
+            };
+            CanUninstall = !appPluginIds.Any(i => i == Plugin?.PluginInformations.PluginIdentifiers.PluginId);
         }
 
         #region property
@@ -61,6 +68,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public bool StartedPreferences { get; private set; }
 
         public Version PluginVersion { get; private set; } = new Version();
+
+        /// <summary>
+        /// アンイントール対象とするか。
+        /// </summary>
+        public bool MarkedUninstall { get; private set; }
+
+        /// <summary>
+        /// そもそもアンインストール可能か。
+        /// <para>Pe 提供プラグインが偽になる。</para>
+        /// </summary>
+        public bool CanUninstall { get; private set; }
 
         #endregion
 
@@ -132,6 +150,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 using var context = PreferencesContextFactory.CreateEndContext(Plugin.PluginInformations, reader);
                 Preferences.EndPreferences(context);
             }
+        }
+
+        public void ToggleUninstallMark()
+        {
+            MarkedUninstall = !MarkedUninstall;
         }
 
         #endregion
