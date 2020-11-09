@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //}
         }
 
-        protected override void SaveImpl(IDatabaseContextsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
             foreach(var group in GroupItems.Counting()) {
@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             foreach(var group in GroupItems) {
-                group.Save(commandPack);
+                group.Save(contextsPack);
             }
         }
 

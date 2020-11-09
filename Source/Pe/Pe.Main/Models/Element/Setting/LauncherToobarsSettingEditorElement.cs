@@ -76,10 +76,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Toolbars.AddRange(nonActiveToolbars);
         }
 
-        protected override void SaveImpl(IDatabaseContextsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
             foreach(var toolbar in Toolbars) {
-                toolbar.Save(commandPack);
+                toolbar.Save(contextsPack);
             }
         }
 

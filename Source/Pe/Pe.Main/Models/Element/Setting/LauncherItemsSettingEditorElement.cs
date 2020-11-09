@@ -244,12 +244,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //}
         }
 
-        protected override void SaveImpl(IDatabaseContextsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
             foreach(var item in AllLauncherItems.Where(i => !i.IsLazyLoad)) {
-                var needIconClear = item.SaveItem(commandPack);
+                var needIconClear = item.SaveItem(contextsPack);
                 if(needIconClear) {
-                    item.ClearIcon(commandPack.File.Context, commandPack.File.Implementation);
+                    item.ClearIcon(contextsPack.File.Context, contextsPack.File.Implementation);
                 }
             }
         }
