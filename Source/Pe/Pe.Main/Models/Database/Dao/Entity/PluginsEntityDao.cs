@@ -88,6 +88,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
+        public PluginStateData? SelectePlguinStateDataByPLuginId(Guid pluginId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                PluginId = pluginId
+            };
+            var dto = Context.QueryFirstOrDefault<PluginStateDto>(statement, parameter);
+            if(dto == null) {
+                return null;
+            }
+
+            return ConvertFromDto(dto);
+        }
+
         public Version? SelectLastUsePluginVersion(Guid pluginId)
         {
             var statement = LoadStatement();

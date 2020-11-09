@@ -61,6 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+
     public class PluginLoadStateData: DataBase
     {
         public PluginLoadStateData(Guid pluginId, string pluginName, Version pluginVersion, PluginState loadState, WeakReference<PluginAssemblyLoadContext>? weekLoadContext, IPlugin? plugin)

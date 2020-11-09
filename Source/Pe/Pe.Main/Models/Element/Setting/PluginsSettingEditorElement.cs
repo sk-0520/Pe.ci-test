@@ -80,6 +80,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 if(element.SupportedPreferences && element.StartedPreferences) {
                     element.SavePreferences(commandPack);
                 }
+
+                element.Save(commandPack);
             }
         }
 
