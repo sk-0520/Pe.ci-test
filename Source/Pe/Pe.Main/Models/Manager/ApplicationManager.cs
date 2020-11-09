@@ -623,6 +623,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             // アンインストール対象を消しちゃう
             var uninstallPlugins = pluginStateItems.Where(i => i.State == PluginState.Uninstall);
+            var uninstalledPlugins = new List<PluginStateData>();
             foreach(var uninstallPlugin in uninstallPlugins) {
                 // なんかが失敗したときに後続を続けたいので毎度ロールバックする
                 using var pack = PersistentHelper.WaitWritePack(
@@ -635,10 +636,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     var uninstaller = ApplicationDiContainer.Build<PluginUninstaller>(pack, environmentParameters.MachinePluginModuleDirectory);
                     uninstaller.Uninstall(uninstallPlugin);
                     pack.Commit();
+                    uninstalledPlugins.Add(uninstallPlugin);
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
                 }
             }
+
+            var enabledPlugins = pluginStateItems.Except(uninstalledPlugins).ToArray();
 
             // プラグインディレクトリからプラグインDLL列挙
             var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.Extentions);
@@ -653,13 +657,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var pluginLoadStateItems = new List<PluginLoadStateData>();
             var pluginConstructorContext = ApplicationDiContainer.Build<PluginConstructorContext>();
             foreach(var pluginFile in pluginFiles) {
-                var loadStateData = PluginContainer.LoadPlugin(pluginFile, pluginStateItems, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
+                var loadStateData = PluginContainer.LoadPlugin(pluginFile, enabledPlugins, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
                 pluginLoadStateItems.Add(loadStateData);
             }
 
             PluginLoadStateData? testPluginLoadState = null;
             if(testPluginFile != null) {
-                testPluginLoadState = PluginContainer.LoadPlugin(testPluginFile, pluginStateItems, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
+                testPluginLoadState = PluginContainer.LoadPlugin(testPluginFile, enabledPlugins, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
                 pluginLoadStateItems.Add(testPluginLoadState);
             }
 
