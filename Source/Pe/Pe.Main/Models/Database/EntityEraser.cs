@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             TemporaryContexts = temporaryContexts ?? throw new ArgumentNullException(nameof(temporaryContexts));
             StatementLoader = statementLoader ?? throw new ArgumentNullException(nameof(statementLoader));
             LoggerFactory = loggerFactory;
-            Logger = LoggerFactory.Create(GetType());
+            Logger = LoggerFactory.CreateLogger(GetType());
         }
 
         #region property
