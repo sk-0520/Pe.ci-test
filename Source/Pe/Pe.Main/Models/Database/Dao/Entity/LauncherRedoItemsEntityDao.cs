@@ -7,20 +7,24 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherRedoItemsDto: CommonDtoBase
-    {
-        #region property
-
-        public Guid LauncherItemId { get; set; }
-        public string RedoMode { get; set; } = string.Empty;
-        public TimeSpan WaitTime { get; set; }
-        public long RetryCount { get; set; }
-
-        #endregion
-    }
-
     public class LauncherRedoItemsEntityDao: EntityDaoBase
     {
+        #region define
+
+        private class LauncherRedoItemsDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid LauncherItemId { get; set; }
+            public string RedoMode { get; set; } = string.Empty;
+            public TimeSpan WaitTime { get; set; }
+            public long RetryCount { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
         public LauncherRedoItemsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

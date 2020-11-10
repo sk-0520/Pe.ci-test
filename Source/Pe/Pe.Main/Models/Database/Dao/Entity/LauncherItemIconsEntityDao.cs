@@ -12,22 +12,26 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherItemIconsDto : CreateDtoBase
+    public class LauncherItemIconsEntityDao : EntityDaoBase
     {
-        #region property
+        #region define
 
-        public Guid LauncherItemId { get; set; }
-        public string IconBox { get; set; } = string.Empty;
-        public double IconScale { get; set; }
-        public long Sequence { get; set; }
-        public byte[]? Image { get; set; }
+        private class LauncherItemIconsDto: CreateDtoBase
+        {
+            #region property
+
+            public Guid LauncherItemId { get; set; }
+            public string IconBox { get; set; } = string.Empty;
+            public double IconScale { get; set; }
+            public long Sequence { get; set; }
+            public byte[]? Image { get; set; }
+
+            #endregion
+
+        }
 
         #endregion
 
-    }
-
-    public class LauncherItemIconsEntityDao : EntityDaoBase
-    {
         public LauncherItemIconsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

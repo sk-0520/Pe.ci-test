@@ -10,21 +10,25 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class AppCommandSettingEntityDto : CommonDtoBase
-    {
-        #region property
-
-        public Guid FontId { get; set; }
-        public string IconBox { get; set; } = string.Empty;
-        public double Width { get; set; }
-        public TimeSpan HideWaitTime { get; set; }
-        public bool FindTag { get; set; }
-
-        #endregion
-    }
-
     public class AppCommandSettingEntityDao : EntityDaoBase
     {
+        #region define
+
+        private class AppCommandSettingEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid FontId { get; set; }
+            public string IconBox { get; set; } = string.Empty;
+            public double Width { get; set; }
+            public TimeSpan HideWaitTime { get; set; }
+            public bool FindTag { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
         public AppCommandSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

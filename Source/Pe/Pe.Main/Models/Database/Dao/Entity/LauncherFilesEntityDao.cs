@@ -10,39 +10,45 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherFilesEntityPathDto : DtoBase
+    public class LauncherFilesEntityDao: EntityDaoBase
     {
-        #region property
+        #region define
 
-        Guid LauncherItemId { get; set; }
-        public string File { get; set; } = string.Empty;
-        public string Option { get; set; } = string.Empty;
-        public string WorkDirectory { get; set; } = string.Empty;
+        private class LauncherFilesEntityPathDto: DtoBase
+        {
+            #region property
 
+            Guid LauncherItemId { get; set; }
+            public string File { get; set; } = string.Empty;
+            public string Option { get; set; } = string.Empty;
+            public string WorkDirectory { get; set; } = string.Empty;
+
+
+            #endregion
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed", Justification = "<保留中>")]
+        private class LauncherFilesEntityDto: CommonDtoBase
+        {
+            #region property
+
+            Guid LauncherItemId { get; set; }
+
+            public string File { get; set; } = string.Empty;
+            public string Option { get; set; } = string.Empty;
+            public string WorkDirectory { get; set; } = string.Empty;
+
+
+            public bool IsEnabledCustomEnvVar { get; set; }
+            public bool IsEnabledStandardIo { get; set; }
+            public string StandardIoEncoding { get; set; } = string.Empty;
+            public bool RunAdministrator { get; set; }
+
+            #endregion
+        }
 
         #endregion
-    }
 
-    internal class LauncherFilesEntityDto : CommonDtoBase
-    {
-        #region property
-
-        Guid LauncherItemId { get; set; }
-
-        public string File { get; set; } = string.Empty;
-        public string Option { get; set; } = string.Empty;
-        public string WorkDirectory { get; set; } = string.Empty;
-
-        public bool IsEnabledCustomEnvVar { get; set; }
-        public bool IsEnabledStandardIo { get; set; }
-        public string StandardIoEncoding { get; set; } = string.Empty;
-        public bool RunAdministrator { get; set; }
-
-        #endregion
-    }
-
-    public class LauncherFilesEntityDao : EntityDaoBase
-    {
         public LauncherFilesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
          : base(context, statementLoader, implementation, loggerFactory)
         { }

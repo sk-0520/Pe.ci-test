@@ -10,22 +10,26 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherGroupsRowDto : RowDtoBase
-    {
-        #region property
-
-        public Guid LauncherGroupId { get; set; }
-        public string Kind { get; set; } = string.Empty;
-        public string Name { get; set; } = string.Empty;
-        public string ImageName { get; set; } = string.Empty;
-        public string ImageColor { get; set; } = string.Empty;
-        public long Sequence { get; set; }
-
-        #endregion
-    }
-
     public class LauncherGroupsEntityDao : EntityDaoBase
     {
+        #region define
+
+        private class LauncherGroupsRowDto: RowDtoBase
+        {
+            #region property
+
+            public Guid LauncherGroupId { get; set; }
+            public string Kind { get; set; } = string.Empty;
+            public string Name { get; set; } = string.Empty;
+            public string ImageName { get; set; } = string.Empty;
+            public string ImageColor { get; set; } = string.Empty;
+            public long Sequence { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
         public LauncherGroupsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

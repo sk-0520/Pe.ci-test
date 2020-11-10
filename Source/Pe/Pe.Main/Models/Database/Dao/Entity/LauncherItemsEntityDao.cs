@@ -11,48 +11,52 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal interface IReadOnlyLauncherItemsRowDto : IReadOnlyRowDtoBase
-    {
-        #region property
-
-        Guid LauncherItemId { get; }
-
-        string Code { get; }
-        string Name { get; }
-        string Kind { get; }
-        string IconPath { get; }
-        long IconIndex { get; }
-        bool IsEnabledCommandLauncher { get; }
-        long ExecuteCount { get; }
-        [DateTimeKind(DateTimeKind.Utc)]
-        DateTime LastExecuteTimestamp { get; }
-        string Comment { get; }
-
-        #endregion
-    }
-
-    internal class LauncherItemsRowDto : RowDtoBase, IReadOnlyLauncherItemsRowDto
-    {
-        #region IReadOnlyLauncherItemRowDto
-
-        public Guid LauncherItemId { get; set; }
-
-        public string Code { get; set; } = string.Empty;
-        public string Name { get; set; } = string.Empty;
-        public string Kind { get; set; } = string.Empty;
-        public string IconPath { get; set; } = string.Empty;
-        public long IconIndex { get; set; }
-        public bool IsEnabledCommandLauncher { get; set; }
-        public long ExecuteCount { get; set; }
-        [DateTimeKind(DateTimeKind.Utc)]
-        public DateTime LastExecuteTimestamp { get; set; }
-        public string Comment { get; set; } = string.Empty;
-
-        #endregion
-    }
-
     public class LauncherItemsEntityDao : EntityDaoBase
     {
+        #region define
+
+        private interface IReadOnlyLauncherItemsRowDto: IReadOnlyRowDtoBase
+        {
+            #region property
+
+            Guid LauncherItemId { get; }
+
+            string Code { get; }
+            string Name { get; }
+            string Kind { get; }
+            string IconPath { get; }
+            long IconIndex { get; }
+            bool IsEnabledCommandLauncher { get; }
+            long ExecuteCount { get; }
+            [DateTimeKind(DateTimeKind.Utc)]
+            DateTime LastExecuteTimestamp { get; }
+            string Comment { get; }
+
+            #endregion
+        }
+
+        private class LauncherItemsRowDto: RowDtoBase, IReadOnlyLauncherItemsRowDto
+        {
+            #region IReadOnlyLauncherItemRowDto
+
+            public Guid LauncherItemId { get; set; }
+
+            public string Code { get; set; } = string.Empty;
+            public string Name { get; set; } = string.Empty;
+            public string Kind { get; set; } = string.Empty;
+            public string IconPath { get; set; } = string.Empty;
+            public long IconIndex { get; set; }
+            public bool IsEnabledCommandLauncher { get; set; }
+            public long ExecuteCount { get; set; }
+            [DateTimeKind(DateTimeKind.Utc)]
+            public DateTime LastExecuteTimestamp { get; set; }
+            public string Comment { get; set; } = string.Empty;
+
+            #endregion
+        }
+
+        #endregion
+
         public LauncherItemsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation , loggerFactory)
         { }

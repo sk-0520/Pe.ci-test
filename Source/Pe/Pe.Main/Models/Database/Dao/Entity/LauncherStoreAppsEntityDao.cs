@@ -7,20 +7,24 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherStoreAppsEntityDto : CommonDtoBase
-    {
-        #region property
-
-        public Guid LauncherItemId { get; set; }
-
-        public string ProtocolAlias { get; set; } = string.Empty;
-        public string Option { get; set; } = string.Empty;
-
-        #endregion
-    }
-
     public class LauncherStoreAppsEntityDao : EntityDaoBase
     {
+        #region define
+
+        private class LauncherStoreAppsEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid LauncherItemId { get; set; }
+
+            public string ProtocolAlias { get; set; } = string.Empty;
+            public string Option { get; set; } = string.Empty;
+
+            #endregion
+        }
+
+        #endregion
+
         public LauncherStoreAppsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

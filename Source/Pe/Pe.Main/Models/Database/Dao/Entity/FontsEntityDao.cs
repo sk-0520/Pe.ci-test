@@ -10,23 +10,27 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class FontsRowDto : CommonDtoBase
-    {
-        #region property
-
-        public Guid FontId { get; set; }
-        public string FamilyName { get; set; } = string.Empty;
-        public double Height { get; set; }
-        public bool IsBold { get; set; }
-        public bool IsItalic { get; set; }
-        public bool IsUnderline { get; set; }
-        public bool IsStrikeThrough { get; set; }
-
-        #endregion
-    }
-
     public class FontsEntityDao : EntityDaoBase
     {
+        #region define
+
+        private class FontsRowDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid FontId { get; set; }
+            public string FamilyName { get; set; } = string.Empty;
+            public double Height { get; set; }
+            public bool IsBold { get; set; }
+            public bool IsItalic { get; set; }
+            public bool IsUnderline { get; set; }
+            public bool IsStrikeThrough { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
         public FontsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

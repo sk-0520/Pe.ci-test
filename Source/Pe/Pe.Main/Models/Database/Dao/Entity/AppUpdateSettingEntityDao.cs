@@ -10,18 +10,22 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class AppUpdateSettingEntityDto : CommonDtoBase
-    {
-        #region property
-
-        public string UpdateKind { get; set; } = string.Empty;
-        public Version IgnoreVersion { get; set; } = new Version(0, 0, 0, 0);
-
-        #endregion
-    }
-
     public class AppUpdateSettingEntityDao : EntityDaoBase
     {
+        #region define
+
+        private class AppUpdateSettingEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public string UpdateKind { get; set; } = string.Empty;
+            public Version IgnoreVersion { get; set; } = new Version(0, 0, 0, 0);
+
+            #endregion
+        }
+
+        #endregion
+
         public AppUpdateSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

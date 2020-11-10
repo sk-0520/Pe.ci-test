@@ -11,31 +11,35 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class NotesEntityDto: CommonDtoBase
-    {
-        #region property
-
-        public Guid NoteId { get; set; }
-        public string Title { get; set; } = string.Empty;
-        public string ScreenName { get; set; } = string.Empty;
-        public string LayoutKind { get; set; } = string.Empty;
-        public bool IsVisible { get; set; }
-        public Guid FontId { get; set; }
-        public string ForegroundColor { get; set; } = string.Empty;
-        public string BackgroundColor { get; set; } = string.Empty;
-        public bool IsLocked { get; set; }
-        public bool IsTopmost { get; set; }
-        public bool IsCompact { get; set; }
-        public bool TextWrap { get; set; }
-        public string ContentKind { get; set; } = string.Empty;
-        public string HiddenMode { get; set; } = string.Empty;
-        public string CaptionPosition { get; set; } = string.Empty;
-
-        #endregion
-    }
-
     public class NotesEntityDao: EntityDaoBase
     {
+        #region define
+
+        private class NotesEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid NoteId { get; set; }
+            public string Title { get; set; } = string.Empty;
+            public string ScreenName { get; set; } = string.Empty;
+            public string LayoutKind { get; set; } = string.Empty;
+            public bool IsVisible { get; set; }
+            public Guid FontId { get; set; }
+            public string ForegroundColor { get; set; } = string.Empty;
+            public string BackgroundColor { get; set; } = string.Empty;
+            public bool IsLocked { get; set; }
+            public bool IsTopmost { get; set; }
+            public bool IsCompact { get; set; }
+            public bool TextWrap { get; set; }
+            public string ContentKind { get; set; } = string.Empty;
+            public string HiddenMode { get; set; } = string.Empty;
+            public string CaptionPosition { get; set; } = string.Empty;
+
+            #endregion
+        }
+
+        #endregion
+
         public NotesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

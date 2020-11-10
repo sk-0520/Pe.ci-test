@@ -11,37 +11,41 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class AppExecuteSettingEntityDto : CommonDtoBase
+    public class AppExecuteSettingEntityDao: EntityDaoBase
     {
-        #region property
-        public bool Accepted { get; set; }
-        public Version? FirstVersion { get; set; }
-        [DateTimeKind(DateTimeKind.Utc)]
-        public DateTime FirstTimestamp { get; set; }
-        public Version? LastVersion { get; set; }
-        [DateTimeKind(DateTimeKind.Utc)]
-        public DateTime LastTimestamp { get; set; }
-        public long ExecuteCount { get; set; }
-        public string UserId { get; set; } = string.Empty;
-        public bool IsEnabledTelemetry { get; set; }
+        #region define
+
+        private class AppExecuteSettingEntityDto: CommonDtoBase
+        {
+            #region property
+            public bool Accepted { get; set; }
+            public Version? FirstVersion { get; set; }
+            [DateTimeKind(DateTimeKind.Utc)]
+            public DateTime FirstTimestamp { get; set; }
+            public Version? LastVersion { get; set; }
+            [DateTimeKind(DateTimeKind.Utc)]
+            public DateTime LastTimestamp { get; set; }
+            public long ExecuteCount { get; set; }
+            public string UserId { get; set; } = string.Empty;
+            public bool IsEnabledTelemetry { get; set; }
+            #endregion
+        }
+
+        private class AppGeneralFirstEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public Version FirstVersion { get; set; } = new Version();
+
+            [DateTimeKind(DateTimeKind.Utc)]
+            public DateTime FirstTimestamp { get; set; }
+
+
+            #endregion
+        }
+
         #endregion
-    }
 
-    internal class AppGeneralFirstEntityDto : CommonDtoBase
-    {
-        #region property
-
-        public Version FirstVersion { get; set; } = new Version();
-
-        [DateTimeKind(DateTimeKind.Utc)]
-        public DateTime FirstTimestamp { get; set; }
-
-
-        #endregion
-    }
-
-    public class AppExecuteSettingEntityDao : EntityDaoBase
-    {
         public AppExecuteSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

@@ -11,22 +11,26 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherItemHistoriesEntityDto : CreateDtoBase
-    {
-        #region property
-
-        public Guid LauncherItemId { get; set; }
-        public string Kind { get; set; } = string.Empty;
-        public string Value { get; set; } = string.Empty;
-
-        [DateTimeKind(DateTimeKind.Utc)]
-        public DateTime LastExecuteTimestamp { get; set; }
-
-        #endregion
-    }
-
     public class LauncherItemHistoriesEntityDao : EntityDaoBase
     {
+        #region define
+
+        private class LauncherItemHistoriesEntityDto: CreateDtoBase
+        {
+            #region property
+
+            public Guid LauncherItemId { get; set; }
+            public string Kind { get; set; } = string.Empty;
+            public string Value { get; set; } = string.Empty;
+
+            [DateTimeKind(DateTimeKind.Utc)]
+            public DateTime LastExecuteTimestamp { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
         public LauncherItemHistoriesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

@@ -8,23 +8,27 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class PluginWidgetSettingDto: CommonDtoBase
-    {
-        #region property
-
-        public Guid PluginId { get; set; }
-        public double? X { get; set; }
-        public double? Y { get; set; }
-        public double? Width { get; set; }
-        public double? Height { get; set; }
-        public bool IsVisible { get; set; }
-        public bool IsTopmost { get; set; }
-
-        #endregion
-    }
-
     public class PluginWidgetSettingsEntityDao: EntityDaoBase
     {
+        #region define
+
+        private class PluginWidgetSettingDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid PluginId { get; set; }
+            public double? X { get; set; }
+            public double? Y { get; set; }
+            public double? Width { get; set; }
+            public double? Height { get; set; }
+            public bool IsVisible { get; set; }
+            public bool IsTopmost { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
         public PluginWidgetSettingsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
            : base(context, statementLoader, implementation, loggerFactory)
         { }

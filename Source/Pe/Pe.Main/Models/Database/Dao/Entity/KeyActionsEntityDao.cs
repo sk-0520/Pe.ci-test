@@ -9,20 +9,24 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class KeyActionsEntityDto : CommonDtoBase
-    {
-        #region property
-
-        public Guid KeyActionId { get; set; }
-        public string KeyActionKind { get; set; } = string.Empty;
-        public string KeyActionContent { get; set; } = string.Empty;
-        public string Comment { get; set; } = string.Empty;
-
-        #endregion
-    }
-
     public class KeyActionsEntityDao : EntityDaoBase
     {
+        #region define
+
+        private class KeyActionsEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid KeyActionId { get; set; }
+            public string KeyActionKind { get; set; } = string.Empty;
+            public string KeyActionContent { get; set; } = string.Empty;
+            public string Comment { get; set; } = string.Empty;
+
+            #endregion
+        }
+
+        #endregion
+
         public KeyActionsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

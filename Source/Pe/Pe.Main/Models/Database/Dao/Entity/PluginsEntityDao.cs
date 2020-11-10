@@ -11,22 +11,25 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class PluginStateDto: CommonDtoBase
-    {
-        #region property
-
-        public Guid PluginId { get; set; }
-
-        public string Name { get; set; } = string.Empty;
-        public string State { get; set; } = string.Empty;
-
-
-        #endregion
-    }
-
-
     public class PluginsEntityDao: EntityDaoBase
     {
+        #region define
+
+        private class PluginStateDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid PluginId { get; set; }
+
+            public string Name { get; set; } = string.Empty;
+            public string State { get; set; } = string.Empty;
+
+
+            #endregion
+        }
+
+        #endregion
+
         public PluginsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }
@@ -148,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public bool DeletePlugin(Guid pluginId)
         {
             var statement = LoadStatement();
-            var parameter = new PluginSettingDto() {
+            var parameter = new {
                 PluginId = pluginId,
             };
 

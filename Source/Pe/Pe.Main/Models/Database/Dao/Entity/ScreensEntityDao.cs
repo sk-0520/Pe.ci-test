@@ -12,25 +12,29 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class ScreensRowDto : CommonDtoBase
-    {
-        #region property
-
-        public string ScreenName { get; set; } = string.Empty;
-        [PixelKind(Px.Device)]
-        public long ScreenX { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenY { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenWidth { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenHeight { get; set; }
-
-        #endregion
-    }
-
     public class ScreensEntityDao : EntityDaoBase
     {
+        #region define
+
+        private class ScreensRowDto: CommonDtoBase
+        {
+            #region property
+
+            public string ScreenName { get; set; } = string.Empty;
+            [PixelKind(Px.Device)]
+            public long ScreenX { get; set; }
+            [PixelKind(Px.Device)]
+            public long ScreenY { get; set; }
+            [PixelKind(Px.Device)]
+            public long ScreenWidth { get; set; }
+            [PixelKind(Px.Device)]
+            public long ScreenHeight { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
         public ScreensEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

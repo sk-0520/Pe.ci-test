@@ -7,18 +7,22 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class AppNotifyLogSettingEntityDto: CommonDtoBase
-    {
-        #region property
-
-        public bool IsVisible { get; set; }
-        public string Position { get; set; } = string.Empty;
-
-        #endregion
-    }
-
     public class AppNotifyLogSettingEntityDao : EntityDaoBase
     {
+        #region define
+
+        private class AppNotifyLogSettingEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public bool IsVisible { get; set; }
+            public string Position { get; set; } = string.Empty;
+
+            #endregion
+        }
+
+        #endregion
+
         public AppNotifyLogSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

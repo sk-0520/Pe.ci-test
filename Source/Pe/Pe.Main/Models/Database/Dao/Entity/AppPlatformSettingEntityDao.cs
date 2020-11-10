@@ -7,18 +7,23 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class AppPlatformSettingEntityDto : CommonDtoBase
-    {
-        #region property
-
-        public bool SuppressSystemIdle { get; set; }
-        public bool SupportExplorer { get; set; }
-
-
-        #endregion
-    }
     public class AppPlatformSettingEntityDao: EntityDaoBase
     {
+        #region define
+
+        private class AppPlatformSettingEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public bool SuppressSystemIdle { get; set; }
+            public bool SupportExplorer { get; set; }
+
+
+            #endregion
+        }
+
+        #endregion
+
         public AppPlatformSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

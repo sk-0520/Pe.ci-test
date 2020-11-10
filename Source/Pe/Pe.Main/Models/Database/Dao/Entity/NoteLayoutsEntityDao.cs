@@ -11,27 +11,31 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class NoteLayoutsEntityDto : CommonDtoBase
-    {
-        #region property
-
-        public Guid NoteId { get; set; }
-        public string LayoutKind { get; set; } = string.Empty;
-
-        [PixelKind(Px.Logical)]
-        public double X { get; set; }
-        [PixelKind(Px.Logical)]
-        public double Y { get; set; }
-        [PixelKind(Px.Logical)]
-        public double Width { get; set; }
-        [PixelKind(Px.Logical)]
-        public double Height { get; set; }
-
-        #endregion
-    }
-
     public class NoteLayoutsEntityDao : EntityDaoBase
     {
+        #region define
+
+        private class NoteLayoutsEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid NoteId { get; set; }
+            public string LayoutKind { get; set; } = string.Empty;
+
+            [PixelKind(Px.Logical)]
+            public double X { get; set; }
+            [PixelKind(Px.Logical)]
+            public double Y { get; set; }
+            [PixelKind(Px.Logical)]
+            public double Width { get; set; }
+            [PixelKind(Px.Logical)]
+            public double Height { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
         public NoteLayoutsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

@@ -10,23 +10,27 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class AppNoteSettingEntityDto : CommonDtoBase
-    {
-        #region property
-
-        public Guid FontId { get; set; }
-        public string TitleKind { get; set; } = string.Empty;
-        public string LayoutKind { get; set; } = string.Empty;
-        public string ForegroundColor { get; set; } = string.Empty;
-        public string BackgroundColor { get; set; } = string.Empty;
-        public bool IsTopmost { get; set; }
-        public string CaptionPosition { get; set; } = string.Empty;
-
-        #endregion
-    }
-
     public class AppNoteSettingEntityDao : EntityDaoBase
     {
+        #region define
+
+        private class AppNoteSettingEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid FontId { get; set; }
+            public string TitleKind { get; set; } = string.Empty;
+            public string LayoutKind { get; set; } = string.Empty;
+            public string ForegroundColor { get; set; } = string.Empty;
+            public string BackgroundColor { get; set; } = string.Empty;
+            public bool IsTopmost { get; set; }
+            public string CaptionPosition { get; set; } = string.Empty;
+
+            #endregion
+        }
+
+        #endregion
+
         public AppNoteSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

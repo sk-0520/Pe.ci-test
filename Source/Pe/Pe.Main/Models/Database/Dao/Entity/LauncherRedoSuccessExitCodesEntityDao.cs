@@ -8,18 +8,22 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherRedoSuccessExitCodesDto: CommonDtoBase
-    {
-        #region property
-
-        public Guid LauncherItemId { get; set; }
-        public int SuccessExitCode { get; set; }
-
-        #endregion
-    }
-
     public class LauncherRedoSuccessExitCodesEntityDao : EntityDaoBase
     {
+        #region define
+
+        private class LauncherRedoSuccessExitCodesDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid LauncherItemId { get; set; }
+            public int SuccessExitCode { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
         public LauncherRedoSuccessExitCodesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

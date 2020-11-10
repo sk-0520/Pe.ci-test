@@ -10,28 +10,32 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherToolbarsDisplayRowDto : CommonDtoBase
-    {
-        #region property
-
-        public Guid LauncherToolbarId { get; set; }
-        public Guid LauncherGroupId { get; set; }
-        public string PositionKind { get; set; } = string.Empty;
-        public string Direction { get; set; } = string.Empty;
-        public string IconBox { get; set; } = string.Empty;
-        public Guid FontId { get; set; }
-        public TimeSpan AutoHideTime { get; set; }
-        public long TextWidth { get; set; }
-        public bool IsVisible { get; set; }
-        public bool IsTopmost { get; set; }
-        public bool IsAutoHide { get; set; }
-        public bool IsIconOnly { get; set; }
-
-        #endregion
-    }
-
     public class LauncherToolbarsEntityDao : EntityDaoBase
     {
+        #region define
+
+        private class LauncherToolbarsDisplayRowDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid LauncherToolbarId { get; set; }
+            public Guid LauncherGroupId { get; set; }
+            public string PositionKind { get; set; } = string.Empty;
+            public string Direction { get; set; } = string.Empty;
+            public string IconBox { get; set; } = string.Empty;
+            public Guid FontId { get; set; }
+            public TimeSpan AutoHideTime { get; set; }
+            public long TextWidth { get; set; }
+            public bool IsVisible { get; set; }
+            public bool IsTopmost { get; set; }
+            public bool IsAutoHide { get; set; }
+            public bool IsIconOnly { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
         public LauncherToolbarsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }

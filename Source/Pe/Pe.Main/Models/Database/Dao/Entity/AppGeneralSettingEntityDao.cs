@@ -12,17 +12,22 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class AppGeneralSettingEntityDto: CommonDtoBase
-    {
-        #region property
-        public string Language { get; set; } = string.Empty;
-        public string UserBackupDirectoryPath { get; set; } = string.Empty;
-        public Guid ThemePluginId { get; set; }
-        #endregion
-    }
-
     public class AppGeneralSettingEntityDao: EntityDaoBase
     {
+        #region define
+
+        private class AppGeneralSettingEntityDto: CommonDtoBase
+        {
+            #region property
+            public string Language { get; set; } = string.Empty;
+            public string UserBackupDirectoryPath { get; set; } = string.Empty;
+            public Guid ThemePluginId { get; set; }
+            #endregion
+        }
+
+
+        #endregion
+
         public AppGeneralSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
         { }
