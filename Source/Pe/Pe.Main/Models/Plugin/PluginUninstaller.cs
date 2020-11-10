@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         ILogger Logger { get; }
 
         IDatabaseContexts MainContexts => DatabaseContextsPack.Main;
-        IDatabaseContexts FileContexts => DatabaseContextsPack.File;
+        IDatabaseContexts FileContexts => DatabaseContextsPack.Large;
 
         #endregion
 

@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
     internal sealed class LauncherIconRefreshLoader: LauncherIconLoader
     {
-        public LauncherIconRefreshLoader(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public LauncherIconRefreshLoader(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(launcherItemId, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, null, loggerFactory)
         { }
 
@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
     public class LauncherIconRefresher: ICronExecutor
     {
-        public LauncherIconRefresher(TimeSpan refreshTime, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IOrderManager orderManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
+        public LauncherIconRefresher(TimeSpan refreshTime, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IOrderManager orderManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         TimeSpan RefreshTime { get; }
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        ILargeDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         IOrderManager OrderManager { get; }

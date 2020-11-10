@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             var start = DateTime.UtcNow;
 
             ExecuteCore(accessorPack.Main, dto, setupper.ExecuteMainDDL, setupper.ExecuteMainDML);
-            ExecuteCore(accessorPack.File, dto, setupper.ExecuteFileDDL, setupper.ExecuteFileDML);
+            ExecuteCore(accessorPack.Large, dto, setupper.ExecuteFileDDL, setupper.ExecuteFileDML);
             ExecuteCore(accessorPack.Temporary, dto, setupper.ExecuteTemporaryDDL, setupper.ExecuteTemporaryDML);
 
             var end = DateTime.UtcNow;

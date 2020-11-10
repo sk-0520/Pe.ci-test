@@ -121,12 +121,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     public interface IMainDatabaseBarrier : IApplicationDatabaseBarrier
     { }
-    public interface IFileDatabaseBarrier : IApplicationDatabaseBarrier
+    public interface ILargeDatabaseBarrier : IApplicationDatabaseBarrier
     { }
     public interface ITemporaryDatabaseBarrier : IApplicationDatabaseBarrier
     { }
 
-    public sealed class ApplicationDatabaseBarrier : DatabaseBarrier, IMainDatabaseBarrier, IFileDatabaseBarrier, ITemporaryDatabaseBarrier
+    public sealed class ApplicationDatabaseBarrier : DatabaseBarrier, IMainDatabaseBarrier, ILargeDatabaseBarrier, ITemporaryDatabaseBarrier
     {
         public ApplicationDatabaseBarrier(IDatabaseAccessor accessor, ReaderWriterLocker locker)
             : base(accessor, locker)

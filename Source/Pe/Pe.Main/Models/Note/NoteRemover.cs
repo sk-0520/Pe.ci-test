@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
                 case Pack.Main:
                     return true;
 
-                case Pack.File: // 悩み中
+                case Pack.Large: // 悩み中
                 case Pack.Temporary:
                     return false;
 
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
 
         protected override EntityRemoverResult RemoveFile(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
         {
-            return new EntityRemoverResult(Pack.File);
+            return new EntityRemoverResult(Pack.Large);
         }
 
         protected override EntityRemoverResult RemoveTemporary(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)

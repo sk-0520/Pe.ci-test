@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.DirectoryServices;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,23 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
+    /// <summary>
+    /// DB区分。
+    /// </summary>
     public enum Pack
     {
+        /// <summary>
+        /// 通常設定。
+        /// </summary>
         Main,
-        File,
+        /// <summary>
+        /// 大きいデータ。
+        /// </summary>
+        Large,
+        /// <summary>
+        /// 一時データ。
+        /// <para>次回起動時は存在しない。</para>
+        /// </summary>
         Temporary,
     }
 
@@ -23,8 +37,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     {
         #region property
 
+        [NotNull]
         T Main { get; }
-        T File { get; }
+        [NotNull]
+        T Large { get; }
+        [NotNull]
         T Temporary { get; }
 
         IReadOnlyList<T> Items { get; }
@@ -37,27 +54,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     public abstract class TApplicationPackBase<TInterface, TObject>: DisposerBase, IApplicationPack<TInterface>
         where TObject : TInterface
     {
-        protected TApplicationPackBase(TObject main, TObject file, TObject temporary)
+        protected TApplicationPackBase([DisallowNull] TObject main, [DisallowNull] TObject large, [DisallowNull] TObject temporary)
         {
             Main = main;
-            File = file;
+            Large = large;
             Temporary = temporary;
         }
 
         #region IApplicationPack
 
+        [NotNull]
         public TObject Main { get; }
+        [NotNull]
         TInterface IApplicationPack<TInterface>.Main => Main;
 
-        public TObject File { get; }
-        TInterface IApplicationPack<TInterface>.File => File;
+        [NotNull]
+        public TObject Large { get; }
+        [NotNull]
+        TInterface IApplicationPack<TInterface>.Large => Large;
 
+        [NotNull]
         public TObject Temporary { get; }
+        [NotNull]
         TInterface IApplicationPack<TInterface>.Temporary => Temporary;
 
         public IReadOnlyList<TObject> Items => new[] {
             Main,
-            File,
+            Large,
             Temporary,
         };
         IReadOnlyList<TInterface> IApplicationPack<TInterface>.Items => (IReadOnlyList<TInterface>)Items; // あっれぇ
@@ -139,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             return new ApplicationDatabaseAccessorPack(
                 new ApplicationDatabaseAccessor(factoryPack.Main, loggerFactory),
-                new ApplicationDatabaseAccessor(factoryPack.File, loggerFactory),
+                new ApplicationDatabaseAccessor(factoryPack.Large, loggerFactory),
                 new ApplicationDatabaseAccessor(factoryPack.Temporary, loggerFactory)
             );
         }
@@ -258,7 +281,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             return new ApplicationDatabaseAccessorPack(
                 new ApplicationDatabaseAccessor(factoryPack.Main, loggerFactory),
-                new ApplicationDatabaseAccessor(factoryPack.File, loggerFactory),
+                new ApplicationDatabaseAccessor(factoryPack.Large, loggerFactory),
                 new ApplicationDatabaseAccessor(factoryPack.Temporary, loggerFactory)
             );
         }
@@ -285,7 +308,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 throw new InvalidOperationException();
             }
 
-            CurrentBarriers = new Barriers(WaitReadCore(Main), WaitReadCore(File), WaitReadCore(Temporary), DatabaseCommonStatus.CreateCurrentAccount(), true);
+            CurrentBarriers = new Barriers(WaitReadCore(Main), WaitReadCore(Large), WaitReadCore(Temporary), DatabaseCommonStatus.CreateCurrentAccount(), true);
             CurrentBarriers.Disposing += CurrentBarriers_Disposing;
             return CurrentBarriers;
         }
@@ -298,7 +321,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 throw new InvalidOperationException();
             }
 
-            CurrentBarriers = new Barriers(WaitWriteCore(Main), WaitWriteCore(File), WaitWriteCore(Temporary), databaseCommonStatus, true);
+            CurrentBarriers = new Barriers(WaitWriteCore(Main), WaitWriteCore(Large), WaitWriteCore(Temporary), databaseCommonStatus, true);
             CurrentBarriers.Disposing += CurrentBarriers_Disposing;
             return CurrentBarriers;
         }

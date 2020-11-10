@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
     public abstract class EntityEraserBase
     {
         protected EntityEraserBase(IDatabaseContextsPack contextsPack, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : this(contextsPack.Main, contextsPack.File, contextsPack.Temporary, statementLoader, loggerFactory)
+            : this(contextsPack.Main, contextsPack.Large, contextsPack.Temporary, statementLoader, loggerFactory)
         { }
 
         protected EntityEraserBase(IDatabaseContexts mainContexts, IDatabaseContexts fileContexts, IDatabaseContexts temporaryContexts, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)

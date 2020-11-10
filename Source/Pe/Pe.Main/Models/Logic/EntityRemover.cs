@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 case Pack.Main:
                     return RemoveMain(context, statementLoader, implementation);
 
-                case Pack.File:
+                case Pack.Large:
                     return RemoveMain(context, statementLoader, implementation);
 
                 case Pack.Temporary:
@@ -151,11 +151,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     public sealed class EntitiesRemover
     {
-        public EntitiesRemover(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader)
+        public EntitiesRemover(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader)
         {
             Barriers = new Dictionary<Pack, IApplicationDatabaseBarrier>() {
                 [Pack.Main] = mainDatabaseBarrier,
-                [Pack.File] = fileDatabaseBarrier,
+                [Pack.Large] = fileDatabaseBarrier,
                 [Pack.Temporary] = temporaryDatabaseBarrier,
             };
             StatementLoader = statementLoader;
@@ -196,7 +196,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             var packs = new[] {
                 Pack.Main,
-                Pack.File,
+                Pack.Large,
                 Pack.Temporary,
             };
 #if DEBUG
