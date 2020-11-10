@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database
 {
@@ -14,16 +15,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
     /// </summary>
     public abstract class EntityEraserBase
     {
-        protected EntityEraserBase(IDatabaseContextsPack contextsPack, IDatabaseStatementLoader statementLoader)
-            : this(contextsPack.Main, contextsPack.File, contextsPack.Temporary, statementLoader)
+        protected EntityEraserBase(IDatabaseContextsPack contextsPack, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : this(contextsPack.Main, contextsPack.File, contextsPack.Temporary, statementLoader, loggerFactory)
         { }
 
-        protected EntityEraserBase(IDatabaseContexts mainContexts, IDatabaseContexts fileContexts, IDatabaseContexts temporaryContexts, IDatabaseStatementLoader statementLoader)
+        protected EntityEraserBase(IDatabaseContexts mainContexts, IDatabaseContexts fileContexts, IDatabaseContexts temporaryContexts, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
             MainContexts = mainContexts ?? throw new ArgumentNullException(nameof(mainContexts));
             FileContexts = fileContexts ?? throw new ArgumentNullException(nameof(fileContexts));
             TemporaryContexts = temporaryContexts ?? throw new ArgumentNullException(nameof(temporaryContexts));
             StatementLoader = statementLoader ?? throw new ArgumentNullException(nameof(statementLoader));
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.Create(GetType());
         }
 
         #region property
@@ -32,6 +35,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         private IDatabaseContexts FileContexts { get; }
         private IDatabaseContexts TemporaryContexts { get; }
         private IDatabaseStatementLoader StatementLoader { get; }
+
+        protected ILoggerFactory LoggerFactory { get; }
+        protected ILogger Logger { get; }
 
         #endregion
 
