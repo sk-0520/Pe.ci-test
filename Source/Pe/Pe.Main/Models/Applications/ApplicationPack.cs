@@ -115,8 +115,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     public sealed class ApplicationReaderWriterLockerPack: TApplicationPackBase<IReaderWriterLocker, ApplicationReaderWriterLockerBase>, IReaderWriterLockerPack
     {
-        public ApplicationReaderWriterLockerPack(ApplicationMainReaderWriterLocker main, ApplicationFileReaderWriterLocker file, ApplicationTemporaryReaderWriterLocker temporary)
-            : base(main, file, temporary)
+        public ApplicationReaderWriterLockerPack(ApplicationMainReaderWriterLocker main, ApplicationLargeReaderWriterLocker large, ApplicationTemporaryReaderWriterLocker temporary)
+            : base(main, large, temporary)
         { }
     }
 
@@ -125,15 +125,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     public sealed class ApplicationDatabaseFactoryPack: TApplicationPackBase<IDatabaseFactory, ApplicationDatabaseFactory>, IDatabaseFactoryPack
     {
-        public ApplicationDatabaseFactoryPack(ApplicationDatabaseFactory main, ApplicationDatabaseFactory file, ApplicationDatabaseFactory temporary)
-            : base(main, file, temporary)
+        public ApplicationDatabaseFactoryPack(ApplicationDatabaseFactory main, ApplicationDatabaseFactory large, ApplicationDatabaseFactory temporary)
+            : base(main, large, temporary)
         { }
     }
 
     public class LazyWriterWaitTimePack: TApplicationPackBase<TimeSpan, TimeSpan>
     {
-        public LazyWriterWaitTimePack(TimeSpan main, TimeSpan file, TimeSpan temporary)
-            : base(main, file, temporary)
+        public LazyWriterWaitTimePack(TimeSpan main, TimeSpan large, TimeSpan temporary)
+            : base(main, large, temporary)
         { }
     }
 
@@ -142,8 +142,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     public sealed class ApplicationDatabaseLazyWriterPack: TApplicationPackBase<IDatabaseLazyWriter, ApplicationDatabaseLazyWriter>, IDatabaseLazyWriterPack
     {
-        public ApplicationDatabaseLazyWriterPack(ApplicationDatabaseLazyWriter main, ApplicationDatabaseLazyWriter file, ApplicationDatabaseLazyWriter temporary)
-            : base(main, file, temporary)
+        public ApplicationDatabaseLazyWriterPack(ApplicationDatabaseLazyWriter main, ApplicationDatabaseLazyWriter large, ApplicationDatabaseLazyWriter temporary)
+            : base(main, large, temporary)
         { }
     }
 
@@ -152,8 +152,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     public sealed class ApplicationDatabaseAccessorPack: TApplicationPackBase<IDatabaseAccessor, ApplicationDatabaseAccessor>, IDatabaseAccessorPack
     {
-        public ApplicationDatabaseAccessorPack(ApplicationDatabaseAccessor main, ApplicationDatabaseAccessor file, ApplicationDatabaseAccessor temporary)
-            : base(main, file, temporary)
+        public ApplicationDatabaseAccessorPack(ApplicationDatabaseAccessor main, ApplicationDatabaseAccessor large, ApplicationDatabaseAccessor temporary)
+            : base(main, large, temporary)
         { }
 
         #region function
@@ -181,8 +181,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     internal class ApplicationDatabaseContextsPack: TApplicationPackBase<IDatabaseContexts, DatabaseContexts>, IDatabaseContextsPack
     {
-        public ApplicationDatabaseContextsPack(DatabaseContexts main, DatabaseContexts file, DatabaseContexts temporary, IDatabaseCommonStatus commonStatus)
-            : base(main, file, temporary)
+        public ApplicationDatabaseContextsPack(DatabaseContexts main, DatabaseContexts large, DatabaseContexts temporary, IDatabaseCommonStatus commonStatus)
+            : base(main, large, temporary)
         {
             CommonStatus = commonStatus;
         }
@@ -218,8 +218,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         internal class Barriers: ApplicationDatabaseContextsPack
         {
-            public Barriers(DatabaseContexts main, DatabaseContexts file, DatabaseContexts temporary, IDatabaseCommonStatus commonStatus, bool isReadOnly)
-                : base(main, file, temporary, commonStatus)
+            public Barriers(DatabaseContexts main, DatabaseContexts large, DatabaseContexts temporary, IDatabaseCommonStatus commonStatus, bool isReadOnly)
+                : base(main, large, temporary, commonStatus)
             {
                 IsReadOnly = isReadOnly;
             }
@@ -265,8 +265,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         }
 
         #endregion
-        public ApplicationDatabaseBarrierPack(ApplicationDatabaseBarrier main, ApplicationDatabaseBarrier file, ApplicationDatabaseBarrier temporary)
-            : base(main, file, temporary)
+        public ApplicationDatabaseBarrierPack(ApplicationDatabaseBarrier main, ApplicationDatabaseBarrier large, ApplicationDatabaseBarrier temporary)
+            : base(main, large, temporary)
         { }
 
         #region property

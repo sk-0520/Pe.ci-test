@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var readerWriterLockerPack = new ApplicationReaderWriterLockerPack(
                 new ApplicationMainReaderWriterLocker(),
-                new ApplicationFileReaderWriterLocker(),
+                new ApplicationLargeReaderWriterLocker(),
                 new ApplicationTemporaryReaderWriterLocker()
             );
             var barrierPack = new ApplicationDatabaseBarrierPack(
