@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public interface IDisposer : IDisposedChackable, IDisposable
+    public interface IDisposer: IDisposedChackable, IDisposable
     {
         #region event
 
@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public sealed class ActionDisposer : DisposerBase
+    public sealed class ActionDisposer: DisposerBase
     {
         public ActionDisposer(Action<bool> action)
         {
@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public sealed class ActionDisposer<TArgument> : DisposerBase
+    public sealed class ActionDisposer<TArgument>: DisposerBase
     {
         public ActionDisposer(Action<bool, TArgument> action, TArgument argument)
         {
@@ -194,7 +194,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class DisposableStocker : DisposerBase
+    public class DisposableStocker: DisposerBase
     {
         #region property
 
@@ -208,11 +208,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public TDisposable Add<TDisposable>(TDisposable disposable)
             where TDisposable : IDisposable
         {
+            if(disposable == null) {
+                throw new ArgumentNullException(nameof(disposable));
+            }
+
             ThrowIfDisposed();
 
-            if(disposable != null) {
-                StockItems.Add(disposable);
-            }
+            StockItems.Add(disposable);
 
             return disposable;
         }

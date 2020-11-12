@@ -36,6 +36,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             };
             DisableJobEditors = DisableJobEditorCollection.GetDefaultView();
 
+            AllLauncherItemCollection = allLauncherItemCollection;
+
             PressedJobEditorCollection = new ActionModelViewModelObservableCollectionManager<KeyboardPressedJobSettingEditorElement, KeyboardPressedJobSettingEditorViewModelBase>(Model.PressedJobEditors) {
                 ToViewModel = m => m.Kind switch {
                     KeyActionKind.Command => new KeyboardCommandJobSettingEditorViewModel(m, DispatcherWrapper, loggerFactory),
@@ -47,7 +49,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             };
             PressedJobEditors = PressedJobEditorCollection.GetDefaultView();
 
-            AllLauncherItemCollection = allLauncherItemCollection;
 
             var replaceKeyItems = EnumUtility.GetMembers<Key>()
                 .Select(i => (int)i)
