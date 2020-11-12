@@ -16,13 +16,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
     public abstract class EntityEraserBase
     {
         protected EntityEraserBase(IDatabaseContextsPack contextsPack, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : this(contextsPack.Main, contextsPack.File, contextsPack.Temporary, statementLoader, loggerFactory)
+            : this(contextsPack.Main, contextsPack.Large, contextsPack.Temporary, statementLoader, loggerFactory)
         { }
 
         protected EntityEraserBase(IDatabaseContexts mainContexts, IDatabaseContexts fileContexts, IDatabaseContexts temporaryContexts, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
             MainContexts = mainContexts ?? throw new ArgumentNullException(nameof(mainContexts));
-            FileContexts = fileContexts ?? throw new ArgumentNullException(nameof(fileContexts));
+            LargeContexts = fileContexts ?? throw new ArgumentNullException(nameof(fileContexts));
             TemporaryContexts = temporaryContexts ?? throw new ArgumentNullException(nameof(temporaryContexts));
             StatementLoader = statementLoader ?? throw new ArgumentNullException(nameof(statementLoader));
             LoggerFactory = loggerFactory;
@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         #region property
 
         private IDatabaseContexts MainContexts { get; }
-        private IDatabaseContexts FileContexts { get; }
+        private IDatabaseContexts LargeContexts { get; }
         private IDatabaseContexts TemporaryContexts { get; }
         private IDatabaseStatementLoader StatementLoader { get; }
 
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         public void Execute()
         {
             ExecuteMain(MainContexts.Context, StatementLoader, MainContexts.Implementation);
-            ExecuteFile(FileContexts.Context, StatementLoader, FileContexts.Implementation);
+            ExecuteFile(LargeContexts.Context, StatementLoader, LargeContexts.Implementation);
             ExecuteTemporary(TemporaryContexts.Context, StatementLoader, TemporaryContexts.Implementation);
         }
 

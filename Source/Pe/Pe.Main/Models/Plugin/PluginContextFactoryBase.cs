@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             var pluginPersistent = new PluginPersistents(
                 new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseContextsPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseContextsPack.File, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseContextsPack.Large, DatabaseStatementLoader, isReadOnly, LoggerFactory),
                 new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseContextsPack.Temporary, DatabaseStatementLoader, isReadOnly, LoggerFactory)
             );
 
@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             var pluginPersistent = new PluginPersistents(
                 new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.File, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Large, DatabaseStatementLoader, isReadOnly, LoggerFactory),
                 new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Temporary, DatabaseStatementLoader, isReadOnly, LoggerFactory)
             );
 
@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             var pluginPersistent = new PluginPersistents(
                 new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Main, databaseLazyWriterPack.Main, DatabaseStatementLoader, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.File, databaseLazyWriterPack.File, DatabaseStatementLoader, LoggerFactory),
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Large, databaseLazyWriterPack.Large, DatabaseStatementLoader, LoggerFactory),
                 new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Temporary, databaseLazyWriterPack.Temporary, DatabaseStatementLoader, LoggerFactory)
             );
 

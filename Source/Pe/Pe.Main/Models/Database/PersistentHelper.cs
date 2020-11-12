@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         #region function
 
-        static PersistentContextsPack WaitPack(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus, bool isReadOnly)
+        static PersistentContextsPack WaitPack(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus, bool isReadOnly)
         {
             static IDatabaseTransaction Do(IDatabaseBarrier databaseBarrier, bool isReadOnly)
             {
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             }
 
             var main = Do(mainDatabaseBarrier, isReadOnly);
-            var file = Do(fileDatabaseBarrier, isReadOnly);
+            var file = Do(largeDatabaseBarrier, isReadOnly);
             var temp = Do(temporaryDatabaseBarrier, isReadOnly);
 
             var result = new PersistentContextsPack(main, file, temp, databaseCommonStatus);
@@ -93,14 +93,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             return result;
         }
 
-        public static PersistentContextsPack WaitWritePack(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
+        public static PersistentContextsPack WaitWritePack(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
         {
-            return WaitPack(mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, databaseCommonStatus, false);
+            return WaitPack(mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, databaseCommonStatus, false);
         }
 
-        public static PersistentContextsPack WaitReadPack(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
+        public static PersistentContextsPack WaitReadPack(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
         {
-            return WaitPack(mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, databaseCommonStatus, true);
+            return WaitPack(mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, databaseCommonStatus, true);
         }
 
         /// <summary>

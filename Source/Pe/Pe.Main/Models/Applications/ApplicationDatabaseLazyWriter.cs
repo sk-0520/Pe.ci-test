@@ -12,12 +12,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     public interface IMainDatabaseLazyWriter : IApplicationDatabaseLazyWriter
     { }
-    public interface IFileDatabaseLazyWriter : IApplicationDatabaseLazyWriter
+    public interface ILargeDatabaseLazyWriter : IApplicationDatabaseLazyWriter
     { }
     public interface ITemporaryDatabaseLazyWriter : IApplicationDatabaseLazyWriter
     { }
 
-    public class ApplicationDatabaseLazyWriter : DatabaseLazyWriter, IMainDatabaseLazyWriter, IFileDatabaseLazyWriter, ITemporaryDatabaseLazyWriter
+    public class ApplicationDatabaseLazyWriter : DatabaseLazyWriter, IMainDatabaseLazyWriter, ILargeDatabaseLazyWriter, ITemporaryDatabaseLazyWriter
     {
         public ApplicationDatabaseLazyWriter(IDatabaseBarrier databaseBarrier, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
             : base(databaseBarrier, pauseRetryTime, loggerFactory)

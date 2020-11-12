@@ -22,8 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
     internal sealed class LauncherIconRefreshLoader: LauncherIconLoader
     {
-        public LauncherIconRefreshLoader(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(launcherItemId, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, null, loggerFactory)
+        public LauncherIconRefreshLoader(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(launcherItemId, mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, null, loggerFactory)
         { }
 
         #region property
@@ -69,13 +69,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
     public class LauncherIconRefresher: ICronExecutor
     {
-        public LauncherIconRefresher(TimeSpan refreshTime, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IOrderManager orderManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
+        public LauncherIconRefresher(TimeSpan refreshTime, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IOrderManager orderManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             RefreshTime = refreshTime;
             MainDatabaseBarrier = mainDatabaseBarrier;
-            FileDatabaseBarrier = fileDatabaseBarrier;
+            LargeDatabaseBarrier = largeDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
             OrderManager = orderManager;
             NotifyManager = notifyManager;
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         TimeSpan RefreshTime { get; }
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         IOrderManager OrderManager { get; }
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         IReadOnlyList<LauncherIconStatus> GetUpdateTartget(Guid launcherItemIs)
         {
-            using var context = FileDatabaseBarrier.WaitRead();
+            using var context = LargeDatabaseBarrier.WaitRead();
             var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
             var status = launcherItemIconStatusEntityDao.SelectLauncherItemIconAllSizeStatus(launcherItemIs)
                 .Where(i => IsNeedUpdate(i, DateTime.UtcNow))
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         private Task UpdateTargetAsync(Guid launcherItemId, LauncherIconStatus target, CancellationToken cancellationToken)
         {
-            using(var context = FileDatabaseBarrier.WaitRead()) {
+            using(var context = LargeDatabaseBarrier.WaitRead()) {
                 var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 var nowStatus = launcherItemIconStatusEntityDao.SelectLauncherItemIconSingleSizeStatus(launcherItemId, target.IconScale);
                 if(nowStatus == null) {
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 }
             }
 
-            var loader = new LauncherIconRefreshLoader(launcherItemId, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+            var loader = new LauncherIconRefreshLoader(launcherItemId, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             return loader.LoadAndSaveAsync(target.IconScale, cancellationToken);
         }
 

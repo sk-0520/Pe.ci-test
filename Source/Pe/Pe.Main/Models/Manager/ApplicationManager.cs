@@ -301,7 +301,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 // 設定用DBを永続用DBと切り替え
                 var pack = ApplicationDiContainer.Get<IDatabaseAccessorPack>();
-                var stoppings = (new IDatabaseAccessor[] { pack.Main, pack.File })
+                var stoppings = (new IDatabaseAccessor[] { pack.Main, pack.Large })
                     .Select(i => i.PauseConnection())
                     .ToList()
                 ;
@@ -628,7 +628,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 // なんかが失敗したときに後続を続けたいので毎度ロールバックする
                 using var pack = PersistentHelper.WaitWritePack(
                     ApplicationDiContainer.Build<IMainDatabaseBarrier>(),
-                    ApplicationDiContainer.Build<IFileDatabaseBarrier>(),
+                    ApplicationDiContainer.Build<ILargeDatabaseBarrier>(),
                     ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>(),
                     DatabaseCommonStatus.CreateCurrentAccount()
                 );
