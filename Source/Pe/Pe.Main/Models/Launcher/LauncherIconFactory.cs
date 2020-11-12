@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
     public class LauncherIconFactory
     {
-        public LauncherIconFactory(Guid launcherItemId, LauncherItemKind launcherItemKind, ILauncherItemAddonFinder launcherItemAddonFinder, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public LauncherIconFactory(Guid launcherItemId, LauncherItemKind launcherItemKind, ILauncherItemAddonFinder launcherItemAddonFinder, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             LauncherItemKind = launcherItemKind;
             LauncherItemAddonFinder = launcherItemAddonFinder;
             MainDatabaseBarrier = mainDatabaseBarrier;
-            FileDatabaseBarrier = fileDatabaseBarrier;
+            LargeDatabaseBarrier = largeDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
         }
 
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         public LauncherItemKind LauncherItemKind { get; }
         ILauncherItemAddonFinder LauncherItemAddonFinder { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        ILargeDatabaseBarrier FileDatabaseBarrier { get; }
+        ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         #endregion
@@ -46,14 +46,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         private IconImageLoaderBase CreateFileIconLoader(IDispatcherWrapper dispatcherWrapper)
         {
-            return new LauncherIconLoader(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, dispatcherWrapper, LoggerFactory);
+            return new LauncherIconLoader(LauncherItemId, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, dispatcherWrapper, LoggerFactory);
         }
 
         public object CreateIconSource(IDispatcherWrapper dispatcherWrapper)
         {
             switch(LauncherItemKind) {
                 case LauncherItemKind.File: {
-                        return new LauncherIconLoader(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, dispatcherWrapper, LoggerFactory);
+                        return new LauncherIconLoader(LauncherItemId, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, dispatcherWrapper, LoggerFactory);
                     }
 
                 case LauncherItemKind.Addon: {

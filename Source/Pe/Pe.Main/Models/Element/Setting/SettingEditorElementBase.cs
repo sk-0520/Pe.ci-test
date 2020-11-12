@@ -17,14 +17,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     /// </summary>
     public abstract class SettingEditorElementBase : ElementBase
     {
-        protected SettingEditorElementBase(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected SettingEditorElementBase(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             SettingNotifyManager = settingNotifyManager;
             ClipboardManager = clipboardManager;
 
             MainDatabaseBarrier = mainDatabaseBarrier;
-            FileDatabaseBarrier = fileDatabaseBarrier;
+            LargeDatabaseBarrier = largeDatabaseBarrier;
             TemporaryDatabaseBarrier = temporaryDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
 
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected IClipboardManager ClipboardManager { get; }
 
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        protected ILargeDatabaseBarrier FileDatabaseBarrier { get; }
+        protected ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
         protected ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
         protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
         protected IIdFactory IdFactory { get; }

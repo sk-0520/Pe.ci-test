@@ -24,18 +24,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public abstract class GeneralSettingEditorElementBase: ElementBase
     {
-        protected GeneralSettingEditorElementBase(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        protected GeneralSettingEditorElementBase(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
-            FileDatabaseBarrier = fileDatabaseBarrier;
+            LargeDatabaseBarrier = largeDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
         }
 
         #region property
 
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        protected ILargeDatabaseBarrier FileDatabaseBarrier { get; }
+        protected ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
         protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
         #endregion
 
@@ -53,8 +53,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppExecuteSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppExecuteSettingEditorElement(EnvironmentParameters environmentParameters, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppExecuteSettingEditorElement(EnvironmentParameters environmentParameters, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {
             EnvironmentParameters = environmentParameters;
         }
@@ -118,8 +118,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppGeneralSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppGeneralSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, IReadOnlyList<IPlugin> themePlugins, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppGeneralSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IReadOnlyList<IPlugin> themePlugins, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {
             ThemePlugins = themePlugins;
         }
@@ -204,8 +204,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppUpdateSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppUpdateSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppUpdateSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         { }
 
         #region property
@@ -244,8 +244,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppNotifyLogSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppNotifyLogSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppNotifyLogSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         { }
 
         #region property
@@ -286,8 +286,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppLauncherToolbarSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppLauncherToolbarSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppLauncherToolbarSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         { }
 
         #region property
@@ -330,8 +330,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppCommandSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppCommandSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppCommandSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         { }
 
         #region property
@@ -404,8 +404,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppNoteSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppNoteSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppNoteSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         { }
 
         #region property
@@ -483,8 +483,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppStandardInputOutputSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppStandardInputOutputSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppStandardInputOutputSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         { }
 
         #region property

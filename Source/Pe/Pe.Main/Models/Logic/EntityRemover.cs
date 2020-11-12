@@ -151,11 +151,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     public sealed class EntitiesRemover
     {
-        public EntitiesRemover(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader)
+        public EntitiesRemover(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader)
         {
             Barriers = new Dictionary<Pack, IApplicationDatabaseBarrier>() {
                 [Pack.Main] = mainDatabaseBarrier,
-                [Pack.Large] = fileDatabaseBarrier,
+                [Pack.Large] = largeDatabaseBarrier,
                 [Pack.Temporary] = temporaryDatabaseBarrier,
             };
             StatementLoader = statementLoader;
