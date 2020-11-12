@@ -11,7 +11,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         #region property
 
+        /// <summary>
+        /// データベース会話処理。
+        /// <para>トランザクション状態は上位で管理。</para>
+        /// </summary>
         IDatabaseContext Context { get; }
+        /// <summary>
+        ///データベース実装依存。
+        /// </summary>
         IDatabaseImplementation Implementation { get; }
 
         #endregion
