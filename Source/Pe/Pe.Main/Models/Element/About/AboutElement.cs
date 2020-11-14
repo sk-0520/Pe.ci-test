@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 {
-    public class AboutElement : ElementBase
+    public class AboutElement: ElementBase
     {
         public AboutElement(EnvironmentParameters environmentParameters, IClipboardManager clipboardManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
@@ -34,8 +34,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 
         private List<AboutComponentItem> ComponentsImpl { get; } = new List<AboutComponentItem>();
         public IReadOnlyList<AboutComponentItem> Components => ComponentsImpl;
-
-        public UninstallTarget UninstallTargets { get; internal set; }
 
         #endregion
 
@@ -146,6 +144,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
             ComponentsImpl.AddRange(GetApplicationItems());
             ComponentsImpl.AddRange(ToItems(AboutComponentKind.Library, components.Library));
             ComponentsImpl.AddRange(ToItems(AboutComponentKind.Resource, components.Resource));
+        }
+
+        public bool CheckCreateUninstallBatch(string uninstallBatchFilePath, UninstallTarget uninstallTargets)
+        {
+            if(uninstallTargets == UninstallTarget.None) {
+                return false;
+            }
+
+            if(string.IsNullOrWhiteSpace(uninstallBatchFilePath)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool CreateUninstallBatch(string uninstallBatchFilePath, UninstallTarget uninstallTargets)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

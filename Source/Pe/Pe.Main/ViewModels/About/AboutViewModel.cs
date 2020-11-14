@@ -8,7 +8,9 @@ using System.Text;
 using System.Windows.Data;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.About;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
@@ -19,6 +21,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
 {
     public class AboutViewModel: ElementViewModelBase<AboutElement>
     {
+        #region variable
+
+        string _uninstallBatchFilePath = string.Empty;
+
+        #endregion
+
         public AboutViewModel(AboutElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
@@ -31,30 +39,38 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
         #region property
 
         public RequestSender CloseRequest { get; } = new RequestSender();
+        public RequestSender FileSelectRequest { get; } = new RequestSender();
+
         ObservableCollection<AboutComponentItemViewModel> ComponentCollection { get; }
         public ICollectionView ComponentItems { get; }
 
+        private UninstallTarget UninstallTargets { get; set; }
+        public string UninstallBatchFilePath
+        {
+            get => this._uninstallBatchFilePath;
+            set => SetProperty(ref this._uninstallBatchFilePath, value);
+        }
+
         public bool UninstallTargetUser
         {
-            get => Model.UninstallTargets.HasFlag(UninstallTarget.User);
+            get => UninstallTargets.HasFlag(UninstallTarget.User);
             set => ChangeUninstallTarget(UninstallTarget.User, value);
         }
         public bool UninstallTargetMachine
         {
-            get => Model.UninstallTargets.HasFlag(UninstallTarget.Machine);
+            get => UninstallTargets.HasFlag(UninstallTarget.Machine);
             set => ChangeUninstallTarget(UninstallTarget.Machine, value);
         }
         public bool UninstallTargetTemporary
         {
-            get => Model.UninstallTargets.HasFlag(UninstallTarget.Temporary);
+            get => UninstallTargets.HasFlag(UninstallTarget.Temporary);
             set => ChangeUninstallTarget(UninstallTarget.Temporary, value);
         }
         public bool UninstallTargetApplication
         {
-            get => Model.UninstallTargets.HasFlag(UninstallTarget.Application);
+            get => UninstallTargets.HasFlag(UninstallTarget.Application);
             set => ChangeUninstallTarget(UninstallTarget.Application, value);
         }
-
 
         #endregion
 
@@ -113,6 +129,37 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
             }
         ));
 
+        public ICommand SelectUninstallBatchFilePathCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 var dialogRequester = new DialogRequester(LoggerFactory);
+                 dialogRequester.SelectFile(
+                     FileSelectRequest,
+                     string.Empty,
+                     false,
+                     new[] {
+                        new DialogFilterItem("bat", "bat", "*.bat"),
+                     },
+                     r => {
+                         var path = r.ResponseFilePaths[0];
+                         try {
+                             UninstallBatchFilePath = path;
+                         } catch(Exception ex) {
+                             Logger.LogError(ex, ex.Message);
+                         }
+                     }
+                 );
+             }
+         ));
+
+        public ICommand CreateUninstallBatchCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                if(Model.CheckCreateUninstallBatch(UninstallBatchFilePath, UninstallTargets)) {
+                    Model.CreateUninstallBatch(UninstallBatchFilePath, UninstallTargets);
+                }
+            }
+        ));
+
+
         #endregion
 
         #region function
@@ -120,9 +167,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
         void ChangeUninstallTarget(UninstallTarget uninstallTarget, bool isEnabled, [CallerMemberName] string callerMemberName = "")
         {
             if(isEnabled) {
-                Model.UninstallTargets |= uninstallTarget;
+                UninstallTargets |= uninstallTarget;
             } else {
-                Model.UninstallTargets &= ~uninstallTarget;
+                UninstallTargets &= ~uninstallTarget;
             }
 
             RaisePropertyChanged(callerMemberName);
