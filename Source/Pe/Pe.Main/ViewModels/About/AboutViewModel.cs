@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Data;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.About;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
@@ -15,7 +17,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.About
 {
-    public class AboutViewModel : ElementViewModelBase<AboutElement>
+    public class AboutViewModel: ElementViewModelBase<AboutElement>
     {
         public AboutViewModel(AboutElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
@@ -31,6 +33,28 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
         public RequestSender CloseRequest { get; } = new RequestSender();
         ObservableCollection<AboutComponentItemViewModel> ComponentCollection { get; }
         public ICollectionView ComponentItems { get; }
+
+        public bool UninstallTargetUser
+        {
+            get => Model.UninstallTargets.HasFlag(UninstallTarget.User);
+            set => ChangeUninstallTarget(UninstallTarget.User, value);
+        }
+        public bool UninstallTargetMachine
+        {
+            get => Model.UninstallTargets.HasFlag(UninstallTarget.Machine);
+            set => ChangeUninstallTarget(UninstallTarget.Machine, value);
+        }
+        public bool UninstallTargetTemporary
+        {
+            get => Model.UninstallTargets.HasFlag(UninstallTarget.Temporary);
+            set => ChangeUninstallTarget(UninstallTarget.Temporary, value);
+        }
+        public bool UninstallTargetApplication
+        {
+            get => Model.UninstallTargets.HasFlag(UninstallTarget.Application);
+            set => ChangeUninstallTarget(UninstallTarget.Application, value);
+        }
+
 
         #endregion
 
@@ -92,6 +116,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
         #endregion
 
         #region function
+
+        void ChangeUninstallTarget(UninstallTarget uninstallTarget, bool isEnabled, [CallerMemberName] string callerMemberName = "")
+        {
+            if(isEnabled) {
+                Model.UninstallTargets |= uninstallTarget;
+            } else {
+                Model.UninstallTargets &= ~uninstallTarget;
+            }
+
+            RaisePropertyChanged(callerMemberName);
+        }
 
         #endregion
     }

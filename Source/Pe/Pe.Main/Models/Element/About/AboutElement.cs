@@ -35,6 +35,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
         private List<AboutComponentItem> ComponentsImpl { get; } = new List<AboutComponentItem>();
         public IReadOnlyList<AboutComponentItem> Components => ComponentsImpl;
 
+        public UninstallTarget UninstallTargets { get; internal set; }
+
         #endregion
 
         #region function

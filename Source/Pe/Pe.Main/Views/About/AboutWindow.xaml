@@ -192,10 +192,10 @@
 
                   <Label Grid.Column="0" Content="data" />
                   <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" Content="user" />
-                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" Content="machine" />
-                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" Content="temp" />
-                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" Content="app" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetUser}" Content="user" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetMachine}" Content="machine" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetTemporary}" Content="temp" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetApplication}" Content="app" />
                   </StackPanel>
                 </Grid>
 
