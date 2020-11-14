@@ -176,7 +176,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
             FileUtility.MakeFileParentDirectory(uninstallBatchFilePath);
             using(var stream = new FileStream(uninstallBatchFilePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
                 using var writer = new StreamWriter(stream, Encoding.UTF8);
+                writer.WriteLine("echo OFF");
                 writer.WriteLine("chcp 65001");
+                writer.WriteLine();
+
+                var deleteItems = new[] {
+                    new { Target = UninstallTarget.User, Directory = EnvironmentParameters.UserRoamingDirectory },
+                    new { Target = UninstallTarget.Machine, Directory = EnvironmentParameters.MachineDirectory },
+                    new { Target = UninstallTarget.Temporary, Directory = EnvironmentParameters.TemporaryDirectory },
+                    new { Target = UninstallTarget.Application, Directory = EnvironmentParameters.RootDirectory },
+                };
+
+                foreach(var deleteItem in deleteItems.Where(i => uninstallTargets.HasFlag(i.Target))) {
+                    writer.WriteLine("echo [{0}]", deleteItem.Target);
+                    writer.WriteLine("rmdir /S /Q {0}", CommandLine.Escape(deleteItem.Directory.FullName));
+                    writer.WriteLine();
+                }
+
+                if(uninstallTargets.HasFlag(UninstallTarget.Batch)) {
+                    writer.WriteLine("echo [{0}]", UninstallTarget.Batch);
+                    writer.WriteLine("echo {0}", "バッチファイル削除エラーは無視してください");
+                    writer.WriteLine("del /F \"%~f0\"");
+                    writer.WriteLine();
+                }
             }
         }
 

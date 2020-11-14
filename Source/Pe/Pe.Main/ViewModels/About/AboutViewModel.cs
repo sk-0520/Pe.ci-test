@@ -23,11 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
     {
         #region variable
 
-#if DEBUG
-        string _uninstallBatchFilePath = @"X:\a.bat";
-#else
         string _uninstallBatchFilePath = string.Empty;
-#endif
 
         #endregion
 
