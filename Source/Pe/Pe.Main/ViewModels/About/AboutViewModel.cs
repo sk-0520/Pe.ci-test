@@ -23,7 +23,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
     {
         #region variable
 
+#if DEBUG
+        string _uninstallBatchFilePath = @"X:\a.bat";
+#else
         string _uninstallBatchFilePath = string.Empty;
+#endif
 
         #endregion
 
@@ -40,11 +44,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
 
         public RequestSender CloseRequest { get; } = new RequestSender();
         public RequestSender FileSelectRequest { get; } = new RequestSender();
+        public RequestSender ShowMessageRequest { get; } = new RequestSender();
 
         ObservableCollection<AboutComponentItemViewModel> ComponentCollection { get; }
         public ICollectionView ComponentItems { get; }
 
-        private UninstallTarget UninstallTargets { get; set; }
+        /// <summary>
+        /// 削除対象。
+        /// <para>初期値ではユーザーデータを一応残しておく。</para>
+        /// </summary>
+        private UninstallTarget UninstallTargets { get; set; } = UninstallTarget.Application | UninstallTarget.Batch | UninstallTarget.Machine | UninstallTarget.Temporary;
         public string UninstallBatchFilePath
         {
             get => this._uninstallBatchFilePath;
@@ -70,6 +79,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
         {
             get => UninstallTargets.HasFlag(UninstallTarget.Application);
             set => ChangeUninstallTarget(UninstallTarget.Application, value);
+        }
+
+        public bool UninstallTargetBatch
+        {
+            get => UninstallTargets.HasFlag(UninstallTarget.Batch);
+            set => ChangeUninstallTarget(UninstallTarget.Batch, value);
         }
 
         #endregion
@@ -154,7 +169,25 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
         public ICommand CreateUninstallBatchCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 if(Model.CheckCreateUninstallBatch(UninstallBatchFilePath, UninstallTargets)) {
-                    Model.CreateUninstallBatch(UninstallBatchFilePath, UninstallTargets);
+                    try {
+                        Model.CreateUninstallBatch(UninstallBatchFilePath, UninstallTargets);
+                        ShowMessageRequest.Send(new CommonMessageDialogRequestParameter() {
+                            Caption = "uninstall",
+                            Message = "ok",
+                            Button = System.Windows.MessageBoxButton.OK,
+                            DefaultResult = System.Windows.MessageBoxResult.OK,
+                            Icon = System.Windows.MessageBoxImage.Information,
+                        });
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, ex.Message);
+                        ShowMessageRequest.Send(new CommonMessageDialogRequestParameter() {
+                            Caption = "uninstall",
+                            Message = ex.ToString(),
+                            Button = System.Windows.MessageBoxButton.OK,
+                            DefaultResult = System.Windows.MessageBoxResult.OK,
+                            Icon = System.Windows.MessageBoxImage.Error,
+                        });
+                    }
                 }
             }
         ));

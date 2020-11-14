@@ -44,6 +44,13 @@ namespace ContentTypeTextNet.Pe.Main.Views.About
             }
         ));
 
+        public ICommand OpenCommonMessageDialogCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+                var parameter = (CommonMessageDialogRequestParameter)o.Parameter;
+                MessageBox.Show(Window.GetWindow(this), parameter.Message, parameter.Caption, parameter.Button, parameter.Icon, parameter.DefaultResult, parameter.Options);
+            }
+        ));
+
         #endregion
 
     }

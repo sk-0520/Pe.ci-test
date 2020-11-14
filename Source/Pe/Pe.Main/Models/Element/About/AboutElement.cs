@@ -149,19 +149,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
         public bool CheckCreateUninstallBatch(string uninstallBatchFilePath, UninstallTarget uninstallTargets)
         {
             if(uninstallTargets == UninstallTarget.None) {
+                Logger.LogInformation("アンインストール対象未選択");
                 return false;
             }
 
             if(string.IsNullOrWhiteSpace(uninstallBatchFilePath)) {
+                Logger.LogInformation("アンインストールバッチファイルパス未設定");
+                return false;
+            }
+
+            var path = Environment.ExpandEnvironmentVariables(uninstallBatchFilePath);
+            if(Directory.Exists(path)) {
+                Logger.LogInformation("アンインストールバッチファイルパスはディレクトリして存在する: {0}", path);
                 return false;
             }
 
             return true;
         }
 
-        public bool CreateUninstallBatch(string uninstallBatchFilePath, UninstallTarget uninstallTargets)
+        public void CreateUninstallBatch(string uninstallBatchFilePath, UninstallTarget uninstallTargets)
         {
-            throw new NotImplementedException();
+            if(!CheckCreateUninstallBatch(uninstallBatchFilePath, uninstallTargets)) {
+                throw new InvalidOperationException();
+            }
+
+            FileUtility.MakeFileParentDirectory(uninstallBatchFilePath);
+            using(var stream = new FileStream(uninstallBatchFilePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
+                using var writer = new StreamWriter(stream, Encoding.UTF8);
+                writer.WriteLine("chcp 65001");
+            }
         }
 
         #endregion

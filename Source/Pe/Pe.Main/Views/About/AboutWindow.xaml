@@ -31,6 +31,9 @@
     <app_core_view:RequestTrigger SourceObject="{Binding FileSelectRequest}">
       <prism:InvokeCommandAction Command="{Binding FileSelectCommand, ElementName=root}" />
     </app_core_view:RequestTrigger>
+    <app_core_view:RequestTrigger SourceObject="{Binding ShowMessageRequest}">
+      <prism:InvokeCommandAction Command="{Binding OpenCommonMessageDialogCommand, ElementName=root}" />
+    </app_core_view:RequestTrigger>
   </behaviors:Interaction.Triggers>
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -198,6 +201,7 @@
                     <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetUser}" Content="user" />
                     <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetMachine}" Content="machine" />
                     <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetTemporary}" Content="temp" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetBatch}" Content="batch" />
                     <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetApplication}" Content="app" />
                   </StackPanel>
                 </Grid>
@@ -217,7 +221,7 @@
                 </Grid>
 
                 <StackPanel HorizontalAlignment="Right" Margin="{StaticResource AllMargin}">
-                  <Button Command="{Binding MakeUninstallBatchCommand}" Content="make" />
+                  <Button Command="{Binding CreateUninstallBatchCommand}" Content="make" />
                   <TextBlock />
                 </StackPanel>
               </StackPanel>
