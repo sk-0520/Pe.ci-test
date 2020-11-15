@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region function
 
-        public static ValidationResult ValidateCode(string value, ValidationContext context)
+        public static ValidationResult? ValidateCode(string value, ValidationContext context)
         {
             if(string.IsNullOrWhiteSpace(value)) {
                 return new ValidationResult(null);

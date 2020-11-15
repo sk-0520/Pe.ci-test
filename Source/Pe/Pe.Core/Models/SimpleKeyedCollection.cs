@@ -5,7 +5,8 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public class SimpleKeyedCollection<TKey, TValue> : KeyedCollection<TKey, TValue>
+    public sealed class SimpleKeyedCollection<TKey, TValue> : KeyedCollection<TKey, TValue>
+        where TKey : notnull
     {
         public SimpleKeyedCollection(Func<TValue, TKey> toKey)
         {

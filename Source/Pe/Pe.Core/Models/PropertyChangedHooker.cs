@@ -339,12 +339,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             var commands = hookItems
                 .Where(i => i.RaiseCommands != null)
-                .SelectMany(i => i.RaiseCommands)
+                .SelectMany(i => i.RaiseCommands!)
                 .ToList()
             ;
 
             var result = new HookItemCache(
-                hookItems.Where(i => i.RaisePropertyNames != null).SelectMany(i => i.RaisePropertyNames),
+                hookItems.Where(i => i.RaisePropertyNames != null).SelectMany(i => i.RaisePropertyNames!),
                 commands.Where(i => !(i is DelegateCommandBase)),
                 commands.OfType<DelegateCommandBase>(),
                 hookItems.Where(i => i.Callback != null).Select(i => i.Callback)
@@ -432,9 +432,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return property || command || callback;
         }
 
-        public bool Execute(string noifyPropertyName, Action<string> raiser)
+        public bool Execute(string? noifyPropertyName, Action<string> raiser)
         {
             ThrowIfDisposed();
+
+            if(noifyPropertyName == null) {
+                return false;
+            }
 
             if(!Hookers.TryGetValue(noifyPropertyName, out var hookItems)) {
                 return false;

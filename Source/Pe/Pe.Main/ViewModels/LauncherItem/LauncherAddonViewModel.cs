@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #endregion
 
-        private void Extension_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Extension_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             ExtensionPropertyChangedHooker!.Execute(e, RaisePropertyChanged);
         }

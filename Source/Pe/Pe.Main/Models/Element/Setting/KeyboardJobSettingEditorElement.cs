@@ -61,9 +61,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var keyOptionsEntityDao = new KeyOptionsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var keyMappingsEntityDao = new KeyMappingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var keyOptionsEntityDao = new KeyOptionsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                var keyMappingsEntityDao = new KeyMappingsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
 
                 var options = keyOptionsEntityDao.SelectOptions(KeyActionId);
                 var mappings = keyMappingsEntityDao.SelectMappings(KeyActionId);
@@ -83,11 +83,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
 
-        public void Save(IDatabaseCommander commander, IDatabaseImplementation implementation, IDatabaseCommonStatus commonStatus)
+        public void Save(IDatabaseContext context, IDatabaseImplementation implementation, IDatabaseCommonStatus commonStatus)
         {
-            var keyActionsEntityDao = new KeyActionsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-            var keyOptionsEntityDao = new KeyOptionsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-            var keyMappingsEntityDao = new KeyMappingsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+            var keyActionsEntityDao = new KeyActionsEntityDao(context, DatabaseStatementLoader, implementation, LoggerFactory);
+            var keyOptionsEntityDao = new KeyOptionsEntityDao(context, DatabaseStatementLoader, implementation, LoggerFactory);
+            var keyMappingsEntityDao = new KeyMappingsEntityDao(context, DatabaseStatementLoader, implementation, LoggerFactory);
 
             if(IsNewJob) {
                 keyActionsEntityDao.InsertKeyAction(ActionData, commonStatus);
@@ -109,11 +109,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
-        public void Remove(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        public void Remove(IDatabaseContext context, IDatabaseImplementation implementation)
         {
-            var keyActionsEntityDao = new KeyActionsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-            var keyOptionsEntityDao = new KeyOptionsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-            var keyMappingsEntityDao = new KeyMappingsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+            var keyActionsEntityDao = new KeyActionsEntityDao(context, DatabaseStatementLoader, implementation, LoggerFactory);
+            var keyOptionsEntityDao = new KeyOptionsEntityDao(context, DatabaseStatementLoader, implementation, LoggerFactory);
+            var keyMappingsEntityDao = new KeyMappingsEntityDao(context, DatabaseStatementLoader, implementation, LoggerFactory);
 
             keyMappingsEntityDao.DeleteByKeyActionId(KeyActionId);
             keyOptionsEntityDao.DeleteByKeyActionId(KeyActionId);

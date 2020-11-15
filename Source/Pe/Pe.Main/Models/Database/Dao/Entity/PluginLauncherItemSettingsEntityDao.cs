@@ -28,8 +28,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
-        public PluginLauncherItemSettingsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public PluginLauncherItemSettingsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         public static class Column
@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 PluginSettingKey = key,
             };
 
-            return Commander.QueryFirstOrDefault<bool>(statement, parameter);
+            return Context.QueryFirstOrDefault<bool>(statement, parameter);
         }
 
         public PluginSettingRawValue? SelectPluginLauncherItemValue(Guid pluginId, Guid launcherItemId, string key)
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 PluginSettingKey = key,
             };
 
-            var dto = Commander.QueryFirstOrDefault<PluginLauncherItemSettingDto>(statement, parameter);
+            var dto = Context.QueryFirstOrDefault<PluginLauncherItemSettingDto>(statement, parameter);
             if(dto == null) {
                 return null;
             }
@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, launcherItemId, key, data, databaseCommonStatus);
 
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         internal bool UpdatePluginLauncherItemSetting(Guid pluginId, Guid launcherItemId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, launcherItemId, key, data, databaseCommonStatus);
 
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public bool DeletePluginLauncherItemSetting(Guid pluginId, Guid launcherItemId, string key)
@@ -129,7 +129,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 PluginSettingKey = key,
             };
 
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
+        }
+
+        public int DeletePluginLauncherItemSettingsByPluginId(Guid pluginId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                PluginId = pluginId,
+            };
+
+            return Context.Execute(statement, parameter);
         }
 
         #endregion

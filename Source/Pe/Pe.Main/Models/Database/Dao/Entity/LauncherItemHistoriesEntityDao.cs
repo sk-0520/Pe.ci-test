@@ -11,24 +11,28 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherItemHistoriesEntityDto : CreateDtoBase
-    {
-        #region property
-
-        public Guid LauncherItemId { get; set; }
-        public string Kind { get; set; } = string.Empty;
-        public string Value { get; set; } = string.Empty;
-
-        [DateTimeKind(DateTimeKind.Utc)]
-        public DateTime LastExecuteTimestamp { get; set; }
-
-        #endregion
-    }
-
     public class LauncherItemHistoriesEntityDao : EntityDaoBase
     {
-        public LauncherItemHistoriesEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        private class LauncherItemHistoriesEntityDto: CreateDtoBase
+        {
+            #region property
+
+            public Guid LauncherItemId { get; set; }
+            public string Kind { get; set; } = string.Empty;
+            public string Value { get; set; } = string.Empty;
+
+            [DateTimeKind(DateTimeKind.Utc)]
+            public DateTime LastExecuteTimestamp { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
+        public LauncherItemHistoriesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -68,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Query<LauncherItemHistoriesEntityDto>(statement, parameter)
+            return Context.Query<LauncherItemHistoriesEntityDto>(statement, parameter)
                 .Select(i => ConvertFromDto(i))
             ;
         }
@@ -86,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             commonStatus.WriteCreate(dto);
 
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         public bool DeleteHistory(Guid launcherItemId, LauncherHistoryKind kind, string value)
@@ -100,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
 
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
-            var result = Commander.Execute(statement, dto);
+            var result = Context.Execute(statement, dto);
             if(1 < result) {
                 Logger.LogWarning("削除件数がちょっとあれ: {0}", result);
             }
@@ -113,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new LauncherItemHistoriesEntityDto() {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Execute(statement, parameter);
+            return Context.Execute(statement, parameter);
         }
 
         #endregion

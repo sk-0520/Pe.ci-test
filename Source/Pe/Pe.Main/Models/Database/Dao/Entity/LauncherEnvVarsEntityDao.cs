@@ -9,21 +9,25 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherEnvVarsEntityDto : CommonDtoBase
-    {
-        #region property
-
-        public Guid LauncherItemId { get; set; }
-        public string EnvName { get; set; } = string.Empty;
-        public string EnvValue { get; set; } = string.Empty;
-
-        #endregion
-    }
-
     public class LauncherEnvVarsEntityDao : EntityDaoBase
     {
-        public LauncherEnvVarsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        private class LauncherEnvVarsEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid LauncherItemId { get; set; }
+            public string EnvName { get; set; } = string.Empty;
+            public string EnvValue { get; set; } = string.Empty;
+
+            #endregion
+        }
+
+        #endregion
+
+        public LauncherEnvVarsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -72,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            var result = Commander.Query<LauncherEnvVarsEntityDto>(statement, parameter)
+            var result = Context.Query<LauncherEnvVarsEntityDto>(statement, parameter)
                 .Select(i => ConvertFromDto(i))
             ;
             return result;
@@ -84,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
 
             foreach(var dto in items.Select(i => ConvertFromData(launcherItemId, i, databaseCommonStatus))) {
-                Commander.Execute(statement, dto);
+                Context.Execute(statement, dto);
             }
         }
 
@@ -94,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Execute(statement, parameter);
+            return Context.Execute(statement, parameter);
         }
 
 

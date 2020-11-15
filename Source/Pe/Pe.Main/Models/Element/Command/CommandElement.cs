@@ -32,11 +32,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
     public class CommandElement: ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
-        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, ApplicationConfiguration applicationConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, ApplicationConfiguration applicationConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
-            FileDatabaseBarrier = fileDatabaseBarrier;
+            LargeDatabaseBarrier = largeDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
             MainDatabaseLazyWriter = mainDatabaseLazyWriter;
             OrderManager = orderManager;
@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         #region property
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         IOrderManager OrderManager { get; }
@@ -156,8 +156,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         private void RefreshSetting()
         {
             SettingAppCommandSettingData setting;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var appCommandSettingEntityDao = new AppCommandSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 setting = appCommandSettingEntityDao.SelectSettingCommandSetting();
             }
 

@@ -47,7 +47,7 @@ create table Statements
             });
         }
 
-        void ImportSqlFile(IDatabaseCommander commander, FileInfo sqlFile)
+        void ImportSqlFile(IDatabaseContext context, FileInfo sqlFile)
         {
             var fullName = Path.GetRelativePath(SqlRootDirectory.FullName, sqlFile.FullName);
             var parentDirPath = Path.GetDirectoryName(fullName);
@@ -58,7 +58,7 @@ create table Statements
                 Statement = File.ReadAllText(sqlFile.FullName, Encoding.UTF8),
             };
             Console.WriteLine($"{parameter.Namespace} -> {parameter.ClassName} -> {parameter.MethodName}");
-            commander.Execute(@"
+            context.Execute(@"
 insert into
     Statements
     (

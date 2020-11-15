@@ -149,8 +149,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         protected override void InitializeImpl()
         {
             SettingAppStandardInputOutputSettingData setting;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 setting = appStandardInputOutputSettingEntityDao.SelectSettingStandardInputOutputSetting();
             }
 

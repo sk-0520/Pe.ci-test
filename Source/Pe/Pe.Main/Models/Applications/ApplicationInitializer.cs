@@ -201,7 +201,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             Debug.Assert(commandLine.IsParsed);
 
             var applicationDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var rootDirectoryPath = Path.GetDirectoryName(applicationDirectory);
+            var rootDirectoryPath = Path.GetDirectoryName(applicationDirectory)!;
 
             return new ApplicationEnvironmentParameters(new DirectoryInfo(rootDirectoryPath), commandLine);
         }
@@ -595,19 +595,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     ? userIdManager.CreateFromEnvironment()
                     : string.Empty
                 ;
-                using(var commander = mainDatabaseBarrier.WaitWrite()) {
-                    var appExecuteSettingEntityDao = DiContainer.Build<AppExecuteSettingEntityDao>(commander, commander.Implementation);
+                using(var context = mainDatabaseBarrier.WaitWrite()) {
+                    var appExecuteSettingEntityDao = DiContainer.Build<AppExecuteSettingEntityDao>(context, context.Implementation);
                     appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(userId, acceptResult.IsEnabledTelemetry, DatabaseCommonStatus.CreateCurrentAccount());
 
-                    var appUpdateSettingEntityDao = DiContainer.Build<AppUpdateSettingEntityDao>(commander, commander.Implementation);
+                    var appUpdateSettingEntityDao = DiContainer.Build<AppUpdateSettingEntityDao>(context, context.Implementation);
                     appUpdateSettingEntityDao.UpdateReleaseVersion(acceptResult.UpdateKind, DatabaseCommonStatus.CreateCurrentAccount());
 
-                    commander.Commit();
+                    context.Commit();
                 }
             } else {
                 var mainDatabaseBarrier = DiContainer.Build<IMainDatabaseBarrier>();
-                using(var commander = mainDatabaseBarrier.WaitWrite()) {
-                    var appExecuteSettingEntityDao = DiContainer.Build<AppExecuteSettingEntityDao>(commander, commander.Implementation);
+                using(var context = mainDatabaseBarrier.WaitWrite()) {
+                    var appExecuteSettingEntityDao = DiContainer.Build<AppExecuteSettingEntityDao>(context, context.Implementation);
                     var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
 
                     if(setting.IsEnabledTelemetry) {
@@ -615,11 +615,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                         if(!userIdManager.IsValidUserId(setting.UserId)) {
                             logger.LogInformation("統計情報送信は有効だがユーザーIDが不正のため無効化: {0}", setting.UserId);
                             appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(string.Empty, false, DatabaseCommonStatus.CreateCurrentAccount());
-                            commander.Commit();
+                            context.Commit();
                         }
                     }
 
-                    commander.Commit();
+                    context.Commit();
                 }
             }
 

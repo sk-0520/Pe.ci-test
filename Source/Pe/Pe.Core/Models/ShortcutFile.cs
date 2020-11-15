@@ -87,6 +87,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             get
             {
+                ThrowIfDisposed();
+
                 var resultBuffer = CreateStringBuffer(PathLength);
 
                 ShellLink.Com.GetPath(resultBuffer, resultBuffer.MaxCapacity, out _, SLGP_FLAGS.SLGP_UNCPRIORITY);
@@ -95,6 +97,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
             set
             {
+                ThrowIfDisposed();
+
                 ShellLink.Com.SetPath(value);
             }
         }
@@ -106,6 +110,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             get
             {
+                ThrowIfDisposed();
+
                 var resultBuffer = CreateStringBuffer(ArgumentLength);
 
                 ShellLink.Com.GetArguments(resultBuffer, resultBuffer.Capacity);
@@ -114,6 +120,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
             set
             {
+                ThrowIfDisposed();
+
                 ShellLink.Com.SetArguments(value);
             }
         }
@@ -125,6 +133,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             get
             {
+                ThrowIfDisposed();
+
                 var resultBuffer = CreateStringBuffer(DescriptionLength);
 
                 ShellLink.Com.GetDescription(resultBuffer, resultBuffer.Capacity);
@@ -133,6 +143,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
             set
             {
+                ThrowIfDisposed();
+
                 ShellLink.Com.SetDescription(value);
             }
         }
@@ -144,6 +156,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             get
             {
+                ThrowIfDisposed();
+
                 var resultBuffer = CreateStringBuffer(PathLength);
 
                 ShellLink.Com.GetWorkingDirectory(resultBuffer, resultBuffer.MaxCapacity);
@@ -152,6 +166,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
             set
             {
+                ThrowIfDisposed();
+
                 ShellLink.Com.SetWorkingDirectory(value);
             }
         }
@@ -174,11 +190,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             get
             {
+                ThrowIfDisposed();
+
                 ShellLink.Com.GetShowCmd(out var rawShowCommand);
                 return (SW)rawShowCommand;
             }
             set
             {
+                ThrowIfDisposed();
+
                 ShellLink.Com.SetShowCmd((int)value);
             }
         }
@@ -203,6 +223,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         IconPathData GetIcon()
         {
+            ThrowIfDisposed();
+
             var resultBuffer = CreateStringBuffer(PathLength);
             ShellLink.Com.GetIconLocation(resultBuffer, resultBuffer.Capacity, out var iconIndex);
 
@@ -215,6 +237,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="iconPath"></param>
         void SetIcon(in IconPathData iconPath)
         {
+            ThrowIfDisposed();
+
             ShellLink.Com.SetIconLocation(iconPath.Path, iconPath.Index);
         }
 
@@ -224,6 +248,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="path">保存先ショートカットパス。</param>
         public void Save(string path)
         {
+            ThrowIfDisposed();
+
             PersistFile.Com.Save(path, true);
         }
 

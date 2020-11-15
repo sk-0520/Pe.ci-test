@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     public class ApplicationMainReaderWriterLocker : ApplicationReaderWriterLockerBase
     { }
 
-    public class ApplicationFileReaderWriterLocker : ApplicationReaderWriterLockerBase
+    public class ApplicationLargeReaderWriterLocker : ApplicationReaderWriterLockerBase
     { }
 
     public class ApplicationTemporaryReaderWriterLocker : ApplicationReaderWriterLockerBase

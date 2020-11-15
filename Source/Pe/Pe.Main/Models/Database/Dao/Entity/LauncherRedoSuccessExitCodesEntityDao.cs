@@ -8,20 +8,24 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherRedoSuccessExitCodesDto: CommonDtoBase
-    {
-        #region property
-
-        public Guid LauncherItemId { get; set; }
-        public int SuccessExitCode { get; set; }
-
-        #endregion
-    }
-
     public class LauncherRedoSuccessExitCodesEntityDao : EntityDaoBase
     {
-        public LauncherRedoSuccessExitCodesEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        private class LauncherRedoSuccessExitCodesDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid LauncherItemId { get; set; }
+            public int SuccessExitCode { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
+        public LauncherRedoSuccessExitCodesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -45,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Query<int>(statement, parameter);
+            return Context.Query<int>(statement, parameter);
         }
 
         public int InsertSuccessExitCodes(Guid launcherItemId, IEnumerable<int> successExitCodes, IDatabaseCommonStatus commonStatus)
@@ -59,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             foreach(var code in successExitCodes) {
                 parameter.SuccessExitCode = code;
                 commonStatus.WriteCreate(parameter);
-                var result = Commander.Execute(statement, parameter);
+                var result = Context.Execute(statement, parameter);
                 insertCount += result;
             }
 
@@ -72,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Execute(statement, parameter);
+            return Context.Execute(statement, parameter);
         }
 
 

@@ -142,8 +142,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             }
 
             IReadOnlyList<Guid> ids;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var launcherItemsEntityDao = new LauncherItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 ids = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
             }
 
@@ -160,8 +160,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
             if(FindTag) {
                 var tagItems = new Dictionary<Guid, IReadOnlyCollection<string>>(ids.Count);
-                using(var commander = MainDatabaseBarrier.WaitRead()) {
-                    var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                using(var context = MainDatabaseBarrier.WaitRead()) {
+                    var launcherTagsEntityDao = new LauncherTagsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                     foreach(var id in ids) {
                         var tags = launcherTagsEntityDao.SelectUniqueTags(id).ToHashSet();
                         if(tags.Count != 0) {

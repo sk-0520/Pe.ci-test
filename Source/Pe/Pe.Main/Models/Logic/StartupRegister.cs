@@ -175,6 +175,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return ResultSuccessValue.Failure<StartupParameter>();
         }
 
+        internal string GetStartupFilePath() => StartupFilePath;
+
         #endregion
     }
 }

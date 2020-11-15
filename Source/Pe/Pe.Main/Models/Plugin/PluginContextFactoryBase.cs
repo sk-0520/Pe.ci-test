@@ -66,8 +66,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected DirectoryInfo GetTemporaryDirectory(IPluginIdentifiers pluginIdentifiers) => GetDirectory(pluginIdentifiers, EnvironmentParameters.UserPluginDataDirectory, BaseDirectoryName);
 
 
-        public IDatabaseCommandsPack BarrierRead() => DatabaseBarrierPack.WaitRead();
-        public IDatabaseCommandsPack BarrierWrite() => DatabaseBarrierPack.WaitWrite();
+        public IDatabaseContextsPack BarrierRead() => DatabaseBarrierPack.WaitRead();
+        public IDatabaseContextsPack BarrierWrite() => DatabaseBarrierPack.WaitWrite();
 
         protected virtual PluginFiles CreatePluginFile(IPluginInformations pluginInformations)
         {
@@ -85,15 +85,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// 上流依存DBアクセス処理の生成。
         /// </summary>
         /// <param name="pluginInformations"></param>
-        /// <param name="databaseCommandsPack"></param>
+        /// <param name="databaseContextsPack"></param>
         /// <param name="isReadOnly"></param>
         /// <returns></returns>
-        protected virtual PluginPersistents CrteatePluginPersistentCommander(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
+        protected virtual PluginPersistents CrteatePluginPersistentContext(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
         {
             var pluginPersistent = new PluginPersistents(
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.File, DatabaseStatementLoader, isReadOnly, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.Temporary, DatabaseStatementLoader, isReadOnly, LoggerFactory)
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseContextsPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseContextsPack.Large, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseContextsPack.Temporary, DatabaseStatementLoader, isReadOnly, LoggerFactory)
             );
 
             return pluginPersistent;
@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             var pluginPersistent = new PluginPersistents(
                 new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.File, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Large, DatabaseStatementLoader, isReadOnly, LoggerFactory),
                 new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Temporary, DatabaseStatementLoader, isReadOnly, LoggerFactory)
             );
 
@@ -128,18 +128,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             var pluginPersistent = new PluginPersistents(
                 new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Main, databaseLazyWriterPack.Main, DatabaseStatementLoader, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.File, databaseLazyWriterPack.File, DatabaseStatementLoader, LoggerFactory),
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Large, databaseLazyWriterPack.Large, DatabaseStatementLoader, LoggerFactory),
                 new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Temporary, databaseLazyWriterPack.Temporary, DatabaseStatementLoader, LoggerFactory)
             );
 
             return pluginPersistent;
         }
 
-        protected virtual PluginStorage CreatePluginStorage(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
+        protected virtual PluginStorage CreatePluginStorage(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
         {
             var pluginStorage = new PluginStorage(
                 CreatePluginFile(pluginInformations),
-                CrteatePluginPersistentCommander(pluginInformations, databaseCommandsPack, isReadOnly)
+                CrteatePluginPersistentContext(pluginInformations, databaseContextsPack, isReadOnly)
             );
 
             return pluginStorage;
@@ -167,9 +167,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginStorage;
         }
 
-        public PluginContext CreateContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
+        public PluginContext CreateContext(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
         {
-            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, isReadOnly);
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseContextsPack, isReadOnly);
             return new PluginContext(pluginInformations.PluginIdentifiers, pluginStorage);
         }
 

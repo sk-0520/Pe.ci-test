@@ -24,25 +24,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Tuner
 
         #region TunerBase
 
-        bool ExistsRows(IDatabaseCommander commander)
+        bool ExistsRows(IDatabaseContext context)
         {
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
-            return commander.QuerySingle<bool>(statement, GetCommonDto());
+            return context.QuerySingle<bool>(statement, GetCommonDto());
         }
 
-        int InsertEmptyGroup(IDatabaseCommander commander)
+        int InsertEmptyGroup(IDatabaseContext context)
         {
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
             var param = GetCommonDto();
             param["LauncherGroupId"] = IdFactory.CreateLauncherGroupId();
             param["Name"] = Properties.Resources.String_NewEmptyGroupName;
-            return commander.Execute(statement, param);
+            return context.Execute(statement, param);
         }
 
-        protected override void TuneImpl(IDatabaseCommander commander)
+        protected override void TuneImpl(IDatabaseContext context)
         {
-            if(!ExistsRows(commander)) {
-                InsertEmptyGroup(commander);
+            if(!ExistsRows(context)) {
+                InsertEmptyGroup(context);
             }
         }
 

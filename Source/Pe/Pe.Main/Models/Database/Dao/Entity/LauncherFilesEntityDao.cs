@@ -10,41 +10,47 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherFilesEntityPathDto : DtoBase
+    public class LauncherFilesEntityDao: EntityDaoBase
     {
-        #region property
+        #region define
 
-        Guid LauncherItemId { get; set; }
-        public string File { get; set; } = string.Empty;
-        public string Option { get; set; } = string.Empty;
-        public string WorkDirectory { get; set; } = string.Empty;
+        private class LauncherFilesEntityPathDto: DtoBase
+        {
+            #region property
 
+            Guid LauncherItemId { get; set; }
+            public string File { get; set; } = string.Empty;
+            public string Option { get; set; } = string.Empty;
+            public string WorkDirectory { get; set; } = string.Empty;
+
+
+            #endregion
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed", Justification = "<保留中>")]
+        private class LauncherFilesEntityDto: CommonDtoBase
+        {
+            #region property
+
+            Guid LauncherItemId { get; set; }
+
+            public string File { get; set; } = string.Empty;
+            public string Option { get; set; } = string.Empty;
+            public string WorkDirectory { get; set; } = string.Empty;
+
+
+            public bool IsEnabledCustomEnvVar { get; set; }
+            public bool IsEnabledStandardIo { get; set; }
+            public string StandardIoEncoding { get; set; } = string.Empty;
+            public bool RunAdministrator { get; set; }
+
+            #endregion
+        }
 
         #endregion
-    }
 
-    internal class LauncherFilesEntityDto : CommonDtoBase
-    {
-        #region property
-
-        Guid LauncherItemId { get; set; }
-
-        public string File { get; set; } = string.Empty;
-        public string Option { get; set; } = string.Empty;
-        public string WorkDirectory { get; set; } = string.Empty;
-
-        public bool IsEnabledCustomEnvVar { get; set; }
-        public bool IsEnabledStandardIo { get; set; }
-        public string StandardIoEncoding { get; set; } = string.Empty;
-        public bool RunAdministrator { get; set; }
-
-        #endregion
-    }
-
-    public class LauncherFilesEntityDao : EntityDaoBase
-    {
-        public LauncherFilesEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-         : base(commander, statementLoader, implementation, loggerFactory)
+        public LauncherFilesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+         : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -104,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            var dto = Commander.QuerySingle<LauncherFilesEntityPathDto>(statement, parameter);
+            var dto = Context.QuerySingle<LauncherFilesEntityPathDto>(statement, parameter);
             var data = ConvertFromDto(dto);
             return data;
         }
@@ -115,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            var dto = Commander.QueryFirst<LauncherFilesEntityDto>(statement, parameter);
+            var dto = Context.QueryFirst<LauncherFilesEntityDto>(statement, parameter);
             var data = ConvertFromDto(dto);
             return data;
 
@@ -133,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.WorkDirectory] = data.WorkDirectoryPath;
             param[Column.StandardIoEncoding] = encodingConverter.ToString(EncodingConverter.DefaultStandardInputOutputEncoding);
 
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateCustomizeLauncherFile(Guid launcherItemId, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IDatabaseCommonStatus commonStatus)
@@ -151,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.RunAdministrator] = customParameter.RunAdministrator;
             parameter[Column.LauncherItemId] = launcherItemId;
 
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public bool DeleteFileByLauncherItemId(Guid launcherItemId)
@@ -160,7 +166,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         #endregion

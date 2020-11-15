@@ -17,14 +17,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     /// </summary>
     public abstract class SettingEditorElementBase : ElementBase
     {
-        protected SettingEditorElementBase(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected SettingEditorElementBase(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             SettingNotifyManager = settingNotifyManager;
             ClipboardManager = clipboardManager;
 
             MainDatabaseBarrier = mainDatabaseBarrier;
-            FileDatabaseBarrier = fileDatabaseBarrier;
+            LargeDatabaseBarrier = largeDatabaseBarrier;
             TemporaryDatabaseBarrier = temporaryDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
 
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected IClipboardManager ClipboardManager { get; }
 
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        protected IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        protected ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
         protected ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
         protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
         protected IIdFactory IdFactory { get; }
@@ -68,15 +68,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IsLoaded = true;
         }
 
-        protected abstract void SaveImpl(IDatabaseCommandsPack commandPack);
+        protected abstract void SaveImpl(IDatabaseContextsPack contextsPack);
 
-        public void Save(IDatabaseCommandsPack commandPack)
+        public void Save(IDatabaseContextsPack contextsPack)
         {
             if(!IsLoaded) {
                 throw new InvalidOperationException(nameof(IsLoaded));
             }
 
-            SaveImpl(commandPack);
+            SaveImpl(contextsPack);
         }
 
         protected virtual void ReceiveLauncherItemRemoved(Guid launcherItemId)

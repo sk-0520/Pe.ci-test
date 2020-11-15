@@ -20,8 +20,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherGroupsSettingEditorElement: SettingEditorElementBase
     {
-        public LauncherGroupsSettingEditorElement(ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, databaseStatementLoader, idFactory, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
+        public LauncherGroupsSettingEditorElement(ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, databaseStatementLoader, idFactory, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
         {
             GroupItems = allLauncherGroups;
         }
@@ -55,14 +55,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             GroupItems.Remove(targetItem);
 
             // DB から物理削除
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var launcherGroupsEntityDao = new LauncherGroupsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var launcherGroupItemsEntityDao = new LauncherGroupItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitWrite()) {
+                var launcherGroupsEntityDao = new LauncherGroupsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                var launcherGroupItemsEntityDao = new LauncherGroupItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
 
                 launcherGroupItemsEntityDao.DeleteGroupItemsByLauncherGroupId(targetItem.LauncherGroupId);
                 launcherGroupsEntityDao.DeleteGroup(targetItem.LauncherGroupId);
 
-                commander.Commit();
+                context.Commit();
             }
 
             targetItem.Dispose();
@@ -75,13 +75,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
             var groupData = launcherFactory.CreateGroupData(newGroupName, kind);
 
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var launcherGroupsDao = new LauncherGroupsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitWrite()) {
+                var launcherGroupsDao = new LauncherGroupsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 //var groupStep = launcherFactory.GroupItemStep;
                 //var sequence = launcherGroupsDao.SelectMaxSequence() + groupStep;
                 launcherGroupsDao.InsertNewGroup(groupData, DatabaseCommonStatus.CreateCurrentAccount());
 
-                commander.Commit();
+                context.Commit();
             }
 
             var group = new LauncherGroupSettingEditorElement(groupData.LauncherGroupId, MainDatabaseBarrier, DatabaseStatementLoader, IdFactory, LoggerFactory);
@@ -101,8 +101,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             IReadOnlyList<Guid> launcherItemIds;
             //IReadOnlyList<Guid> groupIds;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var launcherItemsEntityDao = new LauncherItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 launcherItemIds = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
 
                 //var launcherGroupsEntityDao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //}
         }
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
             foreach(var group in GroupItems.Counting()) {
@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             foreach(var group in GroupItems) {
-                group.Save(commandPack);
+                group.Save(contextsPack);
             }
         }
 

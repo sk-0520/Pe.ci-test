@@ -25,26 +25,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         /// </summary>
         public override Version Version { get; } = new Version(99, 99, 99);
 
-        public override void ExecuteMainDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
+        public override void ExecuteMainDDL(IDatabaseContext context, IReadOnlySetupDto dto)
         { }
 
-        public override void ExecuteMainDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
+        public override void ExecuteMainDML(IDatabaseContext context, IReadOnlySetupDto dto)
         {
-            ExecuteStatement(commander, StatementLoader.LoadStatementByCurrent(GetType()), dto);
+            ExecuteStatement(context, StatementLoader.LoadStatementByCurrent(GetType()), dto);
         }
 
-        public override void ExecuteFileDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
+        public override void ExecuteFileDDL(IDatabaseContext context, IReadOnlySetupDto dto)
         { }
 
-        public override void ExecuteFileDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
+        public override void ExecuteFileDML(IDatabaseContext context, IReadOnlySetupDto dto)
         {
         }
 
-        public override void ExecuteTemporaryDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
+        public override void ExecuteTemporaryDDL(IDatabaseContext context, IReadOnlySetupDto dto)
         {
         }
 
-        public override void ExecuteTemporaryDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
+        public override void ExecuteTemporaryDML(IDatabaseContext context, IReadOnlySetupDto dto)
         {
         }
 

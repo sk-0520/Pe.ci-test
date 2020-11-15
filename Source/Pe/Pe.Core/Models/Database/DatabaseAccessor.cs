@@ -12,15 +12,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
     /// <summary>
     /// データ読み込みを担当。
-    /// <para>データが変更されるかはDBMS次第(シーケンスとか知らんし)</para>
+    /// <para>データが変更されるかはDBMS依存となる。シーケンスやファンクション呼び出し・トリガーなどの実装は<see cref="IDatabaseReader"/>からは判定不可。</para>
     /// </summary>
     public interface IDatabaseReader
     {
+        #region function
+
         /// <summary>
         /// 指定の型で問い合わせ。
         /// </summary>
         /// <typeparam name="T">問い合わせ型</typeparam>
-        /// <param name="statement">データベース文。</parameter>
+        /// <param name="statement">データベース問い合わせ文。</parameter>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</parameter>
         /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</parameter>
         /// <returns></returns>
@@ -28,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <summary>
         /// 動的型で問い合わせ。
         /// </summary>
-        /// <param name="statement">データベース文。</param>
+        /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</parameter>
         /// <returns></returns>
@@ -69,33 +71,40 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="parameter"></param>
         /// <returns></returns>
         DataTable GetDataTable(string statement, object? parameter = null);
+
+        #endregion
     }
 
     /// <summary>
     /// データ書き込みを担当。
-    /// <para>それが実際に書き込んでいるのかはDBMS次第。</para>
+    /// <para>それが実際に書き込んでいるのかはDBMS依存。</para>
     /// </summary>
     public interface IDatabaseWriter
     {
+        #region function
+
         /// <summary>
         /// insert, update, delete, select(sequence) 的なデータ変動するやつを実行。
         /// </summary>
-        /// <param name="statement">データベース文。</parameter>
+        /// <param name="statement">データベース問い合わせ文。</parameter>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</parameter>
-        /// <returns>影響行数。</returns>
+        /// <returns>影響行数。自動採番値の取得はDBMS依存となる。</returns>
         int Execute(string statement, object? parameter = null);
+
+        #endregion
     }
 
     /// <summary>
     /// データベースとの会話用インターフェイス。
+    /// <para><see cref="IDatabaseReader"/>, <see cref="IDatabaseWriter"/>による明確な分離状態で処理するのは現実的でないため本IFで統合して扱う。</para>
     /// </summary>
-    public interface IDatabaseCommander: IDatabaseReader, IDatabaseWriter
+    public interface IDatabaseContext: IDatabaseReader, IDatabaseWriter
     { }
 
     /// <summary>
     /// DBアクセス処理。
     /// </summary>
-    public interface IDatabaseAccessor: IDatabaseCommander
+    public interface IDatabaseAccessor: IDatabaseContext
     {
         #region property
 
@@ -116,7 +125,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 一時的に切断状態へ遷移。
         /// <para><see cref="IDisposable.Dispose()"/>が完了するまでの間接続できない状態になる。</para>
         /// </summary>
-        /// <returns></returns>
+        /// <returns>切断状態終了のトリガー。 GC 任せにせず明示的に <see cref="IDisposable.Dispose()"/> すること。</returns>
         IDisposable PauseConnection();
 
         /// <inheritdoc cref="IDatabaseReader.Query{T}(string, object?, bool)"/>
@@ -155,8 +164,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         IDatabaseTransaction BeginReadOnlyTransaction(IsolationLevel isolationLevel);
 
-        /// <inheritdoc cref="Batch(Func{IDatabaseCommander, bool}, IsolationLevel)"/>
-        IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor);
+        /// <inheritdoc cref="Batch(Func{IDatabaseContext, bool}, IsolationLevel)"/>
+        IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor);
         /// <summary>
         /// バッチ処理の実行。
         /// <para>処理成功時に自動的にコミットされる。</para>
@@ -164,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="executor">処理内容。</param>
         /// <param name="isolationLevel"></param>
         /// <returns>処理実行結果。</returns>
-        IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor, IsolationLevel isolationLevel);
+        IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor, IsolationLevel isolationLevel);
 
         #endregion
     }
@@ -214,6 +223,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region function
 
+        /// <summary>
+        /// DB接続を開く。
+        /// </summary>
+        /// <returns></returns>
         IDbConnection OpenConnection()
         {
             if(ConnectionPausing) {
@@ -230,7 +243,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return con;
         }
 
-        protected virtual IResultFailureValue<Exception> BatchImpl(Func<IDatabaseTransaction> transactionCreator, Func<IDatabaseCommander, bool> function)
+        protected virtual IResultFailureValue<Exception> BatchImpl(Func<IDatabaseTransaction> transactionCreator, Func<IDatabaseContext, bool> function)
         {
             ThrowIfDisposed();
 
@@ -463,14 +476,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
 
-        public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor)
+        public IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor)
         {
             ThrowIfDisposed();
 
             return BatchImpl(() => new DatabaseTransaction(this), executor);
         }
 
-        public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor, IsolationLevel isolationLevel)
+        public IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor, IsolationLevel isolationLevel)
         {
             ThrowIfDisposed();
 

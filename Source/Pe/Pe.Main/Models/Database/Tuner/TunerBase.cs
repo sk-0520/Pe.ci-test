@@ -33,11 +33,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Tuner
             return new Dictionary<string, object>(TuneCommonDtoSource);
         }
 
-        protected abstract void TuneImpl(IDatabaseCommander commander);
+        protected abstract void TuneImpl(IDatabaseContext context);
 
-        public void Tune(IDatabaseCommander commander)
+        public void Tune(IDatabaseContext context)
         {
-            TuneImpl(commander);
+            TuneImpl(context);
         }
 
         #endregion

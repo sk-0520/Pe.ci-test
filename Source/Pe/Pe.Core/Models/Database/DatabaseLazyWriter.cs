@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
-    class LazyStockItem
+    internal class LazyStockItem
     {
         public LazyStockItem(Action<IDatabaseTransaction> action)
         {

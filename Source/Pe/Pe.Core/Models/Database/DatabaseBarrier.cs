@@ -142,14 +142,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public static TResult ReadData<TResult>(this IDatabaseBarrier @this, Func<IDatabaseTransaction, TResult> func)
         {
-            using var commander = @this.WaitRead();
-            return func(commander);
+            using var transaction = @this.WaitRead();
+            return func(transaction);
         }
 
         public static TResult ReadData<TArgument, TResult>(this IDatabaseBarrier @this, Func<IDatabaseTransaction, TArgument, TResult> func, TArgument argument)
         {
-            using var commander = @this.WaitRead();
-            return func(commander, argument);
+            using var transaction = @this.WaitRead();
+            return func(transaction, argument);
         }
 
         #endregion
@@ -183,8 +183,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         public virtual IDatabaseTransaction WaitWrite()
         {
             var locker = Locker.WaitWriteByDefaultTimeout();
-            var commander = Accessor.BeginTransaction();
-            var result = new DatabaseBarrierTransaction(locker, commander, Accessor.DatabaseFactory.CreateImplementation());
+            var transaction = Accessor.BeginTransaction();
+            var result = new DatabaseBarrierTransaction(locker, transaction, Accessor.DatabaseFactory.CreateImplementation());
             return result;
         }
 
@@ -196,8 +196,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         public virtual IDatabaseTransaction WaitRead()
         {
             var locker = Locker.WaitReadByDefaultTimeout();
-            var commander = Accessor.BeginReadOnlyTransaction();
-            var result = new DatabaseBarrierTransaction(locker, commander, Accessor.DatabaseFactory.CreateImplementation());
+            var transaction = Accessor.BeginReadOnlyTransaction();
+            var result = new DatabaseBarrierTransaction(locker, transaction, Accessor.DatabaseFactory.CreateImplementation());
             return result;
         }
 

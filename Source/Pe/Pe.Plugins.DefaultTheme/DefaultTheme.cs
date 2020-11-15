@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
         #region define
 
         public static readonly PluginInformations Informations = new PluginInformations(
-            new PluginIdentifiers(new Guid("4524FC23-EBB9-4C79-A26B-8F472C05095E"), "default-theme"),
+            new PluginIdentifiers(new Guid("4524FC23-EBB9-4C79-A26B-8F472C05095E"), "Pe.Plugins.DefaultTheme"),
             new PluginVersions(Assembly.GetExecutingAssembly()!.GetName()!.Version!, new Version(0, 0, 0), new Version(0, 0, 0)),
             new PluginAuthors(new Author("sk"), PluginLicense.DoWhatTheF_ckYouWantToPublicLicense2),
             new PluginCategory(PluginCategories.Design)

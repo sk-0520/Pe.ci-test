@@ -24,37 +24,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public abstract class GeneralSettingEditorElementBase: ElementBase
     {
-        protected GeneralSettingEditorElementBase(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        protected GeneralSettingEditorElementBase(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
-            FileDatabaseBarrier = fileDatabaseBarrier;
+            LargeDatabaseBarrier = largeDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
         }
 
         #region property
 
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        protected IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        protected ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
         protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
         #endregion
 
         #region function
 
-        public void Save(IDatabaseCommandsPack commandPack)
+        public void Save(IDatabaseContextsPack contextsPack)
         {
-            SaveImpl(commandPack);
+            SaveImpl(contextsPack);
         }
 
-        protected abstract void SaveImpl(IDatabaseCommandsPack commandPack);
+        protected abstract void SaveImpl(IDatabaseContextsPack contextsPack);
 
         #endregion
     }
 
     public class AppExecuteSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppExecuteSettingEditorElement(EnvironmentParameters environmentParameters, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppExecuteSettingEditorElement(EnvironmentParameters environmentParameters, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {
             EnvironmentParameters = environmentParameters;
         }
@@ -88,8 +88,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
             SettingAppExecuteSettingData setting;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
             }
 
@@ -102,14 +102,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
-            var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(commandPack.Main.Commander, DatabaseStatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppExecuteSettingData() {
                 IsEnabledTelemetry = IsEnabledTelemetry,
                 UserId = UserId,
             };
-            appExecuteSettingEntityDao.UpdateSettingExecuteSetting(data, commandPack.CommonStatus);
+            appExecuteSettingEntityDao.UpdateSettingExecuteSetting(data, contextsPack.CommonStatus);
         }
 
         #endregion
@@ -118,8 +118,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppGeneralSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppGeneralSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IReadOnlyList<IPlugin> themePlugins, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppGeneralSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IReadOnlyList<IPlugin> themePlugins, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {
             ThemePlugins = themePlugins;
         }
@@ -148,8 +148,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
             SettingAppGeneralSettingData setting;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appGeneralSettingEntityDao = new AppGeneralSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var appGeneralSettingEntityDao = new AppGeneralSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 setting = appGeneralSettingEntityDao.SelectSettingGeneralSetting();
             }
 
@@ -175,15 +175,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
-            var appGeneralSettingEntityDao = new AppGeneralSettingEntityDao(commandPack.Main.Commander, DatabaseStatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var appGeneralSettingEntityDao = new AppGeneralSettingEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppGeneralSettingData() {
                 Language = CultureInfo.Name,
                 UserBackupDirectoryPath = UserBackupDirectoryPath,
                 ThemePluginId = ThemePluginId,
             };
-            appGeneralSettingEntityDao.UpdateSettingGeneralSetting(data, commandPack.CommonStatus);
+            appGeneralSettingEntityDao.UpdateSettingGeneralSetting(data, contextsPack.CommonStatus);
 
             var startupRegister = new StartupRegister(LoggerFactory);
             if(IsRegisterStartup) {
@@ -204,8 +204,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppUpdateSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppUpdateSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppUpdateSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         { }
 
         #region property
@@ -222,21 +222,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
             SettingAppUpdateSettingData setting;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appUpdateSettingEntityDao = new AppUpdateSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var appUpdateSettingEntityDao = new AppUpdateSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 setting = appUpdateSettingEntityDao.SelectSettingUpdateSetting();
             }
 
             UpdateKind = setting.UpdateKind;
         }
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
-            var appUpdateSettingEntityDao = new AppUpdateSettingEntityDao(commandPack.Main.Commander, DatabaseStatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var appUpdateSettingEntityDao = new AppUpdateSettingEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppUpdateSettingData() {
                 UpdateKind = UpdateKind,
             };
-            appUpdateSettingEntityDao.UpdateSettingUpdateSetting(data, commandPack.CommonStatus);
+            appUpdateSettingEntityDao.UpdateSettingUpdateSetting(data, contextsPack.CommonStatus);
         }
 
         #endregion
@@ -244,8 +244,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppNotifyLogSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppNotifyLogSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppNotifyLogSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         { }
 
         #region property
@@ -271,14 +271,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Position = setting.Position;
         }
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
-            var appNotifyLogSettingEntityDao = new AppNotifyLogSettingEntityDao(commandPack.Main.Commander, DatabaseStatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var appNotifyLogSettingEntityDao = new AppNotifyLogSettingEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppNotifyLogSettingData() {
                 IsVisible = IsVisible,
                 Position = Position,
             };
-            appNotifyLogSettingEntityDao.UpdateSettingNotifyLogSetting(data, commandPack.CommonStatus);
+            appNotifyLogSettingEntityDao.UpdateSettingNotifyLogSetting(data, contextsPack.CommonStatus);
         }
 
         #endregion
@@ -286,8 +286,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppLauncherToolbarSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppLauncherToolbarSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppLauncherToolbarSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         { }
 
         #region property
@@ -313,15 +313,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             GroupMenuPosition = setting.GroupMenuPosition;
         }
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
-            var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(commandPack.Main.Commander, DatabaseStatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
             var data = new AppLauncherToolbarSettingData() {
                 ContentDropMode = ContentDropMode,
                 GroupMenuPosition = GroupMenuPosition,
             };
 
-            appLauncherToolbarSettingEntityDao.UpdateSettingLauncherToolbarSetting(data, commandPack.CommonStatus);
+            appLauncherToolbarSettingEntityDao.UpdateSettingLauncherToolbarSetting(data, contextsPack.CommonStatus);
         }
 
         #endregion
@@ -330,8 +330,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppCommandSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppCommandSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppCommandSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         { }
 
         #region property
@@ -353,8 +353,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
             SettingAppCommandSettingData setting;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var appCommandSettingEntityDao = new AppCommandSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 setting = appCommandSettingEntityDao.SelectSettingCommandSetting();
             }
 
@@ -367,11 +367,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             FindTag = setting.FindTag;
         }
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
             Debug.Assert(Font != null);
 
-            var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commandPack.Main.Commander, DatabaseStatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var appCommandSettingEntityDao = new AppCommandSettingEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppCommandSettingData() {
                 FontId = Font.FontId,
                 IconBox = IconBox,
@@ -379,10 +379,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 HideWaitTime = HideWaitTime,
                 FindTag = FindTag,
             };
-            appCommandSettingEntityDao.UpdateSettingCommandSetting(data, commandPack.CommonStatus);
+            appCommandSettingEntityDao.UpdateSettingCommandSetting(data, contextsPack.CommonStatus);
 
-            var fontsEntityDao = new FontsEntityDao(commandPack.Main.Commander, DatabaseStatementLoader, commandPack.Main.Implementation, LoggerFactory);
-            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commandPack.CommonStatus);
+            var fontsEntityDao = new FontsEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
+            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, contextsPack.CommonStatus);
 
         }
 
@@ -404,8 +404,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppNoteSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppNoteSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppNoteSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         { }
 
         #region property
@@ -428,8 +428,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
             SettingAppNoteSettingData setting;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appNoteSettingEntityDao = new AppNoteSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var appNoteSettingEntityDao = new AppNoteSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 setting = appNoteSettingEntityDao.SelectSettingNoteSetting();
             }
 
@@ -444,11 +444,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             CaptionPosition = setting.CaptionPosition;
         }
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
             Debug.Assert(Font != null);
 
-            var appNoteSettingEntityDao = new AppNoteSettingEntityDao(commandPack.Main.Commander, DatabaseStatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var appNoteSettingEntityDao = new AppNoteSettingEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppNoteSettingData() {
                 FontId = Font.FontId,
                 TitleKind = TitleKind,
@@ -458,10 +458,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 IsTopmost = IsTopmost,
                 CaptionPosition = CaptionPosition,
             };
-            appNoteSettingEntityDao.UpdateSettingNoteSetting(data, commandPack.CommonStatus);
+            appNoteSettingEntityDao.UpdateSettingNoteSetting(data, contextsPack.CommonStatus);
 
-            var fontsEntityDao = new FontsEntityDao(commandPack.Main.Commander, DatabaseStatementLoader, commandPack.Main.Implementation, LoggerFactory);
-            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commandPack.CommonStatus);
+            var fontsEntityDao = new FontsEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
+            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, contextsPack.CommonStatus);
 
         }
 
@@ -483,8 +483,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppStandardInputOutputSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppStandardInputOutputSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public AppStandardInputOutputSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
         { }
 
         #region property
@@ -506,8 +506,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
             SettingAppStandardInputOutputSettingData setting;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 setting = appStandardInputOutputSettingEntityDao.SelectSettingStandardInputOutputSetting();
             }
 
@@ -521,11 +521,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IsTopmost = setting.IsTopmost;
         }
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
             Debug.Assert(Font != null);
 
-            var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(commandPack.Main.Commander, DatabaseStatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppStandardInputOutputSettingData() {
                 FontId = Font.FontId,
                 OutputForegroundColor = OutputForegroundColor,
@@ -534,10 +534,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 ErrorBackgroundColor = ErrorBackgroundColor,
                 IsTopmost = IsTopmost,
             };
-            appStandardInputOutputSettingEntityDao.UpdateSettingStandardInputOutputSetting(data, commandPack.CommonStatus);
+            appStandardInputOutputSettingEntityDao.UpdateSettingStandardInputOutputSetting(data, contextsPack.CommonStatus);
 
-            var fontsEntityDao = new FontsEntityDao(commandPack.Main.Commander, DatabaseStatementLoader, commandPack.Main.Implementation, LoggerFactory);
-            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commandPack.CommonStatus);
+            var fontsEntityDao = new FontsEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
+            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, contextsPack.CommonStatus);
 
         }
 

@@ -9,21 +9,25 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class KeyOptionsEntityDto : CreateDtoBase
-    {
-        #region property
-
-        public Guid KeyActionId { get; set; }
-        public string KeyOptionName { get; set; } = string.Empty;
-        public string KeyOptionValue { get; set; } = string.Empty;
-
-        #endregion
-    }
-
     public class KeyOptionsEntityDao : EntityDaoBase
     {
-        public KeyOptionsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        private class KeyOptionsEntityDto: CreateDtoBase
+        {
+            #region property
+
+            public Guid KeyActionId { get; set; }
+            public string KeyOptionName { get; set; } = string.Empty;
+            public string KeyOptionValue { get; set; } = string.Empty;
+
+            #endregion
+        }
+
+        #endregion
+
+        public KeyOptionsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -49,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 KeyActionId = keyActionId,
             };
-            return Commander.Query<KeyOptionsEntityDto>(statement, parameter)
+            return Context.Query<KeyOptionsEntityDto>(statement, parameter)
                 .Select(i => KeyValuePair.Create(i.KeyOptionName, i.KeyOptionValue))
             ;
         }
@@ -61,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.KeyActionId] = keyActionId;
             parameter[Column.KeyOptionName] = name;
             parameter[Column.KeyOptionValue] = value;
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
 
@@ -71,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 KeyActionId = keyActionId,
             };
-            return Commander.Execute(statement, parameter);
+            return Context.Execute(statement, parameter);
         }
 
         #endregion

@@ -11,25 +11,29 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class KeyMappingsEntityDto : CreateDtoBase
-    {
-        #region property
-
-        public Guid KeyActionId { get; set; }
-        public long Sequence { get; set; }
-
-        public string Key { get; set; } = string.Empty;
-        public string Shift { get; set; } = string.Empty;
-        public string Control { get; set; } = string.Empty;
-        public string Alt { get; set; } = string.Empty;
-        public string Super { get; set; } = string.Empty;
-        #endregion
-    }
-
     public class KeyMappingsEntityDao : EntityDaoBase
     {
-        public KeyMappingsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        private class KeyMappingsEntityDto: CreateDtoBase
+        {
+            #region property
+
+            public Guid KeyActionId { get; set; }
+            public long Sequence { get; set; }
+
+            public string Key { get; set; } = string.Empty;
+            public string Shift { get; set; } = string.Empty;
+            public string Control { get; set; } = string.Empty;
+            public string Alt { get; set; } = string.Empty;
+            public string Super { get; set; } = string.Empty;
+            #endregion
+        }
+
+        #endregion
+
+        public KeyMappingsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -93,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var parameter = new { KeyActionId = keyActionId };
-            return Commander.Query<KeyMappingsEntityDto>(statement, parameter)
+            return Context.Query<KeyMappingsEntityDto>(statement, parameter)
                 .Select(i => ConvertFromDto(i))
             ;
         }
@@ -102,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(keyActionId, mapping, sequence, commonStatus);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         public int DeleteByKeyActionId(Guid keyActionId)
@@ -111,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 KeyActionId = keyActionId,
             };
-            return Commander.Execute(statement, parameter);
+            return Context.Execute(statement, parameter);
         }
 
         #endregion

@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-        private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Model_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(Model.IsLazyLoad) && !Model.IsLazyLoad) {
                 Model.PropertyChanged -= Model_PropertyChanged;

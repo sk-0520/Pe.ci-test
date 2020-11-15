@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// 上流に影響される読み書き。
         /// <para>書き込みは状況により不可。</para>
         /// </summary>
-        Commander,
+        Context,
         /// <summary>
         /// 単独実施する読み書き。
         /// <para>書き込みは状況により不可。</para>
@@ -197,10 +197,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         protected class DatabaseParameter
         {
-            public DatabaseParameter(IDatabaseStatementLoader databaseStatementLoader, IDatabaseCommands databaseCommands, ILoggerFactory loggerFactory)
+            public DatabaseParameter(IDatabaseStatementLoader databaseStatementLoader, IDatabaseContexts databaseContexts, ILoggerFactory loggerFactory)
             {
                 DatabaseStatementLoader = databaseStatementLoader;
-                DatabaseCommands = databaseCommands;
+                DatabaseContexts = databaseContexts;
                 LoggerFactory = loggerFactory;
             }
 
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             public ILoggerFactory LoggerFactory { get; }
             public IDatabaseStatementLoader DatabaseStatementLoader { get; }
-            public IDatabaseCommands DatabaseCommands { get; }
+            public IDatabaseContexts DatabaseContexts { get; }
 
             #endregion
         }
@@ -221,21 +221,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// </summary>
         /// <param name="pluginIdentifiers"></param>
         /// <param name="pluginVersions"></param>
-        /// <param name="databaseCommands"></param>
+        /// <param name="databaseContexts"></param>
         /// <param name="databaseStatementLoader"></param>
         /// <param name="isReadOnly">読み込み専用か。</param>
         /// <param name="loggerFactory"></param>
-        protected PluginPersistentStorageBase(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseCommands databaseCommands, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+        protected PluginPersistentStorageBase(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseContexts databaseContexts, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             PluginIdentifiers = pluginIdentifiers;
             PluginVersions = pluginVersions;
-            DatabaseCommander = databaseCommands.Commander;
-            DatabaseImplementation = databaseCommands.Implementation;
+            DatabaseContext = databaseContexts.Context;
+            DatabaseImplementation = databaseContexts.Implementation;
             IsReadOnly = isReadOnly;
             DatabaseStatementLoader = databaseStatementLoader;
-            Mode = PluginPersistentMode.Commander;
+            Mode = PluginPersistentMode.Context;
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         protected PluginPersistentMode Mode { get; }
         protected IDatabaseImplementation? DatabaseImplementation { get; }
-        protected IDatabaseCommander? DatabaseCommander { get; }
+        protected IDatabaseContext? DatabaseContext { get; }
         protected IDatabaseBarrier? DatabaseBarrier { get; }
         protected IDatabaseLazyWriter? DatabaseLazyWriter { get; }
         protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
@@ -316,11 +316,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected bool ExistsImpl<TParameter>(TParameter parameter, Func<TParameter, DatabaseParameter, bool> func)
         {
             switch(Mode) {
-                case PluginPersistentMode.Commander: {
-                        Debug.Assert(DatabaseCommander != null);
+                case PluginPersistentMode.Context: {
+                        Debug.Assert(DatabaseContext != null);
                         Debug.Assert(DatabaseImplementation != null);
 
-                        return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(DatabaseCommander, DatabaseImplementation), LoggerFactory));
+                        return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(DatabaseContext, DatabaseImplementation), LoggerFactory));
                     }
 
                 case PluginPersistentMode.Barrier:
@@ -333,7 +333,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                         }
 
                         return DatabaseBarrier.ReadData(c => {
-                            return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(c, c.Implementation), LoggerFactory));
+                            return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(c, c.Implementation), LoggerFactory));
                         });
                     }
 
@@ -352,11 +352,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             PluginSettingRawValue? data;
             switch(Mode) {
-                case PluginPersistentMode.Commander: {
-                        Debug.Assert(DatabaseCommander != null);
+                case PluginPersistentMode.Context: {
+                        Debug.Assert(DatabaseContext != null);
                         Debug.Assert(DatabaseImplementation != null);
 
-                        data = func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(DatabaseCommander, DatabaseImplementation), LoggerFactory));
+                        data = func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(DatabaseContext, DatabaseImplementation), LoggerFactory));
                     }
                     break;
 
@@ -370,7 +370,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                         }
 
                         data = DatabaseBarrier.ReadData(c => {
-                            return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(c, c.Implementation), LoggerFactory));
+                            return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(c, c.Implementation), LoggerFactory));
                         });
                     }
                     break;
@@ -408,7 +408,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
                 case PluginPersistentFormat.Json: {
                         try {
-                            value = JsonSerializer.Deserialize<TValue>(data.Value);
+                            value = JsonSerializer.Deserialize<TValue>(data.Value)!;
                             return true;
                         } catch(Exception ex) {
                             Logger.LogError(ex, ex.Message);
@@ -494,20 +494,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             var data = new PluginSettingRawValue(format, textValue);
 
             switch(Mode) {
-                case PluginPersistentMode.Commander: {
-                        Debug.Assert(DatabaseCommander != null);
+                case PluginPersistentMode.Context: {
+                        Debug.Assert(DatabaseContext != null);
                         Debug.Assert(DatabaseImplementation != null);
 
-                        action(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(DatabaseCommander, DatabaseImplementation), LoggerFactory), data);
+                        action(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(DatabaseContext, DatabaseImplementation), LoggerFactory), data);
                     }
                     break;
 
                 case PluginPersistentMode.Barrier: {
                         Debug.Assert(DatabaseBarrier != null);
 
-                        using(var commander = DatabaseBarrier.WaitWrite()) {
-                            action(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(commander, commander.Implementation), LoggerFactory), data);
-                            commander.Commit();
+                        using(var context = DatabaseBarrier.WaitWrite()) {
+                            action(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(context, context.Implementation), LoggerFactory), data);
+                            context.Commit();
                         }
                     }
                     break;
@@ -516,7 +516,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                         Debug.Assert(DatabaseLazyWriter != null);
 
                         DatabaseLazyWriter.Stock(c => {
-                            action(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(c, c.Implementation), LoggerFactory), data);
+                            action(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(c, c.Implementation), LoggerFactory), data);
                         });
                     }
                     break;
@@ -541,19 +541,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             }
 
             switch(Mode) {
-                case PluginPersistentMode.Commander: {
-                        Debug.Assert(DatabaseCommander != null);
+                case PluginPersistentMode.Context: {
+                        Debug.Assert(DatabaseContext != null);
                         Debug.Assert(DatabaseImplementation != null);
 
-                        return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(DatabaseCommander, DatabaseImplementation), LoggerFactory));
+                        return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(DatabaseContext, DatabaseImplementation), LoggerFactory));
                     }
 
                 case PluginPersistentMode.Barrier: {
                         Debug.Assert(DatabaseBarrier != null);
 
-                        using(var commander = DatabaseBarrier.WaitWrite()) {
-                            var result = func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(commander, commander.Implementation), LoggerFactory));
-                            commander.Commit();
+                        using(var context = DatabaseBarrier.WaitWrite()) {
+                            var result = func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(context, context.Implementation), LoggerFactory));
+                            context.Commit();
                             return result;
                         }
                     }
@@ -562,7 +562,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                         Debug.Assert(DatabaseLazyWriter != null);
 
                         DatabaseLazyWriter.Stock(c => {
-                            var result = func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(c, c.Implementation), LoggerFactory));
+                            var result = func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(c, c.Implementation), LoggerFactory));
                             Logger.LogWarning("result = {0}", result);
                         });
                         // 成功したかどうか不明
@@ -586,9 +586,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginPersistentStorage"/>
     public sealed class PluginPersistentStorage: PluginPersistentStorageBase, IPluginPersistentStorage
     {
-        /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseCommands, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseCommands databaseCommands, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
-                   : base(pluginIdentifiers, pluginVersions, databaseCommands, databaseStatementLoader, isReadOnly, loggerFactory)
+        /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseContexts, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseContexts databaseContexts, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+                   : base(pluginIdentifiers, pluginVersions, databaseContexts, databaseStatementLoader, isReadOnly, loggerFactory)
         { }
 
         /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
@@ -616,7 +616,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public bool Exists(string key)
         {
             return ExistsImpl(key, (p, d) => {
-                var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
                 return pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, NormalizeKey(key));
             });
         }
@@ -625,7 +625,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public bool TryGet<TValue>(string key, [MaybeNullWhen(returnValue: false)] out TValue value)
         {
             return TryGetImpl(key, (p, d) => {
-                var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
                 return pluginSettingsEntityDao.SelectPluginSettingValue(PluginId, NormalizeKey(key));
             }, out value);
         }
@@ -634,7 +634,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public bool Set<TValue>(string key, TValue value, PluginPersistentFormat format)
         {
             return SetImpl(value, format, key, (p, d, v) => {
-                var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
                 var normalizedKey = NormalizeKey(p);
                 if(pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, normalizedKey)) {
                     pluginSettingsEntityDao.UpdatePluginSetting(PluginId, normalizedKey, v, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
@@ -650,7 +650,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public bool Delete(string key)
         {
             return DeleteImpl(key, (p, d) => {
-                var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
                 return pluginSettingsEntityDao.DeletePluginSetting(PluginId, NormalizeKey(key));
             });
         }

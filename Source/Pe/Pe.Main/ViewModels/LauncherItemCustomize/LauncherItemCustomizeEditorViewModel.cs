@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-        private void Item_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Item_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             IsChanged = true;
         }

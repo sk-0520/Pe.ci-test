@@ -20,8 +20,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         /// <summary>
         /// プラグインを人が見て判断するための名前。
-        /// <para><see cref="PluginId"/>程ではないが重複しない方針。</para>
-        /// <para>ローカライズは考えなくていい。</para>
+        /// <para>ローカライズ不要。</para>
+        /// <para>手動インストールの場合に、<see cref="PluginId"/> を使用しないディレクトリ名として ASCII 範囲内でかつディレクトリ名として有効な文字のみを使用すること。ディレクトリ名として扱われる場合は重複するとバグる。</para>
         /// </summary>
         string PluginName { get; }
 

@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// データベース実装におけるトランザクション処理。
     /// <para>これが実体化されてればトランザクション中でしょうね。</para>
     /// </summary>
-    public interface IDatabaseTransaction : IDatabaseCommander, IDisposable
+    public interface IDatabaseTransaction : IDatabaseContext, IDisposable
     {
         #region property
 
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
     /// <summary>
     /// トランザクション中の処理をサポート。
-    /// <para>基本的にはユーザーコードでお目にかからない。往々にして<see cref="IDatabaseCommander"/>がすべて上位から良しなに対応する。</para>
+    /// <para>基本的にはユーザーコードでお目にかからない。往々にして<see cref="IDatabaseContext"/>がすべて上位から良しなに対応する。</para>
     /// </summary>
     public class DatabaseTransaction : DisposerBase, IDatabaseTransaction
     {

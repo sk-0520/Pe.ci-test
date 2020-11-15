@@ -11,24 +11,27 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class PluginStateDto: CommonDtoBase
-    {
-        #region property
-
-        public Guid PluginId { get; set; }
-
-        public string Name { get; set; } = string.Empty;
-        public string State { get; set; } = string.Empty;
-
-
-        #endregion
-    }
-
-
     public class PluginsEntityDao: EntityDaoBase
     {
-        public PluginsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        private class PluginStateDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid PluginId { get; set; }
+
+            public string Name { get; set; } = string.Empty;
+            public string State { get; set; } = string.Empty;
+
+
+            #endregion
+        }
+
+        #endregion
+
+        public PluginsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -58,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var dto = new PluginStateDto() {
                 PluginId = data.PluginId,
-                Name = data.Name,
+                Name = data.PluginName,
                 State = pluginStateTransfer.ToString(data.State),
             };
             databaseCommonStatus.WriteCommon(dto);
@@ -72,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var data = new PluginStateData() {
                 PluginId = dto.PluginId,
-                Name = dto.Name,
+                PluginName = dto.Name,
                 State = pluginStateTransfer.ToEnum(dto.State),
             };
 
@@ -82,10 +85,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public IEnumerable<PluginStateData> SelectePlguinStateData()
         {
             var statement = LoadStatement();
-            return Commander
+            return Context
                 .Query<PluginStateDto>(statement)
                 .Select(i => ConvertFromDto(i))
             ;
+        }
+
+        public PluginStateData? SelectePlguinStateDataByPLuginId(Guid pluginId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                PluginId = pluginId
+            };
+            var dto = Context.QueryFirstOrDefault<PluginStateDto>(statement, parameter);
+            if(dto == null) {
+                return null;
+            }
+
+            return ConvertFromDto(dto);
         }
 
         public Version? SelectLastUsePluginVersion(Guid pluginId)
@@ -94,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 PluginId = pluginId
             };
-            return Commander.QueryFirstOrDefault<Version>(statement, parameter);
+            return Context.QueryFirstOrDefault<Version>(statement, parameter);
         }
 
         public bool SelecteExistsPlugin(Guid pluginId)
@@ -103,21 +120,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 PluginId = pluginId
             };
-            return Commander.QueryFirstOrDefault<bool>(statement, parameter);
+            return Context.QueryFirstOrDefault<bool>(statement, parameter);
         }
 
         public bool InsertPluginStateData(PluginStateData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, databaseCommonStatus);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         public bool UpdatePluginStateData(PluginStateData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, databaseCommonStatus);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         public bool UpdatePluginRunningState(Guid pluginId, Version pluginVersion, Version applicationVersio, IDatabaseCommonStatus databaseCommonStatus)
@@ -128,7 +145,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.LastUseTimestamp] = DateTime.UtcNow; // DAO層でまぁいっかぁ
             parameter[Column.LastUsePluginVersion] = pluginVersion;
             parameter[Column.LastUseAppVersion] = applicationVersio;
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
+        }
+
+        public bool DeletePlugin(Guid pluginId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                PluginId = pluginId,
+            };
+
+            return Context.Execute(statement, parameter) == 1;
         }
 
         #endregion

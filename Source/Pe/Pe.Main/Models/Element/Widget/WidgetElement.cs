@@ -154,8 +154,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             window.Topmost = false;
 
             // ウィンドウ位置指定
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(PluginId)) {
                     var setting = pluginWidgetSettingsEntityDao.SelectPluginWidgetSetting(PluginId);
                     var isTopmost = pluginWidgetSettingsEntityDao.SelectPluginWidgetTopmost(PluginId);
@@ -228,14 +228,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
         public void ToggleTopmost()
         {
             var newIsTopmost = !IsTopmost;
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitWrite()) {
+                var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(PluginId)) {
                     pluginWidgetSettingsEntityDao.UpdatePluginWidgetTopmost(PluginId, newIsTopmost, DatabaseCommonStatus.CreatePluginAccount(PluginInformations.PluginIdentifiers, PluginInformations.PluginVersions));
                 } else {
                     pluginWidgetSettingsEntityDao.InsertPluginWidgetTopmost(PluginId, newIsTopmost, DatabaseCommonStatus.CreatePluginAccount(PluginInformations.PluginIdentifiers, PluginInformations.PluginVersions));
                 }
-                commander.Commit();
+                context.Commit();
             }
 
             IsTopmost = newIsTopmost;
@@ -267,14 +267,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             }
 
 
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitWrite()) {
+                var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(PluginId)) {
                     pluginWidgetSettingsEntityDao.UpdatePluginWidgetSetting(PluginId, data, DatabaseCommonStatus.CreatePluginAccount(PluginInformations.PluginIdentifiers, PluginInformations.PluginVersions));
                 } else {
                     pluginWidgetSettingsEntityDao.InsertPluginWidgetSetting(PluginId, data, DatabaseCommonStatus.CreatePluginAccount(PluginInformations.PluginIdentifiers, PluginInformations.PluginVersions));
                 }
-                commander.Commit();
+                context.Commit();
             }
         }
 

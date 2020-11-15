@@ -18,8 +18,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherToobarsSettingEditorElement : SettingEditorElementBase
     {
-        public LauncherToobarsSettingEditorElement(ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, databaseStatementLoader, idFactory, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
+        public LauncherToobarsSettingEditorElement(ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, databaseStatementLoader, idFactory, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
         {
             AllLauncherGroups = allLauncherGroups;
         }
@@ -39,15 +39,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void LoadImpl()
         {
             IReadOnlyList<Guid> launcherToolbarIds;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 var ids = launcherToolbarsEntityDao.SelectAllLauncherToolbarIds();
                 launcherToolbarIds = ids.ToList();
             }
 
             var toolbars = new List<LauncherToobarSettingEditorElement>();
             foreach(var launcherToolbarId in launcherToolbarIds) {
-                var element = new LauncherToobarSettingEditorElement(launcherToolbarId, AllLauncherGroups, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+                var element = new LauncherToobarSettingEditorElement(launcherToolbarId, AllLauncherGroups, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
                 toolbars.Add(element);
             }
 
@@ -76,10 +76,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Toolbars.AddRange(nonActiveToolbars);
         }
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
             foreach(var toolbar in Toolbars) {
-                toolbar.Save(commandPack);
+                toolbar.Save(contextsPack);
             }
         }
 

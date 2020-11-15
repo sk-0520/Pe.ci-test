@@ -12,8 +12,8 @@ branches:
     - ci-test
 install:
   - cmd: dotnet --version
-  - cmd: choco install dotnetcore-sdk
-  - cmd: dotnet --version
+  #- cmd: choco install dotnetcore-sdk
+  #- cmd: dotnet --version
   - ps: Install-Product node 12.18.3
   - cmd: npm -g install npm@6.14.8
   - cmd: npm install

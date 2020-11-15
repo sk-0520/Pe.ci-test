@@ -1,19 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <Platforms>x64;x86</Platforms>
     <UseWPF>true</UseWPF>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <RootNamespace>ContentTypeTextNet.Pe.PInvoke</RootNamespace>
     <Copyright>Copyright © 2014-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Management" Version="4.7.0" />
+    <PackageReference Include="System.Management" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

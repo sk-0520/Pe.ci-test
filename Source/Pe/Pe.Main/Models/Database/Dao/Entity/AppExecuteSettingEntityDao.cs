@@ -11,39 +11,43 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class AppExecuteSettingEntityDto : CommonDtoBase
+    public class AppExecuteSettingEntityDao: EntityDaoBase
     {
-        #region property
-        public bool Accepted { get; set; }
-        public Version? FirstVersion { get; set; }
-        [DateTimeKind(DateTimeKind.Utc)]
-        public DateTime FirstTimestamp { get; set; }
-        public Version? LastVersion { get; set; }
-        [DateTimeKind(DateTimeKind.Utc)]
-        public DateTime LastTimestamp { get; set; }
-        public long ExecuteCount { get; set; }
-        public string UserId { get; set; } = string.Empty;
-        public bool IsEnabledTelemetry { get; set; }
+        #region define
+
+        private class AppExecuteSettingEntityDto: CommonDtoBase
+        {
+            #region property
+            public bool Accepted { get; set; }
+            public Version? FirstVersion { get; set; }
+            [DateTimeKind(DateTimeKind.Utc)]
+            public DateTime FirstTimestamp { get; set; }
+            public Version? LastVersion { get; set; }
+            [DateTimeKind(DateTimeKind.Utc)]
+            public DateTime LastTimestamp { get; set; }
+            public long ExecuteCount { get; set; }
+            public string UserId { get; set; } = string.Empty;
+            public bool IsEnabledTelemetry { get; set; }
+            #endregion
+        }
+
+        private class AppGeneralFirstEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public Version FirstVersion { get; set; } = new Version();
+
+            [DateTimeKind(DateTimeKind.Utc)]
+            public DateTime FirstTimestamp { get; set; }
+
+
+            #endregion
+        }
+
         #endregion
-    }
 
-    internal class AppGeneralFirstEntityDto : CommonDtoBase
-    {
-        #region property
-
-        public Version FirstVersion { get; set; } = new Version();
-
-        [DateTimeKind(DateTimeKind.Utc)]
-        public DateTime FirstTimestamp { get; set; }
-
-
-        #endregion
-    }
-
-    public class AppExecuteSettingEntityDao : EntityDaoBase
-    {
-        public AppExecuteSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public AppExecuteSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -68,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public SettingAppExecuteSettingData SelectSettingExecuteSetting()
         {
             var statement = LoadStatement();
-            var dto = Commander.QueryFirst<AppExecuteSettingEntityDto>(statement);
+            var dto = Context.QueryFirst<AppExecuteSettingEntityDto>(statement);
             var result = new SettingAppExecuteSettingData() {
                 IsEnabledTelemetry = dto.IsEnabledTelemetry,
                 UserId = dto.UserId,
@@ -79,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public AppGeneralFirstData SelectFirstData()
         {
             var statement = LoadStatement();
-            var dto = Commander.QueryFirst<AppGeneralFirstEntityDto>(statement);
+            var dto = Context.QueryFirst<AppGeneralFirstEntityDto>(statement);
             return new AppGeneralFirstData() {
                 FirstExecuteVersion = dto.FirstVersion,
                 FirstExecuteTimestamp = dto.FirstTimestamp,
@@ -94,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 UserId = data.UserId,
             };
             commonStatus.WriteCommon(dto);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         public bool UpdateExecuteSettingAcceptInput(string userId, bool isEnabledTelemetry, IDatabaseCommonStatus commonStatus)
@@ -104,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.UserId] = userId;
             parameter[Column.IsEnabledTelemetry] = isEnabledTelemetry;
 
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         #endregion

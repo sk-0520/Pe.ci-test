@@ -12,19 +12,24 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class AppGeneralSettingEntityDto: CommonDtoBase
-    {
-        #region property
-        public string Language { get; set; } = string.Empty;
-        public string UserBackupDirectoryPath { get; set; } = string.Empty;
-        public Guid ThemePluginId { get; set; }
-        #endregion
-    }
-
     public class AppGeneralSettingEntityDao: EntityDaoBase
     {
-        public AppGeneralSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        private class AppGeneralSettingEntityDto: CommonDtoBase
+        {
+            #region property
+            public string Language { get; set; } = string.Empty;
+            public string UserBackupDirectoryPath { get; set; } = string.Empty;
+            public Guid ThemePluginId { get; set; }
+            #endregion
+        }
+
+
+        #endregion
+
+        public AppGeneralSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -44,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public SettingAppGeneralSettingData SelectSettingGeneralSetting()
         {
             var statement = LoadStatement();
-            var dto = Commander.QueryFirst<AppGeneralSettingEntityDto>(statement);
+            var dto = Context.QueryFirst<AppGeneralSettingEntityDto>(statement);
             var result = new SettingAppGeneralSettingData() {
                 Language = dto.Language,
                 UserBackupDirectoryPath = dto.UserBackupDirectoryPath,
@@ -56,19 +61,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public string SelectLanguage()
         {
             var statement = LoadStatement();
-            return Commander.QueryFirst<string>(statement);
+            return Context.QueryFirst<string>(statement);
         }
 
         public string SelectUserBackupDirectoryPath()
         {
             var statement = LoadStatement();
-            return Commander.QueryFirst<string>(statement);
+            return Context.QueryFirst<string>(statement);
         }
 
         public Guid SelectThemePluginId()
         {
             var statement = LoadStatement();
-            return Commander.QueryFirst<Guid>(statement);
+            return Context.QueryFirst<Guid>(statement);
         }
 
         public bool UpdateSettingGeneralSetting(SettingAppGeneralSettingData data, IDatabaseCommonStatus commonStatus)
@@ -80,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 ThemePluginId = data.ThemePluginId,
             };
             commonStatus.WriteCommon(dto);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
 

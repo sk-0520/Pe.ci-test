@@ -568,7 +568,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        private void SelectedGroup_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void SelectedGroup_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(SelectedGroup.ImageColor)) {
                 ChangeGroupIconColorFromCurrentGroup();

@@ -36,13 +36,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
-        #endregion
         void MouseDown(UIElement sender, MouseButtonEventArgs e);
         void MouseMove(UIElement sender, MouseEventArgs e);
         void DragEnter(UIElement sender, DragEventArgs e);
         void DragOver(UIElement sender, DragEventArgs e);
         void DragLeave(UIElement sender, DragEventArgs e);
         void Drop(UIElement sender, DragEventArgs e);
+
+        #endregion
     }
 
 

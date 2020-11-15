@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.DirectoryServices;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,23 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
+    /// <summary>
+    /// DB区分。
+    /// </summary>
     public enum Pack
     {
+        /// <summary>
+        /// 通常設定。
+        /// </summary>
         Main,
-        File,
+        /// <summary>
+        /// 大きいデータ。
+        /// </summary>
+        Large,
+        /// <summary>
+        /// 一時データ。
+        /// <para>次回起動時は存在しない。</para>
+        /// </summary>
         Temporary,
     }
 
@@ -23,8 +37,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     {
         #region property
 
+        [NotNull]
         T Main { get; }
-        T File { get; }
+        [NotNull]
+        T Large { get; }
+        [NotNull]
         T Temporary { get; }
 
         IReadOnlyList<T> Items { get; }
@@ -37,27 +54,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     public abstract class TApplicationPackBase<TInterface, TObject>: DisposerBase, IApplicationPack<TInterface>
         where TObject : TInterface
     {
-        protected TApplicationPackBase(TObject main, TObject file, TObject temporary)
+        protected TApplicationPackBase([DisallowNull] TObject main, [DisallowNull] TObject large, [DisallowNull] TObject temporary)
         {
             Main = main;
-            File = file;
+            Large = large;
             Temporary = temporary;
         }
 
         #region IApplicationPack
 
+        [NotNull]
         public TObject Main { get; }
+        [NotNull]
         TInterface IApplicationPack<TInterface>.Main => Main;
 
-        public TObject File { get; }
-        TInterface IApplicationPack<TInterface>.File => File;
+        [NotNull]
+        public TObject Large { get; }
+        [NotNull]
+        TInterface IApplicationPack<TInterface>.Large => Large;
 
+        [NotNull]
         public TObject Temporary { get; }
+        [NotNull]
         TInterface IApplicationPack<TInterface>.Temporary => Temporary;
 
         public IReadOnlyList<TObject> Items => new[] {
             Main,
-            File,
+            Large,
             Temporary,
         };
         IReadOnlyList<TInterface> IApplicationPack<TInterface>.Items => (IReadOnlyList<TInterface>)Items; // あっれぇ
@@ -92,8 +115,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     public sealed class ApplicationReaderWriterLockerPack: TApplicationPackBase<IReaderWriterLocker, ApplicationReaderWriterLockerBase>, IReaderWriterLockerPack
     {
-        public ApplicationReaderWriterLockerPack(ApplicationMainReaderWriterLocker main, ApplicationFileReaderWriterLocker file, ApplicationTemporaryReaderWriterLocker temporary)
-            : base(main, file, temporary)
+        public ApplicationReaderWriterLockerPack(ApplicationMainReaderWriterLocker main, ApplicationLargeReaderWriterLocker large, ApplicationTemporaryReaderWriterLocker temporary)
+            : base(main, large, temporary)
         { }
     }
 
@@ -102,15 +125,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     public sealed class ApplicationDatabaseFactoryPack: TApplicationPackBase<IDatabaseFactory, ApplicationDatabaseFactory>, IDatabaseFactoryPack
     {
-        public ApplicationDatabaseFactoryPack(ApplicationDatabaseFactory main, ApplicationDatabaseFactory file, ApplicationDatabaseFactory temporary)
-            : base(main, file, temporary)
+        public ApplicationDatabaseFactoryPack(ApplicationDatabaseFactory main, ApplicationDatabaseFactory large, ApplicationDatabaseFactory temporary)
+            : base(main, large, temporary)
         { }
     }
 
     public class LazyWriterWaitTimePack: TApplicationPackBase<TimeSpan, TimeSpan>
     {
-        public LazyWriterWaitTimePack(TimeSpan main, TimeSpan file, TimeSpan temporary)
-            : base(main, file, temporary)
+        public LazyWriterWaitTimePack(TimeSpan main, TimeSpan large, TimeSpan temporary)
+            : base(main, large, temporary)
         { }
     }
 
@@ -119,8 +142,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     public sealed class ApplicationDatabaseLazyWriterPack: TApplicationPackBase<IDatabaseLazyWriter, ApplicationDatabaseLazyWriter>, IDatabaseLazyWriterPack
     {
-        public ApplicationDatabaseLazyWriterPack(ApplicationDatabaseLazyWriter main, ApplicationDatabaseLazyWriter file, ApplicationDatabaseLazyWriter temporary)
-            : base(main, file, temporary)
+        public ApplicationDatabaseLazyWriterPack(ApplicationDatabaseLazyWriter main, ApplicationDatabaseLazyWriter large, ApplicationDatabaseLazyWriter temporary)
+            : base(main, large, temporary)
         { }
     }
 
@@ -129,8 +152,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     public sealed class ApplicationDatabaseAccessorPack: TApplicationPackBase<IDatabaseAccessor, ApplicationDatabaseAccessor>, IDatabaseAccessorPack
     {
-        public ApplicationDatabaseAccessorPack(ApplicationDatabaseAccessor main, ApplicationDatabaseAccessor file, ApplicationDatabaseAccessor temporary)
-            : base(main, file, temporary)
+        public ApplicationDatabaseAccessorPack(ApplicationDatabaseAccessor main, ApplicationDatabaseAccessor large, ApplicationDatabaseAccessor temporary)
+            : base(main, large, temporary)
         { }
 
         #region function
@@ -139,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             return new ApplicationDatabaseAccessorPack(
                 new ApplicationDatabaseAccessor(factoryPack.Main, loggerFactory),
-                new ApplicationDatabaseAccessor(factoryPack.File, loggerFactory),
+                new ApplicationDatabaseAccessor(factoryPack.Large, loggerFactory),
                 new ApplicationDatabaseAccessor(factoryPack.Temporary, loggerFactory)
             );
         }
@@ -147,7 +170,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public interface IDatabaseCommandsPack: IApplicationPack<IDatabaseCommands>
+    public interface IDatabaseContextsPack: IApplicationPack<IDatabaseContexts>
     {
         #region property
 
@@ -156,17 +179,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    internal class ApplicationDatabaseCommandsPack: TApplicationPackBase<IDatabaseCommands, DatabaseCommands>, IDatabaseCommandsPack
+    internal class ApplicationDatabaseContextsPack: TApplicationPackBase<IDatabaseContexts, DatabaseContexts>, IDatabaseContextsPack
     {
-        public ApplicationDatabaseCommandsPack(DatabaseCommands main, DatabaseCommands file, DatabaseCommands temporary, IDatabaseCommonStatus commonStatus)
-            : base(main, file, temporary)
+        public ApplicationDatabaseContextsPack(DatabaseContexts main, DatabaseContexts large, DatabaseContexts temporary, IDatabaseCommonStatus commonStatus)
+            : base(main, large, temporary)
         {
             CommonStatus = commonStatus;
         }
 
-        #region IDatabaseCommandsPack
+        #region IDatabaseContextsPack
 
-        /// <inheritdoc cref="IDatabaseCommandsPack.CommonStatus"/>
+        /// <inheritdoc cref="IDatabaseContextsPack.CommonStatus"/>
         public IDatabaseCommonStatus CommonStatus { get; }
 
         #endregion
@@ -177,8 +200,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region function
 
-        IDatabaseCommandsPack WaitRead();
-        IDatabaseCommandsPack WaitWrite();
+        IDatabaseContextsPack WaitRead();
+        IDatabaseContextsPack WaitWrite();
 
         /// <summary>
         /// トランザクション処理を確定する。
@@ -193,10 +216,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     {
         #region define
 
-        internal class Barriers: ApplicationDatabaseCommandsPack
+        internal class Barriers: ApplicationDatabaseContextsPack
         {
-            public Barriers(DatabaseCommands main, DatabaseCommands file, DatabaseCommands temporary, IDatabaseCommonStatus commonStatus, bool isReadOnly)
-                : base(main, file, temporary, commonStatus)
+            public Barriers(DatabaseContexts main, DatabaseContexts large, DatabaseContexts temporary, IDatabaseCommonStatus commonStatus, bool isReadOnly)
+                : base(main, large, temporary, commonStatus)
             {
                 IsReadOnly = isReadOnly;
             }
@@ -225,7 +248,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 if(!IsDisposed) {
                     if(disposing) {
                         var disposableItems = Items
-                            .Select(i => i.Commander)
+                            .Select(i => i.Context)
                             .OfType<IDisposable>()
                             .ToList()
                         ;
@@ -242,8 +265,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         }
 
         #endregion
-        public ApplicationDatabaseBarrierPack(ApplicationDatabaseBarrier main, ApplicationDatabaseBarrier file, ApplicationDatabaseBarrier temporary)
-            : base(main, file, temporary)
+        public ApplicationDatabaseBarrierPack(ApplicationDatabaseBarrier main, ApplicationDatabaseBarrier large, ApplicationDatabaseBarrier temporary)
+            : base(main, large, temporary)
         { }
 
         #region property
@@ -258,21 +281,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             return new ApplicationDatabaseAccessorPack(
                 new ApplicationDatabaseAccessor(factoryPack.Main, loggerFactory),
-                new ApplicationDatabaseAccessor(factoryPack.File, loggerFactory),
+                new ApplicationDatabaseAccessor(factoryPack.Large, loggerFactory),
                 new ApplicationDatabaseAccessor(factoryPack.Temporary, loggerFactory)
             );
         }
 
-        DatabaseCommands WaitReadCore(IDatabaseBarrier barrier)
+        DatabaseContexts WaitReadCore(IDatabaseBarrier barrier)
         {
             var tran = barrier.WaitRead();
-            return new DatabaseCommands(tran, tran.Implementation);
+            return new DatabaseContexts(tran, tran.Implementation);
         }
 
-        DatabaseCommands WaitWriteCore(IDatabaseBarrier barrier)
+        DatabaseContexts WaitWriteCore(IDatabaseBarrier barrier)
         {
             var tran = barrier.WaitWrite();
-            return new DatabaseCommands(tran, tran.Implementation);
+            return new DatabaseContexts(tran, tran.Implementation);
         }
 
         #endregion
@@ -285,12 +308,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 throw new InvalidOperationException();
             }
 
-            CurrentBarriers = new Barriers(WaitReadCore(Main), WaitReadCore(File), WaitReadCore(Temporary), DatabaseCommonStatus.CreateCurrentAccount(), true);
+            CurrentBarriers = new Barriers(WaitReadCore(Main), WaitReadCore(Large), WaitReadCore(Temporary), DatabaseCommonStatus.CreateCurrentAccount(), true);
             CurrentBarriers.Disposing += CurrentBarriers_Disposing;
             return CurrentBarriers;
         }
 
-        IDatabaseCommandsPack IDatabaseBarrierPack.WaitRead() => WaitRead();
+        IDatabaseContextsPack IDatabaseBarrierPack.WaitRead() => WaitRead();
 
         internal Barriers WaitWrite(IDatabaseCommonStatus databaseCommonStatus)
         {
@@ -298,11 +321,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 throw new InvalidOperationException();
             }
 
-            CurrentBarriers = new Barriers(WaitWriteCore(Main), WaitWriteCore(File), WaitWriteCore(Temporary), databaseCommonStatus, true);
+            CurrentBarriers = new Barriers(WaitWriteCore(Main), WaitWriteCore(Large), WaitWriteCore(Temporary), databaseCommonStatus, true);
             CurrentBarriers.Disposing += CurrentBarriers_Disposing;
             return CurrentBarriers;
         }
-        IDatabaseCommandsPack IDatabaseBarrierPack.WaitWrite() => WaitRead();
+        IDatabaseContextsPack IDatabaseBarrierPack.WaitWrite() => WaitRead();
 
         public void Save()
         {

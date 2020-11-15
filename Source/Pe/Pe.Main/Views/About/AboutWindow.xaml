@@ -9,6 +9,7 @@
 
   xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+  xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
   Height="500"
@@ -27,6 +28,12 @@
   <behaviors:Interaction.Triggers>
     <app_core_view:RequestTrigger SourceObject="{Binding CloseRequest}">
       <prism:InvokeCommandAction Command="{Binding CloseCommand, ElementName=root}" />
+    </app_core_view:RequestTrigger>
+    <app_core_view:RequestTrigger SourceObject="{Binding FileSelectRequest}">
+      <prism:InvokeCommandAction Command="{Binding FileSelectCommand, ElementName=root}" />
+    </app_core_view:RequestTrigger>
+    <app_core_view:RequestTrigger SourceObject="{Binding ShowMessageRequest}">
+      <prism:InvokeCommandAction Command="{Binding OpenCommonMessageDialogCommand, ElementName=root}" />
     </app_core_view:RequestTrigger>
   </behaviors:Interaction.Triggers>
   <Window.Resources>
@@ -127,53 +134,102 @@
 
       <Grid Grid.Column="1">
         <ScrollViewer>
-          <ItemsControl IsTabStop="False" ItemsSource="{Binding ComponentItems}" Padding="{StaticResource AllMargin}">
-            <ItemsControl.GroupStyle>
-              <GroupStyle>
-                <GroupStyle.HeaderTemplate>
-                  <DataTemplate>
-                    <TextBlock
-                      FontWeight="Bold"
-                      FontSize="16"
-                      VerticalAlignment="Center"
-                      Margin="{StaticResource HalfMargin}"
-                      Text="{Binding Name, Mode=OneTime, Converter={StaticResource EnumToCultureConverter}}"
-                      Background="{DynamicResource PlatformTheme-AccentColors-BaseBrush}"
-                      Foreground="{DynamicResource PlatformTheme-AccentTextColors-BaseBrush}"
-                      Padding="{StaticResource BasePadding}"
-                    />
-                  </DataTemplate>
-                </GroupStyle.HeaderTemplate>
-              </GroupStyle>
-            </ItemsControl.GroupStyle>
-            <ItemsControl.ItemsPanel>
-              <ItemsPanelTemplate>
-                <StackPanel Margin="{StaticResource AllMargin}" />
-              </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-              <DataTemplate>
-                <StackPanel>
-                  <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock FontWeight="Bold" Text="{Binding Name, Mode=OneTime}" />
-                    <TextBlock Margin="{StaticResource LeftMargin}" Visibility="{Binding HasLicenseUri, Converter={StaticResource BooleanToVisibilityConverter}}">
+          <StackPanel>
+            <StackPanel.Resources>
+              <Style x:Key="Header" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Margin" Value="{StaticResource HalfMargin}" />
+                <Setter Property="Background" Value="{DynamicResource PlatformTheme-AccentColors-BaseBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource PlatformTheme-AccentTextColors-BaseBrush}" />
+                <Setter Property="Padding" Value="{StaticResource HalfMargin}" />
+              </Style>
+            </StackPanel.Resources>
+            <ItemsControl IsTabStop="False" ItemsSource="{Binding ComponentItems}" Padding="{StaticResource AllMargin}">
+              <ItemsControl.GroupStyle>
+                <GroupStyle>
+                  <GroupStyle.HeaderTemplate>
+                    <DataTemplate>
+                      <TextBlock Style="{StaticResource Header}" Text="{Binding Name, Mode=OneTime, Converter={StaticResource EnumToCultureConverter}}" />
+                    </DataTemplate>
+                  </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+              </ItemsControl.GroupStyle>
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Margin="{StaticResource AllMargin}" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel>
+                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
+                      <TextBlock FontWeight="Bold" Text="{Binding Name, Mode=OneTime}" />
+                      <TextBlock Margin="{StaticResource LeftMargin}" Visibility="{Binding HasLicenseUri, Converter={StaticResource BooleanToVisibilityConverter}}">
                       <Hyperlink Command="{Binding DataContext.OpenLicenseCommand, ElementName=root}" CommandParameter="{Binding}">
                         <Run Text="{Binding License, Mode=OneTime}" />
                       </Hyperlink>
-                    </TextBlock>
-                  </WrapPanel>
-                  <TextBlock Margin="{StaticResource LeftMargin}">
+                      </TextBlock>
+                    </WrapPanel>
+                    <TextBlock Margin="{StaticResource LeftMargin}">
                       <Hyperlink Command="{Binding DataContext.OpenUriCommand, ElementName=root}" CommandParameter="{Binding}">
                       <Run Text="{Binding Uri, Mode=OneTime}" />
                     </Hyperlink>
-                  </TextBlock>
-                  <TextBlock Margin="{StaticResource LeftMargin}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding Comment}" />
+                    </TextBlock>
+                    <TextBlock Margin="{StaticResource LeftMargin}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding Comment}" />
 
-                  <Separator Style="{StaticResource Vertical-Padding}"/>
+                    <Separator Style="{StaticResource Vertical-Padding}"/>
+                  </StackPanel>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Separator />
+
+            <StackPanel Margin="{StaticResource AllMargin}">
+              <TextBlock Style="{StaticResource Header}" Text="{Binding Resources.String_About_Uninstall_Header, Source={x:Static app_main:CultureService.Instance}}" />
+
+              <StackPanel Margin="{StaticResource HalfMargin}" Grid.IsSharedSizeScope="True">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Header" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Content="{Binding Resources.String_About_Uninstall_Target_Header_A, Source={x:Static app_main:CultureService.Instance}}" />
+                  <WrapPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal">
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetUser}" Content="{Binding Source={x:Static app_main_models_data:UninstallTarget.User}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetMachine}" Content="{Binding Source={x:Static app_main_models_data:UninstallTarget.Machine}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetTemporary}" Content="{Binding Source={x:Static app_main_models_data:UninstallTarget.Temporary}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetBatch}" Content="{Binding Source={x:Static app_main_models_data:UninstallTarget.Application}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetApplication}" Content="{Binding Source={x:Static app_main_models_data:UninstallTarget.Batch}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
+                  </WrapPanel>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Header" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Content="{Binding Resources.String_About_Uninstall_BatchFile_Header_A, Source={x:Static app_main:CultureService.Instance}}" />
+                  <TextBox Grid.Column="1" Style="{StaticResource Horizontal-TextBox}" Text="{Binding UninstallBatchFilePath}" />
+                  <Button Grid.Column="2" Command="{Binding SelectUninstallBatchFilePathCommand}">
+                    <Control Template="{StaticResource App-Image-File}" Style="{StaticResource Image-Small}" />
+                  </Button>
+                </Grid>
+
+                <StackPanel HorizontalAlignment="Right" Margin="{StaticResource AllMargin}">
+                  <Button Command="{Binding CreateUninstallBatchCommand}" Content="{Binding Resources.String_About_Uninstall_Create_Command_A, Source={x:Static app_main:CultureService.Instance}}" />
+                  <TextBlock Text="{Binding Resources.String_About_Uninstall_Create_Description, Source={x:Static app_main:CultureService.Instance}}" />
                 </StackPanel>
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
+              </StackPanel>
+
+            </StackPanel>
+
+          </StackPanel>
         </ScrollViewer>
       </Grid>
 

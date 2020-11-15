@@ -10,29 +10,34 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 {
-    internal class LauncherToolbarScreenRowDto : CommonDtoBase
-    {
-        #region property
-
-        public Guid LauncherToolbarId { get; set; }
-
-        public string ScreenName { get; set; } = string.Empty;
-        [PixelKind(Px.Device)]
-        public long ScreenX { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenY { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenWidth { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenHeight { get; set; }
-
-        #endregion
-    }
-
     public class LauncherToolbarDomainDao : DomainDaoBase
     {
-        public LauncherToolbarDomainDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed", Justification = "<保留中>")]
+        private class LauncherToolbarScreenRowDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid LauncherToolbarId { get; set; }
+
+            public string ScreenName { get; set; } = string.Empty;
+            [PixelKind(Px.Device)]
+            public long ScreenX { get; set; }
+            [PixelKind(Px.Device)]
+            public long ScreenY { get; set; }
+            [PixelKind(Px.Device)]
+            public long ScreenWidth { get; set; }
+            [PixelKind(Px.Device)]
+            public long ScreenHeight { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
+        public LauncherToolbarDomainDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region function
@@ -57,14 +62,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var parameter = new {
                 LauncherToolbarId = launcherToolbarId,
             };
-            var dto = Commander.QueryFirst<LauncherToolbarScreenRowDto>(statement, parameter);
+            var dto = Context.QueryFirst<LauncherToolbarScreenRowDto>(statement, parameter);
             return ConvertFromDto(dto);
         }
 
         public IEnumerable<LauncherToolbarsScreenData> SelectAllScreenToolbars()
         {
             var statement = LoadStatement();
-            return Commander.Query<LauncherToolbarScreenRowDto>(statement)
+            return Context.Query<LauncherToolbarScreenRowDto>(statement)
                 .Select(i => ConvertFromDto(i))
             ;
         }

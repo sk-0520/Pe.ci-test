@@ -19,20 +19,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherToobarSettingEditorElement : ElementBase, ILauncherToolbarId
     {
-        public LauncherToobarSettingEditorElement(Guid launcherToolbarId, ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory) : base(loggerFactory)
+        public LauncherToobarSettingEditorElement(Guid launcherToolbarId, ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory) : base(loggerFactory)
         {
             LauncherToolbarId = launcherToolbarId;
             AllLauncherGroups = allLauncherGroups;
 
             MainDatabaseBarrier = mainDatabaseBarrier;
-            FileDatabaseBarrier = fileDatabaseBarrier;
+            LargeDatabaseBarrier = largeDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
         }
 
         #region property
         ObservableCollection<LauncherGroupSettingEditorElement> AllLauncherGroups { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         public FontElement? Font { get; private set; }
@@ -54,11 +54,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
-        public void Save(IDatabaseCommandsPack commadPack)
+        public void Save(IDatabaseContextsPack commadPack)
         {
             Debug.Assert(Font != null);
 
-            var fontsEntityDao = new FontsEntityDao(commadPack.Main.Commander, DatabaseStatementLoader, commadPack.Main.Implementation, LoggerFactory);
+            var fontsEntityDao = new FontsEntityDao(commadPack.Main.Context, DatabaseStatementLoader, commadPack.Main.Implementation, LoggerFactory);
             fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commadPack.CommonStatus);
 
             var defaultLauncherGroupId = LauncherGroupId;
@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 }
             }
 
-            var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commadPack.Main.Commander, DatabaseStatementLoader, commadPack.Main.Implementation, LoggerFactory);
+            var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commadPack.Main.Context, DatabaseStatementLoader, commadPack.Main.Implementation, LoggerFactory);
             var data = new LauncherToolbarsDisplayData() {
                 LauncherToolbarId = LauncherToolbarId,
                 FontId = Font.FontId,
@@ -96,11 +96,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             LauncherToolbarsDisplayData data;
             LauncherToolbarsScreenData screenToolbar;
 
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 data = launcherToolbarsEntityDao.SelectDisplayData(LauncherToolbarId);
 
-                var launcherToolbarDomainDao = new LauncherToolbarDomainDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                var launcherToolbarDomainDao = new LauncherToolbarDomainDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 screenToolbar = launcherToolbarDomainDao.SelectScreenToolbar(LauncherToolbarId);
             }
 

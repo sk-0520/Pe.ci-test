@@ -469,8 +469,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             SettingAppPlatformSettingData setting;
-            using(var commander = mainDatabaseBarrier.WaitRead()) {
-                var appPlatformSettingEntityDao = ApplicationDiContainer.Build<AppPlatformSettingEntityDao>(commander, commander.Implementation);
+            using(var context = mainDatabaseBarrier.WaitRead()) {
+                var appPlatformSettingEntityDao = ApplicationDiContainer.Build<AppPlatformSettingEntityDao>(context, context.Implementation);
                 setting = appPlatformSettingEntityDao.SelectSettingPlatformSetting();
             }
             if(setting.SuppressSystemIdle) {

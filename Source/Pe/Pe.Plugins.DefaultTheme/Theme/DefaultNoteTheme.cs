@@ -236,7 +236,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
             var newContentXml = XDocument.Load(srcContentReader);
             var penElement = newContentXml.XPathSelectElement("//*/" + xamlNamespace + ":Pen", xmlNamespaceManager);
-            penElement.SetAttributeValue(Pen.BrushProperty.Name, baseColor.Foreground.ToString());
+            penElement!.SetAttributeValue(Pen.BrushProperty.Name, baseColor.Foreground.ToString());
 
             using var newContentStream = new IO.MemoryStream();
             using(var keepStream = new KeepStream(newContentStream)) {

@@ -1,5 +1,77 @@
 [
 	{
+		"date": "2020/11/15",
+		"version": "0.99.070",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"subject": "NET 5 に対応しました",
+						"comments": [
+							".NET Core の時もそうだったけど単一実行は .NET Framework に比べてクッソらくちん"
+						]
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "cbc391569d7bf75fad1d7ebc33c050b1f1a5df5b",
+						"subject": "#681: プラグインのアンインストール処理追加",
+						"comments": [
+							"キー設定したランチャーアイテム周りの破棄はクソほど怪しい",
+							"ユーザー操作は Pe インフラとしてのプラグイン インストール・アップデート処理周りが実装完了するまではなんもしない方がいい"
+						]
+					},
+					{
+						"revision": "c330e8074dbe96500f724024cfa1c2d2dc675e74",
+						"subject": "#698: アンインストール用の記録データ破棄処理を構築する"
+					},
+					{
+						"revision": "8fe9240481e9fbe927f9def81d080c5583da0b5b",
+						"subject": "#701: .NET 5 対応",
+						"comments": [
+							"ロギング処理・アプリケーション構成ファイルのアップデートはこのタイミングだと無理無理",
+							"時間あるときに対応する"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "94ce76001560798d35c2d91a1088df3ea264971d",
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 16.7.1 -> 16.8.0"
+					},
+					{
+						"revision": "19eda9e825bf622fed0232c4b74e3f3cec4ec8ae",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.113.5 -> 1.0.113.6"
+					},
+					{
+						"revision": "38c8e34e5dd6d00f28f3a8153e18f59d8b93105c",
+						"class": "nuget",
+						"subject": "System.Text.Encoding.CodePages 4.7.1 -> 5.0.0"
+					},
+					{
+						"revision": "377f4e6946dc5ccf951e502ccd68505bf7ead2fd",
+						"class": "nuget",
+						"subject": "System.Management 4.7.0 -> 5.0.0"
+					},
+					{
+						"revision": "23a8a82e040eb238efa8bd94df047faa9b920799",
+						"class": "nuget",
+						"subject": "System.DirectoryServices.AccountManagement 4.7.0 -> 5.0.0"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/11/03",
 		"version": "0.99.063",
 		"contents": [

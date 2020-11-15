@@ -128,18 +128,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var readerWriterLockerPack = new ApplicationReaderWriterLockerPack(
                 new ApplicationMainReaderWriterLocker(),
-                new ApplicationFileReaderWriterLocker(),
+                new ApplicationLargeReaderWriterLocker(),
                 new ApplicationTemporaryReaderWriterLocker()
             );
             var barrierPack = new ApplicationDatabaseBarrierPack(
                 new ApplicationDatabaseBarrier(accessorPack.Main, readerWriterLockerPack.Main),
-                new ApplicationDatabaseBarrier(accessorPack.File, readerWriterLockerPack.File),
+                new ApplicationDatabaseBarrier(accessorPack.Large, readerWriterLockerPack.Large),
                 new ApplicationDatabaseBarrier(accessorPack.Temporary, readerWriterLockerPack.Temporary)
             );
 
             var lazyWriterPack = new ApplicationDatabaseLazyWriterPack(
                 new ApplicationDatabaseLazyWriter(barrierPack.Main, lazyWriterWaitTimePack.Main, loggerFactory),
-                new ApplicationDatabaseLazyWriter(barrierPack.File, lazyWriterWaitTimePack.File, loggerFactory),
+                new ApplicationDatabaseLazyWriter(barrierPack.Large, lazyWriterWaitTimePack.Large, loggerFactory),
                 new ApplicationDatabaseLazyWriter(barrierPack.Temporary, lazyWriterWaitTimePack.Temporary, loggerFactory)
             );
 
@@ -151,11 +151,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<IDatabaseLazyWriterPack, ApplicationDatabaseLazyWriterPack>(lazyWriterPack)
 
                 .Register<IMainDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.Main)
-                .Register<IFileDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.File)
+                .Register<ILargeDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.Large)
                 .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.Temporary)
 
                 .Register<IMainDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Main)
-                .Register<IFileDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.File)
+                .Register<ILargeDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Large)
                 .Register<ITemporaryDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Temporary)
             ;
 
@@ -172,11 +172,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 () => @this.Unregister<IDatabaseLazyWriterPack>(),
 
                 () => @this.Unregister<IMainDatabaseBarrier>(),
-                () => @this.Unregister<IFileDatabaseBarrier>(),
+                () => @this.Unregister<ILargeDatabaseBarrier>(),
                 () => @this.Unregister<ITemporaryDatabaseBarrier>(),
 
                 () => @this.Unregister<IMainDatabaseLazyWriter>(),
-                () => @this.Unregister<IFileDatabaseLazyWriter>(),
+                () => @this.Unregister<ILargeDatabaseLazyWriter>(),
                 () => @this.Unregister<ITemporaryDatabaseLazyWriter>(),
             };
 

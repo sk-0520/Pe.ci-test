@@ -59,8 +59,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
 
-        public KeyboardSettingEditorElement(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, databaseStatementLoader, idFactory, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
+        public KeyboardSettingEditorElement(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, databaseStatementLoader, idFactory, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
         { }
 
         #region property
@@ -159,8 +159,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IReadOnlyList<KeyActionData> replaceKeyActions;
             IReadOnlyList<KeyActionData> disableKeyActions;
             IReadOnlyList<KeyActionData> pressedKeyActions;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var keyActionsEntityDao = new KeyActionsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var keyActionsEntityDao = new KeyActionsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 replaceKeyActions = keyActionsEntityDao.SelectAllKeyActionsFromKind(KeyActionKind.Replace).ToList();
                 disableKeyActions = keyActionsEntityDao.SelectAllKeyActionsFromKind(KeyActionKind.Disable).ToList();
                 pressedKeyActions = keyActionsEntityDao.SelectAllKeyActionsIgnoreKinds(new[] { KeyActionKind.Replace, KeyActionKind.Disable }).ToList();
@@ -188,7 +188,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
             var jobs = ReplaceJobEditors
                 .Cast<KeyboardJobSettingEditorElementBase>()
@@ -196,10 +196,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 .Concat(PressedJobEditors)
             ;
             foreach(var job in jobs) {
-                job.Save(commandPack.Main.Commander, commandPack.Main.Implementation, commandPack.CommonStatus);
+                job.Save(contextsPack.Main.Context, contextsPack.Main.Implementation, contextsPack.CommonStatus);
             }
             foreach(var job in RemovedJobEditors) {
-                job.Remove(commandPack.Main.Commander, commandPack.Main.Implementation);
+                job.Remove(contextsPack.Main.Context, contextsPack.Main.Implementation);
             }
         }
 

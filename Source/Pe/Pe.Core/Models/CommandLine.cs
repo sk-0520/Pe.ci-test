@@ -396,7 +396,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="shortKey"></param>
         /// <returns>取得した値。取得できない場合は null 。</returns>
-        public CommandLineKey GetKey(char shortKey)
+        public CommandLineKey? GetKey(char shortKey)
         {
             return KeyItems
                 .Concat(SwitchItems)
@@ -410,7 +410,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="shortKey"></param>
         /// <returns>取得した値。取得できない場合は null 。</returns>
-        public CommandLineKey GetKey(string longKey)
+        public CommandLineKey? GetKey(string longKey)
         {
             return KeyItems
                 .Concat(SwitchItems)

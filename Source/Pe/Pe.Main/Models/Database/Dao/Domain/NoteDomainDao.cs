@@ -10,28 +10,33 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 {
-    internal class NoteScreenRowDto : RowDtoBase
-    {
-        #region property
-        public Guid NoteId { get; set; }
-
-        public string ScreenName { get; set; } = string.Empty;
-        [PixelKind(Px.Device)]
-        public long ScreenX { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenY { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenWidth { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenHeight { get; set; }
-
-        #endregion
-    }
-
     public class NoteDomainDao : DomainDaoBase
     {
-        public NoteDomainDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed", Justification = "<保留中>")]
+        class NoteScreenRowDto: RowDtoBase
+        {
+            #region property
+            public Guid NoteId { get; set; }
+
+            public string ScreenName { get; set; } = string.Empty;
+            [PixelKind(Px.Device)]
+            public long ScreenX { get; set; }
+            [PixelKind(Px.Device)]
+            public long ScreenY { get; set; }
+            [PixelKind(Px.Device)]
+            public long ScreenWidth { get; set; }
+            [PixelKind(Px.Device)]
+            public long ScreenHeight { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
+        public NoteDomainDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         {}
 
         #region function
@@ -56,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var param = new {
                 NoteId = noteId,
             };
-            return Commander.Query<NoteScreenRowDto>(statement, param)
+            return Context.Query<NoteScreenRowDto>(statement, param)
                 .Select(i => ConvertFromDto(i))
             ;
         }

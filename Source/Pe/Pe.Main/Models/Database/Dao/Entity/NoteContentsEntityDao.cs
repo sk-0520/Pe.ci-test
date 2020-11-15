@@ -12,28 +12,32 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class NoteContentsEntityDto : RowDtoBase
-    {
-        #region property
-
-        public Guid NoteId { get; set; }
-        public string ContentKind { get; set; } = string.Empty;
-        public string Content { get; set; } = string.Empty;
-        public bool IsLink { get; set; }
-        public string Address { get; set; } = string.Empty;
-        public string Encoding { get; set; } = string.Empty;
-        public TimeSpan DelayTime { get; set; }
-        public long BufferSize { get; set; }
-        public TimeSpan RefreshTime { get; set; }
-        public bool IsEnabledRefresh { get; set; }
-
-        #endregion
-    }
-
     public class NoteContentsEntityDao : EntityDaoBase
     {
-        public NoteContentsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        private class NoteContentsEntityDto: RowDtoBase
+        {
+            #region property
+
+            public Guid NoteId { get; set; }
+            public string ContentKind { get; set; } = string.Empty;
+            public string Content { get; set; } = string.Empty;
+            public bool IsLink { get; set; }
+            public string Address { get; set; } = string.Empty;
+            public string Encoding { get; set; } = string.Empty;
+            public TimeSpan DelayTime { get; set; }
+            public long BufferSize { get; set; }
+            public TimeSpan RefreshTime { get; set; }
+            public bool IsEnabledRefresh { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
+        public NoteContentsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -110,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = new {
                 NoteId = noteId,
             };
-            return Commander.QueryFirst<bool>(statement, param);
+            return Context.QueryFirst<bool>(statement, param);
         }
 
         public string SelectFullContent(Guid noteId)
@@ -119,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = new {
                 NoteId = noteId,
             };
-            return Commander.QueryFirst<string>(statement, param);
+            return Context.QueryFirst<string>(statement, param);
         }
 
         public NoteContentData SelectLinkParameter(Guid noteId)
@@ -128,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 NoteId = noteId,
             };
-            var dto = Commander.QueryFirst<NoteContentsEntityDto>(statement, parameter);
+            var dto = Context.QueryFirst<NoteContentsEntityDto>(statement, parameter);
             return ConvertFromDto(dto);
         }
 
@@ -136,14 +140,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var param = ConvertFromData(data, databaseCommonStatus);
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateContent(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = ConvertFromData(data, databaseCommonStatus);
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateLinkEnabled(Guid noteId, string path, Encoding encoding, FileWatchParameter fileWatchParameter, IDatabaseCommonStatus databaseCommonStatus)
@@ -161,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.RefreshTime] = fileWatchParameter.RefreshTime;
             parameter[Column.IsEnabledRefresh] = fileWatchParameter.IsEnabledRefresh;
 
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateLinkDisabled(Guid noteId, IDatabaseCommonStatus databaseCommonStatus)
@@ -172,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.IsLink] = true;
             parameter[Column.Address] = string.Empty;
 
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public int DeleteContents(Guid noteId)
@@ -181,7 +185,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 NoteId = noteId
             };
-            return Commander.Execute(statement, parameter);
+            return Context.Execute(statement, parameter);
 
         }
 

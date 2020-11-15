@@ -11,33 +11,37 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class NotesEntityDto: CommonDtoBase
-    {
-        #region property
-
-        public Guid NoteId { get; set; }
-        public string Title { get; set; } = string.Empty;
-        public string ScreenName { get; set; } = string.Empty;
-        public string LayoutKind { get; set; } = string.Empty;
-        public bool IsVisible { get; set; }
-        public Guid FontId { get; set; }
-        public string ForegroundColor { get; set; } = string.Empty;
-        public string BackgroundColor { get; set; } = string.Empty;
-        public bool IsLocked { get; set; }
-        public bool IsTopmost { get; set; }
-        public bool IsCompact { get; set; }
-        public bool TextWrap { get; set; }
-        public string ContentKind { get; set; } = string.Empty;
-        public string HiddenMode { get; set; } = string.Empty;
-        public string CaptionPosition { get; set; } = string.Empty;
-
-        #endregion
-    }
-
     public class NotesEntityDao: EntityDaoBase
     {
-        public NotesEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        private class NotesEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid NoteId { get; set; }
+            public string Title { get; set; } = string.Empty;
+            public string ScreenName { get; set; } = string.Empty;
+            public string LayoutKind { get; set; } = string.Empty;
+            public bool IsVisible { get; set; }
+            public Guid FontId { get; set; }
+            public string ForegroundColor { get; set; } = string.Empty;
+            public string BackgroundColor { get; set; } = string.Empty;
+            public bool IsLocked { get; set; }
+            public bool IsTopmost { get; set; }
+            public bool IsCompact { get; set; }
+            public bool TextWrap { get; set; }
+            public string ContentKind { get; set; } = string.Empty;
+            public string HiddenMode { get; set; } = string.Empty;
+            public string CaptionPosition { get; set; } = string.Empty;
+
+            #endregion
+        }
+
+        #endregion
+
+        public NotesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -131,7 +135,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public IEnumerable<Guid> SelectAllNoteIds()
         {
             var statement = LoadStatement();
-            return Commander.Query<Guid>(statement);
+            return Context.Query<Guid>(statement);
         }
 
         //SelectExistsScreen
@@ -141,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = new {
                 NoteId = noteId,
             };
-            var dto = Commander.QueryFirstOrDefault<NotesEntityDto>(statement, param);
+            var dto = Context.QueryFirstOrDefault<NotesEntityDto>(statement, param);
             if(dto == null) {
                 return null;
             }
@@ -153,14 +157,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var param = ConvertFromData(noteData, commonStatus);
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         internal bool InsertOldNote(NoteData noteData, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var param = ConvertFromData(noteData, commonStatus);
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateScreen(Guid noteId, string screenName, IDatabaseCommonStatus databaseCommonStatus)
@@ -169,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.NoteId] = noteId;
             parameter[Column.ScreenName] = screenName;
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateCompact(Guid noteId, bool isCompact, IDatabaseCommonStatus databaseCommonStatus)
@@ -178,7 +182,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsCompact] = isCompact;
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateTopmost(Guid noteId, bool isTopmost, IDatabaseCommonStatus databaseCommonStatus)
@@ -187,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsTopmost] = isTopmost;
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateLock(Guid noteId, bool isLocked, IDatabaseCommonStatus databaseCommonStatus)
@@ -196,7 +200,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsLocked] = isLocked;
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateTextWrap(Guid noteId, bool textWrap, IDatabaseCommonStatus databaseCommonStatus)
@@ -205,7 +209,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.TextWrap] = textWrap;
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateTitle(Guid noteId, string title, IDatabaseCommonStatus databaseCommonStatus)
@@ -214,7 +218,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.Title] = title;
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateFontId(Guid noteId, Guid fontId, IDatabaseCommonStatus databaseCommonStatus)
@@ -223,7 +227,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.FontId] = fontId;
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateForegroundColor(Guid noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
@@ -232,7 +236,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.ForegroundColor] = FromColor(color);
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
 
         }
         public bool UpdateBackgroundColor(Guid noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
@@ -241,7 +245,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.BackgroundColor] = FromColor(color);
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateCaptionPosition(Guid noteId, NoteCaptionPosition captionPosition, IDatabaseCommonStatus databaseCommonStatus)
@@ -252,7 +256,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.CaptionPosition] = noteCaptionPositionTansfer.ToString(captionPosition);
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateContentKind(Guid noteId, NoteContentKind contentKind, IDatabaseCommonStatus databaseCommonStatus)
@@ -263,7 +267,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.ContentKind] = noteContentKindTansfer.ToString(contentKind);
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateLayoutKind(Guid noteId, NoteLayoutKind layoutKind, IDatabaseCommonStatus databaseCommonStatus)
@@ -274,7 +278,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.LayoutKind] = noteLayoutKindTansfer.ToString(layoutKind);
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
 
@@ -284,7 +288,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsVisible] = isVisible;
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateHiddenMode(Guid noteId, NoteHiddenMode hiddenMode, IDatabaseCommonStatus databaseCommonStatus)
@@ -295,7 +299,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.HiddenMode] = hiddenModeTransfer.ToString(hiddenMode);
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public int DeleteNote(Guid noteId)
@@ -304,7 +308,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 NoteId = noteId,
             };
-            return Commander.Execute(statement, parameter);
+            return Context.Execute(statement, parameter);
         }
 
         #endregion

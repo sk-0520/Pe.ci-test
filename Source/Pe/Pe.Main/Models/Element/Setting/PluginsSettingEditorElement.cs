@@ -22,8 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginsSettingEditorElement: SettingEditorElementBase
     {
-        internal PluginsSettingEditorElement(PluginContainer pluginContainer, PreferencesContextFactory preferencesContextFactory, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, statementLoader, idFactory, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
+        internal PluginsSettingEditorElement(PluginContainer pluginContainer, PreferencesContextFactory preferencesContextFactory, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, statementLoader, idFactory, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
         {
             PluginContainer = pluginContainer;
             PreferencesContextFactory = preferencesContextFactory;
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             // 標準テーマがなければ追加
             if(!pluginStates.Any(i => i.PluginId == DefaultTheme.Informations.PluginIdentifiers.PluginId)) {
                 pluginStates.Insert(0, new Data.PluginStateData() {
-                    Name = DefaultTheme.Informations.PluginIdentifiers.PluginName,
+                    PluginName = DefaultTheme.Informations.PluginIdentifiers.PluginName,
                     PluginId = DefaultTheme.Informations.PluginIdentifiers.PluginId,
                     State = Data.PluginState.Enable,
                 });
@@ -74,12 +74,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
             foreach(var element in PluginItems) {
                 if(element.SupportedPreferences && element.StartedPreferences) {
-                    element.SavePreferences(commandPack);
+                    element.SavePreferences(contextsPack);
                 }
+
+                element.Save(contextsPack);
             }
         }
 

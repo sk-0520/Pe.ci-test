@@ -8,22 +8,26 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class PluginSettingDto: CommonDtoBase
-    {
-        #region property
-
-        public Guid PluginId { get; set; }
-        public string PluginSettingKey { get; set; } = string.Empty;
-        public string DataType { get; set; } = string.Empty;
-        public string DataValue { get; set; } = string.Empty;
-
-        #endregion
-    }
-
     public class PluginSettingsEntityDao: EntityDaoBase
     {
-        public PluginSettingsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        private class PluginSettingDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid PluginId { get; set; }
+            public string PluginSettingKey { get; set; } = string.Empty;
+            public string DataType { get; set; } = string.Empty;
+            public string DataValue { get; set; } = string.Empty;
+
+            #endregion
+        }
+
+        #endregion
+
+        public PluginSettingsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -78,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 PluginSettingKey = key,
             };
 
-            return Commander.QueryFirst<bool>(statement, parameter);
+            return Context.QueryFirst<bool>(statement, parameter);
         }
 
         public PluginSettingRawValue? SelectPluginSettingValue(Guid pluginId, string key)
@@ -89,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 PluginSettingKey = key,
             };
 
-            var dto = Commander.QueryFirstOrDefault<PluginSettingDto>(statement, parameter);
+            var dto = Context.QueryFirstOrDefault<PluginSettingDto>(statement, parameter);
             if(dto == null) {
                 return null;
             }
@@ -103,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, key, data, databaseCommonStatus);
 
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public bool UpdatePluginSetting(Guid pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
@@ -111,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, key, data, databaseCommonStatus);
 
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public bool DeletePluginSetting(Guid pluginId, string key)
@@ -122,8 +126,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 PluginSettingKey = key,
             };
 
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
+
+        public int DeleteAllPluginSettings(Guid pluginId)
+        {
+            var statement = LoadStatement();
+            var parameter = new PluginSettingDto() {
+                PluginId = pluginId,
+            };
+
+            return Context.Execute(statement, parameter);
+        }
+
 
         #endregion
 

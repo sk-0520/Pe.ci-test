@@ -10,24 +10,28 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherGroupsRowDto : RowDtoBase
-    {
-        #region property
-
-        public Guid LauncherGroupId { get; set; }
-        public string Kind { get; set; } = string.Empty;
-        public string Name { get; set; } = string.Empty;
-        public string ImageName { get; set; } = string.Empty;
-        public string ImageColor { get; set; } = string.Empty;
-        public long Sequence { get; set; }
-
-        #endregion
-    }
-
     public class LauncherGroupsEntityDao : EntityDaoBase
     {
-        public LauncherGroupsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        private class LauncherGroupsRowDto: RowDtoBase
+        {
+            #region property
+
+            public Guid LauncherGroupId { get; set; }
+            public string Kind { get; set; } = string.Empty;
+            public string Name { get; set; } = string.Empty;
+            public string ImageName { get; set; } = string.Empty;
+            public string ImageColor { get; set; } = string.Empty;
+            public long Sequence { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
+        public LauncherGroupsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -92,19 +96,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public long SelectMaxSequence()
         {
             var statement = LoadStatement();
-            return Commander.QuerySingle<long>(statement);
+            return Context.QuerySingle<long>(statement);
         }
 
         public IEnumerable<Guid> SelectAllLauncherGroupIds()
         {
             var statement = LoadStatement();
-            return Commander.Query<Guid>(statement);
+            return Context.Query<Guid>(statement);
         }
 
         public IEnumerable<string> SelectAllLauncherGroupNames()
         {
             var statement = LoadStatement();
-            return Commander.Query<string>(statement);
+            return Context.Query<string>(statement);
         }
 
 
@@ -114,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = new {
                 LauncherGroupId = launcherGroupId,
             };
-            var dto = Commander.QuerySingle<LauncherGroupsRowDto>(statement, param);
+            var dto = Context.QuerySingle<LauncherGroupsRowDto>(statement, param);
             var data = ConvertFromDto(dto);
 
             return data;
@@ -124,14 +128,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
-            Commander.Execute(statement, dto);
+            Context.Execute(statement, dto);
         }
 
         public bool UpdateGroup(LauncherGroupData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         public int DeleteGroup(Guid launcherGroupId)
@@ -140,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherGroupId = launcherGroupId,
             };
-            return Commander.Execute(statement, parameter);
+            return Context.Execute(statement, parameter);
         }
 
         #endregion

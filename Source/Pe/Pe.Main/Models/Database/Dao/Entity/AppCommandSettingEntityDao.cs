@@ -10,23 +10,27 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class AppCommandSettingEntityDto : CommonDtoBase
-    {
-        #region property
-
-        public Guid FontId { get; set; }
-        public string IconBox { get; set; } = string.Empty;
-        public double Width { get; set; }
-        public TimeSpan HideWaitTime { get; set; }
-        public bool FindTag { get; set; }
-
-        #endregion
-    }
-
     public class AppCommandSettingEntityDao : EntityDaoBase
     {
-        public AppCommandSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        private class AppCommandSettingEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid FontId { get; set; }
+            public string IconBox { get; set; } = string.Empty;
+            public double Width { get; set; }
+            public TimeSpan HideWaitTime { get; set; }
+            public bool FindTag { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
+        public AppCommandSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -47,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public Guid SelectCommandSettingFontId()
         {
             var statement = LoadStatement();
-            return Commander.QueryFirst<Guid>(statement);
+            return Context.QueryFirst<Guid>(statement);
         }
 
 
@@ -56,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
             var statement = LoadStatement();
-            var dto = Commander.QueryFirst<AppCommandSettingEntityDto>(statement);
+            var dto = Context.QueryFirst<AppCommandSettingEntityDto>(statement);
             var result = new SettingAppCommandSettingData() {
                 FontId = dto.FontId,
                 IconBox = iconBoxTransfer.ToEnum(dto.IconBox),
@@ -81,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 FindTag = data.FindTag,
             };
             commonStatus.WriteCommon(dto);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         public bool UpdatCommandSettingWidth(double width, IDatabaseCommonStatus commonStatus)
@@ -89,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.Width] = width;
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
 

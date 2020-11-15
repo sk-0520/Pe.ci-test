@@ -77,8 +77,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         private string GetKeyMappingSting(KeyActionKind keyActionKind, string parameter)
         {
             KeyGestureSetting? setting = null;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new KeyGestureGuideDomainDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var dao = new KeyGestureGuideDomainDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 setting = dao.SelectKeyMappings(keyActionKind, parameter);
             }
 
@@ -88,8 +88,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         private IEnumerable<string> GetLauncherItemKeyMappingStings(Guid launcherItemId)
         {
             KeyGestureSetting? setting = null;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new KeyGestureGuideDomainDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var dao = new KeyGestureGuideDomainDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 setting = dao.SelectLauncherKeyMappings(launcherItemId);
             }
 

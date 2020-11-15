@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 {
-    public class AboutElement : ElementBase
+    public class AboutElement: ElementBase
     {
         public AboutElement(EnvironmentParameters environmentParameters, IClipboardManager clipboardManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
@@ -144,6 +144,72 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
             ComponentsImpl.AddRange(GetApplicationItems());
             ComponentsImpl.AddRange(ToItems(AboutComponentKind.Library, components.Library));
             ComponentsImpl.AddRange(ToItems(AboutComponentKind.Resource, components.Resource));
+        }
+
+        public bool CheckCreateUninstallBatch(string uninstallBatchFilePath, UninstallTarget uninstallTargets)
+        {
+            if(uninstallTargets == UninstallTarget.None) {
+                Logger.LogInformation("アンインストール対象未選択");
+                return false;
+            }
+
+            if(string.IsNullOrWhiteSpace(uninstallBatchFilePath)) {
+                Logger.LogInformation("アンインストールバッチファイルパス未設定");
+                return false;
+            }
+
+            var path = Environment.ExpandEnvironmentVariables(uninstallBatchFilePath);
+            if(Directory.Exists(path)) {
+                Logger.LogInformation("アンインストールバッチファイルパスはディレクトリして存在する: {0}", path);
+                return false;
+            }
+
+            return true;
+        }
+
+        public void CreateUninstallBatch(string uninstallBatchFilePath, UninstallTarget uninstallTargets)
+        {
+            if(!CheckCreateUninstallBatch(uninstallBatchFilePath, uninstallTargets)) {
+                throw new InvalidOperationException();
+            }
+
+            FileUtility.MakeFileParentDirectory(uninstallBatchFilePath);
+            using(var stream = new FileStream(uninstallBatchFilePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
+                using var writer = new StreamWriter(stream, Encoding.UTF8);
+                writer.WriteLine("echo OFF");
+                writer.WriteLine("chcp 65001");
+                writer.WriteLine();
+
+                var deleteItems = new[] {
+                    new { Target = UninstallTarget.User, Directory = EnvironmentParameters.UserRoamingDirectory },
+                    new { Target = UninstallTarget.Machine, Directory = EnvironmentParameters.MachineDirectory },
+                    new { Target = UninstallTarget.Temporary, Directory = EnvironmentParameters.TemporaryDirectory },
+                    new { Target = UninstallTarget.Application, Directory = EnvironmentParameters.RootDirectory },
+                };
+
+                foreach(var deleteItem in deleteItems.Where(i => uninstallTargets.HasFlag(i.Target))) {
+                    writer.WriteLine("echo [{0}]", deleteItem.Target);
+                    writer.WriteLine("rmdir /S /Q {0}", CommandLine.Escape(deleteItem.Directory.FullName));
+                    writer.WriteLine();
+                }
+
+                if(uninstallTargets.HasFlag(UninstallTarget.Application)) {
+                    var startupRegister = new StartupRegister(LoggerFactory);
+                    if(startupRegister.Exists()) {
+                        var startupFilePath = startupRegister.GetStartupFilePath();
+                        writer.WriteLine("echo [{0}]", "STARTUP");
+                        writer.WriteLine("del \"{0}\"", CommandLine.Escape(startupFilePath));
+                        writer.WriteLine();
+                    }
+                }
+
+                if(uninstallTargets.HasFlag(UninstallTarget.Batch)) {
+                    writer.WriteLine("echo [{0}]", UninstallTarget.Batch);
+                    writer.WriteLine("echo {0}", "バッチファイル削除エラーは無視してください");
+                    writer.WriteLine("del /F \"%~f0\"");
+                    writer.WriteLine();
+                }
+            }
         }
 
         #endregion

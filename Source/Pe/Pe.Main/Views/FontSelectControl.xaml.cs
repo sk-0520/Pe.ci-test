@@ -329,7 +329,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         }
 
-        void newValueINotifyCollectionChanged_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void newValueINotifyCollectionChanged_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             //Do your stuff here.
         }

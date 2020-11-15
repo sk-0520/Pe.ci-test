@@ -195,13 +195,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             IEnumerable<LauncherHistoryData> histories;
             LauncherRedoData launcherRedoData;
 
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var launcherItemHistoriesEntityDao = new LauncherItemHistoriesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var launcherItemsEntityDao = new LauncherItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                var launcherItemHistoriesEntityDao = new LauncherItemHistoriesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
 
                 launcherItem = launcherItemsEntityDao.SelectLauncherItem(LauncherItemId);
                 fileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
@@ -232,15 +232,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             var result = base.Execute(fileData, environmentVariables, redoData, screen);
 
             if(result.Success) {
-                using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                    var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                    var launcherItemHistoriesEntityDao = new LauncherItemHistoriesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                using(var context = MainDatabaseBarrier.WaitWrite()) {
+                    var launcherItemsEntityDao = new LauncherItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                    var launcherItemHistoriesEntityDao = new LauncherItemHistoriesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
 
                     launcherItemsEntityDao.UpdateExecuteCountIncrement(LauncherItemId, DatabaseCommonStatus.CreateCurrentAccount());
 
                     var item = launcherItemsEntityDao.SelectLauncherItem(LauncherItemId);
                     if(item.Kind == LauncherItemKind.File) {
-                        var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                        var launcherFilesEntityDao = new LauncherFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                         var launcherFileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
 
                         launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option);
@@ -254,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
                         }
                     }
 
-                    commander.Commit();
+                    context.Commit();
                 }
             }
 

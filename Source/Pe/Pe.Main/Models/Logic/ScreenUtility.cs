@@ -114,9 +114,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
         }
 
-        public static bool RegisterDatabase(IScreen screen, IDatabaseCommander commander, IDatabaseStatementLoader databaseStatementLoader, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus, ILoggerFactory loggerFactory)
+        public static bool RegisterDatabase(IScreen screen, IDatabaseContext context, IDatabaseStatementLoader databaseStatementLoader, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus, ILoggerFactory loggerFactory)
         {
-            var screensDao = new ScreensEntityDao(commander, databaseStatementLoader, implementation, loggerFactory);
+            var screensDao = new ScreensEntityDao(context, databaseStatementLoader, implementation, loggerFactory);
             if(!screensDao.SelectExistsScreen(screen.DeviceName)) {
                 return screensDao.InsertScreen(screen, databaseCommonStatus);
             }

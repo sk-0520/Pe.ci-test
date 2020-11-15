@@ -46,15 +46,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             return result;
         }
 
-        void ExecuteCore(IDatabaseAccessor accessor, IReadOnlySetupDto dto, Action<IDatabaseCommander, IReadOnlySetupDto> ddl, Action<IDatabaseCommander, IReadOnlySetupDto> dml)
+        void ExecuteCore(IDatabaseAccessor accessor, IReadOnlySetupDto dto, Action<IDatabaseContext, IReadOnlySetupDto> ddl, Action<IDatabaseContext, IReadOnlySetupDto> dml)
         {
             if(accessor.DatabaseFactory.CreateImplementation().SupportedTransactionDDL) {
-                var result = accessor.Batch(commander => {
+                var result = accessor.Batch(context => {
                     Logger.LogDebug("DDL");
-                    ddl(commander, dto);
+                    ddl(context, dto);
 
                     Logger.LogDebug("DML");
-                    dml(commander, dto);
+                    dml(context, dto);
 
                     return true;
                 });
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             var start = DateTime.UtcNow;
 
             ExecuteCore(accessorPack.Main, dto, setupper.ExecuteMainDDL, setupper.ExecuteMainDML);
-            ExecuteCore(accessorPack.File, dto, setupper.ExecuteFileDDL, setupper.ExecuteFileDML);
+            ExecuteCore(accessorPack.Large, dto, setupper.ExecuteFileDDL, setupper.ExecuteFileDML);
             ExecuteCore(accessorPack.Temporary, dto, setupper.ExecuteTemporaryDDL, setupper.ExecuteTemporaryDML);
 
             var end = DateTime.UtcNow;
@@ -148,35 +148,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         }
 
 
-        private void Vacuum(IDatabaseCommander commander)
+        private void Vacuum(IDatabaseContext context)
         {
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
-            commander.Execute(statement);
+            context.Execute(statement);
         }
 
-        private void Reindex(IDatabaseCommander commander)
+        private void Reindex(IDatabaseContext context)
         {
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
-            commander.Execute(statement);
+            context.Execute(statement);
         }
 
-        private void Analyze(IDatabaseCommander commander)
+        private void Analyze(IDatabaseContext context)
         {
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
-            commander.Execute(statement);
+            context.Execute(statement);
         }
 
-        public void Tune(IDatabaseCommander commander)
+        public void Tune(IDatabaseContext context)
         {
-            Vacuum(commander);
-            Reindex(commander);
-            Analyze(commander);
+            Vacuum(context);
+            Reindex(context);
+            Analyze(context);
         }
 
-        public void CheckForeignKey(IDatabaseCommander commander)
+        public void CheckForeignKey(IDatabaseContext context)
         {
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
-            var table = commander.GetDataTable(statement);
+            var table = context.GetDataTable(statement);
             if(table.Rows.Count == 0) {
                 return;
             }

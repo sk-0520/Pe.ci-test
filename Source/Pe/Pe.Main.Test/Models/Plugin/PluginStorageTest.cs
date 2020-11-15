@@ -64,20 +64,20 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
         [TestInitialize]
         public void Initialize()
         {
-            using var commander = Test.DiContainer.Build<IMainDatabaseBarrier>().WaitWrite();
-            var pluginsEntityDao = Test.DiContainer.Build<PluginsEntityDao>(commander, commander.Implementation);
+            using var context = Test.DiContainer.Build<IMainDatabaseBarrier>().WaitWrite();
+            var pluginsEntityDao = Test.DiContainer.Build<PluginsEntityDao>(context, context.Implementation);
             if(pluginsEntityDao.SelecteExistsPlugin(this.Informations.PluginIdentifiers.PluginId)) {
                 return;
             }
             pluginsEntityDao.InsertPluginStateData(
                 new Main.Models.Data.PluginStateData() {
                     PluginId = this.Informations.PluginIdentifiers.PluginId,
-                    Name = this.Informations.PluginIdentifiers.PluginName,
+                    PluginName = this.Informations.PluginIdentifiers.PluginName,
                     State = Main.Models.Data.PluginState.Enable,
                 },
                 DatabaseCommonStatus.CreateCurrentAccount()
             );
-            commander.Commit();
+            context.Commit();
         }
 
         [TestMethod]

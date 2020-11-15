@@ -21,12 +21,14 @@ block BLOCK_LAYOUT_CONTENT
 		p 基本の配置先は
 			em(data-path="dir") %LOCALAPPDATA%\Pe\plugin\modules
 			| で、
-			em(data-path="dir") プラグインディレクトリ名
+			em(data-path="dir") プラグインID or プラグインディレクトリ名
 			| として配置します。
 		p PLUGIN.dll というプラグインがあれば、
-			samp 
-				em(data-path="file-lib") %LOCALAPPDATA%\Pe\plugin\modules\PLUGIN\PLUGIN.dll
+			ol
+				li: em(data-path="file-lib") %LOCALAPPDATA%\Pe\plugin\modules\プラグインID\PLUGIN.dll
+				li: em(data-path="file-lib") %LOCALAPPDATA%\Pe\plugin\modules\PLUGIN\PLUGIN.dll
 			| として配置します。
+		p プラグインディレクトリ名による配置は問題を起こす可能性があるのでプラグインIDによる配置を推奨します。
 
 		aside.bugs
 			p 今んとこ動けばいいや実装なのでアンインストール・自動アップデートなどの補助は Pe から実施しません、というか未実装。

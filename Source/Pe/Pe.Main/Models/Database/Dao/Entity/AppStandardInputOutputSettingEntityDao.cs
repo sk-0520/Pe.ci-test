@@ -10,24 +10,28 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    public class AppStandardInputOutputSettingEntityDto : CommonDtoBase
-    {
-        #region property
-
-        public Guid FontId { get; set; }
-        public string OutputForegroundColor { get; set; } = string.Empty;
-        public string OutputBackgroundColor { get; set; } = string.Empty;
-        public string ErrorForegroundColor { get; set; } = string.Empty;
-        public string ErrorBackgroundColor { get; set; } = string.Empty;
-        public bool IsTopmost { get; set; }
-
-        #endregion
-    }
-
     public class AppStandardInputOutputSettingEntityDao : EntityDaoBase
     {
-        public AppStandardInputOutputSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        #region define
+
+        private class AppStandardInputOutputSettingEntityDto: CommonDtoBase
+        {
+            #region property
+
+            public Guid FontId { get; set; }
+            public string OutputForegroundColor { get; set; } = string.Empty;
+            public string OutputBackgroundColor { get; set; } = string.Empty;
+            public string ErrorForegroundColor { get; set; } = string.Empty;
+            public string ErrorBackgroundColor { get; set; } = string.Empty;
+            public bool IsTopmost { get; set; }
+
+            #endregion
+        }
+
+        #endregion
+
+        public AppStandardInputOutputSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -47,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public Guid SelectStandardInputOutputSettingFontId()
         {
             var statement = LoadStatement();
-            return Commander.QueryFirst<Guid>(statement);
+            return Context.QueryFirst<Guid>(statement);
         }
 
         public SettingAppStandardInputOutputSettingData SelectSettingStandardInputOutputSetting()
@@ -56,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
             var statement = LoadStatement();
-            var dto = Commander.QueryFirst<AppStandardInputOutputSettingEntityDto>(statement);
+            var dto = Context.QueryFirst<AppStandardInputOutputSettingEntityDto>(statement);
             var data = new SettingAppStandardInputOutputSettingData() {
                 FontId = dto.FontId,
                 OutputForegroundColor = ToColor(dto.OutputForegroundColor),
@@ -83,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IsTopmost = data.IsTopmost,
             };
             commonStatus.WriteCommon(dto);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
 

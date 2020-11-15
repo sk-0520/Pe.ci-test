@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         #endregion
 
-        private void Item_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Item_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(Item.CurrentTime)) {
                 CurrentTime = Item.CurrentTime;

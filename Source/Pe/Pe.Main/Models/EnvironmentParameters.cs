@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             RootDirectory = rootDirectory;
 
 #if !PRODUCT
-            ApplicationBaseDirectory = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            ApplicationBaseDirectory = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!);
 #endif
             var versionConverter = new VersionConverter();
             var versionAppSettingFileName = "appsettings." + versionConverter.ConvertDisplayVersion(BuildStatus.Version, "-") + ".json";
@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// アプリケーションのディレクトリ。
         /// </summary>
-        public DirectoryInfo AssemblyDirectory { get; } = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+        public DirectoryInfo AssemblyDirectory { get; } = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!);
         /// <summary>
         /// 通常のプログラムディレクトリ。
         /// </summary>
@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// プラグインディレクトリ。
         /// </summary>
-        public DirectoryInfo UserPluginDirectory => CombineDirectory(true, UserSettingDirectory, "plugin");
+        private DirectoryInfo UserPluginDirectory => CombineDirectory(true, UserSettingDirectory, "plugin");
         /// <summary>
         /// プラグイン設定ディレクトリ。
         /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
@@ -206,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// ユーザー端末プラグイン用ディレクトリ。
         /// </summary>
-        public DirectoryInfo MachinePluginDirectory => CombineDirectory(true, MachineDirectory, "plugin");
+        private DirectoryInfo MachinePluginDirectory => CombineDirectory(true, MachineDirectory, "plugin");
         /// <summary>
         /// ユーザー端末プラグイン設定ディレクトリ。
         /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>

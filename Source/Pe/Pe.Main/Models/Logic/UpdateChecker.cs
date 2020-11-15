@@ -55,6 +55,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
                 //TODO: Serializer.cs に統合したい
                 var updateData = System.Text.Json.JsonSerializer.Deserialize<UpdateData>(content);
+                if(updateData == null) {
+                    Logger.LogError("復元失敗: {0}", content);
+                    return null;
+                }
                 var result = updateData.Items
                     .Where(i => i.Platform == ProcessArchitecture.ApplicationArchitecture)
                     .Where(i => i.MinimumVersion <= BuildStatus.Version)
