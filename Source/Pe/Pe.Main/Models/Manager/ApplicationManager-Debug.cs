@@ -60,8 +60,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //ShowAboutView();
             //DebugEnvironmentExecuteFile();
             //ShowFeedbackView();
-            Uninstall();
-            Exit(true);
+            //Uninstall();
+
+            //Exit(true);
         }
 
         void DebugCustomize()

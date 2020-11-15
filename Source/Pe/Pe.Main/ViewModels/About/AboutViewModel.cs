@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.About;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -167,6 +168,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
                 if(Model.CheckCreateUninstallBatch(UninstallBatchFilePath, UninstallTargets)) {
                     try {
                         Model.CreateUninstallBatch(UninstallBatchFilePath, UninstallTargets);
+
+                        try {
+                            var systemExecutor = new SystemExecutor();
+                            systemExecutor.OpenDirectoryWithFileSelect(UninstallBatchFilePath);
+                        } catch(Exception ex) {
+                            Logger.LogWarning(ex, ex.Message);
+                        }
+
                         ShowMessageRequest.Send(new CommonMessageDialogRequestParameter() {
                             Caption = "uninstall",
                             Message = "ok",
