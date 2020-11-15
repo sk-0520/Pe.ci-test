@@ -38,7 +38,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var addonPlugins = pluginContainer.Plugins.OfType<IAddon>().ToList();
             foreach(var addonId in addonIds) {
                 var addon = addonPlugins.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == addonId);
-                addons.Add(addon);
+                if(addon != null) {
+                    addons.Add(addon);
+                } else {
+                    Logger.LogWarning("アドオンプラグインが存在しない: {0}", addonId);
+                }
             }
             Addons = addons;
         }

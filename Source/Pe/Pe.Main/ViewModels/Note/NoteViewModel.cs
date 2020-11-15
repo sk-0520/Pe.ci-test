@@ -1173,7 +1173,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }

@@ -164,7 +164,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
         #endregion
 
 
-        private void SendStatus_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void SendStatus_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(SendStatus.State)) {
                 RaisePropertyChanged(nameof(ErrorMessage));

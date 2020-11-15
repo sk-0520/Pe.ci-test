@@ -485,7 +485,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             }, this, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
 
-        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }

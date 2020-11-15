@@ -277,7 +277,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #endregion
 
-        void LauncherFileViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        void LauncherFileViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(NowLoading)) {
                 if(NowLoading) {

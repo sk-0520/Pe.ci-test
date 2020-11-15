@@ -201,7 +201,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             Debug.Assert(commandLine.IsParsed);
 
             var applicationDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var rootDirectoryPath = Path.GetDirectoryName(applicationDirectory);
+            var rootDirectoryPath = Path.GetDirectoryName(applicationDirectory)!;
 
             return new ApplicationEnvironmentParameters(new DirectoryInfo(rootDirectoryPath), commandLine);
         }

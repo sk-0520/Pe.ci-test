@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels
 
         #endregion
 
-        private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Model_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(State)) {
                 RaisePropertyChanged(nameof(State));

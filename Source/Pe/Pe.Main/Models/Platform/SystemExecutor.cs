@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #region function
 
-        public Process RunDLL(string command)
+        public Process? RunDLL(string command)
         {
             var rundll = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "rundll32.exe");
             var startupInfo = new ProcessStartInfo(rundll, command);

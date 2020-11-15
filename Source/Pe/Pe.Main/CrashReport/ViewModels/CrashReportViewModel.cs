@@ -163,7 +163,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
 
         #endregion
 
-        private void SendStatus_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void SendStatus_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(SendStatus.State)) {
                 RaisePropertyChanged(nameof(ErrorMessage));

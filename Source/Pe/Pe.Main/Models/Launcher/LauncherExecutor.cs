@@ -173,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(!string.IsNullOrWhiteSpace(pathParameter.WorkDirectoryPath)) {
                 startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(pathParameter.WorkDirectoryPath);
             } else if(Path.IsPathRooted(startInfo.FileName) && FileUtility.Exists(startInfo.FileName)) {
-                startInfo.WorkingDirectory = Path.GetDirectoryName(startInfo.FileName);
+                startInfo.WorkingDirectory = Path.GetDirectoryName(startInfo.FileName)!;
             }
 
             // 環境変数

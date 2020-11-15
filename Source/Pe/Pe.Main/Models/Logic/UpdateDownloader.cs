@@ -60,6 +60,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             Logger.LogInformation("ハッシュ: {0}, {1}", updateItem.ArchiveHashKind, updateItem.ArchiveHashValue);
             using(var hashAlgorithm = HashAlgorithm.Create(updateItem.ArchiveHashKind)) {
+                if(hashAlgorithm == null) {
+                    Logger.LogError("ハッシュ不明: {0}", updateItem.ArchiveHashKind);
+                    return false;
+                }
+
                 using var stream = targetFile.OpenRead();
 
                 var buffer = new byte[1024 * 4];
@@ -74,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     userNotifyProgress.Report(totalReadSize / (double)updateItem.ArchiveSize, string.Empty);
                 }
                 hashAlgorithm.TransformFinalBlock(buffer, 0, 0);
-                var hash = ToCompareValue(BitConverter.ToString(hashAlgorithm.Hash));
+                var hash = ToCompareValue(BitConverter.ToString(hashAlgorithm.Hash!));
 
                 Logger.LogInformation("算出ハッシュ: {0}", hash);
                 userNotifyProgress.Report(1, hash);

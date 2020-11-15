@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public void Register()
         {
-            var moduleName = Process.GetCurrentProcess().MainModule.ModuleName;
+            var moduleName = Process.GetCurrentProcess().MainModule!.ModuleName!;
             var moduleHandle = NativeMethods.GetModuleHandle(moduleName);
             HookHandle = RegisterImpl(HookProc, moduleHandle);
         }
