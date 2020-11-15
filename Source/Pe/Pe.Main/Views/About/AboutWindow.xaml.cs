@@ -22,11 +22,13 @@ namespace ContentTypeTextNet.Pe.Main.Views.About
         public AboutWindow()
         {
             InitializeComponent();
+            DialogRequestReceiver = new DialogRequestReceiver(this);
         }
 
         #region property
 
         CommandStore CommandStore { get; } = new CommandStore();
+        DialogRequestReceiver DialogRequestReceiver { get; }
 
         #endregion
 
@@ -34,6 +36,19 @@ namespace ContentTypeTextNet.Pe.Main.Views.About
 
         public ICommand CloseCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
             () => Close()
+        ));
+
+        public ICommand FileSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+                DialogRequestReceiver.ReceiveFileSystemSelectDialogRequest(o);
+            }
+        ));
+
+        public ICommand OpenCommonMessageDialogCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+                var parameter = (CommonMessageDialogRequestParameter)o.Parameter;
+                MessageBox.Show(Window.GetWindow(this), parameter.Message, parameter.Caption, parameter.Button, parameter.Icon, parameter.DefaultResult, parameter.Options);
+            }
         ));
 
         #endregion

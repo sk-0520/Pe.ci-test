@@ -248,6 +248,71 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   バッチ作成先 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_Uninstall_BatchFile_Header_A {
+            get {
+                return ResourceManager.GetString("String_About_Uninstall_BatchFile_Header_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アンインストールバッチ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_Uninstall_Create_Caption {
+            get {
+                return ResourceManager.GetString("String_About_Uninstall_Create_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   バッチを作成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_Uninstall_Create_Command_A {
+            get {
+                return ResourceManager.GetString("String_About_Uninstall_Create_Command_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   選択したファイル・データを削除するためのバッチファイルを作成します。
+        ///Pe 終了後にバッチファイルを実行することで削除できます。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_Uninstall_Create_Description {
+            get {
+                return ResourceManager.GetString("String_About_Uninstall_Create_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アンインストールバッチファイルを作成しました。
+        ///Pe を終了してから実行してください に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_Uninstall_Create_Message {
+            get {
+                return ResourceManager.GetString("String_About_Uninstall_Create_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アンインストール に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_Uninstall_Header {
+            get {
+                return ResourceManager.GetString("String_About_Uninstall_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   対象データ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_Uninstall_Target_Header_A {
+            get {
+                return ResourceManager.GetString("String_About_Uninstall_Target_Header_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   使用する に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Accept_Affirmative {
@@ -2044,6 +2109,114 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_TimeoutOrCount_A {
             get {
                 return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.TimeoutOrCount_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アプリケーション に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UninstallTarget_Application {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Application", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アプリケーション(_A) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UninstallTarget_Application_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Application_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アンインストールバッチ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UninstallTarget_Batch {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Batch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アンインストールバッチ(_B) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UninstallTarget_Batch_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Batch_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   端末データ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UninstallTarget_Machine {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Machine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   端末データ(_M) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UninstallTarget_Machine_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Machine_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   💩 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UninstallTarget_None {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   💩 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UninstallTarget_None_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.None_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   一時データ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UninstallTarget_Temporary {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Temporary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   一時データ(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UninstallTarget_Temporary_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Temporary_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ユーザーデータ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UninstallTarget_User {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ユーザーデータ(_U) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UninstallTarget_User_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.User_A", resourceCulture);
             }
         }
         

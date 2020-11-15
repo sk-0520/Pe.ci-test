@@ -2049,4 +2049,64 @@
   <data name="String_Setting_Plugins_State_Uninstall_Execute_Message" xml:space="preserve">
     <value>アンインストールには再起動が必要です</value>
   </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Application" xml:space="preserve">
+    <value>アプリケーション</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Application_A" xml:space="preserve">
+    <value>アプリケーション(_A)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Batch" xml:space="preserve">
+    <value>アンインストールバッチ</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Batch_A" xml:space="preserve">
+    <value>アンインストールバッチ(_B)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Machine" xml:space="preserve">
+    <value>端末データ</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Machine_A" xml:space="preserve">
+    <value>端末データ(_M)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.None" xml:space="preserve">
+    <value>💩</value>
+    <comment>使用しない</comment>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.None_A" xml:space="preserve">
+    <value>💩</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Temporary" xml:space="preserve">
+    <value>一時データ</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.Temporary_A" xml:space="preserve">
+    <value>一時データ(_T)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.User" xml:space="preserve">
+    <value>ユーザーデータ</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UninstallTarget.User_A" xml:space="preserve">
+    <value>ユーザーデータ(_U)</value>
+  </data>
+  <data name="String_About_Uninstall_BatchFile_Header_A" xml:space="preserve">
+    <value>バッチ作成先</value>
+  </data>
+  <data name="String_About_Uninstall_Create_Caption" xml:space="preserve">
+    <value>アンインストールバッチ</value>
+  </data>
+  <data name="String_About_Uninstall_Create_Command_A" xml:space="preserve">
+    <value>バッチを作成</value>
+  </data>
+  <data name="String_About_Uninstall_Create_Description" xml:space="preserve">
+    <value>選択したファイル・データを削除するためのバッチファイルを作成します。
+Pe 終了後にバッチファイルを実行することで削除できます。</value>
+  </data>
+  <data name="String_About_Uninstall_Create_Message" xml:space="preserve">
+    <value>アンインストールバッチファイルを作成しました。
+Pe を終了してから実行してください</value>
+  </data>
+  <data name="String_About_Uninstall_Header" xml:space="preserve">
+    <value>アンインストール</value>
+  </data>
+  <data name="String_About_Uninstall_Target_Header_A" xml:space="preserve">
+    <value>対象データ</value>
+  </data>
 </root>

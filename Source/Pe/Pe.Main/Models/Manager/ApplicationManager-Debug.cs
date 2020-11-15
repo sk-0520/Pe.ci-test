@@ -60,6 +60,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //ShowAboutView();
             //DebugEnvironmentExecuteFile();
             //ShowFeedbackView();
+            //Uninstall();
+
+            //Exit(true);
         }
 
         void DebugCustomize()
@@ -221,6 +224,15 @@ echo end
         public void DebugStartupEnd()
         {
             //DebugSetting();
+        }
+
+        void Uninstall()
+        {
+            var about = ApplicationDiContainer.Build<Element.About.AboutElement>();
+            var path = @"x:a.bat";
+            var uninstallTarget = UninstallTarget.Application | UninstallTarget.Batch;
+            uninstallTarget |= UninstallTarget.User | UninstallTarget.Machine | UninstallTarget.Temporary;
+            about.CreateUninstallBatch(path, uninstallTarget);
         }
 
         #endregion
