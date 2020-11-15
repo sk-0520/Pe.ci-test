@@ -9,7 +9,8 @@
 					{
 						"subject": "NET 5 に対応しました",
 						"comments": [
-							".NET Core の時もそうだったけど単一実行は .NET Framework に比べてクッソらくちん"
+							".NET Core の時もそうだったけど単一実行は .NET Framework に比べてクッソらくちん",
+							"NuGet の一部は .NET Core 3 のものを流用"
 						]
 					}
 				]
