@@ -47,7 +47,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "System.Text.Encoding.CodePages 4.7.1 -> 5.0.0"
 					},
 					{
 						"revision": "",
