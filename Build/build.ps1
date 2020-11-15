@@ -141,7 +141,6 @@ try {
 
 	foreach ($platform in $Platforms) {
 		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=Release /p:Platform=$platform /p:DefineConstants=$define /t:Rebuild
-		dotnet build   Source/Pe/Pe.sln                 /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform
 		dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --output Output/Release/$platform/Pe/bin --self-contained true
 
 		if ($ProductMode) {
