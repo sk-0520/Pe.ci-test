@@ -47,14 +47,17 @@
 				"logs": [
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "System.Text.Encoding.CodePages 4.7.1 -> 5.0.0"
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "System.Management 4.7.0 -> 5.0.0"
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "System.DirectoryServices.AccountManagement 4.7.0 -> 5.0.0"
 					},
 					{
