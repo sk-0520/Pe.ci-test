@@ -17,6 +17,8 @@ foreach ($scriptFileName in $scriptFileNames) {
 }
 $rootDirectory = Split-Path -Path $currentDirPath -Parent
 
+$sourceDirectoryPath = Join-Path "$rootDirectory" "Source/Pe"
+
 Write-Output "ProductMode = $ProductMode"
 Write-Output "IgnoreChanged = $IgnoreChanged"
 Write-Output "BuildType = $BuildType"
@@ -139,9 +141,18 @@ try {
 	# ; を扱う https://docs.microsoft.com/ja-jp/visualstudio/msbuild/msbuild-special-characters?view=vs-2015&redirectedfrom=MSDN
 	$define = $defines -join '%3B'
 
+	$testDirectories = Get-ChildItem -Path $sourceDirectoryPath -Directory -Filter "*.Test" -Recurse
+
 	foreach ($platform in $Platforms) {
 		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=Release /p:Platform=$platform /p:DefineConstants=$define /t:Rebuild
 		dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --output Output/Release/$platform/Pe/bin --self-contained true
+		
+		# テストプロジェクトのビルド
+		foreach($testDirectory in $testDirectories) {
+			$testProjectFilePath = (Join-Path $testDirectory.FullName $testDirectory.Name) + ".csproj"
+			dotnet build $testProjectFilePath /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform
+		}
+		
 
 		if ($ProductMode) {
 			$productTargets = @('etc', 'doc', 'bat')
