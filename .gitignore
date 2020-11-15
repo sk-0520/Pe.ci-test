@@ -42,3 +42,4 @@ node_modules/
 /Source/Pe/Pe.Main/etc/appsettings.debug.json
 /Source/Pe/Pe.Main/etc/appsettings.*-*-*.json
 /Source/Pe/Pe.Main/doc/help/
+desktop.ini
