@@ -193,6 +193,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
                     writer.WriteLine();
                 }
 
+                if(uninstallTargets.HasFlag(UninstallTarget.Application)) {
+                    var startupRegister = new StartupRegister(LoggerFactory);
+                    if(startupRegister.Exists()) {
+                        var startupFilePath = startupRegister.GetStartupFilePath();
+                        writer.WriteLine("echo [{0}]", "STARTUP");
+                        writer.WriteLine("del \"{0}\"", CommandLine.Escape(startupFilePath));
+                        writer.WriteLine();
+                    }
+                }
+
                 if(uninstallTargets.HasFlag(UninstallTarget.Batch)) {
                     writer.WriteLine("echo [{0}]", UninstallTarget.Batch);
                     writer.WriteLine("echo {0}", "バッチファイル削除エラーは無視してください");
