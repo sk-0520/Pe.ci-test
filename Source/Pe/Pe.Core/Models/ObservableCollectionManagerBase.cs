@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <see cref="ObservableCollection"/> の変更通知を受け取ってなんかする人。
     /// <para>管理者が誰かもうワケわからんことになるのです。</para>
     /// </summary>
-    public abstract class ObservableCollectionManagerBase<TValue> : NotifyPropertyBase
+    public abstract class ObservableCollectionManagerBase<TValue>: NotifyPropertyBase
     {
         private ObservableCollectionManagerBase(IReadOnlyList<TValue> collection, INotifyCollectionChanged collectionNotifyCollectionChanged)
         {
@@ -137,18 +137,26 @@ namespace ContentTypeTextNet.Pe.Core.Models
             switch(e.Action) {
                 case NotifyCollectionChangedAction.Add:
                     if(e.NewStartingIndex == 0 && Collection.Count == 0) {
-                        AddItems(ConvertList(e.NewItems));
+                        if(e.NewItems != null) {
+                            AddItems(ConvertList(e.NewItems));
+                        }
                     } else {
-                        InsertItems(e.NewStartingIndex, ConvertList(e.NewItems));
+                        if(e.NewItems != null) {
+                            InsertItems(e.NewStartingIndex, ConvertList(e.NewItems));
+                        }
                     }
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    RemoveItems(ConvertList(e.OldItems), e.OldStartingIndex);
+                    if(e.OldItems != null) {
+                        RemoveItems(ConvertList(e.OldItems), e.OldStartingIndex);
+                    }
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    ReplaceItems(ConvertList(e.NewItems), ConvertList(e.OldItems));
+                    if(e.NewItems != null && e.OldItems != null) {
+                        ReplaceItems(ConvertList(e.NewItems), ConvertList(e.OldItems));
+                    }
                     break;
 
                 case NotifyCollectionChangedAction.Move:
@@ -207,7 +215,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
-        private void Collection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void Collection_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             CollectionChanged(e);
         }

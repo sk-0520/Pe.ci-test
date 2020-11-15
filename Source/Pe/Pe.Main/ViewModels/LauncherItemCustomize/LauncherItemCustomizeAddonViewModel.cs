@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-        private void NotifyPropertyChanged_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void NotifyPropertyChanged_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             RaisePropertyChanged(e.PropertyName);
         }

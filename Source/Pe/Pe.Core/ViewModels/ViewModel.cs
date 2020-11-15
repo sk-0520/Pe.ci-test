@@ -182,7 +182,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             var context = new ValidationContext(this) { MemberName = propertyName };
             var validationErrors = new List<ValidationResult>();
             if(!Validator.TryValidateProperty(value, context, validationErrors)) {
-                var errors = validationErrors.Select(error => error.ErrorMessage);
+                var errors = validationErrors.Select(error => error.ErrorMessage ?? string.Empty);
                 ErrorsContainer.SetErrors(propertyName, errors);
             } else {
                 ErrorsContainer.ClearErrors(propertyName);
@@ -396,7 +396,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
-        public System.Collections.IEnumerable GetErrors(string propertyName)
+        public System.Collections.IEnumerable GetErrors(string? propertyName)
         {
             return ErrorsContainer.GetErrors(propertyName);
         }

@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             }
         }
 
-        void MergeErrorItemsSourceValueINotifyCollectionChanged_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void MergeErrorItemsSourceValueINotifyCollectionChanged_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         { }
 
         #endregion
@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             }
         }
 
-        void RemoveErrorItemsSourceValueINotifyCollectionChanged_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void RemoveErrorItemsSourceValueINotifyCollectionChanged_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         { }
 
         #endregion

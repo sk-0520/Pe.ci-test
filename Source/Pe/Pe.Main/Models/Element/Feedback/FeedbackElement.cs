@@ -121,13 +121,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                         var rawResponse = await result.Content.ReadAsStringAsync();
                         var response = JsonSerializer.Deserialize<FeedbackResponse>(rawResponse);
 
-                        if(response.Success) {
+                        if(response != null && response.Success) {
                             SendStatus.State = RunningState.End;
                             Logger.LogInformation("BODY: {0}", rawResponse);
                             return;
                         } else {
-                            Logger.LogError(response.Message);
-                            ErrorMessage = response.Message;
+                            var msg = response?.Message ?? "応答データ不明"; //TODO: ローカライズ
+                            Logger.LogError(msg);
+                            ErrorMessage = msg;
                             SendStatus.State = RunningState.Error;
                         }
 

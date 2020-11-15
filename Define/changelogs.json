@@ -38,6 +38,15 @@
 					},
 					{
 						"revision": "",
+						"subject": "#701: .NET 5 対応",
+						"comments": [
+							"ロギング処理・アプリケーション構成ファイルのアップデートはこのタイミングだと無理無理",
+							"時間あるときに対応する",
+							"アップデート処理の成否は試験してない"
+						]
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
@@ -47,15 +56,18 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "System.Text.Encoding.CodePages 4.7.1 -> 5.0.0"
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "System.Management 4.7.0 -> 5.0.0"
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "System.DirectoryServices.AccountManagement 4.7.0 -> 5.0.0"
 					},
 					{
 						"revision": "",

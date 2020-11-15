@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using System.Runtime.Serialization.Json;
+using System.Diagnostics.CodeAnalysis;
 
 #if ENABLED_NETCoreJSON
 using System.Text.Json;
@@ -82,6 +83,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+        /// <summary>
+        /// 復元処理。
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        /// <exception cref="SerializationException"></exception>
         public abstract TResult Load<TResult>(Stream stream);
         public abstract void Save(object value, Stream stream);
 
@@ -162,7 +170,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             using(var reader = GetReader(stream)) {
                 var serializer = new DataContractJsonSerializer(typeof(TResult));
-                return (TResult)serializer.ReadObject(stream);
+                var rawResult = serializer.ReadObject(stream);
+
+                if(rawResult is TResult result) {
+                    return result;
+                }
+
+                throw new SerializationException();
             }
         }
 
@@ -208,7 +222,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             using(var reader = XmlReader.Create(stream, CreateXmlReaderSettings())) {
                 var serializer = new System.Xml.Serialization.XmlSerializer(typeof(TResult));
-                return (TResult)serializer.Deserialize(reader);
+                var rawResult = serializer.Deserialize(stream);
+
+                if(rawResult is TResult result) {
+                    return result;
+                }
+
+                throw new SerializationException();
             }
         }
 
@@ -234,7 +254,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             using(var reader = XmlReader.Create(stream, CreateXmlReaderSettings())) {
                 var serializer = new DataContractSerializer(typeof(TResult));
-                return (TResult)serializer.ReadObject(reader);
+                var rawResult = serializer.ReadObject(stream);
+
+                if(rawResult is TResult result) {
+                    return result;
+                }
+
+                throw new SerializationException();
             }
         }
 
@@ -259,7 +285,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var quotas = new XmlDictionaryReaderQuotas();
             using(var reader = XmlDictionaryReader.CreateBinaryReader(stream, quotas)) {
                 var serializer = new DataContractSerializer(typeof(TResult));
-                return (TResult)serializer.ReadObject(reader);
+                var rawResult = serializer.ReadObject(stream);
+
+                if(rawResult is TResult result) {
+                    return result;
+                }
+
+                throw new SerializationException();
             }
         }
 

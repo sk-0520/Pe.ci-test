@@ -97,11 +97,11 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
                             var rawResponse = await result.Content.ReadAsStringAsync();
                             var response = JsonSerializer.Deserialize<CrashReportResponse>(rawResponse);
 
-                            if(response.Success) {
+                            if(response != null && response.Success) {
                                 SendStatus.State = RunningState.End;
                                 Logger.LogInformation("BODY: {0}", rawResponse);
                             } else {
-                                ErrorMessage = response.Message;
+                                ErrorMessage = response?.Message ?? "応答データ不明"; //TODO: ローカライズ
                                 SendStatus.State = RunningState.Error;
                             }
 

@@ -408,7 +408,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
                 case PluginPersistentFormat.Json: {
                         try {
-                            value = JsonSerializer.Deserialize<TValue>(data.Value);
+                            value = JsonSerializer.Deserialize<TValue>(data.Value)!;
                             return true;
                         } catch(Exception ex) {
                             Logger.LogError(ex, ex.Message);

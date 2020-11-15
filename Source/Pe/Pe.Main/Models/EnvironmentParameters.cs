@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             RootDirectory = rootDirectory;
 
 #if !PRODUCT
-            ApplicationBaseDirectory = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            ApplicationBaseDirectory = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!);
 #endif
             var versionConverter = new VersionConverter();
             var versionAppSettingFileName = "appsettings." + versionConverter.ConvertDisplayVersion(BuildStatus.Version, "-") + ".json";
@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// アプリケーションのディレクトリ。
         /// </summary>
-        public DirectoryInfo AssemblyDirectory { get; } = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+        public DirectoryInfo AssemblyDirectory { get; } = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!);
         /// <summary>
         /// 通常のプログラムディレクトリ。
         /// </summary>

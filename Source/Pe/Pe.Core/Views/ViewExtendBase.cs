@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             ExtendData.PropertyChanged -= ExtendData_PropertyChanged;
         }
 
-        private void ExtendData_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ExtendData_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             PropertyChangedHooker.Execute(e, ChangedExtendProperty);
         }

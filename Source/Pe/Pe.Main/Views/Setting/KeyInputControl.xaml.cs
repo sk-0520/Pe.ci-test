@@ -249,7 +249,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
             }
         }
 
-        void ModifierKeyItemsSourceValueINotifyCollectionChanged_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void ModifierKeyItemsSourceValueINotifyCollectionChanged_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         { }
 
         #endregion
@@ -298,7 +298,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
             }
         }
 
-        void KeyItemsSourceValueINotifyCollectionChanged_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void KeyItemsSourceValueINotifyCollectionChanged_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         { }
 
         #endregion
