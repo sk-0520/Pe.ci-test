@@ -112,6 +112,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
             ThrowIfDisposed();
 
             if(FileSystemWatcher == null) {
+                Debug.Assert(WatchParameter.File.DirectoryName != null);
+
                 FileSystemWatcher = new FileSystemWatcher() {
                     Path = WatchParameter.File.DirectoryName,
                     Filter = WatchParameter.File.Name,

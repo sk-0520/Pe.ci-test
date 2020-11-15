@@ -16,10 +16,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// ファイルパスを元にディレクトリを作成
         /// </summary>
         /// <param name="path">ファイルパス</param>
-        /// <returns>ディレクトリパス</returns>
+        /// <returns>ディレクトリパス。<paramref name="path"/>から親ディレクトリが判定できなかった場合はから文字列。</returns>
         public static string MakeFileParentDirectory(string path)
         {
             var dirPath = Path.GetDirectoryName(path);
+            if(dirPath == null) {
+                return string.Empty;
+            }
             var dirInfo = Directory.CreateDirectory(dirPath);
             return dirInfo.FullName;
         }

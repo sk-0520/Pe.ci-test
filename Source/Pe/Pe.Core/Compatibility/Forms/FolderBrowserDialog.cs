@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         ///  <see cref="Component"/> を格納している <see cref="IContainer"/> を取得します。
         /// </summary>
         [BrowsableAttribute(false)]
-        public IContainer Container { get { return Dialog.Container; } }
+        public IContainer? Container { get { return Dialog.Container; } }
 
         /// <summary>
         /// ダイアログ ボックスのツリー ビュー コントロールの上部に表示する説明テキストを取得または設定します。
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         /// <see cref="Component"/> の <see cref="ISite"/> を取得または設定します。
         /// </summary>
         [BrowsableAttribute(false)]
-        public virtual ISite Site
+        public virtual ISite? Site
         {
             get { return Dialog.Site; }
             set { Dialog.Site = value; }
