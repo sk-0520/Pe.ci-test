@@ -9,6 +9,7 @@
 
   xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+  xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
   Height="500"
@@ -187,7 +188,7 @@
             <Separator />
 
             <StackPanel Margin="{StaticResource AllMargin}">
-              <TextBlock Style="{StaticResource Header}" Text="uninstall" />
+              <TextBlock Style="{StaticResource Header}" Text="{Binding Resources.String_About_Uninstall_Header, Source={x:Static app_main:CultureService.Instance}}" />
 
               <StackPanel Margin="{StaticResource HalfMargin}" Grid.IsSharedSizeScope="True">
                 <Grid>
@@ -196,14 +197,14 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Content="data" />
-                  <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetUser}" Content="user" />
-                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetMachine}" Content="machine" />
-                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetTemporary}" Content="temp" />
-                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetBatch}" Content="batch" />
-                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetApplication}" Content="app" />
-                  </StackPanel>
+                  <Label Grid.Column="0" Content="{Binding Resources.String_About_Uninstall_Target_Header_A, Source={x:Static app_main:CultureService.Instance}}" />
+                  <WrapPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal">
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetUser}" Content="{Binding Source={x:Static app_main_models_data:UninstallTarget.User}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetMachine}" Content="{Binding Source={x:Static app_main_models_data:UninstallTarget.Machine}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetTemporary}" Content="{Binding Source={x:Static app_main_models_data:UninstallTarget.Temporary}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetBatch}" Content="{Binding Source={x:Static app_main_models_data:UninstallTarget.Application}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding UninstallTargetApplication}" Content="{Binding Source={x:Static app_main_models_data:UninstallTarget.Batch}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
+                  </WrapPanel>
                 </Grid>
 
                 <Grid>
@@ -213,7 +214,7 @@
                     <ColumnDefinition Width="Auto" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Content="dir" />
+                  <Label Grid.Column="0" Content="{Binding Resources.String_About_Uninstall_BatchFile_Header_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <TextBox Grid.Column="1" Style="{StaticResource Horizontal-TextBox}" Text="{Binding UninstallBatchFilePath}" />
                   <Button Grid.Column="2" Command="{Binding SelectUninstallBatchFilePathCommand}">
                     <Control Template="{StaticResource App-Image-File}" Style="{StaticResource Image-Small}" />
@@ -221,8 +222,8 @@
                 </Grid>
 
                 <StackPanel HorizontalAlignment="Right" Margin="{StaticResource AllMargin}">
-                  <Button Command="{Binding CreateUninstallBatchCommand}" Content="make" />
-                  <TextBlock />
+                  <Button Command="{Binding CreateUninstallBatchCommand}" Content="{Binding Resources.String_About_Uninstall_Create_Command_A, Source={x:Static app_main:CultureService.Instance}}" />
+                  <TextBlock Text="{Binding Resources.String_About_Uninstall_Create_Description, Source={x:Static app_main:CultureService.Instance}}" />
                 </StackPanel>
               </StackPanel>
 
