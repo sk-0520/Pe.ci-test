@@ -396,6 +396,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StopHook();
             UninitializeSystem();
 
+            KeyActionChecker.Reset();
+            NotifyManagerImpl.ClearAllLogs();
+            KeyboardNotifyLogId = Guid.Empty;
+
             if(CommandElement != null) {
                 if(CommandElement.ViewCreated) {
                     CommandElement.HideView(true);
