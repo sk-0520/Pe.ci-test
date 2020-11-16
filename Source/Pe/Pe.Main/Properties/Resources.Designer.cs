@@ -886,6 +886,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   自動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Converter_SettingCultureNameConverter_DisplayName_Auto {
+            get {
+                return ResourceManager.GetString("String_Converter_SettingCultureNameConverter_DisplayName_Auto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   OS設定に合わせる に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Converter_SettingCultureNameConverter_Name_Auto {
+            get {
+                return ResourceManager.GetString("String_Converter_SettingCultureNameConverter_Name_Auto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   自動送信待機中... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_CrashReport_AutoSendWaiting {
