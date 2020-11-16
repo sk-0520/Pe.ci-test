@@ -64,7 +64,13 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "Microsoft.Extensions.* の .NET 5 対応",
+						"comments": [
+							"Microsoft.Extensions.Configuration.Binder [NEW] 5.0.0",
+							"Microsoft.Extensions.Configuration.Json 3.1.9 -> 5.0.0",
+							"Microsoft.Extensions.Logging 3.1.9 -> 5.0.0",
+							".NET 5 にたぶん完全移行できた"
+						]
 					},
 					{
 						"revision": "",
