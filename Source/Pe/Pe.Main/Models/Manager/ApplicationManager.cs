@@ -1591,7 +1591,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             BackupSettings(
                 environmentParameters.UserSettingDirectory,
                 environmentParameters.UserBackupDirectory,
-                DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"),
+                DateTime.Now.ToString("yyyy-MM-ddTHH-mm-ss"),
                 environmentParameters.ApplicationConfiguration.Backup.SettingCount,
                 userBackupDirectoryPath
             );

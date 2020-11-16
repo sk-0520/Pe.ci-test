@@ -8,8 +8,8 @@
 				"logs": [
 					{
 						"revision": "",
-						"class": "",
-						"subject": ""
+						"class": "compatibility",
+						"subject": "#712 対応によりバックアップデータ周りのファイル名が変更されます"
 					},
 					{
 						"revision": "",
@@ -30,7 +30,7 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#712: タイムスタンプを使用するファイル名の年月と時間の間を _ じゃなくて T にする"
 					},
 					{
 						"revision": "",
