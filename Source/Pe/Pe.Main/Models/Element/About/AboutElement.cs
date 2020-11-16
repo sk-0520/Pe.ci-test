@@ -67,7 +67,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
                         Name = ApplicationConfiguration.General.LicenseName,
                         Uri = ApplicationConfiguration.General.LicenseUri.ToString(),
                     },
-                    Comment = $"{BuildStatus.BuildType}: {versionConverter.ConvertNormalVersion(BuildStatus.Version)} - {BuildStatus.Revision}"
+                    Comment = string.Join(
+                        Environment.NewLine,
+                        new [] {
+                            $"{BuildStatus.BuildType}: {versionConverter.ConvertNormalVersion(BuildStatus.Version)} - {BuildStatus.Revision}",
+                            $"CLR: {Environment.Version}",
+                        }
+                    )
                 },
             };
 

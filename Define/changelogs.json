@@ -26,7 +26,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#710: バージョン情報にCLRのバージョンを表示する"
 					},
 					{
 						"revision": "",
