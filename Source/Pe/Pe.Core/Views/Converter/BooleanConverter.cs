@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 using System.Windows;
@@ -19,11 +20,10 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
         public T True { get; set; }
         public T False { get; set; }
 
+        [return: MaybeNull]
         public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
             return value is bool && ((bool)value) ? True : False;
-#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
         }
 
         public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

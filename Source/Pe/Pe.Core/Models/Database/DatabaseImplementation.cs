@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
@@ -36,6 +37,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
+        [return: MaybeNull]
         T GetNullValue<T>();
 
         /// <summary>
@@ -80,6 +82,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="this"></param>
         /// <param name="value"></param>
         /// <returns></returns>
+        [return: MaybeNull]
         public static TValue ToNullValue<TValue>(this IDatabaseImplementation @this, TValue value)
         {
             if(@this == null) {
@@ -123,11 +126,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         /// <inheritdoc cref="IDatabaseImplementation.GetNullValue(Type)"/>
+        [return: MaybeNull]
         public T GetNullValue<T>()
         {
-#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
             return (T)GetNullValue(typeof(T));
-#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
         }
 
         /// <inheritdoc cref="IDatabaseImplementation.IsNull(object?)"/>

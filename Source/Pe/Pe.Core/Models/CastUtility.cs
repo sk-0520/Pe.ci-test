@@ -56,11 +56,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static TResult AsFunc<TCast, TResult>(object arg, Func<TCast, TResult> func)
             where TCast : class
         {
-#pragma warning disable CS8653 // 既定の式は、型パラメーターに null 値を導入します。
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-            return AsFunc<TCast, TResult>(arg, func, default(TResult));
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-#pragma warning restore CS8653 // 既定の式は、型パラメーターに null 値を導入します。
+            return AsFunc<TCast, TResult>(arg, func, default!);
         }
 
         /// <summary>

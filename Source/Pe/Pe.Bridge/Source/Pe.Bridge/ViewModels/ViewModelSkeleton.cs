@@ -81,13 +81,9 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
         protected virtual bool SetPropertyValue<TValue>(object obj, TValue value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string notifyPropertyName = "")
         {
             var type = obj.GetType();
-            var propertyInfo = type.GetProperty(targetMemberName);
+            var propertyInfo = type.GetProperty(targetMemberName)!;
 
-#pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
             var nowValue = (TValue)propertyInfo.GetValue(obj);
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-#pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
 
             if(!Equals(nowValue, value)) {
 

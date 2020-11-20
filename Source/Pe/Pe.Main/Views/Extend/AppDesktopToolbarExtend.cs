@@ -243,9 +243,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             View.MouseLeave += View_MouseLeave;
 
             AutoHideTimer = new DispatcherTimer();
-#pragma warning disable CS8622 // パラメーターの型における参照型の Null 許容性が、対象のデリゲートと一致しません。
             AutoHideTimer.Tick += TimerAutoHide_Tick;
-#pragma warning restore CS8622 // パラメーターの型における参照型の Null 許容性が、対象のデリゲートと一致しません。
         }
 
         #region property
@@ -892,7 +890,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             }
         }
 
-        void TimerAutoHide_Tick(object sender, EventArgs e)
+        void TimerAutoHide_Tick(object? sender, EventArgs e)
         {
             if(!IsEnabledWindowHandle) {
                 return;

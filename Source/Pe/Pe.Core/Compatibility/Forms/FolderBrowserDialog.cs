@@ -115,9 +115,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
             if(!IsDisposed) {
                 if(Dialog != null) {
                     Dialog.Dispose();
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-                    Dialog = null;
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
+                    Dialog = null!;
                 }
             }
 

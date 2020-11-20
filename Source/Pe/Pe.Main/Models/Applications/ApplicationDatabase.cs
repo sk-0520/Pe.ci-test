@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -99,15 +100,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region DatabaseImplementation
 
-        public override object GetNullValue(Type type)
+        public override object? GetNullValue(Type type)
         {
             if(NullMapping.TryGetValue(type, out var value)) {
                 return value;
             }
 
-#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
             return base.GetNullValue(type);
-#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
         }
 
         public override bool IsNull(object? value)
