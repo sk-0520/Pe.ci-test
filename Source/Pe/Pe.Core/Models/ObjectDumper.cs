@@ -354,7 +354,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var sb = new StringBuilder(dumpItems.Count * 256); // 特に意味はない
             sb.Append('[');
             sb.Append(target.GetType().Name);
-            sb.Append(":");
+            sb.Append(':');
             sb.AppendLine();
 
             using(var stream = new MemoryStream()) {
@@ -362,6 +362,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 var dumpValue = Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Length);
                 sb.Append(dumpValue);
             }
+
+            sb.Append(']');
 
             return sb.ToString();
         }
