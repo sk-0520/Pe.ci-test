@@ -44,6 +44,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         { }
     }
 
+    /// <summary>
+    /// プラグインアーカイブの種別不明時に投げられる。
+    /// </summary>
+    [Serializable]
+    public sealed class PluginInvalidArchiveKindException: PluginException
+    {
+        public PluginInvalidArchiveKindException()
+        { }
+
+        public PluginInvalidArchiveKindException(string? message) : base(message)
+        { }
+
+        public PluginInvalidArchiveKindException(SerializationInfo info, StreamingContext context) : base(info, context)
+        { }
+
+        public PluginInvalidArchiveKindException(string? message, Exception? innerException) : base(message, innerException)
+        { }
+    }
 
 #pragma warning restore S3925 // "ISerializable" should be implemented correctly
 }

@@ -66,12 +66,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 };
                 parameter.Filter.Add(new Core.Models.DialogFilterItem("plugin", "7z", new[] { "*.7z", "*.zip" }));
 
-                SelectPluginFileRequest.Send<FileSystemSelectDialogRequestResponse>(parameter, r => {
+                SelectPluginFileRequest.Send<FileSystemSelectDialogRequestResponse>(parameter, async r => {
                     if(r.ResponseIsCancel) {
                         Logger.LogTrace("cancel");
                         return;
                     }
-                    //Model.Import
+
+                    await Model.InstallManualPluginTask(r.ResponseFilePaths[0]);
                 });
             }
         ));

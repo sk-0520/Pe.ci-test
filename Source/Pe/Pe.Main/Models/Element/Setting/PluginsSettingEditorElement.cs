@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Management;
 using System.Text;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
@@ -48,6 +51,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         ObservableCollection<PluginInstallItemElement> InstallPluginItemsImpl { get; } = new ObservableCollection<PluginInstallItemElement>();
         public ReadOnlyObservableCollection<PluginInstallItemElement> InstallPluginItems { get; }
+
+        #endregion
+
+        #region function
+
+        private Task<PluginInstallItemElement> InstallPluginAsync(string archivePath, string archiveKind, bool isManual)
+        {
+            Debug.Assert(new[] { "7z", "zip" }.Contains(archiveKind)); // enum 作っておかないからこうなる
+
+            var archiveExtractor = new ArchiveExtractor(LoggerFactory);
+
+            throw new NotImplementedException();
+        }
+
+        internal Task InstallManualPluginTask(string archivePath)
+        {
+            // 拡張子をアーカイブ種別としてそのまま使用する
+            var exts = new HashSet<string>() {
+                "7z",
+                "zip",
+            };
+            var ext = Path.GetExtension(archivePath)?.Substring(1)?.ToLowerInvariant() ?? string.Empty;
+            if(!exts.Contains(ext)) {
+                throw new PluginInvalidArchiveKindException();
+            }
+
+            var element = InstallPluginAsync(archivePath, ext, true);
+
+            throw new NotImplementedException();
+        }
 
         #endregion
 
