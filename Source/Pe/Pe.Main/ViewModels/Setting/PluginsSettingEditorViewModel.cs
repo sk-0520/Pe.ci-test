@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
@@ -31,6 +34,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
+        public RequestSender SelectPluginFileRequest { get; } = new RequestSender();
+
         ModelViewModelObservableCollectionManagerBase<PluginSettingEditorElement, PluginSettingEditorViewModel> PluginCollection { get; }
         public ICollectionView PluginItems { get; }
 
@@ -45,6 +50,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region command
+
+        public ICommand ManualInstallCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                var parameter = new FileSystemSelectDialogRequestParameter() {
+                    FileSystemDialogMode = FileSystemDialogMode.FileOpen,
+                };
+                parameter.Filter.Add(new Core.Models.DialogFilterItem("plugin", "7z", new[] { "*.7z", "*.zip" }));
+
+                SelectPluginFileRequest.Send<FileSystemSelectDialogRequestResponse>(parameter, r => {
+                    if(r.ResponseIsCancel) {
+                        Logger.LogTrace("cancel");
+                        return;
+                    }
+                    //Model.Import
+                });
+            }
+        ));
 
         #endregion
 

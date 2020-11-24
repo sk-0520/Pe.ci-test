@@ -7,6 +7,7 @@
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
@@ -15,6 +16,11 @@
   d:DesignWidth="800"
   d:DesignHeight="450"
 >
+  <behaviors:Interaction.Triggers>
+    <app_core_views:RequestTrigger SourceObject="{Binding Editor.SelectPluginFileRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <prism:InvokeCommandAction Command="{Binding SelectPluginFileCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    </app_core_views:RequestTrigger>
+  </behaviors:Interaction.Triggers>
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <app_core_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
@@ -27,32 +33,47 @@
       <ColumnDefinition Width="7*" />
     </Grid.ColumnDefinitions>
 
-    <ListBox x:Name="listPlugins" Grid.Column="0" SelectedItem="{Binding Editor.SelectedPlugin, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding Editor.PluginItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-            <ContentControl Margin="{StaticResource ImageLabel-Small-Margin}">
-              <ContentControl.Style>
-                <Style TargetType="ContentControl" BasedOn="{StaticResource Image-Small}">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding PluginIcon}" Value="{x:Null}">
-                      <Setter Property="Content">
-                        <Setter.Value>
-                          <Control Template="{StaticResource App-Image-Plugin-HasError}" />
-                        </Setter.Value>
-                      </Setter>
-                    </DataTrigger>
-                  </Style.Triggers>
-                  <Setter Property="Content" Value="{Binding PluginIcon}" />
-                </Style>
-              </ContentControl.Style>
-            </ContentControl>
+    <Grid Grid.Column="0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
 
-            <TextBlock Text="{Binding PluginName}" />
-          </StackPanel>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
+      <ListBox x:Name="listPlugins" Grid.Row="0" SelectedItem="{Binding Editor.SelectedPlugin, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding Editor.PluginItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+              <ContentControl Margin="{StaticResource ImageLabel-Small-Margin}">
+                <ContentControl.Style>
+                  <Style TargetType="ContentControl" BasedOn="{StaticResource Image-Small}">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding PluginIcon}" Value="{x:Null}">
+                        <Setter Property="Content">
+                          <Setter.Value>
+                            <Control Template="{StaticResource App-Image-Plugin-HasError}" />
+                          </Setter.Value>
+                        </Setter>
+                      </DataTrigger>
+                    </Style.Triggers>
+                    <Setter Property="Content" Value="{Binding PluginIcon}" />
+                  </Style>
+                </ContentControl.Style>
+              </ContentControl>
+
+              <TextBlock Text="{Binding PluginName}" />
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+
+      <Expander Grid.Row="1" Header="install">
+        <StackPanel>
+
+          <Button Command="{Binding Editor.ManualInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="manual" />
+        </StackPanel>
+      </Expander>
+
+    </Grid>
 
     <GridSplitter Grid.Column="1" Style="{StaticResource Horizon-GridSplitter}" />
 
