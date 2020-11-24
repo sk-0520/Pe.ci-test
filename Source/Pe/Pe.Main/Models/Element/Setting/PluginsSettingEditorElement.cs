@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             PlatformTheme = platformTheme;
 
             PluginItems = new ReadOnlyObservableCollection<PluginSettingEditorElement>(PluginItemsImpl);
+            InstallPluginItems = new ReadOnlyObservableCollection<PluginInstallItemElement>(InstallPluginItemsImpl);
         }
 
         #region property
@@ -44,6 +45,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         ObservableCollection<PluginSettingEditorElement> PluginItemsImpl { get; } = new ObservableCollection<PluginSettingEditorElement>();
         public ReadOnlyObservableCollection<PluginSettingEditorElement> PluginItems { get; }
+
+        ObservableCollection<PluginInstallItemElement> InstallPluginItemsImpl { get; } = new ObservableCollection<PluginInstallItemElement>();
+        public ReadOnlyObservableCollection<PluginInstallItemElement> InstallPluginItems { get; }
 
         #endregion
 

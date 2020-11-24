@@ -30,6 +30,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 ToViewModel = m => new PluginSettingEditorViewModel(m, ImageLoader, DispatcherWrapper, LoggerFactory),
             };
             PluginItems = PluginCollection.GetDefaultView();
+
+            InstallPluginCollection = new ActionModelViewModelObservableCollectionManager<PluginInstallItemElement, PluginInstallItemViewModel>(Model.InstallPluginItems) {
+                ToViewModel = m => new PluginInstallItemViewModel(m, LoggerFactory),
+            };
+            InstallPluginItems = InstallPluginCollection.GetDefaultView();
         }
 
         #region property
@@ -38,6 +43,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         ModelViewModelObservableCollectionManagerBase<PluginSettingEditorElement, PluginSettingEditorViewModel> PluginCollection { get; }
         public ICollectionView PluginItems { get; }
+
+        ModelViewModelObservableCollectionManagerBase<PluginInstallItemElement, PluginInstallItemViewModel> InstallPluginCollection { get; }
+        public ICollectionView InstallPluginItems { get; }
 
         public PluginSettingEditorViewModel? SelectedPlugin
         {

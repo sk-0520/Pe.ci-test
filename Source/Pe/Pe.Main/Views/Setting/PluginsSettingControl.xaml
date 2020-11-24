@@ -36,7 +36,7 @@
     <Grid Grid.Column="0">
       <Grid.RowDefinitions>
         <RowDefinition Height="*" />
-        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" MaxHeight="200" />
       </Grid.RowDefinitions>
 
       <ListBox x:Name="listPlugins" Grid.Row="0" SelectedItem="{Binding Editor.SelectedPlugin, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding Editor.PluginItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
@@ -70,6 +70,10 @@
         <StackPanel>
 
           <Button Command="{Binding Editor.ManualInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="manual" />
+
+          <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Editor.InstallPluginItems, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+          </ScrollViewer>
         </StackPanel>
       </Expander>
 

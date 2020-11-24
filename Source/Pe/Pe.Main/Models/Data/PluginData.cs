@@ -40,6 +40,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         IllegalAssembly,
     }
 
+    public enum PluginInstallMode
+    {
+        New,
+        Update,
+    }
+
     public interface IPluginId
     {
         #region property
