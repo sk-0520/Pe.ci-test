@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
@@ -71,8 +72,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                         Logger.LogTrace("cancel");
                         return;
                     }
-
-                    await Model.InstallManualPluginTask(r.ResponseFilePaths[0]);
+                    var file = new FileInfo(r.ResponseFilePaths[0]);
+                    await Model.InstallManualPluginTask(file);
                 });
             }
         ));

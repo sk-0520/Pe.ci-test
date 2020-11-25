@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
 
-        public SettingContainerElement(IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public SettingContainerElement(IDiContainer diContainer, Func<IDisposable> pauseReceiveLog, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             GeneralsSettingEditor = ServiceLocator.Build<GeneralsSettingEditorElement>(ServiceLocator.Build<PluginContainer>().Theme.Plugins.ToList());
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>(AllLauncherGroups);
             LauncherToobarsSettingEditor = ServiceLocator.Build<LauncherToobarsSettingEditorElement>(AllLauncherGroups);
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
-            PluginsSettingEditor = new PluginsSettingEditorElement(ServiceLocator.Build<PluginContainer>(), ServiceLocator.Build<PreferencesContextFactory>(), ServiceLocator.Build<ISettingNotifyManager>(), ServiceLocator.Build<IClipboardManager>(), ServiceLocator.Build<IMainDatabaseBarrier>(), ServiceLocator.Build<ILargeDatabaseBarrier>(), ServiceLocator.Build<ITemporaryDatabaseBarrier>(), ServiceLocator.Build<IDatabaseStatementLoader>(), ServiceLocator.Build<IIdFactory>(), ServiceLocator.Build<EnvironmentParameters>(), ServiceLocator.Build<IUserAgentManager>(), ServiceLocator.Build<IPlatformTheme>(), ServiceLocator.Build<IImageLoader>(), ServiceLocator.Build<IMediaConverter>(), ServiceLocator.Build<IDispatcherWrapper>(), ServiceLocator.Build<ILoggerFactory>());
+            PluginsSettingEditor = new PluginsSettingEditorElement(ServiceLocator.Build<PluginContainer>(), ServiceLocator.Build<PluginConstructorContext>(), pauseReceiveLog, ServiceLocator.Build<PreferencesContextFactory>(), ServiceLocator.Build<ISettingNotifyManager>(), ServiceLocator.Build<IClipboardManager>(), ServiceLocator.Build<IMainDatabaseBarrier>(), ServiceLocator.Build<ILargeDatabaseBarrier>(), ServiceLocator.Build<ITemporaryDatabaseBarrier>(), ServiceLocator.Build<IDatabaseStatementLoader>(), ServiceLocator.Build<IIdFactory>(), ServiceLocator.Build<EnvironmentParameters>(), ServiceLocator.Build<IUserAgentManager>(), ServiceLocator.Build<IPlatformTheme>(), ServiceLocator.Build<IImageLoader>(), ServiceLocator.Build<IMediaConverter>(), ServiceLocator.Build<IDispatcherWrapper>(), ServiceLocator.Build<ILoggerFactory>());
 
             PluginContainer = ServiceLocator.Build<PluginContainer>();
 

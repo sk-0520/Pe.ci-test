@@ -278,7 +278,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var settingDatabasePack = container.Build<IDatabaseAccessorPack>();
             PersistentHelper.Copy(workingDatabasePack.Temporary, settingDatabasePack.Temporary);
 
-            var settingElement = new SettingContainerElement(container, container.Build<ILoggerFactory>());
+            var settingElement = new SettingContainerElement(container, Logging.PauseReceiveLog, container.Build<ILoggerFactory>());
             settingElement.Initialize();
             var windowItem = OrderManager.CreateSettingWindow(settingElement);
             WindowManager.Register(windowItem);

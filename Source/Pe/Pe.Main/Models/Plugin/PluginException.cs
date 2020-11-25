@@ -63,5 +63,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         { }
     }
 
+    /// <summary>
+    /// プラグインアーカイブの展開ディレクトリが重複時に投げられる。
+    /// </summary>
+    [Serializable]
+    public sealed class PluginDuplicateExtractDirectoryException: PluginException
+    {
+        public PluginDuplicateExtractDirectoryException()
+        { }
+
+        public PluginDuplicateExtractDirectoryException(string? message) : base(message)
+        { }
+
+        public PluginDuplicateExtractDirectoryException(SerializationInfo info, StreamingContext context) : base(info, context)
+        { }
+
+        public PluginDuplicateExtractDirectoryException(string? message, Exception? innerException) : base(message, innerException)
+        { }
+    }
+
 #pragma warning restore S3925 // "ISerializable" should be implemented correctly
 }
