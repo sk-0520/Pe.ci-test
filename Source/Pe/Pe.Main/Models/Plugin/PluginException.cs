@@ -82,5 +82,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         { }
     }
 
+    /// <summary>
+    /// プラグインぶっ壊れ系。
+    /// </summary>
+    [Serializable]
+    public sealed class PluginBrokenException: PluginException
+    {
+        public PluginBrokenException()
+        { }
+
+        public PluginBrokenException(string? message) : base(message)
+        { }
+
+        public PluginBrokenException(SerializationInfo info, StreamingContext context) : base(info, context)
+        { }
+
+        public PluginBrokenException(string? message, Exception? innerException) : base(message, innerException)
+        { }
+    }
+
 #pragma warning restore S3925 // "ISerializable" should be implemented correctly
 }

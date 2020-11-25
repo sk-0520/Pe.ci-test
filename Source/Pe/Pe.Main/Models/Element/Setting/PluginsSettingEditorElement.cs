@@ -172,6 +172,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             var loadStateData = PluginContainer.LoadPlugin(pluginFile, Enumerable.Empty<PluginStateData>().ToList(), BuildStatus.Version, PluginConstructorContext, PauseReceiveLog);
+            if(loadStateData.PluginId == Guid.Empty || loadStateData.LoadState != PluginState.Enable) {
+                throw new PluginBrokenException(extractedDirectory.FullName);
+            }
 
             throw new NotImplementedException();
         }
