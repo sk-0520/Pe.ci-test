@@ -202,6 +202,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             var unlimitVersion = new Version(0, 0, 0);
 
+            //TODO: PluginUtility.IsUnlimitedVersion の使用
             if(info.PluginVersions.MinimumSupportVersion != unlimitVersion) {
                 var ok = info.PluginVersions.MinimumSupportVersion <= applicationVersion;
                 if(!ok) {

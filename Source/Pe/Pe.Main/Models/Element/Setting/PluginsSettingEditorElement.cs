@@ -195,6 +195,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 }
             }
 
+            if(!PluginUtility.IsUnlimitedVersion(info.PluginVersions.MinimumSupportVersion)) {
+                if(BuildStatus.Version < info.PluginVersions.MinimumSupportVersion) {
+                    // Pe バージョンがプラグインサポート最低バージョンを満たさない
+                    throw new PluginInstallException($"[MIN] {BuildStatus.Version}  < {info.PluginVersions.MinimumSupportVersion}");
+                }
+            }
+            if(!PluginUtility.IsUnlimitedVersion(info.PluginVersions.MaximumSupportVersion)) {
+                if(info.PluginVersions.MaximumSupportVersion < BuildStatus.Version) {
+                    // Pe バージョンがプラグインサポート最大バージョンを超過
+                    throw new PluginInstallException($"[MAX] {info.PluginVersions.MaximumSupportVersion}  < {BuildStatus.Version}");
+                }
+            }
+
             throw new NotImplementedException();
         }
 
