@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
@@ -79,14 +80,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     return Properties.Resources.String_Setting_Plugins_Item_NotLoaded_SupportVersions;
                 }
 
-                bool IsUnlimitedVersion(Version version) {
-                    return version.Major == 0 && version.Minor == 0 && version.Build == 0;
-                }
                 return TextUtility.ReplaceFromDictionary(
                     Properties.Resources.String_Setting_Plugins_Item_SupportVersions_Format,
                     new Dictionary<string, string>() {
-                        ["MIN"] = IsUnlimitedVersion(Model.Plugin.PluginInformations.PluginVersions.MinimumSupportVersion) ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : Model.Plugin.PluginInformations.PluginVersions.MinimumSupportVersion.ToString(),
-                        ["MAX"] = IsUnlimitedVersion(Model.Plugin.PluginInformations.PluginVersions.MaximumSupportVersion) ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : Model.Plugin.PluginInformations.PluginVersions.MaximumSupportVersion.ToString()
+                        ["MIN"] = PluginUtility.IsUnlimitedVersion(Model.Plugin.PluginInformations.PluginVersions.MinimumSupportVersion) ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : Model.Plugin.PluginInformations.PluginVersions.MinimumSupportVersion.ToString(),
+                        ["MAX"] = PluginUtility.IsUnlimitedVersion(Model.Plugin.PluginInformations.PluginVersions.MaximumSupportVersion) ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : Model.Plugin.PluginInformations.PluginVersions.MaximumSupportVersion.ToString()
                     }
                 );
             }

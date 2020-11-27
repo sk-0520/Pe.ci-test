@@ -176,6 +176,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 throw new PluginBrokenException(extractedDirectory.FullName);
             }
 
+            Debug.Assert(loadStateData.Plugin != null);
+            var info = loadStateData.Plugin.PluginInformations;
+
+            var installTargetPlugin = InstallPluginItemsImpl.FirstOrDefault(i => i.Informations.PluginIdentifiers.PluginId == info.PluginIdentifiers.PluginId);
+            if(installTargetPlugin != null) {
+                if(info.PluginVersions.PluginVersion <= installTargetPlugin.Informations.PluginVersions.PluginVersion) {
+                    // すでに同一・新規バージョンがインストール対象になっている
+                    throw new PluginInstallException($"{info.PluginVersions.PluginVersion}  <= {installTargetPlugin.Informations.PluginVersions.PluginVersion}");
+                }
+            } else {
+                var installedPlugin = PluginContainer.Plugins.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == info.PluginIdentifiers.PluginId);
+                if(installedPlugin != null) {
+                    if(info.PluginVersions.PluginVersion <= installedPlugin.PluginInformations.PluginVersions.PluginVersion) {
+                        // すでに同一・新規バージョンがインストールされている
+                        throw new PluginInstallException($"{info.PluginVersions.PluginVersion}  <= {installedPlugin.PluginInformations.PluginVersions.PluginVersion}");
+                    }
+                }
+            }
+
             throw new NotImplementedException();
         }
 

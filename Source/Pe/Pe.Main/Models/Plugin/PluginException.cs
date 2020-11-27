@@ -101,5 +101,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         { }
     }
 
+    /// <summary>
+    /// プラグインインストール失敗処理。
+    /// </summary>
+    [Serializable]
+    public sealed class PluginInstallException: PluginException
+    {
+        public PluginInstallException()
+        { }
+
+        public PluginInstallException(string? message) : base(message)
+        { }
+
+        public PluginInstallException(SerializationInfo info, StreamingContext context) : base(info, context)
+        { }
+
+        public PluginInstallException(string? message, Exception? innerException) : base(message, innerException)
+        { }
+    }
+
 #pragma warning restore S3925 // "ISerializable" should be implemented correctly
 }
