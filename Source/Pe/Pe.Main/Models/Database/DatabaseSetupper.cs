@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         /// </summary>
         /// <param name="accessorPack">DBアクセス処理群。</param>
         /// <param name="lastVersion">最終使用バージョン。</param>
-        public void Migrating(IDatabaseAccessorPack accessorPack, Version lastVersion)
+        public void Migrate(IDatabaseAccessorPack accessorPack, Version lastVersion)
         {
             Logger.LogInformation("マイグレーション処理実行");
 
@@ -132,9 +132,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         /// 最終処理。
         /// </summary>
         /// <param name="accessorPack"></param>
-        public void MigratingLast(IDatabaseAccessorPack accessorPack, Version lastVersion)
+        public void Tune(IDatabaseAccessorPack accessorPack, Version lastVersion)
         {
-            Logger.LogInformation("マイグレーション処理実行");
+            Logger.LogInformation("マイグレーション最終処理実行");
 
             var setupper = new Setupper_V_99_99_999(IdFactory, StatementLoader, LoggerFactory);
             Execute(accessorPack, CreateSetupDto(lastVersion), setupper);

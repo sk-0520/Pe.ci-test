@@ -334,7 +334,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 return false;
             }
 
-            databaseSetupper.Migrating(accessorPack, lastVersion);
+            databaseSetupper.Migrate(accessorPack, lastVersion);
 
             pack.factory = CreateDatabaseFactoryPack(environmentParameters, true, logger);
             pack.accessor = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory);
@@ -600,7 +600,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             DiContainer = SetupContainer(environmentParameters, factory, cultureService, loggerFactory);
             var databaseSetupper = DiContainer.Build<DatabaseSetupper>();
             var lastVersion = databaseSetupper.GetLastVersion(DiContainer.Build<IDatabaseAccessorPack>().Main)!;
-            databaseSetupper.MigratingLast(DiContainer.Build<IDatabaseAccessorPack>(), lastVersion);
+            databaseSetupper.Tune(DiContainer.Build<IDatabaseAccessorPack>(), lastVersion);
 
             WindowManager = SetupWindowManager(DiContainer);
             //OrderManager = SetupOrderManager(DiContainer);

@@ -129,6 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             return Task.Run(() => {
                 extractDirectory.Refresh();
                 if(extractDirectory.Exists) {
+                    // 展開ディレクトリが既にある
                     throw new PluginDuplicateExtractDirectoryException(extractDirectory.FullName);
                 }
 
@@ -167,12 +168,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             var pluginFile = await GetPluginFileAsync(extractedDirectory, extractedDirectory.Name, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions);
             if(pluginFile == null) {
+                // プラグインが見つかんない
                 extractedDirectory.Delete(true);
                 throw new PluginNotFoundException(extractedDirectory.FullName);
             }
 
             var loadStateData = PluginContainer.LoadPlugin(pluginFile, Enumerable.Empty<PluginStateData>().ToList(), BuildStatus.Version, PluginConstructorContext, PauseReceiveLog);
             if(loadStateData.PluginId == Guid.Empty || loadStateData.LoadState != PluginState.Enable) {
+                // なんかもうダメっぽい
                 throw new PluginBrokenException(extractedDirectory.FullName);
             }
 
@@ -180,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var info = loadStateData.Plugin.PluginInformations;
             var isUpdate = false;
 
-            var installTargetPlugin = InstallPluginItemsImpl.FirstOrDefault(i => i.Informations.PluginIdentifiers.PluginId == info.PluginIdentifiers.PluginId);
+            var installTargetPlugin = InstallPluginItems.FirstOrDefault(i => i.Informations.PluginIdentifiers.PluginId == info.PluginIdentifiers.PluginId);
             if(installTargetPlugin != null) {
                 if(info.PluginVersions.PluginVersion <= installTargetPlugin.Informations.PluginVersions.PluginVersion) {
                     // すでに同一・新規バージョンがインストール対象になっている
@@ -214,8 +217,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             // インストール対象のディレクトリを内部保持
             using(var context = TemporaryDatabaseBarrier.WaitWrite()) {
-                context.GetDataTable("select * from InstallPlugins");
-
                 var installPluginsEntityDao = new InstallPluginsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 if(installPluginsEntityDao.SelectExistsInstallPlugin(loadStateData.PluginId)) {
                     installPluginsEntityDao.DeleteInstallPlugin(loadStateData.PluginId);

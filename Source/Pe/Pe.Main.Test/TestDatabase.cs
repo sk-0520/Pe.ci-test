@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Test
             foreach(var accessor in databaseAccessorPack.Items) {
                 accessor.Execute("pragma foreign_keys = false");
             }
-            databaseSetupper.Migrating(databaseAccessorPack, initVersion!);
+            databaseSetupper.Migrate(databaseAccessorPack, initVersion!);
             foreach(var accessor in databaseAccessorPack.Items) {
                 databaseSetupper.CheckForeignKey(accessor);
                 accessor.Execute("pragma foreign_keys = true");
