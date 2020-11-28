@@ -2,6 +2,9 @@ insert into
 	InstallPlugins
 	(
 		PluginId,
+		PluginName,
+		PluginVersion,
+		PluginInstallMode,
 		ExtractedDirectoryPath,
 		PluginDirectoryPath,
 
@@ -13,6 +16,9 @@ insert into
 	values
 	(
 /* PluginId                 */ @PluginId,
+/* PluginName               */ @PluginName,
+/* PluginVersion            */ @PluginVersion,
+/* PluginInstallMode        */ @PluginInstallMode,
 /* ExtractedDirectoryPath   */ @ExtractedDirectoryPath,
 /* PluginDirectoryPath      */ @PluginDirectoryPath,
 /*                          */

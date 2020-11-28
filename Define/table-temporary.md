@@ -12,6 +12,9 @@ ___
 |    | o  |    | 作成ユーザー名                     | CreatedAccount         | text         | System.String   |              |              |
 |    | o  |    | 作成プログラム名                   | CreatedProgramName     | text         | System.String   |              |              |
 |    | o  |    | 作成プログラムバージョン           | CreatedProgramVersion  | text         | System.Version  |              |              |
+|    | o  |    | プラグイン名                       | PluginName             | text         | System.String   |              |              |
+|    | o  |    | プラグインバージョン               | PluginVersion          | text         | System.Version  |              |              |
+|    | o  |    | プラグインインストール方法         | PluginInstallMode      | text         | System.String   |              |              |
 |    | o  |    | 展開ディレクトリパス               | ExtractedDirectoryPath | text         | System.String   |              |              |
 |    | o  |    | プラグインディレクトリパス         | PluginDirectoryPath    | text         | System.String   |              |              |
 

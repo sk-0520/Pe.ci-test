@@ -14,19 +14,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     /// </summary>
     public class PluginInstallItemElement: ElementBase
     {
-        public PluginInstallItemElement(IPluginInformations pluginInformations, Version version, PluginInstallMode pluginInstallMode, ILoggerFactory loggerFactory)
+        public PluginInstallItemElement(PluginInstallData data, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            Informations = pluginInformations;
-            Version = version;
-            InstallMode = pluginInstallMode;
+            Data = data;
         }
 
         #region property
 
-        public IPluginInformations Informations { get; }
-        public Version Version { get; }
-        public PluginInstallMode InstallMode { get; }
+        public PluginInstallData Data { get; }
 
         #endregion
 
@@ -37,9 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region ElementBase
 
         protected override void InitializeImpl()
-        {
-            throw new NotImplementedException();
-        }
+        { }
 
         #endregion
     }

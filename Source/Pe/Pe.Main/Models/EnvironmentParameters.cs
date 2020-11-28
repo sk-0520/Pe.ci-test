@@ -217,6 +217,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <para>この下にプラグインごとのディレクトリを配置してバイナリを置く。</para>
         /// </summary>
         public DirectoryInfo MachinePluginModuleDirectory => CombineDirectory(true, MachinePluginDirectory, "modules");
+        /// <summary>
+        /// インストール対象プラグインの配置ディレクトリ。
+        /// <para>起動時にこの下にあるプラグインを<see cref="MachinePluginModuleDirectory"/>に転送する。</para>
+        /// </summary>
+        public DirectoryInfo MachinePluginInstallDirectory => CombineDirectory(true, MachinePluginDirectory, "install");
 
         /// <summary>
         /// WebViewの端末親ディレクトリ。
@@ -298,7 +303,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// ファイル格納DBファイル。
         /// </summary>
-        public FileInfo FileFile => CombineFile(UserSettingDirectory, "file.sqlite3");
+        public FileInfo LargeFile => CombineFile(UserSettingDirectory, "file.sqlite3");
 
         public ApplicationConfiguration ApplicationConfiguration { get; }
 

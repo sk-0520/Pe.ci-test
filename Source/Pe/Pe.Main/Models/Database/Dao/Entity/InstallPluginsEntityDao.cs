@@ -19,6 +19,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #region property
 
             public Guid PluginId { get; set; }
+            public string PluginName { get; set; } = string.Empty;
+            public Version? PluginVersion { get; set; }
+            public string PluginInstallMode { get; set; } = string.Empty;
+
             public string ExtractedDirectoryPath { get; set; } = string.Empty;
             public string PluginDirectoryPath { get; set; } = string.Empty;
 
@@ -48,6 +52,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
+        PluginInstallData ConvertFromDto(InstallPluginRowDto dto)
+        {
+            var pluginInstallModeTransfer = new EnumTransfer<PluginInstallMode>();
+
+            return new PluginInstallData(
+                dto.PluginId,
+                dto.PluginName,
+                dto.PluginVersion ?? new Version(),
+                pluginInstallModeTransfer.ToEnum(dto.PluginInstallMode)
+            );
+        }
+
         public bool SelectExistsInstallPlugin(Guid pluginId)
         {
             var statement = LoadStatement();
@@ -57,15 +73,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirstOrDefault<bool>(statement, parameter);
         }
 
-        public void InsertInstallPlugin(Guid pluginId, string extractedDirectoryPath, string pluginDirectoryPath, IDatabaseCommonStatus databaseCommonStatus)
+        public IEnumerable<PluginInstallData> SelectInstallPlugins()
         {
             var statement = LoadStatement();
+            return Context.Query<InstallPluginRowDto>(statement)
+                .Select(i => ConvertFromDto(i))
+            ;
+        }
+
+        public void InsertInstallPlugin(PluginInstallData data, string extractedDirectoryPath, string pluginDirectoryPath, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var pluginInstallModeTransfer = new EnumTransfer<PluginInstallMode>();
+
+            var statement = LoadStatement();
             var parameter = new InstallPluginRowDto() {
-                PluginId = pluginId,
+                PluginId = data.PluginId,
+                PluginName = data.PluginName,
+                PluginVersion = data.PluginVersion,
+                PluginInstallMode = pluginInstallModeTransfer.ToString(data.PluginInstallMode),
                 ExtractedDirectoryPath = extractedDirectoryPath,
                 PluginDirectoryPath = pluginDirectoryPath,
             };
             databaseCommonStatus.WriteCreate(parameter);
+
             Context.Execute(statement, parameter);
         }
 

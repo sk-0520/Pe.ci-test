@@ -251,13 +251,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var settings = new {
                 Main = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.MainFile.Name)),
-                File = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name)),
+                File = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.LargeFile.Name)),
             };
             //var settingDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.SettingFile.Name));
             //var fileDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name));
 
             environmentParameters.MainFile.CopyTo(settings.Main.FullName);
-            environmentParameters.FileFile.CopyTo(settings.File.FullName);
+            environmentParameters.LargeFile.CopyTo(settings.File.FullName);
 
             // DIを設定処理用に付け替え
             var container = ApplicationDiContainer.Scope();
@@ -333,7 +333,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
 
                 settings.Main.CopyTo(environmentParameters.MainFile.FullName, true);
-                settings.File.CopyTo(environmentParameters.FileFile.FullName, true);
+                settings.File.CopyTo(environmentParameters.LargeFile.FullName, true);
 
                 foreach(var stopping in stoppings) {
                     stopping.Dispose();

@@ -72,7 +72,22 @@
           <Button Command="{Binding Editor.ManualInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="manual" />
 
           <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Editor.InstallPluginItems, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            <ItemsControl ItemsSource="{Binding Editor.InstallPluginItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <VirtualizingStackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel>
+                    <TextBlock Text="{Binding PluginName}" />
+                    <TextBlock Text="{Binding PluginVersion}" />
+                    <TextBlock Text="{Binding InstallMode}" />
+                  </StackPanel>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
           </ScrollViewer>
         </StackPanel>
       </Expander>

@@ -183,11 +183,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var info = loadStateData.Plugin.PluginInformations;
             var isUpdate = false;
 
-            var installTargetPlugin = InstallPluginItems.FirstOrDefault(i => i.Informations.PluginIdentifiers.PluginId == info.PluginIdentifiers.PluginId);
+            var installTargetPlugin = InstallPluginItems.FirstOrDefault(i => i.Data.PluginId == info.PluginIdentifiers.PluginId);
             if(installTargetPlugin != null) {
-                if(info.PluginVersions.PluginVersion <= installTargetPlugin.Informations.PluginVersions.PluginVersion) {
+                if(info.PluginVersions.PluginVersion <= installTargetPlugin.Data.PluginVersion) {
                     // すでに同一・新規バージョンがインストール対象になっている
-                    throw new PluginInstallException($"{info.PluginVersions.PluginVersion}  <= {installTargetPlugin.Informations.PluginVersions.PluginVersion}");
+                    throw new PluginInstallException($"{info.PluginVersions.PluginVersion}  <= {installTargetPlugin.Data.PluginVersion}");
                 }
             } else {
                 var installedPlugin = PluginContainer.Plugins.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == info.PluginIdentifiers.PluginId);
@@ -213,7 +213,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 }
             }
 
-            var element = new PluginInstallItemElement(info, loadStateData.PluginVersion, isUpdate ? PluginInstallMode.Update : PluginInstallMode.New, LoggerFactory);
+            var element = new PluginInstallItemElement(new PluginInstallData(info.PluginIdentifiers.PluginId, info.PluginIdentifiers.PluginName, loadStateData.PluginVersion, isUpdate ? PluginInstallMode.Update : PluginInstallMode.New), LoggerFactory);
+            element.Initialize();
 
             // インストール対象のディレクトリを内部保持
             using(var context = TemporaryDatabaseBarrier.WaitWrite()) {
@@ -221,12 +222,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 if(installPluginsEntityDao.SelectExistsInstallPlugin(loadStateData.PluginId)) {
                     installPluginsEntityDao.DeleteInstallPlugin(loadStateData.PluginId);
                 }
-                installPluginsEntityDao.InsertInstallPlugin(loadStateData.PluginId, extractedDirectory.FullName, pluginFile.DirectoryName!, DatabaseCommonStatus.CreateCurrentAccount());
+                installPluginsEntityDao.InsertInstallPlugin(element.Data, extractedDirectory.FullName, pluginFile.DirectoryName!, DatabaseCommonStatus.CreateCurrentAccount());
 
                 context.Commit();
             }
 
             return element;
+        }
+
+        private void MergeInstallPlugin(PluginInstallItemElement element)
+        {
+            var oldElement = InstallPluginItemsImpl.FirstOrDefault(i => i.Data.PluginId == element.Data.PluginId);
+            if(oldElement != null) {
+                InstallPluginItemsImpl.Remove(oldElement);
+            }
+            InstallPluginItemsImpl.Add(element);
+
         }
 
         internal async Task InstallManualPluginTask(FileInfo archiveFile)
@@ -242,7 +253,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             var element = await InstallPluginAsync(archiveFile, ext, true);
-            InstallPluginItemsImpl.Add(element);
+            MergeInstallPlugin(element);
         }
 
         #endregion
@@ -252,10 +263,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void LoadImpl()
         {
-            var pluginStates = MainDatabaseBarrier.ReadData(c => {
-                var pluginsEntityDao = new PluginsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
-                return pluginsEntityDao.SelectePlguinStateData().ToList();
-            });
+            IList<PluginStateData> pluginStates;
+
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var pluginsEntityDao = new PluginsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                pluginStates = pluginsEntityDao.SelectePlguinStateData().ToList();
+            }
+
+            IList<PluginInstallData> installDataItems;
+            using(var context = TemporaryDatabaseBarrier.WaitRead()) {
+                var installPluginsEntityDao = new InstallPluginsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                installDataItems = installPluginsEntityDao.SelectInstallPlugins().ToList();
+            }
+
+            InstallPluginItemsImpl.AddRange(installDataItems.Select(i => new PluginInstallItemElement(i, LoggerFactory)));
 
             // 標準テーマがなければ追加
             if(!pluginStates.Any(i => i.PluginId == DefaultTheme.Informations.PluginIdentifiers.PluginId)) {

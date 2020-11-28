@@ -267,7 +267,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             return new ApplicationDatabaseFactoryPack(
                 new ApplicationDatabaseFactory(environmentParameters.MainFile, foreignKeys, false),
-                new ApplicationDatabaseFactory(environmentParameters.FileFile, foreignKeys, false),
+                new ApplicationDatabaseFactory(environmentParameters.LargeFile, foreignKeys, false),
                 new ApplicationDatabaseFactory(true, false)
             );
         }
@@ -289,7 +289,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             // 初回セットアップに来ている場合既に存在するデータファイルは狂っている可能性があるので破棄する
             var deleteTartgetFiles = new[] {
                 environmentParameters.MainFile,
-                environmentParameters.FileFile,
+                environmentParameters.LargeFile,
             };
             foreach(var file in deleteTartgetFiles) {
                 logger.LogDebug("delete: {0}", file.FullName);

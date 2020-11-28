@@ -134,4 +134,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public record PluginInstallData(
+        Guid PluginId,
+        string PluginName,
+        Version PluginVersion,
+        PluginInstallMode PluginInstallMode
+    );
+
+
 }
