@@ -42,7 +42,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         public override void ExecuteTemporaryDDL(IDatabaseContext context, IReadOnlySetupDto dto)
         {
             ExecuteStatement(context, StatementLoader.LoadStatementByCurrent(GetType()), dto);
-            var x = context.GetDataTable("select * from InstallPlugins");
         }
 
         public override void ExecuteTemporaryDML(IDatabaseContext context, IReadOnlySetupDto dto)
