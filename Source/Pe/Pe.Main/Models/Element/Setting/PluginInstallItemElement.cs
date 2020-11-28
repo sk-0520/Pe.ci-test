@@ -14,16 +14,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     /// </summary>
     public class PluginInstallItemElement: ElementBase
     {
-        public PluginInstallItemElement(IPluginInformations pluginInformations, PluginInstallMode pluginInstallMode, ILoggerFactory loggerFactory)
+        public PluginInstallItemElement(IPluginInformations pluginInformations, Version version, PluginInstallMode pluginInstallMode, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Informations = pluginInformations;
+            Version = version;
             InstallMode = pluginInstallMode;
         }
 
         #region property
 
         public IPluginInformations Informations { get; }
+        public Version Version { get; }
         public PluginInstallMode InstallMode { get; }
 
         #endregion

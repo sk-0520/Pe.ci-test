@@ -447,6 +447,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return manager;
         }
 
+        void InitializeDirectory(EnvironmentParameters environmentParameters, ILogger logger, ILoggerFactory loggerFactory)
+        {
+            // 限定的に一時ディレクトリ内きれいにする
+            var dirs = new[] {
+                environmentParameters.TemporaryApplicationExtractDirectory,
+                environmentParameters.TemporaryPluginAutomaticExtractDirectory,
+                environmentParameters.TemporaryPluginManualExtractDirectory,
+                environmentParameters.TemporarySettingDirectory,
+            };
+            foreach(var dir in dirs) {
+                logger.LogInformation("cleanup: {0}", dir.FullName);
+                try {
+                    var directoryCleaner = new DirectoryCleaner(dir, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitCount, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitTime, loggerFactory);
+                    directoryCleaner.Clear(false);
+                } catch(Exception ex) {
+                    logger.LogError(ex, ex.Message);
+                }
+            }
+        }
 
         public bool Initialize(App app, StartupEventArgs e)
         {
@@ -552,6 +571,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 FirstSetup(environmentParameters, loggerFactory, logger);
             }
 
+            InitializeDirectory(environmentParameters, logger, loggerFactory);
+
             var webViewinItializer = new WebViewinItializer(loggerFactory);
             webViewinItializer.Initialize(environmentParameters, cultureService);
             //try {
@@ -577,6 +598,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             pack.accessor.Dispose();
 
             DiContainer = SetupContainer(environmentParameters, factory, cultureService, loggerFactory);
+            var databaseSetupper = DiContainer.Build<DatabaseSetupper>();
+            var lastVersion = databaseSetupper.GetLastVersion(DiContainer.Build<IDatabaseAccessorPack>().Main)!;
+            databaseSetupper.MigratingLast(DiContainer.Build<IDatabaseAccessorPack>(), lastVersion);
+
             WindowManager = SetupWindowManager(DiContainer);
             //OrderManager = SetupOrderManager(DiContainer);
             NotifyManager = SetupNotifyManager(DiContainer);

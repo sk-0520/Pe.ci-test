@@ -178,6 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             Debug.Assert(loadStateData.Plugin != null);
             var info = loadStateData.Plugin.PluginInformations;
+            var isUpdate = false;
 
             var installTargetPlugin = InstallPluginItemsImpl.FirstOrDefault(i => i.Informations.PluginIdentifiers.PluginId == info.PluginIdentifiers.PluginId);
             if(installTargetPlugin != null) {
@@ -192,6 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                         // すでに同一・新規バージョンがインストールされている
                         throw new PluginInstallException($"{info.PluginVersions.PluginVersion}  <= {installedPlugin.PluginInformations.PluginVersions.PluginVersion}");
                     }
+                    isUpdate = true;
                 }
             }
 
@@ -208,7 +210,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 }
             }
 
-            throw new NotImplementedException();
+            var element = new PluginInstallItemElement(info, loadStateData.PluginVersion, isUpdate ? PluginInstallMode.Update : PluginInstallMode.New, LoggerFactory);
+
+            // インストール対象のディレクトリを内部保持
+            using(var context = TemporaryDatabaseBarrier.WaitWrite()) {
+                context.GetDataTable("select * from InstallPlugins");
+
+                var installPluginsEntityDao = new InstallPluginsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                if(installPluginsEntityDao.SelectExistsInstallPlugin(loadStateData.PluginId)) {
+                    installPluginsEntityDao.DeleteInstallPlugin(loadStateData.PluginId);
+                }
+                installPluginsEntityDao.InsertInstallPlugin(loadStateData.PluginId, extractedDirectory.FullName, pluginFile.DirectoryName!, DatabaseCommonStatus.CreateCurrentAccount());
+
+                context.Commit();
+            }
+
+            return element;
         }
 
         internal async Task InstallManualPluginTask(FileInfo archiveFile)
@@ -224,8 +241,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             var element = await InstallPluginAsync(archiveFile, ext, true);
-
-            throw new NotImplementedException();
+            InstallPluginItemsImpl.Add(element);
         }
 
         #endregion

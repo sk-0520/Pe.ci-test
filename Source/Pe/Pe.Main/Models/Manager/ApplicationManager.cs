@@ -275,6 +275,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ;
 
             var workingDatabasePack = ApplicationDiContainer.Build<IDatabaseAccessorPack>();
+            var x = workingDatabasePack.Temporary.GetDataTable("select * from InstallPlugins");
             var settingDatabasePack = container.Build<IDatabaseAccessorPack>();
             PersistentHelper.Copy(workingDatabasePack.Temporary, settingDatabasePack.Temporary);
 
@@ -340,7 +341,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var cultureServiceChanger = ApplicationDiContainer.Build<CultureServiceChanger>(CultureService.Instance);
                 cultureServiceChanger.ChangeCulture();
 
-                PersistentHelper.Copy(workingDatabasePack.Temporary, accessorPack.Temporary);
+                PersistentHelper.Copy(settingDatabasePack.Temporary, workingDatabasePack.Temporary);
+                var y = workingDatabasePack.Temporary.GetDataTable("select * from InstallPlugins");
 
 
                 Logger.LogInformation("設定適用のため各要素生成");

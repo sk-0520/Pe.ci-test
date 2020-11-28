@@ -118,8 +118,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                 new Setupper_V_00_99_010(IdFactory, StatementLoader, LoggerFactory),
                 new Setupper_V_00_99_038(IdFactory, StatementLoader, LoggerFactory),
                 new Setupper_V_00_99_063(IdFactory, StatementLoader, LoggerFactory),
-                // これ最後
-                new Setupper_V_99_99_999(IdFactory, StatementLoader, LoggerFactory),
             };
 
             foreach(var setupper in setuppers) {
@@ -128,6 +126,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                     Execute(accessorPack, dto, setupper);
                 }
             }
+        }
+
+        /// <summary>
+        /// 最終処理。
+        /// </summary>
+        /// <param name="accessorPack"></param>
+        public void MigratingLast(IDatabaseAccessorPack accessorPack, Version lastVersion)
+        {
+            Logger.LogInformation("マイグレーション処理実行");
+
+            var setupper = new Setupper_V_99_99_999(IdFactory, StatementLoader, LoggerFactory);
+            Execute(accessorPack, CreateSetupDto(lastVersion), setupper);
         }
 
         bool ExistsExecuteTable(IDatabaseAccessor mainAccessor)
