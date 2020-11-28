@@ -81,6 +81,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
+        public string SelectExtractedDirectoryPath(Guid pluginId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                PluginId = pluginId,
+            };
+            return Context.QueryFirst<string>(statement, parameter);
+        }
+
         public void InsertInstallPlugin(PluginInstallData data, string extractedDirectoryPath, string pluginDirectoryPath, IDatabaseCommonStatus databaseCommonStatus)
         {
             var pluginInstallModeTransfer = new EnumTransfer<PluginInstallMode>();

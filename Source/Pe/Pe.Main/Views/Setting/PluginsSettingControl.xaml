@@ -84,6 +84,7 @@
                     <TextBlock Text="{Binding PluginName}" />
                     <TextBlock Text="{Binding PluginVersion}" />
                     <TextBlock Text="{Binding InstallMode}" />
+                    <Button Command="{Binding Editor.CancelInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Content="cancel" />
                   </StackPanel>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>

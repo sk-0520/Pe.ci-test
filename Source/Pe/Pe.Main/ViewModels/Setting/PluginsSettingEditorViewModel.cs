@@ -60,6 +60,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
+        public ICommand CancelInstallCommand => GetOrCreateCommand(() => new DelegateCommand<PluginInstallItemViewModel>(
+            o => {
+                Model.CancelInstall(o.PluginId);
+            }
+        ));
+
         public ICommand ManualInstallCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 var parameter = new FileSystemSelectDialogRequestParameter() {
