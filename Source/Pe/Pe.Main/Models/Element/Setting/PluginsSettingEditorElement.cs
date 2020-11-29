@@ -237,7 +237,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 }
             }
 
-            var element = new PluginInstallItemElement(new PluginInstallData(loadStateData.PluginId, loadStateData.PluginName, loadStateData.PluginVersion, isUpdate ? PluginInstallMode.Update : PluginInstallMode.New), LoggerFactory);
+            var element = new PluginInstallItemElement(new PluginInstallBasicData(loadStateData.PluginId, loadStateData.PluginName, loadStateData.PluginVersion, isUpdate ? PluginInstallMode.Update : PluginInstallMode.New), LoggerFactory);
             element.Initialize();
 
             // インストール対象のディレクトリを内部保持
@@ -295,7 +295,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 pluginStates = pluginsEntityDao.SelectePlguinStateData().ToList();
             }
 
-            IList<PluginInstallData> installDataItems;
+            IList<PluginInstallBasicData> installDataItems;
             using(var context = TemporaryDatabaseBarrier.WaitRead()) {
                 var installPluginsEntityDao = new InstallPluginsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 installDataItems = installPluginsEntityDao.SelectInstallPlugins().ToList();

@@ -52,11 +52,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        PluginInstallData ConvertFromDto(InstallPluginRowDto dto)
+        PluginInstallBasicData ConvertFromDto(InstallPluginRowDto dto)
         {
             var pluginInstallModeTransfer = new EnumTransfer<PluginInstallMode>();
 
-            return new PluginInstallData(
+            return new PluginInstallBasicData(
                 dto.PluginId,
                 dto.PluginName,
                 dto.PluginVersion ?? new Version(),
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirstOrDefault<bool>(statement, parameter);
         }
 
-        public IEnumerable<PluginInstallData> SelectInstallPlugins()
+        public IEnumerable<PluginInstallBasicData> SelectInstallPlugins()
         {
             var statement = LoadStatement();
             return Context.Query<InstallPluginRowDto>(statement)
@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirst<string>(statement, parameter);
         }
 
-        public void InsertInstallPlugin(PluginInstallData data, string extractedDirectoryPath, string pluginDirectoryPath, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertInstallPlugin(PluginInstallBasicData data, string extractedDirectoryPath, string pluginDirectoryPath, IDatabaseCommonStatus databaseCommonStatus)
         {
             var pluginInstallModeTransfer = new EnumTransfer<PluginInstallMode>();
 
