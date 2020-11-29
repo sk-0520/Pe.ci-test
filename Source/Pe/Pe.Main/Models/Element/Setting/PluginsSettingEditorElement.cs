@@ -207,42 +207,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 // なんかもうダメっぽい
                 throw new PluginBrokenException(extractedDirectory.FullName);
             }
-
             Debug.Assert(loadStateData.Plugin != null);
-            var info = loadStateData.Plugin.PluginInformations;
+            Debug.Assert(loadStateData.WeekLoadContext != null);
+            if(loadStateData.WeekLoadContext.TryGetTarget(out var pluginLoadContext)) {
+                try {
+                    pluginLoadContext.Unload();
+                } catch(InvalidOperationException ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
+            }
+
+
             var isUpdate = false;
 
-            var installTargetPlugin = InstallPluginItems.FirstOrDefault(i => i.Data.PluginId == info.PluginIdentifiers.PluginId);
+            var installTargetPlugin = InstallPluginItems.FirstOrDefault(i => i.Data.PluginId == loadStateData.PluginId);
             if(installTargetPlugin != null) {
-                if(info.PluginVersions.PluginVersion <= installTargetPlugin.Data.PluginVersion) {
+                if(loadStateData.PluginVersion <= installTargetPlugin.Data.PluginVersion) {
                     // すでに同一・新規バージョンがインストール対象になっている
-                    throw new PluginInstallException($"{info.PluginVersions.PluginVersion}  <= {installTargetPlugin.Data.PluginVersion}");
+                    throw new PluginInstallException($"{loadStateData.PluginVersion}  <= {installTargetPlugin.Data.PluginVersion}");
                 }
             } else {
-                var installedPlugin = PluginContainer.Plugins.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == info.PluginIdentifiers.PluginId);
+                var installedPlugin = PluginContainer.Plugins.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == loadStateData.PluginId);
                 if(installedPlugin != null) {
-                    if(info.PluginVersions.PluginVersion <= installedPlugin.PluginInformations.PluginVersions.PluginVersion) {
+                    if(loadStateData.PluginVersion <= installedPlugin.PluginInformations.PluginVersions.PluginVersion) {
                         // すでに同一・新規バージョンがインストールされている
-                        throw new PluginInstallException($"{info.PluginVersions.PluginVersion}  <= {installedPlugin.PluginInformations.PluginVersions.PluginVersion}");
+                        throw new PluginInstallException($"{loadStateData.PluginVersion}  <= {installedPlugin.PluginInformations.PluginVersions.PluginVersion}");
                     }
                     isUpdate = true;
                 }
             }
 
-            if(!PluginUtility.IsUnlimitedVersion(info.PluginVersions.MinimumSupportVersion)) {
-                if(BuildStatus.Version < info.PluginVersions.MinimumSupportVersion) {
-                    // Pe バージョンがプラグインサポート最低バージョンを満たさない
-                    throw new PluginInstallException($"[MIN] {BuildStatus.Version}  < {info.PluginVersions.MinimumSupportVersion}");
-                }
-            }
-            if(!PluginUtility.IsUnlimitedVersion(info.PluginVersions.MaximumSupportVersion)) {
-                if(info.PluginVersions.MaximumSupportVersion < BuildStatus.Version) {
-                    // Pe バージョンがプラグインサポート最大バージョンを超過
-                    throw new PluginInstallException($"[MAX] {info.PluginVersions.MaximumSupportVersion}  < {BuildStatus.Version}");
-                }
-            }
-
-            var element = new PluginInstallItemElement(new PluginInstallData(info.PluginIdentifiers.PluginId, info.PluginIdentifiers.PluginName, loadStateData.PluginVersion, isUpdate ? PluginInstallMode.Update : PluginInstallMode.New), LoggerFactory);
+            var element = new PluginInstallItemElement(new PluginInstallData(loadStateData.PluginId, loadStateData.PluginName, loadStateData.PluginVersion, isUpdate ? PluginInstallMode.Update : PluginInstallMode.New), LoggerFactory);
             element.Initialize();
 
             // インストール対象のディレクトリを内部保持
