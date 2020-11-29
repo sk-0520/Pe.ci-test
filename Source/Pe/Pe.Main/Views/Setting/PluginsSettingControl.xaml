@@ -20,6 +20,9 @@
     <app_core_views:RequestTrigger SourceObject="{Binding Editor.SelectPluginFileRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <prism:InvokeCommandAction Command="{Binding SelectPluginFileCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
     </app_core_views:RequestTrigger>
+    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ShowMessageRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <prism:InvokeCommandAction Command="{Binding ShowMessageCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    </app_core_views:RequestTrigger>
   </behaviors:Interaction.Triggers>
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -66,10 +69,18 @@
         </ListBox.ItemTemplate>
       </ListBox>
 
-      <Expander Grid.Row="1" Header="install">
+      <GroupBox Grid.Row="1" Header="install">
         <StackPanel>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-          <Button Command="{Binding Editor.ManualInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="manual" />
+            <Button Grid.Column="0" Command="{Binding Editor.ManualInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="manual" />
+            <Button Grid.Column="1" IsEnabled="False" Content="web" />
+          </Grid>
+
 
           <ScrollViewer VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding Editor.InstallPluginItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
@@ -81,17 +92,35 @@
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
                   <StackPanel>
-                    <TextBlock Text="{Binding PluginName}" />
-                    <TextBlock Text="{Binding PluginVersion}" />
-                    <TextBlock Text="{Binding InstallMode}" />
-                    <Button Command="{Binding Editor.CancelInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Content="cancel" />
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                      </Grid.ColumnDefinitions>
+
+                      <TextBlock Grid.Column="0" FontWeight="Bold" Text="{Binding PluginName}" />
+                      <Button Grid.Column="1" Command="{Binding Editor.CancelInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
+                        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+                      </Button>
+                    </Grid>
+
+                    <Grid Margin="{StaticResource LeftMargin}">
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                      </Grid.ColumnDefinitions>
+
+                      <TextBlock Grid.Column="0" TextAlignment="Left" Text="{Binding InstallMode, StringFormat=[{0}]}" />
+                      <TextBlock Grid.Column="1" TextAlignment="Right" Text="{Binding PluginVersion}" />
+                    </Grid>
+
                   </StackPanel>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>
             </ItemsControl>
           </ScrollViewer>
         </StackPanel>
-      </Expander>
+      </GroupBox>
 
     </Grid>
 

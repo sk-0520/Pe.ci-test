@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             Debug.Assert(new[] { "7z", "zip" }.Contains(archiveKind)); // enum 作っておかないからこうなる
 
-            var dirName = Path.GetFileNameWithoutExtension(archiveFile.Name);
+            var dirName = Path.GetFileNameWithoutExtension(archiveFile.Name) + DateTime.Now.ToString("_yyyy-MM-ddTHHmmss");
             var baseDir = isManual
                 ? EnvironmentParameters.TemporaryPluginManualExtractDirectory
                 : EnvironmentParameters.TemporaryPluginAutomaticExtractDirectory
@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         private Task<FileInfo?> GetPluginFileAsync(DirectoryInfo pluginDirectory, string pluginName, IReadOnlyList<string> extensions)
         {
-            var file = PluginContainer.GetPluginFile(pluginDirectory, pluginDirectory.Name, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions);
+            var file = PluginContainer.GetPluginFile(pluginDirectory, pluginName, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions);
             if(file != null) {
                 return Task.FromResult<FileInfo?>(file);
             }
@@ -181,7 +181,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             return Task.Run(() => {
                 var dirs = pluginDirectory.EnumerateDirectories();
                 foreach(var dir in dirs) {
-                    var file = PluginContainer.GetPluginFile(dir, pluginDirectory.Name, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions);
+                    var file = PluginContainer.GetPluginFile(dir, pluginName, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions);
                     if(file != null) {
                         return file;
                     }
@@ -191,11 +191,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             });
         }
 
-        private async Task<PluginInstallItemElement> InstallPluginAsync(FileInfo archiveFile, string archiveKind, bool isManual)
+        private async Task<PluginInstallItemElement> InstallPluginAsync(string pluginName, FileInfo archiveFile, string archiveKind, bool isManual)
         {
             var extractedDirectory = await ExtractArchiveAsync(archiveFile, archiveKind, isManual);
 
-            var pluginFile = await GetPluginFileAsync(extractedDirectory, extractedDirectory.Name, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions);
+            var pluginFile = await GetPluginFileAsync(extractedDirectory, pluginName, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions);
             if(pluginFile == null) {
                 // プラグインが見つかんない
                 extractedDirectory.Delete(true);
@@ -275,8 +275,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             if(!exts.Contains(ext)) {
                 throw new PluginInvalidArchiveKindException();
             }
+            var pluginFileName = Path.GetFileNameWithoutExtension(archiveFile.Name)!;
 
-            var element = await InstallPluginAsync(archiveFile, ext, true);
+            var element = await InstallPluginAsync(pluginFileName, archiveFile, ext, true);
             MergeInstallPlugin(element);
         }
 
@@ -300,7 +301,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 installDataItems = installPluginsEntityDao.SelectInstallPlugins().ToList();
             }
 
-            InstallPluginItemsImpl.AddRange(installDataItems.Select(i => new PluginInstallItemElement(i, LoggerFactory)));
+            foreach(var installDataItem in installDataItems) {
+                var element = new PluginInstallItemElement(installDataItem, LoggerFactory);
+                element.Initialize();
+                InstallPluginItemsImpl.Add(element);
+            }
 
             // 標準テーマがなければ追加
             if(!pluginStates.Any(i => i.PluginId == DefaultTheme.Informations.PluginIdentifiers.PluginId)) {

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
@@ -41,6 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region property
 
         public RequestSender SelectPluginFileRequest { get; } = new RequestSender();
+        public RequestSender ShowMessageRequest { get; } = new RequestSender();
 
         ModelViewModelObservableCollectionManagerBase<PluginSettingEditorElement, PluginSettingEditorViewModel> PluginCollection { get; }
         public ICollectionView PluginItems { get; }
@@ -79,7 +81,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                         return;
                     }
                     var file = new FileInfo(r.ResponseFilePaths[0]);
-                    await Model.InstallManualPluginTask(file);
+                    try {
+                        await Model.InstallManualPluginTask(file);
+                    } catch(Exception ex) {
+                        var parameter = new CommonMessageDialogRequestParameter() {
+                            Message = ex.ToString(),
+                            Button = System.Windows.MessageBoxButton.OK,
+                            Caption = ex.Message,
+                            Icon = System.Windows.MessageBoxImage.Error,
+                        };
+                        ShowMessageRequest.Send(parameter);
+                    }
                 });
             }
         ));
