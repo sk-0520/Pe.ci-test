@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     /// </summary>
     public class PluginInstallItemElement: ElementBase
     {
-        public PluginInstallItemElement(PluginInstallBasicData data, ILoggerFactory loggerFactory)
+        public PluginInstallItemElement(PluginInstallData data, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Data = data;
@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
-        public PluginInstallBasicData Data { get; }
+        public PluginInstallData Data { get; }
 
         #endregion
 

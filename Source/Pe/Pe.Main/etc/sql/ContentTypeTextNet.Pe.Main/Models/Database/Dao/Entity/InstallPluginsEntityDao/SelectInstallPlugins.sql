@@ -2,7 +2,9 @@ select
 	InstallPlugins.PluginId,
 	InstallPlugins.PluginName,
 	InstallPlugins.PluginVersion,
-	InstallPlugins.PluginInstallMode
+	InstallPlugins.PluginInstallMode,
+	InstallPlugins.ExtractedDirectoryPath,
+	InstallPlugins.PluginDirectoryPath
 from
 	InstallPlugins
 order by

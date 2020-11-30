@@ -52,15 +52,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        PluginInstallBasicData ConvertFromDto(InstallPluginRowDto dto)
+        PluginInstallData ConvertFromDto(InstallPluginRowDto dto)
         {
             var pluginInstallModeTransfer = new EnumTransfer<PluginInstallMode>();
 
-            return new PluginInstallBasicData(
+            return new PluginInstallData(
                 dto.PluginId,
                 dto.PluginName,
                 dto.PluginVersion ?? new Version(),
-                pluginInstallModeTransfer.ToEnum(dto.PluginInstallMode)
+                pluginInstallModeTransfer.ToEnum(dto.PluginInstallMode),
+                dto.ExtractedDirectoryPath,
+                dto.PluginDirectoryPath
             );
         }
 
@@ -73,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirstOrDefault<bool>(statement, parameter);
         }
 
-        public IEnumerable<PluginInstallBasicData> SelectInstallPlugins()
+        public IEnumerable<PluginInstallData> SelectInstallPlugins()
         {
             var statement = LoadStatement();
             return Context.Query<InstallPluginRowDto>(statement)
@@ -81,16 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public string SelectExtractedDirectoryPath(Guid pluginId)
-        {
-            var statement = LoadStatement();
-            var parameter = new {
-                PluginId = pluginId,
-            };
-            return Context.QueryFirst<string>(statement, parameter);
-        }
-
-        public void InsertInstallPlugin(PluginInstallBasicData data, string extractedDirectoryPath, string pluginDirectoryPath, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertInstallPlugin(PluginInstallData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var pluginInstallModeTransfer = new EnumTransfer<PluginInstallMode>();
 
@@ -100,8 +93,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 PluginName = data.PluginName,
                 PluginVersion = data.PluginVersion,
                 PluginInstallMode = pluginInstallModeTransfer.ToString(data.PluginInstallMode),
-                ExtractedDirectoryPath = extractedDirectoryPath,
-                PluginDirectoryPath = pluginDirectoryPath,
+                ExtractedDirectoryPath = data.ExtractedDirectoryPath,
+                PluginDirectoryPath = data.PluginDirectoryPath,
             };
             databaseCommonStatus.WriteCreate(parameter);
 

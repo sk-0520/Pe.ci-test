@@ -122,25 +122,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
             InstallPluginItemsImpl.Remove(removeTarget);
 
-            string extractDirectoryPath;
+            //string extractDirectoryPath;
             using(var context = TemporaryDatabaseBarrier.WaitWrite()) {
                 var installPluginsEntityDao = new InstallPluginsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 if(!installPluginsEntityDao.SelectExistsInstallPlugin(removeTarget.Data.PluginId)) {
                     return;
                 }
 
-                extractDirectoryPath = installPluginsEntityDao.SelectExtractedDirectoryPath(removeTarget.Data.PluginId);
+                //extractDirectoryPath = installPluginsEntityDao.SelectExtractedDirectoryPath(removeTarget.Data.PluginId);
                 installPluginsEntityDao.DeleteInstallPlugin(removeTarget.Data.PluginId);
 
                 context.Commit();
             }
 
-            // 展開ディレクトリを破棄できない場合でもガン無視で進める(プラグインインストール準備時点で読み込んでるのでプロセス側がつかんでる可能性あり)
-            try {
-                Directory.Delete(extractDirectoryPath, true);
-            } catch(Exception ex) {
-                Logger.LogError(ex, ex.Message);
-            }
+            // 展開ディレクトリは破棄しない(起動処理にお任せ)
         }
 
         private Task<DirectoryInfo> ExtractArchiveAsync(FileInfo archiveFile, string archiveKind, bool isManual)
@@ -237,7 +232,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 }
             }
 
-            var element = new PluginInstallItemElement(new PluginInstallBasicData(loadStateData.PluginId, loadStateData.PluginName, loadStateData.PluginVersion, isUpdate ? PluginInstallMode.Update : PluginInstallMode.New), LoggerFactory);
+            var data = new PluginInstallData(loadStateData.PluginId, loadStateData.PluginName, loadStateData.PluginVersion, isUpdate ? PluginInstallMode.Update : PluginInstallMode.New, extractedDirectory.FullName, pluginFile.DirectoryName!);
+            var element = new PluginInstallItemElement(data, LoggerFactory);
             element.Initialize();
 
             // インストール対象のディレクトリを内部保持
@@ -246,7 +242,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 if(installPluginsEntityDao.SelectExistsInstallPlugin(loadStateData.PluginId)) {
                     installPluginsEntityDao.DeleteInstallPlugin(loadStateData.PluginId);
                 }
-                installPluginsEntityDao.InsertInstallPlugin(element.Data, extractedDirectory.FullName, pluginFile.DirectoryName!, DatabaseCommonStatus.CreateCurrentAccount());
+                installPluginsEntityDao.InsertInstallPlugin(element.Data, DatabaseCommonStatus.CreateCurrentAccount());
 
                 context.Commit();
             }
@@ -289,13 +285,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void LoadImpl()
         {
             IList<PluginStateData> pluginStates;
-
             using(var context = MainDatabaseBarrier.WaitRead()) {
                 var pluginsEntityDao = new PluginsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 pluginStates = pluginsEntityDao.SelectePlguinStateData().ToList();
             }
 
-            IList<PluginInstallBasicData> installDataItems;
+            IList<PluginInstallData> installDataItems;
             using(var context = TemporaryDatabaseBarrier.WaitRead()) {
                 var installPluginsEntityDao = new InstallPluginsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 installDataItems = installPluginsEntityDao.SelectInstallPlugins().ToList();
