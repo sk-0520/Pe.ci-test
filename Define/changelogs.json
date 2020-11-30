@@ -87,6 +87,10 @@
 					},
 					{
 						"revision": "",
+						"subject": "SonarAnalyzer.CSharp 8.14.0.22654 -> 8.15.0.24505"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
