@@ -267,7 +267,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             return new ApplicationDatabaseFactoryPack(
                 new ApplicationDatabaseFactory(environmentParameters.MainFile, foreignKeys, false),
-                new ApplicationDatabaseFactory(environmentParameters.FileFile, foreignKeys, false),
+                new ApplicationDatabaseFactory(environmentParameters.LargeFile, foreignKeys, false),
                 new ApplicationDatabaseFactory(true, false)
             );
         }
@@ -289,7 +289,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             // 初回セットアップに来ている場合既に存在するデータファイルは狂っている可能性があるので破棄する
             var deleteTartgetFiles = new[] {
                 environmentParameters.MainFile,
-                environmentParameters.FileFile,
+                environmentParameters.LargeFile,
             };
             foreach(var file in deleteTartgetFiles) {
                 logger.LogDebug("delete: {0}", file.FullName);
@@ -334,7 +334,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 return false;
             }
 
-            databaseSetupper.Migrating(accessorPack, lastVersion);
+            databaseSetupper.Migrate(accessorPack, lastVersion);
 
             pack.factory = CreateDatabaseFactoryPack(environmentParameters, true, logger);
             pack.accessor = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory);
@@ -447,6 +447,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return manager;
         }
 
+        void InitializeDirectory(EnvironmentParameters environmentParameters, ILogger logger, ILoggerFactory loggerFactory)
+        {
+            // 限定的に一時ディレクトリ内きれいにする
+            var dirs = new[] {
+                environmentParameters.TemporaryApplicationExtractDirectory,
+                environmentParameters.TemporaryPluginAutomaticExtractDirectory,
+                environmentParameters.TemporaryPluginManualExtractDirectory,
+                environmentParameters.TemporarySettingDirectory,
+            };
+            foreach(var dir in dirs) {
+                logger.LogInformation("cleanup: {0}", dir.FullName);
+                try {
+                    var directoryCleaner = new DirectoryCleaner(dir, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitCount, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitTime, loggerFactory);
+                    directoryCleaner.Clear(false);
+                } catch(Exception ex) {
+                    logger.LogError(ex, ex.Message);
+                }
+            }
+        }
 
         public bool Initialize(App app, StartupEventArgs e)
         {
@@ -552,6 +571,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 FirstSetup(environmentParameters, loggerFactory, logger);
             }
 
+            InitializeDirectory(environmentParameters, logger, loggerFactory);
+
             var webViewinItializer = new WebViewinItializer(loggerFactory);
             webViewinItializer.Initialize(environmentParameters, cultureService);
             //try {
@@ -577,6 +598,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             pack.accessor.Dispose();
 
             DiContainer = SetupContainer(environmentParameters, factory, cultureService, loggerFactory);
+            var databaseSetupper = DiContainer.Build<DatabaseSetupper>();
+            var lastVersion = databaseSetupper.GetLastVersion(DiContainer.Build<IDatabaseAccessorPack>().Main)!;
+            databaseSetupper.Tune(DiContainer.Build<IDatabaseAccessorPack>(), lastVersion);
+
             WindowManager = SetupWindowManager(DiContainer);
             //OrderManager = SetupOrderManager(DiContainer);
             NotifyManager = SetupNotifyManager(DiContainer);

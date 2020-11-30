@@ -40,6 +40,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         IllegalAssembly,
     }
 
+    public enum PluginInstallMode
+    {
+        [EnumResource]
+        New,
+        [EnumResource]
+        Update,
+    }
+
     public interface IPluginId
     {
         #region property
@@ -127,5 +135,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
     }
+
+    public record PluginInstallData(
+        Guid PluginId,
+        string PluginName,
+        Version PluginVersion,
+        PluginInstallMode PluginInstallMode,
+        string ExtractedDirectoryPath,
+        string PluginDirectoryPath
+    );
 
 }

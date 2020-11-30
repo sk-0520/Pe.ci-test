@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
@@ -27,12 +32,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 ToViewModel = m => new PluginSettingEditorViewModel(m, ImageLoader, DispatcherWrapper, LoggerFactory),
             };
             PluginItems = PluginCollection.GetDefaultView();
+
+            InstallPluginCollection = new ActionModelViewModelObservableCollectionManager<PluginInstallItemElement, PluginInstallItemViewModel>(Model.InstallPluginItems) {
+                ToViewModel = m => new PluginInstallItemViewModel(m, LoggerFactory),
+            };
+            InstallPluginItems = InstallPluginCollection.GetDefaultView();
         }
 
         #region property
 
+        public RequestSender SelectPluginFileRequest { get; } = new RequestSender();
+        public RequestSender ShowMessageRequest { get; } = new RequestSender();
+
         ModelViewModelObservableCollectionManagerBase<PluginSettingEditorElement, PluginSettingEditorViewModel> PluginCollection { get; }
         public ICollectionView PluginItems { get; }
+
+        ModelViewModelObservableCollectionManagerBase<PluginInstallItemElement, PluginInstallItemViewModel> InstallPluginCollection { get; }
+        public ICollectionView InstallPluginItems { get; }
 
         public PluginSettingEditorViewModel? SelectedPlugin
         {
@@ -45,6 +61,40 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region command
+
+        public ICommand CancelInstallCommand => GetOrCreateCommand(() => new DelegateCommand<PluginInstallItemViewModel>(
+            o => {
+                Model.CancelInstall(o.PluginId);
+            }
+        ));
+
+        public ICommand ManualInstallCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                var parameter = new FileSystemSelectDialogRequestParameter() {
+                    FileSystemDialogMode = FileSystemDialogMode.FileOpen,
+                };
+                parameter.Filter.Add(new Core.Models.DialogFilterItem(Properties.Resources.String_Setting_Plugins_Install_File, "7z", new[] { "*.7z", "*.zip" }));
+
+                SelectPluginFileRequest.Send<FileSystemSelectDialogRequestResponse>(parameter, async r => {
+                    if(r.ResponseIsCancel) {
+                        Logger.LogTrace("cancel");
+                        return;
+                    }
+                    var file = new FileInfo(r.ResponseFilePaths[0]);
+                    try {
+                        await Model.InstallManualPluginTask(file);
+                    } catch(Exception ex) {
+                        var parameter = new CommonMessageDialogRequestParameter() {
+                            Message = ex.ToString(),
+                            Button = System.Windows.MessageBoxButton.OK,
+                            Caption = ex.Message,
+                            Icon = System.Windows.MessageBoxImage.Error,
+                        };
+                        ShowMessageRequest.Send(parameter);
+                    }
+                });
+            }
+        ));
 
         #endregion
 

@@ -251,13 +251,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var settings = new {
                 Main = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.MainFile.Name)),
-                File = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name)),
+                File = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.LargeFile.Name)),
             };
             //var settingDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.SettingFile.Name));
             //var fileDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name));
 
             environmentParameters.MainFile.CopyTo(settings.Main.FullName);
-            environmentParameters.FileFile.CopyTo(settings.File.FullName);
+            environmentParameters.LargeFile.CopyTo(settings.File.FullName);
 
             // DIを設定処理用に付け替え
             var container = ApplicationDiContainer.Scope();
@@ -278,7 +278,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var settingDatabasePack = container.Build<IDatabaseAccessorPack>();
             PersistentHelper.Copy(workingDatabasePack.Temporary, settingDatabasePack.Temporary);
 
-            var settingElement = new SettingContainerElement(container, container.Build<ILoggerFactory>());
+            var settingElement = new SettingContainerElement(container, Logging.PauseReceiveLog, container.Build<ILoggerFactory>());
             settingElement.Initialize();
             var windowItem = OrderManager.CreateSettingWindow(settingElement);
             WindowManager.Register(windowItem);
@@ -332,7 +332,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
 
                 settings.Main.CopyTo(environmentParameters.MainFile.FullName, true);
-                settings.File.CopyTo(environmentParameters.FileFile.FullName, true);
+                settings.File.CopyTo(environmentParameters.LargeFile.FullName, true);
 
                 foreach(var stopping in stoppings) {
                     stopping.Dispose();
@@ -340,8 +340,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var cultureServiceChanger = ApplicationDiContainer.Build<CultureServiceChanger>(CultureService.Instance);
                 cultureServiceChanger.ChangeCulture();
 
-                PersistentHelper.Copy(workingDatabasePack.Temporary, accessorPack.Temporary);
-
+                PersistentHelper.Copy(settingDatabasePack.Temporary, workingDatabasePack.Temporary);
 
                 Logger.LogInformation("設定適用のため各要素生成");
 
@@ -614,6 +613,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }, DispatcherPriority.ApplicationIdle);
         }
 
+        private void InstallLatestPlugins()
+        {
+            var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
+
+            var directoryMover = ApplicationDiContainer.Build<DirectoryMover>();
+
+            var dirs = environmentParameters.MachinePluginInstallDirectory.EnumerateDirectories();
+            foreach(var dir in dirs) {
+                var destDirPath = Path.Combine(environmentParameters.MachinePluginModuleDirectory.FullName, dir.Name);
+                var destDir = new DirectoryInfo(destDirPath);
+                Logger.LogInformation("新規プラグイン: {0}", destDirPath);
+                directoryMover.Move(dir, destDir);
+            }
+
+            var directoryCleaner = new DirectoryCleaner(environmentParameters.MachinePluginInstallDirectory, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitCount, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitTime, LoggerFactory);
+            directoryCleaner.Clear(false);
+        }
+
         private void LoadPlugins()
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
@@ -649,7 +666,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var enabledPlugins = pluginStateItems.Except(uninstalledPlugins).ToArray();
 
             // プラグインディレクトリからプラグインDLL列挙
-            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.Extentions);
+            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.IgnoreBaseFileNames, environmentParameters.ApplicationConfiguration.Plugin.Extentions);
 
             FileInfo? testPluginFile = null;
             if(TestPluginDirectory != null) {
@@ -914,8 +931,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             ApplicationDiContainer.Get<IDispatcherWrapper>().VerifyAccess();
 
-            var colors = PlatformThemeLoader.ApplicationThemeKind switch
-            {
+            var colors = PlatformThemeLoader.ApplicationThemeKind switch {
                 PlatformThemeKind.Dark => (active: "Dark", inactive: "Light"),
                 PlatformThemeKind.Light => (active: "Light", inactive: "Dark"),
                 _ => throw new NotImplementedException(),
@@ -1054,7 +1070,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             MakeMessageWindow();
 
+            InstallLatestPlugins();
             LoadPlugins();
+
             ApplyThemeSetting();
 
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -1422,6 +1440,47 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CefSharp.Cef.Shutdown();
         }
 
+        private void PrepareLatestPlugins()
+        {
+            var temporaryBarrier = ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>();
+            IList<PluginInstallData> installDataItems;
+            using(var context = temporaryBarrier.WaitRead()) {
+                var installPluginsEntityDao = ApplicationDiContainer.Build<InstallPluginsEntityDao>(context, context.Implementation);
+                installDataItems = installPluginsEntityDao.SelectInstallPlugins().ToList();
+            }
+
+            if(!installDataItems.Any()) {
+                return;
+            }
+
+            var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
+            var pluginMap = PluginContainer.Plugins.ToDictionary(i => i.PluginInformations.PluginIdentifiers.PluginId, i => i);
+            var directoryMover = ApplicationDiContainer.Build<DirectoryMover>();
+            foreach(var installDataItem in installDataItems) {
+                if(installDataItem.PluginInstallMode == PluginInstallMode.New) {
+                    // 新規の場合プラグインIDからほわーっとディレクトリを準備
+                    var destDirPath = Path.Combine(environmentParameters.MachinePluginInstallDirectory.FullName, PluginUtility.ConvertDirectoryName(installDataItem.PluginId));
+                    var srcDir = new DirectoryInfo(installDataItem.PluginDirectoryPath);
+                    var destDir = new DirectoryInfo(destDirPath);
+                    Logger.LogInformation("インストール対象: 新規プラグイン: {0}, {1} -> {2}", installDataItem.PluginId, srcDir.FullName, destDir.FullName);
+                    directoryMover.Move(srcDir, destDir);
+                } else {
+                    Debug.Assert(installDataItem.PluginInstallMode == PluginInstallMode.Update);
+                    // 更新の場合、元プラグインのディレクトリ名をあれこれ調整してほわー
+                    if(!pluginMap.TryGetValue(installDataItem.PluginId, out var plugin)) {
+                        Logger.LogWarning("更新プラグインインストール処理の無視: {0}", installDataItem.PluginId);
+                        continue;
+                    }
+
+                    var pluginDirPath = Path.GetDirectoryName(plugin.GetType().Assembly.Location)!;
+                    var srcDir = new DirectoryInfo(installDataItem.PluginDirectoryPath);
+                    var destDir = new DirectoryInfo(pluginDirPath);
+                    Logger.LogInformation("インストール対象: 更新プラグイン: {0}, {1} -> {2}", installDataItem.PluginId, srcDir.FullName, destDir.FullName);
+                    directoryMover.Move(srcDir, destDir);
+                }
+            }
+        }
+
         /// <summary>
         ///
         /// </summary>
@@ -1434,6 +1493,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var backgroundAddonProxyRunShutdownContext = new BackgroundAddonProxyRunShutdownContext();
                 BackgroundAddon.RunShutdown(backgroundAddonProxyRunShutdownContext);
             }
+
+            PrepareLatestPlugins();
 
             UnloadPlugins();
 
@@ -1670,8 +1731,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var updateWait = ApplicationDiContainer.Build<ApplicationConfiguration>().General.UpdateWait;
             await Task.Delay(updateWait).ConfigureAwait(false);
-            var updateCheckKind = updateKind switch
-            {
+            var updateCheckKind = updateKind switch {
                 UpdateKind.Notify => UpdateCheckKind.CheckOnly,
                 _ => UpdateCheckKind.Update,
             };

@@ -88,13 +88,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// </summary>
         /// <param name="baseDirectory"></param>
         /// <returns></returns>
-        public IEnumerable<FileInfo> GetPluginFiles(DirectoryInfo baseDirectory, IReadOnlyList<string> extensions)
+        public IEnumerable<FileInfo> GetPluginFiles(DirectoryInfo baseDirectory, IReadOnlyCollection<string> ignoreBaseFileName, IReadOnlyList<string> extensions)
         {
             var pluginDirs = baseDirectory.EnumerateDirectories();
             foreach(var pluginDir in pluginDirs) {
-                var pluginFile = GetPluginFile(pluginDir, pluginDir.Name, extensions);
-                if(pluginFile != null) {
-                    yield return pluginFile;
+                // ディレクトリ名に依存しない形でなんかそれっぽいのを探し出す
+                // 1ディレクトリにdll/exeが１つであることを前提にしている問題
+                var baseFileNames = pluginDir.EnumerateFiles()
+                    .Select(i => new { BaseName = Path.GetFileNameWithoutExtension(i.Name), Extension = 1 < i.Length ? i.Extension.Substring(1): string.Empty })
+                    .Where(i => !string.IsNullOrEmpty(i.Extension))
+                    .Where(i => extensions.Select(i => i.ToLowerInvariant()).Contains(i.Extension.ToLowerInvariant()))
+                    .Where(i => !ignoreBaseFileName.Select(i => i.ToLowerInvariant()).Contains(i.BaseName.ToLowerInvariant()))
+                    .Distinct()
+                    .Select(i => i.BaseName)
+                    .ToArray()
+                ;
+                foreach(var baseFileName in baseFileNames) {
+                    var pluginFile = GetPluginFile(pluginDir, baseFileName, extensions);
+                    if(pluginFile != null) {
+                        yield return pluginFile;
+                    }
                 }
             }
         }
@@ -202,6 +215,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             var unlimitVersion = new Version(0, 0, 0);
 
+            //TODO: PluginUtility.IsUnlimitedVersion の使用
             if(info.PluginVersions.MinimumSupportVersion != unlimitVersion) {
                 var ok = info.PluginVersions.MinimumSupportVersion <= applicationVersion;
                 if(!ok) {
