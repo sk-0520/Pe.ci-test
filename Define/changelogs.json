@@ -73,6 +73,7 @@
 				"logs": [
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "Microsoft.Extensions.* の .NET 5 対応",
 						"comments": [
 							"Microsoft.Extensions.Configuration.Binder [NEW] 5.0.0",
@@ -87,14 +88,17 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "SonarAnalyzer.CSharp 8.14.0.22654 -> 8.15.0.24505"
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "Dapper 2.0.35 -> 2.0.78"
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "CefSharp.Wpf 85.3.130 -> 86.0.241"
 					}
 				]
