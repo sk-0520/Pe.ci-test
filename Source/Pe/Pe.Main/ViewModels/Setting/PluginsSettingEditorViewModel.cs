@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 var parameter = new FileSystemSelectDialogRequestParameter() {
                     FileSystemDialogMode = FileSystemDialogMode.FileOpen,
                 };
-                parameter.Filter.Add(new Core.Models.DialogFilterItem("plugin", "7z", new[] { "*.7z", "*.zip" }));
+                parameter.Filter.Add(new Core.Models.DialogFilterItem(Properties.Resources.String_Setting_Plugins_Install_File, "7z", new[] { "*.7z", "*.zip" }));
 
                 SelectPluginFileRequest.Send<FileSystemSelectDialogRequestResponse>(parameter, async r => {
                     if(r.ResponseIsCancel) {

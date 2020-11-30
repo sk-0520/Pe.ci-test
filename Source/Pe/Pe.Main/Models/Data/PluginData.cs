@@ -42,7 +42,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public enum PluginInstallMode
     {
+        [EnumResource]
         New,
+        [EnumResource]
         Update,
     }
 
