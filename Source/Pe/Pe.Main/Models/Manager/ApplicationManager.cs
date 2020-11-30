@@ -666,7 +666,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var enabledPlugins = pluginStateItems.Except(uninstalledPlugins).ToArray();
 
             // プラグインディレクトリからプラグインDLL列挙
-            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.Extentions);
+            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.IgnoreBaseFileNames, environmentParameters.ApplicationConfiguration.Plugin.Extentions);
 
             FileInfo? testPluginFile = null;
             if(TestPluginDirectory != null) {
@@ -1462,18 +1462,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     var destDirPath = Path.Combine(environmentParameters.MachinePluginInstallDirectory.FullName, PluginUtility.ConvertDirectoryName(installDataItem.PluginId));
                     var srcDir = new DirectoryInfo(installDataItem.PluginDirectoryPath);
                     var destDir = new DirectoryInfo(destDirPath);
+                    Logger.LogInformation("インストール対象: 新規プラグイン: {0}, {1} -> {2}", installDataItem.PluginId, srcDir.FullName, destDir.FullName);
                     directoryMover.Move(srcDir, destDir);
                 } else {
                     Debug.Assert(installDataItem.PluginInstallMode == PluginInstallMode.Update);
                     // 更新の場合、元プラグインのディレクトリ名をあれこれ調整してほわー
                     if(!pluginMap.TryGetValue(installDataItem.PluginId, out var plugin)) {
-                        Logger.LogWarning("プラグインインストール処理の無視: {0}", installDataItem.PluginId);
+                        Logger.LogWarning("更新プラグインインストール処理の無視: {0}", installDataItem.PluginId);
                         continue;
                     }
 
                     var pluginDirPath = Path.GetDirectoryName(plugin.GetType().Assembly.Location)!;
                     var srcDir = new DirectoryInfo(installDataItem.PluginDirectoryPath);
                     var destDir = new DirectoryInfo(pluginDirPath);
+                    Logger.LogInformation("インストール対象: 更新プラグイン: {0}, {1} -> {2}", installDataItem.PluginId, srcDir.FullName, destDir.FullName);
                     directoryMover.Move(srcDir, destDir);
                 }
             }
