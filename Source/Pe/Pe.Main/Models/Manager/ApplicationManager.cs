@@ -613,6 +613,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }, DispatcherPriority.ApplicationIdle);
         }
 
+        private void InstallLatestPlugins()
+        {
+            var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
+
+            var directoryMover = ApplicationDiContainer.Build<DirectoryMover>();
+
+            var dirs = environmentParameters.MachinePluginInstallDirectory.EnumerateDirectories();
+            foreach(var dir in dirs) {
+                var destDirPath = Path.Combine(environmentParameters.MachinePluginModuleDirectory.FullName, dir.Name);
+                var destDir = new DirectoryInfo(destDirPath);
+                Logger.LogInformation("新規プラグイン: {0}", destDirPath);
+                directoryMover.Move(dir, destDir);
+            }
+
+            var directoryCleaner = new DirectoryCleaner(environmentParameters.MachinePluginInstallDirectory, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitCount, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitTime, LoggerFactory);
+            directoryCleaner.Clear(false);
+        }
+
         private void LoadPlugins()
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
@@ -1052,7 +1070,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             MakeMessageWindow();
 
+            InstallLatestPlugins();
             LoadPlugins();
+
             ApplyThemeSetting();
 
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -1420,7 +1440,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CefSharp.Cef.Shutdown();
         }
 
-        private void InstallLatestPlugins()
+        private void PrepareLatestPlugins()
         {
             var temporaryBarrier = ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>();
             IList<PluginInstallData> installDataItems;
@@ -1472,7 +1492,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 BackgroundAddon.RunShutdown(backgroundAddonProxyRunShutdownContext);
             }
 
-            InstallLatestPlugins();
+            PrepareLatestPlugins();
 
             UnloadPlugins();
 
