@@ -28,11 +28,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region function
 
-        public string ConvertDirectoryName(IPluginIdentifiers pluginId)
-        {
-            return pluginId.PluginId.ToString("D");
-        }
-
         public DirectoryInfo GetModuleDirectory(IPluginIdentifiers pluginIdentifiers)
         {
             var nameDirPath = Path.Combine(EnvironmentParameters.MachinePluginModuleDirectory.FullName, pluginIdentifiers.PluginName);
@@ -40,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 return new DirectoryInfo(nameDirPath);
             }
 
-            return EnvironmentParameters.MachinePluginModuleDirectory.CreateSubdirectory(ConvertDirectoryName(pluginIdentifiers));
+            return EnvironmentParameters.MachinePluginModuleDirectory.CreateSubdirectory(PluginUtility.ConvertDirectoryName(pluginIdentifiers));
         }
 
 
@@ -48,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             Debug.Assert(baseDirectoryName != null);
 
-            var pluginDirName = ConvertDirectoryName(pluginId);
+            var pluginDirName = PluginUtility.ConvertDirectoryName(pluginId);
             var dirPath = Path.Combine(pluginDataDirectory.FullName, pluginDirName, baseDirectoryName);
 
             return new DirectoryInfo(dirPath);

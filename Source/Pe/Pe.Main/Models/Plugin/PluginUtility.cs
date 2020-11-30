@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
@@ -19,6 +21,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             return version.Major == 0 && version.Minor == 0 && version.Build == 0;
         }
+
+        public static string ConvertDirectoryName(Guid pluginId)
+        {
+            return pluginId.ToString("D");
+        }
+        public static string ConvertDirectoryName(IPluginId pluginId) => ConvertDirectoryName(pluginId.PluginId);
+        public static string ConvertDirectoryName(IPluginIdentifiers pluginIdentifiers) => ConvertDirectoryName(pluginIdentifiers.PluginId);
 
         #endregion
     }

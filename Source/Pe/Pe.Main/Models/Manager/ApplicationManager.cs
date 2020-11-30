@@ -913,8 +913,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             ApplicationDiContainer.Get<IDispatcherWrapper>().VerifyAccess();
 
-            var colors = PlatformThemeLoader.ApplicationThemeKind switch
-            {
+            var colors = PlatformThemeLoader.ApplicationThemeKind switch {
                 PlatformThemeKind.Dark => (active: "Dark", inactive: "Light"),
                 PlatformThemeKind.Light => (active: "Light", inactive: "Dark"),
                 _ => throw new NotImplementedException(),
@@ -1421,6 +1420,45 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CefSharp.Cef.Shutdown();
         }
 
+        private void InstallLatestPlugins()
+        {
+            var temporaryBarrier = ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>();
+            IList<PluginInstallData> installDataItems;
+            using(var context = temporaryBarrier.WaitRead()) {
+                var installPluginsEntityDao = ApplicationDiContainer.Build<InstallPluginsEntityDao>(context, context.Implementation);
+                installDataItems = installPluginsEntityDao.SelectInstallPlugins().ToList();
+            }
+
+            if(!installDataItems.Any()) {
+                return;
+            }
+
+            var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
+            var pluginMap = PluginContainer.Plugins.ToDictionary(i => i.PluginInformations.PluginIdentifiers.PluginId, i => i);
+            var directoryMover = ApplicationDiContainer.Build<DirectoryMover>();
+            foreach(var installDataItem in installDataItems) {
+                if(installDataItem.PluginInstallMode == PluginInstallMode.New) {
+                    // 新規の場合プラグインIDからほわーっとディレクトリを準備
+                    var destDirPath = Path.Combine(environmentParameters.MachinePluginInstallDirectory.FullName, PluginUtility.ConvertDirectoryName(installDataItem.PluginId));
+                    var srcDir = new DirectoryInfo(installDataItem.PluginDirectoryPath);
+                    var destDir = new DirectoryInfo(destDirPath);
+                    directoryMover.Move(srcDir, destDir);
+                } else {
+                    Debug.Assert(installDataItem.PluginInstallMode == PluginInstallMode.Update);
+                    // 更新の場合、元プラグインのディレクトリ名をあれこれ調整してほわー
+                    if(!pluginMap.TryGetValue(installDataItem.PluginId, out var plugin)) {
+                        Logger.LogWarning("プラグインインストール処理の無視: {0}", installDataItem.PluginId);
+                        continue;
+                    }
+
+                    var pluginDirPath = Path.GetDirectoryName(plugin.GetType().Assembly.Location)!;
+                    var srcDir = new DirectoryInfo(installDataItem.PluginDirectoryPath);
+                    var destDir = new DirectoryInfo(pluginDirPath);
+                    directoryMover.Move(srcDir, destDir);
+                }
+            }
+        }
+
         /// <summary>
         ///
         /// </summary>
@@ -1433,6 +1471,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var backgroundAddonProxyRunShutdownContext = new BackgroundAddonProxyRunShutdownContext();
                 BackgroundAddon.RunShutdown(backgroundAddonProxyRunShutdownContext);
             }
+
+            InstallLatestPlugins();
 
             UnloadPlugins();
 
@@ -1669,8 +1709,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var updateWait = ApplicationDiContainer.Build<ApplicationConfiguration>().General.UpdateWait;
             await Task.Delay(updateWait).ConfigureAwait(false);
-            var updateCheckKind = updateKind switch
-            {
+            var updateCheckKind = updateKind switch {
                 UpdateKind.Notify => UpdateCheckKind.CheckOnly,
                 _ => UpdateCheckKind.Update,
             };
