@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             Debug.Assert(new[] { "7z", "zip" }.Contains(archiveKind)); // enum 作っておかないからこうなる
 
-            var dirName = Path.GetFileNameWithoutExtension(archiveFile.Name) + DateTime.Now.ToString("_yyyy-MM-ddTHHmmss");
+            var dirName = Path.GetFileNameWithoutExtension(archiveFile.Name) + DateTime.Now.ToString("_yyyy-MM-dd'T'HHmmss");
             var baseDir = isManual
                 ? EnvironmentParameters.TemporaryPluginManualExtractDirectory
                 : EnvironmentParameters.TemporaryPluginAutomaticExtractDirectory
