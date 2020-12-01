@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
-    public class AcceptResult
+    public record AcceptResult
     {
         public AcceptResult(bool accepted, UpdateKind updateKind, bool isEnabledTelemetry)
         {

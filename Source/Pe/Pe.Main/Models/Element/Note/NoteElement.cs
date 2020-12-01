@@ -554,10 +554,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 case NoteContentKind.Plain:
                     switch(toKind) {
                         case NoteContentKind.RichText:
+                            Debug.Assert(DispatcherWrapper.CheckAccess());
                             return noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor);
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                        //return DispatcherWrapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
 
                         case NoteContentKind.Plain:
                         default:
@@ -589,13 +587,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
             ThrowIfDisposed();
 
+            if(ContentElement == null) {
+                return;
+            }
+
             var prevContentKind = ContentKind;
             var oldContentElement = ContentElement;
 
             using(MainDatabaseLazyWriter.Pause()) {
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
                 var fromRawContent = ContentElement.LoadRawContent();
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
                 var convertedContent = ConvertContent(ContentKind, fromRawContent, toContentKind);
                 var contentData = new NoteContentData() {
                     NoteId = NoteId,

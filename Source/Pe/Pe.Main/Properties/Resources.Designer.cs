@@ -886,6 +886,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   自動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Converter_SettingCultureNameConverter_DisplayName_Auto {
+            get {
+                return ResourceManager.GetString("String_Converter_SettingCultureNameConverter_DisplayName_Auto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   OS設定に合わせる に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Converter_SettingCultureNameConverter_Name_Auto {
+            get {
+                return ResourceManager.GetString("String_Converter_SettingCultureNameConverter_Name_Auto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   自動送信待機中... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_CrashReport_AutoSendWaiting {
@@ -2037,6 +2055,42 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_RightTop_A {
             get {
                 return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightTop_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新規 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_PluginInstallMode_New {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.PluginInstallMode.New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新規 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_PluginInstallMode_New_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.PluginInstallMode.New_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   更新 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_PluginInstallMode_Update {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.PluginInstallMode.Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   更新 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_PluginInstallMode_Update_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.PluginInstallMode.Update_A", resourceCulture);
             }
         }
         
@@ -5709,6 +5763,51 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_Plugins_Header {
             get {
                 return ResourceManager.GetString("String_Setting_Plugins_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   インストール に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Install_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Install_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   インストールしたプラグインは再起動後に有効になります に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Install_Description {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Install_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグインアーカイブ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Install_File {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Install_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   手動(_M) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Install_Manual_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Install_Manual_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Web に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Install_Web_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Install_Web_A", resourceCulture);
             }
         }
         

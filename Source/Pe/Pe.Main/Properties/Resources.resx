@@ -112,12 +112,12 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="File_Accept_AcceptDocument" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\file\accept\acceptdocument.xaml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
@@ -2108,5 +2108,38 @@ Pe を終了してから実行してください</value>
   </data>
   <data name="String_About_Uninstall_Target_Header_A" xml:space="preserve">
     <value>対象データ</value>
+  </data>
+  <data name="String_Converter_SettingCultureNameConverter_DisplayName_Auto" xml:space="preserve">
+    <value>自動</value>
+  </data>
+  <data name="String_Converter_SettingCultureNameConverter_Name_Auto" xml:space="preserve">
+    <value>OS設定に合わせる</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.PluginInstallMode.New" xml:space="preserve">
+    <value>新規</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.PluginInstallMode.New_A" xml:space="preserve">
+    <value>新規</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.PluginInstallMode.Update" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.PluginInstallMode.Update_A" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="String_Setting_Plugins_Install_A" xml:space="preserve">
+    <value>インストール</value>
+  </data>
+  <data name="String_Setting_Plugins_Install_Description" xml:space="preserve">
+    <value>インストールしたプラグインは再起動後に有効になります</value>
+  </data>
+  <data name="String_Setting_Plugins_Install_File" xml:space="preserve">
+    <value>プラグインアーカイブ</value>
+  </data>
+  <data name="String_Setting_Plugins_Install_Manual_A" xml:space="preserve">
+    <value>手動(_M)</value>
+  </data>
+  <data name="String_Setting_Plugins_Install_Web_A" xml:space="preserve">
+    <value>_Web</value>
   </data>
 </root>

@@ -324,6 +324,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             NotifyLogChanged?.Invoke(this, e);
         }
 
+        public void ClearAllLogs()
+        {
+            TopmostNotifyLogsImpl.Clear();
+            StreamNotifyLogsImpl.Clear();
+            NotifyLogs.Clear();
+        }
+
         #endregion
 
         #region INotifyManager
@@ -499,6 +506,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
         }
-
     }
 }

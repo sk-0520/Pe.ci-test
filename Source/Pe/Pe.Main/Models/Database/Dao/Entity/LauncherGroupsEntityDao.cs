@@ -84,9 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Name = dto.Name,
                 Kind = launcherGroupKindTransfer.ToEnum(dto.Kind),
                 ImageName = imgNameEnumTransfer.ToEnum(dto.ImageName),
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 ImageColor = ToColor(dto.ImageColor),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 Sequence = dto.Sequence,
             };
 

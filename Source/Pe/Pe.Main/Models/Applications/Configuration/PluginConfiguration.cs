@@ -20,6 +20,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         [Configuration]
         public IReadOnlyList<string> Extentions { get; } = default!;
 
+        /// <summary>
+        /// プラグインとしてそもそも無視するファイル名(拡張子抜き)。
+        /// </summary>
+        [Configuration]
+        public IReadOnlyList<string> IgnoreBaseFileNames { get; } = default!;
 
         #endregion
     }

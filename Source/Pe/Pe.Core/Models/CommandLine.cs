@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// コマンドラインのキー。
     /// </summary>
-    public class CommandLineKey
+    public record CommandLineKey
     {
         #region define
 
@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="shortKey">短いキー。</param>
         /// <param name="longKey">長いキー。</param>

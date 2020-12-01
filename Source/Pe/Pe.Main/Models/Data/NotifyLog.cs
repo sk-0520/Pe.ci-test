@@ -104,7 +104,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
     }
-    public class NotifyLogContent : IReadOnlyNotifyLogContent
+
+    public record NotifyLogContent : IReadOnlyNotifyLogContent
     {
         public NotifyLogContent(string content)
             : this(content, DateTime.UtcNow)
@@ -138,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class NotifyMessage : IReadOnlyNotifyMessage
+    public record NotifyMessage : IReadOnlyNotifyMessage
     {
         public NotifyMessage(NotifyLogKind kind, string header, NotifyLogContent notifyLogContent)
         {

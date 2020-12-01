@@ -44,6 +44,81 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         { }
     }
 
+    /// <summary>
+    /// プラグインアーカイブの種別不明時に投げられる。
+    /// </summary>
+    [Serializable]
+    public sealed class PluginInvalidArchiveKindException: PluginException
+    {
+        public PluginInvalidArchiveKindException()
+        { }
+
+        public PluginInvalidArchiveKindException(string? message) : base(message)
+        { }
+
+        public PluginInvalidArchiveKindException(SerializationInfo info, StreamingContext context) : base(info, context)
+        { }
+
+        public PluginInvalidArchiveKindException(string? message, Exception? innerException) : base(message, innerException)
+        { }
+    }
+
+    /// <summary>
+    /// プラグインアーカイブの展開ディレクトリが重複時に投げられる。
+    /// </summary>
+    [Serializable]
+    public sealed class PluginDuplicateExtractDirectoryException: PluginException
+    {
+        public PluginDuplicateExtractDirectoryException()
+        { }
+
+        public PluginDuplicateExtractDirectoryException(string? message) : base(message)
+        { }
+
+        public PluginDuplicateExtractDirectoryException(SerializationInfo info, StreamingContext context) : base(info, context)
+        { }
+
+        public PluginDuplicateExtractDirectoryException(string? message, Exception? innerException) : base(message, innerException)
+        { }
+    }
+
+    /// <summary>
+    /// プラグインぶっ壊れ系。
+    /// </summary>
+    [Serializable]
+    public sealed class PluginBrokenException: PluginException
+    {
+        public PluginBrokenException()
+        { }
+
+        public PluginBrokenException(string? message) : base(message)
+        { }
+
+        public PluginBrokenException(SerializationInfo info, StreamingContext context) : base(info, context)
+        { }
+
+        public PluginBrokenException(string? message, Exception? innerException) : base(message, innerException)
+        { }
+    }
+
+    /// <summary>
+    /// プラグインインストール失敗処理。
+    /// </summary>
+    [Serializable]
+    public sealed class PluginInstallException: PluginException
+    {
+        public PluginInstallException()
+        { }
+
+        public PluginInstallException(string? message) : base(message)
+        { }
+
+        public PluginInstallException(SerializationInfo info, StreamingContext context) : base(info, context)
+        { }
+
+        public PluginInstallException(string? message, Exception? innerException) : base(message, innerException)
+        { }
+    }
 
 #pragma warning restore S3925 // "ISerializable" should be implemented correctly
 }

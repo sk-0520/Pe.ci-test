@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// ダイアログで使用するフィルタのアイテム。
     /// </summary>
-    public class DialogFilterItem
+    public record DialogFilterItem
     {
         /// <summary>
         /// 初期化。
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// ダイアログで使用するフィルタのアイテム。
     /// <para>値を保持する。</para>
     /// </summary>
-    public class DialogFilterItem<TValue> : DialogFilterItem
+    public record DialogFilterItem<TValue> : DialogFilterItem
     {
         public DialogFilterItem(TValue value, string display, string defaultExtension, IEnumerable<string> wildcard)
             : base(display, defaultExtension, wildcard)

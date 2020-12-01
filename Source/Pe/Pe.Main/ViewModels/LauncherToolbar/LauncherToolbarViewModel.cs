@@ -209,9 +209,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public LauncherGroupViewModel? SelectedLauncherGroup
         {
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-            get => LauncherGroupCollection.GetViewModel(Model.SelectedLauncherGroup);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
+            get => Model?.SelectedLauncherGroup != null ? LauncherGroupCollection.GetViewModel(Model.SelectedLauncherGroup): null;
         }
 
         public LauncherToolbarContentDropMode ContentDropMode => Model.ContentDropMode;

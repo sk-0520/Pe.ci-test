@@ -81,9 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             var device = new DISPLAY_DEVICE();
             device.cb = Marshal.SizeOf(device);
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
             NativeMethods.EnumDisplayDevices(screen.DeviceName, 0, ref device, 1);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
 
             //return screen.DeviceName;
             return device.DeviceString;

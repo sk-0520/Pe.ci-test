@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 変更通知により呼び出される処理。
         /// </summary>
-        Action Callback { get; }
+        Action? Callback { get; }
 
         #endregion
     }
@@ -70,14 +70,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public List<ICommand>? RaiseCommands { get; }
         IReadOnlyList<ICommand>? IReadOnlyHookItem.RaiseCommands => RaiseCommands;
 
-#pragma warning disable CS8613 // 戻り値の型における参照型の Null 許容性が、暗黙的に実装されるメンバーと一致しません。
-#pragma warning disable CS8766 // 戻り値の型における参照型の NULL 値の許容が、暗黙的に実装されるメンバーと一致しません。おそらく、NULL 値の許容の属性が原因です。
         /// <summary>
         /// 変更通知により呼び出される処理。
         /// </summary>
         public Action? Callback { get; }
-#pragma warning restore CS8766 // 戻り値の型における参照型の NULL 値の許容が、暗黙的に実装されるメンバーと一致しません。おそらく、NULL 値の許容の属性が原因です。
-#pragma warning restore CS8613 // 戻り値の型における参照型の Null 許容性が、暗黙的に実装されるメンバーと一致しません。
 
         #endregion
     }
@@ -347,7 +343,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 hookItems.Where(i => i.RaisePropertyNames != null).SelectMany(i => i.RaisePropertyNames!),
                 commands.Where(i => !(i is DelegateCommandBase)),
                 commands.OfType<DelegateCommandBase>(),
-                hookItems.Where(i => i.Callback != null).Select(i => i.Callback)
+                hookItems.Where(i => i.Callback != null).Select(i => i.Callback!)
             );
 
             return result;

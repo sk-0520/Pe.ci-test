@@ -34,25 +34,58 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
+        /// <summary>
+        /// リリース日時（UTC）。
+        /// </summary>
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime Release { get; }
 
+        /// <summary>
+        /// モジュールバージョン。
+        /// </summary>
         public Version Version { get; }
+        /// <summary>
+        /// モジュールリビジョン。
+        /// </summary>
         public string Revision { get; }
-
+        /// <summary>
+        /// モジュールの対象プラットフォーム。
+        /// <para>使用可能文字列: x64, x86</para>
         public string Platform { get; }
 
+        /// <summary>
+        /// モジュールを適用可能な Pe の最低バージョン。
+        /// <para>このバージョン未満は使用・インストール不可。</para>
+        /// </summary>
         public Version MinimumVersion { get; }
 
+        /// <summary>
+        /// リリースノートのURI。
+        /// </summary>
         Uri NoteUri { get; }
 
+        /// <summary>
+        /// モジュールのDL先URI。
+        /// </summary>
         Uri ArchiveUri { get; }
+        /// <summary>
+        /// モジュールのDL時のサイズ。
+        /// </summary>
         long ArchiveSize { get; }
+        /// <summary>
+        /// モジュールのDLファイル形式。
+        /// <para>使用可能文字列: 7z, zip</para>
+        /// </summary>
         string ArchiveKind { get; }
 
         /// <summary>
+        /// モジュールのDLファイルのハッシュ形式。
         /// <para>https://docs.microsoft.com/ja-jp/dotnet/api/system.security.cryptography.hashalgorithm.create?view=netframework-4.8#System_Security_Cryptography_HashAlgorithm_Create_System_String_</para>
         /// </summary>
         string ArchiveHashKind { get; }
+        /// <summary>
+        /// モジュールのDLファイルのハッシュ値。
+        /// </summary>
         string ArchiveHashValue { get; }
 
         #endregion

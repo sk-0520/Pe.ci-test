@@ -1,5 +1,94 @@
 [
 	{
+		"date": "2020/12/01",
+		"version": "0.99.078",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"class": "compatibility",
+						"subject": "#712 対応によりバックアップデータ周りのファイル名が変更されます",
+						"comments": [
+							"yyyy-MM-dd_HH-mm-ss -> yyyy-MM-ddTHH-mm-ss"
+						]
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "d01af844ba2c3badc58a300c444ed4c5d0ddeab2",
+						"subject": "#710: バージョン情報にCLRのバージョンを表示する"
+					},
+					{
+						"revision": "ccc2f52b9153b678e4ad3aac205fbdfbdbac5410",
+						"subject": "#712: タイムスタンプを使用するファイル名の年月と時間の間を _ じゃなくて T にする"
+					},
+					{
+						"revision": "ad2ac657f750677b69d4b3db4862860c875b6921",
+						"subject": "#705: プラグインの手動インストールを半自動化する",
+						"comment": [
+							"理想的なアーカイブのみインストール可能",
+							"インストールした状態でアンインストール予約したりとかはかなりというか全く試験していない",
+							"アップデート処理も全く試験していない"
+						]
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "8a955b8a3bce496c152384b864866103f9053f67",
+						"subject": "#711: 自動選択言語が☆言語不明☆"
+					},
+					{
+						"revision": "4bcee0780460b0caac248b7a2b21c8c290a4dc0d",
+						"subject": "#713: 通知メッセージが設定画面経由で生きっぱなしのゾンビになる"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "81b82c750fd82671203ba878922747793ef38fd2",
+						"class": "nuget",
+						"subject": "Microsoft.Extensions.* の .NET 5 対応",
+						"comments": [
+							"Microsoft.Extensions.Configuration.Binder [NEW] 5.0.0",
+							"Microsoft.Extensions.Configuration.Json 3.1.9 -> 5.0.0",
+							"Microsoft.Extensions.Logging 3.1.9 -> 5.0.0",
+							".NET 5 にたぶん完全移行できた"
+						]
+					},
+					{
+						"revision": "c7f2e30a2b5697b1a0d3ce1f48642cadbbb25f47",
+						"subject": "update npm"
+					},
+					{
+						"revision": "68753bfc69780be61b43ff8051e96268f3fa949f",
+						"class": "nuget",
+						"subject": "SonarAnalyzer.CSharp 8.14.0.22654 -> 8.15.0.24505"
+					},
+					{
+						"revision": "7e07beb7f4575c4b88618985d9a1d5e6dc88a1c1",
+						"class": "nuget",
+						"subject": "Dapper 2.0.35 -> 2.0.78"
+					},
+					{
+						"revision": "1205ba84e84b80e46d9c0a94e8c193b917bf411d",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf 85.3.130 -> 86.0.241"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/11/15",
 		"version": "0.99.070",
 		"contents": [

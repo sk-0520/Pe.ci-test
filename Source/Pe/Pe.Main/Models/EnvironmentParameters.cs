@@ -217,6 +217,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <para>この下にプラグインごとのディレクトリを配置してバイナリを置く。</para>
         /// </summary>
         public DirectoryInfo MachinePluginModuleDirectory => CombineDirectory(true, MachinePluginDirectory, "modules");
+        /// <summary>
+        /// インストール対象プラグインの配置ディレクトリ。
+        /// <para>起動時にこの下にあるプラグインを<see cref="MachinePluginModuleDirectory"/>に転送する。</para>
+        /// </summary>
+        public DirectoryInfo MachinePluginInstallDirectory => CombineDirectory(true, MachinePluginDirectory, "install");
 
         /// <summary>
         /// WebViewの端末親ディレクトリ。
@@ -258,10 +263,18 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo TemporaryApplicationExtractDirectory => CombineDirectory(true, TemporaryExtractDirectory, "application");
         /// <summary>
-        /// プラグイン展開ディレクトリ。
+        /// プラグイン展開親ディレクトリ。
         /// <para>この下にプラグインごとのディレクトリを作成して展開する。</para>
         /// </summary>
-        public DirectoryInfo TemporaryPluginExtractDirectory => CombineDirectory(true, TemporaryExtractDirectory, "plugins");
+        public DirectoryInfo TemporaryPluginExtractBaseDirectory => CombineDirectory(true, TemporaryExtractDirectory, "plugins");
+        /// <summary>
+        /// プラグイン自動展開ディレクトリ。
+        /// </summary>
+        public DirectoryInfo TemporaryPluginAutomaticExtractDirectory => CombineDirectory(true, TemporaryPluginExtractBaseDirectory, "automatic");
+        /// <summary>
+        /// プラグイン手動展開ディレクトリ。
+        /// </summary>
+        public DirectoryInfo TemporaryPluginManualExtractDirectory => CombineDirectory(true, TemporaryPluginExtractBaseDirectory, "manual");
         /// <summary>
         /// WebViewの一時親ディレクトリ。
         /// </summary>
@@ -290,7 +303,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// ファイル格納DBファイル。
         /// </summary>
-        public FileInfo FileFile => CombineFile(UserSettingDirectory, "file.sqlite3");
+        public FileInfo LargeFile => CombineFile(UserSettingDirectory, "file.sqlite3");
 
         public ApplicationConfiguration ApplicationConfiguration { get; }
 

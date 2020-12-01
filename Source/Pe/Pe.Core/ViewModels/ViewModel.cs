@@ -107,12 +107,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 #else
             var type = obj.GetType();
             var propertyInfo = type.GetProperty(targetMemberName);
+            Debug.Assert(propertyInfo != null);
 
-#pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
             var nowValue = (TValue)propertyInfo.GetValue(obj);
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-#pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
 #endif
 
             if(!IComparable<TValue>.Equals(nowValue, value)) {

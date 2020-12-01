@@ -153,7 +153,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 setting = appGeneralSettingEntityDao.SelectSettingGeneralSetting();
             }
 
-            CultureInfo = CultureInfo.GetCultureInfo(setting.Language);
+            if(string.IsNullOrWhiteSpace(setting.Language)) {
+                CultureInfo = CultureInfo.InvariantCulture;
+            } else {
+                CultureInfo = CultureInfo.GetCultureInfo(setting.Language);
+            }
 
             UserBackupDirectoryPath = setting.UserBackupDirectoryPath;
             ThemePluginId = setting.ThemePluginId;
