@@ -43,7 +43,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         IDispatcherWrapper DispatcherWrapper { get; }
 
         public string PluginName => Model.PluginState.PluginName;
-        public string PluginVersion => Model.PluginVersion.ToString();
+        public string PluginVersion
+        {
+            get
+            {
+                var versionConverter = new VersionConverter();
+                return versionConverter.ConvertNormalVersion(Model.PluginVersion);
+            }
+        }
         public Guid PluginId => Model.PluginId;
         public string? PrimaryCategory => Model.Plugin?.PluginInformations.PluginCategory.PluginPrimaryCategory;
         public IReadOnlyList<string> SecondaryCategories => Model.Plugin?.PluginInformations.PluginCategory.PluginSecondaryCategories ?? new List<string>();
