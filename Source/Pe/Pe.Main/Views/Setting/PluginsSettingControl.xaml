@@ -174,7 +174,17 @@
               <StackPanel IsEnabled="{Binding CanUninstall}" >
                 <!-- アンインストール 実行 -->
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Visibility="{Binding IsEnabledPlugin, Converter={StaticResource BooleanToVisibilityConverter}}">
-                  <TextBlock VerticalAlignment="Center" Margin="{StaticResource RightMargin}" Text="{Binding Resources.String_Setting_Plugins_State_Uninstall_Execute_Message, Source={x:Static app_main:CultureService.Instance}}" />
+                  <TextBlock VerticalAlignment="Center" Margin="{StaticResource RightMargin}" Text="{Binding Resources.String_Setting_Plugins_State_Uninstall_Execute_Message, Source={x:Static app_main:CultureService.Instance}}">
+                    <TextBlock.Style>
+                      <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Style.Triggers>
+                          <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6" />
+                          </Trigger>
+                        </Style.Triggers>
+                      </Style>
+                    </TextBlock.Style>
+                  </TextBlock>
                   <Button Command="{Binding ToggleUninstallMarkCommand}" Content="{Binding Resources.String_Setting_Plugins_State_Uninstall_Execute_A, Source={x:Static app_main:CultureService.Instance}}" />
                 </StackPanel>
 
