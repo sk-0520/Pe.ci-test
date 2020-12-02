@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
@@ -80,11 +81,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     return Properties.Resources.String_Setting_Plugins_Item_NotLoaded_SupportVersions;
                 }
 
+                var unlimitedMinVersion = PluginUtility.IsUnlimitedVersion(Model.Plugin.PluginInformations.PluginVersions.MinimumSupportVersion);
+                var unlimitedMaxVersion = PluginUtility.IsUnlimitedVersion(Model.Plugin.PluginInformations.PluginVersions.MaximumSupportVersion);
+
+                if(unlimitedMinVersion && unlimitedMaxVersion) {
+                    return Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited;
+                }
+
+                var versionConverter = new VersionConverter();
+
                 return TextUtility.ReplaceFromDictionary(
                     Properties.Resources.String_Setting_Plugins_Item_SupportVersions_Format,
                     new Dictionary<string, string>() {
-                        ["MIN"] = PluginUtility.IsUnlimitedVersion(Model.Plugin.PluginInformations.PluginVersions.MinimumSupportVersion) ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : Model.Plugin.PluginInformations.PluginVersions.MinimumSupportVersion.ToString(),
-                        ["MAX"] = PluginUtility.IsUnlimitedVersion(Model.Plugin.PluginInformations.PluginVersions.MaximumSupportVersion) ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : Model.Plugin.PluginInformations.PluginVersions.MaximumSupportVersion.ToString()
+                        ["MIN"] = unlimitedMinVersion ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : versionConverter.ConvertNormalVersion(Model.Plugin.PluginInformations.PluginVersions.MinimumSupportVersion),
+                        ["MAX"] = unlimitedMaxVersion ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : versionConverter.ConvertNormalVersion(Model.Plugin.PluginInformations.PluginVersions.MaximumSupportVersion)
                     }
                 );
             }
