@@ -5794,11 +5794,11 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   手動(_M) に類似しているローカライズされた文字列を検索します。
+        ///   ローカル(_L) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Plugins_Install_Manual_A {
+        public static string String_Setting_Plugins_Install_Local_A {
             get {
-                return ResourceManager.GetString("String_Setting_Plugins_Install_Manual_A", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Plugins_Install_Local_A", resourceCulture);
             }
         }
         

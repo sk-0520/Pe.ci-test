@@ -77,7 +77,7 @@
               <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Command="{Binding Editor.ManualInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="{Binding Resources.String_Setting_Plugins_Install_Manual_A, Source={x:Static app_main:CultureService.Instance}}" />
+            <Button Grid.Column="0" Command="{Binding Editor.LocalInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="{Binding Resources.String_Setting_Plugins_Install_Local_A, Source={x:Static app_main:CultureService.Instance}}" />
             <Button Grid.Column="1" IsEnabled="False" Content="{Binding Resources.String_Setting_Plugins_Install_Web_A, Source={x:Static app_main:CultureService.Instance}}" />
           </Grid>
 
