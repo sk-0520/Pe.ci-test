@@ -1,7 +1,6 @@
 using System;
 using System.Management;
 
-// TODO: リフレクション実装すべき
 namespace ContentTypeTextNet.Pe.PInvoke.Windows.root.CIMV2
 {
     public class CIM_UserDevice: IImportWMI
@@ -29,26 +28,26 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows.root.CIMV2
 
         public virtual void Import(ManagementBaseObject obj)
         {
-            Availability = (ushort?)obj["Availability"];
-            Caption = (string)obj["Caption"];
-            ConfigManagerErrorCode = (uint?)obj["ConfigManagerErrorCode"];
-            ConfigManagerUserConfig = (bool?)obj["ConfigManagerUserConfig"];
-            CreationClassName = (string)obj["CreationClassName"];
-            Description = (string)obj["Description"];
-            DeviceID = (string)obj["DeviceID"];
-            ErrorCleared = (bool?)obj["ErrorCleared"];
-            ErrorDescription = (string)obj["ErrorDescription"];
-            InstallDate = (DateTime?)obj["InstallDate"];
-            IsLocked = (bool?)obj["IsLocked"];
-            LastErrorCode = (uint?)obj["LastErrorCode"];
-            Name = (string)obj["Name"];
-            PNPDeviceID = (string)obj["PNPDeviceID"];
-            PowerManagementCapabilities = (ushort[])obj["PowerManagementCapabilities"];
-            PowerManagementSupported = (bool?)obj["PowerManagementSupported"];
-            Status = (string)obj["Status"];
-            StatusInfo = (ushort?)obj["StatusInfo"];
-            SystemCreationClassName = (string)obj["SystemCreationClassName"];
-            SystemName = (string)obj["SystemName"];
+            Availability = (ushort?)obj[nameof(Availability)];
+            Caption = (string)obj[nameof(Caption)];
+            ConfigManagerErrorCode = (uint?)obj[nameof(ConfigManagerErrorCode)];
+            ConfigManagerUserConfig = (bool?)obj[nameof(ConfigManagerUserConfig)];
+            CreationClassName = (string)obj[nameof(CreationClassName)];
+            Description = (string)obj[nameof(Description)];
+            DeviceID = (string)obj[nameof(DeviceID)];
+            ErrorCleared = (bool?)obj[nameof(ErrorCleared)];
+            ErrorDescription = (string)obj[nameof(ErrorDescription)];
+            InstallDate = (DateTime?)obj[nameof(InstallDate)];
+            IsLocked = (bool?)obj[nameof(IsLocked)];
+            LastErrorCode = (uint?)obj[nameof(LastErrorCode)];
+            Name = (string)obj[nameof(Name)];
+            PNPDeviceID = (string)obj[nameof(PNPDeviceID)];
+            PowerManagementCapabilities = (ushort[])obj[nameof(PowerManagementCapabilities)];
+            PowerManagementSupported = (bool?)obj[nameof(PowerManagementSupported)];
+            Status = (string)obj[nameof(Status)];
+            StatusInfo = (ushort?)obj[nameof(StatusInfo)];
+            SystemCreationClassName = (string)obj[nameof(SystemCreationClassName)];
+            SystemName = (string)obj[nameof(SystemName)];
         }
 
     }
@@ -76,14 +75,14 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows.root.CIMV2
         {
             base.Import(obj);
 
-            Bandwidth = (uint?)obj["Bandwidth"];
-            DisplayType = (ushort?)obj["DisplayType"];
-            MonitorManufacturer = (string)obj["MonitorManufacturer"];
-            MonitorType = (string)obj["MonitorType"];
-            PixelsPerXLogicalInch = (uint?)obj["PixelsPerXLogicalInch"];
-            PixelsPerYLogicalInch = (uint?)obj["PixelsPerYLogicalInch"];
-            ScreenHeight = (uint?)obj["ScreenHeight"];
-            ScreenWidth = (uint?)obj["ScreenWidth"];
+            Bandwidth = (uint?)obj[nameof(Bandwidth)];
+            DisplayType = (ushort?)obj[nameof(DisplayType)];
+            MonitorManufacturer = (string)obj[nameof(MonitorManufacturer)];
+            MonitorType = (string)obj[nameof(MonitorType)];
+            PixelsPerXLogicalInch = (uint?)obj[nameof(PixelsPerXLogicalInch)];
+            PixelsPerYLogicalInch = (uint?)obj[nameof(PixelsPerYLogicalInch)];
+            ScreenHeight = (uint?)obj[nameof(ScreenHeight)];
+            ScreenWidth = (uint?)obj[nameof(ScreenWidth)];
         }
 
     }
