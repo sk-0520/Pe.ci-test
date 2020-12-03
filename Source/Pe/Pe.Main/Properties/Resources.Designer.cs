@@ -787,6 +787,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   応答データ不明 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Network_UnknownResponse {
+            get {
+                return ResourceManager.GetString("String_Common_Network_UnknownResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   OK に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Common_Ok {

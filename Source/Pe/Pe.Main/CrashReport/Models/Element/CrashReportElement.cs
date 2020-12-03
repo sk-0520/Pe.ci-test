@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
                                 SendStatus.State = RunningState.End;
                                 Logger.LogInformation("BODY: {0}", rawResponse);
                             } else {
-                                ErrorMessage = response?.Message ?? "応答データ不明"; //TODO: ローカライズ
+                                ErrorMessage = response?.Message ?? Properties.Resources.String_Common_Network_UnknownResponse;
                                 SendStatus.State = RunningState.Error;
                             }
 
