@@ -45,9 +45,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             LauncherToobarsSettingEditor = new LauncherToobarsSettingEditorViewModel(Model.LauncherToobarsSettingEditor, AllLauncherGroupCollection, generalTheme, DispatcherWrapper, LoggerFactory);
             KeyboardSettingEditor = new KeyboardSettingEditorViewModel(Model.KeyboardSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
             PluginsSettingEditor = new PluginsSettingEditorViewModel(Model.PluginsSettingEditor, imageLoader, DispatcherWrapper, LoggerFactory);
-#if DEBUG
-            Logger.LogTrace("#634: {0}", sw.Elapsed);
-#endif
 
             EditorItems = new List<ISettingEditorViewModel>() {
                 GeneralSettingEditor,
@@ -63,9 +60,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             //            this._selectedEditor = GeneralSettingEditor;
             //#endif
             this._selectedEditor = GeneralSettingEditor;
-#if DEBUG
-            Logger.LogTrace("#634: {0}", sw.Elapsed);
-#endif
         }
 
         #region property
