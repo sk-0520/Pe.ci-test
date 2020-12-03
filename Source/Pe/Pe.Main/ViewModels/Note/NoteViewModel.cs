@@ -709,7 +709,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 }
             }
 
-            //TODO: 未検証ゾーン
             var logicalScreenSize = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Size, DpiScaleOutputor);
             var layout = new NoteLayoutData() {
                 NoteId = NoteId,
