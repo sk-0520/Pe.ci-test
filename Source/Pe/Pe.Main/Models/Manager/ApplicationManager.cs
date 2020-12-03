@@ -534,13 +534,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(userIdManager.CreateFromRandom(), true, status);
 
                 keyActionsEntityDao.InsertKeyAction(commandKeyActionData, status);
-                keyOptionsEntityDao.InsertOption(commandKeyActionData.KeyActionId, KeyActionPresseOption.ThroughSystem.ToString(), false.ToString(), status);
+                keyOptionsEntityDao.InsertOption(commandKeyActionData.KeyActionId, KeyActionPressOption.ThroughSystem.ToString(), false.ToString(), status);
                 foreach(var item in commandKeyMappings.Counting()) {
                     keyMappingsEntityDao.InsertMapping(commandKeyActionData.KeyActionId, item.Value, item.Number, status);
                 }
 
                 keyActionsEntityDao.InsertKeyAction(hideToolbarKeyActionData, status);
-                keyOptionsEntityDao.InsertOption(hideToolbarKeyActionData.KeyActionId, KeyActionPresseOption.ThroughSystem.ToString(), true.ToString(), status);
+                keyOptionsEntityDao.InsertOption(hideToolbarKeyActionData.KeyActionId, KeyActionPressOption.ThroughSystem.ToString(), true.ToString(), status);
                 foreach(var item in hideToolbarKeyMappings.Counting()) {
                     keyMappingsEntityDao.InsertMapping(hideToolbarKeyActionData.KeyActionId, item.Value, item.Number, status);
                 }

@@ -219,8 +219,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    //TODO: typo
-    public enum KeyActionPresseOption
+    public enum KeyActionPressOption
     {
         [KeyActionOption(typeof(bool), nameof(ThroughSystem))]
         ThroughSystem
