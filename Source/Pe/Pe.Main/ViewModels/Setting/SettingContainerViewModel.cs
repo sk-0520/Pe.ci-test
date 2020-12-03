@@ -30,25 +30,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public SettingContainerViewModel(SettingContainerElement model, ApplicationConfiguration applicationConfiguration, IGeneralTheme generalTheme, IUserTracker userTracker, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
-            //TODO: #634, クッソ重い
-#if DEBUG
-            var sw = Stopwatch.StartNew();
-#endif
-
             GeneralTheme = generalTheme;
 
             AllLauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel>(Model.AllLauncherItems) {
                 ToViewModel = m => new LauncherItemSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
             };
-#if DEBUG
-            Logger.LogTrace("#634: {0}", sw.Elapsed);
-#endif
             AllLauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel>(Model.AllLauncherGroups) {
                 ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory),
             };
-#if DEBUG
-            Logger.LogTrace("#634: {0}", sw.Elapsed);
-#endif
 
             GeneralSettingEditor = new GeneralsSettingEditorViewModel(Model.GeneralsSettingEditor, applicationConfiguration, generalTheme, imageLoader, DispatcherWrapper, LoggerFactory);
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
