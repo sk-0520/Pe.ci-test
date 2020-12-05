@@ -20,10 +20,22 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    /// <summary>
+    /// ファイルダイアログモード。
+    /// </summary>
     public enum FileSystemDialogMode
     {
+        /// <summary>
+        /// 開く。
+        /// </summary>
         FileOpen,
+        /// <summary>
+        /// 保存。
+        /// </summary>
         FileSave,
+        /// <summary>
+        /// ディレクトリ。
+        /// </summary>
         Directory,
     }
 

@@ -38,6 +38,17 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         #region function
 
+        public void ReceiveCommonMessageDialogRequest(RequestEventArgs o)
+        {
+            if(OwnerWindow == null) {
+                throw new InvalidOperationException();
+            }
+
+            var messageParameter = (CommonMessageDialogRequestParameter)o.Parameter;
+            var response = MessageBox.Show(OwnerWindow, messageParameter.Message, messageParameter.Caption, messageParameter.Button, messageParameter.Icon, messageParameter.DefaultResult, messageParameter.Options);
+            //TODO: Callback ないんか
+        }
+
         public void ReceiveFileSystemSelectDialogRequest(RequestEventArgs o)
         {
             if(OwnerWindow == null) {
