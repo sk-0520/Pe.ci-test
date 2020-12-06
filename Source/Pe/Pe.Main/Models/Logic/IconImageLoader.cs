@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return null;
             }
 
-            using(var stream = new BinaryChunkedStream()) {
+            using(var stream = new MemoryStream()) {
                 using(var writer = new BinaryWriter(new KeepStream(stream))) {
                     foreach(var imageBinary in imageBynaryItems) {
                         writer.Write(imageBinary);

@@ -161,14 +161,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         {
             ThrowIfDisposed();
 
-            using(var stream = new BinaryChunkedStream()) {
+            using(var stream = new MemoryStream()) {
                 await WriteStreamAsync(iconImage, stream);
-#if DEBUG
-                using(var debugStream = new MemoryStream()) {
-                    await WriteStreamAsync(iconImage, debugStream);
-                    Debug.Assert(stream.Position == debugStream.Position, $"{nameof(stream)}: {stream.Length}, {nameof(debugStream)}: {debugStream.Length}");
-                }
-#endif
+
                 DateTime iconUpdatedTimestamp = DateTime.UtcNow;
                 using(var context = LargeDatabaseBarrier.WaitWrite()) {
                     var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
@@ -181,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                     var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                     launcherItemIconsEntityDao.DeleteImageBinary(LauncherItemId, iconScale);
-                    launcherItemIconsEntityDao.InsertImageBinary(LauncherItemId, iconScale, stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
+                    launcherItemIconsEntityDao.InsertImageBinary(LauncherItemId, iconScale, stream.GetBuffer().Take((int)stream.Position), DatabaseCommonStatus.CreateCurrentAccount());
                     context.Commit();
                 }
 
