@@ -173,6 +173,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="executor">処理内容。</param>
         /// <param name="isolationLevel"></param>
         /// <returns>処理実行結果。</returns>
+        /// これもうなくしたいなぁ。
         IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor, IsolationLevel isolationLevel);
 
         #endregion
