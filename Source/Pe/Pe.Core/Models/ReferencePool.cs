@@ -121,11 +121,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             {
                 return map.GetOrAdd(key, (key, args) => {
 #if DEBUG
-#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation
-#pragma warning disable HAA0101 // Array allocation for params parameter
                     logger.LogTrace("参照アイテム生成: {0}", key);
-#pragma warning restore HAA0101 // Array allocation for params parameter
-#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
 #endif
                     var value = args.creator(key);
                     var item = new ReferenceItem<TValue>(value, args.timelimit, args.isManage);
@@ -137,11 +133,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             lock(result) {
                 if(result.Alive) {
 #if DEBUG
-#pragma warning disable HAA0101 // Array allocation for params parameter
-#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation
                     Logger.LogTrace("参照アイテム生成/再使用: {0}", key);
-#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
-#pragma warning restore HAA0101 // Array allocation for params parameter
 #endif
                     result.Recycle();
                     return result.Value;
