@@ -11,37 +11,73 @@ using System.Reflection;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// 汎用プロパティ取得処理。
+    /// </summary>
     public interface IPropertyGetter
     {
         #region function
 
+        /// <summary>
+        /// 対象オブジェクトからプロパティの値取得。
+        /// </summary>
+        /// <param name="owner">対象オブジェクト。</param>
+        /// <returns>値。</returns>
         object? Get(object owner);
 
         #endregion
     }
 
+    /// <summary>
+    /// 型指定プロパティ値取得処理。
+    /// </summary>
+    /// <typeparam name="TOwner">対象型。</typeparam>
+    /// <typeparam name="TValue">プロパティ型</typeparam>
     public interface IPropertyGetter<in TOwner, out TValue>
     {
         #region function
 
+        /// <summary>
+        /// 対象オブジェクトからプロパティの値取得。
+        /// </summary>
+        /// <param name="owner">対象オブジェクト。</param>
+        /// <returns>値。</returns>
         TValue Get(TOwner owner);
 
         #endregion
     }
 
+    /// <summary>
+    /// 汎用プロパティ設定処理。
+    /// </summary>
     public interface IPropertySetter
     {
         #region function
 
+        /// <summary>
+        /// 対象オブジェクトのプロパティ値を設定。
+        /// </summary>
+        /// <param name="owner">対象オブジェクト。</param>
+        /// <param name="value">値。</param>
         void Set(object owner, object value);
 
         #endregion
     }
 
+    /// <summary>
+    /// 型指定プロパティ設定処理。
+    /// </summary>
+    /// <typeparam name="TOwner">対象型。</typeparam>
+    /// <typeparam name="TValue">プロパティ型</typeparam>
     public interface IPropertySetter<in TOwner, in TValue>
     {
         #region function
 
+        /// <summary>
+        /// 対象オブジェクトのプロパティ値を設定。
+        /// </summary>
+        /// <param name="owner">対象オブジェクト。</param>
+        /// <param name="value">値。</param>
         void Set(TOwner owner, TValue value);
 
         #endregion
@@ -181,7 +217,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     /// <summary>
-    /// ジェネリック版プロパティアクセス処理。
+    /// 型指定プロパティアクセス処理。
     /// </summary>
     /// <typeparam name="TOwner"></typeparam>
     /// <typeparam name="TValue"></typeparam>
