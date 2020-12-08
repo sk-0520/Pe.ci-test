@@ -18,8 +18,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static bool AsAction<TCast>(object arg, Action<TCast> action)
             where TCast : class
         {
-            var obj = arg as TCast;
-            if(obj != null) {
+            if(arg is TCast obj) {
                 action(obj);
                 return true;
             }
@@ -38,8 +37,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static TResult AsFunc<TCast, TResult>(object arg, Func<TCast, TResult> func, TResult castErrorResult)
             where TCast : class
         {
-            var obj = arg as TCast;
-            if(obj != null) {
+            if(arg is TCast obj) {
                 return func(obj);
             }
             return castErrorResult;

@@ -83,7 +83,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             if(disposing) {
 #pragma warning disable S3971 // "GC.SuppressFinalize" should not be called
+#pragma warning disable CA1816 // Dispose メソッドは、SuppressFinalize を呼び出す必要があります
                 GC.SuppressFinalize(this);
+#pragma warning restore CA1816 // Dispose メソッドは、SuppressFinalize を呼び出す必要があります
 #pragma warning restore S3971 // "GC.SuppressFinalize" should not be called
             }
 

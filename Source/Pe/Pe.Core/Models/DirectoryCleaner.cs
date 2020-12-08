@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var files = directory.GetFiles();
             foreach(var file in files) {
                 if(file.Attributes.HasFlag(FileAttributes.ReadOnly)) {
-                    file.Attributes = file.Attributes & ~FileAttributes.ReadOnly;
+                    file.Attributes &= ~FileAttributes.ReadOnly;
                 }
                 file.Delete();
             }
