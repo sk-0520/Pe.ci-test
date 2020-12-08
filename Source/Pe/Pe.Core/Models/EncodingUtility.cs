@@ -6,15 +6,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
     /// エンコーディング。。。
-    /// <para>現状 規格上でも怪しいけど実運用上無視できない utf-8n のためだけのクラス。</para>
     /// </summary>
     public static class EncodingUtility
     {
         #region property
 
-        public static string UTF8nName => "utf-8n";
+        public static string UTF8BomName => "utf-8bom";
 
-        public static Encoding UTF8n => new UTF8Encoding(false);
+        public static Encoding UTF8Bom => new UTF8Encoding(true);
 
         #endregion
 
@@ -22,8 +21,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public static Encoding Parse(string encodingName)
         {
-            if(encodingName == UTF8nName) {
-                return UTF8n;
+            if(encodingName == UTF8BomName) {
+                return UTF8Bom;
             }
 
             return Encoding.GetEncoding(encodingName);
@@ -33,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             if(encoding is UTF8Encoding utf8) {
                 if(utf8.GetPreamble().Length == 0) {
-                    return UTF8nName;
+                    return UTF8BomName;
                 }
             }
 

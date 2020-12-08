@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
-        public static Encoding DefaultEncoding { get; } = EncodingUtility.UTF8n;
+        public static Encoding DefaultEncoding { get; } = EncodingUtility.UTF8Bom;
 
         public static Encoding DefaultStandardInputOutputEncoding { get; } = EncodingUtility.Parse("Shift_JIS"); // プラットフォーム固有のんがいいなぁと思う今日この頃な .net core
 
