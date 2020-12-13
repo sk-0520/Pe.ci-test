@@ -18,11 +18,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Views.Converter
         [DataRow(false, 0.0)]
         [DataRow(false, "")]
         [DataRow(false, ' ')]
-        public void ConvertTest(bool result, object value)
+        public void ConvertTest(bool expected, object value)
         {
             var converter = new LogicalIsNullConverter();
             var actual = converter.Convert(value, value?.GetType() ?? typeof(object), null!, System.Globalization.CultureInfo.CurrentCulture);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]

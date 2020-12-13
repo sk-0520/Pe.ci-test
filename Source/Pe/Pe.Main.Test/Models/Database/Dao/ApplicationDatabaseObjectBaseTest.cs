@@ -132,11 +132,11 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
         [DataRow(int.MaxValue, (long)int.MaxValue + 1)]
         [DataRow(int.MinValue, (long)int.MinValue - 1)]
         [DataRow(int.MinValue, int.MinValue)]
-        public void ToIntTest(int result, long value)
+        public void ToIntTest(int expected, long value)
         {
             var adao = new Adao();
             var actual = adao.ToInt_Public(value);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

@@ -30,17 +30,17 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
         [DataRow("-k", "v", "-k", "v")]
         [DataRow("-k", "\"v v\"", "k", "v v")]
         [DataRow("-k", "\"v\"\" \"\"v\"", "k", "v\" \"v")]
-        public void CreateTest(string resultKey, string resultValue, string inputKey, string inputValue)
+        public void CreateTest(string expectedKey, string expectedValue, string inputKey, string inputValue)
         {
             var psa = new PowerShellArguments();
             var p = KeyValuePair.Create(inputKey, inputValue);
             var actual1 = psa.Create(p);
             var actual2 = psa.Create(inputKey, inputValue);
 
-            Assert.AreEqual(resultKey, actual1.Key);
-            Assert.AreEqual(resultValue, actual1.Value);
-            Assert.AreEqual(resultKey, actual2.Key);
-            Assert.AreEqual(resultValue, actual2.Value);
+            Assert.AreEqual(expectedKey, actual1.Key);
+            Assert.AreEqual(expectedValue, actual1.Value);
+            Assert.AreEqual(expectedKey, actual2.Key);
+            Assert.AreEqual(expectedValue, actual2.Value);
         }
 
         [TestMethod]
@@ -69,11 +69,11 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
         [DataRow("\"\"\"ab\"\"\"", "ab")]
         [DataRow("\"\"\"a b\"\"\"", "a b")]
         [DataRow("\"\"\"a\"\"b\"\"\"", "a\"b")]
-        public void ToRemainingValueTest(string result, string input)
+        public void ToRemainingValueTest(string expected, string input)
         {
             var psa = new PowerShellArguments();
             var actual = psa.ToRemainingValue(input);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

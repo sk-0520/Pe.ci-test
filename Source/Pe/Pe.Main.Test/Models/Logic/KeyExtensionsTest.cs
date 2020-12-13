@@ -23,10 +23,10 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
         [DataRow(true, Key.RightAlt)]
         [DataRow(true, Key.LWin)]
         [DataRow(true, Key.RWin)]
-        public void IsModifierKeyTest(bool result, Key inputKey)
+        public void IsModifierKeyTest(bool expected, Key inputKey)
         {
             var actual = inputKey.IsModifierKey();
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

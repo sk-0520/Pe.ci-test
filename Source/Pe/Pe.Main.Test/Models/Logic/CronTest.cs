@@ -102,8 +102,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
 
                 foreach(var weekDay in EnumUtility.GetMembers<DayOfWeek>()) {
                     var day = (int)weekDay;
-                    var result = item.IsEnabled(new DateTime(2020, 6, 21 + day, 1, 0, 0));
-                    Assert.AreEqual(result, i == day);
+                    var expected = item.IsEnabled(new DateTime(2020, 6, 21 + day, 1, 0, 0));
+                    Assert.AreEqual(expected, i == day);
                 }
             }
         }
@@ -180,12 +180,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
         [DataRow(true, "* * 13 * *", "2020-03-13T00:00")]
         [DataRow(false, "* * 13 * *", "2020-03-20T00:00")]
         [DataRow(false, "* * 13 * *", "2020-03-27T00:00")]
-        public void IsEnabledTest(bool result, string cronPattern, string inputIso8601)
+        public void IsEnabledTest(bool expected, string cronPattern, string inputIso8601)
         {
             var cisf = new CronItemSettingFactory();
             var item = cisf.Parse(cronPattern);
             var actual = item.IsEnabled(DateTime.Parse(inputIso8601));
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -299,11 +299,11 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
         [DataRow(new[] { 0, 1 }, "0,1,1")]
         [DataRow(new[] { 2, 3, 4, 5 }, "2-5")]
         [DataRow(new[] { 0, 1, 2, 5, 10, 11, 12, 13, 57, 58, 59 }, "0,1,2,10-13,5,57-59")]
-        public void Parse_Minutes_Test(int[] results, string targetPattern)
+        public void Parse_Minutes_Test(int[] expecteds, string targetPattern)
         {
             var cisf = new CronItemSettingFactory();
             var actual = cisf.Parse(targetPattern + " * * * *");
-            CollectionAssert.AreEqual(results, actual.Minutes);
+            CollectionAssert.AreEqual(expecteds, actual.Minutes);
             Assert.AreEqual(24, actual.Hours.Count);
             Assert.AreEqual(31, actual.Days.Count);
             Assert.AreEqual(12, actual.Months.Count);
@@ -329,12 +329,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
         [DataRow(1000, "2020-12-31T23:59:59.000")]
         [DataRow(500, "2020-06-28T20:42:59.500")]
         [DataRow(1, "2020-06-28T20:42:59.999")]
-        public void GetNextJobWaitTimeTest(double result, string iso8601)
+        public void GetNextJobWaitTimeTest(double expected, string iso8601)
         {
             var input = DateTime.Parse(iso8601);
             var cs = new CronScheduler(Test.LoggerFactory);
             var actual = cs.GetNextJobWaitTime(input);
-            Assert.AreEqual(result, actual.TotalMilliseconds);
+            Assert.AreEqual(expected, actual.TotalMilliseconds);
         }
 
         //[TestMethod]

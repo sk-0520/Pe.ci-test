@@ -17,11 +17,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Views.Converter
         [DataRow("__", "_")]
         [DataRow("____", "__")]
         [DataRow("__a__", "_a_")]
-        public void ConvertTest(string result, object value)
+        public void ConvertTest(string expected, object value)
         {
             var converter = new EscapeAccessKeyConverter();
             var actual = converter.Convert(value, value?.GetType() ?? typeof(object), null!, System.Globalization.CultureInfo.CurrentCulture);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -31,11 +31,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Views.Converter
         [DataRow("_", "__")]
         [DataRow("__", "____")]
         [DataRow("_a_", "__a__")]
-        public void ConvertBackTest(string result, object value)
+        public void ConvertBackTest(string expected, object value)
         {
             var converter = new EscapeAccessKeyConverter();
             var actual = converter.ConvertBack(value, value?.GetType() ?? typeof(object), null!, System.Globalization.CultureInfo.CurrentCulture);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

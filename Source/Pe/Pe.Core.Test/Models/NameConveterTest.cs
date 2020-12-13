@@ -29,11 +29,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("abc-d", "ABcD")]
         [DataRow("あ", "あ")]
         [DataRow("int32", "Int32")]
-        public void PascalToKebabTest(string result, string input)
+        public void PascalToKebabTest(string expected, string input)
         {
             var nc = new NameConveter();
             var actual = nc.PascalToKebab(input);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
 
@@ -55,11 +55,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("abc_d", "ABcD")]
         [DataRow("あ", "あ")]
         [DataRow("int32", "Int32")]
-        public void PascalToSnakeTest(string result, string input)
+        public void PascalToSnakeTest(string expected, string input)
         {
             var nc = new NameConveter();
             var actual = nc.PascalToSnake(input);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -80,11 +80,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("abcD", "ABcD")]
         [DataRow("あ", "あ")]
         [DataRow("int32", "Int32")]
-        public void PascalToCamelTest(string result, string input)
+        public void PascalToCamelTest(string expected, string input)
         {
             var nc = new NameConveter();
             var actual = nc.PascalToCamel(input);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

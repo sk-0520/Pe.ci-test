@@ -27,13 +27,13 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(1, 1, 1)]
         [DataRow(2, 2, 5)]
         [DataRow(5, 7, 5)]
-        public void EnqueueTest(int result, int limit, int count)
+        public void EnqueueTest(int expected, int limit, int count)
         {
             var fx = new FixedQueue<int>(limit);
             foreach(var i in Enumerable.Range(0, count)) {
                 fx.Enqueue(i);
             }
-            Assert.AreEqual(result, fx.Count);
+            Assert.AreEqual(expected, fx.Count);
         }
 
         #endregion
@@ -58,13 +58,13 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(1, 1, 1)]
         [DataRow(2, 2, 5)]
         [DataRow(5, 7, 5)]
-        public void EnqueueTest(int result, int limit, int count)
+        public void EnqueueTest(int expected, int limit, int count)
         {
             var fx = new ConcurrentFixedQueue<int>(limit);
             foreach(var i in Enumerable.Range(1, count)) {
                 fx.Enqueue(i);
             }
-            Assert.AreEqual(result, fx.Count);
+            Assert.AreEqual(expected, fx.Count);
         }
 
         /*
