@@ -156,7 +156,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     totalSize += length;
                 }
 
-                // TODO:BinaryChunkedStreamがまともに動くなら切り替える
                 using(var stream = new MemoryStream(totalSize))
                 using(var writer = new BinaryWriter(stream)) {
                     writer.Write(binaryGroupIconData, 0, sizeofICONDIR);
