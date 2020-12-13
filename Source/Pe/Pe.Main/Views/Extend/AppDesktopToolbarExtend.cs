@@ -728,21 +728,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
                 ExtendData.HiddenBarArea = UIUtility.ToLogicalPixel(logicalHideArea, View);
 
                 var deviceHideArea = UIUtility.ToDevicePixel(logicalHideArea, View);
-                /*
-                if(animation) {
-                    //var animateTime = (int)ExtendData.HiddenAnimateTime.TotalMilliseconds;
-                    //var animateFlag = ToAW(ExtendData.DockType, false);
-                    //NativeMethods.AnimateWindow(Handle, animateTime, animateFlag);
-                    // TODO: アニメーションしねぇ…
-                    //NativeMethods.MoveWindow(Handle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
-                } else {
-                    //NativeMethods.MoveWindow(Handle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
-                }
-                */
+
                 NativeMethods.MoveWindow(WindowHandle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
-                //View.Width = logicalHideArea.Width;
-                //View.Measure(logicalHideArea.Size);
-                //View.Arrange(new Rect(0, 0, logicalHideArea.Width, logicalHideArea.Height));
             }
         }
 
