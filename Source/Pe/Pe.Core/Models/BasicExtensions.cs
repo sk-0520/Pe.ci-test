@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static IEnumerable<IEnumerable<T>> GroupSplit<T>(this IEnumerable<T> @this, int splitCount)
         {
             return @this
-                 .Counting()
+                .Counting()
                 .GroupBy(i => i.Number / splitCount)
                 .Select(g => g.Select(i => i.Value))
             ;
