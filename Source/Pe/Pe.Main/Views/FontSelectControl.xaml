@@ -18,6 +18,7 @@
   <UserControl.Resources>
     <app_core_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
     <app_main_views_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
+    <app_main_views_converter:FontFamilyIsMonospaceConverter x:Key="FontFamilyIsMonospaceConverter" />
   </UserControl.Resources>
   <StackPanel Orientation="Vertical">
     <ComboBox x:Name="listFont" SelectedValuePath="Source" SelectedValue="{Binding SelectedFontFamily, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
@@ -42,7 +43,23 @@
       </ComboBox.ItemsPanel>
       <ComboBox.ItemTemplate>
         <DataTemplate>
-          <TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}" />
+          <TextBlock LineStackingStrategy="MaxHeight" FontFamily="{Binding}">
+            <TextBlock.Style>
+              <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                <Style.Triggers>
+                  <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                      <Condition Binding="{Binding IsStrongMonospace, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True" />
+                      <Condition Binding="{Binding Converter={StaticResource FontFamilyIsMonospaceConverter}}" Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="FontWeight" Value="Black" />
+                    <Setter Property="Text" Value="{Binding Converter={StaticResource FontFamilyToNameConverter}, StringFormat=[ {0} ]}" />
+                  </MultiDataTrigger>
+                </Style.Triggers>
+                <Setter Property="Text" Value="{Binding Converter={StaticResource FontFamilyToNameConverter}}" />
+              </Style>
+            </TextBlock.Style>
+          </TextBlock>
         </DataTemplate>
       </ComboBox.ItemTemplate>
     </ComboBox>
