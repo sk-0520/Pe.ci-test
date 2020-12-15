@@ -335,5 +335,35 @@ namespace ContentTypeTextNet.Pe.Main.Views
         }
 
         #endregion
+
+        #region IsStrongMonospaceProperty
+
+        public static readonly DependencyProperty IsStrongMonospaceProperty = DependencyProperty.Register(
+            nameof(IsStrongMonospace),
+            typeof(bool),
+            typeof(FontSelectControl),
+            new FrameworkPropertyMetadata(
+                false,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                new PropertyChangedCallback(OnIsStrongMonospaceChanged)
+            )
+        );
+
+        public bool IsStrongMonospace
+        {
+            get { return (bool)GetValue(IsStrongMonospaceProperty); }
+            set { SetValue(IsStrongMonospaceProperty, value); }
+        }
+
+        static void OnIsStrongMonospaceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as FontSelectControl;
+            if(ctrl != null) {
+                ctrl.IsStrongMonospace = (bool)e.NewValue;
+            }
+        }
+
+        #endregion
+
     }
 }
