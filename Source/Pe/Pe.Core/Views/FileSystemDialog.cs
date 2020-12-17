@@ -171,7 +171,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 return path;
             }
 
-            FileDialog.Com.GetFileTypeIndex(out var filterIndex);
+            FileDialog.Raw.GetFileTypeIndex(out var filterIndex);
             var filter = Filters[(int)filterIndex - 1];
             if(string.IsNullOrWhiteSpace(filter.DefaultExtension)) {
                 return path;
@@ -186,16 +186,16 @@ namespace ContentTypeTextNet.Pe.Core.Views
             var cleaner = new DisposableStocker();
 
             var options = GetFos();
-            FileDialog.Com.SetOptions(options);
+            FileDialog.Raw.SetOptions(options);
 
             if(!string.IsNullOrEmpty(Title)) {
-                FileDialog.Com.SetTitle(Title);
+                FileDialog.Raw.SetTitle(Title);
             }
 
             if(!string.IsNullOrEmpty(InitialDirectory)) {
                 var item = CreateFileItem(InitialDirectory);
                 if(item != null) {
-                    FileDialog.Com.SetDefaultFolder(item.Com);
+                    FileDialog.Raw.SetDefaultFolder(item.Raw);
                     cleaner.Add(item);
                 }
             }
@@ -205,16 +205,16 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 if(parentDirPath != null) {
                     var item = CreateFileItem(parentDirPath);
                     if(item != null) {
-                        FileDialog.Com.SetFolder(item.Com);
+                        FileDialog.Raw.SetFolder(item.Raw);
                         cleaner.Add(item);
 
                         var fileName = Path.GetFileName(FileName);
-                        FileDialog.Com.SetFileName(fileName);
+                        FileDialog.Raw.SetFileName(fileName);
                     } else {
-                        FileDialog.Com.SetFileName(FileName);
+                        FileDialog.Raw.SetFileName(FileName);
                     }
                 } else {
-                    FileDialog.Com.SetFileName(FileName);
+                    FileDialog.Raw.SetFileName(FileName);
                 }
             }
 
@@ -223,12 +223,12 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 .ToArray()
             ;
             if(filters.Any()) {
-                FileDialog.Com.SetFileTypes((uint)filters.Length, filters);
+                FileDialog.Raw.SetFileTypes((uint)filters.Length, filters);
             }
 
             Customize.Build(FileDialogCustomize);
 
-            var reuslt = FileDialog.Com.Show(hWnd);
+            var reuslt = FileDialog.Raw.Show(hWnd);
             if(reuslt == (uint)ERROR.ERROR_CANCELLED) {
                 return false;
             }
@@ -237,7 +237,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             }
 
             IShellItem resultItem;
-            FileDialog.Com.GetResult(out resultItem);
+            FileDialog.Raw.GetResult(out resultItem);
             cleaner.Add(ComWrapper.Create(resultItem));
             resultItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out var pszPath);
             if(pszPath != IntPtr.Zero) {

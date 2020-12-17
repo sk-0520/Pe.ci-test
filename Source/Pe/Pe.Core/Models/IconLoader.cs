@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
                 IntPtr hResultBitmap;
                 using(var imageFactory = shellItem.Cast<IShellItemImageFactory>()) {
-                    imageFactory.Com.GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
+                    imageFactory.Raw.GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
                 }
                 using(var hBitmap = new BitmapHandleWrapper(hResultBitmap)) {
                     var result = hBitmap.MakeBitmapSource();
@@ -305,10 +305,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     Debug.Assert(resultImageList != null);
                     using(var imageList = new ComWrapper<IImageList>(resultImageList)) {
                         int n = 0;
-                        imageList.Com.GetImageCount(ref n);
+                        imageList.Raw.GetImageCount(ref n);
 
                         var hResultIcon = IntPtr.Zero;
-                        var hResult = imageList.Com.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
+                        var hResult = imageList.Raw.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
                         if(hResultIcon != IntPtr.Zero) {
                             using(var hIcon = new IconHandleWrapper(hResultIcon)) {
                                 return hIcon.MakeBitmapSource();

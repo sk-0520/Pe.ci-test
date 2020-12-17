@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         public void Close()
         {
-            FileDialogCustomize!.Com.EndVisualGroup();
+            FileDialogCustomize!.Raw.EndVisualGroup();
         }
 
         public void AddControl(CustomizeDialogControlBase control) => Controls.Add(control);
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         protected override void BuildImpl()
         {
-            FileDialogCustomize!.Com.StartVisualGroup(ControlId, Header);
+            FileDialogCustomize!.Raw.StartVisualGroup(ControlId, Header);
         }
 
         #endregion
@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         protected override void BuildImpl()
         {
-            FileDialogCustomize!.Com.SetControlLabel(ControlId, Label);
+            FileDialogCustomize!.Raw.SetControlLabel(ControlId, Label);
         }
 
         #endregion
@@ -158,16 +158,16 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         protected override void BuildImpl()
         {
-            FileDialogCustomize!.Com.AddComboBox(ControlId);
+            FileDialogCustomize!.Raw.AddComboBox(ControlId);
             foreach(var item in Items.Counting()) {
-                FileDialogCustomize!.Com.AddControlItem(ControlId, item.Number, item.Value.DisplayText);
+                FileDialogCustomize!.Raw.AddControlItem(ControlId, item.Number, item.Value.DisplayText);
             }
-            FileDialogCustomize!.Com.SetSelectedControlItem(ControlId, SelectedIndex);
+            FileDialogCustomize!.Raw.SetSelectedControlItem(ControlId, SelectedIndex);
         }
 
         protected override void ChangeStatusImple()
         {
-            FileDialogCustomize!.Com.GetSelectedControlItem(ControlId, out var index);
+            FileDialogCustomize!.Raw.GetSelectedControlItem(ControlId, out var index);
             SelectedIndex = index;
         }
 
@@ -231,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         internal void Build(ComWrapper<IFileDialogCustomize> FileDialogCustomize)
         {
             if(IsBuilded) {
-                FileDialogCustomize.Com.ClearClientData();
+                FileDialogCustomize.Raw.ClearClientData();
             }
 
             var lastControlId = 1;
