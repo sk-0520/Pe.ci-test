@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         /// <summary>
         /// パスカル形式をケバブ形式に変換。
-        /// <para>AbcDef: abc-def</para>
+        /// <para>AbcDef -&gt; abc-def</para>
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         /// <summary>
         /// パスカル形式をスネーク形式に変換。
-        /// <para>AbcDef: abc_def</para>
+        /// <para>AbcDef -&gt; abc_def</para>
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         /// <summary>
         /// パスカル形式をキャメル形式に変換。
-        /// <para>AbcDef: abcDef</para>
+        /// <para>AbcDef -&gt; abcDef</para>
         /// <para>連続する大文字の2文字目以降は小文字に変換される</para>
         /// </summary>
         /// <param name="source"></param>
@@ -101,6 +101,60 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     lastUpperIndex = i;
                 } else {
                     builder.Append(c);
+                }
+            }
+
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// ケバブ形式をパスカル形式に変換。
+        /// <para>abc-def -&gt; AbcDef</para>
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public string KebabToPascal(string source)
+        {
+            if(source == null) {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if(string.IsNullOrWhiteSpace(source)) {
+                return source;
+            }
+
+            var isUpper = true;
+            var builder = new StringBuilder(source.Length);
+            for(var i = 0; i < source.Length; i++) {
+                var c = source[i];
+                if(c == '-') {
+                    if(i + 1 == source.Length) {
+                        break;
+                    }
+
+                    var next = source[i + 1];
+                    if(next == '-') {
+                        continue;
+                    }
+                    if('a' <= next && next <= 'z') {
+                        builder.Append(char.ToUpper(next));
+                        i += 1;
+                        isUpper = false;
+                        continue;
+                    }
+                    if('A' <= next && next <= 'Z') {
+                        builder.Append(next);
+                        i += 1;
+                        isUpper = false;
+                        continue;
+                    }
+                }
+
+                if(isUpper) {
+                    builder.Append(char.ToUpper(c));
+                    isUpper = false;
+                } else {
+                    builder.Append(c);
+
                 }
             }
 

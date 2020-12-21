@@ -87,6 +87,29 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod]
+        [DataRow("", "")]
+        [DataRow(" ", " ")]
+        [DataRow("A", "a")]
+        [DataRow("Abc", "abc")]
+        [DataRow("AbcDef", "abc-def")]
+        [DataRow("AbcDef", "abc-def-")]
+        [DataRow("AbcDef", "abc--def-")]
+        [DataRow("AbcDef", "-abc--def-")]
+        [DataRow("AbcDef", "---abc--def-")]
+        [DataRow("AbcDef", "---abc--def---------")]
+        [DataRow("ABC", "a-b-c")]
+        [DataRow("ABC", "a-B-c")]
+        [DataRow("ABC", "aB-c")]
+        [DataRow("ABc", "a-Bc")]
+        [DataRow("A_b_cD_e", "a_b_c-d_e")]
+        public void KebabToPascalTest(string expected, string input)
+        {
+            var nc = new NameConveter();
+            var actual = nc.KebabToPascal(input);
+            Assert.AreEqual(expected, actual);
+        }
+
         #endregion
     }
 }
