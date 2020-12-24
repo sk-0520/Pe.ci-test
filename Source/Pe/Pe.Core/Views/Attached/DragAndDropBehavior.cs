@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Attached
 {
-    public class DragAndDropBehavior : Behavior<UIElement>
+    public class DragAndDropBehavior : Behavior<FrameworkElement>
     {
         #region DragAndDropProperty
 
@@ -54,10 +54,14 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
             AssociatedObject.PreviewDragOver += AssociatedObject_PreviewDragOver;
             AssociatedObject.PreviewDragLeave += AssociatedObject_PreviewDragLeave;
             AssociatedObject.PreviewDrop += AssociatedObject_PreviewDrop;
+
+            AssociatedObject.Unloaded += AssociatedObject_Unloaded;
         }
 
         protected override void OnDetaching()
         {
+            AssociatedObject.Unloaded -= AssociatedObject_Unloaded;
+
             AssociatedObject.PreviewMouseDown -= AssociatedObject_MouseDown;
 
             AssociatedObject.MouseMove -= AssociatedObject_MouseMove;
@@ -164,5 +168,11 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
                 DragAndDrop?.Drop((UIElement)sender, e);
             }
         }
+
+        private void AssociatedObject_Unloaded(object sender, RoutedEventArgs e)
+        {
+            OnDetaching();
+        }
+
     }
 }
