@@ -1,4 +1,5 @@
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -241,4 +242,47 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
+    /// <summary>
+    /// <see cref="ArrayPool{T}"/> のラッパー。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public struct ArrayPoolDisposer<T>: IDisposable
+    {
+        public ArrayPoolDisposer(int length)
+            : this(length, ArrayPool<T>.Shared)
+        { }
+
+        public ArrayPoolDisposer(int length, ArrayPool<T> pool)
+        {
+            Pool = pool;
+            Items = Pool.Rent(length);
+            Length = length;
+        }
+
+        #region property
+
+        ArrayPool<T> Pool { get; }
+        public T[] Items { get; }
+
+        public int Length { get; }
+
+        #endregion
+
+        #region function
+
+        public ref T this[int index] => ref Items[index];
+
+        #endregion
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            Pool.Return(Items);
+        }
+
+        #endregion
+    }
+
 }
