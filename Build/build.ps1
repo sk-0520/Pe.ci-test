@@ -75,7 +75,7 @@ try {
 		}
 	}
 
-	$projectCommonFilePath = "Source\Pe\Directory.Build.props"
+	$projectCommonFilePath = Join-Path $sourceDirectoryPath "Directory.Build.props"
 	$projectCommonXml = [XML](Get-Content $projectCommonFilePath  -Encoding UTF8)
 	InsertElement $version $projectCommonXml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
 	InsertElement $revision $projectCommonXml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'

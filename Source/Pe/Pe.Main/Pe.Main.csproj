@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>0.99.84</Version>
     <RootNamespace>ContentTypeTextNet.Pe.Main</RootNamespace>
     <UseWPF>true</UseWPF>
     <OutputType>WinExe</OutputType>
