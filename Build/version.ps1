@@ -1,7 +1,7 @@
 ﻿$ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
-$projectFile = Join-Path (Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)) "Source/Pe/Pe.Main/Pe.Main.csproj"
+$projectFile = Join-Path (Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)) "Source/Pe/Directory.Build.props"
 
 function GetAppVersion {
 	$projectXml = [XML](Get-Content -Path $projectFile -Encoding UTF8)
