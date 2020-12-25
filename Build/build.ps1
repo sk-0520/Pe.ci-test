@@ -75,6 +75,18 @@ try {
 		}
 	}
 
+	$projectCommonFilePath = "Source\Pe\Directory.Build.props"
+	$projectCommonXml = [XML](Get-Content $projectCommonFilePath  -Encoding UTF8)
+	InsertElement $version $projectCommonXml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
+	InsertElement $revision $projectCommonXml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
+	$repMap = @{
+		'@YYYY@' = '2020'
+		'@NAME@' = 'sk'
+		'@SITE@' = 'content-type-text.net'
+	}
+	ReplaceElement $repMap $projectCommonXml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
+	$projectCommonXml.Save($projectCommonFilePath)
+
 	$projectFiles = (Get-ChildItem -Path "Source\Pe\" -Recurse -Include *.csproj)
 	if (!$IgnoreChanged) {
 		Write-Output "change ..."
@@ -87,15 +99,6 @@ try {
 	foreach ($projectFile in $projectFiles) {
 		Write-Output $projectFile.Name
 		$xml = [XML](Get-Content $projectFile  -Encoding UTF8)
-
-		InsertElement $version $xml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
-		InsertElement $revision $xml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
-		$repMap = @{
-			'@YYYY@' = '2020'
-			'@NAME@' = 'sk'
-			'@SITE@' = 'content-type-text.net'
-		}
-		ReplaceElement $repMap $xml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
 
 		# リリース版は各種アナライザを除去しておく
 		if( $BuildType -eq '') {
