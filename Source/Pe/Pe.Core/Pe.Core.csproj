@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj" />
+    <ProjectReference Include="..\Pe.Bridge\Pe.Bridge.csproj" />
     <ProjectReference Include="..\Pe.PInvoke\Pe.PInvoke.csproj" />
   </ItemGroup>
 

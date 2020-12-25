@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Main.Test", "Pe.Main.Tes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bridge", "bridge", "{17EE14A7-7F7A-4D40-9216-BB8C561DBF49}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Bridge", "Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj", "{B7D85584-F30C-4070-B2DA-0A275BCA7DD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Bridge", "Pe.Bridge\Pe.Bridge.csproj", "{B7D85584-F30C-4070-B2DA-0A275BCA7DD2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Bridge.Test", "Pe.Bridge\Source\Pe.Bridge.Test\Pe.Bridge.Test.csproj", "{587C7761-68C6-408E-8A33-E7D53ED2A703}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Bridge.Test", "Pe.Bridge.Test\Pe.Bridge.Test.csproj", "{587C7761-68C6-408E-8A33-E7D53ED2A703}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Embedded", "Pe.Bridge\Source\Pe.Embedded\Pe.Embedded.csproj", "{2DDAD3BC-7109-496D-85CF-1B3079B7EDE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Embedded", "Pe.Embedded\Pe.Embedded.csproj", "{2DDAD3BC-7109-496D-85CF-1B3079B7EDE0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{000DF07E-ADB7-4D21-96B7-74F0CBED2840}"
 EndProject

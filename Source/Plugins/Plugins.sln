@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Reference.Classi
 		{C0FD4365-AB1A-425D-8C5C-B229C687E371} = {C0FD4365-AB1A-425D-8C5C-B229C687E371}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Bridge", "..\Pe\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj", "{384BE820-2F92-411C-9993-3F533021519B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Bridge", "..\Pe\Pe.Bridge\Pe.Bridge.csproj", "{384BE820-2F92-411C-9993-3F533021519B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Main", "..\Pe\Pe.Main\Pe.Main.csproj", "{C0FD4365-AB1A-425D-8C5C-B229C687E371}"
 EndProject
@@ -36,7 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{F99C3BEF-796
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{822FF1CD-17FC-4A0C-9C02-6BC9FB113BDF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Embedded", "..\Pe\Pe.Bridge\Source\Pe.Embedded\Pe.Embedded.csproj", "{36EDDBED-D1C6-4643-A693-D575C2D7DBC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Embedded", "..\Pe\Pe.Embedded\Pe.Embedded.csproj", "{36EDDBED-D1C6-4643-A693-D575C2D7DBC3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Reference.Eyes", "Pe.Plugins.Reference.Eyes\Pe.Plugins.Reference.Eyes.csproj", "{44A80EE7-23F9-4F87-90F2-C07B9176755C}"
 	ProjectSection(ProjectDependencies) = postProject
