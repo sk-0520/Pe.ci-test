@@ -1,25 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <Platforms>x64;x86</Platforms>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
     <RootNamespace>ContentTypeTextNet.Pe.Plugins.DefaultTheme</RootNamespace>
-    <Copyright>Copyright © 2020-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
-    <Configurations>Debug;Release;Debug-DisabledAnalyzers</Configurations>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Debug-DisabledAnalyzers'">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>Pe.Plugins.DefaultTheme</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

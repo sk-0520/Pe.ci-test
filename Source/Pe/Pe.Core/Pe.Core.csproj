@@ -1,26 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>ContentTypeTextNet.Pe.Core</RootNamespace>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <Platforms>x64;x86</Platforms>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-    <RootNamespace>ContentTypeTextNet.Pe.Core</RootNamespace>
-    <Copyright>Copyright © 2015-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
-    <Configurations>Debug;Release;Debug-DisabledAnalyzers</Configurations>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Debug-DisabledAnalyzers'">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
 
   <ItemGroup>
