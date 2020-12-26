@@ -316,8 +316,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 }
 
                 Flush();
-                var rect = value switch
-                {
+                var rect = value switch {
                     NoteLayoutKind.Absolute => CurrentWindowToAbsoluteLayout(),
                     NoteLayoutKind.Relative => CurrentWindowToRelativeLayout(),
                     _ => throw new NotImplementedException()
@@ -667,8 +666,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             var parameter = new NoteLinkChangeRequestParameter() {
                 IsOpen = isOpen,
             };
-            var contentKindFilter = ContentKind switch
-            {
+            var contentKindFilter = ContentKind switch {
                 NoteContentKind.Plain => new DialogFilterItem("text", "txt", "*.txt"),
                 NoteContentKind.RichText => new DialogFilterItem("rtf", "rtf", "*.rtf"),
                 _ => throw new NotImplementedException(),
@@ -838,8 +836,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void SetLayout(NoteLayoutData layout)
         {
-            var rect = layout.LayoutKind switch
-            {
+            var rect = layout.LayoutKind switch {
                 NoteLayoutKind.Absolute => AbsoluteLayoutToWindow(layout),
                 NoteLayoutKind.Relative => RelativeLayoutToWindow(layout),
                 _ => throw new NotImplementedException()
@@ -963,8 +960,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 viewAreaChangeTargets |= ViewAreaChangeTarget.Screen;
             }
 
-            var rect = Model.LayoutKind switch
-            {
+            var rect = Model.LayoutKind switch {
                 NoteLayoutKind.Absolute => CurrentWindowToAbsoluteLayout(),
                 NoteLayoutKind.Relative => CurrentWindowToRelativeLayout(),
                 _ => throw new NotImplementedException()
@@ -1011,6 +1007,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                         if(!IsLocked) {
                             EditingTitle = Title;
                             TitleEditMode = true;
+                        }
+                    }
+                    break;
+
+
+                case (int)WM.WM_NCMBUTTONDOWN:
+                    if(WindowsUtility.ConvertHTFromWParam(wParam) == HT.HTCAPTION) {
+                        if(!IsLocked) {
+                            ToggleCompact();
                         }
                     }
                     break;
