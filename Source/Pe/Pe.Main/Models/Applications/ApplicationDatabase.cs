@@ -147,16 +147,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         protected override void LoggingStatement(string statement, object? parameter)
         {
-            var skip = !true;
-            if(skip) {
-                return;
-            }
+#if DEBUG
+            ThrowIfDisposed();
 
             if(!Logger.IsEnabled(LogLevel.Trace)) {
                 return;
             }
-
-            ThrowIfDisposed();
 
             var indent = "    ";
 
@@ -211,7 +207,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             using(Logger.BeginScope(nameof(LoggingStatement))) {
                 Logger.LogTrace(sb.ToString());
             }
-
+#endif
         }
 
         #endregion

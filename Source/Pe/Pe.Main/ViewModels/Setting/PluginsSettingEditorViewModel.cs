@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         ));
 
-        public ICommand ManualInstallCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand LocalInstallCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 var parameter = new FileSystemSelectDialogRequestParameter() {
                     FileSystemDialogMode = FileSystemDialogMode.FileOpen,
@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     }
                     var file = new FileInfo(r.ResponseFilePaths[0]);
                     try {
-                        await Model.InstallManualPluginTask(file);
+                        await Model.InstallLocalPluginTask(file);
                     } catch(Exception ex) {
                         var parameter = new CommonMessageDialogRequestParameter() {
                             Message = ex.ToString(),

@@ -16,11 +16,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(new[] { "A", "a" }, false, "", 2)]
         [DataRow(new string[] { }, true, "", 0)]
         [DataRow(new string[] { }, false, "", 0)]
-        public void ConstructorTest(string[] args, bool firstIsProgram, string resultProgramName, int resultArgumentCount)
+        public void ConstructorTest(string[] args, bool firstIsProgram, string expectedProgramName, int expectedArgumentCount)
         {
             var commandLine = new CommandLine(args, firstIsProgram);
-            Assert.IsTrue(commandLine.ProgramName == resultProgramName);
-            Assert.IsTrue(commandLine.Arguments.Count == resultArgumentCount);
+            Assert.IsTrue(commandLine.ProgramName == expectedProgramName);
+            Assert.IsTrue(commandLine.Arguments.Count == expectedArgumentCount);
         }
 
         [TestMethod]
@@ -29,14 +29,14 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(true, 'a', "")]
         [DataRow(false, '\0', "")]
         [DataRow(false, '\0', "a")]
-        public void AddTest(bool result, char shortKey, string longKey)
+        public void AddTest(bool expected, char shortKey, string longKey)
         {
             var commandLine = new CommandLine();
             try {
                 var key = commandLine.Add(shortKey, longKey);
-                Assert.IsTrue(result);
+                Assert.IsTrue(expected);
             } catch(ArgumentException ex) {
-                Assert.IsFalse(result, ex.ToString());
+                Assert.IsFalse(expected, ex.ToString());
             }
         }
 
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(false, '\0', "bb")]
         [DataRow(false, 'c', "")]
         [DataRow(true, 'b', "aaa")]
-        public void AddTest_Exists(bool result, char shortKey, string longKey)
+        public void AddTest_Exists(bool expected, char shortKey, string longKey)
         {
             var commandLine = new CommandLine();
             commandLine.Add('a', "aa");
@@ -55,9 +55,9 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
 
             try {
                 var key = commandLine.Add(shortKey, longKey);
-                Assert.IsTrue(result);
+                Assert.IsTrue(expected);
             } catch(ArgumentException ex) {
-                Assert.IsFalse(result, ex.ToString());
+                Assert.IsFalse(expected, ex.ToString());
             }
         }
 
@@ -80,14 +80,14 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(new[] { "-a=\"A\"" }, 'a', "aaa", "A")]
         [DataRow(new[] { "--aaa=\"A\"" }, 'a', "aaa", "A")]
         [DataRow(new[] { "--aaa=\"AA\"", "-a=\"A\"" }, 'a', "aaa", "AA")]
-        public void ExecuteTest_Simple(string[] args, char shortKey, string longKey, string result)
+        public void ExecuteTest_Simple(string[] args, char shortKey, string longKey, string expected)
         {
             var commandLine = new CommandLine(args, false);
             var commanadKey = commandLine.Add(shortKey, longKey, true);
 
             Assert.IsTrue(commandLine.Parse());
             var value = commandLine.Values[commanadKey];
-            Assert.IsTrue(value.First == result);
+            Assert.IsTrue(value.First == expected);
         }
 
         [TestMethod]
@@ -95,14 +95,14 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(new[] { "/aaa" }, 'a', "aaa", true)]
         [DataRow(new[] { "-a" }, 'a', "aaa", true)]
         [DataRow(new[] { "--aaa" }, 'a', "aaa", true)]
-        public void ExecuteTest_Switch(string[] args, char shortKey, string longKey, bool result)
+        public void ExecuteTest_Switch(string[] args, char shortKey, string longKey, bool expected)
         {
             var commandLine = new CommandLine(args, false);
             var commanadKey = commandLine.Add(shortKey, longKey, false);
 
             Assert.IsTrue(commandLine.Parse());
             var has = commandLine.Switches.Contains(commanadKey);
-            Assert.IsTrue(has == result);
+            Assert.IsTrue(has == expected);
         }
 
         [TestMethod]
@@ -115,10 +115,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("a\"\"b", "a\"b")]
         [DataRow("a\"\"\"\"\"\"b", "a\"\"\"b")]
         [DataRow("\"a \"\"\"\"\"\" b\"", "a \"\"\" b")]
-        public void Escape(string result, string input)
+        public void Escape(string expected, string input)
         {
             var actual = CommandLine.Escape(input);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
     }
 

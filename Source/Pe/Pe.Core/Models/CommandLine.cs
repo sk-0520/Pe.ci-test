@@ -562,6 +562,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return Convert.ChangeType(rawValue, type);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         object GetTrueSwitch(Type type)
         {
             if(type == typeof(bool)) {

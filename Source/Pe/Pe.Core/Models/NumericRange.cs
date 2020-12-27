@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -112,23 +113,23 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
-        bool ParseCore(string? s, out List<int> result, out Exception? ex)
+        bool ParseCore(string? s, [NotNullWhen(true)]  out IReadOnlyCollection<int>? result, [NotNullWhen(false)]  out Exception? ex)
         {
             ex = null;
             if(string.IsNullOrWhiteSpace(s)) {
-                result = new List<int>();
+                result = new int[0];
                 return true;
             }
 
             var values = s.Split(ValueSeparator);
             if(values.Length == 0) {
-                result = new List<int>();
+                result = new int[0];
                 return true;
             }
 
             var reg = new Regex(@"\s*(?<HEAD>[+\-]?\d+)\s*((?<RANGE>.+?)(?<TAIL>[+\-]?\d+))?\s*");
 
-            result = new List<int>();
+            var workValues = new List<int>();
 
             foreach(var value in values) {
                 var match = reg.Match(value);
@@ -140,26 +141,29 @@ namespace ContentTypeTextNet.Pe.Core.Models
                             var tail = int.Parse(match.Groups["TAIL"].Value);
                             if(head < tail) {
                                 for(var i = head; i <= tail; i++) {
-                                    result.Add(i);
+                                    workValues.Add(i);
                                 }
                             } else {
                                 ex = new Exception($"error: {head} < {tail}");
+                                result = null;
                                 return false;
                             }
                         } else {
                             ex = new Exception("range separator");
+                            result = null;
                             return false;
                         }
                     } else {
-                        result.Add(head);
+                        workValues.Add(head);
                     }
                 } else {
                     ex = new Exception("unmatch");
+                    result = new int[0];
                     return false;
                 }
             }
 
-            result = result
+            result = workValues
                 .OrderBy(i => i)
                 .Distinct()
                 .ToList()
@@ -174,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="s">入力文字列。</param>
         /// <returns>パース結果。</returns>
         /// <exception cref="Exception" />
-        public List<int> Parse(string? s)
+        public IReadOnlyCollection<int> Parse(string? s)
         {
             if(ParseCore(s, out var result, out var ex)) {
                 Debug.Assert(ex == null);
@@ -191,7 +195,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="s">入力文字列。</param>
         /// <param name="result">成功した場合に結果を格納。</param>
         /// <returns>パース成功・失敗。</returns>
-        public bool TryParse(string? s, out List<int> result)
+        public bool TryParse(string? s, [NotNullWhen(true)] out IReadOnlyCollection<int>? result)
         {
             return ParseCore(s, out result, out _);
         }

@@ -1,4 +1,4 @@
-// [T4] build 2020-03-28 10:39:54Z(UTC)
+// [T4] build 2020-12-06 12:29:24Z(UTC)
 using System;
 using System.Diagnostics;
 
@@ -37,6 +37,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         private delegate object DiConstructorCacheP29(object p1, object p2, object p3, object p4, object p5, object p6, object p7, object p8, object p9, object p10, object p11, object p12, object p13, object p14, object p15, object p16, object p17, object p18, object p19, object p20, object p21, object p22, object p23, object p24, object p25, object p26, object p27, object p28, object p29);
         private delegate object DiConstructorCacheP30(object p1, object p2, object p3, object p4, object p5, object p6, object p7, object p8, object p9, object p10, object p11, object p12, object p13, object p14, object p15, object p16, object p17, object p18, object p19, object p20, object p21, object p22, object p23, object p24, object p25, object p26, object p27, object p28, object p29, object p30);
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0301:Closure Allocation Source", Justification = "<•Û—¯’†>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0302:Display class allocation to capture closure", Justification = "<•Û—¯’†>")]
         private Func<object[], object> CreateCore(object[] parameters)
         {
             switch(ParameterInfos.Count) {

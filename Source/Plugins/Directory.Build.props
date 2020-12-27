@@ -1,17 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project>
   <PropertyGroup>
+    <Version>1.0.0</Version>
+    
     <TargetFramework>net5.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
     <Platforms>x64;x86</Platforms>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <RootNamespace>ContentTypeTextNet.Pe.Bridge</RootNamespace>
-    <Copyright>Copyright © 2019-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
+    <Product>Pe</Product>
     <Configurations>Debug;Release;Debug-DisabledAnalyzers</Configurations>
-    <Version>0.0.3</Version>
+    <PathMap>$(MSBuildThisFileDirectory)=.</PathMap>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -22,14 +21,4 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="ClrHeapAllocationAnalyzer" Version="3.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.15.0.24505">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
 </Project>

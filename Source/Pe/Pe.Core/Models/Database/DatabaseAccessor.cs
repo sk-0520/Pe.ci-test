@@ -173,6 +173,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="executor">処理内容。</param>
         /// <param name="isolationLevel"></param>
         /// <returns>処理実行結果。</returns>
+        /// これもうなくしたいなぁ。
         IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor, IsolationLevel isolationLevel);
 
         #endregion
@@ -269,14 +270,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         [SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
         [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
-        protected virtual void LoggingExecuteResult(int result, [DateTimeKind(DateTimeKind.Local)] DateTime startTime, [DateTimeKind(DateTimeKind.Local)] DateTime endTime)
+        protected virtual void LoggingExecuteResult(int result, [DateTimeKind(DateTimeKind.Utc)] DateTime startTime, [DateTimeKind(DateTimeKind.Utc)] DateTime endTime)
         {
             Logger.LogTrace($"result: {result}, {endTime - startTime}", new { startTime, endTime });
         }
         [SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
         [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         [SuppressMessage("Performance", "HAA0503:Explicit new anonymous object allocation")]
-        protected virtual void LoggingDataTable(DataTable table, [DateTimeKind(DateTimeKind.Local)] DateTime startTime, [DateTimeKind(DateTimeKind.Local)] DateTime endTime)
+        protected virtual void LoggingDataTable(DataTable table, [DateTimeKind(DateTimeKind.Utc)] DateTime startTime, [DateTimeKind(DateTimeKind.Utc)] DateTime endTime)
         {
             Logger.LogTrace($"table: {table.TableName} -> {table.Columns.Count} * {table.Rows.Count}, {endTime - startTime}", new { startTime, endTime });
         }

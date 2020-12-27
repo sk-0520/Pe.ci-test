@@ -14,14 +14,14 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff)]
         [DataRow(0x00, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00)]
         [DataRow(0x00, 0x10, 0xff, 0xff, 0x00, 0xef, 0x00, 0x00)]
-        public void GetNegativeColorTest(int testA, int testR, int testG, int testB, int argA, int argR, int argG, int argB)
+        public void GetNegativeColorTest(int expectedA, int expectedR, int expectedG, int expectedB, int argA, int argR, int argG, int argB)
         {
-            var test = Color.FromArgb((byte)testA, (byte)testR, (byte)testG, (byte)testB);
+            var expected = Color.FromArgb((byte)expectedA, (byte)expectedR, (byte)expectedG, (byte)expectedB);
             var arg = Color.FromArgb((byte)argA, (byte)argR, (byte)argG, (byte)argB);
 
             var result = MediaUtility.GetNegativeColor(arg);
 
-            Assert.AreEqual(test, result);
+            Assert.AreEqual(expected, result);
         }
     }
 }

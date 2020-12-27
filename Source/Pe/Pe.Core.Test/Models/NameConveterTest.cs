@@ -29,11 +29,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("abc-d", "ABcD")]
         [DataRow("あ", "あ")]
         [DataRow("int32", "Int32")]
-        public void PascalToKebabTest(string result, string input)
+        public void PascalToKebabTest(string expected, string input)
         {
             var nc = new NameConveter();
             var actual = nc.PascalToKebab(input);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
 
@@ -55,11 +55,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("abc_d", "ABcD")]
         [DataRow("あ", "あ")]
         [DataRow("int32", "Int32")]
-        public void PascalToSnakeTest(string result, string input)
+        public void PascalToSnakeTest(string expected, string input)
         {
             var nc = new NameConveter();
             var actual = nc.PascalToSnake(input);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -80,11 +80,34 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("abcD", "ABcD")]
         [DataRow("あ", "あ")]
         [DataRow("int32", "Int32")]
-        public void PascalToCamelTest(string result, string input)
+        public void PascalToCamelTest(string expected, string input)
         {
             var nc = new NameConveter();
             var actual = nc.PascalToCamel(input);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        [DataRow("", "")]
+        [DataRow(" ", " ")]
+        [DataRow("A", "a")]
+        [DataRow("Abc", "abc")]
+        [DataRow("AbcDef", "abc-def")]
+        [DataRow("AbcDef", "abc-def-")]
+        [DataRow("AbcDef", "abc--def-")]
+        [DataRow("AbcDef", "-abc--def-")]
+        [DataRow("AbcDef", "---abc--def-")]
+        [DataRow("AbcDef", "---abc--def---------")]
+        [DataRow("ABC", "a-b-c")]
+        [DataRow("ABC", "a-B-c")]
+        [DataRow("ABC", "aB-c")]
+        [DataRow("ABc", "a-Bc")]
+        [DataRow("A_b_cD_e", "a_b_c-d_e")]
+        public void KebabToPascalTest(string expected, string input)
+        {
+            var nc = new NameConveter();
+            var actual = nc.KebabToPascal(input);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

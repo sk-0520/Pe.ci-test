@@ -14,10 +14,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("a.txt.txt", "a.txt", "txt")]
         [DataRow("a..txt", "a.", "txt")]
         [DataRow("a..txt", "a", ".txt")]
-        public void AppendExtensionTest(string result, string path, string ext)
+        public void AppendExtensionTest(string expected, string path, string ext)
         {
             var actual = PathUtility.AppendExtension(path, ext);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -28,10 +28,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("a?", "a?", "?")]
         [DataRow("a@b@c@d", "a?b\\c*d", "@")]
         [DataRow("a<>b<>c<>d", "a?b\\c*d", "<>")]
-        public void ToSafeNameTest(string result, string value, string c)
+        public void ToSafeNameTest(string expected, string value, string c)
         {
             var actual = PathUtility.ToSafeName(value, v => c);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -41,10 +41,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("a_", "a?")]
         [DataRow("a_", "a?")]
         [DataRow("a_b_c_d", "a?b\\c*d")]
-        public void ToSafeNameDefaultTest(string result, string value)
+        public void ToSafeNameDefaultTest(string expected, string value)
         {
             var actual = PathUtility.ToSafeNameDefault(value);
-            Assert.AreEqual(actual, result);
+            Assert.AreEqual(actual, expected);
         }
 
         [TestMethod]
@@ -56,10 +56,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(true, "a.exe")]
         [DataRow(true, "a.dll")]
         [DataRow(false, "a.ico")]
-        public void HasIconTest(bool result, string value)
+        public void HasIconTest(bool expected, string value)
         {
             var actual = PathUtility.HasIconPath(value);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -69,10 +69,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(false, @"\")]
         [DataRow(false, @"\\")]
         [DataRow(true, @"\\a")]
-        public void IsNetworkDirectoryPathTest(bool result, string value)
+        public void IsNetworkDirectoryPathTest(bool expected, string value)
         {
             var actual = PathUtility.IsNetworkDirectoryPath(value);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -84,10 +84,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(null, @"\\a\")]
         [DataRow("b", @"\\a\b")]
         [DataRow("b", @"\\a\\b")]
-        public void GetNetworkDirectoryName(string? result, string value)
+        public void GetNetworkDirectoryName(string? expected, string value)
         {
             var actual = PathUtility.GetNetworkDirectoryName(value);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -97,10 +97,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(@"\a", @"\a\")]
         [DataRow(@"\a", @"\a\b")]
         [DataRow(@"\a\b", @"\a\b\c")]
-        public void GetNetworkOwnerName(string? result, string value)
+        public void GetNetworkOwnerName(string? expected, string value)
         {
             var actual = PathUtility.GetNetworkOwnerName(value);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -118,10 +118,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(true, @"C:")]
         [DataRow(true, @"C:\")]
         [DataRow(false, @"C:\A")]
-        public void IsRootNameTest(bool result, string? value)
+        public void IsRootNameTest(bool expected, string? value)
         {
             var actual = PathUtility.IsRootName(value);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -133,10 +133,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(true, "A", "a")]
         [DataRow(true, "A", "A")]
         [DataRow(false, "A", "B")]
-        public void IsEqualTest(bool result, string a, string b)
+        public void IsEqualTest(bool expected, string a, string b)
         {
             var actual = PathUtility.IsEqual(a, b);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

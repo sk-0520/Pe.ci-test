@@ -2136,10 +2136,13 @@ Pe を終了してから実行してください</value>
   <data name="String_Setting_Plugins_Install_File" xml:space="preserve">
     <value>プラグインアーカイブ</value>
   </data>
-  <data name="String_Setting_Plugins_Install_Manual_A" xml:space="preserve">
-    <value>手動(_M)</value>
+  <data name="String_Setting_Plugins_Install_Local_A" xml:space="preserve">
+    <value>ローカル(_L)</value>
   </data>
   <data name="String_Setting_Plugins_Install_Web_A" xml:space="preserve">
     <value>_Web</value>
+  </data>
+  <data name="String_Common_Network_UnknownResponse" xml:space="preserve">
+    <value>応答データ不明</value>
   </data>
 </root>

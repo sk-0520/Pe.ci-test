@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public class ObjectDumpItem
+    public struct ObjectDumpItem
     {
         public ObjectDumpItem(MemberInfo memberInfo, object? value, IReadOnlyList<ObjectDumpItem> children)
         {

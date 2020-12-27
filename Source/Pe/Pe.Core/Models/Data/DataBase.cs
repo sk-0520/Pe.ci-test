@@ -4,6 +4,8 @@ using System.Runtime.Serialization;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 
+// これいっらんなぁ
+
 namespace ContentTypeTextNet.Pe.Core.Models.Data
 {
     public interface IReadOnlyData

@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         public bool ToThroughSystem(IReadOnlyDictionary<string, string> map)
         {
-            var attribute = GetAttribute(KeyActionPresseOption.ThroughSystem);
+            var attribute = GetAttribute(KeyActionPressOption.ThroughSystem);
             return Convert(attribute, map, (a, s) => {
                 return System.Convert.ToBoolean(s);
             });
@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         public bool TryGetThroughSystem(IReadOnlyDictionary<string, string> map, out bool result)
         {
-            var attribute = GetAttribute(KeyActionPresseOption.ThroughSystem);
+            var attribute = GetAttribute(KeyActionPressOption.ThroughSystem);
             return TryConvert(attribute, map, (a, s) => {
                 return System.Convert.ToBoolean(s);
             }, out result);
@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         public void SetThroughSystem(IDictionary<string, string> map, bool conveySystem)
         {
-            var attribute = GetAttribute(KeyActionPresseOption.ThroughSystem);
+            var attribute = GetAttribute(KeyActionPressOption.ThroughSystem);
             map[attribute.OptionName] = conveySystem.ToString();
         }
 

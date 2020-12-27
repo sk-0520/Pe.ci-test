@@ -23,6 +23,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     }
 #>
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0301:Closure Allocation Source", Justification = "<保留中>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0302:Display class allocation to capture closure", Justification = "<保留中>")]
         private Func<object[], object> CreateCore(object[] parameters)
         {
             switch(ParameterInfos.Count) {

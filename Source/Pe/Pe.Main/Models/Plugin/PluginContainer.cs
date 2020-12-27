@@ -213,10 +213,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             var pluginVersion = (Version)info.PluginVersions.PluginVersion.Clone();
 
-            var unlimitVersion = new Version(0, 0, 0);
-
-            //TODO: PluginUtility.IsUnlimitedVersion の使用
-            if(info.PluginVersions.MinimumSupportVersion != unlimitVersion) {
+            if(!PluginUtility.IsUnlimitedVersion(info.PluginVersions.MinimumSupportVersion)) {
                 var ok = info.PluginVersions.MinimumSupportVersion <= applicationVersion;
                 if(!ok) {
                     Logger.LogWarning("プラグインサポート最低バージョン({0}): {1}, {2}", info.PluginVersions.MinimumSupportVersion, pluginName, pluginId);
@@ -225,7 +222,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 }
             }
 
-            if(info.PluginVersions.MaximumSupportVersion != unlimitVersion) {
+            if(!PluginUtility.IsUnlimitedVersion(info.PluginVersions.MaximumSupportVersion)) {
                 var ok = applicationVersion <= info.PluginVersions.MaximumSupportVersion;
                 if(!ok) {
                     Logger.LogWarning("プラグインサポート最高バージョン({0}): {1}, {2}", info.PluginVersions.MaximumSupportVersion, pluginName, pluginId);

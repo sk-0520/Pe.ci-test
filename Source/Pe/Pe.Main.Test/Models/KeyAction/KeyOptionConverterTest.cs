@@ -56,14 +56,14 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
         [DataRow(true, "TRUE")]
         [DataRow(false, "false")]
         [DataRow(false, "FALSE")]
-        public void ToForeverTest(bool result, string input)
+        public void ToForeverTest(bool expected, string input)
         {
             var doc = new DisableOptionConverter();
             var map = new Dictionary<string, string>() {
                 [nameof(KeyActionDisableOption.Forever)] = input,
             };
             var actual = doc.ToForever(map);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

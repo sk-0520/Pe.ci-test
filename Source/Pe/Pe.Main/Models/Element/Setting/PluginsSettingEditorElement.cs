@@ -260,7 +260,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
-        internal async Task InstallManualPluginTask(FileInfo archiveFile)
+        internal async Task InstallLocalPluginTask(FileInfo archiveFile)
         {
             // 拡張子をアーカイブ種別としてそのまま使用する
             var exts = new HashSet<string>() {

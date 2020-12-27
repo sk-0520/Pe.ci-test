@@ -126,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                             Logger.LogInformation("BODY: {0}", rawResponse);
                             return;
                         } else {
-                            var msg = response?.Message ?? "応答データ不明"; //TODO: ローカライズ
+                            var msg = response?.Message ?? Properties.Resources.String_Common_Network_UnknownResponse;
                             Logger.LogError(msg);
                             ErrorMessage = msg;
                             SendStatus.State = RunningState.Error;

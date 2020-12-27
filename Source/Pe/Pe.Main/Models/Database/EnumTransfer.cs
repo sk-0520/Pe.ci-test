@@ -57,8 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         /// <returns></returns>
         public string ToString(TEnum member)
         {
-            //TODO: nullの可能性
-            var fieldInfo = EnumType.GetField(member.ToString()!)!;
+            var fieldInfo = EnumType.GetField(member.ToString())!;
 
             var attribute = fieldInfo.GetCustomAttribute<EnumTransferAttribute>();
             if(attribute != null) {
@@ -102,8 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             ;
             if(fieldItem != null) {
                 foreach(var enumMember in Enum.GetValues(EnumType)) {
-                    //TODO: null の可能性
-                    if(enumMember!.ToString() == fieldItem.Field.Name) {
+                    if(enumMember?.ToString() == fieldItem.Field.Name) {
                         return (TEnum)enumMember;
                     }
                 }

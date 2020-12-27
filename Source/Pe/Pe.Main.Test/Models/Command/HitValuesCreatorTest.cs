@@ -20,11 +20,11 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Command
         [DataRow(1, @"abc.*", "abcabc")]
         [DataRow(4, @"a", "aaaa")]
         [DataRow(2, @"a|b", "abc")]
-        public void GetMatchesTest(int result, string pattern, string input)
+        public void GetMatchesTest(int expected, string pattern, string input)
         {
             var hvc = new HitValuesCreator(Test.LoggerFactory);
             var actual = hvc.GetMatches(input, new Regex(pattern));
-            Assert.AreEqual(result, actual.Count);
+            Assert.AreEqual(expected, actual.Count);
         }
 
 
@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Command
         [DataRow(800, "abc", "abc")]
         [DataRow(0, "Abc", "abc")]
         [DataRow(800, "aBc", "abc")]
-        public void CalcScoreTest(int result, string input, string source)
+        public void CalcScoreTest(int expected, string input, string source)
         {
             var simpleRegexFactory = new SimpleRegexFactory(Test.LoggerFactory);
             var regex = simpleRegexFactory.CreateFilterRegex(input);
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Command
             var ranges = hvc.ConvertRanges(matchers);
             var hitValues = hvc.ConvertHitValues(source, ranges);
             var actual = hvc.CalcScore(source, hitValues);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

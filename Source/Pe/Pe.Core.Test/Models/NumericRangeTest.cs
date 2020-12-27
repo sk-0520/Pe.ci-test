@@ -36,11 +36,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("-3, -1", new[] { -1, -3 })]
         [DataRow("-3--1, 1-3", new[] { -3, -2, -1, 1, 2, 3 })]
         [DataRow("-3-3", new[] { -3, -2, -1, 0, 1, 2, 3 })]
-        public void ToStringTest(string result, int[] values)
+        public void ToStringTest(string expected, int[] values)
         {
             var nr = new NumericRange();
             var actual = nr.ToString(values);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -51,11 +51,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("1,3-5", new[] { 1, 3, 4, 5 })]
         [DataRow("1,3-5,7", new[] { 1, 3, 4, 5, 7 })]
         [DataRow("1,3-5,7,9-12", new[] { 1, 3, 4, 5, 7, 9, 10, 11, 12 })]
-        public void ToString_NoSpace_Test(string result, int[] values)
+        public void ToString_NoSpace_Test(string expected, int[] values)
         {
             var nr = new NumericRange(false, ",", "-");
             var actual = nr.ToString(values);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -66,11 +66,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("1\t3-5", new[] { 1, 3, 4, 5 })]
         [DataRow("1\t3-5\t7", new[] { 1, 3, 4, 5, 7 })]
         [DataRow("1\t3-5\t7\t9-12", new[] { 1, 3, 4, 5, 7, 9, 10, 11, 12 })]
-        public void ToString_Value_Test(string result, int[] values)
+        public void ToString_Value_Test(string expected, int[] values)
         {
             var nr = new NumericRange(false, "\t", "-");
             var actual = nr.ToString(values);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -81,11 +81,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("1,3/5", new[] { 1, 3, 4, 5 })]
         [DataRow("1,3/5,7", new[] { 1, 3, 4, 5, 7 })]
         [DataRow("1,3/5,7,9/12", new[] { 1, 3, 4, 5, 7, 9, 10, 11, 12 })]
-        public void ToString_Range_Test(string result, int[] values)
+        public void ToString_Range_Test(string expected, int[] values)
         {
             var nr = new NumericRange(false, ",", "/");
             var actual = nr.ToString(values);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -97,11 +97,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(new[] { 1, 2, 3, 4, 5 }, "1-5")]
         [DataRow(new[] { -5, -4, -3, 0, 2, 3, 4, 5 }, "-5--3, 0, 2-5")]
         [DataRow(new[] { 1, 2, 3, 4, 5 }, "+1-+5")]
-        public void ParseTest(int[] result, string values)
+        public void ParseTest(int[] expected, string values)
         {
             var nr = new NumericRange();
             var actual = nr.Parse(values).ToList();
-            CollectionAssert.AreEqual(result, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [TestMethod]

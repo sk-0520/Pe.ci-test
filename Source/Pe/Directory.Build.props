@@ -1,5 +1,25 @@
 <Project>
   <PropertyGroup>
+    <Version>0.99.87</Version>
+
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <Platforms>x64;x86</Platforms>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <Product>Pe</Product>
+    <Copyright>Copyright © 2014-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
+    <Configurations>Debug;Release;Debug-DisabledAnalyzers</Configurations>
     <PathMap>$(MSBuildThisFileDirectory)=.</PathMap>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug-DisabledAnalyzers'">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
 </Project>

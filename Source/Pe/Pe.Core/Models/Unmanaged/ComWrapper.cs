@@ -15,18 +15,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
         public ComWrapper(T comObject)
             : base(comObject)
         {
-            Debug.Assert(Com != null);
+            Debug.Assert(Raw != null);
 
-            if(!Marshal.IsComObject(Com)) {
+            if(!Marshal.IsComObject(Raw)) {
                 throw new ArgumentException(nameof(comObject));
             }
         }
-
-        #region property
-
-        public T Com => Raw;
-
-        #endregion
 
         #region function
 

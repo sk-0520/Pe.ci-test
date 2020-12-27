@@ -24,11 +24,11 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
         [DataRow(false, 1, 0, 1, 0)]
         [DataRow(false, 1, 1, 0, 0)]
         [DataRow(false, 1, 1, 1, 0)]
-        public void IsUnlimitedVersionTest(bool result, int major, int minor, int build, int revision)
+        public void IsUnlimitedVersionTest(bool expected, int major, int minor, int build, int revision)
         {
             var ver = new Version(major, minor, build, revision);
             var actual = PluginUtility.IsUnlimitedVersion(ver);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

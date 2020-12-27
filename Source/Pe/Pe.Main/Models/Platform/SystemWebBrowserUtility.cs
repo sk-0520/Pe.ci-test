@@ -27,7 +27,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         static int ToIEVersion(Version version)
         {
-            // TODO: 小数点以下は要調査
             var versionNumber = version.Major * 1000;
             return versionNumber;
         }

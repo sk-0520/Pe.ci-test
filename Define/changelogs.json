@@ -1,5 +1,67 @@
 [
 	{
+		"date": "2020/12/27",
+		"version": "0.99.087",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "aeb0cdb3f8790d71c616ccff70e823771ddac06a",
+						"subject": "#716: プラグインサポート最低バージョン・最高バージョンが両方とも制限なしの場合の表記を短くする"
+					},
+					{
+						"revision": "c405142465dc63a91c9ea7fa29f5d88b99c16f16",
+						"subject": "#631: 固定幅フォントの列挙",
+						"comments": [
+							"列挙というより判定処理になった",
+							"固定幅を [ フォント名 ] として表示するようにした",
+							"特定の対象だけ判定(コマンド, 標準入出力)"
+						]
+					},
+					{
+						"revision": "edab1437067c4705ecd975c30b1268fce48adf24",
+						"subject": "#723: ノートのキャプションをホイールクリックで最小化を切り替える"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "c5e133011f706586be2d0be81c2c783805df1041",
+						"subject": "#715: アンインストールできないプラグインに対して再起動注意文言表示が眩し過ぎる"
+					},
+					{
+						"revision": "daa9034c0c77668df5cf00a5ea23126a9ddb8809",
+						"subject": "[継続課題] #305: メモリ消費を抑える",
+						"comments": [
+							"D&D用インフラに起因するメモリ解放漏れ対応"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "118f276acfffa4ad86db444e31ead04c7c4674a6",
+						"subject": "プラグインインストールボタンの文言を「手動」から「ローカル」に変更"
+					},
+					{
+						"revision": "dd845a66658dc95c7b51624233de3b5fbe2b8c76",
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 16.8.0 -> 16.8.3"
+					},
+					{
+						"revision": "ce2f82f8db3eaab6d83154cfe57fb60397e9c599",
+						"subject": "#724: Pe.Bridge の分離はもうあんま意味なさそう"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/12/01",
 		"version": "0.99.078",
 		"contents": [

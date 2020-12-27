@@ -62,13 +62,13 @@ values
         [TestMethod]
         public void QueryTest()
         {
-            var resultAsc = new[] { "A", "B", "C", "D", };
+            var expectedAsc = new[] { "A", "B", "C", "D", };
             var actualAsc = DatabaseAccessor.Query<string>("select ColVal from TestTable1 order by ColKey").ToList();
-            CollectionAssert.AreEqual(resultAsc, actualAsc);
+            CollectionAssert.AreEqual(expectedAsc, actualAsc);
 
-            var resultDesc = new[] { "D", "C", "B", "A", };
+            var expectedDesc = new[] { "D", "C", "B", "A", };
             var actualDesc = DatabaseAccessor.Query<string>("select ColVal from TestTable1 order by ColKey desc").ToList();
-            CollectionAssert.AreEqual(resultDesc, actualDesc);
+            CollectionAssert.AreEqual(expectedDesc, actualDesc);
         }
 
         [TestMethod]
