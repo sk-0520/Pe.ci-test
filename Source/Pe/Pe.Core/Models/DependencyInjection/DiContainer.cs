@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return result;
         }
 
-        static KeyValuePair<Type, object?> GetParameter(ParameterInfo parameterInfo , IReadOnlyList<KeyValuePair<Type, object?>> manualParameterItems)
+        static KeyValuePair<Type, object?> GetParameter(ParameterInfo parameterInfo, IReadOnlyList<KeyValuePair<Type, object?>> manualParameterItems)
         {
             foreach(var manualParameterItem in manualParameterItems) {
                 if(manualParameterItem.Key == parameterInfo.ParameterType) {
@@ -189,6 +189,21 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
 
             return default;
+        }
+
+        static IReadOnlyList<KeyValuePair<string, ConcurrentDictionary<Type, T>>> GetNamedPools<T>(DiNamedContainer<ConcurrentDictionary<Type, T>> pool, string ignoreName)
+        {
+            var result = new List<KeyValuePair<string, ConcurrentDictionary<Type, T>>>(pool.Container.Count);
+
+            foreach(var pair in pool.Container) {
+                if(pair.Key == ignoreName) {
+                    continue;
+                }
+
+                result.Add(pair);
+            }
+
+            return result;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
@@ -203,7 +218,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 if(manualParameterItems.Count != 0) {
                     //var item = manualParameterItems.FirstOrDefault(p => p.Key == parameterInfo.ParameterType || parameterInfo.ParameterType.IsAssignableFrom(p.Key));
                     var item = GetParameter(parameterInfo, manualParameterItems);
-                    if(item.Key != default(Type)) {
+                    if(item.Key != default) {
                         arguments[i] = item.Value!; // 正しい null
                         manualParameterItems.Remove(item);
                         continue;
@@ -239,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                         }
                     }
 
-                    var namedPools = ObjectPool.ToArray().Where(i => i.Key != name);
+                    var namedPools = GetNamedPools(ObjectPool, name);
                     foreach(var namedPool in namedPools) {
                         if(namedPool.Value.TryGetValue(parameterInfo.ParameterType, out var namedValue)) {
                             arguments[i] = namedValue;
@@ -250,7 +265,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                         continue;
                     }
 
-                    var namedFactories = Factory.ToArray().Where(i => i.Key != name);
+                    var namedFactories = GetNamedPools(Factory, name);
                     foreach(var namedFactory in namedFactories) {
                         if(namedFactory.Value.TryGetValue(parameterInfo.ParameterType, out var factory)) {
                             arguments[i] = factory.Create();
