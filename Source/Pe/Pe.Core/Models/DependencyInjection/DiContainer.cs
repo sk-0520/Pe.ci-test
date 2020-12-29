@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
-        object[]? CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
+        object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
         {
             var manualParameterItems = BuildManualParameters(manualParameters);
 
@@ -277,7 +277,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                     }
 
                     // どうしようもねぇ
-                    return null;
+                    return Array.Empty<object>();
                 }
             }
 
@@ -299,7 +299,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
 
             var arguments = CreateParameters(name, parameters, parameterInjections, manualParameters);
-            if(arguments == null) {
+            if(arguments.Length == 0) {
                 createdObject = default;
                 return false;
             }
