@@ -137,14 +137,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
 
             // 順序なく総なめ
-            var namedPools = ObjectPool.ToArray().Where(i => i.Key != name);
+            var namedPools = GetIgnoreNamedPools(ObjectPool, name);
             foreach(var namedPool in namedPools) {
                 if(namedPool.Value.TryGetValue(interfaceType, out var namedValue)) {
                     return namedValue;
                 }
             }
 
-            var namedFactories = Factory.ToArray().Where(i => i.Key != name);
+            var namedFactories = GetIgnoreNamedPools(Factory, name);
             foreach(var namedFactory in namedFactories) {
                 if(namedFactory.Value.TryGetValue(interfaceType, out var namedValue)) {
                     return namedValue;
@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return default;
         }
 
-        static IReadOnlyList<KeyValuePair<string, ConcurrentDictionary<Type, T>>> GetNamedPools<T>(DiNamedContainer<ConcurrentDictionary<Type, T>> pool, string ignoreName)
+        static IReadOnlyList<KeyValuePair<string, ConcurrentDictionary<Type, T>>> GetIgnoreNamedPools<T>(DiNamedContainer<ConcurrentDictionary<Type, T>> pool, string ignoreName)
         {
             var result = new List<KeyValuePair<string, ConcurrentDictionary<Type, T>>>(pool.Container.Count);
 
@@ -254,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                         }
                     }
 
-                    var namedPools = GetNamedPools(ObjectPool, name);
+                    var namedPools = GetIgnoreNamedPools(ObjectPool, name);
                     foreach(var namedPool in namedPools) {
                         if(namedPool.Value.TryGetValue(parameterInfo.ParameterType, out var namedValue)) {
                             arguments[i] = namedValue;
@@ -265,7 +265,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                         continue;
                     }
 
-                    var namedFactories = GetNamedPools(Factory, name);
+                    var namedFactories = GetIgnoreNamedPools(Factory, name);
                     foreach(var namedFactory in namedFactories) {
                         if(namedFactory.Value.TryGetValue(parameterInfo.ParameterType, out var factory)) {
                             arguments[i] = factory.Create();
