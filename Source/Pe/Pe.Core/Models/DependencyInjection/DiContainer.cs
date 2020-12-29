@@ -1,6 +1,7 @@
 //#define ENABLED_PRISM7
 
 using System;
+using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// <summary>
     /// DI コンテナ。
     /// </summary>
-    public class DiContainer : DisposerBase, IDiRegisterContainer
+    public class DiContainer: DisposerBase, IDiRegisterContainer
     {
         /// <summary>
         /// プールしているオブジェクトはコンテナに任せる。
@@ -153,26 +154,39 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             throw new DiException($"get error: {interfaceType} [{name}]");
         }
 
-        //KeyValuePair<Type, object?>[] BuildManualParameters(IEnumerable<object> manualParameters)
-        //{
-        //    var s= manualParameters.ToArray();
-        //    var manualParameterItems = manualParameters
-        //        .Where(o => o != null)
-        //        .Select(o => (o is DiDefaultParameter) ? ((DiDefaultParameter)o).GetPair() : new KeyValuePair<Type, object?>(o.GetType(), o))
-        //        .ToList()
-        //    ;
+        static IList<KeyValuePair<Type, object?>> BuildManualParameters(IReadOnlyList<object> manualParameters)
+        {
+            var arrayPoolDisposer = new ArrayPoolDisposer<KeyValuePair<Type, object?>>(manualParameters.Count);
+            int resultIndex = 0;
+            foreach(var manualParameter in manualParameters) {
+                if(manualParameter is null) {
+                    continue;
+                }
 
-        //    return manualParameterItems;
-        //}
+                if(manualParameter is DiDefaultParameter diDefaultParameter) {
+                    arrayPoolDisposer.Items[resultIndex++] = diDefaultParameter.GetPair();
+                } else {
+                    arrayPoolDisposer.Items[resultIndex++] = new KeyValuePair<Type, object?>(manualParameter.GetType(), manualParameter);
+                }
+            }
+
+            var result = new List<KeyValuePair<Type, object?>>(resultIndex);
+            foreach(var item in arrayPoolDisposer.Items.AsSpan(0, resultIndex)) {
+                result.Add(item);
+            }
+            return result;
+        }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
-        object[]? CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyCollection<object> manualParameters)
+        object[]? CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
         {
-            var manualParameterItems = manualParameters
-                .Where(o => o != null)
-                .Select(o => (o is DiDefaultParameter) ? ((DiDefaultParameter)o).GetPair() : new KeyValuePair<Type, object?>(o.GetType(), o))
-                .ToList()
-            ;
+            var manualParameterItems = BuildManualParameters(manualParameters);
+
+            //var manualParameterItems = manualParameters
+            //    .Where(o => o != null)
+            //    .Select(o => (o is DiDefaultParameter) ? ((DiDefaultParameter)o).GetPair() : new KeyValuePair<Type, object?>(o.GetType(), o))
+            //    .ToList()
+            //;
 
             var arguments = new object[parameterInfos.Count];
             for(var i = 0; i < parameterInfos.Count; i++) {
@@ -247,7 +261,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         }
 
-        bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IReadOnlyCollection<object> manualParameters, [NotNullWhen(true)] out object? createdObject)
+        bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IReadOnlyList<object> manualParameters, [NotNullWhen(true)] out object? createdObject)
         {
             var parameters = constructorCache.ParameterInfos;
             var parameterInjections = constructorCache.ParameterInjections;
@@ -277,7 +291,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return true;
         }
 
-        bool TryNewObject(Type objectType, string name, IReadOnlyCollection<object> manualParameters, bool useFactoryCache, [NotNullWhen(true)] out object? createdObject)
+        bool TryNewObject(Type objectType, string name, IReadOnlyList<object> manualParameters, bool useFactoryCache, [NotNullWhen(true)] out object? createdObject)
         {
             if(ObjectPool[name].TryGetValue(objectType, out var poolValue)) {
                 createdObject = poolValue;
@@ -330,7 +344,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return false;
         }
 
-        object NewCore(Type type, string name, IReadOnlyCollection<object> manualParameters, bool useFactoryCache)
+        object NewCore(Type type, string name, IReadOnlyList<object> manualParameters, bool useFactoryCache)
         {
             if(ObjectPool[name].TryGetValue(type, out var poolValue)) {
                 return poolValue;
@@ -343,7 +357,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             throw new DiException($"{type}: create error {name}");
         }
 
-        bool TryGetInstance(Type interfaceType, string name, IReadOnlyCollection<object> manualParameters, [MaybeNullWhen(false)] out object value)
+        bool TryGetInstance(Type interfaceType, string name, IReadOnlyList<object> manualParameters, [MaybeNullWhen(false)] out object value)
         {
             if(ObjectPool[name].TryGetValue(interfaceType, out var poolValue)) {
                 value = poolValue;
@@ -465,13 +479,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return (TInterface)Get(typeof(TInterface), TuneName(name));
         }
 
-        /// <inheritdoc cref="IDiContainer.New(Type, IReadOnlyCollection{object})"/>
-        public object New(Type type, IReadOnlyCollection<object> manualParameters)
+        /// <inheritdoc cref="IDiContainer.New(Type, IReadOnlyList{object})"/>
+        public object New(Type type, IReadOnlyList<object> manualParameters)
         {
             return NewCore(type, string.Empty, manualParameters, true);
         }
-        /// <inheritdoc cref="IDiContainer.New(Type, string, IReadOnlyCollection{object})"/>
-        public object New(Type type, string name, IReadOnlyCollection<object> manualParameters)
+        /// <inheritdoc cref="IDiContainer.New(Type, string, IReadOnlyList{object})"/>
+        public object New(Type type, string name, IReadOnlyList<object> manualParameters)
         {
             return NewCore(type, TuneName(name), manualParameters, true);
         }
@@ -488,16 +502,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         }
 
 
-        /// <inheritdoc cref="IDiContainer.New{TObject}(IReadOnlyCollection{object})"/>
-        public TObject New<TObject>(IReadOnlyCollection<object> manualParameters)
+        /// <inheritdoc cref="IDiContainer.New{TObject}(IReadOnlyList{object})"/>
+        public TObject New<TObject>(IReadOnlyList<object> manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         {
             return (TObject)New(typeof(TObject), manualParameters);
         }
-        /// <inheritdoc cref="IDiContainer.New{TObject}(string, IReadOnlyCollection{object})"/>
-        public TObject New<TObject>(string name, IReadOnlyCollection<object> manualParameters)
+        /// <inheritdoc cref="IDiContainer.New{TObject}(string, IReadOnlyList{object})"/>
+        public TObject New<TObject>(string name, IReadOnlyList<object> manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
