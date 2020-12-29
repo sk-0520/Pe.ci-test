@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             throw new DiException($"get error: {interfaceType} [{name}]");
         }
 
-        static IList<KeyValuePair<Type, object?>> BuildManualParameters(IReadOnlyList<object> manualParameters)
+        static List<KeyValuePair<Type, object?>> BuildManualParameters(IReadOnlyList<object> manualParameters)
         {
             var arrayPoolDisposer = new ArrayPoolDisposer<KeyValuePair<Type, object?>>(manualParameters.Count);
             int resultIndex = 0;
@@ -177,23 +177,32 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return result;
         }
 
+        static KeyValuePair<Type, object?> GetParameter(ParameterInfo parameterInfo , IReadOnlyList<KeyValuePair<Type, object?>> manualParameterItems)
+        {
+            foreach(var manualParameterItem in manualParameterItems) {
+                if(manualParameterItem.Key == parameterInfo.ParameterType) {
+                    return manualParameterItem;
+                }
+                if(parameterInfo.ParameterType.IsAssignableFrom(manualParameterItem.Key)) {
+                    return manualParameterItem;
+                }
+            }
+
+            return default;
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
         object[]? CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
         {
             var manualParameterItems = BuildManualParameters(manualParameters);
-
-            //var manualParameterItems = manualParameters
-            //    .Where(o => o != null)
-            //    .Select(o => (o is DiDefaultParameter) ? ((DiDefaultParameter)o).GetPair() : new KeyValuePair<Type, object?>(o.GetType(), o))
-            //    .ToList()
-            //;
 
             var arguments = new object[parameterInfos.Count];
             for(var i = 0; i < parameterInfos.Count; i++) {
                 var parameterInfo = parameterInfos[i];
                 // 入力パラメータを優先して設定
                 if(manualParameterItems.Count != 0) {
-                    var item = manualParameterItems.FirstOrDefault(p => p.Key == parameterInfo.ParameterType || parameterInfo.ParameterType.IsAssignableFrom(p.Key));
+                    //var item = manualParameterItems.FirstOrDefault(p => p.Key == parameterInfo.ParameterType || parameterInfo.ParameterType.IsAssignableFrom(p.Key));
+                    var item = GetParameter(parameterInfo, manualParameterItems);
                     if(item.Key != default(Type)) {
                         arguments[i] = item.Value!; // 正しい null
                         manualParameterItems.Remove(item);
