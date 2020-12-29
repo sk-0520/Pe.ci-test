@@ -55,35 +55,35 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <param name="manualParameters">依存関係以外のパラメータ。前方から型に一致するものが使用される。</param>
         /// <returns></returns>
         /// <remarks>null をパラメータとして使用する場合は型情報が死ぬので <see cref="DiDefaultParameter"/> を使用すること。</remarks>
-        object New(Type type, IEnumerable<object> manualParameters);
-        /// <inheritdoc cref="New(Type, IEnumerable{object})"/>
-        object New(Type type, string name, IEnumerable<object> manualParameters);
+        object New(Type type, IReadOnlyCollection<object> manualParameters);
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
+        object New(Type type, string name, IReadOnlyCollection<object> manualParameters);
 
-        /// <inheritdoc cref="New(Type, IEnumerable{object})"/>
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
         object New(Type type);
-        /// <inheritdoc cref="New(Type, IEnumerable{object})"/>
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
         object New(Type type, string name);
 
-        /// <inheritdoc cref="New(Type, IEnumerable{object})"/>
-        TObject New<TObject>(IEnumerable<object> manualParameters)
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
+        TObject New<TObject>(IReadOnlyCollection<object> manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         ;
-        /// <inheritdoc cref="New(Type, IEnumerable{object})"/>
-        TObject New<TObject>(string name, IEnumerable<object> manualParameters)
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
+        TObject New<TObject>(string name, IReadOnlyCollection<object> manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         ;
 
-        /// <inheritdoc cref="New(Type, IEnumerable{object})"/>
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
         TObject New<TObject>()
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         ;
-        /// <inheritdoc cref="New(Type, IEnumerable{object})"/>
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
         TObject New<TObject>(string name)
 #if !ENABLED_STRUCT
             where TObject : class

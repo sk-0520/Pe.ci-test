@@ -153,8 +153,20 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             throw new DiException($"get error: {interfaceType} [{name}]");
         }
 
+        //KeyValuePair<Type, object?>[] BuildManualParameters(IEnumerable<object> manualParameters)
+        //{
+        //    var s= manualParameters.ToArray();
+        //    var manualParameterItems = manualParameters
+        //        .Where(o => o != null)
+        //        .Select(o => (o is DiDefaultParameter) ? ((DiDefaultParameter)o).GetPair() : new KeyValuePair<Type, object?>(o.GetType(), o))
+        //        .ToList()
+        //    ;
+
+        //    return manualParameterItems;
+        //}
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
-        object[]? CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IEnumerable<object> manualParameters)
+        object[]? CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyCollection<object> manualParameters)
         {
             var manualParameterItems = manualParameters
                 .Where(o => o != null)
@@ -235,7 +247,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         }
 
-        bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IEnumerable<object> manualParameters, [MaybeNullWhen(false)] out object createdObject)
+        bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IReadOnlyCollection<object> manualParameters, [NotNullWhen(true)] out object? createdObject)
         {
             var parameters = constructorCache.ParameterInfos;
             var parameterInjections = constructorCache.ParameterInjections;
@@ -265,7 +277,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return true;
         }
 
-        bool TryNewObject(Type objectType, string name, IEnumerable<object> manualParameters, bool useFactoryCache, [MaybeNullWhen(false)] out object createdObject)
+        bool TryNewObject(Type objectType, string name, IReadOnlyCollection<object> manualParameters, bool useFactoryCache, [NotNullWhen(true)] out object? createdObject)
         {
             if(ObjectPool[name].TryGetValue(objectType, out var poolValue)) {
                 createdObject = poolValue;
@@ -318,7 +330,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return false;
         }
 
-        object NewCore(Type type, string name, IEnumerable<object> manualParameters, bool useFactoryCache)
+        object NewCore(Type type, string name, IReadOnlyCollection<object> manualParameters, bool useFactoryCache)
         {
             if(ObjectPool[name].TryGetValue(type, out var poolValue)) {
                 return poolValue;
@@ -331,7 +343,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             throw new DiException($"{type}: create error {name}");
         }
 
-        bool TryGetInstance(Type interfaceType, string name, IEnumerable<object> manualParameters, [MaybeNullWhen(false)] out object value)
+        bool TryGetInstance(Type interfaceType, string name, IReadOnlyCollection<object> manualParameters, [MaybeNullWhen(false)] out object value)
         {
             if(ObjectPool[name].TryGetValue(interfaceType, out var poolValue)) {
                 value = poolValue;
@@ -366,7 +378,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             switch(memberInfo.MemberType) {
                 case MemberTypes.Field:
                     var fieldInfo = (FieldInfo)memberInfo;
-                    if(TryGetInstance(valueType, name, Enumerable.Empty<object>(), out var fieldValue)) {
+                    if(TryGetInstance(valueType, name, Array.Empty<object>(), out var fieldValue)) {
                         fieldInfo.SetValue(target, fieldValue);
                     } else {
                         throw new DiException($"{fieldInfo}: failed to create {valueType}");
@@ -375,7 +387,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
                 case MemberTypes.Property:
                     var propertyInfo = (PropertyInfo)memberInfo;
-                    if(TryGetInstance(valueType, name, Enumerable.Empty<object>(), out var propertyValue)) {
+                    if(TryGetInstance(valueType, name, Array.Empty<object>(), out var propertyValue)) {
                         propertyInfo.SetValue(target, propertyValue);
                     } else {
                         throw new DiException($"{propertyInfo}: failed to create {valueType}");
@@ -453,13 +465,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return (TInterface)Get(typeof(TInterface), TuneName(name));
         }
 
-        /// <inheritdoc cref="IDiContainer.New(Type, IEnumerable{object})"/>
-        public object New(Type type, IEnumerable<object> manualParameters)
+        /// <inheritdoc cref="IDiContainer.New(Type, IReadOnlyCollection{object})"/>
+        public object New(Type type, IReadOnlyCollection<object> manualParameters)
         {
             return NewCore(type, string.Empty, manualParameters, true);
         }
-        /// <inheritdoc cref="IDiContainer.New(Type, string, IEnumerable{object})"/>
-        public object New(Type type, string name, IEnumerable<object> manualParameters)
+        /// <inheritdoc cref="IDiContainer.New(Type, string, IReadOnlyCollection{object})"/>
+        public object New(Type type, string name, IReadOnlyCollection<object> manualParameters)
         {
             return NewCore(type, TuneName(name), manualParameters, true);
         }
@@ -467,25 +479,25 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <inheritdoc cref="IDiContainer.New(Type)"/>
         public object New(Type type)
         {
-            return New(type, Enumerable.Empty<object>());
+            return New(type, Array.Empty<object>());
         }
         /// <inheritdoc cref="IDiContainer.New(Type, string)"/>
         public object New(Type type, string name)
         {
-            return New(type, name, Enumerable.Empty<object>());
+            return New(type, name, Array.Empty<object>());
         }
 
 
-        /// <inheritdoc cref="IDiContainer.New{TObject}(IEnumerable{object})"/>
-        public TObject New<TObject>(IEnumerable<object> manualParameters)
+        /// <inheritdoc cref="IDiContainer.New{TObject}(IReadOnlyCollection{object})"/>
+        public TObject New<TObject>(IReadOnlyCollection<object> manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         {
             return (TObject)New(typeof(TObject), manualParameters);
         }
-        /// <inheritdoc cref="IDiContainer.New{TObject}(string, IEnumerable{object})"/>
-        public TObject New<TObject>(string name, IEnumerable<object> manualParameters)
+        /// <inheritdoc cref="IDiContainer.New{TObject}(string, IReadOnlyCollection{object})"/>
+        public TObject New<TObject>(string name, IReadOnlyCollection<object> manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -500,7 +512,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             where TObject : class
 #endif
         {
-            return (TObject)New(typeof(TObject), Enumerable.Empty<object>());
+            return (TObject)New(typeof(TObject), Array.Empty<object>());
         }
         /// <inheritdoc cref="IDiContainer.New{TObject}(string)"/>
         public TObject New<TObject>(string name)
@@ -508,7 +520,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             where TObject : class
 #endif
         {
-            return (TObject)New(typeof(TObject), name, Enumerable.Empty<object>());
+            return (TObject)New(typeof(TObject), name, Array.Empty<object>());
         }
 
         public void Inject<TObject>(TObject target)
@@ -593,9 +605,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             var interfaceType = typeof(TInterface);
             var objectType = typeof(TObject);
             if(interfaceType == objectType) {
-                Register(typeof(TInterface), typeof(TObject), TuneName(name), lifecycle, () => NewCore(typeof(TObject), string.Empty, Enumerable.Empty<object>(), false));
+                Register(typeof(TInterface), typeof(TObject), TuneName(name), lifecycle, () => NewCore(typeof(TObject), string.Empty, Array.Empty<object>(), false));
             } else {
-                Register(typeof(TInterface), typeof(TObject), TuneName(name), lifecycle, () => NewCore(typeof(TObject), string.Empty, Enumerable.Empty<object>(), true));
+                Register(typeof(TInterface), typeof(TObject), TuneName(name), lifecycle, () => NewCore(typeof(TObject), string.Empty, Array.Empty<object>(), true));
             }
 
             return this;
