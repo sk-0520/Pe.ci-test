@@ -696,6 +696,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         {
             return RegisterMember(baseType, memberName, objectType, string.Empty);
         }
+
+        static bool CanAdd(IList<DiInjectionMember> injectionMembers, DiInjectionMember member)
+        {
+            foreach(var injectionMember in injectionMembers) {
+                if(injectionMember.BaseType == member.BaseType && injectionMember.MemberInfo.Name == member.MemberInfo.Name) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <inheritdoc cref="IDiRegisterContainer.RegisterMember(Type, string, Type, string)"/>
         public IDiRegisterContainer RegisterMember(Type baseType, string memberName, Type objectType, string name)
         {
@@ -703,8 +714,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             if(memberInfo == null || memberInfo.Length != 1) {
                 throw new NullReferenceException(memberName);
             }
+
             var member = new DiInjectionMember(baseType, memberInfo[0], objectType, TuneName(name));
-            if(InjectionMembers.Any(m => m.BaseType == member.BaseType && m.MemberInfo.Name == member.MemberInfo.Name)) {
+            if(CanAdd(InjectionMembers, member)) {
                 throw new ArgumentException($"{baseType}.{memberInfo}");
             }
             InjectionMembers.Add(member);
