@@ -206,7 +206,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return result;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
         object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
         {
             var manualParameterItems = BuildManualParameters(manualParameters);
