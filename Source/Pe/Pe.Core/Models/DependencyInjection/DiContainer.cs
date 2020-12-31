@@ -261,7 +261,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                             break;
                         }
                     }
-                    if(arguments[i] != null) {
+                    if(arguments[i] is not null) {
                         continue;
                     }
 
@@ -272,7 +272,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                             break;
                         }
                     }
-                    if(arguments[i] != null) {
+                    if(arguments[i] is not null) {
                         continue;
                     }
 
