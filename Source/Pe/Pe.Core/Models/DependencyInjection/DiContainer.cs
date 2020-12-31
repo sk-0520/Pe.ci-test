@@ -397,7 +397,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return TryNewObject(GetMappingType(interfaceType, name), name, manualParameters, true, out value);
         }
 
-        Type GetMemberType(MemberInfo memberInfo)
+        static Type GetMemberType(MemberInfo memberInfo)
         {
             switch(memberInfo.MemberType) {
                 case MemberTypes.Field:
