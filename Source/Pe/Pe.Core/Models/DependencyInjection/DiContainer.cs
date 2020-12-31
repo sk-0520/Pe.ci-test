@@ -466,7 +466,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         }
 
-        protected string TuneName(string? name)
+        private static string TuneName(string? name)
         {
             if(name == null) {
                 return string.Empty;
