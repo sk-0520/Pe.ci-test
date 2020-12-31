@@ -340,15 +340,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
             // 属性付きで引数が多いものを優先
             var constructorItems = objectType.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
-                .Select(c => new {
-                    Constructor = c,
-                    Parameters = c.GetParameters(),
-                    Attribute = c.GetCustomAttribute<InjectAttribute>()
-                })
-                .Where(i => i.Attribute != null ? true : i.Constructor.IsPublic)
-                .OrderBy(i => i.Attribute != null ? 0 : 1)
-                .ThenByDescending(i => i.Parameters.Length)
-                .Select(i => new DiConstructorCache(i.Constructor, i.Parameters))
+                .Select(c => (
+                    constructor: c,
+                    parameters: c.GetParameters(),
+                    attribute: c.GetCustomAttribute<InjectAttribute>()
+                ))
+                .Where(i => i.attribute != null || i.constructor.IsPublic)
+                .OrderBy(i => i.attribute != null ? 0 : 1)
+                .ThenByDescending(i => i.parameters.Length)
+                .Select(i => new DiConstructorCache(i.constructor, i.parameters))
                 .ToList()
             ;
 
