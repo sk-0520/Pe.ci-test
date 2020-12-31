@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         #region property
 
-        ConcurrentDictionary<string, TData> Container { get; } = new ConcurrentDictionary<string, TData>();
+        internal ConcurrentDictionary<string, TData> Container { get; } = new ConcurrentDictionary<string, TData>();
 
         #endregion
 
