@@ -53,7 +53,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.113.6 -> 1.0.113.7"
 					},
 					{
 						"revision": "",
