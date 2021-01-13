@@ -55,13 +55,13 @@
 			"comment": "System.Data.SQLite.Core"
 		},
 		{
-			"name": "Hardcodet NotifyIcon for WPF",
-			"uri": "https://github.com/hardcodet/wpf-notifyicon",
+			"name": "Hardcodet.NotifyIcon.Wpf.NetCore",
+			"uri": "https://github.com/HavenDV/H.NotifyIcon.WPF",
 			"license": {
-				"name": "CPOL",
-				"uri": "https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE"
+				"name": "MIT",
+				"uri": "https://github.com/HavenDV/H.NotifyIcon.WPF/blob/master/LICENSE.md"
 			},
-			"comment": ".NET Core 用に独自修正"
+			"comment": ""
 		},
 		{
 			"name": "CefSharp",

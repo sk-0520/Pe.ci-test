@@ -1,7 +1,7 @@
 [
 	{
 		"date": "YYYY/MM/DD",
-		"version": "0.99.088",
+		"version": "0.99.092",
 		"contents": [
 			{
 				"type": "note",
@@ -43,6 +43,27 @@
 				"logs": [
 					{
 						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "",
 						"class": "nuget",
 						"subject": "SonarAnalyzer.CSharp 8.15.0.24505 -> 8.16.0.25740"
 					},
@@ -58,20 +79,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "developer",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Hardcodet.NotifyIcon.Wpf から Hardcodet.NotifyIcon.Wpf.NetCore に変更"
 					},
 					{
 						"revision": "",
