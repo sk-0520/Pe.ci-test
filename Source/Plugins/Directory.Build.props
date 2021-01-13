@@ -9,7 +9,7 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <Product>Pe</Product>
-    <Configurations>Debug;Release;Debug-DisabledAnalyzers</Configurations>
+    <Configurations>Debug;Release</Configurations>
     <PathMap>$(MSBuildThisFileDirectory)=.</PathMap>
   </PropertyGroup>
 
@@ -17,8 +17,4 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug-DisabledAnalyzers'">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
-  </PropertyGroup>
 </Project>

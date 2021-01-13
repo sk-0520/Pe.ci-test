@@ -1,8 +1,8 @@
 {
 	"library": [
 		{
-			"name": ".NET Core 3.1",
-			"uri": "https://dotnet.microsoft.com/download/dotnet-core/3.1",
+			"name": ".NET 5",
+			"uri": "https://dotnet.microsoft.com/download/dotnet/5.0",
 			"license": {
 				"name": "MIT License",
 				"uri": "https://github.com/dotnet/core/blob/v3.1.0/LICENSE.TXT"
@@ -55,13 +55,13 @@
 			"comment": "System.Data.SQLite.Core"
 		},
 		{
-			"name": "Hardcodet NotifyIcon for WPF",
-			"uri": "https://github.com/hardcodet/wpf-notifyicon",
+			"name": "Hardcodet.NotifyIcon.Wpf.NetCore",
+			"uri": "https://github.com/HavenDV/H.NotifyIcon.WPF",
 			"license": {
-				"name": "CPOL",
-				"uri": "https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE"
+				"name": "MIT",
+				"uri": "https://github.com/HavenDV/H.NotifyIcon.WPF/blob/master/LICENSE.md"
 			},
-			"comment": ".NET Core 用に独自修正"
+			"comment": ""
 		},
 		{
 			"name": "CefSharp",

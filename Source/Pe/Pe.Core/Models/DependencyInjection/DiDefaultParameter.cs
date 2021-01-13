@@ -7,7 +7,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// <summary>
     /// パラメータに型判別できない(default(T)とか)を無理やり認識させるしゃあなし対応。
     /// </summary>
-    public struct DiDefaultParameter
+    public readonly struct DiDefaultParameter
     {
         public DiDefaultParameter(Type type)
         {

@@ -1,5 +1,42 @@
 [
 	{
+		"date": "2021/01/13",
+		"version": "0.99.095",
+		"contents": [
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "d0328f9042055339a98a0ed937c1363bf5c4aa6c",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 1.6.5 -> 1.7.0"
+					},
+					{
+						"revision": "cbfb18c3a5c99b065ff40707d61c34db7216eea1",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.113.6 -> 1.0.113.7"
+					},
+					{
+						"revision": "c31e3c83335a17e2e3ef98abb31fe438633b28dc",
+						"class": "nuget",
+						"subject": "Hardcodet.NotifyIcon.Wpf から Hardcodet.NotifyIcon.Wpf.NetCore に変更"
+					},
+					{
+						"revision": "fe3a0a172f0dcbc0e2091e65d4409e19349fbd6f",
+						"subject": "使用コンポーネントの .NET Core 3.1 を .NET 5 に変更"
+					},
+					{
+						"revision": "e81b59ab3153c9d9af77558c8918b254474f830e",
+						"subject": "#719: SonarAnalyzer.CSharp の常用をやめる",
+						"comments": [
+							"常用というか使用をやめた"
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/12/27",
 		"version": "0.99.087",
 		"contents": [

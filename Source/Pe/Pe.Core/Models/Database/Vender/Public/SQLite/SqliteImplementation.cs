@@ -38,13 +38,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
     {
         public override void SetValue(IDbDataParameter parameter, Version value)
         {
+            parameter.DbType = DbType.String;
             parameter.Value = value.ToString(3);
         }
 
         public override Version Parse(object value)
         {
-            var s = (string)value;
-            if(s != null) {
+            if(value is string s) {
                 if(Version.TryParse(s, out var ret)) {
                     return ret;
                 }
