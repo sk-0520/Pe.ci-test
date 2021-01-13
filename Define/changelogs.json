@@ -88,6 +88,10 @@
 					},
 					{
 						"revision": "",
+						"subject": "#719: SonarAnalyzer.CSharp の常用をやめる"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
