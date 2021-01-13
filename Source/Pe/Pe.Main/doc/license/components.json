@@ -1,8 +1,8 @@
 {
 	"library": [
 		{
-			"name": ".NET Core 3.1",
-			"uri": "https://dotnet.microsoft.com/download/dotnet-core/3.1",
+			"name": ".NET 5",
+			"uri": "https://dotnet.microsoft.com/download/dotnet/5.0",
 			"license": {
 				"name": "MIT License",
 				"uri": "https://github.com/dotnet/core/blob/v3.1.0/LICENSE.TXT"
