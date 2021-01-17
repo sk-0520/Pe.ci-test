@@ -64,7 +64,11 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#726: 開発時に使用する Nodejs/NPM をバージョンアップ",
+						"comments": [
+							"Nodejs: 15.6.0",
+							"npm: 7.4.0"
+						]
 					},
 					{
 						"revision": "",
