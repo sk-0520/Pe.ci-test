@@ -354,6 +354,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             ThrowIfDisposed();
 
+            if(!IsCompact && !IsLocked) {
+                ContentElement?.SafeFlush();
+            }
+
             IsCompact = !IsCompact;
             if(IsCompact) {
                 HiddenCompact = false;
@@ -646,6 +650,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         public void ChangeVisibleDelaySave(bool isVisible)
         {
             ThrowIfDisposed();
+
+            if(!IsCompact && !IsLocked) {
+                ContentElement?.SafeFlush();
+            }
 
             IsVisible = isVisible;
             MainDatabaseLazyWriter.Stock(c => {
