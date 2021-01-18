@@ -200,7 +200,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 Pack.Temporary,
             };
 #if DEBUG
-            Debug.Assert(EnumUtility.GetMembers<Pack>().Count() == packs.Length);
+            Debug.Assert(Enum.GetValues<Pack>().Count() == packs.Length);
 #endif
             var transactions = new Dictionary<Pack, IDatabaseTransaction>();
             try {

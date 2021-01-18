@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             var iconMaker = new LauncherGroupIconMaker();
 
-            var groupImageItems = EnumUtility.GetMembers<LauncherGroupImageName>()
+            var groupImageItems = Enum.GetValues<LauncherGroupImageName>()
                 .OrderBy(i => (int)i)
                 .Select(i => new ThemeIconViewModel<LauncherGroupImageName>(i, c => iconMaker.GetGroupImage(i, c, IconBox.Small, IconSize.DefaultScale, false), LoggerFactory))
             ;

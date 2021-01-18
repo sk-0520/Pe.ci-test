@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             for(var i = 0; i < 7; i++) {
                 var item = cisf.Parse("* * * * " + i.ToString());
 
-                foreach(var weekDay in EnumUtility.GetMembers<DayOfWeek>()) {
+                foreach(var weekDay in Enum.GetValues<DayOfWeek>()) {
                     var day = (int)weekDay;
                     var expected = item.IsEnabled(new DateTime(2020, 6, 21 + day, 1, 0, 0));
                     Assert.AreEqual(expected, i == day);

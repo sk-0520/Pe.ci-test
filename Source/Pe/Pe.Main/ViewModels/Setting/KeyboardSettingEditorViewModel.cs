@@ -50,14 +50,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             PressedJobEditors = PressedJobEditorCollection.GetDefaultView();
 
 
-            var replaceKeyItems = EnumUtility.GetMembers<Key>()
+            var replaceKeyItems = Enum.GetValues<Key>()
                 .Select(i => (int)i)
                 .Distinct()
                 .Select(i => (Key)i)
             ;
             ReplaceKeyItems = new ObservableCollection<Key>(replaceKeyItems);
 
-            var disableKeyItems = EnumUtility.GetMembers<Key>()
+            var disableKeyItems = Enum.GetValues<Key>()
                 .Select(i => (int)i)
                 .Distinct()
                 .Select(i => (Key)i)
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 Key.LWin,
                 Key.RWin,
             };
-            var pressedKeyItems = EnumUtility.GetMembers<Key>()
+            var pressedKeyItems = Enum.GetValues<Key>()
                 .Select(i => (int)i)
                 .Distinct()
                 .Select(i => (Key)i)

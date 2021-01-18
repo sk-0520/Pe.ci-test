@@ -261,7 +261,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
             typeof(IEnumerable),
             typeof(KeyInputControl),
             new PropertyMetadata(
-                EnumUtility.GetMembers<Key>()
+                Enum.GetValues<Key>()
                     .Select(i => (int)i)
                     .Distinct()
                     .Select(i => (Key)i)
@@ -345,7 +345,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
             if(InputUserModifierKeys == ModifierKeys.None) {
                 this.inputKey.Text = keyText;
             } else {
-                var mods = EnumUtility.GetMembers<ModifierKeys>()
+                var mods = Enum.GetValues<ModifierKeys>()
                     .Where(i => i != ModifierKeys.None)
                     .Where(i => InputUserModifierKeys.HasFlag(i))
                     .Select(i => CultureService.Instance.GetString(i, Models.ResourceNameKind.Normal))

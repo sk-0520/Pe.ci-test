@@ -148,7 +148,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             Hours.Add(EnforceHour(hour, nameof(hour)));
             Days.Add(EnforceDay(day, nameof(day)));
             Months.Add(EnforceMonth(month, nameof(month)));
-            DayOfWeeks.AddRange(EnumUtility.GetMembers<DayOfWeek>());
+            DayOfWeeks.AddRange(Enum.GetValues<DayOfWeek>());
         }
 
         internal CronItemSetting(int minutes, int hour, int day, int month, DayOfWeek dayOfWeek)
@@ -251,7 +251,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         IEnumerable<DayOfWeek> ConvertWeek(string value)
         {
             if(value == "*") {
-                return EnumUtility.GetMembers<DayOfWeek>();
+                return Enum.GetValues<DayOfWeek>();
             } else {
                 var numericRange = new NumericRange(false, ",", "-");
                 return numericRange.Parse(value)

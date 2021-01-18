@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             }
 
             var language = CultureService.GetXmlLanguage();
-            var views = EnumUtility.GetMembers<WindowKind>()
+            var views = Enum.GetValues<WindowKind>()
                 .Select(i => WindowManager.GetWindowItems(i))
                 .SelectMany(i => i)
                 .Select(i => i.Window)

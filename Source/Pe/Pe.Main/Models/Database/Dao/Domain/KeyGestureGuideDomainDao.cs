@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var statement = LoadStatement();
             var parameter = new {
                 KeyActionKind = keyActionKindTransfer.ToString(KeyActionKind.LauncherItem),
-                KeyActionContents = EnumUtility.GetMembers<KeyActionContentLauncherItem>().Select(i => i.ToString()).ToArray(),
+                KeyActionContents = Enum.GetValues<KeyActionContentLauncherItem>().Select(i => i.ToString()).ToArray(),
                 LauncherItemId = launcherItemId.ToString("D"),
             };
 

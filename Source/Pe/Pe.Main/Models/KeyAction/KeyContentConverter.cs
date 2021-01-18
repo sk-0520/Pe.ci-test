@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public sealed class ReplaceContentConverter : KeyContentConverterBase
+    public sealed class ReplaceContentConverter: KeyContentConverterBase
     {
         #region function
 
@@ -31,13 +31,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public sealed class LauncherItemContentConverter : KeyContentConverterBase
+    public sealed class LauncherItemContentConverter: KeyContentConverterBase
     {
         #region function
 
         public KeyActionContentLauncherItem ToKeyActionContentLauncherItem(string content)
         {
-            return EnumUtility.Parse<KeyActionContentLauncherItem>(content);
+            return Enum.Parse<KeyActionContentLauncherItem>(content, true);
         }
 
         public string ToContent(KeyActionContentLauncherItem keyActionContentLauncherItem)
@@ -48,13 +48,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public sealed class LauncherToolbarContentConverter : KeyContentConverterBase
+    public sealed class LauncherToolbarContentConverter: KeyContentConverterBase
     {
         #region function
 
         public KeyActionContentLauncherToolbar ToKeyActionContentLauncherToolbar(string content)
         {
-            return EnumUtility.Parse<KeyActionContentLauncherToolbar>(content);
+            return Enum.Parse<KeyActionContentLauncherToolbar>(content, true);
         }
 
         public string ToContent(KeyActionContentLauncherToolbar keyActionContentLauncherToolbar)
@@ -65,13 +65,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public sealed class NoteContentConverter : KeyContentConverterBase
+    public sealed class NoteContentConverter: KeyContentConverterBase
     {
         #region function
 
         public KeyActionContentNote ToKeyActionContentNote(string content)
         {
-            return EnumUtility.Parse<KeyActionContentNote>(content);
+            return Enum.Parse<KeyActionContentNote>(content, true);
         }
 
         public string ToContent(KeyActionContentNote keyActionContentNote)

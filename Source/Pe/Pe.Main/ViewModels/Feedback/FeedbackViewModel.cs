@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
 
         public TextDocument ContentDocument { get; } = new TextDocument();
 
-        public IReadOnlyList<FeedbackKind> FeedbackKindItems { get; } = EnumUtility.GetMembers<FeedbackKind>().ToList();
+        public IReadOnlyList<FeedbackKind> FeedbackKindItems { get; } = Enum.GetValues<FeedbackKind>().ToList();
 
         [Required]
         public string Subject

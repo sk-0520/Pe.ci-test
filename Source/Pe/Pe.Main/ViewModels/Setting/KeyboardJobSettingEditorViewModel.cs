@@ -400,7 +400,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public KeyboardNoteJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            var items = EnumUtility.GetMembers<KeyActionContentNote>();
+            var items = Enum.GetValues<KeyActionContentNote>();
             ContentItems = new List<KeyActionContentNote>(items);
         }
 
