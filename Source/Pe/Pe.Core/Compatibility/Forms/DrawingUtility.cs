@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Pe.Core.Models;
 using Drawing = System.Drawing;
 
 namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
@@ -74,6 +75,14 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
                 return ImageSourceFromBinaryStreamIcon(ms, iconSize);
             }
         }
+
+        public static BitmapSource ImageSourceFromBinaryIcon(ArrayPoolObject<byte> binayIcon, Size iconSize)
+        {
+            using(var ms = new MemoryStream(binayIcon.Items, 0, binayIcon.Length)) {
+                return ImageSourceFromBinaryStreamIcon(ms, iconSize);
+            }
+        }
+
 
         public static BitmapSource ImageSourceFromBinaryStreamIcon(Stream streamIcon, Size iconSize)
         {

@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="resType"></param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
-        byte[]? GetResourceBinaryData(IntPtr hModule, IntPtr name, ResType resType)
+        ArrayPoolObject<byte>? GetResourceBinaryData(IntPtr hModule, IntPtr name, ResType resType)
         {
             var hGroup = NativeMethods.FindResource(hModule, name, new IntPtr((int)resType));
             if(hGroup == IntPtr.Zero) {
@@ -111,8 +111,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return null;
             }
 
-            var resBinary = new byte[resSize];
-            Marshal.Copy(resData, resBinary, 0, resBinary.Length);
+            var resBinary = new ArrayPoolObject<byte>((int)resSize);
+            Marshal.Copy(resData, resBinary.Items, 0, resBinary.Length);
 
             return resBinary;
         }
@@ -122,22 +122,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="resourcePath"></param>
         /// <returns></returns>
-        IList<byte[]> LoadIconResource(string resourcePath)
+        IList<ArrayPoolObject<byte>> LoadIconResource(string resourcePath)
         {
             var hModule = NativeMethods.LoadLibraryEx(resourcePath, IntPtr.Zero, LOAD_LIBRARY.LOAD_LIBRARY_AS_DATAFILE);
             if(hModule == IntPtr.Zero) {
                 Logger.LogError("{0}: {1}, {2}", nameof(NativeMethods.LoadLibraryEx), NativeMethods.GetLastError(), resourcePath);
-                return new List<byte[]>();
+                return new List<ArrayPoolObject<byte>>();
             }
 
-            var binaryList = new List<byte[]>();
+            var binaryList = new List<ArrayPoolObject<byte>>();
             EnumResNameProc proc = (hMod, type, name, lp) => {
                 var binaryGroupIconData = GetResourceBinaryData(hMod, name, ResType.GROUP_ICON);
                 if(binaryGroupIconData == null) {
                     return true;
                 }
 
-                var iconCount = BitConverter.ToUInt16(binaryGroupIconData, sizeofGRPICONDIR_idCount);
+                var iconCount = BitConverter.ToUInt16(binaryGroupIconData.Items, sizeofGRPICONDIR_idCount);
 
                 var totalSize = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
                 for(var i = 0; i < iconCount; i++) {
@@ -150,15 +150,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     }
 
                     var length = BitConverter.ToInt32(
-                        binaryGroupIconData,
+                        binaryGroupIconData.Items,
                         readOffset
                     );
                     totalSize += length;
                 }
-
-                using(var stream = new MemoryStream(totalSize))
+                var pool = new ArrayPoolObject<byte>(totalSize);
+                using(var stream = new MemoryStream(pool.Items))
                 using(var writer = new BinaryWriter(stream)) {
-                    writer.Write(binaryGroupIconData, 0, sizeofICONDIR);
+                    writer.Write(binaryGroupIconData.Items, 0, sizeofICONDIR);
 
                     var picOffset = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
                     foreach(var i in Enumerable.Range(0, iconCount)) {
@@ -167,20 +167,20 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         if(binaryGroupIconData.Length <= offsetWrite + offsetGRPICONDIRENTRY_nID) {
                             continue;
                         }
-                        writer.Write(binaryGroupIconData, offsetWrite, offsetGRPICONDIRENTRY_nID);
+                        writer.Write(binaryGroupIconData.Items, offsetWrite, offsetGRPICONDIRENTRY_nID);
                         writer.Write(picOffset);
 
                         writer.Seek(picOffset, SeekOrigin.Begin);
 
-                        ushort id = BitConverter.ToUInt16(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i + offsetGRPICONDIRENTRY_nID);
-                        var pic = GetResourceBinaryData(hMod, new IntPtr(id), ResType.ICON);
+                        ushort id = BitConverter.ToUInt16(binaryGroupIconData.Items, sizeofICONDIR + sizeofGRPICONDIRENTRY * i + offsetGRPICONDIRENTRY_nID);
+                        using var pic = GetResourceBinaryData(hMod, new IntPtr(id), ResType.ICON);
                         if(pic != null) {
-                            writer.Write(pic, 0, pic.Length);
+                            writer.Write(pic.Items, 0, pic.Length);
                             picOffset += pic.Length;
                         }
                     }
 
-                    binaryList.Add(stream.ToArray());
+                    binaryList.Add(pool);
                 }
 
                 return true;
@@ -273,11 +273,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(hasIcon) {
                 try {
                     var iconList = LoadIconResource(iconPath);
-                    if(iconIndex < iconList.Count) {
-                        var binary = iconList[iconIndex];
+                    try {
+                        if(iconIndex < iconList.Count) {
+                            var binary = iconList[iconIndex];
+                            var image = DrawingUtility.ImageSourceFromBinaryIcon(binary, iconSize.ToSize());
+                            return image;
+                        }
+                    } finally {
+                        foreach(var icon in iconList) {
+                            icon.Dispose();
+                        }
                         iconList.Clear();
-                        var image = DrawingUtility.ImageSourceFromBinaryIcon(binary, iconSize.ToSize());
-                        return image;
                     }
                 } catch(Exception ex) {
                     Logger.LogDebug(ex, ex.Message);
