@@ -51,6 +51,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
             {
                 throw new NotImplementedException();
             }
+
+            public T QuerySingleOrDefault<T>(string statement, object? parameter = null)
+            {
+                throw new NotImplementedException();
+            }
+
         }
 
         class Dsl : IDatabaseStatementLoader

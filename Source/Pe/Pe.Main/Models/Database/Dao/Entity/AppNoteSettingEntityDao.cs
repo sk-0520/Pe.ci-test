@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public bool UpdateSettingNoteSetting(SettingAppNoteSettingData data, IDatabaseCommonStatus commonStatus)
+        public void UpdateSettingNoteSetting(SettingAppNoteSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var noteCreateTitleKindTransfer = new EnumTransfer<NoteCreateTitleKind>();
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 CaptionPosition = noteCaptionPositionTransfer.ToString(data.CaptionPosition),
             };
             commonStatus.WriteCommon(dto);
-            return Context.Execute(statement, dto) == 1;
+            Context.UpdateByKey(statement, dto);
         }
 
         #endregion

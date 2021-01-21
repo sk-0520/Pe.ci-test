@@ -58,28 +58,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         }
 
 
-        public bool UpdateSettingUpdateSetting(SettingAppUpdateSettingData data, IDatabaseCommonStatus commonStatus)
+        public void UpdateSettingUpdateSetting(SettingAppUpdateSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var updateKindTransfer = new EnumTransfer<UpdateKind>();
 
             var statement = LoadStatement();
-            var dto = new AppUpdateSettingEntityDto() {
+            var parameter = new AppUpdateSettingEntityDto() {
                 UpdateKind = updateKindTransfer.ToString(data.UpdateKind),
             };
-            commonStatus.WriteCommon(dto);
-            return Context.Execute(statement, dto) == 1;
+            commonStatus.WriteCommon(parameter);
+            Context.UpdateByKey(statement, parameter);
         }
 
-        public bool UpdateReleaseVersion(UpdateKind updateKind, IDatabaseCommonStatus commonStatus)
+        public void UpdateReleaseVersion(UpdateKind updateKind, IDatabaseCommonStatus commonStatus)
         {
             var updateKindTransfer = new EnumTransfer<UpdateKind>();
 
             var statement = LoadStatement();
-            var dto = new AppUpdateSettingEntityDto() {
+            var parameter = new AppUpdateSettingEntityDto() {
                 UpdateKind = updateKindTransfer.ToString(updateKind),
             };
-            commonStatus.WriteCommon(dto);
-            return Context.Execute(statement, dto) == 1;
+            commonStatus.WriteCommon(parameter);
+            Context.UpdateByKey(statement, parameter);
         }
 
 

@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
-        public bool UpdateSettingLauncherToolbarSetting(AppLauncherToolbarSettingData data, IDatabaseCommonStatus commonStatus)
+        public void UpdateSettingLauncherToolbarSetting(AppLauncherToolbarSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var launcherToolbarContentDropModeTransfer = new EnumTransfer<LauncherToolbarContentDropMode>();
             var launcherGroupPositionTransfer = new EnumTransfer<LauncherGroupPosition>();
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 GroupMenuPosition = launcherGroupPositionTransfer.ToString(data.GroupMenuPosition),
             };
             commonStatus.WriteCommon(dto);
-            return Context.Execute(statement, dto) == 1;
+            Context.UpdateByKey(statement, dto);
         }
 
 

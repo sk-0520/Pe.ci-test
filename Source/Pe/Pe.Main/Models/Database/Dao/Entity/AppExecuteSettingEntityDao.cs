@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
         }
 
-        public bool UpdateSettingExecuteSetting(SettingAppExecuteSettingData data, IDatabaseCommonStatus commonStatus)
+        public void UpdateSettingExecuteSetting(SettingAppExecuteSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = new AppExecuteSettingEntityDto() {
@@ -98,17 +98,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 UserId = data.UserId,
             };
             commonStatus.WriteCommon(dto);
-            return Context.Execute(statement, dto) == 1;
+            Context.UpdateByKey(statement, dto);
         }
 
-        public bool UpdateExecuteSettingAcceptInput(string userId, bool isEnabledTelemetry, IDatabaseCommonStatus commonStatus)
+        public void UpdateExecuteSettingAcceptInput(string userId, bool isEnabledTelemetry, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.UserId] = userId;
             parameter[Column.IsEnabledTelemetry] = isEnabledTelemetry;
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.UpdateByKey(statement, parameter);
         }
 
         #endregion

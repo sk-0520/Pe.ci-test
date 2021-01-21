@@ -72,13 +72,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public bool UpdateSettingStandardInputOutputSetting(SettingAppStandardInputOutputSettingData data, IDatabaseCommonStatus commonStatus)
+        public void UpdateSettingStandardInputOutputSetting(SettingAppStandardInputOutputSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var noteCreateTitleKindTransfer = new EnumTransfer<NoteCreateTitleKind>();
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
             var statement = LoadStatement();
-            var dto = new AppStandardInputOutputSettingEntityDto() {
+            var parameter = new AppStandardInputOutputSettingEntityDto() {
                 FontId = data.FontId,
                 OutputForegroundColor = FromColor(data.OutputForegroundColor),
                 OutputBackgroundColor = FromColor(data.OutputBackgroundColor),
@@ -86,8 +86,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 ErrorBackgroundColor = FromColor(data.ErrorBackgroundColor),
                 IsTopmost = data.IsTopmost,
             };
-            commonStatus.WriteCommon(dto);
-            return Context.Execute(statement, dto) == 1;
+            commonStatus.WriteCommon(parameter);
+            Context.UpdateByKey(statement, parameter);
         }
 
 
