@@ -32,13 +32,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         public int BufferSize { get; set; } = 4 * 1024;
 
-        public Func<Stream>? InnserStreamCreator { get; set; }
+        public Func<Stream>? InnerStreamFactory { get; set; }
 
         #endregion
 
         #region function
 
-        protected Stream CreateInnerStream() => InnserStreamCreator?.Invoke() ?? new MemoryStream(BufferSize);
+        protected Stream CreateInnerStream() => InnerStreamFactory?.Invoke() ?? new MemoryStream(BufferSize);
 
         protected TextReader GetReader(Stream stream) => new StreamReader(stream, Encoding, true, BufferSize, true);
         protected TextWriter GetWriter(Stream stream) => new StreamWriter(stream, Encoding, BufferSize, true);

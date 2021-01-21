@@ -63,6 +63,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <exception cref="InvalidOperationException">空っぽか複数あり。</exception>
         /// <returns></returns>
         T QuerySingle<T>(string statement, object? parameter = null);
+        /// <summary>
+        /// 単一データ取得。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="statement"></param>
+        /// <param name="parameter"></param>
+        /// <exception cref="InvalidOperationException">複数あり。</exception>
+        /// <returns></returns>
+        [return: MaybeNull]
+        T QuerySingleOrDefault<T>(string statement, object? parameter = null);
 
         /// <summary>
         /// <see cref="DataTable"/> でデータ取得。
@@ -139,6 +149,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         T QueryFirstOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
         /// <inheritdoc cref="IDatabaseReader.QuerySingle{T}(string, object?)"/>
         T QuerySingle<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
+        /// <inheritdoc cref="IDatabaseReader.QuerySingleOrDefault{T}(string, object?)"/>
+        [return: MaybeNull]
+        T QuerySingleOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
         /// <inheritdoc cref="IDatabaseReader.GetDataTable(string, object?)"/>
         DataTable GetDataTable(string statement, object? parameter, IDatabaseTransaction? transaction);
 
@@ -397,6 +410,23 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             ThrowIfDisposed();
 
             return QuerySingle<T>(statement, parameter, null);
+        }
+
+        [return: MaybeNull]
+        public virtual T QuerySingleOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+            return BaseConnection.QuerySingleOrDefault<T>(formattedStatement, parameter, transaction?.Transaction);
+        }
+        [return: MaybeNull]
+        public virtual T QuerySingleOrDefault<T>(string statement, object? parameter)
+        {
+            ThrowIfDisposed();
+
+            return QuerySingleOrDefault<T>(statement, parameter, null);
         }
 
         public virtual int Execute(string statement, object? parameter, IDatabaseTransaction? transaction)

@@ -289,7 +289,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <see cref="ArrayPool{T}"/> のラッパー。
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ArrayPoolObject<T>: DisposerBase
+    public sealed class ArrayPoolObject<T>: DisposerBase
     {
         public ArrayPoolObject(int length)
             : this(length, ArrayPool<T>.Shared)

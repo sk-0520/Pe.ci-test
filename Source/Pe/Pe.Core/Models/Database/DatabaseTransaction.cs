@@ -110,6 +110,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return DatabaseAccessor.QuerySingle<T>(statement, parameter, this);
         }
 
+        [return: MaybeNull]
+        public T QuerySingleOrDefault<T>(string statement, object? parameter = null)
+        {
+            return DatabaseAccessor.QuerySingleOrDefault<T>(statement, parameter, this);
+        }
+
         public int Execute(string statement, object? parameter = null)
         {
             return DatabaseAccessor.Execute(statement, parameter, this);
