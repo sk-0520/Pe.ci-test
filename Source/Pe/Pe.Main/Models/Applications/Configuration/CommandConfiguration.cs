@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             {
             }
 
-            #region proeprty
+            #region property
 
             [Configuration]
             public string Prefix { get; } = default!;

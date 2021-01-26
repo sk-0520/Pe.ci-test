@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             ClosedWindow = closedWindow ?? DefaultClosedWindow;
         }
 
-        #region proeprty
+        #region property
 
         public WindowItem WindowItem { get; }
         public Func<bool> UserClosing { get; }

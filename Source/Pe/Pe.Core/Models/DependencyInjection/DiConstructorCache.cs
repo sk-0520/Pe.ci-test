@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             ParameterInjections = map;
         }
 
-        #region proeprty
+        #region property
 
         public ConstructorInfo ConstructorInfo { get; }
         public IReadOnlyList<ParameterInfo> ParameterInfos { get; }

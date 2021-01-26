@@ -308,7 +308,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public static class SerializeUtility
     {
-        #region proeprty
+        #region property
 
         public static Func<SerializerBase> SerializerCreator { get; set; } = () => new BinaryDataContractSerializer();
 

@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// </summary>
     public interface ILauncherItemExtensionCreateParameter: IAddonParameter, ILauncherItemId
     {
-        #region proeprty
+        #region property
 
         ILauncherItemAddonContextWorker ContextWorker { get; }
 

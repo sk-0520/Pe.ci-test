@@ -554,7 +554,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             : base(connectionFactory, loggerFactory)
         { }
 
-        #region proeprty
+        #region property
 
 
         /// <summary>

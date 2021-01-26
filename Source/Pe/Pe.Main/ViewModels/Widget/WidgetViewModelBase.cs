@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             WindowManager = windowManager;
         }
 
-        #region proeprty
+        #region property
 
         protected IWindowManager WindowManager { get; }
 

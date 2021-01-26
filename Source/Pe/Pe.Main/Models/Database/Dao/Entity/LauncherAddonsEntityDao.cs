@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             : base(context, statementLoader, implementation, loggerFactory)
         { }
 
-        #region proeprty
+        #region property
 
         public static class Column
         {

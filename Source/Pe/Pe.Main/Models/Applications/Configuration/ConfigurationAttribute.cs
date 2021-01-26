@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             NestConvertMethodName = nestConvertMethodName;
         }
 
-        #region proeprty
+        #region property
 
         /// <summary>
         /// アプリケーション構成ファイルでのメンバ名。

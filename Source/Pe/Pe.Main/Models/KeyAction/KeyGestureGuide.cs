@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 {
     public interface IKeyGestureGuide
     {
-        #region proeprty
+        #region property
 
         #endregion
 
@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             DatabaseStatementLoader = databaseStatementLoader;
         }
 
-        #region proeprty
+        #region property
 
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }

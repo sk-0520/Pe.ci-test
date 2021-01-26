@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             }
         }
 
-        #region proeprty
+        #region property
 
         public IPluginIdentifiers PluginIdentifiers { get; }
         WebViewWidgetWindow WidgetWindow { get; }

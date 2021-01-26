@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        #region proeprty
+        #region property
 
         Stream BaseStream { get; set; }
 
