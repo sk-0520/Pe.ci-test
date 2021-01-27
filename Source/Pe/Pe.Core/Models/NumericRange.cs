@@ -117,13 +117,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             ex = null;
             if(string.IsNullOrWhiteSpace(s)) {
-                result = new int[0];
+                result = Array.Empty<int>();
                 return true;
             }
 
             var values = s.Split(ValueSeparator);
             if(values.Length == 0) {
-                result = new int[0];
+                result = Array.Empty<int>();
                 return true;
             }
 
@@ -157,8 +157,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         workValues.Add(head);
                     }
                 } else {
-                    ex = new Exception("unmatch");
-                    result = new int[0];
+                    ex = new Exception("unmatched");
+                    result = Array.Empty<int>();
                     return false;
                 }
             }
