@@ -42,11 +42,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="statement"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public static IEnumerable<T> SelectOrdered<T>(this IDatabaseReader reader, string statement, object? parameter = null)
+        public static IEnumerable<T> SelectOrdered<T>(this IDatabaseReader reader, string statement, object? parameter = null, bool buffered = true)
         {
             EnforceOrderBy(statement);
 
-            return reader.Query<T>(statement, parameter);
+            return reader.Query<T>(statement, parameter, buffered);
         }
 
         /// <summary>
@@ -56,11 +56,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="statement"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public static IEnumerable<dynamic> SelectOrdered(this IDatabaseReader reader, string statement, object? parameter = null)
+        public static IEnumerable<dynamic> SelectOrdered(this IDatabaseReader reader, string statement, object? parameter = null, bool buffered = true)
         {
             EnforceOrderBy(statement);
 
-            return reader.Query<dynamic>(statement, parameter);
+            return reader.Query<dynamic>(statement, parameter, buffered);
         }
 
         [Conditional("DEBUG")]
