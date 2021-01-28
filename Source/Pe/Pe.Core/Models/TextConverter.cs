@@ -603,6 +603,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 } else {
                     resultBuffer.Append(KatakanaHalfToFullMap[currentText[0]]);
                 }
+            } else if(currentText.Length == 2) {
+                foreach(var pair in DakutenKatakanaFullToHalfMap) {
+                    if(pair.Value == currentText) {
+                        resultBuffer.Append(pair.Key);
+                        break;
+                    }
+                }
             }
 
             return skip;
