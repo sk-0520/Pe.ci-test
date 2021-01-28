@@ -68,6 +68,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         string ToStatementColumnName(string columnName);
         string ToStatementParameterName(string parameterName, int index);
 
+        /// <summary>
+        /// 実行文に対するエスケープ処理。
+        /// <para>基本的にはバインド処理で対応すること。本処理はしゃあなし動的SQL作成時に無理やり使用する前提。</para>
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        string Escape(string input);
+
         #endregion
     }
 
@@ -99,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
-    public class DatabaseImplementation : IDatabaseImplementation
+    public class DatabaseImplementation: IDatabaseImplementation
     {
         #region function
 
@@ -158,6 +166,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         public virtual string ToStatementColumnName(string columnName) => columnName;
         /// <inheritdoc cref="IDatabaseImplementation.ToStatementParameterName(string, int)"/>
         public virtual string ToStatementParameterName(string parameterName, int index) => "@" + parameterName;
+
+        /// <inheritdoc cref="IDatabaseImplementation.Escape(string)"/>
+        public virtual string Escape(string input) => input
+            .Replace("\\", @"\\")
+            .Replace("\'", @"''")
+            .Replace("\r", @"\r")
+            .Replace("\n", @"\n")
+        ;
 
         #endregion
     }
