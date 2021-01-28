@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         [Conditional("DEBUG")]
         static void EnforceSingleCount(string statement)
         {
-            if(!Regex.IsMatch(statement, @"\bselect\s+count\s*\(\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
+            if(!Regex.IsMatch(statement, @"\bselect\s+count\s*\(", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
                 throw new DatabaseContextException("select count()");
             }
         }
