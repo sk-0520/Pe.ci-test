@@ -106,11 +106,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("バビブベボ", "ﾊﾞﾋﾞﾌﾞﾍﾞﾎﾞ")]
         [DataRow("パピプペポ", "ﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟ")]
         [DataRow("ヴ", "ｳﾞ")]
-#if !IGNORE_NET5
         [DataRow("ﾞ", "ﾞ")]
         [DataRow("ﾟ", "ﾟ")]
         [DataRow("ア゙", "ｱﾞ")]
         [DataRow("ア゚", "ｱﾟ")]
+#if !IGNORE_NET5
         [DataRow("ア゙ﾞ", "ｱﾞﾞ")]
         [DataRow("ア゚ﾟ", "ｱﾟﾟ")]
 #endif
