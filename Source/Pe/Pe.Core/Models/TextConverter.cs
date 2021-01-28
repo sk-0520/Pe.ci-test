@@ -604,21 +604,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     resultBuffer.Append(KatakanaHalfToFullMap[currentText[0]]);
                 }
             } else if(currentText.Length == 2) {
-                if(IsHalfwidthKatakana(currentText[0])) {
-                    resultBuffer.Append(KatakanaHalfToFullMap[currentText[0]]);
-                    if(currentText[1] == 'ﾞ') {
-                        resultBuffer.Append('\u3099'); // 結合文字
-                    } else if(currentText[1] == 'ﾟ') {
-                        resultBuffer.Append('\u309A'); // 結合文字
-                    }
-                } else {
-                    foreach(var pair in DakutenKatakanaFullToHalfMap) {
-                        if(pair.Value == currentText) {
-                            resultBuffer.Append(pair.Key);
-                            break;
-                        }
+                foreach(var pair in DakutenKatakanaFullToHalfMap) {
+                    if(pair.Value == currentText) {
+                        resultBuffer.Append(pair.Key);
+                        break;
                     }
                 }
+
+                //if(IsHalfwidthKatakana(currentText[0])) {
+                //    resultBuffer.Append(KatakanaHalfToFullMap[currentText[0]]);
+                //    if(currentText[1] == 'ﾞ') {
+                //        resultBuffer.Append('\u3099'); // 結合文字
+                //    } else if(currentText[1] == 'ﾟ') {
+                //        resultBuffer.Append('\u309A'); // 結合文字
+                //    }
+                //}
             }
 
             return skip;
