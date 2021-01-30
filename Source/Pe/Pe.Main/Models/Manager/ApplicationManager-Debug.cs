@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -43,7 +45,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogDebug("デバッグ用前処理");
 
             //DebugColorPicker();
-            //Exit();
+            DebugIssue714();
+            Exit(true);
         }
 
         void DebugExecuteAfter()
@@ -205,7 +208,7 @@ echo end
                 di.RegisterMvvm<DebugColorPickerElement, DebugColorPickerViewModel, DebugColorPickerWindow>();
                 var model = di.Build<DebugColorPickerElement>();
                 var view = di.Build<DebugColorPickerWindow>();
-                var windowItem = new WindowItem(WindowKind.Debug, model,view);
+                var windowItem = new WindowItem(WindowKind.Debug, model, view);
                 WindowManager.Register(windowItem);
                 view.ShowDialog();
             }
@@ -233,6 +236,18 @@ echo end
             var uninstallTarget = UninstallTarget.Application | UninstallTarget.Batch;
             uninstallTarget |= UninstallTarget.User | UninstallTarget.Machine | UninstallTarget.Temporary;
             about.CreateUninstallBatch(path, uninstallTarget);
+        }
+
+        void DebugIssue714()
+        {
+            var panel = new StackPanel();
+            var window = new Window() {
+                Content = panel,
+                Width = 400,
+                Height = 200,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+            };
+            window.ShowDialog();
         }
 
         #endregion
