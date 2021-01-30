@@ -2,6 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
@@ -238,9 +241,92 @@ echo end
             about.CreateUninstallBatch(path, uninstallTarget);
         }
 
+        class ttt: Control
+        {
+            protected override void OnRender(DrawingContext drawingContext)
+            {
+                base.OnRender(drawingContext);
+
+                var ft = new FormattedText(
+                    Text,
+                    CultureInfo.CurrentUICulture,
+                    FlowDirection,
+                    new Typeface(this.FontFamily, FontStyle, FontWeight, FontStretch),
+                    FontSize,
+                    Foreground,
+                    VisualTreeHelper.GetDpi(this).PixelsPerDip
+                );
+
+                Height = ft.Height;
+
+                var parent = VisualTreeHelper.GetParent(this) as UIElement;
+
+                if(ActualWidth < ft.Width) {
+                    // 何とかして縮める
+                }
+                Debug.WriteLine($"ActualWidth: {ActualWidth}");
+                Debug.WriteLine($"ActualHeight: {ActualHeight}");
+
+                //var p = TranslatePoint(new Point(0, 0), parent!);
+                //drawingContext.DrawText(ft, p);
+                drawingContext.DrawText(ft, new Point(0, 0));
+            }
+
+
+
+            public string Text
+            {
+                get { return (string)GetValue(TextProperty); }
+                set { SetValue(TextProperty, value); }
+            }
+
+            public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+                nameof(TextProperty),
+                typeof(string),
+                typeof(ttt),
+                new PropertyMetadata(
+                    string.Empty,
+                    TextPropertyChanged
+                )
+            );
+
+            private static void TextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            {
+                if(d is ttt element) {
+                    element.Text = (string)e.NewValue;
+                }
+            }
+        }
+
         void DebugIssue714()
         {
             var panel = new StackPanel();
+            panel.Children.Add(new ttt() {
+                Text = "abc def ghi jkl mno",
+                Background = new SolidColorBrush(Colors.Red),
+            });
+            panel.Children.Add(new ttt() {
+                Text = "あいうえおかきくけこさしすせそ",
+                Background = new SolidColorBrush(Colors.Lime),
+            });
+            panel.Children.Add(new ttt() {
+                Text = @"abc\def\ghi\jkl\mno",
+                Background = new SolidColorBrush(Colors.Yellow),
+            });
+            panel.Children.Add(new ttt() {
+                Text = @"あいう\えおか\きくけ\こさし\すせそ",
+                Background = new SolidColorBrush(Colors.Green),
+            });
+            panel.Children.Add(new ttt() {
+                Text = @"abc/def/ghi/jkl/mno",
+                Background = new SolidColorBrush(Colors.Peru),
+                FontSize = 20,
+            });
+            panel.Children.Add(new ttt() {
+                Text = "あいう/えおか/きくけ/こさし/すせそ",
+                Background = new SolidColorBrush(Colors.Pink),
+                FontSize = 20,
+            });
             var window = new Window() {
                 Content = panel,
                 Width = 400,
