@@ -259,6 +259,7 @@ echo end
                 typeof(ttt),
                 new FrameworkPropertyMetadata(
                     string.Empty,
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                     TextPropertyChanged
                 )
             );
