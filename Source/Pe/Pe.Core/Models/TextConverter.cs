@@ -76,6 +76,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <remarks>http://www.unicode.org/Public/UNIDATA/Blocks.txt</remarks>
     public class TextConverter
     {
+        #region define
+
+        const char KatakanaDakuten = '゙';
+        const char KatakanaHanDakuten = '゚';
+
+        #endregion
         #region variable
 
         IDictionary<char, char>? _halfwidthKatakanaDakutenMap;
@@ -583,7 +589,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                                 resultBuffer.Append(HalfwidthKatakanaHandakutenMap[currentText[0]]);
                             } else {
                                 resultBuffer.Append(KatakanaHalfToFullMap[currentText[0]]);
-                                resultBuffer.Append('\u309A'); // 結合文字
+                                resultBuffer.Append(KatakanaHanDakuten); // 結合文字
                             }
                             break;
 
@@ -592,7 +598,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                                 resultBuffer.Append(HalfwidthKatakanaDakutenMap[currentText[0]]);
                             } else {
                                 resultBuffer.Append(KatakanaHalfToFullMap[currentText[0]]);
-                                resultBuffer.Append('\u3099'); // 結合文字
+                                resultBuffer.Append(KatakanaDakuten); // 結合文字
                             }
                             break;
 
