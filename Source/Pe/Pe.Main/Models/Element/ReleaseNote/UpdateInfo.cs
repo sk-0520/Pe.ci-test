@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         public string CurrentLog
         {
             get => this._currentLog;
-            private set => SetProperty(ref this._currentLog, value);
+            set => SetProperty(ref this._currentLog, value);
         }
 
 

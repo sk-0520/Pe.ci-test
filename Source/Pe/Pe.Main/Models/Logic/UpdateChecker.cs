@@ -67,6 +67,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     .FirstOrDefault()
                 ;
 
+#if DEBUG
+                result = updateData.Items.First();
+#endif
 
                 return result;
             } catch(Exception ex) {

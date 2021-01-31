@@ -26,6 +26,7 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.ViewModels._Debug_;
+using ContentTypeTextNet.Pe.Main.Views;
 using ContentTypeTextNet.Pe.Main.Views._Debug_;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
@@ -49,8 +50,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogDebug("デバッグ用前処理");
 
             //DebugColorPicker();
-            DebugIssue714();
-            Exit(true);
+            //DebugIssue714();
+            //Exit(true);
         }
 
         void DebugExecuteAfter()
@@ -242,167 +243,38 @@ echo end
             about.CreateUninstallBatch(path, uninstallTarget);
         }
 
-        class ttt: Control
-        {
-
-
-            public string? Text
-            {
-                get { return (string)GetValue(TextProperty); }
-                set { SetValue(TextProperty, value); }
-            }
-
-            // Using a DependencyProperty as the backing store for Text.  This enables animation, styling, binding, etc...
-            public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-                nameof(TextProperty),
-                typeof(string),
-                typeof(ttt),
-                new FrameworkPropertyMetadata(
-                    string.Empty,
-                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                    TextPropertyChanged
-                )
-            );
-
-            private static void TextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-            {
-                if(d is ttt control) {
-                    control.Text = (string)e.NewValue;
-                    control.InvalidateVisual();
-                }
-            }
-
-            protected override void OnRender(DrawingContext drawingContext)
-            {
-                var text = Text;
-
-                if(string.IsNullOrEmpty(text)) {
-                    var emptyText = new FormattedText(
-                        "M",
-                        CultureInfo.CurrentUICulture,
-                        FlowDirection,
-                        new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
-                        FontSize,
-                        Foreground,
-                        VisualTreeHelper.GetDpi(this).PixelsPerDip
-                    );
-
-                    Height = emptyText.Height;
-                    drawingContext.DrawRectangle(Background, new Pen(), new Rect(0, 0, ActualWidth, Height));
-                    return;
-                }
-
-                var formattedText = new FormattedText(
-                    text,
-                    CultureInfo.CurrentUICulture,
-                    FlowDirection,
-                    new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
-                    FontSize,
-                    Foreground,
-                    VisualTreeHelper.GetDpi(this).PixelsPerDip
-                );
-                Height = formattedText.Height;
-
-                drawingContext.DrawRectangle(Background, new Pen(), new Rect(0, 0, ActualWidth, Height));
-
-                if(formattedText.Width <= ActualWidth) {
-                    drawingContext.DrawText(formattedText, new Point(0, 0));
-                    return;
-                }
-
-                Debug.WriteLine("何とかして縮める");
-
-                var markChars = new[] { '\\', '/', };
-                var ellipsis = "...";
-
-                string markedText;
-                int fronLength;
-
-                var markIndex = text.LastIndexOfAny(markChars);
-                if(markIndex != -1) {
-                    var markChar = text[markIndex];
-                    var lasIndex = text.LastIndexOf(markChar);
-
-                    if(lasIndex < ellipsis.Length) {
-                        drawingContext.DrawText(formattedText, new Point(0, 0));
-                        return;
-                    }
-
-                    markedText = text.Substring(lasIndex);
-                    fronLength = lasIndex - 1;
-                } else {
-                    var lasIndex = text.Length / 2;
-
-                    if(lasIndex < 2) {
-                        drawingContext.DrawText(formattedText, new Point(0, 0));
-                        return;
-                    }
-
-                    markedText = text.Substring(lasIndex);
-                    fronLength = lasIndex - 1;
-                }
-
-                while(true) {
-                    var front = text.Substring(0, fronLength);
-
-                    var shortText = front + ellipsis + markedText;
-
-                    var shortFormattedText = new FormattedText(
-                       shortText,
-                       CultureInfo.CurrentUICulture,
-                       FlowDirection,
-                       new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
-                       FontSize,
-                       Foreground,
-                       VisualTreeHelper.GetDpi(this).PixelsPerDip
-                   );
-
-                    if(shortFormattedText.Width <= ActualWidth) {
-                        drawingContext.DrawText(shortFormattedText, new Point(0, 0));
-                        return;
-                    }
-
-                    fronLength -= 1;
-
-                    if(fronLength == 0) {
-                            drawingContext.DrawText(shortFormattedText, new Point(0, 0));
-                        return;
-                    }
-                }
-            }
-        }
 
         void DebugIssue714()
         {
             var panel = new StackPanel();
-            panel.Children.Add(new ttt() {
+            panel.Children.Add(new EllipsisTextBlock() {
                 Text = "abc def ghi jkl mno",
                 Background = new SolidColorBrush(Colors.Red),
             });
-            panel.Children.Add(new ttt() {
+            panel.Children.Add(new EllipsisTextBlock() {
                 Text = "あいうえおかきくけこさしすせそ",
                 Background = new SolidColorBrush(Colors.Lime),
             });
-            panel.Children.Add(new ttt() {
+            panel.Children.Add(new EllipsisTextBlock() {
                 Text = @"abc\def\ghi\jkl\mno",
                 Background = new SolidColorBrush(Colors.Yellow),
             });
-            panel.Children.Add(new ttt() {
+            panel.Children.Add(new EllipsisTextBlock() {
                 Text = @"あいう\えおか\きくけ\こさし\すせそ",
                 Background = new SolidColorBrush(Colors.Green),
             });
-            panel.Children.Add(new ttt() {
+            panel.Children.Add(new EllipsisTextBlock() {
                 Text = @"abc/def/ghi/jkl/mno",
                 Background = new SolidColorBrush(Colors.Peru),
                 FontSize = 20,
             });
-            panel.Children.Add(new ttt() {
+            panel.Children.Add(new EllipsisTextBlock() {
                 Text = "あいう/えおか/きくけ/こさし/すせそ",
                 Background = new SolidColorBrush(Colors.Pink),
                 FontSize = 20,
             });
 
-            var output = new ttt() {
+            var output = new EllipsisTextBlock() {
                 Foreground = new SolidColorBrush(Colors.White),
                 Background = new SolidColorBrush(Colors.Black),
                 FontSize = 20,
@@ -410,10 +282,11 @@ echo end
             var input = new TextBox() {
                 Name = "input",
             };
-            output.SetBinding(ttt.TextProperty, new Binding("Text") {
+            output.SetBinding(EllipsisTextBlock.TextProperty, new Binding("Text") {
                 //ElementName = "input",
                 Source = input,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                //Mode = BindingMode.OneWay,
             });
             panel.Children.Add(output);
             panel.Children.Add(input);
