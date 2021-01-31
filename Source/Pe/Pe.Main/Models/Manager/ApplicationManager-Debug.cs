@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
@@ -243,48 +244,20 @@ echo end
 
         class ttt: Control
         {
-            protected override void OnRender(DrawingContext drawingContext)
-            {
-                base.OnRender(drawingContext);
-
-                var ft = new FormattedText(
-                    Text,
-                    CultureInfo.CurrentUICulture,
-                    FlowDirection,
-                    new Typeface(this.FontFamily, FontStyle, FontWeight, FontStretch),
-                    FontSize,
-                    Foreground,
-                    VisualTreeHelper.GetDpi(this).PixelsPerDip
-                );
-
-                Height = ft.Height;
-
-                var parent = VisualTreeHelper.GetParent(this) as UIElement;
-
-                if(ActualWidth < ft.Width) {
-                    // 何とかして縮める
-                }
-                Debug.WriteLine($"ActualWidth: {ActualWidth}");
-                Debug.WriteLine($"ActualHeight: {ActualHeight}");
-
-                //var p = TranslatePoint(new Point(0, 0), parent!);
-                //drawingContext.DrawText(ft, p);
-                drawingContext.DrawText(ft, new Point(0, 0));
-            }
 
 
-
-            public string Text
+            public string? Text
             {
                 get { return (string)GetValue(TextProperty); }
                 set { SetValue(TextProperty, value); }
             }
 
+            // Using a DependencyProperty as the backing store for Text.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
                 nameof(TextProperty),
                 typeof(string),
                 typeof(ttt),
-                new PropertyMetadata(
+                new FrameworkPropertyMetadata(
                     string.Empty,
                     TextPropertyChanged
                 )
@@ -292,8 +265,92 @@ echo end
 
             private static void TextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
             {
-                if(d is ttt element) {
-                    element.Text = (string)e.NewValue;
+                if(d is ttt control) {
+                    control.Text = (string)e.NewValue;
+                    control.InvalidateVisual();
+                }
+            }
+
+            protected override void OnRender(DrawingContext drawingContext)
+            {
+                var text = Text ?? string.Empty;
+
+                var formattedText = new FormattedText(
+                    text,
+                    CultureInfo.CurrentUICulture,
+                    FlowDirection,
+                    new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
+                    FontSize,
+                    Foreground,
+                    VisualTreeHelper.GetDpi(this).PixelsPerDip
+                );
+                Height = formattedText.Height;
+
+                drawingContext.DrawRectangle(Background, new Pen(), new Rect(0, 0, ActualWidth, Height));
+
+                if(formattedText.Width <= ActualWidth) {
+                    drawingContext.DrawText(formattedText, new Point(0, 0));
+                    return;
+                }
+
+                Debug.WriteLine("何とかして縮める");
+
+                var markChars = new[] { '\\', '/', };
+                var ellipsis = "...";
+
+                string markedText;
+                int fronLength;
+
+                var markIndex = text.LastIndexOfAny(markChars);
+                if(markIndex != -1) {
+                    var markChar = text[markIndex];
+                    var lasIndex = text.LastIndexOf(markChar);
+
+                    if(lasIndex < ellipsis.Length) {
+                        drawingContext.DrawText(formattedText, new Point(0, 0));
+                        return;
+                    }
+
+                    markedText = text.Substring(lasIndex);
+                    fronLength = lasIndex - 1;
+                } else {
+                    var lasIndex = text.Length / 2;
+
+                    if(lasIndex < 2) {
+                        drawingContext.DrawText(formattedText, new Point(0, 0));
+                        return;
+                    }
+
+                    markedText = text.Substring(lasIndex);
+                    fronLength = lasIndex - 1;
+                }
+
+                while(true) {
+                    var front = text.Substring(0, fronLength);
+
+                    var shortText = front + ellipsis + markedText;
+
+                    var shortFormattedText = new FormattedText(
+                       shortText,
+                       CultureInfo.CurrentUICulture,
+                       FlowDirection,
+                       new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
+                       FontSize,
+                       Foreground,
+                       VisualTreeHelper.GetDpi(this).PixelsPerDip
+                   );
+
+                    if(shortFormattedText.Width <= ActualWidth) {
+                        drawingContext.DrawText(shortFormattedText, new Point(0, 0));
+                        return;
+                    }
+
+                    fronLength -= 1;
+
+                    if(fronLength == 0) {
+                            drawingContext.DrawText(shortFormattedText, new Point(0, 0));
+                        return;
+                    }
                 }
             }
         }
@@ -327,6 +384,23 @@ echo end
                 Background = new SolidColorBrush(Colors.Pink),
                 FontSize = 20,
             });
+
+            var output = new ttt() {
+                Foreground = new SolidColorBrush(Colors.White),
+                Background = new SolidColorBrush(Colors.Black),
+                FontSize = 20,
+            };
+            var input = new TextBox() {
+                Name = "input",
+            };
+            output.SetBinding(ttt.TextProperty, new Binding("Text") {
+                //ElementName = "input",
+                Source = input,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+            });
+            panel.Children.Add(output);
+            panel.Children.Add(input);
+
             var window = new Window() {
                 Content = panel,
                 Width = 400,
