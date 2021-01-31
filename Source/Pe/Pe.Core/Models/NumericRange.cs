@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return string.Empty;
             }
 
-            var builder = new StringBuilder();
+            var builder = new StringBuilder(64);
             var prevValue = orderdValues.First();
             builder.Append(prevValue);
             var nowRange = false;

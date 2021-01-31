@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public TCommand GetOrCreate<TCommand>(Func<TCommand> creator, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
             where TCommand : ICommand
         {
-            var sb = new StringBuilder();
+            var sb = new StringBuilder(128);
             sb.Append(GetType().FullName);
             sb.Append(':');
             sb.Append(callerMemberName);
