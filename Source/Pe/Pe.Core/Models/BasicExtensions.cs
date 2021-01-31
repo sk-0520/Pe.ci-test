@@ -10,16 +10,23 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public readonly struct CountingItem<TNumber, TElement>
         where TNumber : struct
     {
-        public CountingItem(TNumber number, TElement element)
+        internal CountingItem(TNumber number, TElement element)
         {
-            Value = element;
             Number = number;
+            Value = element;
         }
 
         #region property
 
-        public readonly TElement Value { get; }
+        /// <summary>
+        /// シーケンス値。
+        /// <para><see cref="IEnumerableExtensions.Counting{TElement}(IEnumerable{TElement}, int)"/>の基点からの加算値。</para>
+        /// </summary>
         public readonly TNumber Number { get; }
+        /// <summary>
+        /// 現在の値。
+        /// </summary>
+        public readonly TElement Value { get; }
 
         #endregion
     }
