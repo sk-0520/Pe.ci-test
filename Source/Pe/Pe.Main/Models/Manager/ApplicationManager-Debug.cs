@@ -274,7 +274,23 @@ echo end
 
             protected override void OnRender(DrawingContext drawingContext)
             {
-                var text = Text ?? string.Empty;
+                var text = Text;
+
+                if(string.IsNullOrEmpty(text)) {
+                    var emptyText = new FormattedText(
+                        "M",
+                        CultureInfo.CurrentUICulture,
+                        FlowDirection,
+                        new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
+                        FontSize,
+                        Foreground,
+                        VisualTreeHelper.GetDpi(this).PixelsPerDip
+                    );
+
+                    Height = emptyText.Height;
+                    drawingContext.DrawRectangle(Background, new Pen(), new Rect(0, 0, ActualWidth, Height));
+                    return;
+                }
 
                 var formattedText = new FormattedText(
                     text,
