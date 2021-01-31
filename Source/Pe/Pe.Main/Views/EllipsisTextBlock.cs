@@ -42,30 +42,12 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         #endregion
 
-        #region Control
+        #region function
 
-        protected override void OnRender(DrawingContext drawingContext)
+        FormattedText CreateFormattedText(string s)
         {
-            var text = Text;
-
-            if(string.IsNullOrEmpty(text)) {
-                var emptyText = new FormattedText(
-                    "M",
-                    CultureInfo.CurrentUICulture,
-                    FlowDirection,
-                    new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
-                    FontSize,
-                    Foreground,
-                    VisualTreeHelper.GetDpi(this).PixelsPerDip
-                );
-
-                Height = emptyText.Height;
-                drawingContext.DrawRectangle(Background, new Pen(), new Rect(0, 0, ActualWidth, Height));
-                return;
-            }
-
-            var formattedText = new FormattedText(
-                text,
+            var result = new FormattedText(
+                s,
                 CultureInfo.CurrentUICulture,
                 FlowDirection,
                 new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
@@ -73,9 +55,31 @@ namespace ContentTypeTextNet.Pe.Main.Views
                 Foreground,
                 VisualTreeHelper.GetDpi(this).PixelsPerDip
             );
-            Height = formattedText.Height;
 
+            return result;
+        }
+
+        #endregion
+
+        #region Control
+
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            var text = Text;
+
+            var isEmpty = string.IsNullOrEmpty(text);
+            var formattedText = isEmpty
+                ? CreateFormattedText("M")
+                : CreateFormattedText(text!)
+            ;
+
+            Height = formattedText.Height;
             drawingContext.DrawRectangle(Background, new Pen(), new Rect(0, 0, ActualWidth, Height));
+
+            if(isEmpty) {
+                return;
+            }
+            Debug.Assert(text != null);
 
             if(formattedText.Width <= ActualWidth) {
                 drawingContext.DrawText(formattedText, new Point(0, 0));
@@ -119,15 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
                 var shortText = front + ellipsis + markedText;
 
-                var shortFormattedText = new FormattedText(
-                   shortText,
-                   CultureInfo.CurrentUICulture,
-                   FlowDirection,
-                   new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
-                   FontSize,
-                   Foreground,
-                   VisualTreeHelper.GetDpi(this).PixelsPerDip
-               );
+                var shortFormattedText = CreateFormattedText(shortText);
 
                 if(shortFormattedText.Width <= ActualWidth) {
                     drawingContext.DrawText(shortFormattedText, new Point(0, 0));
