@@ -568,11 +568,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     if(HalfwidthKatakanaDakutenRange.IsIn(currentText[0])) {
                         switch(currentText[0]) {
                             case 'ﾞ':
-                                resultBuffer.Append('ﾞ');
+                                resultBuffer.Append('゛');
                                 break;
 
                             case 'ﾟ':
-                                resultBuffer.Append('ﾟ');
+                                resultBuffer.Append('゜');
                                 break;
 
                             default:
@@ -654,11 +654,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     resultBuffer.Append(normal);
                 } else if(DakutenKatakanaFullToHalfMap.TryGetValue(currentText[0], out var dakuten)) {
                     resultBuffer.Append(dakuten);
+                } else {
+                    var map = new Dictionary<char, char>() {
+                        ['゜'] = 'ﾟ',
+                        ['゛'] = 'ﾞ',
+                    };
+                    if(map.TryGetValue(currentText[0], out var c)) {
+                        resultBuffer.Append(c);
+                    }
                 }
             } else {
                 var map = new Dictionary<char, char>() {
-                    ['\u309A'] = 'ﾟ',
-                    ['\u3099'] = 'ﾞ',
+                    [KatakanaHanDakuten] = 'ﾟ',
+                    [KatakanaDakuten] = 'ﾞ',
                 };
                 foreach(var pair in map) {
                     var index = currentText.IndexOf(pair.Key);
