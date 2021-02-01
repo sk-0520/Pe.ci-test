@@ -75,7 +75,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Hardcodet.NotifyIcon.Wpf.NetCore 1.0.17-> 1.0.18"
 					},
 					{
 						"revision": "",
