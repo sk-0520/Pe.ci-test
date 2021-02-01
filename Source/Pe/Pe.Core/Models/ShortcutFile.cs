@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// コメントのバッファサイズ。
         /// </summary>
-        public int DescriptionLength { get; set; } = 1024 * 5;
+        public int DescriptionLength { get; set; } = 1024 * 4;
 
         protected ComWrapper<IShellLink> ShellLink { get; }
 
