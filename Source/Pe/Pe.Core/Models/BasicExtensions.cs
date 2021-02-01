@@ -37,12 +37,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <paramref name="splitCount"/>数で分割する。
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="this"></param>
+        /// <param name="source"></param>
         /// <param name="splitCount"></param>
         /// <returns></returns>
-        public static IEnumerable<IEnumerable<T>> GroupSplit<T>(this IEnumerable<T> @this, int splitCount)
+        public static IEnumerable<IEnumerable<T>> GroupSplit<T>(this IEnumerable<T> source, int splitCount)
         {
-            return @this
+            return source
                 .Counting()
                 .GroupBy(i => i.Number / splitCount)
                 .Select(g => g.Select(i => i.Value))
@@ -53,22 +53,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 0基点のインデックスと値ペア列挙。
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
-        /// <param name="this"></param>
+        /// <param name="source"></param>
         /// <returns></returns>
-        public static IEnumerable<CountingItem<int, TElement>> Counting<TElement>(this IEnumerable<TElement> @this)
+        public static IEnumerable<CountingItem<int, TElement>> Counting<TElement>(this IEnumerable<TElement> source)
         {
-            return @this.Select((v, i) => new CountingItem<int, TElement>(i, v));
+            return source.Select((v, i) => new CountingItem<int, TElement>(i, v));
         }
         /// <summary>
         /// 独自基点のインデックスと値ペア列挙。
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
-        /// <param name="this"></param>
+        /// <param name="source"></param>
         /// <param name="baseNumber">基点。</param>
         /// <returns></returns>
-        public static IEnumerable<CountingItem<int, TElement>> Counting<TElement>(this IEnumerable<TElement> @this, int baseNumber)
+        public static IEnumerable<CountingItem<int, TElement>> Counting<TElement>(this IEnumerable<TElement> source, int baseNumber)
         {
-            return @this.Select((v, i) => new CountingItem<int, TElement>(i + baseNumber, v));
+            return source.Select((v, i) => new CountingItem<int, TElement>(i + baseNumber, v));
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <para><see cref="string.Join"/>してるだけだけど、 linq でふわっと使いたい。</para>
         /// </summary>
         /// <inheritdoc cref="string.Join"/>
-        public static string JoinString<T>(this IEnumerable<T> values, string? separator) => string.Join(separator, values);
+        public static string JoinString<T>(this IEnumerable<T> source, string? separator) => string.Join(separator, source);
     }
 
     public static class CollectionExtensions
@@ -87,16 +87,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <para><see cref="ICollection{T}"/>が<see cref="List{T}"/>なら<see cref="List{T}.AddRange(IEnumerable{T})"/>する</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="this"></param>
+        /// <param name="source"></param>
         /// <param name="collection"></param>
-        public static void SetRange<T>(this ICollection<T> @this, IEnumerable<T> collection)
+        public static void SetRange<T>(this ICollection<T> source, IEnumerable<T> collection)
         {
-            @this.Clear();
-            if(@this is List<T> list) {
+            source.Clear();
+            if(source is List<T> list) {
                 list.AddRange(collection);
             } else {
                 foreach(var item in collection) {
-                    @this.Add(item);
+                    source.Add(item);
                 }
             }
         }
