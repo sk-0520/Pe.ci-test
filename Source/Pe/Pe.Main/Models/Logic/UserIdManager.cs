@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public string CreateFromRandom()
         {
-            var buffer = new byte[256 * 1024];
+            var buffer = new byte[20 * 1024];
             var rand = new Random();
             rand.NextBytes(buffer);
             return ComputeHash(buffer);
