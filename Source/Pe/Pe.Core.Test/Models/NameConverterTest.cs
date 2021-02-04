@@ -110,6 +110,29 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod]
+        [DataRow("", "")]
+        [DataRow(" ", " ")]
+        [DataRow("A", "a")]
+        [DataRow("Abc", "abc")]
+        [DataRow("AbcDef", "abc_def")]
+        [DataRow("AbcDef", "abc_def_")]
+        [DataRow("AbcDef", "abc__def_")]
+        [DataRow("AbcDef", "_abc__def_")]
+        [DataRow("AbcDef", "___abc__def_")]
+        [DataRow("AbcDef", "___abc__def_________")]
+        [DataRow("ABC", "a_b_c")]
+        [DataRow("ABC", "a_B_c")]
+        [DataRow("ABC", "aB_c")]
+        [DataRow("ABc", "a_Bc")]
+        [DataRow("A-b-cD-e", "a-b-c_d-e")]
+        public void SnakeToPascalTest(string expected, string input)
+        {
+            var nc = new NameConverter();
+            var actual = nc.SnakeToPascal(input);
+            Assert.AreEqual(expected, actual);
+        }
+
         #endregion
     }
 }

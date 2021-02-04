@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -35,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         #endregion
     }
 
-    public class UpdateInfo : BindModelBase, IReadOnlyUpdateInfo
+    public class UpdateInfo: BindModelBase, IReadOnlyUpdateInfo
     {
         #region variable
 
@@ -106,7 +107,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         public string CurrentLog
         {
             get => this._currentLog;
-            private set => SetProperty(ref this._currentLog, value);
+            [Unuse(UnuseKinds.TwoWayBinding)]
+            set => SetProperty(ref this._currentLog, value);
         }
 
 

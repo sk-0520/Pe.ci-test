@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -211,6 +212,55 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="lines"></param>
         /// <returns></returns>
         public static string JoinLines(string lines) => JoinLines(lines, " ");
+
+        /// <summary>
+        /// 指定文字を破棄。
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="characters"></param>
+        /// <returns></returns>
+        public static string RemoveCharacters(string input, ISet<char> characters)
+        {
+            if(characters.Count == 0) {
+                return input;
+            }
+
+            if(input.IndexOfAny(characters.ToArray()) == -1) {
+                return input;
+            }
+
+            var sb = new StringBuilder(input.Length);
+            foreach(var c in input) {
+                if(characters.Contains(c)) {
+                    continue;
+                }
+                sb.Append(c);
+            }
+
+            return sb.ToString();
+        }
+
+        public static string ReplaceCharacters(string input, IReadOnlyDictionary<char, char> characters)
+        {
+            if(characters.Count == 0) {
+                return input;
+            }
+
+            if(input.IndexOfAny(characters.Keys.ToArray()) == -1) {
+                return input;
+            }
+
+            var sb = new StringBuilder(input.Length);
+            foreach(var c in input) {
+                if(characters.TryGetValue(c, out var newChar)) {
+                    sb.Append(newChar);
+                } else {
+                    sb.Append(c);
+                }
+            }
+
+            return sb.ToString();
+        }
 
         #endregion
     }

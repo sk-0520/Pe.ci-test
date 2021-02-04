@@ -26,7 +26,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#714: 文言の途中で ... ってなるテキスト表示コントロールを作成する",
+						"comments": [
+							"スーパー妥協の産物が生まれた"
+						]
 					},
 					{
 						"revision": "",
@@ -72,7 +75,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Hardcodet.NotifyIcon.Wpf.NetCore 1.0.17-> 1.0.18"
 					},
 					{
 						"revision": "",

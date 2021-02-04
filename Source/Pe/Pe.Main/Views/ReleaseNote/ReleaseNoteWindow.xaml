@@ -8,6 +8,7 @@
 
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+  xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
 
   Height="450"
   Width="800"
@@ -102,7 +103,8 @@
           </ProgressBar.Style>
         </ProgressBar>
 
-        <TextBlock Grid.Column="2" Margin="{StaticResource HorizonMargin}" VerticalAlignment="Center" TextAlignment="Left" TextTrimming="CharacterEllipsis" Text="{Binding UpdateInfo.CurrentLog, Mode=OneWay}" />
+        <!--<TextBlock Grid.Column="2" Margin="{StaticResource HorizonMargin}" VerticalAlignment="Center" TextAlignment="Left" TextTrimming="CharacterEllipsis" Text="{Binding UpdateInfo.CurrentLog, Mode=OneWay}" />-->
+        <app_main_views:EllipsisTextBlock Grid.Column="2" Margin="{StaticResource HorizonMargin}" VerticalAlignment="Center" Text="{Binding UpdateInfo.CurrentLog}" />
 
       </Grid>
 
