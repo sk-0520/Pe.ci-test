@@ -11,7 +11,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.12.0" />
+    <None Remove="-Bench.cs.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="-Bench.cs.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Pe\Pe.Bridge\Pe.Bridge.csproj" />
+    <ProjectReference Include="..\..\Pe\Pe.Core\Pe.Core.csproj" />
+    <ProjectReference Include="..\..\Pe\Pe.Main\Pe.Main.csproj" />
+    <ProjectReference Include="..\..\Pe\Pe.PInvoke\Pe.PInvoke.csproj" />
+    <ProjectReference Include="..\..\Pe\Pe.Plugins.DefaultTheme\Pe.Plugins.DefaultTheme.csproj" />
   </ItemGroup>
 
 </Project>
