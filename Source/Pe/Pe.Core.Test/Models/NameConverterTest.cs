@@ -7,14 +7,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ContentTypeTextNet.Pe.Core.Test.Models
 {
     [TestClass]
-    public class NameConveterTest
+    public class NameConverterTest
     {
         #region function
 
         [TestMethod]
         public void PascalToKebab_Exception_Test()
         {
-            var nc = new NameConveter();
+            var nc = new NameConverter();
             Assert.ThrowsException<ArgumentNullException>(() => nc.PascalToKebab(null!));
         }
 
@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("int32", "Int32")]
         public void PascalToKebabTest(string expected, string input)
         {
-            var nc = new NameConveter();
+            var nc = new NameConverter();
             var actual = nc.PascalToKebab(input);
             Assert.AreEqual(expected, actual);
         }
@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [TestMethod]
         public void PascalToSnake_Exception_Test()
         {
-            var nc = new NameConveter();
+            var nc = new NameConverter();
             Assert.ThrowsException<ArgumentNullException>(() => nc.PascalToSnake(null!));
         }
 
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("int32", "Int32")]
         public void PascalToSnakeTest(string expected, string input)
         {
-            var nc = new NameConveter();
+            var nc = new NameConverter();
             var actual = nc.PascalToSnake(input);
             Assert.AreEqual(expected, actual);
         }
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [TestMethod]
         public void PascalToCamel_Exception_Test()
         {
-            var nc = new NameConveter();
+            var nc = new NameConverter();
             Assert.ThrowsException<ArgumentNullException>(() => nc.PascalToCamel(null!));
         }
 
@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("int32", "Int32")]
         public void PascalToCamelTest(string expected, string input)
         {
-            var nc = new NameConveter();
+            var nc = new NameConverter();
             var actual = nc.PascalToCamel(input);
             Assert.AreEqual(expected, actual);
         }
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("A_b_cD_e", "a_b_c-d_e")]
         public void KebabToPascalTest(string expected, string input)
         {
-            var nc = new NameConveter();
+            var nc = new NameConverter();
             var actual = nc.KebabToPascal(input);
             Assert.AreEqual(expected, actual);
         }

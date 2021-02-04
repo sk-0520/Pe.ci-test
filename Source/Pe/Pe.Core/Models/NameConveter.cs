@@ -7,7 +7,7 @@ using Microsoft.Windows.Themes;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public class NameConveter
+    public class NameConverter
     {
         #region function
 
