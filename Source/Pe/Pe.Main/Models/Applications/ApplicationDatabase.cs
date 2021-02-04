@@ -97,31 +97,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         }
 
         #endregion
-
-        #region DatabaseImplementation
-
-        public override object? GetNullValue(Type type)
-        {
-            if(NullMapping.TryGetValue(type, out var value)) {
-                return value;
-            }
-
-            return base.GetNullValue(type);
-        }
-
-        public override bool IsNull(object? value)
-        {
-            if(base.IsNull(value)) {
-                return true;
-            }
-            if(value == null) {
-                return true;
-            }
-
-            return value.Equals(GetNullValue(value.GetType()));
-        }
-
-        #endregion
     }
 
     public class ApplicationDatabaseAccessor: SqliteAccessor
