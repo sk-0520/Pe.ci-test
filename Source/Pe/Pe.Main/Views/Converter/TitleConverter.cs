@@ -24,12 +24,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
             };
 
 
-            string footer;
-            if(BuildStatus.BuildType == BuildType.Release) {
-                footer = string.Empty;
-            } else {
-                footer = new StringBuilder()
-                    .Append(" ")
+            var footer = new StringBuilder();
+            if(BuildStatus.BuildType != BuildType.Release) {
+                footer
+                    .Append(' ')
                     .Append(new VersionConverter().ConvertNormalVersion(BuildStatus.Version))
                     .Append(" APP:")
                     .Append(ProcessArchitecture.ApplicationArchitecture)
@@ -37,8 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
                     .Append(ProcessArchitecture.PlatformArchitecture)
                     .Append(" <")
                     .Append(BuildStatus.Revision)
-                    .Append(">")
-                    .ToString()
+                    .Append('>')
                 ;
             }
 
