@@ -2,13 +2,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
@@ -20,6 +26,7 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.ViewModels._Debug_;
+using ContentTypeTextNet.Pe.Main.Views;
 using ContentTypeTextNet.Pe.Main.Views._Debug_;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
@@ -43,7 +50,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogDebug("デバッグ用前処理");
 
             //DebugColorPicker();
-            //Exit();
+            //DebugIssue714();
+            //Exit(true);
         }
 
         void DebugExecuteAfter()
@@ -205,7 +213,7 @@ echo end
                 di.RegisterMvvm<DebugColorPickerElement, DebugColorPickerViewModel, DebugColorPickerWindow>();
                 var model = di.Build<DebugColorPickerElement>();
                 var view = di.Build<DebugColorPickerWindow>();
-                var windowItem = new WindowItem(WindowKind.Debug, model,view);
+                var windowItem = new WindowItem(WindowKind.Debug, model, view);
                 WindowManager.Register(windowItem);
                 view.ShowDialog();
             }
@@ -233,6 +241,63 @@ echo end
             var uninstallTarget = UninstallTarget.Application | UninstallTarget.Batch;
             uninstallTarget |= UninstallTarget.User | UninstallTarget.Machine | UninstallTarget.Temporary;
             about.CreateUninstallBatch(path, uninstallTarget);
+        }
+
+
+        void DebugIssue714()
+        {
+            var panel = new StackPanel();
+            panel.Children.Add(new EllipsisTextBlock() {
+                Text = "abc def ghi jkl mno",
+                Background = new SolidColorBrush(Colors.Red),
+            });
+            panel.Children.Add(new EllipsisTextBlock() {
+                Text = "あいうえおかきくけこさしすせそ",
+                Background = new SolidColorBrush(Colors.Lime),
+            });
+            panel.Children.Add(new EllipsisTextBlock() {
+                Text = @"abc\def\ghi\jkl\mno",
+                Background = new SolidColorBrush(Colors.Yellow),
+            });
+            panel.Children.Add(new EllipsisTextBlock() {
+                Text = @"あいう\えおか\きくけ\こさし\すせそ",
+                Background = new SolidColorBrush(Colors.Green),
+            });
+            panel.Children.Add(new EllipsisTextBlock() {
+                Text = @"abc/def/ghi/jkl/mno",
+                Background = new SolidColorBrush(Colors.Peru),
+                FontSize = 20,
+            });
+            panel.Children.Add(new EllipsisTextBlock() {
+                Text = "あいう/えおか/きくけ/こさし/すせそ",
+                Background = new SolidColorBrush(Colors.Pink),
+                FontSize = 20,
+            });
+
+            var output = new EllipsisTextBlock() {
+                Foreground = new SolidColorBrush(Colors.White),
+                Background = new SolidColorBrush(Colors.Black),
+                FontSize = 20,
+            };
+            var input = new TextBox() {
+                Name = "input",
+            };
+            output.SetBinding(EllipsisTextBlock.TextProperty, new Binding("Text") {
+                //ElementName = "input",
+                Source = input,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                //Mode = BindingMode.OneWay,
+            });
+            panel.Children.Add(output);
+            panel.Children.Add(input);
+
+            var window = new Window() {
+                Content = panel,
+                Width = 400,
+                Height = 200,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+            };
+            window.ShowDialog();
         }
 
         #endregion

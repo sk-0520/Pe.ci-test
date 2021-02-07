@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             : base(model, loggerFactory)
         { }
 
-        #region proeprty
+        #region property
 
         public Guid PluginId => Model.Data.PluginId;
         public string PluginName => Model.Data.PluginName;

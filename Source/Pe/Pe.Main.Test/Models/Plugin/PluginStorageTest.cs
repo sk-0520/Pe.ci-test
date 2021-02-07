@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
             public int Int { get; set; }
             public long Long { get; set; }
             public string String { get; set; } = string.Empty;
-            public int[] Array { get; set; } = new int[0];
+            public int[] Array { get; set; } = System.Array.Empty<int>();
             public List<int> List { get; set; } = new List<int>();
             public Dictionary<string, string> Dictionary { get; set; } = new Dictionary<string, string>();
         }

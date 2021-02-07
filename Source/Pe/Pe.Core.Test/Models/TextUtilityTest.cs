@@ -152,5 +152,35 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             var actual = TextUtility.SafeTrim(text);
             Assert.AreEqual(expected, actual, $"`{expected}` - `{text}`");
         }
+
+        [TestMethod]
+        [DataRow("", "", new[] { 'a', 'b', 'c' })]
+        [DataRow("def", "def", new[] { 'a', 'b', 'c' })]
+        [DataRow("", "abc", new[] { 'a', 'b', 'c' })]
+        [DataRow("def", "abcdef", new[] { 'a', 'b', 'c' })]
+        [DataRow("def", "abcdefabc", new[] { 'a', 'b', 'c' })]
+        public void RemoveCharactersTest(string expected, string input, char[] cs)
+        {
+            var actual = TextUtility.RemoveCharacters(input, cs.ToHashSet());
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        [DataRow("", "")]
+        [DataRow("def", "def")]
+        [DataRow("ABCdef", "ABCdef")]
+        [DataRow("ABCdefABC", "ABCdefABC")]
+        [DataRow("ABCdef", "abcdef")]
+        [DataRow("ABCdefABC", "abcdefabc")]
+        public void ReplaceCharactersTest(string expected, string input)
+        {
+            var map = new Dictionary<char, char>() {
+                ['a'] = 'A',
+                ['b'] = 'B',
+                ['c'] = 'C',
+            };
+            var actual = TextUtility.ReplaceCharacters(input, map);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

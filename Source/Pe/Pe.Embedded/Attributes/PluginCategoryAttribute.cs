@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Attributes
             Secondaries = list;
         }
 
-        #region proeprty
+        #region property
 
         public string Primary { get; }
         public IReadOnlyList<string> Secondaries { get; }

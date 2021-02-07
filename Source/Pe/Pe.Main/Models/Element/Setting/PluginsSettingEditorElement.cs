@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 Logger = loggerFactory.CreateLogger(GetType());
             }
 
-            #region proeprty
+            #region property
 
             ILogger Logger { get; }
 
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 Logger = loggerFactory.CreateLogger(GetType());
             }
 
-            #region proeprty
+            #region property
 
             ILogger Logger { get; }
 

@@ -26,38 +26,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region function
 
         /// <summary>
-        /// 指定の型がデータベース実装にて null 判定される値の取得。
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        object? GetNullValue(Type type);
-        /// <summary>
-        /// 指定の型がデータベース実装にてnull 判定される値の取得。
-        /// <para><see cref="GetNullValue(Type)"/>のラッパー。</para>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        [return: MaybeNull]
-        T GetNullValue<T>();
-
-        /// <summary>
-        /// データベース実装における null 判定実施。
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        bool IsNull(object? value);
-        /// <summary>
-        /// データベース実装における null 判定実施。
-        /// <para><see cref="IsNull(object)"/>のラッパー。</para>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        bool IsNull<T>(T? value)
-            where T : struct
-        ;
-
-        /// <summary>
         /// 文実行前に実行する文に対して変換処理を実行。
         /// </summary>
         /// <param name="statement"></param>
@@ -68,86 +36,25 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         string ToStatementColumnName(string columnName);
         string ToStatementParameterName(string parameterName, int index);
 
-        #endregion
-    }
-
-    public static class IDatabaseImplementationExtensions
-    {
-        #region function
-
         /// <summary>
-        /// 対象DBに対して null であれば DB 用の null として、そうでなければ <paramref name="value"/> をそのまま使用する。
+        /// 実行文に対するエスケープ処理。
+        /// <para>基本的にはバインド処理で対応すること。本処理はしゃあなし動的SQL作成時に無理やり使用する前提。</para>
         /// </summary>
-        /// <typeparam name="TValue"></typeparam>
-        /// <param name="this"></param>
-        /// <param name="value"></param>
+        /// <param name="input"></param>
         /// <returns></returns>
-        [return: MaybeNull]
-        public static TValue ToNullValue<TValue>(this IDatabaseImplementation @this, TValue value)
-        {
-            if(@this == null) {
-                throw new ArgumentNullException(nameof(@this));
-            }
-
-            if(@this.IsNull(value)) {
-                return @this.GetNullValue<TValue>();
-            }
-
-            return value;
-        }
+        string Escape(string input);
 
         #endregion
     }
 
-    public class DatabaseImplementation : IDatabaseImplementation
+    public class DatabaseImplementation: IDatabaseImplementation
     {
-        #region function
-
-        protected bool IsNullable<T>()
-        {
-            var type = typeof(T);
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
-        }
-
-        #endregion
-
         #region IDatabaseImplementation
 
         /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionDDL"/>
         public virtual bool SupportedTransactionDDL { get; } = false;
         /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionDML"/>
         public virtual bool SupportedTransactionDML { get; } = true;
-
-
-        /// <inheritdoc cref="IDatabaseImplementation.GetNullValue(Type)"/>
-        public virtual object? GetNullValue(Type type)
-        {
-            return null;
-        }
-
-        /// <inheritdoc cref="IDatabaseImplementation.GetNullValue(Type)"/>
-        [return: MaybeNull]
-        public T GetNullValue<T>()
-        {
-            return (T)GetNullValue(typeof(T));
-        }
-
-        /// <inheritdoc cref="IDatabaseImplementation.IsNull(object?)"/>
-        public virtual bool IsNull(object? value)
-        {
-            return value == null;
-        }
-
-        /// <inheritdoc cref="IDatabaseImplementation.IsNull{T}(T?)"/>
-        public bool IsNull<T>(T? value)
-            where T : struct
-        {
-            if(!value.HasValue) {
-                return true;
-            }
-
-            return IsNull(value.Value);
-        }
 
         /// <inheritdoc cref="IDatabaseImplementation.PreFormatStatement(string)"/>
         public virtual string PreFormatStatement(string statement) => statement;
@@ -158,6 +65,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         public virtual string ToStatementColumnName(string columnName) => columnName;
         /// <inheritdoc cref="IDatabaseImplementation.ToStatementParameterName(string, int)"/>
         public virtual string ToStatementParameterName(string parameterName, int index) => "@" + parameterName;
+
+        /// <inheritdoc cref="IDatabaseImplementation.Escape(string)"/>
+        public virtual string Escape(string input) => input
+            .Replace("\\", @"\\")
+            .Replace("\'", @"''")
+            .Replace("\r", @"\r")
+            .Replace("\n", @"\n")
+        ;
 
         #endregion
     }

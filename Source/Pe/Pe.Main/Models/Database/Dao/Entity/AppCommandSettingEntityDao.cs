@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         }
 
 
-        public bool UpdateSettingCommandSetting(SettingAppCommandSettingData data, IDatabaseCommonStatus commonStatus)
+        public void UpdateSettingCommandSetting(SettingAppCommandSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
@@ -85,15 +85,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 FindTag = data.FindTag,
             };
             commonStatus.WriteCommon(dto);
-            return Context.Execute(statement, dto) == 1;
+            Context.UpdateByKey(statement, dto);
         }
 
-        public bool UpdatCommandSettingWidth(double width, IDatabaseCommonStatus commonStatus)
+        public void UpdatCommandSettingWidth(double width, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.Width] = width;
-            return Context.Execute(statement, parameter) == 1;
+            Context.UpdateByKey(statement, parameter);
         }
 
 

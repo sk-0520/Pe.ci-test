@@ -81,6 +81,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return Transaction.QuerySingle<T>(statement, parameter);
         }
 
+        [return: MaybeNull]
+        public T QuerySingleOrDefault<T>(string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            return Transaction.QuerySingleOrDefault<T>(statement, parameter);
+        }
+
         public void Commit()
         {
             ThrowIfDisposed();

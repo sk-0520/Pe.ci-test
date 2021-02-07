@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
     public interface IBackgroundAddonRunPauseContext
     {
-        #region proeprty
+        #region property
 
         /// <summary>
         /// 処理を停止中か。
@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
     public interface IBackgroundAddonMouseMoveContext
     {
-        #region proeprty
+        #region property
 
         /// <summary>
         /// マウスカーソルの物理座標。
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
     public interface IBackgroundAddonMouseButtonContext
     {
-        #region proeprty
+        #region property
 
         MouseButton Button { get; }
         MouseButtonState State { get; }

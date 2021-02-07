@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class PluginWidgetSettingData: DataBase
     {
-        #region proeprty
+        #region property
 
         [PixelKind(Px.Logical)]
         public double X { get; set; }

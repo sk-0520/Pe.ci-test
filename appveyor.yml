@@ -8,6 +8,7 @@ environment:
   BUILD_TYPE: BETA
   ARCHIVE: 7z
   MINIMUM_VERSION: 0.00.0
+  NUGET_PACKAGES: C:\nuget
 platform:
   - x64
   - x86
@@ -20,8 +21,8 @@ install:
   - cmd: dotnet --version
   #- cmd: choco install dotnetcore-sdk
   #- cmd: dotnet --version
-  - ps: Install-Product node 12.18.3
-  - cmd: npm -g install npm@6.14.8
+  - ps: Install-Product node 15.6.0
+  - cmd: npm -g install npm@7.4.0
   - cmd: npm install
 before_build:
   - cmd: git submodule init
@@ -49,3 +50,4 @@ cache:
   - 'node_modules'
   #- C:\ProgramData\chocolatey\bin -> appveyor.yml
   #- C:\ProgramData\chocolatey\lib -> appveyor.yml
+  - 'C:\nuget'

@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public bool UpdateSettingNotifyLogSetting(SettingAppNotifyLogSettingData data, IDatabaseCommonStatus commonStatus)
+        public void UpdateSettingNotifyLogSetting(SettingAppNotifyLogSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var notifyLogPositionTransfer = new EnumTransfer<NotifyLogPosition>();
 
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Position = notifyLogPositionTransfer.ToString(data.Position),
             };
             commonStatus.WriteCommon(dto);
-            return Context.Execute(statement, dto) == 1;
+            Context.UpdateByKey(statement, dto);
         }
 
         #endregion

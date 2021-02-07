@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                 : base(section)
             { }
 
-            #region proeprty
+            #region property
 
             [Configuration("ignore_window_class")]
             public IReadOnlyList<string> IgnoreWindowClasses { get; } = default!;

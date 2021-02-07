@@ -136,21 +136,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public bool InsertNewContent(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertNewContent(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = ConvertFromData(data, databaseCommonStatus);
-            return Context.Execute(statement, param) == 1;
+            Context.InsertSingle(statement, param);
         }
 
-        public bool UpdateContent(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateContent(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = ConvertFromData(data, databaseCommonStatus);
-            return Context.Execute(statement, param) == 1;
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdateLinkEnabled(Guid noteId, string path, Encoding encoding, FileWatchParameter fileWatchParameter, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateLinkEnabled(Guid noteId, string path, Encoding encoding, FileWatchParameter fileWatchParameter, IDatabaseCommonStatus databaseCommonStatus)
         {
             var encodingConverter = new EncodingConverter(LoggerFactory);
 
@@ -165,10 +165,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.RefreshTime] = fileWatchParameter.RefreshTime;
             parameter[Column.IsEnabledRefresh] = fileWatchParameter.IsEnabledRefresh;
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.UpdateByKey(statement, parameter);
         }
 
-        public bool UpdateLinkDisabled(Guid noteId, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateLinkDisabled(Guid noteId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
@@ -176,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.IsLink] = true;
             parameter[Column.Address] = string.Empty;
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.UpdateByKey(statement, parameter);
         }
 
         public int DeleteContents(Guid noteId)

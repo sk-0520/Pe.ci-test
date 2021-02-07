@@ -100,15 +100,15 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("ワヲン", "ﾜｦﾝ")]
         [DataRow("ァィゥェォ", "ｧｨｩｪｫ")]
         [DataRow("ャュョ", "ｬｭｮ")]
-#if !IGNORE_NET5
         [DataRow("ガギグゲゴ", "ｶﾞｷﾞｸﾞｹﾞｺﾞ")]
         [DataRow("ザジズゼゾ", "ｻﾞｼﾞｽﾞｾﾞｿﾞ")]
         [DataRow("ダヂヅデド", "ﾀﾞﾁﾞﾂﾞﾃﾞﾄﾞ")]
         [DataRow("バビブベボ", "ﾊﾞﾋﾞﾌﾞﾍﾞﾎﾞ")]
         [DataRow("パピプペポ", "ﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟ")]
         [DataRow("ヴ", "ｳﾞ")]
-        [DataRow("ﾞ", "ﾞ")]
-        [DataRow("ﾟ", "ﾟ")]
+        [DataRow("゛", "ﾞ")]
+        [DataRow("゜", "ﾟ")]
+#if !IGNORE_NET5
         [DataRow("ア゙", "ｱﾞ")]
         [DataRow("ア゚", "ｱﾟ")]
         [DataRow("ア゙ﾞ", "ｱﾞﾞ")]
@@ -153,6 +153,8 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("ｳﾞ", "ヴ")]
         [DataRow("ﾞ", "ﾞ")]
         [DataRow("ﾟ", "ﾟ")]
+        [DataRow("ﾞ", "゛")]
+        [DataRow("ﾟ", "゜")]
         [DataRow("ｱﾞ", "ア゙")]
         [DataRow("ｱﾟ", "ア゚")]
 #if !IGNORE_NET5

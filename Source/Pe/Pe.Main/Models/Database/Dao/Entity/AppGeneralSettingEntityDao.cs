@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirst<Guid>(statement);
         }
 
-        public bool UpdateSettingGeneralSetting(SettingAppGeneralSettingData data, IDatabaseCommonStatus commonStatus)
+        public void UpdateSettingGeneralSetting(SettingAppGeneralSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = new AppGeneralSettingEntityDto() {
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 ThemePluginId = data.ThemePluginId,
             };
             commonStatus.WriteCommon(dto);
-            return Context.Execute(statement, dto) == 1;
+            Context.UpdateByKey(statement, dto);
         }
 
 

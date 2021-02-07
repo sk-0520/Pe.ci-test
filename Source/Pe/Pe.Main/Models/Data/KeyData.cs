@@ -379,7 +379,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
             Items = items;
         }
 
-        #region proeprty
+        #region property
 
         public IReadOnlyList<KeyGestureItem> Items { get; }
 

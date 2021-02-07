@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Attached
 {
-    public class DragAndDropBehavior : Behavior<FrameworkElement>
+    public class DragAndDropBehavior: Behavior<FrameworkElement>
     {
         #region DragAndDropProperty
 
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsingPreviewEvent) {
-                DragAndDrop?.MouseDown((UIElement)sender, e);
+                dragAndDrop.MouseDown((UIElement)sender, e);
             }
         }
 
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsingPreviewEvent) {
-                DragAndDrop?.MouseMove((UIElement)sender, e);
+                dragAndDrop.MouseMove((UIElement)sender, e);
             }
         }
 
@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsingPreviewEvent) {
-                DragAndDrop?.DragEnter((UIElement)sender, e);
+                dragAndDrop.DragEnter((UIElement)sender, e);
             }
         }
 
@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsingPreviewEvent) {
-                DragAndDrop?.DragOver((UIElement)sender, e);
+                dragAndDrop.DragOver((UIElement)sender, e);
             }
         }
 
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsingPreviewEvent) {
-                DragAndDrop?.DragLeave((UIElement)sender, e);
+                dragAndDrop.DragLeave((UIElement)sender, e);
             }
         }
 
@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsingPreviewEvent) {
-                DragAndDrop?.Drop((UIElement)sender, e);
+                dragAndDrop.Drop((UIElement)sender, e);
             }
         }
 
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && dragAndDrop.UsingPreviewEvent) {
-                DragAndDrop?.MouseMove((UIElement)sender, e);
+                dragAndDrop.MouseMove((UIElement)sender, e);
             }
         }
 
@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && dragAndDrop.UsingPreviewEvent) {
-                DragAndDrop?.DragEnter((UIElement)sender, e);
+                dragAndDrop.DragEnter((UIElement)sender, e);
             }
         }
 
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && dragAndDrop.UsingPreviewEvent) {
-                DragAndDrop?.DragOver((UIElement)sender, e);
+                dragAndDrop.DragOver((UIElement)sender, e);
             }
         }
 
@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && dragAndDrop.UsingPreviewEvent) {
-                DragAndDrop?.DragLeave((UIElement)sender, e);
+                dragAndDrop.DragLeave((UIElement)sender, e);
             }
         }
 
@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && dragAndDrop.UsingPreviewEvent) {
-                DragAndDrop?.Drop((UIElement)sender, e);
+                dragAndDrop.Drop((UIElement)sender, e);
             }
         }
 

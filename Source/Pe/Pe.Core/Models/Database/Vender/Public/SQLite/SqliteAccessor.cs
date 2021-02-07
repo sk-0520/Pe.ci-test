@@ -85,6 +85,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
             return DatabaseAccessor.QuerySingle<T>(statement, parameter);
         }
 
+        [return: MaybeNull]
+        public T QuerySingleOrDefault<T>(string statement, object? parameter = null)
+        {
+            return DatabaseAccessor.QuerySingleOrDefault<T>(statement, parameter, this);
+        }
+
         #endregion
     }
 

@@ -1,5 +1,54 @@
 [
 	{
+		"date": "2021/02/07",
+		"version": "0.99.102",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "b4f8cdbe8b0516f579b604b0a4e4e0e8407e1ea4",
+						"subject": "#714: 文言の途中で ... ってなるテキスト表示コントロールを作成する",
+						"comments": [
+							"スーパー妥協の産物が生まれた"
+						]
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "e2ff01287167847d99b6760162e2af7253bc5137",
+						"subject": "#725: ノートの遅延書き込み処理が何かしらの状況で遅延処理破棄により書き込まれない"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "592c9c7723c7bb588f4bbc7721fa6af8ff67b606",
+						"subject": "#726: 開発時に使用する Nodejs/NPM をバージョンアップ",
+						"comments": [
+							"Nodejs: 15.6.0",
+							"npm: 7.4.0"
+						]
+					},
+					{
+						"revision": "f6b66b21a934efd0d99ca269831ee0e6f4184657",
+						"class": "nuget",
+						"subject": "Hardcodet.NotifyIcon.Wpf.NetCore 1.0.17-> 1.0.18"
+					},
+					{
+						"revision": "1b8f955e75555972dce0131134011100b4c3ba01",
+						"subject": "update npm"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2021/01/13",
 		"version": "0.99.095",
 		"contents": [

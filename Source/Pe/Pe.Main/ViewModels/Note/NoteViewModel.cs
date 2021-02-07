@@ -342,7 +342,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set => SetProperty(ref this._isPopupRemoveNote, value);
         }
 
-        public IReadOnlyList<NoteHiddenMode> HiddenModeItems { get; } = EnumUtility.GetMembers<NoteHiddenMode>().OrderBy(i => i).ToList();
+        public IReadOnlyList<NoteHiddenMode> HiddenModeItems { get; } = Enum.GetValues<NoteHiddenMode>().OrderBy(i => i).ToList();
 
         public NoteHiddenMode SelectedHiddenMode
         {

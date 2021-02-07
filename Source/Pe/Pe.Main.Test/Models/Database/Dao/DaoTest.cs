@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using ContentTypeTextNet.Pe.Main.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -72,10 +73,21 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
                         .Select(i => i.Name)
                         .ToHashSet()
                     ;
+
+                    var classParentNamespace = classFullName.Split('.')[^2];
+                    var isEntity = classParentNamespace.EndsWith("Entity", StringComparison.Ordinal);
+
                     foreach(var sqlFileName in sqlFileGroup) {
                         var sqlMethodName = Path.GetFileNameWithoutExtension(sqlFileName);
                         if(!methods.Contains(sqlMethodName)) {
                             errorMessages.Add($"not found method: {classFullName}.{sqlMethodName}");
+                        }
+                        if(isEntity) {
+                            // テーブル直接は結合しない
+                            var sql = File.ReadAllText(sqlFileName);
+                            if(Regex.IsMatch(sql, @"\bjoin\b")) {
+                                errorMessages.Add($"entity join: {classFullName}.{sqlMethodName}");
+                            }
                         }
                     }
                 }

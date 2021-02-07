@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    internal class ResultBuffer : IResultBuffer
+    internal class ResultBuffer: IResultBuffer
     {
         public ResultBuffer(StringBuilder buffer)
         {
@@ -76,10 +76,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <remarks>http://www.unicode.org/Public/UNIDATA/Blocks.txt</remarks>
     public class TextConverter
     {
+        #region define
+
+        const char KatakanaDakuten = '゙';
+        const char KatakanaHanDakuten = '゚';
+
+        #endregion
         #region variable
 
-        Dictionary<char, char>? _halfwidthKatakanaDakutenMap;
-        Dictionary<char, char>? _halfwidthKatakanaHandakutenMap;
+        IDictionary<char, char>? _halfwidthKatakanaDakutenMap;
+        IDictionary<char, char>? _halfwidthKatakanaHandakutenMap;
         IDictionary<char, char>? _katakanaHalfToFullMap;
         IDictionary<char, char>? _katakanaFullToHalfMap;
         IDictionary<char, string>? _dakutenKatakanaFullToHalfMap;
@@ -93,16 +99,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 3040..309F; Hiragana
         /// </summary>
-        MinMax<char> HiraganaRange { get; } = MinMax.Create('\u3040', '\u309F');
+        IReadOnlyMinMax<char> HiraganaRange { get; } = MinMax.Create('\u3040', '\u309F');
         /// <summary>
         /// 30A0..30FF; Katakana
         /// </summary>
-        MinMax<char> KatakanaRange { get; } = MinMax.Create('\u30A0', '\u30FF');
+        IReadOnlyMinMax<char> KatakanaRange { get; } = MinMax.Create('\u30A0', '\u30FF');
         /// <summary>
         /// 半角カナ
         /// </summary>
-        MinMax<char> HalfwidthKatakanaRange { get; } = MinMax.Create('\uFF60', '\uFF9D');
-        MinMax<char> HalfwidthKatakanaDakutenRange { get; } = MinMax.Create('ﾞ', 'ﾟ');
+        IReadOnlyMinMax<char> HalfwidthKatakanaRange { get; } = MinMax.Create('\uFF60', '\uFF9D');
+        IReadOnlyMinMax<char> HalfwidthKatakanaDakutenRange { get; } = MinMax.Create('ﾞ', 'ﾟ');
 
         protected virtual IDictionary<char, char> HalfwidthKatakanaDakutenMap
         {
@@ -562,11 +568,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     if(HalfwidthKatakanaDakutenRange.IsIn(currentText[0])) {
                         switch(currentText[0]) {
                             case 'ﾞ':
-                                resultBuffer.Append('ﾞ');
+                                resultBuffer.Append('゛');
                                 break;
 
                             case 'ﾟ':
-                                resultBuffer.Append('ﾟ');
+                                resultBuffer.Append('゜');
                                 break;
 
                             default:
@@ -583,7 +589,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                                 resultBuffer.Append(HalfwidthKatakanaHandakutenMap[currentText[0]]);
                             } else {
                                 resultBuffer.Append(KatakanaHalfToFullMap[currentText[0]]);
-                                resultBuffer.Append('\u309A'); // 結合文字
+                                resultBuffer.Append(KatakanaHanDakuten); // 結合文字
                             }
                             break;
 
@@ -592,7 +598,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                                 resultBuffer.Append(HalfwidthKatakanaDakutenMap[currentText[0]]);
                             } else {
                                 resultBuffer.Append(KatakanaHalfToFullMap[currentText[0]]);
-                                resultBuffer.Append('\u3099'); // 結合文字
+                                resultBuffer.Append(KatakanaDakuten); // 結合文字
                             }
                             break;
 
@@ -603,6 +609,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 } else {
                     resultBuffer.Append(KatakanaHalfToFullMap[currentText[0]]);
                 }
+            } else if(currentText.Length == 2) {
+                foreach(var pair in DakutenKatakanaFullToHalfMap) {
+                    if(pair.Value == currentText) {
+                        resultBuffer.Append(pair.Key);
+                        break;
+                    }
+                }
+
+                //if(IsHalfwidthKatakana(currentText[0])) {
+                //    resultBuffer.Append(KatakanaHalfToFullMap[currentText[0]]);
+                //    if(currentText[1] == 'ﾞ') {
+                //        resultBuffer.Append('\u3099'); // 結合文字
+                //    } else if(currentText[1] == 'ﾟ') {
+                //        resultBuffer.Append('\u309A'); // 結合文字
+                //    }
+                //}
             }
 
             return skip;
@@ -632,11 +654,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     resultBuffer.Append(normal);
                 } else if(DakutenKatakanaFullToHalfMap.TryGetValue(currentText[0], out var dakuten)) {
                     resultBuffer.Append(dakuten);
+                } else {
+                    var map = new Dictionary<char, char>() {
+                        ['゜'] = 'ﾟ',
+                        ['゛'] = 'ﾞ',
+                    };
+                    if(map.TryGetValue(currentText[0], out var c)) {
+                        resultBuffer.Append(c);
+                    }
                 }
             } else {
                 var map = new Dictionary<char, char>() {
-                    ['\u309A'] = 'ﾟ',
-                    ['\u3099'] = 'ﾞ',
+                    [KatakanaHanDakuten] = 'ﾟ',
+                    [KatakanaDakuten] = 'ﾞ',
                 };
                 foreach(var pair in map) {
                     var index = currentText.IndexOf(pair.Key);

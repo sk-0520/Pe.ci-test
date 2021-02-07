@@ -1,4 +1,10 @@
-﻿using System;
+using System;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Diagnosers;
+using BenchmarkDotNet.Exporters;
+using BenchmarkDotNet.Jobs;
+using BenchmarkDotNet.Running;
 
 namespace Benchmark
 {
@@ -6,7 +12,13 @@ namespace Benchmark
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            BenchmarkRunner.Run<Bench>();
         }
     }
+
+    // -Bench.cs を作成して細かいのは対応する
+    [RPlotExporter]
+    [MemoryDiagnoser]
+    public partial class Bench
+    { }
 }

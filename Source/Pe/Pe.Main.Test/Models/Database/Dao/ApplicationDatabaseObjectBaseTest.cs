@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
     {
         #region define
 
-        class Dc : IDatabaseContext
+        class Dc: IDatabaseContext
         {
             public int Execute(string statement, object? parameter = null)
             {
@@ -51,9 +51,15 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
             {
                 throw new NotImplementedException();
             }
+
+            public T QuerySingleOrDefault<T>(string statement, object? parameter = null)
+            {
+                throw new NotImplementedException();
+            }
+
         }
 
-        class Dsl : IDatabaseStatementLoader
+        class Dsl: IDatabaseStatementLoader
         {
             public string LoadStatement(string key)
             {
@@ -66,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
             }
         }
 
-        class Di : IDatabaseImplementation
+        class Di: IDatabaseImplementation
         {
             public bool SupportedTransactionDDL => throw new NotImplementedException();
 
@@ -112,9 +118,15 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
             {
                 throw new NotImplementedException();
             }
+
+            public string Escape(string input)
+            {
+                throw new NotImplementedException();
+            }
         }
 
-        class Adao: ApplicationDatabaseObjectBase {
+        class Adao: ApplicationDatabaseObjectBase
+        {
             public Adao()
                 : base(new Dc(), new Dsl(), new Di(), Test.LoggerFactory)
             { }

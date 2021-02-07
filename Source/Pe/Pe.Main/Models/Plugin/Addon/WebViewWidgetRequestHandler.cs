@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             WidgetDirectory = widgetDirectory;
         }
 
-        #region proeprty
+        #region property
 
         ILogger Logger { get; }
         DirectoryInfo WidgetDirectory { get; }
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             WidgetDirectory = widgetDirectory;
         }
 
-        #region proeprty
+        #region property
 
         ILoggerFactory LoggerFactory { get; }
         DirectoryInfo WidgetDirectory { get; }

@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         static List<KeyValuePair<Type, object?>> BuildManualParameters(IReadOnlyList<object> manualParameters)
         {
-            var arrayPoolDisposer = new ArrayPoolDisposer<KeyValuePair<Type, object?>>(manualParameters.Count);
+            using var arrayPoolDisposer = new ArrayPoolValue<KeyValuePair<Type, object?>>(manualParameters.Count);
             int resultIndex = 0;
             foreach(var manualParameter in manualParameters) {
                 if(manualParameter is null) {

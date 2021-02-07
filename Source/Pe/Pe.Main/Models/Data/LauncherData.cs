@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class StandardStreamData: DataBase
     {
-        #region proeprty
+        #region property
 
         public bool IsEnabledStandardOutput { get; set; }
         public bool IsEnabledStandardInput { get; set; }
@@ -458,7 +458,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
             LastUpdatedTimestamp = lastUpdatedTimestamp;
         }
 
-        #region proeprty
+        #region property
 
         public IconScale IconScale { get; }
 

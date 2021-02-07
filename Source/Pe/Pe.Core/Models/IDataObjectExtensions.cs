@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 {
     public static class IDataObjectExtensions
     {
-        #region proeprty
+        #region property
 
         static string[] Formats { get; } = new[] {
             DataFormats.UnicodeText,

@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                 .Where(i => i.Configuration != null)
             ;
 
-            var nameConverter = new NameConveter();
+            var nameConverter = new NameConverter();
 
             foreach(var item in items) {
                 var memberKey = item.Configuration.MemberName.Length == 0

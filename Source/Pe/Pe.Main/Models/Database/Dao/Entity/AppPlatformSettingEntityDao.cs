@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
+        [Obsolete]
         public bool UpdateSettingPlatformSetting(SettingAppPlatformSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
@@ -66,20 +67,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, dto) == 1;
         }
 
-        public bool UpdateSuppressSystemIdle(bool isEnabled, IDatabaseCommonStatus commonStatus)
+        public void UpdateSuppressSystemIdle(bool isEnabled, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.SuppressSystemIdle] = isEnabled;
-            return Context.Execute(statement, parameter) == 1;
+            Context.UpdateByKey(statement, parameter);
         }
 
-        public bool UpdateSupportExplorer(bool isEnabled, IDatabaseCommonStatus commonStatus)
+        public void UpdateSupportExplorer(bool isEnabled, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.SupportExplorer] = isEnabled;
-            return Context.Execute(statement, parameter) == 1;
+            Context.UpdateByKey(statement, parameter);
         }
 
 

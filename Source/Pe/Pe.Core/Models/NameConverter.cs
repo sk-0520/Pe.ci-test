@@ -7,7 +7,7 @@ using Microsoft.Windows.Themes;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public class NameConveter
+    public class NameConverter
     {
         #region function
 
@@ -107,32 +107,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return builder.ToString();
         }
 
-        /// <summary>
-        /// ケバブ形式をパスカル形式に変換。
-        /// <para>abc-def -&gt; AbcDef</para>
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public string KebabToPascal(string source)
+        string ToPascalCore(string source, char separator)
         {
-            if(source == null) {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if(string.IsNullOrWhiteSpace(source)) {
-                return source;
-            }
+            Debug.Assert(!string.IsNullOrWhiteSpace(source));
+            Debug.Assert(!char.IsControl(separator));
 
             var isUpper = true;
             var builder = new StringBuilder(source.Length);
             for(var i = 0; i < source.Length; i++) {
                 var c = source[i];
-                if(c == '-') {
+                if(c == separator) {
                     if(i + 1 == source.Length) {
                         break;
                     }
 
                     var next = source[i + 1];
-                    if(next == '-') {
+                    if(next == separator) {
                         continue;
                     }
                     if('a' <= next && next <= 'z') {
@@ -159,6 +149,42 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// ケバブ形式をパスカル形式に変換。
+        /// <para>abc-def -&gt; AbcDef</para>
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public string KebabToPascal(string source)
+        {
+            if(source == null) {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if(string.IsNullOrWhiteSpace(source)) {
+                return source;
+            }
+
+            return ToPascalCore(source, '-');
+        }
+
+        /// <summary>
+        /// スネーク形式をパスカル形式に変換。
+        /// <para>abc_def -&gt; AbcDef</para>
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public string SnakeToPascal(string source)
+        {
+            if(source == null) {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if(string.IsNullOrWhiteSpace(source)) {
+                return source;
+            }
+
+            return ToPascalCore(source, '_');
         }
 
         #endregion
