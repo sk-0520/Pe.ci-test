@@ -1,13 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
-using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
@@ -17,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
     /// 独立したランチャーアイテム編集処理。
     /// <para>アイテムを単体編集する要素。</para>
     /// </summary>
-    sealed public class LauncherItemCustomizeContainerElement : ElementBase, IViewShowStarter, IViewCloseReceiver
+    sealed public class LauncherItemCustomizeContainerElement: ElementBase, IViewShowStarter, IViewCloseReceiver
     {
         #region variable
 

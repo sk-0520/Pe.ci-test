@@ -1,15 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
@@ -74,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
-    public class DatabaseLazyWriter : DisposerBase, IDatabaseLazyWriter
+    public class DatabaseLazyWriter: DisposerBase, IDatabaseLazyWriter
     {
         #region variable
 

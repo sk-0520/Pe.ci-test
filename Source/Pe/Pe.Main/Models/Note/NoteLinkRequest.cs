@@ -1,12 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Main.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Note
 {
-    public class NoteLinkChangeRequestParameter : FileDialogRequestParameter
+    public class NoteLinkChangeRequestParameter: FileDialogRequestParameter
     {
         #region peoperty
 
@@ -16,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
 
         #endregion
     }
-    public class NoteLinkChangeRequestResponse : FileDialogRequestResponse
+    public class NoteLinkChangeRequestResponse: FileDialogRequestResponse
     {
         #region peoperty
 

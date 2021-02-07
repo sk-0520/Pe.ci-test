@@ -7,7 +7,6 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using Microsoft.Extensions.Logging;
 
@@ -202,8 +201,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         {
             var items = LoadKeyActionPressedData();
             return CreateJobs(items, (id, item) => {
-                KeyActionPressedJobBase job = item.Action.KeyActionKind switch
-                {
+                KeyActionPressedJobBase job = item.Action.KeyActionKind switch {
                     KeyActionKind.Command => CreateCommandJob(item),
                     KeyActionKind.LauncherItem => CreateLauncherItemJob(item),
                     KeyActionKind.LauncherToolbar => CreateLauncherToolbarJob(item),

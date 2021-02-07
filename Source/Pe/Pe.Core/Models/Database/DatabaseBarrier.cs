@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
-    sealed class DatabaseBarrierTransaction : DisposerBase, IDatabaseTransaction
+    sealed class DatabaseBarrierTransaction: DisposerBase, IDatabaseTransaction
     {
         public DatabaseBarrierTransaction(IDisposable locker, IDatabaseTransaction transaction, IDatabaseImplementation implementation)
         {
@@ -164,7 +163,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     }
 
     /// <inheritdoc cref="IDatabaseBarrier" />
-    public class DatabaseBarrier : IDatabaseBarrier
+    public class DatabaseBarrier: IDatabaseBarrier
     {
         public DatabaseBarrier(IDatabaseAccessor accessor, ReaderWriterLocker locker)
         {

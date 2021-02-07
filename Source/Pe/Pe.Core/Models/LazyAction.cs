@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Timers;
-using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models
@@ -10,7 +7,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// 遅延処理。
     /// </summary>
-    public class LazyAction : DisposerBase, IFlushable
+    public class LazyAction: DisposerBase, IFlushable
     {
         #region variable
 

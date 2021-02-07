@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
@@ -11,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Note
 {
-    public class NoteRemover : EntityRemoverBase
+    public class NoteRemover: EntityRemoverBase
     {
         public NoteRemover(Guid noteId, ILoggerFactory loggerFactory) : base(loggerFactory)
         {

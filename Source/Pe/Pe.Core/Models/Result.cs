@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -13,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public interface IResultSuccessValue : IResult
+    public interface IResultSuccessValue: IResult
     {
         #region property
 
@@ -22,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public interface IResultFailureValue : IResult
+    public interface IResultFailureValue: IResult
     {
         #region property
 
@@ -31,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public interface IResultSuccessValue<out TSuccess> : IResultSuccessValue
+    public interface IResultSuccessValue<out TSuccess>: IResultSuccessValue
         where TSuccess : class
     {
         #region property
@@ -41,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public interface IResultFailureValue<out TFailure> : IResultFailureValue
+    public interface IResultFailureValue<out TFailure>: IResultFailureValue
         where TFailure : class
     {
         #region property
@@ -51,15 +49,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public interface IResultValue : IResultSuccessValue, IResultFailureValue
+    public interface IResultValue: IResultSuccessValue, IResultFailureValue
     { }
 
-    public interface IResultValue<TSuccess, TFailure> : IResultSuccessValue<TSuccess>, IResultFailureValue<TFailure>, IResultValue
+    public interface IResultValue<TSuccess, TFailure>: IResultSuccessValue<TSuccess>, IResultFailureValue<TFailure>, IResultValue
         where TSuccess : class
         where TFailure : class
     { }
 
-    public struct Result : IResult
+    public struct Result: IResult
     {
         public Result(bool success)
         {
@@ -73,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public struct ResultSuccessValue<TSuccess> : IResultSuccessValue<TSuccess>
+    public struct ResultSuccessValue<TSuccess>: IResultSuccessValue<TSuccess>
         where TSuccess : class
     {
         public ResultSuccessValue(bool success, TSuccess? successValue)
@@ -111,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     }
 
-    public struct ResultFailureValue<TFailure> : IResultFailureValue<TFailure>
+    public struct ResultFailureValue<TFailure>: IResultFailureValue<TFailure>
         where TFailure : class
     {
         public ResultFailureValue(bool success, TFailure? failureValue)
@@ -149,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     }
 
-    public struct ResultValue<TSuccess, TFailure> : IResultValue<TSuccess, TFailure>
+    public struct ResultValue<TSuccess, TFailure>: IResultValue<TSuccess, TFailure>
             where TSuccess : class
             where TFailure : class
     {

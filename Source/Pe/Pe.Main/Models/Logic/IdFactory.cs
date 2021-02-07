@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
@@ -23,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    internal sealed class IdFactory : IIdFactory
+    internal sealed class IdFactory: IIdFactory
     {
         public IdFactory(ILoggerFactory loggerFactory)
         {

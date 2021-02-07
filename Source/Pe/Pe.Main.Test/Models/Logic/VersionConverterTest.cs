@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -35,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
         [DataRow("A_1-02-003.C", "A", "", "C")]
         [DataRow("A_1-02-003", "A", "", "")]
         [DataRow("A_1-02-003_B", "A", "B", "")]
-        public void ConvertFileNameTest(string expected , string head, string tail, string extension)
+        public void ConvertFileNameTest(string expected, string head, string tail, string extension)
         {
             var vc = new VersionConverter();
             var actual = vc.ConvertFileName(head, new Version(1, 2, 3, 4), tail, extension);

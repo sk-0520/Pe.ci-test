@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 {
-    public class NotifyLogItemElement : ElementBase, IReadOnlyNotifyMessage, INotifyLogId
+    public class NotifyLogItemElement: ElementBase, IReadOnlyNotifyMessage, INotifyLogId
     {
         #region variable
 

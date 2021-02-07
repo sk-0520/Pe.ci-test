@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Windows;
-using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
@@ -16,14 +12,11 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
-using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
-using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.Models.WebView;
 using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
 using ContentTypeTextNet.Pe.Main.Views.Converter;
 using ContentTypeTextNet.Pe.Main.Views.Widget;
-using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
@@ -189,8 +182,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             Window window;
             using(var reader = WidgetAddonContextFactory.BarrierRead()) {
                 using var context = WidgetAddonContextFactory.CreateCreateContex(PluginInformations, reader);
-                window = Widget.ViewType switch
-                {
+                window = Widget.ViewType switch {
                     WidgetViewType.Window => CreateWindowWidget(context),
                     WidgetViewType.WebView => CreateWebViewWidget(context),
                     _ => throw new NotImplementedException(),

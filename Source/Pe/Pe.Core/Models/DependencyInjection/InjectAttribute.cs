@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 {
@@ -10,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// <para><see cref="IDiContainer.Inject{T}(T)"/> を使用する際の対象を指定。</para>
     /// </summary>
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public class InjectAttribute : Attribute
+    public class InjectAttribute: Attribute
     {
         /// <summary>
         /// コンストラクタの限定、対象プロパティ(or フィールド)をマーク。

@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -18,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="stream"><inheritdoc cref="KeepStream(Stream, bool)"/></param>
         public KeepStream(Stream stream)
-            :this(stream, true)
+            : this(stream, true)
         { }
 
         /// <summary>

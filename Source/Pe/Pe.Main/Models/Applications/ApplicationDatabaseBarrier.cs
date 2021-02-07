@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 
@@ -116,17 +112,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     }
     */
 
-    public interface IApplicationDatabaseBarrier : IDatabaseBarrier
+    public interface IApplicationDatabaseBarrier: IDatabaseBarrier
     { }
 
-    public interface IMainDatabaseBarrier : IApplicationDatabaseBarrier
+    public interface IMainDatabaseBarrier: IApplicationDatabaseBarrier
     { }
-    public interface ILargeDatabaseBarrier : IApplicationDatabaseBarrier
+    public interface ILargeDatabaseBarrier: IApplicationDatabaseBarrier
     { }
-    public interface ITemporaryDatabaseBarrier : IApplicationDatabaseBarrier
+    public interface ITemporaryDatabaseBarrier: IApplicationDatabaseBarrier
     { }
 
-    public sealed class ApplicationDatabaseBarrier : DatabaseBarrier, IMainDatabaseBarrier, ILargeDatabaseBarrier, ITemporaryDatabaseBarrier
+    public sealed class ApplicationDatabaseBarrier: DatabaseBarrier, IMainDatabaseBarrier, ILargeDatabaseBarrier, ITemporaryDatabaseBarrier
     {
         public ApplicationDatabaseBarrier(IDatabaseAccessor accessor, ReaderWriterLocker locker)
             : base(accessor, locker)

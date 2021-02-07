@@ -1,22 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Main.Models;
-using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using Prism.Commands;
 
@@ -25,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
     /// <summary>
     /// LauncherItemCustomizeControl.xaml の相互作用ロジック
     /// </summary>
-    public partial class LauncherItemCustomizeControl : UserControl
+    public partial class LauncherItemCustomizeControl: UserControl
     {
         public LauncherItemCustomizeControl()
         {

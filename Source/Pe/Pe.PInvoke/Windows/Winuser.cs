@@ -6,7 +6,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
     public delegate IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam);
 
-    public enum WM : uint
+    public enum WM: uint
     {
         WM_DESTROY = 0x0002,
         WM_ACTIVATE = 0x06,
@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
-    public enum WS : uint
+    public enum WS: uint
     {
         WS_OVERLAPPED = 0,
         WS_POPUP = 0x80000000,
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
-    public enum WS_EX : uint
+    public enum WS_EX: uint
     {
         WS_EX_DLGMODALFRAME = 0x0001,
         WS_EX_NOPARENTNOTIFY = 0x0004,
@@ -248,7 +248,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
     }
 
-    public enum MA : int
+    public enum MA: int
     {
         MA_ACTIVATE = 1,
         MA_ACTIVATEANDEAT = 2,
@@ -257,7 +257,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
-    public enum MOD : uint
+    public enum MOD: uint
     {
         None = 0,
         MOD_ALT = 0x0001,
@@ -301,7 +301,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
-    public enum SWP : int
+    public enum SWP: int
     {
         SWP_ASYNCWINDOWPOS = 0x4000,
         SWP_DEFERERASE = 0x2000,
@@ -333,7 +333,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     /// <summary>
     ///
     /// </summary>
-    public enum SW : uint
+    public enum SW: uint
     {
         /// <summary>
         ///        Hides the window and activates another window.
@@ -400,7 +400,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     ///
     /// </summary>
     [Flags]
-    public enum SMTO : uint
+    public enum SMTO: uint
     {
         SMTO_NORMAL = 0x0,
         SMTO_BLOCK = 0x1,
@@ -509,7 +509,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     /// <summary>
     /// SPI_ System-wide parameter - Used in SystemParametersInfo function
     /// </summary>
-    public enum SPI : uint
+    public enum SPI: uint
     {
         /// <summary>
         /// Determines whether the warning beeper is on.
@@ -1762,7 +1762,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         DI_NORMAL = 3,
     }
 
-    public enum GW : uint
+    public enum GW: uint
     {
         GW_HWNDFIRST = 0,
         GW_HWNDLAST = 1,
@@ -1774,7 +1774,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
-    public enum KEYEVENTF : uint
+    public enum KEYEVENTF: uint
     {
         KEYEVENTF_KEYDOWN = 0x0000,
         KEYEVENTF_EXTENDEDKEY = 0x0001,
@@ -1792,7 +1792,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         GWL_ID = -12
     }
 
-    public enum VK : int
+    public enum VK: int
     {
         VK_LBUTTON = 0x01,
         VK_RBUTTON = 0x02,
@@ -1973,7 +1973,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public SWP flags;
     }
 
-    public enum IDC : int
+    public enum IDC: int
     {
         IDC_ARROW = 32512,
         IDC_IBEAM = 32513,
@@ -2005,7 +2005,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         WMSZ_BOTTOMRIGHT = 8,
     }
 
-    public enum MONITOR : uint
+    public enum MONITOR: uint
     {
         MONITOR_DEFAULTTONULL = 0x00000000,
         MONITOR_DEFAULTTOPRIMARY = 0x00000001,
@@ -2013,7 +2013,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
 
-    public enum CWP : uint
+    public enum CWP: uint
     {
         CWP_ALL = 0x0000,
         CWP_SKIPINVISIBLE = 0x0001,
@@ -2021,7 +2021,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         CWP_SKIPTRANSPARENT = 0x0004
     }
 
-    public enum GA : uint
+    public enum GA: uint
     {
         /// <summary>
         /// 親ウィンドウを取得します。これには、GetParent 関数で取得されるような、オーナーウィンドウは含みません。
@@ -2037,7 +2037,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         GA_ROOTOWNER = 3
     }
 
-    public enum OBJID : uint
+    public enum OBJID: uint
     {
         OBJID_HSCROLL = 0xFFFFFFFA,
         OBJID_VSCROLL = 0xFFFFFFFB,
@@ -2092,7 +2092,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
-    public enum SW_scroll : uint
+    public enum SW_scroll: uint
     {
         /// <summary>
         /// SW_INVALIDATE フラグと共にこのフラグを指定すると、スクロール後、WM_ERASEBKGND メッセージをウィンドウへ送信し、新たに無効になったリージョンを消去します。
@@ -2121,7 +2121,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public UInt32 uCount;
         public UInt32 dwTimeout;
     }
-    public enum FLASHW : uint
+    public enum FLASHW: uint
     {
         /// <summary>
         /// Stop flashing. The system restores the window to its original state.
@@ -2166,7 +2166,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
-    public enum LLKHF : uint
+    public enum LLKHF: uint
     {
         LLKHF_EXTENDED = 0x01,
         LLKHF_INJECTED = 0x10,
@@ -2195,7 +2195,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
-    public enum MOUSEEVENTF : uint
+    public enum MOUSEEVENTF: uint
     {
         MOUSEEVENTF_ABSOLUTE = 0x8000,
         MOUSEEVENTF_HWHEEL = 0x01000,
@@ -2231,7 +2231,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public short wParamH;
     }
 
-    public enum INPUT_type : int
+    public enum INPUT_type: int
     {
         INPUT_MOUSE = 0,
         INPUT_KEYBOARD = 1,
@@ -2264,7 +2264,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     /// https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-mouse_event
     /// http://tokovalue.jp/function/MapVirtualKey.htm
     /// </summary>
-    public enum MAPVK:uint
+    public enum MAPVK: uint
     {
         /// <summary>
         /// uCode は仮想キーコードであり、スキャンコードへ変換される。左右のキーを区別しない仮想キーコードのときは、関数は左側のスキャンコードを返す。スキャンコードに変換されないときは、関数は 0 を返す。
@@ -2705,11 +2705,11 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
         // overload for use with LowLevelKeyboardProc
         [DllImport("user32.dll")]
-        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, WM wParam, [In]KBDLLHOOKSTRUCT lParam);
+        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, WM wParam, [In] KBDLLHOOKSTRUCT lParam);
 
         // overload for use with LowLevelMouseProc
         [DllImport("user32.dll")]
-        static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, WM wParam, [In]MSLLHOOKSTRUCT lParam);
+        static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, WM wParam, [In] MSLLHOOKSTRUCT lParam);
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr GetModuleHandle(string lpModuleName);
         [DllImport("user32.dll", SetLastError = true)]

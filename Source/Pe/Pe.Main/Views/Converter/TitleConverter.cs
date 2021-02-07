@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Reflection;
 using System.Text;
 using System.Windows.Data;
 using ContentTypeTextNet.Pe.Main.Models;
@@ -9,7 +7,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Converter
 {
-    public class TitleConverter : IValueConverter
+    public class TitleConverter: IValueConverter
     {
         #region IValueConverter
 
@@ -17,8 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
         {
             var caption = (string)value ?? string.Empty;
 
-            var header = BuildStatus.BuildType switch
-            {
+            var header = BuildStatus.BuildType switch {
                 BuildType.Release => string.Empty,
                 _ => "[" + BuildStatus.BuildType.ToString() + "] ",
             };

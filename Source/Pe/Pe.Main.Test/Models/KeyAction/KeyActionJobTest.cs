@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
@@ -12,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
     [TestClass]
     public class KeyActionJobTest
     {
-        class PublicKeyActionJob : KeyActionJobBase
+        class PublicKeyActionJob: KeyActionJobBase
         {
             public PublicKeyActionJob()
                 : base(new KeyActionCommonData(Guid.NewGuid(), KeyActionKind.Replace), new[] { new KeyMappingData() })
@@ -247,7 +245,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
     {
         #region define
 
-        class KeyActionPressedData : KeyActionPressedDataBase
+        class KeyActionPressedData: KeyActionPressedDataBase
         {
             public KeyActionPressedData()
                 : base(Guid.NewGuid(), KeyActionKind.Replace)

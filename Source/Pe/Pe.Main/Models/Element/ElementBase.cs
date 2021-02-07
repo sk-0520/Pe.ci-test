@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -12,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
     /// <summary>
     /// DataContext にあてる VM のモデルになる基底クラス。
     /// </summary>
-    public abstract class ElementBase : BindModelBase
+    public abstract class ElementBase: BindModelBase
     {
         #region variable
 
@@ -57,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
     /// <see cref="ElementBase"/>と同じだけど結構な長寿で DI コンテナを持ち運ぶ気持ち最上位なモデル。
     /// <para>わっけ分からんくなりそうなので極力使用しないこと！</para>
     /// </summary>
-    public abstract class ContextElementBase : ElementBase
+    public abstract class ContextElementBase: ElementBase
     {
         protected ContextElementBase(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(loggerFactory)

@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
@@ -167,7 +165,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [ComImport, Guid("42f85136-db7e-439c-85f1-e4075d135fc8"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IFileDialog : IModalWindow
+    public interface IFileDialog: IModalWindow
     {
         // Defined on IModalWindow - repeated here due to requirements of COM interop layer
         // --------------------------------------------------------------------------------
@@ -252,7 +250,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     [ComImport]
     [Guid("42f85136-db7e-439c-85f1-e4075d135fc8")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IFileOpenDialog:IFileDialog
+    public interface IFileOpenDialog: IFileDialog
     {
         [PreserveSig]
         new uint Show([In] IntPtr parent); // IModalWindow
@@ -285,7 +283,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
 
     [ComImport, Guid("84bccd23-5fde-4cdb-aea4-af64b83d78ab"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IFileSaveDialog : IFileDialog
+    public interface IFileSaveDialog: IFileDialog
     {
         // Defined on IModalWindow - repeated here due to requirements of COM interop layer
         // --------------------------------------------------------------------------------
@@ -390,7 +388,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [ComImport, Guid("8016b7b3-3d49-4504-a0aa-2a37494e606f"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IFileDialogCustomize : IFileDialog
+    public interface IFileDialogCustomize: IFileDialog
     {
         [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
         void EnableOpenDropDown([In] int dwIDCtl);

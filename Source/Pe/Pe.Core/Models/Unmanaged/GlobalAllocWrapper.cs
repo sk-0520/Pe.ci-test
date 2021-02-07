@@ -1,14 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 {
     /// <summary>
     /// <see cref="Marshal.AllocHGlobal(int)"/>のラッパー。
     /// </summary>
-    public class GlobalAllocWrapper : UnmanagedWrapperBase<IntPtr>
+    public class GlobalAllocWrapper: UnmanagedWrapperBase<IntPtr>
     {
         /// <summary>
         /// メモリ確保。
@@ -37,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
         }
 
         public static GlobalAllocWrapper Create<T>(T structure)
-            where T: struct
+            where T : struct
         {
             var result = new GlobalAllocWrapper(Marshal.SizeOf(structure));
             Marshal.StructureToPtr(structure, result.Raw, false);

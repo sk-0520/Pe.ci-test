@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 
@@ -78,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="iconScale"></param>
         /// <param name="launcherItemAddonContext"></param>
         /// <returns>アイコンとなるデータ。</returns>
-        object GetIcon(LauncherItemIconMode iconMode,  in IconScale iconScale);
+        object GetIcon(LauncherItemIconMode iconMode, in IconScale iconScale);
 
         /// <summary>
         /// アイテムの実行。

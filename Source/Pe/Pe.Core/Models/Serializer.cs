@@ -1,13 +1,11 @@
 //#define ENABLED_NETCoreJSON
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Xml;
-using System.Runtime.Serialization.Json;
-using System.Diagnostics.CodeAnalysis;
 
 #if ENABLED_NETCoreJSON
 using System.Text.Json;
@@ -127,7 +125,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public class JsonNetCoreSerializer : SerializerBase
     {
-        #region property
+    #region property
 
         public JsonReaderOptions ReaderOptions { get; set; } = new JsonReaderOptions() {
             AllowTrailingCommas = true,
@@ -137,9 +135,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Indented = true,
         };
 
-        #endregion
+    #endregion
 
-        #region SerializerBase
+    #region SerializerBase
 
         public override TResult Load<TResult>(Stream stream)
         {
@@ -157,12 +155,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        #endregion
+    #endregion
     }
 
 #endif
 
-    public class JsonDataSerializer : SerializerBase
+    public class JsonDataSerializer: SerializerBase
     {
         #region SerializerBase
 
@@ -192,7 +190,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
 
-    public abstract class XmlSerializerBase : SerializerBase
+    public abstract class XmlSerializerBase: SerializerBase
     {
         #region function
 
@@ -214,7 +212,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class XmlSerializer : XmlSerializerBase
+    public class XmlSerializer: XmlSerializerBase
     {
         #region XmlSerializerBase
 
@@ -243,10 +241,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public abstract class DataContractSerializerBase : XmlSerializerBase
+    public abstract class DataContractSerializerBase: XmlSerializerBase
     { }
 
-    public class XmlDataContractSerializer : DataContractSerializerBase
+    public class XmlDataContractSerializer: DataContractSerializerBase
     {
         #region DataContractSerializerBase
 
@@ -275,7 +273,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class BinaryDataContractSerializer : DataContractSerializerBase
+    public class BinaryDataContractSerializer: DataContractSerializerBase
     {
         #region DataContractSerializerBase
 

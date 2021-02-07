@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 {
@@ -10,7 +7,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// <para>内部的に <see cref="ArgumentException"/> 等を投げる場合はわざわざラップしないのでこの例外だけ受ければ良いという話ではない。</para>
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3925:\"ISerializable\" should be implemented correctly")]
-    public sealed class DiException : ApplicationException
+    public sealed class DiException: ApplicationException
     {
         public DiException()
         { }

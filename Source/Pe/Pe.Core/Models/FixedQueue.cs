@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -35,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <see cref="Queue{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FixedQueue<T> : IFixedQueue<T>
+    public class FixedQueue<T>: IFixedQueue<T>
     {
         public FixedQueue(int limit)
         {
@@ -102,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <see cref="ConcurrentQueue{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ConcurrentFixedQueue<T> : IFixedQueue<T>
+    public class ConcurrentFixedQueue<T>: IFixedQueue<T>
     {
         public ConcurrentFixedQueue(int limit)
         {

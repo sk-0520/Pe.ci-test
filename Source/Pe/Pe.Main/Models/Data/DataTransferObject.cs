@@ -1,24 +1,21 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
     #region Dto
-    public interface IReadOnlyDto : IReadOnlyTransfer
+    public interface IReadOnlyDto: IReadOnlyTransfer
     { }
 
-    public abstract class DtoBase : TransferBase, IReadOnlyDto
+    public abstract class DtoBase: TransferBase, IReadOnlyDto
     { }
 
     #endregion
 
     #region common dto
 
-    public interface IReadOnlyCreateDto : IReadOnlyDto
+    public interface IReadOnlyCreateDto: IReadOnlyDto
     {
         #region property
 
@@ -30,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
     }
-    public interface IWritableCreateDto : IReadOnlyDto
+    public interface IWritableCreateDto: IReadOnlyDto
     {
         #region property
 
@@ -43,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public interface IReadOnlyUpdateDto : IReadOnlyDto
+    public interface IReadOnlyUpdateDto: IReadOnlyDto
     {
         #region property
 
@@ -56,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
     }
-    public interface IWritableUpdateDto : IReadOnlyDto
+    public interface IWritableUpdateDto: IReadOnlyDto
     {
         #region property
 
@@ -70,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public abstract class CreateDtoBase : IReadOnlyCreateDto, IWritableCreateDto
+    public abstract class CreateDtoBase: IReadOnlyCreateDto, IWritableCreateDto
     {
         #region IReadOnlyCreateDto
 
@@ -82,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
     }
-    public abstract class UpdateDtoBase : IReadOnlyUpdateDto, IWritableUpdateDto
+    public abstract class UpdateDtoBase: IReadOnlyUpdateDto, IWritableUpdateDto
     {
         #region IReadOnlyUpdateDto
 
@@ -95,13 +92,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
     }
-    public interface IReadOnlyCommonDto : IReadOnlyCreateDto, IReadOnlyUpdateDto
+    public interface IReadOnlyCommonDto: IReadOnlyCreateDto, IReadOnlyUpdateDto
     { }
 
-    public interface IWritableCommonDto : IWritableCreateDto, IWritableUpdateDto
+    public interface IWritableCommonDto: IWritableCreateDto, IWritableUpdateDto
     { }
 
-    public abstract class CommonDtoBase : DtoBase, IReadOnlyCommonDto, IWritableCommonDto
+    public abstract class CommonDtoBase: DtoBase, IReadOnlyCommonDto, IWritableCommonDto
     {
         #region IWritableCreateDto
 
@@ -125,20 +122,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public interface IReadOnlyRowDtoBase : IReadOnlyCommonDto
+    public interface IReadOnlyRowDtoBase: IReadOnlyCommonDto
     { }
 
     /// <summary>
     /// ドメイン系で使用。
     /// </summary>
-    public abstract class RowDtoBase : CommonDtoBase, IReadOnlyRowDtoBase
+    public abstract class RowDtoBase: CommonDtoBase, IReadOnlyRowDtoBase
     { }
 
     #endregion
 
     #region setup
 
-    public interface IReadOnlySetupDto : IReadOnlyCommonDto
+    public interface IReadOnlySetupDto: IReadOnlyCommonDto
     {
         #region property
 
@@ -156,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class SetupDto : CommonDtoBase, IReadOnlySetupDto
+    public class SetupDto: CommonDtoBase, IReadOnlySetupDto
     {
         public SetupDto()
         { }

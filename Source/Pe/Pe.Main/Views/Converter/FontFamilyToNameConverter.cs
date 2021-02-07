@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -11,7 +8,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 namespace ContentTypeTextNet.Pe.Main.Views.Converter
 {
     [ValueConversion(typeof(FontFamily), typeof(string))]
-    public class FontFamilyToNameConverter : IValueConverter
+    public class FontFamilyToNameConverter: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

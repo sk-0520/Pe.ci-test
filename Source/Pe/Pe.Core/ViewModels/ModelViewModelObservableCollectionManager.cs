@@ -5,11 +5,9 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Data;
 using ContentTypeTextNet.Pe.Core.Models;
-using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.ViewModels
 {
@@ -25,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     /// </summary>
     /// <typeparam name="TModel"></typeparam>
     /// <typeparam name="TViewModel"></typeparam>
-    public abstract class ModelViewModelObservableCollectionManagerBase<TModel, TViewModel> : ObservableCollectionManagerBase<TModel>
+    public abstract class ModelViewModelObservableCollectionManagerBase<TModel, TViewModel>: ObservableCollectionManagerBase<TModel>
         where TModel : BindModelBase
         where TViewModel : ViewModelBase
     {
@@ -224,7 +222,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     }
 
 
-    public class ActionModelViewModelObservableCollectionManager<TModel, TViewModel> : ModelViewModelObservableCollectionManagerBase<TModel, TViewModel>
+    public class ActionModelViewModelObservableCollectionManager<TModel, TViewModel>: ModelViewModelObservableCollectionManagerBase<TModel, TViewModel>
         where TModel : BindModelBase
         where TViewModel : ViewModelBase
     {

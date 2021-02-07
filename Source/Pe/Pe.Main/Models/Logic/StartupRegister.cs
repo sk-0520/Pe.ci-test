@@ -3,12 +3,9 @@
 #endif
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 
@@ -60,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         string StartupFilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), StartupFileName);
         string OldStartupFilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), OldStartupFileName);
 
-#endregion
+        #endregion
 
         #region function
 

@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
-    public class IsEmptyCollectionConverter : IValueConverter
+    public class IsEmptyCollectionConverter: IValueConverter
     {
         #region IValueConverter
 

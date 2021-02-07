@@ -1,9 +1,8 @@
 // [T4] build 2020-05-01 13:32:17Z(UTC)
 using System;
 using System.Diagnostics;
-using System.Windows.Input;
 using System.Runtime.InteropServices;
-using ContentTypeTextNet.Pe.Main.Models.Logic;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
@@ -24,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             MouseHookEventArgs? e = null;
             EventHandler<MouseHookEventArgs>? target = null;
 
-            
+
             var wParamValue = wParam.ToInt32();
 
             switch(wParamValue) {
@@ -37,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
                 #region 機械生成
                 #region 通常ボタン
-                
+
                 case (int)WM.WM_LBUTTONDOWN:
                     target = MouseDown;
                     if(target != null) {
@@ -45,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                     break;
 
-                
+
                 case (int)WM.WM_RBUTTONDOWN:
                     target = MouseDown;
                     if(target != null) {
@@ -53,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                     break;
 
-                
+
                 case (int)WM.WM_MBUTTONDOWN:
                     target = MouseDown;
                     if(target != null) {
@@ -61,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                     break;
 
-                
+
                 case (int)WM.WM_LBUTTONUP:
                     target = MouseUp;
                     if(target != null) {
@@ -69,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                     break;
 
-                
+
                 case (int)WM.WM_RBUTTONUP:
                     target = MouseUp;
                     if(target != null) {
@@ -77,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                     break;
 
-                
+
                 case (int)WM.WM_MBUTTONUP:
                     target = MouseUp;
                     if(target != null) {
@@ -85,11 +84,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                     break;
 
-                
+
                 #endregion
 
                 #region Xボタン
-                
+
                 case (int)WM.WM_XBUTTONDOWN: {
                         var msll = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT))!;
                         var xbutton = WindowsUtility.HIWORD(msll.mouseData);
@@ -98,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                             if(target != null) {
                                 e = new MouseHookEventArgs(1, MouseButtonState.Pressed, msll);
                             }
-                        } else if (xbutton == (int)XBUTTON.XBUTTON2) {
+                        } else if(xbutton == (int)XBUTTON.XBUTTON2) {
                             target = MouseUp;
                             if(target != null) {
                                 e = new MouseHookEventArgs(2, MouseButtonState.Pressed, msll);
@@ -107,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                     break;
 
-                
+
                 case (int)WM.WM_XBUTTONUP: {
                         var msll = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT))!;
                         var xbutton = WindowsUtility.HIWORD(msll.mouseData);
@@ -116,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                             if(target != null) {
                                 e = new MouseHookEventArgs(1, MouseButtonState.Released, msll);
                             }
-                        } else if (xbutton == (int)XBUTTON.XBUTTON2) {
+                        } else if(xbutton == (int)XBUTTON.XBUTTON2) {
                             target = MouseUp;
                             if(target != null) {
                                 e = new MouseHookEventArgs(2, MouseButtonState.Released, msll);
@@ -125,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                     break;
 
-                
+
                 #endregion
 
                 #endregion

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
     /// enum の属性設定にて <see cref="EnumTransfer{TEnum}"/> を制御する。
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
-    public class EnumTransferAttribute : Attribute
+    public class EnumTransferAttribute: Attribute
     {
         public EnumTransferAttribute(string value)
         {

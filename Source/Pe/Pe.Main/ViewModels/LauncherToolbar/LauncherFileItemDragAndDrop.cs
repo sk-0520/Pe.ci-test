@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -13,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
     public class LauncherFileItemDragAndDrop: DragAndDropGuidelineBase
     {
         public LauncherFileItemDragAndDrop(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            :base(dispatcherWrapper, loggerFactory)
+            : base(dispatcherWrapper, loggerFactory)
         { }
 
         #region function
@@ -33,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 }
             } else {
                 e.Effects = DragDropEffects.None;
-                    e.Handled = true;
+                e.Handled = true;
             }
         }
 

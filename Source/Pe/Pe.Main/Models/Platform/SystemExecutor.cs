@@ -1,14 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
-using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {

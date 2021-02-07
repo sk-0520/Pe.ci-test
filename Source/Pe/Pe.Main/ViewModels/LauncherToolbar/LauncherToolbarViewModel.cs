@@ -1,44 +1,33 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using ContentTypeTextNet.Pe.Main.Views.Extend;
-using ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup;
-using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem;
-using Prism.Commands;
-using Microsoft.Xaml.Behaviors;
 using System.Windows.Controls;
-using ContentTypeTextNet.Pe.Core.ViewModels;
-using ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar;
-using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using Microsoft.Extensions.Logging;
-using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
-using ContentTypeTextNet.Pe.Core.Views;
-using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
-using System.Windows.Controls.Primitives;
-using System.IO;
-using ContentTypeTextNet.Pe.Main.Views.LauncherToolbar;
-using ContentTypeTextNet.Pe.Main.Models.Logic;
-using System.Windows.Media;
-using ContentTypeTextNet.Pe.Main.Models.Platform;
-using System.Diagnostics;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
-using ContentTypeTextNet.Pe.Main.Models;
-using System.Windows.Threading;
-using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.ViewModels.Font;
-using ContentTypeTextNet.Pe.Main.Models.KeyAction;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem;
+using ContentTypeTextNet.Pe.Main.Views.Extend;
+using ContentTypeTextNet.Pe.Main.Views.LauncherToolbar;
+using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -209,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public LauncherGroupViewModel? SelectedLauncherGroup
         {
-            get => Model?.SelectedLauncherGroup != null ? LauncherGroupCollection.GetViewModel(Model.SelectedLauncherGroup): null;
+            get => Model?.SelectedLauncherGroup != null ? LauncherGroupCollection.GetViewModel(Model.SelectedLauncherGroup) : null;
         }
 
         public LauncherToolbarContentDropMode ContentDropMode => Model.ContentDropMode;

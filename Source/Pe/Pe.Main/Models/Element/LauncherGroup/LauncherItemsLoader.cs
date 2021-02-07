@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
@@ -30,8 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         IEnumerable<Guid> LoadNormalIds(Guid launcherGroupId)
         {
-                var dao = new LauncherGroupItemsEntityDao(Context, StatementLoader, Implementation, LoggerFactory);
-                return dao.SelectLauncherItemIds(launcherGroupId);
+            var dao = new LauncherGroupItemsEntityDao(Context, StatementLoader, Implementation, LoggerFactory);
+            return dao.SelectLauncherItemIds(launcherGroupId);
         }
 
         public IEnumerable<Guid> LoadLauncherItemIds(Guid launcherGroupId, LauncherGroupKind kind)

@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
     {
         #region define
 
-        class KeyOptionConverter : KeyOptionConverterBase
+        class KeyOptionConverter: KeyOptionConverterBase
         {
             public new KeyActionOptionAttribute GetAttribute<TEnum>(TEnum value)
                 where TEnum : struct, Enum

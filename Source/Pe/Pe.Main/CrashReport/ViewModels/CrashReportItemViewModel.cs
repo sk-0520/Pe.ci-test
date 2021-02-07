@@ -1,15 +1,12 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
 {
-    public class CrashReportItemViewModel : ViewModelBase
+    public class CrashReportItemViewModel: ViewModelBase
     {
         #region variable
 

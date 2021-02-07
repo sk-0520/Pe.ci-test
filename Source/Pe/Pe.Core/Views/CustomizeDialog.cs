@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Unmanaged;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
@@ -41,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
-    public class CustomizeDialogGroup : CustomizeDialogControlBase
+    public class CustomizeDialogGroup: CustomizeDialogControlBase
     {
         public CustomizeDialogGroup(string header)
         {
@@ -78,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
-    public class CustomizeDialogLabel : CustomizeDialogControlBase
+    public class CustomizeDialogLabel: CustomizeDialogControlBase
     {
         public CustomizeDialogLabel(string label)
         {
@@ -133,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
     }
 
 
-    public class CustomizeDialogComboBox<TValue> : CustomizeDialogControlBase
+    public class CustomizeDialogComboBox<TValue>: CustomizeDialogControlBase
     {
         public CustomizeDialogComboBox()
         { }

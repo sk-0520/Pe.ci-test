@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ContentTypeTextNet.Pe.Core.Models
@@ -231,7 +230,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     return true;
                 }
                 return false;
-            } else if(b == null){
+            } else if(b == null) {
                 return false;
             }
 

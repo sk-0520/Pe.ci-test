@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -17,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
-    public abstract class IconImageLoaderBase : BindModelBase
+    public abstract class IconImageLoaderBase: BindModelBase
     {
         protected IconImageLoaderBase(IDispatcherWrapper? dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
@@ -218,7 +215,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    public class IconImageLoader : IconImageLoaderBase
+    public class IconImageLoader: IconImageLoaderBase
     {
         public IconImageLoader(IReadOnlyIconData iconData, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(dispatcherWrapper, loggerFactory)

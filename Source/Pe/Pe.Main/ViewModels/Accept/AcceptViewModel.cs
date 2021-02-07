@@ -1,29 +1,22 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Reflection;
-using System.Text;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
-using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Accept;
-using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Views.Accept;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
-using Prism.Services.Dialogs;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 {
-    public class AcceptViewModel : SingleModelViewModelBase<AcceptElement>, IDialogCommand, /*IDialogService,*/ IViewLifecycleReceiver, IBuildStatus
+    public class AcceptViewModel: SingleModelViewModelBase<AcceptElement>, IDialogCommand, /*IDialogService,*/ IViewLifecycleReceiver, IBuildStatus
     {
         public AcceptViewModel(AcceptElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -64,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
                try {
                    var uri = new Uri(o);
                    OpenUri(uri);
-               }catch(Exception ex) {
+               } catch(Exception ex) {
                    Logger.LogError(ex, ex.Message);
                }
            }

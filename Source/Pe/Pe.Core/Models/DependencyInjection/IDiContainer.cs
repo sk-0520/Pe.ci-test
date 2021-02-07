@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 #if ENABLED_PRISM7
 using Prism.Ioc;
@@ -22,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// <summary>
     /// 取得可能コンテナ。
     /// </summary>
-    public interface IDiContainer : IDiScopeContainerFactory
+    public interface IDiContainer: IDiScopeContainerFactory
 #if ENABLED_PRISM7
         , IContainerProvider
 #endif
@@ -116,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// <summary>
     ///登録可能コンテナ。
     /// </summary>
-    public interface IDiRegisterContainer : IDiContainer
+    public interface IDiRegisterContainer: IDiContainer
 #if ENABLED_PRISM7
         , IContainerRegistry
 #endif

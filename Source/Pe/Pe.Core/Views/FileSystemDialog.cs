@@ -1,16 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Unmanaged;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
-using static ContentTypeTextNet.Pe.PInvoke.Windows.NativeMethods;
 
 namespace ContentTypeTextNet.Pe.Core.Views
 {
@@ -25,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
     { }
 
     [AttributeUsage(AttributeTargets.Property, Inherited = true)]
-    internal class FileSystemFosAttribute : Attribute
+    internal class FileSystemFosAttribute: Attribute
     {
         public FileSystemFosAttribute(FOS fos)
         {
@@ -37,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
-    public abstract class FileSystemDialogBase : DisposerBase
+    public abstract class FileSystemDialogBase: DisposerBase
     {
         protected private FileSystemDialogBase(FileOpenDialogImpl openDialogImpl)
         {
@@ -278,7 +275,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
-    public class OpenFileDialog : FileSystemDialogBase
+    public class OpenFileDialog: FileSystemDialogBase
     {
         public OpenFileDialog()
             : base(new FileOpenDialogImpl())
@@ -286,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         }
     }
 
-    public class SaveFileDialog : FileSystemDialogBase
+    public class SaveFileDialog: FileSystemDialogBase
     {
         public SaveFileDialog()
             : base(new FileSaveDialogImpl())
@@ -297,7 +294,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         }
     }
 
-    public class FolderBrowserDialog : FileSystemDialogBase
+    public class FolderBrowserDialog: FileSystemDialogBase
     {
         public FolderBrowserDialog()
             : base(new FileOpenDialogImpl())

@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {

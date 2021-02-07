@@ -1,16 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
-using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
-    public class StreamReceivedEventArgs : EventArgs
+    public class StreamReceivedEventArgs: EventArgs
     {
         public StreamReceivedEventArgs(string value, bool exited)
         {

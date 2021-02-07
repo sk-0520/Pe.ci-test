@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows.Data;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Converter
 {
-    public class EnumToCultureConverter : IValueConverter
+    public class EnumToCultureConverter: IValueConverter
     {
         #region property
 
@@ -26,8 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
             var param = (string)parameter;
             if(!string.IsNullOrWhiteSpace(param)) {
                 if(!Enum.TryParse(param, true, out resourceNameKind)) {
-                    resourceNameKind = param.ToUpperInvariant() switch
-                    {
+                    resourceNameKind = param.ToUpperInvariant() switch {
                         "A" => ResourceNameKind.AccessKey,
                         _ => ResourceNameKind.Normal,
                     };

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Win32;
@@ -9,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Windows
     /// <summary>
     /// アイコン選択ダイアログ。
     /// </summary>
-    public class IconDialog : CommonDialog
+    public class IconDialog: CommonDialog
     {
         public IconDialog()
             : base()

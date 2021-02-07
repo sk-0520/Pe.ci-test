@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using CefSharp;
 
 namespace ContentTypeTextNet.Pe.Main.Models.WebView
 {
-    public class DisableContextMenuHandler : IContextMenuHandler
+    public class DisableContextMenuHandler: IContextMenuHandler
     {
         #region IContextMenuHandler
 

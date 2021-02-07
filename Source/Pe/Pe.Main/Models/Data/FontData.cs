@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
@@ -15,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
 
     [Serializable, DataContract]
-    public class FontData : IReadOnlyFontData
+    public class FontData: IReadOnlyFontData
     {
         #region IReadOnlyFontData
 

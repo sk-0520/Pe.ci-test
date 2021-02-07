@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models.Data;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models.Element;
 using ContentTypeTextNet.Pe.Main.CrashReport.ViewModels;

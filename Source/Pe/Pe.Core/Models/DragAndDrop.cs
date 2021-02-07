@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -66,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
 
-    public abstract class DragAndDropBase : IDragAndDrop
+    public abstract class DragAndDropBase: IDragAndDrop
     {
         /// <summary>
         /// <see cref="UsingPreviewEvent"/> は false を使用する。
@@ -213,7 +211,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public delegate IResultSuccessValue<DragParameter> GetDragParameterDelegate(UIElement sender, MouseEventArgs e);
     public delegate void DragAndDropDelegate(UIElement sender, DragEventArgs e);
 
-    public class DelegateDragAndDrop : DragAndDropBase
+    public class DelegateDragAndDrop: DragAndDropBase
     {
         public DelegateDragAndDrop(ILogger logger)
             : base(logger)

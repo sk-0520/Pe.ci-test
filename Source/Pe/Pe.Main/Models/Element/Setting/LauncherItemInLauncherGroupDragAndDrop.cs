@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -13,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public class LauncherItemInLauncherGroupDragAndDrop : DragAndDropGuidelineBase
+    public class LauncherItemInLauncherGroupDragAndDrop: DragAndDropGuidelineBase
     {
         public LauncherItemInLauncherGroupDragAndDrop(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(dispatcherWrapper, loggerFactory)
@@ -29,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                     var item = (LauncherItemSettingEditorViewModel)listbox.SelectedItem;
                     selectedItemChanger(item);
                     var data = new DataObject(typeof(LauncherItemDragData), new LauncherItemDragData(item, fromAllItems));
-                    return ResultSuccessValue.Success(new DragParameter(sender, fromAllItems ? DragDropEffects.Copy: DragDropEffects.Move, data));
+                    return ResultSuccessValue.Success(new DragParameter(sender, fromAllItems ? DragDropEffects.Copy : DragDropEffects.Move, data));
                 }
             }
 

@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 {
@@ -25,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
     }
 
     /// <inheritdoc cref="IAuthor" />
-    public class Author : IAuthor
+    public class Author: IAuthor
     {
         public Author(string name)
         {

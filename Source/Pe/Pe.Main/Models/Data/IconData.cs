@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
@@ -24,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [DataContract, Serializable]
-    public class IconData : DataBase, IReadOnlyIconData
+    public class IconData: DataBase, IReadOnlyIconData
     {
         public IconData()
         { }

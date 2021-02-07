@@ -1,11 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Core.Models.Data;
-using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
@@ -105,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public record NotifyLogContent : IReadOnlyNotifyLogContent
+    public record NotifyLogContent: IReadOnlyNotifyLogContent
     {
         public NotifyLogContent(string content)
             : this(content, DateTime.UtcNow)
@@ -139,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public record NotifyMessage : IReadOnlyNotifyMessage
+    public record NotifyMessage: IReadOnlyNotifyMessage
     {
         public NotifyMessage(NotifyLogKind kind, string header, NotifyLogContent notifyLogContent)
         {

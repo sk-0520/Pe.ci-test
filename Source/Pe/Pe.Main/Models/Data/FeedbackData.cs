@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Text.Json.Serialization;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
@@ -47,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [Serializable, DataContract]
-    public class FeedbackSendData : DataBase
+    public class FeedbackSendData: DataBase
     {
         #region property
 

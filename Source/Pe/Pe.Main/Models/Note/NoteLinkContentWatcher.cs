@@ -1,16 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Note
 {
-    public class NoteContentChangedEventArgs : EventArgs
+    public class NoteContentChangedEventArgs: EventArgs
     {
         public NoteContentChangedEventArgs(FileInfo file, Encoding encoding, bool isRefresh)
         {
@@ -28,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
         #endregion
     }
 
-    public class NoteLinkWatchParameter : FileWatchParameter
+    public class NoteLinkWatchParameter: FileWatchParameter
     {
         #region property
 
@@ -39,10 +35,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
         #endregion
     }
 
-    public class NoteLinkWatcher : FileWatcher
+    public class NoteLinkWatcher: FileWatcher
     {
         public NoteLinkWatcher(NoteLinkWatchParameter noteLinkWatchParameter, ILoggerFactory loggerFactory)
-            :base(noteLinkWatchParameter, loggerFactory)
+            : base(noteLinkWatchParameter, loggerFactory)
         { }
 
 

@@ -1,17 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
 {
-    public class ReleaseNoteElement : ElementBase
+    public class ReleaseNoteElement: ElementBase
     {
         public ReleaseNoteElement(UpdateInfo updateInfo, IReadOnlyUpdateItemData updateItem, bool isCheckOnly, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)

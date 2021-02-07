@@ -1,18 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
-using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 {
-    public class NotifyLogItemViewModel : ElementViewModelBase<NotifyLogItemElement>, INotifyLogId
+    public class NotifyLogItemViewModel: ElementViewModelBase<NotifyLogItemElement>, INotifyLogId
     {
         public NotifyLogItemViewModel(NotifyLogItemElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)

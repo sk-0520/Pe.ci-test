@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using CefSharp;
 using CefSharp.Handler;
 using ContentTypeTextNet.Pe.Main.Models.WebView;
@@ -57,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     public class WebViewWidgetRequestHandler: PlatformRequestHandler
     {
         public WebViewWidgetRequestHandler(DirectoryInfo widgetDirectory, ILoggerFactory loggerFactory)
-            :base(loggerFactory)
+            : base(loggerFactory)
         {
             LoggerFactory = loggerFactory;
             WidgetDirectory = widgetDirectory;

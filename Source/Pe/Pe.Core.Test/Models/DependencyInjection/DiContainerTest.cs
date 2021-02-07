@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -18,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             int Func(int a);
         }
 
-        class C0 : I0
+        class C0: I0
         {
             public C0(Func<int, int> f)
             {
@@ -40,16 +39,16 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             int Func(int a, int b);
         }
 
-        class C1 : I1
+        class C1: I1
         {
             public int Func(int a, int b) => a + b;
         }
-        class C1_other : I1
+        class C1_other: I1
         {
             public int Func(int a, int b) => a - b;
         }
 
-        class C1_Func : I1
+        class C1_Func: I1
         {
             public C1_Func(Func<int, int, int> func)
             {
@@ -60,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             public int Func(int a, int b) => F(a, b);
         }
 
-        class Cdmy1 : Idmy1
+        class Cdmy1: Idmy1
         {
             public int Func(int a, int b) => a + b;
         }
@@ -117,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             public int Get() => I1.Sum(i => i.Func(A, B));
         }
 
-        class C5_LongLong : C5
+        class C5_LongLong: C5
         {
             public C5_LongLong(int a, I1 i1, int b)
                 : base(a, b, new[] { i1 })
@@ -132,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             { }
         }
 
-        class C5_Private : C5
+        class C5_Private: C5
         {
             public C5_Private(int a, I1 i1, int b)
                 : base(a, b, new[] { i1 })
@@ -148,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             { }
         }
 
-        class C5_Minimum : C5
+        class C5_Minimum: C5
         {
             [Inject]
             public C5_Minimum(int a, I1 i1, int b)
@@ -479,7 +478,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             public INest4 Nest4 { get; }
         }
 
-        class Nest1 : INest1
+        class Nest1: INest1
         {
             public Nest1(INest2 nest2)
             {
@@ -489,7 +488,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             public INest2 Nest2 { get; }
         }
 
-        class Nest2 : INest2
+        class Nest2: INest2
         {
             public Nest2(INest3 nest3)
             {
@@ -499,7 +498,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             public INest3 Nest3 { get; }
         }
 
-        class Nest3 : INest3
+        class Nest3: INest3
         {
             public Nest3(INest4 nest4)
             {
@@ -509,7 +508,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             public INest4 Nest4 { get; }
         }
 
-        class Nest4 : INest4
+        class Nest4: INest4
         {
             public bool True => true;
         }
@@ -558,19 +557,19 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
 
         #endregion
 
-        class CScopeA : I1
+        class CScopeA: I1
         {
             public int Func(int a, int b) => a + b;
         }
-        class CScopeB : I1
+        class CScopeB: I1
         {
             public int Func(int a, int b) => a - b;
         }
-        class CScopeC : I1
+        class CScopeC: I1
         {
             public int Func(int a, int b) => a * b;
         }
-        class CScopeD : I1
+        class CScopeD: I1
         {
             public int Func(int a, int b) => a / b;
         }
@@ -681,7 +680,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
         }
 
 #pragma warning disable 169, 649
-        class D2 : ID2
+        class D2: ID2
         {
             [Inject]
             public I1? I1_1;

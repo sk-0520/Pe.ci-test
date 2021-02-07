@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Media;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 {
-    public class StandardOutputColorizingTransformer : DocumentColorizingTransformer
+    public class StandardOutputColorizingTransformer: DocumentColorizingTransformer
     {
         readonly struct OffsetPair
         {

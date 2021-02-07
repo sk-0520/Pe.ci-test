@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows.Ink;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -113,7 +112,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
-        bool ParseCore(string? s, [NotNullWhen(true)]  out IReadOnlyCollection<int>? result, [NotNullWhen(false)]  out Exception? ex)
+        bool ParseCore(string? s, [NotNullWhen(true)] out IReadOnlyCollection<int>? result, [NotNullWhen(false)] out Exception? ex)
         {
             ex = null;
             if(string.IsNullOrWhiteSpace(s)) {

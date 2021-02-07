@@ -1,24 +1,20 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Text;
 using System.Windows;
+using System.Windows.Input;
+using CefSharp;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
+using ContentTypeTextNet.Pe.Main.Models.WebView;
 using ContentTypeTextNet.Pe.Main.Views.ReleaseNote;
 using Microsoft.Extensions.Logging;
-using CefSharp;
-using ContentTypeTextNet.Pe.Main.Models.WebView;
-using System.Windows.Input;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
 {
-    public class ReleaseNoteViewModel : ElementViewModelBase<ReleaseNoteElement>, IViewLifecycleReceiver
+    public class ReleaseNoteViewModel: ElementViewModelBase<ReleaseNoteElement>, IViewLifecycleReceiver
     {
 
         public ReleaseNoteViewModel(ReleaseNoteElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)

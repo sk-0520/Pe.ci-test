@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 {
     /// <summary>
@@ -46,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
     }
 
     /// <inheritdoc cref="IContact" />
-    public class Contact : IContact
+    public class Contact: IContact
     {
         public Contact(string kind, string value)
         {

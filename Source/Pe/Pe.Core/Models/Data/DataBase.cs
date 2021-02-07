@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
-using ContentTypeTextNet.Pe.Core.Models;
 
 // これいっらんなぁ
 
@@ -11,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
     public interface IReadOnlyData
     { }
 
-    public interface IData : IReadOnlyData
+    public interface IData: IReadOnlyData
     { }
 
     /// <summary>
@@ -19,12 +16,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
     /// <para>コンストラクタのみで永続化できないかもしれんけどもうええんちゃう？</para>
     /// </summary>
     [Serializable, DataContract]
-    public abstract class DataBase : IData
+    public abstract class DataBase: IData
     { }
 
 
 
-    public interface IRawModel : IReadOnlyData
+    public interface IRawModel: IReadOnlyData
     {
         #region property
 
@@ -33,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
         #endregion
     }
 
-    public interface IRawModel<out T> : IData, IRawModel
+    public interface IRawModel<out T>: IData, IRawModel
     {
         #region property
 
@@ -42,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
         #endregion
     }
 
-    public class RawModel : DisposerBase, IRawModel
+    public class RawModel: DisposerBase, IRawModel
     {
         public RawModel(object? rawObject)
         {
@@ -60,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
         #endregion
     }
 
-    public class RawModel<T> : RawModel, IRawModel<T>
+    public class RawModel<T>: RawModel, IRawModel<T>
     {
         public RawModel(T rawObject)
             : base(rawObject)

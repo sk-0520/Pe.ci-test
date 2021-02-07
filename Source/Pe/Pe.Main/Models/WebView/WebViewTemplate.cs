@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Web;
 
 namespace ContentTypeTextNet.Pe.Main.Models.WebView
@@ -21,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
         #endregion
     }
 
-    public sealed class CultureWebViewTemplate : WebViewTemplateBase
+    public sealed class CultureWebViewTemplate: WebViewTemplateBase
     {
         public CultureWebViewTemplate(CultureInfo cultureInfo)
         {
@@ -46,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
         #endregion
     }
 
-    public class RawTextWebViewTemplate : WebViewTemplateBase
+    public class RawTextWebViewTemplate: WebViewTemplateBase
     {
         public RawTextWebViewTemplate(string text)
         {
@@ -66,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
         #endregion
     }
 
-    public class HtmlTextWebViewTemplate : RawTextWebViewTemplate
+    public class HtmlTextWebViewTemplate: RawTextWebViewTemplate
     {
         public HtmlTextWebViewTemplate(string text)
             : base(text)
@@ -79,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
         #endregion
     }
 
-    public class JavascriptTextViewTemplate : RawTextWebViewTemplate
+    public class JavascriptTextViewTemplate: RawTextWebViewTemplate
     {
         public JavascriptTextViewTemplate(string text)
             : base(text)
@@ -117,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
         #endregion
     }
 
-    public class CustomWebViewTemplate : WebViewTemplateBase
+    public class CustomWebViewTemplate: WebViewTemplateBase
     {
         public CustomWebViewTemplate(Func<string, string> buildFunction)
         {

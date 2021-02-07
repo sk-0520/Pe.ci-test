@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using Microsoft.Xaml.Behaviors;
 using ContentTypeTextNet.Pe.Core.Models;
+using Microsoft.Xaml.Behaviors;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Attached
 {

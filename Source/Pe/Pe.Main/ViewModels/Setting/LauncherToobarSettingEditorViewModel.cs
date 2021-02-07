@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Input;
-using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
@@ -17,7 +14,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class LauncherToobarSettingEditorViewModel : SettingItemViewModelBase<LauncherToobarSettingEditorElement>
+    public class LauncherToobarSettingEditorViewModel: SettingItemViewModelBase<LauncherToobarSettingEditorElement>
     {
         #region variable
 

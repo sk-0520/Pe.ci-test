@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -312,14 +310,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public MouseHookEventArgs(int buttonX, MouseButtonState mouseButtonState, in MSLLHOOKSTRUCT msll)
         {
-            if(buttonX ==0) {
+            if(buttonX == 0) {
                 throw new ArgumentException(nameof(buttonX));
             }
 
             this.msll = msll;
 
-            Button = buttonX switch
-            {
+            Button = buttonX switch {
                 1 => MouseButton.XButton1,
                 2 => MouseButton.XButton2,
                 _ => throw new NotImplementedException(),

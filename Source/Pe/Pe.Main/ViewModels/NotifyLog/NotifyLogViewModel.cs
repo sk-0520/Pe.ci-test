@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -19,7 +17,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 {
-    public class NotifyLogViewModel : ElementViewModelBase<NotifyLogElement>, IViewLifecycleReceiver
+    public class NotifyLogViewModel: ElementViewModelBase<NotifyLogElement>, IViewLifecycleReceiver
     {
         public NotifyLogViewModel(NotifyLogElement model, INotifyLogTheme notifyLogTheme, IPlatformTheme platformTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)

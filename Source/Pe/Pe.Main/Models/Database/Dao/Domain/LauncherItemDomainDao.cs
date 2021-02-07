@@ -1,15 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
-using ContentTypeTextNet.Pe.Core.Models.Database;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 {
-    public class LauncherItemDomainDao : DomainDaoBase
+    public class LauncherItemDomainDao: DomainDaoBase
     {
         #region define
 

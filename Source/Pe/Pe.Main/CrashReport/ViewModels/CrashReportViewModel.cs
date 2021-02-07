@@ -1,13 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models.Element;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
@@ -17,7 +13,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
 {
-    internal class CrashReportViewModel : ElementViewModelBase<CrashReportElement>
+    internal class CrashReportViewModel: ElementViewModelBase<CrashReportElement>
     {
         #region variable
 

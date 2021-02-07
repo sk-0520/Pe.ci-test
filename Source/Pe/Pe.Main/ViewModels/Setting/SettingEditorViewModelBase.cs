@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -32,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-    public abstract class SettingEditorViewModelBase<TSettingEditorElement> : SingleModelViewModelBase<TSettingEditorElement>, ISettingEditorViewModel
+    public abstract class SettingEditorViewModelBase<TSettingEditorElement>: SingleModelViewModelBase<TSettingEditorElement>, ISettingEditorViewModel
         where TSettingEditorElement : SettingEditorElementBase
     {
         #region variable

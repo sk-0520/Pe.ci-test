@@ -1,9 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
@@ -30,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
     }
 
     /// <inheritdoc cref="IUserTracker"/>
-    internal class UserTracker : TelemeterBase, IUserTracker
+    internal class UserTracker: TelemeterBase, IUserTracker
     {
         public UserTracker(ILoggerFactory loggerFactory)
             : base(loggerFactory)

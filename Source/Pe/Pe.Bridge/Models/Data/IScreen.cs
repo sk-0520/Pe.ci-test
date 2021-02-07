@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data
@@ -11,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <summary>
         /// 1 ピクセルのデータに関連付けられているメモリのビット数を取得します。
         /// </summary>
-        int BitsPerPixel { get;  }
+        int BitsPerPixel { get; }
         /// <summary>
         /// ディスプレイの範囲を取得します。
         /// </summary>
@@ -29,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// ディスプレイの作業領域を取得します。 作業領域とは、ディスプレイのデスクトップ領域からタスクバー、ドッキングされたウィンドウ、およびドッキングされたツール バーを除いた部分です。
         /// </summary>
         [PixelKind(Px.Device)]
-        Rect DeviceWorkingArea { get;  }
+        Rect DeviceWorkingArea { get; }
 
         #endregion
     }

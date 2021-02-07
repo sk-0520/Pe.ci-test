@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Xml.Serialization;
-using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Core.Models.Database;
 using Microsoft.Extensions.Logging;
 using Prism.Mvvm;
 
@@ -82,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public abstract class BindModelBase : NotifyPropertyBase
+    public abstract class BindModelBase: NotifyPropertyBase
     {
         protected BindModelBase(ILoggerFactory loggerFactory)
         {
@@ -121,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     }
 
-    public sealed class WrapModel<TData> : BindModelBase
+    public sealed class WrapModel<TData>: BindModelBase
     {
         public WrapModel(TData data, ILoggerFactory loggerFactory)
             : this(data, true, loggerFactory)

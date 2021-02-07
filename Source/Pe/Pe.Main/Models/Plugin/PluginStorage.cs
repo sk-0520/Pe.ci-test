@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -387,8 +386,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             switch(data.Format) {
                 case PluginPersistentFormat.SimpleXml:
                 case PluginPersistentFormat.DataXml: {
-                        SerializerBase serializer = data.Format switch
-                        {
+                        SerializerBase serializer = data.Format switch {
                             PluginPersistentFormat.SimpleXml => new XmlSerializer(),
                             PluginPersistentFormat.DataXml => new XmlDataContractSerializer(),
                             _ => throw new NotImplementedException(),
@@ -449,8 +447,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             switch(format) {
                 case PluginPersistentFormat.SimpleXml:
                 case PluginPersistentFormat.DataXml: {
-                        SerializerBase serializer = format switch
-                        {
+                        SerializerBase serializer = format switch {
                             PluginPersistentFormat.SimpleXml => new XmlSerializer(),
                             PluginPersistentFormat.DataXml => new XmlDataContractSerializer(),
                             _ => throw new NotImplementedException(),

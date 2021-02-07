@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

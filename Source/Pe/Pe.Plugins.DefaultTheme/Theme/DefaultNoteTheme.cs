@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using IO = System.IO;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
@@ -15,7 +12,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
-using Microsoft.Extensions.Logging;
+using IO = System.IO;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {

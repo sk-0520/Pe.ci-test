@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -19,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 {
-    public class NotifyLogElement : ElementBase, IViewShowStarter, IViewCloseReceiver
+    public class NotifyLogElement: ElementBase, IViewShowStarter, IViewCloseReceiver
     {
         #region variable
 
@@ -152,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
                     deviceWindowLocation.X = Math.Clamp(podDevicePoint.X, deviceArea.X, deviceArea.Right - deviceWindowRect.Width);
                     deviceWindowLocation.Y = Math.Clamp(podDevicePoint.Y, deviceArea.Y, deviceArea.Bottom - deviceWindowRect.Height);
 
-                    CursorHorizontalAlignment= podDevicePoint.X <= deviceWindowLocation.X
+                    CursorHorizontalAlignment = podDevicePoint.X <= deviceWindowLocation.X
                         ? HorizontalAlignment.Left
                         : HorizontalAlignment.Right
                     ;

@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Media;
-using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels._Debug_
 {
-    public class DebugColorPickerViewModel : DebugViewModelBase<DebugColorPickerElement>
+    public class DebugColorPickerViewModel: DebugViewModelBase<DebugColorPickerElement>
     {
         #region variable
 

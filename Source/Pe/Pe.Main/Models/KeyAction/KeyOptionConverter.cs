@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
-using System.Windows.Input;
-using ContentTypeTextNet.Pe.Main.Models.Data;
 using System.Diagnostics;
+using System.Reflection;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 {
@@ -54,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public sealed class ReplaceOptionConverter : KeyOptionConverterBase
+    public sealed class ReplaceOptionConverter: KeyOptionConverterBase
     {
         #region function
 
@@ -71,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public sealed class DisableOptionConverter : KeyOptionConverterBase
+    public sealed class DisableOptionConverter: KeyOptionConverterBase
     {
         #region function
 
@@ -100,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public class PressedOptionConverter : KeyOptionConverterBase
+    public class PressedOptionConverter: KeyOptionConverterBase
     {
         #region function
 
@@ -129,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public sealed class LauncherItemOptionConverter : PressedOptionConverter
+    public sealed class LauncherItemOptionConverter: PressedOptionConverter
     {
         #region function
 

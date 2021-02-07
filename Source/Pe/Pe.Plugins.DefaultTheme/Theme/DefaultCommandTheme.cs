@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -11,7 +9,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
-    internal class DefaultCommandTheme : DefaultThemeBase, ICommandTheme
+    internal class DefaultCommandTheme: DefaultThemeBase, ICommandTheme
     {
         public DefaultCommandTheme(IThemeParameter parameter)
             : base(parameter)
@@ -44,8 +42,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         {
             var colors = PlatformTheme.GetApplicationThemeColors(PlatformTheme.ApplicationThemeKind);
 
-            return inputState switch
-            {
+            return inputState switch {
                 InputState.Empty => FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Border)),
                 InputState.Finding => FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Control)),
                 InputState.Complete => FreezableUtility.GetSafeFreeze(new SolidColorBrush(PlatformTheme.GetAccentColors(PlatformTheme.AccentColor).Base)),

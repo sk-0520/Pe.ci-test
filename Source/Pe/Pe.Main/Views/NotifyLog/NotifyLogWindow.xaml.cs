@@ -1,22 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
-using ICSharpCode.AvalonEdit.CodeCompletion;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
@@ -24,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
     /// <summary>
     /// NotifyLogWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class NotifyLogWindow : Window, IDpiScaleOutputor
+    public partial class NotifyLogWindow: Window, IDpiScaleOutputor
     {
         public NotifyLogWindow()
         {

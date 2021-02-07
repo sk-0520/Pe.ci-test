@@ -1,21 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
-using ContentTypeTextNet.Pe.Main.Views.Startup;
 using ContentTypeTextNet.Pe.Main.ViewModels.Startup;
-using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Views.Startup;
 using Microsoft.Extensions.Logging;
-using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 {
-    public class StartupElement : ContextElementBase
+    public class StartupElement: ContextElementBase
     {
         public StartupElement(IWindowManager windowManager, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)

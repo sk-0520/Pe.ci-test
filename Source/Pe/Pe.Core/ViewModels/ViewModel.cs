@@ -11,7 +11,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Windows.Input;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Pe.Core.Models;

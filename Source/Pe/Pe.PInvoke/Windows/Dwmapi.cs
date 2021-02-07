@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         /// <param name="ColorizationOpaqueBlend"></param>
         [DllImport("dwmapi.dll", PreserveSig = false)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
-        public static extern void DwmGetColorizationColor(out uint ColorizationColor, [MarshalAs(UnmanagedType.Bool)]out bool ColorizationOpaqueBlend);
+        public static extern void DwmGetColorizationColor(out uint ColorizationColor, [MarshalAs(UnmanagedType.Bool)] out bool ColorizationOpaqueBlend);
         [DllImport("dwmapi.dll", EntryPoint = "#127", PreserveSig = false)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
         public static extern void DwmGetColorizationParameters(out DWM_COLORIZATION_PARAMS parameters);

@@ -1,19 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
@@ -23,7 +18,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
-    public class NoteRichTextContentViewModel : NoteContentViewModelBase, IFlushable
+    public class NoteRichTextContentViewModel: NoteContentViewModelBase, IFlushable
     {
         #region variable
 
@@ -190,8 +185,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             ApplySelectionCore((r, s) => {
                 var textDecorationsProperty = s.GetPropertyValue(Inline.TextDecorationsProperty);
                 if(textDecorationsProperty == DependencyProperty.UnsetValue) {
-                    var decs = location switch
-                    {
+                    var decs = location switch {
                         TextDecorationLocation.Underline => TextDecorations.Underline,
                         TextDecorationLocation.Strikethrough => TextDecorations.Strikethrough,
                         TextDecorationLocation.Baseline => TextDecorations.Baseline,

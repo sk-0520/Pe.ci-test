@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -18,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 {
-    public class ExtendsExecuteElement : ElementBase, IViewShowStarter, IViewCloseReceiver
+    public class ExtendsExecuteElement: ElementBase, IViewShowStarter, IViewCloseReceiver
     {
         #region variable
 
@@ -140,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
     }
 
-    public sealed class LauncherExtendsExecuteElement : ExtendsExecuteElement, ILauncherItemId
+    public sealed class LauncherExtendsExecuteElement: ExtendsExecuteElement, ILauncherItemId
     {
         public LauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IOrderManager orderManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(string.Empty, new LauncherFileData(), new List<LauncherEnvironmentVariableData>(), new LauncherRedoData(), screen, orderManager, notifyManager, dispatcherWrapper, loggerFactory)

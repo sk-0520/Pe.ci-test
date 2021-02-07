@@ -1,5 +1,4 @@
 #define DOTNET20
-using System;
 
 namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
@@ -27,22 +26,22 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     /// http://pinvoke.net/default.aspx/Enums/HRESULT.html
     /// </summary>
     [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Pack = 4)]
-    public struct HRESULT :
+    public struct HRESULT:
       System.IComparable
 #if DOTNET20
-    ,System.IEquatable<HRESULT>
-    ,System.IEquatable<int>
-    ,System.IComparable<HRESULT>
-    ,System.IComparable<int>
+    , System.IEquatable<HRESULT>
+    , System.IEquatable<int>
+    , System.IComparable<HRESULT>
+    , System.IComparable<int>
 #endif
     {
         private int m_value;
 
 #if DOTNET20
-    public static System.Exception GetExceptionForHR(int hr)
-    {
-      return System.Runtime.InteropServices.Marshal.GetExceptionForHR(hr)!;
-    }
+        public static System.Exception GetExceptionForHR(int hr)
+        {
+            return System.Runtime.InteropServices.Marshal.GetExceptionForHR(hr)!;
+        }
 #else
         public class HResultException : System.SystemException
         {
@@ -178,7 +177,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         // \1\n\2[Description("\3")]
 
         [System.AttributeUsage(System.AttributeTargets.All)]
-        class DescriptionAttribute : System.Attribute
+        class DescriptionAttribute: System.Attribute
         {
             protected string m_description;
             public DescriptionAttribute(string description)
@@ -7087,15 +7086,15 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         #endregion Error Codes
 
 #if DOTNET20
-    class DirCodes : System.Collections.Generic.Dictionary<int,System.Reflection.FieldInfo>
-    {
-      public DirCodes() : base(System.Collections.Generic.EqualityComparer<int>.Default)
-      {
-      }
-      public DirCodes(int capacity) : base(capacity,System.Collections.Generic.EqualityComparer<int>.Default)
-      {
-      }
-    }
+        class DirCodes: System.Collections.Generic.Dictionary<int, System.Reflection.FieldInfo>
+        {
+            public DirCodes() : base(System.Collections.Generic.EqualityComparer<int>.Default)
+            {
+            }
+            public DirCodes(int capacity) : base(capacity, System.Collections.Generic.EqualityComparer<int>.Default)
+            {
+            }
+        }
 #else
         class DirCodes : System.Collections.DictionaryBase
         {

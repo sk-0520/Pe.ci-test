@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Timers;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -234,8 +232,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         string CreateRedoNotifyLogMessage()
         {
             //var message = "@再試行";
-            var message = Parameter.RedoData.RedoMode switch
-            {
+            var message = Parameter.RedoData.RedoMode switch {
                 RedoMode.Timeout => TextUtility.ReplaceFromDictionary(
                     Properties.Resources.String_RedoExecutor_Retry_Timout_Format,
                     new Dictionary<string, string>() {

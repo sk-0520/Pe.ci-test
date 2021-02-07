@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -15,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     /// <summary>
     /// <see cref="System.Drawing.Icon"/>のラッパー。
     /// </summary>
-    public class IconWrapper : RawModel<Drawing.Icon>, IMakeBitmapSource
+    public class IconWrapper: RawModel<Drawing.Icon>, IMakeBitmapSource
     {
         public IconWrapper(Stream stream, IconSize iconSize)
             : base(new Drawing.Icon(stream, DrawingUtility.Convert(iconSize.ToSize())))

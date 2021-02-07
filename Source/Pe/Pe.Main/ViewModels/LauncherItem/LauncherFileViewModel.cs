@@ -1,26 +1,20 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using Prism.Commands;
-using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
-using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using Microsoft.Extensions.Logging;
-using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
-using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
-using System.Diagnostics;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
+using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
-    public class LauncherFileViewModel : LauncherDetailViewModelBase, ILauncherFilePath, ILauncherWorkingDirectoryPath
+    public class LauncherFileViewModel: LauncherDetailViewModelBase, ILauncherFilePath, ILauncherWorkingDirectoryPath
     {
         #region variable
 

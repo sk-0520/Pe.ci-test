@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
@@ -7,7 +6,6 @@ using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Database.Dao;
 using ContentTypeTextNet.Pe.Main.Models.Database.Setupper;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
@@ -122,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
             foreach(var setupper in setuppers) {
                 if(lastVersion < setupper.Version) {
-                    Logger.LogInformation("マイグレーション対象: {0} < {1}", lastVersion,setupper.Version);
+                    Logger.LogInformation("マイグレーション対象: {0} < {1}", lastVersion, setupper.Version);
                     Execute(accessorPack, dto, setupper);
                 }
             }

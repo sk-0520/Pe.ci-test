@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using System.Windows.Input;
-using ContentTypeTextNet.Pe.Bridge.Models;
-
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 {
     /// <summary>

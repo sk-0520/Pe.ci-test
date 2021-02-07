@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class ThemeIconViewModel<TValue> : ViewModelBase
+    public class ThemeIconViewModel<TValue>: ViewModelBase
     {
         public ThemeIconViewModel(TValue value, Func<Color, object> iconGetter, ILoggerFactory loggerFactory)
             : base(loggerFactory)

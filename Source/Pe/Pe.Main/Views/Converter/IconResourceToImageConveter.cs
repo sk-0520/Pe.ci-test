@@ -1,19 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models;
-using ContentTypeTextNet.Pe.Main.Models.Logic;
-using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Converter

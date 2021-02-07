@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
