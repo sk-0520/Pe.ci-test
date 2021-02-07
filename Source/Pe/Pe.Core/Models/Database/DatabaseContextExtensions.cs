@@ -17,11 +17,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         public DatabaseContextException() { }
         public DatabaseContextException(string message) : base(message) { }
         public DatabaseContextException(string message, Exception inner) : base(message, inner) { }
-        protected DatabaseContextException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        protected DatabaseContextException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+            : base(info, context)
+        { }
     }
 
+    /// <summary>
+    /// 読み込み処理の安全のしおり。
+    /// </summary>
     public static class DatabaseReaderExtensions
     {
         #region function
@@ -88,6 +91,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
+    /// <summary>
+    /// 書き込み処理の安全のしおり。
+    /// </summary>
     public static class DatabaseWriterExtensions
     {
         #region function
@@ -101,12 +107,28 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         /// <summary>
+        /// 更新処理を強制。
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="statement"></param>
+        /// <param name="parameter">更新件数。</param>
+        /// <returns></returns>
+        public static int Update(this IDatabaseWriter writer, string statement, object? parameter = null)
+        {
+            EnforceUpdate(statement);
+
+            return writer.Execute(statement, parameter);
+        }
+
+
+        /// <summary>
         /// 単一更新を強制。
         /// </summary>
         /// <param name="writer"></param>
         /// <param name="statement"></param>
         /// <param name="parameter"></param>
         /// <exception cref="DatabaseContextException">未更新。</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static void UpdateByKey(this IDatabaseWriter writer, string statement, object parameter)
         {
             EnforceUpdate(statement);
@@ -125,6 +147,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="parameter"></param>
         /// <exception cref="DatabaseContextException">複数更新。</exception>
         /// <returns>真: 単一更新、偽: 未更新。</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static bool UpdateByKeyOrNothing(this IDatabaseWriter writer, string statement, object parameter)
         {
             EnforceUpdate(statement);
@@ -146,12 +169,27 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         /// <summary>
+        /// 挿入を強制。
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="statement"></param>
+        /// <param name="parameter"></param>
+        /// <returns>挿入件数。</returns>
+        public static int Insert(this IDatabaseWriter writer, string statement, object? parameter = null)
+        {
+            EnforceInsert(statement);
+
+            return writer.Execute(statement, parameter);
+        }
+
+        /// <summary>
         /// 単一挿入。
         /// </summary>
         /// <param name="writer"></param>
         /// <param name="statement"></param>
         /// <param name="parameter"></param>
         /// <exception cref="DatabaseContextException">未挿入か複数挿入。</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static void InsertSingle(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
             EnforceInsert(statement);
@@ -171,12 +209,27 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         /// <summary>
+        /// 削除を強制。
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="statement"></param>
+        /// <param name="parameter"></param>
+        /// <returns>削除件数。</returns>
+        public static int Delete(this IDatabaseWriter writer, string statement, object? parameter = null)
+        {
+            EnforceDelete(statement);
+
+            return writer.Execute(statement, parameter);
+        }
+
+        /// <summary>
         /// 単一削除。
         /// </summary>
         /// <param name="writer"></param>
         /// <param name="statement"></param>
         /// <param name="parameter"></param>
         /// <exception cref="DatabaseContextException">未削除。</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static void DeleteByKey(this IDatabaseWriter writer, string statement, object parameter)
         {
             EnforceDelete(statement);
@@ -196,6 +249,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         /// <exception cref="DatabaseContextException">複数削除。</exception>
         /// <returns>真: 単一削除、偽: 未削除。</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static bool DeleteByKeyOrNothing(this IDatabaseWriter writer, string statement, object parameter)
         {
             EnforceDelete(statement);
