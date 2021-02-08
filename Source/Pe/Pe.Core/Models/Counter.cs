@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public bool IsLast => CurrentCount == MaxCount;
 
         /// <inheritdoc cref="ICounter.Complete" />
-        public bool Complete { get; set; }
+        public bool Complete { get; private set; }
 
         #endregion
 
