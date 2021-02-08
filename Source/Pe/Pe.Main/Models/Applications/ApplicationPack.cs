@@ -322,7 +322,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             CurrentBarriers.Disposing += CurrentBarriers_Disposing;
             return CurrentBarriers;
         }
-        IDatabaseContextsPack IDatabaseBarrierPack.WaitWrite() => WaitRead();
+        IDatabaseContextsPack IDatabaseBarrierPack.WaitWrite() => throw new NotImplementedException();//WaitRead();
 
         public void Save()
         {
