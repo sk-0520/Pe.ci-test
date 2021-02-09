@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 
         public int Execute(string statement, object? parameter = null)
         {
-            return DatabaseAccessor.Execute(statement, parameter);
+            throw new NotSupportedException();
         }
 
         public DataTable GetDataTable(string statement, object? parameter = null)

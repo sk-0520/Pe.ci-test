@@ -51,7 +51,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "DB読み込み専用処理の不具合対応",
+						"comments": [
+							"したはいいけど書き込み処理の異常さが際立つ"
+						]
 					},
 					{
 						"revision": "",
