@@ -96,5 +96,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 }
             }
         }
+
+        /// <inheritdoc cref="List{T}.AddRange(IEnumerable{T})"/>
+        public static void AddRange<T>(this ICollection<T> source, IEnumerable<T> collection)
+        {
+            if(source is List<T> list) {
+                list.AddRange(collection);
+            } else {
+                foreach(var item in collection) {
+                    source.Add(item);
+                }
+            }
+        }
     }
 }
