@@ -589,7 +589,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 typeof(double),
             };
 
-            if(numTypes.Any(t => t == type)) {
+            if(Array.IndexOf(numTypes, type) != -1) {
                 return 1;
             }
 
