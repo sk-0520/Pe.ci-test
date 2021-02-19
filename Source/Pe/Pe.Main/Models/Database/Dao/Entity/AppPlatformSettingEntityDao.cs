@@ -53,18 +53,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        [Obsolete]
-        public bool UpdateSettingPlatformSetting(SettingAppPlatformSettingData data, IDatabaseCommonStatus commonStatus)
-        {
-            var statement = LoadStatement();
-            var dto = new AppPlatformSettingEntityDto() {
-                SupportExplorer = data.SupportExplorer,
-                SuppressSystemIdle = data.SuppressSystemIdle,
-            };
-            commonStatus.WriteCommon(dto);
-            return Context.Execute(statement, dto) == 1;
-        }
-
         public void UpdateSuppressSystemIdle(bool isEnabled, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();

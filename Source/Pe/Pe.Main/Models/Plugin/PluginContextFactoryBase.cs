@@ -143,28 +143,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginStorage;
         }
 
-        [Obsolete]
-        protected virtual PluginStorage CreatePluginStorage(IPluginInformations pluginInformations, IDatabaseBarrierPack databaseBarrierPack, bool isReadOnly)
-        {
-            var pluginStorage = new PluginStorage(
-                CreatePluginFile(pluginInformations),
-                CrteatePluginPersistentBarrier(pluginInformations, databaseBarrierPack, isReadOnly)
-            );
-
-            return pluginStorage;
-        }
-
-        [Obsolete]
-        protected virtual PluginStorage CreatePluginStorage(IPluginInformations pluginInformations, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
-        {
-            var pluginStorage = new PluginStorage(
-                CreatePluginFile(pluginInformations),
-                CrteatePluginPersistentLazyWriter(pluginInformations, databaseBarrierPack, databaseLazyWriterPack)
-            );
-
-            return pluginStorage;
-        }
-
         public PluginContext CreateContext(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
         {
             var pluginStorage = CreatePluginStorage(pluginInformations, databaseContextsPack, isReadOnly);
