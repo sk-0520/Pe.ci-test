@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// </summary>
         /// <param name="accentColors"></param>
         /// <returns></returns>
-        PlatformAccentColors GetTextColor(PlatformAccentColors accentColors);
+        PlatformAccentColors GetTextColor(in PlatformAccentColors accentColors);
 
         #endregion
     }

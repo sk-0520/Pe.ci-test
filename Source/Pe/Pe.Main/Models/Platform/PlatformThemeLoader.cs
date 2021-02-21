@@ -175,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             );
         }
 
-        public PlatformAccentColors GetTextColor(PlatformAccentColors accentColors)
+        public PlatformAccentColors GetTextColor(in PlatformAccentColors accentColors)
         {
             return new PlatformAccentColors(
                 MediaUtility.GetAutoColor(accentColors.Accent),
