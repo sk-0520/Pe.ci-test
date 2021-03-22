@@ -85,7 +85,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "AvalonEdit 6.0.1 -> 6.1.1"
 					},
 					{
 						"revision": "",
