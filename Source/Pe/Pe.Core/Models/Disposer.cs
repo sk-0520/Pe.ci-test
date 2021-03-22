@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 {
     public interface IDisposedChackable
     {
-        #region propert
+        #region property
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>されたか。
@@ -31,6 +31,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
     /// <summary>
     /// <see cref="IDisposable.Dispose"/>をサポートする基底クラス。
     /// </summary>
@@ -56,6 +57,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         [IgnoreDataMember, XmlIgnore]
         public bool IsDisposed { get; protected set; }
 
+        /// <summary>
+        /// 既に破棄済みの場合は処理を中断する。
+        /// </summary>
+        /// <param name="_callerMemberName"></param>
+        /// <exception cref="ObjectDisposedException">破棄済み。</exception>
+        /// <seealso cref="IDisposedChackable"/>
         protected void ThrowIfDisposed([CallerMemberName] string _callerMemberName = "")
         {
             if(IsDisposed) {
@@ -68,11 +75,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Disposing?.Invoke(this, EventArgs.Empty);
         }
 
+
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>の内部処理。
         /// <para>継承先クラスでは本メソッドを呼び出す必要がある。</para>
         /// </summary>
         /// <param name="disposing">CLRの管理下か。</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA1816:Dispose メソッドは、SuppressFinalize を呼び出す必要があります", Justification = "<保留中>")]
         protected virtual void Dispose(bool disposing)
         {
             if(IsDisposed) {
@@ -83,18 +92,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             if(disposing) {
 #pragma warning disable S3971 // "GC.SuppressFinalize" should not be called
-#pragma warning disable CA1816 // Dispose メソッドは、SuppressFinalize を呼び出す必要があります
                 GC.SuppressFinalize(this);
-#pragma warning restore CA1816 // Dispose メソッドは、SuppressFinalize を呼び出す必要があります
 #pragma warning restore S3971 // "GC.SuppressFinalize" should not be called
             }
 
             IsDisposed = true;
         }
 
-        /// <summary>
-        /// 解放。
-        /// </summary>
+        /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
             Dispose(true);
@@ -182,6 +187,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         #endregion
+
         #region function
 
         public static ActionDisposer Create(Action<bool> action) => new ActionDisposer(action);
@@ -196,7 +202,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class DisposableStocker: DisposerBase
+    /// <summary>
+    /// <see cref="IDisposable"/> をまとめて保持する。
+    /// <para>破棄順序は後入れ先出になる。</para>
+    /// </summary>
+    public sealed class DisposableStocker: DisposerBase
     {
         #region property
 
@@ -206,6 +216,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
+        /// <summary>
+        /// 破棄対象として追加。
+        /// </summary>
+        /// <typeparam name="TDisposable"></typeparam>
+        /// <param name="disposable"></param>
+        /// <returns>追加したデータ。</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public TDisposable Add<TDisposable>(TDisposable disposable)
             where TDisposable : IDisposable
@@ -219,6 +235,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
             StockItems.Add(disposable);
 
             return disposable;
+        }
+
+        /// <summary>
+        /// 破棄対象として集合を追加。
+        /// </summary>
+        /// <param name="disposables"></param>
+        public void AddRange(IEnumerable<IDisposable> disposables)
+        {
+            if(disposables == null) {
+                throw new ArgumentNullException(nameof(disposables));
+            }
+
+            ThrowIfDisposed();
+
+            StockItems.AddRange(disposables);
         }
 
         #endregion
