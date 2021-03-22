@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -76,12 +77,12 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
         /// <param name="targetMemberName">設定対象となる<paramref name="obj"/>のメンバ名。未設定で呼び出しメンバ名。</param>
         /// <param name="notifyPropertyName">値設定後に通知するプロパティ名。未設定で呼び出しメンバ名。</param>
         /// <returns>設定されたか。同一値の場合は設定しない。</returns>
-        protected virtual bool SetPropertyValue<TValue>(object obj, TValue value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string notifyPropertyName = "")
+        protected virtual bool SetPropertyValue<TValue>(object obj, [AllowNull] TValue value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string notifyPropertyName = "")
         {
             var type = obj.GetType();
             var propertyInfo = type.GetProperty(targetMemberName)!;
 
-            var nowValue = (TValue)propertyInfo.GetValue(obj);
+            var nowValue = (TValue?)propertyInfo.GetValue(obj);
 
             if(!Equals(nowValue, value)) {
 
