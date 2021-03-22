@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -40,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     /// <inheritdoc cref="ICounter"/>
-    public class Counter : ICounter, IEnumerable<ICounter>
+    public class Counter: ICounter, IEnumerable<ICounter>
     {
         public Counter(int maxCount)
         {
@@ -80,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public bool IsLast => CurrentCount == MaxCount;
 
         /// <inheritdoc cref="ICounter.Complete" />
-        public bool Complete { get; set; }
+        public bool Complete { get; private set; }
 
         #endregion
 

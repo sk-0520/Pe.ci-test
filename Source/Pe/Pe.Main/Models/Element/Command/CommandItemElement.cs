@@ -1,16 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Command;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
-using ContentTypeTextNet.Pe.Main.Views;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
@@ -53,7 +46,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public abstract CommandItemKind Kind { get; }
 
-        public string FullMatchValue {
+        public string FullMatchValue
+        {
             get
             {
                 switch(Kind) {
@@ -204,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         protected override bool EqualsImpl(CommandItemElementBase commandItemElement)
         {
-            if(commandItemElement is ApplicationCommandItemElement  applicationCommandItemElement) {
+            if(commandItemElement is ApplicationCommandItemElement applicationCommandItemElement) {
                 return Parameter == applicationCommandItemElement.Parameter;
             }
 

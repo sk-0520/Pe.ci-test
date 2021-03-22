@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -25,7 +22,6 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Note;
-using ContentTypeTextNet.Pe.Main.ViewModels.Note;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
@@ -712,8 +708,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
 
             StopHidden(true);
-            var waitTime = HiddenMode switch
-            {
+            var waitTime = HiddenMode switch {
                 NoteHiddenMode.Blind => NoteConfiguration.HiddenBlindWaitTime,
                 NoteHiddenMode.Compact => NoteConfiguration.HiddenCompactWaitTime,
                 _ => throw new NotImplementedException()

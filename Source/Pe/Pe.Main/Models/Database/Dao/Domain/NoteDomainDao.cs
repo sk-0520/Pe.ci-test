@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Core.Models.Database;
-using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 {
-    public class NoteDomainDao : DomainDaoBase
+    public class NoteDomainDao: DomainDaoBase
     {
         #region define
 
@@ -37,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 
         public NoteDomainDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)
-        {}
+        { }
 
         #region function
 

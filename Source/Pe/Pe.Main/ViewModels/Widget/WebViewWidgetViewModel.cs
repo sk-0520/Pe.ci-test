@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.DirectoryServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
 using CefSharp;
 using CefSharp.Wpf;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -13,7 +9,6 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
@@ -245,8 +240,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
                 }
 
                 WebView.ReleaseMouseCapture();
-                var scSizeEx = (int)SC.SC_SIZE + e.Direction switch
-                {
+                var scSizeEx = (int)SC.SC_SIZE + e.Direction switch {
                     WebViewWidgetResizeDirection.North => 3,
                     WebViewWidgetResizeDirection.South => 6,
                     WebViewWidgetResizeDirection.East => 2,

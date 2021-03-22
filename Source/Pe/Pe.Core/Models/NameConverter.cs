@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using Microsoft.Win32.SafeHandles;
-using Microsoft.Windows.Themes;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {

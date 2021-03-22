@@ -1,17 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
@@ -21,7 +16,6 @@ using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using Microsoft.Extensions.Logging;
-using NLog.Fluent;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
@@ -129,8 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                 var control = new Control();
                 using(Initializer.Begin(control)) {
                     control.Template = (ControlTemplate)Application.Current.Resources["App-Image-Command"];
-                    control.Style = iconScale.Box switch
-                    {
+                    control.Style = iconScale.Box switch {
                         IconBox.Small => (Style)Application.Current.Resources["Image-Small"],
                         IconBox.Normal => (Style)Application.Current.Resources["Image-Normal"],
                         IconBox.Big => (Style)Application.Current.Resources["Image-Big"],

@@ -2,9 +2,7 @@
 #if USE_DB_SQLITE
 
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using Dapper;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
@@ -13,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
     /// booleanを制御
     /// <para>0: 偽, 0以外: 真</para>
     /// </summary>
-    class SqliteBooleanHandler : SqlMapper.TypeHandler<bool>
+    class SqliteBooleanHandler: SqlMapper.TypeHandler<bool>
     {
         public override void SetValue(IDbDataParameter parameter, bool value)
         {
@@ -34,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         }
     }
 
-    class SqliteVersionHandler : SqlMapper.TypeHandler<Version>
+    class SqliteVersionHandler: SqlMapper.TypeHandler<Version>
     {
         public override void SetValue(IDbDataParameter parameter, Version value)
         {
@@ -54,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         }
     }
 
-    class SqliteGuidHandler : SqlMapper.TypeHandler<Guid>
+    class SqliteGuidHandler: SqlMapper.TypeHandler<Guid>
     {
         public override void SetValue(IDbDataParameter parameter, Guid value)
         {
@@ -75,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         }
     }
 
-    class SqliteTimeSpanHandler : SqlMapper.TypeHandler<TimeSpan>
+    class SqliteTimeSpanHandler: SqlMapper.TypeHandler<TimeSpan>
     {
         public override void SetValue(IDbDataParameter parameter, TimeSpan value)
         {
@@ -97,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 
     }
 
-    public class SqliteImplementation : DatabaseImplementation
+    public class SqliteImplementation: DatabaseImplementation
     {
         static SqliteImplementation()
         {

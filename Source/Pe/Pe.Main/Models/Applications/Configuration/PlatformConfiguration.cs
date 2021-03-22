@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Configuration;
 

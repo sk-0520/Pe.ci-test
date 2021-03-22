@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using Microsoft.Extensions.Logging;
 
@@ -94,8 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         {
             var resizeStarted = ResizeStarted;
             if(resizeStarted != null) {
-                var resizeDirection = direction switch
-                {
+                var resizeDirection = direction switch {
                     "n" => WebViewWidgetResizeDirection.North,
                     "s" => WebViewWidgetResizeDirection.South,
                     "e" => WebViewWidgetResizeDirection.East,

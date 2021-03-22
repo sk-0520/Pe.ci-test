@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -140,28 +138,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             var pluginStorage = new PluginStorage(
                 CreatePluginFile(pluginInformations),
                 CrteatePluginPersistentContext(pluginInformations, databaseContextsPack, isReadOnly)
-            );
-
-            return pluginStorage;
-        }
-
-        [Obsolete]
-        protected virtual PluginStorage CreatePluginStorage(IPluginInformations pluginInformations, IDatabaseBarrierPack databaseBarrierPack, bool isReadOnly)
-        {
-            var pluginStorage = new PluginStorage(
-                CreatePluginFile(pluginInformations),
-                CrteatePluginPersistentBarrier(pluginInformations, databaseBarrierPack, isReadOnly)
-            );
-
-            return pluginStorage;
-        }
-
-        [Obsolete]
-        protected virtual PluginStorage CreatePluginStorage(IPluginInformations pluginInformations, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
-        {
-            var pluginStorage = new PluginStorage(
-                CreatePluginFile(pluginInformations),
-                CrteatePluginPersistentLazyWriter(pluginInformations, databaseBarrierPack, databaseLazyWriterPack)
             );
 
             return pluginStorage;

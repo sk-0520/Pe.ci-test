@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.About
 {
-    public class AboutComponentItemViewModel : ViewModelBase
+    public class AboutComponentItemViewModel: ViewModelBase
     {
         public AboutComponentItemViewModel(AboutComponentItem item, ILoggerFactory loggerFactory)
             : base(loggerFactory)

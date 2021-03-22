@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
-using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
@@ -11,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// データベース実装におけるトランザクション処理。
     /// <para>これが実体化されてればトランザクション中でしょうね。</para>
     /// </summary>
-    public interface IDatabaseTransaction : IDatabaseContext, IDisposable
+    public interface IDatabaseTransaction: IDatabaseContext, IDisposable
     {
         #region property
 
@@ -45,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// トランザクション中の処理をサポート。
     /// <para>基本的にはユーザーコードでお目にかからない。往々にして<see cref="IDatabaseContext"/>がすべて上位から良しなに対応する。</para>
     /// </summary>
-    public class DatabaseTransaction : DisposerBase, IDatabaseTransaction
+    public class DatabaseTransaction: DisposerBase, IDatabaseTransaction
     {
         public DatabaseTransaction(IDatabaseAccessor databaseAccessor)
         {
@@ -116,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return DatabaseAccessor.QuerySingleOrDefault<T>(statement, parameter, this);
         }
 
-        public int Execute(string statement, object? parameter = null)
+        public virtual int Execute(string statement, object? parameter = null)
         {
             return DatabaseAccessor.Execute(statement, parameter, this);
         }
@@ -149,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
-    public class ReadOnlyDatabaseTransaction : DatabaseTransaction
+    public class ReadOnlyDatabaseTransaction: DatabaseTransaction
     {
         public ReadOnlyDatabaseTransaction(IDatabaseAccessor databaseAccessor)
             : base(databaseAccessor)
@@ -162,6 +160,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region DatabaseTransaction
 
         public override void Commit() => throw new NotSupportedException();
+
+        public override int Execute(string statement, object? parameter = null) => throw new NotSupportedException();
 
         #endregion
 

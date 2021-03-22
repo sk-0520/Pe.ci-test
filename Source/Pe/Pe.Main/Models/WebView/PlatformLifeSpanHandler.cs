@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using CefSharp;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.WebView
 {
-    public class PlatformLifeSpanHandler : ILifeSpanHandler
+    public class PlatformLifeSpanHandler: ILifeSpanHandler
     {
         public PlatformLifeSpanHandler(ILoggerFactory loggerFactory)
         {

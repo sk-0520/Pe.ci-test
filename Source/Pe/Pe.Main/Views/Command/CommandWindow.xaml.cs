@@ -1,16 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
@@ -26,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
     /// <summary>
     /// CommandWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class CommandWindow : Window, IDpiScaleOutputor
+    public partial class CommandWindow: Window, IDpiScaleOutputor
     {
         public CommandWindow()
         {

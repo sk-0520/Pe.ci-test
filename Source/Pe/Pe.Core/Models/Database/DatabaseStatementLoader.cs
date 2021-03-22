@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
@@ -31,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
-    public abstract class DatabaseStatementLoaderBase : IDatabaseStatementLoader
+    public abstract class DatabaseStatementLoaderBase: IDatabaseStatementLoader
     {
         protected DatabaseStatementLoaderBase(ILogger logger)
         {

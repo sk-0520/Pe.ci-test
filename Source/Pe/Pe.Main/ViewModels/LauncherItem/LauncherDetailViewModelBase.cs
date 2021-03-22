@@ -1,23 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
-using System.Windows.Input;
-using Prism.Commands;
-using ContentTypeTextNet.Pe.Core.ViewModels;
-using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
-using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
-using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
-using Microsoft.Extensions.Logging;
-using ContentTypeTextNet.Pe.Main.Models.Data;
-using System.Diagnostics;
-using ContentTypeTextNet.Pe.Main.Models.Launcher;
-using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.KeyAction;
+using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
@@ -49,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         #endregion
     }
 
-    public abstract class LauncherDetailViewModelBase : SingleModelViewModelBase<LauncherItemElement>, ILauncherItemId
+    public abstract class LauncherDetailViewModelBase: SingleModelViewModelBase<LauncherItemElement>, ILauncherItemId
     {
         #region define
 

@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
     [Serializable, DataContract]
-    public class AboutComponentsData : DataBase
+    public class AboutComponentsData: DataBase
     {
         #region property
         [DataMember(Name = "library")]
@@ -19,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [Serializable, DataContract]
-    public class AboutComponentData : DataBase
+    public class AboutComponentData: DataBase
     {
         #region property
 
@@ -38,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [Serializable, DataContract]
-    public class AboutLicenseData : DataBase
+    public class AboutLicenseData: DataBase
     {
         #region property
 

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -19,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         {
             var gi = new Get();
             var go = PropertyExpressionFactory.CreateOwner(gi);
-            var pgetter = PropertyExpressionFactory.CreateGetter<Get,int>(go, "Property");
+            var pgetter = PropertyExpressionFactory.CreateGetter<Get, int>(go, "Property");
             var gi1 = pgetter(gi);
             Assert.AreEqual(1, gi1);
         }

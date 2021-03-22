@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 
@@ -22,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
                     if(CastUtility.GetCastWPFValue<bool>(b, false)) {
                         return true;
                     }
-                }catch(Exception ex) {
+                } catch(Exception ex) {
                     Debug.WriteLine(ex);
                 }
             }

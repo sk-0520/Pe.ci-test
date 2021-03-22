@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    class DummyInfo : MemberInfo
+    class DummyInfo: MemberInfo
     {
         public DummyInfo(string name, Type declaringType, Type reflectedType)
         {
@@ -120,8 +120,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         object? GetMemberValue(object target, MemberInfo memberInfo)
         {
-            return memberInfo.MemberType switch
-            {
+            return memberInfo.MemberType switch {
                 MemberTypes.Field => ((FieldInfo)memberInfo).GetValue(target),
                 MemberTypes.Property => ((PropertyInfo)memberInfo).GetValue(target),
                 _ => throw new NotImplementedException(),

@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -20,7 +16,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
-    public class NoteNotifyAreaViewModel : SingleModelViewModelBase<NoteElement>, INotifyArea
+    public class NoteNotifyAreaViewModel: SingleModelViewModelBase<NoteElement>, INotifyArea
     {
         public NoteNotifyAreaViewModel(NoteElement model, IWindowManager windowManager, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)

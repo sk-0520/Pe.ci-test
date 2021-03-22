@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Database.Dao;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
@@ -14,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
     /// プラグインが仲間入り。
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase")]
-    public class Setupper_V_00_99_000 : SetupperBase
+    public class Setupper_V_00_99_000: SetupperBase
     {
         public Setupper_V_00_99_000(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(idFactory, statementLoader, loggerFactory)

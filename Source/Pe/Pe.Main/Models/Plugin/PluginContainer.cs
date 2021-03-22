@@ -4,8 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
@@ -95,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 // ディレクトリ名に依存しない形でなんかそれっぽいのを探し出す
                 // 1ディレクトリにdll/exeが１つであることを前提にしている問題
                 var baseFileNames = pluginDir.EnumerateFiles()
-                    .Select(i => new { BaseName = Path.GetFileNameWithoutExtension(i.Name), Extension = 1 < i.Length ? i.Extension.Substring(1): string.Empty })
+                    .Select(i => new { BaseName = Path.GetFileNameWithoutExtension(i.Name), Extension = 1 < i.Length ? i.Extension.Substring(1) : string.Empty })
                     .Where(i => !string.IsNullOrEmpty(i.Extension))
                     .Where(i => extensions.Select(i => i.ToLowerInvariant()).Contains(i.Extension.ToLowerInvariant()))
                     .Where(i => !ignoreBaseFileName.Select(i => i.ToLowerInvariant()).Contains(i.BaseName.ToLowerInvariant()))

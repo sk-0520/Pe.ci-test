@@ -3,20 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Input;
-using CefSharp;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
-using ContentTypeTextNet.Pe.Main.Models.WebView;
-using ContentTypeTextNet.Pe.Main.Views.Feedback;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -77,8 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
 
         public ICommand SetTemplateCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                var text = SelectedFeedbackKind switch
-                {
+                var text = SelectedFeedbackKind switch {
                     FeedbackKind.Bug => Properties.Resources.String_Feedback_Comment_Kind_Bug,
                     FeedbackKind.Proposal => Properties.Resources.String_Feedback_Comment_Kind_Proposal,
                     FeedbackKind.Others => Properties.Resources.String_Feedback_Comment_Kind_Others,

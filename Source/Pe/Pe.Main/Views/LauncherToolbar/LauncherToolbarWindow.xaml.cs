@@ -1,31 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
-using ContentTypeTextNet.Pe.Core.Views;
-using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
-using Microsoft.Xaml.Behaviors;
 
 namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
 {
     /// <summary>
     /// LauncherToolbarWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class LauncherToolbarWindow : Window
+    public partial class LauncherToolbarWindow: Window
     {
         public LauncherToolbarWindow()
         {
@@ -109,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
         private void scrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             if(!ViewModel.IsVerticalLayout) {
-                this.scrollViewer.ScrollToHorizontalOffset(this.scrollViewer.HorizontalOffset + - e.Delta);
+                this.scrollViewer.ScrollToHorizontalOffset(this.scrollViewer.HorizontalOffset + -e.Delta);
                 e.Handled = true;
             }
         }

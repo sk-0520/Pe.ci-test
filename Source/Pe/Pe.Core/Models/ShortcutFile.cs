@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Text;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Unmanaged;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 
@@ -10,14 +7,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// ショートカットファイルの読み書き。
     /// </summary>
-    public class ShortcutFile : DisposerBase
+    public class ShortcutFile: DisposerBase
     {
         #region define
 
         readonly struct IconPathData
         {
             public IconPathData(string path)
-                :this(path, 0)
+                : this(path, 0)
             { }
 
             public IconPathData(string path, int index)
@@ -28,8 +25,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             #region property
 
-            public string Path { get;  }
-            public int Index { get;  }
+            public string Path { get; }
+            public int Index { get; }
 
             #endregion
         }

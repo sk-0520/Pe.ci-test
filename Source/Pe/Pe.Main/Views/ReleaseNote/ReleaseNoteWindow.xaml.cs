@@ -1,18 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.PInvoke.Windows;
-using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
@@ -20,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
     /// <summary>
     /// ReleaseNoteWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class ReleaseNoteWindow : Window
+    public partial class ReleaseNoteWindow: Window
     {
         public ReleaseNoteWindow()
         {

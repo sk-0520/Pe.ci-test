@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
@@ -82,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         protected TValue GetResourceValue<TValue>(string parentName, string targetName)
         {
             var key = parentName + '.' + targetName;
-            var result =  (TValue)Application.Current.Resources[key];
+            var result = (TValue)Application.Current.Resources[key];
             Debug.Assert(result != null);
             return result;
 

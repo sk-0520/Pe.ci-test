@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
@@ -50,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
                 // 引数の削除
                 var targetHasKeys = item
-                    .Where(i => i.Value.ParameterInfos.Any(i => i.ParameterType ==type))
+                    .Where(i => i.Value.ParameterInfos.Any(i => i.ParameterType == type))
                     .Select(i => i.Key)
                     .ToList()
                 ;

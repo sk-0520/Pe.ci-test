@@ -1,15 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
-    public interface IUserAgentManager : IHttpUserAgentFactory, IApplicationHttpUserAgentFactory
+    public interface IUserAgentManager: IHttpUserAgentFactory, IApplicationHttpUserAgentFactory
     {
         #region function
 

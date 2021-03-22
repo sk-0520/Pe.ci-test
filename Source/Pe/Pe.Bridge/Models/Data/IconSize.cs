@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data

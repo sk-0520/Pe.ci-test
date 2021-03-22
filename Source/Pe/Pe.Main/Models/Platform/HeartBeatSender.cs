@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Timers;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -36,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         [DateTimeKind(DateTimeKind.Utc)]
         DateTime LastSendTime { get; set; } = DateTime.MinValue;
 
-        public TimeSpan SendSpan { get;  }
+        public TimeSpan SendSpan { get; }
 
         bool CanSend => SendSpan < DateTime.UtcNow - LastSendTime;
 

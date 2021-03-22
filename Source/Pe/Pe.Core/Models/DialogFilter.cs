@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -73,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// ダイアログで使用するフィルタのアイテム。
     /// <para>値を保持する。</para>
     /// </summary>
-    public record DialogFilterItem<TValue> : DialogFilterItem
+    public record DialogFilterItem<TValue>: DialogFilterItem
     {
         public DialogFilterItem(TValue value, string display, string defaultExtension, IEnumerable<string> wildcard)
             : base(display, defaultExtension, wildcard)
@@ -98,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     }
 
-    public class DialogFilterList : Collection<DialogFilterItem>
+    public class DialogFilterList: Collection<DialogFilterItem>
     {
         #region
 

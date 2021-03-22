@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Timers;
 using Microsoft.Extensions.Logging;
 
@@ -76,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    public class ReferencePool<TKey, TValue> : DisposerBase
+    public class ReferencePool<TKey, TValue>: DisposerBase
         where TKey : notnull
         where TValue : class
     {

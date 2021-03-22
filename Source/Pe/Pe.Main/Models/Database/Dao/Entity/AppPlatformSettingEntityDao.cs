@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -50,21 +48,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var dto = Context.QueryFirst<AppPlatformSettingEntityDto>(statement);
             var data = new SettingAppPlatformSettingData() {
                 SupportExplorer = dto.SupportExplorer,
-                SuppressSystemIdle =  dto.SuppressSystemIdle,
+                SuppressSystemIdle = dto.SuppressSystemIdle,
             };
             return data;
-        }
-
-        [Obsolete]
-        public bool UpdateSettingPlatformSetting(SettingAppPlatformSettingData data, IDatabaseCommonStatus commonStatus)
-        {
-            var statement = LoadStatement();
-            var dto = new AppPlatformSettingEntityDto() {
-                SupportExplorer = data.SupportExplorer,
-                SuppressSystemIdle = data.SuppressSystemIdle,
-            };
-            commonStatus.WriteCommon(dto);
-            return Context.Execute(statement, dto) == 1;
         }
 
         public void UpdateSuppressSystemIdle(bool isEnabled, IDatabaseCommonStatus commonStatus)

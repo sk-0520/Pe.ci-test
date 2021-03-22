@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Reflection;
-using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Bridge.Models;

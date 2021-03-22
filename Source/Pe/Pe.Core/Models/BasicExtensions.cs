@@ -1,9 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -92,6 +88,18 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static void SetRange<T>(this ICollection<T> source, IEnumerable<T> collection)
         {
             source.Clear();
+            if(source is List<T> list) {
+                list.AddRange(collection);
+            } else {
+                foreach(var item in collection) {
+                    source.Add(item);
+                }
+            }
+        }
+
+        /// <inheritdoc cref="List{T}.AddRange(IEnumerable{T})"/>
+        public static void AddRange<T>(this ICollection<T> source, IEnumerable<T> collection)
+        {
             if(source is List<T> list) {
                 list.AddRange(collection);
             } else {

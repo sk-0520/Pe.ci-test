@@ -2,14 +2,13 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 {
     /// <summary>
     /// 限定的なDIコンテナ。
     /// </summary>
-    public interface IScopeDiContainer : IDiRegisterContainer, IDisposable
+    public interface IScopeDiContainer: IDiRegisterContainer, IDisposable
     {
         /// <summary>
         /// ただ単純な登録。
@@ -24,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         ;
     }
 
-    internal class ConcurrentHashSet<T> : ConcurrentDictionary<T, byte>
+    internal class ConcurrentHashSet<T>: ConcurrentDictionary<T, byte>
         where T : notnull
     {
         #region property
@@ -46,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
     }
 
-    internal class ScopeDiContainer : DiContainer, IScopeDiContainer
+    internal class ScopeDiContainer: DiContainer, IScopeDiContainer
     {
         public ScopeDiContainer(bool isDisposeObjectPool)
             : base(isDisposeObjectPool)

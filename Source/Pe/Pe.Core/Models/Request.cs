@@ -1,12 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Views;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -15,10 +8,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public class RequestResponse
     { }
 
-    public sealed class RequestSilentResponse : RequestResponse
+    public sealed class RequestSilentResponse: RequestResponse
     { }
 
-    public class CommonMessageDialogRequestParameter : RequestParameter
+    public class CommonMessageDialogRequestParameter: RequestParameter
     {
         #region property
 
@@ -33,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class CancelResponse : RequestResponse
+    public class CancelResponse: RequestResponse
     {
         #region property
 
@@ -42,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class YesNoResponse : CancelResponse
+    public class YesNoResponse: CancelResponse
     {
         #region property
 
@@ -51,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class FileDialogRequestParameter : RequestParameter
+    public class FileDialogRequestParameter: RequestParameter
     {
         public DialogFilterList Filter { get; } = new DialogFilterList();
         public bool ShowExtensions { get; set; } = true;
@@ -59,34 +52,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public string FilePath { get; set; } = string.Empty;
     }
 
-    public class FileDialogRequestResponse : CancelResponse
+    public class FileDialogRequestResponse: CancelResponse
     {
         public string[] ResponseFilePaths { get; set; } = new string[] { };
     }
 
-    public class FileOpenDialogRequestParameter : FileDialogRequestParameter
+    public class FileOpenDialogRequestParameter: FileDialogRequestParameter
     {
         #region property
 
 
         #endregion
     }
-    public class FileOpenDialogRequestResponse : FileDialogRequestResponse
-    {
-        #region property
-
-
-        #endregion
-    }
-
-    public class FileSaveDialogRequestParameter : FileDialogRequestParameter
-    {
-        #region property
-
-
-        #endregion
-    }
-    public class FileSaveDialogRequestResponse : FileDialogRequestResponse
+    public class FileOpenDialogRequestResponse: FileDialogRequestResponse
     {
         #region property
 
@@ -94,7 +72,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class RequestEventArgs : EventArgs
+    public class FileSaveDialogRequestParameter: FileDialogRequestParameter
+    {
+        #region property
+
+
+        #endregion
+    }
+    public class FileSaveDialogRequestResponse: FileDialogRequestResponse
+    {
+        #region property
+
+
+        #endregion
+    }
+
+    public class RequestEventArgs: EventArgs
     {
         public RequestEventArgs(RequestParameter requestParameter, Action<RequestResponse> callback)
         {

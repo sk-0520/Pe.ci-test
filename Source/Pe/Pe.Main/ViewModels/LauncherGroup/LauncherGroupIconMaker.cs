@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -17,8 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup
 
         string GetResourceKey(LauncherGroupImageName imageName)
         {
-            return imageName switch
-            {
+            return imageName switch {
                 LauncherGroupImageName.DirectoryNormal => "Path-LauncherGroup-Directory-Normal",
                 LauncherGroupImageName.DirectoryOpen => "Path-LauncherGroup-Directory-Open",
                 LauncherGroupImageName.File => "Path-LauncherGroup-File",

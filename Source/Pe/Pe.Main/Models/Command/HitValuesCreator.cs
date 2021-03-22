@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -11,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
-    internal class HitValuesCreator : IHitValuesCreator
+    internal class HitValuesCreator: IHitValuesCreator
     {
         public HitValuesCreator(ILoggerFactory loggerFactory)
         {
@@ -32,8 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         /// <inheritdoc cref="IHitValuesCreator.GetScore(ScoreKind, double)"/>
         public int GetScore(ScoreKind scoreKind, double bonus)
         {
-            return scoreKind switch
-            {
+            return scoreKind switch {
                 ScoreKind.Initial => 0,
                 ScoreKind.Maximum => 1000,
                 ScoreKind.Minimum => -1000,

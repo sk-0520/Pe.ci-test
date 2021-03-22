@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -16,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
     /// システムテーマ情報を読み込み。
     /// <inheritdoc cref="IPlatformTheme"/>
     /// </summary>
-    public class PlatformThemeLoader : DisposerBase, IPlatformTheme
+    public class PlatformThemeLoader: DisposerBase, IPlatformTheme
     {
         public PlatformThemeLoader(PlatformConfiguration platformConfiguration, ILoggerFactory loggerFactory)
         {
@@ -177,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             );
         }
 
-        public PlatformAccentColors GetTextColor(PlatformAccentColors accentColors)
+        public PlatformAccentColors GetTextColor(in PlatformAccentColors accentColors)
         {
             return new PlatformAccentColors(
                 MediaUtility.GetAutoColor(accentColors.Accent),

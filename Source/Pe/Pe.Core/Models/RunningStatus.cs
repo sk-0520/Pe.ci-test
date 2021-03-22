@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models
@@ -39,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// 通知可能な実行状態。
     /// </summary>
-    public interface IRunningStatus : INotifyPropertyChanged
+    public interface IRunningStatus: INotifyPropertyChanged
     {
         #region property
 
@@ -54,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// 実行状態。
     /// </summary>
-    public class RunningStatus : BindModelBase, IRunningStatus
+    public class RunningStatus: BindModelBase, IRunningStatus
     {
         #region variable
 

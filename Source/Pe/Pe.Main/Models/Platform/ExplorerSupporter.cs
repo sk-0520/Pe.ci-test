@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Timers;
@@ -15,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
     /// Windows Explorer に対する(独善的)補助処理。
     /// <para>今んとこフォルダツリーの横スクロールくらい。</para>
     /// </summary>
-    public class ExplorerSupporter : DisposerBase
+    public class ExplorerSupporter: DisposerBase
     {
         #region define
 

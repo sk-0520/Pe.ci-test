@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using WinForms = System.Windows.Forms;
 
 namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms

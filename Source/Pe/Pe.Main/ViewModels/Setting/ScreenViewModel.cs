@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -10,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class ScreenViewModel : ViewModelBase
+    public class ScreenViewModel: ViewModelBase
     {
         #region variable
 
@@ -25,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             byte alpha = 180;
             if(Screen.Primary) {
-               BackgroundColor  = Color.FromArgb(alpha, 0xff, 0xff, 0xff);
+                BackgroundColor = Color.FromArgb(alpha, 0xff, 0xff, 0xff);
             } else {
                 var rand = new Random(screen.DeviceName.GetHashCode());
                 BackgroundColor = Color.FromArgb(
@@ -42,12 +40,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public Screen Screen { get; }
 
-        public Color ForegroundColor {
+        public Color ForegroundColor
+        {
             get => this._foregroundColor;
             set => SetProperty(ref this._foregroundColor, value);
         }
 
-        public Color BackgroundColor {
+        public Color BackgroundColor
+        {
             get => this._backgroundColor;
             set => SetProperty(ref this._backgroundColor, value);
         }

@@ -1,15 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Text;
-using ContentTypeTextNet.Pe.Core.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public class FileChangedEventArgs : EventArgs
+    public class FileChangedEventArgs: EventArgs
     {
         public FileChangedEventArgs(FileInfo file, bool isRefresh)
         {
@@ -57,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class FileWatcher : DisposerBase
+    public class FileWatcher: DisposerBase
     {
         #region event
 

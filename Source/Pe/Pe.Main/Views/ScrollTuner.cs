@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -15,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
     /// マウスホイールでスクロールする際にいろんな要因で吸い取られるイベントを自然に処理する。
     /// <para>WPFが標準で用意してるやつは基本的に大丈夫そうだけどサードパーティ製のやつとか自前のやつとかに特化。</para>
     /// </summary>
-    public class ScrollTuner : DisposerBase
+    public class ScrollTuner: DisposerBase
     {
         /// <summary>
         ///

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 {
@@ -13,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// <summary>
     /// マッピング生成キャッシュ。
     /// </summary>
-    public sealed class DiFactoryWorker : DisposerBase
+    public sealed class DiFactoryWorker: DisposerBase
     {
         public DiFactoryWorker(DiLifecycle lifecycle, DiCreator creator, object bind)
         {

@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     /// <see cref="HttpClient"/>を意識せずに(寿命とか)に <see cref="IDisposable.Dispose"/> できる子。
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IHttpUserAgent : IDisposable
+    public interface IHttpUserAgent: IDisposable
     {
         #region function
 

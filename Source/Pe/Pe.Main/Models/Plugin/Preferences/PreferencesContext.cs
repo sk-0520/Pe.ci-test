@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
-using ContentTypeTextNet.Pe.Bridge.ViewModels;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
 {

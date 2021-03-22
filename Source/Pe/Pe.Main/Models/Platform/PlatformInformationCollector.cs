@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
     /// <summary>
     /// システム情報収集。
     /// </summary>
-    public class PlatformInformationCollector : DisposerBase
+    public class PlatformInformationCollector: DisposerBase
     {
         #region property
         #endregion

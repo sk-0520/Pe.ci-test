@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using WinForms = System.Windows.Forms;
@@ -11,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     /// FormsのFormをウィンドウとして扱う。
     /// <para>要はウィンドウハンドル欲しい。</para>
     /// </summary>
-    public class CompatibleFormWindow : WinForms.IWin32Window, IWindowsHandle
+    public class CompatibleFormWindow: WinForms.IWin32Window, IWindowsHandle
     {
         public CompatibleFormWindow(Window window)
         {

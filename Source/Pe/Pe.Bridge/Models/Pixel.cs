@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models
 {
@@ -27,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     /// ピクセル情報を指定。
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter | AttributeTargets.ReturnValue, AllowMultiple = false)]
-    public class PixelKindAttribute : System.Attribute
+    public class PixelKindAttribute: System.Attribute
     {
         /// <summary>
         /// ピクセル情報を指定。

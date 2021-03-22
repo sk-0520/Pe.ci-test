@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
@@ -10,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// <summary>
     /// Windows 万歳な GDI 系オブジェクトを扱う。
     /// </summary>
-    public abstract class GdiObjectBase : UnmanagedHandleWrapper, IMakeBitmapSource
+    public abstract class GdiObjectBase: UnmanagedHandleWrapper, IMakeBitmapSource
     {
         protected GdiObjectBase(IntPtr hHandle)
             : base(hHandle)
@@ -57,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
         #endregion
     }
 
-    public class IconHandleWrapper : GdiObjectBase
+    public class IconHandleWrapper: GdiObjectBase
     {
         public IconHandleWrapper(IntPtr hIcon)
             : base(hIcon)
@@ -96,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// <summary>
     /// ビットマップハンドルを管理。
     /// </summary>
-    public class BitmapHandleWrapper : GdiObjectBase
+    public class BitmapHandleWrapper: GdiObjectBase
     {
         public BitmapHandleWrapper(IntPtr hBitmap)
             : base(hBitmap)

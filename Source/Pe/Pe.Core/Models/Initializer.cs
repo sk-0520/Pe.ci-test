@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
-using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
     /// <see cref="ISupportInitialize"/>の初期化から初期化終了までを using で実施できるようにする。
     /// </summary>
-    public class Initializer : DisposerBase
+    public class Initializer: DisposerBase
     {
         public Initializer(ISupportInitialize target)
         {

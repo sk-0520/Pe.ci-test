@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -9,11 +5,10 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
-using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
-    internal class DefaultLauncherToolbarTheme : DefaultThemeBase, ILauncherToolbarTheme
+    internal class DefaultLauncherToolbarTheme: DefaultThemeBase, ILauncherToolbarTheme
     {
         public DefaultLauncherToolbarTheme(IThemeParameter parameter)
             : base(parameter)

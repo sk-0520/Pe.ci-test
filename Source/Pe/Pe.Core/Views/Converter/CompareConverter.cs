@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 
@@ -35,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
         LessEqual,
     }
 
-    public abstract class CompareConverterBase<T> : IValueConverter
+    public abstract class CompareConverterBase<T>: IValueConverter
         where T : IComparable<T>
     {
         #region property
@@ -83,6 +81,6 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
 
     }
 
-    public class DoubleCompareConverter : CompareConverterBase<double>
+    public class DoubleCompareConverter: CompareConverterBase<double>
     { }
 }

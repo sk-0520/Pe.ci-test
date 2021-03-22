@@ -1,15 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 {
     /// <summary>
     /// 生のCOMを管理。
     /// </summary>
-    public class ComWrapper<T> : UnmanagedWrapperBase<T>
+    public class ComWrapper<T>: UnmanagedWrapperBase<T>
         where T : class
     {
         public ComWrapper(T comObject)

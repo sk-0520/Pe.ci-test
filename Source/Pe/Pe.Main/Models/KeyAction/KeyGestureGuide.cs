@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -17,9 +16,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
 
         #region function
-
-        [Obsolete]
-        void Clear();
 
         string GetCommandKey();
         string GetNoteKey(KeyActionContentNote keyActionContentNote);
@@ -45,9 +41,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
-
-        [Obsolete]
-        IDictionary<string, string> KeyCache { get; } = new Dictionary<string, string>();
 
         #endregion
 
@@ -103,13 +96,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
 
         #region IKeyGestureGuide
-
-        /// <inheritdoc cref="IKeyGestureGuide.Clear"/>
-        [Obsolete]
-        public void Clear()
-        {
-            KeyCache.Clear();
-        }
 
         /// <inheritdoc cref="IKeyGestureGuide.GetCommandKey"/>
         public string GetCommandKey()

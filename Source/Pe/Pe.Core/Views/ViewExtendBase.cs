@@ -1,17 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Views
 {
-    public interface IExtendData : INotifyPropertyChanged, IDisposer
+    public interface IExtendData: INotifyPropertyChanged, IDisposer
     { }
 
-    public abstract class ViewExtendBase<TView, TExtendData> : DisposerBase
+    public abstract class ViewExtendBase<TView, TExtendData>: DisposerBase
         where TView : UIElement
         where TExtendData : IExtendData
     {

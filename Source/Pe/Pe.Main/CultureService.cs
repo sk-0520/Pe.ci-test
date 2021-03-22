@@ -1,15 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Text;
-using System.Windows;
 using System.Windows.Markup;
 using ContentTypeTextNet.Pe.Main.Models;
 
 namespace ContentTypeTextNet.Pe.Main
 {
-    public sealed class CultureService : INotifyPropertyChanged
+    public sealed class CultureService: INotifyPropertyChanged
     {
         #region event
 

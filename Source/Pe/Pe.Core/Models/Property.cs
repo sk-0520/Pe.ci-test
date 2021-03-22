@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// 汎用プロパティアクセス処理。
     /// </summary>
-    public class PropertyAccesser : IPropertyGetter, IPropertySetter
+    public class PropertyAccesser: IPropertyGetter, IPropertySetter
     {
         public PropertyAccesser(ParameterExpression ownerExpression, PropertyInfo propertyInfo)
         {
@@ -221,7 +221,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     /// <typeparam name="TOwner"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    public class PropertyAccesser<TOwner, TValue> : PropertyAccesser, IPropertyGetter<TOwner, TValue>, IPropertySetter<TOwner, TValue>
+    public class PropertyAccesser<TOwner, TValue>: PropertyAccesser, IPropertyGetter<TOwner, TValue>, IPropertySetter<TOwner, TValue>
     {
         public PropertyAccesser(TOwner owner, string propertyName)
             : base(owner!, propertyName)

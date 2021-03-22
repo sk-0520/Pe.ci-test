@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -10,7 +8,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
     [ValueConversion(typeof(Color), typeof(Color))]
-    public class AutoColorConverter : IValueConverter
+    public class AutoColorConverter: IValueConverter
     {
         #region IValueConverter
 

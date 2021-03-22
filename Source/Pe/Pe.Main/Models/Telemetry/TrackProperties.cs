@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
 {
@@ -10,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
     /// 追跡用プロパティ。
     /// <para><see cref="IDictionary{TKey, TValue}"/>となんら変わらないけど宣言を短くする目的。</para>
     /// </summary>
-    public class TrackProperties : IDictionary<string, string>, IReadOnlyDictionary<string, string>
+    public class TrackProperties: IDictionary<string, string>, IReadOnlyDictionary<string, string>
     {
         public TrackProperties()
         { }

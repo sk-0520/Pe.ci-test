@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -16,7 +14,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public abstract class KeyboardJobSettingEditorViewModelBase<TJobEditor> : SettingItemViewModelBase<TJobEditor>, IKeyActionId
+    public abstract class KeyboardJobSettingEditorViewModelBase<TJobEditor>: SettingItemViewModelBase<TJobEditor>, IKeyActionId
         where TJobEditor : KeyboardJobSettingEditorElementBase
     {
         protected KeyboardJobSettingEditorViewModelBase(TJobEditor model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -47,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-    public sealed class KeyboardReplaceJobSettingEditorViewMode : KeyboardJobSettingEditorViewModelBase<KeyboardReplaceJobSettingEditorElement>
+    public sealed class KeyboardReplaceJobSettingEditorViewMode: KeyboardJobSettingEditorViewModelBase<KeyboardReplaceJobSettingEditorElement>
     {
         public KeyboardReplaceJobSettingEditorViewMode(KeyboardReplaceJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
@@ -98,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     }
 
-    public sealed class KeyboardDisableJobSettingEditorViewModel : KeyboardJobSettingEditorViewModelBase<KeyboardDisableJobSettingEditorElement>
+    public sealed class KeyboardDisableJobSettingEditorViewModel: KeyboardJobSettingEditorViewModelBase<KeyboardDisableJobSettingEditorElement>
     {
         public KeyboardDisableJobSettingEditorViewModel(KeyboardDisableJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
@@ -148,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-    public sealed class KeyMappingEditorViewModel : ViewModelBase
+    public sealed class KeyMappingEditorViewModel: ViewModelBase
     {
         public KeyMappingEditorViewModel(KeyMappingData mapping, ILoggerFactory loggerFactory)
             : base(loggerFactory)
@@ -195,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-    public abstract class KeyboardPressedJobSettingEditorViewModelBase : KeyboardJobSettingEditorViewModelBase<KeyboardPressedJobSettingEditorElement>
+    public abstract class KeyboardPressedJobSettingEditorViewModelBase: KeyboardJobSettingEditorViewModelBase<KeyboardPressedJobSettingEditorElement>
     {
         protected KeyboardPressedJobSettingEditorViewModelBase(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
@@ -273,7 +271,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-    public abstract class KeyboardPressedJobSettingEditorViewModelBase<TContent> : KeyboardPressedJobSettingEditorViewModelBase
+    public abstract class KeyboardPressedJobSettingEditorViewModelBase<TContent>: KeyboardPressedJobSettingEditorViewModelBase
     {
         protected KeyboardPressedJobSettingEditorViewModelBase(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
@@ -286,14 +284,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-    public sealed class KeyboardCommandJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase
+    public sealed class KeyboardCommandJobSettingEditorViewModel: KeyboardPressedJobSettingEditorViewModelBase
     {
         public KeyboardCommandJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         { }
     }
 
-    public sealed class KeyboardLauncherItemJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase<KeyActionContentLauncherItem>
+    public sealed class KeyboardLauncherItemJobSettingEditorViewModel: KeyboardPressedJobSettingEditorViewModelBase<KeyActionContentLauncherItem>
     {
         public KeyboardLauncherItemJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
@@ -360,7 +358,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     }
 
-    public sealed class KeyboardLauncherToolbarJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase<KeyActionContentLauncherToolbar>
+    public sealed class KeyboardLauncherToolbarJobSettingEditorViewModel: KeyboardPressedJobSettingEditorViewModelBase<KeyActionContentLauncherToolbar>
     {
         public KeyboardLauncherToolbarJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
@@ -395,7 +393,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     }
 
-    public sealed class KeyboardNoteJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase<KeyActionContentNote>
+    public sealed class KeyboardNoteJobSettingEditorViewModel: KeyboardPressedJobSettingEditorViewModelBase<KeyActionContentNote>
     {
         public KeyboardNoteJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)

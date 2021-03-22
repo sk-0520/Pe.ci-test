@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
-using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
     internal abstract class AddonBase: ExtensionBase, IAddon
     {
         public AddonBase(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
-            :base(pluginConstructorContext, plugin)
+            : base(pluginConstructorContext, plugin)
         { }
 
         #region property

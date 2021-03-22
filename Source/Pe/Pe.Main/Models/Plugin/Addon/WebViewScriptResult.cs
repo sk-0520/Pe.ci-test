@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using CefSharp;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -30,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         #endregion
     }
 
-    public class RequestSender : BindableBase, IRequestSender
+    public class RequestSender: BindableBase, IRequestSender
     {
         public RequestSender()
         { }

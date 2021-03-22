@@ -1,18 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
@@ -23,14 +15,13 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Note;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
-using Microsoft.Xaml.Behaviors;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Note
 {
     /// <summary>
     /// NoteWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class NoteWindow : Window, IDpiScaleOutputor
+    public partial class NoteWindow: Window, IDpiScaleOutputor
     {
         public NoteWindow()
         {
@@ -85,8 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             o => {
                 var linkParameter = (NoteLinkChangeRequestParameter)o.Parameter;
 
-                FileSystemDialogBase dialog = linkParameter.IsOpen switch
-                {
+                FileSystemDialogBase dialog = linkParameter.IsOpen switch {
                     true => new OpenFileDialog(),
                     false => new SaveFileDialog(),
                 };

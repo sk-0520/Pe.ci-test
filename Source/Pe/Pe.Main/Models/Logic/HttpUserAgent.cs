@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     /// <summary>
     /// <inheritdoc cref="IHttpUserAgent"/>
     /// </summary>
-    internal class HttpUserAgent : DisposerBase, IHttpUserAgent
+    internal class HttpUserAgent: DisposerBase, IHttpUserAgent
     {
         #region variable
 
@@ -173,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     /// <summary>
     /// <inheritdoc cref="IHttpUserAgent"/>
     /// </summary>
-    internal class UserAgentName : IHttpUserAgentName
+    internal class UserAgentName: IHttpUserAgentName
     {
         #region function
 
@@ -238,7 +238,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     }
 
     /// <inheritdoc cref="IHttpUserAgentFactory"/>
-    internal class HttpUserAgentFactory : IHttpUserAgentFactory
+    internal class HttpUserAgentFactory: IHttpUserAgentFactory
     {
         public HttpUserAgentFactory(ILoggerFactory loggerFactory)
         {
@@ -272,7 +272,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var handler = new SocketsHttpHandler() {
                     UseCookies = isEnabledSession,
                 };
-                var cacheControl =  new CacheControlHeaderValue() {
+                var cacheControl = new CacheControlHeaderValue() {
                     NoCache = !isEnabledCache
                 };
                 var httpClient = new HttpClient(handler);

@@ -1,27 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 // DBMS の依存は極力考えない処理。
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
-
-    [Serializable]
-    public class DatabaseContextException: Exception
-    {
-        public DatabaseContextException() { }
-        public DatabaseContextException(string message) : base(message) { }
-        public DatabaseContextException(string message, Exception inner) : base(message, inner) { }
-        protected DatabaseContextException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-            : base(info, context)
-        { }
-    }
-
     /// <summary>
     /// 読み込み処理の安全のしおり。
     /// </summary>

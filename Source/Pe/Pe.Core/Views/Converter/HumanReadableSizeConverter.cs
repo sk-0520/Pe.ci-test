@@ -1,14 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
     [ValueConversion(typeof(long), typeof(string))]
-    public class HumanReadableSizeConverter : IValueConverter
+    public class HumanReadableSizeConverter: IValueConverter
     {
         #region property
 

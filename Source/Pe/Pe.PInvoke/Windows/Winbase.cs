@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
-    public enum LOAD_LIBRARY : uint
+    public enum LOAD_LIBRARY: uint
     {
         DONT_RESOLVE_DLL_REFERENCES = 0x00000001,
         LOAD_IGNORE_CODE_AUTHZ_LEVEL = 0x00000010,
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [FlagsAttribute]
-    public enum ES : uint
+    public enum ES: uint
     {
         ES_AWAYMODE_REQUIRED = 0x00000040,
         ES_CONTINUOUS = 0x80000000,

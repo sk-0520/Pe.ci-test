@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows.Data;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
     [ValueConversion(typeof(double), typeof(double))]
-    public class DoubleToParameterPercentConverter : IValueConverter
+    public class DoubleToParameterPercentConverter: IValueConverter
     {
         #region IValueConverter
 

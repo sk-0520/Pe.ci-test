@@ -1,14 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager.Setting
 {
-    public class SettingNotifyEventArgs : EventArgs
+    public class SettingNotifyEventArgs: EventArgs
     { }
 
-    public class LauncherItemRemovedEventArgs : SettingNotifyEventArgs
+    public class LauncherItemRemovedEventArgs: SettingNotifyEventArgs
     {
         public LauncherItemRemovedEventArgs(Guid launcherItemId)
         {

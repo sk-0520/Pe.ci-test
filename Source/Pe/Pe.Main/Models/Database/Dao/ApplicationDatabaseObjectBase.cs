@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao
 {
-    public abstract class ApplicationDatabaseObjectBase : DatabaseAccessObjectBase
+    public abstract class ApplicationDatabaseObjectBase: DatabaseAccessObjectBase
     {
         protected ApplicationDatabaseObjectBase(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(context, statementLoader, implementation, loggerFactory)

@@ -1,15 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
     [ValueConversion(typeof(string), typeof(string))]
-    public class EscapeAccessKeyConverter : IValueConverter
+    public class EscapeAccessKeyConverter: IValueConverter
     {
         #region IValueConverter
 

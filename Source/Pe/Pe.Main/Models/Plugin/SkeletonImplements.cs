@@ -1,11 +1,6 @@
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
-using ContentTypeTextNet.Pe.Core.Models;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin

@@ -2,15 +2,13 @@
 #if USE_DB_SQLITE
 
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 {
-    public abstract class SqliteFactory : IDatabaseFactory
+    public abstract class SqliteFactory: IDatabaseFactory
     {
         #region function
 

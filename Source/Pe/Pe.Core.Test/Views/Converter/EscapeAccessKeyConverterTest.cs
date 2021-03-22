@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Views.Converter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

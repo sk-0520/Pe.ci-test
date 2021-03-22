@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -35,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         /// 通知領域 メニューアイコンが有効か。
         /// <para>これが真の場合にのみ <see cref="MenuIcon"/> が使用される。</para>
         /// </summary>
-        bool MenuHasIcon {get;}
+        bool MenuHasIcon { get; }
         /// <summary>
         /// 通知領域 メニュー 有効状態。
         /// </summary>

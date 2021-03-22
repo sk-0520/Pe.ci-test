@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -67,9 +66,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     .FirstOrDefault()
                 ;
 
-//#if DEBUG
-//                result = updateData.Items.First();
-//#endif
+                //#if DEBUG
+                //                result = updateData.Items.First();
+                //#endif
 
                 return result;
             } catch(Exception ex) {

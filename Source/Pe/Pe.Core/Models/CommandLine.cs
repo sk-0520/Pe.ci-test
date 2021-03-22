@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -91,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// コマンドラインの値。
     /// </summary>
-    public class CommandLineValue : ICommandLineValue
+    public class CommandLineValue: ICommandLineValue
     {
         #region ICommandLineValue
 
@@ -466,7 +465,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class CommandLineAttribute : Attribute
+    public class CommandLineAttribute: Attribute
     {
         public CommandLineAttribute(char shortKey = CommandLineKey.EmptyShortKey, string longKey = "", string description = "", bool hasValue = true)
         {
@@ -590,7 +589,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 typeof(double),
             };
 
-            if(numTypes.Any(t => t == type)) {
+            if(Array.IndexOf(numTypes, type) != -1) {
                 return 1;
             }
 
@@ -641,7 +640,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    sealed public class CommandLineSimpleConverter<TData> : CommandLineConverter<TData>
+    sealed public class CommandLineSimpleConverter<TData>: CommandLineConverter<TData>
         where TData : class, new()
     {
         public CommandLineSimpleConverter(CommandLine commandLine)

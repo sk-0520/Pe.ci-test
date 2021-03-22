@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public class CommandStore : DisposerBase
+    public class CommandStore: DisposerBase
     {
         #region property
 
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class ElementCommandStore : CommandStore
+    public class ElementCommandStore: CommandStore
     {
         public ElementCommandStore(FrameworkElement view)
         {

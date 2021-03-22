@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 
@@ -75,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Compact,
     }
 
-    public class NoteData : DataBase
+    public class NoteData: DataBase
     {
         #region property
 
@@ -169,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class NoteScreenData : DataBase, IScreenData
+    public class NoteScreenData: DataBase, IScreenData
     {
         #region property
 

@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models
 {
-    public class FileSystemSelectDialogRequestParameter : FileDialogRequestParameter
+    public class FileSystemSelectDialogRequestParameter: FileDialogRequestParameter
     {
         #region peoperty
 
@@ -39,13 +38,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
         Directory,
     }
 
-    public class FileSystemSelectDialogRequestResponse : FileDialogRequestResponse
+    public class FileSystemSelectDialogRequestResponse: FileDialogRequestResponse
     {
         #region peoperty
         #endregion
     }
 
-    public class IconSelectDialogRequestParameter : RequestParameter
+    public class IconSelectDialogRequestParameter: RequestParameter
     {
         #region peoperty
 
@@ -55,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class IconSelectDialogRequestResponse : CancelResponse
+    public class IconSelectDialogRequestResponse: CancelResponse
     {
         #region peoperty
 
@@ -129,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 FileName = path,
                 IconIndex = index,
             };
-            requestSender.Send< IconSelectDialogRequestResponse>(parameter, r => {
+            requestSender.Send<IconSelectDialogRequestResponse>(parameter, r => {
                 if(r.ResponseIsCancel) {
                     Logger.LogTrace("cancel");
                     return;

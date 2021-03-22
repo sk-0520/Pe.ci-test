@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -36,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class HookItem : IReadOnlyHookItem
+    public class HookItem: IReadOnlyHookItem
     {
         public HookItem(string notifyPropertyName, IEnumerable<string>? raisePropertyNames, IEnumerable<ICommand>? raiseCommands, Action? callback)
         {
@@ -102,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <see cref="INotifyPropertyChanged.PropertyChanged"/> を受けて何かを更新する ViewModel でよく使うあれな処理の管理役。
     /// <para>基点となる <see cref="PropertyChangedEventArgs.PropertyName"/>の重複は実行時にマージ・キャッシュまで面倒を見る。</para>
     /// </summary>
-    public class PropertyChangedHooker : DisposerBase
+    public class PropertyChangedHooker: DisposerBase
     {
         public PropertyChangedHooker(IDispatcherWrapper dispatcherWrapper, ILogger logger)
         {
@@ -365,7 +363,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 foreach(var raisePropertyName in arg.raisePropertyNames) {
                     arg.raiser(raisePropertyName);
                 }
-            }, (@this:this, raisePropertyNames, raiser));
+            }, (@this: this, raisePropertyNames, raiser));
 
             return true;
         }

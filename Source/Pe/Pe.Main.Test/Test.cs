@@ -1,15 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using ContentTypeTextNet.Pe.Core.Models.Database;
-using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
-using ContentTypeTextNet.Pe.Main.Models;
-using ContentTypeTextNet.Pe.Main.Models.Applications;
-using ContentTypeTextNet.Pe.Main.Models.Database;
-using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

@@ -1,27 +1,19 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.Font;
-using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
-using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 {
-    public class StandardInputOutputElement : ElementBase, IViewShowStarter, IViewCloseReceiver
+    public class StandardInputOutputElement: ElementBase, IViewShowStarter, IViewCloseReceiver
     {
         #region variable
 
@@ -158,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             Font.Initialize();
 
             OutputForegroundColor = setting.OutputForegroundColor;
-            OutputBackgroundColor= setting.OutputBackgroundColor;
+            OutputBackgroundColor = setting.OutputBackgroundColor;
             ErrorForegroundColor = setting.ErrorForegroundColor;
             ErrorBackgroundColor = setting.ErrorBackgroundColor;
 

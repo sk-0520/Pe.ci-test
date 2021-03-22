@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
@@ -10,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// <para>CLIでこういうクラスあったよなぁ。</para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class UnmanagedWrapperBase<T> : RawModel<T>
+    public abstract class UnmanagedWrapperBase<T>: RawModel<T>
     {
         protected UnmanagedWrapperBase(T rawObject)
             : base(rawObject)
@@ -20,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// <summary>
     /// アンマネージドなOS提供ハンドルを管理。
     /// </summary>
-    public abstract class UnmanagedHandleWrapper : UnmanagedWrapperBase<IntPtr>
+    public abstract class UnmanagedHandleWrapper: UnmanagedWrapperBase<IntPtr>
     {
         protected UnmanagedHandleWrapper(IntPtr hHandle)
             : base(hHandle)

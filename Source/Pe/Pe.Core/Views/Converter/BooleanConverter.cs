@@ -2,14 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Text;
 using System.Windows;
 using System.Windows.Data;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
     // https://stackoverflow.com/questions/534575/how-do-i-invert-booleantovisibilityconverter
-    public class BooleanConverter<T> : IValueConverter
+    public class BooleanConverter<T>: IValueConverter
     {
         public BooleanConverter(T trueValue, T falseValue)
         {
@@ -32,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
         }
     }
 
-    public sealed class BooleanToVisibilityConverter : BooleanConverter<Visibility>
+    public sealed class BooleanToVisibilityConverter: BooleanConverter<Visibility>
     {
         public BooleanToVisibilityConverter() :
             base(Visibility.Visible, Visibility.Collapsed)

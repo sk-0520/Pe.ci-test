@@ -2,13 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.DirectoryServices;
 using System.Linq;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Database;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
@@ -234,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             public void Commit()
             {
-                foreach(var tran in Items.OfType<IDatabaseTransaction>()) {
+                foreach(var tran in Items.Select(i => i.Context).OfType<IDatabaseTransaction>()) {
                     tran.Commit();
                 }
             }
@@ -315,17 +312,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         IDatabaseContextsPack IDatabaseBarrierPack.WaitRead() => WaitRead();
 
-        internal Barriers WaitWrite(IDatabaseCommonStatus databaseCommonStatus)
+        internal Barriers WaitWrite(/*IDatabaseCommonStatus databaseCommonStatus*/)
         {
             if(CurrentBarriers != null) {
                 throw new InvalidOperationException();
             }
 
-            CurrentBarriers = new Barriers(WaitWriteCore(Main), WaitWriteCore(Large), WaitWriteCore(Temporary), databaseCommonStatus, true);
+            CurrentBarriers = new Barriers(WaitWriteCore(Main), WaitWriteCore(Large), WaitWriteCore(Temporary), DatabaseCommonStatus.CreateCurrentAccount(), false);
             CurrentBarriers.Disposing += CurrentBarriers_Disposing;
             return CurrentBarriers;
         }
-        IDatabaseContextsPack IDatabaseBarrierPack.WaitWrite() => WaitRead();
+        IDatabaseContextsPack IDatabaseBarrierPack.WaitWrite() => WaitWrite();
 
         public void Save()
         {

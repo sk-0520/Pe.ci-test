@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -40,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         CanCallNotifyAreaMenu,
     }
 
-    public class StatusChangedEventArgs : EventArgs
+    public class StatusChangedEventArgs: EventArgs
     {
         public StatusChangedEventArgs(StatusChangedMode mode, StatusProperty statusProperty, Type valueType, object? oldValue, object? newValue)
         {
@@ -95,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class StatusManager : ManagerBase, IStatusManager
+    public class StatusManager: ManagerBase, IStatusManager
     {
         public StatusManager(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
@@ -126,8 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public IResult ChangeBoolean(StatusProperty statusProperty, bool newValue)
         {
-            var oldValue = statusProperty switch
-            {
+            var oldValue = statusProperty switch {
                 StatusProperty.CanCallNotifyAreaMenu => CanCallNotifyAreaMenu,
                 _ => throw new NotImplementedException(),
             };
@@ -152,8 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public IResultSuccessValue<IDisposable> ChangeLimitedBoolean(StatusProperty statusProperty, bool newValue)
         {
-            var oldValue = statusProperty switch
-            {
+            var oldValue = statusProperty switch {
                 StatusProperty.CanCallNotifyAreaMenu => CanCallNotifyAreaMenu,
                 _ => throw new NotImplementedException(),
             };

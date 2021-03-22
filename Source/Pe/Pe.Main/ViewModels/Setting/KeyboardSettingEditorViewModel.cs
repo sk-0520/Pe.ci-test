@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
@@ -15,7 +12,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class KeyboardSettingEditorViewModel : SettingEditorViewModelBase<KeyboardSettingEditorElement>
+    public class KeyboardSettingEditorViewModel: SettingEditorViewModelBase<KeyboardSettingEditorElement>
     {
         #region variable
 
@@ -43,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     KeyActionKind.Command => new KeyboardCommandJobSettingEditorViewModel(m, DispatcherWrapper, loggerFactory),
                     KeyActionKind.LauncherItem => new KeyboardLauncherItemJobSettingEditorViewModel(m, AllLauncherItemCollection, DispatcherWrapper, loggerFactory),
                     KeyActionKind.LauncherToolbar => new KeyboardLauncherToolbarJobSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
-                    KeyActionKind.Note=> new KeyboardNoteJobSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
+                    KeyActionKind.Note => new KeyboardNoteJobSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
                     _ => throw new NotImplementedException(),
                 },
             };

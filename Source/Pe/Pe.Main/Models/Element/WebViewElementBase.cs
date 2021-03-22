@@ -1,14 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
-using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.WebView;
 using Microsoft.Extensions.Logging;
@@ -16,12 +9,12 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Main.Models.Element
 {
 
-    public abstract class WebViewElementBase : ElementBase
+    public abstract class WebViewElementBase: ElementBase
     {
         #region define
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3925:\"ISerializable\" should be implemented correctly")]
-        protected class WebViewTemplateDictionary : Dictionary<string, WebViewTemplateBase>
+        protected class WebViewTemplateDictionary: Dictionary<string, WebViewTemplateBase>
         {
             public WebViewTemplateDictionary()
             { }

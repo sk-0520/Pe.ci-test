@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 {
-    internal class SqliteReadOnlyTransaction : IDatabaseTransaction
+    internal class SqliteReadOnlyTransaction: IDatabaseTransaction
     {
         public SqliteReadOnlyTransaction(IDatabaseAccessor databaseAccessor)
         {
@@ -51,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 
         public int Execute(string statement, object? parameter = null)
         {
-            return DatabaseAccessor.Execute(statement, parameter);
+            throw new NotSupportedException();
         }
 
         public DataTable GetDataTable(string statement, object? parameter = null)
@@ -94,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         #endregion
     }
 
-    public class SqliteAccessor : DatabaseAccessor<SQLiteConnection>
+    public class SqliteAccessor: DatabaseAccessor<SQLiteConnection>
     {
         public SqliteAccessor(IDatabaseFactory databaseFactory, ILogger logger)
             : base(databaseFactory, logger)

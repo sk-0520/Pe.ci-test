@@ -1,16 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Main.Models;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 
 namespace ContentTypeTextNet.Pe.Main.Views
 {
@@ -56,8 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
             }
 
             var fileSelectParameter = (FileSystemSelectDialogRequestParameter)o.Parameter;
-            FileSystemDialogBase dialog = fileSelectParameter.FileSystemDialogMode switch
-            {
+            FileSystemDialogBase dialog = fileSelectParameter.FileSystemDialogMode switch {
                 FileSystemDialogMode.FileOpen => new OpenFileDialog(),
                 FileSystemDialogMode.FileSave => new SaveFileDialog(),
                 FileSystemDialogMode.Directory => new FolderBrowserDialog(),

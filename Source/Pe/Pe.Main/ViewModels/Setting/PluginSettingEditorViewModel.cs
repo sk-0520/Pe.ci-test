@@ -1,22 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Security.Cryptography.Xml;
-using System.Text;
 using System.Windows;
-using System.Windows.Automation.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
-using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
-using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
-using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 

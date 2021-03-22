@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -10,7 +7,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
     /// <inheritdoc cref="INotifyLogTheme"/>
-    internal class DefaultNotifyLogTheme : DefaultThemeBase, INotifyLogTheme
+    internal class DefaultNotifyLogTheme: DefaultThemeBase, INotifyLogTheme
     {
         public DefaultNotifyLogTheme(IThemeParameter parameter)
             : base(parameter)

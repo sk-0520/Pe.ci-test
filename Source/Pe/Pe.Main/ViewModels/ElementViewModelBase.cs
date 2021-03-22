@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element;
@@ -10,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels
 {
-    public abstract class ElementViewModelBase<TElement> : SingleModelViewModelBase<TElement>
+    public abstract class ElementViewModelBase<TElement>: SingleModelViewModelBase<TElement>
         where TElement : ElementBase
     {
         protected ElementViewModelBase(TElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)

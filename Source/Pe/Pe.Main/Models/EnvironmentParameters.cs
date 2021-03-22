@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -11,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace ContentTypeTextNet.Pe.Main.Models
 {
     [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-    sealed internal class InitialDirectoryAttribute : Attribute
+    sealed internal class InitialDirectoryAttribute: Attribute
     {
         // This is a positional argument
         public InitialDirectoryAttribute()
@@ -360,7 +359,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
     }
 
-    internal class ApplicationEnvironmentParameters : EnvironmentParameters
+    internal class ApplicationEnvironmentParameters: EnvironmentParameters
     {
         public ApplicationEnvironmentParameters(DirectoryInfo rootDirectory, CommandLine commandLine)
             : base(rootDirectory, commandLine)

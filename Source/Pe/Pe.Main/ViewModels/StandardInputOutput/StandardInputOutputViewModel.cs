@@ -4,8 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -20,7 +18,6 @@ using ContentTypeTextNet.Pe.Main.ViewModels.Font;
 using ContentTypeTextNet.Pe.Main.Views.StandardInputOutput;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
-using ICSharpCode.AvalonEdit.Rendering;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -29,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
     /// <summary>
     /// TODO: 標準出力中にまざる標準エラー処理がぐっだぐだ
     /// </summary>
-    public class StandardInputOutputViewModel : ElementViewModelBase<StandardInputOutputElement>, IViewLifecycleReceiver
+    public class StandardInputOutputViewModel: ElementViewModelBase<StandardInputOutputElement>, IViewLifecycleReceiver
     {
         #region define
 
@@ -103,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         }
 
         public bool ProcessExited => Model.ProcessExited;
-        public int ExitCode => ProcessExited ? Model.Process.ExitCode: int.MinValue;
+        public int ExitCode => ProcessExited ? Model.Process.ExitCode : int.MinValue;
 
         public string InputValue
         {

@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Selector
 {
-    public class ComboBoxItemTemplateSelector : DataTemplateSelector
+    public class ComboBoxItemTemplateSelector: DataTemplateSelector
     {
         #region property
 

@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using CefSharp;
 using CefSharp.Handler;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
@@ -9,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.WebView
 {
-    public class PlatformRequestHandler : RequestHandler
+    public class PlatformRequestHandler: RequestHandler
     {
         public PlatformRequestHandler(ILoggerFactory loggerFactory)
         {

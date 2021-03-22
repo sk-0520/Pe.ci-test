@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Windows;
 using System.Windows.Interop;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
@@ -10,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Views
 {
-    public abstract class WindowExtendBase<TWindow, TExtendData> : ViewExtendBase<TWindow, TExtendData>
+    public abstract class WindowExtendBase<TWindow, TExtendData>: ViewExtendBase<TWindow, TExtendData>
         where TWindow : Window
         where TExtendData : IExtendData
     {
@@ -32,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
     }
 
-    public abstract class WndProcExtendBase<TWindow, TExtendData> : WindowExtendBase<TWindow, TExtendData>
+    public abstract class WndProcExtendBase<TWindow, TExtendData>: WindowExtendBase<TWindow, TExtendData>
         where TWindow : Window
         where TExtendData : IExtendData
     {

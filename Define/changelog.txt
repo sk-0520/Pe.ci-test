@@ -23,12 +23,20 @@
 					{
 						"revision": "",
 						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
 					}
 				]
 			},
 			{
 				"type": "features",
 				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
 					{
 						"revision": "",
 						"subject": ""
@@ -67,6 +75,10 @@
 			{
 				"type": "developer",
 				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
 					{
 						"revision": "",
 						"subject": ""

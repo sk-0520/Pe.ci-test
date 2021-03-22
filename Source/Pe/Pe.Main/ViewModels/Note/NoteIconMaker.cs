@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;

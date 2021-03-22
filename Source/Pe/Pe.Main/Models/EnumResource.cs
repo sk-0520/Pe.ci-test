@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models
 {
     [System.AttributeUsage(AttributeTargets.Enum | AttributeTargets.Field, Inherited = true, AllowMultiple = true)]
-    public sealed class EnumResourceAttribute : Attribute
+    public sealed class EnumResourceAttribute: Attribute
     {
         public EnumResourceAttribute()
         {
@@ -163,8 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 return string.Empty;
             }
 
-            var resourceName = resourceNameKind switch
-            {
+            var resourceName = resourceNameKind switch {
                 ResourceNameKind.AccessKey => resourceBaseName + "_A",
                 ResourceNameKind.Normal => resourceBaseName,
                 _ => throw new NotImplementedException()

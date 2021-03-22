@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Data;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
@@ -8,7 +6,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
     /// <summary>
     /// <para>http://stackoverflow.com/questions/397556/how-to-bind-radiobuttons-to-an-enum</para>
     /// </summary>
-    public class EnumToBooleanConverter : IValueConverter
+    public class EnumToBooleanConverter: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
