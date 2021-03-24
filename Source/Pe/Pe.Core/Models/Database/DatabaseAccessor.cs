@@ -20,17 +20,18 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 指定の型で問い合わせ。
         /// </summary>
         /// <typeparam name="T">問い合わせ型</typeparam>
-        /// <param name="statement">データベース問い合わせ文。</parameter>
-        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</parameter>
-        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</parameter>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
         /// <returns></returns>
         IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true);
+
         /// <summary>
         /// 動的型で問い合わせ。
         /// </summary>
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</parameter>
+        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
         /// <returns></returns>
         IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true);
 
@@ -94,8 +95,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <summary>
         /// insert, update, delete, select(sequence) 的なデータ変動するやつを実行。
         /// </summary>
-        /// <param name="statement">データベース問い合わせ文。</parameter>
-        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</parameter>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <returns>影響行数。自動採番値の取得はDBMS依存となる。</returns>
         int Execute(string statement, object? parameter = null);
 

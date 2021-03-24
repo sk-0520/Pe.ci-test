@@ -14,8 +14,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// sizePerTime.Start();
     /// while(nowDownload) {
     ///     var values = download();
-    ///     donwloadSize = values.Length;
-    ///     sizePerTime.Add(donwloadSize);
+    ///     downloadSize = values.Length;
+    ///     sizePerTime.Add(downloadSize);
     ///     Debug.WriteLine(sizePerTime.Size);
     /// }
     /// </code>
