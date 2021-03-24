@@ -22,6 +22,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </example>
     public class SizePerTime
     {
+        /// <summary>
+        /// 1秒間隔で生成。
+        /// </summary>
+        public SizePerTime()
+            :this(TimeSpan.FromSeconds(1))
+        { }
+
+        /// <summary>
+        /// 更新間隔時間を指定して生成。
+        /// </summary>
+        /// <param name="baseTime"></param>
         public SizePerTime(TimeSpan baseTime)
         {
             BaseTime = baseTime;
@@ -34,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         public TimeSpan BaseTime { get; }
 
-        Stopwatch TimeStopWatch { get; } = new Stopwatch();
+        Stopwatch Stopwatch { get; } = new Stopwatch();
 
         /// <summary>
         /// <see cref="BaseTime"/>中での使用量。
@@ -58,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         public void Start()
         {
-            TimeStopWatch.Restart();
+            Stopwatch.Restart();
             SizeInBaseTime = 0;
         }
 
@@ -68,9 +79,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="addSize"></param>
         public void Add(long addSize)
         {
-            Debug.Assert(TimeStopWatch.IsRunning);
+            Debug.Assert(Stopwatch.IsRunning);
 
-            var elapsedTime = TimeStopWatch.Elapsed;
+            var elapsedTime = Stopwatch.Elapsed;
 
             if(BaseTime <= elapsedTime) {
                 Size = SizeInBaseTime + addSize;
@@ -78,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 PrevSize = Size;
                 SizeInBaseTime = 0;
 
-                TimeStopWatch.Restart();
+                Stopwatch.Restart();
             } else {
                 Size = PrevSize;
                 SizeInBaseTime += addSize;
