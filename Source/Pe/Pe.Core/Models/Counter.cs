@@ -20,18 +20,18 @@ namespace ContentTypeTextNet.Pe.Core.Models
         int CurrentCount { get; }
 
         /// <summary>
-        /// 初回か。
+        /// ループ中の初回か。
         /// </summary>
         bool IsFirst { get; }
         /// <summary>
-        /// 再集か。
+        /// ループ中の最終か。
         /// </summary>
         bool IsLast { get; }
 
         /// <summary>
         /// ループ完了か。
         /// </summary>
-        bool Complete { get; }
+        bool IsCompleted { get; }
 
         #endregion
     }
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             CurrentCount += 1;
-            Complete = CurrentCount == MaxCount;
+            IsCompleted = CurrentCount == MaxCount;
             return true;
         }
 
@@ -76,8 +76,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <inheritdoc cref="ICounter.IsLast" />
         public bool IsLast => CurrentCount == MaxCount;
 
-        /// <inheritdoc cref="ICounter.Complete" />
-        public bool Complete { get; private set; }
+        /// <inheritdoc cref="ICounter.IsCompleted" />
+        public bool IsCompleted { get; private set; }
 
         #endregion
 
@@ -92,13 +92,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <inheritdoc cref="IEnumerable{ICounter}.GetEnumerator()"/>
         public IEnumerator<ICounter> GetEnumerator()
         {
-            Complete = false;
+            IsCompleted = false;
 
             for(; CurrentCount <= MaxCount; CurrentCount += 1) {
                 yield return this;
             }
 
-            Complete = true;
+            IsCompleted = true;
         }
 
         #endregion
