@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 {
     public class FileSystemSelectDialogRequestParameter: FileDialogRequestParameter
     {
-        #region peoperty
+        #region property
 
         /// <summary>
         /// ファイルを選択するか。
@@ -40,13 +40,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
     public class FileSystemSelectDialogRequestResponse: FileDialogRequestResponse
     {
-        #region peoperty
+        #region property
         #endregion
     }
 
     public class IconSelectDialogRequestParameter: RequestParameter
     {
-        #region peoperty
+        #region property
 
         public string FileName { get; set; } = string.Empty;
         public int IconIndex { get; set; }
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
     public class IconSelectDialogRequestResponse: CancelResponse
     {
-        #region peoperty
+        #region property
 
         public string FileName { get; set; } = string.Empty;
         public int IconIndex { get; set; }
