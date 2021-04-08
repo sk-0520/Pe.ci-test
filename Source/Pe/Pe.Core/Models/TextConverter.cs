@@ -223,6 +223,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         ['ｭ'] = 'ュ',
                         ['ｮ'] = 'ョ',
                         ['ｰ'] = 'ー',
+                        ['･'] = '・',
                     };
                     Debug.Assert(this._katakanaHalfToFullMap.Keys.All(c => IsHalfwidthKatakana(c)));
                 }
@@ -297,6 +298,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         ['ー'] = 'ｰ',
                         ['ﾞ'] = 'ﾞ',
                         ['ﾟ'] = 'ﾟ',
+                        ['・'] = '･',
                     };
                 }
 
