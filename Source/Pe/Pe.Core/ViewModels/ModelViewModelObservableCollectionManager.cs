@@ -11,9 +11,18 @@ using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Core.ViewModels
 {
+    /// <summary>
+    /// 処理種別。
+    /// </summary>
     public enum ObservableCollectionKind
     {
+        /// <summary>
+        /// 実行前。
+        /// </summary>
         Before,
+        /// <summary>
+        /// 実行後。
+        /// </summary>
         After,
     }
 
@@ -64,12 +73,18 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// </summary>
         public bool ManagingResource { get; set; } = true;
 
+        /// <inheritdoc cref="ICollection{TViewModel}.Count"/>
         public int Count => EditableViewModels.Count;
 
         #endregion
 
         #region function
 
+        /// <summary>
+        /// <typeparamref name="TModel"/>を<typeparamref name="TViewModel"/>に変換する。
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>初期化前の場合はnull、初期化後は生成後の<typeparamref name="TViewModel"/>。</returns>
         protected abstract TViewModel? ToViewModelImpl(TModel model);
 
         protected abstract void AddItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TViewModel> newViewModels);
@@ -286,7 +301,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #endregion
 
-        #region ViewViewModelObservableManagerBase
+        #region ModelViewModelObservableCollectionManagerBase
 
         protected override TViewModel? ToViewModelImpl(TModel model)
         {
