@@ -457,9 +457,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             IsDisposed = true;
         }
 
-        /// <summary>
-        /// 解放。
-        /// </summary>
+        /// <inheritdoc cref="IDisposable.Dispose" />
         public void Dispose()
         {
             Dispose(true);

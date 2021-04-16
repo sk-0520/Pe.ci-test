@@ -103,6 +103,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    [Serializable, DataContract]
     public struct MinMaxDefault<T>: IReadOnlyMinMaxDefault<T>
             where T : IComparable<T>
     {
@@ -113,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Default = defaultValue;
         }
 
-        #region property
+        #region IReadOnlyMinMaxDefault
 
         [DataMember]
         public T Minimum { get; set; }

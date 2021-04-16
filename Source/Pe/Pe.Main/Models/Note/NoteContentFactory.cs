@@ -4,7 +4,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Note
 {
-    public class NoteContentFactory
+    internal class NoteContentFactory
     {
         #region property
 

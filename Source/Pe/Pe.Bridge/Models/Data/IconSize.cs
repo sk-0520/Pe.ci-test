@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         #endregion
 
-        #region funcrion
+        #region function
 
         public override string ToString()
         {

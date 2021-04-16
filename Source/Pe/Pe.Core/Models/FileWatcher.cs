@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public FileWatcher(FileWatchParameter watchParameter, ILoggerFactory loggerFactory)
         {
             if(watchParameter == null) {
-                throw new ArgumentNullException($"{nameof(watchParameter)}");
+                throw new ArgumentNullException(nameof(watchParameter));
             }
             if(watchParameter.File == null) {
                 throw new ArgumentNullException($"{nameof(watchParameter)}.{nameof(watchParameter.File)}");

@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #endregion
 
-        #region DisposeFinalizeBase
+        #region DisposerBase
 
         protected override void Dispose(bool disposing)
         {

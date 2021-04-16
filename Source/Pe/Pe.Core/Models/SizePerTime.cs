@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -26,15 +27,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 1秒間隔で生成。
         /// </summary>
         public SizePerTime()
-            :this(TimeSpan.FromSeconds(1))
+            : this(TimeSpan.FromSeconds(1))
         { }
 
         /// <summary>
         /// 更新間隔時間を指定して生成。
         /// </summary>
-        /// <param name="baseTime"></param>
+        /// <param name="baseTime">更新間隔。</param>
         public SizePerTime(TimeSpan baseTime)
         {
+            if(Timeout.InfiniteTimeSpan == baseTime) {
+                throw new ArgumentException(nameof(baseTime));
+            }
+
             BaseTime = baseTime;
         }
 

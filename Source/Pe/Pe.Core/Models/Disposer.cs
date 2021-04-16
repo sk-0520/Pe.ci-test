@@ -7,6 +7,9 @@ using System.Xml.Serialization;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// <see cref="IDisposable.Dispose"/>が行われたかどうかを確認できるようにする。
+    /// </summary>
     public interface IDisposedChackable
     {
         #region property
@@ -19,6 +22,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    /// <summary>
+    /// <see cref="IDisposable"/> と <see cref="IDisposedChackable"/> を組み合わせたIF。
+    /// </summary>
     public interface IDisposer: IDisposedChackable, IDisposable
     {
         #region event

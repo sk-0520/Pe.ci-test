@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
     [TestClass]
     public class PropertyFactoryTest
     {
-        #region functino
+        #region function
 
         [TestMethod]
         public void CreateGetterTest()
