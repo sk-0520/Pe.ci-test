@@ -1,7 +1,7 @@
 [
 	{
 		"date": "YYYY/MM/DD",
-		"version": "0.99.108",
+		"version": "0.99.109",
 		"contents": [
 			{
 				"type": "note",
@@ -30,7 +30,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#709: プロキシ設定を追加",
+						"comments": [
+							"内容についてはヘルプ -> その他 -> プロキシ を参照"
+						]
 					},
 					{
 						"revision": "",

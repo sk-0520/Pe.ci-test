@@ -308,7 +308,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     Logger.LogDebug("再生成: {0}, {1} < {2}", name, ClearTime, ua.LastElapsed);
                     // 参照がなければ完全破棄、参照が残っていればGCに任せる
                     if(ua.ReferenceCount == 0) {
-                        Logger.LogTrace("完全破棄", name);
+                        Logger.LogInformation("完全破棄", name);
                         ua.ReleaseClient();
                     }
                     ua.Dispose();
@@ -317,11 +317,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     Pool[name] = newUserAgent;
                     return newUserAgent;
                 }
-                Logger.LogDebug("再使用: {0}", name);
+                Logger.LogInformation("再使用: {0}", name);
                 ua.Lease();
                 return ua;
             } else {
-                Logger.LogDebug("初回生成: {0}", name);
+                Logger.LogInformation("初回生成: {0}", name);
                 var newUserAgent = Create(name);
                 Pool.Add(name, newUserAgent);
                 return newUserAgent;
