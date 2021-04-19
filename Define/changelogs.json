@@ -1,7 +1,7 @@
 [
 	{
 		"date": "YYYY/MM/DD",
-		"version": "0.99.109",
+		"version": "0.99.110",
 		"contents": [
 			{
 				"type": "note",
@@ -75,7 +75,8 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 16.9.1 -> 16.9.4"
 					},
 					{
 						"revision": "",
