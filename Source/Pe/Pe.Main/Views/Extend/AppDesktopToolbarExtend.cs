@@ -733,7 +733,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         #endregion
 
 
-        #region DisposeFinalizeBase
+        #region DisposerBase
 
         protected override void Dispose(bool disposing)
         {

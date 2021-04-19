@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
 
         #endregion
 
-        #region DisposeFinalizeBase
+        #region DisposerBase
 
         protected override void Dispose(bool disposing)
         {

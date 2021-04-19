@@ -1,5 +1,38 @@
 [
 	{
+		"date": "2021/04/19",
+		"version": "0.99.112",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "ec41e0eb2ae6c969b3bcf7f4540a2b4ac6b0151d",
+						"subject": "#709: プロキシ設定を追加",
+						"comments": [
+							"内容についてはヘルプ -> その他 -> プロキシ を参照"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "df82b87f5fb31fb88656b33cf3b9d7ce03ee0980",
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 16.9.1 -> 16.9.4"
+					},
+					{
+						"revision": "4943f4251564ec49c0ba8c90b24777e47cdd3bb3",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 1.7.1 -> 1.7.2"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2021/03/22",
 		"version": "0.99.107",
 		"contents": [

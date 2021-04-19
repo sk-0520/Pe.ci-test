@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #region funtion
+        #region function
 
         PluginSettingRawValue ConvertFromDto(PluginLauncherItemSettingDto dto)
         {

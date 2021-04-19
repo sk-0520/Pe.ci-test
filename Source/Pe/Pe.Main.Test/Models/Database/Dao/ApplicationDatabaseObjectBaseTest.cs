@@ -77,26 +77,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
             public bool SupportedTransactionDML => throw new NotImplementedException();
 
 
-            public object? GetNullValue(Type type)
-            {
-                throw new NotImplementedException();
-            }
-
-            public T GetNullValue<T>()
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool IsNull(object? value)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool IsNull<T>(T? value) where T : struct
-            {
-                throw new NotImplementedException();
-            }
-
             public string PreFormatStatement(string statement)
             {
                 throw new NotImplementedException();
@@ -121,6 +101,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
             {
                 throw new NotImplementedException();
             }
+
+            public string EscapeLike(string pattern) => throw new NotImplementedException();
         }
 
         class Adao: ApplicationDatabaseObjectBase

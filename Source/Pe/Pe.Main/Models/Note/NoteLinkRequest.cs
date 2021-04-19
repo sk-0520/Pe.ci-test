@@ -6,7 +6,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
 {
     public class NoteLinkChangeRequestParameter: FileDialogRequestParameter
     {
-        #region peoperty
+        #region property
 
         public bool IsOpen { get; set; }
         public Encoding? Encoding { get; set; }
@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
     }
     public class NoteLinkChangeRequestResponse: FileDialogRequestResponse
     {
-        #region peoperty
+        #region property
 
         public Encoding? Encoding { get; set; }
 

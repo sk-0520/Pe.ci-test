@@ -39,6 +39,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         string Escape(string input);
 
+        /// <summary>
+        /// like句のエスケープ処理を実施。
+        /// </summary>
+        /// <param name="pattern"></param>
+        /// <returns></returns>
+        string EscapeLike(string pattern);
+
         #endregion
     }
 
@@ -67,6 +74,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             .Replace("\'", @"''")
             .Replace("\r", @"\r")
             .Replace("\n", @"\n")
+        ;
+
+        /// <inheritdoc cref="IDatabaseImplementation.EscapeLike(string)"/>
+        public virtual string EscapeLike(string pattern) => pattern
+            .Replace("\\", @"\\")
+            .Replace("%", @"\%")
+            .Replace("_", @"\_")
         ;
 
         #endregion

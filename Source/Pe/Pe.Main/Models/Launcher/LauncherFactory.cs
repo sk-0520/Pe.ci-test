@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 textConverter.ConvertZenkakuDigitToAsciiDigit,
                 textConverter.ConvertZenkakuAlphabetToAsciiAlphabet,
                 textConverter.ConvertHankakuKatakanaToZenkakuKatakana,
-                textConverter.ConvertKatakaToHiragana,
+                textConverter.ConvertKatakanaToHiragana,
                 textConverter.ConvertHiraganaToAsciiRome,
                 // 全部小文字
                 s => s.ToLowerInvariant(),

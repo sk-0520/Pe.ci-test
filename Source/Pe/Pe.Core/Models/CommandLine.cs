@@ -127,6 +127,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <para>/switch</para>
     /// <para>-switch</para>
     /// <para>--switch</para>
+    /// <para>短いキーをいっぱいくっつけてどうとかはできない。</para>
     /// </summary>
     public class CommandLine
     {

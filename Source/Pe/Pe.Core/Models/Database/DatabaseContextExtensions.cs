@@ -96,8 +96,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         /// <param name="writer"></param>
         /// <param name="statement"></param>
-        /// <param name="parameter">更新件数。</param>
-        /// <returns></returns>
+        /// <param name="parameter"></param>
+        /// <returns>更新件数。</returns>
         public static int Update(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
             EnforceUpdate(statement);

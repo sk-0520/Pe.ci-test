@@ -38,6 +38,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return File.Exists(path) || Directory.Exists(path);
         }
 
+        /// <summary>
+        /// 対象パスを削除。
+        /// <para>ファイル・ディレクトリを問わない(ディレクトリの場合は再帰的削除)。</para>
+        /// </summary>
+        /// <param name="path"></param>
         public static void Delete(string path)
         {
             if(File.Exists(path)) {

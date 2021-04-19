@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 
         public ICommand ImportCommand => GetOrCreateCommand(() => new DelegateCommand(
             async () => {
-                var _ = UserTracker.TrackAsync(nameof(ImportCommand), new TrackProperties() {
+                UserTracker.Track(nameof(ImportCommand), new TrackProperties() {
                     ["TotalCount"] = Model.ProgramItems.Count.ToString(),
                     ["ImportCount"] = Model.ProgramItems.Count(i => i.IsImport).ToString(),
                 });

@@ -10,10 +10,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
     public class TextConverterTest
     {
         [TestMethod]
-        public void ConvertHiraganaToKatakaTest_Test()
+        public void ConvertHiraganaToKatakanaTest_Test()
         {
             var textMatcher = new TextConverter();
-            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertHiraganaToKataka(null!));
+            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertHiraganaToKatakana(null!));
         }
 
         [TestMethod]
@@ -37,16 +37,16 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         public void ConvertHiraganaToKatakaTest_Normal(string expected, string input)
         {
             var textMatcher = new TextConverter();
-            var actual = textMatcher.ConvertHiraganaToKataka(input);
+            var actual = textMatcher.ConvertHiraganaToKatakana(input);
             Assert.AreEqual(expected, actual);
         }
 
 
         [TestMethod]
-        public void ConvertKatakaToHiraganaTest_Null()
+        public void ConvertKatakanaToHiraganaTest_Null()
         {
             var textMatcher = new TextConverter();
-            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertKatakaToHiragana(null!));
+            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertKatakanaToHiragana(null!));
         }
 
         [TestMethod]
@@ -67,10 +67,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("ぁぃぅぇぉ", "ァィゥェォ")]
         [DataRow("ゃゅょ", "ャュョ")]
         [DataRow("ゕゖ", "ヵヶ")]
-        public void ConvertKatakaToHiraganaTest_Normal(string expected, string input)
+        public void ConvertKatakanaToHiraganaTest_Normal(string expected, string input)
         {
             var textMatcher = new TextConverter();
-            var actual = textMatcher.ConvertKatakaToHiragana(input);
+            var actual = textMatcher.ConvertKatakanaToHiragana(input);
             Assert.AreEqual(expected, actual);
         }
 

@@ -6,7 +6,7 @@ using WinForms = System.Windows.Forms;
 namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
 {
     /// <summary>
-    /// FormsのFormをウィンドウとして扱う。
+    /// Formsの<see cref="WinForms.Form"/>をウィンドウとして扱う。
     /// <para>要はウィンドウハンドル欲しい。</para>
     /// </summary>
     public class CompatibleFormWindow: WinForms.IWin32Window, IWindowsHandle

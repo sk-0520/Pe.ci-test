@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
                 }
 
                 Assert.IsTrue(c.CurrentCount == i);
-                Assert.IsFalse(c.Complete);
+                Assert.IsFalse(c.IsCompleted);
 
                 if(i == max) {
                     Assert.IsTrue(c.IsLast);
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
                 i += 1;
             }
 
-            Assert.IsTrue(counter.Complete);
+            Assert.IsTrue(counter.IsCompleted);
         }
         [TestMethod]
         public void CompleteTest()
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
                 }
 
                 Assert.IsTrue(c.CurrentCount == i);
-                Assert.IsFalse(c.Complete);
+                Assert.IsFalse(c.IsCompleted);
 
                 if(i == max) {
                     Assert.IsTrue(c.IsLast);
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
                 i += 1;
             }
 
-            Assert.IsFalse(counter.Complete);
+            Assert.IsFalse(counter.IsCompleted);
         }
 
         [TestMethod]
@@ -70,24 +70,24 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.AreEqual(1, counter.CurrentCount);
             Assert.IsTrue(counter.IsFirst);
             Assert.IsFalse(counter.IsLast);
-            Assert.IsFalse(counter.Complete);
+            Assert.IsFalse(counter.IsCompleted);
 
             Assert.IsTrue(counter.Increment());
             Assert.AreEqual(2, counter.CurrentCount);
             Assert.IsFalse(counter.IsFirst);
             Assert.IsFalse(counter.IsLast);
-            Assert.IsFalse(counter.Complete);
+            Assert.IsFalse(counter.IsCompleted);
 
             Assert.IsTrue(counter.Increment());
             Assert.AreEqual(3, counter.CurrentCount);
             Assert.IsFalse(counter.IsFirst);
             Assert.IsTrue(counter.IsLast);
-            Assert.IsTrue(counter.Complete);
+            Assert.IsTrue(counter.IsCompleted);
 
             Assert.IsFalse(counter.Increment());
             Assert.IsFalse(counter.IsFirst);
             Assert.IsTrue(counter.IsLast);
-            Assert.IsTrue(counter.Complete);
+            Assert.IsTrue(counter.IsCompleted);
         }
 
         [TestMethod]
@@ -98,25 +98,25 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
                 Assert.AreEqual(counter.CurrentCount, c.CurrentCount);
                 Assert.AreEqual(counter.IsFirst, c.IsFirst);
                 Assert.AreEqual(counter.IsLast, c.IsLast);
-                Assert.AreEqual(counter.Complete, c.Complete);
+                Assert.AreEqual(counter.IsCompleted, c.IsCompleted);
 
                 if(counter.CurrentCount == 1) {
                     Assert.IsTrue(counter.IsFirst);
                     Assert.IsFalse(counter.IsLast);
-                    Assert.IsFalse(counter.Complete);
+                    Assert.IsFalse(counter.IsCompleted);
                     counter.Increment();
                     Assert.AreEqual(2, counter.CurrentCount);
                     Assert.IsFalse(counter.IsFirst);
                     Assert.IsFalse(counter.IsLast);
-                    Assert.IsFalse(counter.Complete);
+                    Assert.IsFalse(counter.IsCompleted);
                 } else {
                     Assert.AreEqual(3, counter.CurrentCount);
                     Assert.IsFalse(counter.IsFirst);
                     Assert.IsTrue(counter.IsLast);
-                    Assert.IsFalse(counter.Complete);
+                    Assert.IsFalse(counter.IsCompleted);
                 }
             }
-            Assert.IsTrue(counter.Complete);
+            Assert.IsTrue(counter.IsCompleted);
         }
     }
 }

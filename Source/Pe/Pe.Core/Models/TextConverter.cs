@@ -218,9 +218,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         ['ｩ'] = 'ゥ',
                         ['ｪ'] = 'ェ',
                         ['ｫ'] = 'ォ',
+                        ['ｯ'] = 'ッ',
                         ['ｬ'] = 'ャ',
                         ['ｭ'] = 'ュ',
                         ['ｮ'] = 'ョ',
+                        ['ｰ'] = 'ー',
+                        ['･'] = '・',
+                        ['､'] = '、',
+                        ['｡'] = '。',
+                        ['｢'] = '「',
+                        ['｣'] = '」',
                     };
                     Debug.Assert(this._katakanaHalfToFullMap.Keys.All(c => IsHalfwidthKatakana(c)));
                 }
@@ -288,11 +295,18 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         ['ゥ'] = 'ｩ',
                         ['ェ'] = 'ｪ',
                         ['ォ'] = 'ｫ',
+                        ['ッ'] = 'ｯ',
                         ['ャ'] = 'ｬ',
                         ['ュ'] = 'ｭ',
                         ['ョ'] = 'ｮ',
+                        ['ー'] = 'ｰ',
                         ['ﾞ'] = 'ﾞ',
                         ['ﾟ'] = 'ﾟ',
+                        ['・'] = '･',
+                        ['、'] = '､',
+                        ['。'] = '｡',
+                        ['「'] = '｢',
+                        ['」'] = '｣',
                     };
                 }
 
@@ -508,7 +522,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return sb.ToString();
         }
 
-        int ConvertHiraganaToKatakaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        int ConvertHiraganaToKatakanaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
             if(currentText.Length == 1 && IsHiragana(currentText[0])) {
                 resultBuffer.Append((char)(currentText[0] + 'ァ' - 'ぁ'));
@@ -521,18 +535,18 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="input"></param>
         /// <returns>平仮名以外はそのまま。</returns>
-        public string ConvertHiraganaToKataka(string input)
+        public string ConvertHiraganaToKatakana(string input)
         {
             if(input == null) {
                 throw new ArgumentNullException(nameof(input));
             }
 
             return ConvertCore(input, new TextConvertDelegate[] {
-                ConvertHiraganaToKatakaCore
+                ConvertHiraganaToKatakanaCore
             });
         }
 
-        int ConvertKatakaToHiraganaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        int ConvertKatakanaToHiraganaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
             if(currentText.Length == 1 && IsKatakana(currentText[0])) {
                 resultBuffer.Append((char)(currentText[0] + 'ぁ' - 'ァ'));
@@ -546,14 +560,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="input"></param>
         /// <returns>カタカナ以外はそのまま。</returns>
-        public string ConvertKatakaToHiragana(string input)
+        public string ConvertKatakanaToHiragana(string input)
         {
             if(input == null) {
                 throw new ArgumentNullException(nameof(input));
             }
 
             return ConvertCore(input, new TextConvertDelegate[] {
-                ConvertKatakaToHiraganaCore
+                ConvertKatakanaToHiraganaCore
             });
         }
 

@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
-        #region DisposeFinalizeBase
+        #region DisposerBase
 
         protected override void Dispose(bool disposing)
         {

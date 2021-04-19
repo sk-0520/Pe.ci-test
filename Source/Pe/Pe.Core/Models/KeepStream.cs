@@ -5,9 +5,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// 渡されたストリームを閉じないストリーム。
     /// <para>他のストリーム使用処理へ渡した後 閉じられると困る場合にこいつをかませて閉じないようにすることが目的。</para>
-    /// <para>用途が用途なので <see cref="KeepStream.Dispose"/> しても <see cref="KeepStream.BaseStream"/> は何もケアされない、つまりはひらきっっぱなことに注意。</para>
+    /// <para>用途が用途なので <see cref="KeepStream.Dispose"/> しても <see cref="KeepStream.BaseStream"/> は何もケアされない、つまりはひらきっぱなことに注意。</para>
     /// </summary>
-    public class KeepStream: Stream
+    public sealed class KeepStream: Stream
     {
         /// <summary>
         /// <inheritdoc cref="KeepStream(Stream, bool)"/>
@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// ストリームを閉じないストリーム。
         /// </summary>
         /// <param name="stream">閉じたくないストリーム。</param>
-        /// <param name="keepPosition"><see cref="Stream.Dispose"/> 時に <see cref="Stream.Position"/> を初期状態に戻すか</param>
+        /// <param name="keepPosition"><see cref="Stream.Dispose"/> 時に <see cref="Stream.Position"/> を初期状態に戻すか。</param>
         public KeepStream(Stream stream, bool keepPosition)
         {
             BaseStream = stream;
@@ -34,9 +34,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
+        /// <summary>
+        /// 閉じたくないストリーム。
+        /// </summary>
         Stream BaseStream { get; set; }
 
+        /// <summary>
+        /// <see cref="Stream.Dispose"/> 時に <see cref="Stream.Position"/> を初期状態に戻すか。
+        /// </summary>
         bool KeepPosition { get; }
+        /// <summary>
+        /// <see cref="Stream.Dispose"/> 時に移動させるストリーム位置。
+        /// <para><see cref="KeepPosition"/>が真の場合に有効値が設定される。</para>
+        /// </summary>
         long RestorePosition { get; }
 
         #endregion

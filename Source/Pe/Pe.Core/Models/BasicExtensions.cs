@@ -3,6 +3,11 @@ using System.Linq;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// シーケンスの列挙中インデックス・データを保持する。
+    /// </summary>
+    /// <typeparam name="TNumber"></typeparam>
+    /// <typeparam name="TElement"></typeparam>
     public readonly struct CountingItem<TNumber, TElement>
         where TNumber : struct
     {
@@ -79,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         /// <summary>
         /// 全要素を削除してから指定コレクションを追加。
-        /// <para><see cref="Collection.Clear"/>からの<see cref="ICollection{T}.Add"/></para>
+        /// <para><see cref="ICollection{T}.Clear"/>からの<see cref="ICollection{T}.Add"/></para>
         /// <para><see cref="ICollection{T}"/>が<see cref="List{T}"/>なら<see cref="List{T}.AddRange(IEnumerable{T})"/>する</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>

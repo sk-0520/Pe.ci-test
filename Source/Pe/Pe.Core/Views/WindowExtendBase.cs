@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #endregion
 
-        #region DisposeFinalizeBase
+        #region DisposerBase
         #endregion
 
     }
