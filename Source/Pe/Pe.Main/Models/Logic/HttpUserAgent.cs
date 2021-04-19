@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
@@ -240,16 +242,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     /// <inheritdoc cref="IHttpUserAgentFactory"/>
     internal class HttpUserAgentFactory: IHttpUserAgentFactory
     {
-        public HttpUserAgentFactory(ILoggerFactory loggerFactory)
+        public HttpUserAgentFactory(WebConfiguration webConfiguration, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
+
+            WebConfiguration = webConfiguration;
         }
 
         #region property
 
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
+        WebConfiguration WebConfiguration { get; }
         IDictionary<string, HttpUserAgent> Pool { get; } = new Dictionary<string, HttpUserAgent>();
 
         TimeSpan ClearTime { get; } = TimeSpan.FromSeconds(30);
@@ -258,29 +263,45 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
+        void SetProxy(SocketsHttpHandler handler)
+        {
+            Logger.LogInformation("プロキシを使用: {0}, {1}", WebConfiguration.ProxyUri, WebConfiguration.ProxyCredentialIsEnabled);
+            var proxy = new WebProxy(WebConfiguration.ProxyUri);
+            if(WebConfiguration.ProxyCredentialIsEnabled) {
+                proxy.Credentials = new NetworkCredential(WebConfiguration.ProxyCredentialUser, WebConfiguration.ProxyCredentialPassword);
+            }
+            handler.Proxy = proxy;
+            handler.UseProxy = true;
+        }
+
+
+        HttpUserAgent Create(string name)
+        {
+            var param = name.Split(UserAgentName.Separator, StringSplitOptions.RemoveEmptyEntries);
+
+            var isEnabledCache = param.Any(i => i == UserAgentName.Cache);
+            var isEnabledSession = param.Any(i => i == UserAgentName.Session);
+
+            var handler = new SocketsHttpHandler() {
+                UseCookies = isEnabledSession,
+            };
+            if(WebConfiguration.ProxyIsEnabled) {
+                SetProxy(handler);
+            }
+            var cacheControl = new CacheControlHeaderValue() {
+                NoCache = !isEnabledCache
+            };
+            var httpClient = new HttpClient(handler, true);
+            httpClient.DefaultRequestHeaders.CacheControl = cacheControl;
+
+            var newUserAgent = new HttpUserAgent(name, httpClient, LoggerFactory);
+            return newUserAgent;
+        }
+
         HttpUserAgent CreateUserAgentCore(string name)
         {
             Debug.Assert(name != null);
 
-            HttpUserAgent Create(string name)
-            {
-                var param = name.Split(UserAgentName.Separator, StringSplitOptions.RemoveEmptyEntries);
-
-                var isEnabledCache = param.Any(i => i == UserAgentName.Cache);
-                var isEnabledSession = param.Any(i => i == UserAgentName.Session);
-
-                var handler = new SocketsHttpHandler() {
-                    UseCookies = isEnabledSession,
-                };
-                var cacheControl = new CacheControlHeaderValue() {
-                    NoCache = !isEnabledCache
-                };
-                var httpClient = new HttpClient(handler);
-                httpClient.DefaultRequestHeaders.CacheControl = cacheControl;
-
-                var newUserAgent = new HttpUserAgent(name, httpClient, LoggerFactory);
-                return newUserAgent;
-            }
 
             if(Pool.TryGetValue(name, out var ua)) {
                 if(ClearTime < ua.LastElapsed) {
