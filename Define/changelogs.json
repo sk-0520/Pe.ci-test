@@ -1,7 +1,7 @@
 [
 	{
 		"date": "YYYY/MM/DD",
-		"version": "0.99.110",
+		"version": "0.99.111",
 		"contents": [
 			{
 				"type": "note",
@@ -80,7 +80,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 1.7.1 -> 1.7.2"
 					},
 					{
 						"revision": "",
