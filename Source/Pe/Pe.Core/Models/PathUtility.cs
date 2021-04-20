@@ -54,7 +54,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return ToSafeName(name, c => "_");
         }
 
-        public static bool HasExtensions(string path, IEnumerable<string> extList)
+        /// <summary>
+        /// 指定した拡張子を持つか。
+        /// </summary>
+        /// <param name="path">対象パス。</param>
+        /// <param name="extensions">拡張子一覧(.は持たない)。</param>
+        /// <returns></returns>
+        public static bool HasExtensions(string path, IEnumerable<string> extensions)
         {
             var dotExt = Path.GetExtension(path);
             if(string.IsNullOrEmpty(dotExt)) {
@@ -62,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             var ext = dotExt.Substring(1);
-            return extList
+            return extensions
                 .Select(s => s.ToLower())
                 .Any(s => s == ext)
             ;

@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     public interface IReadOnlyMinMax<out T>
-            where T : IComparable<T>
+        where T : IComparable<T>
     {
         #region property
 
@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <typeparam name="T"></typeparam>
     [Serializable, DataContract]
     public struct MinMax<T>: IReadOnlyMinMax<T>
-            where T : IComparable<T>
+        where T : IComparable<T>
     {
         public MinMax(T minimum, T maximum)
         {
@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     public interface IReadOnlyMinMaxDefault<out T>: IReadOnlyMinMax<T>
-            where T : IComparable<T>
+        where T : IComparable<T>
     {
         #region property
 
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     [Serializable, DataContract]
     public struct MinMaxDefault<T>: IReadOnlyMinMaxDefault<T>
-            where T : IComparable<T>
+        where T : IComparable<T>
     {
         public MinMaxDefault(T minimum, T maximum, T defaultValue)
         {
