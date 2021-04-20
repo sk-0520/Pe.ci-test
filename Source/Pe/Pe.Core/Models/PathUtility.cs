@@ -25,9 +25,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="path"></param>
         /// <param name="ext"></param>
         /// <returns></returns>
-        public static string AppendExtension(string path, string ext)
+        public static string AddExtension(string path, string ext)
         {
-            return path + "." + ext;
+            return path.TrimEnd('.') + "." + ext.TrimStart('.');
         }
 
         /// <summary>

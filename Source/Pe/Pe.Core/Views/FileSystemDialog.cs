@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 return path;
             }
 
-            return PathUtility.AppendExtension(path, filter.DefaultExtension);
+            return PathUtility.AddExtension(path, filter.DefaultExtension);
         }
 
         public bool? ShowDialog(Window parent) => ShowDialog(HandleUtility.GetWindowHandle(parent));

@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 // ディレクトリ指定であればタイムスタンプ付きでファイル生成(プレーンログ)
                 var filePath = expandedOutputPath;
                 if(Directory.Exists(expandedOutputPath)) {
-                    var fileName = PathUtility.AppendExtension(DateTime.Now.ToString("yyyy-MM-dd_HHmmss"), "log");
+                    var fileName = PathUtility.AddExtension(DateTime.Now.ToString("yyyy-MM-dd_HHmmss"), "log");
                     filePath = Path.Combine(expandedOutputPath, fileName);
                 }
 
