@@ -106,6 +106,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("ヴ", "ｳﾞ")]
         [DataRow("゛", "ﾞ")]
         [DataRow("゜", "ﾟ")]
+        [DataRow("「ー・、。」", "｢ｰ･､｡｣")]
 #if !IGNORE_NET5
         [DataRow("ア゙", "ｱﾞ")]
         [DataRow("ア゚", "ｱﾟ")]
