@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
@@ -60,12 +62,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         /// <summary>
         /// 指定条件に合わせて文を加工する。
+        /// <para>必須条件として<see cref="IDatabaseImplementation.SupportedBlockComment"/>が真、<see cref="IDatabaseImplementation.BlockComments"/>が1要素以上。</para>
+        /// <para><see cref="IDatabaseImplementation.BlockComments"/>最初の要素が使用される。</para>
         /// </summary>
         /// <example>
         /// select *
-        /// from /*/!*//*KEY
+        /// from /*/!*//*KEY[改行]
         /// KEY-A: { <paramref name="blocks"/>["KEY"] -> KEY-A
-        ///     TABLE_A 
+        ///     TABLE_A
         /// }
         /// KEY-B: { <paramref name="blocks"/>["KEY"] -> KEY-B
         ///     TABLE_B
@@ -79,12 +83,28 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         protected string ProcessStatement(string statement, IReadOnlyDictionary<string, string> blocks, [CallerMemberName] string callerMemberName = "")
         {
+            if(!Implementation.SupportedBlockComment) {
+                throw new InvalidOperationException(nameof(Implementation.SupportedBlockComment));
+            }
+            var blockComment = Implementation.BlockComments.First();
+
             if(string.IsNullOrEmpty(statement)) {
                 return statement;
             }
             if(blocks.Count == 0) {
                 return statement;
             }
+
+            var process = (
+                begin: Regex.Escape(blockComment.Begin + "/!" + blockComment.End),
+                end: Regex.Escape(blockComment.Begin + "!/" + blockComment.End)
+            );
+            var block = (
+                begin: Regex.Escape(blockComment.Begin),
+                end: Regex.Escape(blockComment.End)
+            );
+
+            var regex = new Regex(process.begin + @$"{block.begin}(<?KEY>.+)*s$(.*)" + process.end, RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace);
 
             throw new NotImplementedException();
         }

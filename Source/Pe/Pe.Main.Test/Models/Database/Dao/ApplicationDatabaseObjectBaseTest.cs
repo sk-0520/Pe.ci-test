@@ -76,9 +76,11 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
 
             public bool SupportedTransactionDML => throw new NotSupportedException();
 
-            public bool SupportedSingleLineComment => throw new NotSupportedException();
-            public bool SupportedMultiLineComment => throw new NotSupportedException();
+            public bool SupportedLineComment => throw new NotSupportedException();
+            public bool SupportedBlockComment => throw new NotSupportedException();
 
+            public IEnumerable<string> LineComments => throw new NotSupportedException();
+            public IEnumerable<DatabaseBlockComment> BlockComments => throw new NotSupportedException();
 
             public string PreFormatStatement(string statement)
             {
@@ -100,8 +102,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
                 throw new NotSupportedException();
             }
 
-            public string ToSingleLineComment(string statement) => throw new NotSupportedException();
-            public string ToMultiLineComment(string statement) => throw new NotSupportedException();
+            public string ToLineComment(string statement) => throw new NotSupportedException();
+            public string ToBlockComment(string statement) => throw new NotSupportedException();
 
 
             public string Escape(string input)

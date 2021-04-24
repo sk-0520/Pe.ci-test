@@ -1,9 +1,37 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
+    public struct DatabaseBlockComment
+    {
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="begin">開始。</param>
+        /// <param name="end">終了。</param>
+        public DatabaseBlockComment(string begin, string end)
+        {
+            Begin = begin;
+            End = end;
+        }
+
+        #region property
+
+        /// <summary>
+        /// 開始。
+        /// </summary>
+        public string Begin { get; }
+        /// <summary>
+        /// 終了。
+        /// </summary>
+        public string End { get; }
+
+        #endregion
+    }
+
     /// <summary>
     /// データベース実装依存処理。
     /// </summary>
@@ -23,12 +51,20 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <summary>
         /// 単一行コメントをサポートしているか。
         /// </summary>
-        bool SupportedSingleLineComment { get; }
+        bool SupportedLineComment { get; }
         /// <summary>
-        /// 複数行コメントをサポートしているか。
+        /// ブロックコメントをサポートしているか。
         /// </summary>
-        bool SupportedMultiLineComment { get; }
+        bool SupportedBlockComment { get; }
 
+        /// <summary>
+        /// 単一行コメントの開始文字列。
+        /// </summary>
+        IEnumerable<string> LineComments { get; }
+        /// <summary>
+        /// ブロックコメントの開始終了文字列。
+        /// </summary>
+        IEnumerable<DatabaseBlockComment> BlockComments { get; }
         #endregion
 
         #region function
@@ -64,13 +100,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         /// <param name="statement"></param>
         /// <returns></returns>
-        string ToSingleLineComment(string statement);
+        string ToLineComment(string statement);
         /// <summary>
-        /// 文を複数行コメントに変換。
+        /// 文をブロックコメントに変換。
         /// </summary>
         /// <param name="statement"></param>
         /// <returns></returns>
-        string ToMultiLineComment(string statement);
+        string ToBlockComment(string statement);
         /// <summary>
         /// 実行文に対するエスケープ処理。
         /// <para>基本的にはバインド処理で対応すること。本処理はしゃあなし動的SQL作成時に無理やり使用する前提。</para>
@@ -97,11 +133,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         public virtual bool SupportedTransactionDDL { get; } = false;
         /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionDML"/>
         public virtual bool SupportedTransactionDML { get; } = true;
-        /// <inheritdoc cref="IDatabaseImplementation.SupportedSingleLineComment"/>
-        public virtual bool SupportedSingleLineComment { get; } = true;
-        /// <inheritdoc cref="IDatabaseImplementation.SupportedMultiLineComment"/>
-        public virtual bool SupportedMultiLineComment { get; } = true;
+        /// <inheritdoc cref="IDatabaseImplementation.SupportedLineComment"/>
+        public virtual bool SupportedLineComment { get; } = true;
+        /// <inheritdoc cref="IDatabaseImplementation.SupportedBlockComment"/>
+        public virtual bool SupportedBlockComment { get; } = true;
 
+        /// <inheritdoc cref="IDatabaseImplementation.LineComments"/>
+        public virtual IEnumerable<string> LineComments => new[] { "--", };
+        /// <inheritdoc cref="IDatabaseImplementation.BlockComments"/>
+        public virtual IEnumerable<DatabaseBlockComment> BlockComments => new[] { new DatabaseBlockComment("/*", "*/"), };
 
         /// <inheritdoc cref="IDatabaseImplementation.PreFormatStatement(string)"/>
         public virtual string PreFormatStatement(string statement) => statement;
@@ -113,25 +153,34 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <inheritdoc cref="IDatabaseImplementation.ToStatementParameterName(string, int)"/>
         public virtual string ToStatementParameterName(string parameterName, int index) => "@" + parameterName;
 
-        /// <inheritdoc cref="IDatabaseImplementation.ToSingleLineComment(string)"/>
-        public virtual string ToSingleLineComment(string statement)
+        /// <inheritdoc cref="IDatabaseImplementation.ToLineComment(string)"/>
+        public virtual string ToLineComment(string statement)
         {
+            if(!SupportedLineComment) {
+                throw new InvalidOperationException(nameof(SupportedLineComment));
+            }
+
             return TextUtility.ReadLines(statement)
-                .Select(i => "--" + i)
+                .Select(i => LineComments.First() + i)
                 .JoinString(Environment.NewLine)
             ;
         }
 
-        /// <inheritdoc cref="IDatabaseImplementation.ToMultiLineComment(string)"/>
-        public virtual string ToMultiLineComment(string statement)
+        /// <inheritdoc cref="IDatabaseImplementation.ToBlockComment(string)"/>
+        public virtual string ToBlockComment(string statement)
         {
-            var builder = new StringBuilder(Environment.NewLine.Length * 4 + "/**/".Length + statement.Length);
+            if(!SupportedBlockComment) {
+                throw new InvalidOperationException(nameof(SupportedBlockComment));
+            }
+            var blockComment = BlockComments.First();
+
+            var builder = new StringBuilder(Environment.NewLine.Length * 4 + blockComment.Begin.Length + blockComment.End.Length + statement.Length);
             builder.AppendLine(Environment.NewLine);
-            builder.AppendLine("/*");
+            builder.AppendLine(blockComment.Begin);
             builder.AppendLine(Environment.NewLine);
             builder.AppendLine(statement);
             builder.AppendLine(Environment.NewLine);
-            builder.AppendLine("*/");
+            builder.AppendLine(blockComment.End);
             builder.AppendLine(Environment.NewLine);
 
             return builder.ToString();
