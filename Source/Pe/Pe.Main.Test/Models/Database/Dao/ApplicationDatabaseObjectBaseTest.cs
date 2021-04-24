@@ -72,37 +72,44 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
 
         class Di: IDatabaseImplementation
         {
-            public bool SupportedTransactionDDL => throw new NotImplementedException();
+            public bool SupportedTransactionDDL => throw new NotSupportedException();
 
-            public bool SupportedTransactionDML => throw new NotImplementedException();
+            public bool SupportedTransactionDML => throw new NotSupportedException();
+
+            public bool SupportedSingleLineComment => throw new NotSupportedException();
+            public bool SupportedMultiLineComment => throw new NotSupportedException();
 
 
             public string PreFormatStatement(string statement)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
 
             public string ToStatementColumnName(string columnName)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
 
             public string ToStatementParameterName(string parameterName, int index)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
 
             public string ToStatementTableName(string tableName)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
+
+            public string ToSingleLineComment(string statement) => throw new NotSupportedException();
+            public string ToMultiLineComment(string statement) => throw new NotSupportedException();
+
 
             public string Escape(string input)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
 
-            public string EscapeLike(string pattern) => throw new NotImplementedException();
+            public string EscapeLike(string pattern) => throw new NotSupportedException();
         }
 
         class Adao: ApplicationDatabaseObjectBase
