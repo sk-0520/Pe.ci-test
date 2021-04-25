@@ -47,14 +47,24 @@ select
 *
 from
 /*/!*//*KEY1
-VALUE1: {1}
-VALUE2: {
-    2
+VALUE1: {
+    1
 }
+VALUE2: {2}
 VALUE3: LOAD
-VALUE3:
-    LOAD
-*/TABLE/*!/*/
+*/
+
+TABLE
+
+/*!/*/
+
+/*/!*//*KEY2
+VALUE1: {
+    COL1
+}
+VALUE2: {COL2}
+*/COL3/*!/*/
+
 ";
             var dao = CreateDao();
             var map = new Dictionary<string, string>();

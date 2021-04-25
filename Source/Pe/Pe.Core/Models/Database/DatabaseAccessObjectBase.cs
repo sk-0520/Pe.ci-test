@@ -86,7 +86,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             if(!Implementation.SupportedBlockComment) {
                 throw new InvalidOperationException(nameof(Implementation.SupportedBlockComment));
             }
-            var blockComment = Implementation.BlockComments.First();
 
             if(string.IsNullOrEmpty(statement)) {
                 return statement;
@@ -94,6 +93,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             if(blocks.Count == 0) {
                 return statement;
             }
+
+            var blockComment = Implementation.BlockComments.First();
 
             var process = (
                 begin: Regex.Escape(blockComment.Begin + "/!" + blockComment.End),
@@ -104,9 +105,25 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                 end: Regex.Escape(blockComment.End)
             );
 
-            var regex = new Regex(process.begin + @$"{block.begin}(<?KEY>.+)*s$(.*)" + process.end, RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace);
+            var regex = new Regex(
+                process.begin + @$"{block.begin}(?<KEY>\w+)\s*(?<BODY>[.\s\S]*)" + process.end,
+                RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace
+            );
 
-            throw new NotImplementedException();
+            return regex.Replace(statement, ReplaceStatement);
+        }
+
+        private string ReplaceStatement(Match match)
+        {
+            var blockComment = Implementation.BlockComments.First();
+
+            var key = match.Groups["KEY"].Value;
+            var body = match.Groups["BODY"].Value;
+
+            var bodyLastIndex = body.IndexOf(blockComment.End);
+            var bodyContent = body.Substring(0, bodyLastIndex);
+
+            return body;
         }
 
         #endregion
