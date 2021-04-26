@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ContentTypeTextNet.Pe.Bridge.Models
 {
     /// <summary>
-    /// <see cref="HttpClient"/>を意識せずに(寿命とか)に <see cref="IDisposable.Dispose"/> できる子。
+    /// <see cref="HttpClient"/>を意識せずに(寿命とか) <see cref="IDisposable.Dispose"/> できる子。
     /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IHttpUserAgent: IDisposable

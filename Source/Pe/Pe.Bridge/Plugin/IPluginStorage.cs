@@ -19,13 +19,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         Json,
         /// <summary>
         /// XML形式。
-        /// <seealso cref="System.Xml.Serialization.XmlSerializer"/>
         /// </summary>
+        /// <seealso cref="System.Xml.Serialization.XmlSerializer"/>
         SimpleXml,
         /// <summary>
         /// XML形式。
-        /// <seealso cref="System.Runtime.Serialization.DataContractSerializer"/>
         /// </summary>
+        /// <seealso cref="System.Runtime.Serialization.DataContractSerializer"/>
         DataXml,
     }
 
@@ -94,7 +94,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         bool IsReadOnly { get; }
 
         #endregion
-
 
         #region function
 
