@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         #region function
 
         /// <summary>
-        /// 簡易 HTTP GET 要求。
+        /// HTTP GET 要求。
         /// </summary>
         /// <param name="requestUri"></param>
         /// <param name="cancellationToken"></param>
@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         Task<HttpResponseMessage> GetAsync(Uri requestUri);
 
         /// <summary>
-        /// 簡易 HTTP POST 要求。
+        /// HTTP POST 要求。
         /// </summary>
         /// <param name="requestUri"></param>
         /// <param name="content"></param>
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         Task<HttpResponseMessage> PostAsync(Uri requestUri, HttpContent content);
 
         /// <summary>
-        /// 簡易 HTTP PUT 要求。
+        /// HTTP PUT 要求。
         /// </summary>
         /// <param name="requestUri"></param>
         /// <param name="content"></param>
@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         Task<HttpResponseMessage> PutAsync(Uri requestUri, HttpContent content);
 
         /// <summary>
-        /// 簡易 HTTP DELETE 要求。
+        /// HTTP DELETE 要求。
         /// </summary>
         /// <param name="requestUri"></param>
         /// <param name="cancellationToken"></param>
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         Task<HttpResponseMessage> DeleteAsync(Uri requestUri);
 
         /// <summary>
-        /// 簡易 HTTP 要求。
+        /// HTTP 要求。
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
