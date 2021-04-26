@@ -69,9 +69,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     {
         #region function
 
-        public static IScopeDiContainer CreateChildContainer(this IDiScopeContainerFactory @this)
+        public static IScopeDiContainer CreateChildContainer(this IDiScopeContainerFactory factory)
         {
-            var scopeDiContainer = @this.Scope();
+            var scopeDiContainer = factory.Scope();
             scopeDiContainer.Register<IDiContainer, IScopeDiContainer>(scopeDiContainer);
             return scopeDiContainer;
         }
@@ -86,39 +86,39 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         //    ;
         //}
 
-        public static IDiRegisterContainer RegisterMvvm<TModel, TViewModel, TView>(this IDiRegisterContainer @this)
+        public static IDiRegisterContainer RegisterMvvm<TModel, TViewModel, TView>(this IDiRegisterContainer container)
             where TModel : BindModelBase
             where TViewModel : ViewModelBase
             where TView : FrameworkElement
         {
-            return @this
+            return container
                 .Register<TModel, TModel>(DiLifecycle.Singleton)
                 .Register<TViewModel, TViewModel>(DiLifecycle.Transient)
-                .Register<ILogger, ILogger>(@this.Build<ILoggerFactory>().CreateLogger(typeof(TView)))
+                .Register<ILogger, ILogger>(container.Build<ILoggerFactory>().CreateLogger(typeof(TView)))
                 .RegisterMember<TView, TViewModel>(nameof(FrameworkElement.DataContext))
             ;
         }
 
-        public static TResult UsingTemporaryContainer<TResult>(this IDiScopeContainerFactory @this, Func<IDiRegisterContainer, TResult> func)
+        public static TResult UsingTemporaryContainer<TResult>(this IDiScopeContainerFactory factory, Func<IDiRegisterContainer, TResult> func)
         {
-            using(var container = CreateChildContainer(@this)) {
+            using(var container = CreateChildContainer(factory)) {
                 return func(container);
             }
         }
 
-        public static TView BuildView<TView>(this IDiScopeContainerFactory @this)
+        public static TView BuildView<TView>(this IDiScopeContainerFactory factory)
 #if !ENABLED_STRUCT
             where TView : class
 #endif
         {
-            return @this.UsingTemporaryContainer(c => {
+            return factory.UsingTemporaryContainer(c => {
                 c.Register<ILogger, ILogger>(c.Build<ILoggerFactory>().CreateLogger(typeof(TView)));
                 return c.Build<TView>();
             });
         }
 
 
-        public static TContainer RegisterDatabase<TContainer>(this TContainer @this, ApplicationDatabaseFactoryPack factoryPack, LazyWriterWaitTimePack lazyWriterWaitTimePack, ILoggerFactory loggerFactory)
+        public static TContainer RegisterDatabase<TContainer>(this TContainer container, ApplicationDatabaseFactoryPack factoryPack, LazyWriterWaitTimePack lazyWriterWaitTimePack, ILoggerFactory loggerFactory)
             where TContainer : IDiRegisterContainer
         {
             var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory);
@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 new ApplicationDatabaseLazyWriter(barrierPack.Temporary, lazyWriterWaitTimePack.Temporary, loggerFactory)
             );
 
-            @this
+            container
                 .Register<IDatabaseFactoryPack, ApplicationDatabaseFactoryPack>(factoryPack)
                 .Register<IDatabaseAccessorPack, ApplicationDatabaseAccessorPack>(accessorPack)
                 .Register<IDatabaseBarrierPack, ApplicationDatabaseBarrierPack>(barrierPack)
@@ -156,25 +156,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<ITemporaryDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Temporary)
             ;
 
-            return @this;
+            return container;
         }
 
-        public static void UnregisterDatabase(this IDiRegisterContainer @this)
+        public static void UnregisterDatabase(this IDiRegisterContainer container)
         {
             var unregisters = new Action[] {
-                () => @this.Unregister<IDatabaseFactoryPack>(),
-                () => @this.Unregister<IDatabaseAccessorPack>(),
-                () => @this.Unregister<IDatabaseBarrierPack>(),
-                () => @this.Unregister<IReaderWriterLockerPack>(),
-                () => @this.Unregister<IDatabaseLazyWriterPack>(),
+                () => container.Unregister<IDatabaseFactoryPack>(),
+                () => container.Unregister<IDatabaseAccessorPack>(),
+                () => container.Unregister<IDatabaseBarrierPack>(),
+                () => container.Unregister<IReaderWriterLockerPack>(),
+                () => container.Unregister<IDatabaseLazyWriterPack>(),
 
-                () => @this.Unregister<IMainDatabaseBarrier>(),
-                () => @this.Unregister<ILargeDatabaseBarrier>(),
-                () => @this.Unregister<ITemporaryDatabaseBarrier>(),
+                () => container.Unregister<IMainDatabaseBarrier>(),
+                () => container.Unregister<ILargeDatabaseBarrier>(),
+                () => container.Unregister<ITemporaryDatabaseBarrier>(),
 
-                () => @this.Unregister<IMainDatabaseLazyWriter>(),
-                () => @this.Unregister<ILargeDatabaseLazyWriter>(),
-                () => @this.Unregister<ITemporaryDatabaseLazyWriter>(),
+                () => container.Unregister<IMainDatabaseLazyWriter>(),
+                () => container.Unregister<ILargeDatabaseLazyWriter>(),
+                () => container.Unregister<ITemporaryDatabaseLazyWriter>(),
             };
 
             foreach(var unreg in unregisters.Reverse()) {

@@ -81,10 +81,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <summary>
         /// アイテムが時間から有効であるか判定。
         /// </summary>
-        /// <param name="this"></param>
+        /// <param name="setting"></param>
         /// <param name="timestamp"></param>
         /// <returns></returns>
-        public static bool IsEnabled(this IReadOnlyCronItemSetting @this, DateTime timestamp)
+        public static bool IsEnabled(this IReadOnlyCronItemSetting setting, DateTime timestamp)
         {
             static bool IsIn<T>(T value, IEnumerable<T> range)
                 where T : struct
@@ -98,30 +98,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return false;
             }
 
-            if(!IsIn(timestamp.Minute, @this.Minutes)) {
+            if(!IsIn(timestamp.Minute, setting.Minutes)) {
                 return false;
             }
-            if(!IsIn(timestamp.Hour, @this.Hours)) {
+            if(!IsIn(timestamp.Hour, setting.Hours)) {
                 return false;
             }
 
-            if(@this.DayOfWeeks.Count != 7) {
-                if(IsIn(timestamp.DayOfWeek, @this.DayOfWeeks)) {
+            if(setting.DayOfWeeks.Count != 7) {
+                if(IsIn(timestamp.DayOfWeek, setting.DayOfWeeks)) {
                     // 曜日指定があれば日は無視して月確認
-                    if(IsIn(timestamp.Month, @this.Months)) {
+                    if(IsIn(timestamp.Month, setting.Months)) {
                         return true;
                     }
-                } else if(@this.Days.Count == 31) {
+                } else if(setting.Days.Count == 31) {
                     // 曜日指定ありで日指定なしの場合は曜日に合わない時点で一致しないと判定
                     return false;
                 }
             }
 
-            if(!IsIn(timestamp.Day, @this.Days)) {
+            if(!IsIn(timestamp.Day, setting.Days)) {
                 return false;
             }
 
-            if(!IsIn(timestamp.Month, @this.Months)) {
+            if(!IsIn(timestamp.Month, setting.Months)) {
                 return false;
             }
 

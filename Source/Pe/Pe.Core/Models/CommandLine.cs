@@ -440,11 +440,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region function
 
-        public static string GetValue(this CommandLine @this, string key, string defaultValue)
+        public static string GetValue(this CommandLine commandLine, string key, string defaultValue)
         {
-            var commandLineKey = @this.GetKey(key);
+            var commandLineKey = commandLine.GetKey(key);
             if(commandLineKey != null) {
-                if(@this.Values.TryGetValue(commandLineKey, out var value)) {
+                if(commandLine.Values.TryGetValue(commandLineKey, out var value)) {
                     return value.First;
                 }
             }
@@ -452,11 +452,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return defaultValue;
         }
 
-        public static bool ExistsSwitch(this CommandLine @this, string key)
+        public static bool ExistsSwitch(this CommandLine commandLine, string key)
         {
-            var commandLineKey = @this.GetKey(key);
+            var commandLineKey = commandLine.GetKey(key);
             if(commandLineKey != null) {
-                return @this.Switches.Contains(commandLineKey);
+                return commandLine.Switches.Contains(commandLineKey);
             }
 
             return false;

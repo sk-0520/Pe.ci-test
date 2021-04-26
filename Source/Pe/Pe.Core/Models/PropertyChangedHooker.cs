@@ -464,14 +464,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region function
 
-        public static void AddProperties(this PropertyChangedHooker @this, Type type)
+        public static void AddProperties(this PropertyChangedHooker propertyChangedHooker, Type type)
         {
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             foreach(var property in properties) {
-                @this.AddHook(property.Name);
+                propertyChangedHooker.AddHook(property.Name);
             }
         }
-        public static void AddProperties<Type>(this PropertyChangedHooker @this) => AddProperties(@this, typeof(Type));
+        public static void AddProperties<Type>(this PropertyChangedHooker propertyChangedHooker) => AddProperties(propertyChangedHooker, typeof(Type));
 
 
         #endregion

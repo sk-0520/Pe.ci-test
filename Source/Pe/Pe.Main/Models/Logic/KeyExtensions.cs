@@ -6,9 +6,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region function
 
-        public static bool IsModifierKey(this Key @this)
+        public static bool IsModifierKey(this Key key)
         {
-            switch(@this) {
+            switch(key) {
                 case Key.LeftShift:
                 case Key.RightShift:
                 case Key.LeftCtrl:

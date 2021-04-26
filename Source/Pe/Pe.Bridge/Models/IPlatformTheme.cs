@@ -173,22 +173,22 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <summary>
         /// タスクバーの色を取得。
         /// </summary>
-        /// <param name="this"></param>
+        /// <param name="platformTheme"></param>
         /// <returns></returns>
-        public static Color GetTaskbarColor(this IPlatformTheme @this)
+        public static Color GetTaskbarColor(this IPlatformTheme platformTheme)
         {
             // 透明度どうしよう
             Color result;
 
-            if(@this.ColorPrevalence) {
-                result = @this.AccentColor;
+            if(platformTheme.ColorPrevalence) {
+                result = platformTheme.AccentColor;
             } else {
-                var color = @this.GetWindowsThemeColors(@this.WindowsThemeKind);
+                var color = platformTheme.GetWindowsThemeColors(platformTheme.WindowsThemeKind);
                 result = color.Background;
             }
 
-            if(@this.EnableTransparency) {
-                result.A = @this.AccentColor.A;
+            if(platformTheme.EnableTransparency) {
+                result.A = platformTheme.AccentColor.A;
             } else {
                 result.A = 0xff;
             }
