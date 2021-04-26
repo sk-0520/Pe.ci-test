@@ -11,11 +11,15 @@ from
 	inner join
 		KeyMappings
 		on
+		(
 			KeyMappings.KeyActionId = KeyActions.KeyActionId
+		)
 	inner join
 		KeyOptions
 		on
+		(
 			KeyOptions.KeyActionId = KeyActions.KeyActionId
+		)
 where
 	KeyActions.KeyActionKind = @KeyActionKind
 	and

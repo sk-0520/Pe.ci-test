@@ -1,5 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
+    public struct DatabaseBlockComment
+    {
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="begin">開始。</param>
+        /// <param name="end">終了。</param>
+        public DatabaseBlockComment(string begin, string end)
+        {
+            Begin = begin;
+            End = end;
+        }
+
+        #region property
+
+        /// <summary>
+        /// 開始。
+        /// </summary>
+        public string Begin { get; }
+        /// <summary>
+        /// 終了。
+        /// </summary>
+        public string End { get; }
+
+        #endregion
+    }
+
     /// <summary>
     /// データベース実装依存処理。
     /// </summary>
@@ -16,6 +48,23 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         bool SupportedTransactionDML { get; }
 
+        /// <summary>
+        /// 単一行コメントをサポートしているか。
+        /// </summary>
+        bool SupportedLineComment { get; }
+        /// <summary>
+        /// ブロックコメントをサポートしているか。
+        /// </summary>
+        bool SupportedBlockComment { get; }
+
+        /// <summary>
+        /// 単一行コメントの開始文字列。
+        /// </summary>
+        IEnumerable<string> LineComments { get; }
+        /// <summary>
+        /// ブロックコメントの開始終了文字列。
+        /// </summary>
+        IEnumerable<DatabaseBlockComment> BlockComments { get; }
         #endregion
 
         #region function
@@ -26,11 +75,38 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="statement"></param>
         /// <returns></returns>
         string PreFormatStatement(string statement);
-
+        /// <summary>
+        /// テーブル名を文内で使用可能な文字列に変換。
+        /// </summary>
+        /// <param name="tableName">テーブル名。</param>
+        /// <returns></returns>
         string ToStatementTableName(string tableName);
+        /// <summary>
+        /// カラム名を文内で使用可能な文字列に変換。
+        /// </summary>
+        /// <param name="columnName">カラム名。</param>
+        /// <returns></returns>
         string ToStatementColumnName(string columnName);
+        /// <summary>
+        /// バインド変数名を使用可能な文字列に変換。
+        /// </summary>
+        /// <param name="parameterName"></param>
+        /// <param name="index">0基点のパラメータ番号。</param>
+        /// <returns></returns>
         string ToStatementParameterName(string parameterName, int index);
 
+        /// <summary>
+        /// 文を単一行コメントに変換。
+        /// </summary>
+        /// <param name="statement"></param>
+        /// <returns></returns>
+        string ToLineComment(string statement);
+        /// <summary>
+        /// 文をブロックコメントに変換。
+        /// </summary>
+        /// <param name="statement"></param>
+        /// <returns></returns>
+        string ToBlockComment(string statement);
         /// <summary>
         /// 実行文に対するエスケープ処理。
         /// <para>基本的にはバインド処理で対応すること。本処理はしゃあなし動的SQL作成時に無理やり使用する前提。</para>
@@ -57,6 +133,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         public virtual bool SupportedTransactionDDL { get; } = false;
         /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionDML"/>
         public virtual bool SupportedTransactionDML { get; } = true;
+        /// <inheritdoc cref="IDatabaseImplementation.SupportedLineComment"/>
+        public virtual bool SupportedLineComment { get; } = true;
+        /// <inheritdoc cref="IDatabaseImplementation.SupportedBlockComment"/>
+        public virtual bool SupportedBlockComment { get; } = true;
+
+        /// <inheritdoc cref="IDatabaseImplementation.LineComments"/>
+        public virtual IEnumerable<string> LineComments => new[] { "--", };
+        /// <inheritdoc cref="IDatabaseImplementation.BlockComments"/>
+        public virtual IEnumerable<DatabaseBlockComment> BlockComments => new[] { new DatabaseBlockComment("/*", "*/"), };
 
         /// <inheritdoc cref="IDatabaseImplementation.PreFormatStatement(string)"/>
         public virtual string PreFormatStatement(string statement) => statement;
@@ -67,6 +152,39 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         public virtual string ToStatementColumnName(string columnName) => columnName;
         /// <inheritdoc cref="IDatabaseImplementation.ToStatementParameterName(string, int)"/>
         public virtual string ToStatementParameterName(string parameterName, int index) => "@" + parameterName;
+
+        /// <inheritdoc cref="IDatabaseImplementation.ToLineComment(string)"/>
+        public virtual string ToLineComment(string statement)
+        {
+            if(!SupportedLineComment) {
+                throw new InvalidOperationException(nameof(SupportedLineComment));
+            }
+
+            return TextUtility.ReadLines(statement)
+                .Select(i => LineComments.First() + i)
+                .JoinString(Environment.NewLine)
+            ;
+        }
+
+        /// <inheritdoc cref="IDatabaseImplementation.ToBlockComment(string)"/>
+        public virtual string ToBlockComment(string statement)
+        {
+            if(!SupportedBlockComment) {
+                throw new InvalidOperationException(nameof(SupportedBlockComment));
+            }
+            var blockComment = BlockComments.First();
+
+            var builder = new StringBuilder(Environment.NewLine.Length * 4 + blockComment.Begin.Length + blockComment.End.Length + statement.Length);
+            builder.AppendLine(Environment.NewLine);
+            builder.AppendLine(blockComment.Begin);
+            builder.AppendLine(Environment.NewLine);
+            builder.AppendLine(statement);
+            builder.AppendLine(Environment.NewLine);
+            builder.AppendLine(blockComment.End);
+            builder.AppendLine(Environment.NewLine);
+
+            return builder.ToString();
+        }
 
         /// <inheritdoc cref="IDatabaseImplementation.Escape(string)"/>
         public virtual string Escape(string input) => input

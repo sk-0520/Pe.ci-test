@@ -11,7 +11,9 @@ from
 	inner join
 		KeyMappings
 		on
+		(
 			KeyMappings.KeyActionId = KeyActions.KeyActionId
+		)
 where
 	KeyActions.KeyActionKind = @KeyActionKind
 	and
