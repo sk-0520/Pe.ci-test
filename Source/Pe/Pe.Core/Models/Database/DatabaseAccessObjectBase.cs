@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             );
 
             var regex = new Regex(
-                process.begin + @$"{block.begin}(?<KEY>\w+)\s*(?<BODY>[.\s\S]*)" + process.end,
+                process.begin + @$"{block.begin}(?<KEY>\w+)\s*(?<BODY>[.\s\S]*?)" + process.end,
                 RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace
             );
 
@@ -121,7 +121,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             var body = match.Groups["BODY"].Value;
 
             var bodyLastIndex = body.IndexOf(blockComment.End);
-            var bodyContent = body.Substring(0, bodyLastIndex);
+            var dynamicContent = body.Substring(0, bodyLastIndex - blockComment.End.Length);
+            var defaultContent = body.Substring(bodyLastIndex + blockComment.End.Length);
 
             return body;
         }
