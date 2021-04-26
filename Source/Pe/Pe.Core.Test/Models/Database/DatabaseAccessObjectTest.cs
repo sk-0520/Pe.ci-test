@@ -47,29 +47,59 @@ select
 *
 from
 /*/!*//*KEY1
-VALUE1: {
+VALUE1:CODE
     1
-}
-VALUE2: {2}
-VALUE3: LOAD
+VALUE2:CODE
+    2
+    22
+VALUE3:LOAD
+    NAME
 */
 
 TABLE
 
 /*!/*/
-
+order by
 /*/!*//*KEY2
-VALUE1: {
+VALUE1:CODE
     COL1
-}
-VALUE2: {COL2}
+VALUE2:CODE
+    COL2
 */COL3/*!/*/
 
 ";
             var dao = CreateDao();
             var map = new Dictionary<string, string>();
-            map["KEY"] = "VALUE1";
+            map["KEY1"] = "VALUE1";
             var output1 = dao.ProcessStatement2(input, map);
+            var actual1 = @"
+select
+*
+from
+    1
+order by
+COL3
+
+";
+            Assert.AreEqual(actual1, output1);
+
+            map.Clear();
+            map["KEY1"] = "VALUE2";
+            map["KEY2"] = "VALUE2";
+            var output2 = dao.ProcessStatement2(input, map);
+            var actual2 = @"
+select
+*
+from
+    2
+    22
+order by
+    COL2
+
+";
+            Assert.AreEqual(actual2, output2);
+
+            //LOADは諸々の事情でテストなし
         }
 
 

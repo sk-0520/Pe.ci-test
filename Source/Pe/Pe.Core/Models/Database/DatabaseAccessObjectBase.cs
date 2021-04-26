@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -13,6 +14,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// </summary>
     public abstract class DatabaseAccessObjectBase
     {
+        #region variable
+
+        Regex? _processBodyRegex;
+        Regex? _processContentRegex;
+
+        #endregion
+
         protected DatabaseAccessObjectBase(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
@@ -45,6 +53,49 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         protected ILoggerFactory LoggerFactory { get; }
 
+        private Regex ProcessBodyRegex
+        {
+            get
+            {
+                if(this._processBodyRegex is null) {
+                    Debug.Assert(Implementation.SupportedBlockComment);
+                    Debug.Assert(Implementation.BlockComments.Any());
+
+                    var blockComment = Implementation.BlockComments.First();
+
+                    var process = (
+                        begin: Regex.Escape(blockComment.Begin + "/!" + blockComment.End),
+                        end: Regex.Escape(blockComment.Begin + "!/" + blockComment.End)
+                    );
+                    var block = (
+                        begin: Regex.Escape(blockComment.Begin),
+                        end: Regex.Escape(blockComment.End)
+                    );
+
+                    this._processBodyRegex = new Regex(
+                        process.begin + @$"{block.begin}(?<KEY>\w+)\s*(?<BODY>[.\s\S]*?)" + process.end,
+                        RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace
+                    );
+                }
+
+                return this._processBodyRegex;
+            }
+        }
+
+        private Regex ProcessContentRegex
+        {
+            get
+            {
+                if(this._processContentRegex is null) {
+                    this._processContentRegex = new Regex(@"^\s*(?<NAME>\w+)\s*:\s*(?<KIND>(CODE)|(LOAD))\s*$");
+                }
+
+                return this._processContentRegex;
+            }
+        }
+
+        protected virtual string JoinSeparator { get; } = ".";
+
         #endregion
 
         #region function
@@ -68,13 +119,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <example>
         /// select *
         /// from /*/!*//*KEY[改行]
-        /// KEY-A: { <paramref name="blocks"/>["KEY"] -> KEY-A
+        /// KEY-A:CODE[改行] <paramref name="blocks"/>["KEY"] -> KEY-A
         ///     TABLE_A
-        /// }
-        /// KEY-B: { <paramref name="blocks"/>["KEY"] -> KEY-B
+        /// KEY-B:CODE[改行] <paramref name="blocks"/>["KEY"] -> KEY-B
         ///     TABLE_B
-        /// }
-        /// KEY-C: NAME <paramref name="blocks"/>["KEY"] -> KEY-C, callerMemberName.NAME.sql
+        /// KEY-C:LOAD[改行] <paramref name="blocks"/>["KEY"] -> KEY-C, <see cref="LoadStatement"/>(callerMemberName<see cref="JoinSeparator"/>NAME)
+        ///     NAME
         /// */TABLE_C/*!/*/ <paramref name="blocks"/>["KEY"] not KEY-A,KEY-B,KEY-C
         /// </example>
         /// <param name="statement"></param>
@@ -94,26 +144,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                 return statement;
             }
 
-            var blockComment = Implementation.BlockComments.First();
-
-            var process = (
-                begin: Regex.Escape(blockComment.Begin + "/!" + blockComment.End),
-                end: Regex.Escape(blockComment.Begin + "!/" + blockComment.End)
-            );
-            var block = (
-                begin: Regex.Escape(blockComment.Begin),
-                end: Regex.Escape(blockComment.End)
-            );
-
-            var regex = new Regex(
-                process.begin + @$"{block.begin}(?<KEY>\w+)\s*(?<BODY>[.\s\S]*?)" + process.end,
-                RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace
-            );
-
-            return regex.Replace(statement, ReplaceStatement);
+            return ProcessBodyRegex.Replace(statement, m => ReplaceStatement(m, blocks, callerMemberName));
         }
 
-        private string ReplaceStatement(Match match)
+        private string ReplaceStatement(Match match, IReadOnlyDictionary<string, string> blocks, string callerMemberName)
         {
             var blockComment = Implementation.BlockComments.First();
 
@@ -124,7 +158,48 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             var dynamicContent = body.Substring(0, bodyLastIndex - blockComment.End.Length);
             var defaultContent = body.Substring(bodyLastIndex + blockComment.End.Length);
 
-            return body;
+            if(!blocks.TryGetValue(key, out var name)) {
+                return defaultContent;
+            }
+
+            var lines = TextUtility.ReadLines(dynamicContent)
+                .Counting()
+                .ToArray()
+            ;
+
+            var matchedItems = lines
+                .Select(i => (item: i, match: ProcessContentRegex.Match(i.Value)))
+                .Where(i => i.match.Success)
+                .ToArray()
+            ;
+            for(var i = 0; i < matchedItems.Length; i++) {
+                var matchedItem = matchedItems[i];
+                if(matchedItem.match.Groups["NAME"].Value == name) {
+                    var nextIndex = i + 1 < matchedItems.Length
+                        ? matchedItems[i + 1].item.Number
+                        : lines.Length
+                    ;
+                    var contentIndex = matchedItem.item.Number + 1;
+                    var contentLines = lines[contentIndex..nextIndex];
+                    var kind = matchedItem.match.Groups["KIND"].Value;
+                    if(kind == "CODE") {
+                        return contentLines
+                            .Select(i => i.Value)
+                            .JoinString(Environment.NewLine)
+                        ;
+                    } else {
+                        Debug.Assert(kind == "LOAD");
+                        return contentLines
+                            .Select(i => i.Value.Trim())
+                            .Where(i => !string.IsNullOrEmpty(i))
+                            .Select(i => LoadStatement(callerMemberName + JoinSeparator + i))
+                            .JoinString(Environment.NewLine)
+                        ;
+                    }
+                }
+            }
+
+            return defaultContent;
         }
 
         #endregion
