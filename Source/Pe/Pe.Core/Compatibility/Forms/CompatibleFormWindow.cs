@@ -18,9 +18,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
 
         #region IWin32Window, IWindowsHandle
 
-        /// <summary>
-        /// ウィンドウハンドル。
-        /// </summary>
+        /// <inheritdoc cref="WinForms.IWin32Window.Handle"/>
         public IntPtr Handle { get; }
 
         #endregion

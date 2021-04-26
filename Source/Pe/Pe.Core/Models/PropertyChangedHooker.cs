@@ -53,24 +53,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region IReadOnlyHookItem
 
-        /// <summary>
-        /// 変更通知プロパティ名。
-        /// </summary>
+        /// <inheritdoc cref="IReadOnlyHookItem.NotifyPropertyName"/>
         public string NotifyPropertyName { get; }
-        /// <summary>
-        /// 変更通知を送るプロパティ名。
-        /// </summary>
+        /// <inheritdoc cref="IReadOnlyHookItem.RaisePropertyNames"/>
         public List<string>? RaisePropertyNames { get; }
         IReadOnlyList<string>? IReadOnlyHookItem.RaisePropertyNames => RaisePropertyNames;
-        /// <summary>
-        /// 状態を更新するコマンド。
-        /// </summary>
+        /// <inheritdoc cref="IReadOnlyHookItem.RaiseCommands"/>
         public List<ICommand>? RaiseCommands { get; }
         IReadOnlyList<ICommand>? IReadOnlyHookItem.RaiseCommands => RaiseCommands;
 
-        /// <summary>
-        /// 変更通知により呼び出される処理。
-        /// </summary>
+        /// <inheritdoc cref="IReadOnlyHookItem.Callback"/>
         public Action? Callback { get; }
 
         #endregion
