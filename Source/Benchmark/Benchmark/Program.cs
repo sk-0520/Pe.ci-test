@@ -12,13 +12,16 @@ namespace Benchmark
     {
         static void Main(string[] args)
         {
-            BenchmarkRunner.Run<Bench>();
+            var summary = BenchmarkRunner.Run<Bench>();
+            Console.WriteLine(summary);
         }
     }
 
     // -Bench.cs を作成して細かいのは対応する
+    [SimpleJob(RuntimeMoniker.NetCoreApp50)]
     [RPlotExporter]
     [MemoryDiagnoser]
+    [MinColumn, MaxColumn, RankColumn]
     public partial class Bench
     { }
 }
