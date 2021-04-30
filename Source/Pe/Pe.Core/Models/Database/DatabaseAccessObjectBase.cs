@@ -52,8 +52,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// ログ出力(<see cref="ILogger"/>)生成機構。
         /// </summary>
         protected ILoggerFactory LoggerFactory { get; }
+        /// <summary>
+        /// 行終端文字列を取得または設定。
+        /// </summary>
+        public string NewLine { get; init; } = Environment.NewLine;
+        protected string JoinSeparator { get; init; } = ".";
 
-        private Regex ProcessBodyRegex
+        protected virtual Regex ProcessBodyRegex
         {
             get
             {
@@ -82,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }
         }
 
-        private Regex ProcessContentRegex
+        protected virtual Regex ProcessContentRegex
         {
             get
             {
@@ -94,7 +99,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }
         }
 
-        protected virtual string JoinSeparator { get; } = ".";
 
         #endregion
 
@@ -185,7 +189,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                     if(kind == "CODE") {
                         return contentLines
                             .Select(i => i.Value)
-                            .JoinString(Environment.NewLine)
+                            .JoinString(NewLine)
                         ;
                     } else {
                         Debug.Assert(kind == "LOAD");
@@ -193,7 +197,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                             .Select(i => i.Value.Trim())
                             .Where(i => !string.IsNullOrEmpty(i))
                             .Select(i => LoadStatement(callerMemberName + JoinSeparator + i))
-                            .JoinString(Environment.NewLine)
+                            .JoinString(NewLine)
                         ;
                     }
                 }
