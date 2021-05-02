@@ -42,6 +42,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
+        #region function
+
         /// <summary>
         /// ファイルのサムネイルを取得。
         /// </summary>
@@ -198,7 +200,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="iconSize"></param>
         /// <param name="iconIndex"></param>
         /// <param name="hasIcon"></param>
-        /// <param name="logger"></param>
         /// <returns></returns>
         BitmapSource? LoadNormalIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
         {
@@ -342,6 +343,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return result;
         }
+
+        #endregion
 
     }
 }
