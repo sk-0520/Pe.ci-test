@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         {
             return httpUserAgent.GetAsync(requestUri, cancellationToken).ContinueWith(t => {
                 cancellationToken.ThrowIfCancellationRequested();
-                return t.Result.Content.ReadAsStringAsync();
+                return t.Result.Content.ReadAsStringAsync(cancellationToken);
             }, cancellationToken).Unwrap();
         }
         /// <inheritdoc cref="GetStringAsync(IHttpUserAgent, Uri, CancellationToken)"/>
@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         {
             return httpUserAgent.GetAsync(requestUri, cancellationToken).ContinueWith(t => {
                 cancellationToken.ThrowIfCancellationRequested();
-                return t.Result.Content.ReadAsStreamAsync();
+                return t.Result.Content.ReadAsStreamAsync(cancellationToken);
             }, cancellationToken).Unwrap();
         }
         /// <inheritdoc cref="GetStreamAsync(IHttpUserAgent, Uri, CancellationToken)"/>
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         {
             return httpUserAgent.GetAsync(requestUri, cancellationToken).ContinueWith(t => {
                 cancellationToken.ThrowIfCancellationRequested();
-                return t.Result.Content.ReadAsByteArrayAsync();
+                return t.Result.Content.ReadAsByteArrayAsync(cancellationToken);
             }, cancellationToken).Unwrap();
         }
         /// <inheritdoc cref="GetByteArrayAsync(IHttpUserAgent, Uri, CancellationToken)"/>
@@ -128,6 +128,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     }
 
     /// <summary>
+    /// <see cref="IHttpUserAgent"/>を生成する際に使用する名前の生成器。
     /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IHttpUserAgentName
@@ -173,7 +174,17 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         #region function
 
+        /// <summary>
+        /// 標準の<see cref="IHttpUserAgent"/>を生成。
+        /// <para>基本的にこれを使用すればよい。</para>
+        /// </summary>
+        /// <returns></returns>
         public IHttpUserAgent CreateUserAgent();
+        /// <summary>
+        /// <see cref="IHttpUserAgent"/>を名前付きで生成。
+        /// </summary>
+        /// <param name="name"><see cref="IHttpUserAgentName"/>で作成した名前を使用。</param>
+        /// <returns></returns>
         public IHttpUserAgent CreateUserAgent(string name);
 
         #endregion

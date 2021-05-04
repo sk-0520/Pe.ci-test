@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     /// </summary>
     public interface IPlatformTheme
     {
-        #region define
+        #region event
 
         /// <summary>
         /// OSのテーマ情報が変更された。
