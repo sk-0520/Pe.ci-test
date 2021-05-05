@@ -23,23 +23,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         [Configuration]
         public bool DeveloperTools { get; }
 
-        /// <summary>
-        /// プロキシを使用するか。
-        /// </summary>
-        [Configuration]
-        public bool ProxyIsEnabled { get; }
-        /// <summary>
-        /// プロキシ設定情報。
-        /// </summary>
-        [Configuration]
-        public Uri ProxyUri { get; } = default!;
-        [Configuration]
-        public bool ProxyCredentialIsEnabled { get; }
-        [Configuration]
-        public string ProxyCredentialUser { get; } = default!;
-        [Configuration]
-        public string ProxyCredentialPassword { get; } = default!;
-
         #endregion
     }
 }

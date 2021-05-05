@@ -15,6 +15,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         [Configuration]
         public WebConfiguration Web { get; } = default!;
         [Configuration]
+        public ProxyConfiguration Proxy { get; } = default!;
+        [Configuration]
         public ApiConfiguration Api { get; } = default!;
         [Configuration]
         public BackupConfiguration Backup { get; } = default!;
