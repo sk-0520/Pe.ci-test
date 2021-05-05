@@ -364,6 +364,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<ApplicationConfiguration, ApplicationConfiguration>(environmentParameters.ApplicationConfiguration)
                 .Register<GeneralConfiguration, GeneralConfiguration>(environmentParameters.ApplicationConfiguration.General)
                 .Register<WebConfiguration, WebConfiguration>(environmentParameters.ApplicationConfiguration.Web)
+                .Register<ProxyConfiguration, ProxyConfiguration>(environmentParameters.ApplicationConfiguration.Proxy)
                 .Register<ApiConfiguration, ApiConfiguration>(environmentParameters.ApplicationConfiguration.Api)
                 .Register<BackupConfiguration, BackupConfiguration>(environmentParameters.ApplicationConfiguration.Backup)
                 .Register<FileConfiguration, FileConfiguration>(environmentParameters.ApplicationConfiguration.File)

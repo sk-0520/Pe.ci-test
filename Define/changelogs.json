@@ -1,7 +1,7 @@
 [
 	{
 		"date": "YYYY/MM/DD",
-		"version": "0.99.113",
+		"version": "0.99.114",
 		"contents": [
 			{
 				"type": "note",
@@ -72,7 +72,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#728: プロキシ設定の構成を独立させる"
 					},
 					{
 						"revision": "",
