@@ -4,6 +4,9 @@ using System.Runtime.Serialization;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// 読み込み専用範囲持ちアイテム。
+    /// </summary>
     public interface IReadOnlyMinMax<out T>
         where T : IComparable<T>
     {
@@ -90,6 +93,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     }
 
+    /// <summary>
+    /// 読み込み専用範囲・標準値もちアイテム。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IReadOnlyMinMaxDefault<out T>: IReadOnlyMinMax<T>
         where T : IComparable<T>
     {
@@ -103,6 +110,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    /// <summary>
+    /// 範囲・標準値もちアイテム。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     [Serializable, DataContract]
     public struct MinMaxDefault<T>: IReadOnlyMinMaxDefault<T>
         where T : IComparable<T>
