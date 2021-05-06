@@ -1,5 +1,5 @@
-//#define DOTNET_FRAMEWORK
-#if DOTNET_FRAMEWORK
+// https://docs.microsoft.com/ja-jp/dotnet/standard/frameworks#supported-target-frameworks
+#if NETFRAMEWORK
 using System;
 using System.Runtime.InteropServices;
 
