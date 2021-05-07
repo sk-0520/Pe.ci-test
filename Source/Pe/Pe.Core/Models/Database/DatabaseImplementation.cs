@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
-    public struct DatabaseBlockComment
+    public readonly struct DatabaseBlockComment
     {
         /// <summary>
         ///

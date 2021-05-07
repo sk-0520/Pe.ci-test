@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         string LoadStatement(string key);
         /// <summary>
-        /// 呼び出しクラス情報からデータベース実行文を取得する。
+        /// 呼び出しクラス・メンバ名の完全名からデータベース実行文を取得する。
         /// </summary>
         /// <returns></returns>
         string LoadStatementByCurrent(Type callerType, [CallerMemberName] string callerMemberName = "");
