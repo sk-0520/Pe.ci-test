@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using Dapper;
 using Microsoft.Extensions.Logging;
@@ -275,23 +277,83 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }
         }
 
+        /// <summary>
+        /// 問い合わせ文をログ出力。
+        /// <para>あくまで実行するための文をログに出すだけで実際に実行される文ではない。</para>
+        /// </summary>
+        /// <param name="statement">問い合わせ文。</param>
+        /// <param name="parameter">パラメータ。</param>
         protected virtual void LoggingStatement(string statement, object? parameter)
         {
-            Logger.LogTrace(statement, parameter);
+            if(Logger.IsEnabled(LogLevel.Trace)) {
+                Logger.LogTrace(statement, parameter);
+            }
         }
 
+        /// <summary>
+        /// 単体結果の問い合わせ結果のログ出力。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="result"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        protected virtual void LoggingQueryResult<T>([MaybeNull] T result, [DateTimeKind(DateTimeKind.Utc)] DateTime startTime, [DateTimeKind(DateTimeKind.Utc)] DateTime endTime)
+        {
+            if(Logger.IsEnabled(LogLevel.Trace)) {
+                Logger.LogTrace($"{typeof(T)} -> {result}, {endTime - startTime}", new { startTime, endTime });
+            }
+        }
+
+        /// <summary>
+        /// 複数結果の問い合わせ結果のログ出力。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="result"></param>
+        /// <param name="bufferd">偽の場合、<paramref name="result"/>に全数は存在しない。</param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        protected virtual void LoggingQueryResults<T>(IEnumerable<T> result, bool bufferd, [DateTimeKind(DateTimeKind.Utc)] DateTime startTime, [DateTimeKind(DateTimeKind.Utc)] DateTime endTime)
+        {
+            if(Logger.IsEnabled(LogLevel.Trace)) {
+                if(bufferd) {
+                    Logger.LogTrace($"{nameof(IEnumerable)}<{typeof(T)}> -> {result.Count()}, {endTime - startTime}", new { startTime, endTime });
+                } else {
+                    Logger.LogTrace($"{nameof(IEnumerable)}<{typeof(T)}> -> no buffered, {endTime - startTime}", new { startTime, endTime });
+                }
+            }
+        }
+
+        /// <summary>
+        /// 実行結果のログ出力。
+        /// <para><see cref="IDatabaseWriter.Execute(string, object?)"/>で使用される。</para>
+        /// </summary>
+        /// <param name="result"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
         [SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
         [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         protected virtual void LoggingExecuteResult(int result, [DateTimeKind(DateTimeKind.Utc)] DateTime startTime, [DateTimeKind(DateTimeKind.Utc)] DateTime endTime)
         {
-            Logger.LogTrace($"result: {result}, {endTime - startTime}", new { startTime, endTime });
+            if(Logger.IsEnabled(LogLevel.Trace)) {
+                Logger.LogTrace($"result: {result}, {endTime - startTime}", new { startTime, endTime });
+            }
         }
+
+        /// <summary>
+        /// 問い合わせ結果のログ出力。
+        /// <para><see cref="IDatabaseReader.GetDataTable(string, object?)"/>で使用される。</para>
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
         [SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
         [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         [SuppressMessage("Performance", "HAA0503:Explicit new anonymous object allocation")]
         protected virtual void LoggingDataTable(DataTable table, [DateTimeKind(DateTimeKind.Utc)] DateTime startTime, [DateTimeKind(DateTimeKind.Utc)] DateTime endTime)
         {
-            Logger.LogTrace($"table: {table.TableName} -> {table.Columns.Count} * {table.Rows.Count}, {endTime - startTime}", new { startTime, endTime });
+            if(Logger.IsEnabled(LogLevel.Trace)) {
+                Logger.LogTrace($"table: {table.TableName} -> {table.Columns.Count} * {table.Rows.Count}, {endTime - startTime}", new { startTime, endTime });
+            }
         }
 
         #endregion
@@ -333,7 +395,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
-            return BaseConnection.Query<T>(formattedStatement, parameter, transaction?.Transaction, buffered);
+
+            var startTime = DateTime.UtcNow;
+            var result = BaseConnection.Query<T>(formattedStatement, parameter, transaction?.Transaction, buffered);
+            LoggingQueryResults(result, buffered, startTime, DateTime.UtcNow);
+
+            return result;
         }
 
         /// <inheritdoc cref="IDatabaseReader.Query{T}(string, object?, bool)"/>
@@ -350,7 +417,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
-            return BaseConnection.Query(formattedStatement, parameter, transaction?.Transaction, buffered);
+
+            var startTime = DateTime.UtcNow;
+            var result = BaseConnection.Query(formattedStatement, parameter, transaction?.Transaction, buffered);
+            LoggingQueryResults(result, buffered, startTime, DateTime.UtcNow);
+
+            return result;
         }
 
         /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
@@ -367,7 +439,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
-            return BaseConnection.QueryFirst<T>(formattedStatement, parameter, transaction?.Transaction);
+
+            var startTime = DateTime.UtcNow;
+            var result = BaseConnection.QueryFirst<T>(formattedStatement, parameter, transaction?.Transaction);
+            LoggingQueryResult(result, startTime, DateTime.UtcNow);
+
+            return result;
         }
 
         public virtual T QueryFirst<T>(string statement, object? parameter = null)
@@ -384,7 +461,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
-            return BaseConnection.QueryFirstOrDefault<T>(formattedStatement, parameter, transaction?.Transaction);
+
+            var startTime = DateTime.UtcNow;
+            var result = BaseConnection.QueryFirstOrDefault<T>(formattedStatement, parameter, transaction?.Transaction);
+            LoggingQueryResult(result, startTime, DateTime.UtcNow);
+
+            return result;
         }
 
         [return: MaybeNull]
@@ -401,7 +483,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
-            return BaseConnection.QuerySingle<T>(formattedStatement, parameter, transaction?.Transaction);
+
+            var startTime = DateTime.UtcNow;
+            var result = BaseConnection.QuerySingle<T>(formattedStatement, parameter, transaction?.Transaction);
+            LoggingQueryResult(result, startTime, DateTime.UtcNow);
+
+            return result;
         }
 
         public virtual T QuerySingle<T>(string statement, object? parameter = null)
@@ -418,7 +505,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
-            return BaseConnection.QuerySingleOrDefault<T>(formattedStatement, parameter, transaction?.Transaction);
+
+            var startTime = DateTime.UtcNow;
+            var result = BaseConnection.QuerySingleOrDefault<T>(formattedStatement, parameter, transaction?.Transaction);
+            LoggingQueryResult(result, startTime, DateTime.UtcNow);
+
+            return result;
         }
         [return: MaybeNull]
         public virtual T QuerySingleOrDefault<T>(string statement, object? parameter)
@@ -434,9 +526,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
+
             var startTime = DateTime.UtcNow;
             var result = BaseConnection.Execute(formattedStatement, parameter, transaction?.Transaction);
             LoggingExecuteResult(result, startTime, DateTime.UtcNow);
+
             return result;
         }
 
@@ -459,6 +553,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             var startTime = DateTime.UtcNow;
             dataTable.Load(BaseConnection.ExecuteReader(statement, parameter, transaction?.Transaction));
             LoggingDataTable(dataTable, startTime, DateTime.UtcNow);
+
             return dataTable;
         }
 
