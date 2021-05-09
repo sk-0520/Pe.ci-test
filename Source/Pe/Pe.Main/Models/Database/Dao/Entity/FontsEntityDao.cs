@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        FontsRowDto ConvertFromData(IReadOnlyFontData data, IDatabaseCommonStatus databaseCommonStatus)
+        FontsRowDto ConvertFromData(IFont data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var dto = new FontsRowDto() {
                 FamilyName = data.FamilyName,

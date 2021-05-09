@@ -1,6 +1,6 @@
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 {
-    public interface IReadOnlyFontData
+    public interface IFont
     {
         #region property
 
