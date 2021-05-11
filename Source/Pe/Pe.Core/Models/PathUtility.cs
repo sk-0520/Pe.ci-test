@@ -11,7 +11,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region define
 
+        [Obsolete]
         const string formatTimestampFileName = "yyyy-MM-dd_HH-mm-ss";
+        [Obsolete]
         const string extensionTemporaryFile = "tmp";
 
         #endregion
@@ -105,6 +107,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return HasExtensions(path, new[] { "exe", "dll" });
         }
 
+        [Obsolete]
         public static string GetTimestampFileName(DateTime dateTime)
         {
             return dateTime.ToString(formatTimestampFileName);
@@ -114,6 +117,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// ファイル名に使用可能なタイムスタンプを取得。
         /// </summary>
         /// <returns></returns>
+        [Obsolete]
         public static string GetCurrentTimestampFileName()
         {
             return GetTimestampFileName(DateTime.Now);
@@ -124,6 +128,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <para>現在時間を用いる。</para>
         /// </summary>
         /// <returns></returns>
+        [Obsolete]
         public static string GetTemporaryExtension(string role)
         {
             return $".{GetCurrentTimestampFileName()}.{role}.{extensionTemporaryFile}";

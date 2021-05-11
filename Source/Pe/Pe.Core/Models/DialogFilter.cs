@@ -39,11 +39,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         public IReadOnlyList<string> Wildcard { get; }
 
+        /// <summary>
+        /// デフォルト拡張子。
+        /// </summary>
         public string DefaultExtension { get; }
-
-        #endregion
-
-        #region IDisplayText
 
         /// <summary>
         /// 表示名
