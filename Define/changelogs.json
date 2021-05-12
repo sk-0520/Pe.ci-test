@@ -79,7 +79,11 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "#430: Hardcodet.Wpf.TaskbarNotificationの更新",
+						"comments": [
+							"Hardcodet.NotifyIcon.Wpf.NetCore から Hardcodet.NotifyIcon.Wpf に変更"
+						]
 					},
 					{
 						"revision": "",
