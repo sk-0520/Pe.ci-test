@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         /// <summary>
         /// ディレクトリの移動。
-        /// <para>移動できない場合に<see cref="Copy(DirectoryInfo, DirectoryInfo)"/>を行う。</para>
+        /// <para>移動できない場合に<see cref="Copy(DirectoryInfo, DirectoryInfo)"/>を行い、処理後削除される。</para>
         /// </summary>
         /// <param name="source"></param>
         /// <param name="destination"></param>
@@ -36,11 +36,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 } catch(IOException ex) {
                     Logger.LogWarning(ex, ex.Message);
                     Copy(source, destination);
+                    source.Delete(true);
                 }
 
                 return;
             } else {
                 Copy(source, destination);
+                source.Delete(true);
             }
         }
 
