@@ -11,12 +11,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
     public class ApplicationLogging
     {
-        public ApplicationLogging(int logLimit, string logginConfigFilePath, string outputPath, string withLog, bool createDirectory, bool isFullTrace)
+        public ApplicationLogging(int logLimit, string loggingConfigFilePath, string outputPath, string withLog, bool createDirectory, bool isFullTrace)
         {
             LogItems = new ConcurrentFixedQueue<LogEventInfo>(logLimit);
 
             Factory = new LoggerFactory();
-            LogManager.LoadConfiguration(logginConfigFilePath);
+            LogManager.LoadConfiguration(loggingConfigFilePath);
 
             var op = new NLog.Extensions.Logging.NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties = true };
             var prov = new NLog.Extensions.Logging.NLogLoggerProvider(op, LogManager.LogFactory);
