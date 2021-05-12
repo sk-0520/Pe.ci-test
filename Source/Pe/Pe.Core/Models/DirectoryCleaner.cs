@@ -5,12 +5,23 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// ディレクトリクリーンアップ処理。
+    /// <para>指定ディレクトリ以下のファイルを再帰的に削除する。</para>
+    /// </summary>
     public class DirectoryCleaner
     {
-        public DirectoryCleaner(DirectoryInfo directory, int waitCount, TimeSpan waitTime, ILoggerFactory loggerFactory)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="directory">対象ディレクトリ。</param>
+        /// <param name="retryCount">ディレクトリ作成失敗時の再試行回数。</param>
+        /// <param name="waitTime">ディレクトリ作成失敗時の再試行前に待機する時間。</param>
+        /// <param name="loggerFactory"></param>
+        public DirectoryCleaner(DirectoryInfo directory, int retryCount, TimeSpan waitTime, ILoggerFactory loggerFactory)
         {
             Directory = directory;
-            WaitCount = waitCount;
+            RetryCount = retryCount;
             WaitTime = waitTime;
             Logger = loggerFactory.CreateLogger(GetType());
         }
@@ -24,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 待機回数。
         /// </summary>
-        int WaitCount { get; }
+        int RetryCount { get; }
         /// <summary>
         /// 一回の待機に対する待ち時間。
         /// </summary>
@@ -60,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         private void CreateDirectory()
         {
-            var counter = new Counter(WaitCount);
+            var counter = new Counter(RetryCount);
             foreach(var count in counter) {
                 Directory.Create();
                 Directory.Refresh();
