@@ -34,7 +34,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         private IDatabaseContexts TemporaryContexts { get; }
         private IDatabaseStatementLoader StatementLoader { get; }
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
 
         #endregion

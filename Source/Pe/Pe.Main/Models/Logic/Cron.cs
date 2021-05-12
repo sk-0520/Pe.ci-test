@@ -527,7 +527,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
 
         ISet<CronJob> Jobs { get; } = new HashSet<CronJob>();

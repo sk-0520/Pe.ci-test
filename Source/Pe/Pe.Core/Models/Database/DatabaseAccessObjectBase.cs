@@ -48,9 +48,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// ログ出力担当。
         /// </summary>
         protected ILogger Logger { get; }
-        /// <summary>
-        /// ログ出力(<see cref="ILogger"/>)生成機構。
-        /// </summary>
+        /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
         /// <summary>
         /// 行終端文字列を取得または設定。

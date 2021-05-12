@@ -1,5 +1,6 @@
 using System;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -12,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
-    public class LauncherIconFactory
+    public class LauncherIconFactory: ILauncherItemId
     {
         public LauncherIconFactory(Guid launcherItemId, LauncherItemKind launcherItemKind, ILauncherItemAddonFinder launcherItemAddonFinder, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
@@ -29,8 +30,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         #region property
 
         ILogger Logger { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
-        public Guid LauncherItemId { get; }
         public LauncherItemKind LauncherItemKind { get; }
         ILauncherItemAddonFinder LauncherItemAddonFinder { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
@@ -94,6 +95,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                     throw new NotImplementedException();
             }
         }
+
+        #endregion
+
+        #region ILauncherItemId
+
+        public Guid LauncherItemId { get; }
 
         #endregion
     }

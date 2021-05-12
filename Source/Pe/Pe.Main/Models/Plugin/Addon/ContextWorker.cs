@@ -18,7 +18,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #region property
 
         protected TPluginContextFactory PluginContextFactory { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
 
         #endregion

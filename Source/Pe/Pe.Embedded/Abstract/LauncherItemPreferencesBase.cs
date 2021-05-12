@@ -25,7 +25,9 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
 
         protected PluginBase Plugin { get; }

@@ -53,7 +53,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// <param name="isTopmost">最上位固定メッセージか。</param>
         /// <returns></returns>
         Brush GetContentForegroundBrush(bool isTopmost);
-
+        /// <summary>
+        /// ログ リンク前景のブラシ。
+        /// </summary>
+        /// <param name="isMouseOver"></param>
+        /// <returns></returns>
         Brush GetHyperlinkForegroundBrush(bool isMouseOver);
 
         #endregion

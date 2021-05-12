@@ -6,6 +6,9 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 {
+    /// <summary>
+    /// 入力状態。
+    /// </summary>
     public enum InputState
     {
         /// <summary>
@@ -26,6 +29,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         NotFound,
     }
 
+    /// <summary>
+    /// コマンドtheme。
+    /// </summary>
     public interface ICommandTheme
     {
         #region function
@@ -37,36 +43,67 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         Brush GetViewBackgroundBrush(bool isActive);
 
         /// <summary>
-        /// ウィンドウの枠サイズ。
+        /// ウィンドウの枠サイズを取得。
         /// </summary>
         /// <returns></returns>
         Thickness GetViewBorderThickness();
 
         /// <summary>
-        /// ウィンドウの枠ブラシ。
+        /// ウィンドウの枠ブラシを取得。
         /// </summary>
         /// <returns></returns>
         Brush GetViewBorderBrush(bool isActive);
 
         /// <summary>
-        /// つかむところの幅。
+        /// つかむところの幅を取得。
         /// </summary>
         /// <returns></returns>
         [return: PixelKind(Px.Logical)]
         double GetGripWidth();
         /// <summary>
-        /// つかむところの色。
+        /// つかむところの色を取得。
         /// </summary>
         /// <returns></returns>
         Brush GetGripBrush(bool isActive);
 
+        /// <summary>
+        /// 表示アイコンのマージンを取得。
+        /// </summary>
+        /// <param name="iconScale">アイコンスケール。</param>
+        /// <returns></returns>
+        [return: PixelKind(Px.Logical)]
         Thickness GetSelectedIconMargin(in IconScale iconScale);
 
+        /// <summary>
+        ///入力欄の境界線を取得。
+        /// </summary>
+        /// <returns></returns>
+        [return: PixelKind(Px.Logical)]
         Thickness GetInputBorderThickness();
+        /// <summary>
+        /// 入力欄の境界線ブラシを取得。
+        /// </summary>
+        /// <param name="inputState"></param>
+        /// <returns></returns>
         Brush GetInputBorderBrush(InputState inputState);
+        /// <summary>
+        /// 入力欄の前景色を取得。
+        /// </summary>
+        /// <param name="inputState"></param>
+        /// <returns></returns>
         Brush GetInputForeground(InputState inputState);
+        /// <summary>
+        /// 入力欄の前景色を取得。
+        /// </summary>
+        /// <param name="inputState"></param>
+        /// <returns></returns>
         Brush GetInputBackground(InputState inputState);
 
+        /// <summary>
+        /// 実行ボタンのテンプレ。
+        /// </summary>
+        /// <param name="iconScale"></param>
+        /// <returns></returns>
         ControlTemplate GetExecuteButtonControlTemplate(in IconScale iconScale);
 
         #endregion

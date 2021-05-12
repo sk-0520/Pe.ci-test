@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
         IDatabaseContext Context { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         IDatabaseImplementation Implementation { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
         #endregion
 

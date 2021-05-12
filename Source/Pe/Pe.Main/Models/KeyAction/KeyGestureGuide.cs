@@ -36,7 +36,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }

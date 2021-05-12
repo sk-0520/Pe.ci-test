@@ -50,7 +50,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
 
         #endregion

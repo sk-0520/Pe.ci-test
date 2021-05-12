@@ -28,13 +28,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
+        /// <inheritdoc cref="PluginContextFactory"/>
         protected PluginContextFactory PluginContextFactory { get; }
+        /// <inheritdoc cref="IHttpUserAgentFactory"/>
         protected IHttpUserAgentFactory UserAgentFactory { get; }
+        /// <inheritdoc cref="IPlatformTheme"/>
         protected IPlatformTheme PlatformTheme { get; }
+        /// <inheritdoc cref="IImageLoader"/>
         protected IImageLoader ImageLoader { get; }
+        /// <inheritdoc cref="IMediaConverter"/>
         protected IMediaConverter MediaConverter { get; }
+        /// <inheritdoc cref="IDispatcherWrapper"/>
         protected IDispatcherWrapper DispatcherWrapper { get; }
 
         /// <summary>

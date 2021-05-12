@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
     /// </summary>
     public interface IPreferencesEndContext
     {
-        #region function
+        #region property
 
         /// <summary>
         /// ストレージ操作。

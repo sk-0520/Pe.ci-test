@@ -3,6 +3,10 @@ using System.Runtime.Serialization;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
+    /// <summary>
+    /// プラグイン特有の基底例外。
+    /// <para>ファイルが見つからなければ<see cref="System.IO.IOException"/>でいいけどプラグイン処理として固有の例外はこいつを使用すること。</para>
+    /// </summary>
     [System.Serializable]
     public class PluginException: Exception
     {
@@ -22,6 +26,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         { }
     }
 
+    /// <summary>
+    /// プラグイン使用不可例外。
+    /// </summary>
     [System.Serializable]
     public class PluginUnavailableContextException: PluginException
     {

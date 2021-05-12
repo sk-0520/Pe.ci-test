@@ -42,7 +42,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region property
 
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         HashSet<IPlugin> PluginsImpl { get; } = new HashSet<IPlugin>();

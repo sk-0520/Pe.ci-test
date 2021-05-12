@@ -63,6 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
         DirectoryInfo WidgetDirectory { get; }
 

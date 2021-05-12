@@ -145,7 +145,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         IOrderManager OrderManager { get; }
         INotifyManager NotifyManager { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
         EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; }
 

@@ -21,7 +21,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #region property
 
         EnvironmentParameters EnvironmentParameters { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
 
         #endregion

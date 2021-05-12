@@ -3,11 +3,20 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 {
+    /// <summary>
+    /// 基本テーマのパスのイメージ種別。
+    /// </summary>
     public enum GeneralPathImageKind
     {
+        /// <summary>
+        /// メニュー。
+        /// </summary>
         Menu,
     }
 
+    /// <summary>
+    /// 基本テーマ。
+    /// </summary>
     public interface IGeneralTheme
     {
         #region function

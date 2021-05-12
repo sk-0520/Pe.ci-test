@@ -25,7 +25,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         #region property
         IIdFactory IdFactory { get; }
         IDatabaseStatementLoader StatementLoader { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
         IDatabaseCommonStatus CommonStatus { get; } = DatabaseCommonStatus.CreateCurrentAccount();
 

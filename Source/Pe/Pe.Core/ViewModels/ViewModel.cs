@@ -49,9 +49,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #region property
 
-        /// <summary>
-        /// ログ生成。
-        /// </summary>
+        /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
         /// <summary>
         /// ロガー。

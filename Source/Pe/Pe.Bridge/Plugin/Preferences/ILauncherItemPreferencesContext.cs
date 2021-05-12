@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
     /// </summary>
     public interface ILauncherItemPreferencesEndContext
     {
-        #region function
+        #region property
 
         /// <summary>
         /// 保存されたか。

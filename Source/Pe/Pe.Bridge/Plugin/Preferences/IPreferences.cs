@@ -4,6 +4,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
 {
     /// <summary>
     /// 本体設定画面におけるプラグイン設定機能。
+    /// <para>持ち歩かないこと。</para>
     /// </summary>
     public interface IPreferences
     {
