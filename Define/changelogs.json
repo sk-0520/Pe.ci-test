@@ -1,72 +1,17 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.114",
+		"date": "2021/05/14",
+		"version": "0.99.118",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "82c99121a5c96e9e955020e7ef2f05fc3eb5640f",
 						"subject": "#729: ディスプレイ設定変更を検知した場合に待機処理を挟むようにする",
 						"comments": [
 							"待機時間云々以前にいきなり処理が走っていたのが問題かと思われ"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -74,11 +19,11 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "9777185271a9c3c3fb47bc78ffd129babf22252c",
 						"subject": "#728: プロキシ設定の構成を独立させる"
 					},
 					{
-						"revision": "",
+						"revision": "554b04e0ba14a46dd4a967e6198bf9441bf70a5c",
 						"class": "nuget",
 						"subject": "#430: Hardcodet.Wpf.TaskbarNotificationの更新",
 						"comments": [
@@ -86,13 +31,9 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "f23f571caad5842ec90c451980c2fa3c976dc90a",
 						"class": "nuget",
 						"subject": "Dapper 2.0.78 -> Dapper 2.0.90"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
