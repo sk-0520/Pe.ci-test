@@ -10,11 +10,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <see cref="IDiContainer.New{TObject}(IEnumerable{object})"/> して <see cref="IDiContainer.Inject{TObject}(TObject)"/> する。
         /// </summary>
         /// <typeparam name="TObject"></typeparam>
-        /// <param name="this"></param>
+        /// <param name="diContainer"></param>
         /// <param name="manualParameter"></param>
         /// <param name="manualParameters"></param>
         /// <returns></returns>
-        public static TObject Build<TObject>(this IDiContainer @this, object manualParameter, params object[] manualParameters)
+        public static TObject Build<TObject>(this IDiContainer diContainer, object manualParameter, params object[] manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -24,19 +24,19 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             };
             parameters.AddRange(manualParameters);
 
-            var obj = @this.New<TObject>(parameters);
-            @this.Inject(obj);
+            var obj = diContainer.New<TObject>(parameters);
+            diContainer.Inject(obj);
             return obj;
         }
 
         /// <inheritdoc cref="Build{TObject}(IDiContainer, object, object[])"/>
-        public static TObject Build<TObject>(this IDiContainer @this)
+        public static TObject Build<TObject>(this IDiContainer diContainer)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         {
-            var obj = @this.New<TObject>();
-            @this.Inject(obj);
+            var obj = diContainer.New<TObject>();
+            diContainer.Inject(obj);
             return obj;
         }
 

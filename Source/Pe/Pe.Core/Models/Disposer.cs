@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region define
 
-        class EmptyDisposer: IDisposable
+        private sealed class EmptyDisposer: IDisposable
         {
             public void Dispose()
             {

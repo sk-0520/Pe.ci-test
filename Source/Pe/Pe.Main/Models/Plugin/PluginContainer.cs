@@ -42,7 +42,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region property
 
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         HashSet<IPlugin> PluginsImpl { get; } = new HashSet<IPlugin>();
@@ -62,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public FileInfo? GetPluginFile(DirectoryInfo pluginDirectory, string pluginName, IReadOnlyList<string> extensions)
         {
             foreach(var extension in extensions) {
-                var pluginFileName = PathUtility.AppendExtension(pluginName, extension);
+                var pluginFileName = PathUtility.AddExtension(pluginName, extension);
                 var pluginPath = Path.Combine(pluginDirectory.FullName, pluginFileName);
                 bool existsPlugin;
                 try {

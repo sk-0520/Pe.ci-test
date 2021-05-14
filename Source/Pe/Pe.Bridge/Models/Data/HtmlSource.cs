@@ -44,6 +44,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         #region property
 
+        /// <summary>
+        /// URI。
+        /// </summary>
         public Uri Address { get; }
 
         #endregion
@@ -51,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #region HtmlSourceBase
 
         /// <inheritdoc cref="HtmlSourceBase.HtmlSourceKind"/>
-        public override HtmlSourceKind HtmlSourceKind => HtmlSourceKind.Address;
+        public sealed override HtmlSourceKind HtmlSourceKind => HtmlSourceKind.Address;
 
         #endregion
     }
@@ -74,9 +77,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         #region property
 
-        /// <inheritdoc cref="IHtmlSourceCode.SourceCode"/>
+        /// <summary>
+        /// HTMLソース。
+        /// </summary>
         public string SourceCode { get; }
-        /// <inheritdoc cref="IHtmlSourceCode.BaseAddress"/>
+        /// <summary>
+        /// HTMLの元URI。
+        /// <para>厳密に<see cref="SourceCode"/>と紐付くわけではない(HTML内のbaseとは別物)。たぶんまぁ元ファイルパスとかそんな感じ。</para>
+        /// </summary>
         public Uri? BaseAddress { get; }
 
         #endregion
@@ -84,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #region HtmlSourceBase
 
         /// <inheritdoc cref="HtmlSourceBase.HtmlSourceKind"/>
-        public override HtmlSourceKind HtmlSourceKind => HtmlSourceKind.SourceCode;
+        public sealed override HtmlSourceKind HtmlSourceKind => HtmlSourceKind.SourceCode;
 
         #endregion
     }

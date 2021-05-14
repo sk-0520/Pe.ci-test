@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <inheritdoc cref="IPluginParameter.DispatcherWrapper"/>
         public IDispatcherWrapper DispatcherWrapper { get; }
         /// <inheritdoc cref="IPluginParameter.LoggerFactory"/>
+        /// <inheritdoc cref="ILoggerFactory"/>
         public ILoggerFactory LoggerFactory { get; }
 
         #endregion

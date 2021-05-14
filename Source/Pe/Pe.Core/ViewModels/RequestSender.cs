@@ -93,21 +93,21 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     {
         #region function
 
-        public static void Send<TRequestResponse>(this IRequestSender @this, RequestParameter requestParameter, Action<TRequestResponse> callback)
+        public static void Send<TRequestResponse>(this IRequestSender requestSender, RequestParameter requestParameter, Action<TRequestResponse> callback)
             where TRequestResponse : RequestResponse
         {
-            @this.Send(requestParameter, r => {
+            requestSender.Send(requestParameter, r => {
                 var response = (TRequestResponse)r;
                 callback(response);
             });
         }
 
-        public static TResult Send<TRequestResponse, TResult>(this IRequestSender @this, RequestParameter requestParameter, Func<TRequestResponse, TResult> callback)
+        public static TResult Send<TRequestResponse, TResult>(this IRequestSender requestSender, RequestParameter requestParameter, Func<TRequestResponse, TResult> callback)
             where TRequestResponse : RequestResponse
         {
             TResult result = default!;
 
-            @this.Send(requestParameter, r => {
+            requestSender.Send(requestParameter, r => {
                 var response = (TRequestResponse)r;
                 result = callback(response);
             });

@@ -24,7 +24,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
 
         protected IDatabaseBarrierPack DatabaseBarrierPack { get; }

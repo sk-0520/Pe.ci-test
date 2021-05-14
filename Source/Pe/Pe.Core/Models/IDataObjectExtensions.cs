@@ -23,14 +23,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <see cref="IDataObject"/>から安全にデータを取得する。
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="this"></param>
+        /// <param name="dataObject"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static bool TryGet<T>(this IDataObject @this, [MaybeNullWhen(false)] out T value)
+        public static bool TryGet<T>(this IDataObject dataObject, [MaybeNullWhen(false)] out T value)
         {
             var type = typeof(T);
-            if(@this.GetDataPresent(type)) {
-                var data = @this.GetData(type);
+            if(dataObject.GetDataPresent(type)) {
+                var data = dataObject.GetData(type);
                 if(data != null) {
                     value = (T)data;
                     return true;
@@ -43,29 +43,29 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 指定データがテキストを保持しているか。
         /// </summary>
-        /// <param name="this"></param>
+        /// <param name="dataObject"></param>
         /// <returns></returns>
-        public static bool IsTextPresent(this IDataObject @this)
+        public static bool IsTextPresent(this IDataObject dataObject)
         {
-            return Formats.Any(i => @this.GetDataPresent(i));
+            return Formats.Any(i => dataObject.GetDataPresent(i));
         }
 
         /// <summary>
         /// テキストデータを取得。
         /// <para>あらかじめ<see cref="IsTextPresent(IDataObject)"/>を使用すること。</para>
         /// </summary>
-        /// <param name="this"></param>
+        /// <param name="dataObject"></param>
         /// <returns></returns>
         /// <exception cref="InvalidCastException">テキストデータが存在しない。</exception>
-        public static string GetText(this IDataObject @this)
+        public static string GetText(this IDataObject dataObject)
         {
             foreach(var format in Formats) {
-                if(@this.GetDataPresent(format)) {
-                    return (string)@this.GetData(format);
+                if(dataObject.GetDataPresent(format)) {
+                    return (string)dataObject.GetData(format);
                 }
             }
 
-            throw new InvalidCastException(string.Join(", ", @this.GetFormats()));
+            throw new InvalidCastException(string.Join(", ", dataObject.GetFormats()));
         }
 
         #endregion

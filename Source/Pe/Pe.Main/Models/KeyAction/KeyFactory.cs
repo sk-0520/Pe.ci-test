@@ -27,7 +27,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
 
 

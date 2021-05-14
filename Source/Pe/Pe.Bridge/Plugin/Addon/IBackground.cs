@@ -21,6 +21,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         MouseHook,
     }
 
+    /// <summary>
+    /// なんだこれ。。。
+    /// </summary>
     public enum RunExecuteKind
     {
 

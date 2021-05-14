@@ -37,15 +37,32 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 
         #region property
 
+        /// <summary>
+        /// 前景。
+        /// </summary>
         public T Foreground { get; }
+        /// <summary>
+        /// 背景。
+        /// </summary>
         public T Background { get; }
 
         #endregion
     }
 
+    /// <summary>
+    /// <see cref="ColorPair{T}"/>ヘルパー。
+    /// </summary>
     public static class ColorPair
     {
         #region function
+
+        /// <summary>
+        /// <see cref="ColorPair{T}"/>生成処理。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="foreground">前景。</param>
+        /// <param name="background">背景。</param>
+        /// <returns></returns>
         public static ColorPair<T> Create<T>(T foreground, T background)
         {
             return new ColorPair<T>(foreground, background);
@@ -54,14 +71,28 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         #endregion
     }
 
-
+    /// <summary>
+    /// ビュー状態。
+    /// </summary>
     public enum ViewState
     {
+        /// <summary>
+        /// アクティブ。
+        /// </summary>
         Active,
+        /// <summary>
+        /// 非アクティブ。
+        /// </summary>
         Inactive,
+        /// <summary>
+        /// 無効。
+        /// </summary>
         Disable
     }
 
+    /// <summary>
+    /// プラグインテーマ。
+    /// </summary>
     public interface ITheme: IPlugin
     {
         #region function

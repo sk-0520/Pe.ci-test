@@ -9,11 +9,13 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [TestMethod]
         [DataRow("a.txt", "a", "txt")]
         [DataRow("a.txt.txt", "a.txt", "txt")]
-        [DataRow("a..txt", "a.", "txt")]
-        [DataRow("a..txt", "a", ".txt")]
-        public void AppendExtensionTest(string expected, string path, string ext)
+        [DataRow("a.txt", "a.", "txt")]
+        [DataRow("a.txt", "a", ".txt")]
+        [DataRow("a.txt", "a.....", "......txt")]
+        [DataRow("a.txt.", "a.....", "......txt.")]
+        public void AddExtensionTest(string expected, string path, string ext)
         {
-            var actual = PathUtility.AppendExtension(path, ext);
+            var actual = PathUtility.AddExtension(path, ext);
             Assert.AreEqual(expected, actual);
         }
 

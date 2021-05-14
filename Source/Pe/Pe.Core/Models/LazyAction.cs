@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
-        #region IFlush
+        #region IFlushable
 
         void Flush(bool disposing)
         {

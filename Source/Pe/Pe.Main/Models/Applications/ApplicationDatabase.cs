@@ -181,6 +181,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             using(Logger.BeginScope(nameof(LoggingStatement))) {
                 Logger.LogTrace(sb.ToString());
             }
+#else
+            base.LoggingStatement(statement, parameter);
 #endif
         }
 

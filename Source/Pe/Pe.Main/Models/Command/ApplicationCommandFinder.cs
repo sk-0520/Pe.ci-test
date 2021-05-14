@@ -183,9 +183,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
+        /// <inheritdoc cref="IDispatcherWrapper"/>
         IDispatcherWrapper DispatcherWrapper { get; }
+        /// <inheritdoc cref="CommandConfiguration"/>
         CommandConfiguration CommandConfiguration { get; }
         IReadOnlyList<ApplicationCommandParameter> Parameters { get; }
 

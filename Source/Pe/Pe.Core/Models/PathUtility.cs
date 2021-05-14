@@ -11,7 +11,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region define
 
+        [Obsolete]
         const string formatTimestampFileName = "yyyy-MM-dd_HH-mm-ss";
+        [Obsolete]
         const string extensionTemporaryFile = "tmp";
 
         #endregion
@@ -25,9 +27,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="path"></param>
         /// <param name="ext"></param>
         /// <returns></returns>
-        public static string AppendExtension(string path, string ext)
+        public static string AddExtension(string path, string ext)
         {
-            return path + "." + ext;
+            return path.TrimEnd('.') + "." + ext.TrimStart('.');
         }
 
         /// <summary>
@@ -54,7 +56,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return ToSafeName(name, c => "_");
         }
 
-        public static bool HasExtensions(string path, IEnumerable<string> extList)
+        /// <summary>
+        /// 指定した拡張子を持つか。
+        /// </summary>
+        /// <param name="path">対象パス。</param>
+        /// <param name="extensions">拡張子一覧(.は持たない)。</param>
+        /// <returns></returns>
+        public static bool HasExtensions(string path, IEnumerable<string> extensions)
         {
             var dotExt = Path.GetExtension(path);
             if(string.IsNullOrEmpty(dotExt)) {
@@ -62,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             var ext = dotExt.Substring(1);
-            return extList
+            return extensions
                 .Select(s => s.ToLower())
                 .Any(s => s == ext)
             ;
@@ -99,6 +107,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return HasExtensions(path, new[] { "exe", "dll" });
         }
 
+        [Obsolete]
         public static string GetTimestampFileName(DateTime dateTime)
         {
             return dateTime.ToString(formatTimestampFileName);
@@ -108,6 +117,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// ファイル名に使用可能なタイムスタンプを取得。
         /// </summary>
         /// <returns></returns>
+        [Obsolete]
         public static string GetCurrentTimestampFileName()
         {
             return GetTimestampFileName(DateTime.Now);
@@ -118,6 +128,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <para>現在時間を用いる。</para>
         /// </summary>
         /// <returns></returns>
+        [Obsolete]
         public static string GetTemporaryExtension(string role)
         {
             return $".{GetCurrentTimestampFileName()}.{role}.{extensionTemporaryFile}";

@@ -242,19 +242,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     /// <inheritdoc cref="IHttpUserAgentFactory"/>
     internal class HttpUserAgentFactory: IHttpUserAgentFactory
     {
-        public HttpUserAgentFactory(WebConfiguration webConfiguration, ILoggerFactory loggerFactory)
+        public HttpUserAgentFactory(WebConfiguration webConfiguration, ProxyConfiguration proxyConfiguration, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
             WebConfiguration = webConfiguration;
+            ProxyConfiguration = proxyConfiguration;
         }
 
         #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
         WebConfiguration WebConfiguration { get; }
+        ProxyConfiguration ProxyConfiguration { get; }
         IDictionary<string, HttpUserAgent> Pool { get; } = new Dictionary<string, HttpUserAgent>();
 
         TimeSpan ClearTime { get; } = TimeSpan.FromSeconds(30);
@@ -265,10 +269,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         void SetProxy(SocketsHttpHandler handler)
         {
-            Logger.LogInformation("プロキシを使用: {0}, {1}", WebConfiguration.ProxyUri, WebConfiguration.ProxyCredentialIsEnabled);
-            var proxy = new WebProxy(WebConfiguration.ProxyUri);
-            if(WebConfiguration.ProxyCredentialIsEnabled) {
-                proxy.Credentials = new NetworkCredential(WebConfiguration.ProxyCredentialUser, WebConfiguration.ProxyCredentialPassword);
+            Logger.LogInformation("プロキシを使用: {0}, {1}", ProxyConfiguration.Uri, ProxyConfiguration.CredentialIsEnabled);
+            var proxy = new WebProxy(ProxyConfiguration.Uri);
+            if(ProxyConfiguration.CredentialIsEnabled) {
+                proxy.Credentials = new NetworkCredential(ProxyConfiguration.CredentialUser, ProxyConfiguration.CredentialPassword);
             }
             handler.Proxy = proxy;
             handler.UseProxy = true;
@@ -285,7 +289,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             var handler = new SocketsHttpHandler() {
                 UseCookies = isEnabledSession,
             };
-            if(WebConfiguration.ProxyIsEnabled) {
+            if(ProxyConfiguration.IsEnabled) {
                 SetProxy(handler);
             }
             var cacheControl = new CacheControlHeaderValue() {

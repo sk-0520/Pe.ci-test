@@ -26,7 +26,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         IDatabaseStatementLoader StatementLoader { get; }
         EnvironmentParameters EnvironmentParameters { get; }
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
 
         IDatabaseContexts MainContexts => DatabaseContextsPack.Main;

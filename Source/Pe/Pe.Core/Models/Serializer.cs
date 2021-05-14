@@ -29,16 +29,34 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// バッファサイズ。
         /// </summary>
         public int BufferSize { get; set; } = 4 * 1024;
-
+        /// <summary>
+        /// <see cref="Stream"/> 生成機。
+        /// </summary>
         public Func<Stream>? InnerStreamFactory { get; set; }
 
         #endregion
 
         #region function
 
+        /// <summary>
+        /// 内部ストリーム生成処理。
+        /// <para><see cref="InnerStreamFactory"/>を使用するが、未設定時は<see cref="MemoryStream"/>と<see cref="BufferSize"/>が使用される。</para>
+        /// </summary>
+        /// <returns></returns>
         protected Stream CreateInnerStream() => InnerStreamFactory?.Invoke() ?? new MemoryStream(BufferSize);
-
+        /// <summary>
+        /// ストリームからリーダーを取得。
+        /// <para><see cref="Encoding"/>, <see cref="BufferSize"/>が使用される。</para>
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
         protected TextReader GetReader(Stream stream) => new StreamReader(stream, Encoding, true, BufferSize, true);
+        /// <summary>
+        /// ストリームからライターを取得。
+        /// <para><see cref="Encoding"/>, <see cref="BufferSize"/>が使用される。</para>
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
         protected TextWriter GetWriter(Stream stream) => new StreamWriter(stream, Encoding, BufferSize, true);
 
         /// <summary>
@@ -85,10 +103,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 復元処理。
         /// </summary>
         /// <typeparam name="TResult"></typeparam>
-        /// <param name="stream"></param>
+        /// <param name="stream">復元対象ストリーム。</param>
         /// <returns></returns>
         /// <exception cref="SerializationException"></exception>
         public abstract TResult Load<TResult>(Stream stream);
+        /// <summary>
+        /// 保存処理。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="stream">保存先ストリーム。</param>
         public abstract void Save(object value, Stream stream);
 
         #endregion
@@ -160,6 +183,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
 #endif
 
+    /// <summary>
+    /// <see cref="DataContractJsonSerializer"/>を用いたシリアライズ・デシリアライズ処理。
+    /// </summary>
     public class JsonDataSerializer: SerializerBase
     {
         #region SerializerBase
@@ -189,7 +215,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-
     public abstract class XmlSerializerBase: SerializerBase
     {
         #region function
@@ -212,6 +237,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    /// <summary>
+    /// <see cref="System.Xml.Serialization.XmlSerializer"/>を用いたシリアライズ・デシリアライズ処理。
+    /// </summary>
     public class XmlSerializer: XmlSerializerBase
     {
         #region XmlSerializerBase
@@ -244,6 +272,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public abstract class DataContractSerializerBase: XmlSerializerBase
     { }
 
+    /// <summary>
+    /// <see cref="DataContractSerializer"/>を用いたXMLシリアライズ・デシリアライズ処理。
+    /// </summary>
     public class XmlDataContractSerializer: DataContractSerializerBase
     {
         #region DataContractSerializerBase
@@ -273,6 +304,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    /// <summary>
+    /// <see cref="DataContractSerializer"/>を用いたバイナリシリアライズ・デシリアライズ処理。
+    /// </summary>
     public class BinaryDataContractSerializer: DataContractSerializerBase
     {
         #region DataContractSerializerBase
@@ -304,6 +338,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    /// <summary>
+    /// シリアライズ・デシリアライズ処理。
+    /// </summary>
     public static class SerializeUtility
     {
         #region property
@@ -338,24 +375,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
-
-#if ENABLED_MessagePack
-    public class MessagePackSerializer : SerializerBase
-    {
-    #region SerializerBase
-
-        public override TResult Load<TResult>(Stream stream)
-        {
-            return MessagePack.MessagePackSerializer.Deserialize<TResult>(stream);
-        }
-
-        public override void Save(object value, Stream stream)
-        {
-            MessagePack.MessagePackSerializer.Serialize(stream, value);
-        }
-
-    #endregion
-    }
-#endif
 }
 

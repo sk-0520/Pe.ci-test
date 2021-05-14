@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region function
 
-        static Uri CombinePathCore(Uri uri, bool appendLastSeparator, string[] paths)
+        private static Uri CombinePathCore(Uri uri, bool appendLastSeparator, string[] paths)
         {
             Debug.Assert(paths.Any());
 
@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 ? $"{uri.Scheme}://{uri.Authority}"
                 : $"{uri.Scheme}://{uri.UserInfo}@{uri.Authority}"
             ;
-            var builder = new StringBuilder();
+            var builder = new StringBuilder(uri.OriginalString.Length);
             foreach(var segment in uri.Segments) {
                 builder.Append(segment);
             }

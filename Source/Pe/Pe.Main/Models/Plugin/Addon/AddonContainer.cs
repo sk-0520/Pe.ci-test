@@ -41,7 +41,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region property
 
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
 
         PluginContextFactory PluginContextFactory { get; }

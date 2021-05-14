@@ -2,6 +2,10 @@ using System.Windows.Controls;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
 {
+    /// <summary>
+    /// ランチャーアイテム設定。
+    /// <para>持ち歩かないこと。</para>
+    /// </summary>
     public interface ILauncherItemPreferences
     {
         #region function

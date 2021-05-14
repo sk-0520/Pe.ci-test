@@ -23,18 +23,18 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region function
 
-        public static bool SafeFlush<T>(this T? @this)
+        public static bool SafeFlush<T>(this T? flushable)
             where T : class, IDisposedChackable, IFlushable
         {
-            if(@this == null) {
+            if(flushable == null) {
                 return false;
             }
 
-            if(@this.IsDisposed) {
+            if(flushable.IsDisposed) {
                 return false;
             }
 
-            @this.Flush();
+            flushable.Flush();
             return true;
         }
 

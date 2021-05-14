@@ -29,7 +29,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
         ApplicationConfiguration ApplicationConfiguration { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
 
         #endregion

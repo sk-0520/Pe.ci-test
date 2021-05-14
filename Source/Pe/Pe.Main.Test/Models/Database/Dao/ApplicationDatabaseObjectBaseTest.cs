@@ -72,37 +72,46 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
 
         class Di: IDatabaseImplementation
         {
-            public bool SupportedTransactionDDL => throw new NotImplementedException();
+            public bool SupportedTransactionDDL => throw new NotSupportedException();
 
-            public bool SupportedTransactionDML => throw new NotImplementedException();
+            public bool SupportedTransactionDML => throw new NotSupportedException();
 
+            public bool SupportedLineComment => throw new NotSupportedException();
+            public bool SupportedBlockComment => throw new NotSupportedException();
+
+            public IEnumerable<string> LineComments => throw new NotSupportedException();
+            public IEnumerable<DatabaseBlockComment> BlockComments => throw new NotSupportedException();
 
             public string PreFormatStatement(string statement)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
 
             public string ToStatementColumnName(string columnName)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
 
             public string ToStatementParameterName(string parameterName, int index)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
 
             public string ToStatementTableName(string tableName)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
+
+            public string ToLineComment(string statement) => throw new NotSupportedException();
+            public string ToBlockComment(string statement) => throw new NotSupportedException();
+
 
             public string Escape(string input)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
 
-            public string EscapeLike(string pattern) => throw new NotImplementedException();
+            public string EscapeLike(string pattern) => throw new NotSupportedException();
         }
 
         class Adao: ApplicationDatabaseObjectBase

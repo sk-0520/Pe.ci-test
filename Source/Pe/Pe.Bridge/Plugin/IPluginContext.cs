@@ -2,22 +2,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
-    ///// <summary>
-    ///// 各種コンテキストの共通項目。
-    ///// <para>基本的にコンテキストは持ち歩いて使用ることはできない。</para>
-    ///// </summary>
-    //public interface IPluginCommonContext
-    //{
-    //    #region property
-
-    //    /// <summary>
-    //    /// このコンテキストが使用可能か。
-    //    /// </summary>
-    //    bool IsAvailable { get; }
-
-    //    #endregion
-    //}
-
     /// <summary>
     /// プラグインのコンストラクタ時の Pe との架け橋。
     /// <para>持ち歩かないこと。</para>
@@ -27,6 +11,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     {
         #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
 
         #endregion

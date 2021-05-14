@@ -43,7 +43,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
         #region property
 
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
         IDatabaseBarrierPack DatabaseBarrierPack { get; }
         IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }

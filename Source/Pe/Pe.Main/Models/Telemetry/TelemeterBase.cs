@@ -17,7 +17,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
 
         #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
 
         #endregion

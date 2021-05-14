@@ -28,11 +28,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region property
 
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="IOrderManager"/>
         IOrderManager OrderManager { get; }
+        /// <inheritdoc cref="IWindowManager"/>
         IWindowManager WindowManager { get; }
+        /// <inheritdoc cref="IUserTracker"/>
         IUserTracker UserTracker { get; }
+        /// <inheritdoc cref="IDispatcherWrapper"/>
         IDispatcherWrapper DispatcherWrapper { get; }
 
         ISet<LauncherItemAddonViewSupporter> LauncherItemAddonViewSupporters { get; } = new HashSet<LauncherItemAddonViewSupporter>();
@@ -125,12 +131,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region property
 
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="IPluginInformations"/>
         IPluginInformations PluginInformations { get; }
+        /// <inheritdoc cref="IWindowManager"/>
         IWindowManager WindowManager { get; }
+        /// <inheritdoc cref="IOrderManager"/>
         IOrderManager OrderManager { get; }
+        /// <inheritdoc cref="IUserTracker"/>
         IUserTracker UserTracker { get; }
+        /// <inheritdoc cref="IDispatcherWrapper"/>
         IDispatcherWrapper DispatcherWrapper { get; }
 
         public LauncherItemExtensionElement? Element { get; private set; }

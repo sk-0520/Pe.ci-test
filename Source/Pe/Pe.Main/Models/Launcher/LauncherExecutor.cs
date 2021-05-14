@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Windows.Threading;
@@ -77,7 +78,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         public Type? FailureType { get; set; }
 
-        public Exception? FailureValue { get; set; }
+        [AllowNull]
+        public Exception FailureValue { get; set; }
 
         #endregion
     }
@@ -120,7 +122,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         public Type? FailureType { get; set; }
 
-        public Exception? FailureValue { get; set; }
+        [AllowNull]
+        public Exception FailureValue { get; set; }
 
         #endregion
     }
@@ -142,7 +145,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         IOrderManager OrderManager { get; }
         INotifyManager NotifyManager { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
         EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; }
 

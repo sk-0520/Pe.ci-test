@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <summary>
         /// 複数画像からサイズが一番近しい画像を取得する。
         /// </summary>
-        /// <param name="iconUri"></param>
+        /// <param name="frames"></param>
         /// <param name="iconScale"></param>
         /// <returns></returns>
         public BitmapSource GetImageFromFrames(IReadOnlyCollection<BitmapSource> frames, in IconScale iconScale);

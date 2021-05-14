@@ -20,7 +20,7 @@ namespace Benchmark
         [Benchmark]
         public string Method()
         {
-            retrun "";
+            return "";
         }
     }
 }

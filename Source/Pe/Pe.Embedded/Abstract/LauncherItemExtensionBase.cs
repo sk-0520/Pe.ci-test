@@ -32,16 +32,27 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
+        /// <inheritdoc cref="IPlatformTheme"/>
         protected IPlatformTheme PlatformTheme { get; }
+        /// <inheritdoc cref="IAddonExecutor"/>
         protected IAddonExecutor AddonExecutor { get; }
+        /// <inheritdoc cref="IDispatcherWrapper"/>
         protected IDispatcherWrapper DispatcherWrapper { get; }
+        /// <inheritdoc cref="ISkeletonImplements"/>
         protected ISkeletonImplements SkeletonImplements { get; }
+        /// <inheritdoc cref="ILogger"/>
         protected IImageLoader ImageLoader { get; }
+        /// <inheritdoc cref="IMediaConverter"/>
         protected IMediaConverter MediaConverter { get; }
+        /// <inheritdoc cref="IHttpUserAgentFactory"/>
         protected IHttpUserAgentFactory HttpUserAgentFactory { get; }
+        /// <inheritdoc cref="ILauncherItemAddonContextWorker"/>
         protected ILauncherItemAddonContextWorker ContextWorker { get; }
+        /// <inheritdoc cref="IPluginInformations"/>
         protected IPluginInformations PluginInformations { get; }
 
         protected ISet<object> CallerObjects { get; } = new HashSet<object>();

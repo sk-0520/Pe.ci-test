@@ -147,15 +147,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         #region function
 
-        public static TResult ReadData<TResult>(this IDatabaseBarrier @this, Func<IDatabaseTransaction, TResult> func)
+        public static TResult ReadData<TResult>(this IDatabaseBarrier databaseBarrier, Func<IDatabaseTransaction, TResult> func)
         {
-            using var transaction = @this.WaitRead();
+            using var transaction = databaseBarrier.WaitRead();
             return func(transaction);
         }
 
-        public static TResult ReadData<TArgument, TResult>(this IDatabaseBarrier @this, Func<IDatabaseTransaction, TArgument, TResult> func, TArgument argument)
+        public static TResult ReadData<TArgument, TResult>(this IDatabaseBarrier databaseBarrier, Func<IDatabaseTransaction, TArgument, TResult> func, TArgument argument)
         {
-            using var transaction = @this.WaitRead();
+            using var transaction = databaseBarrier.WaitRead();
             return func(transaction, argument);
         }
 

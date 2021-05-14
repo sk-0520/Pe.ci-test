@@ -19,10 +19,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         }
 
         #region property
+
+        /// <inheritdoc cref="IIdFactory"/>
         IIdFactory IdFactory { get; }
+        /// <inheritdoc cref="IDatabaseAccessorPack"/>
         IDatabaseAccessorPack AccessorPack { get; }
+        /// <inheritdoc cref="IDatabaseStatementLoader"/>
         IDatabaseStatementLoader StatementLoader { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
 
         #endregion

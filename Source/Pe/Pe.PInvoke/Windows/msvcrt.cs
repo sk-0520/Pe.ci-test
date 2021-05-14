@@ -1,3 +1,5 @@
+// https://docs.microsoft.com/ja-jp/dotnet/standard/frameworks#supported-target-frameworks
+#if NETFRAMEWORK
 using System;
 using System.Runtime.InteropServices;
 
@@ -14,3 +16,4 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public static extern int memcmp(IntPtr b1, IntPtr b2, long count);
     }
 }
+#endif

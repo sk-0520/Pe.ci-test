@@ -7,11 +7,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     {
         #region property
 
+        /// <inheritdoc cref="IHttpUserAgentFactory"/>
         IHttpUserAgentFactory HttpUserAgentFactory { get; }
+        /// <inheritdoc cref="IPlatformTheme"/>
         IPlatformTheme PlatformTheme { get; }
+        /// <inheritdoc cref="IImageLoader"/>
         IImageLoader ImageLoader { get; }
+        /// <inheritdoc cref="IMediaConverter"/>
         IMediaConverter MediaConverter { get; }
+        /// <inheritdoc cref="IDispatcherWrapper"/>
         IDispatcherWrapper DispatcherWrapper { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
 
         #endregion

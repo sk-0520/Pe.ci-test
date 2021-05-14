@@ -21,15 +21,11 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
 
         WinForms.FolderBrowserDialog Dialog { get; set; }
 
-        /// <summary>
-        ///  <see cref="Component"/> を格納している <see cref="IContainer"/> を取得します。
-        /// </summary>
+        /// <inheritdoc cref="System.ComponentModel.Component.Container"/>
         [BrowsableAttribute(false)]
         public IContainer? Container { get { return Dialog.Container; } }
 
-        /// <summary>
-        /// ダイアログ ボックスのツリー ビュー コントロールの上部に表示する説明テキストを取得または設定します。
-        /// </summary>
+        /// <inheritdoc cref="WinForms.FolderBrowserDialog.Description"/>
         [BrowsableAttribute(true)]
         public string Description
         {
@@ -37,9 +33,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
             set { Description = value; }
         }
 
-        /// <summary>
-        /// 参照の開始位置とするルート フォルダーを取得または設定します。
-        /// </summary>
+        /// <inheritdoc cref="WinForms.FolderBrowserDialog.RootFolder"/>
         [BrowsableAttribute(true)]
         public Environment.SpecialFolder RootFolder
         {
@@ -47,9 +41,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
             set { Dialog.RootFolder = value; }
         }
 
-        /// <summary>
-        /// ユーザーが選択したパスを取得または設定します。
-        /// </summary>
+        /// <inheritdoc cref="WinForms.FolderBrowserDialog.SelectedPath"/>
         [BrowsableAttribute(true)]
         public string SelectedPath
         {
@@ -57,9 +49,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
             set { Dialog.SelectedPath = value; }
         }
 
-        /// <summary>
-        /// フォルダー参照ダイアログ ボックスに [新しいフォルダー] ボタンを表示するかどうかを示す値を取得または設定します。
-        /// </summary>
+        /// <inheritdoc cref="WinForms.FolderBrowserDialog.ShowNewFolderButton"/>
         [BrowsableAttribute(true)]
         public bool ShowNewFolderButton
         {
@@ -67,9 +57,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
             set { Dialog.ShowNewFolderButton = value; }
         }
 
-        /// <summary>
-        /// <see cref="Component"/> の <see cref="ISite"/> を取得または設定します。
-        /// </summary>
+        /// <inheritdoc cref="System.ComponentModel.IComponent.Site"/>
         [BrowsableAttribute(false)]
         public virtual ISite? Site
         {
@@ -77,9 +65,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
             set { Dialog.Site = value; }
         }
 
-        /// <summary>
-        /// コントロールに関するデータを格納するオブジェクトを取得または設定します。
-        /// </summary>
+        /// <inheritdoc cref="WinForms.Control.Tag"/>
         [BindableAttribute(true)]
         public Object Tag
         {
@@ -91,12 +77,14 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
 
         #region function
 
+        /// <inheritdoc cref="WinForms.CommonDialog.ShowDialog"/>
         public bool? ShowDialog()
         {
             var compatibleresult = Dialog.ShowDialog();
             return compatibleresult == WinForms.DialogResult.OK;
         }
 
+        /// <inheritdoc cref="WinForms.CommonDialog.ShowDialog(WinForms.IWin32Window)"/>
         public bool? ShowDialog(Window owner)
         {
             var form = new CompatibleFormWindow(owner);

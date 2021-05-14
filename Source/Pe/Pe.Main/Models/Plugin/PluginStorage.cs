@@ -205,6 +205,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
             public ILoggerFactory LoggerFactory { get; }
             public IDatabaseStatementLoader DatabaseStatementLoader { get; }
             public IDatabaseContexts DatabaseContexts { get; }
@@ -284,7 +285,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region property
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
 
         protected IPluginIdentifiers PluginIdentifiers { get; }

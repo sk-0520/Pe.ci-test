@@ -32,9 +32,12 @@ namespace ContentTypeTextNet.Pe.Core.Views
         protected TView View { get; private set; }
         protected TExtendData ExtendData { get; private set; }
 
+        /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
+        /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
 
+        /// <inheritdoc cref="PropertyChangedHooker"/>
         protected PropertyChangedHooker PropertyChangedHooker { get; }
 
         #endregion

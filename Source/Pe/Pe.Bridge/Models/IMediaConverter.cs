@@ -4,6 +4,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 {
     /// <summary>
     /// 色とかその辺の変換処理。
+    /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IMediaConverter
     {

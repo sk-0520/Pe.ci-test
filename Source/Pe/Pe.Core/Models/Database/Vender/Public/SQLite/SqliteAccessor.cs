@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 {
-    internal class SqliteReadOnlyTransaction: IDatabaseTransaction
+    internal sealed class SqliteReadOnlyTransaction: IDatabaseTransaction
     {
         public SqliteReadOnlyTransaction(IDatabaseAccessor databaseAccessor)
         {

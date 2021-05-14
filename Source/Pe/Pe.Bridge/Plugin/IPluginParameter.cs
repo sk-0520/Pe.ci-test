@@ -11,10 +11,15 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     {
         #region property
 
+        /// <inheritdoc cref="IPlatformTheme"/>
         IPlatformTheme PlatformTheme { get; }
+        /// <inheritdoc cref="IImageLoader"/>
         IImageLoader ImageLoader { get; }
+        /// <inheritdoc cref="IMediaConverter"/>
         IMediaConverter MediaConverter { get; }
+        /// <inheritdoc cref="IDispatcherWrapper"/>
         IDispatcherWrapper DispatcherWrapper { get; }
+        /// <inheritdoc cref="ILoggerFactory"/>
         ILoggerFactory LoggerFactory { get; }
 
         #endregion

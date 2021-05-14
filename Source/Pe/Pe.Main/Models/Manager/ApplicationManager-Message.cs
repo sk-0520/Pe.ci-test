@@ -439,8 +439,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Logger.LogInformation("ディスプレイ数変更検知: WindowsAPI = {0}, Toolbar = {1}", rawScreenCount, LauncherToolbarElements.Count);
                     var displayConfiguration = ApplicationDiContainer.Get<DisplayConfiguration>();
 
-                    DelayResetScreenViewElements();
-
                     Task.Run(() => {
                         // Forms で取得するディスプレイ数の合計値は少し遅れる
                         int waitMax = displayConfiguration.ChangedRetryCount;

@@ -1,5 +1,8 @@
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 {
+    /// <summary>
+    /// アドオン種別。
+    /// </summary>
     public enum AddonKind
     {
         /// <summary>
@@ -23,6 +26,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         Background,
     }
 
+    /// <summary>
+    /// アドオン。
+    /// </summary>
     public interface IAddon: IPlugin
     {
         #region function

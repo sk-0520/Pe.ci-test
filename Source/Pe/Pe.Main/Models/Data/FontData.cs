@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
 
     [Serializable, DataContract]
-    public class FontData: IReadOnlyFontData
+    public class FontData: IFont
     {
         #region IReadOnlyFontData
 

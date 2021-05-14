@@ -188,13 +188,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         /// <summary>
         /// コマンドから実ファイルを取得。
         /// </summary>
-        /// <param name="this"></param>
+        /// <param name="cache"></param>
         /// <param name="command"></param>
         /// <param name="loggerFactory"></param>
         /// <returns></returns>
-        public static EnvironmentPathExecuteItem? FindExecuteItem(this EnvironmentPathExecuteFileCache @this, string command, ILoggerFactory loggerFactory)
+        public static EnvironmentPathExecuteItem? FindExecuteItem(this EnvironmentPathExecuteFileCache cache, string command, ILoggerFactory loggerFactory)
         {
-            var pathItems = @this.GetItems(loggerFactory);
+            var pathItems = cache.GetItems(loggerFactory);
             var environmentExecuteFile = new EnvironmentExecuteFile(loggerFactory);
             var pathItem = environmentExecuteFile.Get(command, pathItems);
             return pathItem;
@@ -205,10 +205,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         /// </summary>
         /// <param name="path">対象パス。</param>
         /// <returns>フルパス。<param name="path" />がすでにフルパスの場合やコマンドが見つからない場合は<param name="path" />をそのまま返す。</returns>
-        public static string ToFullPathIfExistsCommand(this EnvironmentPathExecuteFileCache @this, string path, ILoggerFactory loggerFactory)
+        public static string ToFullPathIfExistsCommand(this EnvironmentPathExecuteFileCache cache, string path, ILoggerFactory loggerFactory)
         {
             if(!Path.IsPathRooted(path)) {
-                var pathItem = @this.FindExecuteItem(path, loggerFactory);
+                var pathItem = cache.FindExecuteItem(path, loggerFactory);
                 if(pathItem != null) {
                     return pathItem.File.FullName;
                 }
