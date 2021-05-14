@@ -55,11 +55,11 @@
 			"comment": "System.Data.SQLite.Core"
 		},
 		{
-			"name": "Hardcodet.NotifyIcon.Wpf.NetCore",
-			"uri": "https://github.com/HavenDV/H.NotifyIcon.WPF",
+			"name": "Hardcodet NotifyIcon for WPF",
+			"uri": "https://github.com/hardcodet/wpf-notifyicon",
 			"license": {
-				"name": "MIT",
-				"uri": "https://github.com/HavenDV/H.NotifyIcon.WPF/blob/master/LICENSE.md"
+				"name": "CPOL",
+				"uri": "https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE"
 			},
 			"comment": ""
 		},
