@@ -1,8 +1,18 @@
 [
 	{
 		"date": "2021/05/14",
-		"version": "0.99.118",
+		"version": "0.99.119",
 		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"class": "",
+						"subject": "0.99.118 は条件により確実に死ぬので 0.99.119 に統合"
+					}
+				]
+			},
 			{
 				"type": "fixes",
 				"logs": [
