@@ -7,7 +7,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     /// <summary>
     /// UI スレッドであれやこれや頑張る。
     /// </summary>
-    public sealed class ApplicationDispatcherWrapper: DispatcherWrapper
+    internal sealed class ApplicationDispatcherWrapper: DispatcherWrapper
     {
         public ApplicationDispatcherWrapper(TimeSpan waitTime)
             : base(Application.Current.Dispatcher, waitTime)

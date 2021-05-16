@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
-    public class ApplicationDiContainer: DiContainer
+    internal class ApplicationDiContainer: DiContainer
     {
         #region DiContainer
         #endregion
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public static class IDiRegisterContainerExtensions
+    internal static class IDiRegisterContainerExtensions
     {
         #region function
 

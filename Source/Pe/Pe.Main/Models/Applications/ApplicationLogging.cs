@@ -9,7 +9,7 @@ using NLog;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
-    public class ApplicationLogging
+    internal class ApplicationLogging
     {
         public ApplicationLogging(int logLimit, string loggingConfigFilePath, string outputPath, string withLog, bool createDirectory, bool isFullTrace)
         {

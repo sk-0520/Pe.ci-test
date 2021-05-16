@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
-    public class ApplicationDatabaseFactory: SqliteFactory
+    internal class ApplicationDatabaseFactory: SqliteFactory
     {
         #region define
         #endregion
@@ -58,8 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-
-    public class ApplicationDatabaseImplementation: SqliteImplementation
+    internal class ApplicationDatabaseImplementation: SqliteImplementation
     {
         #region property
 
@@ -98,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public class ApplicationDatabaseAccessor: SqliteAccessor
+    internal class ApplicationDatabaseAccessor: SqliteAccessor
     {
         public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILogger logger)
             : base(connectionCreator, logger)
