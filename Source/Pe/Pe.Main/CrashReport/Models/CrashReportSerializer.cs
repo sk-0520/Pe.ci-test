@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models
         public override void Save(object value, Stream stream)
         {
             using var writer = GetWriter(stream);
-            var json = System.Text.Json.JsonSerializer.Serialize(value);
+            var json = System.Text.Json.JsonSerializer.Serialize(value); // TODO: ストリーム直接でいいと思う
             writer.Write(json);
         }
 
