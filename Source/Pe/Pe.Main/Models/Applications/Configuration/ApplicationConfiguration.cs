@@ -45,5 +45,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         [Configuration]
         public PluginConfiguration Plugin { get; } = default!;
         #endregion
+
+        #region ConfigurationBase
+
+        public override string ToString()
+        {
+            var conf = (IConfigurationRoot)Configuration;
+            return conf.GetDebugView();
+        }
+
+        #endregion
     }
 }
