@@ -44,6 +44,16 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod]
+        [DataRow("", "")]
+        [DataRow("2\r\n4", "1\r\n2\r\n3\r\n4")]
+        public void AggregateNull_Test(string expected, string input)
+        {
+            var tl = CreateTextLines();
+            var actual = tl.Aggregate(input, i => (i.Number % 2) == 0 ? i.Line: null);
+            Assert.AreEqual(expected, actual);
+        }
+
         #endregion
     }
 }
