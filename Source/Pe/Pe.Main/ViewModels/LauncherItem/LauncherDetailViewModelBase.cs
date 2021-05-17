@@ -185,6 +185,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         {
             if(!IsDisposed) {
                 if(disposing) {
+                    if(this._mainIcon is IDisposable mainIcon) {
+                        mainIcon.Dispose();
+                        this._mainIcon = null;
+                    }
+                    if(this._tooltipIcon is IDisposable tooltipIcon) {
+                        tooltipIcon.Dispose();
+                        this._tooltipIcon = null;
+                    }
                 }
             }
 
