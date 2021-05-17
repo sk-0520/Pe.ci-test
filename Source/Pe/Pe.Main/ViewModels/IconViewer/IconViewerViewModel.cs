@@ -93,6 +93,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
         IDispatcherWrapper DispatcherWrapper { get; }
 
         #region IconImageLoader
+
+        /// <summary>
+        /// アイコン読み込み処理。
+        /// <para><see cref="IDisposable.Dispose"/>時にVM側で<see cref="IDisposable.Dispose"/>される。</para>
+        /// </summary>
         IconImageLoaderBase? IconImageLoader { get; }
         PropertyChangedHooker? PropertyChangedHooker { get; }
         public RunningStatusViewModel? RunningStatus { get; }
@@ -169,6 +174,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
                     case IconImageKind.IconImageLoader:
                         Debug.Assert(IconImageLoader != null);
                         IconImageLoader.PropertyChanged -= Model_PropertyChanged;
+                        IconImageLoader.Dispose();
                         break;
 
                     case IconImageKind.LauncherItemExtension:

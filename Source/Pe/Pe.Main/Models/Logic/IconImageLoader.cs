@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return null;
             }
 
-            using(var stream = new MemoryStream()) {
+            using(var stream = new MemoryReleaseStream()) {
                 using(var writer = new BinaryWriter(new KeepStream(stream))) {
                     foreach(var imageBinary in imageBynaryItems) {
                         writer.Write(imageBinary);
@@ -205,7 +205,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    //ClearCache();
+                    RunningStatusImpl.Dispose();
+                    CachedImage = null;
                 }
             }
 
