@@ -239,7 +239,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public void AddCommandFinder(ICommandFinder commandFinder)
         {
-            if(!commandFinder.IsInitialize) {
+            if(!commandFinder.IsInitialized) {
                 commandFinder.Initialize();
             }
 
@@ -257,7 +257,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         protected override void InitializeImpl()
         {
             foreach(var commandFinder in CommandFinders) {
-                if(!commandFinder.IsInitialize) {
+                if(!commandFinder.IsInitialized) {
                     commandFinder.Initialize();
                 }
             }

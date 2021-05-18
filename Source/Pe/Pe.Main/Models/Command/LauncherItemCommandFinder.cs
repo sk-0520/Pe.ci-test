@@ -120,26 +120,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         #region ICommandFinder
 
-        public bool IsInitialize { get; private set; }
+        public bool IsInitialized { get; private set; }
 
         public void Initialize()
         {
-            if(IsInitialize) {
-                throw new InvalidOperationException(nameof(IsInitialize));
+            if(IsInitialized) {
+                throw new InvalidOperationException(nameof(IsInitialized));
             }
 
             NotifyManager.LauncherItemChanged += NotifyManager_LauncherItemChanged;
             NotifyManager.LauncherItemRegistered += NotifyManager_LauncherItemRegistered;
 
-            IsInitialize = true;
+            IsInitialized = true;
         }
 
         public void Refresh(IPluginContext pluginContext)
         {
             Debug.Assert(pluginContext.GetType() == typeof(NullPluginContext));
 
-            if(!IsInitialize) {
-                throw new InvalidOperationException(nameof(IsInitialize));
+            if(!IsInitialized) {
+                throw new InvalidOperationException(nameof(IsInitialized));
             }
 
             IReadOnlyList<Guid> ids;
@@ -181,8 +181,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         public IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
-            if(!IsInitialize) {
-                throw new InvalidOperationException(nameof(IsInitialize));
+            if(!IsInitialized) {
+                throw new InvalidOperationException(nameof(IsInitialized));
             }
 
             if(string.IsNullOrWhiteSpace(inputValue)) {
@@ -243,7 +243,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         private void NotifyManager_LauncherItemChanged(object? sender, LauncherItemChangedEventArgs e)
         {
-            Debug.Assert(IsInitialize);
+            Debug.Assert(IsInitialized);
 
             var element = LauncherItemElements.FirstOrDefault(i => i.LauncherItemId == e.LauncherItemId);
             if(element != null) {
@@ -266,7 +266,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         private void NotifyManager_LauncherItemRegistered(object? sender, LauncherItemRegisteredEventArgs e)
         {
-            Debug.Assert(IsInitialize);
+            Debug.Assert(IsInitialized);
 
             var element = OrderManager.GetOrCreateLauncherItemElement(e.LauncherItemId);
             if(element.IsEnabledCommandLauncher) {

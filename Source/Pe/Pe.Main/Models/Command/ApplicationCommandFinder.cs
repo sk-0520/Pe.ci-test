@@ -213,7 +213,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         #region ICommandFinder
 
-        public bool IsInitialize
+        public bool IsInitialized
         {
             get => this._isInitialize;
             private set => this._isInitialize = value;
@@ -221,27 +221,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         public void Initialize()
         {
-            if(IsInitialize) {
-                throw new InvalidOperationException(nameof(IsInitialize));
+            if(IsInitialized) {
+                throw new InvalidOperationException(nameof(IsInitialized));
             }
 
-            IsInitialize = true;
+            IsInitialized = true;
         }
 
         public void Refresh(IPluginContext pluginContext)
         {
             Debug.Assert(pluginContext.GetType() == typeof(NullPluginContext));
 
-            if(!IsInitialize) {
-                throw new InvalidOperationException(nameof(IsInitialize));
+            if(!IsInitialized) {
+                throw new InvalidOperationException(nameof(IsInitialized));
             }
         }
 
 
         public IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
-            if(!IsInitialize) {
-                throw new InvalidOperationException(nameof(IsInitialize));
+            if(!IsInitialized) {
+                throw new InvalidOperationException(nameof(IsInitialized));
             }
 
             if(string.IsNullOrWhiteSpace(inputValue)) {
