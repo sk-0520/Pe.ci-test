@@ -1,4 +1,4 @@
-//#define ENABLED_NETCoreJSON
+#define ENABLED_NETCoreJSON
 
 using System;
 using System.IO;
@@ -8,6 +8,7 @@ using System.Text;
 using System.Xml;
 
 #if ENABLED_NETCoreJSON
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 #endif
@@ -146,39 +147,45 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
 #if ENABLED_NETCoreJSON
 
-    public class JsonNetCoreSerializer : SerializerBase
+    public class JsonNetCoreSerializer: SerializerBase
     {
-    #region property
+        #region property
 
         public JsonReaderOptions ReaderOptions { get; set; } = new JsonReaderOptions() {
             AllowTrailingCommas = true,
             CommentHandling = JsonCommentHandling.Skip,
         };
+
         public JsonWriterOptions WriterOptions { get; set; } = new JsonWriterOptions() {
             Indented = true,
+            Encoder = JavaScriptEncoder.Default,
         };
 
-    #endregion
+        #endregion
 
-    #region SerializerBase
+        #region SerializerBase
 
         public override TResult Load<TResult>(Stream stream)
         {
             var buffer = new byte[stream.Length];
-            //var span = new Span<byte>();
             stream.Read(buffer);
             var reader = new Utf8JsonReader(buffer, ReaderOptions);
-            return System.Text.Json.JsonSerializer.Deserialize<TResult>(ref reader);
+            var rawResult = JsonSerializer.Deserialize<TResult>(ref reader);
+            if(rawResult is TResult result) {
+                return result;
+            }
+
+            throw new SerializationException();
         }
 
         public override void Save(object value, Stream stream)
         {
             using(var writer = new Utf8JsonWriter(stream, WriterOptions)) {
-                System.Text.Json.JsonSerializer.Serialize(writer, value);
+                JsonSerializer.Serialize(writer, value);
             }
         }
 
-    #endregion
+        #endregion
     }
 
 #endif
