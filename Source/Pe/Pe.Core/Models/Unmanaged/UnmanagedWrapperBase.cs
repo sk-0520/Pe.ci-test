@@ -5,7 +5,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 {
     /// <summary>
     /// 非マネージドオブジェクトをマネージドオブジェクトとして扱う。
-    /// <para>CLIでこういうクラスあったよなぁ。</para>
+    /// <para>CLIでこういうクラスあったよなぁ → <see cref="System.Runtime.InteropServices.SafeHandle"/>だったのでメモ。</para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public abstract class UnmanagedWrapperBase<T>: RawModel<T>

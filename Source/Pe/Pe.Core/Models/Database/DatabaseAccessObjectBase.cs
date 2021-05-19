@@ -54,8 +54,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 行終端文字列を取得または設定。
         /// </summary>
         public string NewLine { get; init; } = Environment.NewLine;
-        protected string JoinSeparator { get; init; } = ".";
+        /// <summary>
+        /// ファイル読み込み時に使用するキーの結合文字列。
+        /// <para>ファイル名に使用出来てメソッド名に使用できない(できなさそう)なのが良い。</para>
+        /// </summary>
+        protected string JoinSeparator { get; init; } = "!";
 
+        /// <summary>
+        /// 処理対象文の取得用正規表現。
+        /// <para>KEY: 処理対象キー, BODY: 文。</para>
+        /// </summary>
         protected virtual Regex ProcessBodyRegex
         {
             get
@@ -85,12 +93,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }
         }
 
+        /// <summary>
+        /// 置き換え対象文取得用正規表現。
+        /// <para>NAME: 対象名, KIND: 文(CODE)/読込(LOAD)</para>
+        /// </summary>
         protected virtual Regex ProcessContentRegex
         {
             get
             {
                 if(this._processContentRegex is null) {
-                    this._processContentRegex = new Regex(@"^\s*(?<NAME>\w+)\s*:\s*(?<KIND>(CODE)|(LOAD))\s*$");
+                    this._processContentRegex = new Regex(@"^\s*(?<NAME>\w+)\s*:\s*(?<KIND>(CODE)|(LOAD))\s*$", RegexOptions.Compiled);
                 }
 
                 return this._processContentRegex;
