@@ -91,9 +91,11 @@
     <app_core_views:RequestTrigger SourceObject="{Binding TitleEditStartRequest}">
       <prism:InvokeCommandAction Command="{Binding TitleEditStartCommand ,ElementName=root}" />
     </app_core_views:RequestTrigger>
+    <!--
     <app_core_views:RequestTrigger SourceObject="{Binding SelectLinkFileRequest}">
       <prism:InvokeCommandAction Command="{Binding SelectLinkFileCommand ,ElementName=root}" />
     </app_core_views:RequestTrigger>
+    -->
     <!--<app_core_view:RequestTrigger SourceObject="{Binding UnlinkRequest}">
       <prism:InvokeCommandAction Command="{Binding UnlinkCommand ,ElementName=root}" />
     </app_core_view:RequestTrigger>-->

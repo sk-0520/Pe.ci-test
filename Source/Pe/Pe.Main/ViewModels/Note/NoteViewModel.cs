@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public RequestSender CloseRequest { get; } = new RequestSender();
 
         public RequestSender TitleEditStartRequest { get; } = new RequestSender();
-        public RequestSender SelectLinkFileRequest { get; } = new RequestSender();
+        //public RequestSender SelectLinkFileRequest { get; } = new RequestSender();
 
         public RequestSender LinkChangeRequest { get; } = new RequestSender();
 
