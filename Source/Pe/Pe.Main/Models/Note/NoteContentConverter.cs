@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -30,15 +31,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
 
         #endregion
 
-        public string ToRichText(string plainText, FontData fontData, Color foregroundColor)
+        public string ToRichText(string plainText, IFont font, Color foregroundColor)
         {
             var document = new FlowDocument();
             using(Initializer.Begin(document)) {
                 var fontConverter = new FontConverter(LoggerFactory);
-                document.FontFamily = fontConverter.MakeFontFamily(fontData.FamilyName, SystemFonts.MessageFontFamily);
-                document.FontSize = fontData.Size;
-                document.FontWeight = fontConverter.ToWeight(fontData.IsBold);
-                document.FontStyle = fontConverter.ToStyle(fontData.IsItalic);
+                document.FontFamily = fontConverter.MakeFontFamily(font.FamilyName, SystemFonts.MessageFontFamily);
+                document.FontSize = font.Size;
+                document.FontWeight = fontConverter.ToWeight(font.IsBold);
+                document.FontStyle = fontConverter.ToStyle(font.IsItalic);
                 document.Foreground = FreezableUtility.GetSafeFreeze(new SolidColorBrush(foregroundColor));
 
                 var lines = TextUtility.ReadLines(plainText)

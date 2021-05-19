@@ -66,15 +66,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        FontsRowDto ConvertFromData(IFont data, IDatabaseCommonStatus databaseCommonStatus)
+        FontsRowDto ConvertFromData(IFont font, IDatabaseCommonStatus databaseCommonStatus)
         {
             var dto = new FontsRowDto() {
-                FamilyName = data.FamilyName,
-                Height = data.Size,
-                IsBold = data.IsBold,
-                IsItalic = data.IsItalic,
-                IsUnderline = data.IsUnderline,
-                IsStrikeThrough = data.IsStrikeThrough,
+                FamilyName = font.FamilyName,
+                Height = font.Size,
+                IsBold = font.IsBold,
+                IsItalic = font.IsItalic,
+                IsUnderline = font.IsUnderline,
+                IsStrikeThrough = font.IsStrikeThrough,
             };
             databaseCommonStatus.WriteCommon(dto);
 
@@ -91,10 +91,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public bool InsertFont(Guid fontId, FontData fontData, IDatabaseCommonStatus databaseCommonStatus)
+        public bool InsertFont(Guid fontId, IFont font, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
-            var param = ConvertFromData(fontData, databaseCommonStatus);
+            var param = ConvertFromData(font, databaseCommonStatus);
             param.FontId = fontId;
             return Context.Execute(statement, param) == 1;
         }
@@ -145,10 +145,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        public bool UpdateFont(Guid fontId, FontData data, IDatabaseCommonStatus commonStatus)
+        public bool UpdateFont(Guid fontId, IFont font, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
-            var parameter = ConvertFromData(data, commonStatus);
+            var parameter = ConvertFromData(font, commonStatus);
             parameter.FontId = fontId;
             return Context.Execute(statement, parameter) == 1;
         }
