@@ -56,10 +56,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Models\Logic\MouseHooker.cs">
+    <None Include="Models\Logic\Hooker.MouseHooker.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>MouseHooker.tt</DependentUpon>
+      <DependentUpon>Hooker.MouseHooker.tt</DependentUpon>
     </None>
     <None Include="Resources\File\Accept\AcceptDocument.xaml">
       <Generator></Generator>
@@ -71,6 +71,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Models\Logic\Hooker.MouseHooker.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Hooker.MouseHooker.tt</DependentUpon>
+    </Compile>
     <Compile Update="Models\Logic\MouseHooker.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -103,9 +108,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Models\Logic\MouseHooker.tt">
+    <None Update="Models\Logic\Hooker.MouseHooker.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MouseHooker.cs</LastGenOutput>
+      <LastGenOutput>Hooker.MouseHooker.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
