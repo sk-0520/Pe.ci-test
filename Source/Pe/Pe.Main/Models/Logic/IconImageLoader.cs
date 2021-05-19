@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    public class IconImageLoader: IconImageLoaderBase
+    public sealed class IconImageLoader: IconImageLoaderBase
     {
         public IconImageLoader(IReadOnlyIconData iconData, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(dispatcherWrapper, loggerFactory)

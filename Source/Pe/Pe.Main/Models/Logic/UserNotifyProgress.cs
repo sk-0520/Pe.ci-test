@@ -4,7 +4,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     /// <summary>
     /// 処理経過をユーザー通知する。
-    /// <para>0-1の範囲に制限して使用。</para>
+    /// <para><see cref="IProgress{Double}"/>: 0-1の範囲に制限して使用。</para>
     /// </summary>
     public class UserNotifyProgress
     {

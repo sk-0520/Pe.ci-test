@@ -10,6 +10,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
+    /// <summary>
+    /// アップデートアーカイブのダウンロード処理担当。
+    /// </summary>
     public class UpdateDownloader
     {
         public UpdateDownloader(ApplicationConfiguration applicationConfiguration, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
@@ -40,6 +43,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             ;
         }
 
+        /// <summary>
+        /// チェックサム処理。
+        /// </summary>
+        /// <param name="updateItem"></param>
+        /// <param name="targetFile"></param>
+        /// <param name="userNotifyProgress"></param>
+        /// <returns>[非同期] 真: チェックサムOK。</returns>
         public async Task<bool> ChecksumAsync(IReadOnlyUpdateItemData updateItem, FileInfo targetFile, UserNotifyProgress userNotifyProgress)
         {
             await Task.Delay(0);
@@ -88,6 +98,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
         }
 
+        /// <summary>
+        /// アプリケーションアーカイブのダウンロード。
+        /// </summary>
+        /// <param name="updateItem"></param>
+        /// <param name="donwloadFile"></param>
+        /// <param name="userNotifyProgress"></param>
+        /// <returns></returns>
         public async Task DownloadApplicationArchiveAsync(UpdateItemData updateItem, FileInfo donwloadFile, UserNotifyProgress userNotifyProgress)
         {
             Logger.LogInformation("アップデートファイルダウンロード: {0}, {1}", updateItem.ArchiveUri, donwloadFile);

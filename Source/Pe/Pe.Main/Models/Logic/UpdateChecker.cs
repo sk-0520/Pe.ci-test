@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
+        /// <inheritdoc cref="ILogger"/>
         ILogger Logger { get; }
 
         ApplicationConfiguration ApplicationConfiguration { get; }

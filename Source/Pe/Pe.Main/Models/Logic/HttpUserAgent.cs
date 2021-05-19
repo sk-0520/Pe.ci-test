@@ -269,6 +269,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         void SetProxy(SocketsHttpHandler handler)
         {
+            Debug.Assert(ProxyConfiguration.IsEnabled);
+
             Logger.LogInformation("プロキシを使用: {0}, {1}", ProxyConfiguration.Uri, ProxyConfiguration.CredentialIsEnabled);
             var proxy = new WebProxy(ProxyConfiguration.Uri);
             if(ProxyConfiguration.CredentialIsEnabled) {
