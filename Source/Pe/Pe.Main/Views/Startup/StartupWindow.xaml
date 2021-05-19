@@ -21,6 +21,7 @@
   IsVisibleChanged="root_IsVisibleChanged"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:datacontext="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Startup" d:DataContext="{d:DesignInstance Type=datacontext:StartupViewModel}"
   mc:Ignorable="d"
 >
   <Window.Resources>

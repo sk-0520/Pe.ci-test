@@ -23,6 +23,7 @@
   BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:datacontext="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.About" d:DataContext="{d:DesignInstance Type=datacontext:AboutViewModel}"
   mc:Ignorable="d"
 >
   <behaviors:Interaction.Triggers>

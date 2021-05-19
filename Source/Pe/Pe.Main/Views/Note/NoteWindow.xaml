@@ -34,6 +34,7 @@
   MinHeight="{Binding MinHeight}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:datacontext="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Note" d:DataContext="{d:DesignInstance Type=datacontext:NoteViewModel}"
   mc:Ignorable="d"
   d:DesignWidth="100"
   d:DesignHeight="100"
