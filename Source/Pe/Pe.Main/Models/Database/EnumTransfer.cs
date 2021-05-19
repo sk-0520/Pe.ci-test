@@ -3,11 +3,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database
 {
     /// <summary>
-    /// enum の属性設定にて <see cref="EnumTransfer{TEnum}"/> を制御する。
+    /// <c>enum</c> の属性設定にて <see cref="EnumTransfer{TEnum}"/> を制御する。
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
     public class EnumTransferAttribute: Attribute
@@ -29,9 +30,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
     }
 
     /// <summary>
-    /// <see cref="Dapper"/> で enum (の文字列)を扱えるように変換する。
+    /// <see cref="Dapper"/> で <c>enum</c> (の文字列)を扱えるように変換する。
     /// <para>キャッシュとかは気が向けば。。。</para>
-    /// <para>TODO: <see cref="ContentTypeTextNet.Pe.Core.Models.NameConverter.PascalToKebab(string)"/> への置き換え。</para>
     /// </summary>
     public class EnumTransfer<TEnum>
         where TEnum : struct, Enum
@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         #region function
 
         /// <summary>
-        /// enum 値をそれっぽい文字列に変換。
+        /// <c>enum</c> 値をそれっぽい文字列に変換。
         /// </summary>
         /// <param name="member"></param>
         /// <returns></returns>
@@ -64,26 +64,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             }
 
             var name = fieldInfo.Name;
-            var builder = new StringBuilder((int)(name.Length * 1.5));
-            var lastUpperIndex = -1;
-            for(var i = 0; i < name.Length; i++) {
-                var c = name[i];
-                if(char.IsUpper(c)) {
-                    if(c != 0 && lastUpperIndex != i - 1) {
-                        builder.Append('-');
-                    }
-                    builder.Append(char.ToLower(c));
-                    lastUpperIndex = i;
-                } else {
-                    builder.Append(char.ToLower(c));
-                }
-            }
-
-            return builder.ToString();
+            var nameConverter = new NameConverter();
+            return nameConverter.PascalToKebab(name);
         }
 
         /// <summary>
-        /// DB の値を enum 値に変換。
+        /// DB の値を <c>enum</c> 値に変換。
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
