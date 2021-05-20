@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 if(IsOpenContextMenu) {
                     RaisePropertyChanged(nameof(ShowPlatformOldVersion));
                 }
-                Logger.LogDebug("[#530調査] IsOpenContextMenu: {0}", IsOpenContextMenu);
+                Logger.LogDebug("[#530調査] <IsOpenContextMenu> IsOpenContextMenu = {0}, IsEnabledManager = {1}", IsOpenContextMenu, IsEnabledManager);
             }
         }
 
@@ -296,7 +296,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         {
             if(e.StatusProperty == StatusProperty.CanCallNotifyAreaMenu) {
                 IsEnabledManager = (bool)e.NewValue!;
-                Logger.LogDebug("[#530調査] IsEnabledManager: {0}", IsEnabledManager);
+                Logger.LogDebug("[#530調査] <StatusChanged> IsOpenContextMenu = {0}, IsEnabledManager = {1}", IsOpenContextMenu, IsEnabledManager);
             }
         }
 
