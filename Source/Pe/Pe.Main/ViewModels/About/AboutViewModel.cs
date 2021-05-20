@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
                      string.Empty,
                      false,
                      new[] {
-                        new DialogFilterItem("bat", "bat", "*.bat"),
+                        new DialogFilterItem(Properties.Resources.String_FileDialog_Filter_About_Uninstall, "bat", "*.bat"),
                      },
                      r => {
                          var path = r.ResponseFilePaths[0];

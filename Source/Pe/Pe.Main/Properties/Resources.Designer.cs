@@ -3565,6 +3565,51 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   バッチファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_FileDialog_Filter_About_Uninstall {
+            get {
+                return ResourceManager.GetString("String_FileDialog_Filter_About_Uninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   すべてのファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_FileDialog_Filter_Common_All {
+            get {
+                return ResourceManager.GetString("String_FileDialog_Filter_Common_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ログ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_FileDialog_Filter_Common_Log {
+            get {
+                return ResourceManager.GetString("String_FileDialog_Filter_Common_Log", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   テキスト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_FileDialog_Filter_Note_Plain {
+            get {
+                return ResourceManager.GetString("String_FileDialog_Filter_Note_Plain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   リッチテキスト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_FileDialog_Filter_Note_RichText {
+            get {
+                return ResourceManager.GetString("String_FileDialog_Filter_Note_RichText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   コマンドランチャー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Hook_Keyboard_Execute_Command_Show {

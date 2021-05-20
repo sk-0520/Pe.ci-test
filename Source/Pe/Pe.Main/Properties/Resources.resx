@@ -2145,4 +2145,19 @@ Pe を終了してから実行してください</value>
   <data name="String_Common_Network_UnknownResponse" xml:space="preserve">
     <value>応答データ不明</value>
   </data>
+  <data name="String_FileDialog_Filter_About_Uninstall" xml:space="preserve">
+    <value>バッチファイル</value>
+  </data>
+  <data name="String_FileDialog_Filter_Common_All" xml:space="preserve">
+    <value>すべてのファイル</value>
+  </data>
+  <data name="String_FileDialog_Filter_Common_Log" xml:space="preserve">
+    <value>ログ</value>
+  </data>
+  <data name="String_FileDialog_Filter_Note_Plain" xml:space="preserve">
+    <value>テキスト</value>
+  </data>
+  <data name="String_FileDialog_Filter_Note_RichText" xml:space="preserve">
+    <value>リッチテキスト</value>
+  </data>
 </root>
