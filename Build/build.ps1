@@ -148,6 +148,11 @@ try {
 	foreach ($platform in $Platforms) {
 		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=Release /p:Platform=$platform /p:DefineConstants=$define /t:Rebuild
 		dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --output Output/Release/$platform/Pe/bin --self-contained true
+		# プラグイン参照実装
+		$pluginProjectFiles = $projectFiles | Where-Object -Property "Name" -like "Pe.Plugins.Reference.*.csproj"
+		foreach($pluginProjectFile in $pluginProjectFiles) {
+			dotnet publish $pluginProjectFile /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --output Output/Release/$platform/Plugins --self-contained false
+		}
 
 		# テストプロジェクトのビルド
 		foreach($testDirectory in $testDirectories) {
