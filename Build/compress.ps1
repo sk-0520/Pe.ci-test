@@ -22,6 +22,7 @@ $version = GetAppVersion
 foreach($platform in $Platforms) {
 	$archiveFileName = (ConvertAppArchiveFileName $version $platform $Archive)
 	$binRootDirPath = "Output\Release\$platform\Pe"
+	$pluginsRootDirPath = "Output\Release\$platform\Plugins"
 
 	if($Diet) {
 		$removeTargets = @(
@@ -29,6 +30,7 @@ foreach($platform in $Platforms) {
 			Get-ChildItem -Path $binRootDirPath -File -Filter "*.iobj"
 			Get-ChildItem -Path $binRootDirPath -File -Filter "*.ipdb"
 			Get-ChildItem -Path $binRootDirPath -File -Filter "*.pdb" -Recurse
+			Get-ChildItem -Path $pluginsRootDirPath -File -Filter "*.pdb" -Recurse
 			Get-ChildItem -Path (Join-Path $binRootDirPath 'bin') -File -Filter "*.xml" -Recurse
 		) | Select-Object -ExpandProperty FullName
 
@@ -55,10 +57,20 @@ foreach($platform in $Platforms) {
 		Remove-Item -Path $sqlDilrPath -Recurse  -Force -Exclude $packSqlName
 	}
 
+	$pluginDirs = Get-ChildItem -Path $pluginsRootDirPath -Directory
+
 	switch ($Archive) {
 		'zip' {
-			$destinationPath = Join-Path 'Output' $archiveFileName
-			Compress-Archive -Force -Path (Join-Path $binRootDirPath "*") -DestinationPath $destinationPath
+			function Compress-Core([string] $directoryPath, [string] $outputFileName) {
+				$destinationPath = Join-Path 'Output' $outputFileName
+				Compress-Archive -Force -Path (Join-Path $directoryPath "*") -DestinationPath $destinationPath
+			}
+
+			Compress-Core $binRootDirPath $archiveFileName
+
+			foreach($pluginDir in $pluginDirs) {
+				Compress-Core $pluginDir.FullName ($pluginDir.Name + '.' + $Archive)
+			}
 		}
 		'7z' {
 			try {
