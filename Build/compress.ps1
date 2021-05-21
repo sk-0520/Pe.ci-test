@@ -59,21 +59,13 @@ foreach ($platform in $Platforms) {
 
 	$pluginDirs = Get-ChildItem -Path $pluginsRootDirPath -Directory
 
-	switch ($Archive) {
-		'zip' {
-			function Compress-Core([string] $directoryPath, [string] $outputFileName) {
+	function Compress-Core([string] $directoryPath, [string] $outputFileName) {
+		switch ($Archive) {
+			'zip' {
 				$destinationPath = Join-Path 'Output' $outputFileName
 				Compress-Archive -Force -Path (Join-Path $directoryPath "*") -DestinationPath $destinationPath
 			}
-
-			Compress-Core $binRootDirPath $archiveFileName
-
-			foreach ($pluginDir in $pluginDirs) {
-				Compress-Core $pluginDir.FullName ($pluginDir.Name + '_' + $platform + '.' + $Archive)
-			}
-		}
-		'7z' {
-			function Compress-Core([string] $directoryPath, [string] $outputFileName) {
+			'7z' {
 				try {
 					Push-Location "$directoryPath"
 					if (Test-Path "$outputFileName") {
@@ -86,12 +78,11 @@ foreach ($platform in $Platforms) {
 				}
 				Move-Item -Path (Join-Path "$directoryPath" "$outputFileName") -Destination 'Output'
 			}
-
-			Compress-Core $binRootDirPath $archiveFileName
-
-			foreach ($pluginDir in $pluginDirs) {
-				Compress-Core $pluginDir.FullName ($pluginDir.Name + '_' + $platform + '.' + $Archive)
-			}
 		}
+	}
+
+	Compress-Core $binRootDirPath $archiveFileName
+	foreach ($pluginDir in $pluginDirs) {
+		Compress-Core $pluginDir.FullName ($pluginDir.Name + '_' + $platform + '.' + $Archive)
 	}
 }
