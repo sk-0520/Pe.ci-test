@@ -60,17 +60,17 @@ aside.tips, aside.warning, aside.bugs, aside.ref {
 	}
 	&.warning {
 		&::before {
-			content: '⚠';
+			content: '⚠️';
 		}
-		
-		border-color: #f8f;
+
+		border-color: #faf;
 		background: #fef;
 	}
 	&.bugs {
 		&::before {
 			content: '🐞';
 		}
-		
+
 		border-color: #f88;
 		background: #fee;
 	}
@@ -78,7 +78,7 @@ aside.tips, aside.warning, aside.bugs, aside.ref {
 		&::before {
 			content: '🔗';
 		}
-		
+
 		border-color: #88f;
 		background: #eef;
 	}
