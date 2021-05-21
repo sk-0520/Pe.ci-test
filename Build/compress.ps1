@@ -69,7 +69,7 @@ foreach ($platform in $Platforms) {
 			Compress-Core $binRootDirPath $archiveFileName
 
 			foreach ($pluginDir in $pluginDirs) {
-				Compress-Core $pluginDir.FullName ($pluginDir.Name + '.' + $Archive)
+				Compress-Core $pluginDir.FullName ($pluginDir.Name + '_' + $platform + '.' + $Archive)
 			}
 		}
 		'7z' {
@@ -90,7 +90,7 @@ foreach ($platform in $Platforms) {
 			Compress-Core $binRootDirPath $archiveFileName
 
 			foreach ($pluginDir in $pluginDirs) {
-				Compress-Core $pluginDir.FullName ($pluginDir.Name + '.' + $Archive)
+				Compress-Core $pluginDir.FullName ($pluginDir.Name + '_' + $platform + '.' + $Archive)
 			}
 		}
 	}
