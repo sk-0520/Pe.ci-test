@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models
 {
+
     public class CultureServiceChanger
     {
         public CultureServiceChanger(CultureService cultureService, IWindowManager windowManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ApplicationConfiguration applicationConfiguration, ILoggerFactory loggerFactory)

@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <summary>
         /// 初期化済みか。
         /// </summary>
-        bool IsInitialize { get; }
+        bool IsInitialized { get; }
 
         #endregion
 

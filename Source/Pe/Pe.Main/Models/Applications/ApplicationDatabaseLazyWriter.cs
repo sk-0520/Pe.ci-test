@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     public interface ITemporaryDatabaseLazyWriter: IApplicationDatabaseLazyWriter
     { }
 
-    public class ApplicationDatabaseLazyWriter: DatabaseLazyWriter, IMainDatabaseLazyWriter, ILargeDatabaseLazyWriter, ITemporaryDatabaseLazyWriter
+    internal class ApplicationDatabaseLazyWriter: DatabaseLazyWriter, IMainDatabaseLazyWriter, ILargeDatabaseLazyWriter, ITemporaryDatabaseLazyWriter
     {
         public ApplicationDatabaseLazyWriter(IDatabaseBarrier databaseBarrier, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
             : base(databaseBarrier, pauseRetryTime, loggerFactory)

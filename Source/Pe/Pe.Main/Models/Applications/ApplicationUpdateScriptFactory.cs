@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
-    public class ApplicationUpdateScriptFactory
+    internal class ApplicationUpdateScriptFactory
     {
         public ApplicationUpdateScriptFactory(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
         {

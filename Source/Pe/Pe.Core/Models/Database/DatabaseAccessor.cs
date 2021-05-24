@@ -300,7 +300,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         protected virtual void LoggingQueryResult<T>([MaybeNull] T result, [DateTimeKind(DateTimeKind.Utc)] DateTime startTime, [DateTimeKind(DateTimeKind.Utc)] DateTime endTime)
         {
             if(Logger.IsEnabled(LogLevel.Trace)) {
-                Logger.LogTrace($"{typeof(T)} -> {result}, {endTime - startTime}", new { startTime, endTime });
+                Logger.LogTrace("{0} -> {1}, {2}", typeof(T), result, endTime - startTime);
             }
         }
 
@@ -316,9 +316,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             if(Logger.IsEnabled(LogLevel.Trace)) {
                 if(bufferd) {
-                    Logger.LogTrace($"{nameof(IEnumerable)}<{typeof(T)}> -> {result.Count()}, {endTime - startTime}", new { startTime, endTime });
+                    Logger.LogTrace("{0}<{1}> -> {2}, {3}", nameof(IEnumerable), typeof(T), result.Count(), endTime - startTime);
                 } else {
-                    Logger.LogTrace($"{nameof(IEnumerable)}<{typeof(T)}> -> no buffered, {endTime - startTime}", new { startTime, endTime });
+                    Logger.LogTrace("{0}<{1}> -> no buffered, {2}", nameof(IEnumerable), typeof(T), endTime - startTime);
                 }
             }
         }
@@ -335,7 +335,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         protected virtual void LoggingExecuteResult(int result, [DateTimeKind(DateTimeKind.Utc)] DateTime startTime, [DateTimeKind(DateTimeKind.Utc)] DateTime endTime)
         {
             if(Logger.IsEnabled(LogLevel.Trace)) {
-                Logger.LogTrace($"result: {result}, {endTime - startTime}", new { startTime, endTime });
+                Logger.LogTrace("result: {0}, {1}", result, endTime - startTime);
             }
         }
 
@@ -352,7 +352,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         protected virtual void LoggingDataTable(DataTable table, [DateTimeKind(DateTimeKind.Utc)] DateTime startTime, [DateTimeKind(DateTimeKind.Utc)] DateTime endTime)
         {
             if(Logger.IsEnabled(LogLevel.Trace)) {
-                Logger.LogTrace($"table: {table.TableName} -> {table.Columns.Count} * {table.Rows.Count}, {endTime - startTime}", new { startTime, endTime });
+                Logger.LogTrace("table: {0} -> {1} * {2} = {3}, {4}", table.TableName, table.Columns.Count, table.Rows.Count, table.Columns.Count * table.Rows.Count, endTime - startTime);
             }
         }
 

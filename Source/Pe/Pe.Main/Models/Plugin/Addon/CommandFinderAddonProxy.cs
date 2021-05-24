@@ -38,33 +38,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #region ICommandFinder
 
 
-        public bool IsInitialize { get; private set; }
+        public bool IsInitialized { get; private set; }
 
 
         public void Initialize()
         {
-            if(IsInitialize) {
-                throw new InvalidOperationException(nameof(IsInitialize));
+            if(IsInitialized) {
+                throw new InvalidOperationException(nameof(IsInitialized));
             }
 
             foreach(var addonFunctions in FunctionUnits) {
-                if(addonFunctions.IsInitialize) {
+                if(addonFunctions.IsInitialized) {
                     continue;
                 }
                 addonFunctions.Initialize();
             }
 
-            IsInitialize = true;
+            IsInitialized = true;
         }
 
         public IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
-            if(!IsInitialize) {
-                throw new InvalidOperationException(nameof(IsInitialize));
+            if(!IsInitialized) {
+                throw new InvalidOperationException(nameof(IsInitialized));
             }
 
             foreach(var addonFunctions in FunctionUnits) {
-                Debug.Assert(addonFunctions.IsInitialize);
+                Debug.Assert(addonFunctions.IsInitialized);
                 var results = addonFunctions.EnumerateCommandItems(inputValue, inputRegex, hitValuesCreator, cancellationToken);
                 foreach(var result in results) {
                     yield return result;
@@ -76,8 +76,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         {
             Debug.Assert(pluginContext.GetType() == typeof(NullPluginContext));
 
-            if(!IsInitialize) {
-                throw new InvalidOperationException(nameof(IsInitialize));
+            if(!IsInitialized) {
+                throw new InvalidOperationException(nameof(IsInitialized));
             }
 
             foreach(var functionUnit in FunctionUnits) {

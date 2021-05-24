@@ -149,8 +149,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                     string.Empty,
                     false,
                     new[] {
-                        new DialogFilterItem("log", "log", "*.log"),
-                        new DialogFilterItem("all", string.Empty, "*"),
+                        new DialogFilterItem(Properties.Resources.String_FileDialog_Filter_Common_Log, "log", "*.log"),
+                        new DialogFilterItem(Properties.Resources.String_FileDialog_Filter_Common_All, string.Empty, "*"),
                     },
                     r => {
                         var path = r.ResponseFilePaths[0];

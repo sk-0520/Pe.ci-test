@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         {
             ThrowIfDisposed();
 
-            using(var stream = new MemoryStream()) {
+            using(var stream = new MemoryReleaseStream()) {
                 await WriteStreamAsync(iconImage, stream);
 
                 DateTime iconUpdatedTimestamp = DateTime.UtcNow;

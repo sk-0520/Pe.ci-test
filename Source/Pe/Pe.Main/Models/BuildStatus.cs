@@ -4,7 +4,7 @@ using System.Reflection;
 namespace ContentTypeTextNet.Pe.Main.Models
 {
     /// <summary>
-    /// ビルド種別
+    /// ビルド種別。
     /// </summary>
     public enum BuildType
     {
@@ -22,25 +22,40 @@ namespace ContentTypeTextNet.Pe.Main.Models
         Release,
     }
 
+    /// <summary>
+    /// ビルド状態。
+    /// </summary>
     public interface IBuildStatus
-    {
-        #region property
-
-        BuildType BuildType { get; }
-
-        Version Version { get; }
-        string Revision { get; }
-
-        #endregion
-    }
-
-    public static class BuildStatus
     {
         #region property
 
         /// <summary>
         /// ビルド種別。
         /// </summary>
+        BuildType BuildType { get; }
+
+        /// <summary>
+        /// アプリケーションバージョン。
+        /// </summary>
+        Version Version { get; }
+
+        /// <summary>
+        /// リビジョン。
+        /// <para>ビルド時の git コミット。</para>
+        /// </summary>
+        string Revision { get; }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// ビルド状態ヘルパー。
+    /// </summary>
+    public static class BuildStatus
+    {
+        #region property
+
+        /// <inheritdoc cref="IBuildStatus.BuildType"/>
         public static BuildType BuildType
         {
             get
@@ -55,6 +70,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
             }
         }
 
+        /// <summary>
+        /// 本番バージョンか。
+        /// <para>本番バージョンはそれ以外と違って稼働ディレクトリが一段上になる。</para>
+        /// </summary>
         public static bool IsProduct { get; } =
 #if PRODUCT
             true
@@ -63,19 +82,17 @@ namespace ContentTypeTextNet.Pe.Main.Models
 #endif
         ;
 
-        /// <summary>
-        /// バージョン。
-        /// </summary>
+        /// <inheritdoc cref="IBuildStatus.Version"/>
         public static Version Version { get; } = Assembly.GetExecutingAssembly()!.GetName()!.Version!;
-        /// <summary>
-        /// リビジョン。
-        /// </summary>
+
+        /// <inheritdoc cref="IBuildStatus.Revision"/>
         public static string Revision { get; } = Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
 
         /// <summary>
         /// アプリケーション名。
         /// </summary>
         public static string Name { get; } = Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyProductAttribute>()!.Product;
+
         /// <summary>
         /// 著作権。
         /// </summary>

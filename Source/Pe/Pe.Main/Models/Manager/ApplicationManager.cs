@@ -1920,7 +1920,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var serializer = new CrashReportSerializer();
                 serializer.Save(rawData, stream);
             }
-#if DEBUG
+#if false
             using(var stream = file.Open(FileMode.Open)) {
                 var serializer = new CrashReportSerializer();
                 var data = serializer.Load<CrashReportRawData>(new KeepStream(stream));

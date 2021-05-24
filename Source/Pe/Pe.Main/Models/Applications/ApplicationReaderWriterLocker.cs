@@ -2,15 +2,15 @@ using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
-    public abstract class ApplicationReaderWriterLockerBase: ReaderWriterLocker
+    internal abstract class ApplicationReaderWriterLockerBase: ReaderWriterLocker
     { }
 
-    public class ApplicationMainReaderWriterLocker: ApplicationReaderWriterLockerBase
+    internal class ApplicationMainReaderWriterLocker: ApplicationReaderWriterLockerBase
     { }
 
-    public class ApplicationLargeReaderWriterLocker: ApplicationReaderWriterLockerBase
+    internal class ApplicationLargeReaderWriterLocker: ApplicationReaderWriterLockerBase
     { }
 
-    public class ApplicationTemporaryReaderWriterLocker: ApplicationReaderWriterLockerBase
+    internal class ApplicationTemporaryReaderWriterLocker: ApplicationReaderWriterLockerBase
     { }
 }

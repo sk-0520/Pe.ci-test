@@ -44,6 +44,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         /// <param name="conf"></param>
         protected ConfigurationBase(IConfiguration conf)
         {
+            Configuration = conf;
+
             var type = GetType();
             var properties = type.GetProperties()
                 .ToDictionary(i => i.Name, i => i)
@@ -103,6 +105,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             }
 #endif
         }
+
+        protected IConfiguration Configuration { get; }
 
         #region function
 
@@ -228,42 +232,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         protected static ClassAndText ConvertClassAndText(IConfigurationSection section, string key)
         {
             return new ClassAndText(section.GetValue<string>("class"), section.GetValue<string>("text"));
-        }
-
-        #endregion
-
-        #region object
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-
-            var type = GetType();
-            var parent = "[" + type.Name + "]";
-            sb.AppendLine(parent);
-
-            foreach(var property in type.GetProperties()) {
-                sb.Append(parent);
-                sb.Append(' ');
-                sb.Append(property.Name);
-                sb.Append(": ");
-                var obj = property.GetValue(this);
-                if(obj != null) {
-                    if(obj is ConfigurationBase conf) {
-                        sb.Append(obj);
-                    } else {
-                        var objType = obj.GetType();
-                        if(objType.IsArray) {
-                            sb.Append(ObjectDumper.GetDumpString(obj));
-                        } else {
-                            sb.Append(obj);
-                        }
-                    }
-                }
-                sb.AppendLine();
-            }
-
-            return sb.ToString();
         }
 
         #endregion

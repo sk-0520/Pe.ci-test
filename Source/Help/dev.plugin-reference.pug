@@ -1,0 +1,61 @@
+extends template/_layout.pug
+
+block BLOCK_LAYOUT_VAR
+	- var VAR_LAYOUT_TITLE = pages.dev.plugin_reference
+
+block BLOCK_LAYOUT_CONTENT
+	aside.warning
+		p
+			| プラグインはバージョン
+			a(href="https://bitbucket.org/sk_0520/pe/issues?version=0.99.000") 0.99.000
+			| の
+			a(href="https://bitbucket.org/sk_0520/pe/issues/509") #509
+			| にて実装されましたが試行錯誤しながらやってるので
+			code interface
+			| はころころ変わります。
+
+	p プラグインの参照実装は
+		em(data-path="dir") [Pe.git]/Source/Pe/Pe.Plugins.Reference.*/
+		| に配置されています。
+	p 扱いとしてはその時点の Pe で少なくとも稼働可能なプラグインになります。
+
+	section
+		h2 Pe.Plugins.Reference.Clock
+		p
+			| 時計を表示する。
+			br
+			| ウィジェット・設定の参照実装。
+
+	section
+		h2 Pe.Plugins.Reference.Eyes
+		p
+			| xeyes のおめめ。
+			br
+			| ウィジェット・バックグラウンドの参照実装。
+
+	section
+		h2 Pe.Plugins.Reference.FileFinder
+		p
+			| コマンド入力欄に入力された文字列をファイルパスとして扱う。
+			br
+			| コマンドファインダー・設定の参照実装。
+
+	section
+		h2 Pe.Plugins.Reference.Html
+		p
+			| 常に IME 死んでるマン。
+			br
+			| WebView ウィジェットの参照実装。
+
+	section
+		h2 Pe.Plugins.Reference.ClassicTheme
+		p
+			| テーマをプラグインとして扱うのが💩と教えてくれた偉大なる参照実装。
+			br
+			| テーマの参照実装。
+
+	aside.ref
+		p
+			a(href="https://bitbucket.org/sk_0520/pe/downloads/") ダウンロード
+			| に最新のプラグインが配置されています。
+

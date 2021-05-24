@@ -233,6 +233,21 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             Application.Current.Dispatcher.Invoke(new Action(() => base.CollectionChanged(e)));
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing && ManagingResource) {
+                    var oldItems = EditableViewModels.ToArray();
+                    EditableViewModels.Clear();
+                    foreach(var oldItem in oldItems) {
+                        oldItem.Dispose();
+                    }
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
     }
 
@@ -353,6 +368,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             ReplaceItems = null;
             MoveItems = null;
             ResetItems = null;
+
+            StockModels?.Clear();
+            StockModels = null;
 
             base.Dispose(disposing);
         }

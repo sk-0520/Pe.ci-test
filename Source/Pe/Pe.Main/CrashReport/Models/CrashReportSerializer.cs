@@ -1,31 +1,37 @@
+using System;
+using System.IO;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models
 {
-    internal class CrashReportSerializer: XmlDataContractSerializer
+    internal sealed class CrashReportSerializer: SerializerBase
     {
         public CrashReportSerializer()
         {
         }
 
-        #region XmlDataContractSerializer
+        #region SerializerBase
 
-        protected override XmlReaderSettings CreateXmlReaderSettings()
+        public override TResult Load<TResult>(Stream stream)
         {
-            return new XmlReaderSettings() {
-                CloseInput = false,
-            };
+            using var reader = GetReader(stream);
+            var json = reader.ReadToEnd();
+            var result = System.Text.Json.JsonSerializer.Deserialize<TResult>(json);
+            if(result is null) {
+                throw new SerializationException();
+            }
+
+            return result;
         }
 
-        protected override XmlWriterSettings CreateXmlWriterSettings()
+        public override void Save(object value, Stream stream)
         {
-            return new XmlWriterSettings() {
-                CloseOutput = false,
-                NewLineHandling = NewLineHandling.Entitize,
-                Encoding = Encoding.Unicode,
-            };
+            using var writer = GetWriter(stream);
+            var json = System.Text.Json.JsonSerializer.Serialize(value); // TODO: ストリーム直接でいいと思う
+            writer.Write(json);
         }
 
         #endregion

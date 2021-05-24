@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         public string ExpandPath(string? path) => Environment.ExpandEnvironmentVariables(path ?? string.Empty);
 
-        public DialogFilterItem CreateAllFilter() => new DialogFilterItem("all", string.Empty, "*");
+        public DialogFilterItem CreateAllFilter() => new DialogFilterItem(Properties.Resources.String_FileDialog_Filter_Common_All, string.Empty, "*");
 
         private void SelectFileSystem(IRequestSender requestSender, string path, FileSystemDialogMode fileSystemDialogMode, IEnumerable<DialogFilterItem> filters, Action<FileSystemSelectDialogRequestResponse> response)
         {

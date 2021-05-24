@@ -184,14 +184,14 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
 
         #region ICommandFinder
 
-        /// <inheritdoc cref="ICommandFinder.IsInitialize"/>
-        public bool IsInitialize { get; private set; }
+        /// <inheritdoc cref="ICommandFinder.IsInitialized"/>
+        public bool IsInitialized { get; private set; }
 
         /// <inheritdoc cref="ICommandFinder.Initialize"/>
         public void Initialize()
         {
-            if(IsInitialize) {
-                throw new InvalidOperationException(nameof(IsInitialize));
+            if(IsInitialized) {
+                throw new InvalidOperationException(nameof(IsInitialized));
             }
 
             var path = Environment.GetEnvironmentVariable("PATH");
@@ -225,7 +225,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
                 }
             }
 
-            IsInitialize = true;
+            IsInitialized = true;
         }
 
         /// <inheritdoc cref="ICommandFinder.EnumerateCommandItems(string, Regex, IHitValuesCreator, CancellationToken)"/>

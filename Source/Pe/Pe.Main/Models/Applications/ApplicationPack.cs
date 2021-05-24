@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public abstract class TApplicationPackBase<TInterface, TObject>: DisposerBase, IApplicationPack<TInterface>
+    internal abstract class TApplicationPackBase<TInterface, TObject>: DisposerBase, IApplicationPack<TInterface>
         where TObject : TInterface
     {
         protected TApplicationPackBase([DisallowNull] TObject main, [DisallowNull] TObject large, [DisallowNull] TObject temporary)
@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     public interface IReaderWriterLockerPack: IApplicationPack<IReaderWriterLocker>
     { }
 
-    public sealed class ApplicationReaderWriterLockerPack: TApplicationPackBase<IReaderWriterLocker, ApplicationReaderWriterLockerBase>, IReaderWriterLockerPack
+    internal sealed class ApplicationReaderWriterLockerPack: TApplicationPackBase<IReaderWriterLocker, ApplicationReaderWriterLockerBase>, IReaderWriterLockerPack
     {
         public ApplicationReaderWriterLockerPack(ApplicationMainReaderWriterLocker main, ApplicationLargeReaderWriterLocker large, ApplicationTemporaryReaderWriterLocker temporary)
             : base(main, large, temporary)
@@ -120,14 +120,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     public interface IDatabaseFactoryPack: IApplicationPack<IDatabaseFactory>
     { }
 
-    public sealed class ApplicationDatabaseFactoryPack: TApplicationPackBase<IDatabaseFactory, ApplicationDatabaseFactory>, IDatabaseFactoryPack
+    internal sealed class ApplicationDatabaseFactoryPack: TApplicationPackBase<IDatabaseFactory, ApplicationDatabaseFactory>, IDatabaseFactoryPack
     {
         public ApplicationDatabaseFactoryPack(ApplicationDatabaseFactory main, ApplicationDatabaseFactory large, ApplicationDatabaseFactory temporary)
             : base(main, large, temporary)
         { }
     }
 
-    public class LazyWriterWaitTimePack: TApplicationPackBase<TimeSpan, TimeSpan>
+    internal class LazyWriterWaitTimePack: TApplicationPackBase<TimeSpan, TimeSpan>
     {
         public LazyWriterWaitTimePack(TimeSpan main, TimeSpan large, TimeSpan temporary)
             : base(main, large, temporary)
@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     public interface IDatabaseLazyWriterPack: IApplicationPack<IDatabaseLazyWriter>
     { }
 
-    public sealed class ApplicationDatabaseLazyWriterPack: TApplicationPackBase<IDatabaseLazyWriter, ApplicationDatabaseLazyWriter>, IDatabaseLazyWriterPack
+    internal sealed class ApplicationDatabaseLazyWriterPack: TApplicationPackBase<IDatabaseLazyWriter, ApplicationDatabaseLazyWriter>, IDatabaseLazyWriterPack
     {
         public ApplicationDatabaseLazyWriterPack(ApplicationDatabaseLazyWriter main, ApplicationDatabaseLazyWriter large, ApplicationDatabaseLazyWriter temporary)
             : base(main, large, temporary)
@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     public interface IDatabaseAccessorPack: IApplicationPack<IDatabaseAccessor>
     { }
 
-    public sealed class ApplicationDatabaseAccessorPack: TApplicationPackBase<IDatabaseAccessor, ApplicationDatabaseAccessor>, IDatabaseAccessorPack
+    internal sealed class ApplicationDatabaseAccessorPack: TApplicationPackBase<IDatabaseAccessor, ApplicationDatabaseAccessor>, IDatabaseAccessorPack
     {
         public ApplicationDatabaseAccessorPack(ApplicationDatabaseAccessor main, ApplicationDatabaseAccessor large, ApplicationDatabaseAccessor temporary)
             : base(main, large, temporary)
@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public sealed class ApplicationDatabaseBarrierPack: TApplicationPackBase<IDatabaseBarrier, ApplicationDatabaseBarrier>, IDatabaseBarrierPack
+    internal sealed class ApplicationDatabaseBarrierPack: TApplicationPackBase<IDatabaseBarrier, ApplicationDatabaseBarrier>, IDatabaseBarrierPack
     {
         #region define
 

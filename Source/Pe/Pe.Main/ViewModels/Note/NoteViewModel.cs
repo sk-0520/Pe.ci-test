@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public RequestSender CloseRequest { get; } = new RequestSender();
 
         public RequestSender TitleEditStartRequest { get; } = new RequestSender();
-        public RequestSender SelectLinkFileRequest { get; } = new RequestSender();
+        //public RequestSender SelectLinkFileRequest { get; } = new RequestSender();
 
         public RequestSender LinkChangeRequest { get; } = new RequestSender();
 
@@ -659,12 +659,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 IsOpen = isOpen,
             };
             var contentKindFilter = ContentKind switch {
-                NoteContentKind.Plain => new DialogFilterItem("text", "txt", "*.txt"),
-                NoteContentKind.RichText => new DialogFilterItem("rtf", "rtf", "*.rtf"),
+                NoteContentKind.Plain => new DialogFilterItem(Properties.Resources.String_FileDialog_Filter_Note_Plain, "txt", "*.txt"),
+                NoteContentKind.RichText => new DialogFilterItem(Properties.Resources.String_FileDialog_Filter_Note_RichText, "rtf", "*.rtf"),
                 _ => throw new NotImplementedException(),
             };
             parameter.Filter.Add(contentKindFilter);
-            parameter.Filter.Add(new DialogFilterItem("all", string.Empty, "*.*"));
+            parameter.Filter.Add(new DialogFilterItem(Properties.Resources.String_FileDialog_Filter_Common_All, string.Empty, "*"));
 
             switch(ContentKind) {
                 case NoteContentKind.Plain:
