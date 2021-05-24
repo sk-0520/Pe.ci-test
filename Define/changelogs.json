@@ -4,45 +4,15 @@
 		"version": "0.xx.001",
 		"contents": [
 			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "b91bf956224ad1a6b7c54e73aa13e2f7c3b3b578",
 						"subject": "#732: アプリケーション構成ファイルのログ出力は独自実装ではなく.NET提供の出力方法を使用する"
 					},
 					{
-						"revision": "",
+						"revision": "cb8153a7dfd3812be19d7a5e7b971f8e18e53833",
 						"subject": "#734: ファイルダイアログのフィルターがローカライズ未対応"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -50,20 +20,8 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "d2084778d9542e7e76671232756a5a076e5bed67",
 						"subject": "#731: クラッシュレポートが死んでる"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -71,24 +29,16 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "e3f802865b326f7520042e206f6eb8712691798e",
 						"subject": "update npm"
 					},
 					{
-						"revision": "",
+						"revision": "e4209f76ce113309be1da6a98fb27a95eef1a21e",
 						"subject": "#727: プラグイン参照実装をCIにのせる",
 						"comments": [
 							"CIに乗せたのでCDでダウンロードページまで移送されることになった",
 							"参照実装プラグインの扱いについてはヘルプを参照のこと"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
