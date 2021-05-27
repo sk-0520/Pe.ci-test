@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -14,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        ISupportInitialize Target { get; set; }
+        ISupportInitialize Target { get; [Unuse(UnuseKinds.Dispose)] set; }
 
         #endregion
 
