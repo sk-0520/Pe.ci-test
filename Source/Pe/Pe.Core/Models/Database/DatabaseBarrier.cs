@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
@@ -16,8 +17,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region property
 
-        IDisposable Locker { get; }
-        IDatabaseTransaction Transaction { get; }
+        IDisposable Locker { get; [Unuse(UnuseKinds.Dispose)]set; }
+        IDatabaseTransaction Transaction { get; [Unuse(UnuseKinds.Dispose)] set; }
 
         IDbTransaction IDatabaseTransaction.Transaction => Transaction.Transaction;
 
@@ -113,6 +114,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                     Transaction.Dispose();
                     Locker.Dispose();
                 }
+                Transaction = null!;
+                Locker = null!;
             }
 
             base.Dispose(disposing);

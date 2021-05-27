@@ -8,22 +8,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
-    internal class LazyStockItem
-    {
-        public LazyStockItem(Action<IDatabaseTransaction> action)
-        {
-            Action = action;
-        }
-
-        #region property
-
-        public Action<IDatabaseTransaction> Action { get; }
-        [DateTimeKind(DateTimeKind.Unspecified)]
-        public DateTime StockTimestamp { get; } = DateTime.UtcNow;
-
-        #endregion
-    }
-
     /// <summary>
     /// データベースへの遅延書き込み。
     /// </summary>
@@ -70,12 +54,32 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
     public class DatabaseLazyWriter: DisposerBase, IDatabaseLazyWriter
     {
+        #region define
+
+        readonly struct LazyStockItem
+        {
+            public LazyStockItem(Action<IDatabaseTransaction> action)
+            {
+                Action = action;
+                StockTimestamp = DateTime.UtcNow;
+            }
+
+            #region property
+
+            public Action<IDatabaseTransaction> Action { get; }
+            [DateTimeKind(DateTimeKind.Utc)]
+            public DateTime StockTimestamp { get; }
+
+            #endregion
+        }
+
+        #endregion
+
         #region variable
 
         readonly object _timerLocker = new object();
 
         #endregion
-
 
         public DatabaseLazyWriter(IDatabaseBarrier databaseBarrier, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
         {
@@ -103,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         TimeSpan PauseRetryTime { get; }
         ILogger Logger { get; }
 
-        Timer LazyTimer { get; }
+        Timer LazyTimer { get; [Unuse(UnuseKinds.Dispose)] set; }
 
         IList<LazyStockItem> StockItems { get; } = new List<LazyStockItem>();
         IDictionary<object, LazyStockItem> UniqueItems { get; } = new Dictionary<object, LazyStockItem>();
@@ -258,9 +262,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             if(!IsDisposed) {
                 Flush(disposing);
+                StockItems.Clear();
+                UniqueItems.Clear();
                 if(disposing) {
                     LazyTimer.Dispose();
                 }
+                LazyTimer = null!;
             }
 
             base.Dispose(disposing);
