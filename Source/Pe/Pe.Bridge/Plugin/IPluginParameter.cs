@@ -17,6 +17,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         IImageLoader ImageLoader { get; }
         /// <inheritdoc cref="IMediaConverter"/>
         IMediaConverter MediaConverter { get; }
+        /// <inheritdoc cref="IPolicy"/>
+        IPolicy Policy { get; }
         /// <inheritdoc cref="IDispatcherWrapper"/>
         IDispatcherWrapper DispatcherWrapper { get; }
         /// <inheritdoc cref="ILoggerFactory"/>

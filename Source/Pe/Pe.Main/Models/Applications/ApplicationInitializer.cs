@@ -393,6 +393,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<CultureService, CultureService>(cultureService)
                 .Register<IImageLoader, ImageLoader>(DiLifecycle.Transient)
                 .Register<IMediaConverter, MediaConverter>(DiLifecycle.Transient)
+                .Register<IPolicy, Policy>(DiLifecycle.Transient)
                 .Register<IPluginArguments, PluginArguments>(DiLifecycle.Transient)
 
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)

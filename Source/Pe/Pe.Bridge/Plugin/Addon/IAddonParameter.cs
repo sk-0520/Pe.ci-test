@@ -9,6 +9,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// </summary>
     public interface IAddonParameter: IPluginParameter
     {
+        #region property
+
         /// <summary>
         /// <see cref="IHttpUserAgent"/> 生成器。
         /// </summary>
@@ -23,5 +25,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// </summary>
         ISkeletonImplements SkeletonImplements { get; }
 
+        #endregion
     }
 }
