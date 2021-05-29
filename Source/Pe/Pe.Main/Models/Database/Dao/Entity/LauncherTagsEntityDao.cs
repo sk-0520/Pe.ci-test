@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                     LauncherItemId = launcherItemId,
                     TagName = tag,
                 };
-                commonStatus.WriteCommon(dto);
+                commonStatus.WriteCommonTo(dto);
                 Context.Execute(statement, dto);
             }
         }

@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Height = data.Height,
             };
 
-            databaseCommonStatus.WriteCommon(dto);
+            databaseCommonStatus.WriteCommonTo(dto);
 
             return dto;
         }

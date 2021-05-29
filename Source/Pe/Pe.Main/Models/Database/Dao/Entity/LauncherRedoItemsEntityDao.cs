@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 RetryCount = ToInt(data.RetryCount),
                 WaitTime = data.WaitTime,
             };
-            commonStatus.WriteCommon(dto);
+            commonStatus.WriteCommonTo(dto);
 
             return dto;
         }

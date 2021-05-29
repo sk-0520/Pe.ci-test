@@ -1,8 +1,17 @@
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
+    /// <summary>
+    /// 実行方法。
+    /// </summary>
     public enum RunMode
     {
+        /// <summary>
+        /// 通常。
+        /// </summary>
         Normal,
+        /// <summary>
+        /// クラッシュレポート。
+        /// </summary>
         CrashReport,
     }
 

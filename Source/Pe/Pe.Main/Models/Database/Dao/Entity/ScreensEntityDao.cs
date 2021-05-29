@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 ScreenWidth = (long)screen.DeviceBounds.Width,
                 ScreenHeight = (long)screen.DeviceBounds.Height,
             };
-            commonStatus.WriteCommon(dto);
+            commonStatus.WriteCommonTo(dto);
 
             return Context.Execute(statement, dto) == 1;
         }

@@ -5,6 +5,9 @@ using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
+    /// <summary>
+    /// フィードバック種別。
+    /// </summary>
     public enum FeedbackKind
     {
         /// <summary>
@@ -24,19 +27,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Others,
     }
 
+    /// <summary>
+    /// フィードバック入力データ。
+    /// </summary>
     [Serializable, DataContract]
     public class FeedbackInputData: DataBase
     {
         #region property
 
+        /// <summary>
+        /// 種別。
+        /// </summary>
         [DataMember]
         [JsonPropertyName("kind")]
         public FeedbackKind Kind { get; set; }
 
+        /// <summary>
+        /// 件名。
+        /// </summary>
         [DataMember]
         [JsonPropertyName("subject")]
         public string Subject { get; set; } = string.Empty;
 
+        /// <summary>
+        /// 内容。
+        /// </summary>
         [DataMember]
         [JsonPropertyName("content")]
         public string Content { get; set; } = string.Empty;
@@ -44,6 +59,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    /// <summary>
+    /// フィードバック送信データ。
+    /// </summary>
     [Serializable, DataContract]
     public class FeedbackSendData: DataBase
     {

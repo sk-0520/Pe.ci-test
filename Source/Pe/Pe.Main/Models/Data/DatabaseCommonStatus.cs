@@ -6,13 +6,32 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
+    /// <summary>
+    /// DB共通カラム状態設定処理。
+    /// </summary>
     public interface IDatabaseCommonStatus
     {
         #region function
 
-        void WriteCreate(IWritableCreateDto dto);
-        void WriteUpdate(IWritableUpdateDto dto);
-        void WriteCommon(IWritableCommonDto dto);
+        /// <summary>
+        /// 作成ステータスの書き込み。
+        /// </summary>
+        /// <param name="dto">書き込み対象。</param>
+        void WriteCreateTo(IWritableCreateDto dto);
+        /// <summary>
+        /// 更新ステータスの書き込み。
+        /// </summary>
+        /// <param name="dto">書き込み対象。</param>
+        void WriteUpdateTo(IWritableUpdateDto dto);
+        /// <summary>
+        /// 作成・更新ステータスの書き込み。
+        /// </summary>
+        /// <param name="dto">書き込み対象。</param>
+        void WriteCommonTo(IWritableCommonDto dto);
+        /// <summary>
+        /// 作成・更新ステータス設定済み辞書の生成。
+        /// </summary>
+        /// <returns>生成辞書。</returns>
         IDictionary<string, object> CreateCommonDtoMapping();
 
         #endregion
@@ -80,17 +99,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region IDatabaseCommonStatus
 
-        public void WriteCreate(IWritableCreateDto dto)
+        public void WriteCreateTo(IWritableCreateDto dto)
         {
             WriteCreateCore(dto, DateTime.UtcNow);
         }
 
-        public void WriteUpdate(IWritableUpdateDto dto)
+        public void WriteUpdateTo(IWritableUpdateDto dto)
         {
             WriteUpdateCore(dto, DateTime.UtcNow);
         }
 
-        public void WriteCommon(IWritableCommonDto dto)
+        public void WriteCommonTo(IWritableCommonDto dto)
         {
             var timestamp = DateTime.UtcNow;
 
@@ -103,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
             var result = new Dictionary<string, object>();
 
             var commonDto = new CommonDtoImpl();
-            WriteCommon(commonDto);
+            WriteCommonTo(commonDto);
             foreach(var propertyInfo in commonDto.GetType().GetProperties()) {
                 var value = propertyInfo.GetValue(commonDto);
                 result.Add(propertyInfo.Name, value!); // null は来んでしょ

@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IsTopmost = data.IsTopmost,
                 CaptionPosition = noteCaptionPositionTransfer.ToString(data.CaptionPosition),
             };
-            commonStatus.WriteCommon(dto);
+            commonStatus.WriteCommonTo(dto);
             Context.UpdateByKey(statement, dto);
         }
 

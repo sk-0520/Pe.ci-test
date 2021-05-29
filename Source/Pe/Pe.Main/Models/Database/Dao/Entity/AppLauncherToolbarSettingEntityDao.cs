@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 ContentDropMode = launcherToolbarContentDropModeTransfer.ToString(data.ContentDropMode),
                 GroupMenuPosition = launcherGroupPositionTransfer.ToString(data.GroupMenuPosition),
             };
-            commonStatus.WriteCommon(dto);
+            commonStatus.WriteCommonTo(dto);
             Context.UpdateByKey(statement, dto);
         }
 

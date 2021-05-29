@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Value = value,
                 LastExecuteTimestamp = DateTime.UtcNow,
             };
-            commonStatus.WriteCreate(dto);
+            commonStatus.WriteCreateTo(dto);
 
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
             return Context.Execute(statement, dto) == 1;

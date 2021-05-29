@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IsUnderline = font.IsUnderline,
                 IsStrikeThrough = font.IsStrikeThrough,
             };
-            databaseCommonStatus.WriteCommon(dto);
+            databaseCommonStatus.WriteCommonTo(dto);
 
             return dto;
         }

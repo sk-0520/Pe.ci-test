@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Comment = data.Comment,
             };
 
-            commonStatus.WriteCommon(dto);
+            commonStatus.WriteCommonTo(dto);
 
             return dto;
         }

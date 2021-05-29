@@ -9,33 +9,70 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
+    /// <summary>
+    /// ノート新規作成時タイトル。
+    /// </summary>
     public enum NoteCreateTitleKind
     {
+        /// <summary>
+        /// タイムスタンプ。
+        /// </summary>
         [EnumResource]
         Timestamp,
         [EnumResource]
+        ///ノート数。
         Count,
     }
 
+    /// <summary>
+    /// ノート構築位置。
+    /// </summary>
     public enum NoteStartupPosition
     {
+        /// <summary>
+        /// 設定から。
+        /// </summary>
         Setting,
+        /// <summary>
+        /// カーソル位置。
+        /// </summary>
         CursorPosition,
+        /// <summary>
+        /// ディスプレイ中央。
+        /// </summary>
         CenterScreen,
     }
 
+    /// <summary>
+    /// ノートレイアウト種別。
+    /// </summary>
     public enum NoteLayoutKind
     {
+        /// <summary>
+        /// 絶対座標。
+        /// </summary>
         [EnumResource]
         Absolute,
+        /// <summary>
+        /// 相対座標。
+        /// </summary>
         [EnumResource]
         Relative,
     }
 
+    /// <summary>
+    /// ノート内容種別。
+    /// </summary>
     public enum NoteContentKind
     {
+        /// <summary>
+        /// プレーンテキスト。
+        /// </summary>
         [EnumResource]
         Plain,
+        /// <summary>
+        /// リッチテキスト。
+        /// </summary>
         [EnumResource]
         RichText,
     }
@@ -60,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         [EnumResource]
         None,
         /// <summary>
-        /// メクラ判。
+        /// メクラ板。
         /// <para>テーマに依存。</para>
         /// </summary>
         [EnumResource]

@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Alt = modifierKeyTransfer.ToString(data.Alt),
                 Super = modifierKeyTransfer.ToString(data.Super),
             };
-            databaseCommonStatus.WriteCreate(dto);
+            databaseCommonStatus.WriteCreateTo(dto);
 
             return dto;
         }

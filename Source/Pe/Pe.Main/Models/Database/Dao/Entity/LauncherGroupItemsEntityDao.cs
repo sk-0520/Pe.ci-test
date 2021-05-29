@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                     LauncherItemId = itemId,
                     Sequence = startSequence + (sortStep * (counter++)),
                 };
-                commonStatus.WriteCommon(dto);
+                commonStatus.WriteCommonTo(dto);
                 Context.Execute(statement, dto);
             }
         }

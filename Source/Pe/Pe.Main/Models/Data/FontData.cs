@@ -15,37 +15,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     [Serializable, DataContract]
     public class FontData: IFont
     {
-        #region IReadOnlyFontData
+        #region IFont
 
-        /// <summary>
-        /// フォント名。
-        /// </summary>
+        /// <inheritdoc cref="IFont.FamilyName"/>
         [DataMember]
         public string FamilyName { get; set; } = string.Empty;
-        /// <summary>
-        /// フォントサイズ。
-        /// </summary>
+        /// <inheritdoc cref="IFont.Size"/>
         [DataMember]
         public double Size { get; set; }
-        /// <summary>
-        /// フォントを太字にするか。
-        /// </summary>
+        /// <inheritdoc cref="IFont.IsBold"/>
         [DataMember]
         public bool IsBold { get; set; }
-        /// <summary>
-        /// フォントを斜体にするか。
-        /// </summary>
+        /// <inheritdoc cref="IFont.IsItalic"/>
         [DataMember]
         public bool IsItalic { get; set; }
-
-        /// <summary>
-        /// フォントに下線を設定するか。
-        /// </summary>
+        /// <inheritdoc cref="IFont.IsUnderline"/>
         [DataMember]
         public bool IsUnderline { get; set; }
-        /// <summary>
-        /// フォントに取り消し線を設定するか。
-        /// </summary>
+        /// <inheritdoc cref="IFont.IsStrikeThrough"/>
         [DataMember]
         public bool IsStrikeThrough { get; set; }
 

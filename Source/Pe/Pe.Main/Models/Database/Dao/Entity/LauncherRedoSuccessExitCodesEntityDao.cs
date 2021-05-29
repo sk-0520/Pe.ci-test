@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var insertCount = 0;
             foreach(var code in successExitCodes) {
                 parameter.SuccessExitCode = code;
-                commonStatus.WriteCreate(parameter);
+                commonStatus.WriteCreateTo(parameter);
                 var result = Context.Execute(statement, parameter);
                 insertCount += result;
             }

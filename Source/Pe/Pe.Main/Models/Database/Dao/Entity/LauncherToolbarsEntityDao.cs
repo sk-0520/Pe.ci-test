@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IsAutoHide = data.IsAutoHide,
                 IsIconOnly = data.IsIconOnly,
             };
-            commonStatus.WriteCommon(result);
+            commonStatus.WriteCommonTo(result);
             return result;
         }
 

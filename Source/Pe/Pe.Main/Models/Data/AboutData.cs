@@ -49,18 +49,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    /// <summary>
+    /// コンポーネント種別。
+    /// </summary>
     public enum AboutComponentKind
     {
+        /// <summary>
+        /// Pe。
+        /// </summary>
         [EnumResource]
         Application,
+        /// <summary>
+        /// ライブラリ。
+        /// </summary>
         [EnumResource]
         Library,
+        /// <summary>
+        /// ソフトウェア。
+        /// </summary>
         [EnumResource]
         Software,
+        /// <summary>
+        /// リソース。
+        /// </summary>
         [EnumResource]
         Resource,
     }
 
+    /// <summary>
+    /// コンポーネントアイテム。
+    /// </summary>
     public class AboutComponentItem
     {
         public AboutComponentItem(AboutComponentKind kind, AboutComponentData data, int sort)
@@ -72,11 +90,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region property
 
+        /// <inheritdoc cref="AboutComponentKind"/>
         public AboutComponentKind Kind { get; }
 
+        /// <inheritdoc cref="AboutComponentData"/>
         public AboutComponentData Data { get; }
 
+        /// <summary>
+        /// 順序。
+        /// </summary>
         public int Sort { get; }
+
         #endregion
     }
 }

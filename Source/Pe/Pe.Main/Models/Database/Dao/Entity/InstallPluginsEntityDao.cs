@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 ExtractedDirectoryPath = data.ExtractedDirectoryPath,
                 PluginDirectoryPath = data.PluginDirectoryPath,
             };
-            databaseCommonStatus.WriteCreate(parameter);
+            databaseCommonStatus.WriteCreateTo(parameter);
 
             Context.Execute(statement, parameter);
         }
