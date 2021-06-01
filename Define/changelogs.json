@@ -77,7 +77,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Prism.Wpf 8.0.0.1909 -> 8.1.97"
 					},
 					{
 						"revision": "",
