@@ -63,7 +63,10 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
             totalLength += lstrlen(tunedArgs[j]);
 #pragma warning(pop)
             if (!waitTime) {
-                TCHAR waits[][16] = { _T("--wait"), _T("-wait"), _T("/wait") };
+                TCHAR waits[][16] = {
+                    _T("--_boot-wait"), _T("-_boot-wait"), _T("/_boot-wait"),
+                    _T("--wait"), _T("-wait"), _T("/wait"), //TODO: #737 互換用処理
+                };
                 for (size_t waitIndex = 0; waitIndex < sizeof(waits) / sizeof(waits[0]); waitIndex++) {
                     TCHAR* wait = _tcsstr(tunedArg, waits[waitIndex]);
                     if (wait == tunedArg) {
