@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
                     if(startupRegister.Exists()) {
                         var startupFilePath = startupRegister.GetStartupFilePath();
                         writer.WriteLine("echo [{0}]", "STARTUP");
-                        writer.WriteLine("del \"{0}\"", CommandLine.Escape(startupFilePath));
+                        writer.WriteLine("del {0}", CommandLine.Escape(startupFilePath));
                         writer.WriteLine();
                     }
                 }
