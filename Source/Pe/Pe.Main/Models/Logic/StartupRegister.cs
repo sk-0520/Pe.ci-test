@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
                     var arguments = string.Empty;
                     if(startupParameter.DelayStartup) {
-                        arguments = $"--wait {(int)startupParameter.StartupWaitTime.TotalMilliseconds}";
+                        arguments = $"--_boot-wait {(int)startupParameter.StartupWaitTime.TotalMilliseconds}";
                     }
                     if(!string.IsNullOrWhiteSpace(startupParameter.Argument)) {
                         if(string.IsNullOrEmpty(arguments)) {
@@ -150,13 +150,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var arguments = shortcutFile.Arguments;
                 var args = arguments.Split(' ');
                 var commandLine = new CommandLine(args, false);
-                var waitKey = commandLine.Add(longKey: "wait", hasValue: true);
+                var waitKeys = new[] {
+                    commandLine.Add(longKey: "_boot-wait", hasValue: true),
+                    commandLine.Add(longKey: "wait", hasValue: true), //TODO: #737 互換用処理
+                };
                 if(commandLine.Parse()) {
-                    if(commandLine.Values.TryGetValue(waitKey, out var waitTimes)) {
-                        if(int.TryParse(waitTimes.First, out var waitTime)) {
-                            if(0 < waitTime) {
-                                startupParameter.StartupWaitTime = TimeSpan.FromMilliseconds(waitTime);
-                                startupParameter.DelayStartup = true;
+                    foreach(var waitKey in waitKeys) {
+                        if(commandLine.Values.TryGetValue(waitKey, out var waitTimes)) {
+                            if(int.TryParse(waitTimes.First, out var waitTime)) {
+                                if(0 < waitTime) {
+                                    startupParameter.StartupWaitTime = TimeSpan.FromMilliseconds(waitTime);
+                                    startupParameter.DelayStartup = true;
+                                    break;
+                                }
                             }
                         }
                     }
