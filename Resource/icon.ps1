@@ -9,8 +9,8 @@ $rootDirPath = Split-Path -Parent $currentDirPath
 $iconDirPath = Join-Path $currentDirPath 'Icon'
 $workDirPath = Join-Path $iconDirPath '@work'
 
-$exeIncspace = if ($env:INKSCAPE) { $env:INKSCAPE } else { [Environment]::ExpandEnvironmentVariables('%PROGRAMFILES%\Inkscape\inkscape.exe') }
-$exeImageMagic = if ($env:IMAGEMAGIC) { $env:IMAGEMAGIC } else { [Environment]::ExpandEnvironmentVariables('C:\Applications\tool\ImageMagick\convert.exe') }
+$exeIncspace = if ($env:INKSCAPE) { $env:INKSCAPE } else { [Environment]::ExpandEnvironmentVariables('C:\Program Files\Inkscape\bin\inkscape.exe') }
+$exeImageMagic = if ($env:IMAGEMAGIC) { $env:IMAGEMAGIC } else { [Environment]::ExpandEnvironmentVariables('C:\Applications\ImageMagick\convert.exe') }
 
 $appIcons = @(
 	@{
