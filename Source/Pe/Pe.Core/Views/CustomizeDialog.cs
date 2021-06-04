@@ -1,26 +1,47 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Unmanaged;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Core.Views
 {
+    /// <summary>
+    /// 標準ダイアログに対してカスタムコントロールを提供する基底クラス。
+    /// </summary>
     public abstract class CustomizeDialogControlBase
     {
         #region property
 
+        /// <summary>
+        /// コントロールID。
+        /// <para>自動割り振りされる。</para>
+        /// </summary>
         public int ControlId { get; private set; }
 
+        /// <summary>
+        /// <see cref="BuildImpl"/>で使用する生処理。
+        /// </summary>
         protected ComWrapper<IFileDialogCustomize>? FileDialogCustomize { get; private set; }
 
         #endregion
 
         #region function
 
+        /// <summary>
+        /// ビルド処理。
+        /// <para>継承先で実装すること。</para>
+        /// <para><see cref="ControlId"/>, <see cref="FileDialogCustomize"/>は有効。</para>
+        /// </summary>
         protected abstract void BuildImpl();
 
-        public void Build(int controlId, ComWrapper<IFileDialogCustomize> fileDialogCustomize)
+        /// <summary>
+        /// ビルド処理実施。
+        /// </summary>
+        /// <param name="controlId"></param>
+        /// <param name="fileDialogCustomize"></param>
+        internal void Build(int controlId, ComWrapper<IFileDialogCustomize> fileDialogCustomize)
         {
             ControlId = controlId;
             FileDialogCustomize = fileDialogCustomize;
@@ -28,10 +49,16 @@ namespace ContentTypeTextNet.Pe.Core.Views
             BuildImpl();
         }
 
+        /// <summary>
+        /// 状態変更内部処理。
+        /// </summary>
         protected virtual void ChangeStatusImple()
         { }
 
-        public void ChangeStatus()
+        /// <summary>
+        /// 状態変更。
+        /// </summary>
+        internal void ChangeStatus()
         {
             ChangeStatusImple();
         }
@@ -39,6 +66,9 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
+    /// <summary>
+    /// 標準ダイアログ用グループ。
+    /// </summary>
     public class CustomizeDialogGroup: CustomizeDialogControlBase
     {
         public CustomizeDialogGroup(string header)
@@ -48,7 +78,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #region property
 
+        /// <summary>
+        /// ヘッダ文言。
+        /// </summary>
         public string Header { get; set; }
+
         ISet<CustomizeDialogControlBase> Controls { get; } = new HashSet<CustomizeDialogControlBase>();
 
         #endregion
