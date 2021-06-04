@@ -79,12 +79,18 @@ function ConvertSvgToPng([string] $srcSvgPath) {
 	foreach ($size in $iconSize) {
 		$pngPath = "${pngBasePath}_${size}.png"
 		Write-Host "   -> $pngPath"
+		# 1回じゃ無理なんで2回やるべし。待機も試したけどなんかダメだった
 		& $exeIncspace `
-			--file=$srcSvgPath `
 			--export-dpi=96 `
 			--export-width=$size `
 			--export-height=$size `
-			--export-png=$pngPath
+			--export-filename="$pngPath" `
+			--export-overwrite `
+			--batch-process `
+			--export-type=png `
+			--export-filename="$pngPath" `
+			"$srcSvgPath"
+		Start-Sleep -Seconds 1
 	}
 }
 
