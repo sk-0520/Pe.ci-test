@@ -9,10 +9,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
         [DataMember(Name = "library")]
-        public AboutComponentData[] Library { get; set; } = new AboutComponentData[0];
+        public AboutComponentData[] Library { get; set; } = Array.Empty<AboutComponentData>();
 
         [DataMember(Name = "resource")]
-        public AboutComponentData[] Resource { get; set; } = new AboutComponentData[0];
+        public AboutComponentData[] Resource { get; set; } = Array.Empty<AboutComponentData>();
         #endregion
     }
 

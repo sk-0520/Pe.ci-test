@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         public string Level { get; set; } = string.Empty;
         [DataMember]
         [JsonPropertyName("stack_trace")]
-        public string[] StackTrace { get; set; } = new string[0];
+        public string[] StackTrace { get; set; } = Array.Empty<string>();
         [DataMember]
         [JsonPropertyName("sequence_id")]
         public int SequenceID { get; set; }

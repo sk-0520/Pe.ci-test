@@ -67,6 +67,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
     public enum WS: uint
     {
         WS_OVERLAPPED = 0,
@@ -95,6 +96,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
     public enum WS_EX: uint
     {
         WS_EX_DLGMODALFRAME = 0x0001,
@@ -215,6 +217,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         SC_CONTEXTHELP = 0xF180
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
     public enum SB
     {
         SB_LINEUP = 0,
@@ -301,6 +304,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
     public enum SWP: int
     {
         SWP_ASYNCWINDOWPOS = 0x4000,
@@ -330,9 +334,11 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         HWND_MESSAGE = -3,
     }
 
+
     /// <summary>
     ///
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
     public enum SW: uint
     {
         /// <summary>
@@ -408,6 +414,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         SMTO_NOTIMEOUTIFNOTHUNG = 0x8
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
     public enum SM
     {
         SM_CXSCREEN = 0,
@@ -1712,6 +1719,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     #endregion // SPI
 
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
     public enum SPIF
     {
         None = 0x00,
@@ -1792,6 +1800,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         GWL_ID = -12
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
     public enum VK: int
     {
         VK_LBUTTON = 0x01,

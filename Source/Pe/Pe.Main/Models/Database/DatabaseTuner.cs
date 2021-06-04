@@ -55,9 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         void TuneFile()
         {
-            var tuners = new TunerBase[] {
-
-            };
+            var tuners = System.Array.Empty<TunerBase>();
             TuneImpl(AccessorPack.Large, tuners);
         }
 

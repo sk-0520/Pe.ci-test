@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     }
                     var file = new FileInfo(r.ResponseFilePaths[0]);
                     try {
-                        await Model.InstallLocalPluginTask(file);
+                        await Model.InstallLocalPluginAsync(file);
                     } catch(Exception ex) {
                         var parameter = new CommonMessageDialogRequestParameter() {
                             Message = ex.ToString(),

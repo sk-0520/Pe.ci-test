@@ -265,7 +265,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return false;
             }
 
-            var values = cronPattern.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
+            var values = cronPattern.Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries);
             if(values.Length == 1 && values[0][0] == '@') {
                 switch(values[0]) {
                     case "@hourly":

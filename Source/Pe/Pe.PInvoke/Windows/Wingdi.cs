@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         AC_SRC_ALPHA = 0x01,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
     public enum DT
     {
         DT_TOP = 0x00000000,
