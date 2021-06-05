@@ -1,4 +1,6 @@
+using System;
 using System.Globalization;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -15,6 +17,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
             Value = data.Value;
             Timestamp = timstampConverter.ToViewFullString(data.LastExecuteTimestamp);
+            LastExecuteTimestamp = data.LastExecuteTimestamp;
+            Kind = data.Kind;
+            CanRemove = true;
         }
 
         public HistoryViewModel(string value, ILoggerFactory loggerFactory)
@@ -22,9 +27,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         {
             Value = value;
             Timestamp = string.Empty;
+            CanRemove = false;
         }
 
         #region property
+
+        public LauncherHistoryKind Kind { get; }
+        /// <summary>
+        /// 最終使用日時。
+        /// </summary>
+        [DateTimeKind(DateTimeKind.Utc)]
+        public DateTime LastExecuteTimestamp { get; }
+        public bool CanRemove { get; }
 
         #endregion
 

@@ -275,9 +275,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    /// <summary>
+    /// ランチャーアイテム履歴データ種別。
+    /// </summary>
     public enum LauncherHistoryKind
     {
+        /// <summary>
+        /// コマンドラインオプション。
+        /// </summary>
         Option,
+        /// <summary>
+        /// 作業ディレクトリ。
+        /// </summary>
         WorkDirectory,
     }
 

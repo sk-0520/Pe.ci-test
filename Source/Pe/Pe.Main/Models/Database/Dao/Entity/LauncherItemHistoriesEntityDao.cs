@@ -108,6 +108,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return 0 < result;
         }
 
+        public int DeleteHistoryByLauncherItemId(Guid launcherItemId, LauncherHistoryKind kind, [DateTimeKind(DateTimeKind.Utc)] DateTime lastExecuteTimestamp)
+        {
+            var launcherHistoryKindTransfer = new EnumTransfer<LauncherHistoryKind>();
+
+            var statement = LoadStatement();
+            var parameter = new LauncherItemHistoriesEntityDto() {
+                LauncherItemId = launcherItemId,
+                Kind = launcherHistoryKindTransfer.ToString(kind),
+                LastExecuteTimestamp = lastExecuteTimestamp,
+            };
+
+            return Context.Delete(statement, parameter);
+        }
+
         public int DeleteHistoriesByLauncherItemId(Guid launcherItemId)
         {
             var statement = LoadStatement();

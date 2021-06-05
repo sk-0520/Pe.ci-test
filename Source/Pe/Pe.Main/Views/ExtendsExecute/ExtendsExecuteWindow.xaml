@@ -52,10 +52,14 @@
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                   </Grid.ColumnDefinitions>
 
                   <TextBlock Grid.Column="0" Text="{Binding Value, Mode=OneTime}"/>
                   <TextBlock Grid.Column="1" Text="{Binding Timestamp, Mode=OneTime}"/>
+                  <Button Grid.Column="2" Visibility="{Binding CanRemove, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding DataContext.RemoveHistoryCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding }">
+                    <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+                  </Button>
                 </Grid>
               </DataTemplate>
             </app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
