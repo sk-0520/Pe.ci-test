@@ -668,9 +668,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             switch(ContentKind) {
                 case NoteContentKind.Plain:
-                    parameter.Encoding = EncodingConverter.DefaultEncoding;
-                    parameter.Encodings.Add(EncodingConverter.DefaultEncoding);
-                    parameter.Encodings.Add(Encoding.UTF8);
+                    parameter.Encoding = EncodingUtility.UTF8N;
+                    parameter.Encodings.Add(EncodingUtility.UTF8N);
+                    parameter.Encodings.Add(EncodingUtility.UTF8Bom);
                     parameter.Encodings.Add(Encoding.Unicode);
                     parameter.Encodings.Add(Encoding.UTF32);
                     break;

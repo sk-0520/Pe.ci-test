@@ -80,6 +80,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             }
         }
 
+        public virtual bool RemoveHistory(LauncherHistoryKind kind, DateTime lastExecuteTimestamp)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region ElementBase
@@ -132,7 +137,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             ViewCreated = false;
         }
 
-
         #endregion
 
     }
@@ -172,6 +176,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             ThrowIfDisposed();
 
             CustomOption = option ?? throw new ArgumentNullException(nameof(option));
+        }
+
+        /// <summary>
+        /// 履歴を削除する。
+        /// </summary>
+        /// <param name="kind"><see cref="LauncherHistoryKind"/>。</param>
+        /// <param name="lastExecuteTimestamp">実行日時。</param>
+        /// <returns></returns>
+        public override bool RemoveHistory(LauncherHistoryKind kind, [DateTimeKind(DateTimeKind.Utc)] DateTime lastExecuteTimestamp)
+        {
+            ThrowIfDisposed();
+
+            bool removed;
+
+            using(var context = MainDatabaseBarrier.WaitWrite()) {
+                var launcherItemHistoriesEntityDao = new LauncherItemHistoriesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+
+                var removedCount = launcherItemHistoriesEntityDao.DeleteHistoryByLauncherItemId(LauncherItemId, kind, lastExecuteTimestamp);
+                if(1 < removedCount) {
+                    // ここに来ることはないと思ってるけどテーブルレイアウトは許容可能なデータなので一応警告
+                    Logger.LogWarning("削除数が1を超過: {0}", removedCount);
+                }
+                removed = removedCount != 0;
+
+                context.Commit();
+            }
+
+            return removed;
         }
 
         #endregion

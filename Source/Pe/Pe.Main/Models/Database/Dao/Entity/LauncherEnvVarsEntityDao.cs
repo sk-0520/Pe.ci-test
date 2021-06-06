@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 EnvValue = data.Value,
             };
 
-            databaseCommonStatus.WriteCreate(dto);
+            databaseCommonStatus.WriteCreateTo(dto);
 
             return dto;
         }

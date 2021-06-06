@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -125,23 +126,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool InsertFile(Guid launcherItemId, LauncherExecutePathData data, IDatabaseCommonStatus commonStatus)
         {
-            var encodingConverter = new EncodingConverter(LoggerFactory);
-
             var statement = LoadStatement();
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherItemId] = launcherItemId;
             param[Column.File] = data.Path;
             param[Column.Option] = data.Option;
             param[Column.WorkDirectory] = data.WorkDirectoryPath;
-            param[Column.StandardIoEncoding] = encodingConverter.ToString(EncodingConverter.DefaultStandardInputOutputEncoding);
+            param[Column.StandardIoEncoding] = EncodingUtility.ToString(EncodingConverter.DefaultStandardInputOutputEncoding);
 
             return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateCustomizeLauncherFile(Guid launcherItemId, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IDatabaseCommonStatus commonStatus)
         {
-            var encodingConverter = new EncodingConverter(LoggerFactory);
-
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.File] = pathParameter.Path;
@@ -149,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.WorkDirectory] = pathParameter.WorkDirectoryPath;
             parameter[Column.IsEnabledCustomEnvVar] = customParameter.IsEnabledCustomEnvironmentVariable;
             parameter[Column.IsEnabledStandardIo] = customParameter.IsEnabledStandardInputOutput;
-            parameter[Column.StandardIoEncoding] = encodingConverter.ToString(customParameter.StandardInputOutputEncoding);
+            parameter[Column.StandardIoEncoding] = EncodingUtility.ToString(customParameter.StandardInputOutputEncoding);
             parameter[Column.RunAdministrator] = customParameter.RunAdministrator;
             parameter[Column.LauncherItemId] = launcherItemId;
 

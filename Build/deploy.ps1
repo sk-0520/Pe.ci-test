@@ -28,6 +28,8 @@ $updateFile = Join-Path $outputDirectory 'update.json'
 $version = GetAppVersion
 $releaseNoteFile = Join-Path $outputDirectory (ConvertReleaseNoteFileName $version)
 
+$currentUpdateFile = Join-Path $outputDirectory (ConvertFileName 'update' $version '' 'json')
+
 function UploadFile([string] $filePath) {
 
 	$fileName = [System.IO.Path]::GetFileName($filePath)
@@ -78,6 +80,9 @@ switch ($TargetRepository) {
 		}
 		UploadFile $releaseNoteFile
 		UploadFile $updateFile
+
+		Copy-Item -Path $updateFile -Destination $currentUpdateFile
+		UploadFile $currentUpdateFile
 	}
 }
 

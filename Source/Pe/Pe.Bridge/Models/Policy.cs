@@ -5,6 +5,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     public interface IPolicy
     {
         #region function
+
+        IPolicyBuilder CreateBuilder();
+
         #endregion
     }
 

@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 ProtocolAlias = data.ProtocolAlias,
                 Option = data.Option,
             };
-            commonStatus.WriteCommon(dto);
+            commonStatus.WriteCommonTo(dto);
             return dto;
         }
 

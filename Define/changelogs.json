@@ -1,7 +1,67 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.xx.001",
+		"date": "2021/06/06",
+		"version": "0.99.137",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "658cd107e56b5fcd1ff988f9a9352f71a3566356",
+						"subject": "#741: 指定して実行の履歴アイテムを破棄できるようにする"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "02d65a0b5be0901078159e127515b6d33c3463d1",
+						"subject": "#738: アンインストール時のスタートアップ処理に対して \" の付与が過剰"
+					},
+					{
+						"revision": "b631b39b0707e7b61efa7c9b8d1fa07ac162f546",
+						"subject": "#739: フィードバック送信後のコンテンツ領域リンクが見づらい"
+					},
+					{
+						"revision": "92a93f4c1f3708c0494b0737271b19e7dd5fb002",
+						"subject": "#736: ノート リンク ファイルダイアログのエンコーディングに utf8bom が二件表示される"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "edf585a6fac1bef8fd6f80da0c89ae923d5fe4f1",
+						"class": "nuget",
+						"subject": "AvalonEdit 6.1.1 -> 6.1.2.30"
+					},
+					{
+						"revision": "2cd4b784fcca951b81b81049a27faa78b22163c9",
+						"class": "nuget",
+						"subject": "Prism.Wpf 8.0.0.1909 -> 8.1.97"
+					},
+					{
+						"revision": "3eda349d262ecb5cef233112c015dfebde43026b",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.113.7 -> 1.0.114.2"
+					},
+					{
+						"revision": "44c302a48804738f5fe326a0359318fafb42a56d",
+						"subject": "#744: アップデート通知用ファイルをバージョンごとに生成する"
+					},
+					{
+						"revision": "fa181e0e6b91926d7e76700048d5de3d07b91261",
+						"subject": "#737: 起動処理に渡すコマンドライン引数を本体側で将来的に絶対に競合しないものにする"
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2021/05/24",
+		"version": "0.99.126",
 		"contents": [
 			{
 				"type": "features",

@@ -72,8 +72,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
 
-        internal PluginsSettingEditorElement(PluginContainer pluginContainer, PluginConstructorContext pluginConstructorContext, Func<IDisposable> pauseReceiveLog, PreferencesContextFactory preferencesContextFactory, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, statementLoader, idFactory, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
+        internal PluginsSettingEditorElement(PluginContainer pluginContainer, PluginConstructorContext pluginConstructorContext, Func<IDisposable> pauseReceiveLog, PreferencesContextFactory preferencesContextFactory, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, statementLoader, idFactory, imageLoader, mediaConverter, policy, dispatcherWrapper, loggerFactory)
         {
             PluginContainer = pluginContainer;
             PluginConstructorContext = pluginConstructorContext;
@@ -255,7 +255,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
-        internal async Task InstallLocalPluginTask(FileInfo archiveFile)
+        internal async Task InstallLocalPluginAsync(FileInfo archiveFile)
         {
             // 拡張子をアーカイブ種別としてそのまま使用する
             var exts = new HashSet<string>() {
@@ -308,7 +308,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             foreach(var pluginState in pluginStates) {
                 var plugin = PluginContainer.Plugins.FirstOrDefault(i => pluginState.PluginId == i.PluginInformations.PluginIdentifiers.PluginId);
-                var element = new PluginSettingEditorElement(pluginState, plugin, PreferencesContextFactory, MainDatabaseBarrier, DatabaseStatementLoader, UserAgentFactory, PlatformTheme, ImageLoader, MediaConverter, DispatcherWrapper, LoggerFactory);
+                var element = new PluginSettingEditorElement(pluginState, plugin, PreferencesContextFactory, MainDatabaseBarrier, DatabaseStatementLoader, UserAgentFactory, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
                 element.Initialize();
                 PluginItemsImpl.Add(element);
             }

@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 ErrorBackgroundColor = FromColor(data.ErrorBackgroundColor),
                 IsTopmost = data.IsTopmost,
             };
-            commonStatus.WriteCommon(parameter);
+            commonStatus.WriteCommonTo(parameter);
             Context.UpdateByKey(statement, parameter);
         }
 

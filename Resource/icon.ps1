@@ -9,8 +9,8 @@ $rootDirPath = Split-Path -Parent $currentDirPath
 $iconDirPath = Join-Path $currentDirPath 'Icon'
 $workDirPath = Join-Path $iconDirPath '@work'
 
-$exeIncspace = if ($env:INKSCAPE) { $env:INKSCAPE } else { [Environment]::ExpandEnvironmentVariables('%PROGRAMFILES%\Inkscape\inkscape.exe') }
-$exeImageMagic = if ($env:IMAGEMAGIC) { $env:IMAGEMAGIC } else { [Environment]::ExpandEnvironmentVariables('C:\Applications\tool\ImageMagick\convert.exe') }
+$exeIncspace = if ($env:INKSCAPE) { $env:INKSCAPE } else { [Environment]::ExpandEnvironmentVariables('C:\Program Files\Inkscape\bin\inkscape.exe') }
+$exeImageMagic = if ($env:IMAGEMAGIC) { $env:IMAGEMAGIC } else { [Environment]::ExpandEnvironmentVariables('C:\Applications\ImageMagick\convert.exe') }
 
 $appIcons = @(
 	@{
@@ -79,12 +79,18 @@ function ConvertSvgToPng([string] $srcSvgPath) {
 	foreach ($size in $iconSize) {
 		$pngPath = "${pngBasePath}_${size}.png"
 		Write-Host "   -> $pngPath"
+		# 1回じゃ無理なんで2回やるべし。待機も試したけどなんかダメだった
 		& $exeIncspace `
-			--file=$srcSvgPath `
 			--export-dpi=96 `
 			--export-width=$size `
 			--export-height=$size `
-			--export-png=$pngPath
+			--export-filename="$pngPath" `
+			--export-overwrite `
+			--batch-process `
+			--export-type=png `
+			--export-filename="$pngPath" `
+			"$srcSvgPath"
+		Start-Sleep -Seconds 1
 	}
 }
 

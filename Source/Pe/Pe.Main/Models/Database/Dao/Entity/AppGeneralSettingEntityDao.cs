@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 UserBackupDirectoryPath = data.UserBackupDirectoryPath,
                 ThemePluginId = data.ThemePluginId,
             };
-            commonStatus.WriteCommon(dto);
+            commonStatus.WriteCommonTo(dto);
             Context.UpdateByKey(statement, dto);
         }
 

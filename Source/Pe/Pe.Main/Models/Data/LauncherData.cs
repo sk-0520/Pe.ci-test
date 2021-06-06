@@ -48,12 +48,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Separator,
     }
 
+    /// <summary>
+    /// ランチャーツールバーのアイコン(ボタン)位置。
+    /// </summary>
     public enum LauncherToolbarIconDirection
     {
+        /// <summary>
+        /// 水平: 左から, 垂直: 上から。
+        /// </summary>
         [EnumResource]
         LeftTop,
+        /// <summary>
+        /// 中央から。
+        /// </summary>
         [EnumResource]
         Center,
+        /// <summary>
+        /// 水平: 右から, 垂直: 下から。
+        /// </summary>
         [EnumResource]
         RightBottom,
     }
@@ -263,9 +275,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    /// <summary>
+    /// ランチャーアイテム履歴データ種別。
+    /// </summary>
     public enum LauncherHistoryKind
     {
+        /// <summary>
+        /// コマンドラインオプション。
+        /// </summary>
         Option,
+        /// <summary>
+        /// 作業ディレクトリ。
+        /// </summary>
         WorkDirectory,
     }
 

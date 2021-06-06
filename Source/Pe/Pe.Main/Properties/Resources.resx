@@ -2160,4 +2160,29 @@ Pe を終了してから実行してください</value>
   <data name="String_FileDialog_Filter_Note_RichText" xml:space="preserve">
     <value>リッチテキスト</value>
   </data>
+  <data name="String_Encoding_Name_Ascii" xml:space="preserve">
+    <value>ASCII</value>
+  </data>
+  <data name="String_Encoding_Name_ShiftJis" xml:space="preserve">
+    <value>Shift-JIS</value>
+    <comment>CP932</comment>
+  </data>
+  <data name="String_Encoding_Name_Utf16BigEndian" xml:space="preserve">
+    <value>UTF-16(BE)</value>
+  </data>
+  <data name="String_Encoding_Name_Utf16LittleEndian" xml:space="preserve">
+    <value>UTF-16</value>
+  </data>
+  <data name="String_Encoding_Name_Utf32LittleEndian" xml:space="preserve">
+    <value>UTF-32</value>
+  </data>
+  <data name="String_Encoding_Name_Utf8Bom" xml:space="preserve">
+    <value>UTF-8(BOM付き)</value>
+  </data>
+  <data name="String_Encoding_Name_Utf8N" xml:space="preserve">
+    <value>UTF-8</value>
+  </data>
+  <data name="String_Command_Encoding_AA" xml:space="preserve">
+    <value>エンコーディング(&amp;E)</value>
+  </data>
 </root>

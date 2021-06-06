@@ -13,8 +13,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     internal sealed class CommandFinderAddonProxy: AddonsProxyBase<ICommandFinder>, ICommandFinder
     {
-        public CommandFinderAddonProxy(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(addons, pluginContextFactory, userAgentFactory, platformTheme, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
+        public CommandFinderAddonProxy(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(addons, pluginContextFactory, userAgentFactory, platformTheme, imageLoader, mediaConverter, policy, dispatcherWrapper, loggerFactory)
         {
         }
 

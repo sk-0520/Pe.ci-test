@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
             var resultCount = 0;
             for(var i = 0; i < binaryImageItems.Length; i++) {
-                commonStatus.WriteCreate(dto);
+                commonStatus.WriteCreateTo(dto);
                 dto.Sequence = i;
                 dto.Image = binaryImageItems[i].ToArray();
                 resultCount += Context.Execute(statement, dto);

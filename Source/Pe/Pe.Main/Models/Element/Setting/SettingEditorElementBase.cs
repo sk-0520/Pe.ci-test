@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     /// </summary>
     public abstract class SettingEditorElementBase: ElementBase
     {
-        protected SettingEditorElementBase(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected SettingEditorElementBase(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             SettingNotifyManager = settingNotifyManager;
@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IdFactory = idFactory;
             ImageLoader = imageLoader;
             MediaConverter = mediaConverter;
+            Policy = policy;
             DispatcherWrapper = dispatcherWrapper;
 
             SettingNotifyManager.LauncherItemRemoved += SettingNotifyManager_LauncherItemRemoved;
@@ -45,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected IIdFactory IdFactory { get; }
         protected IImageLoader ImageLoader { get; }
         protected IMediaConverter MediaConverter { get; }
+        protected IPolicy Policy { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
 
         public bool IsLoaded { get; private set; }

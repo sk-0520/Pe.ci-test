@@ -77,12 +77,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
 
         /// <summary>
-        /// http://hp.vector.co.jp/authors/VA016117/rsrc2icon.html
+        /// 実行モジュールのリソースを取得。
         /// </summary>
         /// <param name="hModule"></param>
         /// <param name="name"></param>
         /// <param name="resType"></param>
-        /// <returns></returns>
+        /// <returns>取得成功した場合のリソースバイナリ。</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
         byte[]? GetResourceBinaryData(IntPtr hModule, IntPtr name, ResType resType)
         {
@@ -117,10 +117,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <summary>
-        /// https://github.com/TsudaKageyu/IconExtractor
+        /// アイコンリソースの一覧を取得。
         /// </summary>
         /// <param name="resourcePath"></param>
-        /// <returns></returns>
+        /// <returns>取得したリソースのバイナリ群。</returns>
         IList<byte[]> LoadIconResource(string resourcePath)
         {
             var hModule = NativeMethods.LoadLibraryEx(resourcePath, IntPtr.Zero, LOAD_LIBRARY.LOAD_LIBRARY_AS_DATAFILE);

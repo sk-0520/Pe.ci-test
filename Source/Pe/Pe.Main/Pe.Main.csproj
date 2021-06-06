@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AvalonEdit" Version="6.1.1" />
+    <PackageReference Include="AvalonEdit" Version="6.1.2.30" />
     <PackageReference Include="CefSharp.Wpf" Version="86.0.241" />
     <PackageReference Include="ClrHeapAllocationAnalyzer" Version="3.0.0" />
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
@@ -40,7 +40,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.7.2" />
-    <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
+    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
     <PackageReference Include="SevenZipExtractor" Version="1.0.15" />
     <PackageReference Include="System.DirectoryServices.AccountManagement" Version="5.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />

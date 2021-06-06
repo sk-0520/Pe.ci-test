@@ -9,12 +9,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     internal class LauncherItemExtensionExecuteParameter: AddonParameter, ILauncherItemExtensionExecuteParameter
     {
-        public LauncherItemExtensionExecuteParameter(Guid launcherItemId, ILauncherItemAddonViewSupporter viewSupporter, ISkeletonImplements skeletonImplements, IPluginInformations pluginInformations, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(skeletonImplements, pluginInformations, userAgentFactory, platformTheme, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
+        public LauncherItemExtensionExecuteParameter(Guid launcherItemId, ILauncherItemAddonViewSupporter viewSupporter, ISkeletonImplements skeletonImplements, IPluginInformations pluginInformations, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy , IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(skeletonImplements, pluginInformations, userAgentFactory, platformTheme, imageLoader, mediaConverter, policy, dispatcherWrapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;
             ViewSupporter = viewSupporter;
         }
+
         #region ILauncherItemExtensionExecuteParameter
 
         public ILauncherItemAddonViewSupporter ViewSupporter { get; }

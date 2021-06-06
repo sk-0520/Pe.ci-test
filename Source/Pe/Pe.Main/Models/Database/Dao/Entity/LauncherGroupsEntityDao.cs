@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Sequence = data.Sequence,
             };
 
-            commonStatus.WriteCommon(dto);
+            commonStatus.WriteCommonTo(dto);
 
             return dto;
 

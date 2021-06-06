@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IsTopmost = data.IsTopmost,
             };
 
-            databaseCommonStatus.WriteCommon(dto);
+            databaseCommonStatus.WriteCommonTo(dto);
 
             return dto;
         }

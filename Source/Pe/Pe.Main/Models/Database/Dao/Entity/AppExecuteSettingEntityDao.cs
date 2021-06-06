@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IsEnabledTelemetry = data.IsEnabledTelemetry,
                 UserId = data.UserId,
             };
-            commonStatus.WriteCommon(dto);
+            commonStatus.WriteCommonTo(dto);
             Context.UpdateByKey(statement, dto);
         }
 

@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 KeyActionContent = data.KeyActionContent,
                 Comment = data.Comment,
             };
-            databaseCommonStatus.WriteCommon(dto);
+            databaseCommonStatus.WriteCommonTo(dto);
 
             return dto;
         }

@@ -8,8 +8,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
 {
     public class PreferencesParameter: PluginParameterBase, IPreferencesParameter
     {
-        public PreferencesParameter(ISkeletonImplements skeletonImplements, IPluginInformations pluginInformations, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(pluginInformations, platformTheme, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
+        public PreferencesParameter(ISkeletonImplements skeletonImplements, IPluginInformations pluginInformations, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(pluginInformations, platformTheme, imageLoader, mediaConverter, policy, dispatcherWrapper, loggerFactory)
         {
             SkeletonImplements = skeletonImplements;
             HttpUserAgentFactory = userAgentFactory;

@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
                         Content = ContentDocument.Text,
                     };
 
-                    await Model.SendAync(data);
+                    await Model.SendAsync(data);
                 }
             }
         ));

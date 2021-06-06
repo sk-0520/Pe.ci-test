@@ -67,6 +67,16 @@ dotnet_naming_style.end_in_async.capitalization  = pascal_case
 # IDE --------------------------------------------------------------------------
 # IDE0060: 未使用のパラメーターを削除します
 dotnet_code_quality_unused_parameters = non_public:silent
+# IDE0052: 読み取られていないプライベート メンバーを削除
+dotnet_diagnostic.IDE0052.severity = silent
+# IDE0042: 変数の宣言を分解
+dotnet_diagnostic.IDE0042.severity = silent
+
+# code-analysis ----------------------------------------------------------------
+# CA1822: メンバーを static に設定します
+dotnet_diagnostic.CA1822.severity = silent
+# CA1825: 長さ 0 の配列は割り当て不可
+dotnet_diagnostic.CA1825.severity = warning
 
 
 # ClrHeapAllocationAnalyzer ----------------------------------------------------
@@ -158,9 +168,6 @@ dotnet_diagnostic.S3923.severity = warning
 dotnet_diagnostic.S3400.severity = none
 # S108: Nested blocks of code should not be left empty
 dotnet_diagnostic.S108.severity = suggestion
-
-# CA1822: メンバーを static に設定します
-dotnet_diagnostic.CA1822.severity = silent
 
 [*.sh]
 end_of_line = lf

@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         string Escape(string input);
 
         /// <summary>
-        /// like句のエスケープ処理を実施。
+        /// <c>like</c>句のエスケープ処理を実施。
         /// </summary>
         /// <param name="pattern"></param>
         /// <returns></returns>
@@ -125,6 +125,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
+    /// <inheritdoc cref="IDatabaseImplementation"/>
     public class DatabaseImplementation: IDatabaseImplementation
     {
         #region IDatabaseImplementation

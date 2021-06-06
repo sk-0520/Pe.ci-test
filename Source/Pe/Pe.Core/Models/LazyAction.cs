@@ -130,7 +130,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             if(!IsDisposed) {
                 Flush(disposing);
-                Timer.Dispose();
+                Timer.Elapsed -= Timer_Elapsed;
+                if(disposing) {
+                    Timer.Dispose();
+                }
             }
             Action = null;
 

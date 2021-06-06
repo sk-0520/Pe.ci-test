@@ -7,12 +7,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginParameter"/>
     public abstract class PluginParameterBase: IPluginParameter
     {
-        protected PluginParameterBase(IPluginInformations pluginInformations, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected PluginParameterBase(IPluginInformations pluginInformations, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             PluginInformations = pluginInformations;
             PlatformTheme = platformTheme;
             MediaConverter = mediaConverter;
             ImageLoader = imageLoader;
+            Policy = policy;
             DispatcherWrapper = dispatcherWrapper;
             LoggerFactory = loggerFactory;
         }
@@ -31,10 +32,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public IImageLoader ImageLoader { get; }
         /// <inheritdoc cref="IPluginParameter.MediaConverter"/>
         public IMediaConverter MediaConverter { get; }
+        /// <inheritdoc cref="IPluginParameter.Policy"/>
+        public IPolicy Policy { get; }
         /// <inheritdoc cref="IPluginParameter.DispatcherWrapper"/>
         public IDispatcherWrapper DispatcherWrapper { get; }
         /// <inheritdoc cref="IPluginParameter.LoggerFactory"/>
-        /// <inheritdoc cref="ILoggerFactory"/>
         public ILoggerFactory LoggerFactory { get; }
 
         #endregion

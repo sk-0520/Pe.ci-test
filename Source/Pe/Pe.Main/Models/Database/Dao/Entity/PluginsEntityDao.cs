@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Name = data.PluginName,
                 State = pluginStateTransfer.ToString(data.State),
             };
-            databaseCommonStatus.WriteCommon(dto);
+            databaseCommonStatus.WriteCommonTo(dto);
 
             return dto;
         }

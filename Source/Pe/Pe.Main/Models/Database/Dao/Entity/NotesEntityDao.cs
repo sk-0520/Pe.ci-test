@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 CaptionPosition = captionPositionTransfer.ToString(data.CaptionPosition),
             };
 
-            commonStatus.WriteCommon(result);
+            commonStatus.WriteCommonTo(result);
 
             return result;
 

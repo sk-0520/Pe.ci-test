@@ -12,12 +12,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     public class LauncherItemAddonContextFactory: PluginContextFactoryBase
     {
-        public LauncherItemAddonContextFactory(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemAddonContextFactory(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(databaseBarrierPack, databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager, loggerFactory)
         {
             PlatformTheme = platformTheme;
             ImageLoader = imageLoader;
             MediaConverter = mediaConverter;
+            Policy = policy;
             DispatcherWrapper = dispatcherWrapper;
         }
 
@@ -26,6 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         IPlatformTheme PlatformTheme { get; }
         IImageLoader ImageLoader { get; }
         IMediaConverter MediaConverter { get; }
+        IPolicy Policy { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
         #endregion
@@ -118,6 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 PlatformTheme,
                 ImageLoader,
                 MediaConverter,
+                Policy,
                 DispatcherWrapper,
                 LoggerFactory
             );

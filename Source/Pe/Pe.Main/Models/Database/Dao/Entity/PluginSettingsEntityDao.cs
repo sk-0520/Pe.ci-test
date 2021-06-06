@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 DataType = pluginPersistentFormatTransfer.ToString(data.Format),
                 DataValue = data.Value,
             };
-            databaseCommonStatus.WriteCommon(dto);
+            databaseCommonStatus.WriteCommonTo(dto);
 
             return dto;
         }

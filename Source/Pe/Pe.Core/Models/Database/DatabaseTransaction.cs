@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
@@ -61,66 +62,86 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region property
 
-        IDatabaseAccessor DatabaseAccessor { get; set; }
+        IDatabaseAccessor DatabaseAccessor { get; [Unuse(UnuseKinds.Dispose)] set; }
         public bool Committed { get; private set; }
 
         #endregion
 
         #region IDatabaseTransaction
 
-        public IDbTransaction Transaction { get; private set; }
+        public IDbTransaction Transaction { get; [Unuse(UnuseKinds.Dispose)] private set; }
         public IDatabaseImplementation Implementation { get; }
 
         public virtual void Commit()
         {
+            ThrowIfDisposed();
+
             Committed = true;
             Transaction.Commit();
         }
 
         public virtual void Rollback()
         {
+            ThrowIfDisposed();
+
             Transaction.Rollback();
         }
 
         public IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true)
         {
+            ThrowIfDisposed();
+
             return DatabaseAccessor.Query<T>(statement, parameter, this, buffered);
         }
 
         public IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
         {
+            ThrowIfDisposed();
+
             return DatabaseAccessor.Query(statement, parameter, this, buffered);
         }
 
         public T QueryFirst<T>(string statement, object? parameter = null)
         {
+            ThrowIfDisposed();
+
             return DatabaseAccessor.QueryFirst<T>(statement, parameter, this);
         }
 
         [return: MaybeNull]
         public T QueryFirstOrDefault<T>(string statement, object? parameter = null)
         {
+            ThrowIfDisposed();
+
             return DatabaseAccessor.QueryFirstOrDefault<T>(statement, parameter, this);
         }
 
         public T QuerySingle<T>(string statement, object? parameter = null)
         {
+            ThrowIfDisposed();
+
             return DatabaseAccessor.QuerySingle<T>(statement, parameter, this);
         }
 
         [return: MaybeNull]
         public T QuerySingleOrDefault<T>(string statement, object? parameter = null)
         {
+            ThrowIfDisposed();
+
             return DatabaseAccessor.QuerySingleOrDefault<T>(statement, parameter, this);
         }
 
         public virtual int Execute(string statement, object? parameter = null)
         {
+            ThrowIfDisposed();
+
             return DatabaseAccessor.Execute(statement, parameter, this);
         }
 
         public DataTable GetDataTable(string statement, object? parameter = null)
         {
+            ThrowIfDisposed();
+
             return DatabaseAccessor.GetDataTable(statement, parameter, this);
         }
 
@@ -136,8 +157,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                         Rollback();
                     }
                     Transaction.Dispose();
-                    //Transaction = null;
-                    //DatabaseAccessor = null;
+                    Transaction = null!;
+                    DatabaseAccessor = null!;
                 }
             }
 

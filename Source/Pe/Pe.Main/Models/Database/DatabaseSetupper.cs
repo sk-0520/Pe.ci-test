@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                 LastVersion = lastVersion,
                 ExecuteVersion = Assembly.GetExecutingAssembly().GetName().Version,
             };
-            CommonStatus.WriteCommon(result);
+            CommonStatus.WriteCommonTo(result);
 
             return result;
         }

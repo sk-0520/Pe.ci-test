@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
-    sealed class DatabaseBarrierTransaction: DisposerBase, IDatabaseTransaction
+    internal sealed class DatabaseBarrierTransaction: DisposerBase, IDatabaseTransaction
     {
         public DatabaseBarrierTransaction(IDisposable locker, IDatabaseTransaction transaction, IDatabaseImplementation implementation)
         {
@@ -16,8 +17,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region property
 
-        IDisposable Locker { get; }
-        IDatabaseTransaction Transaction { get; }
+        IDisposable Locker { get; [Unuse(UnuseKinds.Dispose)]set; }
+        IDatabaseTransaction Transaction { get; [Unuse(UnuseKinds.Dispose)] set; }
 
         IDbTransaction IDatabaseTransaction.Transaction => Transaction.Transaction;
 
@@ -113,6 +114,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                     Transaction.Dispose();
                     Locker.Dispose();
                 }
+                Transaction = null!;
+                Locker = null!;
             }
 
             base.Dispose(disposing);
@@ -135,10 +138,24 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         IDatabaseTransaction WaitWrite();
         /// <summary>
+        /// 指定の待機時間で書き込み処理を実施する。
+        /// </summary>
+        /// <param name="timeout">待機時間。</param>
+        /// <returns></returns>
+        IDatabaseTransaction WaitWrite(TimeSpan timeout);
+
+        /// <summary>
         /// 既定の待機時間で読み込み処理を実施する。
         /// </summary>
         /// <returns></returns>
         IDatabaseTransaction WaitRead();
+        /// <summary>
+        /// 指定の待機時間で読み込み処理を実施する。
+        /// </summary>
+        /// <param name="timeout">待機時間。</param>
+        /// <returns></returns>
+        IDatabaseTransaction WaitRead(TimeSpan timeout);
+
 
         #endregion
     }
@@ -147,12 +164,29 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         #region function
 
+        /// <summary>
+        /// データ読み込み。
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="databaseBarrier"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
         public static TResult ReadData<TResult>(this IDatabaseBarrier databaseBarrier, Func<IDatabaseTransaction, TResult> func)
         {
             using var transaction = databaseBarrier.WaitRead();
             return func(transaction);
         }
 
+        /// <summary>
+        /// データ読み込み。
+        /// <para>パラメータ付き。</para>
+        /// </summary>
+        /// <typeparam name="TArgument"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="databaseBarrier"></param>
+        /// <param name="func"></param>
+        /// <param name="argument"></param>
+        /// <returns></returns>
         public static TResult ReadData<TArgument, TResult>(this IDatabaseBarrier databaseBarrier, Func<IDatabaseTransaction, TArgument, TResult> func, TArgument argument)
         {
             using var transaction = databaseBarrier.WaitRead();
@@ -180,12 +214,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region IDatabaseBarrier
 
-        //public IDatabaseAccessor Accessor { get; }
-        //public ReaderWriterLocker Locker { get; }
-
         /// <summary>
         /// <inheritdoc cref="IDatabaseBarrier.WaitWrite" />
-        /// <para><see cref="Locker.WaitWriteByDefaultTimeout()"/>が規定時間。</para>
+        /// <para><see cref="ReaderWriterLocker.WaitWriteByDefaultTimeout()"/>が規定時間。</para>
         /// </summary>
         public virtual IDatabaseTransaction WaitWrite()
         {
@@ -195,14 +226,32 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return result;
         }
 
+        /// <inheritdoc cref="IDatabaseBarrier.WaitWrite(TimeSpan)" />
+        public virtual IDatabaseTransaction WaitWrite(TimeSpan timeout)
+        {
+            var locker = Locker.WaitWrite(timeout);
+            var transaction = Accessor.BeginTransaction();
+            var result = new DatabaseBarrierTransaction(locker, transaction, Accessor.DatabaseFactory.CreateImplementation());
+            return result;
+        }
+
         /// <summary>
         /// <inheritdoc cref="IDatabaseBarrier.WaitRead" />
-        /// <para><see cref="Locker.WaitReadByDefaultTimeout()"/>が規定時間。</para>
+        /// <para><see cref="ReaderWriterLocker.WaitReadByDefaultTimeout()"/>が規定時間。</para>
         /// </summary>
         /// <returns></returns>
         public virtual IDatabaseTransaction WaitRead()
         {
             var locker = Locker.WaitReadByDefaultTimeout();
+            var transaction = Accessor.BeginReadOnlyTransaction();
+            var result = new DatabaseBarrierTransaction(locker, transaction, Accessor.DatabaseFactory.CreateImplementation());
+            return result;
+        }
+
+        /// <inheritdoc cref="IDatabaseBarrier.WaitRead(TimeSpan)" />
+        public virtual IDatabaseTransaction WaitRead(TimeSpan timeout)
+        {
+            var locker = Locker.WaitRead(timeout);
             var transaction = Accessor.BeginReadOnlyTransaction();
             var result = new DatabaseBarrierTransaction(locker, transaction, Accessor.DatabaseFactory.CreateImplementation());
             return result;

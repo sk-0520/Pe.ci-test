@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
             SendStatus.State = RunningState.None;
         }
 
-        public async Task SendAync(FeedbackInputData inputData)
+        public async Task SendAsync(FeedbackInputData inputData)
         {
             ErrorMessage = string.Empty;
             SendStatus.State = RunningState.Running;

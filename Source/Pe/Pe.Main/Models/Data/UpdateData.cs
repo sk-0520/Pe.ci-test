@@ -163,7 +163,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         [DataMember]
         [JsonPropertyName("items")]
-        public UpdateItemData[] Items { get; set; } = new UpdateItemData[0];
+        public UpdateItemData[] Items { get; set; } = Array.Empty<UpdateItemData>();
 
         #endregion
     }

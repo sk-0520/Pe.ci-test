@@ -258,6 +258,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             }
         ));
 
+        public ICommand RemoveHistoryCommand => GetOrCreateCommand(() => new DelegateCommand<HistoryViewModel>(
+            o => {
+                var removed = Model.RemoveHistory(o.Kind, o.LastExecuteTimestamp);
+                var items = o.Kind switch {
+                    LauncherHistoryKind.Option => HistoryOptions,
+                    LauncherHistoryKind.WorkDirectory => HistoryWorkDirectories,
+                    _ => throw new NotImplementedException(),
+                };
+
+                var removeItems = items.Skip(1).Where(i => i.LastExecuteTimestamp == o.LastExecuteTimestamp);
+                foreach(var removeItem in removeItems) {
+                    items.Remove(removeItem);
+                }
+            },
+            o => o.CanRemove
+        ));
+
         #endregion
 
         #region function

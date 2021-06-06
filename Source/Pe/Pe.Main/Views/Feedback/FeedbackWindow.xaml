@@ -30,6 +30,7 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
+    <BlurEffect x:Key="SendEffect" Radius="4" />
   </Window.Resources>
   <Window.Title>
     <Binding Path="Resources.String_Feedback_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
@@ -52,12 +53,15 @@
             <Style.Triggers>
               <DataTrigger Binding="{Binding SendStatus.State}" Value="Running">
                 <Setter Property="IsEnabled" Value="False" />
+                <Setter Property="Effect" Value="{StaticResource SendEffect}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding SendStatus.State}" Value="End">
                 <Setter Property="IsEnabled" Value="False" />
+                <Setter Property="Effect" Value="{StaticResource SendEffect}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding SendStatus.State}" Value="Error">
                 <Setter Property="IsEnabled" Value="False" />
+                <Setter Property="Effect" Value="{StaticResource SendEffect}" />
               </DataTrigger>
             </Style.Triggers>
             <Setter Property="IsEnabled" Value="True" />
@@ -126,8 +130,6 @@
             </sharpdevelop_avalonedit:TextEditor.Options>
           </sharpdevelop_avalonedit:TextEditor>
         </Grid>
-
-
       </Grid>
 
       <Border Background="#80cccccc" Padding="16">
@@ -147,9 +149,10 @@
             <Setter Property="Visibility" Value="Collapsed" />
           </Style>
         </Border.Style>
+
         <StackPanel VerticalAlignment="Center">
           <!--#region 実行中 -->
-          <ContentControl IsTabStop="False" Background="Lime">
+          <ContentControl IsTabStop="False">
             <ContentControl.Style>
               <Style TargetType="ContentControl">
                 <Style.Triggers>
@@ -165,7 +168,7 @@
           <!--#endregion-->
 
           <!--#region 失敗 -->
-          <ContentControl IsTabStop="False">
+          <ContentControl IsTabStop="False" HorizontalAlignment="Center">
             <ContentControl.Style>
               <Style TargetType="ContentControl">
                 <Style.Triggers>
@@ -188,7 +191,7 @@
           <!--#endregion-->
 
           <!--#region 成功 -->
-          <ContentControl IsTabStop="False">
+          <ContentControl IsTabStop="False" HorizontalAlignment="Center">
             <ContentControl.Style>
               <Style TargetType="ContentControl">
                 <Style.Triggers>

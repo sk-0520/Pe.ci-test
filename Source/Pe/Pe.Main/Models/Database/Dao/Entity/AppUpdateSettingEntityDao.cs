@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new AppUpdateSettingEntityDto() {
                 UpdateKind = updateKindTransfer.ToString(data.UpdateKind),
             };
-            commonStatus.WriteCommon(parameter);
+            commonStatus.WriteCommonTo(parameter);
             Context.UpdateByKey(statement, parameter);
         }
 
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new AppUpdateSettingEntityDto() {
                 UpdateKind = updateKindTransfer.ToString(updateKind),
             };
-            commonStatus.WriteCommon(parameter);
+            commonStatus.WriteCommonTo(parameter);
             Context.UpdateByKey(statement, parameter);
         }
 

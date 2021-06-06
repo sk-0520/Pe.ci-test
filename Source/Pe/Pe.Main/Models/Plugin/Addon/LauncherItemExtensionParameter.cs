@@ -12,8 +12,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// </summary>
     internal class LauncherItemExtensionCreateParameter: AddonParameter, ILauncherItemExtensionCreateParameter
     {
-        public LauncherItemExtensionCreateParameter(Guid launcherItemId, ILauncherItemAddonContextWorker contextWorker, ISkeletonImplements skeletonImplements, IPluginInformations pluginInformations, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(skeletonImplements, pluginInformations, userAgentFactory, platformTheme, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
+        public LauncherItemExtensionCreateParameter(Guid launcherItemId, ILauncherItemAddonContextWorker contextWorker, ISkeletonImplements skeletonImplements, IPluginInformations pluginInformations, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(skeletonImplements, pluginInformations, userAgentFactory, platformTheme, imageLoader, mediaConverter, policy, dispatcherWrapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;
             ContextWorker = contextWorker;

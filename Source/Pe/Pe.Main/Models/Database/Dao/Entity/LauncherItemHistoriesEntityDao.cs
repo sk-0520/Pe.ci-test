@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Value = value,
                 LastExecuteTimestamp = DateTime.UtcNow,
             };
-            commonStatus.WriteCreate(dto);
+            commonStatus.WriteCreateTo(dto);
 
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
             return Context.Execute(statement, dto) == 1;
@@ -106,6 +106,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Logger.LogWarning("削除件数がちょっとあれ: {0}", result);
             }
             return 0 < result;
+        }
+
+        public int DeleteHistoryByLauncherItemId(Guid launcherItemId, LauncherHistoryKind kind, [DateTimeKind(DateTimeKind.Utc)] DateTime lastExecuteTimestamp)
+        {
+            var launcherHistoryKindTransfer = new EnumTransfer<LauncherHistoryKind>();
+
+            var statement = LoadStatement();
+            var parameter = new LauncherItemHistoriesEntityDto() {
+                LauncherItemId = launcherItemId,
+                Kind = launcherHistoryKindTransfer.ToString(kind),
+                LastExecuteTimestamp = lastExecuteTimestamp,
+            };
+
+            return Context.Delete(statement, parameter);
         }
 
         public int DeleteHistoriesByLauncherItemId(Guid launcherItemId)

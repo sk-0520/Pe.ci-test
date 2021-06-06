@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 HideWaitTime = data.HideWaitTime,
                 FindTag = data.FindTag,
             };
-            commonStatus.WriteCommon(dto);
+            commonStatus.WriteCommonTo(dto);
             Context.UpdateByKey(statement, dto);
         }
 
