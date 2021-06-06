@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IsLink = data.IsLink,
                 Content = data.Content,
                 Address = data.FilePath,
-                Encoding = encodingConverter.ToString(data.Encoding),
+                Encoding = EncodingUtility.ToString(data.Encoding),
                 DelayTime = data.DelayTime,
                 BufferSize = data.BufferSize,
                 RefreshTime = data.RefreshTime,
@@ -148,14 +148,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public void UpdateLinkEnabled(Guid noteId, string path, Encoding encoding, FileWatchParameter fileWatchParameter, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var encodingConverter = new EncodingConverter(LoggerFactory);
-
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.NoteId] = noteId;
             parameter[Column.IsLink] = true;
             parameter[Column.Address] = path;
-            parameter[Column.Encoding] = encodingConverter.ToString(encoding);
+            parameter[Column.Encoding] = EncodingUtility.ToString(encoding);
             parameter[Column.DelayTime] = fileWatchParameter.DelayTime;
             parameter[Column.BufferSize] = (long)fileWatchParameter.BufferSize;
             parameter[Column.RefreshTime] = fileWatchParameter.RefreshTime;

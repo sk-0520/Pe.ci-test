@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
-        public static Encoding DefaultEncoding { get; } = EncodingUtility.UTF8Bom;
+        public static Encoding DefaultEncoding { get; } = EncodingUtility.UTF8N;
 
         public static Encoding DefaultStandardInputOutputEncoding { get; } = EncodingUtility.Parse("Shift_JIS"); // プラットフォーム固有のんがいいなぁと思う今日この頃な .net core
 
@@ -40,7 +40,41 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
         }
 
-        public string ToString(Encoding encoding) => EncodingUtility.ToString(encoding);
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
+        public string ToDisplayText(Encoding encoding)
+        {
+            if(encoding is UTF8Encoding utf8) {
+                if(utf8.GetPreamble().Length != 0) {
+                    return Properties.Resources.String_Encoding_Name_Utf8Bom;
+                }
+                return Properties.Resources.String_Encoding_Name_Utf8N;
+            }
+
+            switch(encoding.CodePage) {
+                case 932:
+                    return Properties.Resources.String_Encoding_Name_ShiftJis;
+
+                case 1200:
+                    return Properties.Resources.String_Encoding_Name_Utf16LittleEndian;
+
+                case 1201:
+                    return Properties.Resources.String_Encoding_Name_Utf16BigEndian;
+                case 12000:
+                    return Properties.Resources.String_Encoding_Name_Utf32LittleEndian;
+
+                case 20127:
+                    return Properties.Resources.String_Encoding_Name_Ascii;
+
+                default:
+                    break;
+            }
+
+            return EncodingUtility.ToString(encoding);
+        }
 
         #endregion
     }
