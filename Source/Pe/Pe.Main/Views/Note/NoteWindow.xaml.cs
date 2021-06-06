@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
 
                     var encodingConverter = new EncodingConverter(LoggerFactory!);
                     var encodings = linkParameter.Encodings
-                        .Select(i => CustomizeDialogComboBoxItem.Create(encodingConverter.ToString(i), i))
+                        .Select(i => CustomizeDialogComboBoxItem.Create(encodingConverter.ToDisplayText(i), i))
                         .ToArray()
                     ;
                     var defaultItem = encodings.FirstOrDefault(i => EncodingUtility.ToString(i.Value) == EncodingUtility.ToString(linkParameter.Encoding!));
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
 
                     CustomizeDialogComboBox<Encoding>? encodingComboBox = null;
                     if(0 < encodings.Length) {
-                        using(dialog.Customize.Grouping(nameof(Encoding))) {
+                        using(dialog.Customize.Grouping(Properties.Resources.String_Command_Encoding_AA)) {
                             encodingComboBox = dialog.Customize.AddComboBox<Encoding>();
                             foreach(var encoding in encodings) {
                                 encodingComboBox.AddItem(encoding);

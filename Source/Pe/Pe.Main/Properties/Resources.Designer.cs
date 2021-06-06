@@ -724,6 +724,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   エンコーディング(&amp;E) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Command_Encoding_AA {
+            get {
+                return ResourceManager.GetString("String_Command_Encoding_AA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   コマンドを実行 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Command_Execute {
@@ -1128,6 +1137,69 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Download_Seconds_MB {
             get {
                 return ResourceManager.GetString("String_Download_Seconds_MB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ASCII に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Encoding_Name_Ascii {
+            get {
+                return ResourceManager.GetString("String_Encoding_Name_Ascii", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Shift-JIS に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Encoding_Name_ShiftJis {
+            get {
+                return ResourceManager.GetString("String_Encoding_Name_ShiftJis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UTF-16(BE) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Encoding_Name_Utf16BigEndian {
+            get {
+                return ResourceManager.GetString("String_Encoding_Name_Utf16BigEndian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UTF-16 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Encoding_Name_Utf16LittleEndian {
+            get {
+                return ResourceManager.GetString("String_Encoding_Name_Utf16LittleEndian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UTF-32 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Encoding_Name_Utf32LittleEndian {
+            get {
+                return ResourceManager.GetString("String_Encoding_Name_Utf32LittleEndian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UTF-8(BOM付き) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Encoding_Name_Utf8Bom {
+            get {
+                return ResourceManager.GetString("String_Encoding_Name_Utf8Bom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UTF-8 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Encoding_Name_Utf8N {
+            get {
+                return ResourceManager.GetString("String_Encoding_Name_Utf8N", resourceCulture);
             }
         }
         
