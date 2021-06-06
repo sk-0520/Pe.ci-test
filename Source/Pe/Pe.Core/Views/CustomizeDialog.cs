@@ -8,20 +8,20 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 namespace ContentTypeTextNet.Pe.Core.Views
 {
     /// <summary>
-    /// �W���_�C�A���O�ɑ΂��ăJ�X�^���R���g���[����񋟂�����N���X�B
+    /// 標準ダイアログに対してカスタムコントロールを提供する基底クラス。
     /// </summary>
     public abstract class CustomizeDialogControlBase
     {
         #region property
 
         /// <summary>
-        /// �R���g���[��ID�B
-        /// <para>��������U�肳���B</para>
+        /// コントロールID。
+        /// <para>自動割り振りされる。</para>
         /// </summary>
         public int ControlId { get; private set; }
 
         /// <summary>
-        /// <see cref="BuildImpl"/>�Ŏg�p���鐶�����B
+        /// <see cref="BuildImpl"/>で使用する生処理。
         /// </summary>
         protected ComWrapper<IFileDialogCustomize>? FileDialogCustomize { get; private set; }
 
@@ -30,14 +30,14 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #region function
 
         /// <summary>
-        /// �r���h�����B
-        /// <para>�p����Ŏ������邱�ƁB</para>
-        /// <para><see cref="ControlId"/>, <see cref="FileDialogCustomize"/>�͗L���B</para>
+        /// ビルド処理。
+        /// <para>継承先で実装すること。</para>
+        /// <para><see cref="ControlId"/>, <see cref="FileDialogCustomize"/>は有効。</para>
         /// </summary>
         protected abstract void BuildImpl();
 
         /// <summary>
-        /// �r���h�������{�B
+        /// ビルド処理実施。
         /// </summary>
         /// <param name="controlId"></param>
         /// <param name="fileDialogCustomize"></param>
@@ -50,13 +50,13 @@ namespace ContentTypeTextNet.Pe.Core.Views
         }
 
         /// <summary>
-        /// ��ԕύX���������B
+        /// 状態変更内部処理。
         /// </summary>
         protected virtual void ChangeStatusImple()
         { }
 
         /// <summary>
-        /// ��ԕύX�B
+        /// 状態変更。
         /// </summary>
         internal void ChangeStatus()
         {
@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
     }
 
     /// <summary>
-    /// �W���_�C�A���O�p�O���[�v�B
+    /// 標準ダイアログ用グループ。
     /// </summary>
     public class CustomizeDialogGroup: CustomizeDialogControlBase
     {
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #region property
 
         /// <summary>
-        /// �w�b�_�����B
+        /// ヘッダ文言。
         /// </summary>
         public string Header { get; set; }
 
@@ -119,7 +119,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #region property
 
+        /// <summary>
+        /// ラベル文言。
+        /// </summary>
         public string Label { get; set; }
+
         #endregion
 
         #region CustomizeDialogControlBase
@@ -132,6 +136,10 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
+    /// <summary>
+    /// 標準型付きダイアログ用コンボボックスアイテム。
+    /// </summary>
+    /// <typeparam name="TValue"></typeparam>
     public class CustomizeDialogComboBoxItem<TValue>
     {
         public CustomizeDialogComboBoxItem(string displayText, TValue value)
@@ -142,11 +150,21 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #region property
 
+        /// <summary>
+        /// 表示文言。
+        /// </summary>
         public string DisplayText { get; }
+        /// <summary>
+        /// 設定値。
+        /// </summary>
         public TValue Value { get; }
+
         #endregion
     }
 
+    /// <summary>
+    /// <see cref="CustomizeDialogComboBoxItem{T}"/>ヘルパ。
+    /// </summary>
     public static class CustomizeDialogComboBoxItem
     {
         #region function
@@ -164,7 +182,10 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
-
+    /// <summary>
+    /// 標準型付きダイアログ用コンボボックス。
+    /// </summary>
+    /// <typeparam name="TValue"></typeparam>
     public class CustomizeDialogComboBox<TValue>: CustomizeDialogControlBase
     {
         public CustomizeDialogComboBox()
@@ -172,7 +193,13 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #region property
 
+        /// <summary>
+        /// アイテム一覧。
+        /// </summary>
         IList<CustomizeDialogComboBoxItem<TValue>> Items { get; } = new List<CustomizeDialogComboBoxItem<TValue>>();
+        /// <summary>
+        /// 選択インデックス。
+        /// </summary>
         public int SelectedIndex { get; set; } = 0;
 
         #endregion
@@ -206,15 +233,31 @@ namespace ContentTypeTextNet.Pe.Core.Views
         #endregion
     }
 
+    /// <summary>
+    /// 標準ダイアログカスタマイズ。
+    /// <para>基本的にはこれ使ってりゃOK。</para>
+    /// </summary>
     public class CustomizeDialog
     {
         #region property
 
+        /// <summary>
+        /// コントロール一覧。
+        /// </summary>
         public IList<CustomizeDialogControlBase> Controls { get; } = new List<CustomizeDialogControlBase>();
 
+        /// <summary>
+        /// 現在グルーピング中か。
+        /// </summary>
         public bool NowGrouping => CurrentGroup != null;
+        /// <summary>
+        /// 現在のグループ。
+        /// <para><c>null</c>はグループなし。</para>
+        /// </summary>
         CustomizeDialogGroup? CurrentGroup { get; set; }
-
+        /// <summary>
+        /// ビルド済み。
+        /// </summary>
         public bool IsBuilded { get; private set; }
 
         #endregion
@@ -228,6 +271,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
             CurrentGroup?.AddControl(control);
         }
 
+        /// <summary>
+        /// グルーピング開始。
+        /// </summary>
+        /// <param name="header"></param>
+        /// <returns><see cref="IDisposable.Dispose"/>することでグルーピング終了。</returns>
         public IDisposable Grouping(string header)
         {
             if(NowGrouping) {
@@ -242,6 +290,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
             return new ActionDisposer(d => CurrentGroup = null);
         }
 
+        /// <summary>
+        /// ラベル追加。
+        /// </summary>
+        /// <param name="label"></param>
+        /// <returns></returns>
         public CustomizeDialogLabel AddLabel(string label)
         {
             var control = new CustomizeDialogLabel(label);
@@ -251,6 +304,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
             return control;
         }
 
+        /// <summary>
+        /// コンボボックス追加。
+        /// </summary>
+        /// <typeparam name="TValue"></typeparam>
+        /// <returns></returns>
         public CustomizeDialogComboBox<TValue> AddComboBox<TValue>()
         {
             var control = new CustomizeDialogComboBox<TValue>();
