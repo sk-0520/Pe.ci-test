@@ -14,11 +14,17 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
+    /// <summary>
+    /// アプリケーション用<see cref="IDatabaseFactory"/>実装。
+    /// <para>Peは<see cref="SqliteFactory"/>を継承する。</para>
+    /// </summary>
     internal class ApplicationDatabaseFactory: SqliteFactory
     {
-        #region define
-        #endregion
-
+        /// <summary>
+        /// インメモリDBとして構築。
+        /// </summary>
+        /// <param name="foreignKeys">外部制約を有効にするか。</param>
+        /// <param name="isReadOnly">読み込み専用にするか。</param>
         public ApplicationDatabaseFactory(bool foreignKeys, bool isReadOnly)
         {
             var builder = CreateConnectionBuilder();
@@ -31,6 +37,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             ConnectionString = builder.ToString();
         }
 
+        /// <summary>
+        /// ファイルDBとして構築。
+        /// </summary>
+        /// <param name="file">DBファイル。</param>
+        /// <param name="foreignKeys">外部制約を有効にするか。</param>
+        /// <param name="isReadOnly">読み込み専用にするか。</param>
         public ApplicationDatabaseFactory(FileInfo file, bool foreignKeys, bool isReadOnly)
         {
             var builder = CreateConnectionBuilder();
@@ -45,58 +57,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region property
 
+        /// <summary>
+        /// 接続文字列。
+        /// </summary>
         string ConnectionString { get; }
 
         #endregion
 
         #region IDatabaseFactory
 
+        /// <inheritdoc cref="IDatabaseFactory.CreateConnection"/>
         public override IDbConnection CreateConnection() => new SQLiteConnection(ConnectionString);
 
+        /// <inheritdoc cref="IDatabaseFactory.CreateImplementation"/>
         public override IDatabaseImplementation CreateImplementation() => new ApplicationDatabaseImplementation();
 
         #endregion
     }
 
+    /// <summary>
+    /// アプリケーション用<see cref="IDatabaseImplementation"/>実装。
+    /// </summary>
     internal class ApplicationDatabaseImplementation: SqliteImplementation
-    {
-        #region property
+    { }
 
-        Dictionary<Type, object> NullMapping { get; } = new Dictionary<Type, object>() {
-            [typeof(string)] = string.Empty,
-            [typeof(DateTime)] = DateTime.MinValue,
-        };
-
-        #endregion
-
-        #region function
-
-        bool IsIgnoreStatement(string sqlLine)
-        {
-            if(string.IsNullOrWhiteSpace(sqlLine)) {
-                return true;
-            }
-
-            if(sqlLine.StartsWith("--", StringComparison.Ordinal)) {
-                return true;
-            }
-
-            if(sqlLine.StartsWith("DECLARE", StringComparison.InvariantCultureIgnoreCase)) {
-                return true;
-            }
-            if(sqlLine.StartsWith("DEC", StringComparison.InvariantCultureIgnoreCase)) {
-                return true;
-            }
-            if(sqlLine.StartsWith("SET", StringComparison.InvariantCultureIgnoreCase)) {
-                return true;
-            }
-
-            return false;
-        }
-
-        #endregion
-    }
-
+    /// <summary>
+    /// アプリケーション用<see cref="IDatabaseAccessor"/>実装。
+    /// </summary>
     internal class ApplicationDatabaseAccessor: SqliteAccessor
     {
         public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILogger logger)
@@ -106,15 +93,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILoggerFactory loggerFactory)
             : base(connectionCreator, loggerFactory)
         { }
-
-        #region function
-
-        internal void CopyTo(string sourceName, ApplicationDatabaseAccessor destination, string destinationName)
-        {
-            Connection.BackupDatabase(destination.Connection, destinationName, sourceName, -1, null, -1);
-        }
-
-        #endregion
 
         #region DatabaseAccessor
 
