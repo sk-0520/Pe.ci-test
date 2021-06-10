@@ -24,10 +24,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Auto,
     }
 
+    /// <summary>
+    /// アップデート設定。
+    /// </summary>
     public class SettingAppUpdateSettingData: DataBase
     {
         #region property
 
+        /// <summary>
+        /// アップデート方法。
+        /// </summary>
         public UpdateKind UpdateKind { get; set; }
 
         #endregion

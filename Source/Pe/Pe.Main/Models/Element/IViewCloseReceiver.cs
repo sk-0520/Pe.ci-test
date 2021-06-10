@@ -1,5 +1,8 @@
 namespace ContentTypeTextNet.Pe.Main.Models.Element
 {
+    /// <summary>
+    /// ビューが閉じられたことを受信する。
+    /// </summary>
     public interface IViewCloseReceiver
     {
         #region function
