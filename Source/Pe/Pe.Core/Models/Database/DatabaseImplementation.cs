@@ -65,6 +65,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// ブロックコメントの開始終了文字列。
         /// </summary>
         IEnumerable<DatabaseBlockComment> BlockComments { get; }
+
+        /// <summary>
+        /// 行終端文字列を取得または初期設定。
+        /// </summary>
+        string NewLine { get; init; }
+
         #endregion
 
         #region function
@@ -130,6 +136,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         #region IDatabaseImplementation
 
+        /// <inheritdoc cref="IDatabaseImplementation.NewLine"/>
+        public string NewLine { get; init; } = Environment.NewLine;
+
         /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionDDL"/>
         public virtual bool SupportedTransactionDDL { get; } = false;
         /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionDML"/>
@@ -163,7 +172,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             return TextUtility.ReadLines(statement)
                 .Select(i => LineComments.First() + i)
-                .JoinString(Environment.NewLine)
+                .JoinString(NewLine)
             ;
         }
 
@@ -175,14 +184,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }
             var blockComment = BlockComments.First();
 
-            var builder = new StringBuilder(Environment.NewLine.Length * 4 + blockComment.Begin.Length + blockComment.End.Length + statement.Length);
-            builder.AppendLine(Environment.NewLine);
+            var builder = new StringBuilder(NewLine.Length * 4 + blockComment.Begin.Length + blockComment.End.Length + statement.Length);
+            builder.AppendLine(NewLine);
             builder.AppendLine(blockComment.Begin);
-            builder.AppendLine(Environment.NewLine);
+            builder.AppendLine(NewLine);
             builder.AppendLine(statement);
-            builder.AppendLine(Environment.NewLine);
+            builder.AppendLine(NewLine);
             builder.AppendLine(blockComment.End);
-            builder.AppendLine(Environment.NewLine);
+            builder.AppendLine(NewLine);
 
             return builder.ToString();
         }

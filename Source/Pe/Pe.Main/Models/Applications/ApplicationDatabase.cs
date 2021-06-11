@@ -327,14 +327,6 @@ limit
             return LoadStatementCore(key);
         }
 
-        public override string LoadStatementByCurrent(Type callerType, [CallerMemberName] string callerMemberName = "")
-        {
-            Debug.Assert(callerType.FullName != null);
-
-            var key = callerType.FullName + "." + callerMemberName;
-            return LoadStatement(key);
-        }
-
         #endregion
 
         #region IDisposable Support

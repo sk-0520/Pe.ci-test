@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
         /// <summary>
-        /// 行終端文字列を取得または設定。
+        /// 行終端文字列を取得または初期設定。
         /// </summary>
         public string NewLine { get; init; } = Environment.NewLine;
         /// <summary>
