@@ -75,8 +75,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                     var blockComment = Implementation.BlockComments.First();
 
                     var process = (
-                        begin: Regex.Escape(blockComment.Begin + "/!" + blockComment.End),
-                        end: Regex.Escape(blockComment.Begin + "!/" + blockComment.End)
+                        begin: Regex.Escape(blockComment.Begin + Implementation.ProcessBodyRange.Begin + blockComment.End),
+                        end: Regex.Escape(blockComment.Begin + Implementation.ProcessBodyRange.End + blockComment.End)
                     );
                     var block = (
                         begin: Regex.Escape(blockComment.Begin),

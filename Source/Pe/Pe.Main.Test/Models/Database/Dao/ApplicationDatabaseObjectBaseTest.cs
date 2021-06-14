@@ -72,6 +72,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
 
         class Di: IDatabaseImplementation
         {
+            public string NewLine { get; init; } = Environment.NewLine;
+
             public bool SupportedTransactionDDL => throw new NotSupportedException();
 
             public bool SupportedTransactionDML => throw new NotSupportedException();
@@ -81,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
 
             public IEnumerable<string> LineComments => throw new NotSupportedException();
             public IEnumerable<DatabaseBlockComment> BlockComments => throw new NotSupportedException();
-
+            public DatabaseBlockComment ProcessBodyRange => throw new NotSupportedException();
             public string PreFormatStatement(string statement)
             {
                 throw new NotSupportedException();

@@ -65,7 +65,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// ブロックコメントの開始終了文字列。
         /// </summary>
         IEnumerable<DatabaseBlockComment> BlockComments { get; }
-
+        /// <summary>
+        /// DAOで文の置き換え処理を行う際の範囲開始・終了文字列。
+        /// </summary>
+        DatabaseBlockComment ProcessBodyRange { get; }
         /// <summary>
         /// 行終端文字列を取得または初期設定。
         /// </summary>
@@ -151,7 +154,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <inheritdoc cref="IDatabaseImplementation.LineComments"/>
         public virtual IEnumerable<string> LineComments => new[] { "--", };
         /// <inheritdoc cref="IDatabaseImplementation.BlockComments"/>
-        public virtual IEnumerable<DatabaseBlockComment> BlockComments => new[] { new DatabaseBlockComment("/*", "*/"), };
+        public virtual IEnumerable<DatabaseBlockComment> BlockComments { get; } = new[] { new DatabaseBlockComment("/*", "*/"), };
+
+        /// <inheritdoc cref="IDatabaseImplementation.ProcessBodyRange"/>
+        public virtual DatabaseBlockComment ProcessBodyRange { get; } = new DatabaseBlockComment("{{", "}}");
 
         /// <inheritdoc cref="IDatabaseImplementation.PreFormatStatement(string)"/>
         public virtual string PreFormatStatement(string statement) => statement;
