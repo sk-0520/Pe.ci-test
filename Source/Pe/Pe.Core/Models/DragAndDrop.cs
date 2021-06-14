@@ -6,6 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// ドロップ可能処理。
+    /// </summary>
     public interface IDropable
     {
         /// <summary>
@@ -28,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         ///<see cref="UIElement.PreviewMouseMove"/> 的な Preview のイベントを使用する。
         ///<para>基本的には false で <see cref="UIElement.MouseMove"/> を使用する。 なんにせよ<see cref="UIElement.PreviewMouseDown"/> は強制される。</para>
         /// </summary>
-        bool UsingPreviewEvent { get; }
+        bool UsePreviewEvent { get; }
 
         #endregion
 
@@ -56,9 +59,18 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        public UIElement Element { get; set; }
+        /// <summary>
+        /// 対象要素。
+        /// </summary>
+        public UIElement Element { get; }
+        /// <summary>
+        /// <inheritdoc cref="DragDropEffects"/>
+        /// </summary>
         public DragDropEffects Effects { get; set; }
-        public DataObject Data { get; set; }
+        /// <summary>
+        /// ドラッグデータ。
+        /// </summary>
+        public DataObject Data { get; }
 
         #endregion
     }
@@ -67,21 +79,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public abstract class DragAndDropBase: IDragAndDrop
     {
         /// <summary>
-        /// <see cref="UsingPreviewEvent"/> は false を使用する。
+        /// <see cref="UsePreviewEvent"/> は false を使用する。
         /// </summary>
         /// <param name="logger"></param>
         protected DragAndDropBase(ILogger logger)
         {
-            UsingPreviewEvent = false;
+            UsePreviewEvent = false;
             Logger = logger;
         }
         /// <summary>
-        /// <see cref="UsingPreviewEvent"/> は false を使用する。
+        /// <see cref="UsePreviewEvent"/> は false を使用する。
         /// </summary>
         /// <param name="loggerFactory"></param>
         protected DragAndDropBase(ILoggerFactory loggerFactory)
         {
-            UsingPreviewEvent = false;
+            UsePreviewEvent = false;
             Logger = loggerFactory.CreateLogger(GetType());
         }
         /// <summary>
@@ -91,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="logger"></param>
         protected DragAndDropBase(bool usingPreviewEvent, ILogger logger)
         {
-            UsingPreviewEvent = usingPreviewEvent;
+            UsePreviewEvent = usingPreviewEvent;
             Logger = logger;
         }
         /// <summary>
@@ -101,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="loggerFactory"></param>
         protected DragAndDropBase(bool usingPreviewEvent, ILoggerFactory loggerFactory)
         {
-            UsingPreviewEvent = usingPreviewEvent;
+            UsePreviewEvent = usingPreviewEvent;
             Logger = loggerFactory.CreateLogger(GetType());
         }
 
@@ -112,6 +124,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         [PixelKind(Px.Logical)]
         Point DragStartPosition { get; set; }
 
+        /// <summary>
+        /// ドラッグ中か。
+        /// </summary>
         public bool IsDragging { get; private set; }
 
         /// <summary>
@@ -167,9 +182,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region IDragAndDrop
 
         /// <summary>
-        /// <see cref="IDragAndDrop.UsingPreviewEvent"/>
+        /// <see cref="IDragAndDrop.UsePreviewEvent"/>
         /// </summary>
-        public bool UsingPreviewEvent { get; }
+        public bool UsePreviewEvent { get; }
 
         public void MouseDown(UIElement sender, MouseButtonEventArgs e)
         {

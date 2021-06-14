@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         void AssociatedObject_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
-            if(dragAndDrop != null && !dragAndDrop.UsingPreviewEvent) {
+            if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {
                 dragAndDrop.MouseDown((UIElement)sender, e);
             }
         }
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         void AssociatedObject_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
-            if(dragAndDrop != null && !dragAndDrop.UsingPreviewEvent) {
+            if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {
                 dragAndDrop.MouseMove((UIElement)sender, e);
             }
         }
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         void AssociatedObject_DragEnter(object sender, DragEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
-            if(dragAndDrop != null && !dragAndDrop.UsingPreviewEvent) {
+            if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {
                 dragAndDrop.DragEnter((UIElement)sender, e);
             }
         }
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         void AssociatedObject_DragOver(object sender, DragEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
-            if(dragAndDrop != null && !dragAndDrop.UsingPreviewEvent) {
+            if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {
                 dragAndDrop.DragOver((UIElement)sender, e);
             }
         }
@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         void AssociatedObject_DragLeave(object sender, DragEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
-            if(dragAndDrop != null && !dragAndDrop.UsingPreviewEvent) {
+            if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {
                 dragAndDrop.DragLeave((UIElement)sender, e);
             }
         }
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         void AssociatedObject_Drop(object sender, DragEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
-            if(dragAndDrop != null && !dragAndDrop.UsingPreviewEvent) {
+            if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {
                 dragAndDrop.Drop((UIElement)sender, e);
             }
         }
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         private void AssociatedObject_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
-            if(dragAndDrop != null && dragAndDrop.UsingPreviewEvent) {
+            if(dragAndDrop != null && dragAndDrop.UsePreviewEvent) {
                 dragAndDrop.MouseMove((UIElement)sender, e);
             }
         }
@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         private void AssociatedObject_PreviewDragEnter(object sender, DragEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
-            if(dragAndDrop != null && dragAndDrop.UsingPreviewEvent) {
+            if(dragAndDrop != null && dragAndDrop.UsePreviewEvent) {
                 dragAndDrop.DragEnter((UIElement)sender, e);
             }
         }
@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         private void AssociatedObject_PreviewDragOver(object sender, DragEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
-            if(dragAndDrop != null && dragAndDrop.UsingPreviewEvent) {
+            if(dragAndDrop != null && dragAndDrop.UsePreviewEvent) {
                 dragAndDrop.DragOver((UIElement)sender, e);
             }
         }
@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         private void AssociatedObject_PreviewDragLeave(object sender, DragEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
-            if(dragAndDrop != null && dragAndDrop.UsingPreviewEvent) {
+            if(dragAndDrop != null && dragAndDrop.UsePreviewEvent) {
                 dragAndDrop.DragLeave((UIElement)sender, e);
             }
         }
@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         private void AssociatedObject_PreviewDrop(object sender, DragEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
-            if(dragAndDrop != null && dragAndDrop.UsingPreviewEvent) {
+            if(dragAndDrop != null && dragAndDrop.UsePreviewEvent) {
                 dragAndDrop.Drop((UIElement)sender, e);
             }
         }

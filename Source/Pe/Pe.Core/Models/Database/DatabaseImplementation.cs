@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionDML"/>
         public virtual bool SupportedTransactionDML { get; } = true;
         /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionTruncate"/>
-        public virtual bool SupportedTransactionTruncate { get; } = true;
+        public virtual bool SupportedTransactionTruncate { get; } = false;
 
         /// <inheritdoc cref="IDatabaseImplementation.SupportedLineComment"/>
         public virtual bool SupportedLineComment { get; } = true;
