@@ -132,14 +132,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         /// <example>
         /// select *
-        /// from /*/!*//*KEY[改行]
+        /// from /*{{*//*KEY[改行]
         /// KEY-A:CODE[改行] <paramref name="blocks"/>["KEY"] -> KEY-A
         ///     TABLE_A
         /// KEY-B:CODE[改行] <paramref name="blocks"/>["KEY"] -> KEY-B
         ///     TABLE_B
         /// KEY-C:LOAD[改行] <paramref name="blocks"/>["KEY"] -> KEY-C, <see cref="LoadStatement"/>(callerMemberName<see cref="JoinSeparator"/>NAME)
         ///     NAME
-        /// */TABLE_C/*!/*/ <paramref name="blocks"/>["KEY"] not KEY-A,KEY-B,KEY-C
+        /// */TABLE_C/*}}*/ <paramref name="blocks"/>["KEY"] not KEY-A,KEY-B,KEY-C
         /// </example>
         /// <param name="statement"></param>
         /// <param name="blocks"></param>

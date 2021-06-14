@@ -77,6 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
             public bool SupportedTransactionDDL => throw new NotSupportedException();
 
             public bool SupportedTransactionDML => throw new NotSupportedException();
+            public bool SupportedTransactionTruncate => throw new NotSupportedException();
 
             public bool SupportedLineComment => throw new NotSupportedException();
             public bool SupportedBlockComment => throw new NotSupportedException();
@@ -108,12 +109,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
             public string ToBlockComment(string statement) => throw new NotSupportedException();
 
 
-            public string Escape(string input)
+            public string Escape(string word)
             {
                 throw new NotSupportedException();
             }
 
-            public string EscapeLike(string pattern) => throw new NotSupportedException();
+            public string EscapeLike(string word) => throw new NotSupportedException();
         }
 
         class Adao: ApplicationDatabaseObjectBase

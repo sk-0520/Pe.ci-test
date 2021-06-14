@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         IDatabaseContext Context { get; }
         /// <summary>
-        ///データベース実装依存。
+        /// データベース実装依存。
         /// </summary>
         IDatabaseImplementation Implementation { get; }
 
