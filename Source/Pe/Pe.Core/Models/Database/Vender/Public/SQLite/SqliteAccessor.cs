@@ -29,6 +29,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 
         #region IDatabaseTransaction
 
+        public IDatabaseContext Context => this;
         public IDbTransaction Transaction => throw new NotSupportedException();
 
         public IDatabaseImplementation Implementation { get; }

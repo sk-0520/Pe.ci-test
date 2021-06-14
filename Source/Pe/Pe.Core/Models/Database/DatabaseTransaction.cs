@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// データベース実装におけるトランザクション処理。
     /// <para>これが実体化されてればトランザクション中でしょうね。</para>
     /// </summary>
-    public interface IDatabaseTransaction: IDatabaseContext, IDisposable
+    public interface IDatabaseTransaction: IDatabaseContext, IDatabaseContexts, IDisposable
     {
         #region property
 
@@ -18,10 +18,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// CRL上のトランザクション実体。
         /// </summary>
         IDbTransaction Transaction { get; }
-        /// <summary>
-        /// データベース実装依存。
-        /// </summary>
-        IDatabaseImplementation Implementation { get; }
 
         #endregion
 
@@ -69,6 +65,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region IDatabaseTransaction
 
+        /// <summary>
+        /// <see cref="IDatabaseContext"/>としての自身を返す。
+        /// </summary>
+        public IDatabaseContext Context => this;
         public IDbTransaction Transaction { get; [Unuse(UnuseKinds.Dispose)] private set; }
         public IDatabaseImplementation Implementation { get; }
 
