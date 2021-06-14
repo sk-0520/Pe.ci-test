@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ContentTypeTextNet.Pe.Main.Test
 {
     [TestClass]
-    internal class Test
+    public class Test
     {
         #region property
 
