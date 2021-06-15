@@ -541,6 +541,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public ICommand UnlinkCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 Model.Unlink(false);
+                switch(Content) {
+                    case NotePlainContentViewModel plain:
+                        Model.ContentElement?.ChangePlainContent(plain.Content);
+                        break;
+
+                    case NoteRichTextContentViewModel rich:
+                        rich.SafeFlush();
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
                 RaisePropertyChanged(nameof(IsLink));
                 RaisePropertyChanged(nameof(LinkPath));
                 ShowLinkChangeConfim = false;
