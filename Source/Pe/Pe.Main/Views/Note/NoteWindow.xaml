@@ -473,6 +473,7 @@
                 <Setter Property="IsInactiveSelectionHighlightEnabled" Value="{Binding IsActive, ElementName=root, Mode=OneWay}" />
                 <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                <Setter Property="CaretBrush" Value="{Binding DataContext.ContentForeground, RelativeSource={RelativeSource AncestorType=Window}}" />
               </Style>
 
               <Style x:Key="ContentTextBox" TargetType="TextBox" BasedOn="{StaticResource TextBoxBase}">
