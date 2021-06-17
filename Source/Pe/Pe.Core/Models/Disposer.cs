@@ -97,15 +97,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
             OnDisposing();
 
             if(disposing) {
-#pragma warning disable S3971 // "GC.SuppressFinalize" should not be called
                 GC.SuppressFinalize(this);
-#pragma warning restore S3971 // "GC.SuppressFinalize" should not be called
             }
 
             IsDisposed = true;
         }
 
+
         /// <inheritdoc cref="IDisposable.Dispose"/>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA1816:Dispose メソッドは、SuppressFinalize を呼び出す必要があります")]
         public void Dispose()
         {
             Dispose(true);

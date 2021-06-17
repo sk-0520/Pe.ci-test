@@ -13,11 +13,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 {
     public class ProgramElement: ElementBase
     {
-        public ProgramElement(FileInfo fileInfo, IReadOnlyList<Regex> autoImportUntargetRegexItems, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ProgramElement(FileInfo fileInfo, IReadOnlyList<Regex> autoImportExcludeRegexItems, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             FileInfo = fileInfo;
-            AutoImportUntargetRegexItems = autoImportUntargetRegexItems;
+            AutoImportExcludeRegexItems = autoImportExcludeRegexItems;
             DispatcherWrapper = dispatcherWrapper;
             IconImageLoader = new IconImageLoader(
                 new Data.IconData() {
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         IDispatcherWrapper DispatcherWrapper { get; }
         public bool IsShortcut => PathUtility.IsShortcut(FileInfo.Name);
-        IReadOnlyList<Regex> AutoImportUntargetRegexItems { get; }
+        IReadOnlyList<Regex> AutoImportExcludeRegexItems { get; }
         public bool IsImport { get; set; }
         public IconImageLoader IconImageLoader { get; private set; }
 
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         bool IsAutoImportTarget(string path)
         {
-            return !AutoImportUntargetRegexItems.Any(i => i.IsMatch(path));
+            return !AutoImportExcludeRegexItems.Any(i => i.IsMatch(path));
         }
 
         void ApplyShortcutFileIconLoader(string targetPath, string targetIconPath, int targetIconIndex)

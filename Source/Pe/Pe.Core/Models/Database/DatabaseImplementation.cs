@@ -40,13 +40,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region property
 
         /// <summary>
-        /// DDLのトランザクションが有効か。
+        /// トランザクション中の<c>DDL</c>が有効か。
         /// </summary>
         bool SupportedTransactionDDL { get; }
         /// <summary>
-        /// DMLのトランザクションが有効か。
+        /// トランザクション中の<c>DML</c>が有効か。
         /// </summary>
         bool SupportedTransactionDML { get; }
+        /// <summary>
+        /// トランザクション中の<c>TRUNCATE</c>が有効か。
+        /// </summary>
+        bool SupportedTransactionTruncate { get; }
 
         /// <summary>
         /// 単一行コメントをサポートしているか。
@@ -65,6 +69,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// ブロックコメントの開始終了文字列。
         /// </summary>
         IEnumerable<DatabaseBlockComment> BlockComments { get; }
+        /// <summary>
+        /// DAOで文の置き換え処理を行う際の範囲開始・終了文字列。
+        /// </summary>
+        DatabaseBlockComment ProcessBodyRange { get; }
+        /// <summary>
+        /// 行終端文字列を取得または初期設定。
+        /// </summary>
+        string NewLine { get; init; }
+
         #endregion
 
         #region function
@@ -72,55 +85,55 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <summary>
         /// 文実行前に実行する文に対して変換処理を実行。
         /// </summary>
-        /// <param name="statement"></param>
-        /// <returns></returns>
+        /// <param name="statement">問い合わせ文</param>
+        /// <returns>変換処理後の問い合わせ文。</returns>
         string PreFormatStatement(string statement);
         /// <summary>
         /// テーブル名を文内で使用可能な文字列に変換。
         /// </summary>
         /// <param name="tableName">テーブル名。</param>
-        /// <returns></returns>
+        /// <returns>使用可能な文字列。</returns>
         string ToStatementTableName(string tableName);
         /// <summary>
         /// カラム名を文内で使用可能な文字列に変換。
         /// </summary>
         /// <param name="columnName">カラム名。</param>
-        /// <returns></returns>
+        /// <returns>使用可能な文字列。</returns>
         string ToStatementColumnName(string columnName);
         /// <summary>
-        /// バインド変数名を使用可能な文字列に変換。
+        /// バインド変数名として使用可能な文字列に変換。
         /// </summary>
-        /// <param name="parameterName"></param>
+        /// <param name="parameterName">パラメータ名。</param>
         /// <param name="index">0基点のパラメータ番号。</param>
-        /// <returns></returns>
+        /// <returns>使用可能な文字列。</returns>
         string ToStatementParameterName(string parameterName, int index);
 
         /// <summary>
         /// 文を単一行コメントに変換。
         /// </summary>
-        /// <param name="statement"></param>
-        /// <returns></returns>
+        /// <param name="statement">問い合わせ文。</param>
+        /// <returns>変換された文。</returns>
         string ToLineComment(string statement);
         /// <summary>
         /// 文をブロックコメントに変換。
         /// </summary>
-        /// <param name="statement"></param>
-        /// <returns></returns>
+        /// <param name="statement">問い合わせ文</param>
+        /// <returns>変換された文。</returns>
         string ToBlockComment(string statement);
         /// <summary>
         /// 実行文に対するエスケープ処理。
-        /// <para>基本的にはバインド処理で対応すること。本処理はしゃあなし動的SQL作成時に無理やり使用する前提。</para>
+        /// <para>基本的にはバインド処理で対応すること。本処理はしゃあなし動的SQL作成時に無理やり使用する前提。<see cref="DatabaseAccessObjectBase.LoadStatement(string)"/>で動的に組み上げた方が建設的。</para>
         /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        string Escape(string input);
+        /// <param name="word">対象単語。文全体ではなく値を指定する想定。</param>
+        /// <returns>変換された値。</returns>
+        string Escape(string word);
 
         /// <summary>
         /// <c>like</c>句のエスケープ処理を実施。
         /// </summary>
-        /// <param name="pattern"></param>
-        /// <returns></returns>
-        string EscapeLike(string pattern);
+        /// <param name="word">対象単語。</param>
+        /// <returns>変換された値。</returns>
+        string EscapeLike(string word);
 
         #endregion
     }
@@ -130,10 +143,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         #region IDatabaseImplementation
 
+        /// <inheritdoc cref="IDatabaseImplementation.NewLine"/>
+        public string NewLine { get; init; } = Environment.NewLine;
+
         /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionDDL"/>
         public virtual bool SupportedTransactionDDL { get; } = false;
         /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionDML"/>
         public virtual bool SupportedTransactionDML { get; } = true;
+        /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionTruncate"/>
+        public virtual bool SupportedTransactionTruncate { get; } = false;
+
         /// <inheritdoc cref="IDatabaseImplementation.SupportedLineComment"/>
         public virtual bool SupportedLineComment { get; } = true;
         /// <inheritdoc cref="IDatabaseImplementation.SupportedBlockComment"/>
@@ -142,7 +161,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <inheritdoc cref="IDatabaseImplementation.LineComments"/>
         public virtual IEnumerable<string> LineComments => new[] { "--", };
         /// <inheritdoc cref="IDatabaseImplementation.BlockComments"/>
-        public virtual IEnumerable<DatabaseBlockComment> BlockComments => new[] { new DatabaseBlockComment("/*", "*/"), };
+        public virtual IEnumerable<DatabaseBlockComment> BlockComments { get; } = new[] { new DatabaseBlockComment("/*", "*/"), };
+
+        /// <inheritdoc cref="IDatabaseImplementation.ProcessBodyRange"/>
+        public virtual DatabaseBlockComment ProcessBodyRange { get; } = new DatabaseBlockComment("{{", "}}");
 
         /// <inheritdoc cref="IDatabaseImplementation.PreFormatStatement(string)"/>
         public virtual string PreFormatStatement(string statement) => statement;
@@ -163,7 +185,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             return TextUtility.ReadLines(statement)
                 .Select(i => LineComments.First() + i)
-                .JoinString(Environment.NewLine)
+                .JoinString(NewLine)
             ;
         }
 
@@ -175,20 +197,20 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }
             var blockComment = BlockComments.First();
 
-            var builder = new StringBuilder(Environment.NewLine.Length * 4 + blockComment.Begin.Length + blockComment.End.Length + statement.Length);
-            builder.AppendLine(Environment.NewLine);
+            var builder = new StringBuilder(NewLine.Length * 4 + blockComment.Begin.Length + blockComment.End.Length + statement.Length);
+            builder.AppendLine(NewLine);
             builder.AppendLine(blockComment.Begin);
-            builder.AppendLine(Environment.NewLine);
+            builder.AppendLine(NewLine);
             builder.AppendLine(statement);
-            builder.AppendLine(Environment.NewLine);
+            builder.AppendLine(NewLine);
             builder.AppendLine(blockComment.End);
-            builder.AppendLine(Environment.NewLine);
+            builder.AppendLine(NewLine);
 
             return builder.ToString();
         }
 
         /// <inheritdoc cref="IDatabaseImplementation.Escape(string)"/>
-        public virtual string Escape(string input) => input
+        public virtual string Escape(string word) => word
             .Replace("\\", @"\\")
             .Replace("\'", @"''")
             .Replace("\r", @"\r")
@@ -196,7 +218,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         ;
 
         /// <inheritdoc cref="IDatabaseImplementation.EscapeLike(string)"/>
-        public virtual string EscapeLike(string pattern) => pattern
+        public virtual string EscapeLike(string word) => word
             .Replace("\\", @"\\")
             .Replace("%", @"\%")
             .Replace("_", @"\_")

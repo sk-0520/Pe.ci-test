@@ -31,6 +31,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region IDatabaseTransaction
 
+        public IDatabaseContext Context => this;
+
         public int Execute(string statement, object? parameter = null)
         {
             ThrowIfDisposed();

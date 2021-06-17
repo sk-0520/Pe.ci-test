@@ -255,6 +255,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
+        private string GetPluginName(FileInfo archiveFile)
+        {
+            var pluginFileName = Path.GetFileNameWithoutExtension(archiveFile.Name);
+            if(string.IsNullOrEmpty(pluginFileName)) {
+                throw new Exception($"ファイル名不明: {archiveFile}");
+            }
+
+            var endWords = new[] {
+                "_x86",
+                "_x64",
+                "_AnyCPU",
+            };
+            foreach(var endWord in endWords) {
+                if(pluginFileName.EndsWith(endWord, StringComparison.InvariantCultureIgnoreCase)) {
+                    return pluginFileName.Substring(0, pluginFileName.Length - endWord.Length);
+                }
+            }
+
+            return pluginFileName;
+        }
+
         internal async Task InstallLocalPluginAsync(FileInfo archiveFile)
         {
             // 拡張子をアーカイブ種別としてそのまま使用する
@@ -266,7 +287,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             if(!exts.Contains(ext)) {
                 throw new PluginInvalidArchiveKindException();
             }
-            var pluginFileName = Path.GetFileNameWithoutExtension(archiveFile.Name)!;
+            var pluginFileName = GetPluginName(archiveFile);
 
             var element = await InstallPluginAsync(pluginFileName, archiveFile, ext, true);
             MergeInstallPlugin(element);

@@ -142,8 +142,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var extensionPatterns = extensions
                 .Select(i => Regex.Escape(i))
                 .Select(i => "(" + i + ")")
+                .JoinString("|")
             ;
-            var extensionPattern = "(" + string.Join("|", extensionPatterns) + ")";
+            var extensionPattern = "(" + extensionPatterns + ")";
             var extensionRegex = new Regex(extensionPattern, RegexOptions.IgnoreCase);
 
             return ExecuteCore(parentDirectory, extensionRegex, leaveCount, orderByDesc, exceptionCacther);

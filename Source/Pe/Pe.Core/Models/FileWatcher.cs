@@ -53,6 +53,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    /// <summary>
+    /// ファイル監視処理。
+    /// </summary>
     public class FileWatcher: DisposerBase
     {
         #region event

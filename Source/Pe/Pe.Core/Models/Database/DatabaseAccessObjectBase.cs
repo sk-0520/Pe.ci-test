@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
         /// <summary>
-        /// 行終端文字列を取得または設定。
+        /// 行終端文字列を取得または初期設定。
         /// </summary>
         public string NewLine { get; init; } = Environment.NewLine;
         /// <summary>
@@ -75,8 +75,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                     var blockComment = Implementation.BlockComments.First();
 
                     var process = (
-                        begin: Regex.Escape(blockComment.Begin + "/!" + blockComment.End),
-                        end: Regex.Escape(blockComment.Begin + "!/" + blockComment.End)
+                        begin: Regex.Escape(blockComment.Begin + Implementation.ProcessBodyRange.Begin + blockComment.End),
+                        end: Regex.Escape(blockComment.Begin + Implementation.ProcessBodyRange.End + blockComment.End)
                     );
                     var block = (
                         begin: Regex.Escape(blockComment.Begin),
@@ -132,14 +132,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         /// <example>
         /// select *
-        /// from /*/!*//*KEY[改行]
+        /// from /*{{*//*KEY[改行]
         /// KEY-A:CODE[改行] <paramref name="blocks"/>["KEY"] -> KEY-A
         ///     TABLE_A
         /// KEY-B:CODE[改行] <paramref name="blocks"/>["KEY"] -> KEY-B
         ///     TABLE_B
         /// KEY-C:LOAD[改行] <paramref name="blocks"/>["KEY"] -> KEY-C, <see cref="LoadStatement"/>(callerMemberName<see cref="JoinSeparator"/>NAME)
         ///     NAME
-        /// */TABLE_C/*!/*/ <paramref name="blocks"/>["KEY"] not KEY-A,KEY-B,KEY-C
+        /// */TABLE_C/*}}*/ <paramref name="blocks"/>["KEY"] not KEY-A,KEY-B,KEY-C
         /// </example>
         /// <param name="statement"></param>
         /// <param name="blocks"></param>

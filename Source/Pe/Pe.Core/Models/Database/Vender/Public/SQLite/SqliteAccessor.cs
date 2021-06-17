@@ -29,6 +29,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 
         #region IDatabaseTransaction
 
+        public IDatabaseContext Context => this;
         public IDbTransaction Transaction => throw new NotSupportedException();
 
         public IDatabaseImplementation Implementation { get; }
@@ -102,6 +103,21 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         public SqliteAccessor(IDatabaseFactory databaseFactory, ILoggerFactory loggerFactory)
             : base(databaseFactory, loggerFactory)
         { }
+
+        #region function
+
+        /// <summary>
+        /// データベースのコピー。
+        /// </summary>
+        /// <param name="sourceName">コピー元DB名。</param>
+        /// <param name="destination">コピー先の<see cref="SqliteAccessor"/></param>
+        /// <param name="destinationName">コピー先DB名。</param>
+        public void CopyTo(string sourceName, SqliteAccessor destination, string destinationName)
+        {
+            Connection.BackupDatabase(destination.Connection, destinationName, sourceName, -1, null, -1);
+        }
+
+        #endregion
 
         #region DatabaseAccessor
 

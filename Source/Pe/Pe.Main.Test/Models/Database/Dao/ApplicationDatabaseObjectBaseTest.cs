@@ -72,16 +72,19 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
 
         class Di: IDatabaseImplementation
         {
+            public string NewLine { get; init; } = Environment.NewLine;
+
             public bool SupportedTransactionDDL => throw new NotSupportedException();
 
             public bool SupportedTransactionDML => throw new NotSupportedException();
+            public bool SupportedTransactionTruncate => throw new NotSupportedException();
 
             public bool SupportedLineComment => throw new NotSupportedException();
             public bool SupportedBlockComment => throw new NotSupportedException();
 
             public IEnumerable<string> LineComments => throw new NotSupportedException();
             public IEnumerable<DatabaseBlockComment> BlockComments => throw new NotSupportedException();
-
+            public DatabaseBlockComment ProcessBodyRange => throw new NotSupportedException();
             public string PreFormatStatement(string statement)
             {
                 throw new NotSupportedException();
@@ -106,12 +109,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
             public string ToBlockComment(string statement) => throw new NotSupportedException();
 
 
-            public string Escape(string input)
+            public string Escape(string word)
             {
                 throw new NotSupportedException();
             }
 
-            public string EscapeLike(string pattern) => throw new NotSupportedException();
+            public string EscapeLike(string word) => throw new NotSupportedException();
         }
 
         class Adao: ApplicationDatabaseObjectBase

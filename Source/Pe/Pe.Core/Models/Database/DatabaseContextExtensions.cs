@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// <summary>
     /// 読み込み処理の安全のしおり。
     /// </summary>
-    public static class DatabaseReaderExtensions
+    public static class IDatabaseReaderExtensions
     {
         #region function
 
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// <summary>
     /// 書き込み処理の安全のしおり。
     /// </summary>
-    public static class DatabaseWriterExtensions
+    public static class IDatabaseWriterExtensions
     {
         #region function
 

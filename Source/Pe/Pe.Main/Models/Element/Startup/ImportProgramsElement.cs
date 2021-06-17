@@ -71,9 +71,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             return result;
         }
 
-        IReadOnlyList<Regex> GetAutoImportUntargetRegexItems()
+        IReadOnlyList<Regex> GetAutoImportExcludeRegexItems()
         {
-            return LauncherItemConfiguration.AutoImportUntargetPatterns
+            return LauncherItemConfiguration.AutoImportExcludePatterns
                 .Select(i => new Regex(i, RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace))
                 .ToList()
             ;
@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
         {
             ThrowIfDisposed();
 
-            var autoImportUntargetRegexItems = GetAutoImportUntargetRegexItems();
+            var autoImportExcludeRegexItems = GetAutoImportExcludeRegexItems();
 
             var dirPaths = new[] {
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu),
@@ -98,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 .GroupBy(f => f.Name)
                 .OrderBy(g => g.Key)
                 .Select(g => g.First())
-                .Select(f => new ProgramElement(f, autoImportUntargetRegexItems, DispatcherWrapper, LoggerFactory))
+                .Select(f => new ProgramElement(f, autoImportExcludeRegexItems, DispatcherWrapper, LoggerFactory))
             ;
 
             foreach(var element in elements) {

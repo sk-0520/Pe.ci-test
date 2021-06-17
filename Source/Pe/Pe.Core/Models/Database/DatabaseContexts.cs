@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         IDatabaseContext Context { get; }
         /// <summary>
-        ///データベース実装依存。
+        /// データベース実装依存。
         /// </summary>
         IDatabaseImplementation Implementation { get; }
 
@@ -36,33 +36,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         /// <inheritdoc cref="IDatabaseContexts.Implementation"/>
         public IDatabaseImplementation Implementation { get; }
-
-        #endregion
-    }
-
-    public static class DatabaseContextsExtensions
-    {
-        #region function
-
-        /// <summary>
-        /// <see cref="IDatabaseAccessor"/>から<see cref="IDatabaseContexts"/>を生成。
-        /// </summary>
-        /// <param name="databaseAccessor"></param>
-        /// <returns></returns>
-        public static IDatabaseContexts ToContexts(this IDatabaseAccessor databaseAccessor)
-        {
-            return new DatabaseContexts(databaseAccessor, databaseAccessor.DatabaseFactory.CreateImplementation());
-        }
-
-        /// <summary>
-        /// <see cref="IDatabaseTransaction"/>から<see cref="IDatabaseContexts"/>を生成。
-        /// </summary>
-        /// <param name="databaseTransaction"></param>
-        /// <returns></returns>
-        public static IDatabaseContexts ToContexts(this IDatabaseTransaction databaseTransaction)
-        {
-            return new DatabaseContexts(databaseTransaction, databaseTransaction.Implementation);
-        }
 
         #endregion
     }

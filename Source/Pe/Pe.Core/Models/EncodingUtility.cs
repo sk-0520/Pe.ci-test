@@ -9,10 +9,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
+        /// <summary>
+        /// BOMありUTF-8名。
+        /// </summary>
         public static string UTF8BomName => "utf-8bom";
+        /// <summary>
+        /// BOMなしUTF-8名。
+        /// </summary>
         public static string UTF8nName => "utf-8n";
 
+        /// <summary>
+        /// BOMありUTF-8エンコーディング。
+        /// </summary>
         public static Encoding UTF8Bom => new UTF8Encoding(true);
+        /// <summary>
+        /// BOMなしUTF-8エンコーディング。
+        /// </summary>
         public static Encoding UTF8N => new UTF8Encoding(false);
 
         #endregion

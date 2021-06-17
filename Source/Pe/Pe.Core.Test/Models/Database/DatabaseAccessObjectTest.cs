@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Database
 select
 *
 from
-/*/!*//*KEY1
+/*{{*//*KEY1
 VALUE1:CODE
     1
 VALUE2:CODE
@@ -58,14 +58,14 @@ VALUE3:LOAD
 
 TABLE
 
-/*!/*/
+/*}}*/
 order by
-/*/!*//*KEY2
+/*{{*//*KEY2
 VALUE1:CODE
     COL1
 VALUE2:CODE
     COL2
-*/COL3/*!/*/
+*/COL3/*}}*/
 
 ";
             var dao = CreateDao();
