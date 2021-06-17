@@ -1,48 +1,14 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.xx.001",
+		"date": "2021/06/17",
+		"version": "0.99.143",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "9a22c9aedaafa6db2d2390ae5909b81a3067c184",
 						"subject": "#743: ノートのキャレット色を前景に合わせる"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -50,47 +16,22 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "796994923e8ae4918f012ed25b890b651585fa05",
 						"subject": "#748: ノートリンクを切断時にファイル内容を本文に割り当てられていない"
 					},
 					{
-						"revision": "",
+						"revision": "78f52fbb56083f521f2724214624d275feedecd8",
 						"subject": "#756: ノートリンクRTFでやたらとゴミが入る",
 						"comments": [
 							"RTFが目立つってだけでプレーンテキストもごみってた"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "21bb47b1262d33f219adf9d8575fc9f5677f2c95",
 						"subject": "#755: プラグインインストール時にアーカイブ名の x86/x64 で探しに行こうとするので該当プラグインが見つからない",
 						"comments": [
 							"拡張子を抜いたファイル名末尾 _x86, _64, _AnyCPU を無視するようにした(AnyCPUは意味あるか知らん)"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "developer",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
