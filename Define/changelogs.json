@@ -55,7 +55,10 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#756: ノートリンクRTFでやたらとゴミが入る",
+						"comments": [
+							"RTFが目立つってだけでプレーンテキストもごみってた"
+						]
 					},
 					{
 						"revision": "",
