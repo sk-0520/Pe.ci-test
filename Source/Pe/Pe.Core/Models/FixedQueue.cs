@@ -5,32 +5,50 @@ using System.Collections.Generic;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// 最大数制限ありのキュー。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IFixedQueue<T>: IEnumerable<T>
     {
         #region property
 
+        /// <summary>
+        /// 上限。
+        /// </summary>
         int Limit { get; }
 
+        /// <inheritdoc cref="Queue{T}.Count"/>
         int Count { get; }
+
+        /// <summary>
+        /// 空か。
+        /// </summary>
         bool IsEmpty { get; }
 
         #endregion
 
         #region function
 
+        /// <inheritdoc cref="Queue{T}.Clear"/>
         void Clear();
+        /// <inheritdoc cref="Queue{T}.CopyTo(T[], int)"/>
         void CopyTo(T[] array, int index);
+        /// <inheritdoc cref="Queue{T}.ToArray"/>
         T[] ToArray();
 
+        /// <inheritdoc cref="Queue{T}.Enqueue(T)"/>
         void Enqueue(T item);
+        /// <inheritdoc cref="Queue{T}.TryDequeue(out T)"/>
         bool TryDequeue(out T result);
+        /// <inheritdoc cref="Queue{T}.TryPeek(out T)"/>
         bool TryPeek(out T result);
 
         #endregion
     }
 
     /// <summary>
-    /// 最大数制限ありのキュー。
+    /// <inheritdoc cref="IFixedQueue{T}"/>
     /// <see cref="Queue{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -49,9 +67,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         private Queue<T> Queue { get; } = new Queue<T>();
 
+        /// <inheritdoc cref="IFixedQueue{T}.Limit"/>
         public int Limit { get; }
 
-        /// <inheritdoc cref="Queue{T}.Count"/>
+        /// <inheritdoc cref="IFixedQueue{T}.Count"/>
         public int Count => Queue.Count;
         /// <inheritdoc cref="IFixedQueue{T}.IsEmpty"/>
         public bool IsEmpty => Queue.Count == 0;
@@ -60,14 +79,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
-        /// <inheritdoc cref="Queue{T}.Clear"/>
+        /// <inheritdoc cref="IFixedQueue{T}.Clear"/>
         public void Clear() => Queue.Clear();
-        /// <inheritdoc cref="Queue{T}.CopyTo(T[], int)"/>
+        /// <inheritdoc cref="IFixedQueue{T}.CopyTo(T[], int)"/>
         public void CopyTo(T[] array, int index) => Queue.CopyTo(array, index);
-        /// <inheritdoc cref="Queue{T}.ToArray"/>
+        /// <inheritdoc cref="IFixedQueue{T}.ToArray"/>
         public T[] ToArray() => Queue.ToArray();
 
-        /// <inheritdoc cref="Queue{T}.Enqueue(T)"/>
+        /// <inheritdoc cref="IFixedQueue{T}.Enqueue(T)"/>
         public void Enqueue(T item)
         {
             Queue.Enqueue(item);
@@ -76,10 +95,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        /// <inheritdoc cref="Queue{T}.TryDequeue(out T)"/>
+        /// <inheritdoc cref="IFixedQueue{T}.TryDequeue(out T)"/>
         public bool TryDequeue(out T result) => Queue.TryDequeue(out result!);
 
-        /// <inheritdoc cref="Queue{T}.TryPeek(out T)"/>
+        /// <inheritdoc cref="IFixedQueue{T}.TryPeek(out T)"/>
         public bool TryPeek(out T result) => Queue.TryPeek(out result!);
 
 
@@ -97,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     /// <summary>
-    /// 最大数制限ありのキュー。
+    /// スレッド セーフ<inheritdoc cref="IFixedQueue{T}"/>
     /// <see cref="ConcurrentQueue{T}"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -116,25 +135,26 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         private ConcurrentQueue<T> Queue { get; } = new ConcurrentQueue<T>();
 
+        /// <inheritdoc cref="IFixedQueue{T}.Count"/>
         public int Limit { get; }
 
-        /// <inheritdoc cref="ConcurrentQueue{T}.Count"/>
+        /// <inheritdoc cref="IFixedQueue{T}.Count"/>
         public int Count => Queue.Count;
-        /// <inheritdoc cref="ConcurrentQueue{T}.IsEmpty"/>
+        /// <inheritdoc cref="IFixedQueue{T}.IsEmpty"/>
         public bool IsEmpty => Queue.IsEmpty;
 
         #endregion
 
         #region function
 
-        /// <inheritdoc cref="ConcurrentQueue{T}.Clear"/>
+        /// <inheritdoc cref="IFixedQueue{T}.Clear"/>
         public void Clear() => Queue.Clear();
-        /// <inheritdoc cref="ConcurrentQueue{T}.CopyTo(T[], int)"/>
+        /// <inheritdoc cref="IFixedQueue{T}.CopyTo(T[], int)"/>
         public void CopyTo(T[] array, int index) => Queue.CopyTo(array, index);
-        /// <inheritdoc cref="ConcurrentQueue{T}.ToArray"/>
+        /// <inheritdoc cref="IFixedQueue{T}.ToArray"/>
         public T[] ToArray() => Queue.ToArray();
 
-        /// <inheritdoc cref="ConcurrentQueue{T}.Enqueue(T)"/>
+        /// <inheritdoc cref="IFixedQueue{T}.Enqueue(T)"/>
         public void Enqueue(T item)
         {
             Queue.Enqueue(item);
@@ -143,10 +163,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        /// <inheritdoc cref="ConcurrentQueue{T}.TryDequeue(out T)"/>
+        /// <inheritdoc cref="IFixedQueue{T}.TryDequeue(out T)"/>
         public bool TryDequeue(out T result) => Queue.TryDequeue(out result!);
 
-        /// <inheritdoc cref="ConcurrentQueue{T}.TryPeek(out T)"/>
+        /// <inheritdoc cref="IFixedQueue{T}.TryPeek(out T)"/>
         public bool TryPeek(out T result) => Queue.TryPeek(out result!);
 
         #endregion
