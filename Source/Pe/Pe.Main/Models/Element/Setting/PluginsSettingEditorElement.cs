@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             public void Report(string value)
             {
-                Logger.LogInformation(value);
+                Logger.LogInformation("{0}", value);
             }
 
             #endregion

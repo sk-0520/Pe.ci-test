@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                             return;
                         } else {
                             var msg = response?.Message ?? Properties.Resources.String_Common_Network_UnknownResponse;
-                            Logger.LogError(msg);
+                            Logger.LogError("{0}", msg);
                             ErrorMessage = msg;
                             SendStatus.State = RunningState.Error;
                         }

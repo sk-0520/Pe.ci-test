@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public void ResizeStart(string direction)
         {
-            Logger.LogDebug(direction);
+            Logger.LogDebug("{0}", direction);
             OnResizeStart(direction);
         }
 

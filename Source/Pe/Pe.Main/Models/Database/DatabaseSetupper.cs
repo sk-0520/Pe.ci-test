@@ -200,7 +200,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                 errors.AppendLine();
             }
             var error = errors.ToString();
-            Logger.LogError(error);
+            Logger.LogError("{0}", error);
 
             throw new Exception("CheckForeignKey") {
                 Source = error

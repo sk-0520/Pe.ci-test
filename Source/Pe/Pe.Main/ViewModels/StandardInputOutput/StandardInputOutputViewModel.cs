@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         private void AppendOutput(string value, bool isError)
         {
-            Logger.LogTrace(value);
+            Logger.LogTrace("{0}", value);
             if(Terminal == null) {
                 Logger.LogTrace("来ちゃいけない制御フロー");
                 return;
@@ -264,7 +264,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         void SaveLog(string path)
         {
-            Logger.LogDebug(path);
+            Logger.LogDebug("{0}", path);
             using var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
             using var writer = new StreamWriter(stream, Model.Process.StandardOutput.CurrentEncoding);
             writer.WriteLine(TextDocument.Text);

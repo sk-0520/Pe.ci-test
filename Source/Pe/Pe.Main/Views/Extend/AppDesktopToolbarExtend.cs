@@ -267,7 +267,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
 
         protected void OnAppDesktopToolbarFullScreen(bool fullScreen)
         {
-            Logger.LogTrace($"{nameof(fullScreen)}: {fullScreen}");
+            Logger.LogTrace($"{nameof(fullScreen)}: {{0}}", fullScreen);
 
             if(ExtendData != null) {
                 var hForegroundWnd = NativeMethods.GetForegroundWindow();

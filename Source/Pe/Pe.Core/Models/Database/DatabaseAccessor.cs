@@ -286,7 +286,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         protected virtual void LoggingStatement(string statement, object? parameter)
         {
             if(Logger.IsEnabled(LogLevel.Trace)) {
-                Logger.LogTrace(statement, parameter);
+                Logger.LogTrace("{0}{1}{2}", statement, Environment.NewLine, ObjectDumper.GetDumpString(parameter));
             }
         }
 
