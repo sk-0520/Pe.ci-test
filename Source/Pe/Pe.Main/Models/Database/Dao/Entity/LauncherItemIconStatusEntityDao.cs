@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             );
         }
 
-        public bool SelecteExistLauncherItemIconState(Guid launcherItemId, in IconScale iconScale)
+        public bool SelecteExistsLauncherItemIconState(Guid launcherItemId, in IconScale iconScale)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 

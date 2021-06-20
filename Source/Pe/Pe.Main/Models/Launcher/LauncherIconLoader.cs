@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 DateTime iconUpdatedTimestamp = DateTime.UtcNow;
                 using(var context = LargeDatabaseBarrier.WaitWrite()) {
                     var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                    var existIconState = launcherItemIconStatusEntityDao.SelecteExistLauncherItemIconState(LauncherItemId, iconScale);
+                    var existIconState = launcherItemIconStatusEntityDao.SelecteExistsLauncherItemIconState(LauncherItemId, iconScale);
                     if(existIconState) {
                         launcherItemIconStatusEntityDao.UpdateLastUpdatedIconTimestamp(LauncherItemId, iconScale, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
                     } else {
