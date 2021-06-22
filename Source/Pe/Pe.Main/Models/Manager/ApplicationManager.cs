@@ -93,6 +93,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             UserAgentManager = initializer.UserAgentManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.UserAgentManager));
             ApplicationMutex = initializer.Mutex ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.Mutex));
 
+            NotifyManagerImpl.LauncherGroupItemRegistered += NotifyManagerImpl_LauncherGroupItemRegistered;
+
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
             ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
             ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManagerImpl);
@@ -2278,6 +2280,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
         #endregion
+
+        private void NotifyManagerImpl_LauncherGroupItemRegistered(object? sender, LauncherGroupItemRegisteredEventArgs e)
+        {
+            var launcherGroupElement = OrderManager.CreateLauncherGroupElement(e.LauncherGroupId);
+            LauncherGroupElements.Add(launcherGroupElement);
+        }
 
         private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
         {

@@ -267,6 +267,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             NotifyManager.SendLauncherItemRemoveInLauncherGroup(launcherGroupId, launcherItemId, index);
         }
 
+        /// <summary>
+        /// 新規グループを追加。
+        /// </summary>
+        /// <param name="kind"></param>
+        /// <returns>追加したグループ。</returns>
+        public LauncherGroupElement AddNewGroup(LauncherGroupKind kind)
+        {
+            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
+            var newGroupName = launcherFactory.CreateUniqueGroupName(LauncherGroups.Select(i => i.Name).ToList());
+            var groupData = launcherFactory.CreateGroupData(newGroupName, kind);
+
+            using(var context = MainDatabaseBarrier.WaitWrite()) {
+                var launcherGroupsDao = new LauncherGroupsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                var groupStep = launcherFactory.GroupItemStep;
+                groupData.Sequence = launcherGroupsDao.SelectMaxSequence() + groupStep;
+                launcherGroupsDao.InsertNewGroup(groupData, DatabaseCommonStatus.CreateCurrentAccount());
+
+                context.Commit();
+            }
+
+            NotifyManager.SendLauncherGroupItemRegistered(groupData.LauncherGroupId);
+            return LauncherGroups.First(i => i.LauncherGroupId == groupData.LauncherGroupId);
+        }
 
         void UpdateDesign()
         {

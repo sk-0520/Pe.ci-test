@@ -327,6 +327,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             }
         ));
 
+        public ICommand AddNewGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 var newGroupElement = Model.AddNewGroup(LauncherGroupKind.Normal);
+                 var newGroupViewModel = LauncherGroupCollection.GetViewModel(newGroupElement);
+                 if(newGroupViewModel is null) {
+                     Logger.LogError("生成したグループが存在しない異常: {0}", newGroupElement.LauncherGroupId);
+                     return;
+                 }
+                 ChangeLauncherGroup(newGroupViewModel);
+             }
+         ));
+
         #endregion
 
         #region function

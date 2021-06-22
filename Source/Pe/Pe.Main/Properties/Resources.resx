@@ -2185,4 +2185,7 @@ Pe を終了してから実行してください</value>
   <data name="String_Command_Encoding_AA" xml:space="preserve">
     <value>エンコーディング(&amp;E)</value>
   </data>
+  <data name="String_LauncherToolbar_AppMenu_Group_AddNewGroup_A" xml:space="preserve">
+    <value>新規グループの追加(_G)</value>
+  </data>
 </root>

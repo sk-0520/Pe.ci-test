@@ -4118,6 +4118,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   新規グループの追加(_G) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_AppMenu_Group_AddNewGroup_A {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Group_AddNewGroup_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   グループ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_AppMenu_Groups_Header {

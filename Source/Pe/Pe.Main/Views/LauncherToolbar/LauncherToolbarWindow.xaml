@@ -534,6 +534,13 @@
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
+              <Separator />
+              <MenuItem Command="{Binding AddNewGroupCommand}" Header="{Binding Resources.String_LauncherToolbar_AppMenu_Group_AddNewGroup_A, Source={x:Static app_main:CultureService.Instance}}">
+                <MenuItem.Icon>
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Create}" />
+                </MenuItem.Icon>
+              </MenuItem>
+
             </StackPanel>
           </Border>
         </Popup>

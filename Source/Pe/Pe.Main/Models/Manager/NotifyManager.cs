@@ -80,6 +80,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
+    public class LauncherGroupItemRegisteredEventArgs: NotifyEventArgs
+    {
+        public LauncherGroupItemRegisteredEventArgs(Guid launcherGroupId)
+        {
+            LauncherGroupId = launcherGroupId;
+        }
+
+        #region property
+
+        public Guid LauncherGroupId { get; }
+
+        #endregion
+    }
+
     /// <summary>
     /// フルスクリーン状態。
     /// </summary>
@@ -139,6 +153,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         event EventHandler<LauncherItemRemoveInLauncherGroupEventArgs>? LauncherItemRemovedInLauncherGroup;
         event EventHandler<LauncherItemRegisteredEventArgs>? LauncherItemRegistered;
         event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
+        event EventHandler<LauncherGroupItemRegisteredEventArgs>? LauncherGroupItemRegistered;
+
         /// <summary>
         /// アプリケーションの設定が変更された際に通知される。
         /// </summary>
@@ -175,6 +191,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <param name="index">同一の<see cref="launcherItemId"/>に該当するもののうち何番目のアイテムかを示す。</param>
         void SendLauncherItemRemoveInLauncherGroup(Guid launcherGroupId, Guid launcherItemId, int index);
         void SendCustomizeLauncherItemExited(Guid launcherItemId);
+        /// <summary>
+        /// ランチャーグループアイテムが追加されたことを通知。
+        /// </summary>
+        /// <param name="launcherGroupItemId"></param>
+        void SendLauncherGroupItemRegistered(Guid launcherGroupItemId);
         /// <summary>
         /// アプリケーション設定の変更を通知。
         /// </summary>
@@ -262,13 +283,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region function
 
         [Conditional("DEBUG")]
-        private void ThrowIfEmptyLauncherItemId(Guid launcherItemId)
+        private void ThrowIfEmptyGuid(Guid launcherItemId)
         {
             if(launcherItemId == Guid.Empty) {
                 throw new InvalidOperationException();
             }
         }
 
+        [Conditional("DEBUG")]
+        private void ThrowIfEmptyLauncherItemId(Guid launcherItemId) => ThrowIfEmptyGuid(launcherItemId);
+
+        [Conditional("DEBUG")]
+        private void ThrowIfEmptyLauncherGroupItemId(Guid launcherGroupItemId) => ThrowIfEmptyGuid(launcherGroupItemId);
 
         void OnLauncherItemChanged(Guid launcherItemId)
         {
@@ -301,6 +327,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var e = new CustomizeLauncherItemExitedEventArgs(launcherItemId);
             CustomizeLauncherItemExited?.Invoke(this, e);
         }
+
+        void OnLauncherGroupItemRegistered(Guid launcherGroupItemId)
+        {
+            ThrowIfEmptyLauncherGroupItemId(launcherGroupItemId);
+
+            var e = new LauncherGroupItemRegisteredEventArgs(launcherGroupItemId);
+            LauncherGroupItemRegistered?.Invoke(this, e);
+        }
+
 
         void OnSettingChanged()
         {
@@ -336,6 +371,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public event EventHandler<LauncherItemRemoveInLauncherGroupEventArgs>? LauncherItemRemovedInLauncherGroup;
         public event EventHandler<LauncherItemRegisteredEventArgs>? LauncherItemRegistered;
         public event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
+        public event EventHandler<LauncherGroupItemRegisteredEventArgs>? LauncherGroupItemRegistered;
         public event EventHandler<NotifyEventArgs>? SettingChanged;
 
         public event EventHandler<FullscreenEventArgs>? FullscreenChanged;
@@ -362,6 +398,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public void SendCustomizeLauncherItemExited(Guid launcherItemId)
         {
             OnCustomizeLauncherItemExited(launcherItemId);
+        }
+
+        public void SendLauncherGroupItemRegistered(Guid launcherGroupItemId)
+        {
+            OnLauncherGroupItemRegistered(launcherGroupItemId);
         }
 
         public void SendSettingChanged()

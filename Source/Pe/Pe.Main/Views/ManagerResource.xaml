@@ -86,7 +86,7 @@
 
       <MenuItem Header="{Binding Resources.String_AppManager_Note_Create_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CreateNoteCommand}" InputGestureText="{Binding NoteCreateKeyGesture}">
         <MenuItem.Icon>
-          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Note-Create}" />
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Create}" />
         </MenuItem.Icon>
       </MenuItem>
       <Separator />

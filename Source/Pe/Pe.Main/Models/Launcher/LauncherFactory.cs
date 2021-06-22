@@ -28,8 +28,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         public static IReadOnlyCollection<char> CodeSymbols { get; } = new[] { '-', '.', '^', '_', '[', ']', };
 
-        public int GroupItemsStep { get; } = 10;
+        /// <summary>
+        /// ランチャーグループのグループシーケンス刻み。
+        /// </summary>
         public int GroupItemStep { get; } = 10;
+        /// <summary>
+        /// ランチャーグループ内のランチャーアイテムシーケンス刻み。
+        /// </summary>
+        public int GroupItemsStep { get; } = 10;
 
         #endregion
 
@@ -202,6 +208,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return TextUtility.ToUnique(code, codes, StringComparison.OrdinalIgnoreCase, (s, n) => $"{s}-{n}");
 
         }
+
+        /// <summary>
+        /// グループ名から重複しないグループ名を生成。
+        /// </summary>
+        /// <param name="groupNames"></param>
+        /// <returns></returns>
+        public string CreateUniqueGroupName(IReadOnlyList<string> groupNames)
+        {
+            var uniqueGroupName = TextUtility.ToUnique(Properties.Resources.String_LauncherGroup_NewItem_Name, groupNames, StringComparison.OrdinalIgnoreCase, (s, n) => $"{s}({n})");
+            return uniqueGroupName;
+        }
+
         #endregion
     }
 }
