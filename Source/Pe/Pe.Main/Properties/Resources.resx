@@ -2188,4 +2188,7 @@ Pe を終了してから実行してください</value>
   <data name="String_LauncherToolbar_AppMenu_Group_AddNewGroup_A" xml:space="preserve">
     <value>新規グループの追加(_G)</value>
   </data>
+  <data name="String_LauncherToolbar_AppMenu_Status_Header" xml:space="preserve">
+    <value>状態</value>
+  </data>
 </root>

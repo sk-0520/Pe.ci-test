@@ -4145,6 +4145,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   状態 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_AppMenu_Status_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Status_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   最前面(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_AppMenu_Topmost_A {
