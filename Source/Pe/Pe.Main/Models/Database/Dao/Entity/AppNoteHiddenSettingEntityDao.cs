@@ -57,11 +57,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         internal void UpdateHiddenWaitTimes(IReadOnlyDictionary<NoteHiddenMode, TimeSpan> items, IDatabaseCommonStatus databaseCommonStatus)
         {
             foreach(var item in items) {
-                UpdateHiddenWaitTimes(item.Key, item.Value, databaseCommonStatus);
+                UpdateHiddenWaitTime(item.Key, item.Value, databaseCommonStatus);
             }
         }
 
-        public void UpdateHiddenWaitTimes(NoteHiddenMode hiddenMode, TimeSpan waitTime, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateHiddenWaitTime(NoteHiddenMode hiddenMode, TimeSpan waitTime, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteHiddenModeTransfer = new EnumTransfer<NoteHiddenMode>();
 

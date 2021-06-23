@@ -490,6 +490,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetModelValue(value);
         }
 
+        public int BlindWaitTime
+        {
+            get => (int)Model.WaitTimes[NoteHiddenMode.Blind].TotalSeconds;
+            set => Model.WaitTimes[NoteHiddenMode.Blind] = TimeSpan.FromSeconds(value);
+        }
+
+        public int CompactWaitTime
+        {
+            get => (int)Model.WaitTimes[NoteHiddenMode.Compact].TotalSeconds;
+            set => Model.WaitTimes[NoteHiddenMode.Compact] = TimeSpan.FromSeconds(value);
+        }
 
         #endregion
 

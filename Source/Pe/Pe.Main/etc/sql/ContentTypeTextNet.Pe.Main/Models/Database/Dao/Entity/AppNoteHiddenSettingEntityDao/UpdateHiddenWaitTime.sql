@@ -14,6 +14,6 @@ where
 			MAX(AppNoteHiddenSetting.Generation)
 		from
 			AppNoteHiddenSetting
+		where
+			AppNoteHiddenSetting.HiddenMode = @HiddenMode
 	)
-	and
-	AppNoteHiddenSetting.HiddenMode = @HiddenMode

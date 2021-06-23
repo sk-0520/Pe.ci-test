@@ -416,6 +416,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public bool IsTopmost { get; set; }
         public NoteCaptionPosition CaptionPosition { get; set; }
 
+        public Dictionary<NoteHiddenMode, TimeSpan> WaitTimes { get; private set; } = new Dictionary<NoteHiddenMode, TimeSpan>();
+
         #endregion
 
         #region function
@@ -426,9 +428,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
             SettingAppNoteSettingData setting;
+            WaitTimes.Clear();
             using(var context = MainDatabaseBarrier.WaitRead()) {
                 var appNoteSettingEntityDao = new AppNoteSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                var appNoteHiddenSettingEntityDao = new AppNoteHiddenSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+
                 setting = appNoteSettingEntityDao.SelectSettingNoteSetting();
+                foreach(var pair in appNoteHiddenSettingEntityDao.SelectHiddenWaitTimes()) {
+                    WaitTimes.Add(pair.Key, pair.Value);
+                }
             }
 
             Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
@@ -457,6 +465,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 CaptionPosition = CaptionPosition,
             };
             appNoteSettingEntityDao.UpdateSettingNoteSetting(data, contextsPack.CommonStatus);
+
+            var appNoteHiddenSettingEntityDao = new AppNoteHiddenSettingEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
+            appNoteHiddenSettingEntityDao.UpdateHiddenWaitTimes(WaitTimes, contextsPack.CommonStatus);
 
             var fontsEntityDao = new FontsEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
             fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, contextsPack.CommonStatus);
