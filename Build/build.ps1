@@ -2,7 +2,7 @@
 	[switch] $ProductMode,
 	[switch] $IgnoreChanged,
 	[string] $BuildType,
-	[parameter(mandatory = $true)][string[]] $Platforms
+	[Parameter(mandatory = $true)][string[]] $Platforms
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest

@@ -1,9 +1,9 @@
 ﻿Param(
-	[parameter(mandatory = $true)][string] $LogPath,
-	[parameter(mandatory = $true)][int] $ProcessId,
-	[parameter(mandatory = $true)][int] $WaitSeconds,
-	[parameter(mandatory = $true)][string] $ExecuteCommand,
-	[parameter(mandatory = $false,ValueFromRemainingArguments=$true)][string] $ExecuteArgument
+	[Parameter(mandatory = $true)][string] $LogPath,
+	[Parameter(mandatory = $true)][int] $ProcessId,
+	[Parameter(mandatory = $true)][int] $WaitSeconds,
+	[Parameter(mandatory = $true)][string] $ExecuteCommand,
+	[Parameter(mandatory = $false,ValueFromRemainingArguments=$true)][string] $ExecuteArgument
 )
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest

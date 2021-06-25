@@ -1,11 +1,11 @@
 ﻿Param(
-	[parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetDownloader,
-	[parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetRepository,
-	[parameter(mandatory = $true)][ValidateSet("zip", "7z")][string] $Archive,
-	[parameter(mandatory = $true)][string] $DeployApiDownloadUrl,
-	[parameter(mandatory = $true)][string] $DeployApiTagUrl,
-	[parameter(mandatory = $true)][string] $DeployAccount,
-	[parameter(mandatory = $true)][string] $DeployPassword
+	[Parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetDownloader,
+	[Parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetRepository,
+	[Parameter(mandatory = $true)][ValidateSet("zip", "7z")][string] $Archive,
+	[Parameter(mandatory = $true)][string] $DeployApiDownloadUrl,
+	[Parameter(mandatory = $true)][string] $DeployApiTagUrl,
+	[Parameter(mandatory = $true)][string] $DeployAccount,
+	[Parameter(mandatory = $true)][string] $DeployPassword
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest

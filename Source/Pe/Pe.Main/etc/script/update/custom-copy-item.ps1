@@ -1,7 +1,7 @@
 ﻿
 Param(
-	[parameter(mandatory = $true)][string] $SourceDirectoryPath, # 絶対パス
-	[parameter(mandatory = $true)][string] $DestinationDirectoryPath, # 絶対パス
+	[Parameter(mandatory = $true)][string] $SourceDirectoryPath, # 絶対パス
+	[Parameter(mandatory = $true)][string] $DestinationDirectoryPath, # 絶対パス
 	[ValidateSet('animation', 'output', 'none')][string] $ProgressType = 'none', # 進捗状況
 	[switch] $CreateDirectory # 新規ディレクトリを作成するか
 )
