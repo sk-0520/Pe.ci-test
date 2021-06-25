@@ -2191,4 +2191,7 @@ Pe を終了してから実行してください</value>
   <data name="String_LauncherToolbar_AppMenu_Status_Header" xml:space="preserve">
     <value>状態</value>
   </data>
+  <data name="String_Setting_Generals_Note_AutoHidden" xml:space="preserve">
+    <value>自動的に隠す時間(秒)</value>
+  </data>
 </root>

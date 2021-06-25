@@ -708,11 +708,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
 
             StopHidden(true);
-            var waitTime = HiddenMode switch {
-                NoteHiddenMode.Blind => NoteConfiguration.HiddenBlindWaitTime,
-                NoteHiddenMode.Compact => NoteConfiguration.HiddenCompactWaitTime,
-                _ => throw new NotImplementedException()
-            };
+
+            TimeSpan waitTime;
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var appNoteHiddenSettingEntityDao = new AppNoteHiddenSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                waitTime = appNoteHiddenSettingEntityDao.SelectHiddenWaitTime(HiddenMode);
+            }
 
             HideWaitTimer = new Timer() {
                 Interval = (int)waitTime.TotalMilliseconds,

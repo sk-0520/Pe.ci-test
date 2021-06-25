@@ -151,6 +151,35 @@ ___
 
 ___
 
+## AppNoteHiddenSetting
+
+### layout
+
+| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
+|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
+| o  | o  |    | 世代                     | Generation            | integer      | System.Int64    |              | 最大のものを使用する |
+|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり              |
+|    | o  |    | 隠し方                   | HiddenMode            | text         | System.String   |              |                      |
+|    | o  |    | 待機時間                 | WaitTime              | text         | System.TimeSpan |              |                      |
+
+### index
+
+| UK | カラム(CSV)            |
+|:--:|:-----------------------|
+| o  | Generation, HiddenMode |
+
+
+
+___
+
 ## AppStandardInputOutputSetting
 
 ### layout

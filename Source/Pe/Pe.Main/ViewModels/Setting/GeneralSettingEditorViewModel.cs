@@ -12,6 +12,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -396,7 +397,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public double MinimumHideWaitSeconds => TimeSpan.FromMilliseconds(250).TotalSeconds;
         public double MaximumHideWaitSeconds => TimeSpan.FromSeconds(5).TotalSeconds;
-        public double HideWaitMilliseconds
+        public double HideWaitSeconds
         {
             get => Model.HideWaitTime.TotalSeconds;
             set => SetModelValue(TimeSpan.FromSeconds(value), nameof(Model.HideWaitTime));
@@ -445,14 +446,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     public sealed class AppNoteSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppNoteSettingEditorElement>
     {
-        public AppNoteSettingEditorViewModel(AppNoteSettingEditorElement model, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AppNoteSettingEditorViewModel(AppNoteSettingEditorElement model, NoteConfiguration noteConfiguration, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
+            NoteConfiguration = noteConfiguration;
             GeneralTheme = generalTheme;
         }
 
         #region property
 
+        NoteConfiguration NoteConfiguration { get; }
         IGeneralTheme GeneralTheme { get; }
         public FontViewModel? Font { get; private set; }
         public NoteCreateTitleKind TitleKind
@@ -490,6 +493,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetModelValue(value);
         }
 
+        public int BlindWaitTimeSeconds
+        {
+            get => (int)Model.WaitTimes[NoteHiddenMode.Blind].TotalSeconds;
+            set => Model.WaitTimes[NoteHiddenMode.Blind] = TimeSpan.FromSeconds(value);
+        }
+        public int MinimumBlindWaitTimeSeconds => (int)NoteConfiguration.HiddenBlindWaitTime.Minimum.TotalSeconds;
+        public int MaximumBlindWaitTimeSeconds => (int)NoteConfiguration.HiddenBlindWaitTime.Maximum.TotalSeconds;
+
+        public int CompactWaitTimeSeconds
+        {
+            get => (int)Model.WaitTimes[NoteHiddenMode.Compact].TotalSeconds;
+            set => Model.WaitTimes[NoteHiddenMode.Compact] = TimeSpan.FromSeconds(value);
+        }
+        public int MinimumCompactWaitTimeSeconds => (int)NoteConfiguration.HiddenCompactWaitTime.Minimum.TotalSeconds;
+        public int MaximumCompactWaitTimeSeconds => (int)NoteConfiguration.HiddenCompactWaitTime.Maximum.TotalSeconds;
 
         #endregion
 
