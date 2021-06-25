@@ -4,7 +4,7 @@ select
 from
 	AppNoteHiddenSetting
 where
-	AppNoteHiddenSetting.Generation	in (
+	AppNoteHiddenSetting.Generation in (
 		select
 			MAX(AppNoteHiddenSetting.Generation)
 		from

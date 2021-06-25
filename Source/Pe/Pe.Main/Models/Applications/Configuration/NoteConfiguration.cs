@@ -20,10 +20,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         [Configuration(rootConvertMethodName: nameof(ConvertMinMaxDefault))]
         public MinMaxDefault<double> FontSize { get; }
 
-        [Configuration]
-        public TimeSpan HiddenCompactWaitTime { get; }
-        [Configuration]
-        public TimeSpan HiddenBlindWaitTime { get; }
+        [Configuration(rootConvertMethodName: nameof(ConvertMinMax))]
+        public MinMax<TimeSpan> HiddenCompactWaitTime { get; }
+        [Configuration(rootConvertMethodName: nameof(ConvertMinMax))]
+        public MinMax<TimeSpan> HiddenBlindWaitTime { get; }
 
         #endregion
     }
