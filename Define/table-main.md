@@ -172,7 +172,9 @@ ___
 
 ### index
 
-*NONE*
+| UK | カラム(CSV)            |
+|:--:|:-----------------------|
+| o  | Generation, HiddenMode |
 
 
 

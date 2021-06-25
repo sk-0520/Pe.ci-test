@@ -17,3 +17,11 @@ create table [AppNoteHiddenSetting] (
 	)
 )
 ;
+
+
+--// index: idx_AppNoteHiddenSetting_1
+create unique index [idx_AppNoteHiddenSetting_1] on [AppNoteHiddenSetting](
+	[Generation],
+	[HiddenMode]
+)
+;
