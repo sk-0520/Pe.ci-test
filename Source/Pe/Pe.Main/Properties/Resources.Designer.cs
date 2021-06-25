@@ -5128,6 +5128,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   自動的に隠す時間(秒) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_AutoHidden {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_AutoHidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   タイトルバー位置(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_Note_CaptionPosition_A {

@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             AppNotifyLogSettingEditor = new AppNotifyLogSettingEditorViewModel(Model.AppNotifyLogSettingEditor, DispatcherWrapper, LoggerFactory);
             AppLauncherToolbarSettingEditor = new AppLauncherToolbarSettingEditorViewModel(Model.AppLauncherToolbarSettingEditor, DispatcherWrapper, LoggerFactory);
             AppCommandSettingEditor = new AppCommandSettingEditorViewModel(Model.AppCommandSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
-            AppNoteSettingEditor = new AppNoteSettingEditorViewModel(Model.AppNoteSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
+            AppNoteSettingEditor = new AppNoteSettingEditorViewModel(Model.AppNoteSettingEditor, applicationConfiguration.Note, generalTheme, DispatcherWrapper, LoggerFactory);
             AppStandardInputOutputSettingEditor = new AppStandardInputOutputSettingEditorViewModel(Model.AppStandardInputOutputSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
 
             EditorItems = new ObservableCollection<IGeneralSettingEditor>() {
