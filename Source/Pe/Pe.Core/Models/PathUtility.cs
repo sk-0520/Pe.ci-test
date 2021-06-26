@@ -234,22 +234,32 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return false;
         }
 
-        public static bool IsEqual(string a, string b)
+        /// <summary>
+        /// パスを比較。
+        ///<para>Windows で動けば満足です！</para>
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool IsEquals(string? a, string? b)
         {
             if(a == null) {
-                if(b == null) {
-                    return true;
-                }
-                return false;
-            } else if(b == null) {
+                return b == null;
+            }
+            if(b == null) {
                 return false;
             }
 
-            // Windows で動けば満足です！
-            //if(Environment.OSVersion.Platform == PlatformID.Win32NT) {
-            //    return a.ToUpperInvariant() == b.ToUpperInvariant();
-            //}
-            return a.ToUpperInvariant() == b.ToUpperInvariant();
+            var a2 = a.Replace('/', '\\');
+            var b2 = b.Replace('/', '\\');
+
+            var a3 = a2.TrimEnd('\\');
+            var b3 = b2.TrimEnd('\\');
+
+            var a4 = a3.ToUpperInvariant();
+            var b4 = b3.ToUpperInvariant();
+
+            return a4 == b4;
         }
     }
 }

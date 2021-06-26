@@ -132,9 +132,17 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(true, "A", "a")]
         [DataRow(true, "A", "A")]
         [DataRow(false, "A", "B")]
-        public void IsEqualTest(bool expected, string a, string b)
+        [DataRow(true, "A\\", "A\\")]
+        [DataRow(true, "A\\", "a\\")]
+        [DataRow(true, "A\\", "a")]
+        [DataRow(true, "A", "a\\")]
+        [DataRow(true, "A\\", "A/")]
+        [DataRow(true, "A\\", "a/")]
+        [DataRow(true, "A\\", "a")]
+        [DataRow(true, "A", "a/")]
+        public void IsEqualsTest(bool expected, string a, string b)
         {
-            var actual = PathUtility.IsEqual(a, b);
+            var actual = PathUtility.IsEquals(a, b);
             Assert.AreEqual(expected, actual);
         }
     }

@@ -283,14 +283,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         {
             switch(Kind) {
                 case LauncherItemKind.File: {
-                        if(!PathUtility.IsEqual(currentFileIcon.Icon.Path, iconData.Path)) {
+                        if(!PathUtility.IsEquals(currentFileIcon.Icon.Path, iconData.Path)) {
                             return true;
                         }
                         if(currentFileIcon.Icon.Index != iconData.Index) {
                             return true;
                         }
 
-                        if(!PathUtility.IsEqual(currentFileIcon.Path.Path, kindIconValue)) {
+                        if(!PathUtility.IsEquals(currentFileIcon.Path.Path, kindIconValue)) {
                             return true;
                         }
 

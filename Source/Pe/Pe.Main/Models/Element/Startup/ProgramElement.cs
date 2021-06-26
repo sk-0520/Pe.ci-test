@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 var expandedIconPath = Environment.ExpandEnvironmentVariables(targetIconPath);
                 var iconIndex = targetIconIndex;
                 // パスが異なるのはもとよりパスが同じでもアイコンインデックス指定があればアイコンを優先
-                if(!PathUtility.IsEqual(targetPath, expandedIconPath) || iconIndex != 0) {
+                if(!PathUtility.IsEquals(targetPath, expandedIconPath) || iconIndex != 0) {
                     IconImageLoader.Dispose();
                     IconImageLoader = new IconImageLoader(
                         new Data.IconData() {
