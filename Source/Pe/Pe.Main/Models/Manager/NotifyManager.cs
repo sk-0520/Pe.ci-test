@@ -238,6 +238,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
     internal class NotifyManager: ManagerBase, INotifyManager
     {
+        #region property
+
+        /// <summary>
+        /// ログデータの排他用オブジェクト。
+        /// </summary>
+        readonly object _notifyLogsLocker = new object();
+
+        #endregion
+
         #region event
         #endregion
 
@@ -336,13 +345,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             LauncherGroupItemRegistered?.Invoke(this, e);
         }
 
-
         void OnSettingChanged()
         {
             var e = new NotifyEventArgs();
             SettingChanged?.Invoke(this, e);
         }
-
 
         void OnFullscreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd)
         {
@@ -358,9 +365,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public void ClearAllLogs()
         {
-            TopmostNotifyLogsImpl.Clear();
-            StreamNotifyLogsImpl.Clear();
-            NotifyLogs.Clear();
+            lock(this._notifyLogsLocker) {
+                TopmostNotifyLogsImpl.Clear();
+                StreamNotifyLogsImpl.Clear();
+                NotifyLogs.Clear();
+            }
         }
 
         #endregion
@@ -498,19 +507,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return false;
             }
 
-            if(0 < NotifyLogs.Count && NotifyLogs.Remove(notifyLogId)) {
-                DispatcherWrapper.Begin(() => {
-                    if(element.Kind == NotifyLogKind.Topmost) {
-                        TopmostNotifyLogsImpl.Remove(element);
-                    } else {
-                        StreamNotifyLogsImpl.Remove(element);
-                    }
+            lock(this._notifyLogsLocker) {
+                if(0 < NotifyLogs.Count && NotifyLogs.Remove(notifyLogId)) {
+                    DispatcherWrapper.Begin(() => {
+                        if(element.Kind == NotifyLogKind.Topmost) {
+                            TopmostNotifyLogsImpl.Remove(element);
+                        } else {
+                            StreamNotifyLogsImpl.Remove(element);
+                        }
 
-                    OnNotifyEventChanged(NotifyEventKind.Clear, element);
-                    element.Dispose();
-                });
+                        OnNotifyEventChanged(NotifyEventKind.Clear, element);
+                        element.Dispose();
+                    });
 
-                return true;
+                    return true;
+                }
             }
 
             return false;
