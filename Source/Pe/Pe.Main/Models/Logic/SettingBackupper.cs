@@ -25,14 +25,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        public void BackupUserSetting(DirectoryInfo userDirectory, DirectoryInfo targetDirectory, string backupFileBaseName, int enabledCount)
+        public void BackupUserSetting(DirectoryInfo userDirectory, DirectoryInfo targetDirectory, string backupFileWithoutExtensionName, int enabledCount)
         {
             if(enabledCount < 1) {
                 Logger.LogInformation("バックアップ世代が無効値のため処理終了");
                 return;
             }
 
-            var backupFilePath = Path.Combine(targetDirectory.FullName, backupFileBaseName + ".zip");
+            var backupFilePath = Path.Combine(targetDirectory.FullName, backupFileWithoutExtensionName + ".zip");
 
             Logger.LogDebug("バックアップ処理 開始: {0}", backupFilePath);
             using(var stream = new BufferedStream(new FileStream(backupFilePath, FileMode.Create, FileAccess.Write))) {

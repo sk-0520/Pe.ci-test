@@ -1636,12 +1636,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             windowItem.Window.Show();
         }
 
-        void BackupSettings(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, string backupFileBaseName, int enabledCount, string userBackupDirectoryPath)
+        /// <summary>
+        /// 設定データをバックアップ。
+        /// </summary>
+        /// <param name="sourceDirectory">バックアップ対象ディレクトリ。</param>
+        /// <param name="targetDirectory">アーカイブファイル配置ディレクトリ。</param>
+        /// <param name="backupFileWithoutExtensionName">バックアップファイルの拡張子抜きファイル名。</param>
+        /// <param name="enabledCount">ローテート処理で残すファイル数。</param>
+        /// <param name="userBackupDirectoryPath">ユーザー設定バックアップディレクトリパス。</param>
+        void BackupSettings(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, string backupFileWithoutExtensionName, int enabledCount, string userBackupDirectoryPath)
         {
             try {
                 // アプリケーション側バックアップ
                 var settingBackupper = new SettingBackupper(LoggerFactory);
-                settingBackupper.BackupUserSetting(sourceDirectory, targetDirectory, backupFileBaseName, enabledCount);
+                settingBackupper.BackupUserSetting(sourceDirectory, targetDirectory, backupFileWithoutExtensionName, enabledCount);
 
                 // ユーザー設定側バックアップ
                 var expandeduserBackupDirectoryPath = Environment.ExpandEnvironmentVariables(userBackupDirectoryPath ?? string.Empty);
@@ -1664,10 +1672,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var appGeneralSettingEntityDao = diContainer.Build<AppGeneralSettingEntityDao>(context, context.Implementation);
                 userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
             }
+            var versionConverter = new VersionConverter();
+            ;
             BackupSettings(
                 environmentParameters.UserSettingDirectory,
                 environmentParameters.UserBackupDirectory,
-                DateTime.Now.ToString("yyyy-MM-ddTHH-mm-ss"),
+                DateTime.Now.ToString("yyyy-MM-ddTHH-mm-ss") + "_ver." + versionConverter.ConvertDisplayVersion(BuildStatus.Version, "-"),
                 environmentParameters.ApplicationConfiguration.Backup.SettingCount,
                 userBackupDirectoryPath
             );
