@@ -72,7 +72,8 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.114.2 -> 1.0.114.3"
 					},
 					{
 						"revision": "",
