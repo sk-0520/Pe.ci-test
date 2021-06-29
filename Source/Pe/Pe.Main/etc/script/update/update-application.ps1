@@ -1,16 +1,16 @@
 ﻿# アップデート時に実施される処理
 Param(
-	[parameter(mandatory = $true)][string] $LogPath,
-	[parameter(mandatory = $true)][int] $ProcessId,
-	[parameter(mandatory = $true)][int] $WaitSeconds,
-	[parameter(mandatory = $true)][System.IO.DirectoryInfo] $SourceDirectory,
-	[parameter(mandatory = $true)][System.IO.DirectoryInfo] $DestinationDirectory,
-	[parameter(mandatory = $true)][version] $CurrentVersion,
-	[parameter(mandatory = $true)][ValidateSet("x86", "x64")][string] $Platform,
-	[parameter(mandatory = $true)][string] $UpdateBeforeScript,
-	[parameter(mandatory = $true)][string] $UpdateAfterScript,
-	[parameter(mandatory = $true)][string] $ExecuteCommand,
-	[parameter(mandatory = $false,ValueFromRemainingArguments=$true)][string] $ExecuteArgument
+	[Parameter(mandatory = $true)][string] $LogPath,
+	[Parameter(mandatory = $true)][int] $ProcessId,
+	[Parameter(mandatory = $true)][int] $WaitSeconds,
+	[Parameter(mandatory = $true)][System.IO.DirectoryInfo] $SourceDirectory,
+	[Parameter(mandatory = $true)][System.IO.DirectoryInfo] $DestinationDirectory,
+	[Parameter(mandatory = $true)][version] $CurrentVersion,
+	[Parameter(mandatory = $true)][ValidateSet("x86", "x64")][string] $Platform,
+	[Parameter(mandatory = $true)][string] $UpdateBeforeScript,
+	[Parameter(mandatory = $true)][string] $UpdateAfterScript,
+	[Parameter(mandatory = $true)][string] $ExecuteCommand,
+	[Parameter(mandatory = $false,ValueFromRemainingArguments=$true)][string] $ExecuteArgument
 )
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest

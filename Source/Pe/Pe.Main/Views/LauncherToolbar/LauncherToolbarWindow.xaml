@@ -512,7 +512,7 @@
 
               </Grid>
 
-              <Separator />
+              <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_AppMenu_Status_Header, Source={x:Static app_main:CultureService.Instance}}" />
 
               <MenuItem Header="{Binding Resources.String_LauncherToolbar_AppMenu_Topmost_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding ToggleTopmostCommand}" />
               <MenuItem Header="{Binding Resources.String_LauncherToolbar_AppMenu_AutoHide_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsAutoHide, Mode=OneWay}" Command="{Binding ToggleAutoHideCommand}" />
@@ -534,6 +534,13 @@
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
+              <Separator />
+              <MenuItem Command="{Binding AddNewGroupCommand}" Header="{Binding Resources.String_LauncherToolbar_AppMenu_Group_AddNewGroup_A, Source={x:Static app_main:CultureService.Instance}}">
+                <MenuItem.Icon>
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Create}" />
+                </MenuItem.Icon>
+              </MenuItem>
+
             </StackPanel>
           </Border>
         </Popup>

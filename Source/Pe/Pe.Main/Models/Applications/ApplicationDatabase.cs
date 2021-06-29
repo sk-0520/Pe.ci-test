@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             using(Logger.BeginScope(nameof(LoggingStatement))) {
-                Logger.LogTrace(sb.ToString());
+                Logger.LogTrace("{0}", sb.ToString());
             }
 #else
             base.LoggingStatement(statement, parameter);

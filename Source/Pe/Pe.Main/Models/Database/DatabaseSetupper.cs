@@ -118,6 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                 new Setupper_V_00_99_010(IdFactory, StatementLoader, LoggerFactory),
                 new Setupper_V_00_99_038(IdFactory, StatementLoader, LoggerFactory),
                 new Setupper_V_00_99_063(IdFactory, StatementLoader, LoggerFactory),
+                new Setupper_V_00_99_147(IdFactory, StatementLoader, LoggerFactory),
             };
 
             foreach(var setupper in setuppers) {
@@ -200,7 +201,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                 errors.AppendLine();
             }
             var error = errors.ToString();
-            Logger.LogError(error);
+            Logger.LogError("{0}", error);
 
             throw new Exception("CheckForeignKey") {
                 Source = error

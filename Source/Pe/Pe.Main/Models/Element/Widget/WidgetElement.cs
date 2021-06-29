@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
                 var pluginDirPath = Path.GetDirectoryName(Plugin.GetType().Assembly.Location)!;
                 var publicDirPath = Path.Combine(pluginDirPath, seed.PublicDirectoryName);
-                Logger.LogTrace(publicDirPath);
+                Logger.LogTrace("{0}", publicDirPath);
                 var publicDir = new DirectoryInfo(publicDirPath);
 
                 window.webView.RequestHandler = new WebViewWidgetRequestHandler(publicDir, LoggerFactory);

@@ -430,7 +430,14 @@ class Entity {
 		var indexRowColumnTemplate = document.getElementById('template-index-row-column') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(indexRowColumnTemplate.content, true);
 
-		getElementByName<HTMLInputElement>(clonedTemplate, IndexBlockName.ColumnName).value = column;
+		const columnElement = getElementByName<HTMLInputElement>(clonedTemplate, IndexBlockName.ColumnName);
+		columnElement.value = column;
+
+		const columnOptionElement = getElementByName<HTMLOptionElement>(clonedTemplate, IndexBlockName.Column);
+		columnOptionElement.addEventListener('change', ev => {
+			columnElement.value = columnOptionElement.value;
+		});
+
 		getElementByName<HTMLButtonElement>(clonedTemplate, IndexBlockName.DeleteColumn).addEventListener('click', ev => {
 			var parent = getClosest(ev.srcElement as HTMLElement, e => e.getAttribute('name') === IndexBlockName.IndexRowColumnRoot);
 			parent!.remove();
@@ -757,7 +764,12 @@ class EntityRelationManager {
 	}
 
 	private buildCore(rebuild: boolean) {
-		if(!rebuild) {
+		if(rebuild) {
+			const filterElements = document.getElementsByClassName('filter');
+			for(const filterElement of filterElements) {
+				filterElement.textContent = '';
+			}
+		} else {
 			this.buildCommand(this.commandElement);
 		}
 
@@ -1007,7 +1019,7 @@ class EntityRelationManager {
 
 	private toIndexMarkdown(row:IndexRowData): ReadonlyArray<string> {
 		var result = [toCheckMark(row.isUnique)];
-		result.push(...row.columns);
+		result.push(row.columns.join(', '));
 		return result;
 	}
 

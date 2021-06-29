@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         {
             var pairs = SplitMultiStatement(statement);
             foreach(var pair in pairs) {
-                Logger.LogInformation(pair.Key);
+                Logger.LogInformation("{0}", pair.Key);
                 var result = context.Execute(pair.Value, parameters);
                 Logger.LogInformation("result: {0}", result);
             }

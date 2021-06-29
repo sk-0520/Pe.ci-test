@@ -1,7 +1,7 @@
 ﻿Param(
 	[switch] $Diet,
-	[parameter(mandatory = $true)][ValidateSet("zip", "7z")][string] $Archive,
-	[parameter(mandatory = $true)][string[]] $Platforms
+	[Parameter(mandatory = $true)][ValidateSet("zip", "7z")][string] $Archive,
+	[Parameter(mandatory = $true)][string[]] $Platforms
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest

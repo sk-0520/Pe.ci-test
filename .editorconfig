@@ -71,13 +71,18 @@ dotnet_code_quality_unused_parameters = non_public:silent
 dotnet_diagnostic.IDE0052.severity = silent
 # IDE0042: 変数の宣言を分解
 dotnet_diagnostic.IDE0042.severity = silent
+# IDE0008: 明示的な型の使用
+dotnet_diagnostic.IDE0008.severity = none
+# IDE0058: 式の値が使用されていません
+dotnet_diagnostic.IDE0058.severity = none
 
 # code-analysis ----------------------------------------------------------------
 # CA1822: メンバーを static に設定します
 dotnet_diagnostic.CA1822.severity = silent
 # CA1825: 長さ 0 の配列は割り当て不可
 dotnet_diagnostic.CA1825.severity = warning
-
+# CA1041: ObsoleteAttribute メッセージを指定します
+dotnet_diagnostic.CA1041.severity = none
 
 # ClrHeapAllocationAnalyzer ----------------------------------------------------
 # HAA0301: Closure Allocation Source

@@ -381,7 +381,7 @@
                     HorizontalAlignment="Left"
                     Increment="0.5"
                     Width="{Binding ActualWidth, ElementName=commandWaitTime}"
-                    Value="{Binding HideWaitMilliseconds}"
+                    Value="{Binding HideWaitSeconds}"
                     Minimum="{Binding MinimumHideWaitSeconds}"
                     Maximum="{Binding MaximumHideWaitSeconds}"
                   />
@@ -487,6 +487,44 @@
                     <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="1" SelectedColor="{Binding BackgroundColor}" />
                   </Grid>
                 </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label x:Name="nodeHiddenMode" Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Note_AutoHidden, Source={x:Static app_main:CultureService.Instance}}" />
+                  <Grid Grid.Column="1" HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label x:Name="blindTime" Grid.Column="0" Content="{Binding Source={x:Static app_main_models_data:NoteHiddenMode.Blind}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
+                    <app_core_views:NumericUpDown
+                      Grid.Column="1"
+                      VerticalContentAlignment="Center"
+                      Width="{Binding ActualWidth, ElementName=nodeHiddenMode}"
+                      Value="{Binding BlindWaitTimeSeconds}"
+                      Minimum="{Binding MinimumBlindWaitTimeSeconds}"
+                      Maximum="{Binding MaximumBlindWaitTimeSeconds}"
+                    />
+
+                    <Label x:Name="compactTime" Grid.Column="2" Margin="{StaticResource LeftMargin}" Content="{Binding Source={x:Static app_main_models_data:NoteHiddenMode.Compact}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
+                    <app_core_views:NumericUpDown
+                      Grid.Column="3"
+                      VerticalContentAlignment="Center"
+                      Width="{Binding ActualWidth, ElementName=nodeHiddenMode}"
+                      Value="{Binding CompactWaitTimeSeconds}"
+                      Minimum="{Binding MinimumCompactWaitTimeSeconds}"
+                      Maximum="{Binding MaximumCompactWaitTimeSeconds}"
+                    />
+                  </Grid>
+                </Grid>
+
 
                 <Grid>
                   <Grid.ColumnDefinitions>

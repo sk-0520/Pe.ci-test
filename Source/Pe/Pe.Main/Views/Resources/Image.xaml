@@ -185,7 +185,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="App-Image-Note-Create" TargetType="Control">
+  <ControlTemplate x:Key="App-Image-Create" TargetType="Control">
     <Viewbox>
       <Rectangle Width="16" Height="16">
         <Rectangle.Fill>

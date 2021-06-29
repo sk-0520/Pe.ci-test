@@ -3,7 +3,7 @@
 # ほぼほぼ vector 用のローカル実行処理。おれは勤労精神すごい
 # (みたいな) .\local-7z2exe.ps1 -SourceFilePaths X:\10_download\Pe_X-XX-000_x64.7z,X:\10_download\Pe_X-XX-000_x86.7z
 Param(
-	[parameter(mandatory = $true)][string[]] $SourceFilePaths
+	[Parameter(mandatory = $true)][string[]] $SourceFilePaths
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
