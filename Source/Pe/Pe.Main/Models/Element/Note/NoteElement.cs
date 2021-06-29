@@ -759,6 +759,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
+        public void ReceiveInitialized()
+        {
+            // 今後は設定から読むように変更
+            if(StartupPosition != NoteStartupPosition.Setting) {
+                StartupPosition = NoteStartupPosition.Setting;
+            }
+        }
+
         #endregion
 
         #region ElementBase
@@ -818,11 +826,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             var windowItem = OrderManager.CreateNoteWindow(this);
 
             ViewCreated = true;
-
-            // 今後は設定から読むように変更
-            if(StartupPosition != NoteStartupPosition.Setting) {
-                StartupPosition = NoteStartupPosition.Setting;
-            }
         }
 
         #endregion

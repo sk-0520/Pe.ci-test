@@ -1090,9 +1090,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             var layoutValue = GetOrCreateLayout(Model.StartupPosition);
             if(layoutValue.isCreated) {
                 Model.SaveLayout(layoutValue.layout);
-            } else if(CaptionPosition == NoteCaptionPosition.Bottom) {
-
             }
+            Model.ReceiveInitialized();
 
             SetLayout(layoutValue.layout);
 
@@ -1103,7 +1102,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public void ReceiveViewLoaded(Window window)
         {
-            if(!IsVisible) {
+            if(IsVisible) {
+                if(!IsTopmost) {
+                    Model.SetTopmost(true);
+                    Model.SetTopmost(false);
+                }
+            } else {
                 window.Visibility = Visibility.Collapsed;
             }
         }
