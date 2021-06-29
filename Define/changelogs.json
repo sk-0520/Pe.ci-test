@@ -1,48 +1,22 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.001",
+		"date": "2021/06/29",
+		"version": "0.99.154",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "9dc9d3d047ac811efe1fa54a584983e6067468f4",
 						"subject": "#758: ランチャーツールバーから新規グループを作成可能にする"
 					},
 					{
-						"revision": "",
+						"revision": "029208941d827d1d6e002d7c30dbf36b6cf9d8a7",
 						"subject": "ランチャーツールバーメニューの表示状態をグループ化"
 					},
 					{
-						"revision": "",
+						"revision": "5b3e954d3f96174298e942e1620a79d91966bb6f",
 						"subject": "#745: ノートの自動的に隠す方法の時間を設定可能にする"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -50,27 +24,23 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "a602d8004416b5e304d10bc5639a35ce1a5a114f",
 						"subject": "#761: 作業ディレクトリを開く機能死んでね？"
 					},
 					{
-						"revision": "",
+						"revision": "c01a3d48ebb6b45ae8424742e70902a6d9f662f4",
 						"subject": "#764: 設定のバックアップにバージョン情報を付与する 二回目",
 						"comments": [
 							"一回目の #470 が #484 で死んだ"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "6e0ca7121c008b7d2fa4babf5303aa6f6b8b74b7",
 						"subject": "#760: ノートの新規追加時に前面に表示されない"
 					},
 					{
-						"revision": "",
+						"revision": "9f9902716f40b59468c4195785206419063df8ec",
 						"subject": "#759: ランチャーツールバーへのD&Dで指定して実行ダイアログを開いた際に前面表示されない"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -78,22 +48,14 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "bee9bcb3d8ed708c11c90de7ef26f86859665e3d",
 						"class": "nuget",
 						"subject": "System.Data.SQLite.Core 1.0.114.2 -> 1.0.114.3"
 					},
 					{
-						"revision": "",
+						"revision": "dd5ea7febc409db086c8a9efcc6f4556180adccd",
 						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 1.7.2 -> 1.7.3"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
