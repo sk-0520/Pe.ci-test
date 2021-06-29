@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
@@ -17,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -446,6 +448,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         public void ReceiveViewLoaded(Window window)
         {
             DpiScaleOutputor = (IDpiScaleOutputor)window;
+
+            WindowsUtility.ShowActiveForeground(HandleUtility.GetWindowHandle(window));
         }
 
         public void ReceiveViewUserClosing(Window window, CancelEventArgs e)

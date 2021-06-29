@@ -441,28 +441,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         #endregion
 
 
-        void RegisterDropFile(string path)
-        {
-            if(PathUtility.IsShortcut(path)) {
-                var request = new CommonMessageDialogRequestParameter() {
-                    Message = "d&d file is lnk",
-                    Caption = "reg type",
-                    Button = MessageBoxButton.YesNoCancel,
-                    DefaultResult = MessageBoxResult.Yes,
-                    Icon = MessageBoxImage.Question,
-                };
-                ExpandShortcutFileRequest.Send<YesNoResponse>(request, r => {
-                    if(r.ResponseIsCancel) {
-                        Logger.LogTrace("cancel");
-                        return;
-                    }
-                    Model.RegisterFile(path, r.ResponseIsYes);
-                });
-            } else {
-                Model.RegisterFile(path, false);
-            }
-        }
-
         void ExecuteExtendDropData(Guid launcherItemId, string argument)
         {
             switch(ContentDropMode) {
