@@ -72,6 +72,16 @@
 				"logs": [
 					{
 						"revision": "",
+						"class": "nuget",
+						"subject": "MSTest系更新",
+						"Comments": [
+							"Microsoft.NET.Test.Sdk 16.9.4 -> 16.10.0",
+							"MSTest.TestAdapter 2.2.3 -> 2.2.5",
+							"MSTest.TestFramework 2.2.3 -> 2.2.5"
+						]
+					},
+					{
+						"revision": "",
 						"subject": ""
 					},
 					{
