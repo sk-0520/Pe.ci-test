@@ -20,29 +20,98 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         LOAD_WITH_ALTERED_SEARCH_PATH = 0x00000008
     }
 
-    public enum ResType
+    /// <summary>
+    /// リソースの種類。
+    /// </summary>
+    /// <seealso href="https://docs.microsoft.com/ja-jp/windows/win32/menurc/resource-types"/>
+    public enum RT
     {
-        CURSOR = 1,
-        BITMAP = 2,
-        ICON = 3,
-        MENU = 4,
-        DIALOG = 5,
-        STRING = 6,
-        FONTDIR = 7,
-        FONT = 8,
-        ACCELERATOR = 9,
-        RCDATA = 10,
-        MESSAGETABLE = 11,
-        GROUP_CURSOR = 12,
-        GROUP_ICON = 14,
-        VERSION = 16,
-        DLGINCLUDE = 17,
-        PLUGPLAY = 19,
-        VXD = 20,
-        ANICURSOR = 21,
-        ANIICON = 22,
-        HTML = 23,
-        MANIFEST = 24
+        /// <summary>
+        /// ハードウェアに依存するカーソルリソース。
+        /// </summary>
+        RT_CURSOR = 1,
+        /// <summary>
+        /// ビットマップリソース。
+        /// </summary>
+        RT_BITMAP = 2,
+        /// <summary>
+        /// ハードウェアに依存するアイコンリソース。
+        /// </summary>
+        RT_ICON = 3,
+        /// <summary>
+        /// Menu リソース。
+        /// </summary>
+        RT_MENU = 4,
+        /// <summary>
+        /// ダイアログボックス。
+        /// </summary>
+        RT_DIALOG = 5,
+        /// <summary>
+        /// 文字列-テーブルエントリ。
+        /// </summary>
+        RT_STRING = 6,
+        /// <summary>
+        /// フォントディレクトリリソース。
+        /// </summary>
+        RT_FONTDIR = 7,
+        /// <summary>
+        /// フォントリソース。
+        /// </summary>
+        RT_FONT = 8,
+        /// <summary>
+        /// アクセラレータテーブル。
+        /// </summary>
+        RT_ACCELERATOR = 9,
+        /// <summary>
+        /// アプリケーションで定義されたリソース (生データ)。
+        /// </summary>
+        RT_RCDATA = 10,
+        /// <summary>
+        /// メッセージテーブルエントリ。
+        /// </summary>
+        RT_MESSAGETABLE = 11,
+        /// <summary>
+        /// ハードウェアに依存しないカーソルリソース。
+        /// </summary>
+        RT_GROUP_CURSOR = 12,
+        /// <summary>
+        /// ハードウェアに依存しないアイコンリソース。
+        /// </summary>
+        RT_GROUP_ICON = 14,
+        /// <summary>
+        /// バージョンリソース。
+        /// </summary>
+        RT_VERSION = 16,
+        /// <summary>
+        /// リソース編集ツールで文字列を .rc ファイルに関連付けることができるようにします。
+        /// <para>通常、文字列は、シンボル名を提供するヘッダーファイルの名前です。 リソースコンパイラは文字列を解析しますが、それ以外の場合は値を無視します。 たとえば、次のように入力します。</para>
+        /// <code>1 DLGINCLUDE "MyFile.h"</code>
+        /// </summary>
+        RT_DLGINCLUDE = 17,
+        /// <summary>
+        /// プラグアンドプレイリソース。
+        /// </summary>
+        RT_PLUGPLAY = 19,
+        /// <summary>
+        /// VXD.
+        /// </summary>
+        RT_VXD = 20,
+        /// <summary>
+        /// アニメーション化したカーソル。
+        /// </summary>
+        RT_ANICURSOR = 21,
+        /// <summary>
+        /// アニメーション化アイコン。
+        /// </summary>
+        RT_ANIICON = 22,
+        /// <summary>
+        /// HTML リソース。
+        /// </summary>
+        RT_HTML = 23,
+        /// <summary>
+        /// Side-by-side アセンブリマニフェスト。
+        /// </summary>
+        RT_MANIFEST = 24
     }
 
     [FlagsAttribute]

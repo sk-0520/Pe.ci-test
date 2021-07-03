@@ -47,11 +47,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// ファイルのサムネイルを取得。
         /// </summary>
-        /// <param name="iconPath"></param>
-        /// <param name="iconSize"></param>
-        /// <param name="logger"></param>
-        /// <returns></returns>
-        public BitmapSource? GetThumbnailImage(string iconPath, IconSize iconSize)
+        /// <param name="iconPath">ファイルパス。</param>
+        /// <param name="iconSize">アイコンサイズ。</param>
+        /// <returns>成功した場合にイメージ。失敗すれば<c>null</c>を返す。</returns>
+        public BitmapSource? GetThumbnailImage(string iconPath, in IconSize iconSize)
         {
             try {
                 NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out var iShellItem);
@@ -79,12 +78,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 実行モジュールのリソースを取得。
         /// </summary>
-        /// <param name="hModule"></param>
-        /// <param name="name"></param>
-        /// <param name="resType"></param>
+        /// <param name="hModule">モジュールハンドル。</param>
+        /// <param name="name">リソース名。</param>
+        /// <param name="resType"><inheritdoc cref="RT"/></param>
         /// <returns>取得成功した場合のリソースバイナリ。</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
-        byte[]? GetResourceBinaryData(IntPtr hModule, IntPtr name, ResType resType)
+        byte[]? GetResourceBinaryData(IntPtr hModule, IntPtr name, RT resType)
         {
             var hGroup = NativeMethods.FindResource(hModule, name, new IntPtr((int)resType));
             if(hGroup == IntPtr.Zero) {
@@ -131,7 +130,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             var binaryList = new List<byte[]>();
             EnumResNameProc proc = (hMod, type, name, lp) => {
-                var binaryGroupIconData = GetResourceBinaryData(hMod, name, ResType.GROUP_ICON);
+                var binaryGroupIconData = GetResourceBinaryData(hMod, name, RT.RT_GROUP_ICON);
                 if(binaryGroupIconData == null) {
                     return true;
                 }
@@ -172,7 +171,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         writer.Seek(picOffset, SeekOrigin.Begin);
 
                         ushort id = BitConverter.ToUInt16(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i + offsetGRPICONDIRENTRY_nID);
-                        var pic = GetResourceBinaryData(hMod, new IntPtr(id), ResType.ICON);
+                        var pic = GetResourceBinaryData(hMod, new IntPtr(id), RT.RT_ICON);
                         if(pic != null) {
                             writer.Write(pic, 0, pic.Length);
                             picOffset += pic.Length;
@@ -185,7 +184,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return true;
             };
 
-            NativeMethods.EnumResourceNames(hModule, (int)ResType.GROUP_ICON, proc, IntPtr.Zero);
+            NativeMethods.EnumResourceNames(hModule, (int)RT.RT_GROUP_ICON, proc, IntPtr.Zero);
 
             NativeMethods.FreeLibrary(hModule);
 
