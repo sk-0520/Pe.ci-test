@@ -203,11 +203,13 @@
     <ClCompile Include="path.c" />
     <ClCompile Include="logging.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="tstring.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="path.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="tstring.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
