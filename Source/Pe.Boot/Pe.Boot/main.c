@@ -3,11 +3,12 @@
 #include <shlwapi.h>
 #include <assert.h>
 
+#include "logging.h"
+
 #pragma comment(lib, "shlwapi.lib")
 
 #define PATH_LENGTH (1024 * 4)
 
-void outputDebug(TCHAR* s);
 size_t getAppPath(HINSTANCE hInstance, TCHAR* buffer);
 size_t getParentDirPath(TCHAR* buffer, const TCHAR* filePath);
 void addVisualCppRuntimeRedist(const TCHAR* rootDirPath);
@@ -118,12 +119,6 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     }
 
     return 0;
-}
-
-void outputDebug(TCHAR* s)
-{
-    OutputDebugString(s);
-    OutputDebugString(_T("\r\n"));
 }
 
 size_t getAppPath(HINSTANCE hInstance, TCHAR* buffer)

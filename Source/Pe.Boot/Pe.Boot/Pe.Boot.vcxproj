@@ -200,9 +200,11 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="logging.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="logging.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
