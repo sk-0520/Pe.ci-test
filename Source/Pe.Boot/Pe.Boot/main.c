@@ -3,38 +3,31 @@
 #include <shlwapi.h>
 #include <assert.h>
 
+#include "path.h"
 #include "logging.h"
 
 #pragma comment(lib, "shlwapi.lib")
 
 #define PATH_LENGTH (1024 * 4)
 
-size_t getAppPath(HINSTANCE hInstance, TCHAR* buffer);
-size_t getParentDirPath(TCHAR* buffer, const TCHAR* filePath);
 void addVisualCppRuntimeRedist(const TCHAR* rootDirPath);
-size_t getMainModulePath(TCHAR* buffer, const TCHAR* rootDirPath);
 TCHAR* tuneArg(const TCHAR* arg);
 long getWaitTime(const TCHAR* s);
 
 int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
-    TCHAR appFilePath[MAX_PATH];
-    getAppPath(hInstance, appFilePath);
+    APP_PATH_ITEMS appPathItems;
+    getAppPathItems(hInstance, &appPathItems);
 
-    TCHAR appDirPath[MAX_PATH];
-    getParentDirPath(appDirPath, appFilePath);
+    addVisualCppRuntimeRedist(appPathItems.rootDirectory);
 
-    addVisualCppRuntimeRedist(appDirPath);
-
-    TCHAR appExePath[MAX_PATH];
-    getMainModulePath(appExePath, appDirPath);
 
     int argCount = 0;
     LPTSTR* args = CommandLineToArgvW(GetCommandLine(), &argCount);
 
     if (argCount <= 1) {
         // そのまま実行
-        ShellExecute(NULL, _T("open"), appExePath, NULL, NULL, SW_SHOWNORMAL);
+        ShellExecute(NULL, _T("open"), appPathItems.mainModule, NULL, NULL, SW_SHOWNORMAL);
     }
     else {
         // コマンドライン渡して実行
@@ -43,7 +36,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
         if (!tunedArgs) {
             // これもう立ち上げ不能だと思う
             outputDebug(_T("メモリ確保できんかったね！"));
-            ShellExecute(NULL, _T("open"), appExePath, NULL, NULL, SW_SHOWNORMAL);
+            ShellExecute(NULL, _T("open"), appPathItems.mainModule, NULL, NULL, SW_SHOWNORMAL);
             return 0;
         }
 
@@ -113,7 +106,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
         // commandArg の確保に失敗してても引数無し扱いで起動となる
         outputDebug(commandArg);
-        ShellExecute(NULL, _T("open"), appExePath, commandArg, NULL, SW_SHOWNORMAL);
+        ShellExecute(NULL, _T("open"), appPathItems.mainModule, commandArg, NULL, SW_SHOWNORMAL);
 
         // もはや死ぬだけなので後処理不要
     }
@@ -121,23 +114,6 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     return 0;
 }
 
-size_t getAppPath(HINSTANCE hInstance, TCHAR* buffer)
-{
-    TCHAR appRawPath[MAX_PATH];
-    GetModuleFileName(hInstance, appRawPath, MAX_PATH);
-    // 正規化しておく
-    PathCanonicalize(buffer, appRawPath);
-    outputDebug(buffer);
-    return lstrlen(buffer);
-}
-
-size_t getParentDirPath(TCHAR* buffer, const TCHAR* filePath)
-{
-    lstrcpy(buffer, filePath);
-    PathRemoveFileSpec(buffer);
-    outputDebug(buffer);
-    return lstrlen(buffer);
-}
 
 void addVisualCppRuntimeRedist(const TCHAR* rootDirPath) {
     TCHAR crtPath[MAX_PATH];
@@ -168,16 +144,6 @@ void addVisualCppRuntimeRedist(const TCHAR* rootDirPath) {
     lstrcat(pathValue, crtPath);
     SetEnvironmentVariable(_T("PATH"), pathValue);
 
-}
-
-size_t getMainModulePath(TCHAR* buffer, const TCHAR* rootDirPath)
-{
-    TCHAR binPath[MAX_PATH];
-    binPath[0] = 0;
-    PathCombine(binPath, rootDirPath, _T("bin"));
-    PathCombine(buffer, binPath, _T("Pe.Main.exe"));
-    outputDebug(buffer);
-    return lstrlen(buffer);
 }
 
 /**

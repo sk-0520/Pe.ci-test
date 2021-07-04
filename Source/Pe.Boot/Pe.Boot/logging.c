@@ -1,4 +1,6 @@
-﻿#include "logging.h"
+﻿#include <windows.h>
+
+#include "logging.h"
 
 void outputDebug(const TCHAR* s)
 {

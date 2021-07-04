@@ -200,10 +200,12 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="path.c" />
     <ClCompile Include="logging.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="path.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
