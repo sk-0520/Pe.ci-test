@@ -12,7 +12,7 @@ void outputDebug(const TCHAR* s)
 
 
 
-void log(LOG_LEVEL logLevel, const TCHAR* format, ...)
+void logging(LOG_LEVEL logLevel, const TCHAR* format, ...)
 {
     //TODO: OutputDebugString に渡す感じでいいと思う
 }

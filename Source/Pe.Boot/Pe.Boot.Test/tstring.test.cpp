@@ -15,8 +15,8 @@ namespace PeBootTest
 
         TEST_METHOD(tstrstrTest)
         {
-            auto a1 = tstrstr(_T("abcdefg"), _T("abc"));
-            Assert::IsTrue(a1[0] == 'a');
+            auto actual = tstrstr(_T("abcdefg"), _T("abc"));
+            Assert::IsTrue(actual[0] == 'a');
         }
     };
 }
