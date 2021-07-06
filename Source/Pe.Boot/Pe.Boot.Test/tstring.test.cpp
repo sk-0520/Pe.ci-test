@@ -2,7 +2,7 @@
 #include "CppUnitTest.h"
 
 extern "C" {
-    #include "../Pe.Boot/tstring.h"
+#   include "../Pe.Boot/tstring.h"
 }
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
