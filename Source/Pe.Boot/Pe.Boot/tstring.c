@@ -33,3 +33,34 @@ TCHAR* concatString(TCHAR* target, const TCHAR* value)
 {
     return lstrcat(target, value);
 }
+
+static bool tryParseIntegerCore(const TCHAR* input, bool hex, int* result)
+{
+    return StrToIntEx(input, hex ? STIF_SUPPORT_HEX: STIF_DEFAULT, result);
+}
+
+bool tryParseInteger(const TCHAR* input, int* result)
+{
+    return tryParseIntegerCore(input, false, result);
+}
+
+bool tryParseHexOrInteger(const TCHAR* input, int* result)
+{
+    return tryParseIntegerCore(input, true, result);
+}
+
+static bool tryParseLongCore(const TCHAR* input, bool hex, long long* result)
+{
+    return StrToInt64Ex(input, hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, result);
+}
+
+bool tryParseLong(const TCHAR* input, long long* result)
+{
+    return tryParseLongCore(input, false, result);
+}
+
+bool tryParseHexOrLong(const TCHAR* input, long long* result)
+{
+    return tryParseLongCore(input, true, result);
+}
+

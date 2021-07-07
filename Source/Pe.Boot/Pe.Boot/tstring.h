@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <tchar.h>
+#include <stdbool.h>
 
 /// <summary>
 /// 文字列 haystack の先頭から文字列 needle を探し、見つかったときにはその位置をポインタで返却し、見つからなかったときにはNULLを返却。
@@ -40,3 +41,8 @@ TCHAR* findCharacter(const TCHAR* haystack, TCHAR needle);
 /// <returns>結合された文字列。</returns>
 TCHAR* concatString(TCHAR* target, const TCHAR* value);
 
+bool tryParseInteger(const TCHAR* input, int* result);
+bool tryParseHexOrInteger(const TCHAR* input, int* result);
+
+bool tryParseLong(const TCHAR* input, long long* result);
+bool tryParseHexOrLong(const TCHAR* input, long long* result);

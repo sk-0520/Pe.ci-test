@@ -12,7 +12,7 @@
 
 void addVisualCppRuntimeRedist(const TCHAR* rootDirPath);
 TCHAR* tuneArg(const TCHAR* arg);
-long getWaitTime(const TCHAR* s);
+int getWaitTime(const TCHAR* s);
 
 int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
@@ -40,7 +40,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
         }
 
         // 実行待機用
-        long waitTime = 0;
+        int waitTime = 0;
         size_t totalLength = 0;
         size_t skipIndex1 = SIZE_MAX;
         size_t skipIndex2 = SIZE_MAX;
@@ -167,14 +167,17 @@ TCHAR* tuneArg(const TCHAR* arg)
     return s;
 }
 
-long getWaitTime(const TCHAR* s)
+int getWaitTime(const TCHAR* s)
 {
     if (!s) {
         return 0;
     }
-    //size_t len = lstrlen(s);
-    TCHAR* end = NULL;
-    long result = _tcstol(s, &end, 10);
-    return result;
+
+    int result;
+    if (tryParseInteger(s, &result)) {
+        return result;
+    }
+
+    return 0;
 }
 
