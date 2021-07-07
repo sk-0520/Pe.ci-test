@@ -15,17 +15,17 @@ namespace PeBootTest
 
         TEST_METHOD(tstrstrTest)
         {
-            auto actual = tstrstr(_T("abcdefg"), _T("abc"));
+            auto actual = findString(_T("abcdefg"), _T("abc"));
             Assert::IsTrue(actual[0] == 'a');
 
-            Assert::IsNull(tstrstr(_T("abcdefg"), _T("xyz")));
+            Assert::IsNull(findString(_T("abcdefg"), _T("xyz")));
         }
 
         TEST_METHOD(tstrlenTest)
         {
             TCHAR input[] = _T("abcdefg");
             size_t expected = sizeof(input) / sizeof(TCHAR) - 1/*終端*/;
-            auto actual = tstrlen(input);
+            auto actual = getStringLength(input);
             Assert::AreEqual(expected, actual);
         }
 
@@ -33,10 +33,10 @@ namespace PeBootTest
         TEST_METHOD(tstrchrTest)
         {
             TCHAR input[] = _T("abcdefg");
-            auto actual = tstrchr(input, 'c');
+            auto actual = findCharacter(input, 'c');
             Assert::AreEqual(_T('c'), actual[0]);
 
-            Assert::IsNull(tstrchr(input, 'z'));
+            Assert::IsNull(findCharacter(input, 'z'));
         }
 
     };

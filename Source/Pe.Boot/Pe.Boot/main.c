@@ -53,7 +53,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 #pragma warning(push)
 #pragma warning(disable:6385 6386)
             tunedArgs[j] = tunedArg;
-            totalLength += lstrlen(tunedArgs[j]);
+            totalLength += getStringLength(tunedArgs[j]);
 #pragma warning(pop)
             if (!waitTime) {
                 TCHAR waits[][16] = {
@@ -61,11 +61,11 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
                     _T("--wait"), _T("-wait"), _T("/wait"), //TODO: #737 互換用処理
                 };
                 for (size_t waitIndex = 0; waitIndex < sizeof(waits) / sizeof(waits[0]); waitIndex++) {
-                    const TCHAR* wait = tstrstr(tunedArg, waits[waitIndex]);
+                    const TCHAR* wait = findString(tunedArg, waits[waitIndex]);
                     if (wait == tunedArg) {
                         skipIndex1 = j;
 
-                        TCHAR* eq = _tcschr(wait, '=');
+                        TCHAR* eq = findCharacter(wait, '=');
                         if (eq && eq + 1) {
                             TCHAR* value = eq + 1;
                             waitTime = getWaitTime(value);
@@ -89,8 +89,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
                 if ((skipIndex1 == i) || (skipIndex2 == i)) {
                     continue;
                 }
-                lstrcat(commandArg, tunedArgs[i]);
-                lstrcat(commandArg, _T(" "));
+                concatString(commandArg, tunedArgs[i]);
+                concatString(commandArg, _T(" "));
             }
         }
 
@@ -139,8 +139,8 @@ void addVisualCppRuntimeRedist(const TCHAR* rootDirPath) {
 
     TCHAR pathValue[PATH_LENGTH];
     GetEnvironmentVariable(_T("PATH"), pathValue, PATH_LENGTH - 1);
-    lstrcat(pathValue, _T(";"));
-    lstrcat(pathValue, crtPath);
+    concatString(pathValue, _T(";"));
+    concatString(pathValue, crtPath);
     SetEnvironmentVariable(_T("PATH"), pathValue);
 
 }
@@ -152,7 +152,7 @@ void addVisualCppRuntimeRedist(const TCHAR* rootDirPath) {
 TCHAR* tuneArg(const TCHAR* arg)
 {
     int hasSpace = _tcschr(arg, ' ') != NULL;
-    size_t len = (size_t)lstrlen(arg) + (hasSpace ? 2 : 0);
+    size_t len = (size_t)getStringLength(arg) + (hasSpace ? 2 : 0);
     TCHAR* s = allocateClearMemory(len + 1, sizeof(TCHAR*));
     assert(s);
     if (hasSpace) {

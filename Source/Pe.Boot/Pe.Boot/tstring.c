@@ -2,22 +2,22 @@
 
 #include "tstring.h"
 
-TCHAR* tstrstr(const TCHAR* haystack, const TCHAR* needle)
+TCHAR* findString(const TCHAR* haystack, const TCHAR* needle)
 {
     return StrStr(haystack, needle);
 }
 
-TCHAR* tstrstri(const TCHAR* haystack, const TCHAR* needle)
+TCHAR* findStringCase(const TCHAR* haystack, const TCHAR* needle)
 {
     return StrStrI(haystack, needle);
 }
 
-size_t tstrlen(const TCHAR* s)
+size_t getStringLength(const TCHAR* s)
 {
     return lstrlen(s);
 }
 
-TCHAR* tstrchr(const TCHAR* haystack, TCHAR needle)
+TCHAR* findCharacter(const TCHAR* haystack, TCHAR needle)
 {
     while (*haystack != needle) {
         if (!*haystack) {
@@ -27,4 +27,9 @@ TCHAR* tstrchr(const TCHAR* haystack, TCHAR needle)
     }
 
     return (TCHAR*)haystack;
+}
+
+TCHAR* concatString(TCHAR* target, const TCHAR* value)
+{
+    return lstrcat(target, value);
 }

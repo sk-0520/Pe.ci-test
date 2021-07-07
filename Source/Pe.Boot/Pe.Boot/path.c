@@ -1,5 +1,6 @@
 ﻿#include <windows.h>
 
+#include "tstring.h"
 #include "path.h"
 #include "logging.h"
 
@@ -10,7 +11,7 @@ size_t getApplicationPath(HINSTANCE hInstance, TCHAR* result)
     // 正規化しておく
     PathCanonicalize(result, appRawPath);
     outputDebug(result);
-    return lstrlen(result);
+    return getStringLength(result);
 }
 
 size_t getParentDirectoryPath(TCHAR* result, const TCHAR* path)
@@ -18,7 +19,7 @@ size_t getParentDirectoryPath(TCHAR* result, const TCHAR* path)
     lstrcpy(result, path);
     PathRemoveFileSpec(result);
     outputDebug(result);
-    return lstrlen(result);
+    return getStringLength(result);
 }
 
 size_t getMainModulePath(TCHAR* result, const TCHAR* rootDirPath)
@@ -28,7 +29,7 @@ size_t getMainModulePath(TCHAR* result, const TCHAR* rootDirPath)
     PathCombine(binPath, rootDirPath, _T("bin"));
     PathCombine(result, binPath, _T("Pe.Main.exe"));
     outputDebug(result);
-    return lstrlen(result);
+    return getStringLength(result);
 }
 
 void getAppPathItems(HMODULE hInstance, APP_PATH_ITEMS* result)
