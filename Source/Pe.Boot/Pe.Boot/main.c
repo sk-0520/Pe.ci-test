@@ -60,7 +60,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
                     _T("--wait"), _T("-wait"), _T("/wait"), //TODO: #737 互換用処理
                 };
                 for (size_t waitIndex = 0; waitIndex < sizeof(waits) / sizeof(waits[0]); waitIndex++) {
-                    TCHAR* wait = tstrstr(tunedArg, waits[waitIndex]);
+                    const TCHAR* wait = tstrstr(tunedArg, waits[waitIndex]);
                     if (wait == tunedArg) {
                         skipIndex1 = j;
 

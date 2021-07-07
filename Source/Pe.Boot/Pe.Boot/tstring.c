@@ -1,13 +1,13 @@
-#include <shlwapi.h>
+﻿#include <shlwapi.h>
 
 #include "tstring.h"
 
-TCHAR* tstrstr(const TCHAR* s1, const TCHAR* s2)
+const TCHAR* tstrstr(const TCHAR* haystack, const TCHAR* needle)
 {
-    return StrStr(s1, s2);
+    return StrStr(haystack, needle);
 }
 
-TCHAR* tstrstri(const TCHAR* s1, const TCHAR* s2)
+const TCHAR* tstrstri(const TCHAR* haystack, const TCHAR* needle)
 {
-    return StrStrI(s1, s2);
+    return StrStrI(haystack, needle);
 }
