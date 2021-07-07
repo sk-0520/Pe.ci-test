@@ -209,12 +209,14 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="memory.c" />
     <ClCompile Include="path.c" />
     <ClCompile Include="logging.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="tstring.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="memory.h" />
     <ClInclude Include="path.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="resource.h" />

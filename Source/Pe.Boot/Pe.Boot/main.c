@@ -3,6 +3,7 @@
 #include <shlwapi.h>
 #include <assert.h>
 
+#include "memory.h"
 #include "tstring.h"
 #include "path.h"
 #include "logging.h"
@@ -30,7 +31,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     else {
         // コマンドライン渡して実行
         size_t tunedArgsCount = (size_t)argCount - 1;
-        TCHAR** tunedArgs = malloc(tunedArgsCount * sizeof(TCHAR*));
+        TCHAR** tunedArgs = allocateClearMemory(tunedArgsCount, sizeof(TCHAR*));
         if (!tunedArgs) {
             // これもう立ち上げ不能だと思う
             outputDebug(_T("メモリ確保できんかったね！"));
@@ -72,7 +73,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
                         else if(i + 1 < argCount) {
                             waitTime = getWaitTime(args[i + 1]);
 
-                            skipIndex2 = j + 1;
+                            skipIndex2 = (size_t)(j + 1);
                         }
                         break;
                     }
@@ -80,7 +81,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
             }
         }
 
-        TCHAR* commandArg = malloc((totalLength + 1) * sizeof(TCHAR*));
+        TCHAR* commandArg = allocateClearMemory(totalLength + 1, sizeof(TCHAR*));
         if (commandArg) {
             commandArg[0] = 0;
             for (size_t i = 0; i < tunedArgsCount; i++) {
@@ -152,7 +153,7 @@ TCHAR* tuneArg(const TCHAR* arg)
 {
     int hasSpace = _tcschr(arg, ' ') != NULL;
     size_t len = (size_t)lstrlen(arg) + (hasSpace ? 2 : 0);
-    TCHAR* s = malloc((len + 1) * sizeof(TCHAR*));
+    TCHAR* s = allocateClearMemory(len + 1, sizeof(TCHAR*));
     assert(s);
     if (hasSpace) {
         lstrcpy(s + 1, arg);
