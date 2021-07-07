@@ -7,8 +7,6 @@
 #include "path.h"
 #include "logging.h"
 
-#pragma comment(lib, "shlwapi.lib")
-
 #define PATH_LENGTH (1024 * 4)
 
 void addVisualCppRuntimeRedist(const TCHAR* rootDirPath);

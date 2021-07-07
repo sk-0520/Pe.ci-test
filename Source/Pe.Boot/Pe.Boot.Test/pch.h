@@ -8,8 +8,6 @@
 #define PCH_H
 
 // プリコンパイルするヘッダーをここに追加します
-//#include <shlwapi.h>
 
-#pragma comment(lib, "shlwapi.lib")
 
 #endif //PCH_H
