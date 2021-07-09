@@ -43,10 +43,10 @@ TCHAR* findCharacter(const TCHAR* haystack, TCHAR needle);
 /// <returns>結合された文字列。</returns>
 TCHAR* concatString(TCHAR* target, const TCHAR* value);
 
-bool tryParseInteger(const TCHAR* input, int* result);
-bool tryParseHexOrInteger(const TCHAR* input, int* result);
+bool tryParseInteger(int* result, const TCHAR* input);
+bool tryParseHexOrInteger(int* result, const TCHAR* input);
 
-bool tryParseLong(const TCHAR* input, long long* result);
-bool tryParseHexOrLong(const TCHAR* input, long long* result);
+bool tryParseLong(long long* result, const TCHAR* input);
+bool tryParseHexOrLong(long long* result, const TCHAR* input);
 
 #define formatString(result, format, ...) do { wsprintf(result, format,  __VA_ARGS__); } while(0)

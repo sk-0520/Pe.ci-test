@@ -34,34 +34,34 @@ TCHAR* concatString(TCHAR* target, const TCHAR* value)
     return lstrcat(target, value);
 }
 
-static bool tryParseIntegerCore(const TCHAR* input, bool hex, int* result)
+static bool tryParseIntegerCore(int* result, const TCHAR* input, bool hex)
 {
     return StrToIntEx(input, hex ? STIF_SUPPORT_HEX: STIF_DEFAULT, result);
 }
 
-bool tryParseInteger(const TCHAR* input, int* result)
+bool tryParseInteger(int* result, const TCHAR* input)
 {
-    return tryParseIntegerCore(input, false, result);
+    return tryParseIntegerCore(result, input, false);
 }
 
-bool tryParseHexOrInteger(const TCHAR* input, int* result)
+bool tryParseHexOrInteger(int* result, const TCHAR* input)
 {
-    return tryParseIntegerCore(input, true, result);
+    return tryParseIntegerCore(result, input, true);
 }
 
-static bool tryParseLongCore(const TCHAR* input, bool hex, long long* result)
+static bool tryParseLongCore(long long* result, const TCHAR* input, bool hex)
 {
     return StrToInt64Ex(input, hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, result);
 }
 
-bool tryParseLong(const TCHAR* input, long long* result)
+bool tryParseLong(long long* result, const TCHAR* input)
 {
-    return tryParseLongCore(input, false, result);
+    return tryParseLongCore(result, input, false);
 }
 
-bool tryParseHexOrLong(const TCHAR* input, long long* result)
+bool tryParseHexOrLong(long long* result, const TCHAR* input)
 {
-    return tryParseLongCore(input, true, result);
+    return tryParseLongCore(result, input, true);
 }
 
 

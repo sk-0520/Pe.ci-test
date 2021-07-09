@@ -187,7 +187,7 @@ int getWaitTime(const TCHAR* s)
     }
 
     int result;
-    if (tryParseInteger(s, &result)) {
+    if (tryParseInteger(&result, s)) {
         return result;
     }
 

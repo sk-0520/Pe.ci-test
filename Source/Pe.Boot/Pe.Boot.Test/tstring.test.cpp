@@ -42,92 +42,92 @@ namespace PeBootTest
         TEST_METHOD(tryParseIntegerTest)
         {
             int a1;
-            Assert::IsTrue(tryParseInteger(_T("123"), &a1));
+            Assert::IsTrue(tryParseInteger(&a1, _T("123")));
             Assert::AreEqual(123, a1);
 
             int a2;
-            Assert::IsTrue(tryParseInteger(_T("-123"), &a2));
+            Assert::IsTrue(tryParseInteger(&a2, _T("-123")));
             Assert::AreEqual(-123, a2);
 
             int a3;
-            Assert::IsTrue(tryParseInteger(_T("+123"), &a3));
+            Assert::IsTrue(tryParseInteger(&a3, _T("+123")));
             Assert::AreEqual(123, a3);
 
             int a4;
-            Assert::IsTrue(tryParseInteger(_T("123abc"), &a4));
+            Assert::IsTrue(tryParseInteger(&a4, _T("123abc")));
             Assert::AreEqual(123, a4);
         }
 
         TEST_METHOD(tryParseHexOrIntegerTest)
         {
             int a1;
-            Assert::IsTrue(tryParseHexOrInteger(_T("123"), &a1));
+            Assert::IsTrue(tryParseHexOrInteger(&a1, _T("123")));
             Assert::AreEqual(123, a1);
 
             int a2;
-            Assert::IsTrue(tryParseHexOrInteger(_T("-123"), &a2));
+            Assert::IsTrue(tryParseHexOrInteger(&a2, _T("-123")));
             Assert::AreEqual(-123, a2);
 
             int a3;
-            Assert::IsTrue(tryParseHexOrInteger(_T("+123"), &a3));
+            Assert::IsTrue(tryParseHexOrInteger(&a3, _T("+123")));
             Assert::AreEqual(123, a3);
 
             int a4;
-            Assert::IsTrue(tryParseHexOrInteger(_T("123abc"), &a4));
+            Assert::IsTrue(tryParseHexOrInteger(&a4, _T("123abc")));
             Assert::AreEqual(123, a4);
 
             int h1;
-            Assert::IsTrue(tryParseHexOrInteger(_T("0xf"), &h1));
+            Assert::IsTrue(tryParseHexOrInteger(&h1, _T("0xf")));
             Assert::AreEqual(15, h1);
 
             int h2;
-            Assert::IsTrue(tryParseHexOrInteger(_T("0x0f"), &h2));
+            Assert::IsTrue(tryParseHexOrInteger(&h2, _T("0x0f")));
             Assert::AreEqual(15, h2);
         }
 
         TEST_METHOD(tryParseLongTest)
         {
             long long a1;
-            Assert::IsTrue(tryParseLong(_T("123"), &a1));
+            Assert::IsTrue(tryParseLong(&a1, _T("123")));
             Assert::AreEqual((long long)123, a1);
 
             long long a2;
-            Assert::IsTrue(tryParseLong(_T("-123"), &a2));
+            Assert::IsTrue(tryParseLong(&a2, _T("-123")));
             Assert::AreEqual((long long)-123, a2);
 
             long long a3;
-            Assert::IsTrue(tryParseLong(_T("+123"), &a3));
+            Assert::IsTrue(tryParseLong(&a3, _T("+123")));
             Assert::AreEqual((long long)123, a3);
 
             long long a4;
-            Assert::IsTrue(tryParseLong(_T("123abc"), &a4));
+            Assert::IsTrue(tryParseLong(&a4, _T("123abc")));
             Assert::AreEqual((long long)123, a4);
         }
 
         TEST_METHOD(tryParseHexOrLongTest)
         {
             long long a1;
-            Assert::IsTrue(tryParseHexOrLong(_T("123"), &a1));
+            Assert::IsTrue(tryParseHexOrLong(&a1, _T("123")));
             Assert::AreEqual((long long)123, a1);
 
             long long a2;
-            Assert::IsTrue(tryParseHexOrLong(_T("-123"), &a2));
+            Assert::IsTrue(tryParseHexOrLong(&a2, _T("-123")));
             Assert::AreEqual((long long)-123, a2);
 
             long long a3;
-            Assert::IsTrue(tryParseHexOrLong(_T("+123"), &a3));
+            Assert::IsTrue(tryParseHexOrLong(&a3, _T("+123")));
             Assert::AreEqual((long long)123, a3);
 
             long long a4;
-            Assert::IsTrue(tryParseHexOrLong(_T("123abc"), &a4));
+            Assert::IsTrue(tryParseHexOrLong(&a4, _T("123abc")));
             Assert::AreEqual((long long)123, a4);
 
             long long h1;
-            Assert::IsTrue(tryParseHexOrLong(_T("0xf"), &h1));
+            Assert::IsTrue(tryParseHexOrLong(&h1, _T("0xf")));
             Assert::AreEqual((long long)15, h1);
 
             long long h2;
-            Assert::IsTrue(tryParseHexOrLong(_T("0x0f"), &h2));
+            Assert::IsTrue(tryParseHexOrLong(&h2, _T("0x0f")));
             Assert::AreEqual((long long)15, h2);
         }
 
