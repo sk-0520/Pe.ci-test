@@ -130,5 +130,15 @@ namespace PeBootTest
             Assert::IsTrue(tryParseHexOrLong(_T("0x0f"), &h2));
             Assert::AreEqual((long long)15, h2);
         }
+
+        TEST_METHOD(fromatStringTest)
+        {
+            TCHAR input[] = _T("abc %s 123 %d");
+            TCHAR actual[1000] = { 0 };
+            TCHAR expected[1000] = _T("abc def 123 456");
+            fromatString(actual, input, _T("def"), 456);
+
+            Assert::AreEqual(expected, actual);
+        }
     };
 }

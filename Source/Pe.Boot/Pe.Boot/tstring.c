@@ -64,3 +64,5 @@ bool tryParseHexOrLong(const TCHAR* input, long long* result)
     return tryParseLongCore(input, true, result);
 }
 
+
+

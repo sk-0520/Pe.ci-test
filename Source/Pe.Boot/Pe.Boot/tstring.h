@@ -2,6 +2,8 @@
 #include <tchar.h>
 #include <stdbool.h>
 
+#include <Windows.h>
+
 /// <summary>
 /// 文字列 haystack の先頭から文字列 needle を探し、見つかったときにはその位置をポインタで返却し、見つからなかったときにはNULLを返却。
 /// </summary>
@@ -46,3 +48,5 @@ bool tryParseHexOrInteger(const TCHAR* input, int* result);
 
 bool tryParseLong(const TCHAR* input, long long* result);
 bool tryParseHexOrLong(const TCHAR* input, long long* result);
+
+#define formatString(result, format, ...) do { wsprintf(result, format,  __VA_ARGS__); } while(0)

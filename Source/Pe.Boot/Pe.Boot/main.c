@@ -97,7 +97,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
         // 起動前停止
         if (0 < waitTime) {
             TCHAR s[1000];
-            swprintf(s, 1000 - 1, _T("起動前停止: %d ms"), waitTime);
+            formatString(s, _T("起動前停止: %d ms"), waitTime);
             outputDebug(s);
             Sleep(waitTime);
             outputDebug(_T("待機終了"));
