@@ -126,7 +126,7 @@ void WINAPI RawWinMain()
 
 void addVisualCppRuntimeRedist(const TCHAR* rootDirPath) {
     TCHAR crtPath[MAX_PATH];
-    lstrcpy(crtPath, rootDirPath);
+    copyString(crtPath, rootDirPath);
 
 
     TCHAR dirs[][32] = {
@@ -143,7 +143,7 @@ void addVisualCppRuntimeRedist(const TCHAR* rootDirPath) {
         TCHAR buffer[MAX_PATH];
         TCHAR* name = dirs[i];
         combinePath(buffer, crtPath, name);
-        lstrcpy(crtPath, buffer);
+        copyString(crtPath, buffer);
     }
     outputDebug(crtPath);
 
@@ -166,13 +166,13 @@ TCHAR* tuneArg(const TCHAR* arg)
     TCHAR* s = allocateClearMemory(len + 1, sizeof(TCHAR*));
     Assert(s);
     if (hasSpace) {
-        lstrcpy(s + 1, arg);
+        copyString(s + 1, arg);
         s[0] = '"';
         s[len - 1] = '"';
         s[len - 0] = 0; // ↑で +1 してるから安全安全
     }
     else {
-        lstrcpy(s, arg);
+        copyString(s, arg);
     }
     return s;
 }

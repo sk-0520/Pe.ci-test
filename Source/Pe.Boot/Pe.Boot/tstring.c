@@ -29,11 +29,6 @@ TCHAR* findCharacter(const TCHAR* haystack, TCHAR needle)
     return (TCHAR*)haystack;
 }
 
-TCHAR* concatString(TCHAR* target, const TCHAR* value)
-{
-    return lstrcat(target, value);
-}
-
 static bool tryParseIntegerCore(int* result, const TCHAR* input, bool hex)
 {
     return StrToIntEx(input, hex ? STIF_SUPPORT_HEX: STIF_DEFAULT, result);
@@ -64,5 +59,16 @@ bool tryParseHexOrLong(long long* result, const TCHAR* input)
     return tryParseLongCore(result, input, true);
 }
 
+
+
+TCHAR* concatString(TCHAR* target, const TCHAR* value)
+{
+    return lstrcat(target, value);
+}
+
+TCHAR* copyString(TCHAR* result, const TCHAR* value)
+{
+    return lstrcpy(result, value);
+}
 
 

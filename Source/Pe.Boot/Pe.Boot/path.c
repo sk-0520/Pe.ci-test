@@ -6,7 +6,7 @@
 
 size_t getParentDirectoryPath(TCHAR* result, const TCHAR* path)
 {
-    lstrcpy(result, path);
+    copyString(result, path);
     PathRemoveFileSpec(result);
     outputDebug(result);
     return getStringLength(result);

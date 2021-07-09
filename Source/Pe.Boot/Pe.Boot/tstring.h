@@ -35,14 +35,6 @@ size_t getStringLength(const TCHAR* s);
 /// <returns>一致文字のアドレス, 見つからない場合は <c>NULL</c></returns>
 TCHAR* findCharacter(const TCHAR* haystack, TCHAR needle);
 
-/// <summary>
-/// 文字列を結合。
-/// </summary>
-/// <param name="target">結合対象文字列。</param>
-/// <param name="value">追加する文字列。</param>
-/// <returns>結合された文字列。</returns>
-TCHAR* concatString(TCHAR* target, const TCHAR* value);
-
 bool tryParseInteger(int* result, const TCHAR* input);
 bool tryParseHexOrInteger(int* result, const TCHAR* input);
 
@@ -50,3 +42,18 @@ bool tryParseLong(long long* result, const TCHAR* input);
 bool tryParseHexOrLong(long long* result, const TCHAR* input);
 
 #define formatString(result, format, ...) do { wsprintf(result, format,  __VA_ARGS__); } while(0)
+
+/// <summary>
+/// 文字列を結合。
+/// </summary>
+/// <param name="target">結合対象文字列。</param>
+/// <param name="value">追加する文字列。</param>
+/// <returns>結合された文字列。</returns>
+TCHAR* concatString(TCHAR * target, const TCHAR * value);
+/// <summary>
+/// 文字列をコピー。
+/// </summary>
+/// <param name="result">コピー後の文字列の格納先。</param>
+/// <param name="value">コピー対象文字列。</param>
+/// <returns>コピーされた文字列。</returns>
+TCHAR* copyString(TCHAR * result, const TCHAR * value);

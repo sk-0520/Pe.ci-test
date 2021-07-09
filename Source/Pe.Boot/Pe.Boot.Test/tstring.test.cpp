@@ -9,11 +9,11 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace PeBootTest
 {
-    TEST_CLASS(tstringTest)
+    TEST_CLASS(stringTest)
     {
     public:
 
-        TEST_METHOD(tstrstrTest)
+        TEST_METHOD(findStringTest)
         {
             auto actual = findString(_T("abcdefg"), _T("abc"));
             Assert::IsTrue(actual[0] == 'a');
@@ -21,7 +21,7 @@ namespace PeBootTest
             Assert::IsNull(findString(_T("abcdefg"), _T("xyz")));
         }
 
-        TEST_METHOD(tstrlenTest)
+        TEST_METHOD(getStringLengthTest)
         {
             TCHAR input[] = _T("abcdefg");
             size_t expected = sizeof(input) / sizeof(TCHAR) - 1/*終端*/;
@@ -30,7 +30,7 @@ namespace PeBootTest
         }
 
 
-        TEST_METHOD(tstrchrTest)
+        TEST_METHOD(findCharacterTest)
         {
             TCHAR input[] = _T("abcdefg");
             auto actual = findCharacter(input, 'c');
@@ -140,5 +140,27 @@ namespace PeBootTest
 
             Assert::AreEqual(expected, actual);
         }
+
+        TEST_METHOD(concatStringTest)
+        {
+            TCHAR input[] = _T("def");
+            TCHAR actual[1000] = _T("abc");
+            TCHAR expected[1000] = _T("abcdef");
+            concatString(actual, input);
+
+            Assert::AreEqual(expected, actual);
+        }
+
+
+        TEST_METHOD(copyStringTest)
+        {
+            TCHAR input[] = _T("def");
+            TCHAR actual[1000] = _T("abc");
+            TCHAR expected[1000] = _T("def");
+            copyString(actual, input);
+
+            Assert::AreEqual(expected, actual);
+        }
+
     };
 }
