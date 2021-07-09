@@ -27,20 +27,29 @@ typedef struct _TAG_APP_PATH_ITEMS
 } APP_PATH_ITEMS;
 
 /// <summary>
-/// 実行中モジュールパスの取得。
-/// </summary>
-/// <param name="hInstance">実行モジュールインスタンスハンドル。</param>
-/// <param name="result">実行中モジュールパスの格納先。</param>
-/// <returns>実行中モジュールパスの文字列長。</returns>
-size_t getApplicationPath(HINSTANCE hInstance, TCHAR* result);
-
-/// <summary>
 /// パスから親ディレクトリパスを取得。
 /// </summary>
 /// <param name="result">親ディレクトリパスの格納先。</param>
 /// <param name="path">対象パス。</param>
 /// <returns>ディレクトリパスの文字列長。</returns>
 size_t getParentDirectoryPath(TCHAR* result, const TCHAR* path);
+
+/// <summary>
+/// パスを結合する。
+/// </summary>
+/// <param name="result">結合パスの格納先。</param>
+/// <param name="basePath">ベースのパス。</param>
+/// <param name="relativePath">結合するパス。</param>
+/// <returns>結合結果の長さ。失敗時は0。</returns>
+size_t combinePath(TCHAR* result, const TCHAR* basePath, const TCHAR* relativePath);
+
+/// <summary>
+/// 実行中モジュールパスの取得。
+/// </summary>
+/// <param name="hInstance">実行モジュールインスタンスハンドル。</param>
+/// <param name="result">実行中モジュールパスの格納先。</param>
+/// <returns>実行中モジュールパスの文字列長。</returns>
+size_t getApplicationPath(HINSTANCE hInstance, TCHAR* result);
 
 /// <summary>
 /// Pe 本体ファイルパスの取得。

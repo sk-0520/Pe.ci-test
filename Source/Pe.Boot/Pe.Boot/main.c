@@ -132,7 +132,7 @@ void addVisualCppRuntimeRedist(const TCHAR* rootDirPath) {
     for (size_t i = 0; i < (sizeof(dirs) / sizeof(dirs[0])); i++) {
         TCHAR buffer[MAX_PATH];
         TCHAR* name = dirs[i];
-        PathCombine(buffer, crtPath, name);
+        combinePath(buffer, crtPath, name);
         lstrcpy(crtPath, buffer);
     }
     outputDebug(crtPath);

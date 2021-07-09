@@ -4,6 +4,24 @@
 #include "path.h"
 #include "logging.h"
 
+size_t getParentDirectoryPath(TCHAR* result, const TCHAR* path)
+{
+    lstrcpy(result, path);
+    PathRemoveFileSpec(result);
+    outputDebug(result);
+    return getStringLength(result);
+}
+
+size_t combinePath(TCHAR* result, const TCHAR* basePath, const TCHAR* relativePath)
+{
+    TCHAR* ret = PathCombine(result, basePath, relativePath);
+    if (ret == result) {
+        return getStringLength(result);
+    }
+
+    return 0;
+}
+
 size_t getApplicationPath(HINSTANCE hInstance, TCHAR* result)
 {
     TCHAR appRawPath[MAX_PATH];
@@ -14,20 +32,12 @@ size_t getApplicationPath(HINSTANCE hInstance, TCHAR* result)
     return getStringLength(result);
 }
 
-size_t getParentDirectoryPath(TCHAR* result, const TCHAR* path)
-{
-    lstrcpy(result, path);
-    PathRemoveFileSpec(result);
-    outputDebug(result);
-    return getStringLength(result);
-}
-
 size_t getMainModulePath(TCHAR* result, const TCHAR* rootDirPath)
 {
     TCHAR binPath[MAX_PATH];
     binPath[0] = 0;
-    PathCombine(binPath, rootDirPath, _T("bin"));
-    PathCombine(result, binPath, _T("Pe.Main.exe"));
+    combinePath(binPath, rootDirPath, _T("bin"));
+    combinePath(result, binPath, _T("Pe.Main.exe"));
     outputDebug(result);
     return getStringLength(result);
 }

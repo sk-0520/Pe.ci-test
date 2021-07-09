@@ -22,5 +22,17 @@ namespace PeBootTest
 
             Assert::AreEqual(expected, actual);
         }
+
+        TEST_METHOD(combinePathTest)
+        {
+            TCHAR input1[MAX_PATH] = _T("C:\\dir");
+            TCHAR input2[MAX_PATH] = _T("file");
+            TCHAR actual[MAX_PATH] = { 0 };
+            TCHAR expected[MAX_PATH] = _T("C:\\dir\\file");
+            size_t len = combinePath(actual, input1, input2);
+
+            Assert::AreEqual(expected, actual);
+        }
+
     };
 }
