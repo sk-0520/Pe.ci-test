@@ -136,7 +136,7 @@ namespace PeBootTest
             TCHAR input[] = _T("abc %s 123 %d");
             TCHAR actual[1000] = { 0 };
             TCHAR expected[1000] = _T("abc def 123 456");
-            fromatString(actual, input, _T("def"), 456);
+            formatString(actual, input, _T("def"), 456);
 
             Assert::AreEqual(expected, actual);
         }

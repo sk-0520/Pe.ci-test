@@ -1,14 +1,17 @@
 ﻿#include <windows.h>
 #include <tchar.h>
 #include <shlwapi.h>
-#include <assert.h>
 
+#include "debug.h"
 #include "memory.h"
 #include "tstring.h"
 #include "path.h"
 #include "logging.h"
 
 #define PATH_LENGTH (1024 * 4)
+
+void __chkstk()
+{ }
 
 void addVisualCppRuntimeRedist(const TCHAR* rootDirPath);
 TCHAR* tuneArg(const TCHAR* arg);
@@ -49,7 +52,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
             TCHAR* workArg = args[i];
             outputDebug(workArg);
             TCHAR* tunedArg = tuneArg(workArg);
-            assert(tunedArg);
+            Assert(tunedArg);
 #pragma warning(push)
 #pragma warning(disable:6385 6386)
             tunedArgs[j] = tunedArg;
@@ -113,6 +116,11 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     return 0;
 }
 
+DWORD CALLBACK RawWinMain()
+{
+    DWORD result = WinMain(NULL, NULL, NULL, SW_SHOW);
+    ExitProcess(result);
+}
 
 void addVisualCppRuntimeRedist(const TCHAR* rootDirPath) {
     TCHAR crtPath[MAX_PATH];
@@ -151,10 +159,10 @@ void addVisualCppRuntimeRedist(const TCHAR* rootDirPath) {
 */
 TCHAR* tuneArg(const TCHAR* arg)
 {
-    int hasSpace = _tcschr(arg, ' ') != NULL;
+    int hasSpace = findCharacter(arg, ' ') != NULL;
     size_t len = (size_t)getStringLength(arg) + (hasSpace ? 2 : 0);
     TCHAR* s = allocateClearMemory(len + 1, sizeof(TCHAR*));
-    assert(s);
+    Assert(s);
     if (hasSpace) {
         lstrcpy(s + 1, arg);
         s[0] = '"';
