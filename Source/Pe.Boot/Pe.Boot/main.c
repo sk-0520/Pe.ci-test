@@ -17,23 +17,20 @@ void addVisualCppRuntimeRedist(const TCHAR* rootDirPath);
 TCHAR* tuneArg(const TCHAR* arg);
 int getWaitTime(const TCHAR* s);
 
-int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
+int CALLBACK WinMainEx(HINSTANCE hInstance, HINSTANCE hPrevInstance, const LPTSTR* argv, size_t argc, int nCmdShow)
 {
     APP_PATH_ITEMS appPathItems;
     getAppPathItems(hInstance, &appPathItems);
 
     addVisualCppRuntimeRedist(appPathItems.rootDirectory);
 
-    int argCount = 0;
-    LPTSTR* args = CommandLineToArgvW(GetCommandLine(), &argCount);
-
-    if (argCount <= 1) {
+    if (argc <= 1) {
         // そのまま実行
         ShellExecute(NULL, _T("open"), appPathItems.mainModule, NULL, NULL, SW_SHOWNORMAL);
     }
     else {
         // コマンドライン渡して実行
-        size_t tunedArgsCount = (size_t)argCount - 1;
+        size_t tunedArgsCount = argc - 1;
         TCHAR** tunedArgs = allocateClearMemory(tunedArgsCount, sizeof(TCHAR*));
         if (!tunedArgs) {
             // これもう立ち上げ不能だと思う
@@ -48,8 +45,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
         size_t skipIndex1 = SIZE_MAX;
         size_t skipIndex2 = SIZE_MAX;
 
-        for (int i = 1, j = 0; i < argCount; i++, j++) {
-            TCHAR* workArg = args[i];
+        for (size_t i = 1, j = 0; i < argc; i++, j++) {
+            TCHAR* workArg = argv[i];
             outputDebug(workArg);
             TCHAR* tunedArg = tuneArg(workArg);
             Assert(tunedArg);
@@ -73,8 +70,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
                             TCHAR* value = eq + 1;
                             waitTime = getWaitTime(value);
                         }
-                        else if(i + 1 < argCount) {
-                            waitTime = getWaitTime(args[i + 1]);
+                        else if(i + 1 < argc) {
+                            waitTime = getWaitTime(argv[i + 1]);
 
                             skipIndex2 = (size_t)(j + 1);
                         }
@@ -118,7 +115,15 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
 DWORD CALLBACK RawWinMain()
 {
-    DWORD result = WinMain(NULL, NULL, NULL, SW_SHOW);
+    HINSTANCE hInstance = GetModuleHandle(NULL);
+
+    int argc;
+    TCHAR** argv = CommandLineToArgvW(GetCommandLine(), &argc);
+
+    DWORD result = WinMainEx(hInstance, NULL, argv, (size_t)argc, SW_SHOWDEFAULT);
+
+    LocalFree(argv);
+
     ExitProcess(result);
 }
 
