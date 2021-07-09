@@ -50,11 +50,8 @@ int CALLBACK WinMainEx(HINSTANCE hInstance, HINSTANCE hPrevInstance, const LPTST
             outputDebug(workArg);
             TCHAR* tunedArg = tuneArg(workArg);
             Assert(tunedArg);
-#pragma warning(push)
-#pragma warning(disable:6385 6386)
             tunedArgs[j] = tunedArg;
             totalLength += getStringLength(tunedArgs[j]);
-#pragma warning(pop)
             if (!waitTime) {
                 TCHAR waits[][16] = {
                     _T("--_boot-wait"), _T("-_boot-wait"), _T("/_boot-wait"),
@@ -113,7 +110,7 @@ int CALLBACK WinMainEx(HINSTANCE hInstance, HINSTANCE hPrevInstance, const LPTST
     return 0;
 }
 
-DWORD CALLBACK RawWinMain()
+void WINAPI RawWinMain()
 {
     HINSTANCE hInstance = GetModuleHandle(NULL);
 
