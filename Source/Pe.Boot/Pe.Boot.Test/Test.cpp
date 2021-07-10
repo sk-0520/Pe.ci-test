@@ -1,5 +1,6 @@
 #include "pch.h"
 
+#if 0
 extern "C" {
 #   include "../Pe.Boot/tstring.h"
 }
@@ -44,3 +45,5 @@ namespace PeBootTest
     }
 
 }
+
+#endif

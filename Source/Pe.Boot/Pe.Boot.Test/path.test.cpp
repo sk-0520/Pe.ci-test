@@ -19,7 +19,7 @@ namespace PeBootTest
             TCHAR expected[MAX_PATH]= _T("C:\\dir");
             size_t len = getParentDirectoryPath(actual, input);
 
-            Test_AreEqual(expected, actual);
+            Assert::AreEqual(expected, actual);
         }
 
         TEST_METHOD(combinePathTest)
@@ -30,7 +30,7 @@ namespace PeBootTest
             TCHAR expected[MAX_PATH] = _T("C:\\dir\\file");
             size_t len = combinePath(actual, input1, input2);
 
-            Test_AreEqual(expected, actual);
+            Assert::AreEqual(expected, actual);
         }
 
     };

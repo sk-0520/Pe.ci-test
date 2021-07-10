@@ -10,24 +10,21 @@
 
 #define PATH_LENGTH (1024 * 4)
 
-void __chkstk()
-{ }
-#pragma function(memset)
-void* __cdecl memset(void* pTarget, int value, size_t cbTarget)
-{
-    return setMemory(pTarget, value, cbTarget);
-}
-
 void addVisualCppRuntimeRedist(const TCHAR* rootDirPath);
 TCHAR* tuneArg(const TCHAR* arg);
 int getWaitTime(const TCHAR* s);
 
-int CALLBACK WinMainEx(HINSTANCE hInstance, HINSTANCE hPrevInstance, const LPTSTR* argv, size_t argc, int nCmdShow)
+//int CALLBACK WinMainEx(HINSTANCE hInstance, HINSTANCE hPrevInstance, const LPTSTR* argv, size_t argc, int nCmdShow)
+int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow)
 {
     APP_PATH_ITEMS appPathItems;
     getAppPathItems(hInstance, &appPathItems);
 
     addVisualCppRuntimeRedist(appPathItems.rootDirectory);
+
+    int tempArgc;
+    TCHAR** argv = CommandLineToArgvW(GetCommandLine(), &tempArgc);
+    size_t argc = (size_t)tempArgc;
 
     if (argc <= 1) {
         // そのまま実行
@@ -115,19 +112,19 @@ int CALLBACK WinMainEx(HINSTANCE hInstance, HINSTANCE hPrevInstance, const LPTST
     return 0;
 }
 
-void WINAPI RawWinMain()
-{
-    HINSTANCE hInstance = GetModuleHandle(NULL);
-
-    int argc;
-    TCHAR** argv = CommandLineToArgvW(GetCommandLine(), &argc);
-
-    DWORD result = WinMainEx(hInstance, NULL, argv, (size_t)argc, SW_SHOWDEFAULT);
-
-    LocalFree(argv);
-
-    ExitProcess(result);
-}
+//void WINAPI RawWinMain()
+//{
+//    HINSTANCE hInstance = GetModuleHandle(NULL);
+//
+//    int argc;
+//    TCHAR** argv = CommandLineToArgvW(GetCommandLine(), &argc);
+//
+//    DWORD result = WinMainEx(hInstance, NULL, argv, (size_t)argc, SW_SHOWDEFAULT);
+//
+//    LocalFree(argv);
+//
+//    ExitProcess(result);
+//}
 
 void addVisualCppRuntimeRedist(const TCHAR* rootDirPath)
 {

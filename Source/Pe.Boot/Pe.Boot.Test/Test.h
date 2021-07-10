@@ -1,4 +1,7 @@
 ﻿#pragma once
+
+#if 0
+
 #include <tchar.h>
 
 namespace PeBootTest
@@ -38,4 +41,4 @@ namespace PeBootTest
 
 }
 
-
+#endif

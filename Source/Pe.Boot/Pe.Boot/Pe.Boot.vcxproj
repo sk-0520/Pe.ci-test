@@ -109,8 +109,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <FunctionLevelLinking>
       </FunctionLevelLinking>
       <OmitFramePointers>false</OmitFramePointers>
@@ -122,8 +121,9 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
-      <EntryPointSymbol>RawWinMain</EntryPointSymbol>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
@@ -148,8 +148,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <FunctionLevelLinking>
       </FunctionLevelLinking>
       <ExceptionHandling>false</ExceptionHandling>
@@ -161,8 +160,9 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
-      <EntryPointSymbol>RawWinMain</EntryPointSymbol>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
@@ -191,10 +191,9 @@
       <Optimization>MinSpace</Optimization>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
-      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
       <ExceptionHandling>false</ExceptionHandling>
       <ControlFlowGuard>false</ControlFlowGuard>
       <FloatingPointExceptions>false</FloatingPointExceptions>
@@ -205,10 +204,11 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
-      <EntryPointSymbol>RawWinMain</EntryPointSymbol>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
-      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <CustomBuildStep>
       <Outputs>
@@ -232,10 +232,9 @@
       <DisableSpecificWarnings>4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <Optimization>MinSpace</Optimization>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
-      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
       <ExceptionHandling>false</ExceptionHandling>
       <ControlFlowGuard>false</ControlFlowGuard>
       <FloatingPointExceptions>false</FloatingPointExceptions>
@@ -247,10 +246,11 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
-      <EntryPointSymbol>RawWinMain</EntryPointSymbol>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
-      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <CustomBuildStep>
       <Outputs>
