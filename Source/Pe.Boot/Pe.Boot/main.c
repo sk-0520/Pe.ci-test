@@ -1,5 +1,6 @@
-﻿#include <windows.h>
-#include <tchar.h>
+﻿#include <assert.h>
+
+#include <windows.h>
 #include <shlwapi.h>
 
 #include "debug.h"
@@ -17,18 +18,16 @@ int getWaitTime(const TCHAR* s);
 //int CALLBACK WinMainEx(HINSTANCE hInstance, HINSTANCE hPrevInstance, const LPTSTR* argv, size_t argc, int nCmdShow)
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
-    int tempArgc;
-    TCHAR** argv = CommandLineToArgvW(lpCmdLine, &tempArgc);
-    size_t argc = (size_t)tempArgc;
-
-    if (argc <= 1) {
+    COMMAND_LINE_OPTION commandLineOption = parseCommandLine(lpCmdLine);
+    
+    if (commandLineOption.count <= 1) {
         // そのまま実行
         bootNormal(hInstance);
         return 0;
     }
 
     // コマンドライン渡して実行
-    size_t tunedArgsCount = argc - 1;
+    size_t tunedArgsCount = commandLineOption.count - 1;
     TCHAR** tunedArgs = allocateClearMemory(tunedArgsCount, sizeof(TCHAR*));
     if (!tunedArgs) {
         // これもう立ち上げ不能だと思う
@@ -43,11 +42,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
     size_t skipIndex1 = SIZE_MAX;
     size_t skipIndex2 = SIZE_MAX;
 
-    for (size_t i = 1, j = 0; i < argc; i++, j++) {
-        TCHAR* workArg = argv[i];
+    for (size_t i = 1, j = 0; i < commandLineOption.count; i++, j++) {
+        const TCHAR* workArg = commandLineOption.arguments[i];
         outputDebug(workArg);
         TCHAR* tunedArg = tuneArg(workArg);
-        Assert(tunedArg);
+        assert(tunedArg);
         tunedArgs[j] = tunedArg;
         totalLength += getStringLength(tunedArgs[j]);
         if (!waitTime) {
@@ -65,8 +64,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
                         TCHAR* value = eq + 1;
                         waitTime = getWaitTime(value);
                     }
-                    else if (i + 1 < argc) {
-                        waitTime = getWaitTime(argv[i + 1]);
+                    else if (i + 1 < commandLineOption.count) {
+                        waitTime = getWaitTime(commandLineOption.arguments[i + 1]);
 
                         skipIndex2 = (size_t)(j + 1);
                     }

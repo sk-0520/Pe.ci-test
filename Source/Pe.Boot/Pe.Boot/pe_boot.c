@@ -39,14 +39,14 @@ void addVisualCppRuntimeRedist(const TCHAR* rootDirPath)
     SetEnvironmentVariable(_T("PATH"), pathValue);
 }
 
-static void bootCore(HINSTANCE hInstance, const TCHAR* options)
+static void bootCore(HINSTANCE hInstance, const TCHAR* commandLine)
 {
     APP_PATH_ITEMS appPathItems;
     getAppPathItems(hInstance, &appPathItems);
 
     addVisualCppRuntimeRedist(appPathItems.rootDirectory);
 
-    ShellExecute(NULL, _T("open"), appPathItems.mainModule, options, NULL, SW_SHOWNORMAL);
+    ShellExecute(NULL, _T("open"), appPathItems.mainModule, commandLine, NULL, SW_SHOWNORMAL);
 }
 
 void bootNormal(HINSTANCE hInstance)
@@ -54,7 +54,7 @@ void bootNormal(HINSTANCE hInstance)
     bootCore(hInstance, NULL);
 }
 
-void bootWithOption(HINSTANCE hInstance, const TCHAR* options)
+void bootWithOption(HINSTANCE hInstance, const TCHAR* commandLine)
 {
-    bootCore(hInstance, options);
+    bootCore(hInstance, commandLine);
 }
