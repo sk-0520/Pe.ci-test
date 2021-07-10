@@ -14,6 +14,8 @@ namespace PeBootTest
 
         TEST_METHOD(allocateTest)
         {
+            Test_AreEqual(123,456);
+
             size_t len = 16;
             auto p1 = (unsigned char*)allocateMemory(len, false);
             for (size_t i = 0; i < len; i++) {

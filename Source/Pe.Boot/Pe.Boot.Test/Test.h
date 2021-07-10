@@ -5,29 +5,36 @@ namespace PeBootTest
 {
     struct TestInfo
     {
-        TestInfo(const TCHAR* function, const TCHAR* file, int line) {
+        TestInfo(const TCHAR* args, const char* function, const TCHAR* file, int line) {
+            this->args = args;
             this->function = function;
             this->file = file;
             this->line = line;
         }
 
-        const TCHAR* function;
+        const TCHAR* args;
+        const char* function;
         const TCHAR* file;
         int line;
     };
 
     class Test {
+    private:
+        static void failCore(const TCHAR* message, const TestInfo& info);
+
     public:
-        static void IsTrue(bool actual, const TestInfo& info);
-        static void IsFalse(bool actual, const TestInfo& info);
-        static void AreEqual(int expected, int actual, const TestInfo& info);
-        static void AreEqual(const TCHAR* expected, const TCHAR* actual, const TestInfo& info);
+        static void isTrue(bool actual, const TestInfo& info);
+        static void isFalse(bool actual, const TestInfo& info);
+        static void isNull(void* p, const TestInfo& info);
+        static void areEqual(int expected, int actual, const TestInfo& info);
+        static void areEqual(const TCHAR* expected, const TCHAR* actual, const TestInfo& info);
     };
 
-#define INFO TestInfo(__FUNCTIONW__, __FILEW__, __LINE__)
-#define Test_IsTrue(condition) Test::IsTrue((condition), INFO)
-#define Test_IsFalse(condition) Test::IsFalse((condition), INFO)
-#define Test_AreEqual(expected, actual) Test::AreEqual((expected), (actual), INFO)
+#define INFO(args) TestInfo(_T(#args), __func__, __FILEW__, __LINE__)
+#define Test_IsTrue(condition) Test::isTrue((condition), INFO(condition))
+#define Test_IsFalse(condition) Test::isFalse((condition), INFO(condition))
+#define Test_IsNull(p) Test::isNull((p), INFO(p))
+#define Test_AreEqual(expected, actual) Test::areEqual((expected), (actual), INFO(expected "," actual))
 
 }
 
