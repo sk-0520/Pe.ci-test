@@ -7,28 +7,23 @@
 #include "tstring.h"
 #include "path.h"
 #include "logging.h"
+#include "pe_boot.h"
 
 #define PATH_LENGTH (1024 * 4)
 
-void addVisualCppRuntimeRedist(const TCHAR* rootDirPath);
 TCHAR* tuneArg(const TCHAR* arg);
 int getWaitTime(const TCHAR* s);
 
 //int CALLBACK WinMainEx(HINSTANCE hInstance, HINSTANCE hPrevInstance, const LPTSTR* argv, size_t argc, int nCmdShow)
-int CALLBACK _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
-    APP_PATH_ITEMS appPathItems;
-    getAppPathItems(hInstance, &appPathItems);
-
-    addVisualCppRuntimeRedist(appPathItems.rootDirectory);
-
     int tempArgc;
     TCHAR** argv = CommandLineToArgvW(lpCmdLine, &tempArgc);
     size_t argc = (size_t)tempArgc;
 
     if (argc <= 1) {
         // そのまま実行
-        ShellExecute(NULL, _T("open"), appPathItems.mainModule, NULL, NULL, SW_SHOWNORMAL);
+        bootNormal(hInstance);
         return 0;
     }
 
@@ -38,7 +33,7 @@ int CALLBACK _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
     if (!tunedArgs) {
         // これもう立ち上げ不能だと思う
         outputDebug(_T("メモリ確保できんかったね！"));
-        ShellExecute(NULL, _T("open"), appPathItems.mainModule, NULL, NULL, SW_SHOWNORMAL);
+        bootNormal(hInstance);
         return 0;
     }
 
@@ -105,7 +100,7 @@ int CALLBACK _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 
     // commandArg の確保に失敗してても引数無し扱いで起動となる
     outputDebug(commandArg);
-    ShellExecute(NULL, _T("open"), appPathItems.mainModule, commandArg, NULL, SW_SHOWNORMAL);
+    bootWithOption(hInstance, commandArg);
 
     // もはや死ぬだけなので後処理不要
 
@@ -125,36 +120,6 @@ int CALLBACK _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 //
 //    ExitProcess(result);
 //}
-
-void addVisualCppRuntimeRedist(const TCHAR* rootDirPath)
-{
-    TCHAR crtPath[MAX_PATH];
-    copyString(crtPath, rootDirPath);
-
-    TCHAR dirs[][32] = {
-        _T("bin"),
-        _T("lib"),
-        _T("Redist.MSVC.CRT"),
-#ifdef _WIN64
-        _T("x64"),
-#else
-        _T("x86"),
-#endif
-    };
-    for (size_t i = 0; i < (sizeof(dirs) / sizeof(dirs[0])); i++) {
-        TCHAR buffer[MAX_PATH];
-        TCHAR* name = dirs[i];
-        combinePath(buffer, crtPath, name);
-        copyString(crtPath, buffer);
-    }
-    outputDebug(crtPath);
-
-    TCHAR pathValue[PATH_LENGTH];
-    GetEnvironmentVariable(_T("PATH"), pathValue, PATH_LENGTH - 1);
-    concatString(pathValue, _T(";"));
-    concatString(pathValue, crtPath);
-    SetEnvironmentVariable(_T("PATH"), pathValue);
-}
 
 /**
 書式調整後の動的確保された文字列を返す。
