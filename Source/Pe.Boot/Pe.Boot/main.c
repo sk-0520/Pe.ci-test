@@ -15,7 +15,7 @@ TCHAR* tuneArg(const TCHAR* arg);
 int getWaitTime(const TCHAR* s);
 
 //int CALLBACK WinMainEx(HINSTANCE hInstance, HINSTANCE hPrevInstance, const LPTSTR* argv, size_t argc, int nCmdShow)
-int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow)
+int CALLBACK _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
     APP_PATH_ITEMS appPathItems;
     getAppPathItems(hInstance, &appPathItems);
@@ -23,7 +23,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLin
     addVisualCppRuntimeRedist(appPathItems.rootDirectory);
 
     int tempArgc;
-    TCHAR** argv = CommandLineToArgvW(GetCommandLine(), &tempArgc);
+    TCHAR** argv = CommandLineToArgvW(lpCmdLine, &tempArgc);
     size_t argc = (size_t)tempArgc;
 
     if (argc <= 1) {
