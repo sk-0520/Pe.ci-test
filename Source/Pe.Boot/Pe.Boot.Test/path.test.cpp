@@ -12,6 +12,11 @@ namespace PeBootTest
     {
     public:
 
+        void getParentDirectoryPathTestCore()
+        {
+
+        }
+
         TEST_METHOD(getParentDirectoryPathTest)
         {
             TCHAR input[MAX_PATH] = _T("C:\\dir\\file");

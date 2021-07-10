@@ -14,6 +14,8 @@ namespace PeBootTest
 
         TEST_METHOD(findStringTest)
         {
+            TestData x = TestData(1, { 2, 4, 5,6,7 });
+
             auto actual = findString(_T("abcdefg"), _T("abc"));
             Assert::IsTrue(actual[0] == 'a');
 
