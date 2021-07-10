@@ -16,3 +16,12 @@ void* allocateClearMemory(size_t count, size_t typeSize);
 /// <param name="p"></param>
 /// <returns></returns>
 void freeMemory(void* p);
+
+/// <summary>
+/// <c>memset</c> する
+/// </summary>
+/// <param name="target">対象領域。</param>
+/// <param name="value">値。</param>
+/// <param name="bytes">範囲。</param>
+/// <returns>target</returns>
+void* setMemory(void* target, int value, size_t bytes);

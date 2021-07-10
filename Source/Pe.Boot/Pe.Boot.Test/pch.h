@@ -8,6 +8,9 @@
 #define PCH_H
 
 // プリコンパイルするヘッダーをここに追加します
+#include "CppUnitTest.h"
+
+#include "Test.h"
 
 
 #endif //PCH_H

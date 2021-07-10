@@ -1,4 +1,4 @@
-#include <windows.h>
+﻿#include <windows.h>
 
 #include "memory.h"
 
@@ -21,4 +21,19 @@ void* allocateClearMemory(size_t count, size_t typeSize)
 void freeMemory(void* p)
 {
     HeapFree(GetProcessHeap(), 0, p);
+}
+
+void* setMemory(void* target, int value, size_t bytes)
+{
+    unsigned char* p = (unsigned char*)target;
+#pragma warning(push)
+#   pragma warning(disable : 4244)
+    const unsigned char v = value;
+#pragma warning(pop)
+
+    while (bytes--) {
+        *p++ = v;
+    }
+
+    return target;
 }

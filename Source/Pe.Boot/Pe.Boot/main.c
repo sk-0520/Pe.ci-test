@@ -12,6 +12,11 @@
 
 void __chkstk()
 { }
+#pragma function(memset)
+void* __cdecl memset(void* pTarget, int value, size_t cbTarget)
+{
+    return setMemory(pTarget, value, cbTarget);
+}
 
 void addVisualCppRuntimeRedist(const TCHAR* rootDirPath);
 TCHAR* tuneArg(const TCHAR* arg);
@@ -129,7 +134,6 @@ void addVisualCppRuntimeRedist(const TCHAR* rootDirPath)
     TCHAR crtPath[MAX_PATH];
     copyString(crtPath, rootDirPath);
 
-
     TCHAR dirs[][32] = {
         _T("bin"),
         _T("lib"),
@@ -153,7 +157,6 @@ void addVisualCppRuntimeRedist(const TCHAR* rootDirPath)
     concatString(pathValue, _T(";"));
     concatString(pathValue, crtPath);
     SetEnvironmentVariable(_T("PATH"), pathValue);
-
 }
 
 /**

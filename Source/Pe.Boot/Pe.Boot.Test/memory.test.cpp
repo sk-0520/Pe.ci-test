@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "CppUnitTest.h"
 
 extern "C" {
 #   include "../Pe.Boot/memory.h"
@@ -23,12 +22,13 @@ namespace PeBootTest
 
             auto p2 = (unsigned char*)allocateMemory(len, true);
             for (size_t i = 0; i < len; i++) {
-                Assert::AreEqual((int)p2[i], 0);
+                unsigned char c = p2[i];
+                Test_IsFalse(c);
                 p2[i] = (unsigned char)i;
             }
 
             for (size_t i = 0; i < len; i++) {
-                Assert::AreEqual(p1[i], p2[i]);
+                Test_AreEqual(p1[i], p2[i]);
             }
 
             freeMemory(p1);

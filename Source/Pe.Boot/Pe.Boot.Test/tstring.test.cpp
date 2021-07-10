@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "CppUnitTest.h"
 
 extern "C" {
 #   include "../Pe.Boot/tstring.h"
