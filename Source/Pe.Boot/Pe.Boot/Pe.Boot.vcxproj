@@ -258,6 +258,7 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="commandline.c" />
     <ClCompile Include="debug.c" />
     <ClCompile Include="memory.c" />
     <ClCompile Include="path.c" />
@@ -267,6 +268,7 @@
     <ClCompile Include="tstring.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="commandline.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="path.h" />
