@@ -268,6 +268,7 @@
   <ItemGroup>
     <ClCompile Include="commandline.c" />
     <ClCompile Include="debug.c" />
+    <ClCompile Include="fsio.c" />
     <ClCompile Include="memory.c" />
     <ClCompile Include="path.c" />
     <ClCompile Include="logging.c" />
@@ -279,6 +280,7 @@
     <ClInclude Include="commandline.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="fsio.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="path.h" />
     <ClInclude Include="logging.h" />
