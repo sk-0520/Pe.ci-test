@@ -80,7 +80,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\x86\Pe\</OutDir>
-    <IntDir>obj\$(Configuration)\$(Platform)\</IntDir>
+    <IntDir>obj\$(Configuration)\x86\</IntDir>
     <TargetName>Pe</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -92,7 +92,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\x86\Pe\</OutDir>
-    <IntDir>obj\$(Configuration)\$(Platform)\</IntDir>
+    <IntDir>obj\$(Configuration)\x86\</IntDir>
     <TargetName>Pe</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
