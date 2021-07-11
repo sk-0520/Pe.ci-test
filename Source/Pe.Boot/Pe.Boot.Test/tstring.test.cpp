@@ -42,6 +42,21 @@ namespace PeBootTest
             Assert::IsNull(findCharacter(input, 'z'));
         }
 
+        TEST_METHOD(indexCharacterTest)
+        {
+            TCHAR* input = _T("abcdefgABCDEFG");
+            auto data = {
+                TestData<SSIZE_T, TCHAR*, TCHAR>(0, input, _T('a')),
+                TestData<SSIZE_T, TCHAR*, TCHAR>(1, input, _T('b')),
+                TestData<SSIZE_T, TCHAR*, TCHAR>(7, input, _T('A')),
+            };
+
+            for (auto current = data.begin(), e = data.end(); current != e; ++current) {
+                auto actual = std::apply(indexCharacter, current->inputs);
+                Assert::AreEqual(current->expected, actual);
+            }
+        }
+
         TEST_METHOD(tryParseIntegerTest)
         {
             int a1;

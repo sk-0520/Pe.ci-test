@@ -34,6 +34,7 @@ size_t getStringLength(const TCHAR* s);
 /// <param name="needle">検索文字。</param>
 /// <returns>一致文字のアドレス, 見つからない場合は <c>NULL</c></returns>
 TCHAR* findCharacter(const TCHAR* haystack, TCHAR needle);
+SSIZE_T indexCharacter(const TCHAR* haystack, TCHAR needle);
 
 bool tryParseInteger(int* result, const TCHAR* input);
 bool tryParseHexOrInteger(int* result, const TCHAR* input);

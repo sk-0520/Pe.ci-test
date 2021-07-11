@@ -29,6 +29,16 @@ TCHAR* findCharacter(const TCHAR* haystack, TCHAR needle)
     return (TCHAR*)haystack;
 }
 
+SSIZE_T indexCharacter(const TCHAR* haystack, TCHAR needle)
+{
+    TCHAR* p = findCharacter(haystack, needle);
+    if (!p) {
+        return -1;
+    }
+
+    return p - haystack;
+}
+
 static bool tryParseIntegerCore(int* result, const TCHAR* input, bool hex)
 {
     return StrToIntEx(input, hex ? STIF_SUPPORT_HEX: STIF_DEFAULT, result);
