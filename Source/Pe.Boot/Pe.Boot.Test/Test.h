@@ -14,21 +14,7 @@ namespace PeBootTest
         {
             this->expected = expected;
             this->inputs = { input1, inputN... };
-            //std::tuple<TExpected, TInput1, TInputN...>
         }
-        /*
-
-        TestData(TExpected expected, TInput input1, TInput input2, TInput input3)
-        {
-            this->expected = expected;
-            this->inputs = { input1, input2, input3 };
-        }
-
-        TestData(TExpected expected, std::initializer_list<TInput> inputs)
-        {
-            this->expected = expected;
-            this->inputs = inputs;
-        }*/
 
 #pragma endregion
 
