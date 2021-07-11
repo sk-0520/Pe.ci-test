@@ -17,7 +17,7 @@ typedef struct _TAG_FILE_POINTER
     /// ファイルハンドル(ポインタ)。
     /// <c>NULL</c>の場合無効(その場合pathもNULL)。
     /// </summary>
-    const HFILE handle;
+    const HANDLE handle;
 } FILE_POINTER;
 
 /// <summary>
