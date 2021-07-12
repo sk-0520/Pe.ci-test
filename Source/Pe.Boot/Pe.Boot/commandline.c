@@ -11,11 +11,11 @@ COMMAND_LINE_OPTION parseCommandLine(const TCHAR* commandLine)
     TCHAR** argv = CommandLineToArgvW(commandLine, &tempArgc);
     size_t argc = (size_t)tempArgc;
 
-    size_t maxItemLength = (argc - 1) / 2;
-    COMMAND_LINE_ITEM* items = allocateClearMemory(maxItemLength, sizeof(COMMAND_LINE_ITEM));
-    for (size_t i = 0; i < maxItemLength; i++) {
+    //size_t maxItemLength = (argc - 1) / 2;
+    //COMMAND_LINE_ITEM* items = allocateClearMemory(maxItemLength, sizeof(COMMAND_LINE_ITEM));
+    //for (size_t i = 0; i < maxItemLength; i++) {
 
-    }
+    //}
 
     COMMAND_LINE_OPTION result = {
         argv,
