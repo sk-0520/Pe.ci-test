@@ -18,10 +18,28 @@ void* allocateClearMemory(size_t count, size_t typeSize);
 void freeMemory(void* p);
 
 /// <summary>
-/// <c>memset</c> する
+/// <c>memset</c> する。
 /// </summary>
 /// <param name="target">対象領域。</param>
 /// <param name="value">値。</param>
 /// <param name="bytes">範囲。</param>
 /// <returns>target</returns>
 void* setMemory(void* target, int value, size_t bytes);
+
+/// <summary>
+/// <c>memcpy</c>する。
+/// </summary>
+/// <param name="destination"></param>
+/// <param name="source"></param>
+/// <param name="bytes"></param>
+/// <returns></returns>
+void* copyMemory(void* destination, void* source, size_t bytes);
+
+/// <summary>
+/// <c>memmove</c>する。
+/// </summary>
+/// <param name="destination"></param>
+/// <param name="source"></param>
+/// <param name="bytes"></param>
+/// <returns></returns>
+void* moveMemory(void* destination, void* source, size_t bytes);

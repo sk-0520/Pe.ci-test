@@ -58,3 +58,11 @@ TCHAR* concatString(TCHAR * target, const TCHAR * value);
 /// <param name="value">コピー対象文字列。</param>
 /// <returns>コピーされた文字列。</returns>
 TCHAR* copyString(TCHAR * result, const TCHAR * value);
+
+/// <summary>
+/// 文字列を複製。
+/// </summary>
+/// <param name="source"></param>
+/// <returns>複製された文字列。<c>freeMemory</c>にて開放する必要あり。</returns>
+TCHAR* cloneString(const TCHAR * source);
+

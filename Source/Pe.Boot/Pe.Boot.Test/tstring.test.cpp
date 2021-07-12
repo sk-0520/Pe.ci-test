@@ -2,6 +2,7 @@
 
 extern "C" {
 #   include "../Pe.Boot/tstring.h"
+#   include "../Pe.Boot/memory.h"
 }
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -31,7 +32,6 @@ namespace PeBootTest
             auto actual = getStringLength(input);
             Assert::AreEqual(expected, actual);
         }
-
 
         TEST_METHOD(findCharacterTest)
         {
@@ -169,7 +169,6 @@ namespace PeBootTest
             Assert::AreEqual(expected, actual);
         }
 
-
         TEST_METHOD(copyStringTest)
         {
             TCHAR input[] = _T("def");
@@ -180,5 +179,16 @@ namespace PeBootTest
             Assert::AreEqual(expected, actual);
         }
 
+        TEST_METHOD(cloneStringTest)
+        {
+            TCHAR input[] = _T("abc");
+            TCHAR expected[] = _T("abc");
+            TCHAR* actual = cloneString(input);
+
+            Assert::AreEqual(expected, actual);
+            Assert::IsFalse(input == actual);
+
+            freeMemory(actual);
+        }
     };
 }

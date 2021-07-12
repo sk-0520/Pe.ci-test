@@ -25,15 +25,28 @@ void freeMemory(void* p)
 
 void* setMemory(void* target, int value, size_t bytes)
 {
+    /*
     unsigned char* p = (unsigned char*)target;
-#pragma warning(push)
-#   pragma warning(disable : 4244)
-    const unsigned char v = value;
-#pragma warning(pop)
+    const unsigned char v = (unsigned char)value;
 
     while (bytes--) {
         *p++ = v;
     }
 
     return target;
+    */
+    //NOTE: CRT!
+    return FillMemory(target, bytes, value);
+}
+
+void* copyMemory(void* destination, void* source, size_t bytes)
+{
+    //NOTE: CRT!
+    return CopyMemory(destination, source, bytes);
+}
+
+void* moveMemory(void* destination, void* source, size_t bytes)
+{
+    //NOTE: CRT!
+    return MoveMemory(destination, source, bytes);
 }

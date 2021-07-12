@@ -1,6 +1,7 @@
 ﻿#include <shlwapi.h>
 
 #include "tstring.h"
+#include "memory.h"
 
 TCHAR* findString(const TCHAR* haystack, const TCHAR* needle)
 {
@@ -80,5 +81,20 @@ TCHAR* copyString(TCHAR* result, const TCHAR* value)
 {
     return lstrcpy(result, value);
 }
+
+TCHAR* cloneString(const TCHAR* source)
+{
+    if (!source) {
+        return NULL;
+    }
+
+    size_t length = getStringLength(source);
+    TCHAR* result = allocateMemory((length * sizeof(TCHAR)) + sizeof(TCHAR), false);
+    copyMemory(result, (void*)source, length * sizeof(TCHAR));
+    result[length] = 0;
+
+    return result;
+}
+
 
 
