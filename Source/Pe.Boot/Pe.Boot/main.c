@@ -42,7 +42,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
     size_t skipIndex1 = SIZE_MAX;
     size_t skipIndex2 = SIZE_MAX;
 
-    for (size_t i = 1, j = 0; i < commandLineOption.count; i++, j++) {
+    for (size_t i = 0, j = 0; i < commandLineOption.count; i++, j++) {
         const TCHAR* workArg = commandLineOption.arguments[i];
         outputDebug(workArg);
         TCHAR* tunedArg = tuneArg(workArg);
@@ -55,7 +55,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
                 _T("--wait"), _T("-wait"), _T("/wait"), //TODO: #737 互換用処理
             };
             for (size_t waitIndex = 0; waitIndex < sizeof(waits) / sizeof(waits[0]); waitIndex++) {
-                const TCHAR* wait = findString(tunedArg, waits[waitIndex]);
+                const TCHAR* waitArg = waits[waitIndex];
+                const TCHAR* wait = findString(tunedArg, waitArg);
                 if (wait == tunedArg) {
                     skipIndex1 = j;
 
