@@ -11,6 +11,12 @@ COMMAND_LINE_OPTION parseCommandLine(const TCHAR* commandLine)
     TCHAR** argv = CommandLineToArgvW(commandLine, &tempArgc);
     size_t argc = (size_t)tempArgc;
 
+    size_t maxItemLength = (argc - 1) / 2;
+    COMMAND_LINE_ITEM* items = allocateClearMemory(maxItemLength, sizeof(COMMAND_LINE_ITEM));
+    for (size_t i = 0; i < maxItemLength; i++) {
+
+    }
+
     COMMAND_LINE_OPTION result = {
         argv,
         argc
@@ -43,8 +49,7 @@ TCHAR* tuneArg(const TCHAR* arg)
         s[0] = '"';
         s[len - 1] = '"';
         s[len - 0] = 0; // ↑で +1 してるから安全安全
-    }
-    else {
+    } else {
         copyString(s, arg);
     }
     return s;

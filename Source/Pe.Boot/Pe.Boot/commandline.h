@@ -3,6 +3,13 @@
 
 #include "common.h"
 
+
+typedef struct _TAG_COMMAND_LINE_ITEM
+{
+    const TCHAR* key;
+    const TCHAR* value;
+} COMMAND_LINE_ITEM;
+
 /// <summary>
 /// コマンドラインオプション。
 /// </summary>

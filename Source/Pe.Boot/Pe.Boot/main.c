@@ -19,7 +19,7 @@ int getWaitTime(const TCHAR* s);
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
     COMMAND_LINE_OPTION commandLineOption = parseCommandLine(lpCmdLine);
-    
+
     if (commandLineOption.count <= 1) {
         // そのまま実行
         bootNormal(hInstance);
@@ -64,8 +64,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
                     if (eq && eq + 1) {
                         TCHAR* value = eq + 1;
                         waitTime = getWaitTime(value);
-                    }
-                    else if (i + 1 < commandLineOption.count) {
+                    } else if (i + 1 < commandLineOption.count) {
                         waitTime = getWaitTime(commandLineOption.arguments[i + 1]);
 
                         skipIndex2 = (size_t)(j + 1);

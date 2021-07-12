@@ -42,7 +42,7 @@ SSIZE_T indexCharacter(const TCHAR* haystack, TCHAR needle)
 
 static bool tryParseIntegerCore(int* result, const TCHAR* input, bool hex)
 {
-    return StrToIntEx(input, hex ? STIF_SUPPORT_HEX: STIF_DEFAULT, result);
+    return StrToIntEx(input, hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, result);
 }
 
 bool tryParseInteger(int* result, const TCHAR* input)
