@@ -31,7 +31,12 @@ COMMAND_LINE_OPTION parseCommandLine(const TCHAR* commandLine);
 /// <param name="commandLineOption"></param>
 void freeCommandLine(const COMMAND_LINE_OPTION* commandLineOption);
 
-//EXECUTE_MODE getExecuteMode(const TCHAR** arguments, size_t argumentCount);
+/// <summary>
+/// 実行モードを取得。
+/// </summary>
+/// <param name="commandLineOption"></param>
+/// <returns></returns>
+EXECUTE_MODE getExecuteMode(const COMMAND_LINE_OPTION* commandLineOption);
 
 /// <summary>
 /// 書式調整後の動的確保された文字列を返す。
