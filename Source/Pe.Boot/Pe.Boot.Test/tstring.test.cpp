@@ -188,7 +188,7 @@ namespace PeBootTest
             Assert::AreEqual(expected, actual);
             Assert::IsFalse(input == actual);
 
-            freeMemory(actual);
+            freeString(actual);
         }
     };
 }

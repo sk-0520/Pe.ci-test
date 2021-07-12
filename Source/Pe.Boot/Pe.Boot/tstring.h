@@ -4,6 +4,8 @@
 
 #include <Windows.h>
 
+#include <memory.h>
+
 /// <summary>
 /// 文字列 haystack の先頭から文字列 needle を探し、見つかったときにはその位置をポインタで返却し、見つからなかったときにはNULLを返却。
 /// </summary>
@@ -32,8 +34,16 @@ size_t getStringLength(const TCHAR* s);
 /// </summary>
 /// <param name="haystack">検索対象文字列。</param>
 /// <param name="needle">検索文字。</param>
-/// <returns>一致文字のアドレス, 見つからない場合は <c>NULL</c></returns>
+/// <returns>一致文字のアドレス。見つからない場合は <c>NULL</c></returns>
 TCHAR* findCharacter(const TCHAR* haystack, TCHAR needle);
+/// <summary>
+/// 文字列中の文字を検索。
+/// </summary>
+/// <param name="haystack"></param>
+/// <param name="needle"></param>
+/// <param name="haystack">検索対象文字列。</param>
+/// <param name="needle">検索文字。</param>
+/// <returns>一致文字のインデックス。見つからない場合は -1</returns>
 SSIZE_T indexCharacter(const TCHAR* haystack, TCHAR needle);
 
 bool tryParseInteger(int* result, const TCHAR* input);
@@ -63,6 +73,12 @@ TCHAR* copyString(TCHAR * result, const TCHAR * value);
 /// 文字列を複製。
 /// </summary>
 /// <param name="source"></param>
-/// <returns>複製された文字列。<c>freeMemory</c>にて開放する必要あり。</returns>
+/// <returns>複製された文字列。<c>freeString(freeMemory)</c>にて開放する必要あり。</returns>
 TCHAR* cloneString(const TCHAR * source);
+/// <summary>
+/// 確保した文字列を解放。
+/// ドメインとしての関数で<c>freeMemory</c>のラッパー。
+/// </summary>
+/// <param name="s"></param>
+void freeString(const TCHAR* s);
 

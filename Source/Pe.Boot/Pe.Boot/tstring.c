@@ -70,8 +70,6 @@ bool tryParseHexOrLong(long long* result, const TCHAR* input)
     return tryParseLongCore(result, input, true);
 }
 
-
-
 TCHAR* concatString(TCHAR* target, const TCHAR* value)
 {
     return lstrcat(target, value);
@@ -96,5 +94,8 @@ TCHAR* cloneString(const TCHAR* source)
     return result;
 }
 
-
+void freeString(const TCHAR* s)
+{
+    freeMemory((void*)s);
+}
 

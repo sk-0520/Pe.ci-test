@@ -1,5 +1,6 @@
 ﻿#include "fsio.h"
 #include "memory.h"
+#include "tstring.h"
 
 static FILE_POINTER _createInvalidFile()
 {
@@ -19,7 +20,7 @@ static FILE_POINTER _openFileCore(const TCHAR* path, FILE_ACCESS_MODE accessMode
     }
 
     FILE_POINTER result = {
-        path,
+        cloneString(path),
         handle
     };
 
@@ -51,6 +52,7 @@ bool closeFile(const FILE_POINTER* file)
         return false;
     }
 
+    freeString(file->path);
     return CloseHandle((HANDLE)(void*)file->handle);
 }
 
