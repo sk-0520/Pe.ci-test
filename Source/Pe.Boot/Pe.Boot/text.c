@@ -33,7 +33,7 @@ bool isEnableText(const TEXT* text)
 
 TEXT createTextWithLength(const TCHAR* source, size_t length)
 {
-    TCHAR* buffer = allocateMemory((length * sizeof(TCHAR)) + sizeof(TCHAR), false);
+    TCHAR* buffer = allocateString(length);
     copyMemory(buffer, (void*)source, length * sizeof(TCHAR));
     buffer[length] = 0;
 
@@ -90,7 +90,7 @@ TEXT cloneText(const TEXT* source)
         return createEmptyText();
     }
 
-    TCHAR* buffer = allocateMemory((source->length * sizeof(TCHAR)) + sizeof(TCHAR), false);
+    TCHAR* buffer = allocateString(source->length);
     copyMemory(buffer, (void*)source->value, source->length * sizeof(TCHAR));
     buffer[source->length] = 0;
 

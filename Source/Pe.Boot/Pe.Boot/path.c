@@ -49,7 +49,7 @@ TEXT combinePath2(const TEXT* basePath, const TEXT* relativePath)
 
 TEXT canonicalizePath(const TEXT* path)
 {
-    TCHAR* buffer = (TCHAR*)allocateMemory(path->length * sizeof(TCHAR) + sizeof(TCHAR), false);
+    TCHAR* buffer = allocateString(path->length);
     PathCanonicalize(buffer, path->value);
 
     return wrapTextWithLength(buffer, getStringLength(buffer), true);
@@ -72,7 +72,7 @@ TEXT getModulePath(HINSTANCE hInstance)
     TCHAR* path = NULL;
 
     while (!path) {
-        path = (TCHAR*)allocateMemory(length * sizeof(TCHAR), false);
+        path = allocateString(length);
         if (!path) {
             return createEmptyText();
         }
@@ -94,7 +94,7 @@ TEXT getModulePath(HINSTANCE hInstance)
         ? createTextWithLength(path, pathLength)
         : createEmptyText()
         ;
-    freeMemory(path);
+    freeString(path);
 
     return result;
 }
