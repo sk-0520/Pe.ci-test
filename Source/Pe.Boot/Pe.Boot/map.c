@@ -9,7 +9,7 @@ int compareMapKeyDefault(const TEXT* a, const TEXT* b)
     return compareString(a->value, b->value, false);
 }
 
-void freeMapUnuse(MAP_PAIR* pair)
+void freeMapEmpty(MAP_PAIR* pair)
 { /* 何もしない */ }
 
 MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue freeMapValue)

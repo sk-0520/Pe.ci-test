@@ -17,7 +17,7 @@ typedef struct _TAG_MAP_PAIR
     /// <summary>
     /// キー項目。
     /// </summary>
-    const TEXT key;
+    TEXT key;
 
     /// <summary>
     /// 値。
@@ -62,7 +62,7 @@ int compareMapKeyDefault(const TEXT* a, const TEXT* b);
 /// マップの値解放不要処理。
 /// </summary>
 /// <param name="pair"></param>
-void freeMapUnuse(MAP_PAIR* pair);
+void freeMapEmpty(MAP_PAIR* pair);
 
 /// <summary>
 /// マップの生成。
@@ -72,6 +72,7 @@ void freeMapUnuse(MAP_PAIR* pair);
 /// <param name="freeMapValue">値解放処理。</param>
 /// <returns></returns>
 MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue freeMapValue);
+#define createMapDefault(capacity) createMap((capacity), compareMapKeyDefault, freeMapEmpty);
 
 /// <summary>
 /// マップの開放。

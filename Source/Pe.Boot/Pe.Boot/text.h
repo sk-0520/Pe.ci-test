@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "tstring.h"
+#include "tstring.h"
 
 /// <summary>
 /// 不変文字列ラッパー。
@@ -55,3 +56,4 @@ TEXT cloneText(const TEXT* source);
 /// <param name="text"></param>
 /// <returns></returns>
 bool freeText(TEXT* text);
+
