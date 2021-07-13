@@ -16,7 +16,7 @@ TCHAR* tuneArg(const TCHAR* arg);
 int getWaitTime(const TCHAR* s);
 
 //int CALLBACK WinMainEx(HINSTANCE hInstance, HINSTANCE hPrevInstance, const LPTSTR* argv, size_t argc, int nCmdShow)
-int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPTSTR lpCmdLine, _In_ int nCmdShow)
 {
     COMMAND_LINE_OPTION commandLineOption = parseCommandLine(lpCmdLine);
 
