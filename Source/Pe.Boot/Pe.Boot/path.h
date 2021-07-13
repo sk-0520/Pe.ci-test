@@ -97,6 +97,7 @@ TEXT getModulePath(HINSTANCE hInstance);
 /// <param name="rootDirPath">Peのルートディレクトリパス。</param>
 /// <returns>Pe 本体ファイルパスの文字列長。</returns>
 size_t getMainModulePath(TCHAR* result, const TCHAR* rootDirPath);
+TEXT getMainModulePath2(const TEXT* rootDirPath);
 
 /// <summary>
 /// 各種パス情報の取得。

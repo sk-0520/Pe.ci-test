@@ -110,6 +110,31 @@ size_t getMainModulePath(TCHAR* result, const TCHAR* rootDirPath)
     return getStringLength(result);
 }
 
+TEXT getMainModulePath2(const TEXT* rootDirPath)
+{
+    TCHAR* joinPaths[] = {
+        _T("bin"),
+        _T("Pe.Main.exe"),
+    };
+    size_t joinPathsLength = sizeof(joinPaths) / sizeof(joinPaths[0]);
+
+    size_t totalPathLength = 1 + joinPathsLength; // ディレクトリ区切り
+    for (size_t i = 0; i < joinPathsLength; i++) {
+        const TCHAR* path = joinPaths[i];
+        totalPathLength += getStringLength(path);
+    }
+
+    TCHAR* buffer = allocateString(totalPathLength);
+    copyString(buffer, rootDirPath->value);
+
+    for (size_t i = 0; i < joinPathsLength; i++) {
+        const TCHAR* path = joinPaths[i];
+        combinePath(buffer, buffer, path);
+    }
+
+    return wrapTextWithLength(buffer, getStringLength(buffer), true);
+}
+
 void getAppPathItems(HMODULE hInstance, APP_PATH_ITEMS* result)
 {
     result->applicationLength = getApplicationPath(hInstance, result->application);
