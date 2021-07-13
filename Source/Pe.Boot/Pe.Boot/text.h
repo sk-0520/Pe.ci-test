@@ -57,6 +57,15 @@ TEXT createText(const TCHAR* source);
 
 /// <summary>
 /// 文字列から不変文字列にラップ。
+/// </summary>
+/// <param name="source">対象文字列。</param>
+/// <param name="length">対象文字列の長さ。</param>
+/// <param name="needRelease">解放が必要か。真の場合、<c>wrapText</c>と異なり呼び出し側で確保した領域を信頼して持ち運ぶ。</param>
+/// <returns></returns>
+TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease);
+
+/// <summary>
+/// 文字列から不変文字列にラップ。
 /// <para>スタック内で元文字列を変更せずに使用することが前提条件。</para>
 /// </summary>
 /// <param name="source">対象文字列。</param>

@@ -57,6 +57,22 @@ TEXT createText(const TCHAR* source)
     return createTextWithLength(source, length);
 }
 
+TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease)
+{
+    if (!source) {
+        return createEmptyText();
+    }
+
+    TEXT result = {
+        source,
+        length,
+        needRelease,
+        false,
+    };
+
+    return result;
+}
+
 TEXT wrapText(const TCHAR* source)
 {
     if (!source) {
@@ -65,14 +81,7 @@ TEXT wrapText(const TCHAR* source)
 
     size_t length = getStringLength(source);
 
-    TEXT result = {
-        source,
-        length,
-        false,
-        false,
-    };
-
-    return result;
+    return wrapTextWithLength(source, length, false);
 }
 
 TEXT cloneText(const TEXT* source)

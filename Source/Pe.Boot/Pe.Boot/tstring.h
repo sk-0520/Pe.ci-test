@@ -74,8 +74,17 @@ TCHAR* copyString(TCHAR* result, const TCHAR* value);
 /// 文字列を複製。
 /// </summary>
 /// <param name="source"></param>
-/// <returns>複製された文字列。<c>freeString(freeMemory)</c>にて開放する必要あり。</returns>
+/// <returns>複製された文字列。<c>freeString(freeMemory)</c>にて解放する必要あり。</returns>
 TCHAR* cloneString(const TCHAR* source);
+
+
+/// <summary>
+/// 文字列を確保。
+/// </summary>
+/// <param name="length">文字列の長さ。</param>
+/// <returns>先頭 0 の番兵を考慮した領域(length + 1)。freeStringによる解放が必要。</returns>
+TCHAR* allocateString(size_t length);
+
 /// <summary>
 /// 確保した文字列を解放。
 /// ドメインとしての関数で<c>freeMemory</c>のラッパー。

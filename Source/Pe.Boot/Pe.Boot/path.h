@@ -63,6 +63,7 @@ TEXT getParentDirectoryPath2(const TEXT* path);
 /// <param name="relativePath">結合するパス。</param>
 /// <returns>結合結果の長さ。失敗時は0。</returns>
 size_t combinePath(TCHAR* result, const TCHAR* basePath, const TCHAR* relativePath);
+TEXT combinePath2(const TEXT* basePath, const TEXT* relativePath);
 
 /// <summary>
 /// パスの正規化。

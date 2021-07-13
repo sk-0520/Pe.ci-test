@@ -12,11 +12,6 @@ namespace PeBootTest
     {
     public:
 
-        void getParentDirectoryPathTestCore()
-        {
-
-        }
-
         TEST_METHOD(getParentDirectoryPathTest)
         {
             TCHAR input[MAX_PATH] = _T("C:\\dir\\file");
@@ -41,6 +36,12 @@ namespace PeBootTest
             size_t len = combinePath(actual, input1, input2);
 
             Assert::AreEqual(expected, actual);
+
+            TEXT input1t = wrapText(input1);
+            TEXT input2t = wrapText(input2);
+
+            TEXT actual2 = combinePath2(&input1t, &input2t);
+            Assert::AreEqual(expected, actual2.value);
         }
 
         TEST_METHOD(canonicalizePathTest)

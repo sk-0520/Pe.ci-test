@@ -100,6 +100,13 @@ TCHAR* cloneString(const TCHAR* source)
     return result;
 }
 
+TCHAR* allocateString(size_t length)
+{
+    TCHAR* result = allocateMemory(sizeof(TCHAR) * length + sizeof(TCHAR), false);
+    result[0] = 0;
+    return result;
+}
+
 void freeString(const TCHAR* s)
 {
     freeMemory((void*)s);
