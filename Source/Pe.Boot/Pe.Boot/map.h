@@ -3,6 +3,7 @@
 #include <tchar.h>
 
 #include "tstring.h"
+#include "text.h"
 
 #define MAP_DEFAULT_CAPACITY 16
 
@@ -16,7 +17,7 @@ typedef struct _TAG_MAP_PAIR
     /// <summary>
     /// キー項目。
     /// </summary>
-    const TSTRING key;
+    const TEXT key;
 
     /// <summary>
     /// 値。
@@ -28,7 +29,7 @@ typedef struct _TAG_MAP_PAIR
     bool managedValue;
 } MAP_PAIR;
 
-typedef int (*funcCompareMapKey)(const TSTRING* a, const TSTRING* b);
+typedef int (*funcCompareMapKey)(const TEXT* a, const TEXT* b);
 typedef void (*funcFreeMapValue)(MAP_PAIR* pair);
 
 /// <summary>
@@ -54,7 +55,7 @@ typedef struct _TAG_MAP
     size_t _capacity;
 } MAP;
 
-int compareMapKeyDefault(const TSTRING* a, const TSTRING* b);
+int compareMapKeyDefault(const TEXT* a, const TEXT* b);
 
 /// <summary>
 /// マップの値解放不要処理。
@@ -91,9 +92,9 @@ MAP_PAIR* existsMap(MAP* map, const TCHAR* key);
 /// <param name="map">対象マップ。</param>
 /// <param name="key">キー。</param>
 /// <param name="value">値。</param>
-/// <param name="stackOnly">スタックに乗っているか</param>
+/// <param name="needRelease">開放が必要か</param>
 /// <returns>追加されたペア情報。追加できない場合は<c>NULL</c>。</returns>
-MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool stackOnly);
+MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool needRelease);
 /// <summary>
 /// 値の設定。
 /// 既に存在する場合は(解放処理とともに)上書き、存在しない場合は追加される。
@@ -101,9 +102,9 @@ MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool stackOnly);
 /// <param name="map">対象マップ。</param>
 /// <param name="key">キー。</param>
 /// <param name="value">値。</param>
-/// <param name="stackOnly">スタックに乗っているか</param>
+/// <param name="needRelease">開放が必要か</param>
 /// <returns>設定されたペア情報。</returns>
-MAP_PAIR* setMap(MAP* map, const TCHAR* key, void* value, bool stackOnly);
+MAP_PAIR* setMap(MAP* map, const TCHAR* key, void* value, bool needRelease);
 /// <summary>
 /// 削除。
 /// </summary>

@@ -7,26 +7,6 @@
 #include "memory.h"
 
 /// <summary>
-/// 不変文字列ラッパー。
-/// </summary>
-typedef struct _TAG_TSTRING
-{
-    /// <summary>
-    /// 値。
-    /// </summary>
-    const TCHAR* value;
-    /// <summary>
-    /// 長さ。
-    /// </summary>
-    const size_t length;
-    /// <summary>
-    /// スタックに乗っているか。
-    /// <para>乗っていない場合は解放が必要。</para>
-    /// </summary>
-    const bool stackOnly;
-} TSTRING;
-
-/// <summary>
 /// 文字列 haystack の先頭から文字列 needle を探し、見つかったときにはその位置をポインタで返却し、見つからなかったときにはNULLを返却。
 /// </summary>
 /// <param name="haystack">検索対象文字列</param>

@@ -275,6 +275,7 @@
     <ClCompile Include="logging.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="pe_boot.c" />
+    <ClCompile Include="text.c" />
     <ClCompile Include="tstring.c" />
   </ItemGroup>
   <ItemGroup>
@@ -288,6 +289,7 @@
     <ClInclude Include="logging.h" />
     <ClInclude Include="pe_boot.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="text.h" />
     <ClInclude Include="tstring.h" />
   </ItemGroup>
   <ItemGroup>

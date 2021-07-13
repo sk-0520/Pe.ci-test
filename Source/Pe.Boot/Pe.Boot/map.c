@@ -1,10 +1,10 @@
-﻿#include "assert.h"
+﻿#include <assert.h>
 
 #include "map.h"
 #include "memory.h"
 #include "tstring.h"
 
-int compareMapKeyDefault(const TSTRING* a, const TSTRING* b)
+int compareMapKeyDefault(const TEXT* a, const TEXT* b)
 {
     return compareString(a->value, b->value, false);
 }
@@ -47,12 +47,12 @@ MAP_PAIR* existsMap(MAP* map, const TCHAR* key)
     return NULL;
 }
 
-MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool stackOnly)
+MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool needRelease)
 {
     return NULL;
 }
 
-MAP_PAIR* setMap(MAP* map, const TCHAR* key, void* value, bool stackOnly)
+MAP_PAIR* setMap(MAP* map, const TCHAR* key, void* value, bool needRelease)
 {
     return NULL;
 }
