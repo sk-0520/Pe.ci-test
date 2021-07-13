@@ -56,7 +56,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
             };
             for (size_t waitIndex = 0; waitIndex < sizeof(waits) / sizeof(waits[0]); waitIndex++) {
                 const TCHAR* waitArg = waits[waitIndex];
-                const TCHAR* wait = findString(tunedArg, waitArg);
+                const TCHAR* wait = findString(tunedArg, waitArg, false);
                 if (wait == tunedArg) {
                     skipIndex1 = j;
 

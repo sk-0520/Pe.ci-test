@@ -15,14 +15,14 @@ namespace PeBootTest
 
         TEST_METHOD(findStringTest)
         {
-            TestData x = TestData(_T("defghi"), _T("abcdefghi"), _T("def"));
+            TestData x = TestData(_T("defghi"), _T("abcdefghi"), _T("def"), false);
             auto actual2 = std::apply(findString, x.inputs);
             Assert::AreEqual(x.expected, actual2);
 
-            auto actual = findString(_T("abcdefg"), _T("abc"));
+            auto actual = findString(_T("abcdefg"), _T("abc"), false);
             Assert::IsTrue(actual[0] == 'a');
 
-            Assert::IsNull(findString(_T("abcdefg"), _T("xyz")));
+            Assert::IsNull(findString(_T("abcdefg"), _T("xyz"), false));
         }
 
         TEST_METHOD(getStringLengthTest)

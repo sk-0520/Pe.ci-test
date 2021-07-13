@@ -2,9 +2,11 @@
 #include <stdbool.h>
 #include <tchar.h>
 
+#include "tstring.h"
+
 #define MAP_DEFAULT_CAPACITY 16
 
-#define MAP_MAX_KEY_LENGTH 64
+//#define MAP_MAX_KEY_LENGTH 64
 
 /// <summary>
 /// 文字列キーと値のペア。
@@ -14,11 +16,7 @@ typedef struct _TAG_MAP_PAIR
     /// <summary>
     /// キー項目。
     /// </summary>
-    const TCHAR key[MAP_MAX_KEY_LENGTH];
-    /// <summary>
-    /// キー長。
-    /// </summary>
-    size_t keyLength;
+    const TSTRING key;
 
     /// <summary>
     /// 値。
@@ -30,6 +28,7 @@ typedef struct _TAG_MAP_PAIR
     bool managedValue;
 } MAP_PAIR;
 
+typedef int (*funcCompareMapKey)(const TSTRING* a, const TSTRING* b);
 typedef void (*funcFreeMapValue)(MAP_PAIR* pair);
 
 /// <summary>
@@ -39,6 +38,7 @@ typedef void (*funcFreeMapValue)(MAP_PAIR* pair);
 /// </summary>
 typedef struct _TAG_MAP
 {
+    const funcCompareMapKey _compareMapKey;
     const funcFreeMapValue _freeValue;
     /// <summary>
     /// キー・値。
@@ -54,19 +54,22 @@ typedef struct _TAG_MAP
     size_t _capacity;
 } MAP;
 
+int compareMapKeyDefault(const TSTRING* a, const TSTRING* b);
+
 /// <summary>
 /// マップの値解放不要処理。
 /// </summary>
 /// <param name="pair"></param>
-void doNotFreeMap(MAP_PAIR* pair);
+void freeMapUnuse(MAP_PAIR* pair);
 
 /// <summary>
 /// マップの生成。
 /// </summary>
 /// <param name="capacity">初期予約領域。特に指定しない場合は<c>MAP_DEFAULT_CAPACITY</c>を使用する。</param>
+/// <param name="compareMapKey">キー比較処理。</param>
 /// <param name="freeMapValue">値解放処理。</param>
 /// <returns></returns>
-MAP createMap(size_t capacity, funcFreeMapValue freeMapValue);
+MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue freeMapValue);
 
 /// <summary>
 /// マップの開放。
@@ -88,9 +91,9 @@ MAP_PAIR* existsMap(MAP* map, const TCHAR* key);
 /// <param name="map">対象マップ。</param>
 /// <param name="key">キー。</param>
 /// <param name="value">値。</param>
-/// <param name="managed">値は対象マップで管理するか。</param>
+/// <param name="stackOnly">スタックに乗っているか</param>
 /// <returns>追加されたペア情報。追加できない場合は<c>NULL</c>。</returns>
-MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool managed);
+MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool stackOnly);
 /// <summary>
 /// 値の設定。
 /// 既に存在する場合は(解放処理とともに)上書き、存在しない場合は追加される。
@@ -98,9 +101,9 @@ MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool managed);
 /// <param name="map">対象マップ。</param>
 /// <param name="key">キー。</param>
 /// <param name="value">値。</param>
-/// <param name="managed">値は対象マップで管理するか。</param>
+/// <param name="stackOnly">スタックに乗っているか</param>
 /// <returns>設定されたペア情報。</returns>
-MAP_PAIR* setMap(MAP* map, const TCHAR* key, void* value, bool managed);
+MAP_PAIR* setMap(MAP* map, const TCHAR* key, void* value, bool stackOnly);
 /// <summary>
 /// 削除。
 /// </summary>

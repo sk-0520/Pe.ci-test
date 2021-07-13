@@ -3,14 +3,12 @@
 #include "tstring.h"
 #include "memory.h"
 
-TCHAR* findString(const TCHAR* haystack, const TCHAR* needle)
+TCHAR* findString(const TCHAR* haystack, const TCHAR* needle, bool ignoreCase)
 {
-    return StrStr(haystack, needle);
-}
-
-TCHAR* findStringCase(const TCHAR* haystack, const TCHAR* needle)
-{
-    return StrStrI(haystack, needle);
+    return ignoreCase
+        ? StrStrI(haystack, needle)
+        : StrStr(haystack, needle)
+        ;
 }
 
 size_t getStringLength(const TCHAR* s)
@@ -38,6 +36,14 @@ SSIZE_T indexCharacter(const TCHAR* haystack, TCHAR needle)
     }
 
     return p - haystack;
+}
+
+int compareString(const TCHAR* a, const TCHAR* b, bool ignoreCase)
+{
+    return ignoreCase
+        ? lstrcmpi(a, b)
+        : lstrcmp(a, b)
+        ;
 }
 
 static bool tryParseIntegerCore(int* result, const TCHAR* input, bool hex)

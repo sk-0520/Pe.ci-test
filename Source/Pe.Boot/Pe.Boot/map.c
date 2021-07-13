@@ -4,12 +4,18 @@
 #include "memory.h"
 #include "tstring.h"
 
-void doNotFreeMap(MAP_PAIR* pair)
+int compareMapKeyDefault(const TSTRING* a, const TSTRING* b)
+{
+    return compareString(a->value, b->value, false);
+}
+
+void freeMapUnuse(MAP_PAIR* pair)
 { /* 何もしない */ }
 
-MAP createMap(size_t capacity, funcFreeMapValue freeMapValue)
+MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue freeMapValue)
 {
     MAP map = {
+        compareMapKey,
         freeMapValue,
         allocateMemory(capacity * sizeof(MAP_PAIR), false),
         0,
@@ -23,6 +29,8 @@ void freeMap(MAP* map)
 {
     for (size_t i = 0; i < map->length; i++) {
         MAP_PAIR* pair = &(map->pairs[i]);
+
+        freeString(pair->key.value);
 
         if (pair->managedValue) {
             map->_freeValue(pair->value);
@@ -39,12 +47,12 @@ MAP_PAIR* existsMap(MAP* map, const TCHAR* key)
     return NULL;
 }
 
-MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool managed)
+MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool stackOnly)
 {
     return NULL;
 }
 
-MAP_PAIR* setMap(MAP* map, const TCHAR* key, void* value, bool managed)
+MAP_PAIR* setMap(MAP* map, const TCHAR* key, void* value, bool stackOnly)
 {
     return NULL;
 }
