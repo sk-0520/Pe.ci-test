@@ -18,8 +18,6 @@ int getWaitTime(const TCHAR* s);
 //int CALLBACK WinMainEx(HINSTANCE hInstance, HINSTANCE hPrevInstance, const LPTSTR* argv, size_t argc, int nCmdShow)
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
-    TEXT xxxx = getApplicationPath2();
-    assert(xxxx.length);
     COMMAND_LINE_OPTION commandLineOption = parseCommandLine(lpCmdLine);
 
     if (commandLineOption.count <= 1) {
