@@ -12,7 +12,7 @@ static TEXT _createEmptyText()
     return result;
 }
 
-TEXT createText(TCHAR* source)
+TEXT createText(const TCHAR* source)
 {
     if (!source) {
         return _createEmptyText();
@@ -33,7 +33,7 @@ TEXT createText(TCHAR* source)
     return result;
 }
 
-TEXT wrapText(TCHAR* source)
+TEXT wrapText(const TCHAR* source)
 {
     if (!source) {
         return _createEmptyText();
@@ -49,4 +49,30 @@ TEXT wrapText(TCHAR* source)
     };
 
     return result;
+}
+
+bool freeText(TEXT* text)
+{
+    if (!text) {
+        return false;
+    }
+
+    if (!text->_needRelease) {
+        return false;
+    }
+
+    if (text->_released) {
+        return false;
+    }
+
+    if (!text->value) {
+        return false;
+    }
+
+    freeString(text->value);
+    text->value = 0;
+
+    text->_released = true;
+
+    return true;
 }

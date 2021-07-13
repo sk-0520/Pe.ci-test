@@ -15,10 +15,14 @@ typedef struct _TAG_TEXT
     /// </summary>
     const size_t length;
     /// <summary>
-    /// スタックに乗っているか。
-    /// <para>乗っていない場合は解放が必要。</para>
+    /// 解放が必要か。
+    /// <para>アプリケーション内では使用しない。</para>
     /// </summary>
     bool _needRelease;
+    /// <summary>
+    /// 解放済みか。
+    /// <para>アプリケーション内では使用しない。</para>
+    /// </summary>
     bool _released;
 } TEXT;
 
@@ -27,7 +31,7 @@ typedef struct _TAG_TEXT
 /// </summary>
 /// <param name="source">対象文字列。</param>
 /// <returns>不変文字列。</returns>
-TEXT createText(TCHAR* source);
+TEXT createText(const TCHAR* source);
 
 /// <summary>
 /// 文字列から不変文字列にラップ。
@@ -35,4 +39,12 @@ TEXT createText(TCHAR* source);
 /// </summary>
 /// <param name="source">対象文字列。</param>
 /// <returns>不変文字列。</returns>
-TEXT wrapText(TCHAR* source);
+TEXT wrapText(const TCHAR* source);
+
+/// <summary>
+/// 不変文字列の解放。
+/// <para>不要な場合は処理しない。</para>
+/// </summary>
+/// <param name="text"></param>
+/// <returns></returns>
+bool freeText(TEXT* text);
