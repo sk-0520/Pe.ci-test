@@ -28,6 +28,20 @@ typedef struct _TAG_TEXT
 } TEXT;
 
 /// <summary>
+/// 空の不変文字列を生成。
+/// </summary>
+/// <returns>領域自体がNULLの不変文字列(通常使用は出来ない)。</returns>
+TEXT createEmptyText();
+
+/// <summary>
+/// 不変文字列を生成。
+/// </summary>
+/// <param name="source">対象文字列。</param>
+/// <param name="length">対象文字列の長さ。</param>
+/// <returns>不変文字列。</returns>
+TEXT createTextWithLength(const TCHAR* source, size_t length);
+
+/// <summary>
 /// 不変文字列を生成。
 /// </summary>
 /// <param name="source">対象文字列。</param>

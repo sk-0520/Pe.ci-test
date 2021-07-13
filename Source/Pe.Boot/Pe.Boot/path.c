@@ -32,6 +32,41 @@ size_t getApplicationPath(HINSTANCE hInstance, TCHAR* result)
     return getStringLength(result);
 }
 
+TEXT getModulePath(HINSTANCE hInstance)
+{
+    size_t length = MAX_PATH;
+    size_t pathLength = 0;
+    TCHAR* path = NULL;
+
+    while (!path) {
+        path = (TCHAR*)allocateMemory(length * sizeof(TCHAR), false);
+        if (!path) {
+            return createEmptyText();
+        }
+
+        DWORD modulePathLength = GetModuleFileName(hInstance, path, (DWORD)length);
+        if (!modulePathLength) {
+            pathLength = 0;
+            break;
+        } else if (modulePathLength >= length - 1) {
+            freeMemory(path);
+            length *= 2;
+        } else {
+            pathLength = modulePathLength;
+            break;
+        }
+    }
+
+    TEXT result = pathLength
+        ? createTextWithLength(path, pathLength)
+        : createEmptyText()
+        ;
+    freeMemory(path);
+
+    return result;
+}
+
+
 size_t getMainModulePath(TCHAR* result, const TCHAR* rootDirPath)
 {
     TCHAR binPath[MAX_PATH];
@@ -50,3 +85,9 @@ void getAppPathItems(HMODULE hInstance, APP_PATH_ITEMS* result)
 
     result->mainModuleLength = getMainModulePath(result->mainModule, result->rootDirectory);
 }
+
+void getAppPathItems2(APP_PATH_ITEMS2* result, HMODULE hInstance)
+{
+
+}
+

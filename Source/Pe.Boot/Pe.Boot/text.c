@@ -1,6 +1,6 @@
 ﻿#include "text.h"
 
-static TEXT _createEmptyText()
+TEXT createEmptyText()
 {
     TEXT result = {
         NULL,
@@ -12,13 +12,8 @@ static TEXT _createEmptyText()
     return result;
 }
 
-TEXT createText(const TCHAR* source)
+TEXT createTextWithLength(const TCHAR* source, size_t length)
 {
-    if (!source) {
-        return _createEmptyText();
-    }
-
-    size_t length = getStringLength(source);
     TCHAR* buffer = allocateMemory((length * sizeof(TCHAR)) + sizeof(TCHAR), false);
     copyMemory(buffer, (void*)source, length * sizeof(TCHAR));
     buffer[length] = 0;
@@ -33,10 +28,20 @@ TEXT createText(const TCHAR* source)
     return result;
 }
 
+TEXT createText(const TCHAR* source)
+{
+    if (!source) {
+        return createEmptyText();
+    }
+
+    size_t length = getStringLength(source);
+    return createTextWithLength(source, length);
+}
+
 TEXT wrapText(const TCHAR* source)
 {
     if (!source) {
-        return _createEmptyText();
+        return createEmptyText();
     }
 
     size_t length = getStringLength(source);
@@ -54,15 +59,15 @@ TEXT wrapText(const TCHAR* source)
 TEXT cloneText(const TEXT* source)
 {
     if (!source) {
-        return _createEmptyText();
+        return createEmptyText();
     }
 
     if (source->_released) {
-        return _createEmptyText();
+        return createEmptyText();
     }
 
     if (!source->value) {
-        return _createEmptyText();
+        return createEmptyText();
     }
 
     TCHAR* buffer = allocateMemory((source->length * sizeof(TCHAR)) + sizeof(TCHAR), false);
