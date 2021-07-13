@@ -4,6 +4,8 @@
 
 #define MAP_DEFAULT_CAPACITY 16
 
+#define MAP_MAX_KEY_LENGTH 64
+
 /// <summary>
 /// 文字列キーと値のペア。
 /// </summary>
@@ -12,7 +14,7 @@ typedef struct _TAG_MAP_PAIR
     /// <summary>
     /// キー項目。
     /// </summary>
-    const TCHAR* key;
+    const TCHAR key[MAP_MAX_KEY_LENGTH];
     /// <summary>
     /// キー長。
     /// </summary>
@@ -28,6 +30,8 @@ typedef struct _TAG_MAP_PAIR
     bool managedValue;
 } MAP_PAIR;
 
+typedef void (*funcFreeMapValue)(MAP_PAIR* pair);
+
 /// <summary>
 /// 連想配列データ。
 ///
@@ -35,6 +39,7 @@ typedef struct _TAG_MAP_PAIR
 /// </summary>
 typedef struct _TAG_MAP
 {
+    const funcFreeMapValue _freeValue;
     /// <summary>
     /// キー・値。
     /// </summary>
@@ -46,10 +51,62 @@ typedef struct _TAG_MAP
     /// <summary>
     /// 容量。
     /// </summary>
-    size_t capacity;
+    size_t _capacity;
 } MAP;
 
-typedef void (*funcFreeMapPair)(void* value);
+/// <summary>
+/// マップの値解放不要処理。
+/// </summary>
+/// <param name="pair"></param>
+void doNotFreeMap(MAP_PAIR* pair);
 
-MAP createMap(size_t capacity);
-void freeMap(MAP* map, funcFreeMapPair freeMapPair);
+/// <summary>
+/// マップの生成。
+/// </summary>
+/// <param name="capacity">初期予約領域。特に指定しない場合は<c>MAP_DEFAULT_CAPACITY</c>を使用する。</param>
+/// <param name="freeMapValue">値解放処理。</param>
+/// <returns></returns>
+MAP createMap(size_t capacity, funcFreeMapValue freeMapValue);
+
+/// <summary>
+/// マップの開放。
+/// </summary>
+/// <param name="map">対象マップ。</param>
+void freeMap(MAP* map);
+
+/// <summary>
+/// 指定したキーが存在するか。
+/// </summary>
+/// <param name="map">対象マップ。</param>
+/// <param name="key">キー。</param>
+/// <returns>存在するペア情報。存在しない場合は<c>NULL</c>。</returns>
+MAP_PAIR* existsMap(MAP* map, const TCHAR* key);
+/// <summary>
+/// 値の追加。
+/// 既に存在する場合は失敗する。
+/// </summary>
+/// <param name="map">対象マップ。</param>
+/// <param name="key">キー。</param>
+/// <param name="value">値。</param>
+/// <param name="managed">値は対象マップで管理するか。</param>
+/// <returns>追加されたペア情報。追加できない場合は<c>NULL</c>。</returns>
+MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool managed);
+/// <summary>
+/// 値の設定。
+/// 既に存在する場合は(解放処理とともに)上書き、存在しない場合は追加される。
+/// </summary>
+/// <param name="map">対象マップ。</param>
+/// <param name="key">キー。</param>
+/// <param name="value">値。</param>
+/// <param name="managed">値は対象マップで管理するか。</param>
+/// <returns>設定されたペア情報。</returns>
+MAP_PAIR* setMap(MAP* map, const TCHAR* key, void* value, bool managed);
+/// <summary>
+/// 削除。
+/// </summary>
+/// <param name="map">対象マップ。</param>
+/// <param name="key">キー。</param>
+/// <returns>削除の成功状態。</returns>
+bool removeMap(MAP* map, const TCHAR* key);
+
+
