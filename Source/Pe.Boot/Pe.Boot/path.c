@@ -12,6 +12,21 @@ size_t getParentDirectoryPath(TCHAR* result, const TCHAR* path)
     return getStringLength(result);
 }
 
+TEXT getParentDirectoryPath2(const TEXT* path)
+{
+    TCHAR* buffer = cloneString(path->value);
+    if (PathRemoveFileSpec(buffer)) {
+        TEXT result = createText(buffer);
+        freeString(buffer);
+        return result;
+    }
+
+    freeString(buffer);
+
+    return createEmptyText();
+}
+
+
 size_t combinePath(TCHAR* result, const TCHAR* basePath, const TCHAR* relativePath)
 {
     TCHAR* ret = PathCombine(result, basePath, relativePath);

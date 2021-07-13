@@ -55,6 +55,8 @@ TEXT createText(const TCHAR* source);
 /// <param name="source">対象文字列。</param>
 /// <returns>不変文字列。</returns>
 TEXT wrapText(const TCHAR* source);
+#define wct(s) wrapText(_T(s))
+
 
 /// <summary>
 /// 不変文字列の複製。

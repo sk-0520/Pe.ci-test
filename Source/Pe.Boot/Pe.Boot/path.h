@@ -53,6 +53,7 @@ typedef struct _TAG_APP_PATH_ITEMS2
 /// <param name="path">対象パス。</param>
 /// <returns>ディレクトリパスの文字列長。</returns>
 size_t getParentDirectoryPath(TCHAR* result, const TCHAR* path);
+TEXT getParentDirectoryPath2(const TEXT* path);
 
 /// <summary>
 /// パスを結合する。
