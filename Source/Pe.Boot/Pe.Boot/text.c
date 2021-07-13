@@ -71,6 +71,7 @@ bool freeText(TEXT* text)
 
     freeString(text->value);
     text->value = 0;
+    text->length = 0;
 
     text->_released = true;
 

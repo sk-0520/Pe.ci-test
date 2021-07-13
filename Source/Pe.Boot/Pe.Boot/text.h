@@ -13,7 +13,7 @@ typedef struct _TAG_TEXT
     /// <summary>
     /// 長さ。
     /// </summary>
-    const size_t length;
+    size_t length;
     /// <summary>
     /// 解放が必要か。
     /// <para>アプリケーション内では使用しない。</para>

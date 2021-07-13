@@ -15,11 +15,11 @@ void freeMapUnuse(MAP_PAIR* pair)
 MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue freeMapValue)
 {
     MAP map = {
-        compareMapKey,
-        freeMapValue,
         allocateMemory(capacity * sizeof(MAP_PAIR), false),
         0,
         capacity,
+        compareMapKey,
+        freeMapValue,
     };
 
     return map;

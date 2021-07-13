@@ -39,8 +39,6 @@ typedef void (*funcFreeMapValue)(MAP_PAIR* pair);
 /// </summary>
 typedef struct _TAG_MAP
 {
-    const funcCompareMapKey _compareMapKey;
-    const funcFreeMapValue _freeValue;
     /// <summary>
     /// キー・値。
     /// </summary>
@@ -53,6 +51,9 @@ typedef struct _TAG_MAP
     /// 容量。
     /// </summary>
     size_t _capacity;
+
+    funcCompareMapKey _compareMapKey;
+    funcFreeMapValue _freeValue;
 } MAP;
 
 int compareMapKeyDefault(const TEXT* a, const TEXT* b);
