@@ -65,6 +65,13 @@ TEXT getParentDirectoryPath2(const TEXT* path);
 size_t combinePath(TCHAR* result, const TCHAR* basePath, const TCHAR* relativePath);
 
 /// <summary>
+/// パスの正規化。
+/// </summary>
+/// <param name="path"></param>
+/// <returns>正規化されたパス。</returns>
+TEXT canonicalizePath(const TEXT* path);
+
+/// <summary>
 /// 実行中モジュールパスの取得。
 /// </summary>
 /// <param name="hInstance">実行モジュールインスタンスハンドル。</param>

@@ -43,5 +43,15 @@ namespace PeBootTest
             Assert::AreEqual(expected, actual);
         }
 
+        TEST_METHOD(canonicalizePathTest)
+        {
+            TEXT input = wct("C:\\dir\\file\\..\\x\\.\\file2");
+            TCHAR expected[] = _T("C:\\dir\\x\\file2");
+            TEXT actual = canonicalizePath(&input);
+
+            Assert::AreEqual(expected, actual.value);
+
+            freeText(&actual);
+        }
     };
 }

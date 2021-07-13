@@ -37,6 +37,14 @@ size_t combinePath(TCHAR* result, const TCHAR* basePath, const TCHAR* relativePa
     return 0;
 }
 
+TEXT canonicalizePath(const TEXT* path)
+{
+    TCHAR* buffer = (TCHAR*)allocateMemory(path->length * sizeof(TCHAR) + sizeof(TCHAR), false);
+    PathCanonicalize(buffer, path->value);
+
+    return createTextWithLength(buffer, getStringLength(buffer));
+}
+
 size_t getApplicationPath(HINSTANCE hInstance, TCHAR* result)
 {
     TCHAR appRawPath[MAX_PATH];

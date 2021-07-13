@@ -1,4 +1,6 @@
-﻿#include "text.h"
+﻿#include <assert.h>
+
+#include "text.h"
 
 TEXT createEmptyText()
 {
@@ -10,6 +12,23 @@ TEXT createEmptyText()
     };
 
     return result;
+}
+
+bool isEnableText(const TEXT* text)
+{
+    if (!text) {
+        return false;
+    }
+    if (text->_released) {
+        assert(!text->_needRelease);
+        return false;
+    }
+    if (!text->value) {
+        return false;
+    }
+
+
+    return true;
 }
 
 TEXT createTextWithLength(const TCHAR* source, size_t length)
@@ -58,15 +77,7 @@ TEXT wrapText(const TCHAR* source)
 
 TEXT cloneText(const TEXT* source)
 {
-    if (!source) {
-        return createEmptyText();
-    }
-
-    if (source->_released) {
-        return createEmptyText();
-    }
-
-    if (!source->value) {
+    if (!isEnableText(source)) {
         return createEmptyText();
     }
 
@@ -86,15 +97,11 @@ TEXT cloneText(const TEXT* source)
 
 bool freeText(TEXT* text)
 {
-    if (!text) {
+    if (!isEnableText(text)) {
         return false;
     }
 
     if (!text->_needRelease) {
-        return false;
-    }
-
-    if (text->_released) {
         return false;
     }
 

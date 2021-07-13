@@ -34,6 +34,13 @@ typedef struct _TAG_TEXT
 TEXT createEmptyText();
 
 /// <summary>
+/// 不変文字列が使用可能か。
+/// </summary>
+/// <param name="text"></param>
+/// <returns></returns>
+bool isEnableText(const TEXT* text);
+
+/// <summary>
 /// 不変文字列を生成。
 /// </summary>
 /// <param name="source">対象文字列。</param>
