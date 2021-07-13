@@ -104,6 +104,22 @@ TEXT cloneText(const TEXT* source)
     return result;
 }
 
+TEXT referenceText(const TEXT* source)
+{
+    if (!source->_needRelease) {
+        return *source;
+    }
+
+    TEXT result = {
+        source->value,
+        source->length,
+        false,
+        false,
+    };
+
+    return result;
+}
+
 bool freeText(TEXT* text)
 {
     if (!isEnableText(text)) {

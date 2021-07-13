@@ -15,16 +15,17 @@ typedef struct _TAG_TEXT
     /// 長さ。
     /// </summary>
     size_t length;
+
     /// <summary>
     /// 解放が必要か。
     /// <para>アプリケーション内では使用しない。</para>
     /// </summary>
-    bool _needRelease;
+    bool _needRelease : 1;
     /// <summary>
     /// 解放済みか。
     /// <para>アプリケーション内では使用しない。</para>
     /// </summary>
-    bool _released;
+    bool _released : 1;
 } TEXT;
 
 /// <summary>
@@ -80,6 +81,13 @@ TEXT wrapText(const TCHAR* source);
 /// <param name="source">入力不変文字列。</param>
 /// <returns>複製された不変文字列。</returns>
 TEXT cloneText(const TEXT* source);
+
+/// <summary>
+/// 不変文字列を参照として複製。
+/// </summary>
+/// <param name="source">入力不変文字列。</param>
+/// <returns>参照として複製された不変文字列。参照元が生きている限り生きている。解放不要。</returns>
+TEXT referenceText(const TEXT* source);
 
 /// <summary>
 /// 不変文字列の解放。
