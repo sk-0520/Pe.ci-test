@@ -175,7 +175,10 @@ dotnet_diagnostic.S3400.severity = none
 dotnet_diagnostic.S108.severity = suggestion
 
 # VC
-[*.{c++,cc,cpp,cppm,cxx,h,h++,hh,hpp,hxx,inl,ipp,ixx,tlh,tli}]
+[*.{c,c++,cc,cpp,cppm,cxx,h,h++,hh,hpp,hxx,inl,ipp,ixx,tlh,tli}]
+
+charset = utf-8-bom
+
 cpp_generate_documentation_comments = xml
 
 cpp_indent_braces = false
@@ -275,9 +278,6 @@ charset = shift-jis
 [*.pug]
 indent_style = tab
 indent_size = 4
-
-[*.{c,h}]
-charset = utf-8-bom
 
 [*.ps1]
 charset = utf-8-bom

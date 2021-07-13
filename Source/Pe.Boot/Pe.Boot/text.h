@@ -42,6 +42,13 @@ TEXT createText(const TCHAR* source);
 TEXT wrapText(const TCHAR* source);
 
 /// <summary>
+/// 不変文字列の複製。
+/// </summary>
+/// <param name="source">入力不変文字列。</param>
+/// <returns>複製された不変文字列。</returns>
+TEXT cloneText(const TEXT* source);
+
+/// <summary>
 /// 不変文字列の解放。
 /// <para>不要な場合は処理しない。</para>
 /// </summary>

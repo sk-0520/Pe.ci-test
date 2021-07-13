@@ -51,6 +51,34 @@ TEXT wrapText(const TCHAR* source)
     return result;
 }
 
+TEXT cloneText(const TEXT* source)
+{
+    if (!source) {
+        return _createEmptyText();
+    }
+
+    if (source->_released) {
+        return _createEmptyText();
+    }
+
+    if (!source->value) {
+        return _createEmptyText();
+    }
+
+    TCHAR* buffer = allocateMemory((source->length * sizeof(TCHAR)) + sizeof(TCHAR), false);
+    copyMemory(buffer, (void*)source->value, source->length * sizeof(TCHAR));
+    buffer[source->length] = 0;
+
+    TEXT result = {
+        buffer,
+        source->length,
+        true,
+        false,
+    };
+
+    return result;
+}
+
 bool freeText(TEXT* text)
 {
     if (!text) {

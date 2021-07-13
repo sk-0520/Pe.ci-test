@@ -35,6 +35,15 @@ namespace PeBootTest
             Assert::AreEqual(_T("えお"), w.value);
             Assert::AreNotEqual(getStringLength(input), c.length);
 
+            TEXT dc = cloneText(&c);
+            TEXT dw = cloneText(&w);
+
+            Assert::IsTrue(dc._needRelease);
+            Assert::IsTrue(dw._needRelease);
+
+            Assert::AreEqual(c.value, dc.value);
+            Assert::AreEqual(w.value, dw.value);
+
             Assert::IsTrue(freeText(&c));
             Assert::IsFalse(freeText(&w));
 
