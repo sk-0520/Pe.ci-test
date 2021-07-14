@@ -60,6 +60,9 @@
     <ClCompile Include="main.c">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="app_main.c">
+      <Filter>source\app</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -105,6 +108,9 @@
       <Filter>header\app</Filter>
     </ClInclude>
     <ClInclude Include="app_commandline.h">
+      <Filter>header\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app_main.h">
       <Filter>header\app</Filter>
     </ClInclude>
   </ItemGroup>

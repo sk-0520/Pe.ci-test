@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <tchar.h>
 
 #ifdef GLOBAL
 #   define GLOBAL extern
@@ -6,3 +7,5 @@
 #   define GLOBAL
 #endif
 
+#define NEWLINE "\r\n"
+#define NEWLINET _T(NEWLINE)
