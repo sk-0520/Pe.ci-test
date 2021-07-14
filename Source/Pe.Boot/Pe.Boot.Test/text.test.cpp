@@ -18,8 +18,8 @@ namespace PeBootTest
             TEXT c = newText(input);
             TEXT w = wrapText(input);
 
-            Assert::IsTrue(c._needRelease);
-            Assert::IsFalse(w._needRelease);
+            Assert::IsTrue(c._mng.needRelease);
+            Assert::IsFalse(w._mng.needRelease);
 
             Assert::IsFalse(c.value == input);
             Assert::IsTrue(w.value == input);
@@ -38,8 +38,8 @@ namespace PeBootTest
             TEXT dc = cloneText(&c);
             TEXT dw = cloneText(&w);
 
-            Assert::IsTrue(dc._needRelease);
-            Assert::IsTrue(dw._needRelease);
+            Assert::IsTrue(dc._mng.needRelease);
+            Assert::IsTrue(dw._mng.needRelease);
 
             Assert::AreEqual(c.value, dc.value);
             Assert::AreEqual(w.value, dw.value);
@@ -47,8 +47,8 @@ namespace PeBootTest
             Assert::IsTrue(freeText(&c));
             Assert::IsFalse(freeText(&w));
 
-            Assert::IsTrue(c._released);
-            Assert::IsFalse(w._released);
+            Assert::IsTrue(c._mng.released);
+            Assert::IsFalse(w._mng.released);
         }
 
     };

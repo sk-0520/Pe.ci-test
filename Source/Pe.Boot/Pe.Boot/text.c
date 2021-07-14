@@ -7,8 +7,10 @@ TEXT createEmptyText()
     TEXT result = {
         .value = NULL,
         .length = 0,
-        ._needRelease = false,
-        ._released = false,
+        ._mng = {
+            .needRelease = false,
+            .released = false,
+        },
     };
 
     return result;
@@ -19,8 +21,8 @@ bool isEnabledText(const TEXT* text)
     if (!text) {
         return false;
     }
-    if (text->_released) {
-        assert(!text->_needRelease);
+    if (text->_mng.released) {
+        assert(!text->_mng.needRelease);
         return false;
     }
     if (!text->value) {
@@ -39,8 +41,10 @@ TEXT newTextWithLength(const TCHAR* source, size_t length)
     TEXT result = {
         .value = buffer,
         .length = length,
-        ._needRelease = true,
-        ._released = false,
+        ._mng = {
+            .needRelease = true,
+            .released = false,
+        },
     };
 
     return result;
@@ -65,8 +69,10 @@ TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease)
     TEXT result = {
         .value = source,
         .length = length,
-        ._needRelease = needRelease,
-        ._released = false,
+        ._mng = {
+            .needRelease = needRelease,
+            .released = false,
+        },
     };
 
     return result;
@@ -96,8 +102,10 @@ TEXT cloneText(const TEXT* source)
     TEXT result = {
         .value = buffer,
         .length = source->length,
-        ._needRelease = true,
-        ._released = false,
+        ._mng = {
+            .needRelease = true,
+            .released = false,
+        },
     };
 
     return result;
@@ -105,15 +113,17 @@ TEXT cloneText(const TEXT* source)
 
 TEXT referenceText(const TEXT* source)
 {
-    if (!source->_needRelease) {
+    if (!source->_mng.needRelease) {
         return *source;
     }
 
     TEXT result = {
         .value = source->value,
         .length = source->length,
-        ._needRelease = false,
-        ._released = false,
+        ._mng = {
+            .needRelease = false,
+            .released = false,
+        }
     };
 
     return result;
@@ -125,7 +135,7 @@ bool freeText(TEXT* text)
         return false;
     }
 
-    if (!text->_needRelease) {
+    if (!text->_mng.needRelease) {
         return false;
     }
 
@@ -137,7 +147,7 @@ bool freeText(TEXT* text)
     text->value = 0;
     text->length = 0;
 
-    text->_released = true;
+    text->_mng.released = true;
 
     return true;
 }

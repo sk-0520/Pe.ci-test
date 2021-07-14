@@ -23,10 +23,13 @@ typedef struct _TAG_MAP_PAIR
     /// 値。
     /// </summary>
     void* value;
-    /// <summary>
-    /// 値は管理下にあるか。
-    /// </summary>
-    bool managedValue;
+    struct
+    {
+        /// <summary>
+        /// 値の開放は必要か。
+        /// </summary>
+        bool needRelease;
+    } _mng;
 } MAP_PAIR;
 
 typedef int (*funcCompareMapKey)(const TEXT* a, const TEXT* b);
@@ -47,13 +50,20 @@ typedef struct _TAG_MAP
     /// 現在の項目数。
     /// </summary>
     size_t length;
-    /// <summary>
-    /// 容量。
-    /// </summary>
-    size_t _capacity;
 
-    funcCompareMapKey _compareMapKey;
-    funcFreeMapValue _freeValue;
+    /// <summary>
+    /// 管理データ。
+    /// </summary>
+    struct
+    {
+        /// <summary>
+        /// 容量。
+        /// </summary>
+        size_t _capacity;
+
+        funcCompareMapKey _compareMapKey;
+        funcFreeMapValue _freeValue;
+    } _mng;
 } MAP;
 
 int compareMapKeyDefault(const TEXT* a, const TEXT* b);

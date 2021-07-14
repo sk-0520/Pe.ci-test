@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "tstring.h"
+#include "common.h"
 #include "tstring.h"
 
 /// <summary>
@@ -17,15 +17,21 @@ typedef struct _TAG_TEXT
     size_t length;
 
     /// <summary>
-    /// 解放が必要か。
-    /// <para>アプリケーション内では使用しない。</para>
+    /// 管理データ。
     /// </summary>
-    bool _needRelease : 1;
-    /// <summary>
-    /// 解放済みか。
-    /// <para>アプリケーション内では使用しない。</para>
-    /// </summary>
-    bool _released : 1;
+    struct
+    {
+        /// <summary>
+        /// 解放が必要か。
+        /// <para>アプリケーション内では使用しない。</para>
+        /// </summary>
+        bool needRelease : 1;
+        /// <summary>
+        /// 解放済みか。
+        /// <para>アプリケーション内では使用しない。</para>
+        /// </summary>
+        bool released : 1;
+    } _mng;
 } TEXT;
 
 /// <summary>

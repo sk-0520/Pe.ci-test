@@ -19,9 +19,11 @@ MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue
     MAP map = {
         .pairs = allocateMemory(capacity * sizeof(MAP_PAIR), false),
         .length = 0,
-        ._capacity = capacity,
-        ._compareMapKey = compareMapKey,
-        ._freeValue = freeMapValue,
+        ._mng = {
+            ._capacity = capacity,
+            ._compareMapKey = compareMapKey,
+            ._freeValue = freeMapValue,
+        },
     };
 
     return map;
@@ -34,14 +36,14 @@ void freeMap(MAP* map)
 
         freeString(pair->key.value);
 
-        if (pair->managedValue) {
-            map->_freeValue(pair->value);
+        if (pair->_mng.needRelease) {
+            map->_mng._freeValue(pair->value);
         }
     }
 
     freeMemory(map->pairs);
     map->length = 0;
-    map->_capacity = 0;
+    map->_mng._capacity = 0;
 }
 
 MAP_PAIR* existsMap(MAP* map, const TCHAR* key)

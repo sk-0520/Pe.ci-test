@@ -10,6 +10,7 @@
 // プリコンパイルするヘッダーをここに追加します
 #include "CppUnitTest.h"
 
+#include "common.h"
 #include "Test.h"
 
 
