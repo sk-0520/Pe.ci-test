@@ -49,6 +49,15 @@ size_t combinePath(TCHAR* result, const TCHAR* basePath, const TCHAR* relativePa
 TEXT combinePath2(const TEXT* basePath, const TEXT* relativePath);
 
 /// <summary>
+/// パスを結合する。
+/// </summary>
+/// <param name="basePath">ベースのパス。</param>
+/// <param name="paths">結合するパス。</param>
+/// <param name="pathsLength">結合するパスの個数。</param>
+/// <returns>結合パス。</returns>
+TEXT joinPath(const TEXT* basePath, const TEXT paths[], size_t pathsLength);
+
+/// <summary>
 /// パスの正規化。
 /// </summary>
 /// <param name="path"></param>
@@ -78,7 +87,6 @@ TEXT getModulePath(HINSTANCE hInstance);
 /// <param name="rootDirPath">Peのルートディレクトリパス。</param>
 /// <returns>Pe 本体ファイルパスの文字列長。</returns>
 size_t getMainModulePath(TCHAR* result, const TCHAR* rootDirPath);
-TEXT getMainModulePath2(const TEXT* rootDirPath);
 
 /// <summary>
 /// 各種パス情報の取得。

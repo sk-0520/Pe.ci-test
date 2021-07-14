@@ -48,6 +48,29 @@ TEXT combinePath2(const TEXT* basePath, const TEXT* relativePath)
     return wrapTextWithLength(buffer, getStringLength(buffer), true);
 }
 
+TEXT joinPath(const TEXT* basePath, const TEXT paths[], size_t pathsLength)
+{
+    size_t totalPathLength = basePath->length + 1 + pathsLength; // ディレクトリ区切り
+    
+    for (size_t i = 0; i < pathsLength; i++) {
+        const TEXT* path = &paths[i];
+        totalPathLength += path->length;
+    }
+
+    TCHAR* buffer = allocateString(totalPathLength);
+    copyString(buffer, basePath->value);
+
+    for (size_t i = 0; i < pathsLength; i++) {
+        const TEXT* path = &paths[i];
+        combinePath(buffer, buffer, path->value);
+    }
+    TCHAR* tempBuffer = cloneString(buffer);
+    PathCanonicalize(buffer, tempBuffer);
+    freeString(tempBuffer);
+
+    return wrapTextWithLength(buffer, getStringLength(buffer), true);
+
+}
 
 TEXT canonicalizePath(const TEXT* path)
 {
@@ -110,31 +133,6 @@ size_t getMainModulePath(TCHAR* result, const TCHAR* rootDirPath)
     combinePath(result, binPath, _T("Pe.Main.exe"));
     outputDebug(result);
     return getStringLength(result);
-}
-
-TEXT getMainModulePath2(const TEXT* rootDirPath)
-{
-    TCHAR* joinPaths[] = {
-        _T("bin"),
-        _T("Pe.Main.exe"),
-    };
-    size_t joinPathsLength = sizeof(joinPaths) / sizeof(joinPaths[0]);
-
-    size_t totalPathLength = rootDirPath->length + 1 + joinPathsLength; // ディレクトリ区切り
-    for (size_t i = 0; i < joinPathsLength; i++) {
-        const TCHAR* path = joinPaths[i];
-        totalPathLength += getStringLength(path);
-    }
-
-    TCHAR* buffer = allocateString(totalPathLength);
-    copyString(buffer, rootDirPath->value);
-
-    for (size_t i = 0; i < joinPathsLength; i++) {
-        const TCHAR* path = joinPaths[i];
-        combinePath(buffer, buffer, path);
-    }
-
-    return wrapTextWithLength(buffer, getStringLength(buffer), true);
 }
 
 void getAppPathItems(HMODULE hInstance, APP_PATH_ITEMS* result)

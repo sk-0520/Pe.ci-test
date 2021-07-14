@@ -22,5 +22,7 @@ typedef struct _TAG_APP_PATH_ITEMS2
     TEXT mainModule;
 } APP_PATH_ITEMS2;
 
+TEXT getMainModulePath2(const TEXT* rootDirPath);
+
 void initializeAppPathItems(APP_PATH_ITEMS2* result, HMODULE hInstance);
 void uninitializeAppPathItems(APP_PATH_ITEMS2* items);

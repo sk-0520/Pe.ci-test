@@ -44,6 +44,25 @@ namespace PeBootTest
             Assert::AreEqual(expected, actual2.value);
         }
 
+        TEST_METHOD(joinPathTest)
+        {
+            TEXT input1 = wrap("C:\\");
+            TEXT input2[] = {
+                wrap("dir1\\"),
+                wrap("dir2"),
+                wrap("."),
+                wrap(".."),
+                wrap("dir2+"),
+                wrap(""),
+            };
+            TEXT expected = wrap("C:\\dir1\\dir2+");
+
+            TEXT actual = joinPath(&input1, input2, sizeof(input2) / sizeof(input2[0]));
+            Assert::AreEqual(expected.value, actual.value);
+
+            freeText(&actual);
+        }
+
         TEST_METHOD(canonicalizePathTest)
         {
             TEXT input = wrap("C:\\dir\\file\\..\\x\\.\\file2");
