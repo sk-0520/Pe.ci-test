@@ -34,7 +34,7 @@ int appMain(HINSTANCE hInstance, const COMMAND_LINE_OPTION* commandLineOption)
     size_t skipIndex1 = SIZE_MAX;
     size_t skipIndex2 = SIZE_MAX;
 
-    for (size_t i = 0, j = 0; i < commandLineOption->count; i++, j++) {
+    for (size_t i = 1, j = 0; i < commandLineOption->count; i++, j++) {
         const TCHAR* workArg = commandLineOption->_mng.argv[i];
         outputDebug(workArg);
         TCHAR* tunedArg = tuneArg(workArg);
