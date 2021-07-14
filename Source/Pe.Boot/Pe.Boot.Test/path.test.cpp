@@ -21,7 +21,7 @@ namespace PeBootTest
 
             Assert::AreEqual(expected, actual);
 
-            TEXT input2 = wct("C:\\dir\\file");
+            TEXT input2 = wrap("C:\\dir\\file");
             TEXT actual2 = getParentDirectoryPath2(&input2);
             Assert::AreEqual(expected, actual2.value);
             freeText(&actual2);
@@ -46,7 +46,7 @@ namespace PeBootTest
 
         TEST_METHOD(canonicalizePathTest)
         {
-            TEXT input = wct("C:\\dir\\file\\..\\x\\.\\file2");
+            TEXT input = wrap("C:\\dir\\file\\..\\x\\.\\file2");
             TCHAR expected[] = _T("C:\\dir\\x\\file2");
             TEXT actual = canonicalizePath(&input);
 

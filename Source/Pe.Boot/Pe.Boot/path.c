@@ -16,7 +16,7 @@ TEXT getParentDirectoryPath2(const TEXT* path)
 {
     TCHAR* buffer = cloneString(path->value);
     if (PathRemoveFileSpec(buffer)) {
-        TEXT result = createText(buffer);
+        TEXT result = newText(buffer);
         freeString(buffer);
         return result;
     }
@@ -91,7 +91,7 @@ TEXT getModulePath(HINSTANCE hInstance)
     }
 
     TEXT result = pathLength
-        ? createTextWithLength(path, pathLength)
+        ? newTextWithLength(path, pathLength)
         : createEmptyText()
         ;
     freeString(path);

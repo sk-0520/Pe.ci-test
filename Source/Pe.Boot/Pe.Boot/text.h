@@ -47,14 +47,14 @@ bool isEnableText(const TEXT* text);
 /// <param name="source">対象文字列。</param>
 /// <param name="length">対象文字列の長さ。</param>
 /// <returns>不変文字列。</returns>
-TEXT createTextWithLength(const TCHAR* source, size_t length);
+TEXT newTextWithLength(const TCHAR* source, size_t length);
 
 /// <summary>
 /// 不変文字列を生成。
 /// </summary>
 /// <param name="source">対象文字列。</param>
 /// <returns>不変文字列。</returns>
-TEXT createText(const TCHAR* source);
+TEXT newText(const TCHAR* source);
 
 /// <summary>
 /// 文字列から不変文字列にラップ。
@@ -72,7 +72,6 @@ TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease);
 /// <param name="source">対象文字列。</param>
 /// <returns>不変文字列。</returns>
 TEXT wrapText(const TCHAR* source);
-#define wct(s) wrapText(_T(s))
 
 
 /// <summary>

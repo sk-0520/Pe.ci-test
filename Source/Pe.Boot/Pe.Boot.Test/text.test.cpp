@@ -15,7 +15,7 @@ namespace PeBootTest
         TEST_METHOD(newTest)
         {
             TCHAR input[] = _T("あいう");
-            TEXT c = createText(input);
+            TEXT c = newText(input);
             TEXT w = wrapText(input);
 
             Assert::IsTrue(c._needRelease);

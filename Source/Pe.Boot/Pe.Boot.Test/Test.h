@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#define wrap(s) wrapText(_T(s))
+
 namespace PeBootTest
 {
     template<typename TExpected, typename TInput1, typename... TInputN>

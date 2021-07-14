@@ -31,7 +31,7 @@ bool isEnableText(const TEXT* text)
     return true;
 }
 
-TEXT createTextWithLength(const TCHAR* source, size_t length)
+TEXT newTextWithLength(const TCHAR* source, size_t length)
 {
     TCHAR* buffer = allocateString(length);
     copyMemory(buffer, (void*)source, length * sizeof(TCHAR));
@@ -47,14 +47,14 @@ TEXT createTextWithLength(const TCHAR* source, size_t length)
     return result;
 }
 
-TEXT createText(const TCHAR* source)
+TEXT newText(const TCHAR* source)
 {
     if (!source) {
         return createEmptyText();
     }
 
     size_t length = getStringLength(source);
-    return createTextWithLength(source, length);
+    return newTextWithLength(source, length);
 }
 
 TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease)
