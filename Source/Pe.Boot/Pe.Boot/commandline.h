@@ -22,7 +22,7 @@ typedef struct _TAG_COMMAND_LINE_OPTION
     /// <summary>
     /// 引数の個数。
     /// </summary>
-    const size_t count;
+    size_t count;
 } COMMAND_LINE_OPTION;
 
 /// <summary>

@@ -10,16 +10,18 @@ int compareMapKeyDefault(const TEXT* a, const TEXT* b)
 }
 
 void freeMapEmpty(MAP_PAIR* pair)
-{ /* 何もしない */ }
+{
+    /* 何もしない */
+}
 
 MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue freeMapValue)
 {
     MAP map = {
-        allocateMemory(capacity * sizeof(MAP_PAIR), false),
-        0,
-        capacity,
-        compareMapKey,
-        freeMapValue,
+        .pairs = allocateMemory(capacity * sizeof(MAP_PAIR), false),
+        .length = 0,
+        ._capacity = capacity,
+        ._compareMapKey = compareMapKey,
+        ._freeValue = freeMapValue,
     };
 
     return map;

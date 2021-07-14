@@ -4,7 +4,10 @@
 
 static FILE_POINTER _createInvalidFile()
 {
-    FILE_POINTER result = { (TCHAR*)0, NULL };
+    FILE_POINTER result = {
+        .path = (TCHAR*)0,
+        .handle = NULL,
+    };
     return result;
 }
 
@@ -20,8 +23,8 @@ static FILE_POINTER _openFileCore(const TCHAR* path, FILE_ACCESS_MODE accessMode
     }
 
     FILE_POINTER result = {
-        cloneString(path),
-        handle
+        .path = cloneString(path),
+        .handle = handle
     };
 
     return result;

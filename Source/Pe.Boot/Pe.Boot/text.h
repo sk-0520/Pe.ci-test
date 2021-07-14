@@ -39,7 +39,7 @@ TEXT createEmptyText();
 /// </summary>
 /// <param name="text"></param>
 /// <returns></returns>
-bool isEnableText(const TEXT* text);
+bool isEnabledText(const TEXT* text);
 
 /// <summary>
 /// 不変文字列を生成。

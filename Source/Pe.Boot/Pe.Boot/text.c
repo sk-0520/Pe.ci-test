@@ -5,16 +5,16 @@
 TEXT createEmptyText()
 {
     TEXT result = {
-        NULL,
-        0,
-        false,
-        false,
+        .value = NULL,
+        .length = 0,
+        ._needRelease = false,
+        ._released = false,
     };
 
     return result;
 }
 
-bool isEnableText(const TEXT* text)
+bool isEnabledText(const TEXT* text)
 {
     if (!text) {
         return false;
@@ -27,7 +27,6 @@ bool isEnableText(const TEXT* text)
         return false;
     }
 
-
     return true;
 }
 
@@ -38,10 +37,10 @@ TEXT newTextWithLength(const TCHAR* source, size_t length)
     buffer[length] = 0;
 
     TEXT result = {
-        buffer,
-        length,
-        true,
-        false,
+        .value = buffer,
+        .length = length,
+        ._needRelease = true,
+        ._released = false,
     };
 
     return result;
@@ -64,10 +63,10 @@ TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease)
     }
 
     TEXT result = {
-        source,
-        length,
-        needRelease,
-        false,
+        .value = source,
+        .length = length,
+        ._needRelease = needRelease,
+        ._released = false,
     };
 
     return result;
@@ -86,7 +85,7 @@ TEXT wrapText(const TCHAR* source)
 
 TEXT cloneText(const TEXT* source)
 {
-    if (!isEnableText(source)) {
+    if (!isEnabledText(source)) {
         return createEmptyText();
     }
 
@@ -95,10 +94,10 @@ TEXT cloneText(const TEXT* source)
     buffer[source->length] = 0;
 
     TEXT result = {
-        buffer,
-        source->length,
-        true,
-        false,
+        .value = buffer,
+        .length = source->length,
+        ._needRelease = true,
+        ._released = false,
     };
 
     return result;
@@ -111,10 +110,10 @@ TEXT referenceText(const TEXT* source)
     }
 
     TEXT result = {
-        source->value,
-        source->length,
-        false,
-        false,
+        .value = source->value,
+        .length = source->length,
+        ._needRelease = false,
+        ._released = false,
     };
 
     return result;
@@ -122,7 +121,7 @@ TEXT referenceText(const TEXT* source)
 
 bool freeText(TEXT* text)
 {
-    if (!isEnableText(text)) {
+    if (!isEnabledText(text)) {
         return false;
     }
 

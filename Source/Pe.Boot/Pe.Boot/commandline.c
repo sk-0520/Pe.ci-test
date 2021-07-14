@@ -18,8 +18,8 @@ COMMAND_LINE_OPTION parseCommandLine(const TCHAR* commandLine)
     //}
 
     COMMAND_LINE_OPTION result = {
-        argv,
-        argc
+        .arguments = argv,
+        .count = argc
     };
 
     return result;
