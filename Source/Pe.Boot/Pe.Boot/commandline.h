@@ -25,10 +25,13 @@ typedef struct _TAG_COMMAND_LINE_OPTION
     /// </summary>
     size_t count;
 
+    /// <summary>
+   /// 管理データ。
+   /// </summary>
     struct
     {
         TCHAR** argv;
-    } _mng;
+    } library;
 } COMMAND_LINE_OPTION;
 
 /// <summary>

@@ -26,7 +26,7 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine)
     COMMAND_LINE_OPTION result = {
         .arguments = arguments,
         .count = argc,
-        ._mng = {
+        .library = {
             .argv = argv,
         }
     };
@@ -37,7 +37,7 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine)
 void freeCommandLine(const COMMAND_LINE_OPTION* commandLineOption)
 {
     freeMemory((void*)commandLineOption->arguments);
-    LocalFree((HLOCAL)commandLineOption->_mng.argv);
+    LocalFree((HLOCAL)commandLineOption->library.argv);
 }
 
 

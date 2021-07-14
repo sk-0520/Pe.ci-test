@@ -35,7 +35,7 @@ int appMain(HINSTANCE hInstance, const COMMAND_LINE_OPTION* commandLineOption)
     size_t skipIndex2 = SIZE_MAX;
 
     for (size_t i = 1, j = 0; i < commandLineOption->count; i++, j++) {
-        const TCHAR* workArg = commandLineOption->_mng.argv[i];
+        const TCHAR* workArg = commandLineOption->library.argv[i];
         outputDebug(workArg);
         TCHAR* tunedArg = tuneArg(workArg);
         assert(tunedArg);
@@ -57,7 +57,7 @@ int appMain(HINSTANCE hInstance, const COMMAND_LINE_OPTION* commandLineOption)
                         TCHAR* value = eq + 1;
                         waitTime = getWaitTime(value);
                     } else if (i + 1 < commandLineOption->count) {
-                        waitTime = getWaitTime(commandLineOption->_mng.argv[i + 1]);
+                        waitTime = getWaitTime(commandLineOption->library.argv[i + 1]);
 
                         skipIndex2 = (size_t)(j + 1);
                     }

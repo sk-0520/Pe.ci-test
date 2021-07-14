@@ -15,7 +15,7 @@
     <Filter Include="header\app">
       <UniqueIdentifier>{93353e85-b2ab-40d8-ba4d-5c4292bc1bc0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resource">
+    <Filter Include="_resource">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
@@ -116,12 +116,12 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
-      <Filter>resource</Filter>
+      <Filter>_resource</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Pe\Pe.Main\Resources\Icon\App.ico">
-      <Filter>resource</Filter>
+      <Filter>_resource</Filter>
     </Image>
   </ItemGroup>
 </Project>

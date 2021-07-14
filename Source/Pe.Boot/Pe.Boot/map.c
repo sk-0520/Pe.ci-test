@@ -20,9 +20,9 @@ MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue
         .pairs = allocateMemory(capacity * sizeof(MAP_PAIR), false),
         .length = 0,
         ._mng = {
-            ._capacity = capacity,
-            ._compareMapKey = compareMapKey,
-            ._freeValue = freeMapValue,
+            .capacity = capacity,
+            .compareMapKey = compareMapKey,
+            .freeValue = freeMapValue,
         },
     };
 
@@ -36,21 +36,21 @@ void freeMap(MAP* map)
 
         freeText(&pair->key);
 
-        if (pair->_mng.needRelease) {
-            map->_mng._freeValue(pair->value);
+        if (pair->library.needRelease) {
+            map->_mng.freeValue(pair->value);
         }
     }
 
     freeMemory(map->pairs);
     map->length = 0;
-    map->_mng._capacity = 0;
+    map->_mng.capacity = 0;
 }
 
 static MAP_PAIR* _findMap(const MAP* map, const TEXT* key)
 {
     for (size_t i = 0; i < map->length; i++) {
         MAP_PAIR* pair = &map->pairs[i];
-        if (!map->_mng._compareMapKey(&pair->key, key)) {
+        if (!map->_mng.compareMapKey(&pair->key, key)) {
             return pair;
         }
     }

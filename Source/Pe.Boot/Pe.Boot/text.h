@@ -31,7 +31,7 @@ typedef struct _TAG_TEXT
         /// <para>アプリケーション内では使用しない。</para>
         /// </summary>
         bool released : 1;
-    } _mng;
+    } library;
 } TEXT;
 
 /// <summary>

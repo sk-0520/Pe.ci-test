@@ -7,7 +7,7 @@ TEXT createEmptyText()
     TEXT result = {
         .value = NULL,
         .length = 0,
-        ._mng = {
+        .library = {
             .needRelease = false,
             .released = false,
         },
@@ -21,8 +21,8 @@ bool isEnabledText(const TEXT* text)
     if (!text) {
         return false;
     }
-    if (text->_mng.released) {
-        assert(!text->_mng.needRelease);
+    if (text->library.released) {
+        assert(!text->library.needRelease);
         return false;
     }
     if (!text->value) {
@@ -41,7 +41,7 @@ TEXT newTextWithLength(const TCHAR* source, size_t length)
     TEXT result = {
         .value = buffer,
         .length = length,
-        ._mng = {
+        .library = {
             .needRelease = true,
             .released = false,
         },
@@ -69,7 +69,7 @@ TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease)
     TEXT result = {
         .value = source,
         .length = length,
-        ._mng = {
+        .library = {
             .needRelease = needRelease,
             .released = false,
         },
@@ -102,7 +102,7 @@ TEXT cloneText(const TEXT* source)
     TEXT result = {
         .value = buffer,
         .length = source->length,
-        ._mng = {
+        .library = {
             .needRelease = true,
             .released = false,
         },
@@ -113,14 +113,14 @@ TEXT cloneText(const TEXT* source)
 
 TEXT referenceText(const TEXT* source)
 {
-    if (!source->_mng.needRelease) {
+    if (!source->library.needRelease) {
         return *source;
     }
 
     TEXT result = {
         .value = source->value,
         .length = source->length,
-        ._mng = {
+        .library = {
             .needRelease = false,
             .released = false,
         }
@@ -135,7 +135,7 @@ bool freeText(TEXT* text)
         return false;
     }
 
-    if (!text->_mng.needRelease) {
+    if (!text->library.needRelease) {
         return false;
     }
 
@@ -147,7 +147,7 @@ bool freeText(TEXT* text)
     text->value = 0;
     text->length = 0;
 
-    text->_mng.released = true;
+    text->library.released = true;
 
     return true;
 }
