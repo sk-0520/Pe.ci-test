@@ -5,11 +5,17 @@
 #include "tstring.h"
 
 
-COMMAND_LINE_OPTION parseCommandLine(const TCHAR* commandLine)
+COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine)
 {
     int tempArgc;
-    TCHAR** argv = CommandLineToArgvW(commandLine, &tempArgc);
+    TCHAR** argv = CommandLineToArgvW(commandLine->value, &tempArgc);
     size_t argc = (size_t)tempArgc;
+
+    TEXT* arguments = allocateMemory(argc * sizeof(TEXT), false);
+    for (size_t i = 0; i < argc; i++) {
+        TCHAR* arg = argv[i];
+        arguments[i] = wrapText(arg);
+    }
 
     //size_t maxItemLength = (argc - 1) / 2;
     //COMMAND_LINE_ITEM* items = allocateClearMemory(maxItemLength, sizeof(COMMAND_LINE_ITEM));
@@ -18,8 +24,11 @@ COMMAND_LINE_OPTION parseCommandLine(const TCHAR* commandLine)
     //}
 
     COMMAND_LINE_OPTION result = {
-        .arguments = argv,
-        .count = argc
+        .arguments = arguments,
+        .count = argc,
+        ._mng = {
+            .argv = argv,
+        }
     };
 
     return result;
@@ -27,7 +36,8 @@ COMMAND_LINE_OPTION parseCommandLine(const TCHAR* commandLine)
 
 void freeCommandLine(const COMMAND_LINE_OPTION* commandLineOption)
 {
-    LocalFree((HLOCAL)commandLineOption->arguments);
+    freeMemory((void*)commandLineOption->arguments);
+    LocalFree((HLOCAL)commandLineOption->_mng.argv);
 }
 
 

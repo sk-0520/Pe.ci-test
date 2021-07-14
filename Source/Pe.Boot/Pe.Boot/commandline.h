@@ -2,6 +2,7 @@
 #include <tchar.h>
 
 #include "common.h"
+#include "text.h"
 
 
 typedef struct _TAG_COMMAND_LINE_ITEM
@@ -18,11 +19,16 @@ typedef struct _TAG_COMMAND_LINE_OPTION
     /// <summary>
     /// 引数一覧。
     /// </summary>
-    const TCHAR** arguments;
+    const TEXT* arguments;
     /// <summary>
     /// 引数の個数。
     /// </summary>
     size_t count;
+
+    struct
+    {
+        TCHAR** argv;
+    } _mng;
 } COMMAND_LINE_OPTION;
 
 /// <summary>
@@ -30,7 +36,7 @@ typedef struct _TAG_COMMAND_LINE_OPTION
 /// </summary>
 /// <param name="commandLine"></param>
 /// <returns>分解結果。freeCommandLine による開放が必要。</returns>
-COMMAND_LINE_OPTION parseCommandLine(const TCHAR* commandLine);
+COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine);
 
 /// <summary>
 /// コマンドラインオプションを解放。

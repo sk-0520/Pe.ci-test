@@ -12,13 +12,13 @@
 #include "app_boot.h"
 
 
-TCHAR* tuneArg(const TCHAR* arg);
 int getWaitTime(const TCHAR* s);
 
 //int CALLBACK WinMainEx(HINSTANCE hInstance, HINSTANCE hPrevInstance, const LPTSTR* argv, size_t argc, int nCmdShow)
 int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPTSTR lpCmdLine, _In_ int nCmdShow)
 {
-    COMMAND_LINE_OPTION commandLineOption = parseCommandLine(lpCmdLine);
+    TEXT commandLine = wrapText(lpCmdLine);
+    COMMAND_LINE_OPTION commandLineOption = parseCommandLine(&commandLine);
 
     if (commandLineOption.count <= 1) {
         // そのまま実行
@@ -43,7 +43,7 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     size_t skipIndex2 = SIZE_MAX;
 
     for (size_t i = 0, j = 0; i < commandLineOption.count; i++, j++) {
-        const TCHAR* workArg = commandLineOption.arguments[i];
+        const TCHAR* workArg = commandLineOption._mng.argv[i];
         outputDebug(workArg);
         TCHAR* tunedArg = tuneArg(workArg);
         assert(tunedArg);
@@ -65,7 +65,7 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
                         TCHAR* value = eq + 1;
                         waitTime = getWaitTime(value);
                     } else if (i + 1 < commandLineOption.count) {
-                        waitTime = getWaitTime(commandLineOption.arguments[i + 1]);
+                        waitTime = getWaitTime(commandLineOption._mng.argv[i + 1]);
 
                         skipIndex2 = (size_t)(j + 1);
                     }

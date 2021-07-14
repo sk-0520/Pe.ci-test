@@ -58,7 +58,7 @@
       <Filter>source\app</Filter>
     </ClCompile>
     <ClCompile Include="main.c">
-      <Filter>source\app</Filter>
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
