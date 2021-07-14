@@ -9,7 +9,7 @@ int compareMapKeyDefault(const TEXT* a, const TEXT* b)
     return compareString(a->value, b->value, false);
 }
 
-void freeMapEmpty(MAP_PAIR* pair)
+void freeMapValueNull(MAP_PAIR* pair)
 {
     /* 何もしない */
 }
@@ -34,7 +34,7 @@ void freeMap(MAP* map)
     for (size_t i = 0; i < map->length; i++) {
         MAP_PAIR* pair = &(map->pairs[i]);
 
-        freeString(pair->key.value);
+        freeText(&pair->key);
 
         if (pair->_mng.needRelease) {
             map->_mng._freeValue(pair->value);
@@ -46,22 +46,22 @@ void freeMap(MAP* map)
     map->_mng._capacity = 0;
 }
 
-MAP_PAIR* existsMap(MAP* map, const TCHAR* key)
+MAP_PAIR* existsMap(const MAP* map, const TEXT* key)
 {
     return NULL;
 }
 
-MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool needRelease)
+MAP_PAIR* addMap(MAP* map, const TEXT* key, void* value, bool needRelease)
 {
     return NULL;
 }
 
-MAP_PAIR* setMap(MAP* map, const TCHAR* key, void* value, bool needRelease)
+MAP_PAIR* setMap(MAP* map, const TEXT* key, void* value, bool needRelease)
 {
     return NULL;
 }
 
-bool removeMap(MAP* map, const TCHAR* key)
+bool removeMap(MAP* map, const TEXT* key)
 {
     return false;
 }

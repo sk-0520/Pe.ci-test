@@ -16,6 +16,7 @@ typedef struct _TAG_MAP_PAIR
 {
     /// <summary>
     /// キー項目。
+    /// <para>キーそのものはMAPにて管理される。</para>
     /// </summary>
     TEXT key;
 
@@ -66,13 +67,19 @@ typedef struct _TAG_MAP
     } _mng;
 } MAP;
 
+/// <summary>
+/// キー項目比較の標準処理。
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <returns></returns>
 int compareMapKeyDefault(const TEXT* a, const TEXT* b);
 
 /// <summary>
 /// マップの値解放不要処理。
 /// </summary>
 /// <param name="pair"></param>
-void freeMapEmpty(MAP_PAIR* pair);
+void freeMapValueNull(MAP_PAIR* pair);
 
 /// <summary>
 /// マップの生成。
@@ -82,7 +89,6 @@ void freeMapEmpty(MAP_PAIR* pair);
 /// <param name="freeMapValue">値解放処理。</param>
 /// <returns></returns>
 MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue freeMapValue);
-#define createMapDefault(capacity) createMap((capacity), compareMapKeyDefault, freeMapEmpty);
 
 /// <summary>
 /// マップの開放。
@@ -96,7 +102,8 @@ void freeMap(MAP* map);
 /// <param name="map">対象マップ。</param>
 /// <param name="key">キー。</param>
 /// <returns>存在するペア情報。存在しない場合は<c>NULL</c>。</returns>
-MAP_PAIR* existsMap(MAP* map, const TCHAR* key);
+MAP_PAIR* existsMap(const MAP* map, const TEXT* key);
+
 /// <summary>
 /// 値の追加。
 /// 既に存在する場合は失敗する。
@@ -106,7 +113,7 @@ MAP_PAIR* existsMap(MAP* map, const TCHAR* key);
 /// <param name="value">値。</param>
 /// <param name="needRelease">開放が必要か</param>
 /// <returns>追加されたペア情報。追加できない場合は<c>NULL</c>。</returns>
-MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool needRelease);
+MAP_PAIR* addMap(MAP* map, const TEXT* key, void* value, bool needRelease);
 /// <summary>
 /// 値の設定。
 /// 既に存在する場合は(解放処理とともに)上書き、存在しない場合は追加される。
@@ -116,13 +123,13 @@ MAP_PAIR* addMap(MAP* map, const TCHAR* key, void* value, bool needRelease);
 /// <param name="value">値。</param>
 /// <param name="needRelease">開放が必要か</param>
 /// <returns>設定されたペア情報。</returns>
-MAP_PAIR* setMap(MAP* map, const TCHAR* key, void* value, bool needRelease);
+MAP_PAIR* setMap(MAP* map, const TEXT* key, void* value, bool needRelease);
 /// <summary>
 /// 削除。
 /// </summary>
 /// <param name="map">対象マップ。</param>
 /// <param name="key">キー。</param>
 /// <returns>削除の成功状態。</returns>
-bool removeMap(MAP* map, const TCHAR* key);
+bool removeMap(MAP* map, const TEXT* key);
 
 
