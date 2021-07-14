@@ -46,9 +46,20 @@ void freeMap(MAP* map)
     map->_mng._capacity = 0;
 }
 
-MAP_PAIR* existsMap(const MAP* map, const TEXT* key)
+static MAP_PAIR* _findMap(const MAP* map, const TEXT* key)
 {
+    for (size_t i = 0; i < map->length; i++) {
+        MAP_PAIR* pair = &map->pairs[i];
+        if (!map->_mng._compareMapKey(&pair->key, key)) {
+            return pair;
+        }
+    }
     return NULL;
+}
+
+bool existsMap(const MAP* map, const TEXT* key)
+{
+    return _findMap(map, key);
 }
 
 MAP_PAIR* addMap(MAP* map, const TEXT* key, void* value, bool needRelease)

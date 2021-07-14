@@ -101,8 +101,8 @@ void freeMap(MAP* map);
 /// </summary>
 /// <param name="map">対象マップ。</param>
 /// <param name="key">キー。</param>
-/// <returns>存在するペア情報。存在しない場合は<c>NULL</c>。</returns>
-MAP_PAIR* existsMap(const MAP* map, const TEXT* key);
+/// <returns>有無。</returns>
+bool existsMap(const MAP* map, const TEXT* key);
 
 /// <summary>
 /// 値の追加。
