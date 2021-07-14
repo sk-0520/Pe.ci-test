@@ -14,34 +14,25 @@ namespace PeBootTest
 
         TEST_METHOD(getParentDirectoryPathTest)
         {
-            TCHAR input[MAX_PATH] = _T("C:\\dir\\file");
-            TCHAR actual[MAX_PATH] = { 0 };
-            TCHAR expected[MAX_PATH]= _T("C:\\dir");
-            size_t len = getParentDirectoryPath(actual, input);
+            TEXT expected = wrap("C:\\dir");
+            TEXT input = wrap("C:\\dir\\file");
 
-            Assert::AreEqual(expected, actual);
+            TEXT actual = getParentDirectoryPath2(&input);
+            Assert::AreEqual(expected.value, actual.value);
 
-            TEXT input2 = wrap("C:\\dir\\file");
-            TEXT actual2 = getParentDirectoryPath2(&input2);
-            Assert::AreEqual(expected, actual2.value);
-            freeText(&actual2);
+            freeText(&actual);
         }
 
         TEST_METHOD(combinePathTest)
         {
-            TCHAR input1[MAX_PATH] = _T("C:\\dir");
-            TCHAR input2[MAX_PATH] = _T("file");
-            TCHAR actual[MAX_PATH] = { 0 };
-            TCHAR expected[MAX_PATH] = _T("C:\\dir\\file");
-            size_t len = combinePath(actual, input1, input2);
+            TEXT expected = wrap("C:\\dir\\file");
+            TEXT input1 = wrap("C:\\dir");
+            TEXT input2 = wrap("file");
 
-            Assert::AreEqual(expected, actual);
+            TEXT actual = combinePath2(&input1, &input2);
+            Assert::AreEqual(expected.value, actual.value);
 
-            TEXT input1t = wrapText(input1);
-            TEXT input2t = wrapText(input2);
-
-            TEXT actual2 = combinePath2(&input1t, &input2t);
-            Assert::AreEqual(expected, actual2.value);
+            freeText(&actual);
         }
 
         TEST_METHOD(joinPathTest)

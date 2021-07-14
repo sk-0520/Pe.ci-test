@@ -67,7 +67,7 @@ int appMain(HINSTANCE hInstance, const COMMAND_LINE_OPTION* commandLineOption)
         }
     }
 
-    TCHAR* commandArg = allocateClearMemory(totalLength + 1, sizeof(TCHAR*));
+    TCHAR* commandArg = allocateString(totalLength + 1);
     if (commandArg) {
         commandArg[0] = 0;
         for (size_t i = 0; i < tunedArgsCount; i++) {

@@ -10,49 +10,41 @@
 /// ラインタイムパスを環境変数に設定。
 /// </summary>
 /// <param name="rootDirPath"></param>
-void addVisualCppRuntimeRedist(const TCHAR* rootDirPath)
+void addVisualCppRuntimeRedist(const TEXT* rootDirPath)
 {
-    TCHAR crtPath[MAX_PATH];
-    copyString(crtPath, rootDirPath);
-
-    TCHAR dirs[][32] = {
-        _T("bin"),
-        _T("lib"),
-        _T("Redist.MSVC.CRT"),
+    TEXT dirs[] = {
+        wrapText(_T("bin")),
+        wrapText(_T("lib")),
+        wrapText(_T("Redist.MSVC.CRT")),
 #ifdef _WIN64
-        _T("x64"),
+        wrapText(_T("x64")),
 #else
-        _T("x86"),
+        wrapText(_T("x86")),
 #endif
     };
-    for (size_t i = 0; i < (sizeof(dirs) / sizeof(dirs[0])); i++) {
-        TCHAR buffer[MAX_PATH];
-        TCHAR* name = dirs[i];
-        combinePath(buffer, crtPath, name);
-        copyString(crtPath, buffer);
-    }
-    outputDebug(crtPath);
+
+    TEXT crtPath = joinPath(rootDirPath, dirs, sizeof(dirs) / sizeof(dirs[0]));
+    outputDebug(crtPath.value);
 
     TCHAR pathValue[PATH_LENGTH];
     GetEnvironmentVariable(_T("PATH"), pathValue, PATH_LENGTH - 1);
     concatString(pathValue, _T(";"));
-    concatString(pathValue, crtPath);
+    concatString(pathValue, crtPath.value);
     SetEnvironmentVariable(_T("PATH"), pathValue);
+
+    freeText(&crtPath);
 }
 
 static void bootCore(HINSTANCE hInstance, const TCHAR* commandLine)
 {
-    APP_PATH_ITEMS appPathItems;
-    getAppPathItems(hInstance, &appPathItems);
+    APP_PATH_ITEMS2 appPathItems;
+    initializeAppPathItems(&appPathItems, hInstance);
 
-    APP_PATH_ITEMS2 appPathItems2;
-    initializeAppPathItems(&appPathItems2, hInstance);
+    addVisualCppRuntimeRedist(&appPathItems.rootDirectory);
 
-    addVisualCppRuntimeRedist(appPathItems.rootDirectory);
+    ShellExecute(NULL, _T("open"), appPathItems.mainModule.value, commandLine, NULL, SW_SHOWNORMAL);
 
-    ShellExecute(NULL, _T("open"), appPathItems.mainModule, commandLine, NULL, SW_SHOWNORMAL);
-
-    uninitializeAppPathItems(&appPathItems2);
+    uninitializeAppPathItems(&appPathItems);
 }
 
 void bootNormal(HINSTANCE hInstance)
