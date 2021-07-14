@@ -13,11 +13,14 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ヘッダー ファイル\app">
+      <UniqueIdentifier>{93353e85-b2ab-40d8-ba4d-5c4292bc1bc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\app">
+      <UniqueIdentifier>{c7a1e7c3-f1c3-468d-8915-af73b5fa250a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="logging.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -33,9 +36,6 @@
     <ClCompile Include="debug.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="pe_boot.c">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="commandline.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -47,6 +47,18 @@
     </ClCompile>
     <ClCompile Include="text.c">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="app_boot.c">
+      <Filter>ソース ファイル\app</Filter>
+    </ClCompile>
+    <ClCompile Include="app_path.c">
+      <Filter>ソース ファイル\app</Filter>
+    </ClCompile>
+    <ClCompile Include="app_commandline.c">
+      <Filter>ソース ファイル\app</Filter>
+    </ClCompile>
+    <ClCompile Include="main.c">
+      <Filter>ソース ファイル\app</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,9 +80,6 @@
     <ClInclude Include="debug.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="pe_boot.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="commandline.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -85,6 +94,18 @@
     </ClInclude>
     <ClInclude Include="text.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="app_path.h">
+      <Filter>ヘッダー ファイル\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app_boot.h">
+      <Filter>ヘッダー ファイル\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app_common.h">
+      <Filter>ヘッダー ファイル\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app_commandline.h">
+      <Filter>ヘッダー ファイル\app</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

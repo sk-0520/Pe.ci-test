@@ -9,7 +9,7 @@
 #include "path.h"
 #include "logging.h"
 #include "commandline.h"
-#include "pe_boot.h"
+#include "app_boot.h"
 
 
 TCHAR* tuneArg(const TCHAR* arg);

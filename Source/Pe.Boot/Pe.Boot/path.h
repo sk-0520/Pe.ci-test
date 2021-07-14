@@ -28,23 +28,6 @@ typedef struct _TAG_APP_PATH_ITEMS
     size_t mainModuleLength;
 } APP_PATH_ITEMS;
 
-typedef struct _TAG_APP_PATH_ITEMS2
-{
-    /// <summary>
-    /// 起動用アプリケーションファイルパス。
-    /// </summary>
-    TCHAR application;
-
-    /// <summary>
-    /// 起動用アプリケーションファイル親ディレクトリパス。
-    /// </summary>
-    TEXT rootDirectory;
-
-    /// <summary>
-    /// 本体ファイルパス。
-    /// </summary>
-    TEXT mainModule;
-} APP_PATH_ITEMS2;
 
 /// <summary>
 /// パスから親ディレクトリパスを取得。
@@ -87,8 +70,6 @@ size_t getApplicationPath(HINSTANCE hInstance, TCHAR* result);
 /// <returns></returns>
 TEXT getModulePath(HINSTANCE hInstance);
 
-#define getApplicationPath2() getModulePath(NULL)
-
 /// <summary>
 /// Pe 本体ファイルパスの取得。
 /// <para>Pe は起動用EXE(このモジュール)から本体(Pe.Main)を起動するのでその本体ファイルパスを取得する。</para>
@@ -106,4 +87,3 @@ TEXT getMainModulePath2(const TEXT* rootDirPath);
 /// <param name="result">各種パス情報の格納先。</param>
 void getAppPathItems(HMODULE hInstance, APP_PATH_ITEMS* result);
 
-void getAppPathItems2(APP_PATH_ITEMS2* result, HMODULE hInstance);

@@ -266,6 +266,7 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="app_commandline.c" />
     <ClCompile Include="commandline.c" />
     <ClCompile Include="debug.c" />
     <ClCompile Include="fsio.c" />
@@ -274,11 +275,14 @@
     <ClCompile Include="path.c" />
     <ClCompile Include="logging.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="pe_boot.c" />
+    <ClCompile Include="app_boot.c" />
+    <ClCompile Include="app_path.c" />
     <ClCompile Include="text.c" />
     <ClCompile Include="tstring.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="app_commandline.h" />
+    <ClInclude Include="app_common.h" />
     <ClInclude Include="commandline.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="debug.h" />
@@ -287,7 +291,8 @@
     <ClInclude Include="memory.h" />
     <ClInclude Include="path.h" />
     <ClInclude Include="logging.h" />
-    <ClInclude Include="pe_boot.h" />
+    <ClInclude Include="app_boot.h" />
+    <ClInclude Include="app_path.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="tstring.h" />

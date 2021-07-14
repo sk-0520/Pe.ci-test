@@ -1,4 +1,6 @@
 ﻿#include <windows.h>
+#include <crtdbg.h>
+
 
 #include "tstring.h"
 #include "path.h"
@@ -118,7 +120,7 @@ TEXT getMainModulePath2(const TEXT* rootDirPath)
     };
     size_t joinPathsLength = sizeof(joinPaths) / sizeof(joinPaths[0]);
 
-    size_t totalPathLength = 1 + joinPathsLength; // ディレクトリ区切り
+    size_t totalPathLength = rootDirPath->length + 1 + joinPathsLength; // ディレクトリ区切り
     for (size_t i = 0; i < joinPathsLength; i++) {
         const TCHAR* path = joinPaths[i];
         totalPathLength += getStringLength(path);
@@ -143,9 +145,3 @@ void getAppPathItems(HMODULE hInstance, APP_PATH_ITEMS* result)
 
     result->mainModuleLength = getMainModulePath(result->mainModule, result->rootDirectory);
 }
-
-void getAppPathItems2(APP_PATH_ITEMS2* result, HMODULE hInstance)
-{
-
-}
-

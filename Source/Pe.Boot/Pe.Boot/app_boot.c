@@ -1,4 +1,5 @@
-﻿#include "pe_boot.h"
+﻿#include "app_boot.h"
+#include "app_path.h"
 #include "path.h"
 #include "logging.h"
 #include "tstring.h"
@@ -44,9 +45,14 @@ static void bootCore(HINSTANCE hInstance, const TCHAR* commandLine)
     APP_PATH_ITEMS appPathItems;
     getAppPathItems(hInstance, &appPathItems);
 
+    APP_PATH_ITEMS2 appPathItems2;
+    initializeAppPathItems(&appPathItems2, hInstance);
+
     addVisualCppRuntimeRedist(appPathItems.rootDirectory);
 
     ShellExecute(NULL, _T("open"), appPathItems.mainModule, commandLine, NULL, SW_SHOWNORMAL);
+
+    uninitializeAppPathItems(&appPathItems2);
 }
 
 void bootNormal(HINSTANCE hInstance)

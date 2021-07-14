@@ -30,13 +30,6 @@ void freeCommandLine(const COMMAND_LINE_OPTION* commandLineOption)
     LocalFree((HLOCAL)commandLineOption->arguments);
 }
 
-EXECUTE_MODE getExecuteMode(const COMMAND_LINE_OPTION* commandLineOption)
-{
-    assert(commandLineOption);
-    //TODO: 判定処理
-    return EXECUTE_MODE_BOOT;
-}
-
 
 TCHAR* tuneArg(const TCHAR* arg)
 {
