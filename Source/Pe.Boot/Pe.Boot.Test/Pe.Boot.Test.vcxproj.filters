@@ -36,6 +36,9 @@
     <ClCompile Include="text.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="app_path.test.cpp">
+      <Filter>source\app</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
