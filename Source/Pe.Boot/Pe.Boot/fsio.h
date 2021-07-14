@@ -3,6 +3,8 @@
 
 #include <windows.h>
 
+#include "text.h"
+
 /// <summary>
 /// ファイルハンドル(ポインタ)ラッパー。
 /// </summary>
@@ -10,12 +12,11 @@ typedef struct _TAG_FILE_POINTER
 {
     /// <summary>
     /// ファイルパス。
-    /// <c>NULL</c>の場合無効(その場合handleもNULL)。
     /// </summary>
-    const TCHAR* path;
+    TEXT path;
     /// <summary>
     /// ファイルハンドル(ポインタ)。
-    /// <c>NULL</c>の場合無効(その場合pathもNULL)。
+    /// <c>NULL</c>の場合無効(その場合pathも無効)。
     /// </summary>
     HANDLE handle;
 } FILE_POINTER;
@@ -80,10 +81,10 @@ typedef enum _TAG_FILE_OPEN_MODE
     FILE_OPEN_MODE_TRUNCATE = TRUNCATE_EXISTING,
 } FILE_OPEN_MODE;
 
-FILE_POINTER createFile(const TCHAR* path);
-FILE_POINTER openFile(const TCHAR* path);
-FILE_POINTER openOrCreateFile(const TCHAR* path);
-bool closeFile(const FILE_POINTER* file);
+FILE_POINTER createFile(const TEXT* path);
+FILE_POINTER openFile(const TEXT* path);
+FILE_POINTER openOrCreateFile(const TEXT* path);
+bool closeFile(FILE_POINTER* file);
 
 /// <summary>
 /// 指定された FILE_POINTER が有効か。
