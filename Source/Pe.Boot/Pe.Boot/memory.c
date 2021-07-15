@@ -10,70 +10,87 @@
 
 #if MEM_CHECK
 
+#define MEM_CHECK_CALLER_FILE_PATH MAX_PATH
+
 #define MEM_CHECK_ALLOC_STOCK_LENGTH (1024 * 4)
-#define MEM_CHECK_PRINT_BUFFER_LENGTH (1024 * 2)
+#define MEM_CHECK_PRINT_BUFFER_LENGTH (100 + (MEM_CHECK_CALLER_FILE_PATH * 2))
+
 
 typedef struct
 {
     void* p;
-    TCHAR file[/*MAX_PATH */1024];
+    TCHAR file[MEM_CHECK_CALLER_FILE_PATH];
     size_t line;
-} MemCheckAllocStockItem;
+} mem_check__ALLOC_STOCK_ITEM;
 
-static MemCheckAllocStockItem memCheckAllocStocks[MEM_CHECK_ALLOC_STOCK_LENGTH] = { 0 };
-static size_t memCheckAllocStocksCount = 0;
+static mem_check__ALLOC_STOCK_ITEM mem_check__allocStocks[MEM_CHECK_ALLOC_STOCK_LENGTH] = { 0 };
+static size_t mem_check__allocStocksCount = 0;
 
-static void _mem_check_debugHeap(void* p, bool allocate, const TCHAR* _file, size_t _line)
+#define mem_check__debugOutput(format, ...) do { \
+    TCHAR mem_check__debugBuffer[MEM_CHECK_PRINT_BUFFER_LENGTH] = { 0 }; \
+    size_t mem_check__debugBufferLength = (sizeof(mem_check__debugBuffer) - 1) / sizeof(TCHAR); \
+    swprintf(mem_check__debugBuffer, mem_check__debugBufferLength, _T(format) NEWLINET, __VA_ARGS__); \
+    OutputDebugString(mem_check__debugBuffer); \
+} while (0)
+
+static void mem_check__debugHeap(void* p, bool allocate, const TCHAR * callerFile, size_t callerLine)
 {
-    TCHAR s[MEM_CHECK_PRINT_BUFFER_LENGTH] = { 0 };
-    swprintf(s, (sizeof(s) - 1) / sizeof(TCHAR), _T("[MEM] %c %p %s(%zu)%s"), allocate ? '+' : '-', p, _file, _line, NEWLINET);
-    OutputDebugString(s);
     if (allocate) {
+        bool stocked = false;
         for (size_t i = 0; i < MEM_CHECK_ALLOC_STOCK_LENGTH; i++) {
-            if (!memCheckAllocStocks[i].p) {
-                MemCheckAllocStockItem data = {
+            if (!mem_check__allocStocks[i].p) {
+                mem_check__debugOutput("[MEM:+] %p %s(%zu)", p, callerFile, callerLine);
+
+                mem_check__ALLOC_STOCK_ITEM data = {
                     .p = p,
-                    .line = _line,
+                    .line = callerLine,
                 };
                 data.file[0] = 0;
-                lstrcpy(data.file, _file);
+                lstrcpy(data.file, callerFile);
 
-                memCheckAllocStocks[i] = data;
-                memCheckAllocStocksCount += 1;
+                mem_check__allocStocks[i] = data;
+                mem_check__allocStocksCount += 1;
+                stocked = true;
                 break;
             }
         }
+
+        if (!stocked) {
+            mem_check__debugOutput("[MEM:STOCK:ERROR] %p %s(%zu)", p, callerFile, callerLine);
+        }
     } else {
+        bool exists = false;;
         for (size_t i = 0; i < MEM_CHECK_ALLOC_STOCK_LENGTH; i++) {
-            bool exists = false;;
-            MemCheckAllocStockItem existItem = { 0 };
-            if (memCheckAllocStocks[i].p == p) {
-                memCheckAllocStocksCount -= 1;
-                existItem = memCheckAllocStocks[i];
-                memset(&memCheckAllocStocks[i], 0, sizeof(MemCheckAllocStockItem));
+            if (mem_check__allocStocks[i].p == p) {
+                mem_check__debugOutput("[MEM:-] %p %s(%zu) - %s(%zu)", p, callerFile, callerLine, mem_check__allocStocks[i].file, mem_check__allocStocks[i].line);
+
+                mem_check__allocStocksCount -= 1;
+                memset(&mem_check__allocStocks[i], 0, sizeof(mem_check__ALLOC_STOCK_ITEM));
                 exists = true;
-                break;
             }
-            if (exists) {
-                TCHAR e[MEM_CHECK_PRINT_BUFFER_LENGTH] = { 0 };
-                swprintf(e, (sizeof(e) - 1) / sizeof(TCHAR), _T("[DMP:ERROR] %p %s(%zu) - %s(%zu)%s"), existItem.p, existItem.file, existItem.line, _file, _line, NEWLINET);
-                OutputDebugString(e);
-            }
+        }
+
+        if (!exists) {
+            mem_check__debugOutput("[MEM:NOTFOUND:ERROR] %p %s(%zu)", p, callerFile, callerLine);
         }
     }
 }
 
-void _mem_check_printAllocateMemory()
+void mem_check__printAllocateMemory(bool leak)
 {
     TCHAR head[MEM_CHECK_PRINT_BUFFER_LENGTH];
-    swprintf(head, (sizeof(head) - 1) / sizeof(TCHAR), _T("[MEM:%s:COUNT] %zu%s"), memCheckAllocStocksCount ? _T("ERROR") : _T("INFORMATION"), memCheckAllocStocksCount, NEWLINET);
+    swprintf(head, (sizeof(head) - 1) / sizeof(TCHAR), _T("[MEM:%s:COUNT] %zu%s"), mem_check__allocStocksCount && leak ? _T("ERROR") : _T("INFORMATION"), mem_check__allocStocksCount, NEWLINET);
     OutputDebugString(head);
 
     for (size_t i = 0; i < MEM_CHECK_ALLOC_STOCK_LENGTH; i++) {
-        MemCheckAllocStockItem item = memCheckAllocStocks[i];
+        mem_check__ALLOC_STOCK_ITEM item = mem_check__allocStocks[i];
         if (item.p) {
             TCHAR body[MEM_CHECK_PRINT_BUFFER_LENGTH];
-            swprintf(body, (sizeof(body) - 1) / sizeof(TCHAR), _T("[MEM:WARNING:LEAK] %p %s(%zu)%s"), item.p, item.file, item.line, NEWLINET);
+            TCHAR* format = leak
+                ? _T("[MEM:WARNING:LEAK] %p %s(%zu)%s")
+                : _T("[MEM:STOCK] %p %s(%zu)%s")
+                ;
+            swprintf(body, (sizeof(body) - 1) / sizeof(TCHAR), format, item.p, item.file, item.line, NEWLINET);
             OutputDebugString(body);
         }
     }
@@ -82,7 +99,7 @@ void _mem_check_printAllocateMemory()
 #endif
 
 #if MEM_CHECK
-void* _mem_check_allocateMemory(size_t bytes, bool zeroFill, const TCHAR* _file, size_t _line)
+void* mem_check__allocateMemory(size_t bytes, bool zeroFill, const TCHAR * callerFile, size_t callerLine)
 #else
 void* allocateMemory(size_t bytes, bool zeroFill)
 #endif
@@ -94,15 +111,15 @@ void* allocateMemory(size_t bytes, bool zeroFill)
 
     void* heap = HeapAlloc(hHeap, zeroFill ? HEAP_ZERO_MEMORY : 0, bytes);
 #if MEM_CHECK
-    _mem_check_debugHeap(heap, true, _file, _line);
+    mem_check__debugHeap(heap, true, callerFile, callerLine);
 #endif
     return heap;
 }
 
 #if MEM_CHECK
-void* _mem_check_allocateClearMemory(size_t count, size_t typeSize, const TCHAR* _file, size_t _line)
+void* mem_check__allocateClearMemory(size_t count, size_t typeSize, const TCHAR * callerFile, size_t callerLine)
 {
-    return _mem_check_allocateMemory(count * typeSize, true, _file, _line);
+    return mem_check__allocateMemory(count * typeSize, true, callerFile, callerLine);
 }
 #else
 void* allocateClearMemory(size_t count, size_t typeSize)
@@ -112,13 +129,13 @@ void* allocateClearMemory(size_t count, size_t typeSize)
 #endif
 
 #if MEM_CHECK
-void _mem_check_freeMemory(void* p, const TCHAR* _file, size_t _line)
+void mem_check__freeMemory(void* p, const TCHAR * callerFile, size_t callerLine)
 #else
 void freeMemory(void* p)
 #endif
 {
 #if MEM_CHECK
-    _mem_check_debugHeap(p, false, _file, _line);
+    mem_check__debugHeap(p, false, callerFile, callerLine);
 #endif
 
     HeapFree(GetProcessHeap(), 0, p);

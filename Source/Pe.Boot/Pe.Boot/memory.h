@@ -3,7 +3,7 @@
 #include <stddef.h>
 
 #if MEM_CHECK
-void _mem_check_printAllocateMemory();
+void mem_check__printAllocateMemory(bool leak);
 #endif
 
 /// <summary>
@@ -12,8 +12,8 @@ void _mem_check_printAllocateMemory();
 /// <param name="bytes">確保サイズ</param>
 /// <returns>確保した領域。<c>freeMemory</c>にて開放が必要。失敗時は<c>NULL</c>を返す。</returns>
 #if MEM_CHECK
-void* _mem_check_allocateMemory(size_t bytes, bool zeroFill, const TCHAR* _file, size_t _line);
-#   define allocateMemory(bytes, zeroFill) _mem_check_allocateMemory((bytes), (zeroFill), __FILEW__, __LINE__)
+void* mem_check__allocateMemory(size_t bytes, bool zeroFill, const TCHAR* callerFile, size_t callerLine);
+#   define allocateMemory(bytes, zeroFill) mem_check__allocateMemory((bytes), (zeroFill), __FILEW__, __LINE__)
 #else
 void* allocateMemory(size_t bytes, bool zeroFill);
 #endif
@@ -25,8 +25,8 @@ void* allocateMemory(size_t bytes, bool zeroFill);
 /// <param name="typeSize">型サイズ。</param>
 /// <returns>確保した領域。<c>freeMemory</c>にて開放が必要。失敗時は<c>NULL</c>を返す。</returns>
 #if MEM_CHECK
-void* _mem_check_allocateClearMemory(size_t count, size_t typeSize, const TCHAR* _file, size_t _line);
-#   define allocateClearMemory(count, typeSize) _mem_check_allocateClearMemory((count), (typeSize), __FILEW__, __LINE__)
+void* mem_check__allocateClearMemory(size_t count, size_t typeSize, const TCHAR* callerFile, size_t callerLine);
+#   define allocateClearMemory(count, typeSize) mem_check__allocateClearMemory((count), (typeSize), __FILEW__, __LINE__)
 #else
 void* allocateClearMemory(size_t count, size_t typeSize);
 #endif
@@ -37,8 +37,8 @@ void* allocateClearMemory(size_t count, size_t typeSize);
 /// <param name="p"></param>
 /// <returns></returns>
 #if MEM_CHECK
-void _mem_check_freeMemory(void* p, const TCHAR* _file, size_t _line);
-#   define freeMemory(p) _mem_check_freeMemory((p), __FILEW__, __LINE__)
+void mem_check__freeMemory(void* p, const TCHAR* callerFile, size_t callerLine);
+#   define freeMemory(p) mem_check__freeMemory((p), __FILEW__, __LINE__)
 #else
 void freeMemory(void* p);
 #endif

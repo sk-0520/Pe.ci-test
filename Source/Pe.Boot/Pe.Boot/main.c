@@ -16,7 +16,7 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     freeCommandLine(&commandLineOption);
 
 #if MEM_CHECK
-    _mem_check_printAllocateMemory();
+    mem_check__printAllocateMemory(true);
 #endif
 
     return resutnCode;

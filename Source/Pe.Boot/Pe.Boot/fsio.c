@@ -1,6 +1,6 @@
 ﻿#include "fsio.h"
 
-static FILE_POINTER _createInvalidFile()
+static FILE_POINTER createInvalidFile()
 {
     FILE_POINTER result = {
         .path = createEmptyText(),
@@ -12,15 +12,15 @@ static FILE_POINTER _createInvalidFile()
 static FILE_POINTER _openFileCore(const TEXT* path, FILE_ACCESS_MODE accessMode, FILE_SHARE_MODE sharedMode, FILE_OPEN_MODE openMode, DWORD attributes)
 {
     if (!path) {
-        return _createInvalidFile();
+        return createInvalidFile();
     }
     if (!path->value) {
-        return _createInvalidFile();
+        return createInvalidFile();
     }
 
     HANDLE handle = CreateFile(path->value, accessMode, sharedMode, NULL, openMode, attributes, NULL);
     if (!handle) {
-        return _createInvalidFile();
+        return createInvalidFile();
     }
 
     FILE_POINTER result = {
