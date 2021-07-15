@@ -48,7 +48,7 @@ typedef void (*funcFreeMapValue)(MAP_PAIR* pair);
 typedef struct tag_MAP
 {
     /// <summary>
-    /// キー・値。
+    /// キー・値の配列構造。
     /// </summary>
     MAP_PAIR* pairs;
     /// <summary>
@@ -68,7 +68,7 @@ typedef struct tag_MAP
 
         funcCompareMapKey compareMapKey;
         funcFreeMapValue freeValue;
-    } _mng;
+    } library;
 } MAP;
 
 /// <summary>
@@ -93,6 +93,7 @@ void freeMapValueNull(MAP_PAIR* pair);
 /// <param name="freeMapValue">値解放処理。</param>
 /// <returns></returns>
 MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue freeMapValue);
+#define createMapDefault(freeMapValue) createMap(MAP_DEFAULT_CAPACITY, compareMapKeyDefault, freeMapValue)
 
 /// <summary>
 /// マップの開放。

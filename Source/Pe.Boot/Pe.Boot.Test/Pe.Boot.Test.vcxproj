@@ -185,6 +185,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app_path.test.cpp" />
+    <ClCompile Include="map.test.cpp" />
     <ClCompile Include="memory.test.cpp" />
     <ClCompile Include="path.test.cpp" />
     <ClCompile Include="pch.cpp">
