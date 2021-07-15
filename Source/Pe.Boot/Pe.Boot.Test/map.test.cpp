@@ -196,5 +196,38 @@ namespace PeBootTest
             Assert::AreEqual((size_t)0, map.length);
         }
 
+        static int compareMapKeyIgnoreCase(const TEXT* a, const TEXT* b)
+        {
+            return compareString(a->value, b->value, true);
+        }
+
+        TEST_METHOD(compareTest)
+        {
+            MAP map_default = createMap(2, compareMapKeyDefault, freeMapValueNull);
+
+            TEXT key1 = wrap("key1");
+            TEXT key2 = wrap("key2");
+            TEXT key2_1 = wrap("KEY2");
+
+            BOX_INT value1 = create(1);
+            BOX_INT value2 = create(2);
+            BOX_INT value2_1= create(22);
+
+            addMap(&map_default, &key1, &value1, false);
+            addMap(&map_default, &key2, &value2, false);
+            Assert::IsNotNull(addMap(&map_default, &key2_1, &value2_1, false));
+            Assert::IsNull(addMap(&map_default, &key2_1, &value2_1, false));
+            Assert::AreEqual((size_t)3, map_default.length);
+
+            MAP map_ignore = createMap(2, compareMapKeyIgnoreCase, freeMapValueNull);
+            addMap(&map_ignore, &key1, &value1, false);
+            addMap(&map_ignore, &key2, &value2, false);
+            Assert::IsNull(addMap(&map_ignore, &key2_1, &value2_1, false));
+            Assert::IsNull(addMap(&map_ignore, &key2_1, &value2_1, false));
+            Assert::AreEqual((size_t)2, map_ignore.length);
+
+            freeMap(&map_default);
+            freeMap(&map_ignore);
+        }
     };
 }
