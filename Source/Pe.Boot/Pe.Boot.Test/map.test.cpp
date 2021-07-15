@@ -10,20 +10,6 @@ namespace PeBootTest
 {
     TEST_CLASS(mapTest)
     {
-    private:
-        struct BOX_INT
-        {
-            int value;
-        };
-
-        BOX_INT create(int value)
-        {
-            BOX_INT result{
-                value,
-            };
-            return result;
-        }
-
     public:
         TEST_METHOD(addMapTest)
         {
@@ -64,6 +50,28 @@ namespace PeBootTest
             freeMap(&map);
             Assert::IsNull(map.pairs);
             Assert::AreEqual((size_t)0, map.length);
+        }
+
+        TEST_METHOD(setMapTest)
+        {
+            MAP map = createMap(2, compareMapKeyDefault, freeMapValueNull);
+
+            TEXT key1 = wrap("key1");
+            BOX_INT value1 = create(1);
+            MAP_PAIR* pair1 = addMap(&map, &key1, &value1, false);
+            Assert::IsNotNull(pair1);
+            Assert::AreEqual(1, ((BOX_INT*)pair1->value)->value);
+            Assert::AreEqual((size_t)1, map.length);
+            Assert::AreEqual((size_t)2, map.library.capacity);
+
+            TEXT key1_2 = wrap("key1");
+            BOX_INT value1_2 = create(111);
+            MAP_PAIR* pair1_2 = setMap(&map, &key1_2, &value1_2, false);
+            Assert::IsNotNull(pair1_2);
+            Assert::AreEqual(111, ((BOX_INT*)pair1_2->value)->value);
+            Assert::AreEqual((size_t)1, map.length);
+            Assert::AreEqual((size_t)2, map.library.capacity);
+
         }
     };
 }

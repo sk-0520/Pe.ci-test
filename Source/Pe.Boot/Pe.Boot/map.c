@@ -100,7 +100,18 @@ MAP_PAIR* addMap(MAP* map, const TEXT* key, void* value, bool needRelease)
 
 MAP_PAIR* setMap(MAP* map, const TEXT* key, void* value, bool needRelease)
 {
-    return NULL;
+    MAP_PAIR* currentPair = findMap(map, key);
+    if (currentPair) {
+        if (currentPair->library.needRelease) {
+            map->library.freeValue(currentPair->value);
+        }
+        currentPair->value = value;
+        currentPair->library.needRelease = needRelease;
+    } else {
+        currentPair = addMap(map, key, value, needRelease);
+    }
+
+    return currentPair;
 }
 
 bool removeMap(MAP* map, const TEXT* key)

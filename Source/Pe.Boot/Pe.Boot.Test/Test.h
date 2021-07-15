@@ -29,6 +29,22 @@ namespace PeBootTest
 
     };
 
+    template<typename TPrimitive>
+    struct BOX
+    {
+        TPrimitive value;
+    };
+    using BOX_INT = BOX<int>;
+    using BOX_SIZE_T = BOX<size_t>;
+
+    template<typename TPrimitive>
+    BOX<TPrimitive> create(TPrimitive value)
+    {
+        BOX<TPrimitive> result = {
+            value,
+        };
+        return result;
+    }
 }
 
 
