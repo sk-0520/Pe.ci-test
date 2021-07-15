@@ -7,7 +7,7 @@
 static void convertMapFromArguments(MAP* result, const TEXT arguments[], size_t count)
 {
     for (size_t i = 0; i < count; i++) {
-
+        bool canNext = i + 1 < count;
     }
 }
 
