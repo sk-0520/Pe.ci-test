@@ -2,6 +2,7 @@
 #include "app_path.h"
 #include "path.h"
 #include "logging.h"
+#include "debug.h"
 #include "tstring.h"
 
 #define PATH_LENGTH (1024 * 4)

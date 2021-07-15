@@ -1,10 +1,12 @@
 ﻿#pragma once
 #include <tchar.h>
 
+#include "fsio.h"
+
 /// <summary>
 /// ログレベル。
 /// </summary>
-typedef enum
+typedef enum tag_LOG_LEVEL
 {
     LOG_LEVEL_TRACE,
     LOG_LEVEL_DEBUG,
@@ -13,13 +15,12 @@ typedef enum
     LOG_LEVEL_ERROR,
 } LOG_LEVEL;
 
-/// <summary>
-/// デバッグ時のみ使用可能なログ出力。
-///
-/// 内部的には<c>OutputDebugString</c>だが<c>DEBUG</c>定義がある場合にのみ使用される。
-/// </summary>
-/// <param name="s"></param>
-void outputDebug(const TCHAR* s);
+
+static LOG_LEVEL s_defaultLogLevel;
+static FILE_POINTER s_defaultLogFilePointer;
+
+void setupDefaultLog(FILE_POINTER* filePointer, LOG_LEVEL logLevel);
+void cleanupDefaultLog();
 
 /// <summary>
 /// ログ出力。
@@ -27,10 +28,11 @@ void outputDebug(const TCHAR* s);
 /// <param name="logLevel"></param>
 /// <param name="format"></param>
 /// <param name=""></param>
-void logging(LOG_LEVEL logLevel, const TCHAR* format, ...);
+void logging(LOG_LEVEL logLevel, const TCHAR* format, const TCHAR* file, size_t line, ...);
 
-#define logTrace(format, ...) do { logging(LOG_LEVEL_TRACE, format, __VA_ARGS__) } while(0)
-#define logDebug(format, ...) do { logging(LOG_LEVEL_DEBUG, format, __VA_ARGS__) } while(0)
-#define logInformation(format, ...) do { logging(LOG_LEVEL_INFO, format, __VA_ARGS__) } while(0)
-#define logWarning(format, ...) do { logging(LOG_LEVEL_WARNING, format, __VA_ARGS__) } while(0)
-#define logError(format, ...) do { logging(LOG_LEVEL_ERROR, format, __VA_ARGS__) } while(0)
+#define logLevel(level, format, ...) logging((level), __FILEW__, __LINE__, format, __VA_ARGS__)
+#define logTrace(format, ...) logging(LOG_LEVEL_TRACE, __FILEW__, __LINE__, format, __VA_ARGS__)
+#define logDebug(format, ...) logging(LOG_LEVEL_DEBUG, __FILEW__, __LINE__, format, __VA_ARGS__)
+#define logInformation(format, ...) logging(LOG_LEVEL_INFO, __FILEW__, __LINE__, format, __VA_ARGS__)
+#define logWarning(format, ...) logging(LOG_LEVEL_WARNING, __FILEW__, __LINE__, format, __VA_ARGS__)
+#define logError(format, ...) logging(LOG_LEVEL_ERROR, __FILEW__, __LINE__, format, __VA_ARGS__)
