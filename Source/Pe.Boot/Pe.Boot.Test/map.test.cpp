@@ -122,5 +122,39 @@ namespace PeBootTest
             Assert::AreEqual((size_t)0, map.length);
         }
 
+        TEST_METHOD(getMapTest)
+        {
+            MAP map = createMap(2, compareMapKeyDefault, freeMapValueNull);
+
+            TEXT key1 = wrap("key1");
+            BOX_INT value1 = create(1);
+            addMap(&map, &key1, &value1, false);
+
+            TEXT key2 = wrap("key2");
+            BOX_INT value2 = create(2);
+            addMap(&map, &key2, &value2, false);
+
+            TEXT key3 = wrap("key3");
+            BOX_INT value3 = create(3);
+            addMap(&map, &key3, &value3, false);
+
+            MAP_RESULT_VALUE result1 = getMap(&map, &key1);
+            Assert::IsTrue(result1.exists);
+            Assert::AreEqual(1, ((BOX_INT*)result1.value)->value);
+
+            MAP_RESULT_VALUE result2 = getMap(&map, &key2);
+            Assert::IsTrue(result2.exists);
+            Assert::AreEqual(2, ((BOX_INT*)result2.value)->value);
+
+            MAP_RESULT_VALUE result3 = getMap(&map, &key3);
+            Assert::IsTrue(result3.exists);
+            Assert::AreEqual(3, ((BOX_INT*)result3.value)->value);
+
+            removeMap(&map, &key2);
+
+            MAP_RESULT_VALUE result2_2 = getMap(&map, &key2);
+            Assert::IsFalse(result2_2.exists);
+        }
+
     };
 }

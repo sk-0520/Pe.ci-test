@@ -147,9 +147,20 @@ bool removeMap(MAP* map, const TEXT* key)
 
 MAP_RESULT_VALUE getMap(MAP* map, const TEXT* key)
 {
+    MAP_PAIR* pair = findMap(map, key);
+
+    if (!pair) {
+        MAP_RESULT_VALUE notFound = {
+            .value = NULL,
+            .exists = false,
+        };
+
+        return notFound;
+    }
+
     MAP_RESULT_VALUE result = {
-        NULL,
-        false,
+        .value = pair->value,
+        .exists = true,
     };
 
     return result;
