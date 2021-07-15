@@ -12,7 +12,7 @@
 /// <summary>
 /// 文字列キーと値のペア。
 /// </summary>
-typedef struct _TAG_MAP_PAIR
+typedef struct tag_MAP_PAIR
 {
     /// <summary>
     /// キー項目。
@@ -45,7 +45,7 @@ typedef void (*funcFreeMapValue)(MAP_PAIR* pair);
 ///
 /// 注意: 連想配列とは名ばかりの線形検索。
 /// </summary>
-typedef struct _TAG_MAP
+typedef struct tag_MAP
 {
     /// <summary>
     /// キー・値。

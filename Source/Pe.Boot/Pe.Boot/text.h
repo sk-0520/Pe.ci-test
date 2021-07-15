@@ -5,7 +5,7 @@
 /// <summary>
 /// 不変文字列ラッパー。
 /// </summary>
-typedef struct _TAG_TEXT
+typedef struct tag_TEXT
 {
     /// <summary>
     /// 値。

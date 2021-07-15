@@ -10,19 +10,6 @@
 
 #if MEM_CHECK
 
-#define MEM_CHECK_CALLER_FILE_PATH MAX_PATH
-
-#define MEM_CHECK_ALLOC_STOCK_LENGTH (1024 * 4)
-#define MEM_CHECK_PRINT_BUFFER_LENGTH (100 + (MEM_CHECK_CALLER_FILE_PATH * 2))
-
-
-typedef struct
-{
-    void* p;
-    TCHAR file[MEM_CHECK_CALLER_FILE_PATH];
-    size_t line;
-} mem_check__ALLOC_STOCK_ITEM;
-
 static mem_check__ALLOC_STOCK_ITEM mem_check__allocStocks[MEM_CHECK_ALLOC_STOCK_LENGTH] = { 0 };
 static size_t mem_check__allocStocksCount = 0;
 

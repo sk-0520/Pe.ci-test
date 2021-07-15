@@ -3,7 +3,7 @@
 /// <summary>
 /// 実行モード。
 /// </summary>
-typedef enum _TAG_EXECUTE_MODE
+typedef enum tag_EXECUTE_MODE
 {
     /// <summary>
     /// 通常起動。

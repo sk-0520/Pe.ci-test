@@ -4,7 +4,7 @@
 /// <summary>
 /// 各種パス情報。
 /// </summary>
-typedef struct _TAG_APP_PATH_ITEMS2
+typedef struct tag_APP_PATH_ITEMS2
 {
     /// <summary>
     /// 起動用アプリケーションファイルパス。

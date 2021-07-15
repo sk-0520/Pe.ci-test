@@ -4,7 +4,7 @@
 /// <summary>
 /// コマンドラインキーの識別子。
 /// </summary>
-typedef enum _TAG_COMMAND_LINE_MARK
+typedef enum tag_COMMAND_LINE_MARK
 {
     /// <summary>
     /// -
@@ -23,7 +23,7 @@ typedef enum _TAG_COMMAND_LINE_MARK
 /// <summary>
 /// コマンドラインキー。
 /// </summary>
-typedef struct _TAG_COMMAND_LINE_KEY
+typedef struct tag_COMMAND_LINE_KEY
 {
     /// <summary>
     /// コマンドラインキーの識別子。

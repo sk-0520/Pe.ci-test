@@ -5,7 +5,7 @@
 #include "text.h"
 
 
-typedef struct _TAG_COMMAND_LINE_ITEM
+typedef struct tag_COMMAND_LINE_ITEM
 {
     const TCHAR* key;
     const TCHAR* value;
@@ -14,7 +14,7 @@ typedef struct _TAG_COMMAND_LINE_ITEM
 /// <summary>
 /// コマンドラインオプション。
 /// </summary>
-typedef struct _TAG_COMMAND_LINE_OPTION
+typedef struct tag_COMMAND_LINE_OPTION
 {
     /// <summary>
     /// 引数一覧。

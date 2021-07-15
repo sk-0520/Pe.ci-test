@@ -8,7 +8,7 @@
 /// <summary>
 /// ファイルハンドル(ポインタ)ラッパー。
 /// </summary>
-typedef struct _TAG_FILE_POINTER
+typedef struct tag_FILE_POINTER
 {
     /// <summary>
     /// ファイルパス。
@@ -24,7 +24,7 @@ typedef struct _TAG_FILE_POINTER
 /// <summary>
 /// アクセスモード。
 /// </summary>
-typedef enum _TAG_FILE_ACCESS_MODE
+typedef enum tag_FILE_ACCESS_MODE
 {
     FILE_ACCESS_MODE_NONE = 0,
     /// <summary>
@@ -40,7 +40,7 @@ typedef enum _TAG_FILE_ACCESS_MODE
 /// <summary>
 /// 共有方法。
 /// </summary>
-typedef enum _TAG_FILE_SHARE_MODE
+typedef enum tag_FILE_SHARE_MODE
 {
     FILE_SHARE_MODE_NONE = 0,
     /// <summary>
@@ -57,7 +57,7 @@ typedef enum _TAG_FILE_SHARE_MODE
     FILE_SHARE_MODE_WRITE = FILE_SHARE_WRITE,
 } FILE_SHARE_MODE;
 
-typedef enum _TAG_FILE_OPEN_MODE
+typedef enum tag_FILE_OPEN_MODE
 {
     /// <summary>
     /// ファイルを作成。
