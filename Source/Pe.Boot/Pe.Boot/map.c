@@ -32,7 +32,7 @@ MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue
 static void freeMapPairValueOnly(MAP* map, MAP_PAIR* pair)
 {
     if (pair->library.needRelease) {
-        map->library.freeValue(pair->value);
+        map->library.freeValue(pair);
         pair->value = NULL;
     }
 }

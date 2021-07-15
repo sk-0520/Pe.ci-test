@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#define text(s) newText(_T(s))
 #define wrap(s) wrapText(_T(s))
 
 namespace PeBootTest

@@ -154,6 +154,46 @@ namespace PeBootTest
 
             MAP_RESULT_VALUE result2_2 = getMap(&map, &key2);
             Assert::IsFalse(result2_2.exists);
+
+            freeMap(&map);
+            Assert::IsNull(map.pairs);
+            Assert::AreEqual((size_t)0, map.length);
+        }
+
+        static void freeTextTest(MAP_PAIR* pair)
+        {
+            TEXT* p = (TEXT*)pair->value;
+            freeText(p);
+        }
+
+        TEST_METHOD(freeMapTest)
+        {
+            MAP map = createMap(2, compareMapKeyDefault, freeTextTest);
+
+            TEXT key1 = wrap("key1");
+            TEXT value1 = text("あいうえお");
+            addMap(&map, &key1, &value1, false);
+
+            MAP_RESULT_VALUE result1 = getMap(&map, &key1);
+            Assert::IsTrue(result1.exists);
+            TEXT* text1 = (TEXT*)result1.value;
+            Assert::AreEqual(value1.value, text1->value);
+            Assert::IsTrue(&value1 == text1);
+
+            TEXT value1_2 = text("アイウエオ");
+            setMap(&map, &key1, &value1_2, true);
+            Assert::IsFalse(value1.library.released);
+
+            freeText(&value1);
+            Assert::IsTrue(value1.library.released);
+
+            TEXT value1_3 = text("安以宇衣於");
+            setMap(&map, &key1, &value1_3, true);
+            Assert::IsTrue(value1_2.library.released);
+
+            freeMap(&map);
+            Assert::IsNull(map.pairs);
+            Assert::AreEqual((size_t)0, map.length);
         }
 
     };
