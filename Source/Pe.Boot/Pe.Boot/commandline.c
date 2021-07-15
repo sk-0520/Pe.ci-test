@@ -17,6 +17,20 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool commandStarts
         arguments[i] = wrapText(arg);
     }
 
+    TEXT* argumentsWithoutCommand;
+    TEXT* command;
+    if (commandStartsWith) {
+        if (1 < argc) {
+            argumentsWithoutCommand = arguments + 1;
+        } else {
+            argumentsWithoutCommand = NULL;
+        }
+        command = arguments;
+    } else {
+        argumentsWithoutCommand = arguments;
+        command = NULL;
+    }
+
     //size_t maxItemLength = (argc - 1) / 2;
     //COMMAND_LINE_ITEM* items = allocateClearMemory(maxItemLength, sizeof(COMMAND_LINE_ITEM));
     //for (size_t i = 0; i < maxItemLength; i++) {
@@ -24,11 +38,12 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool commandStarts
     //}
 
     COMMAND_LINE_OPTION result = {
-        .arguments = arguments,
+        .arguments = argumentsWithoutCommand,
         .count = argc,
         .library = {
             .argv = argv,
-            .command = commandStartsWith ? &arguments[0] : NULL,
+            .rawTextArguments = arguments,
+            .command = command,
         },
     };
 
@@ -37,7 +52,7 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool commandStarts
 
 void freeCommandLine(const COMMAND_LINE_OPTION* commandLineOption)
 {
-    freeMemory((void*)commandLineOption->arguments);
+    freeMemory((void*)commandLineOption->library.rawTextArguments);
     LocalFree((HLOCAL)commandLineOption->library.argv);
 }
 

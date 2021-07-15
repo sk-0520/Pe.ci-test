@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "text.h"
+#include "map.h"
 
 
 typedef struct tag_COMMAND_LINE_ITEM
@@ -18,19 +19,36 @@ typedef struct tag_COMMAND_LINE_OPTION
 {
     /// <summary>
     /// 引数一覧。
+    /// <para>起動コマンドは含まない。</para>
     /// </summary>
     const TEXT* arguments;
     /// <summary>
-    /// 引数の個数。
+    /// argumentsの個数。
     /// </summary>
     size_t count;
+    /// <summary>
+    /// キーと値のマッピング。
+    /// <para>キー項目のみは値がない。</para>
+    /// <para>Pe としては値だけを考慮する必要なし。</para>
+    /// </summary>
+    MAP pairs;
 
     /// <summary>
    /// 管理データ。
    /// </summary>
     struct
     {
+        /// <summary>
+        ///解放用データ。
+        /// </summary>
         TCHAR** argv;
+        /// <summary>
+        /// 解放用テキストデータ一覧。
+        /// </summary>
+        TEXT* rawTextArguments;
+        /// <summary>
+        /// 起動コマンド。
+        /// </summary>
         TEXT* command;
     } library;
 } COMMAND_LINE_OPTION;

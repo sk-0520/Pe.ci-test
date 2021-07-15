@@ -12,14 +12,14 @@ int getWaitTime(const TCHAR* s);
 
 int appMain(HINSTANCE hInstance, const COMMAND_LINE_OPTION* commandLineOption)
 {
-    if (commandLineOption->count <= 1) {
+    if (commandLineOption->count < 1) {
         // そのまま実行
         bootNormal(hInstance);
         return 0;
     }
 
     // コマンドライン渡して実行
-    size_t tunedArgsCount = commandLineOption->count - 1;
+    size_t tunedArgsCount = commandLineOption->count;
     TCHAR** tunedArgs = allocateClearMemory(tunedArgsCount, sizeof(TCHAR*));
     if (!tunedArgs) {
         // これもう立ち上げ不能だと思う
@@ -34,7 +34,7 @@ int appMain(HINSTANCE hInstance, const COMMAND_LINE_OPTION* commandLineOption)
     size_t skipIndex1 = SIZE_MAX;
     size_t skipIndex2 = SIZE_MAX;
 
-    for (size_t i = 1, j = 0; i < commandLineOption->count; i++, j++) {
+    for (size_t i = 0, j = 0; i < commandLineOption->count; i++, j++) {
         const TCHAR* workArg = commandLineOption->library.argv[i];
         outputDebug(workArg);
         TCHAR* tunedArg = tuneArg(workArg);
