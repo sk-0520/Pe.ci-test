@@ -8,8 +8,9 @@
 
 typedef struct tag_COMMAND_LINE_ITEM
 {
-    const TCHAR* key;
-    const TCHAR* value;
+    TEXT key;
+    TEXT* value;
+    size_t length;
 } COMMAND_LINE_ITEM;
 
 /// <summary>

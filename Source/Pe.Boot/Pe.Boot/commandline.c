@@ -4,6 +4,12 @@
 #include "memory.h"
 #include "tstring.h"
 
+static void convertMapFromArguments(MAP* result, const TEXT arguments[], size_t count)
+{
+    for (size_t i = 0; i < count; i++) {
+
+    }
+}
 
 COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool commandStartsWith)
 {
@@ -46,6 +52,7 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool commandStarts
             .command = command,
         },
     };
+    convertMapFromArguments(&result.pairs, result.arguments, result.count);
 
     return result;
 }
