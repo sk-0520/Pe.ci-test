@@ -11,6 +11,26 @@ namespace PeBootTest
     TEST_CLASS(mapTest)
     {
     public:
+        TEST_METHOD(initializeTest)
+        {
+            MAP map = createMap(2, compareMapKeyDefault, freeMapValueNull);
+            MAP_INIT init[] = {
+                { wrap("key1"), &(create(1)) },
+                { wrap("key2"), &(create(2)) },
+                { wrap("key3"), &(create(3)) },
+                { wrap("key4"), &(create(4)) },
+                { wrap("key5"), &(create(5)) },
+            };
+            Assert::IsTrue(initializeMap(&map, init, sizeof(init) / sizeof(init[0]), false));
+
+            Assert::AreEqual((size_t)5, map.length);
+            Assert::AreEqual((size_t)8, map.library.capacity);
+
+            freeMap(&map);
+            Assert::IsNull(map.pairs);
+            Assert::AreEqual((size_t)0, map.length);
+        }
+
         TEST_METHOD(addMapTest)
         {
             MAP map = createMap(2, compareMapKeyDefault, freeMapValueNull);

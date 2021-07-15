@@ -7,8 +7,6 @@
 
 #define MAP_DEFAULT_CAPACITY 16
 
-//#define MAP_MAX_KEY_LENGTH 64
-
 /// <summary>
 /// 文字列キーと値のペア。
 /// </summary>
@@ -36,6 +34,12 @@ typedef struct tag_MAP_PAIR
         bool needRelease;
     } library;
 } MAP_PAIR;
+
+typedef struct tag_MAP_INIT
+{
+    TEXT key;
+    void* value;
+} MAP_INIT;
 
 /// <summary>
 /// 値ラッパー。
@@ -109,6 +113,8 @@ void freeMapValueNull(MAP_PAIR* pair);
 /// <returns></returns>
 MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue freeMapValue);
 #define createMapDefault(freeMapValue) createMap(MAP_DEFAULT_CAPACITY, compareMapKeyDefault, freeMapPairValueOnly)
+
+bool initializeMap(MAP* map, MAP_INIT init[], size_t length, bool needRelease);
 
 /// <summary>
 /// マップの開放。

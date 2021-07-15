@@ -57,6 +57,19 @@ void freeMap(MAP* map)
     map->library.capacity = 0;
 }
 
+bool initializeMap(MAP* map, MAP_INIT init[], size_t length, bool needRelease)
+{
+    for (size_t i = 0; i < length; i++) {
+        MAP_INIT* item = &init[i];
+        bool result = addMap(map, &item->key, item->value, needRelease);
+        if (!result) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 static MAP_PAIR* findMap(const MAP* map, const TEXT* key)
 {
     for (size_t i = 0; i < map->length; i++) {
