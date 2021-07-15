@@ -9,10 +9,12 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace PeBootTest
 {
+#ifdef MEM_CHECK
     static void output(TCHAR* message)
     {
         Logger::WriteMessage(message);
     }
+#endif
 
     TEST_MODULE_CLEANUP(cleanup)
     {
