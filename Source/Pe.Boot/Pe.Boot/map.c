@@ -137,7 +137,12 @@ bool removeMap(MAP* map, const TEXT* key)
         return true;
     }
 
-    return false;
+    // 最後尾以外は前へずらす
+    freeMapPair(map, currentPair); // 解放するけどアドレスだけもうちと使う
+    size_t index = (size_t)(currentPair - map->pairs);
+    moveMemory(currentPair, currentPair + 1, sizeof(MAP_PAIR) * (map->length - index - 1));
+    map->length -= 1;
+    return true;
 }
 
 MAP_RESULT_VALUE getMap(MAP* map, const TEXT* key)

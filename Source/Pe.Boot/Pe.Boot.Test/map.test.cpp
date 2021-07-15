@@ -99,6 +99,24 @@ namespace PeBootTest
             Assert::AreEqual((size_t)2, map.length);
             Assert::IsTrue(pair2_2 == pair2); // ズレてないので一応使える(使用自体は想定していない)
 
+            Assert::IsTrue(removeMap(&map, &key1));
+            Assert::AreEqual((size_t)1, map.length);
+            Assert::AreEqual(22, ((BOX_INT*)pair1->value)->value);// ズレてるので当時の後ろのやつを指している(使用自体は想定していない)
+
+            BOX_INT value1_2 = create(11);
+            MAP_PAIR* pair1_2 = addMap(&map, &key1, &value1_2, false);
+
+            TEXT key3 = wrap("key3");
+            BOX_INT value3 = create(3);
+            MAP_PAIR* pair3 = addMap(&map, &key3, &value3, false);
+            Assert::IsNotNull(pair3);
+            Assert::AreEqual((size_t)3, map.length);
+
+            Assert::IsTrue(removeMap(&map, &key1));
+            Assert::AreEqual((size_t)2, map.length);
+            Assert::AreEqual(22, ((BOX_INT*)pair1->value)->value);// ズレてるので当時の後ろのやつを指している(使用自体は想定していない)
+            Assert::AreEqual(11, ((BOX_INT*)pair1_2->value)->value);// ズレてるので当時の後ろのやつを指している(使用自体は想定していない)
+
             freeMap(&map);
             Assert::IsNull(map.pairs);
             Assert::AreEqual((size_t)0, map.length);
