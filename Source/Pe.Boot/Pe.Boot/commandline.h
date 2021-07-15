@@ -31,6 +31,7 @@ typedef struct _TAG_COMMAND_LINE_OPTION
     struct
     {
         TCHAR** argv;
+        TEXT* command;
     } library;
 } COMMAND_LINE_OPTION;
 
@@ -38,8 +39,9 @@ typedef struct _TAG_COMMAND_LINE_OPTION
 /// コマンドライン文字列を分解。
 /// </summary>
 /// <param name="commandLine"></param>
+/// <param name="commandStartsWith">commandLineに起動コマンド(プログラム)が含まれているか</param>
 /// <returns>分解結果。freeCommandLine による開放が必要。</returns>
-COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine);
+COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool commandStartsWith);
 
 /// <summary>
 /// コマンドラインオプションを解放。

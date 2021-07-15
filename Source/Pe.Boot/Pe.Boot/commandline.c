@@ -5,7 +5,7 @@
 #include "tstring.h"
 
 
-COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine)
+COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool commandStartsWith)
 {
     int tempArgc;
     TCHAR** argv = CommandLineToArgvW(commandLine->value, &tempArgc);
@@ -28,6 +28,7 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine)
         .count = argc,
         .library = {
             .argv = argv,
+            .command = commandStartsWith ? &arguments[0] : NULL,
         }
     };
 

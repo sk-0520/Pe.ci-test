@@ -8,7 +8,7 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 {
     debug("!START!");
     TEXT commandLine = wrapText(GetCommandLine());
-    COMMAND_LINE_OPTION commandLineOption = parseCommandLine(&commandLine);
+    COMMAND_LINE_OPTION commandLineOption = parseCommandLine(&commandLine, true);
 
     int resutnCode = appMain(hInstance, &commandLineOption);
     //int resutnCode = 0;
