@@ -37,6 +37,21 @@ typedef struct tag_MAP_PAIR
     } library;
 } MAP_PAIR;
 
+/// <summary>
+/// 値ラッパー。
+/// </summary>
+typedef struct tag_MAP_RESULT_VALUE
+{
+    /// <summary>
+    /// 格納されている値。
+    /// </summary>
+    void* value;
+    /// <summary>
+    /// 値は取得できたか。
+    /// </summary>
+    bool exists;
+} MAP_RESULT_VALUE;
+
 typedef int (*funcCompareMapKey)(const TEXT* a, const TEXT* b);
 typedef void (*funcFreeMapValue)(MAP_PAIR* pair);
 
@@ -137,4 +152,11 @@ MAP_PAIR* setMap(MAP* map, const TEXT* key, void* value, bool needRelease);
 /// <returns>削除の成功状態。</returns>
 bool removeMap(MAP* map, const TEXT* key);
 
+/// <summary>
+/// 取得。
+/// </summary>
+/// <param name="map">対象マップ。</param>
+/// <param name="key">キー。</param>
+/// <returns>取得データ。</returns>
+MAP_RESULT_VALUE getMap(MAP* map, const TEXT* key);
 

@@ -118,3 +118,13 @@ bool removeMap(MAP* map, const TEXT* key)
 {
     return false;
 }
+
+MAP_RESULT_VALUE getMap(MAP* map, const TEXT* key)
+{
+    MAP_RESULT_VALUE result = {
+        NULL,
+        false,
+    };
+
+    return result;
+}
