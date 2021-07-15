@@ -49,6 +49,9 @@ namespace PeBootTest
 
             Assert::IsTrue(c.library.released);
             Assert::IsFalse(w.library.released);
+
+            Assert::IsTrue(freeText(&dc));
+            Assert::IsFalse(freeText(&dw));
         }
 
     };

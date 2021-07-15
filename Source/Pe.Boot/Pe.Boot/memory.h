@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#if MEM_CHECK
+#ifdef MEM_CHECK
 
 #define MEM_CHECK_CALLER_FILE_PATH 260
 
@@ -17,7 +17,7 @@ typedef struct
     size_t line;
 } mem_check__ALLOC_STOCK_ITEM;
 
-void mem_check__printAllocateMemory(bool leak);
+void mem_check__printAllocateMemory(bool leak, void(*output)(TCHAR*), bool addNewLine);
 #endif
 
 /// <summary>
@@ -25,7 +25,7 @@ void mem_check__printAllocateMemory(bool leak);
 /// </summary>
 /// <param name="bytes">確保サイズ</param>
 /// <returns>確保した領域。<c>freeMemory</c>にて開放が必要。失敗時は<c>NULL</c>を返す。</returns>
-#if MEM_CHECK
+#ifdef MEM_CHECK
 void* mem_check__allocateMemory(size_t bytes, bool zeroFill, const TCHAR* callerFile, size_t callerLine);
 #   define allocateMemory(bytes, zeroFill) mem_check__allocateMemory((bytes), (zeroFill), __FILEW__, __LINE__)
 #else
@@ -38,7 +38,7 @@ void* allocateMemory(size_t bytes, bool zeroFill);
 /// <param name="count">確保する個数。</param>
 /// <param name="typeSize">型サイズ。</param>
 /// <returns>確保した領域。<c>freeMemory</c>にて開放が必要。失敗時は<c>NULL</c>を返す。</returns>
-#if MEM_CHECK
+#ifdef MEM_CHECK
 void* mem_check__allocateClearMemory(size_t count, size_t typeSize, const TCHAR* callerFile, size_t callerLine);
 #   define allocateClearMemory(count, typeSize) mem_check__allocateClearMemory((count), (typeSize), __FILEW__, __LINE__)
 #else
@@ -50,7 +50,7 @@ void* allocateClearMemory(size_t count, size_t typeSize);
 /// </summary>
 /// <param name="p"></param>
 /// <returns></returns>
-#if MEM_CHECK
+#ifdef MEM_CHECK
 void mem_check__freeMemory(void* p, const TCHAR* callerFile, size_t callerLine);
 #   define freeMemory(p) mem_check__freeMemory((p), __FILEW__, __LINE__)
 #else

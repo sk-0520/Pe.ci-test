@@ -29,16 +29,26 @@ MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue
     return map;
 }
 
+static void freeMapPairValueOnly(MAP* map, MAP_PAIR* pair)
+{
+    if (pair->library.needRelease) {
+        map->library.freeValue(pair->value);
+        pair->value = NULL;
+    }
+}
+
+static void freeMapPair(MAP* map, MAP_PAIR* pair)
+{
+    freeText(&pair->key);
+    freeMapPairValueOnly(map, pair);
+}
+
 void freeMap(MAP* map)
 {
     for (size_t i = 0; i < map->length; i++) {
         MAP_PAIR* pair = &(map->pairs[i]);
 
-        freeText(&pair->key);
-
-        if (pair->library.needRelease) {
-            map->library.freeValue(pair->value);
-        }
+        freeMapPair(map, pair);
     }
 
     freeMemory(map->pairs);
@@ -102,9 +112,8 @@ MAP_PAIR* setMap(MAP* map, const TEXT* key, void* value, bool needRelease)
 {
     MAP_PAIR* currentPair = findMap(map, key);
     if (currentPair) {
-        if (currentPair->library.needRelease) {
-            map->library.freeValue(currentPair->value);
-        }
+        freeMapPairValueOnly(map, currentPair);
+
         currentPair->value = value;
         currentPair->library.needRelease = needRelease;
     } else {
@@ -116,6 +125,18 @@ MAP_PAIR* setMap(MAP* map, const TEXT* key, void* value, bool needRelease)
 
 bool removeMap(MAP* map, const TEXT* key)
 {
+    MAP_PAIR* currentPair = findMap(map, key);
+    if (!currentPair) {
+        return false;
+    }
+
+    if (currentPair == &map->pairs[map->length - 1]) {
+        // 最後尾の場合はずらさず要素の破棄のみ行う
+        freeMapPair(map, currentPair);
+        map->length -= 1;
+        return true;
+    }
+
     return false;
 }
 

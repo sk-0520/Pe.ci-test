@@ -29,7 +29,7 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool commandStarts
         .library = {
             .argv = argv,
             .command = commandStartsWith ? &arguments[0] : NULL,
-        }
+        },
     };
 
     return result;

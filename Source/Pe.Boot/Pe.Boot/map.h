@@ -108,7 +108,7 @@ void freeMapValueNull(MAP_PAIR* pair);
 /// <param name="freeMapValue">値解放処理。</param>
 /// <returns></returns>
 MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue freeMapValue);
-#define createMapDefault(freeMapValue) createMap(MAP_DEFAULT_CAPACITY, compareMapKeyDefault, freeMapValue)
+#define createMapDefault(freeMapValue) createMap(MAP_DEFAULT_CAPACITY, compareMapKeyDefault, freeMapPairValueOnly)
 
 /// <summary>
 /// マップの開放。
@@ -146,6 +146,7 @@ MAP_PAIR* addMap(MAP* map, const TEXT* key, void* value, bool needRelease);
 MAP_PAIR* setMap(MAP* map, const TEXT* key, void* value, bool needRelease);
 /// <summary>
 /// 削除。
+/// 詰め処理が行われているため呼び出し前の<c>MAP_PAIR*</c>は使用不可になる。
 /// </summary>
 /// <param name="map">対象マップ。</param>
 /// <param name="key">キー。</param>

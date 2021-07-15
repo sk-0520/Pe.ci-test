@@ -65,13 +65,44 @@ namespace PeBootTest
             Assert::AreEqual((size_t)2, map.library.capacity);
 
             TEXT key1_2 = wrap("key1");
-            BOX_INT value1_2 = create(111);
+            BOX_INT value1_2 = create(11);
             MAP_PAIR* pair1_2 = setMap(&map, &key1_2, &value1_2, false);
             Assert::IsNotNull(pair1_2);
             Assert::IsTrue(pair1_2 == pair1);
-            Assert::AreEqual(111, ((BOX_INT*)pair1_2->value)->value);
+            Assert::AreEqual(11, ((BOX_INT*)pair1_2->value)->value);
             Assert::AreEqual((size_t)1, map.length);
             Assert::AreEqual((size_t)2, map.library.capacity);
+
+            freeMap(&map);
+            Assert::IsNull(map.pairs);
+            Assert::AreEqual((size_t)0, map.length);
         }
+
+        TEST_METHOD(removeMapTest)
+        {
+            MAP map = createMap(2, compareMapKeyDefault, freeMapValueNull);
+
+            TEXT key1 = wrap("key1");
+            BOX_INT value1 = create(1);
+            MAP_PAIR* pair1 = addMap(&map, &key1, &value1, false);
+
+            TEXT key2 = wrap("key2");
+            BOX_INT value2 = create(2);
+            MAP_PAIR* pair2 = addMap(&map, &key2, &value2, false);
+
+            Assert::AreEqual((size_t)2, map.length);
+            Assert::IsTrue(removeMap(&map, &key2));
+            Assert::AreEqual((size_t)1, map.length);
+
+            BOX_INT value2_2 = create(22);
+            MAP_PAIR* pair2_2 = addMap(&map, &key2, &value2_2, false);
+            Assert::AreEqual((size_t)2, map.length);
+            Assert::IsTrue(pair2_2 == pair2); // ズレてないので一応使える(使用自体は想定していない)
+
+            freeMap(&map);
+            Assert::IsNull(map.pairs);
+            Assert::AreEqual((size_t)0, map.length);
+        }
+
     };
 }
