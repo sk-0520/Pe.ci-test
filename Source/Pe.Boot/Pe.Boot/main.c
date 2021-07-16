@@ -4,6 +4,13 @@
 #include "memory.h"
 #include "app_main.h"
 
+#ifdef MEM_CHECK
+static void output(const TCHAR* s)
+{
+    OutputDebugString(s);
+}
+#endif
+
 int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPTSTR lpCmdLine, _In_ int nCmdShow)
 {
     debug("!START!");
@@ -16,7 +23,7 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     freeCommandLine(&commandLineOption);
 
 #ifdef MEM_CHECK
-    mem_check__printAllocateMemory(true, OutputDebugString, true);
+    mem_check__printAllocateMemory(true, output, true);
 #endif
 
     return resutnCode;
