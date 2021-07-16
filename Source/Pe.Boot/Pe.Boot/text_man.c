@@ -127,9 +127,34 @@ TEXT addText(const TEXT* source, const TEXT* text)
 
     size_t bufferLength = source->length + text->length;
     TCHAR* buffer = allocateString(bufferLength);
-    copyMemory(buffer, (void*)source->value, source->length * sizeof(TCHAR));
-    copyMemory(buffer + source->length, (void*)text->value, text->length * sizeof(TCHAR));
+    copyMemory(buffer, source->value, source->length * sizeof(TCHAR));
+    copyMemory(buffer + source->length, text->value, text->length * sizeof(TCHAR));
     buffer[bufferLength] = 0;
 
     return wrapTextWithLength(buffer, bufferLength, true);
 }
+
+TEXT joinText(const TEXT* separator, const TEXT texts[], size_t count)
+{
+    size_t totalLength = separator->length ? separator->length * count - 1 : 0;
+    for (size_t i = 0; i < count; i++) {
+        totalLength += (texts + i)->length;
+    }
+
+    TCHAR* buffer = allocateString(totalLength);
+    size_t currentPosition = 0;
+    for (size_t i = 0; i < count; i++) {
+        if (i) {
+            copyMemory(buffer + currentPosition, separator->value, separator->length * sizeof(TCHAR));
+            currentPosition += separator->length;
+        }
+
+        const TEXT* text = texts + i;
+        copyMemory(buffer + currentPosition, text->value, text->length * sizeof(TCHAR));
+        currentPosition += text->length;
+    }
+    buffer[totalLength] = 0;
+
+    return wrapTextWithLength(buffer, totalLength, 0);
+}
+

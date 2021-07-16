@@ -267,5 +267,34 @@ namespace PeBootTest
             freeText(&actual_bb);
         }
 
+        TEST_METHOD(joinTextTest)
+        {
+            TCHAR* expected1 = _T("1,2,3");
+            TEXT input1[] = {
+                wrap("1"),
+                wrap("2"),
+                wrap("3"),
+            };
+            TEXT sep1 = wrap(",");
+            TEXT actual1 = joinText(&sep1, input1, SIZEOF_ARRAY(input1));
+            Assert::AreEqual(expected1, actual1.value);
+            freeText(&actual1);
+
+            TCHAR* expected2 = _T("123");
+            TEXT input2[] = {
+                wrap(""),
+                wrap("1"),
+                wrap(""),
+                wrap("2"),
+                wrap(""),
+                wrap("3"),
+                wrap(""),
+            };
+            TEXT sep2 = wrap("");
+            TEXT actual2 = joinText(&sep2, input2, SIZEOF_ARRAY(input2));
+            Assert::AreEqual(expected2, actual2.value);
+            freeText(&actual2);
+        }
+
     };
 }

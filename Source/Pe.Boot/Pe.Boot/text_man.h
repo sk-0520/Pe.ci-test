@@ -97,3 +97,12 @@ TEXT_PARSED_INT64_RESULT parseLong(const TEXT* input, bool supportHex);
 /// <param name="text">追加対象テキスト。</param>
 /// <returns>追加済みテキスト。解放が必要。</returns>
 TEXT addText(const TEXT* source, const TEXT* text);
+
+/// <summary>
+/// テキスト結合。
+/// </summary>
+/// <param name="separator">セパレータ。</param>
+/// <param name="texts">結合するテキスト。</param>
+/// <param name="count">textsの個数。</param>
+/// <returns>結合済みテキスト。解放が必要。</returns>
+TEXT joinText(const TEXT* separator, const TEXT texts[], size_t count);
