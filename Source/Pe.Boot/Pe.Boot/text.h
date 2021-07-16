@@ -35,35 +35,35 @@ typedef struct tag_TEXT
 } TEXT;
 
 /// <summary>
-/// 空の不変文字列を生成。
+/// 空のテキストを生成。
 /// </summary>
 /// <returns>領域自体がNULLの不変文字列(通常使用は出来ない)。</returns>
 TEXT createEmptyText();
 
 /// <summary>
-/// 不変文字列が使用可能か。
+/// テキストが使用可能か。
 /// </summary>
 /// <param name="text"></param>
 /// <returns></returns>
 bool isEnabledText(const TEXT* text);
 
 /// <summary>
-/// 不変文字列を生成。
+/// テキストを生成。
 /// </summary>
 /// <param name="source">対象文字列。</param>
 /// <param name="length">対象文字列の長さ。</param>
-/// <returns>不変文字列。</returns>
+/// <returns>不変文字列。解放が必要。</returns>
 TEXT newTextWithLength(const TCHAR* source, size_t length);
 
 /// <summary>
-/// 不変文字列を生成。
+/// テキストを生成。
 /// </summary>
 /// <param name="source">対象文字列。</param>
-/// <returns>不変文字列。</returns>
+/// <returns>テキスト。解放が必要。</returns>
 TEXT newText(const TCHAR* source);
 
 /// <summary>
-/// 文字列から不変文字列にラップ。
+/// 文字列からテキストにラップ。
 /// </summary>
 /// <param name="source">対象文字列。</param>
 /// <param name="length">対象文字列の長さ。</param>
@@ -72,11 +72,11 @@ TEXT newText(const TCHAR* source);
 TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease);
 
 /// <summary>
-/// 文字列から不変文字列にラップ。
+/// 文字列からテキストにラップ。
 /// <para>スタック内で元文字列を変更せずに使用することが前提条件。</para>
 /// </summary>
 /// <param name="source">対象文字列。</param>
-/// <returns>不変文字列。</returns>
+/// <returns>テキスト。解放不要。</returns>
 TEXT wrapText(const TCHAR* source);
 
 
@@ -84,7 +84,7 @@ TEXT wrapText(const TCHAR* source);
 /// 不変文字列の複製。
 /// </summary>
 /// <param name="source">入力不変文字列。</param>
-/// <returns>複製された不変文字列。</returns>
+/// <returns>複製された不変文字列。解放が必要。</returns>
 TEXT cloneText(const TEXT* source);
 
 /// <summary>

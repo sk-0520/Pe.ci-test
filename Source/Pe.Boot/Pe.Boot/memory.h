@@ -73,7 +73,7 @@ void* setMemory(void* target, unsigned char value, size_t bytes);
 /// <param name="source">コピー元。</param>
 /// <param name="bytes">コピーサイズ。</param>
 /// <returns></returns>
-void* copyMemory(void* destination, void* source, size_t bytes);
+void* copyMemory(void* destination, const void* source, size_t bytes);
 
 /// <summary>
 /// <c>memmove</c>する。
@@ -82,4 +82,4 @@ void* copyMemory(void* destination, void* source, size_t bytes);
 /// <param name="source">移動元。</param>
 /// <param name="bytes">移動サイズ。</param>
 /// <returns></returns>
-void* moveMemory(void* destination, void* source, size_t bytes);
+void* moveMemory(void* destination, const void* source, size_t bytes);

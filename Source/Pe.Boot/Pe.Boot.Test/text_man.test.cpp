@@ -231,5 +231,41 @@ namespace PeBootTest
             }
         }
 
+        TEST_METHOD(addText_normal_Test)
+        {
+            auto tests = {
+                TestData(_T("ab"), wrap("a"), wrap("b")),
+                TestData(_T("a"), wrap("a"), wrap("")),
+                TestData(_T("b"), wrap(""), wrap("b")),
+                TestData(_T("🐭🐮🐯🐰🐉🐍🐴🐏🐵🐔🐶🐷"), wrap("🐭🐮🐯🐰🐉🐍"), wrap("🐴🐏🐵🐔🐶🐷")),
+            };
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                TEXT& arg2 = std::get<1>(test.inputs);
+                TEXT actual = addText(&arg1, &arg2);
+                Assert::AreEqual(test.expected, actual.value);
+                freeText(&actual);
+            }
+        }
+
+        TEST_METHOD(addText_fail_Test)
+        {
+            TEXT a = wrap("");
+            TEXT b = createEmptyText();
+
+            TEXT actual_ab = addText(&a, &b);
+            Assert::IsTrue(isEnabledText(&actual_ab));
+
+            TEXT actual_ba = addText(&b, &a);
+            Assert::IsTrue(isEnabledText(&actual_ba));
+
+            TEXT actual_bb = addText(&b, &b);
+            Assert::IsFalse(isEnabledText(&actual_bb));
+
+            freeText(&actual_ab);
+            freeText(&actual_ba);
+            freeText(&actual_bb);
+        }
+
     };
 }

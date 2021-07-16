@@ -144,13 +144,13 @@ void* setMemory(void* target, unsigned char value, size_t bytes)
     return FillMemory(target, bytes, value);
 }
 
-void* copyMemory(void* destination, void* source, size_t bytes)
+void* copyMemory(void* destination, const void* source, size_t bytes)
 {
     //NOTE: CRT!
     return CopyMemory(destination, source, bytes);
 }
 
-void* moveMemory(void* destination, void* source, size_t bytes)
+void* moveMemory(void* destination, const void* source, size_t bytes)
 {
     //NOTE: CRT!
     return MoveMemory(destination, source, bytes);

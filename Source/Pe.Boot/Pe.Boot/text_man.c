@@ -110,3 +110,26 @@ TEXT_PARSED_INT64_RESULT parseLong(const TEXT* input, bool supportHex)
 
 }
 
+TEXT addText(const TEXT* source, const TEXT* text)
+{
+    bool enabledSource = isEnabledText(source);
+    bool enabledText = isEnabledText(text);
+
+    if (!enabledSource && !enabledText) {
+        return createEmptyText();
+    }
+    if (!enabledSource) {
+        return cloneText(text);
+    }
+    if (!enabledText) {
+        return cloneText(source);
+    }
+
+    size_t bufferLength = source->length + text->length;
+    TCHAR* buffer = allocateString(bufferLength);
+    copyMemory(buffer, (void*)source->value, source->length * sizeof(TCHAR));
+    copyMemory(buffer + source->length, (void*)text->value, text->length * sizeof(TCHAR));
+    buffer[bufferLength] = 0;
+
+    return wrapTextWithLength(buffer, bufferLength, true);
+}

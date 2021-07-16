@@ -1,15 +1,35 @@
 ﻿#pragma once
 #include "text.h"
 
+/// <summary>
+/// 数値(64bit幅)変換結果。
+/// </summary>
 typedef struct tag_TEXT_PARSED_INT32_RESULT
 {
+    /// <summary>
+    /// 変換値。
+    /// <para>successが真の場合に有効値が設定される。</para>
+    /// </summary>
     __int32 value;
+    /// <summary>
+    /// 変換成功状態。
+    /// </summary>
     bool success;
 } TEXT_PARSED_INT32_RESULT;
 
+/// <summary>
+/// 数値(64bit幅)変換結果。
+/// </summary>
 typedef struct tag_TEXT_PARSED_INT64_RESULT
 {
+    /// <summary>
+    /// 変換値。
+    /// <para>successが真の場合に有効値が設定される。</para>
+    /// </summary>
     __int64 value;
+    /// <summary>
+    /// 変換成功状態。
+    /// </summary>
     bool success;
 } TEXT_PARSED_INT64_RESULT;
 
@@ -69,3 +89,11 @@ TEXT_PARSED_INT32_RESULT parseInteger(const TEXT* input, bool supportHex);
 /// <param name="supportHex">16進数(0x)を考慮するか</param>
 /// <returns>結果データ。</returns>
 TEXT_PARSED_INT64_RESULT parseLong(const TEXT* input, bool supportHex);
+
+/// <summary>
+/// テキスト追加。
+/// </summary>
+/// <param name="source">追加元テキスト。</param>
+/// <param name="text">追加対象テキスト。</param>
+/// <returns>追加済みテキスト。解放が必要。</returns>
+TEXT addText(const TEXT* source, const TEXT* text);
