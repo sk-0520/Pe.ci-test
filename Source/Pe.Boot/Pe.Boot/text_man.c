@@ -67,6 +67,20 @@ int compareText(const TEXT* a, const TEXT* b, bool ignoreCase)
         ;
 }
 
+TEXT_COMPARE_RESULT compareTextDetail(const TEXT* a, const TEXT* b, ssize_t width, LOCALE_TYPE locale, TEXT_COMPARE_MODE mode)
+{
+    if (!width) {
+        TEXT_COMPARE_RESULT none = {
+            .compare = 0,
+            .success = true,
+        };
+        return none;
+    }
+
+    //CompareString(locale, mode, a->value, )
+}
+
+
 bool startsWithText(const TEXT* text, const TEXT* word)
 {
     if (text->length < word->length) {

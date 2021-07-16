@@ -1,6 +1,40 @@
 ﻿#pragma once
 #include "text.h"
 
+typedef enum tag_TEXT_COMPARE_MODE
+{
+    /// <summary>
+    /// 大文字と小文字を区別しない。
+    /// </summary>
+    TEXT_COMPARE_MODE_IGNORE_CASE = NORM_IGNORECASE,
+    /// <summary>
+    /// ひらがなとカタカナを区別しない。
+    /// </summary>
+    TEXT_COMPARE_MODE_IGNORE_KANA = NORM_IGNOREKANATYPE,
+    /// <summary>
+    /// アクセントとかを区別しない。
+    /// </summary>
+    TEXT_COMPARE_MODE_IGNORE_NONSPACE = NORM_IGNORENONSPACE,
+    /// <summary>
+    /// 記号を区別しない。
+    /// </summary>
+    TEXT_COMPARE_MODE_IGNORE_SYMBOLS = NORM_IGNORESYMBOLS,
+    /// <summary>
+    /// 全角半角を区別しない。
+    /// </summary>
+    TEXT_COMPARE_MODE_IGNORE_WIDTH = NORM_IGNOREWIDTH,
+    /// <summary>
+    /// 区切り記号を記号として扱う。
+    /// </summary>
+    TEXT_COMPARE_MODE_STRING_SORT = SORT_STRINGSORT,
+} TEXT_COMPARE_MODE;
+
+typedef struct tag_TEXT_COMPARE_RESULT
+{
+    int compare;
+    bool success;
+} TEXT_COMPARE_RESULT;
+
 /// <summary>
 /// 空テキストの無視設定
 /// </summary>
@@ -93,6 +127,8 @@ ssize_t indexOfCharacter(const TEXT* haystack, TCHAR needle);
 /// <param name="ignoreCase">大文字小文字を無視するか。</param>
 /// <returns>a &lt; b: 負, a = b: 0, a &gt; b: 正。</returns>
 int compareText(const TEXT* a, const TEXT* b, bool ignoreCase);
+
+TEXT_COMPARE_RESULT compareTextDetail(const TEXT* a, const TEXT* b, ssize_t width, LOCALE_TYPE locale, TEXT_COMPARE_MODE mode);
 
 /// <summary>
 /// 指定のテキストで始まるか。
