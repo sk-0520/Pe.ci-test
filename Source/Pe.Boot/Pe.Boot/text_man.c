@@ -17,3 +17,12 @@ TEXT findText(const TEXT* haystack, const TEXT* needle, bool ignoreCase)
 
     return wrapText(s);
 }
+
+size_t getTextLength(const TEXT* text)
+{
+    if (!isEnabledText(text)) {
+        return 0;
+    }
+
+    return text->length;
+}
