@@ -9,7 +9,7 @@ static FILE_POINTER createInvalidFile()
     return result;
 }
 
-static FILE_POINTER _openFileCore(const TEXT* path, FILE_ACCESS_MODE accessMode, FILE_SHARE_MODE sharedMode, FILE_OPEN_MODE openMode, DWORD attributes)
+static FILE_POINTER openFileCore(const TEXT* path, FILE_ACCESS_MODE accessMode, FILE_SHARE_MODE sharedMode, FILE_OPEN_MODE openMode, DWORD attributes)
 {
     if (!path) {
         return createInvalidFile();
@@ -33,17 +33,17 @@ static FILE_POINTER _openFileCore(const TEXT* path, FILE_ACCESS_MODE accessMode,
 
 FILE_POINTER createFile(const TEXT* path)
 {
-    return _openFileCore(path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_NEW, 0);
+    return openFileCore(path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_NEW, 0);
 }
 
 FILE_POINTER openFile(const TEXT* path)
 {
-    return _openFileCore(path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0);
+    return openFileCore(path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0);
 }
 
 FILE_POINTER openOrCreateFile(const TEXT* path)
 {
-    return _openFileCore(path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN_OR_CREATE, 0);
+    return openFileCore(path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN_OR_CREATE, 0);
 }
 
 bool closeFile(FILE_POINTER* file)

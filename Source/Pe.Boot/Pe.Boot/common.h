@@ -9,3 +9,5 @@
 
 #define NEWLINE "\r\n"
 #define NEWLINET _T(NEWLINE)
+
+#define SIZEOF_ARRAY(arr) (sizeof(arr) / sizeof(arr[0]))

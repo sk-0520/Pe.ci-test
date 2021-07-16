@@ -14,12 +14,19 @@ namespace PeBootTest
         TEST_METHOD(initializeTest)
         {
             MAP map = createMap(2, compareMapKeyDefault, freeMapValueNull);
+            BOX_INT valies[] = {
+                create(1),
+                create(2),
+                create(3),
+                create(4),
+                create(5),
+            };
             MAP_INIT init[] = {
-                { wrap("key1"), &(create(1)) },
-                { wrap("key2"), &(create(2)) },
-                { wrap("key3"), &(create(3)) },
-                { wrap("key4"), &(create(4)) },
-                { wrap("key5"), &(create(5)) },
+                { wrap("key1"), &valies[0] },
+                { wrap("key2"), &valies[1] },
+                { wrap("key3"), &valies[2] },
+                { wrap("key4"), &valies[3] },
+                { wrap("key5"), &valies[4] },
             };
             Assert::IsTrue(initializeMap(&map, init, sizeof(init) / sizeof(init[0]), false));
 
