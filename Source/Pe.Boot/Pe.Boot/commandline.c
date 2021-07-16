@@ -11,7 +11,7 @@ static void convertMapFromArguments(MAP* result, const TEXT arguments[], size_t 
     }
 }
 
-COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool commandStartsWith)
+COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool withCommand)
 {
     int tempArgc;
     TCHAR** argv = CommandLineToArgvW(commandLine->value, &tempArgc);
@@ -25,7 +25,7 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool commandStarts
 
     TEXT* argumentsWithoutCommand;
     TEXT* command;
-    if (commandStartsWith) {
+    if (withCommand) {
         if (1 < argc) {
             argumentsWithoutCommand = arguments + 1;
         } else {
