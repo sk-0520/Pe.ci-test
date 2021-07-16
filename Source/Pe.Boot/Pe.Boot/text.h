@@ -102,3 +102,5 @@ TEXT referenceText(const TEXT* source);
 /// <returns></returns>
 bool freeText(TEXT* text);
 
+/* 文字列操作ラッパー: text_str.c */
+#include "text_man.h"

@@ -112,3 +112,4 @@ void freeString(const TCHAR* s)
     freeMemory((void*)s);
 }
 
+

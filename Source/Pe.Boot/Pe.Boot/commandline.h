@@ -6,10 +6,35 @@
 #include "map.h"
 
 
+/// <summary>
+/// コマンドラインキーの識別子。
+/// </summary>
+typedef enum tag_COMMAND_LINE_MARK
+{
+    /// <summary>
+    /// -
+    /// </summary>
+    COMMAND_LINE_MARK_SHORT,
+    /// <summary>
+    /// --
+    /// </summary>
+    COMMAND_LINE_MARK_LONG,
+    /// <summary>
+    /// /
+    /// </summary>
+    COMMAND_LINE_MARK_DOS,
+} COMMAND_LINE_MARK;
+
+/// <summary>
+/// コマンドラインの値。
+/// </summary>
 typedef struct tag_COMMAND_LINE_ITEM
 {
-    TEXT key;
-    TEXT* value;
+    /// <summary>
+    /// コマンドラインキーの識別子。
+    /// </summary>
+    COMMAND_LINE_MARK mark;
+    TEXT* values;
     size_t length;
 } COMMAND_LINE_ITEM;
 

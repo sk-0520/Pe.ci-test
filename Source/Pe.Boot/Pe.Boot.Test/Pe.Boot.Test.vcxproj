@@ -197,6 +197,7 @@
     </ClCompile>
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="text.test.cpp" />
+    <ClCompile Include="text_man.test.cpp" />
     <ClCompile Include="tstring.test.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <stdbool.h>
+
 #include <tchar.h>
 
 #include "tstring.h"

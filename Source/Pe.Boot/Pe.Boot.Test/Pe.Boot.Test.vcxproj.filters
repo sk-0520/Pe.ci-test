@@ -45,6 +45,9 @@
     <ClCompile Include="commandline.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="text_man.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

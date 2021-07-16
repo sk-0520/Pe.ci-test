@@ -1,7 +1,8 @@
 ﻿#pragma once
-#include <tchar.h>
-
 #include <vector>
+#include <tuple>
+
+#include <tchar.h>
 
 #define text(s) newText(_T(s))
 #define wrap(s) wrapText(_T(s))

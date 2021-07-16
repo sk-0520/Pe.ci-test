@@ -1,8 +1,7 @@
 ﻿#pragma once
-#include <tchar.h>
 #include <stdbool.h>
 
-#include <Windows.h>
+#include <windows.h>
 
 #include "memory.h"
 

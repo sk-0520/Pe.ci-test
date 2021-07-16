@@ -11,7 +11,10 @@ static bool equalsCommandLineItemKey(const TEXT* a, const TEXT* b)
 
 static void freeCommandLineItemValue(MAP_PAIR* pair)
 {
+    COMMAND_LINE_ITEM* item = (COMMAND_LINE_ITEM*)pair->value;
 
+    freeMemory(item->values);
+    freeMemory(item);
 }
 
 static void setCommandLineMapSetting(MAP* map)
@@ -24,6 +27,7 @@ static void convertMapFromArguments(MAP* result, const TEXT arguments[], size_t 
 {
     for (size_t i = 0; i < count; i++) {
         //bool canNext = i + 1 < count;
+        //TEXT* current = &arguments[i];
     }
 }
 
