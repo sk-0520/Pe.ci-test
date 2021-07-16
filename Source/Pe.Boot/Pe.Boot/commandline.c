@@ -23,11 +23,45 @@ static void setCommandLineMapSetting(MAP* map)
     map->library.freeValue = freeCommandLineItemValue;
 }
 
-static void convertMapFromArguments(MAP* result, const TEXT arguments[], size_t count)
+static ssize_t getKeyMarkIndex(const TEXT* argument, TEXT markTexts[], size_t count)
 {
     for (size_t i = 0; i < count; i++) {
+        const TEXT* markText = markTexts + i;
+        if (startsWithText(argument, markText)) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+static void convertMapFromArguments(MAP* result, const TEXT arguments[], size_t count)
+{
+    TEXT markTexts[] = {
+        wrapText(_T("--")),
+        wrapText(_T("-")),
+        wrapText(_T("/")),
+    };
+    //COMMAND_LINE_MARK markValues[] = {
+    //    COMMAND_LINE_MARK_LONG,
+    //    COMMAND_LINE_MARK_SHORT,
+    //    COMMAND_LINE_MARK_DOS,
+    //};
+
+    for (size_t i = 0; i < count; i++) {
         //bool canNext = i + 1 < count;
-        //TEXT* current = &arguments[i];
+
+        const TEXT* current = &arguments[i];
+
+        ssize_t markIndex = getKeyMarkIndex(current, markTexts, SIZEOF_ARRAY(markTexts));
+        if (markIndex == -1) {
+            // キー不明の値は無視する
+            continue;
+        }
+
+        const TEXT* markText = markTexts + markIndex;
+        TEXT arg = wrapTextWithLength(current->value + markText->length, current->length - markText->length, false);
+        assert(&arg);
     }
 }
 
@@ -67,12 +101,6 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool withCommand)
         count = argc;
         command = NULL;
     }
-
-    //size_t maxItemLength = (argc - 1) / 2;
-    //COMMAND_LINE_ITEM* items = allocateClearMemory(maxItemLength, sizeof(COMMAND_LINE_ITEM));
-    //for (size_t i = 0; i < maxItemLength; i++) {
-
-    //}
 
     COMMAND_LINE_OPTION result = {
         .arguments = argumentsWithoutCommand,

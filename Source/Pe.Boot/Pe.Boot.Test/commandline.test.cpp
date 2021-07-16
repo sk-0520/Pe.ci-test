@@ -36,5 +36,11 @@ namespace PeBootTest
             Assert::AreEqual((size_t)0, actual2_2.count);
             Assert::IsNull(actual2_2.library.command);
         }
+
+        TEST_METHOD(parseCommandLine_map_Test)
+        {
+            TEXT input1 = wrap("abc --def -ghi /jkl");
+            COMMAND_LINE_OPTION actual1 = parseCommandLine(&input1, true);
+        }
     };
 }
