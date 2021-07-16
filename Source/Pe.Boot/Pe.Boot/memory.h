@@ -83,3 +83,12 @@ void* copyMemory(void* destination, const void* source, size_t bytes);
 /// <param name="bytes">移動サイズ。</param>
 /// <returns></returns>
 void* moveMemory(void* destination, const void* source, size_t bytes);
+
+/// <summary>
+/// <c>memcmp</c> する。
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <param name="bytes"></param>
+/// <returns>a &lt; b: 負, a = b: 0, a &gt; b: 正。</returns>
+int compareMemory(const void* a, const void* b, size_t bytes);

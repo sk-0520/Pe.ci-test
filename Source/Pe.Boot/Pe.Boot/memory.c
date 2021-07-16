@@ -155,3 +155,9 @@ void* moveMemory(void* destination, const void* source, size_t bytes)
     //NOTE: CRT!
     return MoveMemory(destination, source, bytes);
 }
+
+int compareMemory(const void* a, const void* b, size_t bytes)
+{
+    //NOTE: CRT!
+    return memcmp(a, b, bytes);
+}

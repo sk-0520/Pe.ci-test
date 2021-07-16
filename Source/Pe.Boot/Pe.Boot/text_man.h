@@ -95,6 +95,14 @@ ssize_t indexOfCharacter(const TEXT* haystack, TCHAR needle);
 int compareText(const TEXT* a, const TEXT* b, bool ignoreCase);
 
 /// <summary>
+/// 指定のテキストで始まるか。
+/// </summary>
+/// <param name="text">対象テキスト。</param>
+/// <param name="word">検索テキスト。</param>
+/// <returns>始まる場合に真。</returns>
+bool startsWithText(const TEXT* text, const TEXT* word);
+
+/// <summary>
 /// テキストを数値(32bit幅)に変換。
 /// </summary>
 /// <param name="input">入力テキスト。</param>

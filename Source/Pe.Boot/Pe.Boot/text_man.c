@@ -67,6 +67,15 @@ int compareText(const TEXT* a, const TEXT* b, bool ignoreCase)
         ;
 }
 
+bool startsWithText(const TEXT* text, const TEXT* word)
+{
+    if (text->length < word->length) {
+        return false;
+    }
+
+    return !compareMemory(text->value, word->value, word->length * sizeof(TCHAR));
+}
+
 static TEXT_PARSED_INT32_RESULT createFailedIntegerParseResult()
 {
     TEXT_PARSED_INT32_RESULT result = {
