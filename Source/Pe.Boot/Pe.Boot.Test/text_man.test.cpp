@@ -104,5 +104,45 @@ namespace PeBootTest
                 Assert::AreEqual(test.expected, actual);
             }
         }
+
+        TEST_METHOD(compareTextTest)
+        {
+            auto tests = {
+                TestData(0, wrap("abc"), wrap("abc"), false),
+                TestData(-1, wrap("abc"), wrap("def"), false),
+                TestData(+1, wrap("def"), wrap("abc"), false),
+                TestData(-1, wrap("abc"), wrap("ABC"), false),
+                TestData(-1, wrap("abc"), wrap("DEF"), false),
+                TestData(+1, wrap("def"), wrap("ABC"), false),
+
+                TestData(0, wrap("abc"), wrap("abc"), true),
+                TestData(-1, wrap("abc"), wrap("def"), true),
+                TestData(+1, wrap("def"), wrap("abc"), true),
+                TestData(0, wrap("abc"), wrap("ABC"), true),
+                TestData(-1, wrap("abc"), wrap("DEF"), true),
+                TestData(+1, wrap("def"), wrap("ABC"), true),
+            };
+
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                TEXT& arg2 = std::get<1>(test.inputs);
+                bool arg3 = std::get<2>(test.inputs);
+                auto actual = compareText(&arg1, &arg2, arg3);
+                switch (test.expected) {
+                    case -1:
+                        Assert::IsTrue(actual < 0);
+                        break;
+                    case 0:
+                        Assert::IsTrue(actual == 0);
+                        break;
+                    case +1:
+                        Assert::IsTrue(0 < actual);
+                        break;
+                    default:
+                        _ASSERT(false);
+                }
+            }
+
+        }
     };
 }

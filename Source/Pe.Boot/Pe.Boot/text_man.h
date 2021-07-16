@@ -33,3 +33,12 @@ TEXT findCharacter2(const TEXT* haystack, TCHAR needle);
 /// <param name="needle">検索文字。</param>
 /// <returns>一致文字のインデックス。見つからない場合は0未満。</returns>
 ssize_t indexOfCharacter(const TEXT* haystack, TCHAR needle);
+
+/// <summary>
+/// テキスト比較。
+/// </summary>
+/// <param name="a">比較対象テキスト1。</param>
+/// <param name="b">比較対象テキスト2。</param>
+/// <param name="ignoreCase">大文字小文字を無視するか。</param>
+/// <returns>a &lt; b: 負, a = b: 0, a &gt; b: 正。</returns>
+int compareText(const TEXT* a, const TEXT* b, bool ignoreCase);

@@ -58,3 +58,11 @@ ssize_t indexOfCharacter(const TEXT* haystack, TCHAR needle)
 
     return s - haystack->value;
 }
+
+int compareText(const TEXT* a, const TEXT* b, bool ignoreCase)
+{
+    return ignoreCase
+        ? lstrcmpi(a->value, b->value)
+        : lstrcmp(a->value, b->value)
+        ;
+}
