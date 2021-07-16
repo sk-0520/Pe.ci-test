@@ -315,5 +315,23 @@ namespace PeBootTest
             }
         }
 
+        TEST_METHOD(isWhiteSpaceTextTest)
+        {
+            auto tests = {
+                TestData(false, wrap("a")),
+                TestData(true, wrap(" ")),
+                TestData(true, wrap("\t")),
+                TestData(true, wrap("")),
+            };
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                bool actual = isWhiteSpaceText(&arg1);
+                if (test.expected) {
+                    Assert::IsTrue(actual);
+                } else {
+                    Assert::IsFalse(actual);
+                }
+            }
+        }
     };
 }

@@ -113,3 +113,11 @@ TEXT joinText(const TEXT* separator, const TEXT texts[], size_t count);
 /// <param name="text">対象テキスト。</param>
 /// <returns>空の場合に真。</returns>
 bool isEmptyText(const TEXT* text);
+
+/// <summary>
+/// 空か空白文字で構成されたテキストか。
+/// </summary>
+/// <param name="text">対象テキスト。</param>
+/// <returns>空か空白文字で構成されている場合に真。</returns>
+bool isWhiteSpaceText(const TEXT* text);
+

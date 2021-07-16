@@ -166,3 +166,32 @@ bool isEmptyText(const TEXT* text)
 
     return !text->length;
 }
+
+bool isWhiteSpaceText(const TEXT* text)
+{
+    if (!isEnabledText(text)) {
+        return true;
+    }
+
+    if (!text->length) {
+        return true;
+    }
+
+    TCHAR whiteSpace[] = { ' ', '\t', };
+
+    for (size_t i = 0; i < text->length; i++) {
+        TCHAR c = text->value[i];
+        bool existsWhiteSpace = false;
+        for (size_t j = 0; j < SIZEOF_ARRAY(whiteSpace); j++) {
+            if (whiteSpace[j] == c) {
+                existsWhiteSpace = true;
+                break;
+            }
+        }
+        if (!existsWhiteSpace) {
+            return false;
+        }
+    }
+
+    return true;
+}
