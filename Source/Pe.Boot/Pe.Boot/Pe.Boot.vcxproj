@@ -278,6 +278,8 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="app_boot.c" />
     <ClCompile Include="app_path.c" />
+    <ClCompile Include="text_conv.c" />
+    <ClCompile Include="text_search.c" />
     <ClCompile Include="text.c" />
     <ClCompile Include="text_man.c" />
     <ClCompile Include="tstring.c" />
@@ -297,6 +299,8 @@
     <ClInclude Include="app_boot.h" />
     <ClInclude Include="app_path.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="text_conv.h" />
+    <ClInclude Include="text_search.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="text_man.h" />
     <ClInclude Include="tstring.h" />

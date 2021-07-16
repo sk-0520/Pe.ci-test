@@ -66,6 +66,12 @@
     <ClCompile Include="text_man.c">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="text_search.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="text_conv.c">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -117,6 +123,12 @@
       <Filter>header\app</Filter>
     </ClInclude>
     <ClInclude Include="text_man.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="text_search.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="text_conv.h">
       <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>

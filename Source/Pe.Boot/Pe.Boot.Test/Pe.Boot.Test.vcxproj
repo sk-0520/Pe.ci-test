@@ -197,6 +197,7 @@
     </ClCompile>
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="text.test.cpp" />
+    <ClCompile Include="text_conv.test.cpp" />
     <ClCompile Include="text_man.test.cpp" />
     <ClCompile Include="tstring.test.cpp" />
   </ItemGroup>
@@ -208,6 +209,11 @@
     <ProjectReference Include="..\Pe.Boot\Pe.Boot.vcxproj">
       <Project>{92130c2c-74bb-446a-9291-fd8c34e0453e}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="text_search.test.cpp">
+      <FileType>CppCode</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
