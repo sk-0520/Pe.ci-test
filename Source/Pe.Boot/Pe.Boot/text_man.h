@@ -2,6 +2,25 @@
 #include "text.h"
 
 /// <summary>
+/// 空テキストの無視設定
+/// </summary>
+typedef enum tag_IGNORE_EMPTY
+{
+    /// <summary>
+    /// 無視しない。
+    /// </summary>
+    IGNORE_EMPTY_NONE,
+    /// <summary>
+    /// 空を無視する。
+    /// </summary>
+    IGNORE_EMPTY_ONLY,
+    /// <summary>
+    /// 空白文字を無視する。
+    /// </summary>
+    IGNORE_EMPTY_WHITESPACE,
+} IGNORE_EMPTY;
+
+/// <summary>
 /// 数値(64bit幅)変換結果。
 /// </summary>
 typedef struct tag_TEXT_PARSED_INT32_RESULT
@@ -104,8 +123,9 @@ TEXT addText(const TEXT* source, const TEXT* text);
 /// <param name="separator">セパレータ。</param>
 /// <param name="texts">結合するテキスト。</param>
 /// <param name="count">textsの個数。</param>
+/// <param name="ignoreEmpty">空要素を無視するか。</param>
 /// <returns>結合済みテキスト。解放が必要。</returns>
-TEXT joinText(const TEXT* separator, const TEXT texts[], size_t count);
+TEXT joinText(const TEXT* separator, const TEXT texts[], size_t count, IGNORE_EMPTY ignoreEmpty);
 
 /// <summary>
 /// 空テキストか。

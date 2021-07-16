@@ -276,7 +276,7 @@ namespace PeBootTest
                 wrap("3"),
             };
             TEXT sep1 = wrap(",");
-            TEXT actual1 = joinText(&sep1, input1, SIZEOF_ARRAY(input1));
+            TEXT actual1 = joinText(&sep1, input1, SIZEOF_ARRAY(input1), IGNORE_EMPTY_NONE);
             Assert::AreEqual(expected1, actual1.value);
             freeText(&actual1);
 
@@ -291,9 +291,35 @@ namespace PeBootTest
                 wrap(""),
             };
             TEXT sep2 = wrap("");
-            TEXT actual2 = joinText(&sep2, input2, SIZEOF_ARRAY(input2));
+            TEXT actual2 = joinText(&sep2, input2, SIZEOF_ARRAY(input2), IGNORE_EMPTY_NONE);
             Assert::AreEqual(expected2, actual2.value);
             freeText(&actual2);
+
+            TCHAR* expected3_1 = _T(",1,,2, ,,3,");
+            TCHAR* expected3_2 = _T("1,2, ,3");
+            TCHAR* expected3_3 = _T("1,2,3");
+            TEXT input3[] = {
+                wrap(""),
+                wrap("1"),
+                wrap(""),
+                wrap("2"),
+                wrap(" "),
+                wrap(""),
+                wrap("3"),
+                wrap(""),
+            };
+            TEXT sep3 = wrap(",");
+            TEXT actual3_1 = joinText(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_NONE);
+            Assert::AreEqual(expected3_1, actual3_1.value);
+            freeText(&actual3_1);
+
+            TEXT actual3_2 = joinText(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_ONLY);
+            Assert::AreEqual(expected3_2, actual3_2.value);
+            freeText(&actual3_2);
+
+            TEXT actual3_3 = joinText(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_WHITESPACE);
+            Assert::AreEqual(expected3_3, actual3_3.value);
+            freeText(&actual3_3);
         }
 
         TEST_METHOD(isEmptyTextTest)

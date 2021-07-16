@@ -134,7 +134,7 @@ TEXT addText(const TEXT* source, const TEXT* text)
     return wrapTextWithLength(buffer, bufferLength, true);
 }
 
-TEXT joinText(const TEXT* separator, const TEXT texts[], size_t count)
+TEXT joinText(const TEXT* separator, const TEXT texts[], size_t count, IGNORE_EMPTY ignoreEmpty)
 {
     size_t totalLength = separator->length ? separator->length * count - 1 : 0;
     for (size_t i = 0; i < count; i++) {
@@ -143,19 +143,39 @@ TEXT joinText(const TEXT* separator, const TEXT texts[], size_t count)
 
     TCHAR* buffer = allocateString(totalLength);
     size_t currentPosition = 0;
+    bool addSeparator = false;
     for (size_t i = 0; i < count; i++) {
-        if (i) {
+        const TEXT* text = texts + i;
+        switch (ignoreEmpty) {
+            case IGNORE_EMPTY_NONE:
+                break;
+
+            case IGNORE_EMPTY_ONLY:
+                if (isEmptyText(text)) {
+                    continue;
+                }
+                break;
+
+            case IGNORE_EMPTY_WHITESPACE:
+                if (isWhiteSpaceText(text)) {
+                    continue;
+                }
+                break;
+        }
+
+        if (addSeparator) {
             copyMemory(buffer + currentPosition, separator->value, separator->length * sizeof(TCHAR));
             currentPosition += separator->length;
         }
 
-        const TEXT* text = texts + i;
         copyMemory(buffer + currentPosition, text->value, text->length * sizeof(TCHAR));
         currentPosition += text->length;
-    }
-    buffer[totalLength] = 0;
 
-    return wrapTextWithLength(buffer, totalLength, 0);
+        addSeparator = true;
+    }
+    buffer[currentPosition] = 0;
+
+    return wrapTextWithLength(buffer, currentPosition, true);
 }
 
 bool isEmptyText(const TEXT* text)
