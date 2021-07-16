@@ -128,7 +128,7 @@ void freeMemory(void* p)
     HeapFree(GetProcessHeap(), 0, p);
 }
 
-void* setMemory(void* target, int value, size_t bytes)
+void* setMemory(void* target, unsigned char value, size_t bytes)
 {
     /*
     unsigned char* p = (unsigned char*)target;

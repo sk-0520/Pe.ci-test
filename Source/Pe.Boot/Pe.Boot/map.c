@@ -4,9 +4,9 @@
 #include "memory.h"
 #include "tstring.h"
 
-int compareMapKeyDefault(const TEXT* a, const TEXT* b)
+bool equalsMapKeyDefault(const TEXT* a, const TEXT* b)
 {
-    return compareString(a->value, b->value, false);
+    return !compareString(a->value, b->value, false);
 }
 
 void freeMapValueNull(MAP_PAIR* pair)
@@ -14,14 +14,14 @@ void freeMapValueNull(MAP_PAIR* pair)
     /* 何もしない */
 }
 
-MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue freeMapValue)
+MAP createMap(size_t capacity, funcEqualsMapKey equalsMapKey, funcFreeMapValue freeMapValue)
 {
     MAP map = {
         .pairs = allocateMemory(capacity * sizeof(MAP_PAIR), false),
         .length = 0,
         .library = {
             .capacity = capacity,
-            .compareMapKey = compareMapKey,
+            .equalsMapKey = equalsMapKey,
             .freeValue = freeMapValue,
         },
     };
@@ -74,7 +74,7 @@ static MAP_PAIR* findMap(const MAP* map, const TEXT* key)
 {
     for (size_t i = 0; i < map->length; i++) {
         MAP_PAIR* pair = &map->pairs[i];
-        if (!map->library.compareMapKey(&pair->key, key)) {
+        if (map->library.equalsMapKey(&pair->key, key)) {
             return pair;
         }
     }

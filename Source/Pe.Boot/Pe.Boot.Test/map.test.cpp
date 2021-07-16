@@ -13,7 +13,7 @@ namespace PeBootTest
     public:
         TEST_METHOD(initializeTest)
         {
-            MAP map = createMap(2, compareMapKeyDefault, freeMapValueNull);
+            MAP map = createMap(2, equalsMapKeyDefault, freeMapValueNull);
             BOX_INT valies[] = {
                 create(1),
                 create(2),
@@ -40,7 +40,7 @@ namespace PeBootTest
 
         TEST_METHOD(addMapTest)
         {
-            MAP map = createMap(2, compareMapKeyDefault, freeMapValueNull);
+            MAP map = createMap(2, equalsMapKeyDefault, freeMapValueNull);
             Assert::AreEqual((size_t)2, map.library.capacity);
             Assert::AreEqual((size_t)0, map.length);
 
@@ -81,7 +81,7 @@ namespace PeBootTest
 
         TEST_METHOD(setMapTest)
         {
-            MAP map = createMap(2, compareMapKeyDefault, freeMapValueNull);
+            MAP map = createMap(2, equalsMapKeyDefault, freeMapValueNull);
 
             TEXT key1 = wrap("key1");
             BOX_INT value1 = create(1);
@@ -107,7 +107,7 @@ namespace PeBootTest
 
         TEST_METHOD(removeMapTest)
         {
-            MAP map = createMap(2, compareMapKeyDefault, freeMapValueNull);
+            MAP map = createMap(2, equalsMapKeyDefault, freeMapValueNull);
 
             TEXT key1 = wrap("key1");
             BOX_INT value1 = create(1);
@@ -151,7 +151,7 @@ namespace PeBootTest
 
         TEST_METHOD(getMapTest)
         {
-            MAP map = createMap(2, compareMapKeyDefault, freeMapValueNull);
+            MAP map = createMap(2, equalsMapKeyDefault, freeMapValueNull);
 
             TEXT key1 = wrap("key1");
             BOX_INT value1 = create(1);
@@ -195,7 +195,7 @@ namespace PeBootTest
 
         TEST_METHOD(freeMapTest)
         {
-            MAP map = createMap(2, compareMapKeyDefault, freeTextTest);
+            MAP map = createMap(2, equalsMapKeyDefault, freeTextTest);
 
             TEXT key1 = wrap("key1");
             TEXT value1 = text("あいうえお");
@@ -223,14 +223,14 @@ namespace PeBootTest
             Assert::AreEqual((size_t)0, map.length);
         }
 
-        static int compareMapKeyIgnoreCase(const TEXT* a, const TEXT* b)
+        static bool equalsMapKeyIgnoreCase(const TEXT* a, const TEXT* b)
         {
-            return compareString(a->value, b->value, true);
+            return !compareString(a->value, b->value, true);
         }
 
         TEST_METHOD(compareTest)
         {
-            MAP map_default = createMap(2, compareMapKeyDefault, freeMapValueNull);
+            MAP map_default = createMap(2, equalsMapKeyDefault, freeMapValueNull);
 
             TEXT key1 = wrap("key1");
             TEXT key2 = wrap("key2");
@@ -246,7 +246,7 @@ namespace PeBootTest
             Assert::IsNull(addMap(&map_default, &key2_1, &value2_1, false));
             Assert::AreEqual((size_t)3, map_default.length);
 
-            MAP map_ignore = createMap(2, compareMapKeyIgnoreCase, freeMapValueNull);
+            MAP map_ignore = createMap(2, equalsMapKeyIgnoreCase, freeMapValueNull);
             addMap(&map_ignore, &key1, &value1, false);
             addMap(&map_ignore, &key2, &value2, false);
             Assert::IsNull(addMap(&map_ignore, &key2_1, &value2_1, false));

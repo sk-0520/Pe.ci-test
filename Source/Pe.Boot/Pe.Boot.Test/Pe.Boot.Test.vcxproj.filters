@@ -42,6 +42,9 @@
     <ClCompile Include="map.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="commandline.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

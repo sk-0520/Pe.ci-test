@@ -32,7 +32,7 @@ typedef struct tag_COMMAND_LINE_OPTION
     /// <para>キー項目のみは値がない。</para>
     /// <para>Pe としては値だけを考慮する必要なし。</para>
     /// </summary>
-    MAP pairs;
+    MAP map;
 
     /// <summary>
    /// 管理データ。
@@ -46,7 +46,8 @@ typedef struct tag_COMMAND_LINE_OPTION
         /// <summary>
         /// 解放用テキストデータ一覧。
         /// </summary>
-        TEXT* rawTextArguments;
+        TEXT* rawArguments;
+        size_t rawCount;
         /// <summary>
         /// 起動コマンド。
         /// </summary>

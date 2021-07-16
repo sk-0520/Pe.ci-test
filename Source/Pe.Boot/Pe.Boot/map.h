@@ -56,7 +56,7 @@ typedef struct tag_MAP_RESULT_VALUE
     bool exists;
 } MAP_RESULT_VALUE;
 
-typedef int (*funcCompareMapKey)(const TEXT* a, const TEXT* b);
+typedef bool (*funcEqualsMapKey)(const TEXT* a, const TEXT* b);
 typedef void (*funcFreeMapValue)(MAP_PAIR* pair);
 
 /// <summary>
@@ -85,18 +85,19 @@ typedef struct tag_MAP
         /// </summary>
         size_t capacity;
 
-        funcCompareMapKey compareMapKey;
+        funcEqualsMapKey equalsMapKey;
         funcFreeMapValue freeValue;
     } library;
 } MAP;
 
 /// <summary>
 /// キー項目比較の標準処理。
+/// <para>大文字小文字を区別する通常の文字列比較。</para>
 /// </summary>
 /// <param name="a"></param>
 /// <param name="b"></param>
 /// <returns></returns>
-int compareMapKeyDefault(const TEXT* a, const TEXT* b);
+bool equalsMapKeyDefault(const TEXT* a, const TEXT* b);
 
 /// <summary>
 /// マップの値解放不要処理。
@@ -108,10 +109,10 @@ void freeMapValueNull(MAP_PAIR* pair);
 /// マップの生成。
 /// </summary>
 /// <param name="capacity">初期予約領域。特に指定しない場合は<c>MAP_DEFAULT_CAPACITY</c>を使用する。</param>
-/// <param name="compareMapKey">キー比較処理。</param>
+/// <param name="equalsMapKey">キー比較処理。</param>
 /// <param name="freeMapValue">値解放処理。</param>
 /// <returns></returns>
-MAP createMap(size_t capacity, funcCompareMapKey compareMapKey, funcFreeMapValue freeMapValue);
+MAP createMap(size_t capacity, funcEqualsMapKey equalsMapKey, funcFreeMapValue freeMapValue);
 #define createMapDefault(freeMapValue) createMap(MAP_DEFAULT_CAPACITY, compareMapKeyDefault, freeMapPairValueOnly)
 
 bool initializeMap(MAP* map, MAP_INIT init[], size_t length, bool needRelease);

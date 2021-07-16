@@ -64,7 +64,7 @@ void freeMemory(void* p);
 /// <param name="value">値。</param>
 /// <param name="bytes">範囲。</param>
 /// <returns>target</returns>
-void* setMemory(void* target, int value, size_t bytes);
+void* setMemory(void* target, unsigned char value, size_t bytes);
 
 /// <summary>
 /// <c>memcpy</c>する。
