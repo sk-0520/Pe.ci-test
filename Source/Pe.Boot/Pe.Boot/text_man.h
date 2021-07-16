@@ -106,3 +106,10 @@ TEXT addText(const TEXT* source, const TEXT* text);
 /// <param name="count">textsの個数。</param>
 /// <returns>結合済みテキスト。解放が必要。</returns>
 TEXT joinText(const TEXT* separator, const TEXT texts[], size_t count);
+
+/// <summary>
+/// 空テキストか。
+/// </summary>
+/// <param name="text">対象テキスト。</param>
+/// <returns>空の場合に真。</returns>
+bool isEmptyText(const TEXT* text);

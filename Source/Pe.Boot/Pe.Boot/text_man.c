@@ -158,3 +158,11 @@ TEXT joinText(const TEXT* separator, const TEXT texts[], size_t count)
     return wrapTextWithLength(buffer, totalLength, 0);
 }
 
+bool isEmptyText(const TEXT* text)
+{
+    if (!isEnabledText(text)) {
+        return true;
+    }
+
+    return !text->length;
+}

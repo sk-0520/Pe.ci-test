@@ -296,5 +296,24 @@ namespace PeBootTest
             freeText(&actual2);
         }
 
+        TEST_METHOD(isEmptyTextTest)
+        {
+            auto tests = {
+                TestData(false, wrap("a")),
+                TestData(false, wrap(" ")),
+                TestData(false, wrap("\t")),
+                TestData(true, wrap("")),
+            };
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                bool actual = isEmptyText(&arg1);
+                if (test.expected) {
+                    Assert::IsTrue(actual);
+                } else {
+                    Assert::IsFalse(actual);
+                }
+            }
+        }
+
     };
 }
