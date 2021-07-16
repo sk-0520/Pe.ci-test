@@ -18,18 +18,5 @@ typedef __int64 ssize_t;
 typedef __int32 ssize_t;
 #endif
 
-typedef enum tag_LOCALE_TYPE
-{
-    /// <summary>
-    /// ロケール非依存。
-    /// </summary>
-    LOCALE_TYPE_INVARIANT = LOCALE_INVARIANT,
-    /// <summary>
-    /// システムのロケール。
-    /// </summary>
-    LOCALE_TYPE_SYSTEM_DEFAULT = LOCALE_SYSTEM_DEFAULT,
-    /// <summary>
-    /// ユーザーのロケール。
-    /// </summary>
-    LOCALE_TYPE_USER_DEFAULT = LOCALE_USER_DEFAULT,
-} LOCALE_TYPE;
+#define MIN(a, b) (((a) < (b)) ? (a): (b))
+#define MAX(a, b) (((a) > (b)) ? (a): (b))

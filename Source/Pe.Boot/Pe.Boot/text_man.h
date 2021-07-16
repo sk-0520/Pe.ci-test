@@ -1,8 +1,25 @@
 ﻿#pragma once
 #include "text.h"
 
+typedef enum tag_LOCALE_TYPE
+{
+    /// <summary>
+    /// ロケール非依存。
+    /// </summary>
+    LOCALE_TYPE_INVARIANT = LOCALE_INVARIANT,
+    /// <summary>
+    /// システムのロケール。
+    /// </summary>
+    LOCALE_TYPE_SYSTEM_DEFAULT = LOCALE_SYSTEM_DEFAULT,
+    /// <summary>
+    /// ユーザーのロケール。
+    /// </summary>
+    LOCALE_TYPE_USER_DEFAULT = LOCALE_USER_DEFAULT,
+} LOCALE_TYPE;
+
 typedef enum tag_TEXT_COMPARE_MODE
 {
+    TEXT_COMPARE_MODE_NONE = 0,
     /// <summary>
     /// 大文字と小文字を区別しない。
     /// </summary>
@@ -31,7 +48,13 @@ typedef enum tag_TEXT_COMPARE_MODE
 
 typedef struct tag_TEXT_COMPARE_RESULT
 {
+    /// <summary>
+    /// <returns>a &lt; b: 負, a = b: 0, a &gt; b: 正。</returns>
+    /// </summary>
     int compare;
+    /// <summary>
+    /// 成功したか。
+    /// </summary>
     bool success;
 } TEXT_COMPARE_RESULT;
 
@@ -128,7 +151,17 @@ ssize_t indexOfCharacter(const TEXT* haystack, TCHAR needle);
 /// <returns>a &lt; b: 負, a = b: 0, a &gt; b: 正。</returns>
 int compareText(const TEXT* a, const TEXT* b, bool ignoreCase);
 
-TEXT_COMPARE_RESULT compareTextDetail(const TEXT* a, const TEXT* b, ssize_t width, LOCALE_TYPE locale, TEXT_COMPARE_MODE mode);
+/// <summary>
+/// 詳細版テキスト比較。
+/// <para>CompareStringばんざーい</para>
+/// </summary>
+/// <param name="a">比較対象テキスト1。</param>
+/// <param name="b">比較対象テキスト2。</param>
+/// <param name="width">比較サイズ。1以上を指定した際に比較対象テキスト長を超過した場合はテキスト長に補正される。0未満を指定した場合は対象テキスト長を使用する。0を指定した場合、テキスト長の短い方が使用される。</param>
+/// <param name="mode">比較方法。組み合わせて使用。</param>
+/// <param name="locale">ロケール。</param>
+/// <returns>比較結果。</returns>
+TEXT_COMPARE_RESULT compareTextDetail(const TEXT* a, const TEXT* b, ssize_t width, TEXT_COMPARE_MODE mode, LOCALE_TYPE locale);
 
 /// <summary>
 /// 指定のテキストで始まるか。

@@ -142,6 +142,49 @@ namespace PeBootTest
                         _ASSERT(false);
                 }
             }
+        }
+
+        TEST_METHOD(compareTextDetail_compareTextTest_Test)
+        {
+            auto tests = {
+                TestData(0, wrap("abc"), wrap("abc"), false),
+                TestData(-1, wrap("abc"), wrap("def"), false),
+                TestData(+1, wrap("def"), wrap("abc"), false),
+                TestData(-1, wrap("abc"), wrap("ABC"), false),
+                TestData(-1, wrap("abc"), wrap("DEF"), false),
+                TestData(+1, wrap("def"), wrap("ABC"), false),
+
+                TestData(0, wrap("abc"), wrap("abc"), true),
+                TestData(-1, wrap("abc"), wrap("def"), true),
+                TestData(+1, wrap("def"), wrap("abc"), true),
+                TestData(0, wrap("abc"), wrap("ABC"), true),
+                TestData(-1, wrap("abc"), wrap("DEF"), true),
+                TestData(+1, wrap("def"), wrap("ABC"), true),
+            };
+
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                TEXT& arg2 = std::get<1>(test.inputs);
+                TEXT_COMPARE_MODE arg3 = std::get<2>(test.inputs) ? TEXT_COMPARE_MODE_IGNORE_CASE : TEXT_COMPARE_MODE_NONE;
+#pragma warning(push)
+#pragma warning(disable:26812)
+                auto actual = compareTextDetail(&arg1, &arg2, -1, arg3, LOCALE_TYPE_INVARIANT);
+#pragma warning(pop)
+                Assert::IsTrue(actual.success);
+                switch (test.expected) {
+                    case -1:
+                        Assert::IsTrue(actual.compare < 0);
+                        break;
+                    case 0:
+                        Assert::IsTrue(actual.compare == 0);
+                        break;
+                    case +1:
+                        Assert::IsTrue(0 < actual.compare);
+                        break;
+                    default:
+                        _ASSERT(false);
+                }
+            }
 
         }
 
@@ -376,7 +419,7 @@ namespace PeBootTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 TEXT& arg2 = std::get<1>(test.inputs);
-                auto actual =  startsWithText(&arg1, &arg2);
+                auto actual = startsWithText(&arg1, &arg2);
                 if (test.expected) {
                     Assert::IsTrue(actual, arg2.value);
                 } else {

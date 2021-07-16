@@ -1,4 +1,6 @@
-﻿#include <windows.h>
+﻿#include <assert.h>
+
+#include <windows.h>
 #include <shlwapi.h>
 
 #include "text.h"
@@ -67,9 +69,26 @@ int compareText(const TEXT* a, const TEXT* b, bool ignoreCase)
         ;
 }
 
-TEXT_COMPARE_RESULT compareTextDetail(const TEXT* a, const TEXT* b, ssize_t width, LOCALE_TYPE locale, TEXT_COMPARE_MODE mode)
+static int getCompareTextLength(const TEXT* text, ssize_t width)
 {
-    if (!width) {
+    assert(width);
+
+    if (0 < width) {
+        return MIN((int)text->length, (int)width);
+    } else {
+        return (int)text->length;
+    }
+}
+
+static int getCompareTextMinimumLength(const TEXT* a, const TEXT* b)
+{
+    return (int)MIN(a->length, b->length);
+}
+
+
+TEXT_COMPARE_RESULT compareTextDetail(const TEXT* a, const TEXT* b, ssize_t width, TEXT_COMPARE_MODE mode, LOCALE_TYPE locale)
+{
+    if (!a->length && !b->length) {
         TEXT_COMPARE_RESULT none = {
             .compare = 0,
             .success = true,
@@ -77,7 +96,40 @@ TEXT_COMPARE_RESULT compareTextDetail(const TEXT* a, const TEXT* b, ssize_t widt
         return none;
     }
 
-    //CompareString(locale, mode, a->value, )
+    int a_length = width ? getCompareTextLength(a, width): getCompareTextMinimumLength(a, b);
+    int b_length = width ? getCompareTextLength(b, width): getCompareTextMinimumLength(a, b);
+
+    int result = CompareString(locale, mode, a->value, a_length, b->value, b_length);
+    if (!result) {
+        TEXT_COMPARE_RESULT none = {
+            .compare = 0,
+            .success = false,
+        };
+        return none;
+    }
+
+    TEXT_COMPARE_RESULT success = {
+        .success = true,
+    };
+
+    switch (result) {
+        case CSTR_LESS_THAN:
+            success.compare = -1;
+            break;
+
+        case CSTR_EQUAL:
+            success.compare = 0;
+            break;
+
+        case CSTR_GREATER_THAN:
+            success.compare = +1;
+            break;
+
+        default:
+            assert(false);
+    }
+
+    return success;
 }
 
 
@@ -114,7 +166,10 @@ TEXT_PARSED_INT32_RESULT parseInteger(const TEXT* input, bool supportHex)
         return createFailedIntegerParseResult();
     }
 
+//#pragma warning(push)
+//#pragma warning(disable:6001)
     TEXT_PARSED_INT32_RESULT result;
+//#pragma warning(pop)
     result.success = StrToIntEx(input->value, supportHex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
 
     return result;
@@ -126,7 +181,10 @@ TEXT_PARSED_INT64_RESULT parseLong(const TEXT* input, bool supportHex)
         return createFailedLongParseResult();
     }
 
+//#pragma warning(push)
+//#pragma warning(disable:6001)
     TEXT_PARSED_INT64_RESULT result;
+//#pragma warning(pop)
     result.success = StrToInt64Ex(input->value, supportHex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
 
     return result;
