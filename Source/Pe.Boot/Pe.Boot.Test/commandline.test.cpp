@@ -41,11 +41,20 @@ namespace PeBootTest
             freeCommandLine(&actual2_2);
         }
 
-        TEST_METHOD(parseCommandLine_map_Test)
+        TEST_METHOD(parseCommandLine_map_switch_Test)
         {
-            TEXT input1 = wrap("abc --def -ghi /jkl");
-            COMMAND_LINE_OPTION actual1 = parseCommandLine(&input1, true);
-            freeCommandLine(&actual1);
+            TEXT expecteds[] = {
+                wrap("def"),
+                wrap("ghi"),
+                wrap("jkl"),
+            };
+            TEXT input = wrap("abc --def -ghi /jkl");
+            COMMAND_LINE_OPTION actual = parseCommandLine(&input, true);
+            for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
+                Assert::IsTrue(existsMap(&actual.map, &expecteds[i]));
+            }
+
+            freeCommandLine(&actual);
         }
     };
 }
