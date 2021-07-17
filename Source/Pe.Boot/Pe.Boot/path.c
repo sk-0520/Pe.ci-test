@@ -17,7 +17,7 @@ TEXT getParentDirectoryPath2(const TEXT* path)
 
     freeString(buffer);
 
-    return createEmptyText();
+    return createInvalidText();
 }
 
 TEXT combinePath2(const TEXT* basePath, const TEXT* relativePath)
@@ -70,7 +70,7 @@ TEXT getModulePath(HINSTANCE hInstance)
     while (!path) {
         path = allocateString(length);
         if (!path) {
-            return createEmptyText();
+            return createInvalidText();
         }
 
         DWORD modulePathLength = GetModuleFileName(hInstance, path, (DWORD)length);
@@ -88,7 +88,7 @@ TEXT getModulePath(HINSTANCE hInstance)
 
     TEXT result = pathLength
         ? newTextWithLength(path, pathLength)
-        : createEmptyText()
+        : createInvalidText()
         ;
     freeString(path);
 

@@ -3,7 +3,7 @@
 static FILE_POINTER createInvalidFile()
 {
     FILE_POINTER result = {
-        .path = createEmptyText(),
+        .path = createInvalidText(),
         .handle = NULL,
     };
     return result;

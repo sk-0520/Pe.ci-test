@@ -2,7 +2,7 @@
 
 #include "text.h"
 
-TEXT createEmptyText()
+TEXT createInvalidText()
 {
     TEXT result = {
         .value = NULL,
@@ -53,7 +53,7 @@ TEXT newTextWithLength(const TCHAR* source, size_t length)
 TEXT newText(const TCHAR* source)
 {
     if (!source) {
-        return createEmptyText();
+        return createInvalidText();
     }
 
     size_t length = getStringLength(source);
@@ -63,7 +63,7 @@ TEXT newText(const TCHAR* source)
 TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease)
 {
     if (!source) {
-        return createEmptyText();
+        return createInvalidText();
     }
 
     TEXT result = {
@@ -81,7 +81,7 @@ TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease)
 TEXT wrapText(const TCHAR* source)
 {
     if (!source) {
-        return createEmptyText();
+        return createInvalidText();
     }
 
     size_t length = getStringLength(source);
@@ -92,7 +92,7 @@ TEXT wrapText(const TCHAR* source)
 TEXT cloneText(const TEXT* source)
 {
     if (!isEnabledText(source)) {
-        return createEmptyText();
+        return createInvalidText();
     }
 
     TCHAR* buffer = allocateString(source->length);

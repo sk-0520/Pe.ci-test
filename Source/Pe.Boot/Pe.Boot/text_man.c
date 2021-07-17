@@ -21,7 +21,7 @@ TEXT addText(const TEXT* source, const TEXT* text)
     bool enabledText = isEnabledText(text);
 
     if (!enabledSource && !enabledText) {
-        return createEmptyText();
+        return createInvalidText();
     }
     if (!enabledSource) {
         return cloneText(text);

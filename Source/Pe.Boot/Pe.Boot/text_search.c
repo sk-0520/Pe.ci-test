@@ -14,7 +14,7 @@ TEXT findText(const TEXT* haystack, const TEXT* needle, bool ignoreCase)
         ;
 
     if (!s) {
-        return createEmptyText();
+        return createInvalidText();
     }
 
     return wrapText(s);
@@ -36,7 +36,7 @@ TEXT findCharacter2(const TEXT* haystack, TCHAR needle)
 {
     TCHAR* s = findCharacterCore(haystack->value, needle);
     if (!s) {
-        return createEmptyText();
+        return createInvalidText();
     }
 
     return wrapText(s);

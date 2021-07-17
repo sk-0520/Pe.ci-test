@@ -13,14 +13,13 @@ static void freeCommandLineItemValue(MAP_PAIR* pair)
 {
     COMMAND_LINE_ITEM* item = (COMMAND_LINE_ITEM*)pair->value;
 
-    freeMemory(item->values);
+    freeText(&item->value);
     freeMemory(item);
 }
 
-static void setCommandLineMapSetting(MAP* map)
+static void setCommandLineMapSetting(MAP* map, size_t capacity)
 {
-    map->library.equalsMapKey = equalsCommandLineItemKey;
-    map->library.freeValue = freeCommandLineItemValue;
+    *map = createMap(capacity, equalsCommandLineItemKey, freeCommandLineItemValue);
 }
 
 static ssize_t getKeyMarkIndex(const TEXT* argument, TEXT markTexts[], size_t count)
@@ -42,15 +41,8 @@ static void convertMapFromArguments(MAP* result, const TEXT arguments[], size_t 
         wrapText(_T("-")),
         wrapText(_T("/")),
     };
-    //COMMAND_LINE_MARK markValues[] = {
-    //    COMMAND_LINE_MARK_LONG,
-    //    COMMAND_LINE_MARK_SHORT,
-    //    COMMAND_LINE_MARK_DOS,
-    //};
 
     for (size_t i = 0; i < count; i++) {
-        //bool canNext = i + 1 < count;
-
         const TEXT* current = &arguments[i];
 
         ssize_t markIndex = getKeyMarkIndex(current, markTexts, SIZEOF_ARRAY(markTexts));
@@ -60,8 +52,54 @@ static void convertMapFromArguments(MAP* result, const TEXT arguments[], size_t 
         }
 
         const TEXT* markText = markTexts + markIndex;
+        // 先頭のマークを外した引数取得
         TEXT arg = wrapTextWithLength(current->value + markText->length, current->length - markText->length, false);
-        assert(&arg);
+
+        COMMAND_LINE_ITEM* item = allocateClearMemory(1, sizeof(COMMAND_LINE_ITEM));
+        item->keyIndex = i;
+
+        TEXT key;
+        TEXT valueWithSeparator = findCharacter2(&arg, _T('='));
+        if (isEnabledText(&valueWithSeparator)) {
+            // 引数が値とキーを持つ
+            key = newTextWithLength(arg.value, (valueWithSeparator.value - arg.value - 1));
+            if (1 < valueWithSeparator.length) {
+                // 値は存在する
+                TEXT rawValue = wrapTextWithLength(valueWithSeparator.value + 1, valueWithSeparator.length - 1, false);
+                if (rawValue.length && ((rawValue.value[0] == '"' || rawValue.value[0] == '\'') && rawValue.value[rawValue.length - 1] == rawValue.value[0]) ) {
+                    // 囲まれている
+                    item->value = newTextWithLength(rawValue.value + 1, rawValue.length - 2);
+                } else {
+                    item->value = rawValue;
+                }
+            } else {
+                // 値は存在しない
+                item->value = createInvalidText();
+            }
+            item->valueIndex = i;
+        } else if(i + 1 < count) {
+            key = arg;
+            // 値は次要素を用いる
+            ssize_t nextMarkIndex = getKeyMarkIndex(current + 1, markTexts, SIZEOF_ARRAY(markTexts));
+            if (nextMarkIndex != -1) {
+                // キーっぽいので値なし引数扱いにする
+                item->valueIndex = 0;
+                item->value = createInvalidText();
+            } else {
+                // 次要素を値として取り込む
+                item->valueIndex = i + 1;
+                item->value = cloneText(current);
+                // 次要素をスキップ
+                i += 1;
+            }
+        } else {
+            key = arg;
+            // 次要素はないのでキーのみを用いる
+            item->valueIndex = 0;
+            item->value = createInvalidText();
+        }
+
+        addMap(result, &key, item, true);
     }
 }
 
@@ -70,8 +108,7 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool withCommand)
     if (!commandLine || !commandLine->length) {
         COMMAND_LINE_OPTION empty;
         setMemory(&empty, 0, sizeof(empty));
-        setCommandLineMapSetting(&empty.map);
-        empty.map.library.capacity = 2;
+        setCommandLineMapSetting(&empty.map, 2);
         return empty;
     }
 
@@ -112,15 +149,21 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool withCommand)
             .command = command,
         },
     };
+    setCommandLineMapSetting(&result.map, result.count);
     convertMapFromArguments(&result.map, result.arguments, result.count);
 
     return result;
 }
 
-void freeCommandLine(const COMMAND_LINE_OPTION* commandLineOption)
+void freeCommandLine(COMMAND_LINE_OPTION* commandLineOption)
 {
-    freeMemory((void*)commandLineOption->library.rawArguments);
+    freeMap(&commandLineOption->map);
+
+    freeMemory(commandLineOption->library.rawArguments);
+    commandLineOption->library.rawArguments = NULL;
+
     LocalFree((HLOCAL)commandLineOption->library.argv);
+    commandLineOption->library.argv = NULL;
 }
 
 

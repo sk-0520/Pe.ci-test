@@ -7,35 +7,24 @@
 
 
 /// <summary>
-/// コマンドラインキーの識別子。
-/// </summary>
-typedef enum tag_COMMAND_LINE_MARK
-{
-    /// <summary>
-    /// -
-    /// </summary>
-    COMMAND_LINE_MARK_SHORT,
-    /// <summary>
-    /// --
-    /// </summary>
-    COMMAND_LINE_MARK_LONG,
-    /// <summary>
-    /// /
-    /// </summary>
-    COMMAND_LINE_MARK_DOS,
-} COMMAND_LINE_MARK;
-
-/// <summary>
 /// コマンドラインの値。
 /// </summary>
 typedef struct tag_COMMAND_LINE_ITEM
 {
     /// <summary>
-    /// コマンドラインキーの識別子。
+    /// COMMAND_LINE_OPTION.arguments から見たキーの位置。
     /// </summary>
-    COMMAND_LINE_MARK mark;
-    TEXT* values;
-    size_t length;
+    size_t keyIndex;
+    /// <summary>
+    /// COMMAND_LINE_OPTION.arguments から見た値の位置。
+    /// <para>keyIndex以上になる(=区切りだと同じ)。</para>
+    /// </summary>
+    size_t valueIndex;
+    /// <summary>
+    /// 値データ。
+    /// <para>値がない場合は無効テキスト。</para>
+    /// </summary>
+    TEXT value;
 } COMMAND_LINE_ITEM;
 
 /// <summary>
@@ -55,7 +44,7 @@ typedef struct tag_COMMAND_LINE_OPTION
     /// <summary>
     /// キーと値のマッピング。
     /// <para>キー項目のみは値がない。</para>
-    /// <para>Pe としては値だけを考慮する必要なし。</para>
+    /// <para>同一キーは前が優先される。</para>
     /// </summary>
     MAP map;
 
@@ -92,7 +81,7 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool withCommand);
 /// コマンドラインオプションを解放。
 /// </summary>
 /// <param name="commandLineOption"></param>
-void freeCommandLine(const COMMAND_LINE_OPTION* commandLineOption);
+void freeCommandLine(COMMAND_LINE_OPTION* commandLineOption);
 
 /// <summary>
 /// 書式調整後の動的確保された文字列を返す。

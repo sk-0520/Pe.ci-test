@@ -26,6 +26,11 @@ typedef struct tag_TEXT
         /// <para>アプリケーション内では使用しない。</para>
         /// </summary>
         bool needRelease : 1;
+        ///// <summary>
+        ///// value終端が0、つまりは通常のC文字列か。
+        ///// <para>偽の場合通常文字列としては使用できない。</para>
+        ///// </summary>
+        //bool sentinel : 1;
         /// <summary>
         /// 解放済みか。
         /// <para>アプリケーション内では使用しない。</para>
@@ -38,7 +43,7 @@ typedef struct tag_TEXT
 /// 空のテキストを生成。
 /// </summary>
 /// <returns>領域自体がNULLの不変文字列(通常使用は出来ない)。</returns>
-TEXT createEmptyText();
+TEXT createInvalidText();
 
 /// <summary>
 /// テキストが使用可能か。

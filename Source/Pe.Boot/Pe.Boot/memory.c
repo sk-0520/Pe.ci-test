@@ -47,13 +47,14 @@ static void mem_check__debugHeap(void* p, bool allocate, const TCHAR * callerFil
         }
     } else {
         bool exists = false;;
-        for (size_t i = 0; i < MEM_CHECK_ALLOC_STOCK_LENGTH; i++) {
+        for (size_t i = 0; p && i < MEM_CHECK_ALLOC_STOCK_LENGTH; i++) {
             if (mem_check__allocStocks[i].p == p) {
                 mem_check__debugOutput("[MEM:-] %p %s(%zu) - %s(%zu)", p, callerFile, callerLine, mem_check__allocStocks[i].file, mem_check__allocStocks[i].line);
 
                 mem_check__allocStocksCount -= 1;
                 memset(&mem_check__allocStocks[i], 0, sizeof(mem_check__ALLOC_STOCK_ITEM));
                 exists = true;
+                break;
             }
         }
 

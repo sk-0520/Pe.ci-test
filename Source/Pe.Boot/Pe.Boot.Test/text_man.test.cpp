@@ -32,7 +32,7 @@ namespace PeBootTest
         TEST_METHOD(addText_fail_Test)
         {
             TEXT a = wrap("");
-            TEXT b = createEmptyText();
+            TEXT b = createInvalidText();
 
             TEXT actual_ab = addText(&a, &b);
             Assert::IsTrue(isEnabledText(&actual_ab));
