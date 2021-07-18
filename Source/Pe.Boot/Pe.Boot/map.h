@@ -167,5 +167,5 @@ bool removeMap(MAP* map, const TEXT* key);
 /// <param name="map">対象マップ。</param>
 /// <param name="key">キー。</param>
 /// <returns>取得データ。</returns>
-MAP_RESULT_VALUE getMap(MAP* map, const TEXT* key);
+MAP_RESULT_VALUE getMap(const MAP* map, const TEXT* key);
 

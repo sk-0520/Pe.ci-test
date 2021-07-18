@@ -41,18 +41,18 @@ typedef struct tag_COMMAND_LINE_OPTION
     /// argumentsの個数。
     /// </summary>
     size_t count;
-    /// <summary>
-    /// キーと値のマッピング。
-    /// <para>キー項目のみは値がない。</para>
-    /// <para>同一キーは前が優先される。</para>
-    /// </summary>
-    MAP map;
 
     /// <summary>
    /// 管理データ。
    /// </summary>
     struct
     {
+        /// <summary>
+        /// キーと値のマッピング。
+        /// <para>キー項目のみは値がない。</para>
+        /// <para>同一キーは前が優先される。</para>
+        /// </summary>
+        MAP map;
         /// <summary>
         ///解放用データ。
         /// </summary>
@@ -82,6 +82,21 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool withCommand);
 /// </summary>
 /// <param name="commandLineOption"></param>
 void freeCommandLine(COMMAND_LINE_OPTION* commandLineOption);
+
+/// <summary>
+/// コマンドラインアイテムを取得する。
+/// </summary>
+/// <param name="commandLineOption"></param>
+/// <param name="key"></param>
+/// <returns>取得したコマンドラインアイテム。アイテムが存在しない場合はNULL。</returns>
+const COMMAND_LINE_ITEM* getCommandLineItem(const COMMAND_LINE_OPTION* commandLineOption, const TEXT* key);
+
+/// <summary>
+/// コマンドラインアイテムは値を持つか。
+/// </summary>
+/// <param name="item"></param>
+/// <returns></returns>
+bool hasValueCommandLineItem(const COMMAND_LINE_ITEM* item);
 
 /// <summary>
 /// 書式調整後の動的確保された文字列を返す。

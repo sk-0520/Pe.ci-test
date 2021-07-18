@@ -58,14 +58,30 @@ bool isEnabledText(const TEXT* text);
 /// <param name="source">対象文字列。</param>
 /// <param name="length">対象文字列の長さ。</param>
 /// <returns>不変文字列。解放が必要。</returns>
+#ifdef MEM_CHECK
+TEXT mem_check__newTextWithLength(const TCHAR* source, size_t length, const TCHAR* callerFile, size_t callerLine);
+#   define newTextWithLength(source, length) mem_check__newTextWithLength((source), (length), __FILEW__, __LINE__)
+#else
 TEXT newTextWithLength(const TCHAR* source, size_t length);
+#endif
 
 /// <summary>
 /// テキストを生成。
 /// </summary>
 /// <param name="source">対象文字列。</param>
 /// <returns>テキスト。解放が必要。</returns>
+#ifdef MEM_CHECK
+TEXT mem_check__newText(const TCHAR* source, const TCHAR* callerFile, size_t callerLine);
+#   define newText(source) mem_check__newText((source), __FILEW__, __LINE__)
+#else
 TEXT newText(const TCHAR* source);
+#endif
+
+#ifdef MEM_CHECK
+#define newEmptyText() mem_check__newText(_T(""), __FILEW__, __LINE__)
+#else
+#define newEmptyText() newText(_T(""))
+#endif
 
 /// <summary>
 /// 文字列からテキストにラップ。
@@ -83,6 +99,7 @@ TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease);
 /// <param name="source">対象文字列。</param>
 /// <returns>テキスト。解放不要。</returns>
 TEXT wrapText(const TCHAR* source);
+#define wrapEmptyText() wrapText(_T(""))
 
 
 /// <summary>

@@ -41,7 +41,7 @@ namespace PeBootTest
             freeCommandLine(&actual2_2);
         }
 
-        TEST_METHOD(parseCommandLine_map_switch_Test)
+        TEST_METHOD(parseCommandLine_map_flag_Test)
         {
             TEXT expecteds[] = {
                 wrap("def"),
@@ -51,7 +51,127 @@ namespace PeBootTest
             TEXT input = wrap("abc --def -ghi /jkl");
             COMMAND_LINE_OPTION actual = parseCommandLine(&input, true);
             for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
-                Assert::IsTrue(existsMap(&actual.map, &expecteds[i]));
+                const COMMAND_LINE_ITEM* item = getCommandLineItem(&actual, &expecteds[i]);
+                Assert::IsFalse(hasValueCommandLineItem(item));
+            }
+
+            freeCommandLine(&actual);
+        }
+
+        TEST_METHOD(parseCommandLine_map_value_space_Test)
+        {
+            TEXT expecteds[][2] = {
+                { wrap("def"), wrap("DEF") },
+                { wrap("ghi"), wrap("GHI") },
+                { wrap("jkl"), wrap("JKL") },
+            };
+            TEXT input = wrap("abc --def DEF -ghi GHI /jkl JKL");
+            COMMAND_LINE_OPTION actual = parseCommandLine(&input, true);
+            for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
+                TEXT* expectedKey = &expecteds[i][0];
+                TEXT* expectedValue = &expecteds[i][1];
+                const COMMAND_LINE_ITEM* item = getCommandLineItem(&actual, expectedKey);
+                Assert::IsNotNull(item);
+                Assert::AreEqual(expectedValue->value, item->value.value);
+            }
+
+            freeCommandLine(&actual);
+        }
+
+        TEST_METHOD(parseCommandLine_map_value_equal_Test)
+        {
+            TEXT expecteds[][2] = {
+                { wrap("def"), wrap("DEF") },
+                { wrap("ghi"), wrap("GHI") },
+                { wrap("jkl"), wrap("JKL") },
+            };
+            TEXT input = wrap("abc --def=DEF -ghi=GHI /jkl=JKL");
+            COMMAND_LINE_OPTION actual = parseCommandLine(&input, true);
+            for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
+                TEXT* expectedKey = &expecteds[i][0];
+                TEXT* expectedValue = &expecteds[i][1];
+                const COMMAND_LINE_ITEM* item = getCommandLineItem(&actual, expectedKey);
+                Assert::IsNotNull(item);
+                Assert::AreEqual(expectedValue->value, item->value.value);
+            }
+
+            freeCommandLine(&actual);
+        }
+
+        TEST_METHOD(parseCommandLine_map_value_space_with_equal_Test)
+        {
+            TEXT expecteds[][2] = {
+                { wrap("def"), wrap("DEF") },
+                { wrap("ghi"), wrap("GHI") },
+                { wrap("jkl"), wrap("JKL") },
+            };
+            TEXT input = wrap("abc --def=DEF -ghi GHI /jkl=JKL");
+            COMMAND_LINE_OPTION actual = parseCommandLine(&input, true);
+            for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
+                TEXT* expectedKey = &expecteds[i][0];
+                TEXT* expectedValue = &expecteds[i][1];
+                const COMMAND_LINE_ITEM* item = getCommandLineItem(&actual, expectedKey);
+                Assert::IsNotNull(item);
+                Assert::AreEqual(expectedValue->value, item->value.value);
+            }
+
+            freeCommandLine(&actual);
+        }
+
+        TEST_METHOD(parseCommandLine_map_switch_width_value_Test)
+        {
+            TEXT expecteds[][2] = {
+                { wrap("def"), wrap("DEF") },
+                { wrap("ghi"), wrap("") },
+                { wrap("jkl"), wrap("") },
+                { wrap("mno"), wrap("MNO") },
+                { wrap("pqr"), createInvalidText() },
+                { wrap("stu"), createInvalidText() },
+            };
+            TEXT input = wrap("abc --def=DEF -ghi= --jkl \"\" /mno=MNO --pqr --stu");
+            COMMAND_LINE_OPTION actual = parseCommandLine(&input, true);
+
+            const COMMAND_LINE_ITEM* item1 = getCommandLineItem(&actual, expecteds[0]);
+            const COMMAND_LINE_ITEM* item2 = getCommandLineItem(&actual, expecteds[1]);
+            const COMMAND_LINE_ITEM* item3 = getCommandLineItem(&actual, expecteds[2]);
+            const COMMAND_LINE_ITEM* item4 = getCommandLineItem(&actual, expecteds[3]);
+            const COMMAND_LINE_ITEM* item5 = getCommandLineItem(&actual, expecteds[4]);
+            const COMMAND_LINE_ITEM* item6 = getCommandLineItem(&actual, expecteds[5]);
+
+            Assert::IsTrue(hasValueCommandLineItem(item1));
+            Assert::AreEqual(expecteds[0][1].value, item1->value.value);
+
+            Assert::IsTrue(hasValueCommandLineItem(item2));
+            Assert::AreEqual(expecteds[1][1].value, item2->value.value);
+
+            Assert::IsTrue(hasValueCommandLineItem(item3));
+            Assert::AreEqual(expecteds[2][1].value, item3->value.value);
+
+            Assert::IsTrue(hasValueCommandLineItem(item4));
+            Assert::AreEqual(expecteds[3][1].value, item4->value.value);
+
+            Assert::IsFalse(hasValueCommandLineItem(item5));
+
+            Assert::IsFalse(hasValueCommandLineItem(item6));
+
+            freeCommandLine(&actual);
+        }
+
+        TEST_METHOD(parseCommandLine_map_value_with_space_Test)
+        {
+            TEXT expecteds[][2] = {
+                { wrap("0"), wrap("0 0") },
+                { wrap("1"), wrap("1 1 ") },
+                { wrap("2"), wrap(" 2 2") },
+            };
+            TEXT input = wrap("abc --0=\"0 0\" -1 \"1 1 \" /2 \" 2 2\"");
+            COMMAND_LINE_OPTION actual = parseCommandLine(&input, true);
+            for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
+                TEXT* expectedKey = &expecteds[i][0];
+                TEXT* expectedValue = &expecteds[i][1];
+                const COMMAND_LINE_ITEM* item = getCommandLineItem(&actual, expectedKey);
+                Assert::IsNotNull(item);
+                Assert::AreEqual(expectedValue->value, item->value.value);
             }
 
             freeCommandLine(&actual);

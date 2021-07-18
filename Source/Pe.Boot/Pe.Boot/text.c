@@ -32,9 +32,18 @@ bool isEnabledText(const TEXT* text)
     return true;
 }
 
+#ifdef MEM_CHECK
+TEXT mem_check__newTextWithLength(const TCHAR* source, size_t length, const TCHAR* callerFile, size_t callerLine)
+#   define newTextWithLength(source, length) mem_check__newTextWithLength((source), (length), __FILEW__, __LINE__)
+#else
 TEXT newTextWithLength(const TCHAR* source, size_t length)
+#endif
 {
+#ifdef MEM_CHECK
+    TCHAR* buffer = mem_check__allocateString(length, callerFile, callerLine);
+#else
     TCHAR* buffer = allocateString(length);
+#endif
     copyMemory(buffer, (void*)source, length * sizeof(TCHAR));
     buffer[length] = 0;
 
@@ -50,14 +59,22 @@ TEXT newTextWithLength(const TCHAR* source, size_t length)
     return result;
 }
 
+#ifdef MEM_CHECK
+TEXT mem_check__newText(const TCHAR* source, const TCHAR* callerFile, size_t callerLine)
+#else
 TEXT newText(const TCHAR* source)
+#endif
 {
     if (!source) {
         return createInvalidText();
     }
 
     size_t length = getStringLength(source);
+#ifdef MEM_CHECK
+    return mem_check__newTextWithLength(source, length, callerFile, callerLine);
+#else
     return newTextWithLength(source, length);
+#endif
 }
 
 TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease)

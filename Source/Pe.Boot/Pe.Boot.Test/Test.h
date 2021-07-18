@@ -4,7 +4,12 @@
 
 #include <tchar.h>
 
-#define text(s) newText(_T(s))
+#ifdef MEM_CHECK
+#   define text(s) mem_check__newText(_T(s), __FILEW__, __LINE__)
+#else
+#   define text(s) newText(_T(s))
+#endif
+
 #define wrap(s) wrapText(_T(s))
 
 namespace PeBootTest

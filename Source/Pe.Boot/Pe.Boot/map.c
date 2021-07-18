@@ -158,7 +158,7 @@ bool removeMap(MAP* map, const TEXT* key)
     return true;
 }
 
-MAP_RESULT_VALUE getMap(MAP* map, const TEXT* key)
+MAP_RESULT_VALUE getMap(const MAP* map, const TEXT* key)
 {
     MAP_PAIR* pair = findMap(map, key);
 

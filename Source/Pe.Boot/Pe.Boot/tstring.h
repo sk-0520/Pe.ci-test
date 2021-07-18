@@ -82,7 +82,12 @@ TCHAR* cloneString(const TCHAR* source);
 /// </summary>
 /// <param name="length">文字列の長さ。</param>
 /// <returns>先頭 0 の番兵を考慮した領域(length + 1)。freeStringによる解放が必要。</returns>
+#ifdef MEM_CHECK
+TCHAR* mem_check__allocateString(size_t length, const TCHAR* callerFile, size_t callerLine);
+#   define allocateString(length) mem_check__allocateString((length), __FILEW__, __LINE__)
+#else
 TCHAR* allocateString(size_t length);
+#endif
 
 /// <summary>
 /// 確保した文字列を解放。

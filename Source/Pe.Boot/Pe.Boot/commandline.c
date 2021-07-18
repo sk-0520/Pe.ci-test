@@ -62,7 +62,7 @@ static void convertMapFromArguments(MAP* result, const TEXT arguments[], size_t 
         TEXT valueWithSeparator = findCharacter2(&arg, _T('='));
         if (isEnabledText(&valueWithSeparator)) {
             // 引数が値とキーを持つ
-            key = newTextWithLength(arg.value, (valueWithSeparator.value - arg.value - 1));
+            key = newTextWithLength(arg.value, (valueWithSeparator.value - arg.value));
             if (1 < valueWithSeparator.length) {
                 // 値は存在する
                 TEXT rawValue = wrapTextWithLength(valueWithSeparator.value + 1, valueWithSeparator.length - 1, false);
@@ -73,8 +73,8 @@ static void convertMapFromArguments(MAP* result, const TEXT arguments[], size_t 
                     item->value = rawValue;
                 }
             } else {
-                // 値は存在しない
-                item->value = createInvalidText();
+                // 値は存在しない、が=指定されてるなら空文字列
+                item->value = newEmptyText();
             }
             item->valueIndex = i;
         } else if(i + 1 < count) {
@@ -88,7 +88,7 @@ static void convertMapFromArguments(MAP* result, const TEXT arguments[], size_t 
             } else {
                 // 次要素を値として取り込む
                 item->valueIndex = i + 1;
-                item->value = cloneText(current);
+                item->value = cloneText(current + 1);
                 // 次要素をスキップ
                 i += 1;
             }
@@ -100,6 +100,7 @@ static void convertMapFromArguments(MAP* result, const TEXT arguments[], size_t 
         }
 
         addMap(result, &key, item, true);
+        freeText(&key);
     }
 }
 
@@ -108,7 +109,7 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool withCommand)
     if (!commandLine || !commandLine->length) {
         COMMAND_LINE_OPTION empty;
         setMemory(&empty, 0, sizeof(empty));
-        setCommandLineMapSetting(&empty.map, 2);
+        setCommandLineMapSetting(&empty.library.map, 2);
         return empty;
     }
 
@@ -149,21 +150,40 @@ COMMAND_LINE_OPTION parseCommandLine(const TEXT* commandLine, bool withCommand)
             .command = command,
         },
     };
-    setCommandLineMapSetting(&result.map, result.count);
-    convertMapFromArguments(&result.map, result.arguments, result.count);
+    setCommandLineMapSetting(&result.library.map, result.count);
+    convertMapFromArguments(&result.library.map, result.arguments, result.count);
 
     return result;
 }
 
 void freeCommandLine(COMMAND_LINE_OPTION* commandLineOption)
 {
-    freeMap(&commandLineOption->map);
+    freeMap(&commandLineOption->library.map);
 
     freeMemory(commandLineOption->library.rawArguments);
     commandLineOption->library.rawArguments = NULL;
 
     LocalFree((HLOCAL)commandLineOption->library.argv);
     commandLineOption->library.argv = NULL;
+}
+
+const COMMAND_LINE_ITEM* getCommandLineItem(const COMMAND_LINE_OPTION* commandLineOption, const TEXT* key)
+{
+    MAP_RESULT_VALUE resultValue = getMap(&commandLineOption->library.map, key);
+    if (resultValue.exists) {
+        return (COMMAND_LINE_ITEM*)resultValue.value;
+    }
+
+    return NULL;
+}
+
+bool hasValueCommandLineItem(const COMMAND_LINE_ITEM* item)
+{
+    if (!item) {
+        return false;
+    }
+
+    return isEnabledText(&item->value);
 }
 
 

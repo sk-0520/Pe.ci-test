@@ -100,9 +100,17 @@ TCHAR* cloneString(const TCHAR* source)
     return result;
 }
 
+#ifdef MEM_CHECK
+TCHAR* mem_check__allocateString(size_t length, const TCHAR* callerFile, size_t callerLine)
+#else
 TCHAR* allocateString(size_t length)
+#endif
 {
+#ifdef MEM_CHECK
+    TCHAR* result = mem_check__allocateMemory(sizeof(TCHAR) * length + sizeof(TCHAR), false, callerFile, callerLine);
+#else
     TCHAR* result = allocateMemory(sizeof(TCHAR) * length + sizeof(TCHAR), false);
+#endif
     result[0] = 0;
     return result;
 }
