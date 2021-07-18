@@ -4,7 +4,7 @@
 /// <summary>
 /// 各種パス情報。
 /// </summary>
-typedef struct tag_APP_PATH_ITEMS2
+typedef struct tag_APP_PATH_ITEMS
 {
     /// <summary>
     /// 起動用アプリケーションファイルパス。
@@ -20,9 +20,9 @@ typedef struct tag_APP_PATH_ITEMS2
     /// 本体ファイルパス。
     /// </summary>
     TEXT mainModule;
-} APP_PATH_ITEMS2;
+} APP_PATH_ITEMS;
 
-TEXT getMainModulePath2(const TEXT* rootDirPath);
+TEXT getMainModulePath(const TEXT* rootDirPath);
 
-void initializeAppPathItems(APP_PATH_ITEMS2* result, HMODULE hInstance);
-void uninitializeAppPathItems(APP_PATH_ITEMS2* items);
+void initializeAppPathItems(APP_PATH_ITEMS* result, HMODULE hInstance);
+void uninitializeAppPathItems(APP_PATH_ITEMS* items);

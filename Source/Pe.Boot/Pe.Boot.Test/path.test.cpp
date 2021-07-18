@@ -17,7 +17,7 @@ namespace PeBootTest
             TEXT expected = wrap("C:\\dir");
             TEXT input = wrap("C:\\dir\\file");
 
-            TEXT actual = getParentDirectoryPath2(&input);
+            TEXT actual = getParentDirectoryPath(&input);
             Assert::AreEqual(expected.value, actual.value);
 
             freeText(&actual);
@@ -29,7 +29,7 @@ namespace PeBootTest
             TEXT input1 = wrap("C:\\dir");
             TEXT input2 = wrap("file");
 
-            TEXT actual = combinePath2(&input1, &input2);
+            TEXT actual = combinePath(&input1, &input2);
             Assert::AreEqual(expected.value, actual.value);
 
             freeText(&actual);

@@ -38,7 +38,7 @@ void addVisualCppRuntimeRedist(const TEXT* rootDirPath)
 
 static void bootCore(HINSTANCE hInstance, const TCHAR* commandLine)
 {
-    APP_PATH_ITEMS2 appPathItems;
+    APP_PATH_ITEMS appPathItems;
     initializeAppPathItems(&appPathItems, hInstance);
 
     addVisualCppRuntimeRedist(&appPathItems.rootDirectory);

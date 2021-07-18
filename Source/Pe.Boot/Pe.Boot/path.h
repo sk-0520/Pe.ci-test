@@ -10,7 +10,7 @@
 /// </summary>
 /// <param name="path">対象パス。</param>
 /// <returns>親ディレクトリパス。</returns>
-TEXT getParentDirectoryPath2(const TEXT* path);
+TEXT getParentDirectoryPath(const TEXT* path);
 
 /// <summary>
 /// パスを結合する。
@@ -18,7 +18,7 @@ TEXT getParentDirectoryPath2(const TEXT* path);
 /// <param name="basePath">ベースのパス。</param>
 /// <param name="relativePath">結合するパス。</param>
 /// <returns>結合パス。</returns>
-TEXT combinePath2(const TEXT* basePath, const TEXT* relativePath);
+TEXT combinePath(const TEXT* basePath, const TEXT* relativePath);
 
 /// <summary>
 /// パスを結合する。

@@ -16,7 +16,7 @@ namespace PeBootTest
         {
             TEXT expected = wrap("C:\\abc\\bin\\Pe.Main.exe");
             TEXT input = wrap("C:\\abc\\");
-            TEXT actual = getMainModulePath2(&input);
+            TEXT actual = getMainModulePath(&input);
 
             Assert::AreEqual(expected.value, actual.value);
             freeText(&actual);

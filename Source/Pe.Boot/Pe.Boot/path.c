@@ -6,7 +6,8 @@
 #include "path.h"
 #include "logging.h"
 
-TEXT getParentDirectoryPath2(const TEXT* path)
+
+TEXT getParentDirectoryPath(const TEXT* path)
 {
     TCHAR* buffer = cloneString(path->value);
     if (PathRemoveFileSpec(buffer)) {
@@ -20,7 +21,7 @@ TEXT getParentDirectoryPath2(const TEXT* path)
     return createInvalidText();
 }
 
-TEXT combinePath2(const TEXT* basePath, const TEXT* relativePath)
+TEXT combinePath(const TEXT* basePath, const TEXT* relativePath)
 {
     size_t totalLength = basePath->length + relativePath->length + sizeof(TCHAR)/* \ */;
     TCHAR* buffer = allocateString(totalLength);

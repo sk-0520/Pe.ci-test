@@ -1,7 +1,7 @@
 ﻿#include "app_path.h"
 
 
-TEXT getMainModulePath2(const TEXT* rootDirPath)
+TEXT getMainModulePath(const TEXT* rootDirPath)
 {
     TEXT joinPaths[] = {
         wrapText(_T("bin")),
@@ -12,14 +12,14 @@ TEXT getMainModulePath2(const TEXT* rootDirPath)
     return joinPath(rootDirPath, joinPaths, joinPathsLength);
 }
 
-void initializeAppPathItems(APP_PATH_ITEMS2* result, HMODULE hInstance)
+void initializeAppPathItems(APP_PATH_ITEMS* result, HMODULE hInstance)
 {
     result->application = getModulePath(hInstance);
-    result->rootDirectory = getParentDirectoryPath2(&result->application);
-    result->mainModule = getMainModulePath2(&result->rootDirectory);
+    result->rootDirectory = getParentDirectoryPath(&result->application);
+    result->mainModule = getMainModulePath(&result->rootDirectory);
 }
 
-void uninitializeAppPathItems(APP_PATH_ITEMS2* items)
+void uninitializeAppPathItems(APP_PATH_ITEMS* items)
 {
     freeText(&items->application);
     freeText(&items->rootDirectory);
