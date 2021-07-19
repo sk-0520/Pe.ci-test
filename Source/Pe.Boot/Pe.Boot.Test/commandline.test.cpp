@@ -41,7 +41,7 @@ namespace PeBootTest
             freeCommandLine(&actual2_2);
         }
 
-        TEST_METHOD(parseCommandLine_map_flag_Test)
+        TEST_METHOD(parseCommandLine_item_flag_Test)
         {
             TEXT expecteds[] = {
                 wrap("def"),
@@ -58,7 +58,7 @@ namespace PeBootTest
             freeCommandLine(&actual);
         }
 
-        TEST_METHOD(parseCommandLine_map_value_space_Test)
+        TEST_METHOD(parseCommandLine_item_value_space_Test)
         {
             TEXT expecteds[][2] = {
                 { wrap("def"), wrap("DEF") },
@@ -78,7 +78,7 @@ namespace PeBootTest
             freeCommandLine(&actual);
         }
 
-        TEST_METHOD(parseCommandLine_map_value_equal_Test)
+        TEST_METHOD(parseCommandLine_item_value_equal_Test)
         {
             TEXT expecteds[][2] = {
                 { wrap("def"), wrap("DEF") },
@@ -98,7 +98,7 @@ namespace PeBootTest
             freeCommandLine(&actual);
         }
 
-        TEST_METHOD(parseCommandLine_map_value_space_with_equal_Test)
+        TEST_METHOD(parseCommandLine_item_value_space_with_equal_Test)
         {
             TEXT expecteds[][2] = {
                 { wrap("def"), wrap("DEF") },
@@ -118,7 +118,7 @@ namespace PeBootTest
             freeCommandLine(&actual);
         }
 
-        TEST_METHOD(parseCommandLine_map_switch_width_value_Test)
+        TEST_METHOD(parseCommandLine_item_switch_width_value_Test)
         {
             TEXT expecteds[][2] = {
                 { wrap("def"), wrap("DEF") },
@@ -157,14 +157,15 @@ namespace PeBootTest
             freeCommandLine(&actual);
         }
 
-        TEST_METHOD(parseCommandLine_map_value_with_space_Test)
+        TEST_METHOD(parseCommandLine_item_value_with_space_Test)
         {
             TEXT expecteds[][2] = {
                 { wrap("0"), wrap("0 0") },
                 { wrap("1"), wrap("1 1 ") },
                 { wrap("2"), wrap(" 2 2") },
+                { wrap("3"), wrap(" 3 3") },
             };
-            TEXT input = wrap("abc --0=\"0 0\" -1 \"1 1 \" /2 \" 2 2\"");
+            TEXT input = wrap("abc --0=\"0 0\" -1 \"1 1 \" /2 \" 2 2\" \"-3= 3 3\"");
             COMMAND_LINE_OPTION actual = parseCommandLine(&input, true);
             for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
                 TEXT* expectedKey = &expecteds[i][0];
