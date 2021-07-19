@@ -107,9 +107,3 @@ bool has_value_command_line_item(const COMMAND_LINE_ITEM* item);
 /// <returns>生成テキスト。解放が必要。</returns>
 TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count);
 
-/// <summary>
-/// 書式調整後の動的確保された文字列を返す。
-/// </summary>
-/// <param name="arg"></param>
-/// <returns>呼び出し側で世話すること。</returns>
-TCHAR* tuneArg(const TCHAR* arg);

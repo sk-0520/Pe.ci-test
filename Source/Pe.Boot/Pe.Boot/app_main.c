@@ -9,8 +9,6 @@
 #include "app_boot.h"
 #include "app_command_line.h"
 
-int getWaitTime(const TCHAR* s);
-
 int app_main(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
 {
     if (command_line_option->count < 1) {

@@ -8,7 +8,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace PeBootTest
 {
-    TEST_CLASS(text_manipulation_test)
+    TEST_CLASS(text_manipulate_test)
     {
     public:
 

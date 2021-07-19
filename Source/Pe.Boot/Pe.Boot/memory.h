@@ -17,6 +17,7 @@
 #define MEM_CHECK_HEAD_ARGS const TCHAR* MEM_CHECK_ARG_FLIE, size_t MEM_CHECK_ARG_LINE
 #define MEM_CHECK_CALL_ARGS MEM_CHECK_ARG_FLIE, MEM_CHECK_ARG_LINE
 
+
 typedef struct
 {
     void* p;
@@ -27,6 +28,17 @@ typedef struct
 void mem_check__print_allocate_memory(bool leak, void(*output)(TCHAR*), bool add_new_line);
 #endif
 
+/*
+#ifdef MEM_CHECK
+#   define MEM_CHECK_FUNCTION(function_name) mem_check__#function_name
+#   define MEM_CHECK_FUNC_HEAD_ARGS , const TCHAR* MEM_CHECK_ARG_FLIE, size_t MEM_CHECK_ARG_LINE
+#   define MEM_CHECK_FUNC_CALL_ARGS , MEM_CHECK_ARG_FLIE, MEM_CHECK_ARG_LINE
+#else
+#   define MEM_CHECK_FUNCTION(function_name) #function_name
+#   define MEM_CHECK_FUNC_HEAD_ARGS
+#   define MEM_CHECK_FUNC_CALL_ARGS
+#endif
+*/
 /// <summary>
 /// 指定したサイズ以上のヒープ領域を確保。
 /// </summary>

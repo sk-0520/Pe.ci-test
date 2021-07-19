@@ -77,11 +77,7 @@ TEXT new_text(const TCHAR* source)
 }
 
 
-#ifdef MEM_CHECK
-TEXT mem_check__wrap_text_with_length(const TCHAR* source, size_t length, bool need_release, MEM_CHECK_HEAD_ARGS)
-#else
 TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release)
-#endif
 {
     if (!source) {
         return create_invalid_text();

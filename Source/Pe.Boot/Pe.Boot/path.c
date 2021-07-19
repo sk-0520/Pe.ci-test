@@ -31,11 +31,7 @@ TEXT combine_path(const TEXT* base_path, const TEXT* relative_path)
     TCHAR* buffer = allocate_string(total_length);
     PathCombine(buffer, base_path->value, relative_path->value);
 
-#ifdef MEM_CHECK
-    return mem_check__wrap_text_with_length(buffer, get_string_length(buffer), true, MEM_CHECK_CALL_ARGS);
-#else
     return wrap_text_with_length(buffer, get_string_length(buffer), true);
-#endif
 }
 
 #ifdef MEM_CHECK

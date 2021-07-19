@@ -100,12 +100,7 @@ TEXT new_text(const TCHAR* source);
 /// <param name="length">対象文字列の長さ。</param>
 /// <param name="need_release">解放が必要か。真の場合、<c>wrapText</c>と異なり呼び出し側で確保した領域を信頼して持ち運ぶ。</param>
 /// <returns></returns>
-#ifdef MEM_CHECK
-TEXT mem_check__wrap_text_with_length(const TCHAR* source, size_t length, bool need_release, MEM_CHECK_HEAD_ARGS);
-#   define wrap_text_with_length(source, length, need_release) mem_check__wrap_text_with_length((source), (length), (need_release), MEM_CHECK_HEAD_DEF)
-#else
 TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release);
-#endif
 
 /// <summary>
 /// 文字列からテキストにラップ。
