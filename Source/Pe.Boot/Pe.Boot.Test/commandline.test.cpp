@@ -68,11 +68,11 @@ namespace PeBootTest
             TEXT input = wrap("abc --def DEF -ghi GHI /jkl JKL");
             COMMAND_LINE_OPTION actual = parse_command_line(&input, true);
             for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
-                TEXT* expectedKey = &expecteds[i][0];
-                TEXT* expectedValue = &expecteds[i][1];
-                const COMMAND_LINE_ITEM* item = get_command_line_item(&actual, expectedKey);
+                TEXT* expected_key = &expecteds[i][0];
+                TEXT* expected_value = &expecteds[i][1];
+                const COMMAND_LINE_ITEM* item = get_command_line_item(&actual, expected_key);
                 Assert::IsNotNull(item);
-                Assert::AreEqual(expectedValue->value, item->value.value);
+                Assert::AreEqual(expected_value->value, item->value.value);
             }
 
             free_command_line(&actual);
@@ -88,11 +88,11 @@ namespace PeBootTest
             TEXT input = wrap("abc --def=DEF -ghi=GHI /jkl=JKL");
             COMMAND_LINE_OPTION actual = parse_command_line(&input, true);
             for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
-                TEXT* expectedKey = &expecteds[i][0];
-                TEXT* expectedValue = &expecteds[i][1];
-                const COMMAND_LINE_ITEM* item = get_command_line_item(&actual, expectedKey);
+                TEXT* expected_key = &expecteds[i][0];
+                TEXT* expected_value = &expecteds[i][1];
+                const COMMAND_LINE_ITEM* item = get_command_line_item(&actual, expected_key);
                 Assert::IsNotNull(item);
-                Assert::AreEqual(expectedValue->value, item->value.value);
+                Assert::AreEqual(expected_value->value, item->value.value);
             }
 
             free_command_line(&actual);
@@ -108,11 +108,11 @@ namespace PeBootTest
             TEXT input = wrap("abc --def=DEF -ghi GHI /jkl=JKL");
             COMMAND_LINE_OPTION actual = parse_command_line(&input, true);
             for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
-                TEXT* expectedKey = &expecteds[i][0];
-                TEXT* expectedValue = &expecteds[i][1];
-                const COMMAND_LINE_ITEM* item = get_command_line_item(&actual, expectedKey);
+                TEXT* expected_key = &expecteds[i][0];
+                TEXT* expected_value = &expecteds[i][1];
+                const COMMAND_LINE_ITEM* item = get_command_line_item(&actual, expected_key);
                 Assert::IsNotNull(item);
-                Assert::AreEqual(expectedValue->value, item->value.value);
+                Assert::AreEqual(expected_value->value, item->value.value);
             }
 
             free_command_line(&actual);
@@ -168,11 +168,11 @@ namespace PeBootTest
             TEXT input = wrap("abc --0=\"0 0\" -1 \"1 1 \" /2 \" 2 2\" \"-3= 3 3\"");
             COMMAND_LINE_OPTION actual = parse_command_line(&input, true);
             for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
-                TEXT* expectedKey = &expecteds[i][0];
-                TEXT* expectedValue = &expecteds[i][1];
-                const COMMAND_LINE_ITEM* item = get_command_line_item(&actual, expectedKey);
+                TEXT* expected_key = &expecteds[i][0];
+                TEXT* expected_value = &expecteds[i][1];
+                const COMMAND_LINE_ITEM* item = get_command_line_item(&actual, expected_key);
                 Assert::IsNotNull(item);
-                Assert::AreEqual(expectedValue->value, item->value.value);
+                Assert::AreEqual(expected_value->value, item->value.value);
             }
 
             free_command_line(&actual);
