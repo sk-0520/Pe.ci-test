@@ -5,52 +5,13 @@
 
 #include "memory.h"
 
-/// <summary>
-/// 文字列 haystack の先頭から文字列 needle を探し、見つかったときにはその位置をポインタで返却し、見つからなかったときにはNULLを返却。
-/// </summary>
-/// <param name="haystack">検索対象文字列</param>
-/// <param name="needle">検索文字列</param>
-/// <param name="ignoreCase">大文字小文字を無視するか。</param>
-/// <returns>一致文字のアドレス, 見つからない場合は <c>NULL</c></returns>
-TCHAR* findString(const TCHAR* haystack, const TCHAR* needle, bool ignoreCase);
+
 /// <summary>
 /// 文字列長を取得。
 /// </summary>
 /// <param name="s">対象文字列。</param>
 /// <returns>長さ。</returns>
 size_t get_string_length(const TCHAR* s);
-
-/// <summary>
-/// 文字列中の文字を検索。
-/// </summary>
-/// <param name="haystack">検索対象文字列。</param>
-/// <param name="needle">検索文字。</param>
-/// <returns>一致文字のアドレス。見つからない場合は <c>NULL</c></returns>
-TCHAR* findCharacter(const TCHAR* haystack, TCHAR needle);
-/// <summary>
-/// 文字列中の文字を検索。
-/// </summary>
-/// <param name="haystack"></param>
-/// <param name="needle"></param>
-/// <param name="haystack">検索対象文字列。</param>
-/// <param name="needle">検索文字。</param>
-/// <returns>一致文字のインデックス。見つからない場合は -1</returns>
-SSIZE_T indexCharacter(const TCHAR* haystack, TCHAR needle);
-
-/// <summary>
-/// 文字列比較。
-/// </summary>
-/// <param name="a">比較対象文字列1。</param>
-/// <param name="b">比較対象文字列2。</param>
-/// <param name="ignoreCase">大文字小文字を無視するか。</param>
-/// <returns>a &lt; b: 負, a = b: 0, a &gt; b: 正。</returns>
-int compare_string(const TCHAR* a, const TCHAR* b, bool ignoreCase);
-
-bool tryParseInteger(int* result, const TCHAR* input);
-bool tryParseHexOrInteger(int* result, const TCHAR* input);
-
-bool tryParseLong(long long* result, const TCHAR* input);
-bool tryParseHexOrLong(long long* result, const TCHAR* input);
 
 #define format_string(result, format, ...) do { wsprintf(result, format,  __VA_ARGS__); } while(0)
 

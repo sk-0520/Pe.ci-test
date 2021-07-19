@@ -6,7 +6,7 @@
 
 bool equals_map_key_default(const TEXT* a, const TEXT* b)
 {
-    return !compare_string(a->value, b->value, false);
+    return !compare_text(a, b, false);
 }
 
 void free_map_value_null(MAP_PAIR* pair)

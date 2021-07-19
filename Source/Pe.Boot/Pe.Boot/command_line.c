@@ -250,19 +250,3 @@ TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count)
     return wrap_text_with_length(buffer, position, true);
 }
 
-TCHAR* tuneArg(const TCHAR* arg)
-{
-    int hasSpace = findCharacter(arg, ' ') != NULL;
-    size_t len = (size_t)get_string_length(arg) + (hasSpace ? 2 : 0);
-    TCHAR* s = allocate_clear_memory(len + 1, sizeof(TCHAR*));
-    assert(s);
-    if (hasSpace) {
-        copy_string(s + 1, arg);
-        s[0] = '"';
-        s[len - 1] = '"';
-        s[len - 0] = 0; // ↑で +1 してるから安全安全
-    } else {
-        copy_string(s, arg);
-    }
-    return s;
-}

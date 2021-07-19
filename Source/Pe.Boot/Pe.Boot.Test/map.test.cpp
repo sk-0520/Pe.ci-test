@@ -225,7 +225,7 @@ namespace PeBootTest
 
         static bool equals_map_key_ignore_case(const TEXT* a, const TEXT* b)
         {
-            return !compare_string(a->value, b->value, true);
+            return !compare_text(a, b, true);
         }
 
         TEST_METHOD(compare_test)
