@@ -84,7 +84,7 @@ TCHAR* cloneString(const TCHAR* source);
 /// <returns>先頭 0 の番兵を考慮した領域(length + 1)。freeStringによる解放が必要。</returns>
 #ifdef MEM_CHECK
 TCHAR* mem_check__allocateString(size_t length, const TCHAR* callerFile, size_t callerLine);
-#   define allocateString(length) mem_check__allocateString((length), __FILEW__, __LINE__)
+#   define allocateString(length) mem_check__allocateString((length), _T(__FILE__), __LINE__)
 #else
 TCHAR* allocateString(size_t length);
 #endif
@@ -94,5 +94,11 @@ TCHAR* allocateString(size_t length);
 /// ドメインとしての関数で<c>freeMemory</c>のラッパー。
 /// </summary>
 /// <param name="s"></param>
-void freeString(const TCHAR* s);
+#ifdef MEM_CHECK
+void mem_check__freeString(const TCHAR * s, const TCHAR * callerFile, size_t callerLine);
+#   define freeString(s) mem_check__freeString((s), _T(__FILE__), __LINE__)
+#else
+void freeString(const TCHAR * s);
+#endif
+
 

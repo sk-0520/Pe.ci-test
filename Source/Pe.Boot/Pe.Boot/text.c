@@ -34,7 +34,6 @@ bool isEnabledText(const TEXT* text)
 
 #ifdef MEM_CHECK
 TEXT mem_check__newTextWithLength(const TCHAR* source, size_t length, const TCHAR* callerFile, size_t callerLine)
-#   define newTextWithLength(source, length) mem_check__newTextWithLength((source), (length), __FILEW__, __LINE__)
 #else
 TEXT newTextWithLength(const TCHAR* source, size_t length)
 #endif
@@ -106,7 +105,11 @@ TEXT wrapText(const TCHAR* source)
     return wrapTextWithLength(source, length, false);
 }
 
+#ifdef MEM_CHECK
+TEXT mem_check__cloneText(const TEXT* source, const TCHAR* callerFile, size_t callerLine)
+#else
 TEXT cloneText(const TEXT* source)
+#endif
 {
     if (!isEnabledText(source)) {
         return createInvalidText();
@@ -146,7 +149,11 @@ TEXT referenceText(const TEXT* source)
     return result;
 }
 
+#ifdef MEM_CHECK
+bool mem_check__freeText(TEXT* text, const TCHAR* callerFile, size_t callerLine)
+#else
 bool freeText(TEXT* text)
+#endif
 {
     if (!isEnabledText(text)) {
         return false;

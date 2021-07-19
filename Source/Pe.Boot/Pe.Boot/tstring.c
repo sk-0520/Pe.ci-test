@@ -115,9 +115,17 @@ TCHAR* allocateString(size_t length)
     return result;
 }
 
+#ifdef MEM_CHECK
+void mem_check__freeString(const TCHAR* s, const TCHAR* callerFile, size_t callerLine)
+#else
 void freeString(const TCHAR* s)
+#endif
 {
+#ifdef MEM_CHECK
+    mem_check__freeMemory((void*)s, callerFile, callerLine);
+#else
     freeMemory((void*)s);
+#endif
 }
 
 

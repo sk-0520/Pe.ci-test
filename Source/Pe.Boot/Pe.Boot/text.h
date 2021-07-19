@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include <tchar.h>
+
 #include "common.h"
 #include "tstring.h"
 
@@ -60,7 +62,7 @@ bool isEnabledText(const TEXT* text);
 /// <returns>不変文字列。解放が必要。</returns>
 #ifdef MEM_CHECK
 TEXT mem_check__newTextWithLength(const TCHAR* source, size_t length, const TCHAR* callerFile, size_t callerLine);
-#   define newTextWithLength(source, length) mem_check__newTextWithLength((source), (length), __FILEW__, __LINE__)
+#   define newTextWithLength(source, length) mem_check__newTextWithLength((source), (length), _T(__FILE__), __LINE__)
 #else
 TEXT newTextWithLength(const TCHAR* source, size_t length);
 #endif
@@ -72,13 +74,13 @@ TEXT newTextWithLength(const TCHAR* source, size_t length);
 /// <returns>テキスト。解放が必要。</returns>
 #ifdef MEM_CHECK
 TEXT mem_check__newText(const TCHAR* source, const TCHAR* callerFile, size_t callerLine);
-#   define newText(source) mem_check__newText((source), __FILEW__, __LINE__)
+#   define newText(source) mem_check__newText((source), _T(__FILE__), __LINE__)
 #else
 TEXT newText(const TCHAR* source);
 #endif
 
 #ifdef MEM_CHECK
-#define newEmptyText() mem_check__newText(_T(""), __FILEW__, __LINE__)
+#define newEmptyText() mem_check__newText(_T(""), _T(__FILE__), __LINE__)
 #else
 #define newEmptyText() newText(_T(""))
 #endif
@@ -107,8 +109,12 @@ TEXT wrapText(const TCHAR* source);
 /// </summary>
 /// <param name="source">入力不変文字列。</param>
 /// <returns>複製された不変文字列。解放が必要。</returns>
+#ifdef MEM_CHECK
+TEXT mem_check__cloneText(const TEXT* source, const TCHAR* callerFile, size_t callerLine);
+#   define cloneText(source) mem_check__cloneText(source, _T(__FILE__), __LINE__)
+#else
 TEXT cloneText(const TEXT* source);
-
+#endif
 /// <summary>
 /// 不変文字列を参照として複製。
 /// </summary>
@@ -122,7 +128,12 @@ TEXT referenceText(const TEXT* source);
 /// </summary>
 /// <param name="text"></param>
 /// <returns></returns>
+#ifdef MEM_CHECK
+bool mem_check__freeText(TEXT* text, const TCHAR* callerFile, size_t callerLine);
+#   define freeText(text) mem_check__freeText(text, _T(__FILE__), __LINE__)
+#else
 bool freeText(TEXT* text);
+#endif
 
 /* 文字列操作ラッパー */
 #include "text_search.h"

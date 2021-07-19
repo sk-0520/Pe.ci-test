@@ -5,7 +5,7 @@
 #include <tchar.h>
 
 #ifdef MEM_CHECK
-#   define text(s) mem_check__newText(_T(s), __FILEW__, __LINE__)
+#   define text(s) mem_check__newText(_T(s), _T(__FILE__), __LINE__)
 #else
 #   define text(s) newText(_T(s))
 #endif
