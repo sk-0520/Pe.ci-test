@@ -5,13 +5,11 @@
 #include "debug.h"
 #include "tstring.h"
 
-#define PATH_LENGTH (1024 * 4)
-
 /// <summary>
 /// ラインタイムパスを環境変数に設定。
 /// </summary>
 /// <param name="rootDirPath"></param>
-void add_visual_cpp_runtime_redist(const TEXT* rootDirPath)
+static void add_visual_cpp_runtime_redist(const TEXT* root_directory_path)
 {
     TEXT dirs[] = {
         wrap_text(_T("bin")),
@@ -24,16 +22,21 @@ void add_visual_cpp_runtime_redist(const TEXT* rootDirPath)
 #endif
     };
 
-    TEXT crtPath = join_path(rootDirPath, dirs, sizeof(dirs) / sizeof(dirs[0]));
-    output_debug(crtPath.value);
+    TEXT crt_path = join_path(root_directory_path, dirs, SIZEOF_ARRAY(dirs));
+    output_debug(crt_path.value);
 
-    TCHAR pathValue[PATH_LENGTH];
-    GetEnvironmentVariable(_T("PATH"), pathValue, PATH_LENGTH - 1);
-    concat_string(pathValue, _T(";"));
-    concat_string(pathValue, crtPath.value);
-    SetEnvironmentVariable(_T("PATH"), pathValue);
+    const TCHAR* env_path_key = _T("PATH");
+    DWORD path_src_length = GetEnvironmentVariable(env_path_key, NULL, 0);
+    DWORD path_dst_length = path_src_length + 1/* ; */ + (DWORD)crt_path.length - 1/*GetEnvironmentVariable が \0 を含めたサイズを返すのでここで補正しておく(allocate_stringが+1する) */;
+    TCHAR* path_value = allocate_string(path_dst_length);
 
-    free_text(&crtPath);
+    GetEnvironmentVariable(env_path_key, path_value, path_dst_length);
+    concat_string(path_value, _T(";"));
+    concat_string(path_value, crt_path.value);
+    SetEnvironmentVariable(env_path_key, path_value);
+
+    free_string(path_value);
+    free_text(&crt_path);
 }
 
 static void boot_core(HINSTANCE hInstance, const TCHAR* command_line)
