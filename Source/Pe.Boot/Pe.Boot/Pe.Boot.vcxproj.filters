@@ -72,6 +72,9 @@
     <ClCompile Include="text_conv.c">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="platform.c">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -129,6 +132,9 @@
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="text_conv.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="platform.h">
       <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>

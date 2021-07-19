@@ -4,11 +4,12 @@
 #include "logging.h"
 #include "debug.h"
 #include "tstring.h"
+#include "platform.h"
 
 /// <summary>
 /// ラインタイムパスを環境変数に設定。
 /// </summary>
-/// <param name="rootDirPath"></param>
+/// <param name="root_directory_path"></param>
 static void add_visual_cpp_runtime_redist(const TEXT* root_directory_path)
 {
     TEXT dirs[] = {
@@ -25,17 +26,19 @@ static void add_visual_cpp_runtime_redist(const TEXT* root_directory_path)
     TEXT crt_path = join_path(root_directory_path, dirs, SIZEOF_ARRAY(dirs));
     output_debug(crt_path.value);
 
-    const TCHAR* env_path_key = _T("PATH");
-    DWORD path_src_length = GetEnvironmentVariable(env_path_key, NULL, 0);
-    DWORD path_dst_length = path_src_length + 1/* ; */ + (DWORD)crt_path.length - 1/*GetEnvironmentVariable が \0 を含めたサイズを返すのでここで補正しておく(allocate_stringが+1する) */;
-    TCHAR* path_value = allocate_string(path_dst_length);
+    TEXT env_path_key = wrap_text(_T("PATH"));
+    TEXT path_src_value = get_environment_variable(&env_path_key);
 
-    GetEnvironmentVariable(env_path_key, path_value, path_dst_length);
-    concat_string(path_value, _T(";"));
-    concat_string(path_value, crt_path.value);
-    SetEnvironmentVariable(env_path_key, path_value);
+    TEXT values[] = {
+        path_src_value,
+        crt_path
+    };
+    TEXT env_sep = wrap_text(_T(";"));
+    TEXT path_new_value = join_text(&env_sep, values, SIZEOF_ARRAY(values), IGNORE_EMPTY_ONLY);
+    set_environment_variable(&env_path_key, &path_new_value);
 
-    free_string(path_value);
+    free_text(&path_new_value);
+    free_text(&path_src_value);
     free_text(&crt_path);
 }
 
