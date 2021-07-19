@@ -20,7 +20,7 @@ static size_t mem_check__allocStocksCount = 0;
     OutputDebugString(mem_check__debug_buffer); \
 } while (0)
 
-static void mem_check__debugHeap(void* p, bool allocate, const TCHAR * caller_file, size_t caller_line)
+static void mem_check__debugHeap(void* p, bool allocate, MEM_CHECK_HEAD_ARGS)
 {
     if (allocate) {
         bool stocked = false;
@@ -33,7 +33,7 @@ static void mem_check__debugHeap(void* p, bool allocate, const TCHAR * caller_fi
                     .line = caller_line,
                 };
                 data.file[0] = 0;
-                lstrcpy(data.file, caller_file);
+                lstrcpy(data.file, caller_file); // tstring.h を取り込みたくないのでAPIを直接呼び出し
 
                 mem_check__allocStocks[i] = data;
                 mem_check__allocStocksCount += 1;
@@ -87,7 +87,7 @@ void mem_check__print_allocate_memory(bool leak, void(*output)(TCHAR*), bool add
 #endif
 
 #ifdef MEM_CHECK
-void* mem_check__allocate_memory(size_t bytes, bool zero_fill, const TCHAR * caller_file, size_t caller_line)
+void* mem_check__allocate_memory(size_t bytes, bool zero_fill, MEM_CHECK_HEAD_ARGS)
 #else
 void* allocate_memory(size_t bytes, bool zero_fill)
 #endif
@@ -105,7 +105,7 @@ void* allocate_memory(size_t bytes, bool zero_fill)
 }
 
 #ifdef MEM_CHECK
-void* mem_check__allocate_clear_memory(size_t count, size_t type_size, const TCHAR * caller_file, size_t caller_line)
+void* mem_check__allocate_clear_memory(size_t count, size_t type_size, MEM_CHECK_HEAD_ARGS)
 {
     return mem_check__allocate_memory(count * type_size, true, caller_file, caller_line);
 }
@@ -117,7 +117,7 @@ void* allocate_clear_memory(size_t count, size_t type_size)
 #endif
 
 #ifdef MEM_CHECK
-void mem_check__free_memory(void* p, const TCHAR * caller_file, size_t caller_line)
+void mem_check__free_memory(void* p, MEM_CHECK_HEAD_ARGS)
 #else
 void free_memory(void* p)
 #endif

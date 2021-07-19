@@ -56,7 +56,7 @@ TCHAR* allocate_string(size_t length);
 /// </summary>
 /// <param name="s"></param>
 #ifdef MEM_CHECK
-void mem_check__free_string(const TCHAR * s, const TCHAR * caller_file, size_t caller_line);
+void mem_check__free_string(const TCHAR * s, MEM_CHECK_HEAD_ARGS);
 #   define free_string(s) mem_check__free_string((s), _T(__FILE__), __LINE__)
 #else
 void free_string(const TCHAR * s);

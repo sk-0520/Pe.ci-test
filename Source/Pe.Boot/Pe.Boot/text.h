@@ -100,7 +100,12 @@ TEXT new_text(const TCHAR* source);
 /// <param name="length">対象文字列の長さ。</param>
 /// <param name="need_release">解放が必要か。真の場合、<c>wrapText</c>と異なり呼び出し側で確保した領域を信頼して持ち運ぶ。</param>
 /// <returns></returns>
+#ifdef MEM_CHECK
+TEXT mem_check__wrap_text_with_length(const TCHAR* source, size_t length, bool need_release, MEM_CHECK_HEAD_ARGS);
+#   define wrap_text_with_length(source, length, need_release) mem_check__wrap_text_with_length((source), (length), (need_release), MEM_CHECK_HEAD_DEF)
+#else
 TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release);
+#endif
 
 /// <summary>
 /// 文字列からテキストにラップ。
@@ -118,8 +123,8 @@ TEXT wrap_text(const TCHAR* source);
 /// <param name="source">入力不変文字列。</param>
 /// <returns>複製された不変文字列。解放が必要。</returns>
 #ifdef MEM_CHECK
-TEXT mem_check__clone_text(const TEXT* source, const TCHAR* caller_file, size_t caller_line);
-#   define clone_text(source) mem_check__clone_text(source, _T(__FILE__), __LINE__)
+TEXT mem_check__clone_text(const TEXT* source, MEM_CHECK_HEAD_ARGS);
+#   define clone_text(source) mem_check__clone_text(source, MEM_CHECK_HEAD_DEF)
 #else
 TEXT clone_text(const TEXT* source);
 #endif
@@ -137,8 +142,8 @@ TEXT reference_text(const TEXT* source);
 /// <param name="text"></param>
 /// <returns></returns>
 #ifdef MEM_CHECK
-bool mem_check__free_text(TEXT* text, const TCHAR* caller_file, size_t caller_line);
-#   define free_text(text) mem_check__free_text(text, _T(__FILE__), __LINE__)
+bool mem_check__free_text(TEXT* text, MEM_CHECK_HEAD_ARGS);
+#   define free_text(text) mem_check__free_text(text, MEM_CHECK_HEAD_DEF)
 #else
 bool free_text(TEXT* text);
 #endif

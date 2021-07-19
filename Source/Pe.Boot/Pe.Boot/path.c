@@ -21,16 +21,28 @@ TEXT get_parent_directory_path(const TEXT* path)
     return create_invalid_text();
 }
 
+#ifdef MEM_CHECK
+TEXT mem_check__combine_path(const TEXT* base_path, const TEXT* relative_path, MEM_CHECK_HEAD_ARGS)
+#else
 TEXT combine_path(const TEXT* base_path, const TEXT* relative_path)
+#endif
 {
     size_t total_length = base_path->length + relative_path->length + sizeof(TCHAR)/* \ */;
     TCHAR* buffer = allocate_string(total_length);
     PathCombine(buffer, base_path->value, relative_path->value);
 
+#ifdef MEM_CHECK
+    return mem_check__wrap_text_with_length(buffer, get_string_length(buffer), true, MEM_CHECK_CALL_ARGS);
+#else
     return wrap_text_with_length(buffer, get_string_length(buffer), true);
+#endif
 }
 
+#ifdef MEM_CHECK
+TEXT mem_check__join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count, MEM_CHECK_HEAD_ARGS)
+#else
 TEXT join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count)
+#endif
 {
     size_t total_path_length = base_path->length + 1 + count; // ディレクトリ区切り
 
@@ -54,10 +66,19 @@ TEXT join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count)
 
 }
 
+#ifdef MEM_CHECK
+TEXT mem_check__canonicalize_path(const TEXT* path, MEM_CHECK_HEAD_ARGS)
+#else
 TEXT canonicalize_path(const TEXT* path)
+#endif
 {
-    TCHAR* buffer = allocate_string(path->length);
-    PathCanonicalize(buffer, path->value);
+    TCHAR* buffer =
+#ifdef MEM_CHECK
+        mem_check__allocate_string(path->length, MEM_CHECK_CALL_ARGS);
+#else
+        allocate_string(path->length);
+#endif
+        PathCanonicalize(buffer, path->value);
 
     return wrap_text_with_length(buffer, get_string_length(buffer), true);
 }
