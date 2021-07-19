@@ -49,7 +49,7 @@ TEXT add_text(const TEXT* source, const TEXT* text)
     return wrap_text_with_length(buffer, buffer_length, true);
 }
 
-TEXT join_text(const TEXT* separator, const TEXT texts[], size_t count, IGNORE_EMPTY ignore_empty)
+TEXT join_text(const TEXT* separator, const TEXT_LIST texts, size_t count, IGNORE_EMPTY ignore_empty)
 {
     size_t total_length = separator->length ? separator->length * count - 1 : 0;
     for (size_t i = 0; i < count; i++) {

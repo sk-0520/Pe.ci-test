@@ -27,7 +27,7 @@ TEXT combine_path(const TEXT* base_path, const TEXT* relative_path);
 /// <param name="paths">結合するパス。</param>
 /// <param name="count">結合するパスの個数。</param>
 /// <returns>結合パス。</returns>
-TEXT join_path(const TEXT* base_path, const TEXT paths[], size_t count);
+TEXT join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count);
 
 /// <summary>
 /// パスの正規化。

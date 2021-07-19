@@ -30,7 +30,7 @@ TEXT combine_path(const TEXT* base_path, const TEXT* relative_path)
     return wrap_text_with_length(buffer, get_string_length(buffer), true);
 }
 
-TEXT join_path(const TEXT* base_path, const TEXT paths[], size_t count)
+TEXT join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count)
 {
     size_t total_path_length = base_path->length + 1 + count; // ディレクトリ区切り
 

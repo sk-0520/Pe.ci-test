@@ -45,7 +45,7 @@ TEXT add_text(const TEXT* source, const TEXT* text);
 /// <param name="count">textsの個数。</param>
 /// <param name="ignore_empty">空要素を無視するか。</param>
 /// <returns>結合済みテキスト。解放が必要。</returns>
-TEXT join_text(const TEXT* separator, const TEXT texts[], size_t count, IGNORE_EMPTY ignore_empty);
+TEXT join_text(const TEXT* separator, const TEXT_LIST texts, size_t count, IGNORE_EMPTY ignore_empty);
 
 /// <summary>
 /// 空テキストか。

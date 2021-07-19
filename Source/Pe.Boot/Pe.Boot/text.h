@@ -44,6 +44,12 @@ typedef struct tag_TEXT
 } TEXT;
 
 /// <summary>
+/// テキストの配列的なもの。
+/// <para>構造体のポインタとして扱いたいのかテキスト配列を扱いたいのかパッと見分からないのでこれで見た目をよくする。</para>
+/// </summary>
+typedef TEXT* TEXT_LIST;
+
+/// <summary>
 /// 空のテキストを生成。
 /// </summary>
 /// <returns>領域自体がNULLの不変文字列(通常使用は出来ない)。</returns>
