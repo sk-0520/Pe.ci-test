@@ -22,6 +22,11 @@ typedef struct tag_APP_PATH_ITEMS
     TEXT mainModule;
 } APP_PATH_ITEMS;
 
+/// <summary>
+///
+/// </summary>
+/// <param name="root_directory_path"></param>
+/// <returns>解放が必要。</returns>
 TEXT get_main_module_path(const TEXT* root_directory_path);
 
 void initialize_app_path_items(APP_PATH_ITEMS* result, HMODULE hInstance);

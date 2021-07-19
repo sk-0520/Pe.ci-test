@@ -44,7 +44,7 @@ static void add_visual_cpp_runtime_redist(const TEXT* root_directory_path)
     free_text(&crt_path);
 }
 
-static int boot_core(HINSTANCE hInstance, const TEXT* command_line)
+static EXIT_CODE boot_core(HINSTANCE hInstance, const TEXT* command_line)
 {
     APP_PATH_ITEMS app_path_items;
     initialize_app_path_items(&app_path_items, hInstance);
@@ -58,12 +58,12 @@ static int boot_core(HINSTANCE hInstance, const TEXT* command_line)
     return 0;
 }
 
-int boot_normal(HINSTANCE hInstance)
+EXIT_CODE boot_normal(HINSTANCE hInstance)
 {
     return boot_core(hInstance, NULL);
 }
 
-int boot_with_option(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
+EXIT_CODE boot_with_option(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
 {
     TEXT_LIST args = allocate_clear_memory(command_line_option->count, sizeof(TEXT));
     size_t arg_count = 0;
@@ -96,7 +96,7 @@ int boot_with_option(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_lin
 
     TEXT argument = to_command_line_argument(args, arg_count);
     output_debug(argument.value);
-    int result = boot_core(hInstance, &argument);
+    EXIT_CODE result = boot_core(hInstance, &argument);
     free_text(&argument);
     free_memory(args);
 
