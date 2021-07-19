@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 
 extern "C" {
-#   include "../Pe.Boot/commandline.h"
+#   include "../Pe.Boot/command_line.h"
 }
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

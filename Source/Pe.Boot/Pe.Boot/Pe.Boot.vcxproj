@@ -266,9 +266,9 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="app_commandline.c" />
+    <ClCompile Include="app_command_line.c" />
     <ClCompile Include="app_main.c" />
-    <ClCompile Include="commandline.c" />
+    <ClCompile Include="command_line.c" />
     <ClCompile Include="debug.c" />
     <ClCompile Include="fsio.c" />
     <ClCompile Include="map.c" />
@@ -285,10 +285,10 @@
     <ClCompile Include="tstring.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app_commandline.h" />
+    <ClInclude Include="app_command_line.h" />
     <ClInclude Include="app_common.h" />
     <ClInclude Include="app_main.h" />
-    <ClInclude Include="commandline.h" />
+    <ClInclude Include="command_line.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="fsio.h" />

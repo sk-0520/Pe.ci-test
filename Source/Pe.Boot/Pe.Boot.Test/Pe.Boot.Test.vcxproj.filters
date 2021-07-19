@@ -42,13 +42,16 @@
     <ClCompile Include="map.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="commandline.test.cpp">
+    <ClCompile Include="command_line.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="text_man.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="text_conv.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="text_search.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,10 +62,5 @@
     <ClInclude Include="Test.h">
       <Filter>header</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="text_search.test.cpp">
-      <Filter>source</Filter>
-    </None>
   </ItemGroup>
 </Project>

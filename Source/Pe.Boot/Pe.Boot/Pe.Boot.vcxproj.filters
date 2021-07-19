@@ -36,7 +36,7 @@
     <ClCompile Include="debug.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="commandline.c">
+    <ClCompile Include="command_line.c">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="fsio.c">
@@ -54,7 +54,7 @@
     <ClCompile Include="app_path.c">
       <Filter>source\app</Filter>
     </ClCompile>
-    <ClCompile Include="app_commandline.c">
+    <ClCompile Include="app_command_line.c">
       <Filter>source\app</Filter>
     </ClCompile>
     <ClCompile Include="main.c">
@@ -92,7 +92,7 @@
     <ClInclude Include="debug.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="commandline.h">
+    <ClInclude Include="command_line.h">
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="common.h">
@@ -116,7 +116,7 @@
     <ClInclude Include="app_common.h">
       <Filter>header\app</Filter>
     </ClInclude>
-    <ClInclude Include="app_commandline.h">
+    <ClInclude Include="app_command_line.h">
       <Filter>header\app</Filter>
     </ClInclude>
     <ClInclude Include="app_main.h">

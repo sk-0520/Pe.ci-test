@@ -1,5 +1,6 @@
 ﻿#pragma once
-#include "commandline.h"
+#include "command_line.h"
+#include "app_common.h"
 
 /// <summary>
 /// 実行モードを取得。
