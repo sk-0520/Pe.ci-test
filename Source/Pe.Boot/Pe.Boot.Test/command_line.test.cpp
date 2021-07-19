@@ -177,5 +177,26 @@ namespace PeBootTest
 
             free_command_line(&actual);
         }
+
+        TEST_METHOD(to_command_line_argument_test)
+        {
+            auto tests = {
+                DATA(_T("a"), std::vector<TEXT>({ wrap("a") })),
+                DATA(_T("a b"), std::vector<TEXT>({ wrap("a"), wrap("b") })),
+                DATA(_T("a b c"), std::vector<TEXT>({ wrap("a"), wrap("b"), wrap("c") })),
+                DATA(_T("a=A"), std::vector<TEXT>({ wrap("a=A") })),
+                DATA(_T("-a \"A A\""), std::vector<TEXT>({ wrap("-a"), wrap("A A") })),
+                DATA(_T("\"-a=A A\""), std::vector<TEXT>({ wrap("-a=A A") })),
+                DATA(_T("-a=\"A A\""), std::vector<TEXT>({ wrap("-a=\"A A\"") })),
+                DATA(_T("--a=\"A A\" --b \"B B\" /c \" C C C \""), std::vector<TEXT>({ wrap("--a=\"A A\""), wrap("--b"), wrap("B B"), wrap("/c"), wrap(" C C C ") })),
+            };
+            for (auto test : tests) {
+                auto arg1 = std::get<0>(test.inputs);
+                TEXT actual = to_command_line_argument(arg1.data(), arg1.size());
+                Assert::AreEqual(test.expected, actual.value);
+                Assert::AreEqual(get_string_length(test.expected), actual.length);
+                free_text(&actual);
+            }
+        }
     };
 }

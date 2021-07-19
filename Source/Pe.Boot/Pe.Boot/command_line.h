@@ -99,6 +99,15 @@ const COMMAND_LINE_ITEM* get_command_line_item(const COMMAND_LINE_OPTION* comman
 bool has_value_command_line_item(const COMMAND_LINE_ITEM* item);
 
 /// <summary>
+/// コマンドライン引数一覧から単体テキストとしてのコマンドライン引数を生成する。
+/// <para>TODO: "が閉じられていないパターンとか " 自体のエスケープが未対応</para>
+/// </summary>
+/// <param name="arguments">コマンドライン引数一覧</param>
+/// <param name="count">argumentの個数</param>
+/// <returns>生成テキスト。解放が必要。</returns>
+TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count);
+
+/// <summary>
 /// 書式調整後の動的確保された文字列を返す。
 /// </summary>
 /// <param name="arg"></param>

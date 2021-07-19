@@ -20,7 +20,7 @@ void add_visual_cpp_runtime_redist(const TEXT* rootDirPath)
 #ifdef _WIN64
         wrap_text(_T("x64")),
 #else
-        wrapText(_T("x86")),
+        wrap_text(_T("x86")),
 #endif
     };
 

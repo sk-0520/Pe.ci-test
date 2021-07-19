@@ -22,7 +22,14 @@ static void set_command_line_map_setting(MAP* map, size_t capacity)
     *map = create_map(capacity, equals_command_line_item_key, free_command_line_item_value);
 }
 
-static ssize_t get_key_mark_index(const TEXT* argument, TEXT mark_texts[], size_t count)
+/// <summary>
+/// <c>convert_map_from_arguments.mark_texts</c>に依存するインデックス番号の取得。
+/// </summary>
+/// <param name="argument"></param>
+/// <param name="mark_texts"></param>
+/// <param name="count"></param>
+/// <returns></returns>
+static ssize_t get_key_mark_index(const TEXT* argument, TEXT_LIST mark_texts, size_t count)
 {
     for (size_t i = 0; i < count; i++) {
         const TEXT* mark_text = mark_texts + i;
@@ -186,6 +193,62 @@ bool has_value_command_line_item(const COMMAND_LINE_ITEM* item)
     return is_enabled_text(&item->value);
 }
 
+TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count)
+{
+    if (!arguments || !count) {
+        return new_empty_text();
+    }
+
+    size_t total_length = count - 1; // スペース分
+
+    bool* hasSpaceList = allocate_clear_memory(count, sizeof(bool));
+
+    for (size_t i = 0; i < count; i++) {
+        const TEXT* argument = &arguments[i];
+        ssize_t space_index = index_of_character(argument, ' ');
+        if (space_index == -1) {
+            total_length += argument->length;
+        } else {
+            ssize_t separator_index = index_of_character(argument, '=');
+            if (separator_index == -1) {
+                total_length += argument->length + 2/* "" */;
+                hasSpaceList[i] = true;
+            } else if(separator_index < index_of_character(argument, '"')) {
+                // 最初から key="" として囲まれてる場合はあえて括る必要なし
+                total_length += argument->length;
+            } else {
+                total_length += argument->length + 2/* "" */;
+                hasSpaceList[i] = true;
+            }
+        }
+    }
+
+    TCHAR* buffer = allocate_string(total_length);
+    size_t position = 0;
+    for (size_t i = 0; i < count; i++) {
+        const TEXT* argument = &arguments[i];
+        bool hasSpace = hasSpaceList[i];
+
+        if (i) {
+            buffer[position++] = ' ';
+        }
+
+        if (hasSpace) {
+            buffer[position++] = '"';
+            copy_memory(buffer + position, argument->value, argument->length * sizeof(TCHAR));
+            position += argument->length;
+            buffer[position++] = '"';
+        } else {
+            copy_memory(buffer + position, argument->value, argument->length * sizeof(TCHAR));
+            position += argument->length;
+        }
+    }
+    buffer[position] = 0;
+
+    free_memory(hasSpaceList);
+
+    return wrap_text_with_length(buffer, position, true);
+}
 
 TCHAR* tuneArg(const TCHAR* arg)
 {
