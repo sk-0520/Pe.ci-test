@@ -6,21 +6,21 @@
 #include "text.h"
 
 
-TEXT findText(const TEXT* haystack, const TEXT* needle, bool ignoreCase)
+TEXT find_text(const TEXT* haystack, const TEXT* needle, bool ignore_case)
 {
-    TCHAR* s = ignoreCase
+    TCHAR* s = ignore_case
         ? StrStrI(haystack->value, needle->value)
         : StrStr(haystack->value, needle->value)
         ;
 
     if (!s) {
-        return createInvalidText();
+        return create_invalid_text();
     }
 
-    return wrapText(s);
+    return wrap_text(s);
 }
 
-static TCHAR* findCharacterCore(const TCHAR* haystack, TCHAR needle)
+static TCHAR* find_character_core(const TCHAR* haystack, TCHAR needle)
 {
     while (*haystack != needle) {
         if (!*haystack) {
@@ -32,19 +32,19 @@ static TCHAR* findCharacterCore(const TCHAR* haystack, TCHAR needle)
     return (TCHAR*)haystack;
 }
 
-TEXT findCharacter2(const TEXT* haystack, TCHAR needle)
+TEXT find_character(const TEXT* haystack, TCHAR needle)
 {
-    TCHAR* s = findCharacterCore(haystack->value, needle);
+    TCHAR* s = find_character_core(haystack->value, needle);
     if (!s) {
-        return createInvalidText();
+        return create_invalid_text();
     }
 
-    return wrapText(s);
+    return wrap_text(s);
 }
 
-ssize_t indexOfCharacter(const TEXT* haystack, TCHAR needle)
+ssize_t index_of_character(const TEXT* haystack, TCHAR needle)
 {
-    TCHAR* s = findCharacterCore(haystack->value, needle);
+    TCHAR* s = find_character_core(haystack->value, needle);
     if (!s) {
         return -1;
     }
@@ -52,15 +52,15 @@ ssize_t indexOfCharacter(const TEXT* haystack, TCHAR needle)
     return s - haystack->value;
 }
 
-int compareText(const TEXT* a, const TEXT* b, bool ignoreCase)
+int compare_text(const TEXT* a, const TEXT* b, bool ignore_case)
 {
-    return ignoreCase
+    return ignore_case
         ? lstrcmpi(a->value, b->value)
         : lstrcmp(a->value, b->value)
         ;
 }
 
-static int getCompareTextLength(const TEXT* text, ssize_t width)
+static int get_compare_text_length(const TEXT* text, ssize_t width)
 {
     assert(width);
 
@@ -71,12 +71,12 @@ static int getCompareTextLength(const TEXT* text, ssize_t width)
     }
 }
 
-static int getCompareTextMinimumLength(const TEXT* a, const TEXT* b)
+static int get_compare_text_minimum_length(const TEXT* a, const TEXT* b)
 {
     return (int)MIN(a->length, b->length);
 }
 
-TEXT_COMPARE_RESULT compareTextDetail(const TEXT* a, const TEXT* b, ssize_t width, TEXT_COMPARE_MODE mode, LOCALE_TYPE locale)
+TEXT_COMPARE_RESULT compare_text_detail(const TEXT* a, const TEXT* b, ssize_t width, TEXT_COMPARE_MODE mode, LOCALE_TYPE locale)
 {
     if (!a->length && !b->length) {
         TEXT_COMPARE_RESULT none = {
@@ -86,8 +86,8 @@ TEXT_COMPARE_RESULT compareTextDetail(const TEXT* a, const TEXT* b, ssize_t widt
         return none;
     }
 
-    int a_length = width ? getCompareTextLength(a, width) : getCompareTextMinimumLength(a, b);
-    int b_length = width ? getCompareTextLength(b, width) : getCompareTextMinimumLength(a, b);
+    int a_length = width ? get_compare_text_length(a, width) : get_compare_text_minimum_length(a, b);
+    int b_length = width ? get_compare_text_length(b, width) : get_compare_text_minimum_length(a, b);
 
     int result = CompareString(locale, mode, a->value, a_length, b->value, b_length);
     if (!result) {
@@ -122,11 +122,11 @@ TEXT_COMPARE_RESULT compareTextDetail(const TEXT* a, const TEXT* b, ssize_t widt
     return success;
 }
 
-bool startsWithText(const TEXT* text, const TEXT* word)
+bool starts_with_text(const TEXT* text, const TEXT* word)
 {
     if (text->length < word->length) {
         return false;
     }
 
-    return !compareMemory(text->value, word->value, word->length * sizeof(TCHAR));
+    return !compare_memory(text->value, word->value, word->length * sizeof(TCHAR));
 }

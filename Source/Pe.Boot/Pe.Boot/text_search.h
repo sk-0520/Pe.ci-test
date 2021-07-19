@@ -64,9 +64,9 @@ typedef struct tag_TEXT_COMPARE_RESULT
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索テキスト。</param>
-/// <param name="ignoreCase">大文字小文字を無視するか。</param>
+/// <param name="ignore_case">大文字小文字を無視するか。</param>
 /// <returns>見つかったテキストを開始とする参照テキスト、見つからない場合は無効テキスト。解放不要。</returns>
-TEXT findText(const TEXT* haystack, const TEXT* needle, bool ignoreCase);
+TEXT find_text(const TEXT* haystack, const TEXT* needle, bool ignore_case);
 
 /// <summary>
 /// テキスト検索。
@@ -74,7 +74,7 @@ TEXT findText(const TEXT* haystack, const TEXT* needle, bool ignoreCase);
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索文字。</param>
 /// <returns>見つかったテキストを開始とする参照テキスト、見つからない場合は無効テキスト。解放不要。</returns>
-TEXT findCharacter2(const TEXT* haystack, TCHAR needle);
+TEXT find_character(const TEXT* haystack, TCHAR needle);
 
 /// <summary>
 /// テキスト内の文字位置を検索。
@@ -82,16 +82,16 @@ TEXT findCharacter2(const TEXT* haystack, TCHAR needle);
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索文字。</param>
 /// <returns>一致文字のインデックス。見つからない場合は0未満。</returns>
-ssize_t indexOfCharacter(const TEXT* haystack, TCHAR needle);
+ssize_t index_of_character(const TEXT* haystack, TCHAR needle);
 
 /// <summary>
 /// テキスト比較。
 /// </summary>
 /// <param name="a">比較対象テキスト1。</param>
 /// <param name="b">比較対象テキスト2。</param>
-/// <param name="ignoreCase">大文字小文字を無視するか。</param>
+/// <param name="ignore_case">大文字小文字を無視するか。</param>
 /// <returns>a &lt; b: 負, a = b: 0, a &gt; b: 正。</returns>
-int compareText(const TEXT* a, const TEXT* b, bool ignoreCase);
+int compare_text(const TEXT* a, const TEXT* b, bool ignore_case);
 
 /// <summary>
 /// 詳細版テキスト比較。
@@ -103,7 +103,7 @@ int compareText(const TEXT* a, const TEXT* b, bool ignoreCase);
 /// <param name="mode">比較方法。組み合わせて使用。</param>
 /// <param name="locale">ロケール。</param>
 /// <returns>比較結果。</returns>
-TEXT_COMPARE_RESULT compareTextDetail(const TEXT* a, const TEXT* b, ssize_t width, TEXT_COMPARE_MODE mode, LOCALE_TYPE locale);
+TEXT_COMPARE_RESULT compare_text_detail(const TEXT* a, const TEXT* b, ssize_t width, TEXT_COMPARE_MODE mode, LOCALE_TYPE locale);
 
 /// <summary>
 /// 指定のテキストで始まるか。
@@ -111,4 +111,4 @@ TEXT_COMPARE_RESULT compareTextDetail(const TEXT* a, const TEXT* b, ssize_t widt
 /// <param name="text">対象テキスト。</param>
 /// <param name="word">検索テキスト。</param>
 /// <returns>始まる場合に真。</returns>
-bool startsWithText(const TEXT* text, const TEXT* word);
+bool starts_with_text(const TEXT* text, const TEXT* word);

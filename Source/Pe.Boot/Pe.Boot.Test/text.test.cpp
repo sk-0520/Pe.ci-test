@@ -8,24 +8,24 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace PeBootTest
 {
-    TEST_CLASS(textTest)
+    TEST_CLASS(text_test)
     {
     public:
 
-        TEST_METHOD(newTest)
+        TEST_METHOD(new_test)
         {
             TCHAR input[] = _T("あいう");
-            TEXT c = newText(input);
-            TEXT w = wrapText(input);
+            TEXT c = new_text(input);
+            TEXT w = wrap_text(input);
 
-            Assert::IsTrue(c.library.needRelease);
-            Assert::IsFalse(w.library.needRelease);
+            Assert::IsTrue(c.library.need_release);
+            Assert::IsFalse(w.library.need_release);
 
             Assert::IsFalse(c.value == input);
             Assert::IsTrue(w.value == input);
 
-            Assert::AreEqual(getStringLength(input), c.length);
-            Assert::AreEqual(getStringLength(input), w.length);
+            Assert::AreEqual(get_string_length(input), c.length);
+            Assert::AreEqual(get_string_length(input), w.length);
 
             input[0] = _T('え');
             input[1] = _T('お');
@@ -33,25 +33,25 @@ namespace PeBootTest
 
             Assert::AreNotEqual(_T("えお"), c.value);
             Assert::AreEqual(_T("えお"), w.value);
-            Assert::AreNotEqual(getStringLength(input), c.length);
+            Assert::AreNotEqual(get_string_length(input), c.length);
 
-            TEXT dc = cloneText(&c);
-            TEXT dw = cloneText(&w);
+            TEXT dc = clone_text(&c);
+            TEXT dw = clone_text(&w);
 
-            Assert::IsTrue(dc.library.needRelease);
-            Assert::IsTrue(dw.library.needRelease);
+            Assert::IsTrue(dc.library.need_release);
+            Assert::IsTrue(dw.library.need_release);
 
             Assert::AreEqual(c.value, dc.value);
             Assert::AreEqual(w.value, dw.value);
 
-            Assert::IsTrue(freeText(&c));
-            Assert::IsFalse(freeText(&w));
+            Assert::IsTrue(free_text(&c));
+            Assert::IsFalse(free_text(&w));
 
             Assert::IsTrue(c.library.released);
             Assert::IsFalse(w.library.released);
 
-            Assert::IsTrue(freeText(&dc));
-            Assert::IsTrue(freeText(&dw));
+            Assert::IsTrue(free_text(&dc));
+            Assert::IsTrue(free_text(&dw));
         }
 
     };

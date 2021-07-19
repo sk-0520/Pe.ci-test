@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 
 extern "C" {
 #   include "../Pe.Boot/tstring.h"
@@ -9,13 +9,13 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace PeBootTest
 {
-    TEST_CLASS(stringTest)
+    TEST_CLASS(string_test)
     {
     public:
 
-        TEST_METHOD(findStringTest)
+        TEST_METHOD(find_string_test)
         {
-            TestData x = TestData(_T("defghi"), _T("abcdefghi"), _T("def"), false);
+            DATA x = DATA(_T("defghi"), _T("abcdefghi"), _T("def"), false);
             auto actual2 = std::apply(findString, x.inputs);
             Assert::AreEqual(x.expected, actual2);
 
@@ -25,15 +25,15 @@ namespace PeBootTest
             Assert::IsNull(findString(_T("abcdefg"), _T("xyz"), false));
         }
 
-        TEST_METHOD(getStringLengthTest)
+        TEST_METHOD(get_string_length_test)
         {
             TCHAR input[] = _T("abcdefg");
             size_t expected = sizeof(input) / sizeof(TCHAR) - 1/*終端*/;
-            auto actual = getStringLength(input);
+            auto actual = get_string_length(input);
             Assert::AreEqual(expected, actual);
         }
 
-        TEST_METHOD(findCharacterTest)
+        TEST_METHOD(find_character_test)
         {
             TCHAR input[] = _T("abcdefg");
             auto actual = findCharacter(input, 'c');
@@ -42,13 +42,13 @@ namespace PeBootTest
             Assert::IsNull(findCharacter(input, 'z'));
         }
 
-        TEST_METHOD(indexCharacterTest)
+        TEST_METHOD(index_character_test)
         {
             TCHAR* input = _T("abcdefgABCDEFG");
             auto data = {
-                TestData<SSIZE_T, TCHAR*, TCHAR>(0, input, _T('a')),
-                TestData<SSIZE_T, TCHAR*, TCHAR>(1, input, _T('b')),
-                TestData<SSIZE_T, TCHAR*, TCHAR>(7, input, _T('A')),
+                DATA<SSIZE_T, TCHAR*, TCHAR>(0, input, _T('a')),
+                DATA<SSIZE_T, TCHAR*, TCHAR>(1, input, _T('b')),
+                DATA<SSIZE_T, TCHAR*, TCHAR>(7, input, _T('A')),
             };
 
             for (auto current = data.begin(), e = data.end(); current != e; ++current) {
@@ -149,46 +149,46 @@ namespace PeBootTest
             Assert::AreEqual((long long)15, h2);
         }
 
-        TEST_METHOD(fromatStringTest)
+        TEST_METHOD(fromat_string_test)
         {
             TCHAR input[] = _T("abc %s 123 %d");
             TCHAR actual[1000] = { 0 };
             TCHAR expected[1000] = _T("abc def 123 456");
-            formatString(actual, input, _T("def"), 456);
+            format_string(actual, input, _T("def"), 456);
 
             Assert::AreEqual(expected, actual);
         }
 
-        TEST_METHOD(concatStringTest)
+        TEST_METHOD(concat_string_test)
         {
             TCHAR input[] = _T("def");
             TCHAR actual[1000] = _T("abc");
             TCHAR expected[1000] = _T("abcdef");
-            concatString(actual, input);
+            concat_string(actual, input);
 
             Assert::AreEqual(expected, actual);
         }
 
-        TEST_METHOD(copyStringTest)
+        TEST_METHOD(copy_string_test)
         {
             TCHAR input[] = _T("def");
             TCHAR actual[1000] = _T("abc");
             TCHAR expected[1000] = _T("def");
-            copyString(actual, input);
+            copy_string(actual, input);
 
             Assert::AreEqual(expected, actual);
         }
 
-        TEST_METHOD(cloneStringTest)
+        TEST_METHOD(clone_string_test)
         {
             TCHAR input[] = _T("abc");
             TCHAR expected[] = _T("abc");
-            TCHAR* actual = cloneString(input);
+            TCHAR* actual = clone_string(input);
 
             Assert::AreEqual(expected, actual);
             Assert::IsFalse(input == actual);
 
-            freeString(actual);
+            free_string(actual);
         }
     };
 }

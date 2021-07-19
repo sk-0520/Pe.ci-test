@@ -1,28 +1,28 @@
 ﻿#include "app_path.h"
 
 
-TEXT getMainModulePath(const TEXT* rootDirPath)
+TEXT get_main_module_path(const TEXT* root_directory_path)
 {
-    TEXT joinPaths[] = {
-        wrapText(_T("bin")),
-        wrapText(_T("Pe.Main.exe")),
+    TEXT join_paths[] = {
+        wrap_text(_T("bin")),
+        wrap_text(_T("Pe.Main.exe")),
     };
-    size_t joinPathsLength = sizeof(joinPaths) / sizeof(joinPaths[0]);
+    size_t join_paths_length = sizeof(join_paths) / sizeof(join_paths[0]);
 
-    return joinPath(rootDirPath, joinPaths, joinPathsLength);
+    return join_path(root_directory_path, join_paths, join_paths_length);
 }
 
-void initializeAppPathItems(APP_PATH_ITEMS* result, HMODULE hInstance)
+void initialize_app_path_items(APP_PATH_ITEMS* result, HMODULE hInstance)
 {
-    result->application = getModulePath(hInstance);
-    result->rootDirectory = getParentDirectoryPath(&result->application);
-    result->mainModule = getMainModulePath(&result->rootDirectory);
+    result->application = get_module_path(hInstance);
+    result->rootDirectory = get_parent_directory_path(&result->application);
+    result->mainModule = get_main_module_path(&result->rootDirectory);
 }
 
-void uninitializeAppPathItems(APP_PATH_ITEMS* items)
+void uninitialize_app_path_items(APP_PATH_ITEMS* items)
 {
-    freeText(&items->application);
-    freeText(&items->rootDirectory);
-    freeText(&items->mainModule);
+    free_text(&items->application);
+    free_text(&items->rootDirectory);
+    free_text(&items->mainModule);
 }
 

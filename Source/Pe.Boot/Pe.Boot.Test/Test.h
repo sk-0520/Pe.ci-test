@@ -5,21 +5,21 @@
 #include <tchar.h>
 
 #ifdef MEM_CHECK
-#   define text(s) mem_check__newText(_T(s), _T(__FILE__), __LINE__)
+#   define text(s) mem_check__new_text(_T(s), _T(__FILE__), __LINE__)
 #else
-#   define text(s) newText(_T(s))
+#   define text(s) new_text(_T(s))
 #endif
 
-#define wrap(s) wrapText(_T(s))
+#define wrap(s) wrap_text(_T(s))
 
 namespace PeBootTest
 {
     template<typename TExpected, typename TInput1, typename... TInputN>
-    struct TestData
+    struct DATA
     {
 #pragma region constructor
 
-        TestData(TExpected expected, TInput1 input1, TInputN... inputN)
+        DATA(TExpected expected, TInput1 input1, TInputN... inputN)
         {
             this->expected = expected;
             this->inputs = { input1, inputN... };

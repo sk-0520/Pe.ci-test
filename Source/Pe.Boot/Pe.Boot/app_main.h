@@ -3,4 +3,4 @@
 
 #include "commandline.h"
 
-int appMain(HINSTANCE hInstance, const COMMAND_LINE_OPTION* commandLineOption);
+int app_main(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option);

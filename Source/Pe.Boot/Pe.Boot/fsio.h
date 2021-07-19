@@ -81,14 +81,14 @@ typedef enum tag_FILE_OPEN_MODE
     FILE_OPEN_MODE_TRUNCATE = TRUNCATE_EXISTING,
 } FILE_OPEN_MODE;
 
-FILE_POINTER createFile(const TEXT* path);
-FILE_POINTER openFile(const TEXT* path);
-FILE_POINTER openOrCreateFile(const TEXT* path);
-bool closeFile(FILE_POINTER* file);
+FILE_POINTER create_file(const TEXT* path);
+FILE_POINTER open_file(const TEXT* path);
+FILE_POINTER open_or_create_file(const TEXT* path);
+bool close_file(FILE_POINTER* file);
 
 /// <summary>
 /// 指定された FILE_POINTER が有効か。
 /// </summary>
 /// <param name="file"></param>
 /// <returns></returns>
-bool isEnabledFile(const FILE_POINTER* file);
+bool is_enabled_file(const FILE_POINTER* file);

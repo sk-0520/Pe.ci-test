@@ -14,17 +14,17 @@ static void output(const TCHAR* s)
 int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPTSTR lpCmdLine, _In_ int nCmdShow)
 {
     debug("!START!");
-    TEXT commandLine = wrapText(GetCommandLine());
-    COMMAND_LINE_OPTION commandLineOption = parseCommandLine(&commandLine, true);
+    TEXT command_line = wrap_text(GetCommandLine());
+    COMMAND_LINE_OPTION command_line_option = parse_command_line(&command_line, true);
 
-    int resutnCode = appMain(hInstance, &commandLineOption);
-    //int resutnCode = 0;
+    int resutn_code = app_main(hInstance, &command_line_option);
+    //int resutn_code = 0;
 
-    freeCommandLine(&commandLineOption);
+    free_command_line(&command_line_option);
 
 #ifdef MEM_CHECK
-    mem_check__printAllocateMemory(true, output, true);
+    mem_check__print_allocate_memory(true, output, true);
 #endif
 
-    return resutnCode;
+    return resutn_code;
 }

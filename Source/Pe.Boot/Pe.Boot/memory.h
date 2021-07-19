@@ -19,7 +19,7 @@ typedef struct
     size_t line;
 } mem_check__ALLOC_STOCK_ITEM;
 
-void mem_check__printAllocateMemory(bool leak, void(*output)(TCHAR*), bool addNewLine);
+void mem_check__print_allocate_memory(bool leak, void(*output)(TCHAR*), bool add_new_line);
 #endif
 
 /// <summary>
@@ -28,23 +28,23 @@ void mem_check__printAllocateMemory(bool leak, void(*output)(TCHAR*), bool addNe
 /// <param name="bytes">確保サイズ</param>
 /// <returns>確保した領域。<c>freeMemory</c>にて開放が必要。失敗時は<c>NULL</c>を返す。</returns>
 #ifdef MEM_CHECK
-void* mem_check__allocateMemory(size_t bytes, bool zeroFill, const TCHAR* callerFile, size_t callerLine);
-#   define allocateMemory(bytes, zeroFill) mem_check__allocateMemory((bytes), (zeroFill), _T(__FILE__), __LINE__)
+void* mem_check__allocate_memory(size_t bytes, bool zero_fill, const TCHAR* caller_file, size_t caller_line);
+#   define allocate_memory(bytes, zero_fill) mem_check__allocate_memory((bytes), (zero_fill), _T(__FILE__), __LINE__)
 #else
-void* allocateMemory(size_t bytes, bool zeroFill);
+void* allocate_memory(size_t bytes, bool zero_fill);
 #endif
 
 /// <summary>
 /// 指定したサイズ以上のヒープ領域を0クリアで確保。
 /// </summary>
 /// <param name="count">確保する個数。</param>
-/// <param name="typeSize">型サイズ。</param>
+/// <param name="type_size">型サイズ。</param>
 /// <returns>確保した領域。<c>freeMemory</c>にて開放が必要。失敗時は<c>NULL</c>を返す。</returns>
 #ifdef MEM_CHECK
-void* mem_check__allocateClearMemory(size_t count, size_t typeSize, const TCHAR* callerFile, size_t callerLine);
-#   define allocateClearMemory(count, typeSize) mem_check__allocateClearMemory((count), (typeSize), _T(__FILE__), __LINE__)
+void* mem_check__allocate_clear_memory(size_t count, size_t type_size, const TCHAR* caller_file, size_t caller_line);
+#   define allocate_clear_memory(count, type_size) mem_check__allocate_clear_memory((count), (type_size), _T(__FILE__), __LINE__)
 #else
-void* allocateClearMemory(size_t count, size_t typeSize);
+void* allocate_clear_memory(size_t count, size_t type_size);
 #endif
 
 /// <summary>
@@ -53,10 +53,10 @@ void* allocateClearMemory(size_t count, size_t typeSize);
 /// <param name="p"></param>
 /// <returns></returns>
 #ifdef MEM_CHECK
-void mem_check__freeMemory(void* p, const TCHAR* callerFile, size_t callerLine);
-#   define freeMemory(p) mem_check__freeMemory((p), _T(__FILE__), __LINE__)
+void mem_check__free_memory(void* p, const TCHAR* caller_file, size_t caller_line);
+#   define free_memory(p) mem_check__free_memory((p), _T(__FILE__), __LINE__)
 #else
-void freeMemory(void* p);
+void free_memory(void* p);
 #endif
 
 /// <summary>
@@ -66,7 +66,7 @@ void freeMemory(void* p);
 /// <param name="value">値。</param>
 /// <param name="bytes">範囲。</param>
 /// <returns>target</returns>
-void* setMemory(void* target, unsigned char value, size_t bytes);
+void* set_memory(void* target, unsigned char value, size_t bytes);
 
 /// <summary>
 /// <c>memcpy</c>する。
@@ -75,7 +75,7 @@ void* setMemory(void* target, unsigned char value, size_t bytes);
 /// <param name="source">コピー元。</param>
 /// <param name="bytes">コピーサイズ。</param>
 /// <returns></returns>
-void* copyMemory(void* destination, const void* source, size_t bytes);
+void* copy_memory(void* destination, const void* source, size_t bytes);
 
 /// <summary>
 /// <c>memmove</c>する。
@@ -84,7 +84,7 @@ void* copyMemory(void* destination, const void* source, size_t bytes);
 /// <param name="source">移動元。</param>
 /// <param name="bytes">移動サイズ。</param>
 /// <returns></returns>
-void* moveMemory(void* destination, const void* source, size_t bytes);
+void* move_memory(void* destination, const void* source, size_t bytes);
 
 /// <summary>
 /// <c>memcmp</c> する。
@@ -93,4 +93,4 @@ void* moveMemory(void* destination, const void* source, size_t bytes);
 /// <param name="b"></param>
 /// <param name="bytes"></param>
 /// <returns>a &lt; b: 負, a = b: 0, a &gt; b: 正。</returns>
-int compareMemory(const void* a, const void* b, size_t bytes);
+int compare_memory(const void* a, const void* b, size_t bytes);

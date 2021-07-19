@@ -11,7 +11,7 @@ TCHAR* findString(const TCHAR* haystack, const TCHAR* needle, bool ignoreCase)
         ;
 }
 
-size_t getStringLength(const TCHAR* s)
+size_t get_string_length(const TCHAR* s)
 {
     return lstrlen(s);
 }
@@ -38,9 +38,9 @@ SSIZE_T indexCharacter(const TCHAR* haystack, TCHAR needle)
     return p - haystack;
 }
 
-int compareString(const TCHAR* a, const TCHAR* b, bool ignoreCase)
+int compare_string(const TCHAR* a, const TCHAR* b, bool ignore_case)
 {
-    return ignoreCase
+    return ignore_case
         ? lstrcmpi(a, b)
         : lstrcmp(a, b)
         ;
@@ -76,55 +76,55 @@ bool tryParseHexOrLong(long long* result, const TCHAR* input)
     return tryParseLongCore(result, input, true);
 }
 
-TCHAR* concatString(TCHAR* target, const TCHAR* value)
+TCHAR* concat_string(TCHAR* target, const TCHAR* value)
 {
     return lstrcat(target, value);
 }
 
-TCHAR* copyString(TCHAR* result, const TCHAR* value)
+TCHAR* copy_string(TCHAR* result, const TCHAR* value)
 {
     return lstrcpy(result, value);
 }
 
-TCHAR* cloneString(const TCHAR* source)
+TCHAR* clone_string(const TCHAR* source)
 {
     if (!source) {
         return NULL;
     }
 
-    size_t length = getStringLength(source);
-    TCHAR* result = allocateMemory((length * sizeof(TCHAR)) + sizeof(TCHAR), false);
-    copyMemory(result, (void*)source, length * sizeof(TCHAR));
+    size_t length = get_string_length(source);
+    TCHAR* result = allocate_memory((length * sizeof(TCHAR)) + sizeof(TCHAR), false);
+    copy_memory(result, (void*)source, length * sizeof(TCHAR));
     result[length] = 0;
 
     return result;
 }
 
 #ifdef MEM_CHECK
-TCHAR* mem_check__allocateString(size_t length, const TCHAR* callerFile, size_t callerLine)
+TCHAR* mem_check__allocate_string(size_t length, const TCHAR* callerFile, size_t callerLine)
 #else
-TCHAR* allocateString(size_t length)
+TCHAR* allocate_string(size_t length)
 #endif
 {
 #ifdef MEM_CHECK
-    TCHAR* result = mem_check__allocateMemory(sizeof(TCHAR) * length + sizeof(TCHAR), false, callerFile, callerLine);
+    TCHAR* result = mem_check__allocate_memory(sizeof(TCHAR) * length + sizeof(TCHAR), false, callerFile, callerLine);
 #else
-    TCHAR* result = allocateMemory(sizeof(TCHAR) * length + sizeof(TCHAR), false);
+    TCHAR* result = allocate_memory(sizeof(TCHAR) * length + sizeof(TCHAR), false);
 #endif
     result[0] = 0;
     return result;
 }
 
 #ifdef MEM_CHECK
-void mem_check__freeString(const TCHAR* s, const TCHAR* callerFile, size_t callerLine)
+void mem_check__free_string(const TCHAR* s, const TCHAR* callerFile, size_t callerLine)
 #else
-void freeString(const TCHAR* s)
+void free_string(const TCHAR* s)
 #endif
 {
 #ifdef MEM_CHECK
-    mem_check__freeMemory((void*)s, callerFile, callerLine);
+    mem_check__free_memory((void*)s, callerFile, callerLine);
 #else
-    freeMemory((void*)s);
+    free_memory((void*)s);
 #endif
 }
 

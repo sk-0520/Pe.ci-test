@@ -18,7 +18,7 @@ TCHAR* findString(const TCHAR* haystack, const TCHAR* needle, bool ignoreCase);
 /// </summary>
 /// <param name="s">対象文字列。</param>
 /// <returns>長さ。</returns>
-size_t getStringLength(const TCHAR* s);
+size_t get_string_length(const TCHAR* s);
 
 /// <summary>
 /// 文字列中の文字を検索。
@@ -44,7 +44,7 @@ SSIZE_T indexCharacter(const TCHAR* haystack, TCHAR needle);
 /// <param name="b">比較対象文字列2。</param>
 /// <param name="ignoreCase">大文字小文字を無視するか。</param>
 /// <returns>a &lt; b: 負, a = b: 0, a &gt; b: 正。</returns>
-int compareString(const TCHAR* a, const TCHAR* b, bool ignoreCase);
+int compare_string(const TCHAR* a, const TCHAR* b, bool ignoreCase);
 
 bool tryParseInteger(int* result, const TCHAR* input);
 bool tryParseHexOrInteger(int* result, const TCHAR* input);
@@ -52,7 +52,7 @@ bool tryParseHexOrInteger(int* result, const TCHAR* input);
 bool tryParseLong(long long* result, const TCHAR* input);
 bool tryParseHexOrLong(long long* result, const TCHAR* input);
 
-#define formatString(result, format, ...) do { wsprintf(result, format,  __VA_ARGS__); } while(0)
+#define format_string(result, format, ...) do { wsprintf(result, format,  __VA_ARGS__); } while(0)
 
 /// <summary>
 /// 文字列を結合。
@@ -60,21 +60,21 @@ bool tryParseHexOrLong(long long* result, const TCHAR* input);
 /// <param name="target">結合対象文字列。</param>
 /// <param name="value">追加する文字列。</param>
 /// <returns>結合された文字列。</returns>
-TCHAR* concatString(TCHAR* target, const TCHAR* value);
+TCHAR* concat_string(TCHAR* target, const TCHAR* value);
 /// <summary>
 /// 文字列をコピー。
 /// </summary>
 /// <param name="result">コピー後の文字列の格納先。</param>
 /// <param name="value">コピー対象文字列。</param>
 /// <returns>コピーされた文字列。</returns>
-TCHAR* copyString(TCHAR* result, const TCHAR* value);
+TCHAR* copy_string(TCHAR* result, const TCHAR* value);
 
 /// <summary>
 /// 文字列を複製。
 /// </summary>
 /// <param name="source"></param>
 /// <returns>複製された文字列。<c>freeString(freeMemory)</c>にて解放する必要あり。</returns>
-TCHAR* cloneString(const TCHAR* source);
+TCHAR* clone_string(const TCHAR* source);
 
 
 /// <summary>
@@ -83,10 +83,10 @@ TCHAR* cloneString(const TCHAR* source);
 /// <param name="length">文字列の長さ。</param>
 /// <returns>先頭 0 の番兵を考慮した領域(length + 1)。freeStringによる解放が必要。</returns>
 #ifdef MEM_CHECK
-TCHAR* mem_check__allocateString(size_t length, const TCHAR* callerFile, size_t callerLine);
-#   define allocateString(length) mem_check__allocateString((length), _T(__FILE__), __LINE__)
+TCHAR* mem_check__allocate_string(size_t length, const TCHAR* callerFile, size_t callerLine);
+#   define allocate_string(length) mem_check__allocate_string((length), _T(__FILE__), __LINE__)
 #else
-TCHAR* allocateString(size_t length);
+TCHAR* allocate_string(size_t length);
 #endif
 
 /// <summary>
@@ -95,10 +95,10 @@ TCHAR* allocateString(size_t length);
 /// </summary>
 /// <param name="s"></param>
 #ifdef MEM_CHECK
-void mem_check__freeString(const TCHAR * s, const TCHAR * callerFile, size_t callerLine);
-#   define freeString(s) mem_check__freeString((s), _T(__FILE__), __LINE__)
+void mem_check__free_string(const TCHAR * s, const TCHAR * caller_file, size_t caller_line);
+#   define free_string(s) mem_check__free_string((s), _T(__FILE__), __LINE__)
 #else
-void freeString(const TCHAR * s);
+void free_string(const TCHAR * s);
 #endif
 
 

@@ -16,11 +16,11 @@ typedef enum tag_LOG_LEVEL
 } LOG_LEVEL;
 
 
-static LOG_LEVEL s_defaultLogLevel;
-static FILE_POINTER s_defaultLogFilePointer;
+static LOG_LEVEL library__default_log_level;
+static FILE_POINTER library__default_log_file_pointer;
 
-void setupDefaultLog(FILE_POINTER* filePointer, LOG_LEVEL logLevel);
-void cleanupDefaultLog();
+void setup_default_log(FILE_POINTER* filePointer, LOG_LEVEL logLevel);
+void cleanup_default_log();
 
 /// <summary>
 /// ログ出力。
@@ -30,9 +30,9 @@ void cleanupDefaultLog();
 /// <param name=""></param>
 void logging(LOG_LEVEL logLevel, const TCHAR* format, const TCHAR* file, size_t line, ...);
 
-#define logLevel(level, format, ...) logging((level), _T(__FILE__), __LINE__, format, __VA_ARGS__)
-#define logTrace(format, ...) logging(LOG_LEVEL_TRACE, _T(__FILE__), __LINE__, format, __VA_ARGS__)
-#define logDebug(format, ...) logging(LOG_LEVEL_DEBUG, _T(__FILE__), __LINE__, format, __VA_ARGS__)
-#define logInformation(format, ...) logging(LOG_LEVEL_INFO, _T(__FILE__), __LINE__, format, __VA_ARGS__)
-#define logWarning(format, ...) logging(LOG_LEVEL_WARNING, _T(__FILE__), __LINE__, format, __VA_ARGS__)
-#define logError(format, ...) logging(LOG_LEVEL_ERROR, _T(__FILE__), __LINE__, format, __VA_ARGS__)
+#define log_level(level, format, ...) logging((level), _T(__FILE__), __LINE__, format, __VA_ARGS__)
+#define log_trace(format, ...) logging(LOG_LEVEL_TRACE, _T(__FILE__), __LINE__, format, __VA_ARGS__)
+#define log_debug(format, ...) logging(LOG_LEVEL_DEBUG, _T(__FILE__), __LINE__, format, __VA_ARGS__)
+#define log_information(format, ...) logging(LOG_LEVEL_INFO, _T(__FILE__), __LINE__, format, __VA_ARGS__)
+#define log_warning(format, ...) logging(LOG_LEVEL_WARNING, _T(__FILE__), __LINE__, format, __VA_ARGS__)
+#define log_error(format, ...) logging(LOG_LEVEL_ERROR, _T(__FILE__), __LINE__, format, __VA_ARGS__)

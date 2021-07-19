@@ -27,7 +27,7 @@ typedef struct tag_TEXT
         /// 解放が必要か。
         /// <para>アプリケーション内では使用しない。</para>
         /// </summary>
-        bool needRelease : 1;
+        bool need_release : 1;
         ///// <summary>
         ///// value終端が0、つまりは通常のC文字列か。
         ///// <para>偽の場合通常文字列としては使用できない。</para>
@@ -45,14 +45,14 @@ typedef struct tag_TEXT
 /// 空のテキストを生成。
 /// </summary>
 /// <returns>領域自体がNULLの不変文字列(通常使用は出来ない)。</returns>
-TEXT createInvalidText();
+TEXT create_invalid_text();
 
 /// <summary>
 /// テキストが使用可能か。
 /// </summary>
 /// <param name="text"></param>
 /// <returns></returns>
-bool isEnabledText(const TEXT* text);
+bool is_enabled_text(const TEXT* text);
 
 /// <summary>
 /// テキストを生成。
@@ -61,10 +61,10 @@ bool isEnabledText(const TEXT* text);
 /// <param name="length">対象文字列の長さ。</param>
 /// <returns>不変文字列。解放が必要。</returns>
 #ifdef MEM_CHECK
-TEXT mem_check__newTextWithLength(const TCHAR* source, size_t length, const TCHAR* callerFile, size_t callerLine);
-#   define newTextWithLength(source, length) mem_check__newTextWithLength((source), (length), _T(__FILE__), __LINE__)
+TEXT mem_check__new_text_with_length(const TCHAR* source, size_t length, const TCHAR* caller_file, size_t caller_line);
+#   define new_text_with_length(source, length) mem_check__new_text_with_length((source), (length), _T(__FILE__), __LINE__)
 #else
-TEXT newTextWithLength(const TCHAR* source, size_t length);
+TEXT new_text_with_length(const TCHAR* source, size_t length);
 #endif
 
 /// <summary>
@@ -73,16 +73,16 @@ TEXT newTextWithLength(const TCHAR* source, size_t length);
 /// <param name="source">対象文字列。</param>
 /// <returns>テキスト。解放が必要。</returns>
 #ifdef MEM_CHECK
-TEXT mem_check__newText(const TCHAR* source, const TCHAR* callerFile, size_t callerLine);
-#   define newText(source) mem_check__newText((source), _T(__FILE__), __LINE__)
+TEXT mem_check__new_text(const TCHAR* source, const TCHAR* caller_file, size_t caller_line);
+#   define new_text(source) mem_check__new_text((source), _T(__FILE__), __LINE__)
 #else
-TEXT newText(const TCHAR* source);
+TEXT new_text(const TCHAR* source);
 #endif
 
 #ifdef MEM_CHECK
-#define newEmptyText() mem_check__newText(_T(""), _T(__FILE__), __LINE__)
+#define new_empty_text() mem_check__new_text(_T(""), _T(__FILE__), __LINE__)
 #else
-#define newEmptyText() newText(_T(""))
+#define new_empty_text() new_text(_T(""))
 #endif
 
 /// <summary>
@@ -90,9 +90,9 @@ TEXT newText(const TCHAR* source);
 /// </summary>
 /// <param name="source">対象文字列。</param>
 /// <param name="length">対象文字列の長さ。</param>
-/// <param name="needRelease">解放が必要か。真の場合、<c>wrapText</c>と異なり呼び出し側で確保した領域を信頼して持ち運ぶ。</param>
+/// <param name="need_release">解放が必要か。真の場合、<c>wrapText</c>と異なり呼び出し側で確保した領域を信頼して持ち運ぶ。</param>
 /// <returns></returns>
-TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease);
+TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release);
 
 /// <summary>
 /// 文字列からテキストにラップ。
@@ -100,8 +100,8 @@ TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease);
 /// </summary>
 /// <param name="source">対象文字列。</param>
 /// <returns>テキスト。解放不要。</returns>
-TEXT wrapText(const TCHAR* source);
-#define wrapEmptyText() wrapText(_T(""))
+TEXT wrap_text(const TCHAR* source);
+#define wrap_empty_text() wrap_text(_T(""))
 
 
 /// <summary>
@@ -110,29 +110,29 @@ TEXT wrapText(const TCHAR* source);
 /// <param name="source">入力不変文字列。</param>
 /// <returns>複製された不変文字列。解放が必要。</returns>
 #ifdef MEM_CHECK
-TEXT mem_check__cloneText(const TEXT* source, const TCHAR* callerFile, size_t callerLine);
-#   define cloneText(source) mem_check__cloneText(source, _T(__FILE__), __LINE__)
+TEXT mem_check__clone_text(const TEXT* source, const TCHAR* caller_file, size_t caller_line);
+#   define clone_text(source) mem_check__clone_text(source, _T(__FILE__), __LINE__)
 #else
-TEXT cloneText(const TEXT* source);
+TEXT clone_text(const TEXT* source);
 #endif
 /// <summary>
-/// 不変文字列を参照として複製。
+/// テキストを参照として複製。
 /// </summary>
-/// <param name="source">入力不変文字列。</param>
-/// <returns>参照として複製された不変文字列。参照元が生きている限り生きている。解放不要。</returns>
-TEXT referenceText(const TEXT* source);
+/// <param name="source">入力テキストを。</param>
+/// <returns>参照として複製されたテキストを。参照元が生きている限り生きている。解放不要。</returns>
+TEXT reference_text(const TEXT* source);
 
 /// <summary>
-/// 不変文字列の解放。
+/// テキストをの解放。
 /// <para>不要な場合は処理しない。</para>
 /// </summary>
 /// <param name="text"></param>
 /// <returns></returns>
 #ifdef MEM_CHECK
-bool mem_check__freeText(TEXT* text, const TCHAR* callerFile, size_t callerLine);
-#   define freeText(text) mem_check__freeText(text, _T(__FILE__), __LINE__)
+bool mem_check__free_text(TEXT* text, const TCHAR* caller_file, size_t caller_line);
+#   define free_text(text) mem_check__free_text(text, _T(__FILE__), __LINE__)
 #else
-bool freeText(TEXT* text);
+bool free_text(TEXT* text);
 #endif
 
 /* 文字列操作ラッパー */

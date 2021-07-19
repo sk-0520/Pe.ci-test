@@ -6,7 +6,7 @@
 #include "text.h"
 
 
-static TEXT_PARSED_INT32_RESULT createFailedIntegerParseResult()
+static TEXT_PARSED_INT32_RESULT create_failed_integer_parse_result()
 {
     TEXT_PARSED_INT32_RESULT result = {
         .success = false,
@@ -15,7 +15,7 @@ static TEXT_PARSED_INT32_RESULT createFailedIntegerParseResult()
     return result;
 }
 
-static TEXT_PARSED_INT64_RESULT createFailedLongParseResult()
+static TEXT_PARSED_INT64_RESULT create_failed_long_parse_result()
 {
     TEXT_PARSED_INT64_RESULT result = {
         .success = false,
@@ -24,10 +24,10 @@ static TEXT_PARSED_INT64_RESULT createFailedLongParseResult()
     return result;
 }
 
-TEXT_PARSED_INT32_RESULT parseIntegerFromText(const TEXT* input, bool supportHex)
+TEXT_PARSED_INT32_RESULT parse_integer_from_text(const TEXT* input, bool supportHex)
 {
-    if (!isEnabledText(input)) {
-        return createFailedIntegerParseResult();
+    if (!is_enabled_text(input)) {
+        return create_failed_integer_parse_result();
     }
 
 #pragma warning(push)
@@ -39,10 +39,10 @@ TEXT_PARSED_INT32_RESULT parseIntegerFromText(const TEXT* input, bool supportHex
     return result;
 }
 
-TEXT_PARSED_INT64_RESULT parseLongFromText(const TEXT* input, bool supportHex)
+TEXT_PARSED_INT64_RESULT parse_long_from_text(const TEXT* input, bool supportHex)
 {
-    if (!isEnabledText(input)) {
-        return createFailedLongParseResult();
+    if (!is_enabled_text(input)) {
+        return create_failed_long_parse_result();
     }
 
 #pragma warning(push)

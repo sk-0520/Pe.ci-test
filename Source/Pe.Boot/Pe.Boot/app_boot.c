@@ -11,49 +11,49 @@
 /// ラインタイムパスを環境変数に設定。
 /// </summary>
 /// <param name="rootDirPath"></param>
-void addVisualCppRuntimeRedist(const TEXT* rootDirPath)
+void add_visual_cpp_runtime_redist(const TEXT* rootDirPath)
 {
     TEXT dirs[] = {
-        wrapText(_T("bin")),
-        wrapText(_T("lib")),
-        wrapText(_T("Redist.MSVC.CRT")),
+        wrap_text(_T("bin")),
+        wrap_text(_T("lib")),
+        wrap_text(_T("Redist.MSVC.CRT")),
 #ifdef _WIN64
-        wrapText(_T("x64")),
+        wrap_text(_T("x64")),
 #else
         wrapText(_T("x86")),
 #endif
     };
 
-    TEXT crtPath = joinPath(rootDirPath, dirs, sizeof(dirs) / sizeof(dirs[0]));
-    outputDebug(crtPath.value);
+    TEXT crtPath = join_path(rootDirPath, dirs, sizeof(dirs) / sizeof(dirs[0]));
+    output_debug(crtPath.value);
 
     TCHAR pathValue[PATH_LENGTH];
     GetEnvironmentVariable(_T("PATH"), pathValue, PATH_LENGTH - 1);
-    concatString(pathValue, _T(";"));
-    concatString(pathValue, crtPath.value);
+    concat_string(pathValue, _T(";"));
+    concat_string(pathValue, crtPath.value);
     SetEnvironmentVariable(_T("PATH"), pathValue);
 
-    freeText(&crtPath);
+    free_text(&crtPath);
 }
 
-static void bootCore(HINSTANCE hInstance, const TCHAR* commandLine)
+static void boot_core(HINSTANCE hInstance, const TCHAR* command_line)
 {
-    APP_PATH_ITEMS appPathItems;
-    initializeAppPathItems(&appPathItems, hInstance);
+    APP_PATH_ITEMS app_path_items;
+    initialize_app_path_items(&app_path_items, hInstance);
 
-    addVisualCppRuntimeRedist(&appPathItems.rootDirectory);
+    add_visual_cpp_runtime_redist(&app_path_items.rootDirectory);
 
-    ShellExecute(NULL, _T("open"), appPathItems.mainModule.value, commandLine, NULL, SW_SHOWNORMAL);
+    ShellExecute(NULL, _T("open"), app_path_items.mainModule.value, command_line, NULL, SW_SHOWNORMAL);
 
-    uninitializeAppPathItems(&appPathItems);
+    uninitialize_app_path_items(&app_path_items);
 }
 
-void bootNormal(HINSTANCE hInstance)
+void boot_normal(HINSTANCE hInstance)
 {
-    bootCore(hInstance, NULL);
+    boot_core(hInstance, NULL);
 }
 
-void bootWithOption(HINSTANCE hInstance, const TCHAR* commandLine)
+void boot_with_option(HINSTANCE hInstance, const TCHAR* command_line)
 {
-    bootCore(hInstance, commandLine);
+    boot_core(hInstance, command_line);
 }

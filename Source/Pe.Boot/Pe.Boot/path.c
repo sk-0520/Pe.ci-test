@@ -7,91 +7,91 @@
 #include "logging.h"
 
 
-TEXT getParentDirectoryPath(const TEXT* path)
+TEXT get_parent_directory_path(const TEXT* path)
 {
-    TCHAR* buffer = cloneString(path->value);
+    TCHAR* buffer = clone_string(path->value);
     if (PathRemoveFileSpec(buffer)) {
-        TEXT result = newText(buffer);
-        freeString(buffer);
+        TEXT result = new_text(buffer);
+        free_string(buffer);
         return result;
     }
 
-    freeString(buffer);
+    free_string(buffer);
 
-    return createInvalidText();
+    return create_invalid_text();
 }
 
-TEXT combinePath(const TEXT* basePath, const TEXT* relativePath)
+TEXT combine_path(const TEXT* base_path, const TEXT* relative_path)
 {
-    size_t totalLength = basePath->length + relativePath->length + sizeof(TCHAR)/* \ */;
-    TCHAR* buffer = allocateString(totalLength);
-    PathCombine(buffer, basePath->value, relativePath->value);
+    size_t total_length = base_path->length + relative_path->length + sizeof(TCHAR)/* \ */;
+    TCHAR* buffer = allocate_string(total_length);
+    PathCombine(buffer, base_path->value, relative_path->value);
 
-    return wrapTextWithLength(buffer, getStringLength(buffer), true);
+    return wrap_text_with_length(buffer, get_string_length(buffer), true);
 }
 
-TEXT joinPath(const TEXT* basePath, const TEXT paths[], size_t pathsLength)
+TEXT join_path(const TEXT* base_path, const TEXT paths[], size_t count)
 {
-    size_t totalPathLength = basePath->length + 1 + pathsLength; // ディレクトリ区切り
+    size_t total_path_length = base_path->length + 1 + count; // ディレクトリ区切り
 
-    for (size_t i = 0; i < pathsLength; i++) {
+    for (size_t i = 0; i < count; i++) {
         const TEXT* path = &paths[i];
-        totalPathLength += path->length;
+        total_path_length += path->length;
     }
 
-    TCHAR* buffer = allocateString(totalPathLength);
-    copyString(buffer, basePath->value);
+    TCHAR* buffer = allocate_string(total_path_length);
+    copy_string(buffer, base_path->value);
 
-    for (size_t i = 0; i < pathsLength; i++) {
+    for (size_t i = 0; i < count; i++) {
         const TEXT* path = &paths[i];
         PathCombine(buffer, buffer, path->value);
     }
-    TCHAR* tempBuffer = cloneString(buffer);
-    PathCanonicalize(buffer, tempBuffer);
-    freeString(tempBuffer);
+    TCHAR* temp_buffer = clone_string(buffer);
+    PathCanonicalize(buffer, temp_buffer);
+    free_string(temp_buffer);
 
-    return wrapTextWithLength(buffer, getStringLength(buffer), true);
+    return wrap_text_with_length(buffer, get_string_length(buffer), true);
 
 }
 
-TEXT canonicalizePath(const TEXT* path)
+TEXT canonicalize_path(const TEXT* path)
 {
-    TCHAR* buffer = allocateString(path->length);
+    TCHAR* buffer = allocate_string(path->length);
     PathCanonicalize(buffer, path->value);
 
-    return wrapTextWithLength(buffer, getStringLength(buffer), true);
+    return wrap_text_with_length(buffer, get_string_length(buffer), true);
 }
 
-TEXT getModulePath(HINSTANCE hInstance)
+TEXT get_module_path(HINSTANCE hInstance)
 {
     size_t length = MAX_PATH;
-    size_t pathLength = 0;
+    size_t path_length = 0;
     TCHAR* path = NULL;
 
     while (!path) {
-        path = allocateString(length);
+        path = allocate_string(length);
         if (!path) {
-            return createInvalidText();
+            return create_invalid_text();
         }
 
-        DWORD modulePathLength = GetModuleFileName(hInstance, path, (DWORD)length);
-        if (!modulePathLength) {
-            pathLength = 0;
+        DWORD module_path_length = GetModuleFileName(hInstance, path, (DWORD)length);
+        if (!module_path_length) {
+            path_length = 0;
             break;
-        } else if (modulePathLength >= length - 1) {
-            freeMemory(path);
+        } else if (module_path_length >= length - 1) {
+            free_memory(path);
             length *= 2;
         } else {
-            pathLength = modulePathLength;
+            path_length = module_path_length;
             break;
         }
     }
 
-    TEXT result = pathLength
-        ? newTextWithLength(path, pathLength)
-        : createInvalidText()
+    TEXT result = path_length
+        ? new_text_with_length(path, path_length)
+        : create_invalid_text()
         ;
-    freeString(path);
+    free_string(path);
 
     return result;
 }

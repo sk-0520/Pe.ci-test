@@ -8,47 +8,47 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace PeBootTest
 {
-    TEST_CLASS(textManipulationTest)
+    TEST_CLASS(text_manipulation_test)
     {
     public:
 
-        TEST_METHOD(addText_normal_Test)
+        TEST_METHOD(add_text_normal_test)
         {
             auto tests = {
-                TestData(_T("ab"), wrap("a"), wrap("b")),
-                TestData(_T("a"), wrap("a"), wrap("")),
-                TestData(_T("b"), wrap(""), wrap("b")),
-                TestData(_T("🐭🐮🐯🐰🐉🐍🐴🐏🐵🐔🐶🐷"), wrap("🐭🐮🐯🐰🐉🐍"), wrap("🐴🐏🐵🐔🐶🐷")),
+                DATA(_T("ab"), wrap("a"), wrap("b")),
+                DATA(_T("a"), wrap("a"), wrap("")),
+                DATA(_T("b"), wrap(""), wrap("b")),
+                DATA(_T("🐭🐮🐯🐰🐉🐍🐴🐏🐵🐔🐶🐷"), wrap("🐭🐮🐯🐰🐉🐍"), wrap("🐴🐏🐵🐔🐶🐷")),
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 TEXT& arg2 = std::get<1>(test.inputs);
-                TEXT actual = addText(&arg1, &arg2);
+                TEXT actual = add_text(&arg1, &arg2);
                 Assert::AreEqual(test.expected, actual.value);
-                freeText(&actual);
+                free_text(&actual);
             }
         }
 
-        TEST_METHOD(addText_fail_Test)
+        TEST_METHOD(add_text_fail_test)
         {
             TEXT a = wrap("");
-            TEXT b = createInvalidText();
+            TEXT b = create_invalid_text();
 
-            TEXT actual_ab = addText(&a, &b);
-            Assert::IsTrue(isEnabledText(&actual_ab));
+            TEXT actual_ab = add_text(&a, &b);
+            Assert::IsTrue(is_enabled_text(&actual_ab));
 
-            TEXT actual_ba = addText(&b, &a);
-            Assert::IsTrue(isEnabledText(&actual_ba));
+            TEXT actual_ba = add_text(&b, &a);
+            Assert::IsTrue(is_enabled_text(&actual_ba));
 
-            TEXT actual_bb = addText(&b, &b);
-            Assert::IsFalse(isEnabledText(&actual_bb));
+            TEXT actual_bb = add_text(&b, &b);
+            Assert::IsFalse(is_enabled_text(&actual_bb));
 
-            freeText(&actual_ab);
-            freeText(&actual_ba);
-            freeText(&actual_bb);
+            free_text(&actual_ab);
+            free_text(&actual_ba);
+            free_text(&actual_bb);
         }
 
-        TEST_METHOD(joinTextTest)
+        TEST_METHOD(join_text_test)
         {
             TCHAR* expected1 = _T("1,2,3");
             TEXT input1[] = {
@@ -57,9 +57,9 @@ namespace PeBootTest
                 wrap("3"),
             };
             TEXT sep1 = wrap(",");
-            TEXT actual1 = joinText(&sep1, input1, SIZEOF_ARRAY(input1), IGNORE_EMPTY_NONE);
+            TEXT actual1 = join_text(&sep1, input1, SIZEOF_ARRAY(input1), IGNORE_EMPTY_NONE);
             Assert::AreEqual(expected1, actual1.value);
-            freeText(&actual1);
+            free_text(&actual1);
 
             TCHAR* expected2 = _T("123");
             TEXT input2[] = {
@@ -72,9 +72,9 @@ namespace PeBootTest
                 wrap(""),
             };
             TEXT sep2 = wrap("");
-            TEXT actual2 = joinText(&sep2, input2, SIZEOF_ARRAY(input2), IGNORE_EMPTY_NONE);
+            TEXT actual2 = join_text(&sep2, input2, SIZEOF_ARRAY(input2), IGNORE_EMPTY_NONE);
             Assert::AreEqual(expected2, actual2.value);
-            freeText(&actual2);
+            free_text(&actual2);
 
             TCHAR* expected3_1 = _T(",1,,2, ,,3,");
             TCHAR* expected3_2 = _T("1,2, ,3");
@@ -90,30 +90,30 @@ namespace PeBootTest
                 wrap(""),
             };
             TEXT sep3 = wrap(",");
-            TEXT actual3_1 = joinText(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_NONE);
+            TEXT actual3_1 = join_text(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_NONE);
             Assert::AreEqual(expected3_1, actual3_1.value);
-            freeText(&actual3_1);
+            free_text(&actual3_1);
 
-            TEXT actual3_2 = joinText(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_ONLY);
+            TEXT actual3_2 = join_text(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_ONLY);
             Assert::AreEqual(expected3_2, actual3_2.value);
-            freeText(&actual3_2);
+            free_text(&actual3_2);
 
-            TEXT actual3_3 = joinText(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_WHITESPACE);
+            TEXT actual3_3 = join_text(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_WHITESPACE);
             Assert::AreEqual(expected3_3, actual3_3.value);
-            freeText(&actual3_3);
+            free_text(&actual3_3);
         }
 
-        TEST_METHOD(isEmptyTextTest)
+        TEST_METHOD(is_empty_text_test)
         {
             auto tests = {
-                TestData(false, wrap("a")),
-                TestData(false, wrap(" ")),
-                TestData(false, wrap("\t")),
-                TestData(true, wrap("")),
+                DATA(false, wrap("a")),
+                DATA(false, wrap(" ")),
+                DATA(false, wrap("\t")),
+                DATA(true, wrap("")),
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                bool actual = isEmptyText(&arg1);
+                bool actual = is_empty_text(&arg1);
                 if (test.expected) {
                     Assert::IsTrue(actual);
                 } else {
@@ -122,17 +122,17 @@ namespace PeBootTest
             }
         }
 
-        TEST_METHOD(isWhiteSpaceTextTest)
+        TEST_METHOD(is_white_space_text_test)
         {
             auto tests = {
-                TestData(false, wrap("a")),
-                TestData(true, wrap(" ")),
-                TestData(true, wrap("\t")),
-                TestData(true, wrap("")),
+                DATA(false, wrap("a")),
+                DATA(true, wrap(" ")),
+                DATA(true, wrap("\t")),
+                DATA(true, wrap("")),
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                bool actual = isWhiteSpaceText(&arg1);
+                bool actual = is_whitespace_text(&arg1);
                 if (test.expected) {
                     Assert::IsTrue(actual);
                 } else {
@@ -141,21 +141,21 @@ namespace PeBootTest
             }
         }
 
-        TEST_METHOD(trimTextTest)
+        TEST_METHOD(trim_text_test)
         {
             auto tests = {
-                TestData(_T("a"), wrap(" a "), true, true, std::vector<TCHAR>({ ' ', })),
-                TestData(_T("a "), wrap(" a "), true, false, std::vector<TCHAR>({ ' ', })),
-                TestData(_T(" a"), wrap(" a "), false, true, std::vector<TCHAR>({ ' ', })),
-                TestData(_T("a b"), wrap("      a b    "), true, true, std::vector<TCHAR>({ ' ', })),
-                TestData(_T("a"), wrap(" \t a\t \t"), true, true, std::vector<TCHAR>({ ' ', '\t' })),
-                TestData(_T("a\tb c"), wrap(" \t a\tb c\t \t"), true, true, std::vector<TCHAR>({ ' ', '\t' })),
-                TestData(_T(" \t a\tb c"), wrap(" \t a\tb c\t \t"), false, true, std::vector<TCHAR>({ ' ', '\t' })),
-                TestData(_T("a\tb c\t \t"), wrap(" \t a\tb c\t \t"), true, false, std::vector<TCHAR>({ ' ', '\t' })),
-                TestData(_T(" \t a\tb c\t \t"), wrap(" \t a\tb c\t \t"), false, false, std::vector<TCHAR>({ ' ', '\t' })),
-                TestData(_T(" \t \t \t"), wrap(" \t \t \t"), false, false, std::vector<TCHAR>({ ' ', '\t' })),
-                TestData(_T(""), wrap(" \t \t \t"), true, false, std::vector<TCHAR>({ ' ', '\t' })),
-                TestData(_T(""), wrap(" \t \t \t"), false, true, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T("a"), wrap(" a "), true, true, std::vector<TCHAR>({ ' ', })),
+                DATA(_T("a "), wrap(" a "), true, false, std::vector<TCHAR>({ ' ', })),
+                DATA(_T(" a"), wrap(" a "), false, true, std::vector<TCHAR>({ ' ', })),
+                DATA(_T("a b"), wrap("      a b    "), true, true, std::vector<TCHAR>({ ' ', })),
+                DATA(_T("a"), wrap(" \t a\t \t"), true, true, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T("a\tb c"), wrap(" \t a\tb c\t \t"), true, true, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T(" \t a\tb c"), wrap(" \t a\tb c\t \t"), false, true, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T("a\tb c\t \t"), wrap(" \t a\tb c\t \t"), true, false, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T(" \t a\tb c\t \t"), wrap(" \t a\tb c\t \t"), false, false, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T(" \t \t \t"), wrap(" \t \t \t"), false, false, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T(""), wrap(" \t \t \t"), true, false, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T(""), wrap(" \t \t \t"), false, true, std::vector<TCHAR>({ ' ', '\t' })),
             };
 
             for (auto test : tests) {
@@ -163,22 +163,22 @@ namespace PeBootTest
                 bool arg2 = std::get<1>(test.inputs);
                 bool arg3 = std::get<2>(test.inputs);
                 auto arg4 = std::get<3>(test.inputs);
-                TEXT actual = trimText(&arg1, arg2, arg3, arg4.data(), arg4.size());
+                TEXT actual = trim_text(&arg1, arg2, arg3, arg4.data(), arg4.size());
                 Assert::AreEqual(test.expected, actual.value);
-                freeText(&actual);
+                free_text(&actual);
             }
         }
 
-        TEST_METHOD(trimWhiteSpaceTextTest)
+        TEST_METHOD(trim_white_space_text_test)
         {
             auto tests = {
-                TestData(_T("a"), wrap(" a ")),
+                DATA(_T("a"), wrap(" a ")),
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                TEXT actual = trimWhiteSpaceText(&arg1);
+                TEXT actual = trim_whitespace_text(&arg1);
                 Assert::AreEqual(test.expected, actual.value);
-                freeText(&actual);
+                free_text(&actual);
             }
         }
     };

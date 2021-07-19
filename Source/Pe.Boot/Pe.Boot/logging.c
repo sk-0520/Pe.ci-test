@@ -2,14 +2,14 @@
 
 #include "logging.h"
 
-void setupDefaultLog(FILE_POINTER* filePointer, LOG_LEVEL logLevel)
+void setup_default_log(FILE_POINTER* filePointer, LOG_LEVEL logLevel)
 {
-    s_defaultLogLevel = logLevel;
-    s_defaultLogFilePointer = *filePointer;
+    library__default_log_level = logLevel;
+    library__default_log_file_pointer = *filePointer;
 }
-void cleanupDefaultLog()
+void cleanup_default_log()
 {
-    closeFile(&s_defaultLogFilePointer);
+    close_file(&library__default_log_file_pointer);
 }
 
 void logging(LOG_LEVEL logLevel, const TCHAR* format, const TCHAR* file, size_t line, ...)

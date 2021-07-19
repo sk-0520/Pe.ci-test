@@ -5,95 +5,95 @@
 #include "text.h"
 
 
-size_t getTextLength(const TEXT* text)
+size_t get_text_length(const TEXT* text)
 {
-    if (!isEnabledText(text)) {
+    if (!is_enabled_text(text)) {
         return 0;
     }
 
     return text->length;
 }
 
-TEXT addText(const TEXT* source, const TEXT* text)
+TEXT add_text(const TEXT* source, const TEXT* text)
 {
-    bool enabledSource = isEnabledText(source);
-    bool enabledText = isEnabledText(text);
+    bool enabled_source = is_enabled_text(source);
+    bool enabled_text = is_enabled_text(text);
 
-    if (!enabledSource && !enabledText) {
-        return createInvalidText();
+    if (!enabled_source && !enabled_text) {
+        return create_invalid_text();
     }
-    if (!enabledSource) {
-        return cloneText(text);
+    if (!enabled_source) {
+        return clone_text(text);
     }
-    if (!enabledText) {
-        return cloneText(source);
+    if (!enabled_text) {
+        return clone_text(source);
     }
 
-    size_t bufferLength = source->length + text->length;
-    TCHAR* buffer = allocateString(bufferLength);
-    copyMemory(buffer, source->value, source->length * sizeof(TCHAR));
-    copyMemory(buffer + source->length, text->value, text->length * sizeof(TCHAR));
-    buffer[bufferLength] = 0;
+    size_t buffer_length = source->length + text->length;
+    TCHAR* buffer = allocate_string(buffer_length);
+    copy_memory(buffer, source->value, source->length * sizeof(TCHAR));
+    copy_memory(buffer + source->length, text->value, text->length * sizeof(TCHAR));
+    buffer[buffer_length] = 0;
 
-    return wrapTextWithLength(buffer, bufferLength, true);
+    return wrap_text_with_length(buffer, buffer_length, true);
 }
 
-TEXT joinText(const TEXT* separator, const TEXT texts[], size_t count, IGNORE_EMPTY ignoreEmpty)
+TEXT join_text(const TEXT* separator, const TEXT texts[], size_t count, IGNORE_EMPTY ignore_empty)
 {
-    size_t totalLength = separator->length ? separator->length * count - 1 : 0;
+    size_t total_length = separator->length ? separator->length * count - 1 : 0;
     for (size_t i = 0; i < count; i++) {
-        totalLength += (texts + i)->length;
+        total_length += (texts + i)->length;
     }
 
-    TCHAR* buffer = allocateString(totalLength);
-    size_t currentPosition = 0;
-    bool addSeparator = false;
+    TCHAR* buffer = allocate_string(total_length);
+    size_t current_position = 0;
+    bool add_separator = false;
     for (size_t i = 0; i < count; i++) {
         const TEXT* text = texts + i;
-        switch (ignoreEmpty) {
+        switch (ignore_empty) {
             case IGNORE_EMPTY_NONE:
                 break;
 
             case IGNORE_EMPTY_ONLY:
-                if (isEmptyText(text)) {
+                if (is_empty_text(text)) {
                     continue;
                 }
                 break;
 
             case IGNORE_EMPTY_WHITESPACE:
-                if (isWhiteSpaceText(text)) {
+                if (is_whitespace_text(text)) {
                     continue;
                 }
                 break;
         }
 
-        if (addSeparator) {
-            copyMemory(buffer + currentPosition, separator->value, separator->length * sizeof(TCHAR));
-            currentPosition += separator->length;
+        if (add_separator) {
+            copy_memory(buffer + current_position, separator->value, separator->length * sizeof(TCHAR));
+            current_position += separator->length;
         }
 
-        copyMemory(buffer + currentPosition, text->value, text->length * sizeof(TCHAR));
-        currentPosition += text->length;
+        copy_memory(buffer + current_position, text->value, text->length * sizeof(TCHAR));
+        current_position += text->length;
 
-        addSeparator = true;
+        add_separator = true;
     }
-    buffer[currentPosition] = 0;
+    buffer[current_position] = 0;
 
-    return wrapTextWithLength(buffer, currentPosition, true);
+    return wrap_text_with_length(buffer, current_position, true);
 }
 
-bool isEmptyText(const TEXT* text)
+bool is_empty_text(const TEXT* text)
 {
-    if (!isEnabledText(text)) {
+    if (!is_enabled_text(text)) {
         return true;
     }
 
     return !text->length;
 }
 
-bool isWhiteSpaceText(const TEXT* text)
+bool is_whitespace_text(const TEXT* text)
 {
-    if (!isEnabledText(text)) {
+    if (!is_enabled_text(text)) {
         return true;
     }
 
@@ -101,13 +101,13 @@ bool isWhiteSpaceText(const TEXT* text)
         return true;
     }
 
-    TCHAR whiteSpace[] = { ' ', '\t', };
+    TCHAR whitespace[] = { ' ', '\t', };
 
     for (size_t i = 0; i < text->length; i++) {
         TCHAR c = text->value[i];
         bool existsWhiteSpace = false;
-        for (size_t j = 0; j < SIZEOF_ARRAY(whiteSpace); j++) {
-            if (whiteSpace[j] == c) {
+        for (size_t j = 0; j < SIZEOF_ARRAY(whitespace); j++) {
+            if (whitespace[j] == c) {
                 existsWhiteSpace = true;
                 break;
             }
@@ -120,7 +120,7 @@ bool isWhiteSpaceText(const TEXT* text)
     return true;
 }
 
-static bool containsCharacters(TCHAR c, const TCHAR* characters, size_t count)
+static bool contains_characters(TCHAR c, const TCHAR* characters, size_t count)
 {
     for (size_t i = 0; i < count; i++) {
         if (c == characters[i]) {
@@ -131,45 +131,45 @@ static bool containsCharacters(TCHAR c, const TCHAR* characters, size_t count)
     return false;
 }
 
-TEXT trimText(const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count)
+TEXT trim_text(const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count)
 {
     assert(text);
     if ((!start && !end) || !count) {
-        return cloneText(text);
+        return clone_text(text);
     }
     assert(characters);
 
-    size_t beginIndex = 0;
+    size_t begin_index = 0;
     for (size_t i = 0; start && i < text->length; i++) {
-        bool find = containsCharacters(text->value[i], characters, count);
+        bool find = contains_characters(text->value[i], characters, count);
         if (!find) {
-            beginIndex = i;
+            begin_index = i;
             break;
         }
         if (i == text->length - 1) {
             // 最後まで行っちゃった
-            return newText(_T(""));
+            return new_text(_T(""));
         }
     }
 
-    size_t endIndex = text->length - 1;
-    for (size_t i = endIndex; end; i--) {
-        bool find = containsCharacters(text->value[i], characters, count);
+    size_t end_index = text->length - 1;
+    for (size_t i = end_index; end; i--) {
+        bool find = contains_characters(text->value[i], characters, count);
         if (!find) {
-            endIndex = i;
+            end_index = i;
             break;
         }
         if (!i) {
             // 最初まで行っちゃった
-            return newText(_T(""));
+            return new_text(_T(""));
         }
     }
 
-    return newTextWithLength(text->value + beginIndex, endIndex - beginIndex + 1);
+    return new_text_with_length(text->value + begin_index, end_index - begin_index + 1);
 }
 
-TEXT trimWhiteSpaceText(const TEXT* text)
+TEXT trim_whitespace_text(const TEXT* text)
 {
     TCHAR characters[] = { _T(' '), _T('\t') };
-    return trimText(text, true, true, characters, SIZEOF_ARRAY(characters));
+    return trim_text(text, true, true, characters, SIZEOF_ARRAY(characters));
 }

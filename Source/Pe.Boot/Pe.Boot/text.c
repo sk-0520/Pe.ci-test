@@ -2,13 +2,13 @@
 
 #include "text.h"
 
-TEXT createInvalidText()
+TEXT create_invalid_text()
 {
     TEXT result = {
         .value = NULL,
         .length = 0,
         .library = {
-            .needRelease = false,
+            .need_release = false,
             .released = false,
         },
     };
@@ -16,13 +16,13 @@ TEXT createInvalidText()
     return result;
 }
 
-bool isEnabledText(const TEXT* text)
+bool is_enabled_text(const TEXT* text)
 {
     if (!text) {
         return false;
     }
     if (text->library.released) {
-        assert(!text->library.needRelease);
+        assert(!text->library.need_release);
         return false;
     }
     if (!text->value) {
@@ -33,24 +33,24 @@ bool isEnabledText(const TEXT* text)
 }
 
 #ifdef MEM_CHECK
-TEXT mem_check__newTextWithLength(const TCHAR* source, size_t length, const TCHAR* callerFile, size_t callerLine)
+TEXT mem_check__new_text_with_length(const TCHAR* source, size_t length, const TCHAR* callerFile, size_t callerLine)
 #else
-TEXT newTextWithLength(const TCHAR* source, size_t length)
+TEXT new_text_with_length(const TCHAR* source, size_t length)
 #endif
 {
 #ifdef MEM_CHECK
-    TCHAR* buffer = mem_check__allocateString(length, callerFile, callerLine);
+    TCHAR* buffer = mem_check__allocate_string(length, callerFile, callerLine);
 #else
-    TCHAR* buffer = allocateString(length);
+    TCHAR* buffer = allocate_string(length);
 #endif
-    copyMemory(buffer, (void*)source, length * sizeof(TCHAR));
+    copy_memory(buffer, (void*)source, length * sizeof(TCHAR));
     buffer[length] = 0;
 
     TEXT result = {
         .value = buffer,
         .length = length,
         .library = {
-            .needRelease = true,
+            .need_release = true,
             .released = false,
         },
     };
@@ -59,34 +59,34 @@ TEXT newTextWithLength(const TCHAR* source, size_t length)
 }
 
 #ifdef MEM_CHECK
-TEXT mem_check__newText(const TCHAR* source, const TCHAR* callerFile, size_t callerLine)
+TEXT mem_check__new_text(const TCHAR* source, const TCHAR* callerFile, size_t callerLine)
 #else
-TEXT newText(const TCHAR* source)
+TEXT new_text(const TCHAR* source)
 #endif
 {
     if (!source) {
-        return createInvalidText();
+        return create_invalid_text();
     }
 
-    size_t length = getStringLength(source);
+    size_t length = get_string_length(source);
 #ifdef MEM_CHECK
-    return mem_check__newTextWithLength(source, length, callerFile, callerLine);
+    return mem_check__new_text_with_length(source, length, callerFile, callerLine);
 #else
-    return newTextWithLength(source, length);
+    return new_text_with_length(source, length);
 #endif
 }
 
-TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease)
+TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release)
 {
     if (!source) {
-        return createInvalidText();
+        return create_invalid_text();
     }
 
     TEXT result = {
         .value = source,
         .length = length,
         .library = {
-            .needRelease = needRelease,
+            .need_release = need_release,
             .released = false,
         },
     };
@@ -94,36 +94,36 @@ TEXT wrapTextWithLength(const TCHAR* source, size_t length, bool needRelease)
     return result;
 }
 
-TEXT wrapText(const TCHAR* source)
+TEXT wrap_text(const TCHAR* source)
 {
     if (!source) {
-        return createInvalidText();
+        return create_invalid_text();
     }
 
-    size_t length = getStringLength(source);
+    size_t length = get_string_length(source);
 
-    return wrapTextWithLength(source, length, false);
+    return wrap_text_with_length(source, length, false);
 }
 
 #ifdef MEM_CHECK
-TEXT mem_check__cloneText(const TEXT* source, const TCHAR* callerFile, size_t callerLine)
+TEXT mem_check__clone_text(const TEXT* source, const TCHAR* callerFile, size_t callerLine)
 #else
-TEXT cloneText(const TEXT* source)
+TEXT clone_text(const TEXT* source)
 #endif
 {
-    if (!isEnabledText(source)) {
-        return createInvalidText();
+    if (!is_enabled_text(source)) {
+        return create_invalid_text();
     }
 
-    TCHAR* buffer = allocateString(source->length);
-    copyMemory(buffer, (void*)source->value, source->length * sizeof(TCHAR));
+    TCHAR* buffer = allocate_string(source->length);
+    copy_memory(buffer, (void*)source->value, source->length * sizeof(TCHAR));
     buffer[source->length] = 0;
 
     TEXT result = {
         .value = buffer,
         .length = source->length,
         .library = {
-            .needRelease = true,
+            .need_release = true,
             .released = false,
         },
     };
@@ -131,9 +131,9 @@ TEXT cloneText(const TEXT* source)
     return result;
 }
 
-TEXT referenceText(const TEXT* source)
+TEXT reference_text(const TEXT* source)
 {
-    if (!source->library.needRelease) {
+    if (!source->library.need_release) {
         return *source;
     }
 
@@ -141,7 +141,7 @@ TEXT referenceText(const TEXT* source)
         .value = source->value,
         .length = source->length,
         .library = {
-            .needRelease = false,
+            .need_release = false,
             .released = false,
         }
     };
@@ -150,16 +150,16 @@ TEXT referenceText(const TEXT* source)
 }
 
 #ifdef MEM_CHECK
-bool mem_check__freeText(TEXT* text, const TCHAR* callerFile, size_t callerLine)
+bool mem_check__free_text(TEXT* text, const TCHAR* callerFile, size_t callerLine)
 #else
-bool freeText(TEXT* text)
+bool free_text(TEXT* text)
 #endif
 {
-    if (!isEnabledText(text)) {
+    if (!is_enabled_text(text)) {
         return false;
     }
 
-    if (!text->library.needRelease) {
+    if (!text->library.need_release) {
         return false;
     }
 
@@ -167,7 +167,7 @@ bool freeText(TEXT* text)
         return false;
     }
 
-    freeString(text->value);
+    free_string(text->value);
     text->value = 0;
     text->length = 0;
 
