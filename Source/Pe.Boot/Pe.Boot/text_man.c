@@ -5,6 +5,17 @@
 #include "text.h"
 
 
+static bool contains_characters(TCHAR c, const TCHAR* characters, size_t count)
+{
+    for (size_t i = 0; i < count; i++) {
+        if (c == characters[i]) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 size_t get_text_length(const TEXT* text)
 {
     if (!is_enabled_text(text)) {
@@ -101,34 +112,15 @@ bool is_whitespace_text(const TEXT* text)
         return true;
     }
 
-    TCHAR whitespace[] = { ' ', '\t', };
-
     for (size_t i = 0; i < text->length; i++) {
         TCHAR c = text->value[i];
-        bool existsWhiteSpace = false;
-        for (size_t j = 0; j < SIZEOF_ARRAY(whitespace); j++) {
-            if (whitespace[j] == c) {
-                existsWhiteSpace = true;
-                break;
-            }
-        }
+        bool existsWhiteSpace = contains_characters(c, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters));
         if (!existsWhiteSpace) {
             return false;
         }
     }
 
     return true;
-}
-
-static bool contains_characters(TCHAR c, const TCHAR* characters, size_t count)
-{
-    for (size_t i = 0; i < count; i++) {
-        if (c == characters[i]) {
-            return true;
-        }
-    }
-
-    return false;
 }
 
 TEXT trim_text(const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count)
@@ -170,6 +162,5 @@ TEXT trim_text(const TEXT* text, bool start, bool end, const TCHAR* characters, 
 
 TEXT trim_whitespace_text(const TEXT* text)
 {
-    TCHAR characters[] = { _T(' '), _T('\t') };
-    return trim_text(text, true, true, characters, SIZEOF_ARRAY(characters));
+    return trim_text(text, true, true, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters));
 }
