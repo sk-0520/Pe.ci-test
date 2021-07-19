@@ -12,7 +12,7 @@ namespace PeBootTest
     {
     public:
 
-        TEST_METHOD(parseInteger_success_Test)
+        TEST_METHOD(parseIntegerFromText_success_Test)
         {
             auto tests = {
                 TestData(false, wrap(""), false),
@@ -27,7 +27,7 @@ namespace PeBootTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 bool arg2 = std::get<1>(test.inputs);
-                auto actual = parseInteger(&arg1, arg2);
+                auto actual = parseIntegerFromText(&arg1, arg2);
                 if (test.expected) {
                     Assert::IsTrue(actual.success);
                 } else {
@@ -36,7 +36,7 @@ namespace PeBootTest
             }
         }
 
-        TEST_METHOD(parseInteger_value_Test)
+        TEST_METHOD(parseIntegerFromText_value_Test)
         {
             auto tests = {
                 TestData(1, wrap("1"), false),
@@ -49,13 +49,13 @@ namespace PeBootTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 bool arg2 = std::get<1>(test.inputs);
-                auto actual = parseInteger(&arg1, arg2);
+                auto actual = parseIntegerFromText(&arg1, arg2);
                 Assert::IsTrue(actual.success);
                 Assert::AreEqual(test.expected, actual.value);
             }
         }
 
-        TEST_METHOD(parseLong_success_Test)
+        TEST_METHOD(parseLongFromText_success_Test)
         {
             auto tests = {
                 TestData(false, wrap(""), false),
@@ -70,7 +70,7 @@ namespace PeBootTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 bool arg2 = std::get<1>(test.inputs);
-                auto actual = parseLong(&arg1, arg2);
+                auto actual = parseLongFromText(&arg1, arg2);
                 if (test.expected) {
                     Assert::IsTrue(actual.success);
                 } else {
@@ -79,7 +79,7 @@ namespace PeBootTest
             }
         }
 
-        TEST_METHOD(parseLong_value_Test)
+        TEST_METHOD(parseLongFromText_value_Test)
         {
             auto tests = {
                 TestData((__int64)1, wrap("1"), false),
@@ -92,7 +92,7 @@ namespace PeBootTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 bool arg2 = std::get<1>(test.inputs);
-                auto actual = parseLong(&arg1, arg2);
+                auto actual = parseLongFromText(&arg1, arg2);
                 Assert::IsTrue(actual.success);
                 Assert::AreEqual(test.expected, actual.value);
             }

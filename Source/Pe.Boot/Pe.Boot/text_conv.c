@@ -24,7 +24,7 @@ static TEXT_PARSED_INT64_RESULT createFailedLongParseResult()
     return result;
 }
 
-TEXT_PARSED_INT32_RESULT parseInteger(const TEXT* input, bool supportHex)
+TEXT_PARSED_INT32_RESULT parseIntegerFromText(const TEXT* input, bool supportHex)
 {
     if (!isEnabledText(input)) {
         return createFailedIntegerParseResult();
@@ -39,7 +39,7 @@ TEXT_PARSED_INT32_RESULT parseInteger(const TEXT* input, bool supportHex)
     return result;
 }
 
-TEXT_PARSED_INT64_RESULT parseLong(const TEXT* input, bool supportHex)
+TEXT_PARSED_INT64_RESULT parseLongFromText(const TEXT* input, bool supportHex)
 {
     if (!isEnabledText(input)) {
         return createFailedLongParseResult();

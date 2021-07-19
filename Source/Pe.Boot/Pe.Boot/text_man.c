@@ -1,8 +1,7 @@
-﻿#include <assert.h>
-
-#include <windows.h>
+﻿#include <windows.h>
 #include <shlwapi.h>
 
+#include "debug.h"
 #include "text.h"
 
 
@@ -119,4 +118,58 @@ bool isWhiteSpaceText(const TEXT* text)
     }
 
     return true;
+}
+
+static bool containsCharacters(TCHAR c, const TCHAR* characters, size_t count)
+{
+    for (size_t i = 0; i < count; i++) {
+        if (c == characters[i]) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+TEXT trimText(const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count)
+{
+    assert(text);
+    if ((!start && !end) || !count) {
+        return cloneText(text);
+    }
+    assert(characters);
+
+    size_t beginIndex = 0;
+    for (size_t i = 0; start && i < text->length; i++) {
+        bool find = containsCharacters(text->value[i], characters, count);
+        if (!find) {
+            beginIndex = i;
+            break;
+        }
+        if (i == text->length - 1) {
+            // 最後まで行っちゃった
+            return newText(_T(""));
+        }
+    }
+
+    size_t endIndex = text->length - 1;
+    for (size_t i = endIndex; end; i--) {
+        bool find = containsCharacters(text->value[i], characters, count);
+        if (!find) {
+            endIndex = i;
+            break;
+        }
+        if (!i) {
+            // 最初まで行っちゃった
+            return newText(_T(""));
+        }
+    }
+
+    return newTextWithLength(text->value + beginIndex, endIndex - beginIndex + 1);
+}
+
+TEXT trimWhiteSpaceText(const TEXT* text)
+{
+    TCHAR characters[] = { _T(' '), _T('\t') };
+    return trimText(text, true, true, characters, SIZEOF_ARRAY(characters));
 }

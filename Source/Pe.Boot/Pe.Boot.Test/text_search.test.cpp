@@ -174,15 +174,15 @@ namespace PeBootTest
         TEST_METHOD(startsWithTest)
         {
             auto tests = {
-                //TestData(true, wrap("abc"), wrap("a")),
-                //TestData(false, wrap("abc"), wrap("b")),
+                TestData(true, wrap("abc"), wrap("a")),
+                TestData(false, wrap("abc"), wrap("b")),
 
-                //TestData(true, wrap("abc"), wrap("ab")),
-                //TestData(false, wrap("abc"), wrap("bc")),
+                TestData(true, wrap("abc"), wrap("ab")),
+                TestData(false, wrap("abc"), wrap("bc")),
                 TestData(false, wrap("abc"), wrap("ac")),
 
-                //TestData(true, wrap("abc"), wrap("abc")),
-                //TestData(false, wrap("abc"), wrap("abcd")),
+                TestData(true, wrap("abc"), wrap("abc")),
+                TestData(false, wrap("abc"), wrap("abcd")),
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);

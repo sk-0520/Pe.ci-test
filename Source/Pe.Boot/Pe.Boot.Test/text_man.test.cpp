@@ -140,5 +140,46 @@ namespace PeBootTest
                 }
             }
         }
+
+        TEST_METHOD(trimTextTest)
+        {
+            auto tests = {
+                TestData(_T("a"), wrap(" a "), true, true, std::vector<TCHAR>({ ' ', })),
+                TestData(_T("a "), wrap(" a "), true, false, std::vector<TCHAR>({ ' ', })),
+                TestData(_T(" a"), wrap(" a "), false, true, std::vector<TCHAR>({ ' ', })),
+                TestData(_T("a b"), wrap("      a b    "), true, true, std::vector<TCHAR>({ ' ', })),
+                TestData(_T("a"), wrap(" \t a\t \t"), true, true, std::vector<TCHAR>({ ' ', '\t' })),
+                TestData(_T("a\tb c"), wrap(" \t a\tb c\t \t"), true, true, std::vector<TCHAR>({ ' ', '\t' })),
+                TestData(_T(" \t a\tb c"), wrap(" \t a\tb c\t \t"), false, true, std::vector<TCHAR>({ ' ', '\t' })),
+                TestData(_T("a\tb c\t \t"), wrap(" \t a\tb c\t \t"), true, false, std::vector<TCHAR>({ ' ', '\t' })),
+                TestData(_T(" \t a\tb c\t \t"), wrap(" \t a\tb c\t \t"), false, false, std::vector<TCHAR>({ ' ', '\t' })),
+                TestData(_T(" \t \t \t"), wrap(" \t \t \t"), false, false, std::vector<TCHAR>({ ' ', '\t' })),
+                TestData(_T(""), wrap(" \t \t \t"), true, false, std::vector<TCHAR>({ ' ', '\t' })),
+                TestData(_T(""), wrap(" \t \t \t"), false, true, std::vector<TCHAR>({ ' ', '\t' })),
+            };
+
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                bool arg2 = std::get<1>(test.inputs);
+                bool arg3 = std::get<2>(test.inputs);
+                auto arg4 = std::get<3>(test.inputs);
+                TEXT actual = trimText(&arg1, arg2, arg3, arg4.data(), arg4.size());
+                Assert::AreEqual(test.expected, actual.value);
+                freeText(&actual);
+            }
+        }
+
+        TEST_METHOD(trimWhiteSpaceTextTest)
+        {
+            auto tests = {
+                TestData(_T("a"), wrap(" a ")),
+            };
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                TEXT actual = trimWhiteSpaceText(&arg1);
+                Assert::AreEqual(test.expected, actual.value);
+                freeText(&actual);
+            }
+        }
     };
 }

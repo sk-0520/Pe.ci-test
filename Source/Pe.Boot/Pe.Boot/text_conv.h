@@ -3,25 +3,6 @@
 
 
 /// <summary>
-/// 空テキストの無視設定
-/// </summary>
-typedef enum tag_IGNORE_EMPTY
-{
-    /// <summary>
-    /// 無視しない。
-    /// </summary>
-    IGNORE_EMPTY_NONE,
-    /// <summary>
-    /// 空を無視する。
-    /// </summary>
-    IGNORE_EMPTY_ONLY,
-    /// <summary>
-    /// 空白文字を無視する。
-    /// </summary>
-    IGNORE_EMPTY_WHITESPACE,
-} IGNORE_EMPTY;
-
-/// <summary>
 /// 数値(64bit幅)変換結果。
 /// </summary>
 typedef struct tag_TEXT_PARSED_INT32_RESULT
@@ -59,11 +40,11 @@ typedef struct tag_TEXT_PARSED_INT64_RESULT
 /// <param name="input">入力テキスト。</param>
 /// <param name="supportHex">16進数(0x)を考慮するか</param>
 /// <returns>結果データ。</returns>
-TEXT_PARSED_INT32_RESULT parseInteger(const TEXT* input, bool supportHex);
+TEXT_PARSED_INT32_RESULT parseIntegerFromText(const TEXT* input, bool supportHex);
 /// <summary>
 /// テキストを数値(64bit幅)に変換。
 /// </summary>
 /// <param name="input">入力テキスト。</param>
 /// <param name="supportHex">16進数(0x)を考慮するか</param>
 /// <returns>結果データ。</returns>
-TEXT_PARSED_INT64_RESULT parseLong(const TEXT* input, bool supportHex);
+TEXT_PARSED_INT64_RESULT parseLongFromText(const TEXT* input, bool supportHex);

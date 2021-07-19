@@ -3,6 +3,25 @@
 
 
 /// <summary>
+/// 空テキストの無視設定
+/// </summary>
+typedef enum tag_IGNORE_EMPTY
+{
+    /// <summary>
+    /// 無視しない。
+    /// </summary>
+    IGNORE_EMPTY_NONE,
+    /// <summary>
+    /// 空を無視する。
+    /// </summary>
+    IGNORE_EMPTY_ONLY,
+    /// <summary>
+    /// 空白文字を無視する。
+    /// </summary>
+    IGNORE_EMPTY_WHITESPACE,
+} IGNORE_EMPTY;
+
+/// <summary>
 /// テキスト長の取得。
 /// <para>TEXT.length でもいいけどこちらの方が安全。</para>
 /// </summary>
@@ -42,3 +61,21 @@ bool isEmptyText(const TEXT* text);
 /// <returns>空か空白文字で構成されている場合に真。</returns>
 bool isWhiteSpaceText(const TEXT* text);
 
+/// <summary>
+/// テキストのトリム処理。
+/// </summary>
+/// <param name="text">対象テキスト。</param>
+/// <param name="start">先頭をトリム対象とするか。</param>
+/// <param name="end">終端をトリム対象とするか。</param>
+/// <param name="characters">トリム対象文字一覧。</param>
+/// <param name="count">charactersの個数。</param>
+/// <returns>トリムされたテキスト。解放が必要。</returns>
+TEXT trimText(const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count);
+
+/// <summary>
+/// 両端のホワイトスペースをトリム。
+/// <para><c>trimText</c>のラッパー。</para>
+/// </summary>
+/// <param name="text">対象テキスト。</param>
+/// <returns>トリムされたテキスト。解放が必要。</returns>
+TEXT trimWhiteSpaceText(const TEXT* text);

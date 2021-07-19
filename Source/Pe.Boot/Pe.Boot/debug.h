@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include <assert.h>
+
 #include <windows.h>
 
 /// <summary>
@@ -9,3 +11,4 @@
 /// <param name="s"></param>
 void outputDebug(const TCHAR * s);
 #define debug(s) outputDebug(_T(s))
+
