@@ -2,7 +2,7 @@
 
 
 #ifdef MEM_CHECK
-TEXT mem_check__get_environment_variable(const TEXT* key, MEM_CHECK_HEAD_ARGS)
+TEXT mem_check__get_environment_variable(const TEXT* key, MEM_CHECK_PORT_ARGS)
 #else
 TEXT get_environment_variable(const TEXT* key)
 #endif

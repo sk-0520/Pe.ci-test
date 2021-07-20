@@ -22,7 +22,7 @@ TEXT get_parent_directory_path(const TEXT* path)
 }
 
 #ifdef MEM_CHECK
-TEXT mem_check__combine_path(const TEXT* base_path, const TEXT* relative_path, MEM_CHECK_HEAD_ARGS)
+TEXT mem_check__combine_path(const TEXT* base_path, const TEXT* relative_path, MEM_CHECK_PORT_ARGS)
 #else
 TEXT combine_path(const TEXT* base_path, const TEXT* relative_path)
 #endif
@@ -35,7 +35,7 @@ TEXT combine_path(const TEXT* base_path, const TEXT* relative_path)
 }
 
 #ifdef MEM_CHECK
-TEXT mem_check__join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count, MEM_CHECK_HEAD_ARGS)
+TEXT mem_check__join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count, MEM_CHECK_PORT_ARGS)
 #else
 TEXT join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count)
 #endif
@@ -63,7 +63,7 @@ TEXT join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count)
 }
 
 #ifdef MEM_CHECK
-TEXT mem_check__canonicalize_path(const TEXT* path, MEM_CHECK_HEAD_ARGS)
+TEXT mem_check__canonicalize_path(const TEXT* path, MEM_CHECK_PORT_ARGS)
 #else
 TEXT canonicalize_path(const TEXT* path)
 #endif

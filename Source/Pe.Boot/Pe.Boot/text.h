@@ -118,8 +118,8 @@ TEXT wrap_text(const TCHAR* source);
 /// <param name="source">入力不変文字列。</param>
 /// <returns>複製された不変文字列。解放が必要。</returns>
 #ifdef MEM_CHECK
-TEXT mem_check__clone_text(const TEXT* source, MEM_CHECK_HEAD_ARGS);
-#   define clone_text(source) mem_check__clone_text(source, MEM_CHECK_HEAD_DEF)
+TEXT mem_check__clone_text(const TEXT* source, MEM_CHECK_PORT_ARGS);
+#   define clone_text(source) mem_check__clone_text(source, MEM_CHECK_WRAP_ARGS)
 #else
 TEXT clone_text(const TEXT* source);
 #endif
@@ -137,8 +137,8 @@ TEXT reference_text(const TEXT* source);
 /// <param name="text"></param>
 /// <returns></returns>
 #ifdef MEM_CHECK
-bool mem_check__free_text(TEXT* text, MEM_CHECK_HEAD_ARGS);
-#   define free_text(text) mem_check__free_text(text, MEM_CHECK_HEAD_DEF)
+bool mem_check__free_text(TEXT* text, MEM_CHECK_PORT_ARGS);
+#   define free_text(text) mem_check__free_text(text, MEM_CHECK_WRAP_ARGS)
 #else
 bool free_text(TEXT* text);
 #endif
