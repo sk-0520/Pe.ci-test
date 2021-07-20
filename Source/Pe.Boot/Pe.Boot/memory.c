@@ -17,7 +17,7 @@ void* allocate_memory(size_t bytes, bool zero_fill)
 
     void* heap = HeapAlloc(hHeap, zero_fill ? HEAP_ZERO_MEMORY : 0, bytes);
 #ifdef RES_CHECK
-    rc_heap__debugHeap(heap, true, caller_file, caller_line);
+    rc_heap__check(heap, true, MEM_CHECK_CALL_ARGS);
 #endif
     return heap;
 }
@@ -41,7 +41,7 @@ void free_memory(void* p)
 #endif
 {
 #ifdef RES_CHECK
-    rc_heap__debugHeap(p, false, MEM_CHECK_CALL_ARGS);
+    rc_heap__check(p, false, MEM_CHECK_CALL_ARGS);
 #endif
 
     HeapFree(GetProcessHeap(), 0, p);

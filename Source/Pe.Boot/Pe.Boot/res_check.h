@@ -25,9 +25,9 @@ typedef struct
     size_t line;
 } rc_heap__ALLOC_STOCK_ITEM;
 
-void rc_heap__debugHeap(void* p, bool allocate, MEM_CHECK_FUNC_ARGS);
+void rc_heap__check(void* p, bool allocate, MEM_CHECK_FUNC_ARGS);
 
-void rc_heap__print_allocate_memory(bool leak, void(*output)(TCHAR*), bool add_new_line);
+void rc_heap__print_allocate_memory(bool leak, void(*output)(TCHAR*));
 
 #endif
 

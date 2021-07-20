@@ -20,7 +20,7 @@ static size_t rc_heap__allocStocksCount = 0;
     OutputDebugString(rc_heap__debug_buffer); \
 } while (0)
 
-void rc_heap__debugHeap(void* p, bool allocate, MEM_CHECK_FUNC_ARGS)
+void rc_heap__check(void* p, bool allocate, MEM_CHECK_FUNC_ARGS)
 {
     if (allocate) {
         bool stocked = false;
@@ -64,10 +64,10 @@ void rc_heap__debugHeap(void* p, bool allocate, MEM_CHECK_FUNC_ARGS)
     }
 }
 
-void rc_heap__print_allocate_memory(bool leak, void(*output)(TCHAR*), bool add_new_line)
+void rc_heap__print_allocate_memory(bool leak, void(*output)(TCHAR*))
 {
     TCHAR head[MEM_CHECK_PRINT_BUFFER_LENGTH];
-    swprintf(head, (sizeof(head) - 1) / sizeof(TCHAR), _T("[MEM:%s:COUNT] %zu%s"), rc_heap__allocStocksCount && leak ? _T("ERROR") : _T("INFORMATION"), rc_heap__allocStocksCount, add_new_line ? NEWLINET : _T(""));
+    swprintf(head, (sizeof(head) - 1) / sizeof(TCHAR), _T("[MEM:%s:COUNT] %zu"), rc_heap__allocStocksCount && leak ? _T("ERROR") : _T("INFORMATION"), rc_heap__allocStocksCount);
     output(head);
 
     for (size_t i = 0; i < MEM_CHECK_ALLOC_STOCK_LENGTH; i++) {
@@ -75,10 +75,10 @@ void rc_heap__print_allocate_memory(bool leak, void(*output)(TCHAR*), bool add_n
         if (item.p) {
             TCHAR body[MEM_CHECK_PRINT_BUFFER_LENGTH];
             TCHAR* format = leak
-                ? _T("[MEM:WARNING:LEAK] %p %s(%zu)%s")
-                : _T("[MEM:STOCK] %p %s(%zu)%s")
+                ? _T("[MEM:WARNING:LEAK] %p %s(%zu)")
+                : _T("[MEM:STOCK] %p %s(%zu)")
                 ;
-            swprintf(body, (sizeof(body) - 1) / sizeof(TCHAR), format, item.p, item.file, item.line, add_new_line ? NEWLINET : _T(""));
+            swprintf(body, (sizeof(body) - 1) / sizeof(TCHAR), format, item.p, item.file, item.line);
             output(body);
         }
     }

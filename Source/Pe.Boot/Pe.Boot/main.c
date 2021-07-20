@@ -8,6 +8,7 @@
 static void output(const TCHAR* s)
 {
     OutputDebugString(s);
+    OutputDebugString(NEWLINET);
 }
 #endif
 
@@ -23,7 +24,7 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     free_command_line(&command_line_option);
 
 #ifdef RES_CHECK
-    rc_heap__print_allocate_memory(true, output, true);
+    rc_heap__print_allocate_memory(true, output);
 #endif
 
     return resutn_code;

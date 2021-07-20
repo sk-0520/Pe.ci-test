@@ -19,7 +19,7 @@ namespace PeBootTest
     TEST_MODULE_CLEANUP(cleanup)
     {
 #ifdef RES_CHECK
-        rc_heap__print_allocate_memory(true, output, false);
+        rc_heap__print_allocate_memory(true, output);
 #endif
     }
 }
