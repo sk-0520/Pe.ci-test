@@ -107,7 +107,7 @@ TEXT wrap_text(const TCHAR* source)
 }
 
 #ifdef MEM_CHECK
-TEXT mem_check__clone_text(const TEXT* source, const TCHAR* callerFile, size_t callerLine)
+TEXT mem_check__clone_text(const TEXT* source, MEM_CHECK_HEAD_ARGS)
 #else
 TEXT clone_text(const TEXT* source)
 #endif
@@ -116,7 +116,14 @@ TEXT clone_text(const TEXT* source)
         return create_invalid_text();
     }
 
-    TCHAR* buffer = allocate_string(source->length);
+    TCHAR* buffer =
+#ifdef MEM_CHECK
+        mem_check__allocate_string(source->length, MEM_CHECK_CALL_ARGS)
+#else
+        allocate_string(source->length)
+#endif
+        ;
+
     copy_memory(buffer, (void*)source->value, source->length * sizeof(TCHAR));
     buffer[source->length] = 0;
 

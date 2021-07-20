@@ -9,12 +9,15 @@ static bool equals_command_line_item_key(const TEXT* a, const TEXT* b)
     return equals_map_key_default(a, b);
 }
 
-static void free_command_line_item_value(MAP_PAIR* pair)
+static void free_command_line_item_core(COMMAND_LINE_ITEM* item)
 {
-    COMMAND_LINE_ITEM* item = (COMMAND_LINE_ITEM*)pair->value;
-
     free_text(&item->value);
     free_memory(item);
+}
+
+static void free_command_line_item_value(MAP_PAIR* pair)
+{
+    free_command_line_item_core((COMMAND_LINE_ITEM*)pair->value);
 }
 
 static void set_command_line_map_setting(MAP* map, size_t capacity)
@@ -106,7 +109,10 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
             item->value = create_invalid_text();
         }
 
-        add_map(result, &key, item, true);
+        MAP_PAIR* pair = add_map(result, &key, item, true);
+        if (!pair) {
+            free_command_line_item_core(item);
+        }
         free_text(&key);
     }
 }

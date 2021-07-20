@@ -51,7 +51,7 @@ static EXIT_CODE boot_core(HINSTANCE hInstance, const TEXT* command_line)
 
     add_visual_cpp_runtime_redist(&app_path_items.rootDirectory);
 
-    ShellExecute(NULL, _T("open"), app_path_items.mainModule.value, is_enabled_text(command_line) ? command_line->value: NULL, NULL, SW_SHOWNORMAL);
+    ShellExecute(NULL, _T("open"), app_path_items.mainModule.value, is_enabled_text(command_line) ? command_line->value : NULL, NULL, SW_SHOWNORMAL);
 
     uninitialize_app_path_items(&app_path_items);
 
@@ -68,25 +68,23 @@ EXIT_CODE boot_with_option(HINSTANCE hInstance, const COMMAND_LINE_OPTION* comma
     TEXT_LIST args = allocate_clear_memory(command_line_option->count, sizeof(TEXT));
     size_t arg_count = 0;
 
-    const COMMAND_LINE_ITEM* wait_time_item = get_wait_time_item(command_line_option);
 
-    if (has_value_command_line_item(wait_time_item) && !is_whitespace_text(&wait_time_item->value)) {
-        TEXT_PARSED_INT32_RESULT result = parse_integer_from_text(&wait_time_item->value, false);
-        if (result.success) {
-            TCHAR s[1000];
-            format_string(s, _T("起動前停止: %d ms"), result.value);
-            output_debug(s);
-            Sleep(result.value);
-            output_debug(_T("待機終了"));
-        }
+    const WAIT_TIME_ARG  wait_time_arg = get_wait_time(command_line_option);
+
+    if (wait_time_arg.enabled) {
+        TCHAR s[1000];
+        format_string(s, _T("起動前停止: %d ms"), wait_time_arg.time);
+        output_debug(s);
+        Sleep(wait_time_arg.time);
+        output_debug(_T("待機終了"));
     }
 
     for (size_t i = 0; i < command_line_option->count; i++) {
-        if (wait_time_item) {
-            if (wait_time_item->key_index == i) {
+        if (wait_time_arg.item) {
+            if (wait_time_arg.item->key_index == i) {
                 continue;
             }
-            if (wait_time_item->value_index == i) {
+            if (wait_time_arg.item->value_index == i) {
                 continue;
             }
         }
