@@ -1,7 +1,7 @@
 ﻿#include <assert.h>
 
 #include "debug.h"
-#include "memory.h"
+#include "resource_check.h"
 #include "app_main.h"
 
 #ifdef MEM_CHECK
