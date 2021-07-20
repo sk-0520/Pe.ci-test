@@ -81,3 +81,12 @@ bool is_enabled_file(const FILE_POINTER* file)
     return true;
 }
 
+bool seek_begin_file_pointer(const FILE_POINTER* file)
+{
+    return SetFilePointer(file->handle, 0, 0, FILE_BEGIN) != INVALID_SET_FILE_POINTER;
+}
+
+bool seek_end_file_pointer(const FILE_POINTER* file)
+{
+    return SetFilePointer(file->handle, 0, 0, FILE_END) != INVALID_SET_FILE_POINTER;
+}

@@ -2,7 +2,7 @@
 #include "fsio.h"
 
 /// <summary>
-/// ファイルハンドル(ポインタ)ラッパー。
+/// ファイルポインタ(ハンドル)ラッパー。
 /// </summary>
 typedef struct tag_FILE_POINTER
 {
@@ -82,31 +82,45 @@ typedef enum tag_FILE_OPEN_MODE
 /// <para>既にファイルが存在する場合は失敗する。</para>
 /// </summary>
 /// <param name="path">作成するファイルパス。</param>
-/// <returns>作成したファイル。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
+/// <returns>作成したファイルポインタ。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
 FILE_POINTER create_file(const TEXT* path);
 /// <summary>
 /// 既存ファイルを開く。
 /// <para>ファイルが存在しない場合は失敗する。</para>
 /// </summary>
 /// <param name="path">開くファイルパス。</param>
-/// <returns>開いたファイル。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
+/// <returns>開いたファイルポインタ。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
 FILE_POINTER open_file(const TEXT* path);
 /// <summary>
 /// ファイルが存在すれば開き、存在しない場合は作成する。
 /// </summary>
 /// <param name="path">ファイルパス。</param>
-/// <returns>ファイル。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
+/// <returns>ファイルポインタ。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
 FILE_POINTER open_or_create_file(const TEXT* path);
 /// <summary>
 /// ファイルを閉じる。
 /// </summary>
-/// <param name="file">対象ファイル。</param>
+/// <param name="file">対象ファイルポインタ。</param>
 /// <returns>成功状態。</returns>
 bool close_file(FILE_POINTER* file);
 
 /// <summary>
-/// 指定された <c>FILE_POINTER</c> が有効か。
+/// 指定されたファイルポインタが有効か。
 /// </summary>
 /// <param name="file"></param>
 /// <returns></returns>
 bool is_enabled_file(const FILE_POINTER* file);
+
+// 64bit値をいい感じに使うのがめんどいので頭かケツにしか移動できませーん
+/// <summary>
+/// ファイルポインタの現在地を先頭に移動。
+/// </summary>
+/// <param name="file"></param>
+/// <returns></returns>
+bool seek_begin_file_pointer(const FILE_POINTER* file);
+/// <summary>
+/// ファイルポインタの現在地を終端に移動。
+/// </summary>
+/// <param name="file"></param>
+/// <returns></returns>
+bool seek_end_file_pointer(const FILE_POINTER* file);
