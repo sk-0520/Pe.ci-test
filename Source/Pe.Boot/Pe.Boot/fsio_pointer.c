@@ -90,3 +90,23 @@ bool seek_end_file_pointer(const FILE_POINTER* file)
 {
     return SetFilePointer(file->handle, 0, 0, FILE_END) != INVALID_SET_FILE_POINTER;
 }
+
+ssize_t read_file_pointer(const FILE_POINTER* file, uint8_t* buffer, size_t length)
+{
+    DWORD read_length = 0;
+    if (ReadFile(file->handle, (void*)buffer, (DWORD)length, &read_length, NULL)) {
+        return read_length;
+    }
+
+    return -1;
+}
+
+ssize_t write_file_pointer(const FILE_POINTER* file, uint8_t* values, size_t length)
+{
+    DWORD write_length = 0;
+    if (WriteFile(file->handle, (void*)values, (DWORD)length, &write_length, NULL)) {
+        return write_length;
+    }
+
+    return -1;
+}
