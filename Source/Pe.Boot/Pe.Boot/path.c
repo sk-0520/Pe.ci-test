@@ -97,6 +97,7 @@ TEXT get_module_path(HINSTANCE hInstance)
             break;
         } else if (module_path_length >= length - 1) {
             free_memory(path);
+            path = NULL;
             length *= 2;
         } else {
             path_length = module_path_length;
