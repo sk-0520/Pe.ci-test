@@ -2,7 +2,7 @@
 
 
 #ifdef RES_CHECK
-TEXT rc_heap__get_environment_variable(const TEXT* key, MEM_CHECK_FUNC_ARGS)
+TEXT rc_heap__get_environment_variable(const TEXT* key, RES_CHECK_FUNC_ARGS)
 #else
 TEXT get_environment_variable(const TEXT* key)
 #endif
@@ -14,7 +14,7 @@ TEXT get_environment_variable(const TEXT* key)
 
     TCHAR* env_value =
 #ifdef RES_CHECK
-        rc_heap__allocate_string(env_length - 1, MEM_CHECK_CALL_ARGS);
+        rc_heap__allocate_string(env_length - 1, RES_CHECK_CALL_ARGS);
 #else
         allocate_string(env_length - 1);
 #endif

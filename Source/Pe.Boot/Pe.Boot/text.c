@@ -33,12 +33,12 @@ bool is_enabled_text(const TEXT* text)
 }
 
 #ifdef RES_CHECK
-TEXT rc_heap__new_text_with_length(const TCHAR* source, size_t length, MEM_CHECK_FUNC_ARGS)
+TEXT rc_heap__new_text_with_length(const TCHAR* source, size_t length, RES_CHECK_FUNC_ARGS)
 #else
 TEXT new_text_with_length(const TCHAR* source, size_t length)
 #endif
 {
-    TCHAR* buffer = MC_CALL(allocate_string, length);
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, length);
     copy_memory(buffer, (void*)source, length * sizeof(TCHAR));
     buffer[length] = 0;
 
@@ -55,7 +55,7 @@ TEXT new_text_with_length(const TCHAR* source, size_t length)
 }
 
 #ifdef RES_CHECK
-TEXT rc_heap__new_text(const TCHAR* source, MEM_CHECK_FUNC_ARGS)
+TEXT rc_heap__new_text(const TCHAR* source, RES_CHECK_FUNC_ARGS)
 #else
 TEXT new_text(const TCHAR* source)
 #endif
@@ -65,7 +65,7 @@ TEXT new_text(const TCHAR* source)
     }
 
     size_t length = get_string_length(source);
-    return MC_CALL(new_text_with_length, source, length);
+    return RC_HEAP_CALL(new_text_with_length, source, length);
 }
 
 
@@ -99,7 +99,7 @@ TEXT wrap_text(const TCHAR* source)
 }
 
 #ifdef RES_CHECK
-TEXT rc_heap__clone_text(const TEXT* source, MEM_CHECK_FUNC_ARGS)
+TEXT rc_heap__clone_text(const TEXT* source, RES_CHECK_FUNC_ARGS)
 #else
 TEXT clone_text(const TEXT* source)
 #endif
@@ -108,10 +108,10 @@ TEXT clone_text(const TEXT* source)
         return create_invalid_text();
     }
 
-    TCHAR* buffer = MC_CALL(allocate_string, source->length);
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, source->length);
         /*
 #ifdef RES_CHECK
-        rc_heap__allocate_string(source->length, MEM_CHECK_CALL_ARGS)
+        rc_heap__allocate_string(source->length, RES_CHECK_CALL_ARGS)
 #else
         allocate_string(source->length)
 #endif
@@ -151,7 +151,7 @@ TEXT reference_text(const TEXT* source)
 }
 
 #ifdef RES_CHECK
-bool rc_heap__free_text(TEXT* text, MEM_CHECK_FUNC_ARGS)
+bool rc_heap__free_text(TEXT* text, RES_CHECK_FUNC_ARGS)
 #else
 bool free_text(TEXT* text)
 #endif
@@ -168,7 +168,7 @@ bool free_text(TEXT* text)
         return false;
     }
 
-    MC_CALL(free_string, text->value);
+    RC_HEAP_CALL(free_string, text->value);
     text->value = 0;
     text->length = 0;
 

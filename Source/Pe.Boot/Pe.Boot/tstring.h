@@ -36,8 +36,8 @@ TCHAR* copy_string(TCHAR* result, const TCHAR* value);
 /// <param name="source"></param>
 /// <returns>複製された文字列。<c>freeString(freeMemory)</c>にて解放する必要あり。</returns>
 #ifdef RES_CHECK
-TCHAR* rc_heap__clone_string(const TCHAR * source, MEM_CHECK_FUNC_ARGS);
-#   define clone_string(source) rc_heap__clone_string(source, MEM_CHECK_WRAP_ARGS)
+TCHAR* rc_heap__clone_string(const TCHAR * source, RES_CHECK_FUNC_ARGS);
+#   define clone_string(source) rc_heap__clone_string(source, RES_CHECK_WRAP_ARGS)
 #else
 TCHAR* clone_string(const TCHAR* source);
 #endif
@@ -48,8 +48,8 @@ TCHAR* clone_string(const TCHAR* source);
 /// <param name="length">文字列の長さ。</param>
 /// <returns>先頭 0 の番兵を考慮した領域(length + 1)。freeStringによる解放が必要。</returns>
 #ifdef RES_CHECK
-TCHAR* rc_heap__allocate_string(size_t length, MEM_CHECK_FUNC_ARGS);
-#   define allocate_string(length) rc_heap__allocate_string((length), MEM_CHECK_WRAP_ARGS)
+TCHAR* rc_heap__allocate_string(size_t length, RES_CHECK_FUNC_ARGS);
+#   define allocate_string(length) rc_heap__allocate_string((length), RES_CHECK_WRAP_ARGS)
 #else
 TCHAR* allocate_string(size_t length);
 #endif
@@ -60,8 +60,8 @@ TCHAR* allocate_string(size_t length);
 /// </summary>
 /// <param name="s"></param>
 #ifdef RES_CHECK
-void rc_heap__free_string(const TCHAR * s, MEM_CHECK_FUNC_ARGS);
-#   define free_string(s) rc_heap__free_string((s), MEM_CHECK_WRAP_ARGS)
+void rc_heap__free_string(const TCHAR * s, RES_CHECK_FUNC_ARGS);
+#   define free_string(s) rc_heap__free_string((s), RES_CHECK_WRAP_ARGS)
 #else
 void free_string(const TCHAR * s);
 #endif
