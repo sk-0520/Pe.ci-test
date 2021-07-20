@@ -4,6 +4,9 @@
 
 #include <tchar.h>
 
+// RC_HEAP: メモリ確保用チェック処理
+// RC_FILE: ファイルオープン系チェック処理
+
 #ifdef MEM_CHECK
 
 #define MEM_CHECK_CALLER_FILE_PATH 260
