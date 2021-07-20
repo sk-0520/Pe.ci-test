@@ -33,7 +33,7 @@ bool is_enabled_text(const TEXT* text)
 }
 
 #ifdef RES_CHECK
-TEXT mem_check__new_text_with_length(const TCHAR* source, size_t length, MEM_CHECK_FUNC_ARGS)
+TEXT rc_heap__new_text_with_length(const TCHAR* source, size_t length, MEM_CHECK_FUNC_ARGS)
 #else
 TEXT new_text_with_length(const TCHAR* source, size_t length)
 #endif
@@ -55,7 +55,7 @@ TEXT new_text_with_length(const TCHAR* source, size_t length)
 }
 
 #ifdef RES_CHECK
-TEXT mem_check__new_text(const TCHAR* source, MEM_CHECK_FUNC_ARGS)
+TEXT rc_heap__new_text(const TCHAR* source, MEM_CHECK_FUNC_ARGS)
 #else
 TEXT new_text(const TCHAR* source)
 #endif
@@ -99,7 +99,7 @@ TEXT wrap_text(const TCHAR* source)
 }
 
 #ifdef RES_CHECK
-TEXT mem_check__clone_text(const TEXT* source, MEM_CHECK_FUNC_ARGS)
+TEXT rc_heap__clone_text(const TEXT* source, MEM_CHECK_FUNC_ARGS)
 #else
 TEXT clone_text(const TEXT* source)
 #endif
@@ -111,7 +111,7 @@ TEXT clone_text(const TEXT* source)
     TCHAR* buffer = MC_CALL(allocate_string, source->length);
         /*
 #ifdef RES_CHECK
-        mem_check__allocate_string(source->length, MEM_CHECK_CALL_ARGS)
+        rc_heap__allocate_string(source->length, MEM_CHECK_CALL_ARGS)
 #else
         allocate_string(source->length)
 #endif
@@ -151,7 +151,7 @@ TEXT reference_text(const TEXT* source)
 }
 
 #ifdef RES_CHECK
-bool mem_check__free_text(TEXT* text, MEM_CHECK_FUNC_ARGS)
+bool rc_heap__free_text(TEXT* text, MEM_CHECK_FUNC_ARGS)
 #else
 bool free_text(TEXT* text)
 #endif

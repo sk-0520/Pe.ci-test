@@ -1,7 +1,7 @@
 ﻿#include <shlwapi.h>
 
 #include "tstring.h"
-#include "memory.h"
+#include "res_check.h"
 
 size_t get_string_length(const TCHAR* s)
 {
@@ -19,7 +19,7 @@ TCHAR* copy_string(TCHAR* result, const TCHAR* value)
 }
 
 #ifdef RES_CHECK
-TCHAR* mem_check__clone_string(const TCHAR* source, MEM_CHECK_FUNC_ARGS)
+TCHAR* rc_heap__clone_string(const TCHAR* source, MEM_CHECK_FUNC_ARGS)
 #else
 TCHAR* clone_string(const TCHAR* source)
 #endif
@@ -30,7 +30,7 @@ TCHAR* clone_string(const TCHAR* source)
 
     size_t length = get_string_length(source);
 #ifdef RES_CHECK
-    TCHAR* result = mem_check__allocate_memory((length * sizeof(TCHAR)) + sizeof(TCHAR), false, MEM_CHECK_CALL_ARGS);
+    TCHAR* result = rc_heap__allocate_memory((length * sizeof(TCHAR)) + sizeof(TCHAR), false, MEM_CHECK_CALL_ARGS);
 #else
     TCHAR* result = allocate_memory((length * sizeof(TCHAR)) + sizeof(TCHAR), false);
 #endif
@@ -41,13 +41,13 @@ TCHAR* clone_string(const TCHAR* source)
 }
 
 #ifdef RES_CHECK
-TCHAR* mem_check__allocate_string(size_t length, MEM_CHECK_FUNC_ARGS)
+TCHAR* rc_heap__allocate_string(size_t length, MEM_CHECK_FUNC_ARGS)
 #else
 TCHAR* allocate_string(size_t length)
 #endif
 {
 #ifdef RES_CHECK
-    TCHAR* result = mem_check__allocate_memory(sizeof(TCHAR) * length + sizeof(TCHAR), false, MEM_CHECK_CALL_ARGS);
+    TCHAR* result = rc_heap__allocate_memory(sizeof(TCHAR) * length + sizeof(TCHAR), false, MEM_CHECK_CALL_ARGS);
 #else
     TCHAR* result = allocate_memory(sizeof(TCHAR) * length + sizeof(TCHAR), false);
 #endif
@@ -56,13 +56,13 @@ TCHAR* allocate_string(size_t length)
 }
 
 #ifdef RES_CHECK
-void mem_check__free_string(const TCHAR* s, MEM_CHECK_FUNC_ARGS)
+void rc_heap__free_string(const TCHAR* s, MEM_CHECK_FUNC_ARGS)
 #else
 void free_string(const TCHAR* s)
 #endif
 {
 #ifdef RES_CHECK
-    mem_check__free_memory((void*)s, MEM_CHECK_CALL_ARGS);
+    rc_heap__free_memory((void*)s, MEM_CHECK_CALL_ARGS);
 #else
     free_memory((void*)s);
 #endif

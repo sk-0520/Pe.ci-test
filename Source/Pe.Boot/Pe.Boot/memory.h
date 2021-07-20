@@ -4,7 +4,7 @@
 
 #include <tchar.h>
 
-#include "resource_check.h"
+#include "res_check.h"
 
 /// <summary>
 /// 指定したサイズ以上のヒープ領域を確保。
@@ -12,8 +12,8 @@
 /// <param name="bytes">確保サイズ</param>
 /// <returns>確保した領域。<c>freeMemory</c>にて開放が必要。失敗時は<c>NULL</c>を返す。</returns>
 #ifdef RES_CHECK
-void* mem_check__allocate_memory(size_t bytes, bool zero_fill, MEM_CHECK_FUNC_ARGS);
-#   define allocate_memory(bytes, zero_fill) mem_check__allocate_memory((bytes), (zero_fill), MEM_CHECK_WRAP_ARGS)
+void* rc_heap__allocate_memory(size_t bytes, bool zero_fill, MEM_CHECK_FUNC_ARGS);
+#   define allocate_memory(bytes, zero_fill) rc_heap__allocate_memory((bytes), (zero_fill), MEM_CHECK_WRAP_ARGS)
 #else
 void* allocate_memory(size_t bytes, bool zero_fill);
 #endif
@@ -25,8 +25,8 @@ void* allocate_memory(size_t bytes, bool zero_fill);
 /// <param name="type_size">型サイズ。</param>
 /// <returns>確保した領域。<c>freeMemory</c>にて開放が必要。失敗時は<c>NULL</c>を返す。</returns>
 #ifdef RES_CHECK
-void* mem_check__allocate_clear_memory(size_t count, size_t type_size, MEM_CHECK_FUNC_ARGS);
-#   define allocate_clear_memory(count, type_size) mem_check__allocate_clear_memory((count), (type_size), MEM_CHECK_WRAP_ARGS)
+void* rc_heap__allocate_clear_memory(size_t count, size_t type_size, MEM_CHECK_FUNC_ARGS);
+#   define allocate_clear_memory(count, type_size) rc_heap__allocate_clear_memory((count), (type_size), MEM_CHECK_WRAP_ARGS)
 #else
 void* allocate_clear_memory(size_t count, size_t type_size);
 #endif
@@ -37,8 +37,8 @@ void* allocate_clear_memory(size_t count, size_t type_size);
 /// <param name="p"></param>
 /// <returns></returns>
 #ifdef RES_CHECK
-void mem_check__free_memory(void* p, MEM_CHECK_FUNC_ARGS);
-#   define free_memory(p) mem_check__free_memory((p), MEM_CHECK_WRAP_ARGS)
+void rc_heap__free_memory(void* p, MEM_CHECK_FUNC_ARGS);
+#   define free_memory(p) rc_heap__free_memory((p), MEM_CHECK_WRAP_ARGS)
 #else
 void free_memory(void* p);
 #endif

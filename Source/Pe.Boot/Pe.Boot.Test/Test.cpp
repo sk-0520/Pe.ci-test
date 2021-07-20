@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 #ifdef RES_CHECK
 extern "C" {
-#   include "../Pe.Boot/memory.h"
+#   include "../Pe.Boot/res_check.h"
 }
 #endif
 
@@ -19,7 +19,7 @@ namespace PeBootTest
     TEST_MODULE_CLEANUP(cleanup)
     {
 #ifdef RES_CHECK
-        mem_check__print_allocate_memory(true, output, false);
+        rc_heap__print_allocate_memory(true, output, false);
 #endif
     }
 }

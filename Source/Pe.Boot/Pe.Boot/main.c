@@ -1,7 +1,7 @@
 ﻿#include <assert.h>
 
 #include "debug.h"
-#include "resource_check.h"
+#include "res_check.h"
 #include "app_main.h"
 
 #ifdef RES_CHECK
@@ -23,7 +23,7 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     free_command_line(&command_line_option);
 
 #ifdef RES_CHECK
-    mem_check__print_allocate_memory(true, output, true);
+    rc_heap__print_allocate_memory(true, output, true);
 #endif
 
     return resutn_code;

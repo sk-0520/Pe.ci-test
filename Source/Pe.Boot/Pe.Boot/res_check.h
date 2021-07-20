@@ -23,17 +23,17 @@ typedef struct
     void* p;
     TCHAR file[MEM_CHECK_CALLER_FILE_PATH];
     size_t line;
-} mem_check__ALLOC_STOCK_ITEM;
+} rc_heap__ALLOC_STOCK_ITEM;
 
-void mem_check__debugHeap(void* p, bool allocate, MEM_CHECK_FUNC_ARGS);
+void rc_heap__debugHeap(void* p, bool allocate, MEM_CHECK_FUNC_ARGS);
 
-void mem_check__print_allocate_memory(bool leak, void(*output)(TCHAR*), bool add_new_line);
+void rc_heap__print_allocate_memory(bool leak, void(*output)(TCHAR*), bool add_new_line);
 
 #endif
 
 #ifdef RES_CHECK
 /// リソースチェック処理呼び出し切り替え処理
-#   define MC_CALL(function_name, ...) mem_check__##function_name(__VA_ARGS__, MEM_CHECK_CALL_ARGS)
+#   define MC_CALL(function_name, ...) rc_heap__##function_name(__VA_ARGS__, MEM_CHECK_CALL_ARGS)
 #else
 #   define MC_CALL(function_name, ...) function_name(__VA_ARGS__)
 #endif

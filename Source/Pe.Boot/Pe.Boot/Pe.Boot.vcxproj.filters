@@ -78,7 +78,7 @@
     <ClCompile Include="platform.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="resource_check.c">
+    <ClCompile Include="res_check.c">
       <Filter>source\condition</Filter>
     </ClCompile>
     <ClCompile Include="debug.c">
@@ -146,7 +146,7 @@
     <ClInclude Include="debug.h">
       <Filter>header\condition</Filter>
     </ClInclude>
-    <ClInclude Include="resource_check.h">
+    <ClInclude Include="res_check.h">
       <Filter>header\condition</Filter>
     </ClInclude>
   </ItemGroup>

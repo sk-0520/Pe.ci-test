@@ -279,7 +279,7 @@
     <ClCompile Include="app_boot.c" />
     <ClCompile Include="app_path.c" />
     <ClCompile Include="platform.c" />
-    <ClCompile Include="resource_check.c" />
+    <ClCompile Include="res_check.c" />
     <ClCompile Include="text_conv.c" />
     <ClCompile Include="text_search.c" />
     <ClCompile Include="text.c" />
@@ -302,7 +302,7 @@
     <ClInclude Include="app_path.h" />
     <ClInclude Include="platform.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="resource_check.h" />
+    <ClInclude Include="res_check.h" />
     <ClInclude Include="text_conv.h" />
     <ClInclude Include="text_search.h" />
     <ClInclude Include="text.h" />

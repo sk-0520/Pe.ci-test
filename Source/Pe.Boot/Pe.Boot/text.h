@@ -69,8 +69,8 @@ bool is_enabled_text(const TEXT* text);
 /// <param name="length">対象文字列の長さ。</param>
 /// <returns>不変文字列。解放が必要。</returns>
 #ifdef RES_CHECK
-TEXT mem_check__new_text_with_length(const TCHAR* source, size_t length, MEM_CHECK_FUNC_ARGS);
-#   define new_text_with_length(source, length) mem_check__new_text_with_length((source), (length), MEM_CHECK_WRAP_ARGS)
+TEXT rc_heap__new_text_with_length(const TCHAR* source, size_t length, MEM_CHECK_FUNC_ARGS);
+#   define new_text_with_length(source, length) rc_heap__new_text_with_length((source), (length), MEM_CHECK_WRAP_ARGS)
 #else
 TEXT new_text_with_length(const TCHAR* source, size_t length);
 #endif
@@ -81,14 +81,14 @@ TEXT new_text_with_length(const TCHAR* source, size_t length);
 /// <param name="source">対象文字列。</param>
 /// <returns>テキスト。解放が必要。</returns>
 #ifdef RES_CHECK
-TEXT mem_check__new_text(const TCHAR* source, MEM_CHECK_FUNC_ARGS);
-#   define new_text(source) mem_check__new_text((source), MEM_CHECK_WRAP_ARGS)
+TEXT rc_heap__new_text(const TCHAR* source, MEM_CHECK_FUNC_ARGS);
+#   define new_text(source) rc_heap__new_text((source), MEM_CHECK_WRAP_ARGS)
 #else
 TEXT new_text(const TCHAR* source);
 #endif
 
 #ifdef RES_CHECK
-#define new_empty_text() mem_check__new_text(_T(""), MEM_CHECK_WRAP_ARGS)
+#define new_empty_text() rc_heap__new_text(_T(""), MEM_CHECK_WRAP_ARGS)
 #else
 #define new_empty_text() new_text(_T(""))
 #endif
@@ -118,8 +118,8 @@ TEXT wrap_text(const TCHAR* source);
 /// <param name="source">入力不変文字列。</param>
 /// <returns>複製された不変文字列。解放が必要。</returns>
 #ifdef RES_CHECK
-TEXT mem_check__clone_text(const TEXT* source, MEM_CHECK_FUNC_ARGS);
-#   define clone_text(source) mem_check__clone_text(source, MEM_CHECK_WRAP_ARGS)
+TEXT rc_heap__clone_text(const TEXT* source, MEM_CHECK_FUNC_ARGS);
+#   define clone_text(source) rc_heap__clone_text(source, MEM_CHECK_WRAP_ARGS)
 #else
 TEXT clone_text(const TEXT* source);
 #endif
@@ -137,8 +137,8 @@ TEXT reference_text(const TEXT* source);
 /// <param name="text"></param>
 /// <returns></returns>
 #ifdef RES_CHECK
-bool mem_check__free_text(TEXT* text, MEM_CHECK_FUNC_ARGS);
-#   define free_text(text) mem_check__free_text(text, MEM_CHECK_WRAP_ARGS)
+bool rc_heap__free_text(TEXT* text, MEM_CHECK_FUNC_ARGS);
+#   define free_text(text) rc_heap__free_text(text, MEM_CHECK_WRAP_ARGS)
 #else
 bool free_text(TEXT* text);
 #endif

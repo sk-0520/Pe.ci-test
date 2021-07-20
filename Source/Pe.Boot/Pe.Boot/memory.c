@@ -5,7 +5,7 @@
 
 
 #ifdef RES_CHECK
-void* mem_check__allocate_memory(size_t bytes, bool zero_fill, MEM_CHECK_FUNC_ARGS)
+void* rc_heap__allocate_memory(size_t bytes, bool zero_fill, MEM_CHECK_FUNC_ARGS)
 #else
 void* allocate_memory(size_t bytes, bool zero_fill)
 #endif
@@ -17,15 +17,15 @@ void* allocate_memory(size_t bytes, bool zero_fill)
 
     void* heap = HeapAlloc(hHeap, zero_fill ? HEAP_ZERO_MEMORY : 0, bytes);
 #ifdef RES_CHECK
-    mem_check__debugHeap(heap, true, caller_file, caller_line);
+    rc_heap__debugHeap(heap, true, caller_file, caller_line);
 #endif
     return heap;
 }
 
 #ifdef RES_CHECK
-void* mem_check__allocate_clear_memory(size_t count, size_t type_size, MEM_CHECK_FUNC_ARGS)
+void* rc_heap__allocate_clear_memory(size_t count, size_t type_size, MEM_CHECK_FUNC_ARGS)
 {
-    return mem_check__allocate_memory(count * type_size, true, MEM_CHECK_CALL_ARGS);
+    return rc_heap__allocate_memory(count * type_size, true, MEM_CHECK_CALL_ARGS);
 }
 #else
 void* allocate_clear_memory(size_t count, size_t type_size)
@@ -35,13 +35,13 @@ void* allocate_clear_memory(size_t count, size_t type_size)
 #endif
 
 #ifdef RES_CHECK
-void mem_check__free_memory(void* p, MEM_CHECK_FUNC_ARGS)
+void rc_heap__free_memory(void* p, MEM_CHECK_FUNC_ARGS)
 #else
 void free_memory(void* p)
 #endif
 {
 #ifdef RES_CHECK
-    mem_check__debugHeap(p, false, MEM_CHECK_CALL_ARGS);
+    rc_heap__debugHeap(p, false, MEM_CHECK_CALL_ARGS);
 #endif
 
     HeapFree(GetProcessHeap(), 0, p);

@@ -5,7 +5,7 @@
 #include <tchar.h>
 
 #ifdef RES_CHECK
-#   define text(s) mem_check__new_text(_T(s), _T(__FILE__), __LINE__)
+#   define text(s) rc_heap__new_text(_T(s), _T(__FILE__), __LINE__)
 #else
 #   define text(s) new_text(_T(s))
 #endif

@@ -19,8 +19,8 @@ TEXT get_parent_directory_path(const TEXT* path);
 /// <param name="relative_path">結合するパス。</param>
 /// <returns>結合パス。解放が必要。</returns>
 #ifdef RES_CHECK
-TEXT mem_check__combine_path(const TEXT* base_path, const TEXT* relative_path, MEM_CHECK_FUNC_ARGS);
-#   define combine_path(base_path, relative_path) mem_check__combine_path((base_path), (relative_path), MEM_CHECK_WRAP_ARGS)
+TEXT rc_heap__combine_path(const TEXT* base_path, const TEXT* relative_path, MEM_CHECK_FUNC_ARGS);
+#   define combine_path(base_path, relative_path) rc_heap__combine_path((base_path), (relative_path), MEM_CHECK_WRAP_ARGS)
 #else
 TEXT combine_path(const TEXT* base_path, const TEXT* relative_path);
 #endif
@@ -33,8 +33,8 @@ TEXT combine_path(const TEXT* base_path, const TEXT* relative_path);
 /// <param name="count">結合するパスの個数。</param>
 /// <returns>結合パス。解放が必要。</returns>
 #ifdef RES_CHECK
-TEXT mem_check__join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count, MEM_CHECK_FUNC_ARGS);
-#   define join_path(base_path, paths, count) mem_check__join_path((base_path), (paths), (count), MEM_CHECK_WRAP_ARGS)
+TEXT rc_heap__join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count, MEM_CHECK_FUNC_ARGS);
+#   define join_path(base_path, paths, count) rc_heap__join_path((base_path), (paths), (count), MEM_CHECK_WRAP_ARGS)
 #else
 TEXT join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count);
 #endif
@@ -45,8 +45,8 @@ TEXT join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count);
 /// <param name="path"></param>
 /// <returns>正規化されたパス。</returns>
 #ifdef RES_CHECK
-TEXT mem_check__canonicalize_path(const TEXT* path, MEM_CHECK_FUNC_ARGS);
-#   define canonicalize_path(path) mem_check__canonicalize_path(path, MEM_CHECK_WRAP_ARGS)
+TEXT rc_heap__canonicalize_path(const TEXT* path, MEM_CHECK_FUNC_ARGS);
+#   define canonicalize_path(path) rc_heap__canonicalize_path(path, MEM_CHECK_WRAP_ARGS)
 #else
 TEXT canonicalize_path(const TEXT* path);
 #endif
