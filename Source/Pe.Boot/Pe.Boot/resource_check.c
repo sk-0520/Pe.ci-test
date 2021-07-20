@@ -1,4 +1,4 @@
-﻿#ifdef MEM_CHECK
+﻿#ifdef RES_CHECK
 #   include <stdio.h>
 #   include <tchar.h>
 #endif
@@ -8,7 +8,7 @@
 #include "resource_check.h"
 #include "common.h"
 
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 
 static mem_check__ALLOC_STOCK_ITEM mem_check__allocStocks[MEM_CHECK_ALLOC_STOCK_LENGTH] = { 0 };
 static size_t mem_check__allocStocksCount = 0;

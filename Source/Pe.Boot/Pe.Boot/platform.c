@@ -1,7 +1,7 @@
 ﻿#include "platform.h"
 
 
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 TEXT mem_check__get_environment_variable(const TEXT* key, MEM_CHECK_FUNC_ARGS)
 #else
 TEXT get_environment_variable(const TEXT* key)
@@ -13,7 +13,7 @@ TEXT get_environment_variable(const TEXT* key)
     }
 
     TCHAR* env_value =
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
         mem_check__allocate_string(env_length - 1, MEM_CHECK_CALL_ARGS);
 #else
         allocate_string(env_length - 1);

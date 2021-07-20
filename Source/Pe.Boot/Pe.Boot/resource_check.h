@@ -4,10 +4,8 @@
 
 #include <tchar.h>
 
-// RC_HEAP: メモリ確保用チェック処理
-// RC_FILE: ファイルオープン系チェック処理
 
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 
 #define MEM_CHECK_CALLER_FILE_PATH 260
 
@@ -33,7 +31,7 @@ void mem_check__print_allocate_memory(bool leak, void(*output)(TCHAR*), bool add
 
 #endif
 
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 /// リソースチェック処理呼び出し切り替え処理
 #   define MC_CALL(function_name, ...) mem_check__##function_name(__VA_ARGS__, MEM_CHECK_CALL_ARGS)
 #else

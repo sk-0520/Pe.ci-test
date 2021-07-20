@@ -35,7 +35,7 @@ TCHAR* copy_string(TCHAR* result, const TCHAR* value);
 /// </summary>
 /// <param name="source"></param>
 /// <returns>複製された文字列。<c>freeString(freeMemory)</c>にて解放する必要あり。</returns>
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 TCHAR* mem_check__clone_string(const TCHAR * source, MEM_CHECK_FUNC_ARGS);
 #   define clone_string(source) mem_check__clone_string(source, MEM_CHECK_WRAP_ARGS)
 #else
@@ -47,7 +47,7 @@ TCHAR* clone_string(const TCHAR* source);
 /// </summary>
 /// <param name="length">文字列の長さ。</param>
 /// <returns>先頭 0 の番兵を考慮した領域(length + 1)。freeStringによる解放が必要。</returns>
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 TCHAR* mem_check__allocate_string(size_t length, MEM_CHECK_FUNC_ARGS);
 #   define allocate_string(length) mem_check__allocate_string((length), MEM_CHECK_WRAP_ARGS)
 #else
@@ -59,7 +59,7 @@ TCHAR* allocate_string(size_t length);
 /// ドメインとしての関数で<c>freeMemory</c>のラッパー。
 /// </summary>
 /// <param name="s"></param>
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 void mem_check__free_string(const TCHAR * s, MEM_CHECK_FUNC_ARGS);
 #   define free_string(s) mem_check__free_string((s), MEM_CHECK_WRAP_ARGS)
 #else

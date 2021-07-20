@@ -21,7 +21,7 @@ TEXT get_parent_directory_path(const TEXT* path)
     return create_invalid_text();
 }
 
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 TEXT mem_check__combine_path(const TEXT* base_path, const TEXT* relative_path, MEM_CHECK_FUNC_ARGS)
 #else
 TEXT combine_path(const TEXT* base_path, const TEXT* relative_path)
@@ -34,7 +34,7 @@ TEXT combine_path(const TEXT* base_path, const TEXT* relative_path)
     return wrap_text_with_length(buffer, get_string_length(buffer), true);
 }
 
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 TEXT mem_check__join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count, MEM_CHECK_FUNC_ARGS)
 #else
 TEXT join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count)
@@ -62,14 +62,14 @@ TEXT join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count)
 
 }
 
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 TEXT mem_check__canonicalize_path(const TEXT* path, MEM_CHECK_FUNC_ARGS)
 #else
 TEXT canonicalize_path(const TEXT* path)
 #endif
 {
     TCHAR* buffer =
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
         mem_check__allocate_string(path->length, MEM_CHECK_CALL_ARGS);
 #else
         allocate_string(path->length);

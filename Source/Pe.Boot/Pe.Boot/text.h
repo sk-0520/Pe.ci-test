@@ -68,7 +68,7 @@ bool is_enabled_text(const TEXT* text);
 /// <param name="source">対象文字列。</param>
 /// <param name="length">対象文字列の長さ。</param>
 /// <returns>不変文字列。解放が必要。</returns>
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 TEXT mem_check__new_text_with_length(const TCHAR* source, size_t length, MEM_CHECK_FUNC_ARGS);
 #   define new_text_with_length(source, length) mem_check__new_text_with_length((source), (length), MEM_CHECK_WRAP_ARGS)
 #else
@@ -80,14 +80,14 @@ TEXT new_text_with_length(const TCHAR* source, size_t length);
 /// </summary>
 /// <param name="source">対象文字列。</param>
 /// <returns>テキスト。解放が必要。</returns>
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 TEXT mem_check__new_text(const TCHAR* source, MEM_CHECK_FUNC_ARGS);
 #   define new_text(source) mem_check__new_text((source), MEM_CHECK_WRAP_ARGS)
 #else
 TEXT new_text(const TCHAR* source);
 #endif
 
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 #define new_empty_text() mem_check__new_text(_T(""), MEM_CHECK_WRAP_ARGS)
 #else
 #define new_empty_text() new_text(_T(""))
@@ -117,7 +117,7 @@ TEXT wrap_text(const TCHAR* source);
 /// </summary>
 /// <param name="source">入力不変文字列。</param>
 /// <returns>複製された不変文字列。解放が必要。</returns>
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 TEXT mem_check__clone_text(const TEXT* source, MEM_CHECK_FUNC_ARGS);
 #   define clone_text(source) mem_check__clone_text(source, MEM_CHECK_WRAP_ARGS)
 #else
@@ -136,7 +136,7 @@ TEXT reference_text(const TEXT* source);
 /// </summary>
 /// <param name="text"></param>
 /// <returns></returns>
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 bool mem_check__free_text(TEXT* text, MEM_CHECK_FUNC_ARGS);
 #   define free_text(text) mem_check__free_text(text, MEM_CHECK_WRAP_ARGS)
 #else

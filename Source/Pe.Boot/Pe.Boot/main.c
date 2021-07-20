@@ -4,7 +4,7 @@
 #include "resource_check.h"
 #include "app_main.h"
 
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
 static void output(const TCHAR* s)
 {
     OutputDebugString(s);
@@ -22,7 +22,7 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
     free_command_line(&command_line_option);
 
-#ifdef MEM_CHECK
+#ifdef RES_CHECK
     mem_check__print_allocate_memory(true, output, true);
 #endif
 
