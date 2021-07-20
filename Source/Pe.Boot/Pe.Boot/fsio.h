@@ -92,3 +92,20 @@ bool close_file(FILE_POINTER* file);
 /// <param name="file"></param>
 /// <returns></returns>
 bool is_enabled_file(const FILE_POINTER* file);
+
+/// <summary>
+/// パスはディレクトリか。
+/// </summary>
+/// <param name="path"></param>
+/// <returns></returns>
+bool is_directory(const TEXT* path);
+
+/// <summary>
+/// ファイルが存在するか。
+/// </summary>
+/// <param name="path">ファイルパス。</param>
+/// <returns></returns>
+bool exists_file(const TEXT* path);
+
+
+

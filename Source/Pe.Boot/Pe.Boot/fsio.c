@@ -1,4 +1,7 @@
-﻿#include "fsio.h"
+﻿#include <shlwapi.h>
+
+#include "fsio.h"
+
 
 static FILE_POINTER create_invalid_file()
 {
@@ -80,3 +83,17 @@ bool is_enabled_file(const FILE_POINTER* file)
     return true;
 }
 
+bool is_directory(const TEXT* path)
+{
+    return PathIsDirectory(path->value);
+}
+
+bool exists_file(const TEXT* path)
+{
+    return PathFileExists(path->value) && !is_directory(path);
+}
+
+bool exists_directory(const TEXT* path)
+{
+    return PathFileExists(path->value) && is_directory(path);
+}
