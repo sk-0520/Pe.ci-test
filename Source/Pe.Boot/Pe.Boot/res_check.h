@@ -14,7 +14,7 @@
 
 #define RES_CHECK_ARG_FLIE caller_file
 #define RES_CHECK_ARG_LINE caller_line
-#define RES_CHECK_WRAP_ARGS _T(__FILE__), __LINE__
+#define RES_CHECK_WRAP_ARGS _T(__FILE__), (__LINE__)
 #define RES_CHECK_FUNC_ARGS const TCHAR* RES_CHECK_ARG_FLIE, size_t RES_CHECK_ARG_LINE
 #define RES_CHECK_CALL_ARGS RES_CHECK_ARG_FLIE, RES_CHECK_ARG_LINE
 
@@ -40,9 +40,11 @@ void rc__uninitialize();
 
 #endif
 
-#ifdef RES_CHECK
 /// リソースチェック処理呼び出し切り替え処理
+#ifdef RES_CHECK
 #   define RC_HEAP_CALL(function_name, ...) rc_heap__##function_name(__VA_ARGS__, RES_CHECK_CALL_ARGS)
+#   define RC_FILE_CALL(function_name, ...) rc_file__##function_name(__VA_ARGS__, RES_CHECK_CALL_ARGS)
 #else
 #   define RC_HEAP_CALL(function_name, ...) function_name(__VA_ARGS__)
+#   define RC_FILE_CALL(function_name, ...) function_name(__VA_ARGS__)
 #endif

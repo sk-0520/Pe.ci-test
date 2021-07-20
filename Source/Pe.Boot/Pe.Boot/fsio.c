@@ -2,17 +2,17 @@
 
 #include "fsio.h"
 
-bool is_directory(const TEXT* path)
+bool is_directory_path(const TEXT* path)
 {
     return PathIsDirectory(path->value);
 }
 
-bool exists_file(const TEXT* path)
+bool exists_file_path(const TEXT* path)
 {
-    return PathFileExists(path->value) && !is_directory(path);
+    return PathFileExists(path->value) && !is_directory_path(path);
 }
 
-bool exists_directory(const TEXT* path)
+bool exists_directory_path(const TEXT* path)
 {
-    return PathFileExists(path->value) && is_directory(path);
+    return PathFileExists(path->value) && is_directory_path(path);
 }
