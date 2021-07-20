@@ -271,6 +271,7 @@
     <ClCompile Include="command_line.c" />
     <ClCompile Include="debug.c" />
     <ClCompile Include="fsio.c" />
+    <ClCompile Include="fsio_pointer.c" />
     <ClCompile Include="map.c" />
     <ClCompile Include="memory.c" />
     <ClCompile Include="path.c" />
@@ -294,6 +295,7 @@
     <ClInclude Include="common.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="fsio.h" />
+    <ClInclude Include="fsio_pointer.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="path.h" />

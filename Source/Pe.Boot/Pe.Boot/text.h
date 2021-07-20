@@ -143,7 +143,7 @@ bool rc_heap__free_text(TEXT* text, RES_CHECK_FUNC_ARGS);
 bool free_text(TEXT* text);
 #endif
 
-/* 文字列操作ラッパー */
+// 文字列操作ラッパー
 #include "text_search.h"
 #include "text_conv.h"
 #include "text_man.h"

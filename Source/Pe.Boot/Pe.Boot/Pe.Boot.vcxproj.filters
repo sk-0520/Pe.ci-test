@@ -84,6 +84,9 @@
     <ClCompile Include="debug.c">
       <Filter>source\condition</Filter>
     </ClCompile>
+    <ClCompile Include="fsio_pointer.c">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="res_check.h">
       <Filter>header\condition</Filter>
+    </ClInclude>
+    <ClInclude Include="fsio_pointer.h">
+      <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
