@@ -14,7 +14,7 @@
 #define MEM_CHECK_ARG_FLIE caller_file
 #define MEM_CHECK_ARG_LINE caller_line
 #define MEM_CHECK_WRAP_ARGS _T(__FILE__), __LINE__
-#define MEM_CHECK_PORT_ARGS const TCHAR* MEM_CHECK_ARG_FLIE, size_t MEM_CHECK_ARG_LINE
+#define MEM_CHECK_FUNC_ARGS const TCHAR* MEM_CHECK_ARG_FLIE, size_t MEM_CHECK_ARG_LINE
 #define MEM_CHECK_CALL_ARGS MEM_CHECK_ARG_FLIE, MEM_CHECK_ARG_LINE
 
 typedef struct
@@ -28,6 +28,7 @@ void mem_check__print_allocate_memory(bool leak, void(*output)(TCHAR*), bool add
 #endif
 
 #ifdef MEM_CHECK
+/// リソースチェック処理呼び出し切り替え処理
 #   define MC_CALL(function_name, ...) mem_check__##function_name(__VA_ARGS__, MEM_CHECK_CALL_ARGS)
 #else
 #   define MC_CALL(function_name, ...) function_name(__VA_ARGS__)
@@ -39,7 +40,7 @@ void mem_check__print_allocate_memory(bool leak, void(*output)(TCHAR*), bool add
 /// <param name="bytes">確保サイズ</param>
 /// <returns>確保した領域。<c>freeMemory</c>にて開放が必要。失敗時は<c>NULL</c>を返す。</returns>
 #ifdef MEM_CHECK
-void* mem_check__allocate_memory(size_t bytes, bool zero_fill, const TCHAR* caller_file, size_t caller_line);
+void* mem_check__allocate_memory(size_t bytes, bool zero_fill, MEM_CHECK_FUNC_ARGS);
 #   define allocate_memory(bytes, zero_fill) mem_check__allocate_memory((bytes), (zero_fill), MEM_CHECK_WRAP_ARGS)
 #else
 void* allocate_memory(size_t bytes, bool zero_fill);
@@ -52,8 +53,8 @@ void* allocate_memory(size_t bytes, bool zero_fill);
 /// <param name="type_size">型サイズ。</param>
 /// <returns>確保した領域。<c>freeMemory</c>にて開放が必要。失敗時は<c>NULL</c>を返す。</returns>
 #ifdef MEM_CHECK
-void* mem_check__allocate_clear_memory(size_t count, size_t type_size, const TCHAR* caller_file, size_t caller_line);
-#   define allocate_clear_memory(count, type_size) mem_check__allocate_clear_memory((count), (type_size), _T(__FILE__), __LINE__)
+void* mem_check__allocate_clear_memory(size_t count, size_t type_size, MEM_CHECK_FUNC_ARGS);
+#   define allocate_clear_memory(count, type_size) mem_check__allocate_clear_memory((count), (type_size), MEM_CHECK_WRAP_ARGS)
 #else
 void* allocate_clear_memory(size_t count, size_t type_size);
 #endif
@@ -64,8 +65,8 @@ void* allocate_clear_memory(size_t count, size_t type_size);
 /// <param name="p"></param>
 /// <returns></returns>
 #ifdef MEM_CHECK
-void mem_check__free_memory(void* p, const TCHAR* caller_file, size_t caller_line);
-#   define free_memory(p) mem_check__free_memory((p), _T(__FILE__), __LINE__)
+void mem_check__free_memory(void* p, MEM_CHECK_FUNC_ARGS);
+#   define free_memory(p) mem_check__free_memory((p), MEM_CHECK_WRAP_ARGS)
 #else
 void free_memory(void* p);
 #endif

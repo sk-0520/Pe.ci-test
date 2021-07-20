@@ -20,7 +20,7 @@ static size_t mem_check__allocStocksCount = 0;
     OutputDebugString(mem_check__debug_buffer); \
 } while (0)
 
-static void mem_check__debugHeap(void* p, bool allocate, MEM_CHECK_PORT_ARGS)
+static void mem_check__debugHeap(void* p, bool allocate, MEM_CHECK_FUNC_ARGS)
 {
     if (allocate) {
         bool stocked = false;
@@ -88,7 +88,7 @@ void mem_check__print_allocate_memory(bool leak, void(*output)(TCHAR*), bool add
 
 
 #ifdef MEM_CHECK
-void* mem_check__allocate_memory(size_t bytes, bool zero_fill, MEM_CHECK_PORT_ARGS)
+void* mem_check__allocate_memory(size_t bytes, bool zero_fill, MEM_CHECK_FUNC_ARGS)
 #else
 void* allocate_memory(size_t bytes, bool zero_fill)
 #endif
@@ -106,9 +106,9 @@ void* allocate_memory(size_t bytes, bool zero_fill)
 }
 
 #ifdef MEM_CHECK
-void* mem_check__allocate_clear_memory(size_t count, size_t type_size, MEM_CHECK_PORT_ARGS)
+void* mem_check__allocate_clear_memory(size_t count, size_t type_size, MEM_CHECK_FUNC_ARGS)
 {
-    return mem_check__allocate_memory(count * type_size, true, caller_file, caller_line);
+    return mem_check__allocate_memory(count * type_size, true, MEM_CHECK_CALL_ARGS);
 }
 #else
 void* allocate_clear_memory(size_t count, size_t type_size)
@@ -118,13 +118,13 @@ void* allocate_clear_memory(size_t count, size_t type_size)
 #endif
 
 #ifdef MEM_CHECK
-void mem_check__free_memory(void* p, MEM_CHECK_PORT_ARGS)
+void mem_check__free_memory(void* p, MEM_CHECK_FUNC_ARGS)
 #else
 void free_memory(void* p)
 #endif
 {
 #ifdef MEM_CHECK
-    mem_check__debugHeap(p, false, caller_file, caller_line);
+    mem_check__debugHeap(p, false, MEM_CHECK_CALL_ARGS);
 #endif
 
     HeapFree(GetProcessHeap(), 0, p);

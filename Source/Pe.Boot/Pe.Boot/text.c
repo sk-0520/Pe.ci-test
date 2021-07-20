@@ -33,16 +33,12 @@ bool is_enabled_text(const TEXT* text)
 }
 
 #ifdef MEM_CHECK
-TEXT mem_check__new_text_with_length(const TCHAR* source, size_t length, const TCHAR* callerFile, size_t callerLine)
+TEXT mem_check__new_text_with_length(const TCHAR* source, size_t length, MEM_CHECK_FUNC_ARGS)
 #else
 TEXT new_text_with_length(const TCHAR* source, size_t length)
 #endif
 {
-#ifdef MEM_CHECK
-    TCHAR* buffer = mem_check__allocate_string(length, callerFile, callerLine);
-#else
-    TCHAR* buffer = allocate_string(length);
-#endif
+    TCHAR* buffer = MC_CALL(allocate_string, length);
     copy_memory(buffer, (void*)source, length * sizeof(TCHAR));
     buffer[length] = 0;
 
@@ -59,7 +55,7 @@ TEXT new_text_with_length(const TCHAR* source, size_t length)
 }
 
 #ifdef MEM_CHECK
-TEXT mem_check__new_text(const TCHAR* source, const TCHAR* callerFile, size_t callerLine)
+TEXT mem_check__new_text(const TCHAR* source, MEM_CHECK_FUNC_ARGS)
 #else
 TEXT new_text(const TCHAR* source)
 #endif
@@ -69,11 +65,7 @@ TEXT new_text(const TCHAR* source)
     }
 
     size_t length = get_string_length(source);
-#ifdef MEM_CHECK
-    return mem_check__new_text_with_length(source, length, callerFile, callerLine);
-#else
-    return new_text_with_length(source, length);
-#endif
+    return MC_CALL(new_text_with_length, source, length);
 }
 
 
@@ -107,7 +99,7 @@ TEXT wrap_text(const TCHAR* source)
 }
 
 #ifdef MEM_CHECK
-TEXT mem_check__clone_text(const TEXT* source, MEM_CHECK_PORT_ARGS)
+TEXT mem_check__clone_text(const TEXT* source, MEM_CHECK_FUNC_ARGS)
 #else
 TEXT clone_text(const TEXT* source)
 #endif
@@ -159,7 +151,7 @@ TEXT reference_text(const TEXT* source)
 }
 
 #ifdef MEM_CHECK
-bool mem_check__free_text(TEXT* text, const TCHAR* callerFile, size_t callerLine)
+bool mem_check__free_text(TEXT* text, MEM_CHECK_FUNC_ARGS)
 #else
 bool free_text(TEXT* text)
 #endif
@@ -176,7 +168,7 @@ bool free_text(TEXT* text)
         return false;
     }
 
-    free_string(text->value);
+    MC_CALL(free_string, text->value);
     text->value = 0;
     text->length = 0;
 

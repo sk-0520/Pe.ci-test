@@ -19,7 +19,7 @@ TCHAR* copy_string(TCHAR* result, const TCHAR* value)
 }
 
 #ifdef MEM_CHECK
-TCHAR* mem_check__clone_string(const TCHAR* source, MEM_CHECK_PORT_ARGS)
+TCHAR* mem_check__clone_string(const TCHAR* source, MEM_CHECK_FUNC_ARGS)
 #else
 TCHAR* clone_string(const TCHAR* source)
 #endif
@@ -41,7 +41,7 @@ TCHAR* clone_string(const TCHAR* source)
 }
 
 #ifdef MEM_CHECK
-TCHAR* mem_check__allocate_string(size_t length, MEM_CHECK_PORT_ARGS)
+TCHAR* mem_check__allocate_string(size_t length, MEM_CHECK_FUNC_ARGS)
 #else
 TCHAR* allocate_string(size_t length)
 #endif
@@ -56,7 +56,7 @@ TCHAR* allocate_string(size_t length)
 }
 
 #ifdef MEM_CHECK
-void mem_check__free_string(const TCHAR* s, MEM_CHECK_PORT_ARGS)
+void mem_check__free_string(const TCHAR* s, MEM_CHECK_FUNC_ARGS)
 #else
 void free_string(const TCHAR* s)
 #endif
