@@ -57,12 +57,21 @@
     <ClCompile Include="app_command_line.test.cpp">
       <Filter>source\app</Filter>
     </ClCompile>
+    <ClCompile Include="fsio.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="fsio_pointer.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="Test.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
       <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>
