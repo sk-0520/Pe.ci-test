@@ -149,6 +149,7 @@ bool RC_HEAP_FUNC(free_text, TEXT* text)
     text->length = 0;
 
     text->library.released = true;
+    text->library.need_release = false;
 
     return true;
 }

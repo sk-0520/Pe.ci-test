@@ -89,21 +89,6 @@ bool is_enabled_file_resource(const FILE_RESOURCE* file)
     return true;
 }
 
-bool seek_begin_file_resource(const FILE_RESOURCE* file)
-{
-    return SetFilePointer(file->handle, 0, 0, FILE_BEGIN) != INVALID_SET_FILE_POINTER;
-}
-
-bool seek_end_file_resource(const FILE_RESOURCE* file)
-{
-    return SetFilePointer(file->handle, 0, 0, FILE_END) != INVALID_SET_FILE_POINTER;
-}
-
-bool cut_current_position_file_resource(const FILE_RESOURCE* file)
-{
-    return SetEndOfFile(file->handle);
-}
-
 ssize_t read_file_resource(const FILE_RESOURCE* file, uint8_t* buffer, size_t length)
 {
     DWORD read_length = 0;
@@ -122,4 +107,19 @@ ssize_t write_file_resource(const FILE_RESOURCE* file, uint8_t* values, size_t l
     }
 
     return -1;
+}
+
+bool seek_begin_file_resource(const FILE_RESOURCE* file)
+{
+    return SetFilePointer(file->handle, 0, 0, FILE_BEGIN) != INVALID_SET_FILE_POINTER;
+}
+
+bool seek_end_file_resource(const FILE_RESOURCE* file)
+{
+    return SetFilePointer(file->handle, 0, 0, FILE_END) != INVALID_SET_FILE_POINTER;
+}
+
+bool cut_current_position_file_resource(const FILE_RESOURCE* file)
+{
+    return SetEndOfFile(file->handle);
 }

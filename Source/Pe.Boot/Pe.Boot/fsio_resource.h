@@ -128,6 +128,26 @@ bool RC_FILE_FUNC(close_file_resource, FILE_RESOURCE* file);
 /// <returns></returns>
 bool is_enabled_file_resource(const FILE_RESOURCE* file);
 
+/// <summary>
+/// ファイルリソースからデータ読み込み。
+/// <para>読み込んだ分だけ現在地は進められる。</para>
+/// </summary>
+/// <param name="file">対象ファイル。</param>
+/// <param name="buffer">読み込みデータ格納先。</param>
+/// <param name="length">読み込みデータサイズ。</param>
+/// <returns>読み込んだサイズ。0の場合は終端。読み込みに失敗している場合は-1。</returns>
+ssize_t read_file_resource(const FILE_RESOURCE* file, uint8_t* buffer, size_t length);
+
+/// <summary>
+/// ファイルリソースからデータ書き込み。
+/// <para>書き込んだ分だけ現在地は進められる。</para>
+/// </summary>
+/// <param name="file">対象ファイル。</param>
+/// <param name="values">読み込みデータ格納先。</param>
+/// <param name="length">読み込みデータサイズ。</param>
+/// <returns>書き込んだサイズ。書き込み失敗時は-1。</returns>
+ssize_t write_file_resource(const FILE_RESOURCE* file, uint8_t* values, size_t length);
+
 // 64bit値をいい感じに使うのがめんどいので頭かケツにしか移動できませーん
 /// <summary>
 /// ファイルリソースの現在地を先頭に移動。
@@ -148,22 +168,3 @@ bool seek_end_file_resource(const FILE_RESOURCE* file);
 /// <returns></returns>
 bool cut_current_position_file_resource(const FILE_RESOURCE* file);
 
-/// <summary>
-/// ファイルリソースからデータ読み込み。
-/// <para>読み込んだ分だけ現在地は進められる。</para>
-/// </summary>
-/// <param name="file">対象ファイル。</param>
-/// <param name="buffer">読み込みデータ格納先。</param>
-/// <param name="length">読み込みデータサイズ。</param>
-/// <returns>読み込んだサイズ。0の場合は終端。読み込みに失敗している場合は-1。</returns>
-ssize_t read_file_resource(const FILE_RESOURCE* file, uint8_t* buffer, size_t length);
-
-/// <summary>
-/// ファイルリソースからデータ書き込み。
-/// <para>書き込んだ分だけ現在地は進められる。</para>
-/// </summary>
-/// <param name="file">対象ファイル。</param>
-/// <param name="values">読み込みデータ格納先。</param>
-/// <param name="length">読み込みデータサイズ。</param>
-/// <returns>書き込んだサイズ。書き込み失敗時は-1。</returns>
-ssize_t write_file_resource(const FILE_RESOURCE* file, uint8_t* values, size_t length);
