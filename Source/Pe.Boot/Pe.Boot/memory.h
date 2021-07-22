@@ -16,26 +16,15 @@ void* RC_HEAP_FUNC(allocate_memory, size_t bytes, bool zero_fill);
 #   define allocate_memory(bytes, zero_fill) RC_HEAP_WRAP(allocate_memory, bytes, zero_fill)
 #endif
 
-/*
-#ifdef RES_CHECK
-void* rc_heap__allocate_memory(size_t bytes, bool zero_fill, RES_CHECK_FUNC_ARGS);
-#   define allocate_memory(bytes, zero_fill) rc_heap__allocate_memory((bytes), (zero_fill), RES_CHECK_WRAP_ARGS)
-#else
-void* allocate_memory(size_t bytes, bool zero_fill);
-#endif
-*/
-
 /// <summary>
 /// 指定したサイズ以上のヒープ領域を0クリアで確保。
 /// </summary>
 /// <param name="count">確保する個数。</param>
 /// <param name="type_size">型サイズ。</param>
 /// <returns>確保した領域。<c>freeMemory</c>にて開放が必要。失敗時は<c>NULL</c>を返す。</returns>
-#ifdef RES_CHECK
-void* rc_heap__allocate_clear_memory(size_t count, size_t type_size, RES_CHECK_FUNC_ARGS);
-#   define allocate_clear_memory(count, type_size) rc_heap__allocate_clear_memory((count), (type_size), RES_CHECK_WRAP_ARGS)
-#else
-void* allocate_clear_memory(size_t count, size_t type_size);
+void* RC_HEAP_FUNC(allocate_clear_memory, size_t count, size_t type_size);
+#if RES_CHECK
+#   define allocate_clear_memory(count, type_size) RC_HEAP_WRAP(allocate_clear_memory, count, type_size)
 #endif
 
 /// <summary>
@@ -43,12 +32,12 @@ void* allocate_clear_memory(size_t count, size_t type_size);
 /// </summary>
 /// <param name="p"></param>
 /// <returns></returns>
-#ifdef RES_CHECK
-void rc_heap__free_memory(void* p, RES_CHECK_FUNC_ARGS);
-#   define free_memory(p) rc_heap__free_memory((p), RES_CHECK_WRAP_ARGS)
-#else
-void free_memory(void* p);
+void RC_HEAP_FUNC(free_memory, void* p);
+#if RES_CHECK
+#   define free_memory(p) RC_HEAP_WRAP(free_memory, p)
 #endif
+
+
 
 /// <summary>
 /// <c>memset</c> する。

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <windows.h>
 
+#include "res_check.h"
 #include "text.h"
 
 
@@ -9,11 +10,9 @@
 /// </summary>
 /// <param name="key">環境変数名。</param>
 /// <returns>取得した環境変数。解放が必要。存在しない場合は無効テキスト。</returns>
+TEXT RC_HEAP_FUNC(get_environment_variable, const TEXT* key);
 #ifdef RES_CHECK
-TEXT rc_heap__get_environment_variable(const TEXT* key, RES_CHECK_FUNC_ARGS);
-#   define get_environment_variable(key) rc_heap__get_environment_variable((key), RES_CHECK_WRAP_ARGS)
-#else
-TEXT get_environment_variable(const TEXT* key);
+#   define get_environment_variable(key) RC_HEAP_WRAP(get_environment_variable, key)
 #endif
 
 /// <summary>

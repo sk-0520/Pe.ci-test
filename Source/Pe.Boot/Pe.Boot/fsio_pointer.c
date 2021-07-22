@@ -10,7 +10,7 @@ static FILE_POINTER create_invalid_file()
     return result;
 }
 
-static FILE_POINTER openFileCore(const TEXT* path, FILE_ACCESS_MODE accessMode, FILE_SHARE_MODE sharedMode, FILE_OPEN_MODE openMode, DWORD attributes)
+static FILE_POINTER RC_FILE_FUNC(open_file_core, const TEXT* path, FILE_ACCESS_MODE accessMode, FILE_SHARE_MODE sharedMode, FILE_OPEN_MODE openMode, DWORD attributes)
 {
     if (!path) {
         return create_invalid_file();
@@ -29,25 +29,29 @@ static FILE_POINTER openFileCore(const TEXT* path, FILE_ACCESS_MODE accessMode, 
         .handle = handle
     };
 
+#ifdef RES_CHECK
+    rc_file__check(result.handle, true, RES_CHECK_CALL_ARGS);
+#endif
+
     return result;
 }
 
 FILE_POINTER RC_FILE_FUNC(create_file, const TEXT* path)
 {
-    return openFileCore(path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_NEW, 0);
+    return RC_FILE_CALL(open_file_core, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_NEW, 0);
 }
 
-FILE_POINTER open_file(const TEXT* path)
+FILE_POINTER RC_FILE_FUNC(open_file, const TEXT* path)
 {
-    return openFileCore(path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0);
+    return RC_FILE_CALL(open_file_core, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0);
 }
 
-FILE_POINTER open_or_create_file(const TEXT* path)
+FILE_POINTER RC_FILE_FUNC(open_or_create_file, const TEXT* path)
 {
-    return openFileCore(path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN_OR_CREATE, 0);
+    return RC_FILE_CALL(open_file_core, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN_OR_CREATE, 0);
 }
 
-bool close_file(FILE_POINTER* file)
+bool RC_FILE_FUNC(close_file, FILE_POINTER* file)
 {
     if (!file) {
         return false;
@@ -56,6 +60,10 @@ bool close_file(FILE_POINTER* file)
     if (!is_enabled_file(file)) {
         return false;
     }
+
+#ifdef RES_CHECK
+    rc_file__check(file->handle, false, RES_CHECK_CALL_ARGS);
+#endif
 
     free_text(&file->path);
     bool result = CloseHandle(file->handle);

@@ -21,24 +21,16 @@ TEXT get_parent_directory_path(const TEXT* path)
     return create_invalid_text();
 }
 
-#ifdef RES_CHECK
-TEXT rc_heap__combine_path(const TEXT* base_path, const TEXT* relative_path, RES_CHECK_FUNC_ARGS)
-#else
-TEXT combine_path(const TEXT* base_path, const TEXT* relative_path)
-#endif
+TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path)
 {
     size_t total_length = base_path->length + relative_path->length + sizeof(TCHAR)/* \ */;
-    TCHAR* buffer = allocate_string(total_length);
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, total_length);
     PathCombine(buffer, base_path->value, relative_path->value);
 
     return wrap_text_with_length(buffer, get_string_length(buffer), true);
 }
 
-#ifdef RES_CHECK
-TEXT rc_heap__join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count, RES_CHECK_FUNC_ARGS)
-#else
-TEXT join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count)
-#endif
+TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_t count)
 {
     size_t total_path_length = base_path->length + 1 + count; // ディレクトリ区切り
 
@@ -47,7 +39,7 @@ TEXT join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count)
         total_path_length += path->length;
     }
 
-    TCHAR* buffer = allocate_string(total_path_length);
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, total_path_length);
     copy_string(buffer, base_path->value);
 
     for (size_t i = 0; i < count; i++) {
@@ -62,19 +54,10 @@ TEXT join_path(const TEXT* base_path, const TEXT_LIST paths, size_t count)
 
 }
 
-#ifdef RES_CHECK
-TEXT rc_heap__canonicalize_path(const TEXT* path, RES_CHECK_FUNC_ARGS)
-#else
-TEXT canonicalize_path(const TEXT* path)
-#endif
+TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path)
 {
-    TCHAR* buffer =
-#ifdef RES_CHECK
-        rc_heap__allocate_string(path->length, RES_CHECK_CALL_ARGS);
-#else
-        allocate_string(path->length);
-#endif
-        PathCanonicalize(buffer, path->value);
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, path->length);
+    PathCanonicalize(buffer, path->value);
 
     return wrap_text_with_length(buffer, get_string_length(buffer), true);
 }

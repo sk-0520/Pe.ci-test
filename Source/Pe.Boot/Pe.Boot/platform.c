@@ -1,23 +1,14 @@
 ﻿#include "platform.h"
 
 
-#ifdef RES_CHECK
-TEXT rc_heap__get_environment_variable(const TEXT* key, RES_CHECK_FUNC_ARGS)
-#else
-TEXT get_environment_variable(const TEXT* key)
-#endif
+TEXT RC_HEAP_FUNC(get_environment_variable, const TEXT* key)
 {
     DWORD env_length = GetEnvironmentVariable(key->value, NULL, 0);
     if (!env_length) {
         return create_invalid_text();
     }
 
-    TCHAR* env_value =
-#ifdef RES_CHECK
-        rc_heap__allocate_string(env_length - 1, RES_CHECK_CALL_ARGS);
-#else
-        allocate_string(env_length - 1);
-#endif
+    TCHAR* env_value = RC_HEAP_CALL(allocate_string, env_length - 1);
     GetEnvironmentVariable(key->value, env_value, env_length);
 
     return wrap_text_with_length(env_value, env_length - 1, true);

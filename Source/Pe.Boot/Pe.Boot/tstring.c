@@ -18,54 +18,32 @@ TCHAR* copy_string(TCHAR* result, const TCHAR* value)
     return lstrcpy(result, value);
 }
 
-#ifdef RES_CHECK
-TCHAR* rc_heap__clone_string(const TCHAR* source, RES_CHECK_FUNC_ARGS)
-#else
-TCHAR* clone_string(const TCHAR* source)
-#endif
+TCHAR* RC_HEAP_FUNC(clone_string, const TCHAR* source)
 {
     if (!source) {
         return NULL;
     }
 
     size_t length = get_string_length(source);
-#ifdef RES_CHECK
-    TCHAR* result = rc_heap__allocate_memory((length * sizeof(TCHAR)) + sizeof(TCHAR), false, RES_CHECK_CALL_ARGS);
-#else
-    TCHAR* result = allocate_memory((length * sizeof(TCHAR)) + sizeof(TCHAR), false);
-#endif
+    size_t bytes = (length * sizeof(TCHAR)) + sizeof(TCHAR);
+    TCHAR* result = (TCHAR*)RC_HEAP_CALL(allocate_memory, bytes, false);
     copy_memory(result, (void*)source, length * sizeof(TCHAR));
     result[length] = 0;
 
     return result;
 }
 
-#ifdef RES_CHECK
-TCHAR* rc_heap__allocate_string(size_t length, RES_CHECK_FUNC_ARGS)
-#else
-TCHAR* allocate_string(size_t length)
-#endif
+TCHAR* RC_HEAP_FUNC(allocate_string, size_t length)
 {
-#ifdef RES_CHECK
-    TCHAR* result = rc_heap__allocate_memory(sizeof(TCHAR) * length + sizeof(TCHAR), false, RES_CHECK_CALL_ARGS);
-#else
-    TCHAR* result = allocate_memory(sizeof(TCHAR) * length + sizeof(TCHAR), false);
-#endif
+    size_t bytes = sizeof(TCHAR) * length + sizeof(TCHAR);
+    TCHAR* result = RC_HEAP_CALL(allocate_memory, bytes, false);
     result[0] = 0;
     return result;
 }
 
-#ifdef RES_CHECK
-void rc_heap__free_string(const TCHAR* s, RES_CHECK_FUNC_ARGS)
-#else
-void free_string(const TCHAR* s)
-#endif
+void RC_HEAP_FUNC(free_string, const TCHAR* s)
 {
-#ifdef RES_CHECK
-    rc_heap__free_memory((void*)s, RES_CHECK_CALL_ARGS);
-#else
-    free_memory((void*)s);
-#endif
+    RC_HEAP_CALL(free_memory, (void*)s);
 }
 
 

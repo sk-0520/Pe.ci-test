@@ -68,11 +68,9 @@ bool is_enabled_text(const TEXT* text);
 /// <param name="source">対象文字列。</param>
 /// <param name="length">対象文字列の長さ。</param>
 /// <returns>不変文字列。解放が必要。</returns>
+TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length);
 #ifdef RES_CHECK
-TEXT rc_heap__new_text_with_length(const TCHAR* source, size_t length, RES_CHECK_FUNC_ARGS);
-#   define new_text_with_length(source, length) rc_heap__new_text_with_length((source), (length), RES_CHECK_WRAP_ARGS)
-#else
-TEXT new_text_with_length(const TCHAR* source, size_t length);
+#   define new_text_with_length(source, length) RC_HEAP_WRAP(new_text_with_length, (source), (length))
 #endif
 
 /// <summary>
@@ -80,18 +78,12 @@ TEXT new_text_with_length(const TCHAR* source, size_t length);
 /// </summary>
 /// <param name="source">対象文字列。</param>
 /// <returns>テキスト。解放が必要。</returns>
+TEXT RC_HEAP_FUNC(new_text, const TCHAR* source);
 #ifdef RES_CHECK
-TEXT rc_heap__new_text(const TCHAR* source, RES_CHECK_FUNC_ARGS);
-#   define new_text(source) rc_heap__new_text((source), RES_CHECK_WRAP_ARGS)
-#else
-TEXT new_text(const TCHAR* source);
+#   define new_text(source) RC_HEAP_WRAP(new_text, (source))
 #endif
 
-#ifdef RES_CHECK
-#define new_empty_text() rc_heap__new_text(_T(""), RES_CHECK_WRAP_ARGS)
-#else
 #define new_empty_text() new_text(_T(""))
-#endif
 
 /// <summary>
 /// 文字列からテキストにラップ。
@@ -113,16 +105,15 @@ TEXT wrap_text(const TCHAR* source);
 
 
 /// <summary>
-/// 不変文字列の複製。
+/// テキストの複製。
 /// </summary>
-/// <param name="source">入力不変文字列。</param>
-/// <returns>複製された不変文字列。解放が必要。</returns>
+/// <param name="source">入力テキスト。</param>
+/// <returns>複製されたテキスト。解放が必要。</returns>
+TEXT RC_HEAP_FUNC(clone_text, const TEXT* source);
 #ifdef RES_CHECK
-TEXT rc_heap__clone_text(const TEXT* source, RES_CHECK_FUNC_ARGS);
-#   define clone_text(source) rc_heap__clone_text(source, RES_CHECK_WRAP_ARGS)
-#else
-TEXT clone_text(const TEXT* source);
+#   define clone_text(source) RC_HEAP_WRAP(clone_text, (source))
 #endif
+
 /// <summary>
 /// テキストを参照として複製。
 /// </summary>
@@ -136,11 +127,9 @@ TEXT reference_text(const TEXT* source);
 /// </summary>
 /// <param name="text"></param>
 /// <returns></returns>
+bool RC_HEAP_FUNC(free_text, TEXT* text);
 #ifdef RES_CHECK
-bool rc_heap__free_text(TEXT* text, RES_CHECK_FUNC_ARGS);
-#   define free_text(text) rc_heap__free_text(text, RES_CHECK_WRAP_ARGS)
-#else
-bool free_text(TEXT* text);
+#   define free_text(text) RC_HEAP_WRAP(free_text, (text))
 #endif
 
 // 文字列操作ラッパー

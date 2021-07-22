@@ -3,13 +3,7 @@
 #include "common.h"
 #include "memory.h"
 
-/*
-#ifdef RES_CHECK
-void* rc_heap__allocate_memory(size_t bytes, bool zero_fill, RES_CHECK_FUNC_ARGS)
-#else
-void* allocate_memory(size_t bytes, bool zero_fill)
-#endif
-*/
+
 void* RC_HEAP_FUNC(allocate_memory, size_t bytes, bool zero_fill)
 {
     HANDLE hHeap = GetProcessHeap();
@@ -18,29 +12,23 @@ void* RC_HEAP_FUNC(allocate_memory, size_t bytes, bool zero_fill)
     }
 
     void* heap = HeapAlloc(hHeap, zero_fill ? HEAP_ZERO_MEMORY : 0, bytes);
+    if (!heap) {
+        return NULL;
+    }
+
 #ifdef RES_CHECK
     rc_heap__check(heap, true, RES_CHECK_CALL_ARGS);
 #endif
+
     return heap;
 }
 
-#ifdef RES_CHECK
-void* rc_heap__allocate_clear_memory(size_t count, size_t type_size, RES_CHECK_FUNC_ARGS)
+void* RC_HEAP_FUNC(allocate_clear_memory, size_t count, size_t type_size)
 {
-    return rc_heap__allocate_memory(count * type_size, true, RES_CHECK_CALL_ARGS);
+    return RC_HEAP_CALL(allocate_memory, count * type_size, true);
 }
-#else
-void* allocate_clear_memory(size_t count, size_t type_size)
-{
-    return allocate_memory(count * type_size, true);
-}
-#endif
 
-#ifdef RES_CHECK
-void rc_heap__free_memory(void* p, RES_CHECK_FUNC_ARGS)
-#else
-void free_memory(void* p)
-#endif
+void RC_HEAP_FUNC(free_memory, void* p)
 {
 #ifdef RES_CHECK
     rc_heap__check(p, false, RES_CHECK_CALL_ARGS);
