@@ -99,6 +99,11 @@ bool seek_end_file_resource(const FILE_RESOURCE* file)
     return SetFilePointer(file->handle, 0, 0, FILE_END) != INVALID_SET_FILE_POINTER;
 }
 
+bool cut_current_position_file_resource(const FILE_RESOURCE* file)
+{
+    return SetEndOfFile(file->handle);
+}
+
 ssize_t read_file_resource(const FILE_RESOURCE* file, uint8_t* buffer, size_t length)
 {
     DWORD read_length = 0;

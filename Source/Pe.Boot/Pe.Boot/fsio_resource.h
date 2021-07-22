@@ -84,7 +84,7 @@ typedef enum tag_FILE_OPEN_MODE
 /// <para>既にファイルが存在する場合は失敗する。</para>
 /// </summary>
 /// <param name="path">作成するファイルパス。</param>
-/// <returns>作成したファイルポインタ。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
+/// <returns>作成したファイルリソース。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
 FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path);
 #if RES_CHECK
 #   define create_file_resource(path) RC_FILE_WRAP(create_file_resource, path)
@@ -95,7 +95,7 @@ FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path);
 /// <para>ファイルが存在しない場合は失敗する。</para>
 /// </summary>
 /// <param name="path">開くファイルパス。</param>
-/// <returns>開いたファイルポインタ。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
+/// <returns>開いたファイルリソース。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
 FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path);
 #if RES_CHECK
 #   define open_file_resource(path) RC_FILE_WRAP(open_file_resource, path)
@@ -105,7 +105,7 @@ FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path);
 /// ファイルが存在すれば開き、存在しない場合は作成する。
 /// </summary>
 /// <param name="path">ファイルパス。</param>
-/// <returns>ファイルポインタ。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
+/// <returns>ファイルリソース。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
 FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path);
 #if RES_CHECK
 #   define open_or_create_file_resource(path) RC_FILE_WRAP(open_or_create_file_resource, path)
@@ -114,7 +114,7 @@ FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path);
 /// <summary>
 /// ファイルを閉じる。
 /// </summary>
-/// <param name="file">対象ファイルポインタ。</param>
+/// <param name="file">対象ファイルリソース。</param>
 /// <returns>成功状態。</returns>
 bool RC_FILE_FUNC(close_file_resource, FILE_RESOURCE* file);
 #if RES_CHECK
@@ -122,7 +122,7 @@ bool RC_FILE_FUNC(close_file_resource, FILE_RESOURCE* file);
 #endif
 
 /// <summary>
-/// 指定されたファイルポインタが有効か。
+/// 指定されたファイルリソースが有効か。
 /// </summary>
 /// <param name="file"></param>
 /// <returns></returns>
@@ -130,20 +130,26 @@ bool is_enabled_file_resource(const FILE_RESOURCE* file);
 
 // 64bit値をいい感じに使うのがめんどいので頭かケツにしか移動できませーん
 /// <summary>
-/// ファイルポインタの現在地を先頭に移動。
+/// ファイルリソースの現在地を先頭に移動。
 /// </summary>
 /// <param name="file"></param>
 /// <returns></returns>
 bool seek_begin_file_resource(const FILE_RESOURCE* file);
 /// <summary>
-/// ファイルポインタの現在地を終端に移動。
+/// ファイルリソースの現在地を終端に移動。
 /// </summary>
 /// <param name="file"></param>
 /// <returns></returns>
 bool seek_end_file_resource(const FILE_RESOURCE* file);
+/// <summary>
+/// ファイルリソースの現在地をファイル終端に設定する。
+/// </summary>
+/// <param name="file"></param>
+/// <returns></returns>
+bool cut_current_position_file_resource(const FILE_RESOURCE* file);
 
 /// <summary>
-/// ファイルポインタからデータ読み込み。
+/// ファイルリソースからデータ読み込み。
 /// <para>読み込んだ分だけ現在地は進められる。</para>
 /// </summary>
 /// <param name="file">対象ファイル。</param>
@@ -153,7 +159,7 @@ bool seek_end_file_resource(const FILE_RESOURCE* file);
 ssize_t read_file_resource(const FILE_RESOURCE* file, uint8_t* buffer, size_t length);
 
 /// <summary>
-/// ファイルポインタからデータ書き込み。
+/// ファイルリソースからデータ書き込み。
 /// <para>書き込んだ分だけ現在地は進められる。</para>
 /// </summary>
 /// <param name="file">対象ファイル。</param>
