@@ -1,11 +1,14 @@
 ﻿#pragma once
 #include <vector>
 #include <tuple>
+#include <fstream>
 #include <filesystem>
 
 #include <tchar.h>
 #include <atlstr.h>
 
+namespace fs = std::filesystem;
+namespace mstest = Microsoft::VisualStudio::CppUnitTestFramework;
 
 #ifdef RES_CHECK
 #   define text(s) rc_heap__new_text(_T(s), _T(__FILE__), __LINE__)
@@ -23,8 +26,8 @@ typedef std::string tstring;
 
 /// テストパータン内で使用するディレクトリの初期化処理
 #define TEST_INIT_DIR PeBootTest::TEST::initialize_test_pattern_work_directory(_T(__FUNCTION__));
-/// テストパターン内で使用可能なファイルパスをvarに設定する
-#define TEST_GET_PATH(var, file_name) tstring var; PeBootTest::TEST::get_test_pattern_work_path(var, _T(__FUNCTION__), file_name)
+/// テストパターン内で使用可能なファイルパスを (C++)test_var, (C)var に設定する
+#define TEST_GET_PATH(var, file_name) tstring test_##var; PeBootTest::TEST::get_test_pattern_work_path(test_##var, _T(__FUNCTION__), file_name); TEXT var = wrap_text(test_##var.c_str())
 
 
 namespace PeBootTest
@@ -121,15 +124,44 @@ namespace PeBootTest
         }
 
     public:
+
         /// <summary>
         /// テスト用ヘルパの初期化。
         /// </summary>
-        static void initialize();
+        static void initialize()
+        {
+            mstest::Assert::IsFalse(is_initialized);
+
+            // https://stackoverflow.com/a/25151971
+#define STRINGIFY(x) #x
+#define EXPAND(x) STRINGIFY(x)
+            auto ut_dir = tstring(_T(EXPAND(UT_DIR)));
+            ut_dir.erase(0, 1);
+#undef EXPAND
+#undef STRINGIFY
+            ut_dir.erase(ut_dir.size() - 2);
+            test_root_directory_path = ut_dir;
+
+            tstring work_dir;
+            get_path_from_test_dir(work_dir, work_dir_name());
+            initialize_directory_core(work_dir);
+            is_initialized = true;
+        }
 
         /// <summary>
         /// テスト用ヘルパの最終処理。
         /// </summary>
-        static void cleanup();
+        static void cleanup()
+        {
+            mstest::Assert::IsTrue(is_initialized);
+
+            mstest::Logger::WriteMessage(_T("====FILE LIST===="));
+            tstring work_dir;
+            get_path_from_test_dir(work_dir, work_dir_name());
+            for (const auto& file : std::filesystem::recursive_directory_iterator(work_dir)) {
+                mstest::Logger::WriteMessage(file.path().c_str());
+            }
+        }
 
         /// <summary>
         /// テストパターン内で使用するディレクトリ初期化処理。
@@ -137,7 +169,7 @@ namespace PeBootTest
         /// </summary>
         static void initialize_test_pattern_work_directory(const TCHAR* msvc_function)
         {
-            Microsoft::VisualStudio::CppUnitTestFramework::Assert::IsTrue(is_initialized);
+            mstest::Assert::IsTrue(is_initialized);
 
             tstring work_dir;
             make_test_pattern_work_directory_path(work_dir, msvc_function);
@@ -154,11 +186,29 @@ namespace PeBootTest
         /// <returns></returns>
         static void get_test_pattern_work_path(tstring& result, const TCHAR* msvc_function, TCHAR* path)
         {
-            Microsoft::VisualStudio::CppUnitTestFramework::Assert::IsTrue(is_initialized);
+            mstest::Assert::IsTrue(is_initialized);
 
             make_test_pattern_work_directory_path(result, msvc_function, path);
         }
 
+        /// <summary>
+        /// テスト用ディレクトリ作成ヘルパ。
+        /// </summary>
+        /// <param name="path"></param>
+        static void create_directory(tstring path)
+        {
+            std::filesystem::create_directories(path);
+        }
+
+        /// <summary>
+        /// テスト用ファイル作成ヘルパ。
+        /// </summary>
+        /// <param name="path"></param>
+        static void create_file(tstring path)
+        {
+            std::wofstream f(path);
+            f.close();
+        }
     };
 
 }

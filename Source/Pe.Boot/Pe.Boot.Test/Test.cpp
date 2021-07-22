@@ -36,42 +36,9 @@ namespace PeBootTest
 #endif
     }
 
+    // 静的メンバの実体だけおいとく
     bool TEST::is_initialized = false;
     tstring TEST::test_root_directory_path;
-
-    void TEST::initialize()
-    {
-        Assert::IsFalse(is_initialized);
-
-        // https://stackoverflow.com/a/25151971
-#define STRINGIFY(x) #x
-#define EXPAND(x) STRINGIFY(x)
-        auto ut_dir = tstring(_T(EXPAND(UT_DIR)));
-        ut_dir.erase(0, 1);
-#undef EXPAND
-#undef STRINGIFY
-        ut_dir.erase(ut_dir.size() - 2);
-        test_root_directory_path = ut_dir;
-
-        tstring work_dir;
-        get_path_from_test_dir(work_dir, work_dir_name());
-        initialize_directory_core(work_dir);
-        is_initialized = true;
-    }
-
-    void TEST::cleanup()
-    {
-        Assert::IsTrue(is_initialized);
-
-        Logger::WriteMessage(_T("====FILE LIST===="));
-        tstring work_dir;
-        get_path_from_test_dir(work_dir, work_dir_name());
-        for (const auto& file : std::filesystem::recursive_directory_iterator(work_dir)) {
-            Logger::WriteMessage(file.path().c_str());
-        }
-
-    }
-
 }
 
 
