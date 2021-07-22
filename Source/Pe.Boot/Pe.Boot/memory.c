@@ -3,12 +3,14 @@
 #include "common.h"
 #include "memory.h"
 
-
+/*
 #ifdef RES_CHECK
 void* rc_heap__allocate_memory(size_t bytes, bool zero_fill, RES_CHECK_FUNC_ARGS)
 #else
 void* allocate_memory(size_t bytes, bool zero_fill)
 #endif
+*/
+void* RC_HEAP_FUNC(allocate_memory, size_t bytes, bool zero_fill)
 {
     HANDLE hHeap = GetProcessHeap();
     if (!hHeap) {
