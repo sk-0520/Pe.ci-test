@@ -156,7 +156,8 @@ try {
 			dotnet publish $pluginProjectFile /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --output Output/Release/$platform/Plugins/$name --self-contained false
 		}
 
-		# テストプロジェクトのビルド
+		# テストプロジェクトのビルド(Pe.Main側)
+		# TODO: Pe.Boot はビルド依存の関係でリソースチェックの出力ができていない
 		foreach($testDirectory in $testDirectories) {
 			$testProjectFilePath = (Join-Path $testDirectory.FullName $testDirectory.Name) + ".csproj"
 			dotnet build $testProjectFilePath /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform
