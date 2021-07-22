@@ -121,16 +121,16 @@ static void rc_check_core(void* p, bool allocate, RES_CHECK_TYPE type, RES_CHECK
         bool stocked = false;
         for (size_t i = 0; i < rc_item.stock_items_length; i++) {
             if (!rc_item.stock_items[i].p) {
-                rc_heap__output(rc_item.formats->alloc_msg, p, caller_file, caller_line);
+                rc_heap__output(rc_item.formats->alloc_msg, p, RES_CHECK_CALL_ARGS);
 
                 RES_CHECK_STOCK_ITEM data = {
                     .p = p,
-                    .line = caller_line,
+                    .line = RES_CHECK_ARG_LINE,
                 };
                 data.file = (TCHAR*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, rc__path_length * sizeof(TCHAR));
 #pragma warning(push)
 #pragma warning(disable:6387)
-                lstrcpy(data.file, caller_file); // tstring.h を取り込みたくないのでAPIを直接呼び出し
+                lstrcpy(data.file, RES_CHECK_ARG_FLIE); // tstring.h を取り込みたくないのでAPIを直接呼び出し
 #pragma warning(pop)
 
                 rc_item.stock_items[i] = data;
@@ -141,24 +141,26 @@ static void rc_check_core(void* p, bool allocate, RES_CHECK_TYPE type, RES_CHECK
         }
 
         if (!stocked) {
-            rc_heap__output(rc_item.formats->alloc_err, p, caller_file, caller_line);
+            rc_heap__output(rc_item.formats->alloc_err, p, RES_CHECK_CALL_ARGS);
         }
     } else {
-        bool exists = false;;
-        for (size_t i = 0; p && i < rc_item.stock_items_length; i++) {
-            if (rc_item.stock_items[i].p == p) {
-                rc_heap__output(rc_item.formats->free_mgs, p, caller_file, caller_line, rc_item.stock_items[i].file, rc_item.stock_items[i].line);
-                //HeapFree(GetProcessHeap(), 0, rc_item.stock_items->file);
+        if (p) {
+            bool exists = false;
+            for (size_t i = 0; p && i < rc_item.stock_items_length; i++) {
+                if (rc_item.stock_items[i].p == p) {
+                    rc_heap__output(rc_item.formats->free_mgs, p, RES_CHECK_CALL_ARGS, rc_item.stock_items[i].file, rc_item.stock_items[i].line);
+                    //HeapFree(GetProcessHeap(), 0, rc_item.stock_items->file);
 
-                *rc_item.stock_item_count = *rc_item.stock_item_count - 1;
-                memset(&rc_item.stock_items[i], 0, sizeof(RES_CHECK_STOCK_ITEM));
-                exists = true;
-                break;
+                    *rc_item.stock_item_count = *rc_item.stock_item_count - 1;
+                    memset(&rc_item.stock_items[i], 0, sizeof(RES_CHECK_STOCK_ITEM));
+                    exists = true;
+                    break;
+                }
             }
-        }
 
-        if (!exists) {
-            rc_heap__output(rc_item.formats->free_err, p, caller_file, caller_line);
+            if (!exists) {
+                rc_heap__output(rc_item.formats->free_err, p, RES_CHECK_CALL_ARGS);
+            }
         }
     }
 }
