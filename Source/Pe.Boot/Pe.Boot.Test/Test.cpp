@@ -19,11 +19,6 @@ namespace PeBootTest
     }
 #endif
 
-    static void initialize_fsio_test()
-    {
-
-    }
-
     TEST_MODULE_INITIALIZE(initialize)
     {
 #ifdef RES_CHECK
@@ -34,6 +29,7 @@ namespace PeBootTest
 
     TEST_MODULE_CLEANUP(cleanup)
     {
+        TEST::cleanup();
 #ifdef RES_CHECK
         rc__print(true);
         rc__uninitialize();
@@ -57,10 +53,25 @@ namespace PeBootTest
         ut_dir.erase(ut_dir.size() - 2);
         test_root_directory_path = ut_dir;
 
-        auto work_dir = get_path_from_test_dir(work_dir_name());
+        tstring work_dir;
+        get_path_from_test_dir(work_dir, work_dir_name());
         initialize_directory_core(work_dir);
         is_initialized = true;
     }
+
+    void TEST::cleanup()
+    {
+        Assert::IsTrue(is_initialized);
+
+        Logger::WriteMessage(_T("====FILE LIST===="));
+        tstring work_dir;
+        get_path_from_test_dir(work_dir, work_dir_name());
+        for (const auto& file : std::filesystem::recursive_directory_iterator(work_dir)) {
+            Logger::WriteMessage(file.path().c_str());
+        }
+
+    }
+
 }
 
 

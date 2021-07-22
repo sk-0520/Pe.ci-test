@@ -74,20 +74,20 @@ namespace PeBootTest
         static bool TEST::is_initialized;
         static tstring test_root_directory_path;
 
-        static tstring get_path_from_test_dir_core(std::initializer_list<tstring> path_items)
+        static void get_path_from_test_dir_core(tstring& result, std::initializer_list<tstring> path_items)
         {
-            std::filesystem::path result = test_root_directory_path;
+            std::filesystem::path path = test_root_directory_path;
             for (auto path_item : path_items) {
-                result /= path_item;
+                path /= path_item;
             }
-            return result;
+            result = path;
         }
 
         template<typename... more_sub_item_path>
-        static tstring get_path_from_test_dir(tstring sub_item_path, more_sub_item_path... sub_item_paths)
+        static void get_path_from_test_dir(tstring& result, tstring sub_item_path, more_sub_item_path... sub_item_paths)
         {
             auto list = std::initializer_list<tstring>{ sub_item_path, sub_item_paths... };
-            return get_path_from_test_dir_core(list);
+            get_path_from_test_dir_core(result, list);
         }
 
         static void initialize_directory_core(tstring path)
@@ -113,10 +113,11 @@ namespace PeBootTest
             auto class_name = tstring(class_method_pair, raw_separator - class_method_pair);
             auto method_name = tstring(raw_separator + (sizeof(separator) / sizeof(TCHAR)) - 1);
 
-            result = sub_path
-                ? get_path_from_test_dir(work_dir_name(), class_name, method_name, tstring(sub_path))
-                : get_path_from_test_dir(work_dir_name(), class_name, method_name)
-                ;
+            if (sub_path) {
+                get_path_from_test_dir(result, work_dir_name(), class_name, method_name, tstring(sub_path));
+            } else {
+                get_path_from_test_dir(result, work_dir_name(), class_name, method_name);
+            }
         }
 
     public:
@@ -124,6 +125,11 @@ namespace PeBootTest
         /// テスト用ヘルパの初期化。
         /// </summary>
         static void initialize();
+
+        /// <summary>
+        /// テスト用ヘルパの最終処理。
+        /// </summary>
+        static void cleanup();
 
         /// <summary>
         /// テストパターン内で使用するディレクトリ初期化処理。
