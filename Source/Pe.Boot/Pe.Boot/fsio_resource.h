@@ -4,9 +4,9 @@
 #include "fsio.h"
 
 /// <summary>
-/// ファイルポインタ(ハンドル)ラッパー。
+/// ファイルハンドルラッパー。
 /// </summary>
-typedef struct tag_FILE_POINTER
+typedef struct tag_FILE_RESOURCE
 {
     /// <summary>
     /// ファイルパス。
@@ -17,7 +17,7 @@ typedef struct tag_FILE_POINTER
     /// <c>NULL</c>の場合無効(その場合pathも無効)。
     /// </summary>
     HANDLE handle;
-} FILE_POINTER;
+} FILE_RESOURCE;
 
 /// <summary>
 /// アクセスモード。
@@ -85,9 +85,9 @@ typedef enum tag_FILE_OPEN_MODE
 /// </summary>
 /// <param name="path">作成するファイルパス。</param>
 /// <returns>作成したファイルポインタ。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
-FILE_POINTER RC_FILE_FUNC(create_file, const TEXT* path);
+FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path);
 #if RES_CHECK
-#   define create_file(path) RC_FILE_WRAP(create_file, path)
+#   define create_file_resource(path) RC_FILE_WRAP(create_file_resource, path)
 #endif
 
 /// <summary>
@@ -96,9 +96,9 @@ FILE_POINTER RC_FILE_FUNC(create_file, const TEXT* path);
 /// </summary>
 /// <param name="path">開くファイルパス。</param>
 /// <returns>開いたファイルポインタ。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
-FILE_POINTER RC_FILE_FUNC(open_file, const TEXT* path);
+FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path);
 #if RES_CHECK
-#   define open_file(path) RC_FILE_WRAP(open_file, path)
+#   define open_file_resource(path) RC_FILE_WRAP(open_file_resource, path)
 #endif
 
 /// <summary>
@@ -106,9 +106,9 @@ FILE_POINTER RC_FILE_FUNC(open_file, const TEXT* path);
 /// </summary>
 /// <param name="path">ファイルパス。</param>
 /// <returns>ファイルポインタ。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
-FILE_POINTER RC_FILE_FUNC(open_or_create_file, const TEXT* path);
+FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path);
 #if RES_CHECK
-#   define open_or_create_file(path) RC_FILE_WRAP(open_or_create_file, path)
+#   define open_or_create_file_resource(path) RC_FILE_WRAP(open_or_create_file_resource, path)
 #endif
 
 /// <summary>
@@ -116,9 +116,9 @@ FILE_POINTER RC_FILE_FUNC(open_or_create_file, const TEXT* path);
 /// </summary>
 /// <param name="file">対象ファイルポインタ。</param>
 /// <returns>成功状態。</returns>
-bool RC_FILE_FUNC(close_file, FILE_POINTER* file);
+bool RC_FILE_FUNC(close_file_resource, FILE_RESOURCE* file);
 #if RES_CHECK
-#   define close_file(file) RC_FILE_WRAP(close_file, file)
+#   define close_file_resource(file) RC_FILE_WRAP(close_file_resource, file)
 #endif
 
 /// <summary>
@@ -126,7 +126,7 @@ bool RC_FILE_FUNC(close_file, FILE_POINTER* file);
 /// </summary>
 /// <param name="file"></param>
 /// <returns></returns>
-bool is_enabled_file(const FILE_POINTER* file);
+bool is_enabled_file_resource(const FILE_RESOURCE* file);
 
 // 64bit値をいい感じに使うのがめんどいので頭かケツにしか移動できませーん
 /// <summary>
@@ -134,13 +134,13 @@ bool is_enabled_file(const FILE_POINTER* file);
 /// </summary>
 /// <param name="file"></param>
 /// <returns></returns>
-bool seek_begin_file_pointer(const FILE_POINTER* file);
+bool seek_begin_file_resource(const FILE_RESOURCE* file);
 /// <summary>
 /// ファイルポインタの現在地を終端に移動。
 /// </summary>
 /// <param name="file"></param>
 /// <returns></returns>
-bool seek_end_file_pointer(const FILE_POINTER* file);
+bool seek_end_file_resource(const FILE_RESOURCE* file);
 
 /// <summary>
 /// ファイルポインタからデータ読み込み。
@@ -150,7 +150,7 @@ bool seek_end_file_pointer(const FILE_POINTER* file);
 /// <param name="buffer">読み込みデータ格納先。</param>
 /// <param name="length">読み込みデータサイズ。</param>
 /// <returns>読み込んだサイズ。0の場合は終端。読み込みに失敗している場合は-1。</returns>
-ssize_t read_file_pointer(const FILE_POINTER* file, uint8_t* buffer, size_t length);
+ssize_t read_file_resource(const FILE_RESOURCE* file, uint8_t* buffer, size_t length);
 
 /// <summary>
 /// ファイルポインタからデータ書き込み。
@@ -160,4 +160,4 @@ ssize_t read_file_pointer(const FILE_POINTER* file, uint8_t* buffer, size_t leng
 /// <param name="values">読み込みデータ格納先。</param>
 /// <param name="length">読み込みデータサイズ。</param>
 /// <returns>書き込んだサイズ。書き込み失敗時は-1。</returns>
-ssize_t write_file_pointer(const FILE_POINTER* file, uint8_t* values, size_t length);
+ssize_t write_file_resource(const FILE_RESOURCE* file, uint8_t* values, size_t length);

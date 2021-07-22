@@ -17,9 +17,9 @@ typedef enum tag_LOG_LEVEL
 
 
 static LOG_LEVEL library__default_log_level;
-static FILE_POINTER library__default_log_file_pointer;
+static FILE_RESOURCE library__default_log_file_pointer;
 
-void setup_default_log(FILE_POINTER* filePointer, LOG_LEVEL logLevel);
+void setup_default_log(FILE_RESOURCE* filePointer, LOG_LEVEL logLevel);
 void cleanup_default_log();
 
 /// <summary>

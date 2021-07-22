@@ -188,7 +188,7 @@
     <ClCompile Include="app_path.test.cpp" />
     <ClCompile Include="command_line.test.cpp" />
     <ClCompile Include="fsio.test.cpp" />
-    <ClCompile Include="fsio_pointer.test.cpp" />
+    <ClCompile Include="fsio_resource.test.cpp" />
     <ClCompile Include="map.test.cpp" />
     <ClCompile Include="memory.test.cpp" />
     <ClCompile Include="path.test.cpp" />

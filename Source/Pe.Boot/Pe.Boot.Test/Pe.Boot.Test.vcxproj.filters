@@ -60,7 +60,7 @@
     <ClCompile Include="fsio.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="fsio_pointer.test.cpp">
+    <ClCompile Include="fsio_resource.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

@@ -28,4 +28,4 @@ bool exists_file_path(const TEXT* path);
 bool exists_directory_path(const TEXT* path);
 
 // ファイル処理諸々
-#include "fsio_pointer.h"
+#include "fsio_resource.h"

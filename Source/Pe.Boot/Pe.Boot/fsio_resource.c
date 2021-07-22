@@ -1,16 +1,16 @@
 ﻿#include "fsio.h"
 
 
-static FILE_POINTER create_invalid_file()
+static FILE_RESOURCE create_invalid_file()
 {
-    FILE_POINTER result = {
+    FILE_RESOURCE result = {
         .path = create_invalid_text(),
         .handle = NULL,
     };
     return result;
 }
 
-static FILE_POINTER RC_FILE_FUNC(open_file_core, const TEXT* path, FILE_ACCESS_MODE accessMode, FILE_SHARE_MODE sharedMode, FILE_OPEN_MODE openMode, DWORD attributes)
+static FILE_RESOURCE RC_FILE_FUNC(open_file_resource_core, const TEXT* path, FILE_ACCESS_MODE accessMode, FILE_SHARE_MODE sharedMode, FILE_OPEN_MODE openMode, DWORD attributes)
 {
     if (!path) {
         return create_invalid_file();
@@ -24,7 +24,7 @@ static FILE_POINTER RC_FILE_FUNC(open_file_core, const TEXT* path, FILE_ACCESS_M
         return create_invalid_file();
     }
 
-    FILE_POINTER result = {
+    FILE_RESOURCE result = {
         .path = clone_text(path),
         .handle = handle
     };
@@ -36,28 +36,28 @@ static FILE_POINTER RC_FILE_FUNC(open_file_core, const TEXT* path, FILE_ACCESS_M
     return result;
 }
 
-FILE_POINTER RC_FILE_FUNC(create_file, const TEXT* path)
+FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path)
 {
-    return RC_FILE_CALL(open_file_core, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_NEW, 0);
+    return RC_FILE_CALL(open_file_resource_core, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_NEW, 0);
 }
 
-FILE_POINTER RC_FILE_FUNC(open_file, const TEXT* path)
+FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path)
 {
-    return RC_FILE_CALL(open_file_core, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0);
+    return RC_FILE_CALL(open_file_resource_core, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0);
 }
 
-FILE_POINTER RC_FILE_FUNC(open_or_create_file, const TEXT* path)
+FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path)
 {
-    return RC_FILE_CALL(open_file_core, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN_OR_CREATE, 0);
+    return RC_FILE_CALL(open_file_resource_core, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN_OR_CREATE, 0);
 }
 
-bool RC_FILE_FUNC(close_file, FILE_POINTER* file)
+bool RC_FILE_FUNC(close_file_resource, FILE_RESOURCE* file)
 {
     if (!file) {
         return false;
     }
 
-    if (!is_enabled_file(file)) {
+    if (!is_enabled_file_resource(file)) {
         return false;
     }
 
@@ -72,7 +72,7 @@ bool RC_FILE_FUNC(close_file, FILE_POINTER* file)
     return result;
 }
 
-bool is_enabled_file(const FILE_POINTER* file)
+bool is_enabled_file_resource(const FILE_RESOURCE* file)
 {
     if (!file) {
         return false;
@@ -89,17 +89,17 @@ bool is_enabled_file(const FILE_POINTER* file)
     return true;
 }
 
-bool seek_begin_file_pointer(const FILE_POINTER* file)
+bool seek_begin_file_resource(const FILE_RESOURCE* file)
 {
     return SetFilePointer(file->handle, 0, 0, FILE_BEGIN) != INVALID_SET_FILE_POINTER;
 }
 
-bool seek_end_file_pointer(const FILE_POINTER* file)
+bool seek_end_file_resource(const FILE_RESOURCE* file)
 {
     return SetFilePointer(file->handle, 0, 0, FILE_END) != INVALID_SET_FILE_POINTER;
 }
 
-ssize_t read_file_pointer(const FILE_POINTER* file, uint8_t* buffer, size_t length)
+ssize_t read_file_resource(const FILE_RESOURCE* file, uint8_t* buffer, size_t length)
 {
     DWORD read_length = 0;
     if (ReadFile(file->handle, (void*)buffer, (DWORD)length, &read_length, NULL)) {
@@ -109,7 +109,7 @@ ssize_t read_file_pointer(const FILE_POINTER* file, uint8_t* buffer, size_t leng
     return -1;
 }
 
-ssize_t write_file_pointer(const FILE_POINTER* file, uint8_t* values, size_t length)
+ssize_t write_file_resource(const FILE_RESOURCE* file, uint8_t* values, size_t length)
 {
     DWORD write_length = 0;
     if (WriteFile(file->handle, (void*)values, (DWORD)length, &write_length, NULL)) {
