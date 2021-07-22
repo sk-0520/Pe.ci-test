@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #include <tchar.h>
 
@@ -46,7 +47,7 @@ void RC_HEAP_FUNC(free_memory, void* p);
 /// <param name="value">値。</param>
 /// <param name="bytes">範囲。</param>
 /// <returns>target</returns>
-void* set_memory(void* target, unsigned char value, size_t bytes);
+void* set_memory(void* target, uint8_t value, size_t bytes);
 
 /// <summary>
 /// <c>memcpy</c>する。

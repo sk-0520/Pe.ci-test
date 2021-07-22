@@ -169,12 +169,12 @@ static void rc_check_core(void* p, const void* data, bool allocate, RES_CHECK_TY
     }
 }
 
-void rc_heap__check(void* p, bool allocate, RES_CHECK_FUNC_ARGS)
+void rc__heap_check(void* p, bool allocate, RES_CHECK_FUNC_ARGS)
 {
     rc_check_core(p, NULL, allocate, RES_CHECK_TYPE_HEAP, RES_CHECK_CALL_ARGS);
 }
 
-void rc_file__check(void* p, const TCHAR* path, bool allocate, RES_CHECK_FUNC_ARGS)
+void rc__file_check(void* p, const TCHAR* path, bool allocate, RES_CHECK_FUNC_ARGS)
 {
     rc_check_core(p, path, allocate, RES_CHECK_TYPE_FILE, RES_CHECK_CALL_ARGS);
 }

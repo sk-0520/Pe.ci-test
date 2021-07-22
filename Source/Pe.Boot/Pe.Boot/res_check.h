@@ -30,8 +30,8 @@ typedef RES_CHECK_STOCK_ITEM RES_CHECK_FILE_STOCK_ITEM;
 
 typedef void (*func_rc__output)(const TCHAR* s);
 
-void rc_heap__check(void* p, bool allocate, RES_CHECK_FUNC_ARGS);
-void rc_file__check(void* p, const TCHAR* path, bool allocate, RES_CHECK_FUNC_ARGS);
+void rc__heap_check(void* p, bool allocate, RES_CHECK_FUNC_ARGS);
+void rc__file_check(void* p, const TCHAR* path, bool allocate, RES_CHECK_FUNC_ARGS);
 
 void rc__print(bool leak);
 

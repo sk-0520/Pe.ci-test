@@ -30,7 +30,7 @@ static FILE_RESOURCE RC_FILE_FUNC(open_file_resource_core, const TEXT* path, FIL
     };
 
 #ifdef RES_CHECK
-    rc_file__check(result.handle, result.path.value, true, RES_CHECK_CALL_ARGS);
+    rc__file_check(result.handle, result.path.value, true, RES_CHECK_CALL_ARGS);
 #endif
 
     return result;
@@ -62,7 +62,7 @@ bool RC_FILE_FUNC(close_file_resource, FILE_RESOURCE* file)
     }
 
 #ifdef RES_CHECK
-    rc_file__check(file->handle, NULL, false, RES_CHECK_CALL_ARGS);
+    rc__file_check(file->handle, NULL, false, RES_CHECK_CALL_ARGS);
 #endif
 
     free_text(&file->path);

@@ -17,7 +17,7 @@ void* RC_HEAP_FUNC(allocate_memory, size_t bytes, bool zero_fill)
     }
 
 #ifdef RES_CHECK
-    rc_heap__check(heap, true, RES_CHECK_CALL_ARGS);
+    rc__heap_check(heap, true, RES_CHECK_CALL_ARGS);
 #endif
 
     return heap;
@@ -31,24 +31,14 @@ void* RC_HEAP_FUNC(allocate_clear_memory, size_t count, size_t type_size)
 void RC_HEAP_FUNC(free_memory, void* p)
 {
 #ifdef RES_CHECK
-    rc_heap__check(p, false, RES_CHECK_CALL_ARGS);
+    rc__heap_check(p, false, RES_CHECK_CALL_ARGS);
 #endif
 
     HeapFree(GetProcessHeap(), 0, p);
 }
 
-void* set_memory(void* target, unsigned char value, size_t bytes)
+void* set_memory(void* target, uint8_t value, size_t bytes)
 {
-    /*
-    unsigned char* p = (unsigned char*)target;
-    const unsigned char v = (unsigned char)value;
-
-    while (bytes--) {
-        *p++ = v;
-    }
-
-    return target;
-    */
     //NOTE: CRT!
     return FillMemory(target, bytes, value);
 }
