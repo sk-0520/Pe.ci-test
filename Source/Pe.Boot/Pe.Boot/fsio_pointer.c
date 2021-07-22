@@ -20,7 +20,7 @@ static FILE_POINTER RC_FILE_FUNC(open_file_core, const TEXT* path, FILE_ACCESS_M
     }
 
     HANDLE handle = CreateFile(path->value, accessMode, sharedMode, NULL, openMode, attributes, NULL);
-    if (!handle) {
+    if (handle == INVALID_HANDLE_VALUE) {
         return create_invalid_file();
     }
 
@@ -30,7 +30,7 @@ static FILE_POINTER RC_FILE_FUNC(open_file_core, const TEXT* path, FILE_ACCESS_M
     };
 
 #ifdef RES_CHECK
-    rc_file__check(result.handle, true, RES_CHECK_CALL_ARGS);
+    rc_file__check(result.handle, result.path.value, true, RES_CHECK_CALL_ARGS);
 #endif
 
     return result;
@@ -62,7 +62,7 @@ bool RC_FILE_FUNC(close_file, FILE_POINTER* file)
     }
 
 #ifdef RES_CHECK
-    rc_file__check(file->handle, false, RES_CHECK_CALL_ARGS);
+    rc_file__check(file->handle, NULL, false, RES_CHECK_CALL_ARGS);
 #endif
 
     free_text(&file->path);

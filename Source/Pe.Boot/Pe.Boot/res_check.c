@@ -38,7 +38,7 @@ static const struct RES_CHECK_FORAMT
         .stock_leak = _T("[HEAP:WARNING:LEAK] %p %s(%zu)"),
     },
     {
-        .alloc_msg = _T("[FILE:+] %p %s(%zu)"),
+        .alloc_msg = _T("[FILE:+] %p %s(%zu) -> %s"),
         .alloc_err = _T("[FILE:STOCK:ERROR] %p %s(%zu)"),
         .free_mgs = _T("[FILE:-] %p %s(%zu) - %s(%zu)"),
         .free_err = _T("[FILE:NOTFOUND:ERROR] %p %s(%zu)"),
@@ -113,7 +113,7 @@ static RES_CHECK_ITEM rc_get_item(RES_CHECK_TYPE type)
     return none;
 }
 
-static void rc_check_core(void* p, bool allocate, RES_CHECK_TYPE type, RES_CHECK_FUNC_ARGS)
+static void rc_check_core(void* p, const void* data, bool allocate, RES_CHECK_TYPE type, RES_CHECK_FUNC_ARGS)
 {
     RES_CHECK_ITEM rc_item = rc_get_item(type);
 
@@ -121,19 +121,23 @@ static void rc_check_core(void* p, bool allocate, RES_CHECK_TYPE type, RES_CHECK
         bool stocked = false;
         for (size_t i = 0; i < rc_item.stock_items_length; i++) {
             if (!rc_item.stock_items[i].p) {
-                rc_heap__output(rc_item.formats->alloc_msg, p, RES_CHECK_CALL_ARGS);
+                if (type == RES_CHECK_TYPE_FILE) {
+                    rc_heap__output(rc_item.formats->alloc_msg, p, RES_CHECK_CALL_ARGS, (TCHAR*)data);
+                } else {
+                    rc_heap__output(rc_item.formats->alloc_msg, p, RES_CHECK_CALL_ARGS);
+                }
 
-                RES_CHECK_STOCK_ITEM data = {
+                RES_CHECK_STOCK_ITEM item = {
                     .p = p,
                     .line = RES_CHECK_ARG_LINE,
                 };
-                data.file = (TCHAR*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, rc__path_length * sizeof(TCHAR));
+                item.file = (TCHAR*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, rc__path_length * sizeof(TCHAR));
 #pragma warning(push)
 #pragma warning(disable:6387)
-                lstrcpy(data.file, RES_CHECK_ARG_FLIE); // tstring.h を取り込みたくないのでAPIを直接呼び出し
+                lstrcpy(item.file, RES_CHECK_ARG_FLIE); // tstring.h を取り込みたくないのでAPIを直接呼び出し
 #pragma warning(pop)
 
-                rc_item.stock_items[i] = data;
+                rc_item.stock_items[i] = item;
                 *rc_item.stock_item_count = *rc_item.stock_item_count + 1;
                 stocked = true;
                 break;
@@ -167,12 +171,12 @@ static void rc_check_core(void* p, bool allocate, RES_CHECK_TYPE type, RES_CHECK
 
 void rc_heap__check(void* p, bool allocate, RES_CHECK_FUNC_ARGS)
 {
-    rc_check_core(p, allocate, RES_CHECK_TYPE_HEAP, RES_CHECK_CALL_ARGS);
+    rc_check_core(p, NULL, allocate, RES_CHECK_TYPE_HEAP, RES_CHECK_CALL_ARGS);
 }
 
-void rc_file__check(void* p, bool allocate, RES_CHECK_FUNC_ARGS)
+void rc_file__check(void* p, const TCHAR* path, bool allocate, RES_CHECK_FUNC_ARGS)
 {
-    rc_check_core(p, allocate, RES_CHECK_TYPE_FILE, RES_CHECK_CALL_ARGS);
+    rc_check_core(p, path, allocate, RES_CHECK_TYPE_FILE, RES_CHECK_CALL_ARGS);
 }
 
 static void rc__print_core(bool leak, RES_CHECK_TYPE type)
