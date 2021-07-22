@@ -19,7 +19,7 @@ namespace PeBootTest
             TEST::create_directory(test_dir_path);
 
             TEST_GET_PATH(file_path, _T("file"));
-            TEST::create_file(test_file_path);
+            TEST::create_empty_file(test_file_path);
 
             TEST_GET_PATH(unknown_path, _T("unknown"));
 
@@ -36,7 +36,7 @@ namespace PeBootTest
             TEST::create_directory(test_dir_path);
 
             TEST_GET_PATH(file_path, _T("file"));
-            TEST::create_file(test_file_path);
+            TEST::create_empty_file(test_file_path);
 
             TEST_GET_PATH(unknown_path, _T("unknown"));
 
@@ -53,7 +53,7 @@ namespace PeBootTest
             TEST::create_directory(test_dir_path);
 
             TEST_GET_PATH(file_path, _T("file"));
-            TEST::create_file(test_file_path);
+            TEST::create_empty_file(test_file_path);
 
             TEST_GET_PATH(unknown_path, _T("unknown"));
 

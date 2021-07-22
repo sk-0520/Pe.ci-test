@@ -204,7 +204,7 @@ namespace PeBootTest
         /// テスト用ファイル作成ヘルパ。
         /// </summary>
         /// <param name="path"></param>
-        static void create_file(tstring path)
+        static void create_empty_file(tstring path)
         {
             std::wofstream f(path);
             f.close();

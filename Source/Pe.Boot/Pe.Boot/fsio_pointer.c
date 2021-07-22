@@ -32,7 +32,7 @@ static FILE_POINTER openFileCore(const TEXT* path, FILE_ACCESS_MODE accessMode, 
     return result;
 }
 
-FILE_POINTER create_file(const TEXT* path)
+FILE_POINTER RC_FILE_FUNC(create_file, const TEXT* path)
 {
     return openFileCore(path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_NEW, 0);
 }

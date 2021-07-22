@@ -85,7 +85,11 @@ typedef enum tag_FILE_OPEN_MODE
 /// </summary>
 /// <param name="path">作成するファイルパス。</param>
 /// <returns>作成したファイルポインタ。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
-FILE_POINTER create_file(const TEXT* path);
+FILE_POINTER RC_FILE_FUNC(create_file, const TEXT* path);
+#if RES_CHECK
+#   define create_file(path) RC_FILE_WRAP(create_file, path)
+#endif
+
 /// <summary>
 /// 既存ファイルを開く。
 /// <para>ファイルが存在しない場合は失敗する。</para>
