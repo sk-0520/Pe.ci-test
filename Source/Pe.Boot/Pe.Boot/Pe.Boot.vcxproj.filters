@@ -90,6 +90,9 @@
     <ClCompile Include="without_crt.c">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="tstring_builder.c">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -159,6 +162,9 @@
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="without_crt.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="tstring_builder.h">
       <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>

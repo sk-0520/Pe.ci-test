@@ -300,6 +300,7 @@
     <ClCompile Include="text_man.test.cpp" />
     <ClCompile Include="text_search.test.cpp" />
     <ClCompile Include="tstring.test.cpp" />
+    <ClCompile Include="tstring_builder.test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
