@@ -39,24 +39,20 @@ void RC_HEAP_FUNC(free_memory, void* p)
 
 void* set_memory(void* target, uint8_t value, size_t bytes)
 {
-    //NOTE: CRT!
     return FillMemory(target, bytes, value);
 }
 
 void* copy_memory(void* destination, const void* source, size_t bytes)
 {
-    //NOTE: CRT!
     return CopyMemory(destination, source, bytes);
 }
 
 void* move_memory(void* destination, const void* source, size_t bytes)
 {
-    //NOTE: CRT!
     return MoveMemory(destination, source, bytes);
 }
 
 int compare_memory(const void* a, const void* b, size_t bytes)
 {
-    //NOTE: CRT!
     return memcmp(a, b, bytes);
 }
