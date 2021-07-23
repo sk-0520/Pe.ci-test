@@ -11,7 +11,7 @@ static void output(const TCHAR* s)
 }
 #endif
 
-int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPTSTR lpCmdLine, _In_ int nCmdShow)
+static int application_main(HINSTANCE hInstance)
 {
     debug("!START!");
 #ifdef RES_CHECK
@@ -21,8 +21,7 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     TEXT command_line = wrap_text(GetCommandLine());
     COMMAND_LINE_OPTION command_line_option = parse_command_line(&command_line, true);
 
-    int resutn_code = app_main(hInstance, &command_line_option);
-    //int resutn_code = 0;
+    int return_code = app_main(hInstance, &command_line_option);
 
     free_command_line(&command_line_option);
 
@@ -31,5 +30,30 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     rc__uninitialize();
 #endif
 
-    return resutn_code;
+    return return_code;
 }
+
+/// <summary>
+/// CRT版スタートアップ。
+/// </summary>
+/// <param name="hInstance"></param>
+/// <param name="hPrevInstance"></param>
+/// <param name="lpCmdLine"></param>
+/// <param name="nCmdShow"></param>
+/// <returns></returns>
+int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPTSTR lpCmdLine, _In_ int nCmdShow)
+{
+    return application_main(hInstance);
+}
+
+/// <summary>
+/// 非CRT版スタートアップ。
+/// </summary>
+/// <returns></returns>
+void WINAPI entry_main()
+{
+    HINSTANCE hInstance = GetModuleHandle(NULL);
+    int return_code = application_main(hInstance);
+    ExitProcess(return_code);
+}
+

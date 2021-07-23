@@ -123,9 +123,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <EntryPointSymbol>
-      </EntryPointSymbol>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <EntryPointSymbol>entry_main</EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
@@ -164,9 +163,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <EntryPointSymbol>
-      </EntryPointSymbol>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <EntryPointSymbol>entry_main</EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
@@ -210,9 +208,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <EntryPointSymbol>
-      </EntryPointSymbol>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <EntryPointSymbol>entry_main</EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -254,9 +251,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <EntryPointSymbol>
-      </EntryPointSymbol>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <EntryPointSymbol>entry_main</EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -286,6 +282,7 @@
     <ClCompile Include="text.c" />
     <ClCompile Include="text_man.c" />
     <ClCompile Include="tstring.c" />
+    <ClCompile Include="without_crt.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app_command_line.h" />
@@ -310,6 +307,7 @@
     <ClInclude Include="text.h" />
     <ClInclude Include="text_man.h" />
     <ClInclude Include="tstring.h" />
+    <ClInclude Include="without_crt.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
