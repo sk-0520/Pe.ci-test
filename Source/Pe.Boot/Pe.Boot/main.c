@@ -52,6 +52,7 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 /// <returns></returns>
 void WINAPI entry_main()
 {
+    assert_debug(0);
     HINSTANCE hInstance = GetModuleHandle(NULL);
     int return_code = application_main(hInstance);
     ExitProcess(return_code);
