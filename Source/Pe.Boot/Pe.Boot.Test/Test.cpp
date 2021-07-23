@@ -32,7 +32,9 @@ namespace PeBootTest
         TEST::cleanup();
 #ifdef RES_CHECK
         rc__print(true);
+        auto  exists_resource_leak = rc__exists_resource_leak();
         rc__uninitialize();
+        Assert::IsFalse(exists_resource_leak);
 #endif
     }
 

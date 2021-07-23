@@ -171,6 +171,7 @@ try {
 
 	foreach ($platform in $Platforms) {
 		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=Release /p:Platform=$platform /p:DefineConstants=$define /t:Rebuild
+		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=CI_TEST /p:Platform=$platform /p:DefineConstants=$define /t:Rebuild
 		dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --output Output/Release/$platform/Pe/bin --self-contained true
 
 		# プラグイン参照実装
@@ -181,7 +182,6 @@ try {
 		}
 
 		# テストプロジェクトのビルド(Pe.Main側)
-		# TODO: Pe.Boot はビルド依存の関係でリソースチェックの出力ができていない
 		foreach($testDirectory in $testDirectories) {
 			$testProjectFilePath = (Join-Path $testDirectory.FullName $testDirectory.Name) + ".csproj"
 			dotnet build $testProjectFilePath /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform
