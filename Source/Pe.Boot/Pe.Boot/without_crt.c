@@ -7,14 +7,20 @@
 #pragma function(memset)
 void* __cdecl memset(void* dest, int value, size_t bytes)
 {
+#pragma warning(push)
+#pragma warning(disable:6001)
     __stosb((uint8_t*)dest, (uint8_t)value, bytes);
+#pragma warning(pop)
     return dest;
 }
 
 #pragma function(memcpy)
 void* __cdecl memcpy(void* dest, const void* src, size_t bytes)
 {
+#pragma warning(push)
+#pragma warning(disable:6001)
     __movsb((uint8_t*)dest, (uint8_t*)src, bytes);
+#pragma warning(pop)
     return dest;
 }
 
