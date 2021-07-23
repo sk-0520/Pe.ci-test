@@ -110,4 +110,7 @@ STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity);
 /// <param name=""></param>
 /// <param name="string_builder"></param>
 bool RC_HEAP_FUNC(free_string_builder, STRING_BUILDER* string_builder);
+#ifdef RES_CHECK
+#   define free_string_builder(string_builder) RC_HEAP_WRAP(free_string_builder, (string_builder))
+#endif
 
