@@ -1,5 +1,4 @@
 ﻿#include <windows.h>
-#include <crtdbg.h>
 
 
 #include "tstring.h"

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <stddef.h>
+#include <stdint.h>
 
 void* __cdecl memset(void* dest, int c, size_t bytes);
 #pragma intrinsic(memset)
