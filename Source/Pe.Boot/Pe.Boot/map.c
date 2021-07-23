@@ -85,7 +85,7 @@ bool exists_map(const MAP* map, const TEXT* key)
     return find_map(map, key);
 }
 
-MAP_PAIR* addKeyCore(MAP* map, const MAP_PAIR* pair)
+static MAP_PAIR* add_key_core(MAP* map, const MAP_PAIR* pair)
 {
     if (map->length == map->library.capacity) {
         // 拡張が必要
@@ -116,7 +116,7 @@ MAP_PAIR* add_map(MAP* map, const TEXT* key, void* value, bool need_release)
         },
     };
 
-    return addKeyCore(map, &pair);
+    return add_key_core(map, &pair);
 }
 
 MAP_PAIR* set_map(MAP* map, const TEXT* key, void* value, bool need_release)
