@@ -1,7 +1,8 @@
 ﻿#include <shlwapi.h>
 
-#include "tstring.h"
+#include "debug.h"
 #include "res_check.h"
+#include "tstring.h"
 
 size_t get_string_length(const TCHAR* s)
 {
