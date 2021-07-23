@@ -93,6 +93,9 @@
     <ClCompile Include="tstring_builder.c">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="writer.c">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -165,6 +168,9 @@
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="tstring_builder.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="writer.h">
       <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>

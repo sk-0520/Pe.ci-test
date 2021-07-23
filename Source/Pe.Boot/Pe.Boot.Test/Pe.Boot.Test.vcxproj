@@ -301,6 +301,7 @@
     <ClCompile Include="text_search.test.cpp" />
     <ClCompile Include="tstring.test.cpp" />
     <ClCompile Include="tstring_builder.test.cpp" />
+    <ClCompile Include="writer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

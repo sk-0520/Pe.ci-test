@@ -66,6 +66,9 @@
     <ClCompile Include="tstring_builder.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="writer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

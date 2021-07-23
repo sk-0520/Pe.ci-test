@@ -421,6 +421,7 @@
     <ClCompile Include="text.c" />
     <ClCompile Include="text_man.c" />
     <ClCompile Include="tstring.c" />
+    <ClCompile Include="writer.c" />
     <ClCompile Include="without_crt.c" />
   </ItemGroup>
   <ItemGroup>
@@ -447,6 +448,7 @@
     <ClInclude Include="text.h" />
     <ClInclude Include="text_man.h" />
     <ClInclude Include="tstring.h" />
+    <ClInclude Include="writer.h" />
     <ClInclude Include="without_crt.h" />
   </ItemGroup>
   <ItemGroup>
