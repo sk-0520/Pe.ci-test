@@ -235,7 +235,7 @@ void rc__print(bool leak)
 
 bool rc__exists_resource_leak()
 {
-
+    return rc_heap__stock_item_count || rc_file__stock_item_count;
 }
 
 void rc__initialize(func_rc__output output, size_t path_length, size_t buffer_length, size_t heap_count, size_t file_count)
