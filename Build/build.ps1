@@ -18,6 +18,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 $rootDirectory = Split-Path -Path $currentDirPath -Parent
 
 $sourceDirectoryPath = Join-Path "$rootDirectory" "Source/Pe"
+$sourceBootDirectoryPath = Join-Path "$rootDirectory" "Source/Pe.Boot"
 
 Write-Output "ProductMode = $ProductMode"
 Write-Output "IgnoreChanged = $IgnoreChanged"
@@ -74,6 +75,28 @@ try {
 		}
 	}
 
+	function ReplaceResourceValue([xml] $commonXml, [string] $resourcePath) {
+		$versionElement = $commonXml.SelectSingleNode('/Project/PropertyGroup[1]/Version');
+		$copyrightElement = $commonXml.SelectSingleNode('/Project/PropertyGroup[1]/Copyright');
+		$revisionElement = $commonXml.SelectSingleNode('/Project/PropertyGroup[1]/InformationalVersion');
+
+		$version = [version]$versionElement.InnerText
+		$versionRevision = if($version.Revision -eq -1) { 0 } else { $version.Revision }
+		$csvVersion = @($version.Major, $version.Minor, $version.Build, $versionRevision) -join ','
+
+		$utf8nEncoding = New-Object System.Text.UTF8Encoding $False
+		$resourceContent = [System.IO.File]::ReadAllText($resourcePath ,$utf8nEncoding);
+
+		$replacedResourceContent = $resourceContent `
+			-replace '(\s*FILEVERSION)\s+[0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+.*', "`$1 ${csvVersion}" `
+			-replace '(\s*PRODUCTVERSION)\s+[0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+.*', "`$1 ${csvVersion}" `
+			-replace '(\s*VALUE\s+"FileVersion"\s*),.*', "`$1,`"$(${versionElement}.InnerText)`"" `
+			-replace '(\s*VALUE\s+"LegalCopyright"\s*),.*', "`$1,`"$(${copyrightElement}.InnerText)`"" `
+			-replace '(\s*VALUE\s+"ProductVersion"\s*),.*', "`$1,`"$(${revisionElement}.InnerText)`""
+
+		[System.IO.File]::WriteAllText($resourcePath, $replacedResourceContent, $utf8nEncoding)
+	}
+
 	$projectCommonFilePath = Join-Path $sourceDirectoryPath "Directory.Build.props"
 	$projectCommonXml = [XML](Get-Content $projectCommonFilePath  -Encoding UTF8)
 	InsertElement $version $projectCommonXml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
@@ -85,6 +108,8 @@ try {
 	}
 	ReplaceElement $repMap $projectCommonXml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
 	$projectCommonXml.Save($projectCommonFilePath)
+
+	ReplaceResourceValue $projectCommonXml (Join-Path $sourceBootDirectoryPath "Pe.Boot\Resource.rc")
 
 	$projectFiles = (Get-ChildItem -Path "Source\Pe\" -Recurse -Include *.csproj)
 	if (!$IgnoreChanged) {

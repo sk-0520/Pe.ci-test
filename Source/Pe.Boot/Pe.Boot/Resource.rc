@@ -45,7 +45,7 @@ BEGIN
             VALUE "FileVersion", "0.0.0.0"
             VALUE "InternalName", "Pe.Boot"
             VALUE "LegalCopyright", "@Pe.Main.Copyright"
-            VALUE "OriginalFilename", "Pe"
+            VALUE "OriginalFilename", "Pe.exe"
             VALUE "ProductName", "Pe"
             VALUE "ProductVersion", "@Pe.Main.InformationalVersion"
         END
