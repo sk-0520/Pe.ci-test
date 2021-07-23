@@ -1,5 +1,4 @@
-﻿#include <assert.h>
-
+﻿#include "debug.h"
 #include "command_line.h"
 #include "memory.h"
 #include "tstring.h"

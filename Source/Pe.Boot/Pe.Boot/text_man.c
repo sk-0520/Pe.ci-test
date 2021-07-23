@@ -125,11 +125,11 @@ bool is_whitespace_text(const TEXT* text)
 
 TEXT trim_text(const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count)
 {
-    assert(text);
-    if ((!start && !end) || !count) {
+    assert_debug(text);
+    if (false/**/ || (!start && !end) || !count) {
         return clone_text(text);
     }
-    assert(characters);
+    assert_debug(characters);
 
     size_t begin_index = 0;
     for (size_t i = 0; start && i < text->length; i++) {

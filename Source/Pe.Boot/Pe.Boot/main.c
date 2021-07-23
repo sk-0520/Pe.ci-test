@@ -1,5 +1,4 @@
-﻿#include <assert.h>
-
+﻿#include "debug.h"
 #include "debug.h"
 #include "res_check.h"
 #include "app_main.h"

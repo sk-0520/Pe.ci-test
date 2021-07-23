@@ -1,8 +1,7 @@
-﻿#include <assert.h>
-
-#include <windows.h>
+﻿#include <windows.h>
 #include <shlwapi.h>
 
+#include "debug.h"
 #include "text.h"
 
 

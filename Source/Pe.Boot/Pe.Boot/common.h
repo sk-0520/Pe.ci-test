@@ -10,6 +10,9 @@
 #define NEWLINE "\r\n"
 #define NEWLINET _T(NEWLINE)
 
+#define TO_STRING_CORE(x) #x
+#define TO_STRING(literal) TO_STRING_CORE(literal)
+
 #define SIZEOF_ARRAY(arr) (sizeof(arr) / sizeof(arr[0]))
 
 #ifdef _WIN64

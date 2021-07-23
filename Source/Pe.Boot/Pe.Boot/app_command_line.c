@@ -1,5 +1,4 @@
-﻿#include <assert.h>
-
+﻿#include "debug.h"
 #include "app_command_line.h"
 
 EXECUTE_MODE get_execute_mode(const COMMAND_LINE_OPTION* command_line_option)

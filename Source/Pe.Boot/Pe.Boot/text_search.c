@@ -1,8 +1,7 @@
-﻿#include <assert.h>
-
-#include <windows.h>
+﻿#include <windows.h>
 #include <shlwapi.h>
 
+#include "debug.h"
 #include "text.h"
 
 
@@ -62,7 +61,7 @@ int compare_text(const TEXT* a, const TEXT* b, bool ignore_case)
 
 static int get_compare_text_length(const TEXT* text, ssize_t width)
 {
-    assert(width);
+    assert_debug(width);
 
     if (0 < width) {
         return MIN((int)text->length, (int)width);
@@ -116,7 +115,7 @@ TEXT_COMPARE_RESULT compare_text_detail(const TEXT* a, const TEXT* b, ssize_t wi
             break;
 
         default:
-            assert(false);
+            assert_debug(false);
     }
 
     return success;

@@ -1,5 +1,4 @@
-﻿#include <assert.h>
-
+﻿#include "debug.h"
 #include "app_main.h"
 #include "debug.h"
 #include "memory.h"
@@ -23,7 +22,7 @@ EXIT_CODE app_main(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_
             return boot_with_option(hInstance, command_line_option);
 
         default:
-            assert(false);
+            assert_debug(false);
     }
 
     return EXIT_CODE_UNKNOWN_EXECUTE_MODE;

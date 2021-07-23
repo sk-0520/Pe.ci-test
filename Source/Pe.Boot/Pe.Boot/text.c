@@ -1,5 +1,4 @@
-﻿#include <assert.h>
-
+﻿#include "debug.h"
 #include "text.h"
 
 TEXT create_invalid_text()
@@ -22,7 +21,7 @@ bool is_enabled_text(const TEXT* text)
         return false;
     }
     if (text->library.released) {
-        assert(!text->library.need_release);
+        assert_debug(!text->library.need_release);
         return false;
     }
     if (!text->value) {

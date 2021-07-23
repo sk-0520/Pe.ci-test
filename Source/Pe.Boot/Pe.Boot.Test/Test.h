@@ -133,12 +133,8 @@ namespace PeBootTest
             mstest::Assert::IsFalse(is_initialized);
 
             // https://stackoverflow.com/a/25151971
-#define STRINGIFY(x) #x
-#define EXPAND(x) STRINGIFY(x)
-            auto ut_dir = tstring(_T(EXPAND(UT_DIR)));
+            auto ut_dir = tstring(_T(TO_STRING(UT_DIR)));
             ut_dir.erase(0, 1);
-#undef EXPAND
-#undef STRINGIFY
             ut_dir.erase(ut_dir.size() - 2);
             test_root_directory_path = ut_dir;
 
