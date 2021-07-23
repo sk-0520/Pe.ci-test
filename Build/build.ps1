@@ -84,8 +84,7 @@ try {
 		$versionRevision = if($version.Revision -eq -1) { 0 } else { $version.Revision }
 		$csvVersion = @($version.Major, $version.Minor, $version.Build, $versionRevision) -join ','
 
-		$utf8nEncoding = New-Object System.Text.UTF8Encoding $False
-		$resourceContent = [System.IO.File]::ReadAllText($resourcePath ,$utf8nEncoding);
+		$resourceContent = Get-Content -Path $resourcePath -Encoding Unicode -Raw
 
 		$replacedResourceContent = $resourceContent `
 			-replace '(\s*FILEVERSION)\s+[0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+.*', "`$1 ${csvVersion}" `
@@ -94,7 +93,7 @@ try {
 			-replace '(\s*VALUE\s+"LegalCopyright"\s*),.*', "`$1,`"$(${copyrightElement}.InnerText)`"" `
 			-replace '(\s*VALUE\s+"ProductVersion"\s*),.*', "`$1,`"$(${revisionElement}.InnerText)`""
 
-		[System.IO.File]::WriteAllText($resourcePath, $replacedResourceContent, $utf8nEncoding)
+		Set-Content -Path $resourcePath -Value $replacedResourceContent -Encoding Unicode
 	}
 
 	$projectCommonFilePath = Join-Path $sourceDirectoryPath "Directory.Build.props"
