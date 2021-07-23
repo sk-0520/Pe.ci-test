@@ -15,6 +15,10 @@
 
 #define SIZEOF_ARRAY(arr) (sizeof(arr) / sizeof(arr[0]))
 
+#define FILE_BASE_DIR TO_STRING(SOLUTION_DIR)
+#define RELATIVE_FILE (__FILE__ + (sizeof(FILE_BASE_DIR) - 4 /* "\."\0 */))
+#define RELATIVE_FILET (_T(__FILE__) + (sizeof(FILE_BASE_DIR) - 4 /* "\."\0 */))
+
 #ifdef _WIN64
 typedef __int64 ssize_t;
 #else

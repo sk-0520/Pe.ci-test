@@ -11,7 +11,7 @@ namespace fs = std::filesystem;
 namespace mstest = Microsoft::VisualStudio::CppUnitTestFramework;
 
 #ifdef RES_CHECK
-#   define text(s) rc_heap__new_text(_T(s), _T(__FILE__), __LINE__)
+#   define text(s) rc_heap__new_text(_T(s), RELATIVE_FILET, __LINE__)
 #else
 #   define text(s) new_text(_T(s))
 #endif
@@ -151,11 +151,13 @@ namespace PeBootTest
         {
             mstest::Assert::IsTrue(is_initialized);
 
-            mstest::Logger::WriteMessage(_T("====FILE LIST===="));
             tstring work_dir;
             get_path_from_test_dir(work_dir, work_dir_name());
+            mstest::Logger::WriteMessage((tstring(_T("[FILE LIST] -> ")) + work_dir).c_str());
+
             for (const auto& file : std::filesystem::recursive_directory_iterator(work_dir)) {
-                mstest::Logger::WriteMessage(file.path().c_str());
+                auto path = tstring(file.path().c_str() + work_dir.size() + 1/* \ */);
+                mstest::Logger::WriteMessage((tstring(_T("> ")) + (tstring(file.is_directory() ? _T("[D] ") : _T("[F] "))) + path).c_str());
             }
         }
 

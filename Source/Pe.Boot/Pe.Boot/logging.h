@@ -30,9 +30,9 @@ void cleanup_default_log();
 /// <param name=""></param>
 void logging(LOG_LEVEL logLevel, const TCHAR* format, const TCHAR* file, size_t line, ...);
 
-#define log_level(level, format, ...) logging((level), _T(__FILE__), __LINE__, format, __VA_ARGS__)
-#define log_trace(format, ...) logging(LOG_LEVEL_TRACE, _T(__FILE__), __LINE__, format, __VA_ARGS__)
-#define log_debug(format, ...) logging(LOG_LEVEL_DEBUG, _T(__FILE__), __LINE__, format, __VA_ARGS__)
-#define log_information(format, ...) logging(LOG_LEVEL_INFO, _T(__FILE__), __LINE__, format, __VA_ARGS__)
-#define log_warning(format, ...) logging(LOG_LEVEL_WARNING, _T(__FILE__), __LINE__, format, __VA_ARGS__)
-#define log_error(format, ...) logging(LOG_LEVEL_ERROR, _T(__FILE__), __LINE__, format, __VA_ARGS__)
+#define log_level(level, format, ...) logging((level), RELATIVE_FILET, __LINE__, format, __VA_ARGS__)
+#define log_trace(format, ...) logging(LOG_LEVEL_TRACE, RELATIVE_FILET, __LINE__, format, __VA_ARGS__)
+#define log_debug(format, ...) logging(LOG_LEVEL_DEBUG, RELATIVE_FILET, __LINE__, format, __VA_ARGS__)
+#define log_information(format, ...) logging(LOG_LEVEL_INFO, RELATIVE_FILET, __LINE__, format, __VA_ARGS__)
+#define log_warning(format, ...) logging(LOG_LEVEL_WARNING, RELATIVE_FILET, __LINE__, format, __VA_ARGS__)
+#define log_error(format, ...) logging(LOG_LEVEL_ERROR, RELATIVE_FILET, __LINE__, format, __VA_ARGS__)

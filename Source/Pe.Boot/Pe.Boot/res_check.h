@@ -4,6 +4,8 @@
 
 #include <tchar.h>
 
+#include "common.h"
+
 
 #ifdef RES_CHECK
 
@@ -14,7 +16,7 @@
 
 #define RES_CHECK_ARG_FLIE caller_file
 #define RES_CHECK_ARG_LINE caller_line
-#define RES_CHECK_WRAP_ARGS _T(__FILE__), (__LINE__)
+#define RES_CHECK_WRAP_ARGS RELATIVE_FILET, (__LINE__)
 #define RES_CHECK_FUNC_ARGS const TCHAR* RES_CHECK_ARG_FLIE, size_t RES_CHECK_ARG_LINE
 #define RES_CHECK_CALL_ARGS RES_CHECK_ARG_FLIE, RES_CHECK_ARG_LINE
 

@@ -2,6 +2,8 @@
 #include <windows.h>
 #include <assert.h>
 
+#include "common.h"
+
 /// <summary>
 /// デバッグ時のみ使用可能なログ出力。
 ///
