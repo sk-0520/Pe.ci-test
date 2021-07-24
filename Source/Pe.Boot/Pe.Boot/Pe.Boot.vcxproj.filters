@@ -1,37 +1,193 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
+    <Filter Include="source">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
+    <Filter Include="source\app">
+      <UniqueIdentifier>{c7a1e7c3-f1c3-468d-8915-af73b5fa250a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="リソース ファイル">
+    <Filter Include="header\app">
+      <UniqueIdentifier>{93353e85-b2ab-40d8-ba4d-5c4292bc1bc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_resource">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="header\condition">
+      <UniqueIdentifier>{581d7fdd-80fb-489f-be6d-f3ed2cac1524}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\condition">
+      <UniqueIdentifier>{8f2f22ad-7e5f-4949-b134-525415b4b3b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="logging.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="path.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="tstring.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="memory.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="command_line.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="fsio.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="map.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="text.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="app_boot.c">
+      <Filter>source\app</Filter>
+    </ClCompile>
+    <ClCompile Include="app_path.c">
+      <Filter>source\app</Filter>
+    </ClCompile>
+    <ClCompile Include="app_command_line.c">
+      <Filter>source\app</Filter>
+    </ClCompile>
     <ClCompile Include="main.c">
-      <Filter>ソース ファイル</Filter>
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="app_main.c">
+      <Filter>source\app</Filter>
+    </ClCompile>
+    <ClCompile Include="text_man.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="text_search.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="text_conv.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="platform.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="res_check.c">
+      <Filter>source\condition</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.c">
+      <Filter>source\condition</Filter>
+    </ClCompile>
+    <ClCompile Include="fsio_resource.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="without_crt.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="string_builder.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="writer.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="text_fmt.c">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="logging.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="path.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="tstring.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="memory.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="command_line.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="fsio.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="text.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="app_path.h">
+      <Filter>header\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app_boot.h">
+      <Filter>header\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app_common.h">
+      <Filter>header\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app_command_line.h">
+      <Filter>header\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app_main.h">
+      <Filter>header\app</Filter>
+    </ClInclude>
+    <ClInclude Include="text_man.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="text_search.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="text_conv.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="platform.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>header\condition</Filter>
+    </ClInclude>
+    <ClInclude Include="res_check.h">
+      <Filter>header\condition</Filter>
+    </ClInclude>
+    <ClInclude Include="fsio_resource.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="without_crt.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="string_builder.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="writer.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="text_fmt.h">
+      <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
-      <Filter>リソース ファイル</Filter>
+      <Filter>_resource</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Pe\Pe.Main\Resources\Icon\App.ico">
-      <Filter>リソース ファイル</Filter>
+      <Filter>_resource</Filter>
     </Image>
   </ItemGroup>
 </Project>

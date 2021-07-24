@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         /// <summary>
         /// <para><see cref="Environment.GetCommandLineArgs()"/>からコマンドライン分解。</para>
-        /// <para><see cref="ProgramName"/>を含む。</para>
+        /// <para><see cref="CommandName"/>を含む。</para>
         /// </summary>
         public CommandLine()
             : this(Environment.GetCommandLineArgs(), true)
@@ -143,14 +143,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 引数からコマンドライン分解。
         /// </summary>
         /// <param name="arguments">コマンドライン引数。</param>
-        /// <param name="commandStartsWith"><see cref="arguments"/>の先頭はプログラム/コマンドか。<para>Main関数だと含まれず、<see cref="Environment.GetCommandLineArgs()"/>だと含まれてる的な。</para></param>
-        public CommandLine(IEnumerable<string> arguments, bool commandStartsWith = false)
+        /// <param name="withCommand"><see cref="arguments"/>の先頭はプログラム/コマンドか。<para>Main関数だと含まれず、<see cref="Environment.GetCommandLineArgs()"/>だと含まれてる的な。</para></param>
+        public CommandLine(IEnumerable<string> arguments, bool withCommand = false)
         {
-            if(commandStartsWith) {
-                ProgramName = arguments.FirstOrDefault() ?? string.Empty;
+            if(withCommand) {
+                CommandName = arguments.FirstOrDefault() ?? string.Empty;
                 Arguments = arguments.Skip(1).ToList();
             } else {
-                ProgramName = string.Empty;
+                CommandName = string.Empty;
                 Arguments = arguments.ToList();
             }
         }
@@ -158,10 +158,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region property
 
         /// <summary>
-        /// プログラム名。
+        /// プログラム/コマンド名。
         /// <para>nullが入ることはない。</para>
         /// </summary>
-        public string ProgramName { get; }
+        public string CommandName { get; }
         /// <summary>
         /// プログラム名を含まないコマンドライン引数。
         /// </summary>

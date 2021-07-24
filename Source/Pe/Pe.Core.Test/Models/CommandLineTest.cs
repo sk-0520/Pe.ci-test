@@ -14,10 +14,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(new[] { "A", "a" }, false, "", 2)]
         [DataRow(new string[] { }, true, "", 0)]
         [DataRow(new string[] { }, false, "", 0)]
-        public void ConstructorTest(string[] args, bool firstIsProgram, string expectedProgramName, int expectedArgumentCount)
+        public void ConstructorTest(string[] args, bool withCommand, string expectedProgramName, int expectedArgumentCount)
         {
-            var commandLine = new CommandLine(args, firstIsProgram);
-            Assert.IsTrue(commandLine.ProgramName == expectedProgramName);
+            var commandLine = new CommandLine(args, withCommand);
+            Assert.IsTrue(commandLine.CommandName == expectedProgramName);
             Assert.IsTrue(commandLine.Arguments.Count == expectedArgumentCount);
         }
 

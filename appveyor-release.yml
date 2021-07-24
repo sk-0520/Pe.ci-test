@@ -32,6 +32,10 @@ before_test:
 test_script:
   - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64 /p:Platform=x64 /p:DefineConstants="" --test-adapter-path:. --logger:Appveyor
   - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x86 /p:Platform=x86 /p:DefineConstants="" --test-adapter-path:. --logger:Appveyor
+  - cmd: VSTest.Console Source\Pe.Boot\Pe.Boot.Test\bin\Release\x64\Pe.Boot.Test.dll /InIsolation /Platform:x64 /Logger:Appveyor
+  - cmd: VSTest.Console Source\Pe.Boot\Pe.Boot.Test\bin\CI_TEST\x64\Pe.Boot.Test.dll /InIsolation /Platform:x64 /Logger:Appveyor
+  - cmd: VSTest.Console Source\Pe.Boot\Pe.Boot.Test\bin\Release\x86\Pe.Boot.Test.dll /InIsolation /Platform:x86 /Logger:Appveyor
+  - cmd: VSTest.Console Source\Pe.Boot\Pe.Boot.Test\bin\CI_TEST\x86\Pe.Boot.Test.dll /InIsolation /Platform:x86 /Logger:Appveyor
 artifacts:
   - path: Output\*.json
   - path: Output\*.html

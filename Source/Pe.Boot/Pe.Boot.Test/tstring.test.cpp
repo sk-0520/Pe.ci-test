@@ -1,0 +1,66 @@
+﻿#include "pch.h"
+
+extern "C" {
+#   include "../Pe.Boot/tstring.h"
+#   include "../Pe.Boot/memory.h"
+}
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace PeBootTest
+{
+    TEST_CLASS(string_test)
+    {
+    public:
+
+        TEST_METHOD(get_string_length_test)
+        {
+            TCHAR input[] = _T("abcdefg");
+            size_t expected = sizeof(input) / sizeof(TCHAR) - 1/*終端*/;
+            auto actual = get_string_length(input);
+            Assert::AreEqual(expected, actual);
+        }
+
+        TEST_METHOD(fromat_string_test)
+        {
+            TCHAR input[] = _T("abc %s 123 %d");
+            TCHAR actual[1000] = { 0 };
+            TCHAR expected[1000] = _T("abc def 123 456");
+            format_string(actual, input, _T("def"), 456);
+
+            Assert::AreEqual(expected, actual);
+        }
+
+        TEST_METHOD(concat_string_test)
+        {
+            TCHAR input[] = _T("def");
+            TCHAR actual[1000] = _T("abc");
+            TCHAR expected[1000] = _T("abcdef");
+            concat_string(actual, input);
+
+            Assert::AreEqual(expected, actual);
+        }
+
+        TEST_METHOD(copy_string_test)
+        {
+            TCHAR input[] = _T("def");
+            TCHAR actual[1000] = _T("abc");
+            TCHAR expected[1000] = _T("def");
+            copy_string(actual, input);
+
+            Assert::AreEqual(expected, actual);
+        }
+
+        TEST_METHOD(clone_string_test)
+        {
+            TCHAR input[] = _T("abc");
+            TCHAR expected[] = _T("abc");
+            TCHAR* actual = clone_string(input);
+
+            Assert::AreEqual(expected, actual);
+            Assert::IsFalse(input == actual);
+
+            free_string(actual);
+        }
+    };
+}
