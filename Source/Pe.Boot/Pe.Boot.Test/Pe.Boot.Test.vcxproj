@@ -147,7 +147,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <DisableSpecificWarnings>26817</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26817;26812</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -168,7 +168,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <DisableSpecificWarnings>26817</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26817;26812</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -191,7 +191,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <DisableSpecificWarnings>26817</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26817;26812</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -216,7 +216,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <DisableSpecificWarnings>26817</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26817;26812</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -241,7 +241,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <DisableSpecificWarnings>26817</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26817;26812</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -266,7 +266,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <DisableSpecificWarnings>26817</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26817;26812</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -301,7 +301,7 @@
     <ClCompile Include="text_search.test.cpp" />
     <ClCompile Include="tstring.test.cpp" />
     <ClCompile Include="tstring_builder.test.cpp" />
-    <ClCompile Include="writer.cpp" />
+    <ClCompile Include="writer.test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

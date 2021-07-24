@@ -111,4 +111,4 @@ bool write_to_primitive_boolean(func_string_writer writer, void* receiver, bool 
 /// <param name="width">表示幅。</param>
 /// <param name="separator">区切り文字。NUL文字の場合区切りなしとする。</param>
 /// <returns>成功状態。</returns>
-bool write_to_primitive_integer(func_character_writer writer, void* receiver, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator);
+bool write_to_primitive_integer(func_string_writer writer, void* receiver, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator);
