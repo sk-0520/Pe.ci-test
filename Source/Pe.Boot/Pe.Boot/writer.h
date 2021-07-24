@@ -161,3 +161,11 @@ bool write_primitive_uhex(func_string_writer writer, void* receiver, size_t valu
 /// <returns>成功状態。</returns>
 bool write_primitive_character(func_string_writer writer, void* receiver, TCHAR character, WRITE_ALIGN write_align, size_t width);
 
+/// <summary>
+/// ポインタの表示。
+/// </summary>
+/// <param name="writer"></param>
+/// <param name="receiver"></param>
+/// <param name="pointer"></param>
+/// <returns></returns>
+bool write_primitive_pointer(func_string_writer writer, void* receiver, const void* pointer);

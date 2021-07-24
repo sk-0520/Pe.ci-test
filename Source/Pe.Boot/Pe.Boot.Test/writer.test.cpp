@@ -233,5 +233,28 @@ namespace PeBootTest
                 Assert::AreEqual(test.expected, actual.values);
             }
         }
+
+        TEST_METHOD(write_primitive_pointer_test)
+        {
+            void* np1 = NULL;
+            void* np2 = (void*)1000;
+            auto tests = {
+#ifdef _WIN64
+                DATA(_T("0000000000000000"), np1),
+                DATA(_T("00000000000003e8"), np2),
+#else
+                DATA(_T("00000000"), np1),
+                DATA(_T("000003e8"), nnp2p1),
+#endif
+
+            };
+            for (auto test : tests) {
+                BUF actual;
+                auto [arg2 ] = test.inputs;
+                write_primitive_pointer(&BUF::write_s, &actual, arg2);
+                Assert::AreEqual(test.expected, actual.values);
+            }
+        }
+
     };
 }

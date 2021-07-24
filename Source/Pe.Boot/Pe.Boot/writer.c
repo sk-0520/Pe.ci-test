@@ -295,3 +295,29 @@ bool write_primitive_character(func_string_writer writer, void* receiver, TCHAR 
 
     return true;
 }
+
+bool write_primitive_pointer(func_string_writer writer, void* receiver, const void* pointer)
+{
+    TCHAR buffer[sizeof(void*) * 2];
+    for (size_t i = 0; i < SIZEOF_ARRAY(buffer); i++) {
+        buffer[i] = _T('0');
+    }
+
+    ptrdiff_t work_value = (ptrdiff_t)pointer;
+    size_t buffer_length = 0;
+    do {
+        int n = work_value % 16;
+        buffer[buffer_length++] = hexs[0][n];
+        work_value /= 16;
+    } while (work_value != 0);
+
+    reverse_buffer(buffer, sizeof(buffer) / sizeof(TCHAR));
+
+    WRITE_STRING_DATA data = {
+        .value = buffer,
+        .length = sizeof(buffer) / sizeof(TCHAR),
+    };
+    writer(receiver, &data);
+
+    return true;
+}
