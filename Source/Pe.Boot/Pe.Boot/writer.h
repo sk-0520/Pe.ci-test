@@ -43,10 +43,6 @@ typedef struct tag_WRITE_STRING_DATA
 typedef enum tag_WRITE_PADDING
 {
     /// <summary>
-    /// 埋めない。
-    /// </summary>
-    WRITE_PADDING_NONE,
-    /// <summary>
     /// 0埋め。
     /// </summary>
     WRITE_PADDING_ZERO,
@@ -111,7 +107,7 @@ bool write_to_primitive_boolean(func_string_writer writer, void* receiver, bool 
 /// <param name="width">表示幅。</param>
 /// <param name="separator">区切り文字。NUL文字の場合区切りなしとする。</param>
 /// <returns>成功状態。</returns>
-bool write_to_primitive_integer(func_string_writer writer, void* receiver, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator);
+bool write_primitive_integer(func_string_writer writer, void* receiver, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator);
 
 /// <summary>
 /// <c>size_t</c>の数値を書き込み。
@@ -125,4 +121,16 @@ bool write_to_primitive_integer(func_string_writer writer, void* receiver, ssize
 /// <param name="width">表示幅。</param>
 /// <param name="separator">区切り文字。NUL文字の場合区切りなしとする。</param>
 /// <returns>成功状態。</returns>
-bool write_to_primitive_uinteger(func_string_writer writer, void* receiver, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator);
+bool write_primitive_uinteger(func_string_writer writer, void* receiver, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator);
+
+/// <summary>
+/// 文字を書き込み。
+/// </summary>
+/// <param name="writer">書き込みデータ送信処理。</param>
+/// <param name="receiver">書き込み対象データ受信処理。</param>
+/// <param name="character">文字。</param>
+/// <param name="write_align">埋め処理時の揃え方向。</param>
+/// <param name="width">表示幅。</param>
+/// <returns>成功状態。</returns>
+bool write_primitive_character(func_string_writer writer, void* receiver, TCHAR character, WRITE_ALIGN write_align, size_t width);
+

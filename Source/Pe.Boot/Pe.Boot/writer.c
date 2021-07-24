@@ -42,24 +42,27 @@ static TCHAR* allocate_number(bool isHex, size_t width)
     return allocate_clear_memory(sizeof(size_t) * 8 + 1 + width + ((sizeof(size_t) * 8) / 3), sizeof(TCHAR));
 }
 
+TCHAR get_fill_character(WRITE_PADDING write_padding)
+{
+    switch (write_padding) {
+        case WRITE_PADDING_ZERO:
+            return _T('0');
+
+        case WRITE_PADDING_SPACE:
+            return _T(' ');
+
+        default:
+            assert_debug(false);
+    }
+
+    return _T('\0');
+}
+
 static size_t set_sign_and_fill(TCHAR* buffer, size_t buffer_length, size_t fill_buffer_length, size_t fill_buffer_index, bool is_sign, bool is_negative, WRITE_PADDING write_padding, WRITE_ALIGN write_align)
 {
     if (buffer_length != fill_buffer_length) {
         if (write_align == WRITE_ALIGN_RIGHT || (write_align == WRITE_ALIGN_LEFT && write_padding == WRITE_PADDING_ZERO)) {
-            TCHAR padding = _T('\0');
-            switch (write_padding) {
-                case WRITE_PADDING_ZERO:
-                    padding = _T('0');
-                    break;
-
-                case WRITE_PADDING_SPACE:
-                case WRITE_PADDING_NONE:
-                    padding = _T(' ');
-                    break;
-
-                default:
-                    assert_debug(false);
-            }
+            TCHAR padding = get_fill_character(write_padding);
             if (padding) {
                 for (size_t i = fill_buffer_index; i < fill_buffer_length; i++) {
                     buffer[i] = padding;
@@ -96,7 +99,20 @@ static void reverse_buffer(TCHAR* buffer, size_t length)
     }
 }
 
-bool write_to_primitive_integer(func_string_writer writer, void* receiver, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
+static size_t fill_last(TCHAR* buffer, size_t fill_buffer_length, size_t width, WRITE_PADDING write_padding, WRITE_ALIGN write_align)
+{
+    if (write_align == WRITE_ALIGN_LEFT && write_padding == WRITE_PADDING_SPACE && fill_buffer_length < width) {
+        TCHAR padding = get_fill_character(write_padding);
+        for (size_t i = fill_buffer_length; i < width; i++) {
+            buffer[i] = padding;
+        }
+        fill_buffer_length = width;
+    }
+
+    return fill_buffer_length;
+}
+
+bool write_primitive_integer(func_string_writer writer, void* receiver, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
 {
     TCHAR* buffer = allocate_number(width, sizeof(TCHAR));
     size_t buffer_length = 0;
@@ -125,6 +141,8 @@ bool write_to_primitive_integer(func_string_writer writer, void* receiver, ssize
 
     reverse_buffer(buffer, fill_buffer_length);
 
+    fill_buffer_length = fill_last(buffer, fill_buffer_length, width, write_padding, write_align);
+
     WRITE_STRING_DATA data = {
         .value = buffer,
         .length = fill_buffer_length,
@@ -136,7 +154,7 @@ bool write_to_primitive_integer(func_string_writer writer, void* receiver, ssize
     return true;
 }
 
-bool write_to_primitive_uinteger(func_string_writer writer, void* receiver, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
+bool write_primitive_uinteger(func_string_writer writer, void* receiver, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
 {
     TCHAR* buffer = allocate_number(width, sizeof(TCHAR));
     size_t buffer_length = 0;
@@ -164,6 +182,31 @@ bool write_to_primitive_uinteger(func_string_writer writer, void* receiver, size
     fill_buffer_length = set_sign_and_fill(buffer, buffer_length, fill_buffer_length, fill_buffer_index, is_sign, is_negative, write_padding, write_align);
 
     reverse_buffer(buffer, fill_buffer_length);
+
+    fill_buffer_length = fill_last(buffer, fill_buffer_length, width, write_padding, write_align);
+
+    WRITE_STRING_DATA data = {
+        .value = buffer,
+        .length = fill_buffer_length,
+    };
+    writer(receiver, &data);
+
+    free_string(buffer);
+
+    return true;
+}
+
+bool write_primitive_character(func_string_writer writer, void* receiver, TCHAR character, WRITE_ALIGN write_align, size_t width)
+{
+    size_t buffer_length = width ? width : 1;
+    TCHAR* buffer = allocate_clear_memory(buffer_length, sizeof(TCHAR));
+    buffer[0] = character;
+
+    size_t fill_buffer_length = set_sign_and_fill(buffer, 1, buffer_length, 1, false, false, WRITE_PADDING_SPACE, write_align);
+
+    reverse_buffer(buffer, fill_buffer_length);
+
+    fill_buffer_length = fill_last(buffer, fill_buffer_length, width, WRITE_PADDING_SPACE, write_align);
 
     WRITE_STRING_DATA data = {
         .value = buffer,
