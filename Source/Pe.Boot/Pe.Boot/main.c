@@ -13,7 +13,6 @@ static void output(const TCHAR* s)
 
 static int application_main(HINSTANCE hInstance)
 {
-    debug("!START!");
 #ifdef RES_CHECK
     rc__initialize(output, RES_CHECK_INIT_PATH_LENGTH, RES_CHECK_INIT_BUFFER_LENGTH, RES_CHECK_INIT_HEAP_COUNT, RES_CHECK_INIT_FILE_COUNT);
 #endif

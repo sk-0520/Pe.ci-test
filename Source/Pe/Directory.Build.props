@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>0.99.156</Version>
+    <Version>0.99.157</Version>
 
     <TargetFramework>net5.0-windows</TargetFramework>
     <Platforms>x64;x86</Platforms>
