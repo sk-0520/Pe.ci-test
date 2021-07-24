@@ -28,3 +28,12 @@ bool write_to_primitive_boolean(func_string_writer writer, void* receiver, bool 
 
     return writer(receiver, &data);
 }
+
+bool write_to_primitive_integer(func_character_writer writer, void* receiver, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
+{
+    WRITE_CHARACTER_DATA data;
+    TCHAR decimals[] = _T("0123456789");
+    size_t decimal_length = sizeof(decimals) / sizeof(TCHAR) - 1;
+
+    return false;
+}
