@@ -117,5 +117,51 @@ namespace PeBootTest
             }
         }
 
+        TEST_METHOD(write_to_primitive_uinteger_test)
+        {
+            auto tests = {
+                DATA(_T("0"), (size_t)0, WRITE_PADDING_NONE, WRITE_ALIGN_LEFT, false, 0, _T('\0')),
+                DATA(_T("1234"), (size_t)1234, WRITE_PADDING_NONE, WRITE_ALIGN_LEFT, false, 0, _T('\0')),
+                DATA(_T("12345678"), (size_t)12345678, WRITE_PADDING_NONE, WRITE_ALIGN_LEFT, false, 0, _T('\0')),
+
+                DATA(_T("+0"), (size_t)0, WRITE_PADDING_NONE, WRITE_ALIGN_LEFT, true, 0, _T('\0')),
+                DATA(_T("+123"), (size_t)123, WRITE_PADDING_NONE, WRITE_ALIGN_LEFT, true, 0, _T('\0')),
+
+                DATA(_T("0"), (size_t)0, WRITE_PADDING_NONE, WRITE_ALIGN_LEFT, false, 4, _T('\0')),
+                DATA(_T("   0"), (size_t)0, WRITE_PADDING_NONE, WRITE_ALIGN_RIGHT, false, 4, _T('\0')),
+                DATA(_T("1234"), (size_t)1234, WRITE_PADDING_NONE, WRITE_ALIGN_RIGHT, false, 4, _T('\0')),
+                DATA(_T("12345"), (size_t)12345, WRITE_PADDING_NONE, WRITE_ALIGN_RIGHT, false, 4, _T('\0')),
+
+                DATA(_T("+1"), (size_t)1, WRITE_PADDING_NONE, WRITE_ALIGN_LEFT, true, 4, _T('\0')),
+                DATA(_T("  +1"), (size_t)1, WRITE_PADDING_NONE, WRITE_ALIGN_RIGHT, true, 4, _T('\0')),
+
+                DATA(_T("0001"), (size_t)1, WRITE_PADDING_ZERO, WRITE_ALIGN_LEFT, false, 4, _T('\0')),
+                DATA(_T("0001"), (size_t)1, WRITE_PADDING_ZERO, WRITE_ALIGN_RIGHT, false, 4, _T('\0')),
+                DATA(_T("+001"), (size_t)1, WRITE_PADDING_ZERO, WRITE_ALIGN_LEFT, true, 4, _T('\0')),
+                DATA(_T("+001"), (size_t)1, WRITE_PADDING_ZERO, WRITE_ALIGN_RIGHT, true, 4, _T('\0')),
+
+                DATA(_T("0"), (size_t)0, WRITE_PADDING_NONE, WRITE_ALIGN_LEFT, false, 0, _T(',')),
+                DATA(_T("1,234"), (size_t)1234, WRITE_PADDING_NONE, WRITE_ALIGN_LEFT, false, 0, _T(',')),
+                DATA(_T("12,345,678"), (size_t)12345678, WRITE_PADDING_NONE, WRITE_ALIGN_LEFT, false, 0, _T(',')),
+
+                DATA(_T("       0"), (size_t)0, WRITE_PADDING_NONE, WRITE_ALIGN_RIGHT, false, 8, _T(',')),
+                DATA(_T("   1,234"), (size_t)1234, WRITE_PADDING_NONE, WRITE_ALIGN_RIGHT, false, 8, _T(',')),
+                DATA(_T("12,345,678"), (size_t)12345678, WRITE_PADDING_NONE, WRITE_ALIGN_RIGHT, false, 8, _T(',')),
+
+                DATA(_T("      +0"), (size_t)0, WRITE_PADDING_NONE, WRITE_ALIGN_RIGHT, true, 8, _T(',')),
+                DATA(_T("  +1,234"), (size_t)1234, WRITE_PADDING_NONE, WRITE_ALIGN_RIGHT, true, 8, _T(',')),
+                DATA(_T("+12,345,678"), (size_t)12345678, WRITE_PADDING_NONE, WRITE_ALIGN_RIGHT, true, 8, _T(',')),
+
+                DATA(_T("+0000000"), (size_t)0, WRITE_PADDING_ZERO, WRITE_ALIGN_RIGHT, true, 8, _T(',')),
+                DATA(_T("+001,234"), (size_t)1234, WRITE_PADDING_ZERO, WRITE_ALIGN_RIGHT, true, 8, _T(',')),
+                DATA(_T("+12,345,678"), (size_t)12345678, WRITE_PADDING_ZERO, WRITE_ALIGN_RIGHT, true, 8, _T(',')),
+            };
+            for (auto test : tests) {
+                BUF actual;
+                auto [arg2, arg3, arg4, arg5, arg6, arg7] = test.inputs;
+                write_to_primitive_uinteger(&BUF::write_s, &actual, arg2, arg3, arg4, arg5, arg6, arg7);
+                Assert::AreEqual(test.expected, actual.values);
+            }
+        }
     };
 }

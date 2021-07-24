@@ -112,3 +112,17 @@ bool write_to_primitive_boolean(func_string_writer writer, void* receiver, bool 
 /// <param name="separator">区切り文字。NUL文字の場合区切りなしとする。</param>
 /// <returns>成功状態。</returns>
 bool write_to_primitive_integer(func_string_writer writer, void* receiver, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator);
+
+/// <summary>
+/// <c>size_t</c>の数値を書き込み。
+/// </summary>
+/// <param name="writer">書き込みデータ送信処理。</param>
+/// <param name="receiver">書き込み対象データ受信処理。</param>
+/// <param name="value">数値。</param>
+/// <param name="write_padding">埋め処理を方法。</param>
+/// <param name="write_align">埋め処理時の揃え方向。</param>
+/// <param name="show_sign">符号を常に表示するか。偽の場合でも負数は表示される。</param>
+/// <param name="width">表示幅。</param>
+/// <param name="separator">区切り文字。NUL文字の場合区切りなしとする。</param>
+/// <returns>成功状態。</returns>
+bool write_to_primitive_uinteger(func_string_writer writer, void* receiver, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator);
