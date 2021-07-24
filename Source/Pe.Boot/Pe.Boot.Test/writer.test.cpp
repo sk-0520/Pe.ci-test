@@ -256,5 +256,32 @@ namespace PeBootTest
             }
         }
 
+        TEST_METHOD(write_address_string_test)
+        {
+            auto tests = {
+                DATA(_T("abc"), _T("abc")),
+                DATA(_T("💣"), _T("💣")),
+            };
+            for (auto test : tests) {
+                BUF actual;
+                auto [arg2] = test.inputs;
+                write_address_string(&BUF::write_s, &actual, arg2, WRITE_ALIGN_LEFT, 0);
+                Assert::AreEqual(test.expected, actual.values);
+            }
+        }
+
+        TEST_METHOD(write_address_text_test)
+        {
+            auto tests = {
+                DATA(_T("abc"), wrap("abc")),
+                DATA(_T("💣"), wrap("💣")),
+            };
+            for (auto test : tests) {
+                BUF actual;
+                auto [arg2] = test.inputs;
+                write_address_text(&BUF::write_s, &actual, &arg2, WRITE_ALIGN_LEFT, 0);
+                Assert::AreEqual(test.expected, actual.values);
+            }
+        }
     };
 }

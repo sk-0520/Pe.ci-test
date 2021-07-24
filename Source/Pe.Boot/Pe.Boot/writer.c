@@ -321,3 +321,20 @@ bool write_primitive_pointer(func_string_writer writer, void* receiver, const vo
 
     return true;
 }
+
+bool write_address_string(func_string_writer writer, void* receiver, const TCHAR* string, WRITE_ALIGN write_align, size_t width)
+{
+    TEXT text = wrap_text(string);
+    return write_address_text(writer, receiver, &text, write_align, width);
+}
+
+bool write_address_text(func_string_writer writer, void* receiver, const TEXT* text, WRITE_ALIGN write_align, size_t width)
+{
+    WRITE_STRING_DATA data = {
+        .value = text->value,
+        .length = text->length,
+    };
+    writer(receiver, &data);
+
+    return true;
+}

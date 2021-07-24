@@ -5,6 +5,7 @@
 #include <tchar.h>
 
 #include "common.h"
+#include "text.h"
 
 /*
 * データ書き込み処理の抽象化を担当
@@ -164,8 +165,30 @@ bool write_primitive_character(func_string_writer writer, void* receiver, TCHAR 
 /// <summary>
 /// ポインタの表示。
 /// </summary>
-/// <param name="writer"></param>
-/// <param name="receiver"></param>
+/// <param name="writer">書き込みデータ送信処理。</param>
+/// <param name="receiver">書き込み対象データ受信処理。</param>
 /// <param name="pointer"></param>
-/// <returns></returns>
+/// <returns>成功状態。</returns>
 bool write_primitive_pointer(func_string_writer writer, void* receiver, const void* pointer);
+
+/// <summary>
+/// 文字列の表示。
+/// </summary>
+/// <param name="writer">書き込みデータ送信処理。</param>
+/// <param name="receiver">書き込み対象データ受信処理。</param>
+/// <param name="string">文字列。</param>
+/// <param name="write_align">(未実装)埋め処理時の揃え方向。</param>
+/// <param name="width">(未実装)表示幅。</param>
+/// <returns>成功状態。</returns>
+bool write_address_string(func_string_writer writer, void* receiver, const TCHAR* string, WRITE_ALIGN write_align, size_t width);
+
+/// <summary>
+/// テキストの表示。
+/// </summary>
+/// <param name="writer">書き込みデータ送信処理。</param>
+/// <param name="receiver">書き込み対象データ受信処理。</param>
+/// <param name="string">テキスト。</param>
+/// <param name="write_align">(未実装)埋め処理時の揃え方向。</param>
+/// <param name="width">(未実装)表示幅。</param>
+/// <returns>成功状態。</returns>
+bool write_address_text(func_string_writer writer, void* receiver, const TEXT* text, WRITE_ALIGN write_align, size_t width);
