@@ -90,7 +90,7 @@
     <ClCompile Include="without_crt.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="tstring_builder.c">
+    <ClCompile Include="string_builder.c">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="writer.c">
@@ -167,7 +167,7 @@
     <ClInclude Include="without_crt.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="tstring_builder.h">
+    <ClInclude Include="string_builder.h">
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="writer.h">

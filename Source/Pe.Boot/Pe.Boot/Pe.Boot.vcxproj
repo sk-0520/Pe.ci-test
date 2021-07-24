@@ -415,7 +415,7 @@
     <ClCompile Include="app_path.c" />
     <ClCompile Include="platform.c" />
     <ClCompile Include="res_check.c" />
-    <ClCompile Include="tstring_builder.c" />
+    <ClCompile Include="string_builder.c" />
     <ClCompile Include="text_conv.c" />
     <ClCompile Include="text_search.c" />
     <ClCompile Include="text.c" />
@@ -442,7 +442,7 @@
     <ClInclude Include="platform.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="res_check.h" />
-    <ClInclude Include="tstring_builder.h" />
+    <ClInclude Include="string_builder.h" />
     <ClInclude Include="text_conv.h" />
     <ClInclude Include="text_search.h" />
     <ClInclude Include="text.h" />

@@ -1,5 +1,6 @@
 ﻿#include "debug.h"
 #include "tstring.h"
+#include "string_builder.h"
 
 STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t capacity)
 {
@@ -58,6 +59,7 @@ bool RC_HEAP_FUNC(free_string_builder, STRING_BUILDER* string_builder)
     return true;
 }
 
+
 /// <summary>
 /// 必要に応じて<c>STRING_BUILDER</c>予約領域を拡張。
 /// </summary>
@@ -84,9 +86,55 @@ static size_t extend_capacity_if_not_enough_string_builder(STRING_BUILDER* strin
     TCHAR* old_buffer = string_builder->buffer;
 
     copy_memory(new_buffer, old_buffer, new_bytes);
+    free_memory(old_buffer);
 
     string_builder->buffer = new_buffer;
     string_builder->library.capacity = new_capacity;
 
     return new_capacity - old_capacity;
+}
+
+static STRING_BUILDER* append_string_core(STRING_BUILDER* string_builder, const TCHAR* s, size_t length)
+{
+    extend_capacity_if_not_enough_string_builder(string_builder, length);
+    copy_memory(string_builder->buffer + string_builder->length, s, length * sizeof(TCHAR));
+    string_builder->length += length;
+    assert_debug(string_builder->length <= string_builder->library.capacity);
+
+    return string_builder;
+}
+
+STRING_BUILDER* append_builder_string(STRING_BUILDER* string_builder, const TCHAR* s)
+{
+    if (!s) {
+        return string_builder;
+    }
+
+    size_t length = get_string_length(s);
+    if (!length) {
+        return string_builder;
+    }
+
+    return append_string_core(string_builder, s, length);
+}
+
+STRING_BUILDER* append_builder_text(STRING_BUILDER* string_builder, const TEXT* text)
+{
+    if (!text) {
+        return string_builder;
+    }
+
+    if (!text->length) {
+        return string_builder;
+    }
+
+    return append_string_core(string_builder, text->value, text->length);
+}
+
+STRING_BUILDER* append_builder_character(STRING_BUILDER* string_builder, TCHAR c)
+{
+    extend_capacity_if_not_enough_string_builder(string_builder, 1);
+    string_builder->buffer[string_builder->length++] = c;
+
+    return string_builder;
 }

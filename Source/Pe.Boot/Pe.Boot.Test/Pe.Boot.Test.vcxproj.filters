@@ -63,7 +63,7 @@
     <ClCompile Include="fsio_resource.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="tstring_builder.test.cpp">
+    <ClCompile Include="string_builder.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="writer.test.cpp">

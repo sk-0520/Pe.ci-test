@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "tstring.h"
+#include "text.h"
 
 
 #define STRING_BUILDER_DEFAULT_CAPACITY (64)
@@ -60,5 +61,8 @@ bool RC_HEAP_FUNC(free_string_builder, STRING_BUILDER* string_builder);
 #   define free_string_builder(string_builder) RC_HEAP_WRAP(free_string_builder, (string_builder))
 #endif
 
+STRING_BUILDER* append_builder_string(STRING_BUILDER* string_builder, const TCHAR* s);
+STRING_BUILDER* append_builder_text(STRING_BUILDER* string_builder, const TEXT* text);
+STRING_BUILDER* append_builder_character(STRING_BUILDER* string_builder, TCHAR c);
 
 

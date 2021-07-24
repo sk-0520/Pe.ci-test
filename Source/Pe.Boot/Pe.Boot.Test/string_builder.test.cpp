@@ -2,6 +2,7 @@
 
 extern "C" {
 #   include "../Pe.Boot/tstring.h"
+#   include "../Pe.Boot/string_builder.h"
 }
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -11,6 +12,7 @@ namespace PeBootTest
     TEST_CLASS(string_builder_test)
     {
     public:
+
         TEST_METHOD(initialize_string_builder_test)
         {
             auto tests = {
@@ -56,6 +58,20 @@ namespace PeBootTest
 
             STRING_BUILDER input3 = create_string_builder(1);
             Assert::IsTrue(free_string_builder(&input3));
+        }
+
+        TEST_METHOD(append_string_builder_test)
+        {
+            auto sb = create_string_builder(3);
+
+            append_builder_string(&sb, _T("ABC"));
+
+            TEXT text = wrap("DEF");
+            append_builder_text(&sb, &text);
+
+            append_builder_character(&sb, _T('E'));
+
+            Assert::IsTrue(free_string_builder(&sb));
         }
     };
 }

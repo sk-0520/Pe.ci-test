@@ -60,5 +60,3 @@ void RC_HEAP_FUNC(free_string, const TCHAR* s);
 #   define free_string(s) RC_HEAP_WRAP(free_string, (s))
 #endif
 
-// 文字列処理
-#include "tstring_builder.h"
