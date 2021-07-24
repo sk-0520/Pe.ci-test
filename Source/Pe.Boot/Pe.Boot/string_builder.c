@@ -17,6 +17,7 @@ STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t ca
         .length = length,
         .library = {
             .capacity = MAX(length, capacity),
+            .newline = NEWLINET,
     }
     };
 
@@ -36,6 +37,7 @@ STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity)
         .length = 0,
         .library = {
             .capacity = capacity,
+            .newline = NEWLINET,
     }
     };
 
@@ -58,6 +60,7 @@ bool RC_HEAP_FUNC(free_string_builder, STRING_BUILDER* string_builder)
 
     return true;
 }
+
 
 
 /// <summary>
@@ -104,7 +107,37 @@ static STRING_BUILDER* append_string_core(STRING_BUILDER* string_builder, const 
     return string_builder;
 }
 
-STRING_BUILDER* append_builder_string(STRING_BUILDER* string_builder, const TCHAR* s)
+TEXT RC_HEAP_FUNC(build_text_string_builder, const STRING_BUILDER* string_builder)
+{
+    if (!string_builder) {
+        return create_invalid_text();
+    }
+
+    if (!string_builder->length) {
+        return RC_HEAP_CALL(new_text, _T(""));
+    }
+
+    TCHAR* s = RC_HEAP_CALL(allocate_string, string_builder->length);
+    copy_memory(s, string_builder->buffer, string_builder->length * sizeof(TCHAR));
+    return wrap_text_with_length(s, string_builder->length, true);
+}
+
+TEXT reference_text_string_builder(STRING_BUILDER* string_builder)
+{
+    if (string_builder->length < string_builder->library.capacity) {
+        string_builder->buffer[string_builder->length] = 0;
+    } else {
+        append_builder_character(string_builder, _T('0'), false);
+    }
+    return wrap_text_with_length(string_builder->buffer, string_builder->length, false);
+}
+
+STRING_BUILDER* append_builder_newline(STRING_BUILDER* string_builder)
+{
+    return append_string_core(string_builder, string_builder->library.newline, get_string_length(string_builder->library.newline));
+}
+
+STRING_BUILDER* append_builder_string(STRING_BUILDER* string_builder, const TCHAR* s, bool newline)
 {
     if (!s) {
         return string_builder;
@@ -115,10 +148,14 @@ STRING_BUILDER* append_builder_string(STRING_BUILDER* string_builder, const TCHA
         return string_builder;
     }
 
-    return append_string_core(string_builder, s, length);
+    append_string_core(string_builder, s, length);
+    if (newline) {
+        append_builder_newline(string_builder);
+    }
+    return string_builder;
 }
 
-STRING_BUILDER* append_builder_text(STRING_BUILDER* string_builder, const TEXT* text)
+STRING_BUILDER* append_builder_text(STRING_BUILDER* string_builder, const TEXT* text, bool newline)
 {
     if (!text) {
         return string_builder;
@@ -128,13 +165,20 @@ STRING_BUILDER* append_builder_text(STRING_BUILDER* string_builder, const TEXT* 
         return string_builder;
     }
 
-    return append_string_core(string_builder, text->value, text->length);
+    append_string_core(string_builder, text->value, text->length);
+    if (newline) {
+        append_builder_newline(string_builder);
+    }
+    return string_builder;
 }
 
-STRING_BUILDER* append_builder_character(STRING_BUILDER* string_builder, TCHAR c)
+STRING_BUILDER* append_builder_character(STRING_BUILDER* string_builder, TCHAR c, bool newline)
 {
     extend_capacity_if_not_enough_string_builder(string_builder, 1);
     string_builder->buffer[string_builder->length++] = c;
 
+    if (newline) {
+        append_builder_newline(string_builder);
+    }
     return string_builder;
 }

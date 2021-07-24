@@ -64,13 +64,23 @@ namespace PeBootTest
         {
             auto sb = create_string_builder(3);
 
-            append_builder_string(&sb, _T("ABC"));
+            append_builder_string(&sb, _T("ABC"), false);
 
             TEXT text = wrap("DEF");
-            append_builder_text(&sb, &text);
+            append_builder_text(&sb, &text, false);
 
-            append_builder_character(&sb, _T('E'));
+            append_builder_character(&sb, _T('G'), false);
 
+            TEXT actual = build_text_string_builder(&sb);
+
+            Assert::AreEqual(_T("ABCDEFG"), actual.value);
+
+            TEXT free1 = reference_text_string_builder(&sb);
+            TEXT free2 = reference_text_string_builder(&sb);
+            TEXT free3 = reference_text_string_builder(&sb);
+
+
+            Assert::IsTrue(free_text(&actual));
             Assert::IsTrue(free_string_builder(&sb));
         }
     };

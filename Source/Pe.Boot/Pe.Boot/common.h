@@ -7,7 +7,15 @@
 #   define GLOBAL
 #endif
 
-#define NEWLINE "\r\n"
+#define NEWLINE_CR "\r"
+#define NEWLINE_LF "\n"
+#define NEWLINE_CRLF "\r\n"
+
+#define NEWLINE_CRT _(NEWLINE_CR)
+#define NEWLINE_LFT _(NEWLINE_LF)
+#define NEWLINE_CRLFT _(NEWLINE_CRLF)
+
+#define NEWLINE NEWLINE_CRLF
 #define NEWLINET _T(NEWLINE)
 
 #define TO_STRING_CORE(x) #x

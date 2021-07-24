@@ -24,6 +24,7 @@ typedef struct tag_STRING_BUILDER
     struct
     {
         size_t capacity;
+        TCHAR* newline;
     } library;
 } STRING_BUILDER;
 
@@ -61,8 +62,30 @@ bool RC_HEAP_FUNC(free_string_builder, STRING_BUILDER* string_builder);
 #   define free_string_builder(string_builder) RC_HEAP_WRAP(free_string_builder, (string_builder))
 #endif
 
-STRING_BUILDER* append_builder_string(STRING_BUILDER* string_builder, const TCHAR* s);
-STRING_BUILDER* append_builder_text(STRING_BUILDER* string_builder, const TEXT* text);
-STRING_BUILDER* append_builder_character(STRING_BUILDER* string_builder, TCHAR c);
+/// <summary>
+/// テキストを生成する。
+/// </summary>
+/// <param name="string_builder"></param>
+/// <param name="text"></param>
+/// <param name="newline"></param>
+/// <returns>生成したテキスト。解放が必要。</returns>
+TEXT RC_HEAP_FUNC(build_text_string_builder, const STRING_BUILDER* string_builder);
+#ifdef RES_CHECK
+#   define build_text_string_builder(string_builder) RC_HEAP_WRAP(build_text_string_builder, (string_builder))
+#endif
+
+/// <summary>
+/// テキストを参照する。
+/// <para>参照テキスト使用中に元<c>STRING_BUILDER</c>を操作しない前提。</para>
+/// </summary>
+/// <param name="string_builder"></param>
+/// <returns>参照テキスト。</returns>
+TEXT reference_text_string_builder(STRING_BUILDER* string_builder);
+
+
+STRING_BUILDER* append_builder_newline(STRING_BUILDER* string_builder);
+STRING_BUILDER* append_builder_string(STRING_BUILDER* string_builder, const TCHAR* s, bool newline);
+STRING_BUILDER* append_builder_text(STRING_BUILDER* string_builder, const TEXT* text, bool newline);
+STRING_BUILDER* append_builder_character(STRING_BUILDER* string_builder, TCHAR c, bool newline);
 
 
