@@ -136,3 +136,4 @@ bool RC_HEAP_FUNC(free_text, TEXT* text);
 #include "text_search.h"
 #include "text_conv.h"
 #include "text_man.h"
+#include "text_fmt.h"

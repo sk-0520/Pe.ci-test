@@ -417,6 +417,7 @@
     <ClCompile Include="res_check.c" />
     <ClCompile Include="string_builder.c" />
     <ClCompile Include="text_conv.c" />
+    <ClCompile Include="text_fmt.c" />
     <ClCompile Include="text_search.c" />
     <ClCompile Include="text.c" />
     <ClCompile Include="text_man.c" />
@@ -444,6 +445,7 @@
     <ClInclude Include="res_check.h" />
     <ClInclude Include="string_builder.h" />
     <ClInclude Include="text_conv.h" />
+    <ClInclude Include="text_fmt.h" />
     <ClInclude Include="text_search.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="text_man.h" />
