@@ -94,7 +94,7 @@ typedef bool (*func_string_writer)(void* receiver, const WRITE_STRING_DATA* data
 /// <param name="value">真偽値。</param>
 /// <param name="is_uppper">大文字にするか。</param>
 /// <returns>成功状態。</returns>
-bool write_to_primitive_boolean(func_string_writer writer, void* receiver, bool value, bool is_uppper);
+bool write_primitive_boolean(func_string_writer writer, void* receiver, bool value, bool is_uppper);
 
 /// <summary>
 /// <c>ssize_t</c>の数値を書き込み。

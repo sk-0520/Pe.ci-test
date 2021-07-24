@@ -1,6 +1,7 @@
 ﻿#include "debug.h"
 #include "tstring.h"
 #include "string_builder.h"
+#include "writer.h"
 
 STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t capacity)
 {
@@ -177,6 +178,57 @@ STRING_BUILDER* append_builder_character(STRING_BUILDER* string_builder, TCHAR c
     extend_capacity_if_not_enough_string_builder(string_builder, 1);
     string_builder->buffer[string_builder->length++] = c;
 
+    if (newline) {
+        append_builder_newline(string_builder);
+    }
+    return string_builder;
+}
+
+static bool write_string(void* receiver, const WRITE_STRING_DATA* data)
+{
+    STRING_BUILDER* string_builder = (STRING_BUILDER*)receiver;
+    append_string_core(string_builder, data->value, data->length);
+    return true;
+}
+
+STRING_BUILDER* append_builder_int(STRING_BUILDER* string_builder, ssize_t value, bool newline)
+{
+    if (0 <= value && value <= 9) {
+        return append_builder_character(string_builder, (uint8_t)value + '0', newline);
+    }
+
+    write_primitive_integer(write_string, string_builder, value, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, 0, _T(' '));
+    if (newline) {
+        append_builder_newline(string_builder);
+    }
+    return string_builder;
+}
+
+STRING_BUILDER* append_builder_uint(STRING_BUILDER* string_builder, size_t value, bool newline)
+{
+    if (0 <= value && value <= 9) {
+        return append_builder_character(string_builder, (uint8_t)value + '0', newline);
+    }
+
+    write_primitive_uinteger(write_string, string_builder, value, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, 0, _T(' '));
+    if (newline) {
+        append_builder_newline(string_builder);
+    }
+    return string_builder;
+}
+
+STRING_BUILDER* append_builder_bool(STRING_BUILDER* string_builder, bool value, bool newline)
+{
+    write_primitive_boolean(write_string, string_builder, value, false);
+    if (newline) {
+        append_builder_newline(string_builder);
+    }
+    return string_builder;
+}
+
+STRING_BUILDER* append_builder_pointer(STRING_BUILDER* string_builder, void* pointer, bool newline)
+{
+    write_primitive_pointer(write_string, string_builder, pointer);
     if (newline) {
         append_builder_newline(string_builder);
     }

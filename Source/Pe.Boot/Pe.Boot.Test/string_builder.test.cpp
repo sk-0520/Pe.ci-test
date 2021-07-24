@@ -71,9 +71,14 @@ namespace PeBootTest
 
             append_builder_character(&sb, _T('G'), false);
 
+            append_builder_bool(&sb, true, false);
+            append_builder_int(&sb, -1, false);
+            append_builder_bool(&sb, false, false);
+            append_builder_uint(&sb, 1, false);
+
             TEXT actual = build_text_string_builder(&sb);
 
-            Assert::AreEqual(_T("ABCDEFG"), actual.value);
+            Assert::AreEqual(_T("ABCDEFGtrue-1false1"), actual.value);
 
             TEXT free1 = reference_text_string_builder(&sb);
             TEXT free2 = reference_text_string_builder(&sb);

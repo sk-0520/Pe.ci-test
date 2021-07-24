@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "common.h"
 #include "tstring.h"
 #include "text.h"
 
@@ -87,5 +88,8 @@ STRING_BUILDER* append_builder_newline(STRING_BUILDER* string_builder);
 STRING_BUILDER* append_builder_string(STRING_BUILDER* string_builder, const TCHAR* s, bool newline);
 STRING_BUILDER* append_builder_text(STRING_BUILDER* string_builder, const TEXT* text, bool newline);
 STRING_BUILDER* append_builder_character(STRING_BUILDER* string_builder, TCHAR c, bool newline);
-
+STRING_BUILDER* append_builder_int(STRING_BUILDER* string_builder, ssize_t value, bool newline);
+STRING_BUILDER* append_builder_uint(STRING_BUILDER* string_builder, size_t value, bool newline);
+STRING_BUILDER* append_builder_bool(STRING_BUILDER* string_builder, bool value, bool newline);
+STRING_BUILDER* append_builder_pointer(STRING_BUILDER* string_builder, void* pointer, bool newline);
 

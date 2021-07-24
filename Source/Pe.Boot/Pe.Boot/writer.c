@@ -14,7 +14,7 @@ static const TCHAR decimals[] = _T("0123456789");
 static const TCHAR* hexs[] = { _T("0123456789abcdef"), _T("0123456789ABCDEF"), };
 
 
-bool write_to_primitive_boolean(func_string_writer writer, void* receiver, bool value, bool is_uppper)
+bool write_primitive_boolean(func_string_writer writer, void* receiver, bool value, bool is_uppper)
 {
     WRITE_STRING_DATA data;
     if (value) {

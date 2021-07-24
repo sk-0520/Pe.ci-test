@@ -58,7 +58,7 @@ namespace PeBootTest
             for (auto test : tests) {
                 BUF actual;
                 auto [arg2, arg3] = test.inputs;
-                write_to_primitive_boolean(&BUF::write_s, &actual, arg2, arg3);
+                write_primitive_boolean(&BUF::write_s, &actual, arg2, arg3);
                 Assert::AreEqual(test.expected, actual.values);
             }
         }
