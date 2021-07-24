@@ -244,7 +244,7 @@ namespace PeBootTest
                 DATA(_T("00000000000003e8"), np2),
 #else
                 DATA(_T("00000000"), np1),
-                DATA(_T("000003e8"), nnp2p1),
+                DATA(_T("000003e8"), np2),
 #endif
 
             };
