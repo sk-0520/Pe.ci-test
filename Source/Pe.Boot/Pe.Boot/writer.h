@@ -124,6 +124,33 @@ bool write_primitive_integer(func_string_writer writer, void* receiver, ssize_t 
 bool write_primitive_uinteger(func_string_writer writer, void* receiver, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator);
 
 /// <summary>
+/// <c>ssize_t</c>の16進数を書き込み。
+/// </summary>
+/// <param name="writer">書き込みデータ送信処理。</param>
+/// <param name="receiver">書き込み対象データ受信処理。</param>
+/// <param name="value">数値。</param>
+/// <param name="write_padding">埋め処理を方法。</param>
+/// <param name="write_align">埋め処理時の揃え方向。</param>
+/// <param name="is_upper">大文字で表示するか。</param>
+/// <param name="alternate_form">0x(X)を付与するか。</param>
+/// <param name="width">表示幅。</param>
+/// <returns>成功状態。</returns>
+bool write_primitive_hex(func_string_writer writer, void* receiver, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width);
+/// <summary>
+/// <c>size_t</c>の16進数を書き込み。
+/// </summary>
+/// <param name="writer">書き込みデータ送信処理。</param>
+/// <param name="receiver">書き込み対象データ受信処理。</param>
+/// <param name="value">数値。</param>
+/// <param name="write_padding">埋め処理を方法。</param>
+/// <param name="write_align">埋め処理時の揃え方向。</param>
+/// <param name="is_upper">大文字で表示するか。</param>
+/// <param name="alternate_form">0x(X)を付与するか。</param>
+/// <param name="width">表示幅。</param>
+/// <returns>成功状態。</returns>
+bool write_primitive_uhex(func_string_writer writer, void* receiver, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width);
+
+/// <summary>
 /// 文字を書き込み。
 /// </summary>
 /// <param name="writer">書き込みデータ送信処理。</param>

@@ -11,6 +11,7 @@
 #define FALSE_LOWER "false"
 
 static const TCHAR decimals[] = _T("0123456789");
+static const TCHAR* hexs[] = { _T("0123456789abcdef"), _T("0123456789ABCDEF"), };
 
 
 bool write_to_primitive_boolean(func_string_writer writer, void* receiver, bool value, bool is_uppper)
@@ -39,7 +40,11 @@ bool write_to_primitive_boolean(func_string_writer writer, void* receiver, bool 
 
 static TCHAR* allocate_number(bool isHex, size_t width)
 {
-    return allocate_clear_memory(sizeof(size_t) * 8 + 1 + width + ((sizeof(size_t) * 8) / 3), sizeof(TCHAR));
+    if (isHex) {
+        return allocate_clear_memory(sizeof(size_t) * 2 + 2 + width, sizeof(TCHAR));
+    } else {
+        return allocate_clear_memory(sizeof(size_t) * 8 + 1 + width + ((sizeof(size_t) * 8) / 3), sizeof(TCHAR));
+    }
 }
 
 TCHAR get_fill_character(WRITE_PADDING write_padding)
@@ -114,7 +119,7 @@ static size_t fill_last(TCHAR* buffer, size_t fill_buffer_length, size_t width, 
 
 bool write_primitive_integer(func_string_writer writer, void* receiver, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
 {
-    TCHAR* buffer = allocate_number(width, sizeof(TCHAR));
+    TCHAR* buffer = allocate_number(false, width);
     size_t buffer_length = 0;
     bool is_negative = value < 0;
     ssize_t abs_value = is_negative ? -value : value;
@@ -156,7 +161,7 @@ bool write_primitive_integer(func_string_writer writer, void* receiver, ssize_t 
 
 bool write_primitive_uinteger(func_string_writer writer, void* receiver, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
 {
-    TCHAR* buffer = allocate_number(width, sizeof(TCHAR));
+    TCHAR* buffer = allocate_number(false, width);
     size_t buffer_length = 0;
     bool is_negative = false;
     size_t abs_value = value;
@@ -180,6 +185,78 @@ bool write_primitive_uinteger(func_string_writer writer, void* receiver, size_t 
     size_t fill_buffer_length = MAX(buffer_length, width);
 
     fill_buffer_length = set_sign_and_fill(buffer, buffer_length, fill_buffer_length, fill_buffer_index, is_sign, is_negative, write_padding, write_align);
+
+    reverse_buffer(buffer, fill_buffer_length);
+
+    fill_buffer_length = fill_last(buffer, fill_buffer_length, width, write_padding, write_align);
+
+    WRITE_STRING_DATA data = {
+        .value = buffer,
+        .length = fill_buffer_length,
+    };
+    writer(receiver, &data);
+
+    free_string(buffer);
+
+    return true;
+}
+
+//TODO: 諸々間違ってる
+bool write_primitive_hex(func_string_writer writer, void* receiver, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width)
+{
+    TCHAR* buffer = allocate_number(true, width);
+    ssize_t work_value = value;
+    size_t buffer_length = 0;
+    do {
+        int n = work_value % 16;
+        buffer[buffer_length++] = hexs[is_upper ? 1 : 0][n];
+        work_value /= 16;
+    } while (work_value != 0);
+
+    if (alternate_form) {
+        buffer[buffer_length++] = is_upper ? _T('X') : _T('x');
+        buffer[buffer_length++] = _T('0');
+    }
+
+    size_t fill_buffer_length = MAX(buffer_length, width);
+
+    fill_buffer_length = set_sign_and_fill(buffer, buffer_length, fill_buffer_length, buffer_length, false, false, write_padding, write_align);
+
+    reverse_buffer(buffer, fill_buffer_length);
+
+    fill_buffer_length = fill_last(buffer, fill_buffer_length, width, write_padding, write_align);
+
+    WRITE_STRING_DATA data = {
+        .value = buffer,
+        .length = fill_buffer_length,
+    };
+    writer(receiver, &data);
+
+    free_string(buffer);
+
+    return true;
+}
+
+//TODO: 諸々間違ってる
+bool write_primitive_uhex(func_string_writer writer, void* receiver, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width)
+{
+    TCHAR* buffer = allocate_number(true, width);
+    size_t work_value = value;
+    size_t buffer_length = 0;
+    do {
+        int n = work_value % 16;
+        buffer[buffer_length++] = hexs[is_upper ? 1 : 0][n];
+        work_value /= 16;
+    } while (work_value != 0);
+
+    if (alternate_form) {
+        buffer[buffer_length++] = is_upper ? _T('X') : _T('x');
+        buffer[buffer_length++] = _T('0');
+    }
+
+    size_t fill_buffer_length = MAX(buffer_length, width);
+
+    fill_buffer_length = set_sign_and_fill(buffer, buffer_length, fill_buffer_length, buffer_length, false, false, write_padding, write_align);
 
     reverse_buffer(buffer, fill_buffer_length);
 

@@ -164,6 +164,60 @@ namespace PeBootTest
             }
         }
 
+        //TODO: そもそも間違ってる
+        TEST_METHOD(write_primitive_hex_test)
+        {
+            auto tests = {
+                DATA(_T("0"), 0, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, false, 0),
+                DATA(_T("1"), 1, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, false, 0),
+                DATA(_T("9"), 9, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, false, 0),
+                DATA(_T("a"), 10, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, false, 0),
+                DATA(_T("f"), 15, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, false, 0),
+                DATA(_T("10"), 16, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, false, 0),
+
+                DATA(_T("A"), 10, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, true, false, 0),
+                DATA(_T("F"), 15, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, true, false, 0),
+
+                DATA(_T("0xf"), 15, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, true, 0),
+                DATA(_T("0x10"), 16, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, true, 0),
+                DATA(_T("0XF"), 15, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, true, true, 0),
+                DATA(_T("0X10"), 16, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, true, true, 0),
+            };
+            for (auto test : tests) {
+                BUF actual;
+                auto [arg2, arg3, arg4, arg5, arg6, arg7] = test.inputs;
+                write_primitive_hex(&BUF::write_s, &actual, arg2, arg3, arg4, arg5, arg6, arg7);
+                Assert::AreEqual(test.expected, actual.values);
+            }
+        }
+
+        //TODO: そもそも間違ってる
+        TEST_METHOD(write_primitive_uhex_test)
+        {
+            auto tests = {
+                DATA(_T("0"), (size_t)0, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, false, 0),
+                DATA(_T("1"), (size_t)1, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, false, 0),
+                DATA(_T("9"), (size_t)9, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, false, 0),
+                DATA(_T("a"), (size_t)10, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, false, 0),
+                DATA(_T("f"), (size_t)15, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, false, 0),
+                DATA(_T("10"), (size_t)16, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, false, 0),
+
+                DATA(_T("A"), (size_t)10, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, true, false, 0),
+                DATA(_T("F"), (size_t)15, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, true, false, 0),
+
+                DATA(_T("0xf"), (size_t)15, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, true, 0),
+                DATA(_T("0x10"), (size_t)16, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, true, 0),
+                DATA(_T("0XF"), (size_t)15, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, true, true, 0),
+                DATA(_T("0X10"), (size_t)16, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, true, true, 0),
+            };
+            for (auto test : tests) {
+                BUF actual;
+                auto [arg2, arg3, arg4, arg5, arg6, arg7] = test.inputs;
+                write_primitive_uhex(&BUF::write_s, &actual, arg2, arg3, arg4, arg5, arg6, arg7);
+                Assert::AreEqual(test.expected, actual.values);
+            }
+        }
+
         TEST_METHOD(write_primitive_character_test)
         {
             auto tests = {
