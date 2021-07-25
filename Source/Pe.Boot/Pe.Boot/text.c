@@ -11,6 +11,7 @@ TEXT create_invalid_text()
         .length = 0,
         .library = {
             .need_release = false,
+            .sentinel = false,
             .released = false,
         },
     };
@@ -45,6 +46,7 @@ TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length)
         .length = length,
         .library = {
             .need_release = true,
+            .sentinel = true,
             .released = false,
         },
     };
@@ -62,7 +64,6 @@ TEXT RC_HEAP_FUNC(new_text, const TCHAR* source)
     return RC_HEAP_CALL(new_text_with_length, source, length);
 }
 
-
 TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release)
 {
     if (!source) {
@@ -74,6 +75,7 @@ TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release
         .length = length,
         .library = {
             .need_release = need_release,
+            .sentinel = false,
             .released = false,
         },
     };
@@ -89,7 +91,9 @@ TEXT wrap_text(const TCHAR* source)
 
     size_t length = get_string_length(source);
 
-    return wrap_text_with_length(source, length, false);
+    TEXT result = wrap_text_with_length(source, length, false);
+    result.library.sentinel = true;
+    return result;
 }
 
 TEXT RC_HEAP_FUNC(clone_text, const TEXT* source)
@@ -107,6 +111,7 @@ TEXT RC_HEAP_FUNC(clone_text, const TEXT* source)
         .length = source->length,
         .library = {
             .need_release = true,
+            .sentinel = true,
             .released = false,
         },
     };
@@ -132,6 +137,7 @@ TEXT reference_text_width_length(const TEXT* source, size_t index, size_t length
         .length = length,
         .library = {
             .need_release = false,
+            .sentinel = false, //TODO: 番兵判定できるはず
             .released = false,
         }
     };
@@ -150,6 +156,7 @@ TEXT reference_text(const TEXT* source)
         .length = source->length,
         .library = {
             .need_release = false,
+            .sentinel = source->library.sentinel,
             .released = false,
         }
     };

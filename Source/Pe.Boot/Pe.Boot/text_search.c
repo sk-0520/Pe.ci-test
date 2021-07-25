@@ -7,6 +7,7 @@
 
 TEXT find_text(const TEXT* haystack, const TEXT* needle, bool ignore_case)
 {
+    //TODO: 番兵なし対応
     TCHAR* s = ignore_case
         ? StrStrI(haystack->value, needle->value)
         : StrStr(haystack->value, needle->value)
@@ -33,6 +34,8 @@ static TCHAR* find_character_core(const TCHAR* haystack, TCHAR needle)
 
 TEXT find_character(const TEXT* haystack, TCHAR needle)
 {
+    //TODO: 番兵なし対応
+
     TCHAR* s = find_character_core(haystack->value, needle);
     if (!s) {
         return create_invalid_text();
@@ -43,6 +46,7 @@ TEXT find_character(const TEXT* haystack, TCHAR needle)
 
 ssize_t index_of_character(const TEXT* haystack, TCHAR needle)
 {
+    //TODO: 番兵なし対応
     TCHAR* s = find_character_core(haystack->value, needle);
     if (!s) {
         return -1;
@@ -53,6 +57,7 @@ ssize_t index_of_character(const TEXT* haystack, TCHAR needle)
 
 int compare_text(const TEXT* a, const TEXT* b, bool ignore_case)
 {
+    //TODO: 番兵なし対応
     return ignore_case
         ? lstrcmpi(a->value, b->value)
         : lstrcmp(a->value, b->value)

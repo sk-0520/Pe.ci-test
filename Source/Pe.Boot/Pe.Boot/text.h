@@ -30,11 +30,12 @@ typedef struct tag_TEXT
         /// <para>アプリケーション内では使用しない。</para>
         /// </summary>
         bool need_release : 1;
-        ///// <summary>
-        ///// value終端が0、つまりは通常のC文字列か。
-        ///// <para>偽の場合通常文字列としては使用できない。</para>
-        ///// </summary>
-        //bool sentinel : 1;
+        /// <summary>
+        /// value終端が0、つまりは通常のC文字列か。
+        /// <para>偽の場合通常文字列としては使用できない。</para>
+        /// <para>TODO: 現状番兵が存在する前提処理が多数のため偽に設定した場合は大抵死ぬ。</para>
+        /// </summary>
+        bool sentinel : 1;
         /// <summary>
         /// 解放済みか。
         /// <para>アプリケーション内では使用しない。</para>
@@ -50,16 +51,17 @@ typedef struct tag_TEXT
 typedef TEXT* TEXT_LIST;
 
 /// <summary>
-/// 空のテキストを生成。
+/// 無効テキストを生成。
 /// </summary>
-/// <returns>領域自体がNULLの不変文字列(通常使用は出来ない)。</returns>
+/// <returns>領域自体がNULLのテキスト(通常使用は出来ない)。</returns>
 TEXT create_invalid_text();
 
 /// <summary>
 /// テキストが使用可能か。
+/// <para><c>create_invalid_text</c>で作られたやつなんかは使用不可になる。</para>
 /// </summary>
 /// <param name="text"></param>
-/// <returns></returns>
+/// <returns>使用可能か。</returns>
 bool is_enabled_text(const TEXT* text);
 
 /// <summary>
@@ -91,7 +93,7 @@ TEXT RC_HEAP_FUNC(new_text, const TCHAR* source);
 /// <param name="source">対象文字列。</param>
 /// <param name="length">対象文字列の長さ。</param>
 /// <param name="need_release">解放が必要か。真の場合、<c>wrapText</c>と異なり呼び出し側で確保した領域を信頼して持ち運ぶ。</param>
-/// <returns></returns>
+/// <returns>番兵使用不可のテキスト。</returns>
 TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release);
 
 /// <summary>
@@ -121,7 +123,7 @@ TEXT RC_HEAP_FUNC(clone_text, const TEXT* source);
 /// <param name="source">入力テキスト。</param>
 /// <param name="index">開始位置。</param>
 /// <param name="length">長さ。0を指定すれば残りすべて。</param>
-/// <returns>参照として複製されたテキスト。参照元が生きている限り生きている。解放不要。参照できない場合は無効テキスト。</returns>
+/// <returns>参照として複製されたテキスト。参照元が生きている限り生きている。解放不要。番兵使用不可。参照できない場合は無効テキスト。</returns>
 TEXT reference_text_width_length(const TEXT* source, size_t index, size_t length);
 
 /// <summary>
