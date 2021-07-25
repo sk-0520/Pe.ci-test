@@ -62,6 +62,7 @@ namespace PeBootTest
 
         TEST_METHOD(append_string_builder_test)
         {
+            auto expected = _T("ABCDEFGtrue-1false1");
             auto sb = create_string_builder(3);
 
             append_builder_string(&sb, _T("ABC"), false);
@@ -78,12 +79,28 @@ namespace PeBootTest
 
             TEXT actual = build_text_string_builder(&sb);
 
-            Assert::AreEqual(_T("ABCDEFGtrue-1false1"), actual.value);
+            Assert::AreEqual(expected, actual.value);
 
             TEXT free1 = reference_text_string_builder(&sb);
             TEXT free2 = reference_text_string_builder(&sb);
             TEXT free3 = reference_text_string_builder(&sb);
 
+
+            Assert::IsTrue(free_text(&actual));
+            Assert::IsTrue(free_string_builder(&sb));
+        }
+
+        TEST_METHOD(append_builder_format_test)
+        {
+            auto sb = create_string_builder(3);
+
+            auto expected = _T("1 -1 +100 -100 -200 A abc def");
+            TEXT format = wrap("%d %d %+d %d %+d %c %s %t");
+            auto t = wrap("def");
+            append_builder_format(&sb, &format, 1, -1, 100, -100, -200, _T('A'), _T("abc"), &t);
+            TEXT actual = build_text_string_builder(&sb);
+
+            Assert::AreEqual(expected, actual.value);
 
             Assert::IsTrue(free_text(&actual));
             Assert::IsTrue(free_string_builder(&sb));

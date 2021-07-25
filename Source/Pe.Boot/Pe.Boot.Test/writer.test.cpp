@@ -18,34 +18,79 @@ namespace PeBootTest
             TCHAR values[size] = { 0 };
             size_t length = 0;
 
-            static bool receive_c(const WRITE_CHARACTER_DATA* data)
+            WRITE_RESULT receive_c(const WRITE_CHARACTER_DATA* data)
             {
                 values[length++] = data->value;
                 values[length] = 0;
-                return true;
+                return write_success(1);
             }
 
-            bool receive_s(const WRITE_STRING_DATA* data)
+            WRITE_RESULT receive_s(const WRITE_STRING_DATA* data)
             {
                 copy_memory(values + length, data->value, data->length * sizeof(TCHAR));
                 length += data->length;
                 values[length] = 0;
-                return true;
+                return write_success(data->length);
             }
 
-            static bool write_s(void* receiver, const TCHAR c)
+            static WRITE_RESULT write_c(const WRITE_CHARACTER_DATA* data)
             {
-                return static_cast<STRING_BUFFER<size>*>(receiver)->receive_c(c);
+                Assert::IsNotNull(data);
+                Assert::IsNotNull(data->receiver);
+                auto _this = static_cast<STRING_BUFFER<size>*>(data->receiver);
+                return _this->receive_c(data);
             }
 
-            static bool write_s(void* receiver, const WRITE_STRING_DATA* data)
+            static WRITE_RESULT write_s(const WRITE_STRING_DATA* data)
             {
-                return static_cast<STRING_BUFFER<size>*>(receiver)->receive_s(data);
+                Assert::IsNotNull(data);
+                Assert::IsNotNull(data->receiver);
+                auto _this = static_cast<STRING_BUFFER<size>*>(data->receiver);
+                return _this->receive_s(data);
             }
         };
         using BUF = STRING_BUFFER<1024>;
 
     public:
+
+        TEST_METHOD(get_write_format_flags_test)
+        {
+            struct EXPECTED
+            {
+                size_t length;
+                WRITE_FORMAT_FLAGS flags;
+            };
+
+            auto tests = {
+                //DATA<EXPECTED, TEXT>({ 0, { WRITE_ALIGN_LEFT, WRITE_PADDING_SPACE, false, false } }, wrap("")),
+                //DATA<EXPECTED, TEXT>({ 0, { WRITE_ALIGN_LEFT, WRITE_PADDING_SPACE, false, false } }, wrap("x")),
+                //DATA<EXPECTED, TEXT>({ 1, { WRITE_ALIGN_LEFT, WRITE_PADDING_SPACE, false, false } }, wrap("-")),
+                //DATA<EXPECTED, TEXT>({ 1, { WRITE_ALIGN_LEFT, WRITE_PADDING_SPACE, false, true } }, wrap("+")),
+                //DATA<EXPECTED, TEXT>({ 1, { WRITE_ALIGN_RIGHT, WRITE_PADDING_SPACE, false, false } }, wrap(" ")),
+                DATA<EXPECTED, TEXT>({ 1, { WRITE_ALIGN_LEFT, WRITE_PADDING_SPACE, true, false } }, wrap("#")),
+                DATA<EXPECTED, TEXT>({ 1, { WRITE_ALIGN_LEFT, WRITE_PADDING_SPACE, false, true } }, wrap("+")),
+                DATA<EXPECTED, TEXT>({ 2, { WRITE_ALIGN_LEFT, WRITE_PADDING_SPACE, true, true } }, wrap("#+")),
+                DATA<EXPECTED, TEXT>({ 2, { WRITE_ALIGN_LEFT, WRITE_PADDING_SPACE, true, true } }, wrap("+#")),
+                DATA<EXPECTED, TEXT>({ 4, { WRITE_ALIGN_LEFT, WRITE_PADDING_ZERO, true, true } }, wrap("#+0 ")),
+                DATA<EXPECTED, TEXT>({ 3, { WRITE_ALIGN_LEFT, WRITE_PADDING_ZERO, true, true } }, wrap("#+0x")),
+                DATA<EXPECTED, TEXT>({ 3, { WRITE_ALIGN_LEFT, WRITE_PADDING_ZERO, true, true } }, wrap("#+0x ")),
+            };
+            for (auto test : tests) {
+                WRITE_FORMAT_FLAGS actual_flags = {
+                    /*.align = */ WRITE_ALIGN_LEFT,
+                    /*.padding = */ WRITE_PADDING_SPACE,
+                    /*.alternate_form = */ false,
+                    /*.show_sign = */ false,
+                };
+                auto [arg2] = test.inputs;
+                size_t actual_length = get_write_format_flags(&actual_flags, &arg2);
+                Assert::AreEqual(test.expected.length, actual_length);
+                Assert::AreEqual<int>(test.expected.flags.align, actual_flags.align);
+                Assert::AreEqual<int>(test.expected.flags.padding, actual_flags.padding);
+                Assert::AreEqual(test.expected.flags.alternate_form, actual_flags.alternate_form);
+                Assert::AreEqual(test.expected.flags.show_sign, actual_flags.show_sign);
+            }
+        }
 
         TEST_METHOD(write_primitive_boolean_test)
         {
@@ -283,5 +328,68 @@ namespace PeBootTest
                 Assert::AreEqual(test.expected, actual.values);
             }
         }
+
+        TEST_METHOD(write_format_plaintext_test)
+        {
+            TCHAR* expected1 = _T("abc");
+            TEXT format1 = wrap("abc");
+            BUF actual1;
+            write_format(&BUF::write_s, &BUF::write_c, &actual1, &format1);
+            Assert::AreEqual(expected1, actual1.values);
+
+            TCHAR* expected2 = _T("%a%b%c%");
+            TEXT format2 = wrap("%%a%%b%%c%%");
+            BUF actual2;
+            write_format(&BUF::write_s, &BUF::write_c, &actual2, &format2);
+            Assert::AreEqual(expected2, actual2.values);
+        }
+
+        TEST_METHOD(write_format_d_test)
+        {
+            TCHAR* expected1 = _T("123 [ 456] -123 +456");
+            TEXT format1 = wrap("%d [% 4d] %d %+d");
+            BUF actual1;
+            write_format(&BUF::write_s, &BUF::write_c, &actual1, &format1, 123, 456, -123, 456);
+            Assert::AreEqual(expected1, actual1.values);
+        }
+
+        TEST_METHOD(write_format_c_test)
+        {
+            TCHAR* expected1 = _T("1 a A");
+            TEXT format1 = wrap("%c %c %c");
+            BUF actual1;
+            write_format(&BUF::write_s, &BUF::write_c, &actual1, &format1, _T('1'), _T('a'), _T('A'));
+            Assert::AreEqual(expected1, actual1.values);
+        }
+
+        TEST_METHOD(write_format_b_test)
+        {
+            TCHAR* expected1 = _T("true false TRUE FALSE");
+            TEXT format1 = wrap("%b %b %B %B");
+            BUF actual1;
+            write_format(&BUF::write_s, &BUF::write_c, &actual1, &format1, true, false, true, false);
+            Assert::AreEqual(expected1, actual1.values);
+        }
+
+        TEST_METHOD(write_format_s_test)
+        {
+            TCHAR* expected1 = _T("[🎍]");
+            TEXT format1 = wrap("[%s]");
+            BUF actual1;
+            write_format(&BUF::write_s, &BUF::write_c, &actual1, &format1, _T("🎍"));
+            Assert::AreEqual(expected1, actual1.values);
+        }
+
+
+        TEST_METHOD(write_format_t_test)
+        {
+            TCHAR* expected1 = _T("[🚬]");
+            TEXT format1 = wrap("[%t]");
+            BUF actual1;
+            TEXT input = wrap("🚬");
+            write_format(&BUF::write_s, &BUF::write_c, &actual1, &format1, &input);
+            Assert::AreEqual(expected1, actual1.values);
+        }
+
     };
 }

@@ -92,4 +92,20 @@ STRING_BUILDER* append_builder_int(STRING_BUILDER* string_builder, ssize_t value
 STRING_BUILDER* append_builder_uint(STRING_BUILDER* string_builder, size_t value, bool newline);
 STRING_BUILDER* append_builder_bool(STRING_BUILDER* string_builder, bool value, bool newline);
 STRING_BUILDER* append_builder_pointer(STRING_BUILDER* string_builder, void* pointer, bool newline);
+STRING_BUILDER* append_builder_format(STRING_BUILDER* string_builder, const TEXT* format, ...);
 
+#define append_builder_string_word(string_builder, s)       append_builder_string((string_builder), (s), false)
+#define append_builder_text_word(string_builder, text)      append_builder_text((string_builder), (text), false)
+#define append_builder_character_word(string_builder, c)     append_builder_character((string_builder), (c), false)
+#define append_builder_int_word(string_builder, value)       append_builder_int((string_builder), (value), false)
+#define append_builder_uint_word(string_builder, value)      append_builder_uint((string_builder), (value), false)
+#define append_builder_bool_word(string_builder, value)      append_builder_bool((string_builder), (value), false)
+#define append_builder_pointer_word(string_builder, pointer) append_builder_pointer((string_builder), pointer, false)
+
+#define append_builder_string_newline(string_builder, s)       append_builder_string((string_builder), (s), true)
+#define append_builder_text_newline(string_builder, text)      append_builder_text((string_builder), (text), true)
+#define append_builder_character_newline(string_builder, c)     append_builder_character((string_builder), (c), true)
+#define append_builder_int_newline(string_builder, value)       append_builder_int((string_builder), (value), true)
+#define append_builder_uint_newline(string_builder, value)      append_builder_uint((string_builder), (value), true)
+#define append_builder_bool_newline(string_builder, value)      append_builder_bool((string_builder), (value), true)
+#define append_builder_pointer_newline(string_builder, pointer) append_builder_pointer((string_builder), pointer, true)

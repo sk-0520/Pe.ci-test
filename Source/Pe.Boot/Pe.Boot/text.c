@@ -1,6 +1,9 @@
 ﻿#include "debug.h"
 #include "text.h"
 
+#define FORMAT_LENGTH (256)
+
+
 TEXT create_invalid_text()
 {
     TEXT result = {
@@ -111,6 +114,31 @@ TEXT RC_HEAP_FUNC(clone_text, const TEXT* source)
     return result;
 }
 
+TEXT reference_text_width_length(const TEXT* source, size_t index, size_t length)
+{
+    if (!source->library.need_release && !index && source->length == length) {
+        return *source;
+    }
+
+    if(source->length <= index + length) {
+        return create_invalid_text();
+    }
+    if (!length) {
+        length = source->length - index;
+    }
+
+    TEXT result = {
+        .value = source->value + index,
+        .length = length,
+        .library = {
+            .need_release = false,
+            .released = false,
+        }
+    };
+
+    return result;
+}
+
 TEXT reference_text(const TEXT* source)
 {
     if (!source->library.need_release) {
@@ -151,4 +179,17 @@ bool RC_HEAP_FUNC(free_text, TEXT* text)
     text->library.need_release = false;
 
     return true;
+}
+
+TEXT format_text(const TEXT* format, ...)
+{
+    va_list ap;
+
+    va_start(ap, format);
+
+    //TEXT result = vformat_text(format, ap);
+
+    va_end(ap);
+
+    return create_invalid_text();
 }

@@ -115,10 +115,20 @@ TEXT RC_HEAP_FUNC(clone_text, const TEXT* source);
 #endif
 
 /// <summary>
+/// テキストを桁数指定で参照として複製。
+/// <para><c>wrap_text</c>のテキスト入力版みたいな感じ。</para>
+/// </summary>
+/// <param name="source">入力テキスト。</param>
+/// <param name="index">開始位置。</param>
+/// <param name="length">長さ。0を指定すれば残りすべて。</param>
+/// <returns>参照として複製されたテキスト。参照元が生きている限り生きている。解放不要。参照できない場合は無効テキスト。</returns>
+TEXT reference_text_width_length(const TEXT* source, size_t index, size_t length);
+
+/// <summary>
 /// テキストを参照として複製。
 /// </summary>
-/// <param name="source">入力テキストを。</param>
-/// <returns>参照として複製されたテキストを。参照元が生きている限り生きている。解放不要。</returns>
+/// <param name="source">入力テキスト。</param>
+/// <returns>参照として複製されたテキスト。参照元が生きている限り生きている。解放不要。</returns>
 TEXT reference_text(const TEXT* source);
 
 /// <summary>
@@ -132,8 +142,9 @@ bool RC_HEAP_FUNC(free_text, TEXT* text);
 #   define free_text(text) RC_HEAP_WRAP(free_text, (text))
 #endif
 
+TEXT format_text(const TEXT* format, ...);
+
 // 文字列操作ラッパー
 #include "text_search.h"
 #include "text_conv.h"
 #include "text_man.h"
-#include "text_fmt.h"

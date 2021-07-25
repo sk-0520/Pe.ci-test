@@ -184,11 +184,18 @@ STRING_BUILDER* append_builder_character(STRING_BUILDER* string_builder, TCHAR c
     return string_builder;
 }
 
-static bool write_string(void* receiver, const WRITE_STRING_DATA* data)
+static WRITE_RESULT write_character(const WRITE_CHARACTER_DATA* data)
 {
-    STRING_BUILDER* string_builder = (STRING_BUILDER*)receiver;
+    STRING_BUILDER* string_builder = (STRING_BUILDER*)data->receiver;
+    append_builder_character(string_builder, data->value, false);
+    return write_success(1);
+}
+
+static WRITE_RESULT write_string(const WRITE_STRING_DATA* data)
+{
+    STRING_BUILDER* string_builder = (STRING_BUILDER*)data->receiver;
     append_string_core(string_builder, data->value, data->length);
-    return true;
+    return write_success(data->length);
 }
 
 STRING_BUILDER* append_builder_int(STRING_BUILDER* string_builder, ssize_t value, bool newline)
@@ -232,5 +239,17 @@ STRING_BUILDER* append_builder_pointer(STRING_BUILDER* string_builder, void* poi
     if (newline) {
         append_builder_newline(string_builder);
     }
+    return string_builder;
+}
+
+STRING_BUILDER* append_builder_format(STRING_BUILDER* string_builder, const TEXT* format, ...)
+{
+    va_list ap;
+    va_start(ap, format);
+
+    write_vformat(write_string, write_character, string_builder, format, ap);
+
+    va_end(ap);
+
     return string_builder;
 }
