@@ -32,15 +32,16 @@ build_script:
   - cmd: npm run help-ci
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
   - ps: .\Build\build.ps1 -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
-  - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
-  - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms $env:PLATFORM
-  - ps: .\Build\create-release-note.ps1
 before_test:
   - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger & cd ..\..\..\ )
 test_script:
   - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-%PLATFORM% /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%" --test-adapter-path:. --logger:Appveyor
   - cmd: VSTest.Console Source\Pe.Boot\Pe.Boot.Test\bin\Release\%PLATFORM%\Pe.Boot.Test.dll /InIsolation /Platform:%PLATFORM% /Logger:Appveyor
   - cmd: VSTest.Console Source\Pe.Boot\Pe.Boot.Test\bin\CI_TEST\%PLATFORM%\Pe.Boot.Test.dll /InIsolation /Platform:%PLATFORM% /Logger:Appveyor
+after_test:
+  - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
+  - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms $env:PLATFORM
+  - ps: .\Build\create-release-note.ps1
 artifacts:
   - path: Output\*.zip
   - path: Output\*.7z
