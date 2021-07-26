@@ -54,5 +54,19 @@ namespace PeBootTest
             Assert::IsTrue(free_text(&dw));
         }
 
+        TEST_METHOD(format_text_test)
+        {
+            TCHAR* expected = _T("123 abc ABC");
+            TEXT format = wrap("%d %s %t");
+            int input1 = 123;
+            TCHAR* input2 = _T("abc");
+            TEXT input3 = wrap("ABC");
+
+            TEXT actual = format_text(&format, input1, input2, &input3);
+
+            Assert::AreEqual(expected, actual.value);
+
+            free_text(&actual);
+        }
     };
 }

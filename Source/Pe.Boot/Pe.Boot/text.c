@@ -1,5 +1,7 @@
 ﻿#include "debug.h"
 #include "text.h"
+#include "writer.h"
+#include "string_builder.h"
 
 #define FORMAT_LENGTH (256)
 
@@ -188,15 +190,19 @@ bool RC_HEAP_FUNC(free_text, TEXT* text)
     return true;
 }
 
-TEXT format_text(const TEXT* format, ...)
+TEXT RC_HEAP_FUNC(format_text, const TEXT* format, ...)
 {
+    STRING_BUILDER sb = RC_HEAP_CALL(create_string_builder, FORMAT_LENGTH);
     va_list ap;
-
     va_start(ap, format);
 
-    //TEXT result = vformat_text(format, ap);
+    append_builder_vformat(&sb, format, ap);
 
     va_end(ap);
 
-    return create_invalid_text();
+    TEXT result = RC_HEAP_CALL(build_text_string_builder, &sb);
+
+    RC_HEAP_CALL(free_string_builder, &sb);
+
+    return result;
 }

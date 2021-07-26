@@ -45,10 +45,10 @@ void rc__uninitialize();
 
 /// リソースチェック処理呼び出し切り替え処理
 #ifdef RES_CHECK
-#   define RC_HEAP_FUNC(function_name, ...) rc_heap__##function_name(__VA_ARGS__, RES_CHECK_FUNC_ARGS)
-#   define RC_FILE_FUNC(function_name, ...) rc_file__##function_name(__VA_ARGS__, RES_CHECK_FUNC_ARGS)
-#   define RC_HEAP_CALL(function_name, ...) rc_heap__##function_name(__VA_ARGS__, RES_CHECK_CALL_ARGS)
-#   define RC_FILE_CALL(function_name, ...) rc_file__##function_name(__VA_ARGS__, RES_CHECK_CALL_ARGS)
+#   define RC_HEAP_FUNC(function_name, ...) rc_heap__##function_name(RES_CHECK_FUNC_ARGS, __VA_ARGS__)
+#   define RC_FILE_FUNC(function_name, ...) rc_file__##function_name(RES_CHECK_FUNC_ARGS, __VA_ARGS__)
+#   define RC_HEAP_CALL(function_name, ...) rc_heap__##function_name(RES_CHECK_CALL_ARGS, __VA_ARGS__)
+#   define RC_FILE_CALL(function_name, ...) rc_file__##function_name(RES_CHECK_CALL_ARGS, __VA_ARGS__)
 #else
 #   define RC_HEAP_FUNC(function_name, ...) function_name(__VA_ARGS__)
 #   define RC_FILE_FUNC(function_name, ...) function_name(__VA_ARGS__)
@@ -57,6 +57,6 @@ void rc__uninitialize();
 #endif
 
 #ifdef RES_CHECK
-#   define RC_HEAP_WRAP(function_name, ...) rc_heap__##function_name(__VA_ARGS__, RES_CHECK_WRAP_ARGS)
-#   define RC_FILE_WRAP(function_name, ...) rc_file__##function_name(__VA_ARGS__, RES_CHECK_WRAP_ARGS)
+#   define RC_HEAP_WRAP(function_name, ...) rc_heap__##function_name(RES_CHECK_WRAP_ARGS, __VA_ARGS__)
+#   define RC_FILE_WRAP(function_name, ...) rc_file__##function_name(RES_CHECK_WRAP_ARGS, __VA_ARGS__)
 #endif

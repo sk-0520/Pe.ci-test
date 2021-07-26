@@ -242,12 +242,18 @@ STRING_BUILDER* append_builder_pointer(STRING_BUILDER* string_builder, void* poi
     return string_builder;
 }
 
+STRING_BUILDER* append_builder_vformat(STRING_BUILDER* string_builder, const TEXT* format, va_list ap)
+{
+    write_vformat(write_string, write_character, string_builder, format, ap);
+    return string_builder;
+}
+
 STRING_BUILDER* append_builder_format(STRING_BUILDER* string_builder, const TEXT* format, ...)
 {
     va_list ap;
     va_start(ap, format);
 
-    write_vformat(write_string, write_character, string_builder, format, ap);
+    append_builder_vformat(string_builder, format, ap);
 
     va_end(ap);
 

@@ -92,6 +92,8 @@ STRING_BUILDER* append_builder_int(STRING_BUILDER* string_builder, ssize_t value
 STRING_BUILDER* append_builder_uint(STRING_BUILDER* string_builder, size_t value, bool newline);
 STRING_BUILDER* append_builder_bool(STRING_BUILDER* string_builder, bool value, bool newline);
 STRING_BUILDER* append_builder_pointer(STRING_BUILDER* string_builder, void* pointer, bool newline);
+
+STRING_BUILDER* append_builder_vformat(STRING_BUILDER* string_builder, const TEXT* format, va_list ap);
 STRING_BUILDER* append_builder_format(STRING_BUILDER* string_builder, const TEXT* format, ...);
 
 #define append_builder_string_word(string_builder, s)       append_builder_string((string_builder), (s), false)

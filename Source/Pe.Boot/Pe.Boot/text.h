@@ -144,7 +144,16 @@ bool RC_HEAP_FUNC(free_text, TEXT* text);
 #   define free_text(text) RC_HEAP_WRAP(free_text, (text))
 #endif
 
-TEXT format_text(const TEXT* format, ...);
+/// <summary>
+/// 書式指定したテキストの生成。
+/// </summary>
+/// <param name="format"></param>
+/// <returns>生成テキスト。解放が必要。</returns>
+TEXT RC_HEAP_FUNC(format_text, const TEXT* format, ...);
+#ifdef RES_CHECK
+#   define format_text(actual, ...) RC_HEAP_WRAP(format_text, (actual), __VA_ARGS__)
+#endif
+
 
 // 文字列操作ラッパー
 #include "text_search.h"
