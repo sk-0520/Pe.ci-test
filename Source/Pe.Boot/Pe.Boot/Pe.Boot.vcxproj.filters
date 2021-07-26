@@ -102,6 +102,12 @@
     <ClCompile Include="writer.c">
       <Filter>source\library</Filter>
     </ClCompile>
+    <ClCompile Include="app_console.c">
+      <Filter>source\app</Filter>
+    </ClCompile>
+    <ClCompile Include="app_console_prompt.c">
+      <Filter>source\app</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app_path.h">
@@ -178,6 +184,12 @@
     </ClInclude>
     <ClInclude Include="writer.h">
       <Filter>header\library</Filter>
+    </ClInclude>
+    <ClInclude Include="app_console.h">
+      <Filter>header\app</Filter>
+    </ClInclude>
+    <ClInclude Include="app_console_prompt.h">
+      <Filter>header\app</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -14,5 +14,9 @@ typedef enum tag_EXECUTE_MODE
     /// <summary>
     /// 通常起動。
     /// </summary>
-    EXECUTE_MODE_BOOT
+    EXECUTE_MODE_BOOT,
+    /// <summary>
+    /// コンソール起動。
+    /// </summary>
+    EXECUTE_MODE_CONSOLE,
 } EXECUTE_MODE;

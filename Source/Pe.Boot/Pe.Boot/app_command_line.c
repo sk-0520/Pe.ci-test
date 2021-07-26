@@ -18,7 +18,8 @@ EXECUTE_MODE get_execute_mode(const COMMAND_LINE_OPTION* command_line_option)
         EXECUTE_MODE mode;
         TEXT value;
     } mode_mappings[] = {
-        { EXECUTE_MODE_BOOT, wrap_text(_T("boot")), }
+        { EXECUTE_MODE_BOOT, wrap_text(_T("boot")), },
+        { EXECUTE_MODE_CONSOLE, wrap_text(_T("console")), },
     };
 
     for (size_t i = 0; i < SIZEOF_ARRAY(mode_mappings); i++) {

@@ -401,6 +401,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app_command_line.c" />
+    <ClCompile Include="app_console.c" />
+    <ClCompile Include="app_console_prompt.c" />
     <ClCompile Include="app_main.c" />
     <ClCompile Include="command_line.c" />
     <ClCompile Include="debug.c" />
@@ -427,6 +429,8 @@
   <ItemGroup>
     <ClInclude Include="app_command_line.h" />
     <ClInclude Include="app_common.h" />
+    <ClInclude Include="app_console.h" />
+    <ClInclude Include="app_console_prompt.h" />
     <ClInclude Include="app_main.h" />
     <ClInclude Include="command_line.h" />
     <ClInclude Include="common.h" />

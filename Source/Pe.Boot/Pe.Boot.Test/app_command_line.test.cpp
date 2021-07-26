@@ -16,7 +16,7 @@ namespace PeBootTest
         {
             auto tests = {
                 DATA(EXECUTE_MODE_BOOT, wrap("app --_mode boot")),
-                // 今の時点では何しても EXECUTE_MODE_BOOT になる
+                DATA(EXECUTE_MODE_CONSOLE, wrap("app --_mode console")),
                 DATA(EXECUTE_MODE_BOOT, wrap("app")),
                 DATA(EXECUTE_MODE_BOOT, wrap("app /_mode=help")),
             };
