@@ -16,58 +16,61 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="source\library">
+      <UniqueIdentifier>{d8528895-ad76-4936-ba4b-096d158bf2fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="tstring.test.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="path.test.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="memory.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="Test.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="text.test.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="app_path.test.cpp">
       <Filter>source\app</Filter>
-    </ClCompile>
-    <ClCompile Include="map.test.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="command_line.test.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="text_man.test.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="text_conv.test.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="text_search.test.cpp">
-      <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="app_command_line.test.cpp">
       <Filter>source\app</Filter>
     </ClCompile>
+    <ClCompile Include="command_line.test.cpp">
+      <Filter>source\library</Filter>
+    </ClCompile>
     <ClCompile Include="fsio.test.cpp">
-      <Filter>source</Filter>
+      <Filter>source\library</Filter>
     </ClCompile>
     <ClCompile Include="fsio_resource.test.cpp">
-      <Filter>source</Filter>
+      <Filter>source\library</Filter>
+    </ClCompile>
+    <ClCompile Include="map.test.cpp">
+      <Filter>source\library</Filter>
+    </ClCompile>
+    <ClCompile Include="memory.test.cpp">
+      <Filter>source\library</Filter>
+    </ClCompile>
+    <ClCompile Include="path.test.cpp">
+      <Filter>source\library</Filter>
     </ClCompile>
     <ClCompile Include="string_builder.test.cpp">
-      <Filter>source</Filter>
+      <Filter>source\library</Filter>
+    </ClCompile>
+    <ClCompile Include="text.test.cpp">
+      <Filter>source\library</Filter>
+    </ClCompile>
+    <ClCompile Include="text_conv.test.cpp">
+      <Filter>source\library</Filter>
+    </ClCompile>
+    <ClCompile Include="text_man.test.cpp">
+      <Filter>source\library</Filter>
+    </ClCompile>
+    <ClCompile Include="text_search.test.cpp">
+      <Filter>source\library</Filter>
+    </ClCompile>
+    <ClCompile Include="tstring.test.cpp">
+      <Filter>source\library</Filter>
     </ClCompile>
     <ClCompile Include="writer.test.cpp">
-      <Filter>source</Filter>
+      <Filter>source\library</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
