@@ -89,7 +89,7 @@ bool is_enabled_file_resource(const FILE_RESOURCE* file)
     return true;
 }
 
-ssize_t read_file_resource(const FILE_RESOURCE* file, uint8_t* buffer, size_t length)
+ssize_t read_file_resource(const FILE_RESOURCE* file, void* buffer, size_t length)
 {
     DWORD read_length = 0;
     if (ReadFile(file->handle, (void*)buffer, (DWORD)length, &read_length, NULL)) {
@@ -99,7 +99,7 @@ ssize_t read_file_resource(const FILE_RESOURCE* file, uint8_t* buffer, size_t le
     return -1;
 }
 
-ssize_t write_file_resource(const FILE_RESOURCE* file, uint8_t* values, size_t length)
+ssize_t write_file_resource(const FILE_RESOURCE* file, void* values, size_t length)
 {
     DWORD write_length = 0;
     if (WriteFile(file->handle, (void*)values, (DWORD)length, &write_length, NULL)) {

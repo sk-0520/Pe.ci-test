@@ -136,7 +136,7 @@ bool is_enabled_file_resource(const FILE_RESOURCE* file);
 /// <param name="buffer">読み込みデータ格納先。</param>
 /// <param name="length">読み込みデータサイズ。</param>
 /// <returns>読み込んだサイズ。0の場合は終端。読み込みに失敗している場合は-1。</returns>
-ssize_t read_file_resource(const FILE_RESOURCE* file, uint8_t* buffer, size_t length);
+ssize_t read_file_resource(const FILE_RESOURCE* file, void* buffer, size_t length);
 
 /// <summary>
 /// ファイルリソースからデータ書き込み。
@@ -146,7 +146,7 @@ ssize_t read_file_resource(const FILE_RESOURCE* file, uint8_t* buffer, size_t le
 /// <param name="values">読み込みデータ格納先。</param>
 /// <param name="length">読み込みデータサイズ。</param>
 /// <returns>書き込んだサイズ。書き込み失敗時は-1。</returns>
-ssize_t write_file_resource(const FILE_RESOURCE* file, uint8_t* values, size_t length);
+ssize_t write_file_resource(const FILE_RESOURCE* file, void* values, size_t length);
 
 // 64bit値をいい感じに使うのがめんどいので頭かケツにしか移動できませーん
 /// <summary>
