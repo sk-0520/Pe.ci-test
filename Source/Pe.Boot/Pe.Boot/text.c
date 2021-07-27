@@ -158,10 +158,11 @@ TEXT reference_text(const TEXT* source)
         .length = source->length,
         .library = {
             .need_release = false,
-            .sentinel = source->library.sentinel,
+            //.sentinel = source->library.sentinel,
             .released = false,
         }
     };
+    result.library.sentinel = source->library.sentinel;
 
     return result;
 }
