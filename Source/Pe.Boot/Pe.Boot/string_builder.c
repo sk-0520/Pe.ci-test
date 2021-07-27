@@ -133,6 +133,15 @@ TEXT reference_text_string_builder(STRING_BUILDER* string_builder)
     return wrap_text_with_length(string_builder->buffer, string_builder->length, false);
 }
 
+STRING_BUILDER* clear_builder(STRING_BUILDER* string_builder)
+{
+    string_builder->buffer[0] = 0;
+    string_builder->length = 0;
+
+    return string_builder;
+}
+
+
 STRING_BUILDER* append_builder_newline(STRING_BUILDER* string_builder)
 {
     return append_string_core(string_builder, string_builder->library.newline, get_string_length(string_builder->library.newline));
@@ -233,7 +242,7 @@ STRING_BUILDER* append_builder_bool(STRING_BUILDER* string_builder, bool value, 
     return string_builder;
 }
 
-STRING_BUILDER* append_builder_pointer(STRING_BUILDER* string_builder, void* pointer, bool newline)
+STRING_BUILDER* append_builder_pointer(STRING_BUILDER* string_builder, const void* pointer, bool newline)
 {
     write_primitive_pointer(write_string, string_builder, pointer);
     if (newline) {

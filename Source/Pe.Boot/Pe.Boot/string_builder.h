@@ -83,6 +83,7 @@ TEXT RC_HEAP_FUNC(build_text_string_builder, const STRING_BUILDER* string_builde
 /// <returns>参照テキスト。</returns>
 TEXT reference_text_string_builder(STRING_BUILDER* string_builder);
 
+STRING_BUILDER* clear_builder(STRING_BUILDER* string_builder);
 
 STRING_BUILDER* append_builder_newline(STRING_BUILDER* string_builder);
 STRING_BUILDER* append_builder_string(STRING_BUILDER* string_builder, const TCHAR* s, bool newline);
@@ -91,7 +92,7 @@ STRING_BUILDER* append_builder_character(STRING_BUILDER* string_builder, TCHAR c
 STRING_BUILDER* append_builder_int(STRING_BUILDER* string_builder, ssize_t value, bool newline);
 STRING_BUILDER* append_builder_uint(STRING_BUILDER* string_builder, size_t value, bool newline);
 STRING_BUILDER* append_builder_bool(STRING_BUILDER* string_builder, bool value, bool newline);
-STRING_BUILDER* append_builder_pointer(STRING_BUILDER* string_builder, void* pointer, bool newline);
+STRING_BUILDER* append_builder_pointer(STRING_BUILDER* string_builder, const void* pointer, bool newline);
 
 STRING_BUILDER* append_builder_vformat(STRING_BUILDER* string_builder, const TEXT* format, va_list ap);
 STRING_BUILDER* append_builder_format(STRING_BUILDER* string_builder, const TEXT* format, ...);

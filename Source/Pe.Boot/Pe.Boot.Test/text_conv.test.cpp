@@ -102,7 +102,6 @@ namespace PeBootTest
         {
             auto input = wrap("あいうえお");
             auto tests = {
-                //MULTI_BYTE_CHARACTER_TYPE_UTF7,
                 MULTI_BYTE_CHARACTER_TYPE_UTF8,
                 MULTI_BYTE_CHARACTER_TYPE_SJIS,
             };

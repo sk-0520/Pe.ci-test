@@ -15,11 +15,7 @@ typedef enum tag_LOG_LEVEL
     LOG_LEVEL_ERROR,
 } LOG_LEVEL;
 
-
-static LOG_LEVEL library__default_log_level;
-static FILE_RESOURCE library__default_log_file_pointer;
-
-void setup_default_log(FILE_RESOURCE* filePointer, LOG_LEVEL logLevel);
+void setup_default_log(FILE_WRITER* file_writer, LOG_LEVEL log_level);
 void cleanup_default_log();
 
 /// <summary>
@@ -28,7 +24,7 @@ void cleanup_default_log();
 /// <param name="logLevel"></param>
 /// <param name="format"></param>
 /// <param name=""></param>
-void logging(LOG_LEVEL logLevel, const TCHAR* format, const TCHAR* file, size_t line, ...);
+void logging(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller_line, const TCHAR* format, ...);
 
 #define log_level(level, format, ...) logging((level), RELATIVE_FILET, __LINE__, format, __VA_ARGS__)
 #define log_trace(format, ...) logging(LOG_LEVEL_TRACE, RELATIVE_FILET, __LINE__, format, __VA_ARGS__)

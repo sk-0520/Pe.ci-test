@@ -111,6 +111,9 @@
     <ClCompile Include="datetime.c">
       <Filter>source\library</Filter>
     </ClCompile>
+    <ClCompile Include="fsio_writer.c">
+      <Filter>source\library</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app_path.h">
@@ -161,9 +164,6 @@
     <ClInclude Include="platform.h">
       <Filter>header\library</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>header\library</Filter>
-    </ClInclude>
     <ClInclude Include="string_builder.h">
       <Filter>header\library</Filter>
     </ClInclude>
@@ -196,6 +196,12 @@
     </ClInclude>
     <ClInclude Include="datetime.h">
       <Filter>header\library</Filter>
+    </ClInclude>
+    <ClInclude Include="fsio_writer.h">
+      <Filter>header\library</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>_resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

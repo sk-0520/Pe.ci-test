@@ -1,4 +1,7 @@
 ﻿#pragma once
+#include <stdint.h>
+
+#include <windows.h>
 #include <tchar.h>
 
 #ifdef GLOBAL
@@ -35,3 +38,10 @@ typedef __int32 ssize_t;
 
 #define MIN(a, b) (((a) < (b)) ? (a): (b))
 #define MAX(a, b) (((a) > (b)) ? (a): (b))
+
+typedef union tag_INT_64
+{
+    LARGE_INTEGER large;
+    int64_t plain;
+} INT_64;
+

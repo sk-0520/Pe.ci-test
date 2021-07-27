@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <stdint.h>
 
+#include "common.h"
 #include "fsio.h"
 
 /// <summary>
@@ -79,6 +80,13 @@ typedef enum tag_FILE_OPEN_MODE
     FILE_OPEN_MODE_TRUNCATE = TRUNCATE_EXISTING,
 } FILE_OPEN_MODE;
 
+FILE_RESOURCE create_invalid_file();
+
+FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE access_mode, FILE_SHARE_MODE shared_mode, FILE_OPEN_MODE open_mode, DWORD attributes);
+#if RES_CHECK
+#   define new_file_resource(path, access_mode, shared_mode, open_mode, attributes) RC_FILE_WRAP(new_file_resource, (path), (access_mode), (shared_mode), (open_mode), (attributes))
+#endif
+
 /// <summary>
 /// ファイルを新規作成。
 /// <para>既にファイルが存在する場合は失敗する。</para>
@@ -134,21 +142,22 @@ bool is_enabled_file_resource(const FILE_RESOURCE* file);
 /// </summary>
 /// <param name="file">対象ファイル。</param>
 /// <param name="buffer">読み込みデータ格納先。</param>
-/// <param name="length">読み込みデータサイズ。</param>
+/// <param name="bytes">読み込みデータサイズ。</param>
 /// <returns>読み込んだサイズ。0の場合は終端。読み込みに失敗している場合は負数。</returns>
-ssize_t read_file_resource(const FILE_RESOURCE* file, void* buffer, size_t length);
+ssize_t read_file_resource(const FILE_RESOURCE* file, void* buffer, size_t bytes);
 
 /// <summary>
 /// ファイルリソースからデータ書き込み。
 /// <para>書き込んだ分だけ現在地は進められる。</para>
 /// </summary>
 /// <param name="file">対象ファイル。</param>
-/// <param name="buffer">読み込みデータ格納先。</param>
+/// <param name="bytes">読み込みデータ格納先。</param>
 /// <param name="length">読み込みデータサイズ。</param>
 /// <returns>書き込んだサイズ。書き込み失敗時は負数。</returns>
-ssize_t write_file_resource(const FILE_RESOURCE* file, void* buffer, size_t length);
+ssize_t write_file_resource(const FILE_RESOURCE* file, const void* buffer, size_t bytes);
 
-// 64bit値をいい感じに使うのがめんどいので頭かケツにしか移動できませーん
+bool flush_file_resource(const FILE_RESOURCE* file);
+
 /// <summary>
 /// ファイルリソースの現在地を先頭に移動。
 /// </summary>
@@ -161,10 +170,19 @@ bool seek_begin_file_resource(const FILE_RESOURCE* file);
 /// <param name="file"></param>
 /// <returns></returns>
 bool seek_end_file_resource(const FILE_RESOURCE* file);
+bool seek_current_file_resource(const FILE_RESOURCE* file_resource, const INT_64* relative_position);
+bool set_position_file_resource(const FILE_RESOURCE* file_resource, const INT_64* position);
+/// <summary>
+/// ファイルリソースの現在地を取得。
+/// </summary>
+/// <param name="file_resource"></param>
+/// <returns></returns>
+INT_64 get_position_file_resource(const FILE_RESOURCE* file_resource);
 /// <summary>
 /// ファイルリソースの現在地をファイル終端に設定する。
 /// </summary>
 /// <param name="file"></param>
 /// <returns></returns>
-bool cut_current_position_file_resource(const FILE_RESOURCE* file);
+bool set_current_position_file_resource(const FILE_RESOURCE* file);
+
 

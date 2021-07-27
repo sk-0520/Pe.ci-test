@@ -1,6 +1,7 @@
 ﻿#include "debug.h"
-#include "debug.h"
 #include "res_check.h"
+#include "logging.h"
+#include "fsio_writer.h"
 #include "app_main.h"
 
 #ifdef RES_CHECK
@@ -11,6 +12,21 @@ static void output(const TCHAR* s)
 }
 #endif
 
+static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
+{
+#ifdef _DEBUG
+    TEXT path = wrap_text(_T("x:\\logging.log"));
+    FILE_WRITER fw = new_file_writer(&path, FILE_WRITER_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM);
+    setup_default_log(&fw, LOG_LEVEL_TRACE);
+#endif
+}
+
+static void end_logging()
+{
+    cleanup_default_log();
+}
+
+
 static int application_main(HINSTANCE hInstance)
 {
 #ifdef RES_CHECK
@@ -20,6 +36,10 @@ static int application_main(HINSTANCE hInstance)
     TEXT command_line = wrap_text(GetCommandLine());
     COMMAND_LINE_OPTION command_line_option = parse_command_line(&command_line, true);
 
+    start_logging(&command_line_option);
+
+    log_information(_T("おうまさんぱっぱか🏇"));
+
     int return_code = app_main(hInstance, &command_line_option);
 
     free_command_line(&command_line_option);
@@ -28,6 +48,8 @@ static int application_main(HINSTANCE hInstance)
     rc__print(true);
     rc__uninitialize();
 #endif
+
+    end_logging();
 
     return return_code;
 }
