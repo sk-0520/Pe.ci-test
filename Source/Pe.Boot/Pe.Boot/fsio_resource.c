@@ -99,10 +99,10 @@ ssize_t read_file_resource(const FILE_RESOURCE* file, void* buffer, size_t lengt
     return -1;
 }
 
-ssize_t write_file_resource(const FILE_RESOURCE* file, void* values, size_t length)
+ssize_t write_file_resource(const FILE_RESOURCE* file, void* buffer, size_t length)
 {
     DWORD write_length = 0;
-    if (WriteFile(file->handle, (void*)values, (DWORD)length, &write_length, NULL)) {
+    if (WriteFile(file->handle, (void*)buffer, (DWORD)length, &write_length, NULL)) {
         return write_length;
     }
 

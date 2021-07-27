@@ -97,5 +97,25 @@ namespace PeBootTest
                 Assert::AreEqual(test.expected, actual.value);
             }
         }
+
+        TEST_METHOD(multibyte_success_test)
+        {
+            auto input = wrap("あいうえお");
+            auto tests = {
+                //MULTI_BYTE_CHARACTER_TYPE_UTF7,
+                MULTI_BYTE_CHARACTER_TYPE_UTF8,
+                MULTI_BYTE_CHARACTER_TYPE_SJIS,
+            };
+            for (auto test : tests) {
+                auto res = convert_to_multibyte_character(&input, test);
+                Assert::IsTrue(is_enabled_multibyte_character_result(&res));
+                auto text = make_text_from_multibyte(res.buffer, res.length, test);
+                Assert::AreEqual(text.value, input.value);
+                Assert::IsTrue(free_multibyte_character_result(&res));
+                Assert::IsTrue(free_text(&text));
+                Assert::IsFalse(free_multibyte_character_result(&res));
+            }
+        }
+
     };
 }
