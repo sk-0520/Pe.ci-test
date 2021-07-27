@@ -32,7 +32,7 @@ void* RC_HEAP_FUNC(allocate_clear_memory, size_t count, size_t type_size);
 /// </summary>
 /// <param name="p"></param>
 /// <returns></returns>
-void RC_HEAP_FUNC(free_memory, void* p);
+bool RC_HEAP_FUNC(free_memory, void* p);
 #if RES_CHECK
 #   define free_memory(p) RC_HEAP_WRAP(free_memory, p)
 #endif

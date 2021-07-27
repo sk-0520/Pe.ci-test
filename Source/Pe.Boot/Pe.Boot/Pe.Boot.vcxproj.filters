@@ -111,9 +111,6 @@
     <ClCompile Include="datetime.c">
       <Filter>source\library</Filter>
     </ClCompile>
-    <ClCompile Include="encoding.c">
-      <Filter>source\library</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app_path.h">
@@ -198,9 +195,6 @@
       <Filter>header\app</Filter>
     </ClInclude>
     <ClInclude Include="datetime.h">
-      <Filter>header\library</Filter>
-    </ClInclude>
-    <ClInclude Include="encoding.h">
       <Filter>header\library</Filter>
     </ClInclude>
   </ItemGroup>

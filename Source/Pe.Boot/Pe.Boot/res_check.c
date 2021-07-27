@@ -157,34 +157,34 @@ static void rc_check_core(void* p, const void* data, bool allocate, RES_CHECK_TY
             rc_output(rc_item.formats->alloc_err, p, RES_CHECK_CALL_ARGS);
         }
     } else {
-        if (p) {
-            bool exists = false;
-            for (size_t i = 0; p && i < rc_item.stock_items_length; i++) {
-                if (rc_item.stock_items[i].p == p) {
-                    rc_output(rc_item.formats->free_mgs, p, RES_CHECK_CALL_ARGS, rc_item.stock_items[i].file, rc_item.stock_items[i].line);
-                    //HeapFree(GetProcessHeap(), 0, rc_item.stock_items->file);
+        bool exists = false;
+        for (size_t i = 0; p && i < rc_item.stock_items_length; i++) {
+            if (rc_item.stock_items[i].p == p) {
+                rc_output(rc_item.formats->free_mgs, p, RES_CHECK_CALL_ARGS, rc_item.stock_items[i].file, rc_item.stock_items[i].line);
+                //HeapFree(GetProcessHeap(), 0, rc_item.stock_items->file);
 
-                    *rc_item.stock_item_count = *rc_item.stock_item_count - 1;
-                    memset(&rc_item.stock_items[i], 0, sizeof(RES_CHECK_STOCK_ITEM));
-                    exists = true;
-                    break;
-                }
+                *rc_item.stock_item_count = *rc_item.stock_item_count - 1;
+                memset(&rc_item.stock_items[i], 0, sizeof(RES_CHECK_STOCK_ITEM));
+                exists = true;
+                break;
             }
+        }
 
-            if (!exists) {
-                rc_output(rc_item.formats->free_err, p, RES_CHECK_CALL_ARGS);
-            }
+        if (!exists) {
+            rc_output(rc_item.formats->free_err, p, RES_CHECK_CALL_ARGS);
         }
     }
 }
 
 void rc__heap_check(void* p, bool allocate, RES_CHECK_FUNC_ARGS)
 {
+    assert_debug(p);
     rc_check_core(p, NULL, allocate, RES_CHECK_TYPE_HEAP, RES_CHECK_CALL_ARGS);
 }
 
 void rc__file_check(void* p, const TCHAR* path, bool allocate, RES_CHECK_FUNC_ARGS)
 {
+    assert_debug(p);
     rc_check_core(p, path, allocate, RES_CHECK_TYPE_FILE, RES_CHECK_CALL_ARGS);
 }
 

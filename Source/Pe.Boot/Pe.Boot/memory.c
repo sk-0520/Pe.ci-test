@@ -28,13 +28,16 @@ void* RC_HEAP_FUNC(allocate_clear_memory, size_t count, size_t type_size)
     return RC_HEAP_CALL(allocate_memory, count * type_size, true);
 }
 
-void RC_HEAP_FUNC(free_memory, void* p)
+bool RC_HEAP_FUNC(free_memory, void* p)
 {
+    if (!p) {
+        return false;
+    }
 #ifdef RES_CHECK
     rc__heap_check(p, false, RES_CHECK_CALL_ARGS);
 #endif
 
-    HeapFree(GetProcessHeap(), 0, p);
+    return HeapFree(GetProcessHeap(), 0, p);
 }
 
 void* set_memory(void* target, uint8_t value, size_t bytes)
