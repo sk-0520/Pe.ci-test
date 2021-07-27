@@ -108,6 +108,9 @@
     <ClCompile Include="app_console_prompt.c">
       <Filter>source\app</Filter>
     </ClCompile>
+    <ClCompile Include="datetime.c">
+      <Filter>source\library</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app_path.h">
@@ -190,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="app_console_prompt.h">
       <Filter>header\app</Filter>
+    </ClInclude>
+    <ClInclude Include="datetime.h">
+      <Filter>header\library</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

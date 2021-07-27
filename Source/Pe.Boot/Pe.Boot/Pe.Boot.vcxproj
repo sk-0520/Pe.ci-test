@@ -405,6 +405,7 @@
     <ClCompile Include="app_console_prompt.c" />
     <ClCompile Include="app_main.c" />
     <ClCompile Include="command_line.c" />
+    <ClCompile Include="datetime.c" />
     <ClCompile Include="debug.c" />
     <ClCompile Include="fsio.c" />
     <ClCompile Include="fsio_resource.c" />
@@ -434,6 +435,7 @@
     <ClInclude Include="app_main.h" />
     <ClInclude Include="command_line.h" />
     <ClInclude Include="common.h" />
+    <ClInclude Include="datetime.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="fsio.h" />
     <ClInclude Include="fsio_resource.h" />

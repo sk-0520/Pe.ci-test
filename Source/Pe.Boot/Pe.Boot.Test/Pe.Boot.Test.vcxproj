@@ -281,6 +281,7 @@
     <ClCompile Include="app_command_line.test.cpp" />
     <ClCompile Include="app_path.test.cpp" />
     <ClCompile Include="command_line.test.cpp" />
+    <ClCompile Include="datetime.test.cpp" />
     <ClCompile Include="fsio.test.cpp" />
     <ClCompile Include="fsio_resource.test.cpp" />
     <ClCompile Include="map.test.cpp" />

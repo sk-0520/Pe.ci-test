@@ -72,6 +72,9 @@
     <ClCompile Include="writer.test.cpp">
       <Filter>source\library</Filter>
     </ClCompile>
+    <ClCompile Include="datetime.test.cpp">
+      <Filter>source\library</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
