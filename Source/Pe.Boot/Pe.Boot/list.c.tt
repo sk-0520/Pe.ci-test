@@ -7,18 +7,21 @@
 <#@ output encoding="utf-8" extension="" #>
 <#
     var items = new[] {
+        "int8_t",
         "uint8_t",
+        "int16_t",
         "uint16_t",
+        "int32_t",
         "uint32_t",
+        "TCHAR",
     }.Select(i => new {
         ValueType = i,
-        BaseName = i.Replace("_t", string.Empty)
+        BaseName = i.Replace("_t", string.Empty).ToLowerInvariant()
     }).Select(i => new {
         ValueType = i.ValueType,
         BaseName = i.BaseName,
         TypeName = "PRIMITIVE_LIST_TYPE_" + i.BaseName.ToUpperInvariant(),
         AliasList = "PRIMITIVE_LIST_" + i.BaseName.ToUpperInvariant(),
-        TypeByteWidth = int.Parse(Regex.Match(i.ValueType, @"(\d+)").Groups[1].Value) / 8,
     });
 #>
 #include "list.h"
@@ -35,7 +38,7 @@ static size_t get_type_byte(PRIMITIVE_LIST_TYPE list_type)
     switch (list_type) {
 <# foreach(var item in items) { #>
         case <#= item.TypeName #>:
-            return <#= item.TypeByteWidth #>;
+            return sizeof(<#= item.ValueType #>);
 <# } #>
         default:
             assert_debug(false);
@@ -145,7 +148,7 @@ bool pop_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.Alias
 
     if(result) {
         <#= item.ValueType #>* buffer = (<#= item.ValueType #>*)list->buffer;
-        *result = buffer[list->length--];
+        *result = buffer[--list->length];
     } else {
         list->length -= 1;
     }

@@ -46,5 +46,23 @@ namespace PeBootTest
 
             Assert::IsTrue(free_primitive_list(&list));
         }
+
+        TEST_METHOD(type_error_test)
+        {
+            PRIMITIVE_LIST_UINT32 list = new_primitive_list(PRIMITIVE_LIST_TYPE_UINT32, 2);
+
+            Assert::IsFalse(push_list_uint8(&list, 1));
+            Assert::IsFalse(push_list_uint16(&list, 1));
+            Assert::IsTrue(push_list_uint32(&list, 1));
+
+            uint8_t u8;
+            uint16_t u16;
+            uint32_t u32;
+            Assert::IsFalse(get_list_uint8(&u8, &list, 0));
+            Assert::IsFalse(get_list_uint16(&u16, &list, 0));
+            Assert::IsTrue(get_list_uint32(&u32, &list, 0));
+
+            free_primitive_list(&list);
+        }
     };
 }
