@@ -210,3 +210,7 @@ const <#= item.ValueType #>* reference_list_<#= item.BaseName #>(<#= item.AliasL
 }
 <# } #>
 
+void clear_list(PRIMITIVE_LIST* list)
+{
+    list->length = 0;
+}

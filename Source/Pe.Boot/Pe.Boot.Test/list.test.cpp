@@ -77,6 +77,8 @@ namespace PeBootTest
                 Assert::IsTrue(get_list_int32(&value, &list, i));
                 Assert::AreEqual(values[i], value);
             }
+
+            free_primitive_list(&list);
         }
     };
 }

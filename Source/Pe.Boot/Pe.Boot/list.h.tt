@@ -151,3 +151,10 @@ bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.Alias
 /// <returns>成功した場合は型指定されたポインタ。失敗時はNULL。</returns>
 const <#= item.ValueType #>* reference_list_<#= item.BaseName #>(<#= item.AliasList #>* list);
 <# } #>
+
+/// <summary>
+/// リストを空にする。
+/// <para>領域自体はそのまま残る点に注意。</para>
+/// </summary>
+/// <param name="list">対象リスト。</param>
+void clear_list(PRIMITIVE_LIST* list);

@@ -640,3 +640,7 @@ const TCHAR* reference_list_tchar(PRIMITIVE_LIST_TCHAR* list)
     return (TCHAR*)list->buffer;
 }
 
+void clear_list(PRIMITIVE_LIST* list)
+{
+    list->length = 0;
+}
