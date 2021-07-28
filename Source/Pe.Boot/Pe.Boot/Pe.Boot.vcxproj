@@ -408,9 +408,8 @@
     <ClCompile Include="datetime.c" />
     <ClCompile Include="debug.c" />
     <ClCompile Include="fsio.c" />
-    <ClCompile Include="fsio_reader.c" />
     <ClCompile Include="fsio_resource.c" />
-    <ClCompile Include="fsio_writer.c" />
+    <ClCompile Include="fsio_textfile.c" />
     <ClCompile Include="map.c" />
     <ClCompile Include="memory.c" />
     <ClCompile Include="path.c" />
@@ -440,10 +439,8 @@
     <ClInclude Include="datetime.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="fsio.h" />
-    <ClInclude Include="fsio_reader.h" />
     <ClInclude Include="fsio_resource.h" />
-    <ClInclude Include="fsio_writer.h" />
-    <ClInclude Include="global.h" />
+    <ClInclude Include="fsio_textfile.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="path.h" />

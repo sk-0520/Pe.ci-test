@@ -8,7 +8,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace PeBootTest
 {
-    TEST_CLASS(fsio_writer_test)
+    TEST_CLASS(fsio_textfile_test)
     {
     public:
         TEST_METHOD(writer_native_test)

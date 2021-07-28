@@ -38,5 +38,4 @@ bool exists_directory_path(const TEXT* path);
 
 // ファイル処理諸々
 #include "fsio_resource.h"
-#include "fsio_writer.h"
-#include "fsio_reader.h"
+#include "fsio_textfile.h"

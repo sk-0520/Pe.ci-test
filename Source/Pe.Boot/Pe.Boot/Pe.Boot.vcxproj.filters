@@ -111,10 +111,7 @@
     <ClCompile Include="datetime.c">
       <Filter>source\library</Filter>
     </ClCompile>
-    <ClCompile Include="fsio_writer.c">
-      <Filter>source\library</Filter>
-    </ClCompile>
-    <ClCompile Include="fsio_reader.c">
+    <ClCompile Include="fsio_textfile.c">
       <Filter>source\library</Filter>
     </ClCompile>
   </ItemGroup>
@@ -200,17 +197,11 @@
     <ClInclude Include="datetime.h">
       <Filter>header\library</Filter>
     </ClInclude>
-    <ClInclude Include="fsio_writer.h">
+    <ClInclude Include="fsio_textfile.h">
       <Filter>header\library</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>_resource</Filter>
-    </ClInclude>
-    <ClInclude Include="fsio_reader.h">
-      <Filter>header\library</Filter>
-    </ClInclude>
-    <ClInclude Include="global.h">
-      <Filter>header\library</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

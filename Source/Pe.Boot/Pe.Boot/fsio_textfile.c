@@ -1,9 +1,11 @@
 ﻿#include "common.h"
-#include "global.h"
-#include "fsio_writer.h"
+#include "fsio_textfile.h"
 #include "fsio_resource.h"
 #include "debug.h"
 
+
+static const uint8_t library__unicode_utf8_bom[] = { 0xef, 0xbb, 0xbf };
+static const uint8_t library__unicode_utf16le_bom[] = { 0xff, 0xef };
 
 static void write_bom_if_unicode(const FILE_RESOURCE* file_resource, FILE_ENCODING encoding)
 {
@@ -186,3 +188,7 @@ void RC_FILE_FUNC(write_format_file_writer, FILE_WRITER* file_writer, const TEXT
     va_end(ap);
 }
 
+bool RC_FILE_FUNC(free_file_reader, FILE_READER* file_reader)
+{
+    return RC_FILE_CALL(close_file_resource, &file_reader->resource);
+}

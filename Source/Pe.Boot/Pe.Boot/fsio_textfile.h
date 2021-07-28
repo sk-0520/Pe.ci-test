@@ -5,9 +5,24 @@
 #include "string_builder.h"
 
 
+#define FILE_READER_BUFFER_SIZE (1024 * 4)
+#define FILE_READER_BUILDER_CAPACITY ((FILE_READER_BUFFER_SIZE / 10) * 12)
+
 #define FILE_WRITER_BUFFER_SIZE (1024 * 4)
 #define FILE_WRITER_BUILDER_CAPACITY ((FILE_WRITER_BUFFER_SIZE / 10) * 12)
 
+
+/// <summary>
+/// テキストファイル読み込み処理。
+/// </summary>
+typedef struct tag_FILE_READER
+{
+    FILE_RESOURCE resource;
+    struct
+    {
+        size_t buffer_size;
+    } library;
+} FILE_READER;
 
 typedef enum tag_FILE_WRITER_OPTIONS
 {
@@ -15,6 +30,9 @@ typedef enum tag_FILE_WRITER_OPTIONS
     FILE_WRITER_OPTIONS_BOM = 0x00000001,
 } FILE_WRITER_OPTIONS;
 
+/// <summary>
+/// テキストファイル書き込み処理。
+/// </summary>
 typedef struct tag_FILE_WRITER
 {
     FILE_RESOURCE resource;
@@ -29,8 +47,15 @@ typedef struct tag_FILE_WRITER
     } library;
 } FILE_WRITER;
 
+
+bool RC_FILE_FUNC(free_file_reader, FILE_READER* file_reader);
+#if RES_CHECK
+#   define free_file_reader(file_reader) RC_FILE_WRAP(free_file_reader, (file_reader))
+#endif
+
+
 /// <summary>
-/// ファイル書き込み処理の生成。
+/// テキストファイル書き込み処理の生成。
 /// </summary>
 /// <param name="path"></param>
 /// <param name="encoding"></param>

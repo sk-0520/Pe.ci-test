@@ -283,9 +283,8 @@
     <ClCompile Include="command_line.test.cpp" />
     <ClCompile Include="datetime.test.cpp" />
     <ClCompile Include="fsio.test.cpp" />
-    <ClCompile Include="fsio_reader.test.cpp" />
     <ClCompile Include="fsio_resource.test.cpp" />
-    <ClCompile Include="fsio_writer.test.cpp" />
+    <ClCompile Include="fsio_textfile.test.cpp" />
     <ClCompile Include="map.test.cpp" />
     <ClCompile Include="memory.test.cpp" />
     <ClCompile Include="path.test.cpp" />
