@@ -13,6 +13,8 @@
         "uint16_t",
         "int32_t",
         "uint32_t",
+        "size_t",
+        "ssize_t",
         "TCHAR",
     }.Select(i => new {
         ValueType = i,
@@ -41,7 +43,7 @@ static byte_t get_type_byte(PRIMITIVE_LIST_TYPE list_type)
             return sizeof(<#= item.ValueType #>);
 <# } #>
         default:
-            assert_debug(false);
+            assert(false);
     }
 
     return 0;

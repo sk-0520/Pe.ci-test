@@ -13,6 +13,8 @@
         "uint16_t",
         "int32_t",
         "uint32_t",
+        "size_t",
+        "ssize_t",
         "TCHAR",
     }.Select(i => new {
         ValueType = i,
@@ -27,6 +29,7 @@
 #pragma once
 #include <stdint.h>
 
+#include "common.h"
 #include "res_check.h"
 
 #define LIST_DEFAULT_CAPACITY 32

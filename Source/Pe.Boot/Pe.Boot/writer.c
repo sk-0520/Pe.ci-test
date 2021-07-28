@@ -107,7 +107,7 @@ TCHAR get_fill_character(WRITE_PADDING write_padding)
             return _T(' ');
 
         default:
-            assert_debug(false);
+            assert(false);
     }
 
     return _T('\0');
@@ -625,7 +625,7 @@ static WRITE_RESULT write_format_value(func_string_writer string_writer, func_ch
         break;
 
         default:
-            assert_debug(false);
+            assert(false);
     }
 
     return result;
@@ -662,7 +662,7 @@ bool write_vformat(func_string_writer string_writer, func_character_writer chara
         bool has_next = status.current_index + 1 < format->length;
 
         if (status.format) {
-            assert_debug(0 <= status.begin_index && status.begin_index < status.current_index);
+            assert(0 <= status.begin_index && status.begin_index < status.current_index);
             FORMAT_KIND format_kind = get_write_format_kind(c);
             if (format_kind == FORMAT_KIND_UNKNOWN) {
                 continue;

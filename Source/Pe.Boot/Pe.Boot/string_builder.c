@@ -7,7 +7,7 @@
 
 STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t capacity)
 {
-    assert_debug(s);
+    assert(s);
 
     size_t length = get_string_length(s);
 
@@ -27,7 +27,7 @@ STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t ca
 
 STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity)
 {
-    assert_debug(capacity);
+    assert(capacity);
 
     PRIMITIVE_LIST_TCHAR list = RC_HEAP_CALL(new_primitive_list, PRIMITIVE_LIST_TYPE_TCHAR, capacity);
 

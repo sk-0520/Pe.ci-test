@@ -35,7 +35,7 @@ EXIT_CODE app_main(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_
         //    return console_execute(hInstance, command_line_option);
 
         default:
-            assert_debug(false);
+            assert(false);
     }
 
     return EXIT_CODE_UNKNOWN_EXECUTE_MODE;

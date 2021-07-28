@@ -85,7 +85,7 @@ static size_t get_bom_info(FILE_READER* file_reader, uint8_t* buffer, size_t len
             break;
 #endif
         default:
-            assert_debug(false);
+            assert(false);
     }
 
     if (bom_length <= length) {
@@ -151,7 +151,7 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
         }
 
         default:
-            assert_debug(false);
+            assert(false);
     }
 
     return create_invalid_text();
@@ -188,7 +188,7 @@ FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encodi
             break;
 
         default:
-            assert_debug(false);
+            assert(false);
     }
 
     return result;
@@ -244,7 +244,7 @@ void flush_file_writer(FILE_WRITER* file_writer, bool force)
         break;
 
         default:
-            assert_debug(false);
+            assert(false);
         }
 #else
 #   error しらんがな

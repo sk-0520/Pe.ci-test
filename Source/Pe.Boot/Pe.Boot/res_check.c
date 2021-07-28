@@ -76,7 +76,7 @@ static size_t rc_file__stock_item_count;
 #pragma warning(disable:6386)
 #define rc_output(format, ...) do { \
     TCHAR* rc__buffer = HeapAlloc(GetProcessHeap(), 0, rc__buffer_length * sizeof(TCHAR)); \
-    assert_debug(rc__buffer); \
+    assert(rc__buffer); \
     wsprintf(rc__buffer, /*rc__buffer_length - 1, */format, __VA_ARGS__); \
     rc__output(rc__buffer); \
     HeapFree(GetProcessHeap(), 0, rc__buffer); \
@@ -110,7 +110,7 @@ static RES_CHECK_ITEM rc_get_item(RES_CHECK_TYPE type)
         }
 
         default:
-            assert_debug(false);
+            assert(false);
     }
 
     RES_CHECK_ITEM none = {
@@ -178,13 +178,13 @@ static void rc_check_core(void* p, const void* data, bool allocate, RES_CHECK_TY
 
 void rc__heap_check(void* p, bool allocate, RES_CHECK_FUNC_ARGS)
 {
-    assert_debug(p);
+    assert(p);
     rc_check_core(p, NULL, allocate, RES_CHECK_TYPE_HEAP, RES_CHECK_CALL_ARGS);
 }
 
 void rc__file_check(void* p, const TCHAR* path, bool allocate, RES_CHECK_FUNC_ARGS)
 {
-    assert_debug(p);
+    assert(p);
     rc_check_core(p, path, allocate, RES_CHECK_TYPE_FILE, RES_CHECK_CALL_ARGS);
 }
 

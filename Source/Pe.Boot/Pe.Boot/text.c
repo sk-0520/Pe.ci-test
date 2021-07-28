@@ -27,7 +27,7 @@ bool is_enabled_text(const TEXT* text)
         return false;
     }
     if (text->library.released) {
-        assert_debug(!text->library.need_release);
+        assert(!text->library.need_release);
         return false;
     }
     if (!text->value) {

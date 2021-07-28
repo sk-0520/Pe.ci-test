@@ -66,7 +66,7 @@ int compare_text(const TEXT* a, const TEXT* b, bool ignore_case)
 
 static int get_compare_text_length(const TEXT* text, ssize_t width)
 {
-    assert_debug(width);
+    assert(width);
 
     if (0 < width) {
         return MIN((int)text->length, (int)width);
@@ -120,7 +120,7 @@ TEXT_COMPARE_RESULT compare_text_detail(const TEXT* a, const TEXT* b, ssize_t wi
             break;
 
         default:
-            assert_debug(false);
+            assert(false);
     }
 
     return success;

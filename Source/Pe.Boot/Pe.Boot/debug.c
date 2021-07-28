@@ -11,7 +11,7 @@ void output_debug(const TCHAR* s)
 
 #ifndef NDEBUG
 
-void assert_debug_impl(const TCHAR* message, const TCHAR* expression, const TCHAR* caller_file, size_t caller_line)
+void assert_impl(const TCHAR* message, const TCHAR* expression, const TCHAR* caller_file, size_t caller_line)
 {
     output_debug(message);
     DebugBreak();
