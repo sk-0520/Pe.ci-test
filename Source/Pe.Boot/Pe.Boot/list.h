@@ -34,39 +34,43 @@ typedef struct tag_PRIMITIVE_LIST
 
 } PRIMITIVE_LIST;
 
-typedef PRIMITIVE_LIST UINT8_LIST;
-typedef PRIMITIVE_LIST UINT16_LIST;
-typedef PRIMITIVE_LIST UINT32_LIST;
+typedef PRIMITIVE_LIST PRIMITIVE_LIST_UINT8;
+typedef PRIMITIVE_LIST PRIMITIVE_LIST_UINT16;
+typedef PRIMITIVE_LIST PRIMITIVE_LIST_UINT32;
 
 /// <summary>
 /// リストの生成。
 /// </summary>
 /// <param name="list_type"></param>
 /// <param name="capacity"></param>
-/// <returns></returns>
+/// <returns>解放が必要。</returns>
 PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity);
 #ifdef RES_CHECK
 #   define new_primitive_list(list_type, capacity) RC_HEAP_WRAP(new_primitive_list, (list_type), (capacity))
 #endif
 
-
+/// <summary>
+/// リストの解放。
+/// </summary>
+/// <param name="list"></param>
+/// <returns></returns>
 bool RC_HEAP_FUNC(free_primitive_list, PRIMITIVE_LIST* list);
 #ifdef RES_CHECK
 #   define free_primitive_list(list) RC_HEAP_WRAP(free_primitive_list, (list))
 #endif
 
-#define PUSH_PRIMITIVE_LIST_FUNC(list_type, function, value_type) bool push_ ##function ##_list(list_type* list, value_type value)
+bool push_list_uint8(PRIMITIVE_LIST_UINT8* list, uint8_t value);
+bool push_list_uint16(PRIMITIVE_LIST_UINT16* list, uint16_t value);
+bool push_list_uint32(PRIMITIVE_LIST_UINT32* list, uint32_t value);
 
-PUSH_PRIMITIVE_LIST_FUNC(UINT8_LIST, uint8, uint8_t);
-PUSH_PRIMITIVE_LIST_FUNC(UINT16_LIST, uint16, uint16_t);
-PUSH_PRIMITIVE_LIST_FUNC(UINT32_LIST, uint32, uint32_t);
+bool pop_list_uint8(uint8_t* result, PRIMITIVE_LIST_UINT8* list);
+bool pop_list_uint16(uint16_t* result, PRIMITIVE_LIST_UINT16* list);
+bool pop_list_uint32(uint32_t* result, PRIMITIVE_LIST_UINT32* list);
 
-#define GET_PRIMITIVE_LIST_FUNC(list_type, function, value_type) bool get_ ##function ##_list(value_type* result, list_type* list, size_t index)
-GET_PRIMITIVE_LIST_FUNC(UINT8_LIST, uint8, uint8_t);
-GET_PRIMITIVE_LIST_FUNC(UINT16_LIST, uint16, uint16_t);
-GET_PRIMITIVE_LIST_FUNC(UINT32_LIST, uint32, uint32_t);
+bool get_list_uint8(uint8_t* result, PRIMITIVE_LIST_UINT8* list, size_t index);
+bool get_list_uint16(uint16_t* result, PRIMITIVE_LIST_UINT16* list, size_t index);
+bool get_list_uint32(uint32_t* result, PRIMITIVE_LIST_UINT32* list, size_t index);
 
-#define REFERENCE_PRIMITIVE_LIST_FUNC(list_type, function, value_type) value_type* reference_ ##function ##_list(list_type* list)
-REFERENCE_PRIMITIVE_LIST_FUNC(UINT8_LIST, uint8, uint8_t);
-REFERENCE_PRIMITIVE_LIST_FUNC(UINT16_LIST, uint16, uint16_t);
-REFERENCE_PRIMITIVE_LIST_FUNC(UINT32_LIST, uint32, uint32_t);
+uint8_t* reference_list_uint8(PRIMITIVE_LIST_UINT8* list);
+uint16_t* reference_list_uint16(PRIMITIVE_LIST_UINT16* list);
+uint32_t* reference_list_uint32(PRIMITIVE_LIST_UINT32* list);
