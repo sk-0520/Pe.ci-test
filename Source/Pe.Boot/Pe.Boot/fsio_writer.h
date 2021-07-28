@@ -5,14 +5,9 @@
 #include "string_builder.h"
 
 
-typedef enum tag_FILE_WRITER_ENCODING
-{
-    FILE_WRITER_ENCODING_NATIVE,
-#ifdef _UNICODE
-    FILE_WRITER_ENCODING_UTF8,
-    FILE_WRITER_ENCODING_UTF16LE,
-#endif
-} FILE_WRITER_ENCODING;
+#define FILE_WRITER_BUFFER_SIZE (1024 * 4)
+#define FILE_WRITER_BUILDER_CAPACITY ((FILE_WRITER_BUFFER_SIZE / 10) * 12)
+
 
 typedef enum tag_FILE_WRITER_OPTIONS
 {
@@ -25,8 +20,12 @@ typedef struct tag_FILE_WRITER
     FILE_RESOURCE resource;
     struct
     {
-        FILE_WRITER_ENCODING encoding;
+        FILE_ENCODING encoding;
         STRING_BUILDER string_builder;
+        /// <summary>
+        /// このサイズを超過するまでため込んでおく。
+        /// </summary>
+        size_t buffer_size;
     } library;
 } FILE_WRITER;
 
@@ -38,7 +37,7 @@ typedef struct tag_FILE_WRITER
 /// <param name="open_mode"></param>
 /// <param name="options"></param>
 /// <returns>解放が必要。</returns>
-FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_WRITER_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options);
+FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options);
 #if RES_CHECK
 #   define new_file_writer(path, encoding, open_mode, options) RC_FILE_WRAP(new_file_writer, (path), (encoding), (open_mode), (options))
 #endif
@@ -52,6 +51,13 @@ bool RC_FILE_FUNC(free_file_writer, FILE_WRITER* file_writer);
 #if RES_CHECK
 #   define free_file_writer(file_writer) RC_FILE_WRAP(free_file_writer, (file_writer))
 #endif
+
+/// <summary>
+/// バッファ内のファイル書き込み処理を実施。
+/// </summary>
+/// <param name="file_writer"></param>
+/// <param name="force"></param>
+void flush_file_buffer(FILE_WRITER* file_writer, bool force);
 
 void RC_FILE_FUNC(write_string_file_writer, FILE_WRITER* file_writer, const TCHAR* s, bool newline);
 #if RES_CHECK

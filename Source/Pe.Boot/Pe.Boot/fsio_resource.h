@@ -170,14 +170,14 @@ bool seek_begin_file_resource(const FILE_RESOURCE* file);
 /// <param name="file"></param>
 /// <returns></returns>
 bool seek_end_file_resource(const FILE_RESOURCE* file);
-bool seek_current_file_resource(const FILE_RESOURCE* file_resource, const INT_64* relative_position);
-bool set_position_file_resource(const FILE_RESOURCE* file_resource, const INT_64* position);
+bool seek_current_file_resource(const FILE_RESOURCE* file_resource, const DATA_INT64* relative_position);
+bool set_position_file_resource(const FILE_RESOURCE* file_resource, const DATA_INT64* position);
 /// <summary>
 /// ファイルリソースの現在地を取得。
 /// </summary>
 /// <param name="file_resource"></param>
 /// <returns></returns>
-INT_64 get_position_file_resource(const FILE_RESOURCE* file_resource);
+DATA_INT64 get_position_file_resource(const FILE_RESOURCE* file_resource);
 /// <summary>
 /// ファイルリソースの現在地をファイル終端に設定する。
 /// </summary>

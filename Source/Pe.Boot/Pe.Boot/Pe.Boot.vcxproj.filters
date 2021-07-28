@@ -114,6 +114,9 @@
     <ClCompile Include="fsio_writer.c">
       <Filter>source\library</Filter>
     </ClCompile>
+    <ClCompile Include="fsio_reader.c">
+      <Filter>source\library</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app_path.h">
@@ -202,6 +205,12 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>_resource</Filter>
+    </ClInclude>
+    <ClInclude Include="fsio_reader.h">
+      <Filter>header\library</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>header\library</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

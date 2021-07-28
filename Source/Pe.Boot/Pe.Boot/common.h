@@ -4,12 +4,6 @@
 #include <windows.h>
 #include <tchar.h>
 
-#ifdef GLOBAL
-#   define GLOBAL extern
-#else
-#   define GLOBAL
-#endif
-
 #define NEWLINE_CR "\r"
 #define NEWLINE_LF "\n"
 #define NEWLINE_CRLF "\r\n"
@@ -39,9 +33,15 @@ typedef __int32 ssize_t;
 #define MIN(a, b) (((a) < (b)) ? (a): (b))
 #define MAX(a, b) (((a) > (b)) ? (a): (b))
 
-typedef union tag_INT_64
+typedef union tag_DATA_INT64
 {
     LARGE_INTEGER large;
     int64_t plain;
-} INT_64;
+} DATA_INT64;
+
+typedef union tag_DATA_UINT64
+{
+    ULARGE_INTEGER large;
+    uint64_t plain;
+} DATA_UINT64;
 

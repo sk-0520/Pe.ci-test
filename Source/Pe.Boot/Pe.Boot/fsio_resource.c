@@ -124,19 +124,19 @@ bool seek_end_file_resource(const FILE_RESOURCE* file)
     return SetFilePointer(file->handle, 0, 0, FILE_END) != INVALID_SET_FILE_POINTER;
 }
 
-bool seek_current_file_resource(const FILE_RESOURCE* file_resource, const INT_64* relative_position)
+bool seek_current_file_resource(const FILE_RESOURCE* file_resource, const DATA_INT64* relative_position)
 {
     return SetFilePointerEx(file_resource->handle, relative_position->large, NULL, FILE_CURRENT);
 }
 
-bool set_position_file_resource(const FILE_RESOURCE* file_resource, const INT_64* position)
+bool set_position_file_resource(const FILE_RESOURCE* file_resource, const DATA_INT64* position)
 {
     return SetFilePointerEx(file_resource->handle, position->large, NULL, FILE_BEGIN);
 }
 
-INT_64 get_position_file_resource(const FILE_RESOURCE* file)
+DATA_INT64 get_position_file_resource(const FILE_RESOURCE* file)
 {
-    INT_64 result;
+    DATA_INT64 result;
     result.large.HighPart = 0;
 
     result.large.LowPart = SetFilePointer(file->handle, 0, &result.large.HighPart, FILE_CURRENT);

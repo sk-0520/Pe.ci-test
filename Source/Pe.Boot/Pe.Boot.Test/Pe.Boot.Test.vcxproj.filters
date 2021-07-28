@@ -75,6 +75,12 @@
     <ClCompile Include="datetime.test.cpp">
       <Filter>source\library</Filter>
     </ClCompile>
+    <ClCompile Include="fsio_writer.test.cpp">
+      <Filter>source\library</Filter>
+    </ClCompile>
+    <ClCompile Include="fsio_reader.test.cpp">
+      <Filter>source\library</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

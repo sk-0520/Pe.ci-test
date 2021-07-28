@@ -16,7 +16,7 @@ static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
 {
 #ifdef _DEBUG
     TEXT path = wrap_text(_T("x:\\logging.log"));
-    FILE_WRITER fw = new_file_writer(&path, FILE_WRITER_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM);
+    FILE_WRITER fw = new_file_writer(&path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM);
     setup_default_log(&fw, LOG_LEVEL_TRACE);
 #endif
 }
