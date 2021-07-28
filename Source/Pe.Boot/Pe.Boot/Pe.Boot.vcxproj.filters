@@ -114,6 +114,9 @@
     <ClCompile Include="fsio_textfile.c">
       <Filter>source\library</Filter>
     </ClCompile>
+    <ClCompile Include="list.c">
+      <Filter>source\library</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app_path.h">
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>_resource</Filter>
+    </ClInclude>
+    <ClInclude Include="list.h">
+      <Filter>header\library</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

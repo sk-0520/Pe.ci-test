@@ -78,6 +78,9 @@
     <ClCompile Include="fsio_textfile.test.cpp">
       <Filter>source\library</Filter>
     </ClCompile>
+    <ClCompile Include="list.test.cpp">
+      <Filter>source\library</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
