@@ -4,6 +4,11 @@
 #include <windows.h>
 #include <tchar.h>
 
+/// <summary>
+/// バイト長。
+/// </summary>
+typedef size_t byte_t;
+
 #define NEWLINE_CR "\r"
 #define NEWLINE_LF "\n"
 #define NEWLINE_CRLF "\r\n"

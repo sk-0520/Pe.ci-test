@@ -4,7 +4,7 @@
 #include "memory.h"
 
 
-void* RC_HEAP_FUNC(allocate_memory, size_t bytes, bool zero_fill)
+void* RC_HEAP_FUNC(allocate_memory, byte_t bytes, bool zero_fill)
 {
     HANDLE hHeap = GetProcessHeap();
     if (!hHeap) {
@@ -40,22 +40,22 @@ bool RC_HEAP_FUNC(free_memory, void* p)
     return HeapFree(GetProcessHeap(), 0, p);
 }
 
-void* set_memory(void* target, uint8_t value, size_t bytes)
+void* set_memory(void* target, uint8_t value, byte_t bytes)
 {
     return FillMemory(target, bytes, value);
 }
 
-void* copy_memory(void* destination, const void* source, size_t bytes)
+void* copy_memory(void* destination, const void* source, byte_t bytes)
 {
     return CopyMemory(destination, source, bytes);
 }
 
-void* move_memory(void* destination, const void* source, size_t bytes)
+void* move_memory(void* destination, const void* source, byte_t bytes)
 {
     return MoveMemory(destination, source, bytes);
 }
 
-int compare_memory(const void* a, const void* b, size_t bytes)
+int compare_memory(const void* a, const void* b, byte_t bytes)
 {
     return memcmp(a, b, bytes);
 }

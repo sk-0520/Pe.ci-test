@@ -144,7 +144,7 @@ bool is_enabled_file_resource(const FILE_RESOURCE* file);
 /// <param name="buffer">読み込みデータ格納先。</param>
 /// <param name="bytes">読み込みデータサイズ。</param>
 /// <returns>読み込んだサイズ。0の場合は終端。読み込みに失敗している場合は負数。</returns>
-ssize_t read_file_resource(const FILE_RESOURCE* file, void* buffer, size_t bytes);
+ssize_t read_file_resource(const FILE_RESOURCE* file, void* buffer, byte_t bytes);
 
 /// <summary>
 /// ファイルリソースからデータ書き込み。
@@ -154,7 +154,7 @@ ssize_t read_file_resource(const FILE_RESOURCE* file, void* buffer, size_t bytes
 /// <param name="bytes">読み込みデータ格納先。</param>
 /// <param name="length">読み込みデータサイズ。</param>
 /// <returns>書き込んだサイズ。書き込み失敗時は負数。</returns>
-ssize_t write_file_resource(const FILE_RESOURCE* file, const void* buffer, size_t bytes);
+ssize_t write_file_resource(const FILE_RESOURCE* file, const void* buffer, byte_t bytes);
 
 bool flush_file_resource(const FILE_RESOURCE* file);
 

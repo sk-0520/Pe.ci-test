@@ -62,7 +62,7 @@ typedef struct tag_PRIMITIVE_LIST
         /// <summary>
         /// 確保済みサイズ(バイト幅)。
         /// </summary>
-        size_t capacity_bytes;
+        byte_t capacity_bytes;
     } library;
 
 } PRIMITIVE_LIST;

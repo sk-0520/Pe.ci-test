@@ -7,7 +7,7 @@
 /// </summary>
 /// <param name="list_type"></param>
 /// <returns></returns>
-static size_t get_type_byte(PRIMITIVE_LIST_TYPE list_type)
+static byte_t get_type_byte(PRIMITIVE_LIST_TYPE list_type)
 {
     switch (list_type) {
         case PRIMITIVE_LIST_TYPE_INT8:
@@ -37,7 +37,7 @@ static size_t get_type_byte(PRIMITIVE_LIST_TYPE list_type)
 /// <param name="list_type"></param>
 /// <param name="length"></param>
 /// <returns></returns>
-static size_t get_type_bytes(PRIMITIVE_LIST_TYPE list_type, size_t length)
+static byte_t get_type_bytes(PRIMITIVE_LIST_TYPE list_type, size_t length)
 {
     if (!length) {
         return 0;
@@ -77,16 +77,16 @@ bool RC_HEAP_FUNC(free_primitive_list, PRIMITIVE_LIST* list)
 // 同じような処理ばっか書いてんね
 static size_t extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t need_length)
 {
-    size_t need_bytes = get_type_bytes(list->library.type, need_length);
-    size_t current_bytes = get_type_bytes(list->library.type, list->length);
+    byte_t need_bytes = get_type_bytes(list->library.type, need_length);
+    byte_t current_bytes = get_type_bytes(list->library.type, list->length);
     // まだ大丈夫なら何もしない
-    size_t need_total_bytes = current_bytes + need_bytes;
+    byte_t need_total_bytes = current_bytes + need_bytes;
     if (need_total_bytes <= list->library.capacity_bytes) {
         return 0;
     }
 
-    size_t old_capacity_bytes = list->library.capacity_bytes;
-    size_t new_capacity_bytes = list->library.capacity_bytes ? list->library.capacity_bytes: LIST_DEFAULT_CAPACITY;
+    byte_t old_capacity_bytes = list->library.capacity_bytes;
+    byte_t new_capacity_bytes = list->library.capacity_bytes ? list->library.capacity_bytes: LIST_DEFAULT_CAPACITY;
     do {
         new_capacity_bytes *= 2;
     } while (new_capacity_bytes < need_total_bytes);
