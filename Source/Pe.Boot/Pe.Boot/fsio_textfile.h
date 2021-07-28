@@ -47,12 +47,23 @@ typedef struct tag_FILE_WRITER
     } library;
 } FILE_WRITER;
 
+/// <summary>
+/// ファイル読み取り処理の生成。
+/// </summary>
+/// <param name="path"></param>
+/// <returns>解放が必要。</returns>
+FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding);
+#if RES_CHECK
+#   define new_file_reader(path, encoding) RC_FILE_WRAP(new_file_reader, (path), (encoding))
+#endif
+
 
 bool RC_FILE_FUNC(free_file_reader, FILE_READER* file_reader);
 #if RES_CHECK
 #   define free_file_reader(file_reader) RC_FILE_WRAP(free_file_reader, (file_reader))
 #endif
 
+bool is_enabled_file_reader(const FILE_READER* file_reader);
 
 /// <summary>
 /// テキストファイル書き込み処理の生成。
@@ -77,47 +88,22 @@ bool RC_FILE_FUNC(free_file_writer, FILE_WRITER* file_writer);
 #   define free_file_writer(file_writer) RC_FILE_WRAP(free_file_writer, (file_writer))
 #endif
 
+bool is_enabled_file_writer(const FILE_WRITER* file_writer);
+
 /// <summary>
 /// バッファ内のファイル書き込み処理を実施。
 /// </summary>
 /// <param name="file_writer"></param>
 /// <param name="force"></param>
-void flush_file_buffer(FILE_WRITER* file_writer, bool force);
+void flush_file_writer(FILE_WRITER* file_writer, bool force);
 
-void RC_FILE_FUNC(write_string_file_writer, FILE_WRITER* file_writer, const TCHAR* s, bool newline);
-#if RES_CHECK
-#   define write_string_file_writer(file_writer, s, newline) RC_FILE_WRAP(write_string_file_writer, (file_writer), (s), (newline))
-#endif
-void RC_FILE_FUNC(write_text_file_writer, FILE_WRITER* file_writer, const TEXT* text, bool newline);
-#if RES_CHECK
-#   define write_text_file_writer(file_writer, text, newline) RC_FILE_WRAP(write_text_file_writer, (file_writer), (text), (newline))
-#endif
-void RC_FILE_FUNC(write_character_file_writer, FILE_WRITER* file_writer, TCHAR c, bool newline);
-#if RES_CHECK
-#   define write_character_file_writer(file_writer, c, newline) RC_FILE_WRAP(write_character_file_writer, (file_writer), (c), (newline))
-#endif
-void RC_FILE_FUNC(write_int_file_writer, FILE_WRITER* file_writer, ssize_t value, bool newline);
-#if RES_CHECK
-#   define write_int_file_writer(file_writer, value, newline) RC_FILE_WRAP(write_int_file_writer, (file_writer), (value), (newline))
-#endif
-void RC_FILE_FUNC(write_uint_file_writer, FILE_WRITER* file_writer, size_t value, bool newline);
-#if RES_CHECK
-#   define write_uint_file_writer(file_writer, value, newline) RC_FILE_WRAP(write_uint_file_writer, (file_writer), (value), (newline))
-#endif
-void RC_FILE_FUNC(write_bool_file_writer, FILE_WRITER* file_writer, bool value, bool newline);
-#if RES_CHECK
-#   define write_bool_file_writer(file_writer, value, newline) RC_FILE_WRAP(write_bool_file_writer, (file_writer), (value), (newline))
-#endif
-void RC_FILE_FUNC(write_pointer_file_writer, FILE_WRITER* file_writer, const void* pointer, bool newline);
-#if RES_CHECK
-#   define write_pointer_file_writer(file_writer, value, newline) RC_FILE_WRAP(write_pointer_file_writer, (file_writer), (value), (newline))
-#endif
+void write_string_file_writer(FILE_WRITER* file_writer, const TCHAR* s, bool newline);
+void write_text_file_writer(FILE_WRITER* file_writer, const TEXT* text, bool newline);
+void write_character_file_writer(FILE_WRITER* file_writer, TCHAR c, bool newline);
+void write_int_file_writer(FILE_WRITER* file_writer, ssize_t value, bool newline);
+void write_uint_file_writer(FILE_WRITER* file_writer, size_t value, bool newline);
+void write_bool_file_writer(FILE_WRITER* file_writer, bool value, bool newline);
+void write_pointer_file_writer(FILE_WRITER* file_writer, const void* pointer, bool newline);
 
-void RC_HEAP_FUNC(write_vformat_file_writer, FILE_WRITER* file_writer, const TEXT* format, va_list ap);
-#if RES_CHECK
-#   define write_vformat_file_writer(file_writer, format, ...) RC_HEAP_WRAP(write_vformat_file_writer, (file_writer), (format), (ap))
-#endif
-void RC_FILE_FUNC(write_format_file_writer, FILE_WRITER* file_writer, const TEXT* format, ...);
-#if RES_CHECK
-#   define write_format_file_writer(file_writer, format, ...) RC_FILE_WRAP(write_format_file_writer, (file_writer), (format), __VA_ARGS__)
-#endif
+void write_vformat_file_writer(FILE_WRITER* file_writer, const TEXT* format, va_list ap);
+void write_format_file_writer(FILE_WRITER* file_writer, const TEXT* format, ...);

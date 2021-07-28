@@ -40,6 +40,25 @@ static void write_bom_if_unicode(const FILE_RESOURCE* file_resource, FILE_ENCODI
     }
 }
 
+FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding)
+{
+
+}
+
+bool RC_FILE_FUNC(free_file_reader, FILE_READER* file_reader)
+{
+    return RC_FILE_CALL(close_file_resource, &file_reader->resource);
+}
+
+bool is_enabled_file_reader(const FILE_READER* file_reader)
+{
+    if (!file_reader) {
+        return false;
+    }
+
+    return is_enabled_file_resource(&file_reader->resource);
+}
+
 FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options)
 {
     FILE_WRITER result;
@@ -79,7 +98,7 @@ FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encodi
 
 bool RC_FILE_FUNC(free_file_writer, FILE_WRITER* file_writer)
 {
-    flush_file_buffer(file_writer, true);
+    flush_file_writer(file_writer, true);
 
     bool fr = RC_FILE_CALL(close_file_resource, &file_writer->resource);
     fr &= RC_HEAP_CALL(free_string_builder, &file_writer->library.string_builder);
@@ -91,7 +110,16 @@ bool RC_FILE_FUNC(free_file_writer, FILE_WRITER* file_writer)
     return true;
 }
 
-void flush_file_buffer(FILE_WRITER* file_writer, bool force)
+bool is_enabled_file_writer(const FILE_WRITER* file_writer)
+{
+    if (!file_writer) {
+        return false;
+    }
+
+    return is_enabled_file_resource(&file_writer->resource);
+}
+
+void flush_file_writer(FILE_WRITER* file_writer, bool force)
 {
     if (!force) {
         if (file_writer->library.string_builder.list.length < file_writer->library.buffer_size) {
@@ -129,66 +157,62 @@ void flush_file_buffer(FILE_WRITER* file_writer, bool force)
     clear_builder(&file_writer->library.string_builder);
 }
 
-void RC_FILE_FUNC(write_string_file_writer, FILE_WRITER* file_writer, const TCHAR* s, bool newline)
+void write_string_file_writer(FILE_WRITER* file_writer, const TCHAR* s, bool newline)
 {
     append_builder_string(&file_writer->library.string_builder, s, newline);
 
-    flush_file_buffer(file_writer, false);
+    flush_file_writer(file_writer, false);
 }
-void RC_FILE_FUNC(write_text_file_writer, FILE_WRITER* file_writer, const TEXT* text, bool newline)
+void write_text_file_writer(FILE_WRITER* file_writer, const TEXT* text, bool newline)
 {
     append_builder_text(&file_writer->library.string_builder, text, newline);
 
-    flush_file_buffer(file_writer, false);
+    flush_file_writer(file_writer, false);
 }
-void RC_FILE_FUNC(write_character_file_writer, FILE_WRITER* file_writer, TCHAR c, bool newline)
+void write_character_file_writer(FILE_WRITER* file_writer, TCHAR c, bool newline)
 {
     append_builder_character(&file_writer->library.string_builder, c, newline);
 
-    flush_file_buffer(file_writer, false);
+    flush_file_writer(file_writer, false);
 }
-void RC_FILE_FUNC(write_int_file_writer, FILE_WRITER* file_writer, ssize_t value, bool newline)
+void write_int_file_writer(FILE_WRITER* file_writer, ssize_t value, bool newline)
 {
     append_builder_int(&file_writer->library.string_builder, value, newline);
 
-    flush_file_buffer(file_writer, false);
+    flush_file_writer(file_writer, false);
 }
-void RC_FILE_FUNC(write_uint_file_writer, FILE_WRITER* file_writer, size_t value, bool newline)
+void write_uint_file_writer(FILE_WRITER* file_writer, size_t value, bool newline)
 {
     append_builder_uint(&file_writer->library.string_builder, value, newline);
 
-    flush_file_buffer(file_writer, false);
+    flush_file_writer(file_writer, false);
 }
-void RC_FILE_FUNC(write_bool_file_writer, FILE_WRITER* file_writer, bool value, bool newline)
+void write_bool_file_writer(FILE_WRITER* file_writer, bool value, bool newline)
 {
     append_builder_bool(&file_writer->library.string_builder, value, newline);
 
-    flush_file_buffer(file_writer, false);
+    flush_file_writer(file_writer, false);
 }
-void RC_FILE_FUNC(write_pointer_file_writer, FILE_WRITER* file_writer, const void* pointer, bool newline)
+void write_pointer_file_writer(FILE_WRITER* file_writer, const void* pointer, bool newline)
 {
     append_builder_pointer(&file_writer->library.string_builder, pointer, newline);
 
-    flush_file_buffer(file_writer, false);
+    flush_file_writer(file_writer, false);
 }
 
-void RC_HEAP_FUNC(write_vformat_file_writer, FILE_WRITER* file_writer, const TEXT* format, va_list ap)
+void write_vformat_file_writer(FILE_WRITER* file_writer, const TEXT* format, va_list ap)
 {
     append_builder_vformat(&file_writer->library.string_builder, format, ap);
 
-    flush_file_buffer(file_writer, false);
+    flush_file_writer(file_writer, false);
 }
-void RC_FILE_FUNC(write_format_file_writer, FILE_WRITER* file_writer, const TEXT* format, ...)
+void write_format_file_writer(FILE_WRITER* file_writer, const TEXT* format, ...)
 {
     va_list ap;
     va_start(ap, format);
 
-    RC_HEAP_CALL(write_vformat_file_writer, file_writer, format, ap);
+    write_vformat_file_writer(file_writer, format, ap);
 
     va_end(ap);
 }
 
-bool RC_FILE_FUNC(free_file_reader, FILE_READER* file_reader)
-{
-    return RC_FILE_CALL(close_file_resource, &file_reader->resource);
-}
