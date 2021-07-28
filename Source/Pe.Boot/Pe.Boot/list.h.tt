@@ -29,13 +29,22 @@
 
 #include "res_check.h"
 
+/// <summary>
+/// 設定可能な型。
+/// </summary>
 typedef enum tag_PRIMITIVE_LIST_TYPE
 {
 <# foreach(var item in items) { #>
+    /// <summary>
+    /// <c><#= item.ValueType #></c>を設定。
+    /// </summary>
     <#= item.TypeName #>,
 <# } #>
 } PRIMITIVE_LIST_TYPE;
 
+/// <summary>
+/// 組み込み型(≠構造体)の動的リスト。
+/// </summary>
 typedef struct tag_PRIMITIVE_LIST
 {
     /// <summary>
@@ -61,14 +70,18 @@ typedef struct tag_PRIMITIVE_LIST
 } PRIMITIVE_LIST;
 
 <# foreach(var item in items) { #>
+/// <summary>
+/// <c><#= item.ValueType #></c>を扱う<c>PRIMITIVE_LIST</c>の別名。
+/// <para>弱い型なのであくまでソース上の見た目判断用。</para>
+/// </summary>
 typedef PRIMITIVE_LIST <#= item.AliasList #>;
 <# } #>
 
 /// <summary>
 /// リストの生成。
 /// </summary>
-/// <param name="list_type"></param>
-/// <param name="capacity"></param>
+/// <param name="list_type">リストで使用する型。</param>
+/// <param name="capacity">予約サイズ。list_typeに影響されない理論的なサイズ。</param>
 /// <returns>解放が必要。</returns>
 PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity);
 #ifdef RES_CHECK
@@ -86,17 +99,44 @@ bool RC_HEAP_FUNC(free_primitive_list, PRIMITIVE_LIST* list);
 #endif
 
 <# foreach(var item in items) { #>
+/// <summary>
+/// リストにデータ追加。
+/// </summary>
+/// <param name="list">対象リスト。</param>
+/// <param name="value">追加する値。</param>
+/// <returns>成功状態。</returns>
 bool push_list_<#= item.BaseName #>(<#= item.AliasList #>* list, <#= item.ValueType #> value);
 <# } #>
 
 <# foreach(var item in items) { #>
+/// <summary>
+/// リストの末尾データを破棄。
+/// </summary>
+/// <param name="result">末尾データ。<c>NULL</c>指定で無視。</param>
+/// <param name="list">対象リスト。</param>
+/// <returns>成功状態。</returns>
 bool pop_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.AliasList #>* list);
 <# } #>
 
 <# foreach(var item in items) { #>
+/// <summary>
+/// リストからデータを取得。
+/// </summary>
+/// <param name="result">取得データ。</param>
+/// <param name="list">対象リスト。</param>
+/// <param name="index">0基点の取得位置。</param>
+/// <returns>成功状態。</returns>
 bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.AliasList #>* list, size_t index);
 <# } #>
 
 <# foreach(var item in items) { #>
-<#= item.ValueType #>* reference_list_<#= item.BaseName #>(<#= item.AliasList #>* list);
+/// <summary>
+/// リストのデータを参照。
+/// <para>参照データ使用時はリストに対する処理を行ってはならない。</para>
+/// </summary>
+/// <param name="result">取得データ。</param>
+/// <param name="list">対象リスト。</param>
+/// <param name="index">0基点の取得位置。</param>
+/// <returns>成功した場合は型指定されたポインタ。失敗時はNULL。</returns>
+const <#= item.ValueType #>* reference_list_<#= item.BaseName #>(<#= item.AliasList #>* list);
 <# } #>

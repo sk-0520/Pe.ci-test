@@ -428,7 +428,7 @@ bool get_list_tchar(TCHAR* result, PRIMITIVE_LIST_TCHAR* list, size_t index)
     return false;
 }
 
-int8_t* reference_list_int8(PRIMITIVE_LIST_INT8* list)
+const int8_t* reference_list_int8(PRIMITIVE_LIST_INT8* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_INT8) {
         return NULL;
@@ -436,7 +436,7 @@ int8_t* reference_list_int8(PRIMITIVE_LIST_INT8* list)
 
     return (int8_t*)list->buffer;
 }
-uint8_t* reference_list_uint8(PRIMITIVE_LIST_UINT8* list)
+const uint8_t* reference_list_uint8(PRIMITIVE_LIST_UINT8* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_UINT8) {
         return NULL;
@@ -444,7 +444,7 @@ uint8_t* reference_list_uint8(PRIMITIVE_LIST_UINT8* list)
 
     return (uint8_t*)list->buffer;
 }
-int16_t* reference_list_int16(PRIMITIVE_LIST_INT16* list)
+const int16_t* reference_list_int16(PRIMITIVE_LIST_INT16* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_INT16) {
         return NULL;
@@ -452,7 +452,7 @@ int16_t* reference_list_int16(PRIMITIVE_LIST_INT16* list)
 
     return (int16_t*)list->buffer;
 }
-uint16_t* reference_list_uint16(PRIMITIVE_LIST_UINT16* list)
+const uint16_t* reference_list_uint16(PRIMITIVE_LIST_UINT16* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_UINT16) {
         return NULL;
@@ -460,7 +460,7 @@ uint16_t* reference_list_uint16(PRIMITIVE_LIST_UINT16* list)
 
     return (uint16_t*)list->buffer;
 }
-int32_t* reference_list_int32(PRIMITIVE_LIST_INT32* list)
+const int32_t* reference_list_int32(PRIMITIVE_LIST_INT32* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_INT32) {
         return NULL;
@@ -468,7 +468,7 @@ int32_t* reference_list_int32(PRIMITIVE_LIST_INT32* list)
 
     return (int32_t*)list->buffer;
 }
-uint32_t* reference_list_uint32(PRIMITIVE_LIST_UINT32* list)
+const uint32_t* reference_list_uint32(PRIMITIVE_LIST_UINT32* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_UINT32) {
         return NULL;
@@ -476,7 +476,7 @@ uint32_t* reference_list_uint32(PRIMITIVE_LIST_UINT32* list)
 
     return (uint32_t*)list->buffer;
 }
-TCHAR* reference_list_tchar(PRIMITIVE_LIST_TCHAR* list)
+const TCHAR* reference_list_tchar(PRIMITIVE_LIST_TCHAR* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_TCHAR) {
         return NULL;

@@ -175,7 +175,7 @@ bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.Alias
 <# } #>
 
 <# foreach(var item in items) { #>
-<#= item.ValueType #>* reference_list_<#= item.BaseName #>(<#= item.AliasList #>* list)
+const <#= item.ValueType #>* reference_list_<#= item.BaseName #>(<#= item.AliasList #>* list)
 {
     if(list->library.type != <#= item.TypeName #>) {
         return NULL;
