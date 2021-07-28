@@ -110,6 +110,17 @@ bool push_list_<#= item.BaseName #>(<#= item.AliasList #>* list, <#= item.ValueT
 
 <# foreach(var item in items) { #>
 /// <summary>
+/// リストにデータ追加。
+/// </summary>
+/// <param name="list">対象リスト。</param>
+/// <param name="values">追加する値の一覧。</param>
+/// <param name="count">個数。</param>
+/// <returns>成功状態。</returns>
+bool add_range_list_<#= item.BaseName #>(<#= item.AliasList #>* list, const <#= item.ValueType #>* values, size_t count);
+<# } #>
+
+<# foreach(var item in items) { #>
+/// <summary>
 /// リストの末尾データを破棄。
 /// </summary>
 /// <param name="result">末尾データ。<c>NULL</c>指定で無視。</param>

@@ -136,6 +136,31 @@ bool push_list_<#= item.BaseName #>(<#= item.AliasList #>* list, <#= item.ValueT
 <# } #>
 
 <# foreach(var item in items) { #>
+bool add_range_list_<#= item.BaseName #>(<#= item.AliasList #>* list, const <#= item.ValueType #>* values, size_t count)
+{
+    if(list->library.type != <#= item.TypeName #>) {
+        return false;
+    }
+
+    if(!values) {
+        return false;
+    }
+    if(!count) {
+        return false;
+    }
+
+    extend_capacity_if_not_enough_list(list, count);
+
+    size_t data_bytes = get_type_bytes(list->library.type, count);
+    copy_memory((<#= item.ValueType #>*)list->buffer + list->length, values, data_bytes);
+
+    list->length += count;
+
+    return true;
+}
+<# } #>
+
+<# foreach(var item in items) { #>
 bool pop_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.AliasList #>* list)
 {
     if(list->library.type != <#= item.TypeName #>) {

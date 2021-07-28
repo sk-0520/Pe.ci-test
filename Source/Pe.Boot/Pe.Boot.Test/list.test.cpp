@@ -64,5 +64,19 @@ namespace PeBootTest
 
             free_primitive_list(&list);
         }
+
+        TEST_METHOD(add_range_test)
+        {
+            PRIMITIVE_LIST_INT32 list = new_primitive_list(PRIMITIVE_LIST_TYPE_INT32, 1);
+            int32_t values[] = {
+                1, 2, 3, 4, 5,
+            };
+            add_range_list_int32(&list, values, sizeof(values));
+            for (size_t i = 0; i < SIZEOF_ARRAY(values); i++) {
+                int32_t value;
+                Assert::IsTrue(get_list_int32(&value, &list, i));
+                Assert::AreEqual(values[i], value);
+            }
+        }
     };
 }

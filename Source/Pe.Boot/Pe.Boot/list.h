@@ -173,6 +173,63 @@ bool push_list_uint32(PRIMITIVE_LIST_UINT32* list, uint32_t value);
 bool push_list_tchar(PRIMITIVE_LIST_TCHAR* list, TCHAR value);
 
 /// <summary>
+/// リストにデータ追加。
+/// </summary>
+/// <param name="list">対象リスト。</param>
+/// <param name="values">追加する値の一覧。</param>
+/// <param name="count">個数。</param>
+/// <returns>成功状態。</returns>
+bool add_range_list_int8(PRIMITIVE_LIST_INT8* list, const int8_t* values, size_t count);
+/// <summary>
+/// リストにデータ追加。
+/// </summary>
+/// <param name="list">対象リスト。</param>
+/// <param name="values">追加する値の一覧。</param>
+/// <param name="count">個数。</param>
+/// <returns>成功状態。</returns>
+bool add_range_list_uint8(PRIMITIVE_LIST_UINT8* list, const uint8_t* values, size_t count);
+/// <summary>
+/// リストにデータ追加。
+/// </summary>
+/// <param name="list">対象リスト。</param>
+/// <param name="values">追加する値の一覧。</param>
+/// <param name="count">個数。</param>
+/// <returns>成功状態。</returns>
+bool add_range_list_int16(PRIMITIVE_LIST_INT16* list, const int16_t* values, size_t count);
+/// <summary>
+/// リストにデータ追加。
+/// </summary>
+/// <param name="list">対象リスト。</param>
+/// <param name="values">追加する値の一覧。</param>
+/// <param name="count">個数。</param>
+/// <returns>成功状態。</returns>
+bool add_range_list_uint16(PRIMITIVE_LIST_UINT16* list, const uint16_t* values, size_t count);
+/// <summary>
+/// リストにデータ追加。
+/// </summary>
+/// <param name="list">対象リスト。</param>
+/// <param name="values">追加する値の一覧。</param>
+/// <param name="count">個数。</param>
+/// <returns>成功状態。</returns>
+bool add_range_list_int32(PRIMITIVE_LIST_INT32* list, const int32_t* values, size_t count);
+/// <summary>
+/// リストにデータ追加。
+/// </summary>
+/// <param name="list">対象リスト。</param>
+/// <param name="values">追加する値の一覧。</param>
+/// <param name="count">個数。</param>
+/// <returns>成功状態。</returns>
+bool add_range_list_uint32(PRIMITIVE_LIST_UINT32* list, const uint32_t* values, size_t count);
+/// <summary>
+/// リストにデータ追加。
+/// </summary>
+/// <param name="list">対象リスト。</param>
+/// <param name="values">追加する値の一覧。</param>
+/// <param name="count">個数。</param>
+/// <returns>成功状態。</returns>
+bool add_range_list_tchar(PRIMITIVE_LIST_TCHAR* list, const TCHAR* values, size_t count);
+
+/// <summary>
 /// リストの末尾データを破棄。
 /// </summary>
 /// <param name="result">末尾データ。<c>NULL</c>指定で無視。</param>

@@ -195,6 +195,161 @@ bool push_list_tchar(PRIMITIVE_LIST_TCHAR* list, TCHAR value)
     return true;
 }
 
+bool add_range_list_int8(PRIMITIVE_LIST_INT8* list, const int8_t* values, size_t count)
+{
+    if(list->library.type != PRIMITIVE_LIST_TYPE_INT8) {
+        return false;
+    }
+
+    if(!values) {
+        return false;
+    }
+    if(!count) {
+        return false;
+    }
+
+    extend_capacity_if_not_enough_list(list, count);
+
+    size_t data_bytes = get_type_bytes(list->library.type, count);
+    copy_memory((int8_t*)list->buffer + list->length, values, data_bytes);
+
+    list->length += count;
+
+    return true;
+}
+bool add_range_list_uint8(PRIMITIVE_LIST_UINT8* list, const uint8_t* values, size_t count)
+{
+    if(list->library.type != PRIMITIVE_LIST_TYPE_UINT8) {
+        return false;
+    }
+
+    if(!values) {
+        return false;
+    }
+    if(!count) {
+        return false;
+    }
+
+    extend_capacity_if_not_enough_list(list, count);
+
+    size_t data_bytes = get_type_bytes(list->library.type, count);
+    copy_memory((uint8_t*)list->buffer + list->length, values, data_bytes);
+
+    list->length += count;
+
+    return true;
+}
+bool add_range_list_int16(PRIMITIVE_LIST_INT16* list, const int16_t* values, size_t count)
+{
+    if(list->library.type != PRIMITIVE_LIST_TYPE_INT16) {
+        return false;
+    }
+
+    if(!values) {
+        return false;
+    }
+    if(!count) {
+        return false;
+    }
+
+    extend_capacity_if_not_enough_list(list, count);
+
+    size_t data_bytes = get_type_bytes(list->library.type, count);
+    copy_memory((int16_t*)list->buffer + list->length, values, data_bytes);
+
+    list->length += count;
+
+    return true;
+}
+bool add_range_list_uint16(PRIMITIVE_LIST_UINT16* list, const uint16_t* values, size_t count)
+{
+    if(list->library.type != PRIMITIVE_LIST_TYPE_UINT16) {
+        return false;
+    }
+
+    if(!values) {
+        return false;
+    }
+    if(!count) {
+        return false;
+    }
+
+    extend_capacity_if_not_enough_list(list, count);
+
+    size_t data_bytes = get_type_bytes(list->library.type, count);
+    copy_memory((uint16_t*)list->buffer + list->length, values, data_bytes);
+
+    list->length += count;
+
+    return true;
+}
+bool add_range_list_int32(PRIMITIVE_LIST_INT32* list, const int32_t* values, size_t count)
+{
+    if(list->library.type != PRIMITIVE_LIST_TYPE_INT32) {
+        return false;
+    }
+
+    if(!values) {
+        return false;
+    }
+    if(!count) {
+        return false;
+    }
+
+    extend_capacity_if_not_enough_list(list, count);
+
+    size_t data_bytes = get_type_bytes(list->library.type, count);
+    copy_memory((int32_t*)list->buffer + list->length, values, data_bytes);
+
+    list->length += count;
+
+    return true;
+}
+bool add_range_list_uint32(PRIMITIVE_LIST_UINT32* list, const uint32_t* values, size_t count)
+{
+    if(list->library.type != PRIMITIVE_LIST_TYPE_UINT32) {
+        return false;
+    }
+
+    if(!values) {
+        return false;
+    }
+    if(!count) {
+        return false;
+    }
+
+    extend_capacity_if_not_enough_list(list, count);
+
+    size_t data_bytes = get_type_bytes(list->library.type, count);
+    copy_memory((uint32_t*)list->buffer + list->length, values, data_bytes);
+
+    list->length += count;
+
+    return true;
+}
+bool add_range_list_tchar(PRIMITIVE_LIST_TCHAR* list, const TCHAR* values, size_t count)
+{
+    if(list->library.type != PRIMITIVE_LIST_TYPE_TCHAR) {
+        return false;
+    }
+
+    if(!values) {
+        return false;
+    }
+    if(!count) {
+        return false;
+    }
+
+    extend_capacity_if_not_enough_list(list, count);
+
+    size_t data_bytes = get_type_bytes(list->library.type, count);
+    copy_memory((TCHAR*)list->buffer + list->length, values, data_bytes);
+
+    list->length += count;
+
+    return true;
+}
+
 bool pop_list_int8(int8_t* result, PRIMITIVE_LIST_INT8* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_INT8) {
