@@ -9,7 +9,6 @@ environment:
   ARCHIVE: 7z
   MINIMUM_VERSION: 0.00.0
   NUGET_PACKAGES: C:\nuget
-  DevEnvDir: C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\
 platform:
   - x64
   - x86

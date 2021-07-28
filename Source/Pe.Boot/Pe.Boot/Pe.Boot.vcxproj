@@ -410,11 +410,10 @@
     <ClCompile Include="fsio.c" />
     <ClCompile Include="fsio_resource.c" />
     <ClCompile Include="fsio_textfile.c" />
-    <CustomBuild Include="list.c.tt">
+    <None Include="..\build-t4.bat" />
+    <None Include="list.c.tt">
       <FileType>Document</FileType>
-      <Command>"$(DevEnvDir)TextTransform.exe" -out "$(ProjectDir)list.c" "$(ProjectDir)list.c.tt"</Command>
-      <Outputs>$(ProjectDir)list.c</Outputs>
-    </CustomBuild>
+    </None>
     <ClCompile Include="list.c" />
     <ClCompile Include="map.c" />
     <ClCompile Include="memory.c" />
@@ -447,11 +446,9 @@
     <ClInclude Include="fsio.h" />
     <ClInclude Include="fsio_resource.h" />
     <ClInclude Include="fsio_textfile.h" />
-    <CustomBuild Include="list.h.tt">
+    <None Include="list.h.tt">
       <FileType>Document</FileType>
-      <Command >"$(DevEnvDir)TextTransform.exe" -out "$(ProjectDir)list.h" "$(ProjectDir)list.h.tt"</Command>
-      <Outputs >$(ProjectDir)list.h</Outputs>
-    </CustomBuild>
+    </None>
     <ClInclude Include="list.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="memory.h" />
@@ -476,18 +473,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Pe\Pe.Main\Resources\Icon\App.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="list.h">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>list.h.tt</DependentUpon>
-    </Compile>
-    <Compile Update="lisr.c">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>list.c.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

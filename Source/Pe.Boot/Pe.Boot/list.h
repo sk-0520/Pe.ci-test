@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <stdint.h>
 
 #include "res_check.h"
@@ -13,21 +13,21 @@ typedef enum tag_PRIMITIVE_LIST_TYPE
 typedef struct tag_PRIMITIVE_LIST
 {
     /// <summary>
-    /// Œ^‚É‡‚í‚¹‚½’·‚³B
+    /// å‹ã«åˆã‚ã›ãŸé•·ã•ã€‚
     /// </summary>
     size_t length;
     /// <summary>
-    /// À‘ÌB
+    /// å®Ÿä½“ã€‚
     /// </summary>
     void* buffer;
     struct
     {
         /// <summary>
-        /// Œ^B
+        /// å‹ã€‚
         /// </summary>
         PRIMITIVE_LIST_TYPE type;
         /// <summary>
-        /// Šm•ÛÏ‚İƒTƒCƒY(ƒoƒCƒg•)B
+        /// ç¢ºä¿æ¸ˆã¿ã‚µã‚¤ã‚º(ãƒã‚¤ãƒˆå¹…)ã€‚
         /// </summary>
         size_t capacity_bytes;
     } library;
@@ -39,7 +39,7 @@ typedef PRIMITIVE_LIST UINT16_LIST;
 typedef PRIMITIVE_LIST UINT32_LIST;
 
 /// <summary>
-/// ƒŠƒXƒg‚Ì¶¬B
+/// ãƒªã‚¹ãƒˆã®ç”Ÿæˆã€‚
 /// </summary>
 /// <param name="list_type"></param>
 /// <param name="capacity"></param>
