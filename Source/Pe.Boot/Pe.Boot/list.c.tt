@@ -1,9 +1,14 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
 #include "list.h"
 #include "memory.h"
 #include "debug.h"
 
 /// <summary>
-/// w’èŒ^‚ÌƒoƒCƒg•‚ğæ“¾B
+/// æŒ‡å®šå‹ã®ãƒã‚¤ãƒˆå¹…ã‚’å–å¾—ã€‚
 /// </summary>
 /// <param name="list_type"></param>
 /// <returns></returns>
@@ -27,7 +32,7 @@ static size_t get_type_byte(PRIMITIVE_LIST_TYPE list_type)
 }
 
 /// <summary>
-/// w’èŒ^‚Ì’·‚³‚ğƒoƒCƒg’PˆÊ‚Åæ“¾B
+/// æŒ‡å®šå‹ã®é•·ã•ã‚’ãƒã‚¤ãƒˆå˜ä½ã§å–å¾—ã€‚
 /// </summary>
 /// <param name="list_type"></param>
 /// <param name="length"></param>
@@ -69,12 +74,12 @@ bool RC_HEAP_FUNC(free_primitive_list, PRIMITIVE_LIST* list)
     return RC_HEAP_CALL(free_memory, list->buffer);
 }
 
-// “¯‚¶‚æ‚¤‚Èˆ—‚Î‚Á‚©‘‚¢‚Ä‚ñ‚Ë
+// åŒã˜ã‚ˆã†ãªå‡¦ç†ã°ã£ã‹æ›¸ã„ã¦ã‚“ã­
 static size_t extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t need_length)
 {
     size_t need_bytes = get_type_bytes(list->library.type, need_length);
     size_t current_bytes = get_type_bytes(list->library.type, list->length);
-    // ‚Ü‚¾‘åä•v‚È‚ç‰½‚à‚µ‚È‚¢
+    // ã¾ã å¤§ä¸ˆå¤«ãªã‚‰ä½•ã‚‚ã—ãªã„
     size_t need_total_bytes = current_bytes + need_bytes;
     if (need_total_bytes <= list->library.capacity_bytes) {
         return 0;

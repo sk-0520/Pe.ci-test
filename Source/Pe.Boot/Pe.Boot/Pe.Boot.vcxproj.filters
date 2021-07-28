@@ -31,6 +31,12 @@
     <Filter Include="source\library">
       <UniqueIdentifier>{a75267ac-b3c1-4ac2-8645-f5c829ccfb12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="header\library\template">
+      <UniqueIdentifier>{f0de3537-dc40-407f-a784-5a0e539b78ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\library\template">
+      <UniqueIdentifier>{02a79809-8e85-4375-a69d-c5d762f04fa0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="app_boot.c">
@@ -219,5 +225,13 @@
     <Image Include="..\..\Pe\Pe.Main\Resources\Icon\App.ico">
       <Filter>_resource</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="list.h.tt">
+      <Filter>header\library\template</Filter>
+    </CustomBuild>
+    <CustomBuild Include="list.c.tt">
+      <Filter>source\library\template</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>
