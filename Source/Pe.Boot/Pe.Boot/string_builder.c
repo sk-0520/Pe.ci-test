@@ -10,18 +10,16 @@ STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t ca
     assert_debug(s);
 
     size_t length = get_string_length(s);
-    size_t bytes = length * sizeof(TCHAR);
 
-    TCHAR* buffer = RC_HEAP_CALL(allocate_memory, bytes, false);
-    copy_memory(buffer, s, bytes);
+    PRIMITIVE_LIST_TCHAR list = RC_HEAP_CALL(new_primitive_list, PRIMITIVE_LIST_TYPE_TCHAR, capacity);
+
+    add_range_list_tchar(&list, s, length);
 
     STRING_BUILDER result = {
-        .buffer = buffer,
-        .length = length,
+        .list = list,
         .library = {
-            .capacity = MAX(length, capacity),
             .newline = NEWLINET,
-    }
+        }
     };
 
     return result;
@@ -31,17 +29,13 @@ STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity)
 {
     assert_debug(capacity);
 
-    size_t bytes = capacity * sizeof(TCHAR);
-    TCHAR* buffer = RC_HEAP_CALL(allocate_memory, bytes, false);
-    buffer[0] = 0;
+    PRIMITIVE_LIST_TCHAR list = RC_HEAP_CALL(new_primitive_list, PRIMITIVE_LIST_TYPE_TCHAR, capacity);
 
     STRING_BUILDER result = {
-        .buffer = buffer,
-        .length = 0,
+        .list = list,
         .library = {
-            .capacity = capacity,
             .newline = NEWLINET,
-    }
+        }
     };
 
     return result;
@@ -52,60 +46,13 @@ bool RC_HEAP_FUNC(free_string_builder, STRING_BUILDER* string_builder)
     if (!string_builder) {
         return false;
     }
-    if (!string_builder->buffer) {
-        return false;
-    }
 
-    RC_HEAP_CALL(free_memory, string_builder->buffer);
-    string_builder->buffer = NULL;
-    string_builder->length = 0;
-    string_builder->library.capacity = 0;
-
-    return true;
-}
-
-
-
-/// <summary>
-/// 必要に応じて<c>STRING_BUILDER</c>予約領域を拡張。
-/// </summary>
-/// <param name="string_builder">対象の<c>STRING_BUILDER</c></param>
-/// <param name="need_length">追加に必要なサイズ。</param>
-/// <returns>拡張したサイズ。拡張しなかった場合は0。</returns>
-static size_t extend_capacity_if_not_enough_string_builder(STRING_BUILDER* string_builder, size_t need_length)
-{
-    // まだ大丈夫なら何もしない
-    size_t need_total_length = string_builder->length + need_length;
-    if (need_total_length <= string_builder->library.capacity) {
-        return 0;
-    }
-
-    // 必要な領域まで拡張
-    size_t old_capacity = string_builder->library.capacity;
-    size_t new_capacity = string_builder->library.capacity;
-    do {
-        new_capacity *= 2;
-    } while (new_capacity < need_total_length);
-
-    size_t new_bytes = new_capacity * sizeof(TCHAR);
-    TCHAR* new_buffer = allocate_memory(new_bytes, false);
-    TCHAR* old_buffer = string_builder->buffer;
-
-    copy_memory(new_buffer, old_buffer, new_bytes);
-    free_memory(old_buffer);
-
-    string_builder->buffer = new_buffer;
-    string_builder->library.capacity = new_capacity;
-
-    return new_capacity - old_capacity;
+    return RC_HEAP_CALL(free_primitive_list, &string_builder->list);
 }
 
 static STRING_BUILDER* append_string_core(STRING_BUILDER* string_builder, const TCHAR* s, size_t length)
 {
-    extend_capacity_if_not_enough_string_builder(string_builder, length);
-    copy_memory(string_builder->buffer + string_builder->length, s, length * sizeof(TCHAR));
-    string_builder->length += length;
-    assert_debug(string_builder->length <= string_builder->library.capacity);
+    add_range_list_tchar(&string_builder->list, s, length);
 
     return string_builder;
 }
@@ -116,29 +63,32 @@ TEXT RC_HEAP_FUNC(build_text_string_builder, const STRING_BUILDER* string_builde
         return create_invalid_text();
     }
 
-    if (!string_builder->length) {
+    if (!string_builder->list.length) {
         return RC_HEAP_CALL(new_text, _T(""));
     }
 
-    TCHAR* s = RC_HEAP_CALL(allocate_string, string_builder->length);
-    copy_memory(s, string_builder->buffer, string_builder->length * sizeof(TCHAR));
-    return wrap_text_with_length(s, string_builder->length, true);
+    TCHAR* s = RC_HEAP_CALL(allocate_string, string_builder->list.length);
+    const TCHAR* buffer = reference_list_tchar(&string_builder->list);
+    copy_memory(s, buffer, string_builder->list.length * sizeof(TCHAR));
+    return wrap_text_with_length(s, string_builder->list.length, true);
 }
 
 TEXT reference_text_string_builder(STRING_BUILDER* string_builder)
 {
-    if (string_builder->length < string_builder->library.capacity) {
-        string_builder->buffer[string_builder->length] = 0;
+    TCHAR* buffer;
+    if (string_builder->list.length < string_builder->list.library.capacity_bytes * sizeof(TCHAR)) {
+        buffer = reference_list_tchar(&string_builder->list);
+        buffer[string_builder->list.length] = 0;
     } else {
         append_builder_character(string_builder, _T('0'), false);
+        buffer = reference_list_tchar(&string_builder->list);
     }
-    return wrap_text_with_length(string_builder->buffer, string_builder->length, false);
+    return wrap_text_with_length(buffer, string_builder->list.length, false);
 }
 
 STRING_BUILDER* clear_builder(STRING_BUILDER* string_builder)
 {
-    string_builder->buffer[0] = 0;
-    string_builder->length = 0;
+    clear_list(&string_builder->list);
 
     return string_builder;
 }
@@ -186,8 +136,7 @@ STRING_BUILDER* append_builder_text(STRING_BUILDER* string_builder, const TEXT* 
 
 STRING_BUILDER* append_builder_character(STRING_BUILDER* string_builder, TCHAR c, bool newline)
 {
-    extend_capacity_if_not_enough_string_builder(string_builder, 1);
-    string_builder->buffer[string_builder->length++] = c;
+    push_list_tchar(&string_builder->list, c);
 
     if (newline) {
         append_builder_newline(string_builder);

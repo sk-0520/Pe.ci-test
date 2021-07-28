@@ -86,7 +86,7 @@ static size_t extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t ne
     }
 
     size_t old_capacity_bytes = list->library.capacity_bytes;
-    size_t new_capacity_bytes = list->library.capacity_bytes;
+    size_t new_capacity_bytes = list->library.capacity_bytes ? list->library.capacity_bytes: LIST_DEFAULT_CAPACITY;
     do {
         new_capacity_bytes *= 2;
     } while (new_capacity_bytes < need_total_bytes);
@@ -484,7 +484,7 @@ bool pop_list_tchar(TCHAR* result, PRIMITIVE_LIST_TCHAR* list)
     return true;
 }
 
-bool get_list_int8(int8_t* result, PRIMITIVE_LIST_INT8* list, size_t index)
+bool get_list_int8(int8_t* result, const PRIMITIVE_LIST_INT8* list, size_t index)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_INT8) {
         return false;
@@ -498,7 +498,7 @@ bool get_list_int8(int8_t* result, PRIMITIVE_LIST_INT8* list, size_t index)
 
     return false;
 }
-bool get_list_uint8(uint8_t* result, PRIMITIVE_LIST_UINT8* list, size_t index)
+bool get_list_uint8(uint8_t* result, const PRIMITIVE_LIST_UINT8* list, size_t index)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_UINT8) {
         return false;
@@ -512,7 +512,7 @@ bool get_list_uint8(uint8_t* result, PRIMITIVE_LIST_UINT8* list, size_t index)
 
     return false;
 }
-bool get_list_int16(int16_t* result, PRIMITIVE_LIST_INT16* list, size_t index)
+bool get_list_int16(int16_t* result, const PRIMITIVE_LIST_INT16* list, size_t index)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_INT16) {
         return false;
@@ -526,7 +526,7 @@ bool get_list_int16(int16_t* result, PRIMITIVE_LIST_INT16* list, size_t index)
 
     return false;
 }
-bool get_list_uint16(uint16_t* result, PRIMITIVE_LIST_UINT16* list, size_t index)
+bool get_list_uint16(uint16_t* result, const PRIMITIVE_LIST_UINT16* list, size_t index)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_UINT16) {
         return false;
@@ -540,7 +540,7 @@ bool get_list_uint16(uint16_t* result, PRIMITIVE_LIST_UINT16* list, size_t index
 
     return false;
 }
-bool get_list_int32(int32_t* result, PRIMITIVE_LIST_INT32* list, size_t index)
+bool get_list_int32(int32_t* result, const PRIMITIVE_LIST_INT32* list, size_t index)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_INT32) {
         return false;
@@ -554,7 +554,7 @@ bool get_list_int32(int32_t* result, PRIMITIVE_LIST_INT32* list, size_t index)
 
     return false;
 }
-bool get_list_uint32(uint32_t* result, PRIMITIVE_LIST_UINT32* list, size_t index)
+bool get_list_uint32(uint32_t* result, const PRIMITIVE_LIST_UINT32* list, size_t index)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_UINT32) {
         return false;
@@ -568,7 +568,7 @@ bool get_list_uint32(uint32_t* result, PRIMITIVE_LIST_UINT32* list, size_t index
 
     return false;
 }
-bool get_list_tchar(TCHAR* result, PRIMITIVE_LIST_TCHAR* list, size_t index)
+bool get_list_tchar(TCHAR* result, const PRIMITIVE_LIST_TCHAR* list, size_t index)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_TCHAR) {
         return false;
@@ -583,7 +583,7 @@ bool get_list_tchar(TCHAR* result, PRIMITIVE_LIST_TCHAR* list, size_t index)
     return false;
 }
 
-const int8_t* reference_list_int8(PRIMITIVE_LIST_INT8* list)
+int8_t* reference_list_int8(const PRIMITIVE_LIST_INT8* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_INT8) {
         return NULL;
@@ -591,7 +591,7 @@ const int8_t* reference_list_int8(PRIMITIVE_LIST_INT8* list)
 
     return (int8_t*)list->buffer;
 }
-const uint8_t* reference_list_uint8(PRIMITIVE_LIST_UINT8* list)
+uint8_t* reference_list_uint8(const PRIMITIVE_LIST_UINT8* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_UINT8) {
         return NULL;
@@ -599,7 +599,7 @@ const uint8_t* reference_list_uint8(PRIMITIVE_LIST_UINT8* list)
 
     return (uint8_t*)list->buffer;
 }
-const int16_t* reference_list_int16(PRIMITIVE_LIST_INT16* list)
+int16_t* reference_list_int16(const PRIMITIVE_LIST_INT16* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_INT16) {
         return NULL;
@@ -607,7 +607,7 @@ const int16_t* reference_list_int16(PRIMITIVE_LIST_INT16* list)
 
     return (int16_t*)list->buffer;
 }
-const uint16_t* reference_list_uint16(PRIMITIVE_LIST_UINT16* list)
+uint16_t* reference_list_uint16(const PRIMITIVE_LIST_UINT16* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_UINT16) {
         return NULL;
@@ -615,7 +615,7 @@ const uint16_t* reference_list_uint16(PRIMITIVE_LIST_UINT16* list)
 
     return (uint16_t*)list->buffer;
 }
-const int32_t* reference_list_int32(PRIMITIVE_LIST_INT32* list)
+int32_t* reference_list_int32(const PRIMITIVE_LIST_INT32* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_INT32) {
         return NULL;
@@ -623,7 +623,7 @@ const int32_t* reference_list_int32(PRIMITIVE_LIST_INT32* list)
 
     return (int32_t*)list->buffer;
 }
-const uint32_t* reference_list_uint32(PRIMITIVE_LIST_UINT32* list)
+uint32_t* reference_list_uint32(const PRIMITIVE_LIST_UINT32* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_UINT32) {
         return NULL;
@@ -631,7 +631,7 @@ const uint32_t* reference_list_uint32(PRIMITIVE_LIST_UINT32* list)
 
     return (uint32_t*)list->buffer;
 }
-const TCHAR* reference_list_tchar(PRIMITIVE_LIST_TCHAR* list)
+TCHAR* reference_list_tchar(const PRIMITIVE_LIST_TCHAR* list)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_TCHAR) {
         return NULL;

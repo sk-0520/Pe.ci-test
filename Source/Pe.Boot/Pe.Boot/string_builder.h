@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "tstring.h"
+#include "list.h"
 #include "text.h"
 
 
@@ -12,19 +13,9 @@
 /// </summary>
 typedef struct tag_STRING_BUILDER
 {
-    /// <summary>
-    /// バッファ。
-    /// <para>番兵を前提として扱わないこと。</para>
-    /// <para>構築中に使用する場合、追加・削除処理を行ってはいけない(再確保でヒープが無効の可能性あり)。</para>
-    /// </summary>
-    TCHAR* buffer;
-    /// <summary>
-    /// 現在の長さ。
-    /// </summary>
-    size_t length;
+    PRIMITIVE_LIST_TCHAR list;
     struct
     {
-        size_t capacity;
         TCHAR* newline;
     } library;
 } STRING_BUILDER;

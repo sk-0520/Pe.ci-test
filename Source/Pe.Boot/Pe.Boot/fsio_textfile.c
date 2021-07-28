@@ -94,7 +94,7 @@ bool RC_FILE_FUNC(free_file_writer, FILE_WRITER* file_writer)
 void flush_file_buffer(FILE_WRITER* file_writer, bool force)
 {
     if (!force) {
-        if (file_writer->library.string_builder.length < file_writer->library.buffer_size) {
+        if (file_writer->library.string_builder.list.length < file_writer->library.buffer_size) {
             return;
         }
     }

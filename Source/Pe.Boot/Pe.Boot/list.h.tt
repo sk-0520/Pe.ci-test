@@ -29,6 +29,8 @@
 
 #include "res_check.h"
 
+#define LIST_DEFAULT_CAPACITY 32
+
 /// <summary>
 /// 設定可能な型。
 /// </summary>
@@ -137,7 +139,7 @@ bool pop_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.Alias
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
 /// <returns>成功状態。</returns>
-bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.AliasList #>* list, size_t index);
+bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, const <#= item.AliasList #>* list, size_t index);
 <# } #>
 
 <# foreach(var item in items) { #>
@@ -148,8 +150,8 @@ bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.Alias
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
-/// <returns>成功した場合は型指定されたポインタ。失敗時はNULL。</returns>
-const <#= item.ValueType #>* reference_list_<#= item.BaseName #>(<#= item.AliasList #>* list);
+/// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
+<#= item.ValueType #>* reference_list_<#= item.BaseName #>(const <#= item.AliasList #>* list);
 <# } #>
 
 /// <summary>

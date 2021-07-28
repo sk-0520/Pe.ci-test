@@ -102,7 +102,7 @@ static size_t extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t ne
     }
 
     size_t old_capacity_bytes = list->library.capacity_bytes;
-    size_t new_capacity_bytes = list->library.capacity_bytes;
+    size_t new_capacity_bytes = list->library.capacity_bytes ? list->library.capacity_bytes: LIST_DEFAULT_CAPACITY;
     do {
         new_capacity_bytes *= 2;
     } while (new_capacity_bytes < need_total_bytes);
@@ -183,7 +183,7 @@ bool pop_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.Alias
 <# } #>
 
 <# foreach(var item in items) { #>
-bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.AliasList #>* list, size_t index)
+bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, const <#= item.AliasList #>* list, size_t index)
 {
     if(list->library.type != <#= item.TypeName #>) {
         return false;
@@ -200,7 +200,7 @@ bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.Alias
 <# } #>
 
 <# foreach(var item in items) { #>
-const <#= item.ValueType #>* reference_list_<#= item.BaseName #>(<#= item.AliasList #>* list)
+<#= item.ValueType #>* reference_list_<#= item.BaseName #>(const <#= item.AliasList #>* list)
 {
     if(list->library.type != <#= item.TypeName #>) {
         return NULL;

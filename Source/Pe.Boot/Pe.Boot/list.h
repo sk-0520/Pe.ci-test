@@ -3,6 +3,8 @@
 
 #include "res_check.h"
 
+#define LIST_DEFAULT_CAPACITY 32
+
 /// <summary>
 /// 設定可能な型。
 /// </summary>
@@ -286,7 +288,7 @@ bool pop_list_tchar(TCHAR* result, PRIMITIVE_LIST_TCHAR* list);
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
 /// <returns>成功状態。</returns>
-bool get_list_int8(int8_t* result, PRIMITIVE_LIST_INT8* list, size_t index);
+bool get_list_int8(int8_t* result, const PRIMITIVE_LIST_INT8* list, size_t index);
 /// <summary>
 /// リストからデータを取得。
 /// </summary>
@@ -294,7 +296,7 @@ bool get_list_int8(int8_t* result, PRIMITIVE_LIST_INT8* list, size_t index);
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
 /// <returns>成功状態。</returns>
-bool get_list_uint8(uint8_t* result, PRIMITIVE_LIST_UINT8* list, size_t index);
+bool get_list_uint8(uint8_t* result, const PRIMITIVE_LIST_UINT8* list, size_t index);
 /// <summary>
 /// リストからデータを取得。
 /// </summary>
@@ -302,7 +304,7 @@ bool get_list_uint8(uint8_t* result, PRIMITIVE_LIST_UINT8* list, size_t index);
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
 /// <returns>成功状態。</returns>
-bool get_list_int16(int16_t* result, PRIMITIVE_LIST_INT16* list, size_t index);
+bool get_list_int16(int16_t* result, const PRIMITIVE_LIST_INT16* list, size_t index);
 /// <summary>
 /// リストからデータを取得。
 /// </summary>
@@ -310,7 +312,7 @@ bool get_list_int16(int16_t* result, PRIMITIVE_LIST_INT16* list, size_t index);
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
 /// <returns>成功状態。</returns>
-bool get_list_uint16(uint16_t* result, PRIMITIVE_LIST_UINT16* list, size_t index);
+bool get_list_uint16(uint16_t* result, const PRIMITIVE_LIST_UINT16* list, size_t index);
 /// <summary>
 /// リストからデータを取得。
 /// </summary>
@@ -318,7 +320,7 @@ bool get_list_uint16(uint16_t* result, PRIMITIVE_LIST_UINT16* list, size_t index
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
 /// <returns>成功状態。</returns>
-bool get_list_int32(int32_t* result, PRIMITIVE_LIST_INT32* list, size_t index);
+bool get_list_int32(int32_t* result, const PRIMITIVE_LIST_INT32* list, size_t index);
 /// <summary>
 /// リストからデータを取得。
 /// </summary>
@@ -326,7 +328,7 @@ bool get_list_int32(int32_t* result, PRIMITIVE_LIST_INT32* list, size_t index);
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
 /// <returns>成功状態。</returns>
-bool get_list_uint32(uint32_t* result, PRIMITIVE_LIST_UINT32* list, size_t index);
+bool get_list_uint32(uint32_t* result, const PRIMITIVE_LIST_UINT32* list, size_t index);
 /// <summary>
 /// リストからデータを取得。
 /// </summary>
@@ -334,7 +336,7 @@ bool get_list_uint32(uint32_t* result, PRIMITIVE_LIST_UINT32* list, size_t index
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
 /// <returns>成功状態。</returns>
-bool get_list_tchar(TCHAR* result, PRIMITIVE_LIST_TCHAR* list, size_t index);
+bool get_list_tchar(TCHAR* result, const PRIMITIVE_LIST_TCHAR* list, size_t index);
 
 /// <summary>
 /// リストのデータを参照。
@@ -343,8 +345,8 @@ bool get_list_tchar(TCHAR* result, PRIMITIVE_LIST_TCHAR* list, size_t index);
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
-/// <returns>成功した場合は型指定されたポインタ。失敗時はNULL。</returns>
-const int8_t* reference_list_int8(PRIMITIVE_LIST_INT8* list);
+/// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
+int8_t* reference_list_int8(const PRIMITIVE_LIST_INT8* list);
 /// <summary>
 /// リストのデータを参照。
 /// <para>参照データ使用時はリストに対する処理を行ってはならない。</para>
@@ -352,8 +354,8 @@ const int8_t* reference_list_int8(PRIMITIVE_LIST_INT8* list);
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
-/// <returns>成功した場合は型指定されたポインタ。失敗時はNULL。</returns>
-const uint8_t* reference_list_uint8(PRIMITIVE_LIST_UINT8* list);
+/// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
+uint8_t* reference_list_uint8(const PRIMITIVE_LIST_UINT8* list);
 /// <summary>
 /// リストのデータを参照。
 /// <para>参照データ使用時はリストに対する処理を行ってはならない。</para>
@@ -361,8 +363,8 @@ const uint8_t* reference_list_uint8(PRIMITIVE_LIST_UINT8* list);
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
-/// <returns>成功した場合は型指定されたポインタ。失敗時はNULL。</returns>
-const int16_t* reference_list_int16(PRIMITIVE_LIST_INT16* list);
+/// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
+int16_t* reference_list_int16(const PRIMITIVE_LIST_INT16* list);
 /// <summary>
 /// リストのデータを参照。
 /// <para>参照データ使用時はリストに対する処理を行ってはならない。</para>
@@ -370,8 +372,8 @@ const int16_t* reference_list_int16(PRIMITIVE_LIST_INT16* list);
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
-/// <returns>成功した場合は型指定されたポインタ。失敗時はNULL。</returns>
-const uint16_t* reference_list_uint16(PRIMITIVE_LIST_UINT16* list);
+/// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
+uint16_t* reference_list_uint16(const PRIMITIVE_LIST_UINT16* list);
 /// <summary>
 /// リストのデータを参照。
 /// <para>参照データ使用時はリストに対する処理を行ってはならない。</para>
@@ -379,8 +381,8 @@ const uint16_t* reference_list_uint16(PRIMITIVE_LIST_UINT16* list);
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
-/// <returns>成功した場合は型指定されたポインタ。失敗時はNULL。</returns>
-const int32_t* reference_list_int32(PRIMITIVE_LIST_INT32* list);
+/// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
+int32_t* reference_list_int32(const PRIMITIVE_LIST_INT32* list);
 /// <summary>
 /// リストのデータを参照。
 /// <para>参照データ使用時はリストに対する処理を行ってはならない。</para>
@@ -388,8 +390,8 @@ const int32_t* reference_list_int32(PRIMITIVE_LIST_INT32* list);
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
-/// <returns>成功した場合は型指定されたポインタ。失敗時はNULL。</returns>
-const uint32_t* reference_list_uint32(PRIMITIVE_LIST_UINT32* list);
+/// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
+uint32_t* reference_list_uint32(const PRIMITIVE_LIST_UINT32* list);
 /// <summary>
 /// リストのデータを参照。
 /// <para>参照データ使用時はリストに対する処理を行ってはならない。</para>
@@ -397,8 +399,8 @@ const uint32_t* reference_list_uint32(PRIMITIVE_LIST_UINT32* list);
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
 /// <param name="index">0基点の取得位置。</param>
-/// <returns>成功した場合は型指定されたポインタ。失敗時はNULL。</returns>
-const TCHAR* reference_list_tchar(PRIMITIVE_LIST_TCHAR* list);
+/// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
+TCHAR* reference_list_tchar(const PRIMITIVE_LIST_TCHAR* list);
 
 /// <summary>
 /// リストを空にする。
