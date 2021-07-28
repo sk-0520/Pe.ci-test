@@ -185,4 +185,4 @@ DATA_INT64 get_position_file_resource(const FILE_RESOURCE* file_resource);
 /// <returns></returns>
 bool set_current_position_file_resource(const FILE_RESOURCE* file);
 
-
+DATA_INT64 get_size_file_resource(const FILE_RESOURCE* file_resource);

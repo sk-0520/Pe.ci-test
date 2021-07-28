@@ -9,9 +9,17 @@
 #include "app_boot.h"
 #include "app_console.h"
 
+//#define OREORE_TEST
+#ifdef OREORE_TEST
+#   include "oreore_test.h"
+#endif
 
 EXIT_CODE app_main(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
 {
+#ifdef OREORE_TEST
+    oreore_test(hInstance, command_line_option);
+#endif
+
     if (command_line_option->count < 1) {
         // そのまま実行
         return boot_normal(hInstance);

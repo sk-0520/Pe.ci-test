@@ -85,7 +85,10 @@ TEXT RC_HEAP_FUNC(new_text, const TCHAR* source);
 #   define new_text(source) RC_HEAP_WRAP(new_text, (source))
 #endif
 
-#define new_empty_text() new_text(_T(""))
+TEXT RC_HEAP_FUNC(new_empty_text);
+#ifdef RES_CHECK
+#   define new_empty_text() RC_HEAP_WRAP(new_empty_text)
+#endif
 
 /// <summary>
 /// 文字列からテキストにラップ。

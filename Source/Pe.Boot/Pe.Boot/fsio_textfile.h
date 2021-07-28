@@ -5,12 +5,10 @@
 #include "string_builder.h"
 
 
-#define FILE_READER_BUFFER_SIZE (1024 * 4)
-#define FILE_READER_BUILDER_CAPACITY ((FILE_READER_BUFFER_SIZE / 10) * 12)
+#define FILE_READER_BUFFER_SIZE (1024 * 2)
 
 #define FILE_WRITER_BUFFER_SIZE (1024 * 4)
 #define FILE_WRITER_BUILDER_CAPACITY ((FILE_WRITER_BUFFER_SIZE / 10) * 12)
-
 
 /// <summary>
 /// テキストファイル読み込み処理。
@@ -18,9 +16,13 @@
 typedef struct tag_FILE_READER
 {
     FILE_RESOURCE resource;
+    /// <summary>
+    /// BOMを読み込んだか。
+    /// </summary>
+    bool has_bom;
     struct
     {
-        size_t buffer_size;
+        FILE_ENCODING encoding;
     } library;
 } FILE_READER;
 
@@ -63,7 +65,23 @@ bool RC_FILE_FUNC(free_file_reader, FILE_READER* file_reader);
 #   define free_file_reader(file_reader) RC_FILE_WRAP(free_file_reader, (file_reader))
 #endif
 
+/// <summary>
+/// テキストファイル読み込み処理の生成。
+/// </summary>
+/// <param name="file_reader"></param>
+/// <returns></returns>
 bool is_enabled_file_reader(const FILE_READER* file_reader);
+
+/// <summary>
+/// テキストファイルの一括取得。
+/// </summary>
+/// <param name="file_reader"></param>
+/// <returns>解放が必要。</returns>
+TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader);
+#if RES_CHECK
+#   define read_content_file_reader(file_reader) RC_FILE_WRAP(read_content_file_reader, (file_reader))
+#endif
+
 
 /// <summary>
 /// テキストファイル書き込み処理の生成。
@@ -79,7 +97,7 @@ FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encodi
 #endif
 
 /// <summary>
-/// ファイル書き込み処理の解放。
+/// テキストファイル書き込み処理の解放。
 /// </summary>
 /// <param name="file_writer"></param>
 /// <returns></returns>
@@ -88,6 +106,11 @@ bool RC_FILE_FUNC(free_file_writer, FILE_WRITER* file_writer);
 #   define free_file_writer(file_writer) RC_FILE_WRAP(free_file_writer, (file_writer))
 #endif
 
+/// <summary>
+/// ファイル書き込み処理は有効か。
+/// </summary>
+/// <param name="file_writer"></param>
+/// <returns></returns>
 bool is_enabled_file_writer(const FILE_WRITER* file_writer);
 
 /// <summary>

@@ -417,6 +417,7 @@
     <ClCompile Include="list.c" />
     <ClCompile Include="map.c" />
     <ClCompile Include="memory.c" />
+    <ClCompile Include="oreore_test.c" />
     <ClCompile Include="path.c" />
     <ClCompile Include="logging.c" />
     <ClCompile Include="main.c" />
@@ -452,6 +453,7 @@
     <ClInclude Include="list.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="memory.h" />
+    <ClInclude Include="oreore_test.h" />
     <ClInclude Include="path.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="app_boot.h" />

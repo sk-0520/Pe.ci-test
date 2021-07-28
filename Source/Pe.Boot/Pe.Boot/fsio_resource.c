@@ -149,3 +149,12 @@ bool set_current_position_file_resource(const FILE_RESOURCE* file)
     return SetEndOfFile(file->handle);
 }
 
+DATA_INT64 get_size_file_resource(const FILE_RESOURCE* file_resource)
+{
+    DATA_INT64 data;
+    if (!GetFileSizeEx(file_resource->handle, &data.large)) {
+        data.plain = -1;
+    }
+
+    return data;
+}

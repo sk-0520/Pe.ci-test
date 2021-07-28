@@ -56,6 +56,11 @@ TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length)
     return result;
 }
 
+TEXT RC_HEAP_FUNC(new_empty_text)
+{
+    return RC_HEAP_CALL(new_text_with_length, _T(""), 0);
+}
+
 TEXT RC_HEAP_FUNC(new_text, const TCHAR* source)
 {
     if (!source) {

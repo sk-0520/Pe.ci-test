@@ -44,7 +44,6 @@ namespace PeBootTest
 
             Assert::IsTrue(free_file_writer(&file_writer));
         }
-
 #endif
     };
 }
