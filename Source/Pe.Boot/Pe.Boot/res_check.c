@@ -74,14 +74,23 @@ static size_t rc_file__stock_item_count;
 
 #pragma warning(push)
 #pragma warning(disable:6386)
-#define rc_output(format, ...) do { \
-    TCHAR* rc__buffer = HeapAlloc(GetProcessHeap(), 0, rc__buffer_length * sizeof(TCHAR)); \
-    assert(rc__buffer); \
-    wsprintf(rc__buffer, /*rc__buffer_length - 1, */format, __VA_ARGS__); \
-    rc__output(rc__buffer); \
-    HeapFree(GetProcessHeap(), 0, rc__buffer); \
+#define output_core(format, ...) do { \
+    if(rc__output) { \
+        TCHAR* rc__buffer = HeapAlloc(GetProcessHeap(), 0, rc__buffer_length * sizeof(TCHAR)); \
+        assert(rc__buffer); \
+        wsprintf(rc__buffer, /*rc__buffer_length - 1, */format, __VA_ARGS__); \
+        rc__output(rc__buffer); \
+        HeapFree(GetProcessHeap(), 0, rc__buffer); \
+    } \
 } while (0)
 #pragma warning(push)
+
+#ifdef RES_CHECK_NO_OUTPUT
+#   define output(format, ...)
+#else
+#   define output(format, ...) output_core(format, __VA_ARGS__)
+#endif
+
 
 
 static RES_CHECK_ITEM rc_get_item(RES_CHECK_TYPE type)
@@ -131,9 +140,9 @@ static void rc_check_core(void* p, const void* data, bool allocate, RES_CHECK_TY
         for (size_t i = 0; i < rc_item.stock_items_length; i++) {
             if (!rc_item.stock_items[i].p) {
                 if (type == RES_CHECK_TYPE_FILE) {
-                    rc_output(rc_item.formats->alloc_msg, p, RES_CHECK_CALL_ARGS, (TCHAR*)data);
+                    output(rc_item.formats->alloc_msg, p, RES_CHECK_CALL_ARGS, (TCHAR*)data);
                 } else {
-                    rc_output(rc_item.formats->alloc_msg, p, RES_CHECK_CALL_ARGS);
+                    output(rc_item.formats->alloc_msg, p, RES_CHECK_CALL_ARGS);
                 }
 
                 RES_CHECK_STOCK_ITEM item = {
@@ -154,13 +163,13 @@ static void rc_check_core(void* p, const void* data, bool allocate, RES_CHECK_TY
         }
 
         if (!stocked) {
-            rc_output(rc_item.formats->alloc_err, p, RES_CHECK_CALL_ARGS);
+            output(rc_item.formats->alloc_err, p, RES_CHECK_CALL_ARGS);
         }
     } else {
         bool exists = false;
         for (size_t i = 0; p && i < rc_item.stock_items_length; i++) {
             if (rc_item.stock_items[i].p == p) {
-                rc_output(rc_item.formats->free_mgs, p, RES_CHECK_CALL_ARGS, rc_item.stock_items[i].file, rc_item.stock_items[i].line);
+                output(rc_item.formats->free_mgs, p, RES_CHECK_CALL_ARGS, rc_item.stock_items[i].file, rc_item.stock_items[i].line);
                 //HeapFree(GetProcessHeap(), 0, rc_item.stock_items->file);
 
                 *rc_item.stock_item_count = *rc_item.stock_item_count - 1;
@@ -171,7 +180,7 @@ static void rc_check_core(void* p, const void* data, bool allocate, RES_CHECK_TY
         }
 
         if (!exists) {
-            rc_output(rc_item.formats->free_err, p, RES_CHECK_CALL_ARGS);
+            output(rc_item.formats->free_err, p, RES_CHECK_CALL_ARGS);
         }
     }
 }
@@ -192,7 +201,7 @@ static void rc__print_core(bool leak, RES_CHECK_TYPE type)
 {
     RES_CHECK_ITEM rc_item = rc_get_item(type);
 
-    rc_output(rc_item.formats->stock_count, *rc_item.stock_item_count && leak ? _T("ERROR") : _T("INFORMATION"), *rc_item.stock_item_count);
+    output_core(rc_item.formats->stock_count, *rc_item.stock_item_count && leak ? _T("ERROR") : _T("INFORMATION"), *rc_item.stock_item_count);
 
     for (size_t i = 0; i < rc_item.stock_items_length; i++) {
         RES_CHECK_STOCK_ITEM* item = rc_item.stock_items + i;
@@ -201,7 +210,7 @@ static void rc__print_core(bool leak, RES_CHECK_TYPE type)
                 ? res_check__formats->stock_list
                 : res_check__formats->stock_leak
                 ;
-            rc_output(format, item->p, item->file, item->line);
+            output_core(format, item->p, item->file, item->line);
         }
     }
 }

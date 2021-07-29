@@ -15,25 +15,25 @@ static ssize_t log_id;
 static void logging(const LOG_ITEM* log_item, void* data)
 {
     static TCHAR* log_levels[] = {
-        _T("TRACE      "),
-        _T("DEBUG      "),
+        _T("TRACE"),
+        _T("DEBUG"),
         _T("INFORMATION"),
-        _T("WARNING    "),
-        _T("ERROR      "),
+        _T("WARNING"),
+        _T("ERROR"),
     };
     STRING_BUILDER sb = create_string_builder(256);
     TEXT format = wrap_text(
-        _T("%t")
+        _T("[LOG:%s]")
         _T(" ")
-        _T("%s")
+        _T("%t")
         _T(" -> ")
         _T("%t")
         _T(" (%t)")
         NEWLINET
     );
     append_builder_format(&sb, &format,
-        log_item->format.time,
         log_levels[log_item->log_level],
+        log_item->format.time,
         log_item->message,
         log_item->format.caller
     );
@@ -61,8 +61,27 @@ static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
         const COMMAND_LINE_ITEM* log_level_item = get_command_line_item(command_line_option, &log_level_key);
         if (is_inputed_command_line_item(log_level_item)) {
             TEXT_PARSED_INT32_RESULT num_result = parse_integer_from_text(&log_level_item->value, false);
-            if (num_result.success && LOG_LEVEL_TRACE <= num_result.value && num_result.value <= LOG_LEVEL_ERROR) {
-                default_log_level = num_result.value;
+            int log_level = default_log_level;
+            if (num_result.success) {
+                log_level = num_result.value;
+            } else {
+                TEXT levels[] = {
+                    wrap_text(_T("trace")),
+                    wrap_text(_T("debug")),
+                    wrap_text(_T("information")),
+                    wrap_text(_T("warning")),
+                    wrap_text(_T("error")),
+                };
+                for (size_t i = 0; i < SIZEOF_ARRAY(levels); i++) {
+                    if (!compare_text(levels + i, &log_level_item->value, true)) {
+                        log_level = (int)i;
+                        break;
+                    }
+                }
+            }
+
+            if (LOG_LEVEL_TRACE <= log_level && log_level <= LOG_LEVEL_ERROR) {
+                default_log_level = log_level;
             }
         }
 

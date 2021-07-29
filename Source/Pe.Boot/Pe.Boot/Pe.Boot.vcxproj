@@ -140,7 +140,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;RES_CHECK;SOLUTION_DIR="$(SolutionDir).";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;RES_CHECK;____RES_CHECK_NO_OUTPUT;SOLUTION_DIR="$(SolutionDir).";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
