@@ -63,17 +63,8 @@ void cleanup_default_log()
     free_file_writer(&library__default_log_file_writer);
 }
 
-static void logging_core(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller_line, const TEXT* message, const DATETIME* datetime)
+static void logging_default(const LOG_ITEM* log_item)
 {
-    TIMESTAMP timestamp = datetime_to_timestamp(datetime, false);
-    LOG_ITEM log_item = {
-        .caller_file = caller_file,
-        .caller_line = caller_line,
-        .log_level = log_level,
-        .message = message,
-        .timestamp = &timestamp,
-    };
-
     if (is_enabled_file_writer(&library__default_log_file_writer)) {
         static const TCHAR* log_levels[] = {
             _T("TRACE"),
@@ -94,10 +85,10 @@ static void logging_core(LOG_LEVEL log_level, const TCHAR* caller_file, size_t c
             _T("%s:%zd")
         );
         append_builder_format(&sb, &format,
-            log_item.timestamp->year, log_item.timestamp->month, log_item.timestamp->day, log_item.timestamp->hour, log_item.timestamp->minute, log_item.timestamp->second, log_item.timestamp->milli_sec,
-            log_levels[log_item.log_level],
-            log_item.message,
-            log_item.caller_file, log_item.caller_line
+            log_item->timestamp->year, log_item->timestamp->month, log_item->timestamp->day, log_item->timestamp->hour, log_item->timestamp->minute, log_item->timestamp->second, log_item->timestamp->milli_sec,
+            log_levels[log_item->log_level],
+            log_item->message,
+            log_item->caller_file, log_item->caller_line
         );
         TEXT log_message = build_text_string_builder(&sb);
 
@@ -106,6 +97,30 @@ static void logging_core(LOG_LEVEL log_level, const TCHAR* caller_file, size_t c
         free_string_builder(&sb);
         free_text(&log_message);
     }
+}
+
+static void logging_logger(const LOG_ITEM* log_item)
+{
+    for (size_t i = 0; i < SIZEOF_ARRAY(library__log_loggers); i++) {
+        LOGGER* logger = library__log_loggers + i;
+        if (logger->function) {
+            logger->function(log_item, logger->data);
+        }
+    }
+}
+
+static void logging(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller_line, const TEXT* message, const DATETIME* datetime)
+{
+    TIMESTAMP timestamp = datetime_to_timestamp(datetime, false);
+    LOG_ITEM log_item = {
+        .caller_file = caller_file,
+        .caller_line = caller_line,
+        .log_level = log_level,
+        .message = message,
+        .timestamp = &timestamp,
+    };
+    logging_default(&log_item);
+    logging_logger(&log_item);
 }
 
 static bool can_logging(LOG_LEVEL log_level)
@@ -148,7 +163,7 @@ void library__format_log(LOG_LEVEL log_level, const TCHAR* caller_file, size_t c
 
     va_end(ap);
 
-    logging_core(log_level, caller_file, caller_line, &message, &datetime);
+    logging(log_level, caller_file, caller_line, &message, &datetime);
 
     free_text(&message);
 
@@ -164,5 +179,5 @@ void library__put_log(LOG_LEVEL log_level, const TCHAR* caller_file, size_t call
 
     TEXT text_message = wrap_text(message);
 
-    logging_core(log_level, caller_file, caller_line, &text_message, &datetime);
+    logging(log_level, caller_file, caller_line, &text_message, &datetime);
 }

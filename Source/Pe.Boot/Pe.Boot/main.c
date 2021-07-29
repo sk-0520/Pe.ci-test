@@ -11,6 +11,39 @@ static void output(const TCHAR* s)
 }
 #endif
 
+static ssize_t log_id;
+static void logging(const LOG_ITEM* log_item, void* data)
+{
+    static TCHAR* log_levels[] = {
+        _T("TRACE      "),
+        _T("DEBUG      "),
+        _T("INFORMATION"),
+        _T("WARNING    "),
+        _T("ERROR      "),
+    };
+    STRING_BUILDER sb = create_string_builder(256);
+    TEXT format = wrap_text(
+        _T("%02d:%02d:%02d.%03d")
+        _T(" ")
+        _T("%s")
+        _T(" -> ")
+        _T("%t")
+        _T(" (%s:%zd)")
+        NEWLINET
+    );
+    append_builder_format(&sb, &format,
+        log_item->timestamp->hour, log_item->timestamp->minute, log_item->timestamp->second, log_item->timestamp->milli_sec,
+        log_levels[log_item->log_level],
+        log_item->message,
+        log_item->caller_file, log_item->caller_line
+    );
+    TEXT text = build_text_string_builder(&sb);
+    OutputDebugString(text.value);
+
+    free_text(&text);
+    free_string_builder(&sb);
+}
+
 static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
 {
 #ifdef _DEBUG
@@ -18,11 +51,18 @@ static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
     FILE_WRITER fw = new_file_writer(&path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM);
     seek_end_file_resource(&fw.resource);
     setup_default_log(&fw, LOG_LEVEL_TRACE);
+
+    LOGGER logger = {
+        .function = logging,
+        .data = NULL,
+    };
+    log_id = attach_logger(&logger);
 #endif
 }
 
 static void end_logging()
 {
+    detach_logger(log_id);
     cleanup_default_log();
 }
 
@@ -44,13 +84,10 @@ static int application_main(HINSTANCE hInstance)
 
     free_command_line(&command_line_option);
 
-#ifdef RES_CHECK
-    rc__print(true);
-#endif
-
     end_logging();
 
 #ifdef RES_CHECK
+    rc__print(true);
     rc__uninitialize();
 #endif
 
