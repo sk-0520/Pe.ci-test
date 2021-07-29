@@ -97,10 +97,14 @@ static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
     };
     log_id = attach_logger(&logger);
 #endif
+
+    logger_put_trace(_T("お馬さんパッカパッカ🏇"));
 }
 
 static void end_logging()
 {
+    logger_put_trace(_T("お魚さんブックブック🐟"));
+
     detach_logger(log_id);
     cleanup_default_log();
 }
@@ -117,9 +121,11 @@ static int application_main(HINSTANCE hInstance)
 
     start_logging(&command_line_option);
 
-    logger_put_information(_T("おうまさんぱっぱか🏇"));
+    logger_put_information(_T("Pe アプリケーション処理開始"));
 
     int return_code = app_main(hInstance, &command_line_option);
+
+    logger_put_information(_T("Pe アプリケーション処理終了"));
 
     free_command_line(&command_line_option);
 

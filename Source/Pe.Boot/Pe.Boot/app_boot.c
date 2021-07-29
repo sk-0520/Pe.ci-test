@@ -26,7 +26,7 @@ static void add_visual_cpp_runtime_redist(const TEXT* root_directory_path)
     };
 
     TEXT crt_path = join_path(root_directory_path, dirs, SIZEOF_ARRAY(dirs));
-    output_debug(crt_path.value);
+    logger_put_debug(crt_path.value);
 
     TEXT env_path_key = wrap_text(_T("PATH"));
     TEXT path_src_value = get_environment_variable(&env_path_key);
@@ -60,26 +60,29 @@ static EXIT_CODE boot_core(HINSTANCE hInstance, const TEXT* command_line)
 
 EXIT_CODE boot_normal(HINSTANCE hInstance)
 {
+    logger_put_information(_T("通常起動処理"));
+
     return boot_core(hInstance, NULL);
 }
 
 EXIT_CODE boot_with_option(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
 {
-    const WAIT_TIME_ARG  wait_time_arg = get_wait_time(command_line_option);
+    logger_put_information(_T("オプションあり処理"));
+
+    const WAIT_TIME_ARG wait_time_arg = get_wait_time(command_line_option);
 
     if (wait_time_arg.enabled) {
-        TCHAR s[1000];
-        format_string(s, _T("起動前停止: %d ms"), wait_time_arg.time);
-        output_debug(s);
+        logger_format_information(_T("起動前停止 %d ms"), wait_time_arg.time);
         Sleep(wait_time_arg.time);
-        output_debug(_T("待機終了"));
+        logger_put_information(_T("待機終了"));
     }
 
     TEXT_LIST args = allocate_clear_memory(command_line_option->count, sizeof(TEXT));
     size_t arg_count = filter_enable_command_line_items(args, command_line_option);
 
     TEXT argument = to_command_line_argument(args, arg_count);
-    output_debug(argument.value);
+    logger_put_information(argument.value);
+
     EXIT_CODE result = boot_core(hInstance, &argument);
     free_text(&argument);
     free_memory(args);

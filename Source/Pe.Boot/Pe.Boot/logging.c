@@ -78,11 +78,11 @@ static void logging_default(const LOG_ITEM* log_item)
         STRING_BUILDER sb = create_string_builder(OUTPUT_LINE_CAPACITY);
         TEXT format = wrap_text(
             _T("%tT%t")
-            _T("|")
+            _T(" | ")
             _T("%s")
-            _T("|")
+            _T(" | ")
             _T("%t")
-            _T("|")
+            _T(" | ")
             _T("%t")
         );
         append_builder_format(&sb, &format,
