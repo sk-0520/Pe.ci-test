@@ -75,13 +75,19 @@ typedef struct tag_COMMAND_LINE_OPTION
 /// <param name="command_line"></param>
 /// <param name="with_command">commandLineに起動コマンド(プログラム)が含まれているか</param>
 /// <returns>分解結果。freeCommandLine による開放が必要。</returns>
-COMMAND_LINE_OPTION parse_command_line(const TEXT* command_line, bool with_command);
+COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, bool with_command);
+#ifdef RES_CHECK
+#   define parse_command_line(command_line, with_command) RC_HEAP_WRAP(parse_command_line, (command_line), (with_command))
+#endif
 
 /// <summary>
 /// コマンドラインオプションを解放。
 /// </summary>
 /// <param name="commandLineOption"></param>
-void free_command_line(COMMAND_LINE_OPTION* command_line_option);
+bool RC_HEAP_FUNC(free_command_line, COMMAND_LINE_OPTION* command_line_option);
+#ifdef RES_CHECK
+#   define free_command_line(command_line_option) RC_HEAP_WRAP(free_command_line, (command_line_option))
+#endif
 
 /// <summary>
 /// コマンドラインアイテムを取得する。

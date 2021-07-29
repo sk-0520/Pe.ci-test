@@ -113,7 +113,11 @@ void free_map_value_null(MAP_PAIR* pair);
 /// <param name="equals_map_key">キー比較処理。</param>
 /// <param name="free_map_value">値解放処理。</param>
 /// <returns></returns>
-MAP create_map(size_t capacity, func_equals_map_key equals_map_key, func_free_map_value free_map_value);
+MAP RC_HEAP_FUNC(create_map, size_t capacity, func_equals_map_key equals_map_key, func_free_map_value free_map_value);
+#ifdef RES_CHECK
+#   define create_map(capacity, equals_map_key, free_map_value) RC_HEAP_WRAP(create_map, (capacity), (equals_map_key), (free_map_value))
+#endif
+
 #define create_map_default(freeMapValue) create_map(MAP_DEFAULT_CAPACITY, equals_map_key_default, free_map_value_null)
 
 bool initialize_map(MAP* map, MAP_INIT init[], size_t length, bool needRelease);
@@ -122,7 +126,10 @@ bool initialize_map(MAP* map, MAP_INIT init[], size_t length, bool needRelease);
 /// マップの開放。
 /// </summary>
 /// <param name="map">対象マップ。</param>
-void free_map(MAP* map);
+bool RC_HEAP_FUNC(free_map, MAP* map);
+#ifdef RES_CHECK
+#   define free_map(map) RC_HEAP_WRAP(free_map, (map))
+#endif
 
 /// <summary>
 /// 指定したキーが存在するか。

@@ -6,7 +6,7 @@
 #include "logging.h"
 
 
-TEXT get_parent_directory_path(const TEXT* path)
+TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path)
 {
     TCHAR* buffer = clone_string(path->value);
     if (PathRemoveFileSpec(buffer)) {
@@ -61,7 +61,7 @@ TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path)
     return wrap_text_with_length(buffer, get_string_length(buffer), true);
 }
 
-TEXT get_module_path(HINSTANCE hInstance)
+TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance)
 {
     size_t length = MAX_PATH;
     size_t path_length = 0;
@@ -78,7 +78,7 @@ TEXT get_module_path(HINSTANCE hInstance)
             path_length = 0;
             break;
         } else if (module_path_length >= length - 1) {
-            free_memory(path);
+            free_string(path);
             path = NULL;
             length *= 2;
         } else {

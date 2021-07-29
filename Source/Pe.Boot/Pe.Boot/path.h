@@ -9,8 +9,11 @@
 /// パスから親ディレクトリパスを取得。
 /// </summary>
 /// <param name="path">対象パス。</param>
-/// <returns>親ディレクトリパス。</returns>
-TEXT get_parent_directory_path(const TEXT* path);
+/// <returns>親ディレクトリパス。解放が必要。</returns>
+TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path);
+#ifdef RES_CHECK
+#   define get_parent_directory_path(path) RC_HEAP_WRAP(get_parent_directory_path, (path))
+#endif
 
 /// <summary>
 /// パスを結合する。
@@ -51,5 +54,8 @@ TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path);
 /// </summary>
 /// <param name="hInstance">実行モジュールインスタンスハンドル。</param>
 /// <returns></returns>
-TEXT get_module_path(HINSTANCE hInstance);
+TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance);
+#ifdef RES_CHECK
+#   define get_module_path(hInstance) RC_HEAP_WRAP(get_module_path, (hInstance))
+#endif
 

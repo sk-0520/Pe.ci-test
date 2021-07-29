@@ -13,7 +13,7 @@ void free_map_value_null(MAP_PAIR* pair)
     /* 何もしない */
 }
 
-MAP create_map(size_t capacity, func_equals_map_key equals_map_key, func_free_map_value free_map_value)
+MAP RC_HEAP_FUNC(create_map, size_t capacity, func_equals_map_key equals_map_key, func_free_map_value free_map_value)
 {
     MAP map = {
         .pairs = allocate_memory(capacity * sizeof(MAP_PAIR), false),
@@ -42,18 +42,24 @@ static void free_map_pair(MAP* map, MAP_PAIR* pair)
     free_map_pair_value_only(map, pair);
 }
 
-void free_map(MAP* map)
+bool RC_HEAP_FUNC(free_map, MAP* map)
 {
+    if (!map) {
+        return false;
+    }
+
     for (size_t i = 0; i < map->length; i++) {
         MAP_PAIR* pair = &(map->pairs[i]);
 
         free_map_pair(map, pair);
     }
 
-    free_memory(map->pairs);
+    RC_HEAP_CALL(free_memory, map->pairs);
     map->pairs = NULL;
     map->length = 0;
     map->library.capacity = 0;
+
+    return true;
 }
 
 bool initialize_map(MAP* map, MAP_INIT init[], size_t length, bool need_release)

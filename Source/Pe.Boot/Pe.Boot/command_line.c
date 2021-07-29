@@ -116,7 +116,7 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
     }
 }
 
-COMMAND_LINE_OPTION parse_command_line(const TEXT* command_line, bool with_command)
+COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, bool with_command)
 {
     if (!command_line || !command_line->length) {
         COMMAND_LINE_OPTION empty;
@@ -168,15 +168,21 @@ COMMAND_LINE_OPTION parse_command_line(const TEXT* command_line, bool with_comma
     return result;
 }
 
-void free_command_line(COMMAND_LINE_OPTION* command_line_option)
+bool RC_HEAP_FUNC(free_command_line, COMMAND_LINE_OPTION* command_line_option)
 {
+    if (!command_line_option) {
+        return false;
+    }
+
     free_map(&command_line_option->library.map);
 
-    free_memory(command_line_option->library.raw_arguments);
+    RC_HEAP_CALL(free_memory, command_line_option->library.raw_arguments);
     command_line_option->library.raw_arguments = NULL;
 
     LocalFree((HLOCAL)command_line_option->library.argv);
     command_line_option->library.argv = NULL;
+
+    return true;
 }
 
 const COMMAND_LINE_ITEM* get_command_line_item(const COMMAND_LINE_OPTION* command_line_option, const TEXT* key)
