@@ -16,6 +16,7 @@ static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
 #ifdef _DEBUG
     TEXT path = wrap_text(_T("x:\\logging.log"));
     FILE_WRITER fw = new_file_writer(&path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM);
+    seek_end_file_resource(&fw.resource);
     setup_default_log(&fw, LOG_LEVEL_TRACE);
 #endif
 }
@@ -37,7 +38,7 @@ static int application_main(HINSTANCE hInstance)
 
     start_logging(&command_line_option);
 
-    log_information(_T("おうまさんぱっぱか🏇"));
+    logger_put_information(_T("おうまさんぱっぱか🏇"));
 
     int return_code = app_main(hInstance, &command_line_option);
 
@@ -45,10 +46,13 @@ static int application_main(HINSTANCE hInstance)
 
 #ifdef RES_CHECK
     rc__print(true);
-    rc__uninitialize();
 #endif
 
     end_logging();
+
+#ifdef RES_CHECK
+    rc__uninitialize();
+#endif
 
     return return_code;
 }
