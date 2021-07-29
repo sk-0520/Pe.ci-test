@@ -49,9 +49,9 @@ static EXIT_CODE boot_core(HINSTANCE hInstance, const TEXT* command_line)
     APP_PATH_ITEMS app_path_items;
     initialize_app_path_items(&app_path_items, hInstance);
 
-    add_visual_cpp_runtime_redist(&app_path_items.rootDirectory);
+    add_visual_cpp_runtime_redist(&app_path_items.root_directory);
 
-    ShellExecute(NULL, _T("open"), app_path_items.mainModule.value, is_enabled_text(command_line) ? command_line->value : NULL, NULL, SW_SHOWNORMAL);
+    ShellExecute(NULL, _T("open"), app_path_items.main_module.value, is_enabled_text(command_line) ? command_line->value : NULL, NULL, SW_SHOWNORMAL);
 
     uninitialize_app_path_items(&app_path_items);
 

@@ -14,12 +14,12 @@ typedef struct tag_APP_PATH_ITEMS
     /// <summary>
     /// 起動用アプリケーションファイル親ディレクトリパス。
     /// </summary>
-    TEXT rootDirectory;
+    TEXT root_directory;
 
     /// <summary>
     /// 本体ファイルパス。
     /// </summary>
-    TEXT mainModule;
+    TEXT main_module;
 } APP_PATH_ITEMS;
 
 /// <summary>

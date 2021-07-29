@@ -7,22 +7,21 @@ TEXT get_main_module_path(const TEXT* root_directory_path)
         wrap_text(_T("bin")),
         wrap_text(_T("Pe.Main.exe")),
     };
-    size_t join_paths_length = sizeof(join_paths) / sizeof(join_paths[0]);
 
-    return join_path(root_directory_path, join_paths, join_paths_length);
+    return join_path(root_directory_path, join_paths, SIZEOF_ARRAY(join_paths));
 }
 
 void initialize_app_path_items(APP_PATH_ITEMS* result, HMODULE hInstance)
 {
     result->application = get_module_path(hInstance);
-    result->rootDirectory = get_parent_directory_path(&result->application);
-    result->mainModule = get_main_module_path(&result->rootDirectory);
+    result->root_directory = get_parent_directory_path(&result->application);
+    result->main_module = get_main_module_path(&result->root_directory);
 }
 
 void uninitialize_app_path_items(APP_PATH_ITEMS* items)
 {
     free_text(&items->application);
-    free_text(&items->rootDirectory);
-    free_text(&items->mainModule);
+    free_text(&items->root_directory);
+    free_text(&items->main_module);
 }
 
