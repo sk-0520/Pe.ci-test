@@ -37,3 +37,11 @@ EXECUTE_MODE get_execute_mode(const COMMAND_LINE_OPTION* command_line_option);
 /// <param name="command_line_option"></param>
 /// <returns></returns>
 WAIT_TIME_ARG get_wait_time(const COMMAND_LINE_OPTION* command_line_option);
+
+/// <summary>
+/// 不要なコマンドライン引数を間引く。
+/// </summary>
+/// <param name="result">コマンドライン引数格納領域。確保済みであること。</param>
+/// <param name="command_line_option"></param>
+/// <returns>resultの有効数。</returns>
+size_t filter_enable_command_line_items(TEXT_LIST result, const COMMAND_LINE_OPTION* command_line_option);

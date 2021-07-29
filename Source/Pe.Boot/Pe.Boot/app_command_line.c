@@ -34,8 +34,8 @@ EXECUTE_MODE get_execute_mode(const COMMAND_LINE_OPTION* command_line_option)
 WAIT_TIME_ARG get_wait_time(const COMMAND_LINE_OPTION* command_line_option)
 {
     TEXT wait_keys[] = {
-        wrap_text(_T("_boot-wait")),
-        wrap_text(_T("wait")), //TODO: #737 互換用処理
+        wrap_text(OPTION_APP_BOOT_WAIT_KEY),
+        wrap_text(OPTION_APP_BOOT_WAIT_KEY_issue_737), //TODO: #737 互換用処理
     };
     for (size_t i = 0; i < SIZEOF_ARRAY(wait_keys); i++) {
         const TEXT* wait_key = wait_keys + i;
@@ -44,7 +44,7 @@ WAIT_TIME_ARG get_wait_time(const COMMAND_LINE_OPTION* command_line_option)
             WAIT_TIME_ARG result = {
                 .item = item,
             };
-            if (has_value_command_line_item(item) && !is_whitespace_text(&item->value)) {
+            if (is_inputed_command_line_item(item)) {
                 TEXT_PARSED_INT32_RESULT time_result = parse_integer_from_text(&item->value, false);
                 result.enabled = time_result.success && 0 < time_result.value;
                 if (result.enabled) {
@@ -66,3 +66,40 @@ WAIT_TIME_ARG get_wait_time(const COMMAND_LINE_OPTION* command_line_option)
     return none;
 }
 
+size_t filter_enable_command_line_items(TEXT_LIST result, const COMMAND_LINE_OPTION* command_line_option)
+{
+    TEXT ignore_command_line_item_keys[] = {
+        wrap_text(OPTION_LOG_FILE_KEY),
+        wrap_text(OPTION_LOG_LEVEL_KEY),
+        wrap_text(OPTION_APP_BOOT_WAIT_KEY),
+        wrap_text(OPTION_APP_BOOT_WAIT_KEY_issue_737),
+    };
+
+    size_t ignore_length = 0;
+    const COMMAND_LINE_ITEM* ignore_command_line_items[SIZEOF_ARRAY(ignore_command_line_item_keys)] = { NULL, };
+    for (size_t i = 0; i < SIZEOF_ARRAY(ignore_command_line_item_keys); i++) {
+        const COMMAND_LINE_ITEM* item = get_command_line_item(command_line_option, ignore_command_line_item_keys + i);
+        if (item) {
+            ignore_command_line_items[ignore_length++] = item;
+        }
+    }
+
+    size_t arg_count = 0;
+    for (size_t option_index = 0; option_index < command_line_option->count; option_index++) {
+        bool ignore = false;
+        for (size_t ignore_index = 0; ignore_index < ignore_length; ignore_index++) {
+            const COMMAND_LINE_ITEM* ignore_command_line_item = ignore_command_line_items[ignore_index];
+            if (ignore_command_line_item->key_index == option_index || ignore_command_line_item->value_index == option_index) {
+                ignore = true;
+                break;
+            }
+        }
+        if (ignore) {
+            continue;
+        }
+
+        result[arg_count++] = command_line_option->arguments[option_index];
+    }
+
+    return arg_count;
+}

@@ -50,3 +50,8 @@ typedef union tag_DATA_UINT64
     uint64_t plain;
 } DATA_UINT64;
 
+// ライブラリ側使用オプションは _: で始まる(アプリケーション側は _ のみ)
+#define OPTION_LOG_FILE_KEY _T("_:log-file")
+#define OPTION_LOG_LEVEL_KEY _T("_:log-level")
+
+

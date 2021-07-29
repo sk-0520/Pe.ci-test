@@ -65,10 +65,6 @@ EXIT_CODE boot_normal(HINSTANCE hInstance)
 
 EXIT_CODE boot_with_option(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
 {
-    TEXT_LIST args = allocate_clear_memory(command_line_option->count, sizeof(TEXT));
-    size_t arg_count = 0;
-
-
     const WAIT_TIME_ARG  wait_time_arg = get_wait_time(command_line_option);
 
     if (wait_time_arg.enabled) {
@@ -79,18 +75,8 @@ EXIT_CODE boot_with_option(HINSTANCE hInstance, const COMMAND_LINE_OPTION* comma
         output_debug(_T("待機終了"));
     }
 
-    for (size_t i = 0; i < command_line_option->count; i++) {
-        if (wait_time_arg.item) {
-            if (wait_time_arg.item->key_index == i) {
-                continue;
-            }
-            if (wait_time_arg.item->value_index == i) {
-                continue;
-            }
-        }
-
-        args[arg_count++] = command_line_option->arguments[i];
-    }
+    TEXT_LIST args = allocate_clear_memory(command_line_option->count, sizeof(TEXT));
+    size_t arg_count = filter_enable_command_line_items(args, command_line_option);
 
     TEXT argument = to_command_line_argument(args, arg_count);
     output_debug(argument.value);

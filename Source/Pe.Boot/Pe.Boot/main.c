@@ -46,12 +46,32 @@ static void logging(const LOG_ITEM* log_item, void* data)
 
 static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
 {
-#ifdef _DEBUG
-    TEXT path = wrap_text(_T("x:\\logging.log"));
-    FILE_WRITER fw = new_file_writer(&path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM);
-    seek_end_file_resource(&fw.resource);
-    setup_default_log(&fw, LOG_LEVEL_TRACE);
+    TEXT log_file_key = wrap_text(OPTION_LOG_FILE_KEY);
+    const COMMAND_LINE_ITEM* log_file_item = get_command_line_item(command_line_option, &log_file_key);
+    if (is_inputed_command_line_item(log_file_item)) {
+        TEXT default_log_path = log_file_item->value;
 
+#ifdef _DEBUG
+        LOG_LEVEL default_log_level = LOG_LEVEL_TRACE;
+#else
+        LOG_LEVEL default_log_level = LOG_LEVEL_INFO;
+#endif
+
+        TEXT log_level_key = wrap_text(OPTION_LOG_LEVEL_KEY);
+        const COMMAND_LINE_ITEM* log_level_item = get_command_line_item(command_line_option, &log_level_key);
+        if (is_inputed_command_line_item(log_level_item)) {
+            TEXT_PARSED_INT32_RESULT num_result = parse_integer_from_text(&log_level_item->value, false);
+            if (num_result.success && LOG_LEVEL_TRACE <= num_result.value && num_result.value <= LOG_LEVEL_ERROR) {
+                default_log_level = num_result.value;
+            }
+        }
+
+        FILE_WRITER log_file_writer = new_file_writer(&default_log_path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM);
+        seek_end_file_resource(&log_file_writer.resource);
+        setup_default_log(&log_file_writer, default_log_level);
+    }
+
+#ifdef _DEBUG
     LOGGER logger = {
         .function = logging,
         .data = NULL,

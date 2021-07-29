@@ -93,10 +93,18 @@ const COMMAND_LINE_ITEM* get_command_line_item(const COMMAND_LINE_OPTION* comman
 
 /// <summary>
 /// コマンドラインアイテムは値を持つか。
+/// <para>空文字列も許容しているので文字列長も含めてチェックする場合は<c>is_inputed_command_line_item</c>を使用すること。</para>
 /// </summary>
 /// <param name="item"></param>
 /// <returns></returns>
 bool has_value_command_line_item(const COMMAND_LINE_ITEM* item);
+
+/// <summary>
+/// コマンドラインアイテムは非空白の値を持つか。
+/// </summary>
+/// <param name="item"></param>
+/// <returns></returns>
+bool is_inputed_command_line_item(const COMMAND_LINE_ITEM* item);
 
 /// <summary>
 /// コマンドライン引数一覧から単体テキストとしてのコマンドライン引数を生成する。

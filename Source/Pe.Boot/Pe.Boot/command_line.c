@@ -198,6 +198,15 @@ bool has_value_command_line_item(const COMMAND_LINE_ITEM* item)
     return is_enabled_text(&item->value);
 }
 
+bool is_inputed_command_line_item(const COMMAND_LINE_ITEM* item)
+{
+    if (!has_value_command_line_item(item)) {
+        return false;
+    }
+
+    return !is_whitespace_text(&item->value);
+}
+
 TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count)
 {
     if (!arguments || !count) {
