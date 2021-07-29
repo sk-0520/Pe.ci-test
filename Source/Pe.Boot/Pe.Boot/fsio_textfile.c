@@ -220,7 +220,7 @@ bool is_enabled_file_writer(const FILE_WRITER* file_writer)
 void flush_file_writer(FILE_WRITER* file_writer, bool force)
 {
     if (!force) {
-        if (file_writer->library.string_builder.list.length < file_writer->library.buffer_size) {
+        if (file_writer->library.string_builder.library.list.length < file_writer->library.buffer_size) {
             return;
         }
     }

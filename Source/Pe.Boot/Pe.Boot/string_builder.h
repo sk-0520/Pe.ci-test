@@ -13,9 +13,9 @@
 /// </summary>
 typedef struct tag_STRING_BUILDER
 {
-    PRIMITIVE_LIST_TCHAR list;
     struct
     {
+        PRIMITIVE_LIST_TCHAR list;
         TCHAR* newline;
     } library;
 } STRING_BUILDER;

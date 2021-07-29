@@ -24,7 +24,7 @@ namespace PeBootTest
             for (auto test : tests) {
                 auto [arg1, arg2] = test.inputs;
                 auto actual = initialize_string_builder(arg1, arg2);
-                Assert::AreEqual(get_string_length(arg1), actual.list.length);
+                Assert::AreEqual(get_string_length(arg1), actual.library.list.length);
                 //Assert::AreEqual(test.expected, actual.library.capacity);
 
                 Assert::IsTrue(free_string_builder(&actual));

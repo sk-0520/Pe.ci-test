@@ -16,8 +16,8 @@ STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t ca
     add_range_list_tchar(&list, s, length);
 
     STRING_BUILDER result = {
-        .list = list,
         .library = {
+            .list = list,
             .newline = NEWLINET,
         }
     };
@@ -32,8 +32,8 @@ STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity)
     PRIMITIVE_LIST_TCHAR list = RC_HEAP_CALL(new_primitive_list, PRIMITIVE_LIST_TYPE_TCHAR, capacity);
 
     STRING_BUILDER result = {
-        .list = list,
         .library = {
+            .list = list,
             .newline = NEWLINET,
         }
     };
@@ -47,12 +47,12 @@ bool RC_HEAP_FUNC(free_string_builder, STRING_BUILDER* string_builder)
         return false;
     }
 
-    return RC_HEAP_CALL(free_primitive_list, &string_builder->list);
+    return RC_HEAP_CALL(free_primitive_list, &string_builder->library.list);
 }
 
 static STRING_BUILDER* append_string_core(STRING_BUILDER* string_builder, const TCHAR* s, size_t length)
 {
-    add_range_list_tchar(&string_builder->list, s, length);
+    add_range_list_tchar(&string_builder->library.list, s, length);
 
     return string_builder;
 }
@@ -63,32 +63,32 @@ TEXT RC_HEAP_FUNC(build_text_string_builder, const STRING_BUILDER* string_builde
         return create_invalid_text();
     }
 
-    if (!string_builder->list.length) {
+    if (!string_builder->library.list.length) {
         return RC_HEAP_CALL(new_text, _T(""));
     }
 
-    TCHAR* s = RC_HEAP_CALL(allocate_string, string_builder->list.length);
-    const TCHAR* buffer = reference_list_tchar(&string_builder->list);
-    copy_memory(s, buffer, string_builder->list.length * sizeof(TCHAR));
-    return wrap_text_with_length(s, string_builder->list.length, true);
+    TCHAR* s = RC_HEAP_CALL(allocate_string, string_builder->library.list.length);
+    const TCHAR* buffer = reference_list_tchar(&string_builder->library.list);
+    copy_memory(s, buffer, string_builder->library.list.length * sizeof(TCHAR));
+    return wrap_text_with_length(s, string_builder->library.list.length, true);
 }
 
 TEXT reference_text_string_builder(STRING_BUILDER* string_builder)
 {
     TCHAR* buffer;
-    if (string_builder->list.length < string_builder->list.library.capacity_bytes * sizeof(TCHAR)) {
-        buffer = reference_list_tchar(&string_builder->list);
-        buffer[string_builder->list.length] = 0;
+    if (string_builder->library.list.length < string_builder->library.list.library.capacity_bytes * sizeof(TCHAR)) {
+        buffer = reference_list_tchar(&string_builder->library.list);
+        buffer[string_builder->library.list.length] = 0;
     } else {
         append_builder_character(string_builder, _T('0'), false);
-        buffer = reference_list_tchar(&string_builder->list);
+        buffer = reference_list_tchar(&string_builder->library.list);
     }
-    return wrap_text_with_length(buffer, string_builder->list.length, false);
+    return wrap_text_with_length(buffer, string_builder->library.list.length, false);
 }
 
 STRING_BUILDER* clear_builder(STRING_BUILDER* string_builder)
 {
-    clear_list(&string_builder->list);
+    clear_list(&string_builder->library.list);
 
     return string_builder;
 }
@@ -136,7 +136,7 @@ STRING_BUILDER* append_builder_text(STRING_BUILDER* string_builder, const TEXT* 
 
 STRING_BUILDER* append_builder_character(STRING_BUILDER* string_builder, TCHAR c, bool newline)
 {
-    push_list_tchar(&string_builder->list, c);
+    push_list_tchar(&string_builder->library.list, c);
 
     if (newline) {
         append_builder_newline(string_builder);
