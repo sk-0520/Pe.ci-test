@@ -23,19 +23,19 @@ static void logging(const LOG_ITEM* log_item, void* data)
     };
     STRING_BUILDER sb = create_string_builder(256);
     TEXT format = wrap_text(
-        _T("%02d:%02d:%02d.%03d")
+        _T("%t")
         _T(" ")
         _T("%s")
         _T(" -> ")
         _T("%t")
-        _T(" (%s:%zd)")
+        _T(" (%t)")
         NEWLINET
     );
     append_builder_format(&sb, &format,
-        log_item->timestamp->hour, log_item->timestamp->minute, log_item->timestamp->second, log_item->timestamp->milli_sec,
+        log_item->format.time,
         log_levels[log_item->log_level],
         log_item->message,
-        log_item->caller_file, log_item->caller_line
+        log_item->format.caller
     );
     TEXT text = build_text_string_builder(&sb);
     OutputDebugString(text.value);

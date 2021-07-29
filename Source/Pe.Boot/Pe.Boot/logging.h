@@ -27,7 +27,7 @@ typedef struct tag_LOG_ITEM
     /// <summary>
     /// 呼び出し元ファイルパス。
     /// </summary>
-    const TCHAR* caller_file;
+    const TEXT* caller_file;
     /// <summary>
     /// 呼び出し元ファイル行番号。
     /// </summary>
@@ -36,11 +36,18 @@ typedef struct tag_LOG_ITEM
     /// ログ日時(ローカル)
     /// </summary>
     const TIMESTAMP* timestamp;
+    const DATETIME* datetime;
     /// <summary>
     /// ログ内容。
     /// <para>番兵なしの可能性あり。</para>
     /// </summary>
     const TEXT* message;
+    struct
+    {
+        const TEXT* date;
+        const TEXT* time;
+        const TEXT* caller;
+    } format;
 } LOG_ITEM;
 
 /// <summary>

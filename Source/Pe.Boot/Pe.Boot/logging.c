@@ -7,6 +7,7 @@
 #define LOGGER_LENGTH (4)
 
 #define MESSAGE_CAPACITY (1024)
+#define LOG_FORMAT_CAPACITY (256)
 #define OUTPUT_LINE_CAPACITY (1024)
 
 static FILE_WRITER library__default_log_file_writer;
@@ -76,19 +77,19 @@ static void logging_default(const LOG_ITEM* log_item)
 
         STRING_BUILDER sb = create_string_builder(OUTPUT_LINE_CAPACITY);
         TEXT format = wrap_text(
-            _T("%04d-%02d-%02dT%02d:%02d:%02d.%03d")
+            _T("%tT%t")
             _T("|")
             _T("%s")
             _T("|")
             _T("%t")
             _T("|")
-            _T("%s:%zd")
+            _T("%t")
         );
         append_builder_format(&sb, &format,
-            log_item->timestamp->year, log_item->timestamp->month, log_item->timestamp->day, log_item->timestamp->hour, log_item->timestamp->minute, log_item->timestamp->second, log_item->timestamp->milli_sec,
+            log_item->format.date, log_item->format.time,
             log_levels[log_item->log_level],
             log_item->message,
-            log_item->caller_file, log_item->caller_line
+            log_item->format.caller
         );
         TEXT log_message = build_text_string_builder(&sb);
 
@@ -112,15 +113,48 @@ static void logging_logger(const LOG_ITEM* log_item)
 static void logging(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller_line, const TEXT* message, const DATETIME* datetime)
 {
     TIMESTAMP timestamp = datetime_to_timestamp(datetime, false);
+
+    TEXT caller_file_text = wrap_text(caller_file);
+
+    STRING_BUILDER sb = create_string_builder(LOG_FORMAT_CAPACITY);
+
+    TEXT date_format = wrap_text(_T("%04d-%02d-%02d"));
+    append_builder_format(&sb, &date_format, timestamp.year, timestamp.month, timestamp.day);
+    TEXT date_text = build_text_string_builder(&sb);
+    clear_builder(&sb);
+
+    TEXT time_format = wrap_text(_T("%02d:%02d:%02d.%03d"));
+    append_builder_format(&sb, &time_format, timestamp.hour, timestamp.minute, timestamp.second, timestamp.milli_sec);
+    TEXT time_text = build_text_string_builder(&sb);
+    clear_builder(&sb);
+
+    TEXT caller_format = wrap_text(_T("%t:%zd"));
+    append_builder_format(&sb, &caller_format, &caller_file_text, caller_line);
+    TEXT caller_text = build_text_string_builder(&sb);
+    //clear_builder(&sb);
+
+    free_string_builder(&sb);
+
     LOG_ITEM log_item = {
-        .caller_file = caller_file,
+        .caller_file = &caller_file_text,
         .caller_line = caller_line,
         .log_level = log_level,
         .message = message,
         .timestamp = &timestamp,
+        .datetime = datetime,
+        .format = {
+            .date = &date_text,
+            .time = &time_text,
+            .caller = &caller_text,
+        },
     };
+
     logging_default(&log_item);
     logging_logger(&log_item);
+
+    free_text(&date_text);
+    free_text(&time_text);
+    free_text(&caller_text);
 }
 
 static bool can_logging(LOG_LEVEL log_level)
