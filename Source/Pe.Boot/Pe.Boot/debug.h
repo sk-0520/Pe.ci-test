@@ -1,5 +1,7 @@
 ﻿#pragma once
-#include <windows.h>
+#ifdef NDEBUG
+#   include <windows.h>
+#endif
 
 #include "common.h"
 
@@ -10,16 +12,16 @@
 /// </summary>
 /// <param name="s"></param>
 void output_debug(const TCHAR * s);
-#define debug(s) output_debug(_T(s))
 
 #ifdef NDEBUG
 #   define assert(expr)
 #else
-    void assert_impl(const TCHAR* message, const TCHAR* expression, const TCHAR* caller_file, size_t caller_line);
 #   define assert(expr) \
 do { \
     if (!(expr)) { \
-        assert_impl(_T("ASSERT: ") _T(#expr) _T(" -> ") _T(__FILE__) _T(":") _T(TO_STRING(__LINE__)), _T(#expr), _T(__FILE__), __LINE__); \
+        output_debug(_T("ASSERT: ") _T(#expr) _T(" -> ") _T(__FILE__) _T(":") _T(TO_STRING(__LINE__))); \
+        DebugBreak(); \
+        ExitProcess(9); \
     } \
 } while(0)
 #endif
