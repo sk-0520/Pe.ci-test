@@ -4,7 +4,7 @@
 #include "common.h"
 #include "res_check.h"
 
-#define LIST_DEFAULT_CAPACITY 32
+#define LIST_DEFAULT_CAPACITY (32)
 
 /// <summary>
 /// 設定可能な型。

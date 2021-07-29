@@ -30,9 +30,9 @@ typedef size_t byte_t;
 #define RELATIVE_FILET (_T(__FILE__) + ((sizeof(_T(FILE_BASE_DIR)) / sizeof(TCHAR)) - 4 /* "\."\0 */))
 
 #ifdef _WIN64
-typedef __int64 ssize_t;
+typedef int64_t ssize_t;
 #else
-typedef __int32 ssize_t;
+typedef int32_t ssize_t;
 #endif
 
 #define MIN(a, b) (((a) < (b)) ? (a): (b))

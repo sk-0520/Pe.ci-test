@@ -6,7 +6,7 @@
 #include "tstring.h"
 #include "text.h"
 
-#define MAP_DEFAULT_CAPACITY 16
+#define MAP_DEFAULT_CAPACITY (16)
 
 /// <summary>
 /// 文字列キーと値のペア。
