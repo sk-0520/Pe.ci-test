@@ -34,5 +34,37 @@ namespace PeBootTest
             free_memory(p1);
             free_memory(p2);
         }
+
+        TEST_METHOD(library__extend_capacity_if_not_enough_bytes_x2_test)
+        {
+            const byte_t default_cap = 2;
+            void* p1 = allocate_memory(8, false);
+
+            void* old_p1 = p1;
+
+            Assert::AreEqual((byte_t)0, library__extend_capacity_if_not_enough_bytes_x2(&p1, 0, 8, 7, default_cap));
+            Assert::AreEqual(old_p1, p1);
+            Assert::AreEqual((byte_t)0, library__extend_capacity_if_not_enough_bytes_x2(&p1, 0, 8, 8, default_cap));
+            Assert::AreEqual(old_p1, p1);
+
+            byte_t extends1 = library__extend_capacity_if_not_enough_bytes_x2(&p1, 0, 8, 9, default_cap);
+            Assert::AreEqual((byte_t)16, extends1);
+            Assert::AreNotEqual(old_p1, p1);
+
+            void* old_p2 = p1;
+
+            Assert::AreEqual((byte_t)0, library__extend_capacity_if_not_enough_bytes_x2(&p1, 14, 16, 1, default_cap));
+            Assert::AreEqual((byte_t)0, library__extend_capacity_if_not_enough_bytes_x2(&p1, 15, 16, 1, default_cap));
+
+            byte_t extends2 = library__extend_capacity_if_not_enough_bytes_x2(&p1, 15, 16, 2, default_cap);
+            Assert::AreEqual((byte_t)32, extends2);
+            Assert::AreNotEqual(old_p2, p1);
+
+            byte_t extends3 = library__extend_capacity_if_not_enough_bytes_x2(&p1, 0, 8, 4097, default_cap);
+            Assert::AreEqual((byte_t)8192, extends3);
+
+
+            free_memory(p1);
+        }
     };
 }

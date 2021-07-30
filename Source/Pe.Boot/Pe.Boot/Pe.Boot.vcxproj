@@ -411,7 +411,7 @@
     <ClCompile Include="fsio_resource.c" />
     <ClCompile Include="fsio_textfile.c" />
     <None Include="..\build-t4.bat" />
-    <None Include="list.c.tt">
+    <None Include="primitive_list.c.tt">
       <FileType>Document</FileType>
     </None>
     <ClCompile Include="object_list.c" />
@@ -448,7 +448,7 @@
     <ClInclude Include="fsio.h" />
     <ClInclude Include="fsio_resource.h" />
     <ClInclude Include="fsio_textfile.h" />
-    <None Include="list.h.tt">
+    <None Include="primitive_list.h.tt">
       <FileType>Document</FileType>
     </None>
     <ClInclude Include="object_list.h" />

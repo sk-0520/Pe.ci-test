@@ -245,10 +245,10 @@
     <None Include="..\build-t4.bat">
       <Filter>build</Filter>
     </None>
-    <None Include="list.c.tt">
+    <None Include="primitive_list.c.tt">
       <Filter>template\library</Filter>
     </None>
-    <None Include="list.h.tt">
+    <None Include="primitive_list.h.tt">
       <Filter>template\library</Filter>
     </None>
   </ItemGroup>

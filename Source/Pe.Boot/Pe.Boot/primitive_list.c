@@ -78,34 +78,18 @@ bool RC_HEAP_FUNC(free_primitive_list, PRIMITIVE_LIST* list)
     return RC_HEAP_CALL(free_memory, list->buffer);
 }
 
-// 同じような処理ばっか書いてんね
-static size_t extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t need_length)
+static void extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t need_length)
 {
     byte_t need_bytes = get_type_bytes(list->library.type, need_length);
     byte_t current_bytes = get_type_bytes(list->library.type, list->length);
-    // まだ大丈夫なら何もしない
-    byte_t need_total_bytes = current_bytes + need_bytes;
-    if (need_total_bytes <= list->library.capacity_bytes) {
-        return 0;
+    byte_t default_capacity_bytes = get_type_bytes(list->library.type, LIST_DEFAULT_CAPACITY);
+
+    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&list->buffer, current_bytes, list->library.capacity_bytes, need_bytes, default_capacity_bytes);
+    if (extend_total_byte) {
+        list->library.capacity_bytes = extend_total_byte;
     }
-
-    byte_t old_capacity_bytes = list->library.capacity_bytes;
-    byte_t new_capacity_bytes = list->library.capacity_bytes ? list->library.capacity_bytes: LIST_DEFAULT_CAPACITY;
-    do {
-        new_capacity_bytes *= 2;
-    } while (new_capacity_bytes < need_total_bytes);
-
-    void* new_buffer = allocate_memory(new_capacity_bytes, false);
-    void* old_buffer = list->buffer;
-
-    copy_memory(new_buffer, old_buffer, new_capacity_bytes);
-    free_memory(old_buffer);
-
-    list->buffer = new_buffer;
-    list->library.capacity_bytes = new_capacity_bytes;
-
-    return new_capacity_bytes - old_capacity_bytes;
 }
+
 
 bool push_list_int8(PRIMITIVE_LIST_INT8* list, int8_t value)
 {

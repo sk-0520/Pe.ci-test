@@ -62,6 +62,18 @@ bool RC_HEAP_FUNC(free_map, MAP* map)
     return true;
 }
 
+static void extend_capacity_if_not_enough_map(MAP* map, size_t need_length)
+{
+    byte_t need_bytes = need_length * sizeof(MAP_PAIR);
+    byte_t current_bytes = map->length * sizeof(MAP_PAIR);
+    byte_t default_capacity_bytes = MAP_DEFAULT_CAPACITY * sizeof(MAP_PAIR);
+
+    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&map->pairs, current_bytes, map->library.capacity * sizeof(MAP_PAIR), need_bytes, default_capacity_bytes);
+    if (extend_total_byte) {
+        map->library.capacity = extend_total_byte / sizeof(MAP_PAIR);
+    }
+}
+
 bool initialize_map(MAP* map, MAP_INIT init[], size_t length, bool need_release)
 {
     for (size_t i = 0; i < length; i++) {
@@ -93,14 +105,7 @@ bool exists_map(const MAP* map, const TEXT* key)
 
 static MAP_PAIR* add_key_core(MAP* map, const MAP_PAIR* pair)
 {
-    if (map->length == map->library.capacity) {
-        // 拡張が必要
-        map->library.capacity *= 2;
-        MAP_PAIR* pairs = allocate_memory(map->library.capacity * sizeof(MAP_PAIR), false);
-        copy_memory(pairs, map->pairs, map->length * sizeof(MAP_PAIR));
-        free_memory(map->pairs);
-        map->pairs = pairs;
-    }
+    extend_capacity_if_not_enough_map(map, 1);
 
     size_t new_index = map->length++;
     map->pairs[new_index] = *pair;

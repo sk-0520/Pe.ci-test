@@ -6,6 +6,8 @@
 
 #include "res_check.h"
 
+typedef byte_t (*library__func_calc_extend_capacity)(byte_t input_bytes);
+
 /// <summary>
 /// 指定したサイズ以上のヒープ領域を確保。
 /// </summary>
@@ -74,3 +76,18 @@ void* move_memory(void* destination, const void* source, byte_t bytes);
 /// <param name="bytes"></param>
 /// <returns>a &lt; b: 負, a = b: 0, a &gt; b: 正。</returns>
 int compare_memory(const void* a, const void* b, byte_t bytes);
+
+/// <summary>
+/// 予約領域を持つバッファを拡張する基底処理。
+/// <para>ライブラリ側で使用する前提処理。アプリケーション側からは使用しない。</para>
+/// </summary>
+/// <param name="buffer">対象領域のポインタ。</param>
+/// <param name="current_bytes">現在のバイト数。</param>
+/// <param name="current_capacity_bytes">現在の予約バイト数。</param>
+/// <param name="need_bytes">必要なバイト数。</param>
+/// <param name="default_capacity_bytes">予約領域の標準値。</param>
+/// <param name="calc_extend_capacity">予約領域拡張方法。</param>
+/// <returns>拡張後の総バイト数。未実施の場合は0を返す。</returns>
+byte_t library__extend_capacity_if_not_enough_bytes(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, library__func_calc_extend_capacity calc_extend_capacity);
+
+byte_t library__extend_capacity_if_not_enough_bytes_x2(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes);
