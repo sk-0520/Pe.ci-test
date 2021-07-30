@@ -162,4 +162,4 @@ bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, const <#= item
 /// <para>領域自体はそのまま残る点に注意。</para>
 /// </summary>
 /// <param name="list">対象リスト。</param>
-void clear_list(PRIMITIVE_LIST* list);
+void clear_primitive_list(PRIMITIVE_LIST* list);

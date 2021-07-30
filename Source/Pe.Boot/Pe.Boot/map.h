@@ -146,9 +146,9 @@ MAP RC_HEAP_FUNC(create_map, size_t capacity, func_equals_map_key equals_map_key
 /// <param name="map"></param>
 /// <param name="init"></param>
 /// <param name="length"></param>
-/// <param name="needRelease"></param>
+/// <param name="need_release"></param>
 /// <returns></returns>
-bool initialize_map(MAP* map, MAP_INIT init[], size_t length, bool needRelease);
+bool initialize_map(MAP* map, MAP_INIT init[], size_t length, bool need_release);
 
 /// <summary>
 /// マップの開放。

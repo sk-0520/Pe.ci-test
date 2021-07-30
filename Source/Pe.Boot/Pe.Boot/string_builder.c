@@ -88,7 +88,7 @@ TEXT reference_text_string_builder(STRING_BUILDER* string_builder)
 
 STRING_BUILDER* clear_builder(STRING_BUILDER* string_builder)
 {
-    clear_list(&string_builder->library.list);
+    clear_primitive_list(&string_builder->library.list);
 
     return string_builder;
 }

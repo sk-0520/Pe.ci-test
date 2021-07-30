@@ -196,7 +196,7 @@ bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, const <#= item
 }
 <# } #>
 
-void clear_list(PRIMITIVE_LIST* list)
+void clear_primitive_list(PRIMITIVE_LIST* list)
 {
     list->length = 0;
 }

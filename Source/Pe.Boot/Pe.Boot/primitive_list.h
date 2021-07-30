@@ -504,4 +504,4 @@ TCHAR* reference_list_tchar(const PRIMITIVE_LIST_TCHAR* list);
 /// <para>領域自体はそのまま残る点に注意。</para>
 /// </summary>
 /// <param name="list">対象リスト。</param>
-void clear_list(PRIMITIVE_LIST* list);
+void clear_primitive_list(PRIMITIVE_LIST* list);

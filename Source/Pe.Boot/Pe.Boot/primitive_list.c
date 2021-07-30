@@ -780,7 +780,7 @@ TCHAR* reference_list_tchar(const PRIMITIVE_LIST_TCHAR* list)
     return (TCHAR*)list->buffer;
 }
 
-void clear_list(PRIMITIVE_LIST* list)
+void clear_primitive_list(PRIMITIVE_LIST* list)
 {
     list->length = 0;
 }
