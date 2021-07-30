@@ -129,6 +129,9 @@
     <ClCompile Include="oreore_test.c">
       <Filter>source\app</Filter>
     </ClCompile>
+    <ClCompile Include="object_list.c">
+      <Filter>source\library</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app_path.h">
@@ -223,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="oreore_test.h">
       <Filter>header\app</Filter>
+    </ClInclude>
+    <ClInclude Include="object_list.h">
+      <Filter>header\library</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
