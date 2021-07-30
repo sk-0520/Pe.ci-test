@@ -2,8 +2,12 @@
 
 TIME_ZONE get_current_time_zone()
 {
-    TIME_ZONE time_zone;
-    time_zone.library.enabled = GetTimeZoneInformation(&time_zone.tzi) != TIME_ZONE_ID_UNKNOWN;
+    TIME_ZONE time_zone = {
+        .library = {
+            .enabled = GetTimeZoneInformation(&time_zone.tzi) != TIME_ZONE_ID_UNKNOWN,
+        },
+    };
+
     return time_zone;
 }
 
@@ -58,7 +62,7 @@ static void systemtime_to_timestamp(TIMESTAMP* result, const SYSTEMTIME* system_
 TIMESTAMP datetime_to_timestamp(const DATETIME* datetime, bool to_utc)
 {
     SYSTEMTIME systemtime;
-    
+
     if (to_utc) {
         FileTimeToSystemTime(&datetime->filetime, &systemtime);
     } else {
@@ -66,7 +70,7 @@ TIMESTAMP datetime_to_timestamp(const DATETIME* datetime, bool to_utc)
         FileTimeToLocalFileTime(&datetime->filetime, &local_filetime);
         FileTimeToSystemTime(&local_filetime, &systemtime);
     }
-    
+
     //FileTimeToSystemTime(&datetime->filetime, &systemtime);
 
     TIMESTAMP timestamp;

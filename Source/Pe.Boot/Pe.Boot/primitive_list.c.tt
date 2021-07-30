@@ -66,10 +66,10 @@ static byte_t get_type_bytes(PRIMITIVE_LIST_TYPE list_type, size_t length)
 PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity)
 {
     size_t capacity_bytes = get_type_bytes(list_type, capacity);
-    void* buffer = RC_HEAP_CALL(allocate_memory, capacity_bytes, false);
+    void* items = RC_HEAP_CALL(allocate_memory, capacity_bytes, false);
 
     PRIMITIVE_LIST result = {
-        .buffer = buffer,
+        .items = items,
         .length = 0,
         .library = {
             .capacity_bytes = capacity_bytes,
@@ -85,11 +85,11 @@ bool RC_HEAP_FUNC(free_primitive_list, PRIMITIVE_LIST* list)
     if (!list) {
         return false;
     }
-    if (!list->buffer) {
+    if (!list->items) {
         return false;
     }
 
-    return RC_HEAP_CALL(free_memory, list->buffer);
+    return RC_HEAP_CALL(free_memory, list->items);
 }
 
 static void extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t need_length)
@@ -98,7 +98,7 @@ static void extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t need
     byte_t current_bytes = get_type_bytes(list->library.type, list->length);
     byte_t default_capacity_bytes = get_type_bytes(list->library.type, LIST_DEFAULT_CAPACITY);
 
-    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&list->buffer, current_bytes, list->library.capacity_bytes, need_bytes, default_capacity_bytes);
+    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&list->items, current_bytes, list->library.capacity_bytes, need_bytes, default_capacity_bytes);
     if (extend_total_byte) {
         list->library.capacity_bytes = extend_total_byte;
     }
@@ -114,8 +114,8 @@ bool push_list_<#= item.BaseName #>(<#= item.AliasList #>* list, <#= item.ValueT
 
     extend_capacity_if_not_enough_list(list, 1);
 
-    <#= item.ValueType #>* buffer = (<#= item.ValueType #>*)list->buffer;
-    buffer[list->length++] = value;
+    <#= item.ValueType #>* items = (<#= item.ValueType #>*)list->items;
+    items[list->length++] = value;
 
     return true;
 }
@@ -138,7 +138,7 @@ bool add_range_list_<#= item.BaseName #>(<#= item.AliasList #>* list, const <#= 
     extend_capacity_if_not_enough_list(list, count);
 
     size_t data_bytes = get_type_bytes(list->library.type, count);
-    copy_memory((<#= item.ValueType #>*)list->buffer + list->length, values, data_bytes);
+    copy_memory((<#= item.ValueType #>*)list->items + list->length, values, data_bytes);
 
     list->length += count;
 
@@ -158,8 +158,8 @@ bool pop_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.Alias
     }
 
     if(result) {
-        <#= item.ValueType #>* buffer = (<#= item.ValueType #>*)list->buffer;
-        *result = buffer[--list->length];
+        <#= item.ValueType #>* items = (<#= item.ValueType #>*)list->items;
+        *result = items[--list->length];
     } else {
         list->length -= 1;
     }
@@ -176,8 +176,8 @@ bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, const <#= item
     }
 
     if(index < list->length) {
-        <#= item.ValueType #>* buffer = (<#= item.ValueType #>*)list->buffer;
-        *result = buffer[index];
+        <#= item.ValueType #>* items = (<#= item.ValueType #>*)list->items;
+        *result = items[index];
         return true;
     }
 
@@ -192,7 +192,7 @@ bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, const <#= item
         return NULL;
     }
 
-    return (<#= item.ValueType #>*)list->buffer;
+    return (<#= item.ValueType #>*)list->items;
 }
 <# } #>
 

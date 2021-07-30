@@ -12,14 +12,15 @@ void free_object_list_value_null(void* value)
 
 OBJECT_LIST RC_HEAP_FUNC(create_object_list, size_t capacity, func_compare_object_list_value compare_object_list_value, func_free_object_list_value free_object_list_value)
 {
-    OBJECT_LIST result;
-
-    result.length = 0;
-    result.library.capacity = capacity;
-    result.library.compare_object_list_value = compare_object_list_value;
-    result.library.free_object_list_value = free_object_list_value;
-
-    result.buffer = RC_HEAP_CALL(allocate_memory, sizeof(OBJECT_LIST_ITEM) * capacity, false);
+    OBJECT_LIST result = {
+        .length = 0,
+        .items = RC_HEAP_CALL(allocate_memory, sizeof(OBJECT_LIST_ITEM) * capacity, false),
+        .library = {
+            .capacity = capacity,
+            .compare_object_list_value = compare_object_list_value,
+            .free_object_list_value = free_object_list_value
+        },
+    };
 
     return result;
 }
@@ -38,12 +39,12 @@ bool RC_HEAP_FUNC(free_object_list, OBJECT_LIST* object_list)
     }
 
     for (size_t i = 0; i < object_list->length; i++) {
-        free_object_list_item(object_list, object_list->buffer + i);
+        free_object_list_item(object_list, object_list->items + i);
     }
 
-    RC_HEAP_CALL(free_memory, object_list->buffer);
+    RC_HEAP_CALL(free_memory, object_list->items);
 
-    object_list->buffer = NULL;
+    object_list->items = NULL;
     object_list->length = 0;
     object_list->library.capacity = 0;
     object_list->library.free_object_list_value = NULL;
@@ -57,7 +58,7 @@ static void extend_capacity_if_not_enough_object_list(OBJECT_LIST* object_list, 
     byte_t current_bytes = object_list->length * sizeof(OBJECT_LIST_ITEM);
     byte_t default_capacity_bytes = OBJECT_LIST_DEFAULT_CAPACITY * sizeof(OBJECT_LIST_ITEM);
 
-    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&object_list->buffer, current_bytes, object_list->library.capacity * sizeof(OBJECT_LIST_ITEM), need_bytes, default_capacity_bytes);
+    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&object_list->items, current_bytes, object_list->library.capacity * sizeof(OBJECT_LIST_ITEM), need_bytes, default_capacity_bytes);
     if (extend_total_byte) {
         object_list->library.capacity = extend_total_byte / sizeof(OBJECT_LIST_ITEM);
     }
@@ -78,10 +79,10 @@ OBJECT_LIST_ITEM* push_object_list(OBJECT_LIST* object_list, void* value, bool n
     },
     };
 
-    object_list->buffer[object_list->length] = item;
+    object_list->items[object_list->length] = item;
     object_list->length += 1;
 
-    return object_list->buffer + object_list->length - 1;
+    return object_list->items + object_list->length - 1;
 }
 
 bool add_range_object_list(OBJECT_LIST* object_list, OBJECT_LIST_RANGE_ITEM items[], size_t length, bool need_release)
@@ -105,7 +106,7 @@ bool add_range_object_list(OBJECT_LIST* object_list, OBJECT_LIST_RANGE_ITEM item
                 .need_release = need_release,
             },
         };
-        object_list->buffer[object_list->length + i] = item;
+        object_list->items[object_list->length + i] = item;
     }
 
     object_list->length += length;
@@ -123,7 +124,7 @@ bool pop_object_list(void** result, OBJECT_LIST* object_list)
         return false;
     }
 
-    OBJECT_LIST_ITEM* item = object_list->buffer + (--object_list->length);
+    OBJECT_LIST_ITEM* item = object_list->items + (--object_list->length);
 
     *result = item->value;
 
@@ -133,7 +134,7 @@ bool pop_object_list(void** result, OBJECT_LIST* object_list)
 OBJECT_RESULT_VALUE get_object_list(OBJECT_LIST* object_list, size_t index)
 {
     if (index < object_list->length) {
-        OBJECT_LIST_ITEM* item = (OBJECT_LIST_ITEM*)object_list->buffer + index;
+        OBJECT_LIST_ITEM* item = (OBJECT_LIST_ITEM*)object_list->items + index;
         OBJECT_RESULT_VALUE result = {
             .value = item->value,
             .exists = true,
@@ -162,7 +163,7 @@ bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool n
                 .need_release = need_release,
             },
         };
-        object_list->buffer[index] = item;
+        object_list->items[index] = item;
         return true;
     }
 
@@ -172,7 +173,7 @@ bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool n
 void clear_object_list(OBJECT_LIST* list)
 {
     for (size_t i = 0; i < list->length; i++) {
-        list->library.free_object_list_value(list->buffer + i);
+        list->library.free_object_list_value(list->items + i);
     }
     list->length = 0;
 }

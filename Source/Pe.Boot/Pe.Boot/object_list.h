@@ -58,7 +58,7 @@ typedef struct tag_OBJECT_LIST
     /// <summary>
     /// 実体。
     /// </summary>
-    OBJECT_LIST_ITEM* buffer;
+    OBJECT_LIST_ITEM* items;
     struct
     {
         byte_t capacity;

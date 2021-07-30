@@ -61,7 +61,7 @@ typedef struct tag_PRIMITIVE_LIST
     /// <summary>
     /// 実体。
     /// </summary>
-    void* buffer;
+    void* items;
     struct
     {
         /// <summary>

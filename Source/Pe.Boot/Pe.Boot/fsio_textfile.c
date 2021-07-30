@@ -42,10 +42,13 @@ static void write_bom_if_unicode(const FILE_RESOURCE* file_resource, FILE_ENCODI
 
 FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding)
 {
-    FILE_READER result;
-    result.library.encoding = encoding;
-
-    result.resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0);
+    FILE_READER result = {
+        .has_bom = false,
+        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0),
+        .library = {
+            .encoding = encoding,
+        },
+    };
 
     return result;
 }
@@ -159,12 +162,15 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
 
 FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options)
 {
-    FILE_WRITER result;
-    result.library.encoding = encoding;
-    result.library.string_builder = RC_HEAP_CALL(create_string_builder, FILE_WRITER_BUFFER_SIZE);
-    result.library.buffer_size = FILE_WRITER_BUFFER_SIZE;
+    FILE_WRITER result = {
+        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, open_mode, 0),
+        .library = {
+            .encoding = encoding,
+            .string_builder = RC_HEAP_CALL(create_string_builder, FILE_WRITER_BUFFER_SIZE),
+            .buffer_size = FILE_WRITER_BUFFER_SIZE,
+        }
+    };
 
-    result.resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, open_mode, 0);
     if (!is_enabled_file_resource(&result.resource)) {
         return result;
     }
@@ -199,7 +205,7 @@ FILE_WRITER create_invalid_file_writer()
     FILE_WRITER result;
     set_memory(&result, 0, sizeof(result));
     result.resource = create_invalid_file_resource();
-    result.library.string_builder.library.list.buffer = NULL;
+    result.library.string_builder.library.list.items = NULL;
     result.library.string_builder.library.list.length = 0;
     result.library.string_builder.library.list.library.capacity_bytes = 0;
 
