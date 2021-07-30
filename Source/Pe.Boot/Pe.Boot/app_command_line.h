@@ -16,7 +16,7 @@ typedef struct tag_WAIT_TIME_ARG
     /// <summary>
     /// ミリ秒時間。
     /// </summary>
-    __int32 time;
+    int32_t time;
     /// <summary>
     /// <c>time</c>は有効か。
     /// </summary>

@@ -44,51 +44,63 @@ static void logging(const LOG_ITEM* log_item, void* data)
     free_string_builder(&sb);
 }
 
-static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
+static void setup_logging_file(const COMMAND_LINE_OPTION* command_line_option)
 {
     TEXT log_file_key = wrap_text(OPTION_LOG_FILE_KEY);
     const COMMAND_LINE_ITEM* log_file_item = get_command_line_item(command_line_option, &log_file_key);
     if (is_inputed_command_line_item(log_file_item)) {
         TEXT default_log_path = log_file_item->value;
 
+        FILE_WRITER log_file_writer = new_file_writer(&default_log_path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM);
+        seek_end_file_resource(&log_file_writer.resource);
+        set_default_log_file(&log_file_writer);
+    } else {
+        set_default_log_file(NULL);
+    }
+}
+static void setup_logging_level(const COMMAND_LINE_OPTION* command_line_option)
+{
 #ifdef _DEBUG
-        LOG_LEVEL default_log_level = LOG_LEVEL_TRACE;
+    LOG_LEVEL default_log_level = LOG_LEVEL_TRACE;
 #else
-        LOG_LEVEL default_log_level = LOG_LEVEL_INFO;
+    LOG_LEVEL default_log_level = LOG_LEVEL_INFO;
 #endif
 
-        TEXT log_level_key = wrap_text(OPTION_LOG_LEVEL_KEY);
-        const COMMAND_LINE_ITEM* log_level_item = get_command_line_item(command_line_option, &log_level_key);
-        if (is_inputed_command_line_item(log_level_item)) {
-            TEXT_PARSED_INT32_RESULT num_result = parse_integer_from_text(&log_level_item->value, false);
-            int log_level = default_log_level;
-            if (num_result.success) {
-                log_level = num_result.value;
-            } else {
-                TEXT levels[] = {
-                    wrap_text(_T("trace")),
-                    wrap_text(_T("debug")),
-                    wrap_text(_T("information")),
-                    wrap_text(_T("warning")),
-                    wrap_text(_T("error")),
-                };
-                for (size_t i = 0; i < SIZEOF_ARRAY(levels); i++) {
-                    if (!compare_text(levels + i, &log_level_item->value, true)) {
-                        log_level = (int)i;
-                        break;
-                    }
+    TEXT log_level_key = wrap_text(OPTION_LOG_LEVEL_KEY);
+    const COMMAND_LINE_ITEM* log_level_item = get_command_line_item(command_line_option, &log_level_key);
+    if (is_inputed_command_line_item(log_level_item)) {
+        TEXT_PARSED_INT32_RESULT num_result = parse_integer_from_text(&log_level_item->value, false);
+        int log_level = default_log_level;
+        if (num_result.success) {
+            log_level = num_result.value;
+        } else {
+            TEXT levels[] = {
+                wrap_text(_T("trace")),
+                wrap_text(_T("debug")),
+                wrap_text(_T("information")),
+                wrap_text(_T("warning")),
+                wrap_text(_T("error")),
+            };
+            for (size_t i = 0; i < SIZEOF_ARRAY(levels); i++) {
+                if (!compare_text(levels + i, &log_level_item->value, true)) {
+                    log_level = (int)i;
+                    break;
                 }
-            }
-
-            if (LOG_LEVEL_TRACE <= log_level && log_level <= LOG_LEVEL_ERROR) {
-                default_log_level = log_level;
             }
         }
 
-        FILE_WRITER log_file_writer = new_file_writer(&default_log_path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM);
-        seek_end_file_resource(&log_file_writer.resource);
-        setup_default_log(&log_file_writer, default_log_level);
+        if (LOG_LEVEL_TRACE <= log_level && log_level <= LOG_LEVEL_ERROR) {
+            default_log_level = log_level;
+        }
     }
+
+    set_default_log_level(default_log_level);
+}
+
+static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
+{
+    setup_logging_file(command_line_option);
+    setup_logging_level(command_line_option);
 
 #ifdef _DEBUG
     LOGGER logger = {

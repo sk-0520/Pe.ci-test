@@ -194,6 +194,19 @@ FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encodi
     return result;
 }
 
+FILE_WRITER create_invalid_file_writer()
+{
+    FILE_WRITER result;
+    set_memory(&result, 0, sizeof(result));
+    result.resource = create_invalid_file_resource();
+    result.library.string_builder.library.list.buffer = NULL;
+    result.library.string_builder.library.list.length = 0;
+    result.library.string_builder.library.list.library.capacity_bytes = 0;
+
+    return result;
+}
+
+
 bool RC_FILE_FUNC(free_file_writer, FILE_WRITER* file_writer)
 {
     flush_file_writer(file_writer, true);
@@ -203,7 +216,7 @@ bool RC_FILE_FUNC(free_file_writer, FILE_WRITER* file_writer)
     if (!fr) {
         return false;
     }
-    file_writer->resource = create_invalid_file();
+    file_writer->resource = create_invalid_file_resource();
 
     return true;
 }
@@ -245,7 +258,7 @@ void flush_file_writer(FILE_WRITER* file_writer, bool force)
 
         default:
             assert(false);
-        }
+    }
 #else
 #   error しらんがな
 #endif

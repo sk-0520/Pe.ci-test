@@ -108,7 +108,6 @@ TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release
 TEXT wrap_text(const TCHAR* source);
 #define wrap_empty_text() wrap_text(_T(""))
 
-
 /// <summary>
 /// テキストの複製。
 /// </summary>
@@ -121,7 +120,7 @@ TEXT RC_HEAP_FUNC(clone_text, const TEXT* source);
 
 /// <summary>
 /// テキストを桁数指定で参照として複製。
-/// <para><c>wrap_text</c>のテキスト入力版みたいな感じ。</para>
+/// <para><see cref="wrap_text"/>のテキスト入力版みたいな感じ。</para>
 /// </summary>
 /// <param name="source">入力テキスト。</param>
 /// <param name="index">開始位置。</param>

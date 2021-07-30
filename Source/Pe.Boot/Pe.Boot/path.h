@@ -26,7 +26,6 @@ TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path
 #   define combine_path(base_path, relative_path) RC_HEAP_WRAP(combine_path, (base_path), (relative_path))
 #endif
 
-
 /// <summary>
 /// パスを結合する。
 /// </summary>

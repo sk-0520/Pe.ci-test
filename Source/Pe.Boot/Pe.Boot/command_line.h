@@ -17,7 +17,7 @@ typedef struct tag_COMMAND_LINE_ITEM
     size_t key_index;
     /// <summary>
     /// COMMAND_LINE_OPTION.arguments から見た値の位置。
-    /// <para>keyIndex以上になる(=区切りだと同じ)。</para>
+    /// <para><c>key_index</c>以上になる(=区切りだと同じ)。</para>
     /// </summary>
     size_t value_index;
     /// <summary>
@@ -38,7 +38,7 @@ typedef struct tag_COMMAND_LINE_OPTION
     /// </summary>
     const TEXT* arguments;
     /// <summary>
-    /// argumentsの個数。
+    /// <see cref="arguments" /> の個数。
     /// </summary>
     size_t count;
 
@@ -61,6 +61,9 @@ typedef struct tag_COMMAND_LINE_OPTION
         /// 解放用テキストデータ一覧。
         /// </summary>
         TEXT* raw_arguments;
+        /// <summary>
+        /// <see cref="raw_arguments" />の個数。
+        /// </summary>
         size_t raw_count;
         /// <summary>
         /// 起動コマンド。
@@ -73,8 +76,8 @@ typedef struct tag_COMMAND_LINE_OPTION
 /// コマンドライン文字列を分解。
 /// </summary>
 /// <param name="command_line"></param>
-/// <param name="with_command">commandLineに起動コマンド(プログラム)が含まれているか</param>
-/// <returns>分解結果。freeCommandLine による開放が必要。</returns>
+/// <param name="with_command"><c>command_line</c>に起動コマンド(プログラム)が含まれているか</param>
+/// <returns>分解結果。<see cref="free_command_line" /> による開放が必要。</returns>
 COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, bool with_command);
 #ifdef RES_CHECK
 #   define parse_command_line(command_line, with_command) RC_HEAP_WRAP(parse_command_line, (command_line), (with_command))
@@ -92,14 +95,14 @@ bool RC_HEAP_FUNC(free_command_line, COMMAND_LINE_OPTION* command_line_option);
 /// <summary>
 /// コマンドラインアイテムを取得する。
 /// </summary>
-/// <param name="commandLineOption"></param>
+/// <param name="command_line_option"></param>
 /// <param name="key"></param>
-/// <returns>取得したコマンドラインアイテム。アイテムが存在しない場合はNULL。</returns>
+/// <returns>取得したコマンドラインアイテム。アイテムが存在しない場合は<c>NULL</c>。</returns>
 const COMMAND_LINE_ITEM* get_command_line_item(const COMMAND_LINE_OPTION* command_line_option, const TEXT* key);
 
 /// <summary>
 /// コマンドラインアイテムは値を持つか。
-/// <para>空文字列も許容しているので文字列長も含めてチェックする場合は<c>is_inputed_command_line_item</c>を使用すること。</para>
+/// <para>空文字列も許容しているので文字列長も含めてチェックする場合は<see cref="is_inputed_command_line_item" />を使用すること。</para>
 /// </summary>
 /// <param name="item"></param>
 /// <returns></returns>

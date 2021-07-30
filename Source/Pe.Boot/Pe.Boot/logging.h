@@ -57,13 +57,31 @@ typedef struct tag_LOG_ITEM
 /// <param name="data">アタッチ時のデータ。</param>
 typedef void (*func_custom_logger)(const LOG_ITEM* log_item, void* data);
 
+/// <summary>
+/// ロガー。
+/// </summary>
 typedef struct tag_LOGGER
 {
+    /// <summary>
+    /// ロガー実装。
+    /// </summary>
     func_custom_logger function;
+    /// <summary>
+    /// <see cref="function" />に渡されるデータ。
+    /// </summary>
     void* data;
 } LOGGER;
 
-void setup_default_log(FILE_WRITER* file_writer, LOG_LEVEL log_level);
+/// <summary>
+/// 標準のログファイル設定。
+/// </summary>
+/// <param name="file_writer">書き込み処理。<c>NULL</c>の場合は無効化。</param>
+void set_default_log_file(FILE_WRITER* file_writer);
+/// <summary>
+/// 標準のログレベルを設定。
+/// </summary>
+/// <param name="log_level"></param>
+void set_default_log_level(LOG_LEVEL log_level);
 void cleanup_default_log();
 
 /// <summary>
@@ -75,7 +93,7 @@ ssize_t attach_logger(const LOGGER* logger);
 /// <summary>
 /// ロガーを破棄。
 /// </summary>
-/// <param name="log_id">attach_loggerで取得したログID。</param>
+/// <param name="log_id"><see cref="attach_logger" />で取得したログID。</param>
 bool detach_logger(ssize_t log_id);
 
 /// <summary>

@@ -40,7 +40,7 @@ bool RC_HEAP_FUNC(free_memory, void* p);
 
 
 /// <summary>
-/// <c>memset</c> する。
+/// <see cref="memset" />する。
 /// </summary>
 /// <param name="target">対象領域。</param>
 /// <param name="value">値。</param>
@@ -49,7 +49,7 @@ bool RC_HEAP_FUNC(free_memory, void* p);
 void* set_memory(void* target, uint8_t value, byte_t bytes);
 
 /// <summary>
-/// <c>memcpy</c>する。
+/// <see cref="memcpy" />する。
 /// </summary>
 /// <param name="destination">コピー先。</param>
 /// <param name="source">コピー元。</param>
@@ -58,7 +58,7 @@ void* set_memory(void* target, uint8_t value, byte_t bytes);
 void* copy_memory(void* destination, const void* source, byte_t bytes);
 
 /// <summary>
-/// <c>memmove</c>する。
+/// <see cref="memmove" />する。
 /// </summary>
 /// <param name="destination">移動先。</param>
 /// <param name="source">移動元。</param>
@@ -67,7 +67,7 @@ void* copy_memory(void* destination, const void* source, byte_t bytes);
 void* move_memory(void* destination, const void* source, byte_t bytes);
 
 /// <summary>
-/// <c>memcmp</c> する。
+/// <see cref="memcmp" />する。
 /// </summary>
 /// <param name="a"></param>
 /// <param name="b"></param>

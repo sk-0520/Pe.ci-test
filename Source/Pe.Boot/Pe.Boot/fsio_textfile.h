@@ -97,6 +97,12 @@ FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encodi
 #endif
 
 /// <summary>
+/// 無効なテキスト書き込み処理の生成。
+/// </summary>
+/// <returns></returns>
+FILE_WRITER create_invalid_file_writer();
+
+/// <summary>
 /// テキストファイル書き込み処理の解放。
 /// </summary>
 /// <param name="file_writer"></param>

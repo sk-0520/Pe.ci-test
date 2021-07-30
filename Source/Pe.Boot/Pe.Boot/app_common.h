@@ -4,9 +4,18 @@
 /// #737 互換用処理
 #define OPTION_APP_BOOT_WAIT_KEY_issue_737 _T("wait")
 
+/// <summary>
+/// 終了コード。
+/// </summary>
 typedef enum tag_EXIT_CODE
 {
+    /// <summary>
+    /// 正常終了。
+    /// </summary>
     EXIT_CODE_SUCCESS = 0,
+    /// <summary>
+    /// 実行モードが不明。
+    /// </summary>
     EXIT_CODE_UNKNOWN_EXECUTE_MODE = 1,
 } EXIT_CODE;
 

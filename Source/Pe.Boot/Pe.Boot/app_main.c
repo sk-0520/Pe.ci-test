@@ -5,8 +5,8 @@
 #include "tstring.h"
 #include "path.h"
 #include "logging.h"
-#include "app_command_line.h"
 #include "app_boot.h"
+#include "app_command_line.h"
 #include "app_console.h"
 
 //#define OREORE_TEST

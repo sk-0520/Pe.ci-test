@@ -23,11 +23,20 @@ typedef struct tag_APP_PATH_ITEMS
 } APP_PATH_ITEMS;
 
 /// <summary>
-///
+/// 本体アプリケーションのパスを取得。
 /// </summary>
-/// <param name="root_directory_path"></param>
+/// <param name="root_directory_path">Peのルートディレクトリパス。</param>
 /// <returns>解放が必要。</returns>
 TEXT get_main_module_path(const TEXT* root_directory_path);
 
+/// <summary>
+/// アプリケーションパスの取得。
+/// </summary>
+/// <param name="result"></param>
+/// <param name="hInstance">解放が必要</param>
 void initialize_app_path_items(APP_PATH_ITEMS* result, HMODULE hInstance);
+/// <summary>
+/// アプリケーションパスの解放。
+/// </summary>
+/// <param name="items"></param>
 void uninitialize_app_path_items(APP_PATH_ITEMS* items);

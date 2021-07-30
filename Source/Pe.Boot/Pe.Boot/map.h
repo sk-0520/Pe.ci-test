@@ -15,7 +15,7 @@ typedef struct tag_MAP_PAIR
 {
     /// <summary>
     /// キー項目。
-    /// <para>キーそのものはMAPにて管理される。</para>
+    /// <para>キーそのものは<see cref="MAP" />にて管理される。</para>
     /// </summary>
     TEXT key;
 
@@ -36,9 +36,18 @@ typedef struct tag_MAP_PAIR
     } library;
 } MAP_PAIR;
 
+/// <summary>
+/// マップ初期化データ。
+/// </summary>
 typedef struct tag_MAP_INIT
 {
+    /// <summary>
+    /// キー。
+    /// </summary>
     TEXT key;
+    /// <summary>
+    /// データ。
+    /// </summary>
     void* value;
 } MAP_INIT;
 
@@ -57,7 +66,13 @@ typedef struct tag_MAP_RESULT_VALUE
     bool exists;
 } MAP_RESULT_VALUE;
 
+/// <summary>
+/// マップキー比較処理。
+/// </summary>
 typedef bool (*func_equals_map_key)(const TEXT* a, const TEXT* b);
+/// <summary>
+/// マップ値解放処理。
+/// </summary>
 typedef void (*func_free_map_value)(MAP_PAIR* pair);
 
 /// <summary>
@@ -85,8 +100,13 @@ typedef struct tag_MAP
         /// 容量。
         /// </summary>
         size_t capacity;
-
+        /// <summary>
+        /// キー比較処理。
+        /// </summary>
         func_equals_map_key equals_map_key;
+        /// <summary>
+        /// 値解放処理。
+        /// </summary>
         func_free_map_value free_value;
     } library;
 } MAP;
@@ -120,6 +140,14 @@ MAP RC_HEAP_FUNC(create_map, size_t capacity, func_equals_map_key equals_map_key
 
 #define create_map_default(freeMapValue) create_map(MAP_DEFAULT_CAPACITY, equals_map_key_default, free_map_value_null)
 
+/// <summary>
+/// 初期化処理。
+/// </summary>
+/// <param name="map"></param>
+/// <param name="init"></param>
+/// <param name="length"></param>
+/// <param name="needRelease"></param>
+/// <returns></returns>
 bool initialize_map(MAP* map, MAP_INIT init[], size_t length, bool needRelease);
 
 /// <summary>

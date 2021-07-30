@@ -7,8 +7,7 @@
 
 /// <summary>
 /// デバッグ時のみ使用可能なログ出力。
-///
-/// 内部的には<c>OutputDebugString</c>だが<c>NDEBUG</c>定義がない場合にのみ使用される。
+/// <para>DEBUGレベルで動かすので設定レベルに依存。</para>
 /// </summary>
 /// <param name="s"></param>
 void output_debug(const TCHAR * s);

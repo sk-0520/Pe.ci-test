@@ -14,9 +14,19 @@ static FILE_WRITER library__default_log_file_writer;
 static LOG_LEVEL library__default_log_level;
 static LOGGER library__log_loggers[LOGGER_LENGTH];
 
-void setup_default_log(FILE_WRITER* file_writer, LOG_LEVEL log_level)
+void set_default_log_file(FILE_WRITER* file_writer)
 {
-    library__default_log_file_writer = *file_writer;
+    free_file_writer(&library__default_log_file_writer);
+
+    if (file_writer) {
+        library__default_log_file_writer = *file_writer;
+    } else {
+        library__default_log_file_writer = create_invalid_file_writer();
+    }
+}
+
+void set_default_log_level(LOG_LEVEL log_level)
+{
     library__default_log_level = log_level;
 }
 
@@ -94,6 +104,7 @@ static void logging_default(const LOG_ITEM* log_item)
         TEXT log_message = build_text_string_builder(&sb);
 
         write_text_file_writer(&library__default_log_file_writer, &log_message, true);
+        flush_file_writer(&library__default_log_file_writer, true);
 
         free_string_builder(&sb);
         free_text(&log_message);
@@ -146,7 +157,7 @@ static void logging(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller
             .date = &date_text,
             .time = &time_text,
             .caller = &caller_text,
-        },
+    },
     };
 
     logging_default(&log_item);
