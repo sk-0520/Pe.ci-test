@@ -123,7 +123,7 @@
     <ClCompile Include="fsio_textfile.c">
       <Filter>source\library</Filter>
     </ClCompile>
-    <ClCompile Include="list.c">
+    <ClCompile Include="primitive_list.c">
       <Filter>source\library</Filter>
     </ClCompile>
     <ClCompile Include="oreore_test.c">
@@ -218,7 +218,7 @@
     <ClInclude Include="resource.h">
       <Filter>_resource</Filter>
     </ClInclude>
-    <ClInclude Include="list.h">
+    <ClInclude Include="primitive_list.h">
       <Filter>header\library</Filter>
     </ClInclude>
     <ClInclude Include="oreore_test.h">

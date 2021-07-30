@@ -414,7 +414,7 @@
     <None Include="list.c.tt">
       <FileType>Document</FileType>
     </None>
-    <ClCompile Include="list.c" />
+    <ClCompile Include="primitive_list.c" />
     <ClCompile Include="map.c" />
     <ClCompile Include="memory.c" />
     <ClCompile Include="oreore_test.c" />
@@ -450,7 +450,7 @@
     <None Include="list.h.tt">
       <FileType>Document</FileType>
     </None>
-    <ClInclude Include="list.h" />
+    <ClInclude Include="primitive_list.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="oreore_test.h" />

@@ -2,7 +2,7 @@
 
 #include "common.h"
 #include "tstring.h"
-#include "list.h"
+#include "primitive_list.h"
 #include "text.h"
 
 

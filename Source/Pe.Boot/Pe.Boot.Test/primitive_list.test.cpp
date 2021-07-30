@@ -1,14 +1,14 @@
 ﻿#include "pch.h"
 
 extern "C" {
-#   include "../Pe.Boot/list.h"
+#   include "../Pe.Boot/primitive_list.h"
 }
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace PeBootTest
 {
-    TEST_CLASS(list_test)
+    TEST_CLASS(primitive_list_test)
     {
     public:
         TEST_METHOD(life_test)
