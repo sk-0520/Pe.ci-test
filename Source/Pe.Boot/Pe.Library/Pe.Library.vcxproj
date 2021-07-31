@@ -28,48 +28,48 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{92130C2C-74BB-446A-9291-FD8C34E0453E}</ProjectGuid>
+    <ProjectGuid>{778CE0A0-CB22-4B9C-AD32-490C1ED04F7A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>PeBoot</RootNamespace>
+    <RootNamespace>PeLibrary</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Pe.Boot</ProjectName>
+    <ProjectName>Pe.Library</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CI_TEST|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CI_TEST|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -101,39 +101,33 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\Pe\</OutDir>
-    <IntDir>obj\$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>Pe</TargetName>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\x86\Pe\</OutDir>
-    <IntDir>obj\$(Configuration)\x86\</IntDir>
-    <TargetName>Pe</TargetName>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\x86\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\x86\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\Pe\</OutDir>
-    <IntDir>obj\$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>Pe</TargetName>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CI_TEST|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\$(Platform)\Pe\</OutDir>
-    <IntDir>obj\$(Configuration)\$(Platform)\</IntDir>
-    <TargetName>Pe</TargetName>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\x86\Pe\</OutDir>
-    <IntDir>obj\$(Configuration)\x86\</IntDir>
-    <TargetName>Pe</TargetName>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\x86\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\x86\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CI_TEST|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\Output\$(Configuration)\x86\Pe\</OutDir>
-    <IntDir>obj\$(Configuration)\x86\</IntDir>
-    <TargetName>Pe</TargetName>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\x86\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\x86\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -160,8 +154,6 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -204,8 +196,6 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -251,8 +241,6 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -298,8 +286,6 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -345,8 +331,6 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -392,8 +376,6 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -412,36 +394,59 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="app_command_line.c" />
-    <ClCompile Include="app_console.c" />
-    <ClCompile Include="app_console_prompt.c" />
-    <ClCompile Include="app_main.c" />
-    <ClCompile Include="oreore_test.c" />
-    <ClCompile Include="main.c" />
-    <ClCompile Include="app_boot.c" />
-    <ClCompile Include="app_path.c" />
+    <ClCompile Include="command_line.c" />
+    <ClCompile Include="datetime.c" />
+    <ClCompile Include="debug.c" />
+    <ClCompile Include="fsio.c" />
+    <ClCompile Include="fsio_resource.c" />
+    <ClCompile Include="fsio_textfile.c" />
+    <None Include="primitive_list.c.tt">
+      <FileType>Document</FileType>
+    </None>
+    <ClCompile Include="object_list.c" />
+    <ClCompile Include="primitive_list.c" />
+    <ClCompile Include="map.c" />
+    <ClCompile Include="memory.c" />
+    <ClCompile Include="path.c" />
+    <ClCompile Include="logging.c" />
+    <ClCompile Include="platform.c" />
+    <ClCompile Include="res_check.c" />
+    <ClCompile Include="string_builder.c" />
+    <ClCompile Include="text_conv.c" />
+    <ClCompile Include="text_search.c" />
+    <ClCompile Include="text.c" />
+    <ClCompile Include="text_man.c" />
+    <ClCompile Include="tstring.c" />
+    <ClCompile Include="writer.c" />
+    <ClCompile Include="without_crt.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app_command_line.h" />
-    <ClInclude Include="app_common.h" />
-    <ClInclude Include="app_console.h" />
-    <ClInclude Include="app_console_prompt.h" />
-    <ClInclude Include="app_main.h" />
-    <ClInclude Include="oreore_test.h" />
-    <ClInclude Include="app_boot.h" />
-    <ClInclude Include="app_path.h" />
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Resource.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\Pe\Pe.Main\Resources\Icon\App.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Pe.Library\Pe.Library.vcxproj">
-      <Project>{778ce0a0-cb22-4b9c-ad32-490c1ed04f7a}</Project>
-    </ProjectReference>
+    <ClInclude Include="command_line.h" />
+    <ClInclude Include="common.h" />
+    <ClInclude Include="datetime.h" />
+    <ClInclude Include="debug.h" />
+    <ClInclude Include="fsio.h" />
+    <ClInclude Include="fsio_resource.h" />
+    <ClInclude Include="fsio_textfile.h" />
+    <None Include="primitive_list.h.tt">
+      <FileType>Document</FileType>
+    </None>
+    <ClInclude Include="object_list.h" />
+    <ClInclude Include="primitive_list.h" />
+    <ClInclude Include="map.h" />
+    <ClInclude Include="memory.h" />
+    <ClInclude Include="path.h" />
+    <ClInclude Include="logging.h" />
+    <ClInclude Include="platform.h" />
+    <ClInclude Include="res_check.h" />
+    <ClInclude Include="string_builder.h" />
+    <ClInclude Include="text_conv.h" />
+    <ClInclude Include="text_search.h" />
+    <ClInclude Include="text.h" />
+    <ClInclude Include="text_man.h" />
+    <ClInclude Include="tstring.h" />
+    <ClInclude Include="writer.h" />
+    <ClInclude Include="without_crt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

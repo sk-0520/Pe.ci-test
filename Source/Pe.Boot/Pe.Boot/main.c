@@ -1,6 +1,6 @@
-﻿#include "debug.h"
-#include "res_check.h"
-#include "logging.h"
+﻿#include "../Pe.Library/debug.h"
+#include "../Pe.Library/res_check.h"
+#include "../Pe.Library/logging.h"
 #include "app_main.h"
 
 #ifdef RES_CHECK

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "path.h"
+#include "../Pe.Library/path.h"
 
 /// <summary>
 /// 各種パス情報。

@@ -1,12 +1,12 @@
 ﻿#include "pch.h"
 
 extern "C" {
-#   include "../Pe.Boot/primitive_list.h"
+#   include "../Pe.Library/primitive_list.h"
 }
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace PeBootTest
+namespace PeLibraryTest
 {
     TEST_CLASS(primitive_list_test)
     {

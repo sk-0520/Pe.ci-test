@@ -1,11 +1,11 @@
 ﻿#include "app_boot.h"
 #include "app_path.h"
-#include "path.h"
-#include "logging.h"
-#include "debug.h"
-#include "tstring.h"
-#include "platform.h"
-#include "command_line.h"
+#include "../Pe.Library/path.h"
+#include "../Pe.Library/logging.h"
+#include "../Pe.Library/debug.h"
+#include "../Pe.Library/tstring.h"
+#include "../Pe.Library/platform.h"
+#include "../Pe.Library/command_line.h"
 #include "app_command_line.h"
 
 /// <summary>

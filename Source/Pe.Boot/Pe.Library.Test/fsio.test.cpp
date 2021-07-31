@@ -1,12 +1,12 @@
 ﻿#include "pch.h"
 
 extern "C" {
-#   include "../Pe.Boot/fsio.h"
+#   include "../Pe.Library/fsio.h"
 }
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace PeBootTest
+namespace PeLibraryTest
 {
     TEST_CLASS(fsio_test)
     {
@@ -16,10 +16,10 @@ namespace PeBootTest
             TEST_INIT_DIR;
 
             TEST_GET_PATH(dir_path, _T("dir"));
-            TEST::create_directory(test_dir_path);
+            TEST.create_directory(test_dir_path);
 
             TEST_GET_PATH(file_path, _T("file"));
-            TEST::create_empty_file(test_file_path);
+            TEST.create_empty_file(test_file_path);
 
             TEST_GET_PATH(unknown_path, _T("unknown"));
 
@@ -33,10 +33,10 @@ namespace PeBootTest
             TEST_INIT_DIR;
 
             TEST_GET_PATH(dir_path, _T("dir"));
-            TEST::create_directory(test_dir_path);
+            TEST.create_directory(test_dir_path);
 
             TEST_GET_PATH(file_path, _T("file"));
-            TEST::create_empty_file(test_file_path);
+            TEST.create_empty_file(test_file_path);
 
             TEST_GET_PATH(unknown_path, _T("unknown"));
 
@@ -50,10 +50,10 @@ namespace PeBootTest
             TEST_INIT_DIR;
 
             TEST_GET_PATH(dir_path, _T("dir"));
-            TEST::create_directory(test_dir_path);
+            TEST.create_directory(test_dir_path);
 
             TEST_GET_PATH(file_path, _T("file"));
-            TEST::create_empty_file(test_file_path);
+            TEST.create_empty_file(test_file_path);
 
             TEST_GET_PATH(unknown_path, _T("unknown"));
 

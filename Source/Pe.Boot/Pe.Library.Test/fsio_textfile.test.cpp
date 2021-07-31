@@ -1,12 +1,12 @@
 ﻿#include "pch.h"
 
 extern "C" {
-#   include "../Pe.Boot/fsio.h"
+#   include "../Pe.Library/fsio.h"
 }
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace PeBootTest
+namespace PeLibraryTest
 {
     TEST_CLASS(fsio_textfile_test)
     {

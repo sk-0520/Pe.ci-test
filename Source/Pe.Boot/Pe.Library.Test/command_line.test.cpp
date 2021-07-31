@@ -1,12 +1,12 @@
 ﻿#include "pch.h"
 
 extern "C" {
-#   include "../Pe.Boot/command_line.h"
+#   include "../Pe.Library/command_line.h"
 }
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace PeBootTest
+namespace PeLibraryTest
 {
     TEST_CLASS(command_line_test)
     {

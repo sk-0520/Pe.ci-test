@@ -1,12 +1,12 @@
 ﻿#include "pch.h"
 
 extern "C" {
-#   include "../Pe.Boot/fsio.h"
+#   include "../Pe.Library/fsio.h"
 }
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace PeBootTest
+namespace PeLibraryTest
 {
     TEST_CLASS(fsio_resource_test)
     {
@@ -34,7 +34,7 @@ namespace PeBootTest
             TEST_GET_PATH(path1, _T("exists"));
             TEST_GET_PATH(path2, _T("not-exists"));
 
-            TEST::create_empty_file(test_path1);
+            TEST.create_empty_file(test_path1);
 
             FILE_RESOURCE actual1 = open_file_resource(&path1);
             FILE_RESOURCE actual2 = open_file_resource(&path2);
@@ -53,7 +53,7 @@ namespace PeBootTest
             TEST_GET_PATH(path1, _T("exists"));
             TEST_GET_PATH(path2, _T("not-exists"));
 
-            TEST::create_empty_file(test_path1);
+            TEST.create_empty_file(test_path1);
 
             FILE_RESOURCE actual1 = open_or_create_file_resource(&path1);
             FILE_RESOURCE actual2 = open_or_create_file_resource(&path2);

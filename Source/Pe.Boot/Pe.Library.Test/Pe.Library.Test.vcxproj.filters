@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="header">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="_resource">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="source\test">
+      <UniqueIdentifier>{d8528895-ad76-4936-ba4b-096d158bf2fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header\test">
+      <UniqueIdentifier>{15954daf-078c-4296-980e-b39de9d443f2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="command_line.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="datetime.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="fsio.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="fsio_resource.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="fsio_textfile.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="map.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="memory.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="object_list.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="path.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="primitive_list.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="string_builder.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="text.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="text_conv.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="text_man.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="text_search.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="tstring.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="writer.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>source\test</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>source\test</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>_resource</Filter>
+    </ClInclude>
+    <ClInclude Include="utility.h">
+      <Filter>header\test</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>header\test</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

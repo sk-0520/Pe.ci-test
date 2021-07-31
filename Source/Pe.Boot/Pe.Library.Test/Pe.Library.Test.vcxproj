@@ -28,9 +28,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{ACB686FE-5B11-4D85-8655-7EF803F28794}</ProjectGuid>
+    <ProjectGuid>{3B755030-5607-42EA-BF8D-9439A3B55A04}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>PeBootTest</RootNamespace>
+    <RootNamespace>PeLibraryTest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectSubType>NativeUnitTestProject</ProjectSubType>
   </PropertyGroup>
@@ -140,7 +140,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;RES_CHECK;UT_DIR="$(OutputPath).";SOLUTION_DIR="$(SolutionDir).";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -152,7 +152,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>shlwapi.lib;$(SolutionDir)Pe.Boot\obj\$(Configuration)\$(Platform)\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;$(SolutionDir)Pe.Library\obj\$(Configuration)\$(Platform)\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>MSVCRTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -161,7 +161,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;RES_CHECK;UT_DIR="$(OutputPath).";SOLUTION_DIR="$(SolutionDir).";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -173,7 +173,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>shlwapi.lib;$(SolutionDir)Pe.Boot\obj\$(Configuration)\x86\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;$(SolutionDir)Pe.Library\obj\$(Configuration)\x86\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>MSVCRTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -184,7 +184,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;UT_DIR="$(OutputPath).";SOLUTION_DIR="$(SolutionDir).";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -198,7 +198,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>shlwapi.lib;$(SolutionDir)Pe.Boot\obj\$(Configuration)\x86\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;$(SolutionDir)Pe.Library\obj\$(Configuration)\x86\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>MSVCRTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -209,7 +209,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;RES_CHECK;UT_DIR="$(OutputPath).";SOLUTION_DIR="$(SolutionDir).";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -223,7 +223,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>shlwapi.lib;$(SolutionDir)Pe.Boot\obj\$(Configuration)\x86\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;$(SolutionDir)Pe.Library\obj\$(Configuration)\x86\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>MSVCRTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -234,7 +234,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;UT_DIR="$(OutputPath).";SOLUTION_DIR="$(SolutionDir).";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -248,7 +248,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>shlwapi.lib;$(SolutionDir)Pe.Boot\obj\$(Configuration)\$(Platform)\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;$(SolutionDir)Pe.Library\obj\$(Configuration)\$(Platform)\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>MSVCRTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -259,7 +259,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;RES_CHECK;UT_DIR="$(OutputPath).";SOLUTION_DIR="$(SolutionDir).";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -273,13 +273,21 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>shlwapi.lib;$(SolutionDir)Pe.Boot\obj\$(Configuration)\$(Platform)\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;$(SolutionDir)Pe.Library\obj\$(Configuration)\$(Platform)\*.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>MSVCRTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="app_command_line.test.cpp" />
-    <ClCompile Include="app_path.test.cpp" />
+    <ClCompile Include="command_line.test.cpp" />
+    <ClCompile Include="datetime.test.cpp" />
+    <ClCompile Include="fsio.test.cpp" />
+    <ClCompile Include="fsio_resource.test.cpp" />
+    <ClCompile Include="fsio_textfile.test.cpp" />
+    <ClCompile Include="object_list.test.cpp" />
+    <ClCompile Include="primitive_list.test.cpp" />
+    <ClCompile Include="map.test.cpp" />
+    <ClCompile Include="memory.test.cpp" />
+    <ClCompile Include="path.test.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -289,15 +297,20 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='CI_TEST|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="text.test.cpp" />
+    <ClCompile Include="text_conv.test.cpp" />
+    <ClCompile Include="text_man.test.cpp" />
+    <ClCompile Include="text_search.test.cpp" />
+    <ClCompile Include="tstring.test.cpp" />
+    <ClCompile Include="string_builder.test.cpp" />
+    <ClCompile Include="writer.test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="utility.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pe.Boot\Pe.Boot.vcxproj">
-      <Project>{92130c2c-74bb-446a-9291-fd8c34e0453e}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Pe.Library\Pe.Library.vcxproj">
       <Project>{778ce0a0-cb22-4b9c-ad32-490c1ed04f7a}</Project>
     </ProjectReference>

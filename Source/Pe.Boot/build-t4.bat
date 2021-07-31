@@ -9,8 +9,8 @@ set DevEnvDir=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Comm
 
 if exist "%CUSTOM_SETTING_FILE%" call "%CUSTOM_SETTING_FILE%"
 
-for %%f in (Pe.Boot\*.tt) do (
-	"%DevEnvDir%TextTransform.exe"  "%%f"
+for /d %%d in (*) do (
+	for %%f in (%%d\*.tt) do (
+		"%DevEnvDir%TextTransform.exe"  "%%f"
+	)
 )
-
-

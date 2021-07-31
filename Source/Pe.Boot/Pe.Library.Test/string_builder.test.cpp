@@ -1,13 +1,13 @@
 ﻿#include "pch.h"
 
 extern "C" {
-#   include "../Pe.Boot/tstring.h"
-#   include "../Pe.Boot/string_builder.h"
+#   include "../Pe.Library/tstring.h"
+#   include "../Pe.Library/string_builder.h"
 }
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace PeBootTest
+namespace PeLibraryTest
 {
     TEST_CLASS(string_builder_test)
     {

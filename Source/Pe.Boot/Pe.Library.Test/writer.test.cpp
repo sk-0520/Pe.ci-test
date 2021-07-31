@@ -2,13 +2,13 @@
 #include <functional>
 
 extern "C" {
-#   include "../Pe.Boot/memory.h"
-#   include "../Pe.Boot/writer.h"
+#   include "../Pe.Library/memory.h"
+#   include "../Pe.Library/writer.h"
 }
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace PeBootTest
+namespace PeLibraryTest
 {
     TEST_CLASS(writer_test)
     {

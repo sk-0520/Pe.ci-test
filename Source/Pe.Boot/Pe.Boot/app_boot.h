@@ -2,7 +2,7 @@
 #include <windows.h>
 
 #include "app_common.h"
-#include "command_line.h"
+#include "../Pe.Library/command_line.h"
 
 
 /// <summary>

@@ -11,8 +11,7 @@
 #include "CppUnitTest.h"
 
 #include "../Pe.Library/common.h"
-#include "../Pe.Boot/app_common.h"
-#include "../Pe.Library.Test/utility.h"
+#include "utility.h"
 
 extern TestImpl TEST;
 

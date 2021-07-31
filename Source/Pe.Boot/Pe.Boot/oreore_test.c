@@ -1,6 +1,6 @@
 ﻿#include "oreore_test.h"
-#include "debug.h"
-#include "fsio_textfile.h"
+#include "../Pe.Library/debug.h"
+#include "../Pe.Library/fsio_textfile.h"
 
 void oreore_test(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
 {
