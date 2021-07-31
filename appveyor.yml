@@ -33,13 +33,10 @@ build_script:
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
   - ps: .\Build\build.ps1 -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
 before_test:
-  - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger & cd ..\..\..\ )
+  - cmd: for /d %%d in (Source\Pe\*.Test) do ( cd %%d & nuget install Appveyor.TestLogger & cd ..\..\..\ )
 test_script:
   - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-%PLATFORM% /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%" --test-adapter-path:. --logger:Appveyor
-  - cmd: VSTest.Console Source\Pe.Boot\Pe.Library.Test\bin\Release\%PLATFORM%\Pe.Library.Test.dll /InIsolation /Platform:%PLATFORM% /Logger:Appveyor
-  - cmd: VSTest.Console Source\Pe.Boot\Pe.Library.Test\bin\Release\%PLATFORM%\Pe.Library.Test.dll /InIsolation /Platform:%PLATFORM% /Logger:Appveyor
-  - cmd: VSTest.Console Source\Pe.Boot\Pe.Boot.Test\bin\CI_TEST\%PLATFORM%\Pe.Boot.Test.dll /InIsolation /Platform:%PLATFORM% /Logger:Appveyor
-  - cmd: VSTest.Console Source\Pe.Boot\Pe.Boot.Test\bin\CI_TEST\%PLATFORM%\Pe.Boot.Test.dll /InIsolation /Platform:%PLATFORM% /Logger:Appveyor
+  - cmd: for /d %%d in (Source\Pe.Boot\*.Test) do (VSTest.Console %%d\bin\Release\%PLATFORM%\%%~nxd.dll /InIsolation /Platform:%PLATFORM% /Logger:Appveyor & VSTest.Console %%d\bin\CI_TEST\%PLATFORM%\%%~nxd.dll /InIsolation /Platform:%PLATFORM% /Logger:Appveyor )
 after_test:
   - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
   - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms $env:PLATFORM
