@@ -15,11 +15,11 @@ namespace PeLibraryTest
         {
             MAP map = create_map(2, equals_map_key_default, free_map_value_null);
             BOX_INT valies[] = {
-                create(1),
-                create(2),
-                create(3),
-                create(4),
-                create(5),
+                BOX_INT::create(1),
+                BOX_INT::create(2),
+                BOX_INT::create(3),
+                BOX_INT::create(4),
+                BOX_INT::create(5),
             };
             MAP_INIT init[] = {
                 { wrap("key1"), &valies[0] },
@@ -45,7 +45,7 @@ namespace PeLibraryTest
             Assert::AreEqual((size_t)0, map.length);
 
             TEXT key1 = wrap("key1");
-            BOX_INT value1 = create(1);
+            BOX_INT value1 = BOX_INT::create(1);
             MAP_PAIR* pair1 = add_map(&map, &key1, &value1, false);
             Assert::IsNotNull(pair1);
             Assert::AreEqual(1, ((BOX_INT*)pair1->value)->value);
@@ -53,7 +53,7 @@ namespace PeLibraryTest
             Assert::AreEqual((size_t)2, map.library.capacity);
 
             TEXT key2 = wrap("key2");
-            BOX_INT value2 = create(2);
+            BOX_INT value2 = BOX_INT::create(2);
             MAP_PAIR* pair2 = add_map(&map, &key2, &value2, false);
             Assert::IsNotNull(pair2);
             Assert::AreEqual(2, ((BOX_INT*)pair2->value)->value);
@@ -61,14 +61,14 @@ namespace PeLibraryTest
             Assert::AreEqual((size_t)2, map.library.capacity);
 
             TEXT key3 = wrap("key3");
-            BOX_INT value3 = create(3);
+            BOX_INT value3 = BOX_INT::create(3);
             MAP_PAIR* pair3 = add_map(&map, &key3, &value3, false);
             Assert::IsNotNull(pair3);
             Assert::AreEqual(3, ((BOX_INT*)pair3->value)->value);
             Assert::AreEqual((size_t)3, map.length);
             Assert::AreEqual((size_t)4, map.library.capacity);
 
-            BOX_INT value4 = create(3);
+            BOX_INT value4 = BOX_INT::create(3);
             MAP_PAIR* pairFailed = add_map(&map, &key1, &value4, false);
             Assert::IsNull(pairFailed);
             Assert::AreEqual((size_t)3, map.length);
@@ -84,7 +84,7 @@ namespace PeLibraryTest
             MAP map = create_map(2, equals_map_key_default, free_map_value_null);
 
             TEXT key1 = wrap("key1");
-            BOX_INT value1 = create(1);
+            BOX_INT value1 = BOX_INT::create(1);
             MAP_PAIR* pair1 = set_map(&map, &key1, &value1, false);
             Assert::IsNotNull(pair1);
             Assert::AreEqual(1, ((BOX_INT*)pair1->value)->value);
@@ -92,7 +92,7 @@ namespace PeLibraryTest
             Assert::AreEqual((size_t)2, map.library.capacity);
 
             TEXT key1_2 = wrap("key1");
-            BOX_INT value1_2 = create(11);
+            BOX_INT value1_2 = BOX_INT::create(11);
             MAP_PAIR* pair1_2 = set_map(&map, &key1_2, &value1_2, false);
             Assert::IsNotNull(pair1_2);
             Assert::IsTrue(pair1_2 == pair1);
@@ -110,18 +110,18 @@ namespace PeLibraryTest
             MAP map = create_map(2, equals_map_key_default, free_map_value_null);
 
             TEXT key1 = wrap("key1");
-            BOX_INT value1 = create(1);
+            BOX_INT value1 = BOX_INT::create(1);
             MAP_PAIR* pair1 = add_map(&map, &key1, &value1, false);
 
             TEXT key2 = wrap("key2");
-            BOX_INT value2 = create(2);
+            BOX_INT value2 = BOX_INT::create(2);
             MAP_PAIR* pair2 = add_map(&map, &key2, &value2, false);
 
             Assert::AreEqual((size_t)2, map.length);
             Assert::IsTrue(remove_map(&map, &key2));
             Assert::AreEqual((size_t)1, map.length);
 
-            BOX_INT value2_2 = create(22);
+            BOX_INT value2_2 = BOX_INT::create(22);
             MAP_PAIR* pair2_2 = add_map(&map, &key2, &value2_2, false);
             Assert::AreEqual((size_t)2, map.length);
             Assert::IsTrue(pair2_2 == pair2); // ズレてないので一応使える(使用自体は想定していない)
@@ -130,11 +130,11 @@ namespace PeLibraryTest
             Assert::AreEqual((size_t)1, map.length);
             Assert::AreEqual(22, ((BOX_INT*)pair1->value)->value);// ズレてるので当時の後ろのやつを指している(使用自体は想定していない)
 
-            BOX_INT value1_2 = create(11);
+            BOX_INT value1_2 = BOX_INT::create(11);
             MAP_PAIR* pair1_2 = add_map(&map, &key1, &value1_2, false);
 
             TEXT key3 = wrap("key3");
-            BOX_INT value3 = create(3);
+            BOX_INT value3 = BOX_INT::create(3);
             MAP_PAIR* pair3 = add_map(&map, &key3, &value3, false);
             Assert::IsNotNull(pair3);
             Assert::AreEqual((size_t)3, map.length);
@@ -154,15 +154,15 @@ namespace PeLibraryTest
             MAP map = create_map(2, equals_map_key_default, free_map_value_null);
 
             TEXT key1 = wrap("key1");
-            BOX_INT value1 = create(1);
+            BOX_INT value1 = BOX_INT::create(1);
             add_map(&map, &key1, &value1, false);
 
             TEXT key2 = wrap("key2");
-            BOX_INT value2 = create(2);
+            BOX_INT value2 = BOX_INT::create(2);
             add_map(&map, &key2, &value2, false);
 
             TEXT key3 = wrap("key3");
-            BOX_INT value3 = create(3);
+            BOX_INT value3 = BOX_INT::create(3);
             add_map(&map, &key3, &value3, false);
 
             MAP_RESULT_VALUE result1 = get_map(&map, &key1);
@@ -236,9 +236,9 @@ namespace PeLibraryTest
             TEXT key2 = wrap("key2");
             TEXT key2_1 = wrap("KEY2");
 
-            BOX_INT value1 = create(1);
-            BOX_INT value2 = create(2);
-            BOX_INT value2_1= create(22);
+            BOX_INT value1 = BOX_INT::create(1);
+            BOX_INT value2 = BOX_INT::create(2);
+            BOX_INT value2_1= BOX_INT::create(22);
 
             add_map(&map_default, &key1, &value1, false);
             add_map(&map_default, &key2, &value2, false);

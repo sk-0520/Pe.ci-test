@@ -46,18 +46,18 @@ template<typename TPrimitive>
 struct BOX
 {
     TPrimitive value;
+
+    static BOX<TPrimitive> create(TPrimitive value)
+    {
+        BOX<TPrimitive> result = {
+            value,
+        };
+        return result;
+    }
+
 };
 using BOX_INT = BOX<int>;
 using BOX_SIZE_T = BOX<size_t>;
-
-template<typename TPrimitive>
-BOX<TPrimitive> create(TPrimitive value)
-{
-    BOX<TPrimitive> result = {
-        value,
-    };
-    return result;
-}
 
 /// <summary>
 /// pch.h の中で TEST として外部参照宣言しておいて各テストプロジェクトの test.cpp に実体を作っておくこと。

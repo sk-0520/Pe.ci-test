@@ -18,17 +18,17 @@ namespace PeLibraryTest
             Assert::AreEqual((size_t)2, list.library.capacity);
             Assert::IsFalse(get_object_list(&list, 0).exists);
 
-            auto input1 = create(1);
+            auto input1 = BOX_INT::create(1);
             push_object_list(&list, &input1, false);
             Assert::AreEqual((size_t)1, list.length);
             Assert::AreEqual((size_t)2, list.library.capacity);
 
-            auto input2 = create(2);
+            auto input2 = BOX_INT::create(2);
             push_object_list(&list, &input2, false);
             Assert::AreEqual((size_t)2, list.length);
             Assert::AreEqual((size_t)2, list.library.capacity);
 
-            auto input3 = create(3);
+            auto input3 = BOX_INT::create(3);
             push_object_list(&list, &input3, false);
             Assert::AreEqual((size_t)3, list.length);
             Assert::AreEqual((size_t)4, list.library.capacity);
@@ -40,14 +40,14 @@ namespace PeLibraryTest
             Assert::AreEqual((size_t)4, list.library.capacity);
             //delete result3;
 
-            auto input3_2 = create(32);
+            auto input3_2 = BOX_INT::create(32);
             push_object_list(&list, &input3_2, false);
 
             Assert::IsFalse(get_object_list(&list, 3).exists);
             Assert::IsTrue(get_object_list(&list, 2).exists);
             Assert::AreEqual(input3_2.value, ((BOX_INT*)(get_object_list(&list, 2).value))->value);
 
-            auto input3_3 = create(33);
+            auto input3_3 = BOX_INT::create(33);
             Assert::IsFalse(set_object_list(&list, 3, &input3_3, false));
             Assert::IsTrue(set_object_list(&list, 2, &input3_3, false));
             Assert::IsTrue(get_object_list(&list, 2).exists);
