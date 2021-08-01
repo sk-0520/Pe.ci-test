@@ -27,24 +27,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region function
 
-        private void RunMode(Mode mode)
+        private void RunDryRun(IEnumerable<string> arguments)
+        {
+            var commandLine = new CommandLine(arguments, false);
+            var arg = string.Join(" ", commandLine.Arguments.Select(i => CommandLine.Escape(i)));
+            Console.WriteLine(arg);
+        }
+
+        private void RunCore(Mode mode, IEnumerable<string> arguments)
         {
             Debug.Assert(mode != Mode.None);
-
-            var stdIn = new StreamReader(new MemoryStream());
-            var stdOut = new StreamWriter(new MemoryStream());
-            var stdErr = new StreamWriter(new MemoryStream());
 
             try {
                 NativeMethods.AllocConsole();
 
-                /*
-                Console.SetIn(stdIn);
-                Console.SetOut(stdOut);
-                Console.SetError(stdErr);
-                */
+                switch(mode) {
+                    case Mode.DryRun:
+                        RunDryRun(arguments);
+                        break;
 
-                Console.WriteLine("asd");
+                    default:
+                        throw new NotImplementedException();
+                }
 
             } finally {
                 NativeMethods.FreeConsole();
@@ -68,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 return false;
             }
 
-            RunMode(mode);
+            RunCore(mode, arguments);
 
             return true;
         }
