@@ -39,11 +39,11 @@ namespace ContentTypeTextNet.Pe.Main
 #endif
             var initializer = new ApplicationInitializer();
             var accepted = initializer.Initialize(this, e);
-            Debug.Assert(initializer.Logging != null);
             if(!accepted) {
                 Shutdown();
                 return;
             }
+            Debug.Assert(initializer.Logging != null);
 
             Logger = initializer.Logging.Factory.CreateLogger(GetType());
             RunMode = initializer.RunMode;

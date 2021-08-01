@@ -1,3 +1,7 @@
+#if BETA
+#   define BETA_MODE
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -116,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return commandLine;
         }
 
-#if BETA
+#if BETA_MODE
         bool ShowCommandLineMessageIfUnspecified(CommandLine commandLine)
         {
             var knownBetaVersion = commandLine.ExistsSwitch(CommandLineSwitchBetaVersion);
@@ -124,8 +128,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 return true;
             }
 
+            // この段階で ApplicationEnvironmentParameters は未構築なのでルートディレクトリを取得する重複コード
+            var rootDirectory = GetRootDirectory();
+            var batchFilePath = Path.Combine(rootDirectory.FullName, "bat", "beta.bat");
+
+            var message = TextUtility.ReplaceFromDictionary(
+                Properties.Resources.String_BetaVersion_Unknown_Message_Format,
+                new Dictionary<string, string>() {
+                    ["BETA-BAT"] = batchFilePath,
+                }
+            );
+
+
             var result = MessageBox.Show(
-                Properties.Resources.String_BetaVersion_Unknown_Message,
+                message,
                 Properties.Resources.String_BetaVersion_Unknown_Caption,
                 MessageBoxButton.OKCancel,
                 MessageBoxImage.Warning,
@@ -194,14 +210,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return true;
         }
 
+        private DirectoryInfo GetRootDirectory()
+        {
+            var applicationDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var rootDirectoryPath = Path.GetDirectoryName(applicationDirectory)!;
+
+            return new DirectoryInfo(rootDirectoryPath);
+        }
+
         ApplicationEnvironmentParameters InitializeEnvironment(CommandLine commandLine)
         {
             Debug.Assert(commandLine.IsParsed);
 
-            var applicationDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var rootDirectoryPath = Path.GetDirectoryName(applicationDirectory)!;
+            var rootDirectory = GetRootDirectory();
 
-            return new ApplicationEnvironmentParameters(new DirectoryInfo(rootDirectoryPath), commandLine);
+            return new ApplicationEnvironmentParameters(rootDirectory, commandLine);
         }
 
         bool CheckFirstStartup(EnvironmentParameters environmentParameters, ILogger logger)
@@ -474,7 +497,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var commandLine = CreateCommandLine(e.Args);
             RunMode = RunModeUtility.Parse(commandLine.GetValue(CommandLineKeyRunMode, string.Empty));
-#if BETA
+#if BETA_MODE
             if(RunMode != RunMode.CrashReport) {
                 if(!ShowCommandLineMessageIfUnspecified(commandLine)) {
                     return false;
