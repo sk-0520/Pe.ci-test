@@ -20,6 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         IWindowManager WindowManager { get; }
         public bool IsRegisteredLauncher { get; private set; }
+        public bool IsRegisteredStartup { get; private set; }
 
         #endregion
 
