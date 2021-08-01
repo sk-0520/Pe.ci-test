@@ -25,6 +25,25 @@ namespace ContentTypeTextNet.Pe.Main
 
         #region function
 
+        bool ExecuteIfExistsConsoleModeEnvironment(string[] arguments)
+        {
+            var ce = new ApplicationConsoleExecutor();
+            ce.Run("DRY-RUN", arguments);
+            var a = true; if(a) return true;
+
+            var appConsoleMode = Environment.GetEnvironmentVariable("PE_CONSOLE_MODE");
+            if(string.IsNullOrWhiteSpace(appConsoleMode)) {
+                return false;
+            }
+
+            var consoleExecutor = new ApplicationConsoleExecutor();
+            if(consoleExecutor.Run(appConsoleMode, arguments)) {
+                return true;
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region Application
@@ -33,10 +52,16 @@ namespace ContentTypeTextNet.Pe.Main
         {
             var stopwatch = Stopwatch.StartNew();
 
+            if(ExecuteIfExistsConsoleModeEnvironment(e.Args)) {
+                Shutdown();
+                return;
+            }
+
             base.OnStartup(e);
 #if DEBUG
             DebugStartup();
 #endif
+
             var initializer = new ApplicationInitializer();
             var accepted = initializer.Initialize(this, e);
             if(!accepted) {
