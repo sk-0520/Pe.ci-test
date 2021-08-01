@@ -13,5 +13,9 @@ EXIT_CODE dry_run(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_o
     size_t arg_count = filter_enable_command_line_items(args, command_line_option);
 
     TEXT argument = to_command_line_argument(args, arg_count);
-    return boot(hInstance, &argument);
+    free_memory(args);
+    EXIT_CODE exit_code = boot(hInstance, &argument);
+    free_text(&argument);
+
+    return exit_code;
 }
