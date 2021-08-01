@@ -11,7 +11,29 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const TEXT* command_line)
 
     add_visual_cpp_runtime_redist_env_path(&app_path_items.root_directory);
 
-    ShellExecute(NULL, _T("open"), app_path_items.main_module.value, is_enabled_text(command_line) ? command_line->value : NULL, NULL, SW_SHOWNORMAL);
+    STARTUPINFO startupinfo = {
+        0
+    };
+    PROCESS_INFORMATION process_information;
+
+    const TCHAR* argument = is_enabled_text(command_line) ? command_line->value : NULL;
+
+    bool result = CreateProcess(
+        app_path_items.main_module.value,
+        (TCHAR*)argument,
+        NULL,
+        NULL,
+        false,
+        0,
+        NULL,
+        NULL,
+        &startupinfo,
+        &process_information
+    );
+    if (result) {
+        WaitForSingleObject(process_information.hProcess, INFINITE);
+        CloseHandle(process_information.hThread);
+    }
 
     uninitialize_app_path_items(&app_path_items);
 
