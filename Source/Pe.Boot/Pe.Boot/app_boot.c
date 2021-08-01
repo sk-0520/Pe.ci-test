@@ -44,7 +44,7 @@ static void add_visual_cpp_runtime_redist_env_path(const TEXT* root_directory_pa
     free_text(&crt_path);
 }
 
-static EXIT_CODE boot_core(HINSTANCE hInstance, const TEXT* command_line)
+EXIT_CODE boot(HINSTANCE hInstance, const TEXT* command_line)
 {
     APP_PATH_ITEMS app_path_items;
     initialize_app_path_items(&app_path_items, hInstance);
@@ -62,7 +62,7 @@ EXIT_CODE boot_normal(HINSTANCE hInstance)
 {
     logger_put_information(_T("通常起動処理"));
 
-    return boot_core(hInstance, NULL);
+    return boot(hInstance, NULL);
 }
 
 EXIT_CODE boot_with_option(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
@@ -83,7 +83,7 @@ EXIT_CODE boot_with_option(HINSTANCE hInstance, const COMMAND_LINE_OPTION* comma
     TEXT argument = to_command_line_argument(args, arg_count);
     logger_put_information(argument.value);
 
-    EXIT_CODE result = boot_core(hInstance, &argument);
+    EXIT_CODE result = boot(hInstance, &argument);
     free_text(&argument);
     free_memory(args);
 

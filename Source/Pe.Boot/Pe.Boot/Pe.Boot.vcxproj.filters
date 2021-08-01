@@ -45,6 +45,9 @@
     <ClCompile Include="oreore_test.c">
       <Filter>source\exec</Filter>
     </ClCompile>
+    <ClCompile Include="app_dry_run.c">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -72,6 +75,9 @@
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="oreore_test.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="app_dry_run.h">
       <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>
