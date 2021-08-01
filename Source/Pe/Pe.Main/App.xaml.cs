@@ -60,13 +60,14 @@ namespace ContentTypeTextNet.Pe.Main
                         var viewModel = ApplicationManager.CreateViewModel();
                         ApplicationManager.Execute();
 
-                        var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
-                        notifyIcon.DataContext = viewModel;
+                        Dispatcher.BeginInvoke(new Action(() => {
+                            Logger.LogInformation("つかえるよ！ 所要時間: {0}", stopwatch.Elapsed);
 
-                        Dispatcher.BeginInvoke(new Action<Stopwatch>(sw => {
-                            Logger.LogInformation("つかえるよ！ 所要時間: {0}", sw.Elapsed);
+                            var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
+                            notifyIcon.DataContext = viewModel;
+
                             ApplicationManager.StartupEnd();
-                        }), System.Windows.Threading.DispatcherPriority.SystemIdle, stopwatch);
+                        }), System.Windows.Threading.DispatcherPriority.SystemIdle);
                     }
                     break;
 
