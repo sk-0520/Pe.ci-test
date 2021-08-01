@@ -27,10 +27,7 @@ build_script:
 before_test:
   - cmd: for /d %%d in (Source\Pe\*.Test) do ( cd %%d & nuget install Appveyor.TestLogger & cd ..\..\..\ )
 test_script:
-  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64 /p:Platform=x64 /p:DefineConstants="" --test-adapter-path:. --logger:Appveyor
-  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x86 /p:Platform=x86 /p:DefineConstants="" --test-adapter-path:. --logger:Appveyor
-  - cmd: for /d %%d in (Source\Pe.Boot\*.Test) do (VSTest.Console %%d\bin\Release\x64\%%~nxd.dll /InIsolation /Platform:x64 /Logger:Appveyor & VSTest.Console %%d\bin\CI_TEST\x64\%%~nxd.dll /InIsolation /Platform:x64 /Logger:Appveyor )
-  - cmd: for /d %%d in (Source\Pe.Boot\*.Test) do (VSTest.Console %%d\bin\Release\x86\%%~nxd.dll /InIsolation /Platform:x86 /Logger:Appveyor & VSTest.Console %%d\bin\CI_TEST\x86\%%~nxd.dll /InIsolation /Platform:x86 /Logger:Appveyor )
+  - ps: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Logger Appveyor -Platforms x64,x86
 after_test:
   - ps: .\Build\compress.ps1 -Diet -Archive $env:ARCHIVE -Platforms x64,x86
   - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl $env:PE_RELEASE_ARCHIVE_BASE_URL -NoteBaseUrl $env:PE_RELEASE_NOTE_BASE_URL -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms x64,x86

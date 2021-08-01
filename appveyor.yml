@@ -35,8 +35,7 @@ build_script:
 before_test:
   - cmd: for /d %%d in (Source\Pe\*.Test) do ( cd %%d & nuget install Appveyor.TestLogger & cd ..\..\..\ )
 test_script:
-  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-%PLATFORM% /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%" --test-adapter-path:. --logger:Appveyor
-  - cmd: for /d %%d in (Source\Pe.Boot\*.Test) do (VSTest.Console %%d\bin\Release\%PLATFORM%\%%~nxd.dll /InIsolation /Platform:%PLATFORM% /Logger:Appveyor & VSTest.Console %%d\bin\CI_TEST\%PLATFORM%\%%~nxd.dll /InIsolation /Platform:%PLATFORM% /Logger:Appveyor )
+  - ps: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Logger Appveyor -Platforms $env:PLATFORM
 after_test:
   - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
   - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms $env:PLATFORM
