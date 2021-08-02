@@ -41,6 +41,17 @@ TCHAR* RC_HEAP_FUNC(clone_string, const TCHAR* source);
 #endif
 
 /// <summary>
+/// 文字列を指定した長さで複製。
+/// </summary>
+/// <param name="source"></param>
+/// <param name="length"></param>
+/// <returns>複製された文字列。解放が必要。</returns>
+TCHAR* RC_HEAP_FUNC(clone_string_with_length, const TCHAR * source, size_t length);
+#ifdef RES_CHECK
+#   define clone_string_with_length(source, length) RC_HEAP_WRAP(clone_string_with_length, (source), (length))
+#endif
+
+/// <summary>
 /// 文字列を確保。
 /// </summary>
 /// <param name="length">文字列の長さ。</param>

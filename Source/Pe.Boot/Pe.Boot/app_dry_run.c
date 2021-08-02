@@ -16,11 +16,14 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const TEXT* command_line)
     };
     PROCESS_INFORMATION process_information;
 
-    const TCHAR* argument = is_enabled_text(command_line) ? command_line->value : NULL;
+    TCHAR* argument = NULL;
+    if (is_enabled_text(command_line)) {
+        argument = clone_string_with_length(command_line->value, command_line->length);
+    }
 
     bool result = CreateProcess(
         app_path_items.main_module.value,
-        (TCHAR*)argument,
+        argument,
         NULL,
         NULL,
         false,
@@ -30,6 +33,7 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const TEXT* command_line)
         &startupinfo,
         &process_information
     );
+    free_string(argument);
     if (result) {
         WaitForSingleObject(process_information.hProcess, INFINITE);
         CloseHandle(process_information.hThread);
