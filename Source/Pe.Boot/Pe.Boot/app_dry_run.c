@@ -11,9 +11,10 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const TEXT* command_line)
 
     add_visual_cpp_runtime_redist_env_path(&app_path_items.root_directory);
 
-    STARTUPINFO startupinfo = {
-        0
-    };
+    STARTUPINFO startupinfo;
+    set_memory(&startupinfo, 0, sizeof(startupinfo));
+    startupinfo.cb = sizeof(startupinfo);
+
     PROCESS_INFORMATION process_information;
 
     TCHAR* argument = NULL;
