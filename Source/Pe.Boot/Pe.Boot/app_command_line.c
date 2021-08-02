@@ -1,10 +1,17 @@
 ﻿#include "../Pe.Library/debug.h"
+#include "../Pe.Library/logging.h"
 #include "app_command_line.h"
 
 EXECUTE_MODE get_execute_mode(const COMMAND_LINE_OPTION* command_line_option)
 {
     TEXT key = wrap_text(OPTION_APP_MODE_KEY);
     const COMMAND_LINE_ITEM* item = get_command_line_item(command_line_option, &key);
+
+    AttachConsole((DWORD)-1);
+
+    HANDLE x = GetStdHandle(STD_OUTPUT_HANDLE);
+    logger_format_trace(_T("STDOUT: %p"), x);
+
 
     if (!has_value_command_line_item(item)) {
         return EXECUTE_MODE_BOOT;
