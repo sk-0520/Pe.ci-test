@@ -27,9 +27,9 @@ namespace ContentTypeTextNet.Pe.Main
 
         bool ExecuteIfExistsConsoleModeEnvironment(string[] arguments)
         {
-            var ce = new ApplicationConsoleExecutor();
-            ce.Run("DRY-RUN", arguments);
-            var a = true; if(a) return true;
+            //var ce = new ApplicationConsoleExecutor();
+            //ce.Run("DRY-RUN", arguments);
+            //var a = true; if(a) return true;
 
             var appConsoleMode = Environment.GetEnvironmentVariable("PE_CONSOLE_MODE");
             if(string.IsNullOrWhiteSpace(appConsoleMode)) {

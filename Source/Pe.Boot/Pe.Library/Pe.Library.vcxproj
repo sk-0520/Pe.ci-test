@@ -395,6 +395,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="command_line.c" />
+    <ClCompile Include="console.c" />
     <ClCompile Include="datetime.c" />
     <ClCompile Include="debug.c" />
     <ClCompile Include="fsio.c" />
@@ -423,6 +424,7 @@
   <ItemGroup>
     <ClInclude Include="command_line.h" />
     <ClInclude Include="common.h" />
+    <ClInclude Include="console.h" />
     <ClInclude Include="datetime.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="fsio.h" />

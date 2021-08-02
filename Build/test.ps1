@@ -51,5 +51,6 @@ foreach ($platform in $Platforms) {
 	$releaseDirPath = Join-Path $outputDirectoryPath $platform | Join-Path -ChildPath "Pe"
 	$releaseAppPath = Join-Path $releaseDirPath "Pe.exe"
 
-	echo $releaseAppPath --_mode dry-run --mou honma --kanben shitekure
+	$test =  &$releaseAppPath --_mode dry-run --mou honma --kanben shitekure
+	echo "TEST: " + $test
 }

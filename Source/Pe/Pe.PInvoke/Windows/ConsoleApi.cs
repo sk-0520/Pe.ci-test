@@ -18,6 +18,9 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
         public static extern bool FreeConsole();
 
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool AttachConsole(int dwProcessId);
+
         [DllImport("kernel32.dll")]
         public static extern IntPtr GetConsoleWindow();
 

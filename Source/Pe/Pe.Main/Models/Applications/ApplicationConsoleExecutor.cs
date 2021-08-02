@@ -38,8 +38,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             Debug.Assert(mode != Mode.None);
 
+            bool attached = false;
             try {
-                NativeMethods.AllocConsole();
+                if(NativeMethods.AttachConsole(-1)) {
+                    attached = true;
+                } else {
+                    NativeMethods.AllocConsole();
+                }
 
                 switch(mode) {
                     case Mode.DryRun:
@@ -51,7 +56,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
 
             } finally {
-                NativeMethods.FreeConsole();
+                if(!attached) {
+                    NativeMethods.FreeConsole();
+                }
             }
         }
 
