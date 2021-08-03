@@ -1,25 +1,44 @@
 ﻿#pragma once
 #include <windows.h>
 
-#include "../Pe.Library/text.h"
+#include "text.h"
+#include "fsio.h"
 
 /// <summary>
 /// コンソールリソース。
 /// </summary>
 typedef struct tag_CONSOLE_RESOURCE
 {
-    /// <summary>
-    /// 標準入力。
-    /// </summary>
-    HANDLE input;
-    /// <summary>
-    /// 標準出力。
-    /// </summary>
-    HANDLE output;
-    /// <summary>
-    /// 標準エラー。
-    /// </summary>
-    HANDLE error;
+    struct
+    {
+        /// <summary>
+        /// 標準入力。
+        /// </summary>
+        HANDLE input;
+        /// <summary>
+        /// 標準出力。
+        /// </summary>
+        HANDLE output;
+        /// <summary>
+        /// 標準エラー。
+        /// </summary>
+        HANDLE error;
+    } handle;
+    struct
+    {
+        /// <summary>
+        /// 標準入力。
+        /// </summary>
+        FILE_RESOURCE input;
+        /// <summary>
+        /// 標準出力。
+        /// </summary>
+        FILE_RESOURCE output;
+        /// <summary>
+        /// 標準エラー。
+        /// </summary>
+        FILE_RESOURCE error;
+    } stdio;
     struct
     {
         /// <summary>
