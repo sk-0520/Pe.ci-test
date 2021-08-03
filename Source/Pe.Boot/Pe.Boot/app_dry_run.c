@@ -6,7 +6,7 @@
 #include "execute.h"
 #include "app_path.h"
 
-static EXIT_CODE dry_run_core(HINSTANCE hInstance, const TEXT* command_line)
+static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* console_resource, const TEXT* command_line)
 {
     APP_PATH_ITEMS app_path_items;
     initialize_app_path_items(&app_path_items, hInstance);
@@ -54,11 +54,14 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const TEXT* command_line)
 
 EXIT_CODE dry_run(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
 {
+    CONSOLE_RESOURCE console_resource = begin_console();
+
     TEXT env_special_key = wrap_text(_T("PE_SPECIAL_MODE"));
     TEXT value = wrap_text(_T("DRY-RUN"));
     set_environment_variable(&env_special_key, &value);
 
     logger_format_debug(_T("[ENV] %t = %t"), &env_special_key, &value);
+    output_console_text(&console_resource, &value, true);
 
     TEXT_LIST args = allocate_clear_memory(command_line_option->count, sizeof(TEXT));
     size_t arg_count = filter_enable_command_line_items(args, command_line_option);
@@ -66,8 +69,10 @@ EXIT_CODE dry_run(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_o
     TEXT argument = to_command_line_argument(args, arg_count);
     logger_format_debug(_T("argument = %t"), &argument);
     free_memory(args);
-    EXIT_CODE exit_code = dry_run_core(hInstance, &argument);
+    EXIT_CODE exit_code = dry_run_core(hInstance, &console_resource, &argument);
     free_text(&argument);
+
+    end_console(&console_resource);
 
     return exit_code;
 }

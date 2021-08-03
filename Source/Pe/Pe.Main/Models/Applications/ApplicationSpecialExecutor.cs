@@ -20,12 +20,54 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             DryRun,
         }
 
+        class ConsoleLifetime: DisposerBase
+        {
+            public ConsoleLifetime()
+            {
+                if(NativeMethods.AttachConsole(-1)) {
+                    this._attached = true;
+                } else {
+                    NativeMethods.AllocConsole();
+                }
+            }
+
+            #region property
+
+            bool _attached = true;
+
+            #endregion
+
+            #region MyRegion
+
+            protected override void Dispose(bool disposing)
+            {
+                if(!IsDisposed) {
+                    if(!this._attached) {
+                        NativeMethods.FreeConsole();
+                    }
+                }
+                base.Dispose(disposing);
+            }
+
+            #endregion
+        }
+
         #endregion
 
         #region property
         #endregion
 
         #region function
+
+        private IDisposable GetConsolelifetimeIfConsoleMode(Mode mode)
+        {
+            switch(mode) {
+                case Mode.DryRun:
+                    return new ConsoleLifetime();
+            }
+
+            return ActionDisposerHelper.CreateEmpty();
+        }
 
         private void RunDryRun(IEnumerable<string> arguments)
         {
@@ -38,29 +80,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             Debug.Assert(mode != Mode.None);
 
-            bool attached = false;
-            try {
-                if(NativeMethods.AttachConsole(-1)) {
-                    attached = true;
-                } else {
-                    NativeMethods.AllocConsole();
-                }
+            using var consoleLifetime = GetConsolelifetimeIfConsoleMode(mode);
 
-                switch(mode) {
-                    case Mode.DryRun:
-                        RunDryRun(arguments);
-                        break;
+            switch(mode) {
+                case Mode.DryRun:
+                    RunDryRun(arguments);
+                    break;
 
-                    default:
-                        throw new NotImplementedException();
-                }
-
-            } finally {
-                if(!attached) {
-                    NativeMethods.FreeConsole();
-                }
+                default:
+                    throw new NotImplementedException();
             }
+
         }
+
 
         public bool Run(string appSpecialMode, IEnumerable<string> arguments)
         {
