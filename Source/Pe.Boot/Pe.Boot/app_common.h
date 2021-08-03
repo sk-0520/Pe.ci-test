@@ -18,7 +18,8 @@ typedef enum tag_EXIT_CODE
     /// <summary>
     /// 実行モードが不明。
     /// </summary>
-    EXIT_CODE_UNKNOWN_EXECUTE_MODE = 1,
+    EXIT_CODE_UNKNOWN_EXECUTE_MODE,
+    EXIT_CODE_DRY_RUN_FAILED,
 } EXIT_CODE;
 
 /// <summary>

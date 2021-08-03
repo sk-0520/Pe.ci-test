@@ -8,6 +8,8 @@
 
 static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* console_resource, const TEXT* command_line)
 {
+    EXIT_CODE exit_code = EXIT_CODE_UNKNOWN_EXECUTE_MODE;
+
     APP_PATH_ITEMS app_path_items;
     initialize_app_path_items(&app_path_items, hInstance);
 
@@ -16,11 +18,11 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* conso
     STARTUPINFO startupinfo;
     set_memory(&startupinfo, 0, sizeof(startupinfo));
     startupinfo.cb = sizeof(startupinfo);
-    /*
-    startupinfo.hStdInput = console_resource->input;
-    startupinfo.hStdOutput = console_resource->output;
-    startupinfo.hStdError = console_resource->error;
-    */
+
+    //startupinfo.hStdInput = console_resource->handle.input;
+    //startupinfo.hStdOutput = console_resource->handle.output;
+    //startupinfo.hStdError = console_resource->handle.error;
+
 
     PROCESS_INFORMATION process_information;
 
@@ -42,14 +44,18 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* conso
         &process_information
     );
     free_string(argument);
+
     if (result) {
         WaitForSingleObject(process_information.hProcess, INFINITE);
         CloseHandle(process_information.hThread);
+        exit_code = EXIT_CODE_SUCCESS;
+    } else {
+        exit_code = EXIT_CODE_DRY_RUN_FAILED;
     }
 
     uninitialize_app_path_items(&app_path_items);
 
-    return 0;
+    return exit_code;
 }
 
 EXIT_CODE dry_run(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
@@ -59,9 +65,9 @@ EXIT_CODE dry_run(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_o
     TEXT env_special_key = wrap_text(_T("PE_SPECIAL_MODE"));
     TEXT value = wrap_text(_T("DRY-RUN"));
     set_environment_variable(&env_special_key, &value);
+    //output_console_text(&console_resource, &value, true);
 
     logger_format_debug(_T("[ENV] %t = %t"), &env_special_key, &value);
-    output_console_text(&console_resource, &value, true);
 
     TEXT_LIST args = allocate_clear_memory(command_line_option->count, sizeof(TEXT));
     size_t arg_count = filter_enable_command_line_items(args, command_line_option);
