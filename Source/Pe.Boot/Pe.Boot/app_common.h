@@ -20,6 +20,7 @@ typedef enum tag_EXIT_CODE
     /// </summary>
     EXIT_CODE_UNKNOWN_EXECUTE_MODE,
     EXIT_CODE_DRY_RUN_FAILED,
+    EXIT_CODE_DRY_RUN_EXIT_ERROR,
 } EXIT_CODE;
 
 /// <summary>

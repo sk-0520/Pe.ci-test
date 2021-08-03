@@ -69,14 +69,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return ActionDisposerHelper.CreateEmpty();
         }
 
-        private void RunDryRun(IEnumerable<string> arguments)
+        private int RunDryRun(IEnumerable<string> arguments)
         {
-            var commandLine = new CommandLine(arguments, false);
-            var arg = string.Join(" ", commandLine.Arguments.Select(i => CommandLine.Escape(i)));
-            Console.WriteLine(arg);
+            return 0;
         }
 
-        private void RunCore(Mode mode, IEnumerable<string> arguments)
+        private int RunCore(Mode mode, IEnumerable<string> arguments)
         {
             Debug.Assert(mode != Mode.None);
 
@@ -84,17 +82,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             switch(mode) {
                 case Mode.DryRun:
-                    RunDryRun(arguments);
-                    break;
+                    return RunDryRun(arguments);
 
                 default:
                     throw new NotImplementedException();
             }
-
         }
 
 
-        public bool Run(string appSpecialMode, IEnumerable<string> arguments)
+        public int Run(string appSpecialMode, IEnumerable<string> arguments)
         {
             Mode mode;
             switch(appSpecialMode) {
@@ -108,12 +104,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             if(mode == Mode.None) {
-                return false;
+                return -1;
             }
 
-            RunCore(mode, arguments);
-
-            return true;
+            return RunCore(mode, arguments);
         }
 
         #endregion

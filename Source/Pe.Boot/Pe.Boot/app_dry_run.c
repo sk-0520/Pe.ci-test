@@ -48,11 +48,22 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* conso
     if (result) {
         WaitForSingleObject(process_information.hProcess, INFINITE);
         CloseHandle(process_information.hThread);
-        exit_code = EXIT_CODE_SUCCESS;
+
+        DWORD process_exit_code;
+        if (GetExitCodeProcess(process_information.hProcess, &process_exit_code)) {
+            if (process_exit_code) {
+                exit_code = process_exit_code;
+            } else {
+                exit_code = EXIT_CODE_SUCCESS;
+            }
+        } else {
+            exit_code = EXIT_CODE_DRY_RUN_EXIT_ERROR;
+        }
     } else {
         exit_code = EXIT_CODE_DRY_RUN_FAILED;
     }
 
+    CloseHandle(process_information.hProcess);
     uninitialize_app_path_items(&app_path_items);
 
     return exit_code;
