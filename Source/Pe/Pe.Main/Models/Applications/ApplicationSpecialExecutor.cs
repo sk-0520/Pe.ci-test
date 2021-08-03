@@ -10,7 +10,7 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
-    public class ApplicationConsoleExecutor
+    public class ApplicationSpecialExecutor
     {
         #region define
 
@@ -62,10 +62,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
-        public bool Run(string appConsoleMode, IEnumerable<string> arguments)
+        public bool Run(string appSpecialMode, IEnumerable<string> arguments)
         {
             Mode mode;
-            switch(appConsoleMode) {
+            switch(appSpecialMode) {
                 case "DRY-RUN":
                     mode = Mode.DryRun;
                     break;

@@ -31,13 +31,13 @@ namespace ContentTypeTextNet.Pe.Main
             //ce.Run("DRY-RUN", arguments);
             //var a = true; if(a) return true;
 
-            var appConsoleMode = Environment.GetEnvironmentVariable("PE_CONSOLE_MODE");
-            if(string.IsNullOrWhiteSpace(appConsoleMode)) {
+            var appSpecialMode = Environment.GetEnvironmentVariable("PE_SPECIAL_MODE");
+            if(string.IsNullOrWhiteSpace(appSpecialMode)) {
                 return false;
             }
 
-            var consoleExecutor = new ApplicationConsoleExecutor();
-            if(consoleExecutor.Run(appConsoleMode, arguments)) {
+            var specialExecutor = new ApplicationSpecialExecutor();
+            if(specialExecutor.Run(appSpecialMode, arguments)) {
                 return true;
             }
 

@@ -54,11 +54,11 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const TEXT* command_line)
 
 EXIT_CODE dry_run(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
 {
-    TEXT env_console_key = wrap_text(_T("PE_CONSOLE_MODE"));
+    TEXT env_special_key = wrap_text(_T("PE_SPECIAL_MODE"));
     TEXT value = wrap_text(_T("DRY-RUN"));
-    set_environment_variable(&env_console_key, &value);
+    set_environment_variable(&env_special_key, &value);
 
-    logger_format_debug(_T("[ENV] %t = %t"), &env_console_key, &value);
+    logger_format_debug(_T("[ENV] %t = %t"), &env_special_key, &value);
 
     TEXT_LIST args = allocate_clear_memory(command_line_option->count, sizeof(TEXT));
     size_t arg_count = filter_enable_command_line_items(args, command_line_option);
