@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             try {
                 // 完全固定のブートストラップ前提
-                var assemblyPath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))!, "Pe.exe");
+                var assemblyPath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))!, EnvironmentParameters.RootApplicationName);
                 using(var shortcut = new ShortcutFile()) {
                     shortcut.TargetPath = assemblyPath;
                     shortcut.WorkingDirectory = Path.GetDirectoryName(assemblyPath)!;

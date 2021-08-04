@@ -1842,7 +1842,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     ApplicationUpdateInfo.State = UpdateState.Downloading;
                     await updateDownloader.DownloadApplicationArchiveAsync(ApplicationUpdateInfo.UpdateItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.DownloadProgress, ApplicationUpdateInfo.CurrentLogProgress)).ConfigureAwait(false);
 
-                    // ここで更新しないとチェックサムでファイ無し判定を食らう
+                    // ここで更新しないとチェックサムでファイル無し判定を食らう
                     downloadFile.Refresh();
 
                     ApplicationUpdateInfo.State = UpdateState.Checksumming;
@@ -1866,6 +1866,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 var archiveExtractor = ApplicationDiContainer.Build<ArchiveExtractor>();
                 archiveExtractor.Extract(downloadFile, environmentParameters.TemporaryApplicationExtractDirectory, ApplicationUpdateInfo.UpdateItem.ArchiveKind, new UserNotifyProgress(ApplicationUpdateInfo.ExtractProgress, ApplicationUpdateInfo.CurrentLogProgress));
+
+                // #766ここの例外はきちんと対応した際にはなくなる
+                var newAppPath = Path.Join(environmentParameters.TemporaryApplicationExtractDirectory.FullName, EnvironmentParameters.RootApplicationName);
+                Logger.LogInformation("アプリケーション試走: {0}", newAppPath);
+                using var process = new Process();
+                process.StartInfo.FileName = newAppPath;
+                process.StartInfo.Arguments = "-_mode dry-run";
+                try {
+                    if(process.Start()) {
+                        process.WaitForExit();
+                        if(process.ExitCode != 0) {
+                            Logger.LogError("アプリケーション試走失敗: {0}", process.ExitCode);
+                            //ApplicationUpdateInfo.SetError(#766-exec);
+                            //return;
+                        }
+                    } else {
+                        Logger.LogError("アプリケーション試走実行失敗");
+                        //ApplicationUpdateInfo.SetError(#766-run);
+                        //return;
+                    }
+                } catch(Exception innerEx) {
+                    Logger.LogError(innerEx, innerEx.Message);
+                }
 
                 var scriptFactory = ApplicationDiContainer.Build<ApplicationUpdateScriptFactory>();
                 var exeutePathParameter = scriptFactory.CreateUpdateExecutePathParameter(environmentParameters.EtcUpdateScriptFile, environmentParameters.TemporaryDirectory, environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.RootDirectory);
@@ -1891,7 +1914,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 Logger.LogError(ex, ex.Message);
                 ApplicationUpdateInfo.SetError(ex.Message);
             }
-
         }
 
         internal FileInfo OutputRawCrashReport(Exception exception)
