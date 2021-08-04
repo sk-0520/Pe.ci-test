@@ -1,0 +1,165 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output encoding="utf-8" extension="" #>
+<#
+    var items = new[] {
+        "int8_t",
+        "uint8_t",
+        "int16_t",
+        "uint16_t",
+        "int32_t",
+        "uint32_t",
+        "size_t",
+        "ssize_t",
+        "TCHAR",
+    }.Select(i => new {
+        ValueType = i,
+        BaseName = i.Replace("_t", string.Empty).ToLowerInvariant()
+    }).Select(i => new {
+        ValueType = i.ValueType,
+        BaseName = i.BaseName,
+        TypeName = "PRIMITIVE_LIST_TYPE_" + i.BaseName.ToUpperInvariant(),
+        AliasList = "PRIMITIVE_LIST_" + i.BaseName.ToUpperInvariant(),
+    });
+#>
+#pragma once
+#include <stdint.h>
+
+#include "common.h"
+#include "res_check.h"
+
+#define LIST_DEFAULT_CAPACITY (32)
+
+/// <summary>
+/// 設定可能な型。
+/// </summary>
+typedef enum tag_PRIMITIVE_LIST_TYPE
+{
+<# foreach(var item in items) { #>
+    /// <summary>
+    /// <c><#= item.ValueType #></c>を設定。
+    /// </summary>
+    <#= item.TypeName #>,
+<# } #>
+} PRIMITIVE_LIST_TYPE;
+
+/// <summary>
+/// 組み込み型(≠構造体)の動的リスト。
+/// </summary>
+typedef struct tag_PRIMITIVE_LIST
+{
+    /// <summary>
+    /// 型に合わせた長さ。
+    /// </summary>
+    size_t length;
+    /// <summary>
+    /// 実体。
+    /// </summary>
+    void* items;
+    struct
+    {
+        /// <summary>
+        /// 型。
+        /// </summary>
+        PRIMITIVE_LIST_TYPE type;
+        /// <summary>
+        /// 確保済みサイズ(バイト幅)。
+        /// </summary>
+        byte_t capacity_bytes;
+    } library;
+
+} PRIMITIVE_LIST;
+
+<# foreach(var item in items) { #>
+/// <summary>
+/// <c><#= item.ValueType #></c>を扱う<c>PRIMITIVE_LIST</c>の別名。
+/// <para>弱い型なのであくまでソース上の見た目判断用。</para>
+/// </summary>
+typedef PRIMITIVE_LIST <#= item.AliasList #>;
+<# } #>
+
+/// <summary>
+/// リストの生成。
+/// </summary>
+/// <param name="list_type">リストで使用する型。</param>
+/// <param name="capacity">予約サイズ。list_typeに影響されない理論的なサイズ。</param>
+/// <returns>解放が必要。</returns>
+PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity);
+#ifdef RES_CHECK
+#   define new_primitive_list(list_type, capacity) RC_HEAP_WRAP(new_primitive_list, (list_type), (capacity))
+#endif
+
+/// <summary>
+/// リストの解放。
+/// </summary>
+/// <param name="list"></param>
+/// <returns></returns>
+bool RC_HEAP_FUNC(free_primitive_list, PRIMITIVE_LIST* list);
+#ifdef RES_CHECK
+#   define free_primitive_list(list) RC_HEAP_WRAP(free_primitive_list, (list))
+#endif
+
+<# foreach(var item in items) { #>
+/// <summary>
+/// リストにデータ追加。
+/// </summary>
+/// <param name="list">対象リスト。</param>
+/// <param name="value">追加する値。</param>
+/// <returns>成功状態。</returns>
+bool push_list_<#= item.BaseName #>(<#= item.AliasList #>* list, <#= item.ValueType #> value);
+<# } #>
+
+<# foreach(var item in items) { #>
+/// <summary>
+/// リストにデータ追加。
+/// </summary>
+/// <param name="list">対象リスト。</param>
+/// <param name="values">追加する値の一覧。</param>
+/// <param name="count">個数。</param>
+/// <returns>成功状態。</returns>
+bool add_range_list_<#= item.BaseName #>(<#= item.AliasList #>* list, const <#= item.ValueType #>* values, size_t count);
+<# } #>
+
+<# foreach(var item in items) { #>
+/// <summary>
+/// リストの末尾データを破棄。
+/// </summary>
+/// <param name="result">末尾データ。<c>NULL</c>指定で無視。</param>
+/// <param name="list">対象リスト。</param>
+/// <returns>成功状態。</returns>
+bool pop_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.AliasList #>* list);
+<# } #>
+
+<# foreach(var item in items) { #>
+/// <summary>
+/// リストからデータを取得。
+/// </summary>
+/// <param name="result">取得データ。</param>
+/// <param name="list">対象リスト。</param>
+/// <param name="index">0基点の取得位置。</param>
+/// <returns>成功状態。</returns>
+bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, const <#= item.AliasList #>* list, size_t index);
+<# } #>
+
+<# foreach(var item in items) { #>
+/// <summary>
+/// リストのデータを参照。
+/// <para>参照データ使用時はリストに対する処理を行ってはならない。</para>
+/// </summary>
+/// <param name="result">取得データ。</param>
+/// <param name="list">対象リスト。</param>
+/// <param name="index">0基点の取得位置。</param>
+/// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
+<#= item.ValueType #>* reference_list_<#= item.BaseName #>(const <#= item.AliasList #>* list);
+<# } #>
+
+/// <summary>
+/// リストを空にする。
+/// <para>領域自体はそのまま残る点に注意。</para>
+/// </summary>
+/// <param name="list">対象リスト。</param>
+void clear_primitive_list(PRIMITIVE_LIST* list);

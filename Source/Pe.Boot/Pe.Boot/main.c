@@ -1,220 +1,177 @@
-﻿#include <windows.h>
-#include <tchar.h>
-#include <shlwapi.h>
-#include <assert.h>
+﻿#include "../Pe.Library/debug.h"
+#include "../Pe.Library/res_check.h"
+#include "../Pe.Library/logging.h"
+#include "app_main.h"
 
-#pragma comment(lib, "shlwapi.lib")
-
-#define PATH_LENGTH (1024 * 4)
-
-void outputDebug(TCHAR* s);
-size_t getAppPath(HINSTANCE hInstance, TCHAR* buffer);
-size_t getParentDirPath(TCHAR* buffer, const TCHAR* filePath);
-void addVisualCppRuntimeRedist(const TCHAR* rootDirPath);
-size_t getMainModulePath(TCHAR* buffer, const TCHAR* rootDirPath);
-TCHAR* tuneArg(const TCHAR* arg);
-long getWaitTime(const TCHAR* s);
-
-int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
-{
-    TCHAR appFilePath[MAX_PATH];
-    getAppPath(hInstance, appFilePath);
-
-    TCHAR appDirPath[MAX_PATH];
-    getParentDirPath(appDirPath, appFilePath);
-
-    addVisualCppRuntimeRedist(appDirPath);
-
-    TCHAR appExePath[MAX_PATH];
-    getMainModulePath(appExePath, appDirPath);
-
-    int argCount = 0;
-    LPTSTR* args = CommandLineToArgvW(GetCommandLine(), &argCount);
-
-    if (argCount <= 1) {
-        // そのまま実行
-        ShellExecute(NULL, _T("open"), appExePath, NULL, NULL, SW_SHOWNORMAL);
-    }
-    else {
-        // コマンドライン渡して実行
-        size_t tunedArgsCount = (size_t)argCount - 1;
-        TCHAR** tunedArgs = malloc(tunedArgsCount * sizeof(TCHAR*));
-        if (!tunedArgs) {
-            // これもう立ち上げ不能だと思う
-            outputDebug(_T("メモリ確保できんかったね！"));
-            ShellExecute(NULL, _T("open"), appExePath, NULL, NULL, SW_SHOWNORMAL);
-            return 0;
-        }
-
-        // 実行待機用
-        long waitTime = 0;
-        size_t totalLength = 0;
-        size_t skipIndex1 = SIZE_MAX;
-        size_t skipIndex2 = SIZE_MAX;
-
-        for (int i = 1, j = 0; i < argCount; i++, j++) {
-            TCHAR* workArg = args[i];
-            outputDebug(workArg);
-            TCHAR* tunedArg = tuneArg(workArg);
-            assert(tunedArg);
-#pragma warning(push)
-#pragma warning(disable:6385 6386)
-            tunedArgs[j] = tunedArg;
-            totalLength += lstrlen(tunedArgs[j]);
-#pragma warning(pop)
-            if (!waitTime) {
-                TCHAR waits[][16] = {
-                    _T("--_boot-wait"), _T("-_boot-wait"), _T("/_boot-wait"),
-                    _T("--wait"), _T("-wait"), _T("/wait"), //TODO: #737 互換用処理
-                };
-                for (size_t waitIndex = 0; waitIndex < sizeof(waits) / sizeof(waits[0]); waitIndex++) {
-                    TCHAR* wait = _tcsstr(tunedArg, waits[waitIndex]);
-                    if (wait == tunedArg) {
-                        skipIndex1 = j;
-
-                        TCHAR* eq = _tcschr(wait, '=');
-                        if (eq && eq + 1) {
-                            TCHAR* value = eq + 1;
-                            waitTime = getWaitTime(value);
-                        }
-                        else if(i + 1 < argCount) {
-                            waitTime = getWaitTime(args[i + 1]);
-
-                            skipIndex2 = j + 1;
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-
-        TCHAR* commandArg = malloc((totalLength + 1) * sizeof(TCHAR*));
-        if (commandArg) {
-            commandArg[0] = 0;
-            for (size_t i = 0; i < tunedArgsCount; i++) {
-                // 大丈夫、はやいよ！
-                if ((skipIndex1 == i) || (skipIndex2 == i)) {
-                    continue;
-                }
-                lstrcat(commandArg, tunedArgs[i]);
-                lstrcat(commandArg, _T(" "));
-            }
-        }
-
-        // 起動前停止
-        if (0 < waitTime) {
-            TCHAR s[1000];
-            swprintf(s, 1000 - 1, _T("起動前停止: %d ms"), waitTime);
-            outputDebug(s);
-            Sleep(waitTime);
-            outputDebug(_T("待機終了"));
-        }
-
-        // commandArg の確保に失敗してても引数無し扱いで起動となる
-        outputDebug(commandArg);
-        ShellExecute(NULL, _T("open"), appExePath, commandArg, NULL, SW_SHOWNORMAL);
-
-        // もはや死ぬだけなので後処理不要
-    }
-
-    return 0;
-}
-
-void outputDebug(TCHAR* s)
+#ifdef RES_CHECK
+static void output(const TCHAR* s)
 {
     OutputDebugString(s);
-    OutputDebugString(_T("\r\n"));
+    OutputDebugString(NEWLINET);
 }
-
-size_t getAppPath(HINSTANCE hInstance, TCHAR* buffer)
-{
-    TCHAR appRawPath[MAX_PATH];
-    GetModuleFileName(hInstance, appRawPath, MAX_PATH);
-    // 正規化しておく
-    PathCanonicalize(buffer, appRawPath);
-    outputDebug(buffer);
-    return lstrlen(buffer);
-}
-
-size_t getParentDirPath(TCHAR* buffer, const TCHAR* filePath)
-{
-    lstrcpy(buffer, filePath);
-    PathRemoveFileSpec(buffer);
-    outputDebug(buffer);
-    return lstrlen(buffer);
-}
-
-void addVisualCppRuntimeRedist(const TCHAR* rootDirPath) {
-    TCHAR crtPath[MAX_PATH];
-    lstrcpy(crtPath, rootDirPath);
-
-
-    TCHAR dirs[][32] = {
-        _T("bin"),
-        _T("lib"),
-        _T("Redist.MSVC.CRT"),
-#ifdef _WIN64
-        _T("x64"),
-#else
-        _T("x86"),
 #endif
+
+static ssize_t log_id;
+static void logging(const LOG_ITEM* log_item, void* data)
+{
+    static TCHAR* log_levels[] = {
+        _T("TRACE"),
+        _T("DEBUG"),
+        _T("INFORMATION"),
+        _T("WARNING"),
+        _T("ERROR"),
     };
-    for (size_t i = 0; i < (sizeof(dirs) / sizeof(dirs[0])); i++) {
-        TCHAR buffer[MAX_PATH];
-        TCHAR* name = dirs[i];
-        PathCombine(buffer, crtPath, name);
-        lstrcpy(crtPath, buffer);
-    }
-    outputDebug(crtPath);
+    STRING_BUILDER sb = create_string_builder(256);
+    TEXT format = wrap_text(
+        _T("[LOG:%s]")
+        _T(" ")
+        _T("%t")
+        _T(" -> ")
+        _T("%t")
+        _T(" (%t)")
+        NEWLINET
+    );
+    append_builder_format(&sb, &format,
+        log_levels[log_item->log_level],
+        log_item->format.time,
+        log_item->message,
+        log_item->format.caller
+    );
+    TEXT text = build_text_string_builder(&sb);
+    OutputDebugString(text.value);
 
-    TCHAR pathValue[PATH_LENGTH];
-    GetEnvironmentVariable(_T("PATH"), pathValue, PATH_LENGTH - 1);
-    lstrcat(pathValue, _T(";"));
-    lstrcat(pathValue, crtPath);
-    SetEnvironmentVariable(_T("PATH"), pathValue);
-
+    free_text(&text);
+    free_string_builder(&sb);
 }
 
-size_t getMainModulePath(TCHAR* buffer, const TCHAR* rootDirPath)
+static void setup_logging_file(const COMMAND_LINE_OPTION* command_line_option)
 {
-    TCHAR binPath[MAX_PATH];
-    binPath[0] = 0;
-    PathCombine(binPath, rootDirPath, _T("bin"));
-    PathCombine(buffer, binPath, _T("Pe.Main.exe"));
-    outputDebug(buffer);
-    return lstrlen(buffer);
+    TEXT log_file_key = wrap_text(OPTION_LOG_FILE_KEY);
+    const COMMAND_LINE_ITEM* log_file_item = get_command_line_item(command_line_option, &log_file_key);
+    if (is_inputed_command_line_item(log_file_item)) {
+        TEXT default_log_path = log_file_item->value;
+
+        FILE_WRITER log_file_writer = new_file_writer(&default_log_path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM);
+        seek_end_file_resource(&log_file_writer.resource);
+        set_default_log_file(&log_file_writer);
+    } else {
+        set_default_log_file(NULL);
+    }
+}
+static void setup_logging_level(const COMMAND_LINE_OPTION* command_line_option)
+{
+#ifdef _DEBUG
+    LOG_LEVEL default_log_level = LOG_LEVEL_TRACE;
+#else
+    LOG_LEVEL default_log_level = LOG_LEVEL_INFO;
+#endif
+
+    TEXT log_level_key = wrap_text(OPTION_LOG_LEVEL_KEY);
+    const COMMAND_LINE_ITEM* log_level_item = get_command_line_item(command_line_option, &log_level_key);
+    if (is_inputed_command_line_item(log_level_item)) {
+        TEXT_PARSED_INT32_RESULT num_result = parse_integer_from_text(&log_level_item->value, false);
+        int log_level = default_log_level;
+        if (num_result.success) {
+            log_level = num_result.value;
+        } else {
+            TEXT levels[] = {
+                wrap_text(_T("trace")),
+                wrap_text(_T("debug")),
+                wrap_text(_T("information")),
+                wrap_text(_T("warning")),
+                wrap_text(_T("error")),
+            };
+            for (size_t i = 0; i < SIZEOF_ARRAY(levels); i++) {
+                if (!compare_text(levels + i, &log_level_item->value, true)) {
+                    log_level = (int)i;
+                    break;
+                }
+            }
+        }
+
+        if (LOG_LEVEL_TRACE <= log_level && log_level <= LOG_LEVEL_ERROR) {
+            default_log_level = log_level;
+        }
+    }
+
+    set_default_log_level(default_log_level);
 }
 
-/**
-書式調整後の動的確保された文字列を返す。
-呼び出し側で世話すること。
-*/
-TCHAR* tuneArg(const TCHAR* arg)
+static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
 {
-    int hasSpace = _tcschr(arg, ' ') != NULL;
-    size_t len = (size_t)lstrlen(arg) + (hasSpace ? 2 : 0);
-    TCHAR* s = malloc((len + 1) * sizeof(TCHAR*));
-    assert(s);
-    if (hasSpace) {
-        lstrcpy(s + 1, arg);
-        s[0] = '"';
-        s[len - 1] = '"';
-        s[len - 0] = 0; // ↑で +1 してるから安全安全
-    }
-    else {
-        lstrcpy(s, arg);
-    }
-    return s;
+    setup_logging_file(command_line_option);
+    setup_logging_level(command_line_option);
+
+#ifdef _DEBUG
+    LOGGER logger = {
+        .function = logging,
+        .data = NULL,
+    };
+    log_id = attach_logger(&logger);
+#endif
+
+    logger_put_trace(_T("お馬さんパッカパッカ🏇"));
 }
 
-long getWaitTime(const TCHAR* s)
+static void end_logging()
 {
-    if (!s) {
-        return 0;
-    }
-    //size_t len = lstrlen(s);
-    TCHAR* end = NULL;
-    long result = _tcstol(s, &end, 10);
-    return result;
+    logger_put_trace(_T("お魚さんブックブック🐟"));
+
+    detach_logger(log_id);
+    cleanup_default_log();
+}
+
+
+static int application_main(HINSTANCE hInstance)
+{
+#ifdef RES_CHECK
+    rc__initialize(output, RES_CHECK_INIT_PATH_LENGTH, RES_CHECK_INIT_BUFFER_LENGTH, RES_CHECK_INIT_HEAP_COUNT, RES_CHECK_INIT_FILE_COUNT);
+#endif
+
+    TEXT command_line = wrap_text(GetCommandLine());
+    COMMAND_LINE_OPTION command_line_option = parse_command_line(&command_line, true);
+
+    start_logging(&command_line_option);
+
+    logger_put_information(_T("Pe アプリケーション処理開始"));
+
+    int return_code = app_main(hInstance, &command_line_option);
+
+    logger_put_information(_T("Pe アプリケーション処理終了"));
+
+    free_command_line(&command_line_option);
+
+    end_logging();
+
+#ifdef RES_CHECK
+    rc__print(true);
+    rc__uninitialize();
+#endif
+
+    return return_code;
+}
+
+/// <summary>
+/// CRT版スタートアップ。
+/// </summary>
+/// <param name="hInstance"></param>
+/// <param name="hPrevInstance"></param>
+/// <param name="lpCmdLine"></param>
+/// <param name="nCmdShow"></param>
+/// <returns></returns>
+int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPTSTR lpCmdLine, _In_ int nCmdShow)
+{
+    return application_main(hInstance);
+}
+
+/// <summary>
+/// 非CRT版スタートアップ。
+/// </summary>
+/// <returns></returns>
+void WINAPI entry_main()
+{
+    HINSTANCE hInstance = GetModuleHandle(NULL);
+    int return_code = application_main(hInstance);
+    ExitProcess(return_code);
 }
 

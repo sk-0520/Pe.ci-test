@@ -32,6 +32,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    /// <summary>
+    /// ふわふわ LINQ。
+    /// </summary>
     public static class IEnumerableExtensions
     {
         /// <summary>

@@ -1,0 +1,202 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output encoding="utf-8" extension="" #>
+<#
+    var items = new[] {
+        "int8_t",
+        "uint8_t",
+        "int16_t",
+        "uint16_t",
+        "int32_t",
+        "uint32_t",
+        "size_t",
+        "ssize_t",
+        "TCHAR",
+    }.Select(i => new {
+        ValueType = i,
+        BaseName = i.Replace("_t", string.Empty).ToLowerInvariant()
+    }).Select(i => new {
+        ValueType = i.ValueType,
+        BaseName = i.BaseName,
+        TypeName = "PRIMITIVE_LIST_TYPE_" + i.BaseName.ToUpperInvariant(),
+        AliasList = "PRIMITIVE_LIST_" + i.BaseName.ToUpperInvariant(),
+    });
+#>
+#include "primitive_list.h"
+#include "memory.h"
+#include "debug.h"
+
+/// <summary>
+/// 指定型のバイト幅を取得。
+/// </summary>
+/// <param name="list_type"></param>
+/// <returns></returns>
+static byte_t get_type_byte(PRIMITIVE_LIST_TYPE list_type)
+{
+    switch (list_type) {
+<# foreach(var item in items) { #>
+        case <#= item.TypeName #>:
+            return sizeof(<#= item.ValueType #>);
+<# } #>
+        default:
+            assert(false);
+    }
+
+    return 0;
+}
+
+/// <summary>
+/// 指定型の長さをバイト単位で取得。
+/// </summary>
+/// <param name="list_type"></param>
+/// <param name="length"></param>
+/// <returns></returns>
+static byte_t get_type_bytes(PRIMITIVE_LIST_TYPE list_type, size_t length)
+{
+    if (!length) {
+        return 0;
+    }
+    return get_type_byte(list_type) * length;
+}
+
+PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity)
+{
+    size_t capacity_bytes = get_type_bytes(list_type, capacity);
+    void* items = RC_HEAP_CALL(allocate_memory, capacity_bytes, false);
+
+    PRIMITIVE_LIST result = {
+        .items = items,
+        .length = 0,
+        .library = {
+            .capacity_bytes = capacity_bytes,
+            .type = list_type,
+        },
+    };
+
+    return result;
+}
+
+bool RC_HEAP_FUNC(free_primitive_list, PRIMITIVE_LIST* list)
+{
+    if (!list) {
+        return false;
+    }
+    if (!list->items) {
+        return false;
+    }
+
+    return RC_HEAP_CALL(free_memory, list->items);
+}
+
+static void extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t need_length)
+{
+    byte_t need_bytes = get_type_bytes(list->library.type, need_length);
+    byte_t current_bytes = get_type_bytes(list->library.type, list->length);
+    byte_t default_capacity_bytes = get_type_bytes(list->library.type, LIST_DEFAULT_CAPACITY);
+
+    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&list->items, current_bytes, list->library.capacity_bytes, need_bytes, default_capacity_bytes);
+    if (extend_total_byte) {
+        list->library.capacity_bytes = extend_total_byte;
+    }
+}
+
+
+<# foreach(var item in items) { #>
+bool push_list_<#= item.BaseName #>(<#= item.AliasList #>* list, <#= item.ValueType #> value)
+{
+    if(list->library.type != <#= item.TypeName #>) {
+        return false;
+    }
+
+    extend_capacity_if_not_enough_list(list, 1);
+
+    <#= item.ValueType #>* items = (<#= item.ValueType #>*)list->items;
+    items[list->length++] = value;
+
+    return true;
+}
+<# } #>
+
+<# foreach(var item in items) { #>
+bool add_range_list_<#= item.BaseName #>(<#= item.AliasList #>* list, const <#= item.ValueType #>* values, size_t count)
+{
+    if(list->library.type != <#= item.TypeName #>) {
+        return false;
+    }
+
+    if(!values) {
+        return false;
+    }
+    if(!count) {
+        return false;
+    }
+
+    extend_capacity_if_not_enough_list(list, count);
+
+    size_t data_bytes = get_type_bytes(list->library.type, count);
+    copy_memory((<#= item.ValueType #>*)list->items + list->length, values, data_bytes);
+
+    list->length += count;
+
+    return true;
+}
+<# } #>
+
+<# foreach(var item in items) { #>
+bool pop_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.AliasList #>* list)
+{
+    if(list->library.type != <#= item.TypeName #>) {
+        return false;
+    }
+
+    if(!list->length) {
+        return false;
+    }
+
+    if(result) {
+        <#= item.ValueType #>* items = (<#= item.ValueType #>*)list->items;
+        *result = items[--list->length];
+    } else {
+        list->length -= 1;
+    }
+
+    return true;
+}
+<# } #>
+
+<# foreach(var item in items) { #>
+bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, const <#= item.AliasList #>* list, size_t index)
+{
+    if(list->library.type != <#= item.TypeName #>) {
+        return false;
+    }
+
+    if(index < list->length) {
+        <#= item.ValueType #>* items = (<#= item.ValueType #>*)list->items;
+        *result = items[index];
+        return true;
+    }
+
+    return false;
+}
+<# } #>
+
+<# foreach(var item in items) { #>
+<#= item.ValueType #>* reference_list_<#= item.BaseName #>(const <#= item.AliasList #>* list)
+{
+    if(list->library.type != <#= item.TypeName #>) {
+        return NULL;
+    }
+
+    return (<#= item.ValueType #>*)list->items;
+}
+<# } #>
+
+void clear_primitive_list(PRIMITIVE_LIST* list)
+{
+    list->length = 0;
+}

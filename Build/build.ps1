@@ -18,6 +18,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 $rootDirectory = Split-Path -Path $currentDirPath -Parent
 
 $sourceDirectoryPath = Join-Path "$rootDirectory" "Source/Pe"
+$sourceBootDirectoryPath = Join-Path "$rootDirectory" "Source/Pe.Boot"
 
 Write-Output "ProductMode = $ProductMode"
 Write-Output "IgnoreChanged = $IgnoreChanged"
@@ -74,6 +75,27 @@ try {
 		}
 	}
 
+	function ReplaceResourceValue([xml] $commonXml, [string] $resourcePath) {
+		$versionElement = $commonXml.SelectSingleNode('/Project/PropertyGroup[1]/Version');
+		$copyrightElement = $commonXml.SelectSingleNode('/Project/PropertyGroup[1]/Copyright');
+		$revisionElement = $commonXml.SelectSingleNode('/Project/PropertyGroup[1]/InformationalVersion');
+
+		$version = [version]$versionElement.InnerText
+		$versionRevision = if($version.Revision -eq -1) { 0 } else { $version.Revision }
+		$csvVersion = @($version.Major, $version.Minor, $version.Build, $versionRevision) -join ','
+
+		$resourceContent = Get-Content -Path $resourcePath -Encoding Unicode -Raw
+
+		$replacedResourceContent = $resourceContent `
+			-replace '(\s*FILEVERSION)\s+[0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+.*', "`$1 ${csvVersion}" `
+			-replace '(\s*PRODUCTVERSION)\s+[0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+.*', "`$1 ${csvVersion}" `
+			-replace '(\s*VALUE\s+"FileVersion"\s*),.*', "`$1,`"$(${versionElement}.InnerText)`"" `
+			-replace '(\s*VALUE\s+"LegalCopyright"\s*),.*', "`$1,`"$(${copyrightElement}.InnerText)`"" `
+			-replace '(\s*VALUE\s+"ProductVersion"\s*),.*', "`$1,`"$(${revisionElement}.InnerText)`""
+
+		Set-Content -Path $resourcePath -Value $replacedResourceContent -Encoding Unicode
+	}
+
 	$projectCommonFilePath = Join-Path $sourceDirectoryPath "Directory.Build.props"
 	$projectCommonXml = [XML](Get-Content $projectCommonFilePath  -Encoding UTF8)
 	InsertElement $version $projectCommonXml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
@@ -85,6 +107,8 @@ try {
 	}
 	ReplaceElement $repMap $projectCommonXml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
 	$projectCommonXml.Save($projectCommonFilePath)
+
+	ReplaceResourceValue $projectCommonXml (Join-Path $sourceBootDirectoryPath "Pe.Boot\Resource.rc")
 
 	$projectFiles = (Get-ChildItem -Path "Source\Pe\" -Recurse -Include *.csproj)
 	if (!$IgnoreChanged) {
@@ -147,19 +171,35 @@ try {
 
 	foreach ($platform in $Platforms) {
 		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=Release /p:Platform=$platform /p:DefineConstants=$define /t:Rebuild
+		if (-not $?) {
+			exit 1
+		}
+		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=CI_TEST /p:Platform=$platform /p:DefineConstants=$define /t:Rebuild
+		if (-not $?) {
+			exit 1
+		}
 		dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --output Output/Release/$platform/Pe/bin --self-contained true
+		if (-not $?) {
+			exit 1
+		}
 
 		# プラグイン参照実装
 		$pluginProjectFiles = $projectFiles | Where-Object -Property "Name" -like "Pe.Plugins.Reference.*.csproj"
 		foreach($pluginProjectFile in $pluginProjectFiles) {
 			$name = $pluginProjectFile.BaseName
 			dotnet publish $pluginProjectFile /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --output Output/Release/$platform/Plugins/$name --self-contained false
+			if (-not $?) {
+				exit 1
+			}
 		}
 
-		# テストプロジェクトのビルド
+		# テストプロジェクトのビルド(Pe.Main側, Pe.Boot は msbuild 実行時に同時ビルド)
 		foreach($testDirectory in $testDirectories) {
 			$testProjectFilePath = (Join-Path $testDirectory.FullName $testDirectory.Name) + ".csproj"
 			dotnet build $testProjectFilePath /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform
+			if (-not $?) {
+				exit 1
+			}
 		}
 
 		if ($ProductMode) {

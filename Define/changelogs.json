@@ -1,5 +1,71 @@
 [
 	{
+		"date": "2021/08/04",
+		"version": "0.99.158",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "044fec4522372dced95bf9a001f870aad9fe5ef9",
+						"subject": "#527: 本体起動用処理をもうちっときれいにする",
+						"comment": [
+							"軽い感じで綺麗にするつもりが壮大な作り直しプロジェクトになった",
+							"本体を動かす程度は動くけどいまだ未完成(printf実装とかもうしんどい)"
+						]
+					},
+					{
+						"revision": "7427c3df835cedd1ce1cef7b6c4b1721cd794151",
+						"subject": "#769: ランチャーアイテム自動取り込み後に取り込んだ旨のメッセージを表示する",
+						"comment": [
+							"チェックマークを付けるようにしつつスタートアップも同じようにした"
+						]
+					},
+					{
+						"revision": "b6bf99b19e1c3b0166913f6e2db212d7ef6b1f53",
+						"subject": "#767: β版実行時の警告メッセージにバッチから動かす旨を記載する"
+					},
+					{
+						"revision": "e001f7ff46078dce5fe81da1dc7cbc93e068d61b",
+						"subject": "[継続課題] #766: アップデート時に事前にEXEを一通り動かす",
+						"comment": [
+							"一旦は失敗しても処理を進めるようにした",
+							"次の次くらいのリリースで失敗処理をきちんとする"
+						]
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "25f76f2d57d629d7c79b79d579b986b21fab1ced",
+						"subject": "#770: 使用可能前にダイアログ系(スタートウィンドウとか)を動かすとスケジュール処理再起動で死ぬ"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "728aed2da2938b44c7ee04f037d44096289fe2a6",
+						"class": "nuget",
+						"subject": "MSTest系更新",
+						"Comments": [
+							"Microsoft.NET.Test.Sdk 16.9.4 -> 16.10.0",
+							"MSTest.TestAdapter 2.2.3 -> 2.2.5",
+							"MSTest.TestFramework 2.2.3 -> 2.2.5"
+						]
+					},
+					{
+						"revision": "aa17bb39e838e7779f1e3e78f54f111c47a9ded7",
+						"subject": "#771: CI上のテストをスクリプトファイルにする"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2021/06/29",
 		"version": "0.99.154",
 		"contents": [

@@ -706,11 +706,14 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///このメッセージはβ版 Pe を直接実行した場合に表示されます。
         ///このまま続行するとリリース版 Pe の設定データを壊す可能性があります。
         ///
+        ///β版を安全に実行するには以下のバッチファイルを実行してください。
+        ///バッチファイル: ${BETA-BAT}
+        ///
         ///β版 Pe をこのまま実行してよろしいですか。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_BetaVersion_Unknown_Message {
+        public static string String_BetaVersion_Unknown_Message_Format {
             get {
-                return ResourceManager.GetString("String_BetaVersion_Unknown_Message", resourceCulture);
+                return ResourceManager.GetString("String_BetaVersion_Unknown_Message_Format", resourceCulture);
             }
         }
         

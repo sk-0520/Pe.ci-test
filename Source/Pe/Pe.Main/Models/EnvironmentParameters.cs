@@ -77,7 +77,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
         internal DirectoryInfo ApplicationBaseDirectory { get; }
 #endif
 
-        public FileInfo RootApplication => CombineFile(RootDirectory, "Pe.exe");
+        public static string RootApplicationName { get; } = "Pe.exe";
+        public FileInfo RootApplication => CombineFile(RootDirectory, RootApplicationName);
 
         /// <summary>
         /// アプリケーションのディレクトリ。

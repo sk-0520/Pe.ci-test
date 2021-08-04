@@ -31,13 +31,15 @@ before_build:
 build_script:
   - cmd: npm run help-ci
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
+  - ps: .\Build\build.ps1 -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
+before_test:
+  - cmd: for /d %%d in (Source\Pe\*.Test) do ( cd %%d & nuget install Appveyor.TestLogger & cd ..\..\..\ )
+test_script:
+  - ps: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Logger Appveyor -Platforms $env:PLATFORM
+after_test:
   - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
   - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms $env:PLATFORM
   - ps: .\Build\create-release-note.ps1
-before_test:
-  - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger & cd ..\..\..\ )
-test_script:
-  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-%PLATFORM% /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%" --test-adapter-path:. --logger:Appveyor
 artifacts:
   - path: Output\*.zip
   - path: Output\*.7z

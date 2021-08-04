@@ -25,6 +25,21 @@ namespace ContentTypeTextNet.Pe.Main
 
         #region function
 
+        (bool runSpecialMode, int exitCode) ExecuteIfExistsSpecialModeEnvironment(string[] arguments)
+        {
+            //var ce = new ApplicationConsoleExecutor();
+            //ce.Run("DRY-RUN", arguments);
+            //var a = true; if(a) return true;
+
+            var appSpecialMode = Environment.GetEnvironmentVariable("PE_SPECIAL_MODE");
+            if(string.IsNullOrWhiteSpace(appSpecialMode)) {
+                return (false, 0);
+            }
+
+            var specialExecutor = new ApplicationSpecialExecutor();
+            return (true, specialExecutor.Run(appSpecialMode, arguments));
+        }
+
         #endregion
 
         #region Application
@@ -33,17 +48,24 @@ namespace ContentTypeTextNet.Pe.Main
         {
             var stopwatch = Stopwatch.StartNew();
 
+            var special = ExecuteIfExistsSpecialModeEnvironment(e.Args);
+            if(special.runSpecialMode) {
+                Shutdown(special.exitCode);
+                return;
+            }
+
             base.OnStartup(e);
 #if DEBUG
             DebugStartup();
 #endif
+
             var initializer = new ApplicationInitializer();
             var accepted = initializer.Initialize(this, e);
-            Debug.Assert(initializer.Logging != null);
             if(!accepted) {
                 Shutdown();
                 return;
             }
+            Debug.Assert(initializer.Logging != null);
 
             Logger = initializer.Logging.Factory.CreateLogger(GetType());
             RunMode = initializer.RunMode;
@@ -60,13 +82,14 @@ namespace ContentTypeTextNet.Pe.Main
                         var viewModel = ApplicationManager.CreateViewModel();
                         ApplicationManager.Execute();
 
-                        var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
-                        notifyIcon.DataContext = viewModel;
+                        Dispatcher.BeginInvoke(new Action(() => {
+                            Logger.LogInformation("つかえるよ！ 所要時間: {0}", stopwatch.Elapsed);
 
-                        Dispatcher.BeginInvoke(new Action<Stopwatch>(sw => {
-                            Logger.LogInformation("つかえるよ！ 所要時間: {0}", sw.Elapsed);
+                            var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
+                            notifyIcon.DataContext = viewModel;
+
                             ApplicationManager.StartupEnd();
-                        }), System.Windows.Threading.DispatcherPriority.SystemIdle, stopwatch);
+                        }), System.Windows.Threading.DispatcherPriority.SystemIdle);
                     }
                     break;
 

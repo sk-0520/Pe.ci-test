@@ -10,13 +10,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 {
     public class StartupViewModel: ElementViewModelBase<StartupElement>
     {
+        #region variable
+
+        bool _isRegisteredStartup;
+
+        #endregion
+
         public StartupViewModel(StartupElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         { }
 
         #region property
 
-
+        public bool IsRegisteredLauncher => Model.IsRegisteredLauncher;
+        public bool IsRegisteredStartup
+        {
+            get => this._isRegisteredStartup;
+            private set => SetProperty(ref this._isRegisteredStartup, value);
+        }
 
         #endregion
 
@@ -25,6 +36,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         public ICommand ImportProgramsCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 Model.ShowImportProgramsView();
+                if(Model.IsRegisteredLauncher) {
+                    RaisePropertyChanged(nameof(IsRegisteredLauncher));
+                }
             }
         ));
 
@@ -33,6 +47,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
                 if(!Model.ExistsStartup()) {
                     Model.RegisterStartup();
                 }
+                // 状況によらずマークだけつける
+                IsRegisteredStartup = true;
             }
         ));
 

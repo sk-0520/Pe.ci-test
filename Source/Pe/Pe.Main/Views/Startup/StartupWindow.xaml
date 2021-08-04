@@ -25,7 +25,14 @@
   mc:Ignorable="d"
 >
   <Window.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
+
+    <Style x:Key="checkmark" TargetType="Control" BasedOn="{StaticResource Image-Big}">
+      <Setter Property="Template" Value="{StaticResource App-Image-Checkmark}" />
+      <Setter Property="VerticalAlignment" Value="Bottom" />
+      <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
   </Window.Resources>
   <Window.Title>
     <Binding Path="Resources.String_Startup_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
@@ -50,10 +57,13 @@
       </UniformGrid.Resources>
 
       <Button Command="{Binding ImportProgramsCommand}">
-        <StackPanel>
-          <Control Style="{StaticResource Image-Jumbo}" Template="{StaticResource App-Image-FindinFiles}" />
-          <AccessText Text="{Binding Resources.String_Startup_ImportPrograms_A, Source={x:Static app_main:CultureService.Instance}}" />
-        </StackPanel>
+        <Grid>
+          <StackPanel>
+            <Control Style="{StaticResource Image-Jumbo}" Template="{StaticResource App-Image-FindinFiles}" />
+            <AccessText Text="{Binding Resources.String_Startup_ImportPrograms_A, Source={x:Static app_main:CultureService.Instance}}" />
+          </StackPanel>
+          <Control Style="{StaticResource checkmark}" Visibility="{Binding IsRegisteredLauncher, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </Grid>
       </Button>
 
       <Button Command="{Binding ShowNotificationAreaCommand}">
@@ -64,10 +74,13 @@
       </Button>
 
       <Button Command="{Binding RegisterStartupCommand}">
-        <StackPanel>
-          <Control Style="{StaticResource Image-Jumbo}" Template="{StaticResource App-Image-Windows}" />
-          <AccessText Text="{Binding Resources.String_Startup_RegisterStartup_A, Source={x:Static app_main:CultureService.Instance}}" />
-        </StackPanel>
+        <Grid>
+          <StackPanel>
+            <Control Style="{StaticResource Image-Jumbo}" Template="{StaticResource App-Image-Windows}" />
+            <AccessText Text="{Binding Resources.String_Startup_RegisterStartup_A, Source={x:Static app_main:CultureService.Instance}}" />
+          </StackPanel>
+          <Control Style="{StaticResource checkmark}" Visibility="{Binding IsRegisteredStartup, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </Grid>
       </Button>
     </UniformGrid>
 
