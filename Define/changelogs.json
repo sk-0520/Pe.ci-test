@@ -100,7 +100,7 @@
 					{
 						"revision": "044fec4522372dced95bf9a001f870aad9fe5ef9",
 						"subject": "#527: 本体起動用処理をもうちっときれいにする",
-						"comment": [
+						"comments": [
 							"軽い感じで綺麗にするつもりが壮大な作り直しプロジェクトになった",
 							"本体を動かす程度は動くけどいまだ未完成(printf実装とかもうしんどい)"
 						]
@@ -108,7 +108,7 @@
 					{
 						"revision": "7427c3df835cedd1ce1cef7b6c4b1721cd794151",
 						"subject": "#769: ランチャーアイテム自動取り込み後に取り込んだ旨のメッセージを表示する",
-						"comment": [
+						"comments": [
 							"チェックマークを付けるようにしつつスタートアップも同じようにした"
 						]
 					},
@@ -119,7 +119,7 @@
 					{
 						"revision": "e001f7ff46078dce5fe81da1dc7cbc93e068d61b",
 						"subject": "[継続課題] #766: アップデート時に事前にEXEを一通り動かす",
-						"comment": [
+						"comments": [
 							"一旦は失敗しても処理を進めるようにした",
 							"次の次くらいのリリースで失敗処理をきちんとする"
 						]
@@ -142,7 +142,7 @@
 						"revision": "728aed2da2938b44c7ee04f037d44096289fe2a6",
 						"class": "nuget",
 						"subject": "MSTest系更新",
-						"Comments": [
+						"comments": [
 							"Microsoft.NET.Test.Sdk 16.9.4 -> 16.10.0",
 							"MSTest.TestAdapter 2.2.3 -> 2.2.5",
 							"MSTest.TestFramework 2.2.3 -> 2.2.5"
