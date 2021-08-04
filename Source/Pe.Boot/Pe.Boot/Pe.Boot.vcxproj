@@ -415,7 +415,9 @@
     <ClCompile Include="app_command_line.c" />
     <ClCompile Include="app_console.c" />
     <ClCompile Include="app_console_prompt.c" />
+    <ClCompile Include="app_dry_run.c" />
     <ClCompile Include="app_main.c" />
+    <ClCompile Include="execute.c" />
     <ClCompile Include="oreore_test.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="app_boot.c" />
@@ -426,7 +428,9 @@
     <ClInclude Include="app_common.h" />
     <ClInclude Include="app_console.h" />
     <ClInclude Include="app_console_prompt.h" />
+    <ClInclude Include="app_dry_run.h" />
     <ClInclude Include="app_main.h" />
+    <ClInclude Include="execute.h" />
     <ClInclude Include="oreore_test.h" />
     <ClInclude Include="app_boot.h" />
     <ClInclude Include="app_path.h" />

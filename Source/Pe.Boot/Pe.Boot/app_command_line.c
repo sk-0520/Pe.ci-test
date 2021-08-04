@@ -1,9 +1,10 @@
 ﻿#include "../Pe.Library/debug.h"
+#include "../Pe.Library/logging.h"
 #include "app_command_line.h"
 
 EXECUTE_MODE get_execute_mode(const COMMAND_LINE_OPTION* command_line_option)
 {
-    TEXT key = wrap_text(_T("_mode"));
+    TEXT key = wrap_text(OPTION_APP_MODE_KEY);
     const COMMAND_LINE_ITEM* item = get_command_line_item(command_line_option, &key);
 
     if (!has_value_command_line_item(item)) {
@@ -19,6 +20,7 @@ EXECUTE_MODE get_execute_mode(const COMMAND_LINE_OPTION* command_line_option)
         TEXT value;
     } mode_mappings[] = {
         { EXECUTE_MODE_BOOT, wrap_text(_T("boot")), },
+        { EXECUTE_MODE_DRY_RUN, wrap_text(_T("dry-run")), },
         { EXECUTE_MODE_CONSOLE, wrap_text(_T("console")), },
     };
 
@@ -71,6 +73,7 @@ size_t filter_enable_command_line_items(TEXT_LIST result, const COMMAND_LINE_OPT
     TEXT ignore_command_line_item_keys[] = {
         wrap_text(OPTION_LOG_FILE_KEY),
         wrap_text(OPTION_LOG_LEVEL_KEY),
+        wrap_text(OPTION_APP_MODE_KEY),
         wrap_text(OPTION_APP_BOOT_WAIT_KEY),
         wrap_text(OPTION_APP_BOOT_WAIT_KEY_issue_737),
     };

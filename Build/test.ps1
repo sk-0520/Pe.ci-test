@@ -20,6 +20,8 @@ $rootDirectory = Split-Path -Path $currentDirPath -Parent
 $sourceMainDirectoryPath = Join-Path "$rootDirectory" "Source/Pe"
 $sourceBootDirectoryPath = Join-Path "$rootDirectory" "Source/Pe.Boot"
 
+$outputDirectoryPath = Join-Path "$rootDirectory" "Output/Release"
+
 $mainSolutionPath = Join-Path $sourceMainDirectoryPath "Pe.sln"
 
 foreach ($platform in $Platforms) {
@@ -45,4 +47,13 @@ foreach ($platform in $Platforms) {
 			VSTest.Console $testFilePath /InIsolation /Platform:$platform $bootLoggerArg
 		}
 	}
+
+	$releaseDirPath = Join-Path $outputDirectoryPath $platform | Join-Path -ChildPath "Pe"
+	$releaseAppPath = Join-Path $releaseDirPath "Pe.exe"
+
+	&$releaseAppPath --_mode dry-run --mou honma --kanben shitekure
+	if (-not $?) {
+		exit 1
+	}
+
 }

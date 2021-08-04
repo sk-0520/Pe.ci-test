@@ -62,5 +62,18 @@ namespace PeLibraryTest
 
             free_string(actual);
         }
+
+        TEST_METHOD(clone_string_with_length_test)
+        {
+            TCHAR input[] = _T("abc");
+            TCHAR expected[] = _T("ab");
+            TCHAR* actual = clone_string_with_length(input, 2);
+
+            Assert::AreEqual(expected, actual);
+            Assert::IsFalse(input == actual);
+
+            free_string(actual);
+        }
+
     };
 }

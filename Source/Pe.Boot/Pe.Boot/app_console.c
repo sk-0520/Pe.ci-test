@@ -2,24 +2,6 @@
 #include "app_console.h"
 #include "app_console_prompt.h"
 
-CONSOLE_RESOURCE begin_console()
-{
-    AllocConsole();
-
-    CONSOLE_RESOURCE console_resource = {
-        .input = GetStdHandle(STD_INPUT_HANDLE),
-        .output = GetStdHandle(STD_OUTPUT_HANDLE),
-        .error = GetStdHandle(STD_ERROR_HANDLE),
-    };
-
-    return console_resource;
-}
-
-void end_console(CONSOLE_RESOURCE* console_resource)
-{
-    FreeConsole();
-}
-
 CONSOLE_KIND get_console_kind(const COMMAND_LINE_OPTION* command_line_option)
 {
     TEXT key = wrap_text(_T("_console"));
@@ -47,20 +29,6 @@ CONSOLE_KIND get_console_kind(const COMMAND_LINE_OPTION* command_line_option)
     }
 
     return CONSOLE_KIND_UNKNOWN;
-}
-
-size_t output_console_text(const CONSOLE_RESOURCE* console_resource, const TEXT* text, bool newline)
-{
-    DWORD write_length;
-    WriteConsole(console_resource->output, text->value, (DWORD)text->length, &write_length, NULL);
-
-    if (newline) {
-        DWORD newline_length;
-        WriteConsole(console_resource->output, NEWLINET, sizeof(NEWLINET) / sizeof(TCHAR) - 1, &newline_length, NULL);
-        write_length += newline_length;
-    }
-
-    return (size_t)write_length;
 }
 
 EXIT_CODE console_execute(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)

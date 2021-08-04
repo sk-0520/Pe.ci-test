@@ -25,6 +25,21 @@ namespace ContentTypeTextNet.Pe.Main
 
         #region function
 
+        (bool runSpecialMode, int exitCode) ExecuteIfExistsSpecialModeEnvironment(string[] arguments)
+        {
+            //var ce = new ApplicationConsoleExecutor();
+            //ce.Run("DRY-RUN", arguments);
+            //var a = true; if(a) return true;
+
+            var appSpecialMode = Environment.GetEnvironmentVariable("PE_SPECIAL_MODE");
+            if(string.IsNullOrWhiteSpace(appSpecialMode)) {
+                return (false, 0);
+            }
+
+            var specialExecutor = new ApplicationSpecialExecutor();
+            return (true, specialExecutor.Run(appSpecialMode, arguments));
+        }
+
         #endregion
 
         #region Application
@@ -33,10 +48,17 @@ namespace ContentTypeTextNet.Pe.Main
         {
             var stopwatch = Stopwatch.StartNew();
 
+            var special = ExecuteIfExistsSpecialModeEnvironment(e.Args);
+            if(special.runSpecialMode) {
+                Shutdown(special.exitCode);
+                return;
+            }
+
             base.OnStartup(e);
 #if DEBUG
             DebugStartup();
 #endif
+
             var initializer = new ApplicationInitializer();
             var accepted = initializer.Initialize(this, e);
             if(!accepted) {
