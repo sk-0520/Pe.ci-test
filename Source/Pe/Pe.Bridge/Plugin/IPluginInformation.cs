@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
@@ -85,18 +86,49 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// </summary>
         Version MaximumSupportVersion { get; }
 
+        /// <summary>
+        /// アップデートチェックURIの基本URL一覧。
+        /// <list type="table">
+        ///     <listheader>
+        ///       <term>置き換えキー</term>
+        ///       <description>置き換えデータ</description>
+        ///     </listheader>
+        ///     <item>
+        ///       <term>${TIMESTAMP-NUMBER}</term>
+        ///       <description>現在時間(UTC)の数値表現。<seealso cref="DateTime.UtcNow"/>を<seealso cref="DateTime.ToBinary"/>しただけ。</description>
+        ///     </item>
+        ///     <item>
+        ///       <term>${APP-VERSION}</term>
+        ///       <description>本体バージョン。</description>
+        ///     </item>
+        ///     <item>
+        ///       <term>${APP-REVISION}</term>
+        ///       <description>本体リビジョン。</description>
+        ///     </item>
+        ///     <item>
+        ///       <term>${PLUGIN-ID}</term>
+        ///       <description>プラグインID。</description>
+        ///     </item>
+        ///     <item>
+        ///       <term>${PLUGIN-VERSION}</term>
+        ///       <description>プラグインバージョン。</description>
+        ///     </item>
+        /// </list>
+        /// </summary>
+        IEnumerable<string> CheckUrls { get; }
+
         #endregion
     }
 
     /// <inheritdoc cref="IPluginVersions"/>
     public class PluginVersions: IPluginVersions
     {
-        public PluginVersions(Version pluginVersion, Version minimumSupportVersion, Version maximumSupportVersion)
+        public PluginVersions(Version pluginVersion, Version minimumSupportVersion, Version maximumSupportVersion, IEnumerable<string> checkUrls)
         {
             PluginVersion = pluginVersion;
             MinimumSupportVersion = minimumSupportVersion;
             MaximumSupportVersion = maximumSupportVersion;
-
+            CheckUrls = checkUrls;
         }
 
         #region IPluginVersion
@@ -107,6 +139,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         public Version MinimumSupportVersion { get; }
         /// <inheritdoc cref="IPluginVersions.MaximumSupportVersion"/>
         public Version MaximumSupportVersion { get; }
+        public IEnumerable<string> CheckUrls { get; }
 
         #endregion
     }

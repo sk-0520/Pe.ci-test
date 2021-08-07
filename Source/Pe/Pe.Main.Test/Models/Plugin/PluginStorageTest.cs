@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
 
         readonly PluginInformations Informations = new PluginInformations(
             new PluginIdentifiers(new Guid("00000000-1111-2222-3333-444444444444"), "test-plugin"),
-            new PluginVersions(new Version(1, 2, 3), new Version(), new Version()),
+            new PluginVersions(new Version(1, 2, 3), new Version(), new Version(), Array.Empty<string>()),
             new PluginAuthors(new Author("testman"), PluginLicense.Unknown),
             new PluginCategory(PluginCategories.Others)
         );
