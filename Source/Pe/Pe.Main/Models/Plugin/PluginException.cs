@@ -24,6 +24,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <summary>
+    /// プラグインの読み込み失敗時に投げられる。
+    /// </summary>
+    [Serializable]
+    public sealed class PluginInvalidAssemblyException: PluginException
+    {
+        public PluginInvalidAssemblyException()
+        { }
+
+        public PluginInvalidAssemblyException(string? message) : base(message)
+        { }
+
+        public PluginInvalidAssemblyException(SerializationInfo info, StreamingContext context) : base(info, context)
+        { }
+
+        public PluginInvalidAssemblyException(string? message, Exception? innerException) : base(message, innerException)
+        { }
+    }
+
+    /// <summary>
     /// プラグインが存在しない場合に投げられる。
     /// </summary>
     [Serializable]
