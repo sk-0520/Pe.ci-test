@@ -687,6 +687,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             using(var context = barrier.WaitWrite()) {
                 var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
+                var pluginVersionChecksEntityDao = ApplicationDiContainer.Build<PluginVersionChecksEntityDao>(context, context.Implementation);
                 foreach(var pluginLoadStateItem in pluginLoadStateItems) {
                     // プラグインIDすら取得できなかったぶっこわれアセンブリは無視
                     if(pluginLoadStateItem.PluginId == Guid.Empty && pluginLoadStateItem.LoadState == PluginState.IllegalAssembly) {
@@ -726,7 +727,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         pluginsEntityDao.InsertPluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
                     }
 
-                    //pluginLoadStateItem.Plugin.PluginInformations.PluginVersions.CheckUrls
+                    // 読み込みOKの際に更新URLの再設定
+                    if(pluginLoadStateItem.Plugin != null) {
+                        pluginVersionChecksEntityDao.DeletePluginVersionChecks(pluginLoadStateItem.PluginId);
+                        foreach(var countUrl in pluginLoadStateItem.Plugin.PluginInformations.PluginVersions.CheckUrls.Counting()) {
+                            pluginVersionChecksEntityDao.InsertPluginVersionCheckUrl(pluginLoadStateItem.PluginId, countUrl.Number * PluginUtility.CheckVersionStep, countUrl.Value);
+                        }
+                    }
                 }
 
                 context.Commit();

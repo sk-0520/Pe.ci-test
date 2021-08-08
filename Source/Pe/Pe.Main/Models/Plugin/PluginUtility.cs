@@ -6,6 +6,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     public static class PluginUtility
     {
+        #region property
+
+        public static int CheckVersionStep { get; } = 10;
+
+        #endregion
+
         #region function
 
         /// <summary>
