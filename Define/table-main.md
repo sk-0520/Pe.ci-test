@@ -939,7 +939,7 @@ ___
 |    | o  |                  | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
 |    | o  |                  | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
 |    | o  |                  | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |                  | 更新確認URI              | VersionCheckUri       | text         | System.String   |              |          |
+|    | o  |                  | 更新確認URL              | VersionCheckUrl       | text         | System.String   |              |          |
 
 ### index
 

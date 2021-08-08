@@ -725,6 +725,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     } else {
                         pluginsEntityDao.InsertPluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
                     }
+
+                    //pluginLoadStateItem.Plugin.PluginInformations.PluginVersions.CheckUrls
                 }
 
                 context.Commit();
