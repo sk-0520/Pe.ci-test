@@ -731,7 +731,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     if(pluginLoadStateItem.Plugin != null) {
                         pluginVersionChecksEntityDao.DeletePluginVersionChecks(pluginLoadStateItem.PluginId);
                         foreach(var countUrl in pluginLoadStateItem.Plugin.PluginInformations.PluginVersions.CheckUrls.Counting()) {
-                            pluginVersionChecksEntityDao.InsertPluginVersionCheckUrl(pluginLoadStateItem.PluginId, countUrl.Number * PluginUtility.CheckVersionStep, countUrl.Value);
+                            pluginVersionChecksEntityDao.InsertPluginVersionCheckUrl(pluginLoadStateItem.PluginId, countUrl.Number * PluginUtility.CheckVersionStep, countUrl.Value, DatabaseCommonStatus.CreateCurrentAccount());
                         }
                     }
                 }

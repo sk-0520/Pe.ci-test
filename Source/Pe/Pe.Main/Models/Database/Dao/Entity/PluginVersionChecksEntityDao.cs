@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             public static string PluginId { get; } = "PluginId";
             public static string Sequence { get; } = "Sequence";
-            public static string VersionCheckUrl { get; } = "VersionCheckUrl";
+            public static string CheckUrl { get; } = "CheckUrl";
 
             #endregion
         }
@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Delete(statement, parameter);
         }
 
-        public void InsertPluginVersionCheckUrl(Guid pluginId, long sequence, string checkUrl)
+        public void InsertPluginVersionCheckUrl(Guid pluginId, long sequence, string checkUrl, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = new PluginVersionCheckDto() {
@@ -63,6 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Sequence = sequence,
                 CheckUrl = checkUrl,
             };
+            databaseCommonStatus.WriteCommonTo(parameter);
 
             Context.InsertSingle(statement, parameter);
         }

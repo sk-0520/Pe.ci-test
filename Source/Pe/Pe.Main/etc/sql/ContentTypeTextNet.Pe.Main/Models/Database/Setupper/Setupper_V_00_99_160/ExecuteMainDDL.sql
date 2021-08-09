@@ -6,7 +6,7 @@ create table [PluginVersionChecks] (
 	[CreatedAccount] text not null /* 作成ユーザー名  */,
 	[CreatedProgramName] text not null /* 作成プログラム名  */,
 	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
-	[VersionCheckUrl] text not null /* 更新確認URL  */,
+	[CheckUrl] text not null /* 更新確認URL  */,
 	primary key(
 		[PluginId],
 		[Sequence]

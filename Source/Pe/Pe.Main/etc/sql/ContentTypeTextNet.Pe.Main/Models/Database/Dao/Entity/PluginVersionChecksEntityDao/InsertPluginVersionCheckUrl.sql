@@ -3,7 +3,8 @@ insert into
 	(
 		PluginId,
 		Sequence,
-		VersionCheckUrl,
+		CheckUrl,
+
 		CreatedTimestamp,
 		CreatedAccount,
 		CreatedProgramName,
@@ -13,7 +14,8 @@ insert into
 	(
 /* PluginId              */ @PluginId,
 /* Sequence              */ @Sequence,
-/* VersionCheckUrl       */ @VersionCheckUrl,
+/* CheckUrl              */ @CheckUrl,
+
 /* CreatedTimestamp      */ @CreatedTimestamp,
 /* CreatedAccount        */ @CreatedAccount,
 /* CreatedProgramName    */ @CreatedProgramName,
