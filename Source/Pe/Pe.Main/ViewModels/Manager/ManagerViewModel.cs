@@ -237,7 +237,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         public ICommand UpdateCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
-                 ApplicationManager.ExecuteUpdateAsync(Models.Data.UpdateCheckKind.CheckOnly).ConfigureAwait(false);
+                 ApplicationManager.ExecuteCheckNewVersionAsync(Models.Data.UpdateCheckKind.CheckOnly).ConfigureAwait(false);
              }
          ));
 

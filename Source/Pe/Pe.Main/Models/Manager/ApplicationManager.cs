@@ -1746,7 +1746,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        public async Task DelayCheckUpdateAsync()
+        public async Task DelayCheckNewVersionAsync()
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             UpdateKind updateKind;
@@ -1765,10 +1765,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 UpdateKind.Notify => UpdateCheckKind.CheckOnly,
                 _ => UpdateCheckKind.Update,
             };
-            await ExecuteUpdateAsync(updateCheckKind).ConfigureAwait(false);
+            await ExecuteCheckNewVersionAsync(updateCheckKind).ConfigureAwait(false);
         }
 
-        public async Task ExecuteUpdateAsync(UpdateCheckKind updateCheckKind)
+        public async Task ExecuteCheckNewVersionAsync(UpdateCheckKind updateCheckKind)
         {
             if(ApplicationUpdateInfo.State == UpdateState.None || ApplicationUpdateInfo.State == UpdateState.Error) {
                 if(ApplicationUpdateInfo.State == UpdateState.Error) {
@@ -2051,7 +2051,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 #endif
 
-            DelayCheckUpdateAsync().ConfigureAwait(false);
+            DelayCheckNewVersionAsync().ConfigureAwait(false);
 #if DEBUG
             DebugStartupEnd();
 #endif
@@ -2103,7 +2103,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             switch(process) {
                 case UpdateProcess.Download:
-                    ExecuteUpdateAsync(UpdateCheckKind.Update).ConfigureAwait(false);
+                    ExecuteCheckNewVersionAsync(UpdateCheckKind.Update).ConfigureAwait(false);
                     break;
 
                 case UpdateProcess.Update:
