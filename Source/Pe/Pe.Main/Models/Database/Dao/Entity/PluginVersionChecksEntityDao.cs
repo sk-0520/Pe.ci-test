@@ -45,14 +45,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public int DeletePluginVersionChecks(Guid pluginId)
+        public IEnumerable<string> SelectPluginVersionCheckUrls(Guid pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {
                 PluginId = pluginId,
             };
 
-            return Context.Delete(statement, parameter);
+            return Context.SelectOrdered<string>(statement, parameter);
         }
 
         public void InsertPluginVersionCheckUrl(Guid pluginId, long sequence, string checkUrl, IDatabaseCommonStatus databaseCommonStatus)
@@ -67,6 +67,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             Context.InsertSingle(statement, parameter);
         }
+
+        public int DeletePluginVersionChecks(Guid pluginId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                PluginId = pluginId,
+            };
+
+            return Context.Delete(statement, parameter);
+        }
+
 
 
         #endregion

@@ -1794,7 +1794,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             ApplicationUpdateInfo.State = UpdateState.Checking;
             {
-                var appVersion = await updateChecker.CheckApplicationUpdateAsync().ConfigureAwait(false);
+                var appVersion = await updateChecker.CheckApplicationNewVersionAsync().ConfigureAwait(false);
                 if(appVersion == null) {
                     Logger.LogInformation("アップデートなし");
                     ApplicationUpdateInfo.State = UpdateState.None;
