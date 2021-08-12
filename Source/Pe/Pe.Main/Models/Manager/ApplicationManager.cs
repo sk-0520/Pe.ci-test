@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             CronScheduler = new CronScheduler(LoggerFactory);
 
-            ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
+            ApplicationUpdateInfo = ApplicationDiContainer.Build<NewVersionInfo>();
 
             NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
             NotifyLogElement.Initialize();
@@ -203,7 +203,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
-        public UpdateInfo ApplicationUpdateInfo { get; }
+        public NewVersionInfo ApplicationUpdateInfo { get; }
 
         public bool CanCallNotifyAreaMenu { get; private set; }
 
@@ -577,7 +577,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        void ShowNewVersionReleaseNoteCore(UpdateItemData updateItem, bool isCheckOnly)
+        void ShowNewVersionReleaseNoteCore(NewVersionItemData updateItem, bool isCheckOnly)
         {
             var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(ApplicationUpdateInfo, updateItem, isCheckOnly);
             element.Initialize();
@@ -587,7 +587,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             view.Show();
         }
 
-        private void ShowNewVersionReleaseNote(UpdateItemData updateItem, bool isCheckOnly)
+        private void ShowNewVersionReleaseNote(NewVersionItemData updateItem, bool isCheckOnly)
         {
             var windowItem = WindowManager.GetWindowItems(WindowKind.Release);
             if(windowItem.Any()) {
@@ -1770,8 +1770,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public async Task CheckNewVersionAsync(UpdateCheckKind updateCheckKind)
         {
-            if(ApplicationUpdateInfo.State == UpdateState.None || ApplicationUpdateInfo.State == UpdateState.Error) {
-                if(ApplicationUpdateInfo.State == UpdateState.Error) {
+            if(ApplicationUpdateInfo.State == NewVersionState.None || ApplicationUpdateInfo.State == NewVersionState.Error) {
+                if(ApplicationUpdateInfo.State == NewVersionState.Error) {
                     Logger.LogInformation("エラーありのため再実施");
                 }
             } else {
@@ -1781,8 +1781,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Logger.LogInformation("アップデート排他制御中");
                 }
 
-                if(ApplicationUpdateInfo.UpdateItem != null) {
-                    ShowNewVersionReleaseNote(ApplicationUpdateInfo.UpdateItem, false);
+                if(ApplicationUpdateInfo.NewVersionItem != null) {
+                    ShowNewVersionReleaseNote(ApplicationUpdateInfo.NewVersionItem, false);
                 } else {
                     Logger.LogInformation("アップデート情報未取得");
                 }
@@ -1792,18 +1792,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var newVersionChecker = ApplicationDiContainer.Build<NewVersionChecker>();
 
-            ApplicationUpdateInfo.State = UpdateState.Checking;
+            ApplicationUpdateInfo.State = NewVersionState.Checking;
             {
                 var appVersion = await newVersionChecker.CheckApplicationNewVersionAsync().ConfigureAwait(false);
                 if(appVersion == null) {
                     Logger.LogInformation("アップデートなし");
-                    ApplicationUpdateInfo.State = UpdateState.None;
+                    ApplicationUpdateInfo.State = NewVersionState.None;
                     return;
                 }
-                ApplicationUpdateInfo.UpdateItem = appVersion;
+                ApplicationUpdateInfo.NewVersionItem = appVersion;
             }
 
-            Logger.LogInformation("アップデートあり: {0}", ApplicationUpdateInfo.UpdateItem.Version);
+            Logger.LogInformation("アップデートあり: {0}", ApplicationUpdateInfo.NewVersionItem.Version);
 
             // CheckApplicationUpdateAsync で弾いてる
             //if(BuildStatus.Version < ApplicationUpdateInfo.UpdateItem.MinimumVersion) {
@@ -1818,7 +1818,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(updateCheckKind != UpdateCheckKind.ForceUpdate) {
                 try {
-                    ShowNewVersionReleaseNote(ApplicationUpdateInfo.UpdateItem, updateCheckKind == UpdateCheckKind.CheckOnly);
+                    ShowNewVersionReleaseNote(ApplicationUpdateInfo.NewVersionItem, updateCheckKind == UpdateCheckKind.CheckOnly);
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
                     ApplicationUpdateInfo.SetError(ex.Message);
@@ -1826,21 +1826,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
             if(updateCheckKind == UpdateCheckKind.CheckOnly) {
-                ApplicationUpdateInfo.State = UpdateState.None;
+                ApplicationUpdateInfo.State = NewVersionState.None;
                 return;
             }
 
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
             var versionConverter = new VersionConverter();
-            var downloadFileName = versionConverter.ConvertFileName(BuildStatus.Name, ApplicationUpdateInfo.UpdateItem.Version, ApplicationUpdateInfo.UpdateItem.Platform, ApplicationUpdateInfo.UpdateItem.ArchiveKind);
+            var downloadFileName = versionConverter.ConvertFileName(BuildStatus.Name, ApplicationUpdateInfo.NewVersionItem.Version, ApplicationUpdateInfo.NewVersionItem.Platform, ApplicationUpdateInfo.NewVersionItem.ArchiveKind);
             var downloadFilePath = Path.Combine(environmentParameters.MachineUpdateArchiveDirectory.FullName, downloadFileName);
             var downloadFile = new FileInfo(downloadFilePath);
             try {
                 var skipDownload = false;
                 downloadFile.Refresh();
                 if(downloadFile.Exists) {
-                    ApplicationUpdateInfo.State = UpdateState.Checksumming;
-                    skipDownload = await newVersionDownloader.ChecksumAsync(ApplicationUpdateInfo.UpdateItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
+                    ApplicationUpdateInfo.State = NewVersionState.Checksumming;
+                    skipDownload = await newVersionDownloader.ChecksumAsync(ApplicationUpdateInfo.NewVersionItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
                 }
                 if(skipDownload) {
                     Logger.LogInformation("チェックサムの結果ダウンロード不要");
@@ -1848,14 +1848,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     progress.Report(1);
                 } else {
                     downloadFile.Delete(); // ゴミは消しとく
-                    ApplicationUpdateInfo.State = UpdateState.Downloading;
-                    await newVersionDownloader.DownloadApplicationArchiveAsync(ApplicationUpdateInfo.UpdateItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.DownloadProgress, ApplicationUpdateInfo.CurrentLogProgress)).ConfigureAwait(false);
+                    ApplicationUpdateInfo.State = NewVersionState.Downloading;
+                    await newVersionDownloader.DownloadApplicationArchiveAsync(ApplicationUpdateInfo.NewVersionItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.DownloadProgress, ApplicationUpdateInfo.CurrentLogProgress)).ConfigureAwait(false);
 
                     // ここで更新しないとチェックサムでファイル無し判定を食らう
                     downloadFile.Refresh();
 
-                    ApplicationUpdateInfo.State = UpdateState.Checksumming;
-                    var checksumOk = await newVersionDownloader.ChecksumAsync(ApplicationUpdateInfo.UpdateItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
+                    ApplicationUpdateInfo.State = NewVersionState.Checksumming;
+                    var checksumOk = await newVersionDownloader.ChecksumAsync(ApplicationUpdateInfo.NewVersionItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
                     if(!checksumOk) {
                         Logger.LogError("チェックサム異常あり");
                         ApplicationUpdateInfo.SetError(Properties.Resources.String_Download_ChecksumError);
@@ -1868,13 +1868,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             Logger.LogInformation("アップデートファイル展開");
-            ApplicationUpdateInfo.State = UpdateState.Extracting;
+            ApplicationUpdateInfo.State = NewVersionState.Extracting;
             try {
                 var directoryCleaner = new DirectoryCleaner(environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitCount, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitTime, LoggerFactory);
                 directoryCleaner.Clear(false);
 
                 var archiveExtractor = ApplicationDiContainer.Build<ArchiveExtractor>();
-                archiveExtractor.Extract(downloadFile, environmentParameters.TemporaryApplicationExtractDirectory, ApplicationUpdateInfo.UpdateItem.ArchiveKind, new UserNotifyProgress(ApplicationUpdateInfo.ExtractProgress, ApplicationUpdateInfo.CurrentLogProgress));
+                archiveExtractor.Extract(downloadFile, environmentParameters.TemporaryApplicationExtractDirectory, ApplicationUpdateInfo.NewVersionItem.ArchiveKind, new UserNotifyProgress(ApplicationUpdateInfo.ExtractProgress, ApplicationUpdateInfo.CurrentLogProgress));
 
                 // #766ここの例外はきちんと対応した際にはなくなる
                 var newAppPath = Path.Join(environmentParameters.TemporaryApplicationExtractDirectory.FullName, EnvironmentParameters.RootApplicationName);
@@ -1902,7 +1902,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var scriptFactory = ApplicationDiContainer.Build<ApplicationUpdateScriptFactory>();
                 var exeutePathParameter = scriptFactory.CreateUpdateExecutePathParameter(environmentParameters.EtcUpdateScriptFile, environmentParameters.TemporaryDirectory, environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.RootDirectory);
                 ApplicationUpdateInfo.Path = exeutePathParameter;
-                ApplicationUpdateInfo.State = UpdateState.Ready;
+                ApplicationUpdateInfo.State = NewVersionState.Ready;
 
                 // アップデートアーカイブのローテート
                 var fileRotation = new FileRotation();
@@ -1917,7 +1917,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 );
 
                 // リリースノート再表示
-                ShowNewVersionReleaseNote(ApplicationUpdateInfo.UpdateItem, false);
+                ShowNewVersionReleaseNote(ApplicationUpdateInfo.NewVersionItem, false);
 
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);

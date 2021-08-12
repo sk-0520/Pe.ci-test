@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
 {
-    public interface IReadOnlyUpdateInfo
+    public interface IReadOnlyNewVersionInfo
     {
         #region property
 
@@ -16,9 +16,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         /// </summary>
         bool IsReady { get; }
         bool Updating { get; }
-        UpdateState State { get; }
+        NewVersionState State { get; }
 
-        IReadOnlyUpdateItemData? UpdateItem { get; }
+        IReadOnlyNewVersionItemData? NewVersion { get; }
 
         IProgress<string> CurrentLogProgress { get; }
         string CurrentLog { get; }
@@ -34,11 +34,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         #endregion
     }
 
-    public class UpdateInfo: BindModelBase, IReadOnlyUpdateInfo
+    public class NewVersionInfo: BindModelBase, IReadOnlyNewVersionInfo
     {
         #region variable
 
-        UpdateState _state;
+        NewVersionState _state;
 
         string _currentLog = string.Empty;
 
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
 
         #endregion
 
-        public UpdateInfo(ILoggerFactory loggerFactory) : base(loggerFactory)
+        public NewVersionInfo(ILoggerFactory loggerFactory) : base(loggerFactory)
         {
             CurrentLogProgress = new Progress<string>(v => CurrentLog = v);
             ChecksumProgress = new Progress<double>(v => ChecksumValue = v);
@@ -71,22 +71,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         /// <summary>
         /// アップデート準備完了。
         /// </summary>
-        public bool IsReady => State == UpdateState.Ready;
+        public bool IsReady => State == NewVersionState.Ready;
         public bool Updating
         {
             get
             {
                 var updtings = new[] {
-                    UpdateState.Checking,
-                    UpdateState.Downloading,
-                    UpdateState.Checksumming,
-                    UpdateState.Extracting,
+                    NewVersionState.Checking,
+                    NewVersionState.Downloading,
+                    NewVersionState.Checksumming,
+                    NewVersionState.Extracting,
                 };
                 return updtings.Any(i => i == State);
             }
         }
 
-        public UpdateState State
+        public NewVersionState State
         {
             get => this._state;
             set
@@ -97,11 +97,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
             }
         }
 
-        public UpdateItemData? UpdateItem { get; set; }
-        IReadOnlyUpdateItemData? IReadOnlyUpdateInfo.UpdateItem => UpdateItem;
+        public NewVersionItemData? NewVersionItem { get; set; }
+        IReadOnlyNewVersionItemData? IReadOnlyNewVersionInfo.NewVersion => NewVersionItem;
 
         public Progress<string> CurrentLogProgress { get; }
-        IProgress<string> IReadOnlyUpdateInfo.CurrentLogProgress => CurrentLogProgress;
+        IProgress<string> IReadOnlyNewVersionInfo.CurrentLogProgress => CurrentLogProgress;
         public string CurrentLog
         {
             get => this._currentLog;
@@ -111,11 +111,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
 
 
         public Progress<double> ChecksumProgress { get; }
-        IProgress<double> IReadOnlyUpdateInfo.ChecksumProgress => ChecksumProgress;
+        IProgress<double> IReadOnlyNewVersionInfo.ChecksumProgress => ChecksumProgress;
         public Progress<double> DownloadProgress { get; }
-        IProgress<double> IReadOnlyUpdateInfo.DownloadProgress => DownloadProgress;
+        IProgress<double> IReadOnlyNewVersionInfo.DownloadProgress => DownloadProgress;
         public IProgress<double> ExtractProgress { get; }
-        IProgress<double> IReadOnlyUpdateInfo.ExtractProgress => ExtractProgress;
+        IProgress<double> IReadOnlyNewVersionInfo.ExtractProgress => ExtractProgress;
 
 
         public double ChecksumValue
@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
 
         public void SetError(string message)
         {
-            State = UpdateState.Error;
+            State = NewVersionState.Error;
             Logging(message);
         }
 

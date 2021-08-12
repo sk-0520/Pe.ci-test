@@ -170,7 +170,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         }
 
 
-        public IReadOnlyUpdateInfo UpdateInfo => ApplicationManager.ApplicationUpdateInfo;
+        public IReadOnlyNewVersionInfo UpdateInfo => ApplicationManager.ApplicationUpdateInfo;
 
         #endregion
 

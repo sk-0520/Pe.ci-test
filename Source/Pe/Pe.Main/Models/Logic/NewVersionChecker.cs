@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        async Task<UpdateData?> RequestUpdateDataAsync(Uri uri)
+        async Task<NewVersionData?> RequestUpdateDataAsync(Uri uri)
         {
             using var agent = UserAgentManager.CreateUserAgent();
             try {
@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var content = await response.Content.ReadAsStringAsync();
 
                 //TODO: Serializer.cs に統合したい
-                var updateData = System.Text.Json.JsonSerializer.Deserialize<UpdateData>(content);
+                var updateData = System.Text.Json.JsonSerializer.Deserialize<NewVersionData>(content);
                 if(updateData == null) {
                     Logger.LogError("復元失敗: {0}", content);
                     return null;
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// アプリケーションの新バージョン確認。
         /// </summary>
         /// <returns>新バージョンがあれば新情報。なければ<c>null</c>。</returns>
-        public async Task<UpdateItemData?> CheckApplicationNewVersionAsync(CancellationToken token)
+        public async Task<NewVersionItemData?> CheckApplicationNewVersionAsync(CancellationToken token)
         {
 
             var uri = new Uri(
@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var content = await response.Content.ReadAsStringAsync();
 
                 //TODO: Serializer.cs に統合したい
-                var updateData = System.Text.Json.JsonSerializer.Deserialize<UpdateData>(content);
+                var updateData = System.Text.Json.JsonSerializer.Deserialize<NewVersionData>(content);
                 if(updateData == null) {
                     Logger.LogError("復元失敗: {0}", content);
                     return null;
@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return null;
         }
 
-        public Task<UpdateItemData?> CheckApplicationNewVersionAsync() => CheckApplicationNewVersionAsync(CancellationToken.None);
+        public Task<NewVersionItemData?> CheckApplicationNewVersionAsync() => CheckApplicationNewVersionAsync(CancellationToken.None);
 
         Uri? BuildPluginUri(string baseUrl, IPlugin plugin)
         {
@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         /// <param name="plugin">プラグイン。</param>
         /// <returns>新バージョンがあれば新情報。なければ<c>null</c>。</returns>
-        public async Task<UpdateItemData?> CheckPluginNewVersionAsync(IPlugin plugin, IDatabaseContexts contexts, IDatabaseStatementLoader statementLoader)
+        public async Task<NewVersionItemData?> CheckPluginNewVersionAsync(IPlugin plugin, IDatabaseContexts contexts, IDatabaseStatementLoader statementLoader)
         {
             var pluginId = plugin.PluginInformations.PluginIdentifiers.PluginId;
             Debug.Assert(pluginId != ContentTypeTextNet.Pe.Plugins.DefaultTheme.DefaultTheme.Informations.PluginIdentifiers.PluginId);
