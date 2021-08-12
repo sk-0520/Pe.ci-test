@@ -1765,10 +1765,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 UpdateKind.Notify => UpdateCheckKind.CheckOnly,
                 _ => UpdateCheckKind.Update,
             };
-            await CheckApplicationNewVersionAsync(updateCheckKind).ConfigureAwait(false);
+            await CheckNewVersionAsync(updateCheckKind).ConfigureAwait(false);
         }
 
-        public async Task CheckApplicationNewVersionAsync(UpdateCheckKind updateCheckKind)
+        public async Task CheckNewVersionAsync(UpdateCheckKind updateCheckKind)
         {
             if(ApplicationUpdateInfo.State == UpdateState.None || ApplicationUpdateInfo.State == UpdateState.Error) {
                 if(ApplicationUpdateInfo.State == UpdateState.Error) {
@@ -2103,7 +2103,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             switch(process) {
                 case UpdateProcess.Download:
-                    CheckApplicationNewVersionAsync(UpdateCheckKind.Update).ConfigureAwait(false);
+                    CheckNewVersionAsync(UpdateCheckKind.Update).ConfigureAwait(false);
                     break;
 
                 case UpdateProcess.Update:
