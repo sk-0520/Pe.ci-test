@@ -577,7 +577,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        void ShowUpdateReleaseNoteCore(UpdateItemData updateItem, bool isCheckOnly)
+        void ShowNewVersionReleaseNoteCore(UpdateItemData updateItem, bool isCheckOnly)
         {
             var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(ApplicationUpdateInfo, updateItem, isCheckOnly);
             element.Initialize();
@@ -587,7 +587,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             view.Show();
         }
 
-        private void ShowUpdateReleaseNote(UpdateItemData updateItem, bool isCheckOnly)
+        private void ShowNewVersionReleaseNote(UpdateItemData updateItem, bool isCheckOnly)
         {
             var windowItem = WindowManager.GetWindowItems(WindowKind.Release);
             if(windowItem.Any()) {
@@ -597,14 +597,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     if(window != null) {
                         window.Window.Activate();
                     } else {
-                        ShowUpdateReleaseNoteCore(updateItem, isCheckOnly);
+                        ShowNewVersionReleaseNoteCore(updateItem, isCheckOnly);
                     }
                 }, DispatcherPriority.ApplicationIdle);
                 return;
             }
 
             ApplicationDiContainer.Build<IDispatcherWrapper>().Begin(() => {
-                ShowUpdateReleaseNoteCore(updateItem, isCheckOnly);
+                ShowNewVersionReleaseNoteCore(updateItem, isCheckOnly);
             }, DispatcherPriority.ApplicationIdle);
         }
 
@@ -1782,7 +1782,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
 
                 if(ApplicationUpdateInfo.UpdateItem != null) {
-                    ShowUpdateReleaseNote(ApplicationUpdateInfo.UpdateItem, false);
+                    ShowNewVersionReleaseNote(ApplicationUpdateInfo.UpdateItem, false);
                 } else {
                     Logger.LogInformation("アップデート情報未取得");
                 }
@@ -1818,7 +1818,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(updateCheckKind != UpdateCheckKind.ForceUpdate) {
                 try {
-                    ShowUpdateReleaseNote(ApplicationUpdateInfo.UpdateItem, updateCheckKind == UpdateCheckKind.CheckOnly);
+                    ShowNewVersionReleaseNote(ApplicationUpdateInfo.UpdateItem, updateCheckKind == UpdateCheckKind.CheckOnly);
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
                     ApplicationUpdateInfo.SetError(ex.Message);
@@ -1917,7 +1917,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 );
 
                 // リリースノート再表示
-                ShowUpdateReleaseNote(ApplicationUpdateInfo.UpdateItem, false);
+                ShowNewVersionReleaseNote(ApplicationUpdateInfo.UpdateItem, false);
 
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);

@@ -1353,46 +1353,46 @@
   <data name="File_ReleaseNote_ErrorReleaseNote" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\file\releasenote\errorreleasenote.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Checking" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NewVersionState.Checking" xml:space="preserve">
     <value>チェック中</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Checking_A" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NewVersionState.Checking_A" xml:space="preserve">
     <value>チェック中</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Checksumming" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NewVersionState.Checksumming" xml:space="preserve">
     <value>検証中</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Checksumming_A" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NewVersionState.Checksumming_A" xml:space="preserve">
     <value>検証中</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Downloading" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NewVersionState.Downloading" xml:space="preserve">
     <value>ダウンロード中</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Downloading_A" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.DataNewVersionState.Downloading_A" xml:space="preserve">
     <value>ダウンロード中</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Error" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NewVersionState.Error" xml:space="preserve">
     <value>異常あり</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Error_A" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NewVersionState.Error_A" xml:space="preserve">
     <value>異常あり</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Extracting" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NewVersionState.Extracting" xml:space="preserve">
     <value>展開中</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Extracting_A" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NewVersionState.Extracting_A" xml:space="preserve">
     <value>展開中</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.None" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NewVersionState.None" xml:space="preserve">
     <value>未実行</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.None_A" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NewVersionState.None_A" xml:space="preserve">
     <value>未実行</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Ready" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NewVersionState.Ready" xml:space="preserve">
     <value>準備完了</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Ready_A" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NewVersionState.Ready_A" xml:space="preserve">
     <value>準備完了</value>
   </data>
   <data name="String_Download_ChecksumError" xml:space="preserve">
