@@ -13,9 +13,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     /// <summary>
     /// アップデートアーカイブのダウンロード処理担当。
     /// </summary>
-    public class UpdateDownloader
+    public class NewVersionDownloader
     {
-        public UpdateDownloader(ApplicationConfiguration applicationConfiguration, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public NewVersionDownloader(ApplicationConfiguration applicationConfiguration, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
             ApplicationConfiguration = applicationConfiguration;

@@ -1765,10 +1765,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 UpdateKind.Notify => UpdateCheckKind.CheckOnly,
                 _ => UpdateCheckKind.Update,
             };
-            await ExecuteCheckNewVersionAsync(updateCheckKind).ConfigureAwait(false);
+            await CheckApplicationNewVersionAsync(updateCheckKind).ConfigureAwait(false);
         }
 
-        public async Task ExecuteCheckNewVersionAsync(UpdateCheckKind updateCheckKind)
+        public async Task CheckApplicationNewVersionAsync(UpdateCheckKind updateCheckKind)
         {
             if(ApplicationUpdateInfo.State == UpdateState.None || ApplicationUpdateInfo.State == UpdateState.Error) {
                 if(ApplicationUpdateInfo.State == UpdateState.Error) {
@@ -1790,11 +1790,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return;
             }
 
-            var updateChecker = ApplicationDiContainer.Build<UpdateChecker>();
+            var newVersionChecker = ApplicationDiContainer.Build<NewVersionChecker>();
 
             ApplicationUpdateInfo.State = UpdateState.Checking;
             {
-                var appVersion = await updateChecker.CheckApplicationNewVersionAsync().ConfigureAwait(false);
+                var appVersion = await newVersionChecker.CheckApplicationNewVersionAsync().ConfigureAwait(false);
                 if(appVersion == null) {
                     Logger.LogInformation("アップデートなし");
                     ApplicationUpdateInfo.State = UpdateState.None;
@@ -1814,7 +1814,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             Logger.LogInformation("アップデート可能");
 
-            var updateDownloader = ApplicationDiContainer.Build<UpdateDownloader>();
+            var newVersionDownloader = ApplicationDiContainer.Build<NewVersionDownloader>();
 
             if(updateCheckKind != UpdateCheckKind.ForceUpdate) {
                 try {
@@ -1840,7 +1840,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 downloadFile.Refresh();
                 if(downloadFile.Exists) {
                     ApplicationUpdateInfo.State = UpdateState.Checksumming;
-                    skipDownload = await updateDownloader.ChecksumAsync(ApplicationUpdateInfo.UpdateItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
+                    skipDownload = await newVersionDownloader.ChecksumAsync(ApplicationUpdateInfo.UpdateItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
                 }
                 if(skipDownload) {
                     Logger.LogInformation("チェックサムの結果ダウンロード不要");
@@ -1849,13 +1849,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 } else {
                     downloadFile.Delete(); // ゴミは消しとく
                     ApplicationUpdateInfo.State = UpdateState.Downloading;
-                    await updateDownloader.DownloadApplicationArchiveAsync(ApplicationUpdateInfo.UpdateItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.DownloadProgress, ApplicationUpdateInfo.CurrentLogProgress)).ConfigureAwait(false);
+                    await newVersionDownloader.DownloadApplicationArchiveAsync(ApplicationUpdateInfo.UpdateItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.DownloadProgress, ApplicationUpdateInfo.CurrentLogProgress)).ConfigureAwait(false);
 
                     // ここで更新しないとチェックサムでファイル無し判定を食らう
                     downloadFile.Refresh();
 
                     ApplicationUpdateInfo.State = UpdateState.Checksumming;
-                    var checksumOk = await updateDownloader.ChecksumAsync(ApplicationUpdateInfo.UpdateItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
+                    var checksumOk = await newVersionDownloader.ChecksumAsync(ApplicationUpdateInfo.UpdateItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
                     if(!checksumOk) {
                         Logger.LogError("チェックサム異常あり");
                         ApplicationUpdateInfo.SetError(Properties.Resources.String_Download_ChecksumError);
@@ -2103,7 +2103,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             switch(process) {
                 case UpdateProcess.Download:
-                    ExecuteCheckNewVersionAsync(UpdateCheckKind.Update).ConfigureAwait(false);
+                    CheckApplicationNewVersionAsync(UpdateCheckKind.Update).ConfigureAwait(false);
                     break;
 
                 case UpdateProcess.Update:
