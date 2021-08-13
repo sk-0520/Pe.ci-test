@@ -26,6 +26,12 @@ $hashAlgorithm = "SHA256"
 $releaseTimestamp = (Get-Date).ToUniversalTime()
 $revision = (git rev-parse HEAD)
 
+function OutputJson([object] $json, [string] $outputPath) {
+	ConvertTo-Json -InputObject $json `
+	| ForEach-Object { [Text.Encoding]::UTF8.GetBytes($_) } `
+	| Set-Content -Path $outputPath -Encoding Byte
+}
+
 # アップデート情報の作成
 $updateJson = Get-Content -Path (Join-Path $currentDirPath "update.json") | ConvertFrom-Json
 foreach ($platform in $Platforms) {
@@ -48,11 +54,19 @@ foreach ($platform in $Platforms) {
 
 	$updateJson.items += $item
 }
+
 $outputUpdateFile = Join-Path $outputDirectory 'update.json'
-ConvertTo-Json -InputObject $updateJson `
-| ForEach-Object { [Text.Encoding]::UTF8.GetBytes($_) } `
-| Set-Content -Path $outputUpdateFile -Encoding Byte
-Get-Content $outputUpdateFile
+OutputJson $updateJson $outputUpdateFile
+#Get-Content $outputUpdateFile
+
+$pluginArchiveFiles = Get-ChildItem -Path $outputDirectory -Filter ('Pe.Plugins.Reference.*_*.' + $Archive) -File
+foreach ($platform in $Platforms) {
+	foreach($pluginArchiveFile in $pluginArchiveFiles) {
+		$baseName = $pluginArchiveFile.Basename.TrimEnd('_' + $platform)
+		$targetName = ConvertFileName $baseName $version $platform $archive
+		$targetName
+	}
+}
 
 switch ($TargetRepository) {
 	'bitbucket' {
@@ -63,9 +77,7 @@ switch ($TargetRepository) {
 			}
 		}
 		$bitbucketTagApiFile = Join-Path $outputDirectory "bitbucket-tag.json"
-		ConvertTo-Json -InputObject $tagJson `
-		| ForEach-Object { [Text.Encoding]::UTF8.GetBytes($_) } `
-		| Set-Content -Path $bitbucketTagApiFile -Encoding Byte
-		Get-Content $bitbucketTagApiFile
+		OutputJson $tagJson $bitbucketTagApiFile
+		#Get-Content $bitbucketTagApiFile
 	}
 }
