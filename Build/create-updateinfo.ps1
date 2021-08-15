@@ -32,25 +32,29 @@ function OutputJson([object] $json, [string] $outputPath) {
 	| Set-Content -Path $outputPath -Encoding Byte
 }
 
+function CreateUpdateItem([string] $archiveFilePath, [string] $noteName, [version] $minimumVersion) {
+	return @{
+		release            = $releaseTimestamp.ToString("s")
+		version            = $version
+		revision           = $revision
+		platform           = $platform
+		minimum_version    = $minimumVersion
+		note_uri           = $NoteBaseUrl.Replace("@NOTENAME@", $noteName)
+		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", $archiveFilePath)
+		archive_size       = (Get-Item -Path $archiveFilePath).Length
+		archive_kind       = $Archive
+		archive_hash_kind  = $hashAlgorithm
+		archive_hash_value = (Get-FileHash -Path $archiveFilePath -Algorithm $hashAlgorithm).Hash
+	}
+}
+
 # アップデート情報の作成
 $updateJson = Get-Content -Path (Join-Path $currentDirPath "update.json") | ConvertFrom-Json
 foreach ($platform in $Platforms) {
 	$targetName = ConvertAppArchiveFileName $version $platform $Archive
 	$targetPath = Join-Path $ReleaseDirectory $targetName
 
-	$item = @{
-		release            = $releaseTimestamp.ToString("s")
-		version            = $version
-		revision           = $revision
-		platform           = $platform
-		minimum_version    = $MinimumVersion
-		note_uri           = $NoteBaseUrl.Replace("@NOTENAME@", (ConvertReleaseNoteFileName $version))
-		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", $targetName)
-		archive_size       = (Get-Item -Path $targetPath).Length
-		archive_kind       = $Archive
-		archive_hash_kind  = $hashAlgorithm
-		archive_hash_value = (Get-FileHash -Path $targetPath -Algorithm $hashAlgorithm).Hash
-	}
+	$item = CreateUpdateItem $targetPath (ConvertReleaseNoteFileName $version) $MinimumVersion
 
 	$updateJson.items += $item
 }
@@ -59,12 +63,32 @@ $outputUpdateFile = Join-Path $outputDirectory 'update.json'
 OutputJson $updateJson $outputUpdateFile
 #Get-Content $outputUpdateFile
 
-$pluginArchiveFiles = Get-ChildItem -Path $outputDirectory -Filter ('Pe.Plugins.Reference.*_*.' + $Archive) -File
-foreach ($platform in $Platforms) {
-	foreach($pluginArchiveFile in $pluginArchiveFiles) {
-		$baseName = $pluginArchiveFile.Basename.TrimEnd('_' + $platform)
-		$targetName = ConvertFileName $baseName $version $platform $archive
-		$targetName
+$pluginProjectDirectoryPath = Join-Path $rootDirPath 'Source/Pe'
+
+$pluginProjectNames = Get-ChildItem -Path $pluginProjectDirectoryPath -Filter ('Pe.Plugins.Reference.*') -Directory | Select-Object -Property Name
+foreach($pluginProjectName in $pluginProjectNames) {
+	# $lasIndex = $pluginArchiveFile.Basename.LastIndexOf('_')
+	# $baseName = $pluginArchiveFile.Basename.Substring(0, $lasIndex);
+	# $baseName
+	# $targetName = ConvertFileName $baseName $version $platform $archive
+	# $targetName
+	$items = @()
+	foreach ($platform in $Platforms) {
+		$pluginFileName = $pluginProjectName.Name + '_' + $platform + '.' + $Archive
+		$pluginFilePath = Join-Path $outputDirectory $pluginFileName
+
+		$npteName = (ConvertFileName $pluginProjectName.Name $version '' 'html')
+		$item = CreateUpdateItem $pluginFilePath $npteName $version
+
+		$items += $item
+	}
+
+	if(0 -lt $items.Count) {
+		$pluginFiles = @{
+			items = $items
+		}
+		$outputUpdateFile = Join-Path $outputDirectory ('update-' + $pluginProjectName.Name + '.json')
+		OutputJson $pluginFiles $outputUpdateFile
 	}
 }
 
