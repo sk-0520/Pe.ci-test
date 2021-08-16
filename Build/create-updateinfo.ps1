@@ -32,14 +32,14 @@ function OutputJson([object] $json, [string] $outputPath) {
 	| Set-Content -Path $outputPath -Encoding Byte
 }
 
-function CreateUpdateItem([string] $archiveFilePath, [string] $noteName, [version] $minimumVersion) {
+function CreateUpdateItem([string] $archiveFilePath, [uri] $noteUri, [version] $minimumVersion) {
 	return @{
 		release            = $releaseTimestamp.ToString("s")
 		version            = $version
 		revision           = $revision
 		platform           = $platform
 		minimum_version    = $minimumVersion
-		note_uri           = $NoteBaseUrl.Replace("@NOTENAME@", $noteName)
+		note_uri           = $noteUri
 		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", $archiveFilePath)
 		archive_size       = (Get-Item -Path $archiveFilePath).Length
 		archive_kind       = $Archive
@@ -54,7 +54,9 @@ foreach ($platform in $Platforms) {
 	$targetName = ConvertAppArchiveFileName $version $platform $Archive
 	$targetPath = Join-Path $ReleaseDirectory $targetName
 
-	$item = CreateUpdateItem $targetPath (ConvertReleaseNoteFileName $version) $MinimumVersion
+	$noteName = (ConvertReleaseNoteFileName $version)
+	$noteUri = $NoteBaseUrl.Replace("@NOTENAME@", $noteName)
+	$item = CreateUpdateItem $targetPath $noteUri $MinimumVersion
 
 	$updateJson.items += $item
 }
@@ -65,8 +67,8 @@ OutputJson $updateJson $outputUpdateFile
 
 $pluginProjectDirectoryPath = Join-Path $rootDirPath 'Source/Pe'
 
-$pluginProjectNames = Get-ChildItem -Path $pluginProjectDirectoryPath -Filter ('Pe.Plugins.Reference.*') -Directory | Select-Object -Property Name
-foreach($pluginProjectName in $pluginProjectNames) {
+$pluginProjectDirectories = Get-ChildItem -Path $pluginProjectDirectoryPath -Filter ('Pe.Plugins.Reference.*') -Directory
+foreach($pluginProjectDirectory in $pluginProjectDirectories) {
 	# $lasIndex = $pluginArchiveFile.Basename.LastIndexOf('_')
 	# $baseName = $pluginArchiveFile.Basename.Substring(0, $lasIndex);
 	# $baseName
@@ -74,11 +76,12 @@ foreach($pluginProjectName in $pluginProjectNames) {
 	# $targetName
 	$items = @()
 	foreach ($platform in $Platforms) {
-		$pluginFileName = $pluginProjectName.Name + '_' + $platform + '.' + $Archive
+		$pluginFileName = $pluginProjectDirectory.Name + '_' + $platform + '.' + $Archive
 		$pluginFilePath = Join-Path $outputDirectory $pluginFileName
 
-		$npteName = (ConvertFileName $pluginProjectName.Name $version '' 'html')
-		$item = CreateUpdateItem $pluginFilePath $npteName $version
+		$noteName = (ConvertFileName $pluginProjectDirectory.Name $version '' 'html')
+		$noteUri = $NoteBaseUrl.Replace("@NOTENAME@", $noteName)
+		$item = CreateUpdateItem $pluginFilePath $noteUri $version
 
 		$items += $item
 	}
@@ -87,7 +90,7 @@ foreach($pluginProjectName in $pluginProjectNames) {
 		$pluginFiles = @{
 			items = $items
 		}
-		$outputUpdateFile = Join-Path $outputDirectory ('update-' + $pluginProjectName.Name + '.json')
+		$outputUpdateFile = Join-Path $outputDirectory ('update-' + $pluginProjectDirectory.Name + '.json')
 		OutputJson $pluginFiles $outputUpdateFile
 	}
 }
