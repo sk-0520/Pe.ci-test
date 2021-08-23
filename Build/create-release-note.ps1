@@ -223,14 +223,10 @@ foreach ($pluginProjectDirectory in $pluginProjectDirectories) {
 		$logRevision = $logHeader.CreateChild('a')
 		$logRevision.CreateText($hash)
 		$logRevision.attributes['class'] = 'revision'
-
 	}
 
-
-
-
 	$pluginHtmlContent = (Get-Content $pluginTemplateHtmlFile -Encoding UTF8 -Raw)
-	$pluginHtmlContent = $pluginHtmlContent.Replace('<!--NAME-->', $pluginProjectDirectory.Name)
+	$pluginHtmlContent = $pluginHtmlContent.Replace('<!--NAME-->', ($pluginProjectDirectory.Name + ', ' + $currentVersion.version))
 	$pluginHtmlContent = $pluginHtmlContent.Replace('<!--CONTENT-->', $pluginRoot.ToHtml());
 	$pluginHtmlContent = $pluginHtmlContent.Replace('//SCRIPT', (Get-Content $compiledChangelogLinkFile -Raw -Encoding UTF8))
 	$pluginHtmlContent = $pluginHtmlContent.Replace('/*STYLE*/', (Get-Content $compiledChangelogStyleFile -Raw -Encoding UTF8))
