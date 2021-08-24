@@ -37,4 +37,5 @@ artifacts:
   - path: Output\*.html
   - path: Output\help
     name: document
-
+cache:
+  - 'node_modules'
