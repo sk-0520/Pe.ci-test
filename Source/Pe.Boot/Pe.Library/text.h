@@ -1,8 +1,12 @@
 ﻿#pragma once
+#include <stddef.h>
+
 #include <tchar.h>
 
 #include "common.h"
 #include "tstring.h"
+
+typedef uint32_t text_t;
 
 static const TCHAR library__whitespace_characters[] = { _T(' '), _T('\t') };
 
@@ -18,7 +22,7 @@ typedef struct tag_TEXT
     /// <summary>
     /// 長さ。
     /// </summary>
-    size_t length;
+    text_t length;
 
     /// <summary>
     /// 管理データ。
