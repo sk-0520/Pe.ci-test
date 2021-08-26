@@ -1746,6 +1746,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
+        /// <summary>
+        /// 新バージョン遅延チェック。
+        /// </summary>
+        /// <returns></returns>
         public async Task DelayCheckNewVersionAsync()
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
@@ -1768,6 +1772,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             await CheckNewVersionAsync(updateCheckKind).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// 新バージョンチェック。
+        /// </summary>
+        /// <param name="updateCheckKind"></param>
+        /// <returns></returns>
         public async Task CheckNewVersionAsync(UpdateCheckKind updateCheckKind)
         {
             if(ApplicationUpdateInfo.State == NewVersionState.None || ApplicationUpdateInfo.State == NewVersionState.Error) {
