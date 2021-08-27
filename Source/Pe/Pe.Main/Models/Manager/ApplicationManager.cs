@@ -1747,10 +1747,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
         /// <summary>
-        /// 新バージョン遅延チェック。
+        /// アプリケーション新バージョン遅延チェック。
         /// </summary>
         /// <returns></returns>
-        public async Task DelayCheckNewVersionAsync()
+        public async Task DelayCheckApplicationNewVersionAsync()
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             UpdateKind updateKind;
@@ -1769,15 +1769,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 UpdateKind.Notify => UpdateCheckKind.CheckOnly,
                 _ => UpdateCheckKind.Update,
             };
-            await CheckNewVersionAsync(updateCheckKind).ConfigureAwait(false);
+            await CheckApplicationNewVersionAsync(updateCheckKind).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// 新バージョンチェック。
+        /// アプリケーション新バージョンチェック。
         /// </summary>
         /// <param name="updateCheckKind"></param>
         /// <returns></returns>
-        public async Task CheckNewVersionAsync(UpdateCheckKind updateCheckKind)
+        public async Task CheckApplicationNewVersionAsync(UpdateCheckKind updateCheckKind)
         {
             if(ApplicationUpdateInfo.State == NewVersionState.None || ApplicationUpdateInfo.State == NewVersionState.Error) {
                 if(ApplicationUpdateInfo.State == NewVersionState.Error) {
@@ -2059,8 +2059,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #if DEBUG
             }
 #endif
-
-            DelayCheckNewVersionAsync().ConfigureAwait(false);
+            // #735 ここにすべてをかけろ
+            DelayCheckApplicationNewVersionAsync().ConfigureAwait(false);
 #if DEBUG
             DebugStartupEnd();
 #endif
@@ -2112,7 +2112,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             switch(process) {
                 case UpdateProcess.Download:
-                    CheckNewVersionAsync(UpdateCheckKind.Update).ConfigureAwait(false);
+                    CheckApplicationNewVersionAsync(UpdateCheckKind.Update).ConfigureAwait(false);
                     break;
 
                 case UpdateProcess.Update:
