@@ -1934,6 +1934,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
+        Task CheckPluginNewVersionAsync(IPluginId pluginId)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task CheckPluginsNewVersionAsync()
+        {
+            var pluginIds = ApplicationDiContainer.Get<IMainDatabaseBarrier>().ReadData(c => {
+                var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(c, c.Implementation);
+                return pluginsEntityDao.SelectAllPluginIds().ToList();
+            });
+            throw new NotImplementedException();
+        }
+
         internal FileInfo OutputRawCrashReport(Exception exception)
         {
             var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
@@ -2060,7 +2074,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 #endif
             // #735 ここにすべてをかけろ
-            DelayCheckApplicationNewVersionAsync().ConfigureAwait(false);
+            var checkTask = DelayCheckApplicationNewVersionAsync();
+            checkTask.ConfigureAwait(false);
+            checkTask.ContinueWith(t => {
+                CheckPluginsNewVersionAsync();
+            });
 #if DEBUG
             DebugStartupEnd();
 #endif
