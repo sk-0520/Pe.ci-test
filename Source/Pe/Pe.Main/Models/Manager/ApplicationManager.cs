@@ -1934,18 +1934,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        Task CheckPluginNewVersionAsync(IPluginId pluginId)
+        Task<bool> CheckPluginNewVersionAsync(Guid pluginId)
         {
             throw new NotImplementedException();
         }
 
-        Task CheckPluginsNewVersionAsync()
+        async Task<bool> CheckPluginsNewVersionAsync()
         {
-            var pluginIds = ApplicationDiContainer.Get<IMainDatabaseBarrier>().ReadData(c => {
-                var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(c, c.Implementation);
-                return pluginsEntityDao.SelectAllPluginIds().ToList();
-            });
-            throw new NotImplementedException();
+            var mainDatabaseBarrier = ApplicationDiContainer.Get<IMainDatabaseBarrier>();
+            IList<Guid> pluginIds;
+            using(var context = mainDatabaseBarrier.WaitRead()) {
+                var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
+                pluginIds = pluginsEntityDao.SelectAllPluginIds().ToList();
+            }
+            var newVersionPlugins = new Dictionary<Guid, bool>(pluginIds.Count);
+            foreach(var pluginId in pluginIds) {
+                var newVersion = await CheckPluginNewVersionAsync(pluginId);
+                newVersionPlugins[pluginId] = newVersion;
+            }
+            foreach(var pair in newVersionPlugins) {
+                Logger.LogInformation("{0}: {1}", pair.Key, pair.Value);
+            }
+
+            return newVersionPlugins.Any(i => i.Value);
         }
 
         internal FileInfo OutputRawCrashReport(Exception exception)
@@ -2077,7 +2088,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var checkTask = DelayCheckApplicationNewVersionAsync();
             checkTask.ConfigureAwait(false);
             checkTask.ContinueWith(t => {
-                CheckPluginsNewVersionAsync();
+                CheckPluginsNewVersionAsync().ConfigureAwait(false);
             });
 #if DEBUG
             DebugStartupEnd();
