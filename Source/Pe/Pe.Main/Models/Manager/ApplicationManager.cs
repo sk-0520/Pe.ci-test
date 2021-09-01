@@ -1939,11 +1939,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var newVersionChecker = ApplicationDiContainer.Build<NewVersionChecker>();
             var mainDatabaseBarrier = ApplicationDiContainer.Get<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
+
+            IReadOnlyList<string> urls;
             using(var context = mainDatabaseBarrier.WaitWrite()) {
-                var item = await newVersionChecker.CheckPluginNewVersionAsync(pluginId, pluginVersion, context, statementLoader);
-                if(item is null) {
-                    return false;
-                }
+                var pluginVersionChecksEntityDao = new PluginVersionChecksEntityDao(context, statementLoader, context.Implementation, LoggerFactory);
+                urls = pluginVersionChecksEntityDao.SelectPluginVersionCheckUrls(pluginId).ToList();
+            }
+
+            var item = await newVersionChecker.CheckPluginNewVersionAsync(pluginId, pluginVersion, urls);
+            if(item is null) {
+                return false;
+            }
+
+            using(var context = mainDatabaseBarrier.WaitWrite()) {
+
             }
 
             return true;
