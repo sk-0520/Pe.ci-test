@@ -119,10 +119,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirstOrDefault<bool>(statement, parameter);
         }
 
-        public IEnumerable<Guid> SelectAllPluginIds()
+        public IEnumerable<PluginLastUsedData> SelectAllLastUsedPlugins()
         {
             var statement = LoadStatement();
-            return Context.Query<Guid>(statement);
+            return Context.Query<PluginLastUsedData>(statement);
         }
 
         public bool InsertPluginStateData(PluginStateData data, IDatabaseCommonStatus databaseCommonStatus)

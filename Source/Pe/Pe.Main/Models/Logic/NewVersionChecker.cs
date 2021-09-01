@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public Task<NewVersionItemData?> CheckApplicationNewVersionAsync() => CheckApplicationNewVersionAsync(CancellationToken.None);
 
-        Uri? BuildPluginUri(string baseUrl, IPlugin plugin)
+        Uri? BuildPluginUri(string baseUrl, Guid pluginId, Version pluginVersion)
         {
             if(string.IsNullOrWhiteSpace(baseUrl)) {
                 return null;
@@ -128,8 +128,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 ["TIMESTAMP-NUMBER"] = DateTime.UtcNow.ToBinary().ToString(),
                 ["APP-VERSION"] = versionConverter.ConvertNormalVersion(BuildStatus.Version),
                 ["APP-REVISION"] = BuildStatus.Revision,
-                ["PLUGIN-ID"] = plugin.PluginInformations.PluginIdentifiers.PluginId.ToString(),
-                ["PLUGIN-VERSION"] = versionConverter.ConvertNormalVersion(plugin.PluginInformations.PluginVersions.PluginVersion),
+                ["PLUGIN-ID"] = pluginId.ToString(),
+                ["PLUGIN-VERSION"] = versionConverter.ConvertNormalVersion(pluginVersion),
             };
 
             var replaced = TextUtility.ReplaceFromDictionary(baseUrl, map);
@@ -145,18 +145,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         /// <param name="plugin">プラグイン。</param>
         /// <returns>新バージョンがあれば新情報。なければ<c>null</c>。</returns>
-        public async Task<NewVersionItemData?> CheckPluginNewVersionAsync(IPlugin plugin, IDatabaseContexts contexts, IDatabaseStatementLoader statementLoader)
+        public async Task<NewVersionItemData?> CheckPluginNewVersionAsync(Guid pluginId, Version pluginVersion, IDatabaseContexts contexts, IDatabaseStatementLoader statementLoader)
         {
-            var pluginId = plugin.PluginInformations.PluginIdentifiers.PluginId;
             Debug.Assert(pluginId != ContentTypeTextNet.Pe.Plugins.DefaultTheme.DefaultTheme.Informations.PluginIdentifiers.PluginId);
 
             var pluginVersionChecksEntityDao = new PluginVersionChecksEntityDao(contexts.Context, statementLoader, contexts.Implementation, LoggerFactory);
             var urls = pluginVersionChecksEntityDao.SelectPluginVersionCheckUrls(pluginId);
 
-            var pluginVersion = plugin.PluginInformations.PluginVersions.PluginVersion;
-
             foreach(var url in urls) {
-                var uri = BuildPluginUri(url, plugin);
+                var uri = BuildPluginUri(url, pluginId, pluginVersion);
                 if(uri is null) {
                     continue;
                 }

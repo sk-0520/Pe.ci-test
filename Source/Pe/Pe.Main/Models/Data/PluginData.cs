@@ -142,4 +142,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         string PluginDirectoryPath
     );
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="Version">最終使用バージョン。</param>
+    public record PluginLastUsedData(
+        Guid PluginId,
+        Version Version
+    ): IPluginId;
 }

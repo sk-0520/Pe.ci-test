@@ -1934,23 +1934,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        Task<bool> CheckPluginNewVersionAsync(Guid pluginId)
+        async Task<bool> CheckPluginNewVersionAsync(Guid pluginId, Version pluginVersion)
         {
-            throw new NotImplementedException();
+            var newVersionChecker = ApplicationDiContainer.Build<NewVersionChecker>();
+            var mainDatabaseBarrier = ApplicationDiContainer.Get<IMainDatabaseBarrier>();
+            var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
+            using(var context = mainDatabaseBarrier.WaitWrite()) {
+                var item = await newVersionChecker.CheckPluginNewVersionAsync(pluginId, pluginVersion, context, statementLoader);
+                if(item is null) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         async Task<bool> CheckPluginsNewVersionAsync()
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Get<IMainDatabaseBarrier>();
-            IList<Guid> pluginIds;
+            IList<PluginLastUsedData> lastUsedPlugins;
             using(var context = mainDatabaseBarrier.WaitRead()) {
                 var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
-                pluginIds = pluginsEntityDao.SelectAllPluginIds().ToList();
+                lastUsedPlugins = pluginsEntityDao.SelectAllLastUsedPlugins().ToList();
             }
-            var newVersionPlugins = new Dictionary<Guid, bool>(pluginIds.Count);
-            foreach(var pluginId in pluginIds) {
-                var newVersion = await CheckPluginNewVersionAsync(pluginId);
-                newVersionPlugins[pluginId] = newVersion;
+            var newVersionPlugins = new Dictionary<Guid, bool>(lastUsedPlugins.Count);
+            foreach(var lastUsePlugin in lastUsedPlugins) {
+                var newVersion = await CheckPluginNewVersionAsync(lastUsePlugin.PluginId, lastUsePlugin.Version);
+                newVersionPlugins[lastUsePlugin.PluginId] = newVersion;
             }
             foreach(var pair in newVersionPlugins) {
                 Logger.LogInformation("{0}: {1}", pair.Key, pair.Value);
