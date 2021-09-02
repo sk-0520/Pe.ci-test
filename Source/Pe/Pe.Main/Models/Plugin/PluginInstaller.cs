@@ -15,12 +15,13 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    public class PluginInstaller
+    internal class PluginInstaller
     {
-        public PluginInstaller(EnvironmentParameters environmentParameters, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public PluginInstaller(PluginContainer pluginContainer, EnvironmentParameters environmentParameters, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
+            PluginContainer = pluginContainer;
             EnvironmentParameters = environmentParameters;
             DatabaseStatementLoader = databaseStatementLoader;
         }
@@ -29,6 +30,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
+
+        PluginContainer PluginContainer { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
@@ -92,6 +95,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 archiveExtractor.Extract(archiveFile, extractDirectory, archiveKind, progress);
 
                 return extractDirectory;
+            });
+        }
+
+        private Task<FileInfo?> GetPluginFileAsync(DirectoryInfo pluginDirectory, string pluginName, IReadOnlyList<string> extensions)
+        {
+            var file = PluginContainer.GetPluginFile(pluginDirectory, pluginName, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions);
+            if(file != null) {
+                return Task.FromResult<FileInfo?>(file);
+            }
+
+            // ファイルなければディレクトリを掘り下げていく
+            return Task.Run(() => {
+                var dirs = pluginDirectory.EnumerateDirectories();
+                foreach(var dir in dirs) {
+                    var file = PluginContainer.GetPluginFile(dir, pluginName, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions);
+                    if(file != null) {
+                        return file;
+                    }
+                }
+
+                return default;
             });
         }
 
