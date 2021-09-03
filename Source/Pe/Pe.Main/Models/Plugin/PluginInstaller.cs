@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -17,11 +18,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     internal class PluginInstaller
     {
-        public PluginInstaller(PluginContainer pluginContainer, EnvironmentParameters environmentParameters, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public PluginInstaller(PluginContainer pluginContainer, IPluginConstructorContext pluginConstructorContext, EnvironmentParameters environmentParameters, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             PluginContainer = pluginContainer;
+            PluginConstructorContext = pluginConstructorContext;
             EnvironmentParameters = environmentParameters;
             DatabaseStatementLoader = databaseStatementLoader;
         }
@@ -32,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         ILogger Logger { get; }
 
         PluginContainer PluginContainer { get; }
+        IPluginConstructorContext PluginConstructorContext { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
