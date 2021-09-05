@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="pluginFile"></param>
         /// <returns>読み込み結果。</returns>
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public PluginLoadStateData LoadPlugin(FileInfo pluginFile, IReadOnlyList<PluginStateData> pluginStateItems, Version applicationVersion, PluginConstructorContext pluginConstructorContext, Func<IDisposable> pauseReceiveLog)
+        public PluginLoadStateData LoadPlugin(FileInfo pluginFile, IReadOnlyList<PluginStateData> pluginStateItems, Version applicationVersion, IPluginConstructorContext pluginConstructorContext, Func<IDisposable> pauseReceiveLog)
         {
             var pluginBaseName = Path.GetFileNameWithoutExtension(pluginFile.Name);
             var currentPlugin = pluginStateItems.FirstOrDefault(i => string.Equals(pluginBaseName, i.PluginName, StringComparison.InvariantCultureIgnoreCase));

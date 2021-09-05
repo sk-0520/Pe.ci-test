@@ -18,12 +18,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     internal class PluginInstaller
     {
-        public PluginInstaller(PluginContainer pluginContainer, IPluginConstructorContext pluginConstructorContext, EnvironmentParameters environmentParameters, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public PluginInstaller(PluginContainer pluginContainer, IPluginConstructorContext pluginConstructorContext, Func<IDisposable> pauseReceiveLog, EnvironmentParameters environmentParameters, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             PluginContainer = pluginContainer;
             PluginConstructorContext = pluginConstructorContext;
+            PauseReceiveLog = pauseReceiveLog;
             EnvironmentParameters = environmentParameters;
             DatabaseStatementLoader = databaseStatementLoader;
         }
@@ -35,6 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         PluginContainer PluginContainer { get; }
         IPluginConstructorContext PluginConstructorContext { get; }
+        Func<IDisposable> PauseReceiveLog { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
@@ -120,6 +122,68 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
                 return default;
             });
+        }
+
+        private async Task<PluginInstallData> InstallPluginAsync(string pluginName, FileInfo archiveFile, string archiveKind, bool isManual, IEnumerable<PluginInstallData> installPluginItems, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
+        {
+            var extractedDirectory = await ExtractArchiveAsync(archiveFile, archiveKind, isManual);
+
+            var pluginFile = await GetPluginFileAsync(extractedDirectory, pluginName, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions);
+            if(pluginFile == null) {
+                // プラグインが見つかんない
+                extractedDirectory.Delete(true);
+                throw new PluginNotFoundException(extractedDirectory.FullName);
+            }
+
+            var loadStateData = PluginContainer.LoadPlugin(pluginFile, Enumerable.Empty<PluginStateData>().ToList(), BuildStatus.Version, PluginConstructorContext, PauseReceiveLog);
+            if(loadStateData.PluginId == Guid.Empty || loadStateData.LoadState != PluginState.Enable) {
+                // なんかもうダメっぽい
+                throw new PluginBrokenException(extractedDirectory.FullName);
+            }
+            Debug.Assert(loadStateData.Plugin != null);
+            Debug.Assert(loadStateData.WeekLoadContext != null);
+            if(loadStateData.WeekLoadContext.TryGetTarget(out var pluginLoadContext)) {
+                try {
+                    pluginLoadContext.Unload();
+                } catch(InvalidOperationException ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
+            }
+
+
+            var isUpdate = false;
+
+            var installTargetPlugin = installPluginItems.FirstOrDefault(i => i.PluginId == loadStateData.PluginId);
+            if(installTargetPlugin != null) {
+                if(loadStateData.PluginVersion <= installTargetPlugin.PluginVersion) {
+                    // すでに同一・新規バージョンがインストール対象になっている
+                    throw new PluginInstallException($"{loadStateData.PluginVersion}  <= {installTargetPlugin.PluginVersion}");
+                }
+            } else {
+                var installedPlugin = PluginContainer.Plugins.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == loadStateData.PluginId);
+                if(installedPlugin != null) {
+                    if(loadStateData.PluginVersion <= installedPlugin.PluginInformations.PluginVersions.PluginVersion) {
+                        // すでに同一・新規バージョンがインストールされている
+                        throw new PluginInstallException($"{loadStateData.PluginVersion}  <= {installedPlugin.PluginInformations.PluginVersions.PluginVersion}");
+                    }
+                    isUpdate = true;
+                }
+            }
+
+            var data = new PluginInstallData(loadStateData.PluginId, loadStateData.PluginName, loadStateData.PluginVersion, isUpdate ? PluginInstallMode.Update : PluginInstallMode.New, extractedDirectory.FullName, pluginFile.DirectoryName!);
+
+            // インストール対象のディレクトリを内部保持
+            using(var context = temporaryDatabaseBarrier.WaitWrite()) {
+                var installPluginsEntityDao = new InstallPluginsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                if(installPluginsEntityDao.SelectExistsInstallPlugin(loadStateData.PluginId)) {
+                    installPluginsEntityDao.DeleteInstallPlugin(loadStateData.PluginId);
+                }
+                installPluginsEntityDao.InsertInstallPlugin(data, DatabaseCommonStatus.CreateCurrentAccount());
+
+                context.Commit();
+            }
+
+            return data;
         }
 
         #endregion
