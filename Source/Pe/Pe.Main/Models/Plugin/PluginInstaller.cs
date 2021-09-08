@@ -129,7 +129,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             });
         }
 
-        private async Task<PluginInstallData> InstallPluginAsync(string pluginName, FileInfo archiveFile, string archiveKind, bool isManual, IEnumerable<PluginInstallData> installPluginItems, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
+        private string GetArchiveExtension(FileInfo archiveFile)
+        {
+            var ext = archiveFile.Extension.Substring(1)?.ToLowerInvariant() ?? string.Empty;
+            if(!Extensions.Contains(ext)) {
+                throw new PluginInvalidArchiveKindException();
+            }
+            return ext;
+        }
+
+        private string GetPluginName(FileInfo archiveFile)
+        {
+            var pluginFileName = Path.GetFileNameWithoutExtension(archiveFile.Name);
+            if(string.IsNullOrEmpty(pluginFileName)) {
+                throw new Exception($"ファイル名不明: {archiveFile}");
+            }
+
+            var endWords = new[] {
+                "_x86",
+                "_x64",
+                "_AnyCPU",
+            };
+            foreach(var endWord in endWords) {
+                if(pluginFileName.EndsWith(endWord, StringComparison.InvariantCultureIgnoreCase)) {
+                    return pluginFileName.Substring(0, pluginFileName.Length - endWord.Length);
+                }
+            }
+
+            return pluginFileName;
+        }
+
+        private async Task<PluginInstallData> InstallPluginArchiveAsync(string pluginName, FileInfo archiveFile, string archiveKind, bool isManual, IEnumerable<PluginInstallData> installPluginItems, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
         {
             var extractedDirectory = await ExtractArchiveAsync(archiveFile, archiveKind, isManual);
 
@@ -189,36 +219,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             }
 
             return data;
-        }
-
-        private string GetArchiveExtension(FileInfo archiveFile)
-        {
-            var ext = archiveFile.Extension.Substring(1)?.ToLowerInvariant() ?? string.Empty;
-            if(!Extensions.Contains(ext)) {
-                throw new PluginInvalidArchiveKindException();
-            }
-            return ext;
-        }
-
-        private string GetPluginName(FileInfo archiveFile)
-        {
-            var pluginFileName = Path.GetFileNameWithoutExtension(archiveFile.Name);
-            if(string.IsNullOrEmpty(pluginFileName)) {
-                throw new Exception($"ファイル名不明: {archiveFile}");
-            }
-
-            var endWords = new[] {
-                "_x86",
-                "_x64",
-                "_AnyCPU",
-            };
-            foreach(var endWord in endWords) {
-                if(pluginFileName.EndsWith(endWord, StringComparison.InvariantCultureIgnoreCase)) {
-                    return pluginFileName.Substring(0, pluginFileName.Length - endWord.Length);
-                }
-            }
-
-            return pluginFileName;
         }
 
         #endregion

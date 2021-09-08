@@ -1940,6 +1940,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var mainDatabaseBarrier = ApplicationDiContainer.Get<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
 
+            // 新バージョンチェック
             IReadOnlyList<string> urls;
             using(var context = mainDatabaseBarrier.WaitWrite()) {
                 var pluginVersionChecksEntityDao = new PluginVersionChecksEntityDao(context, statementLoader, context.Implementation, LoggerFactory);
@@ -1950,6 +1951,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             if(item is null) {
                 return false;
             }
+
+            // 最新バージョンアーカイブ取得
 
             using(var context = mainDatabaseBarrier.WaitWrite()) {
 
