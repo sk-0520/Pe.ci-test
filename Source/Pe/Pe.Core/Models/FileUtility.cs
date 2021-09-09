@@ -24,6 +24,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return dirInfo.FullName;
         }
 
+        /// <inheritdoc cref="MakeFileParentDirectory(string)"/>
+        public static string MakeFileParentDirectory(FileSystemInfo fileSystemInfo) => MakeFileParentDirectory(fileSystemInfo.FullName);
+
+
         /// <summary>
         /// ファイル・ディレクトリ問わずに存在するか
         /// </summary>

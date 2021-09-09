@@ -99,13 +99,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         }
 
         /// <summary>
-        /// アプリケーションアーカイブのダウンロード。
+        /// アーカイブのダウンロード。
         /// </summary>
         /// <param name="updateItem"></param>
         /// <param name="donwloadFile"></param>
         /// <param name="userNotifyProgress"></param>
         /// <returns></returns>
-        public async Task DownloadApplicationArchiveAsync(NewVersionItemData updateItem, FileInfo donwloadFile, UserNotifyProgress userNotifyProgress)
+        public async Task DownloadArchiveAsync(NewVersionItemData updateItem, FileInfo donwloadFile, UserNotifyProgress userNotifyProgress)
         {
             Logger.LogInformation("アップデートファイルダウンロード: {0}, {1}", updateItem.ArchiveUri, donwloadFile);
             userNotifyProgress.Start();

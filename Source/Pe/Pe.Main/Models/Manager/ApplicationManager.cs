@@ -1850,15 +1850,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 if(downloadFile.Exists) {
                     ApplicationUpdateInfo.State = NewVersionState.Checksumming;
                     skipDownload = await newVersionDownloader.ChecksumAsync(ApplicationUpdateInfo.NewVersionItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
+                    if(!skipDownload) {
+                        downloadFile.Delete(); // ゴミは消しとく
+                    }
                 }
                 if(skipDownload) {
                     Logger.LogInformation("チェックサムの結果ダウンロード不要");
                     IProgress<double> progress = ApplicationUpdateInfo.DownloadProgress;
                     progress.Report(1);
                 } else {
-                    downloadFile.Delete(); // ゴミは消しとく
                     ApplicationUpdateInfo.State = NewVersionState.Downloading;
-                    await newVersionDownloader.DownloadApplicationArchiveAsync(ApplicationUpdateInfo.NewVersionItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.DownloadProgress, ApplicationUpdateInfo.CurrentLogProgress)).ConfigureAwait(false);
+                    await newVersionDownloader.DownloadArchiveAsync(ApplicationUpdateInfo.NewVersionItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.DownloadProgress, ApplicationUpdateInfo.CurrentLogProgress)).ConfigureAwait(false);
 
                     // ここで更新しないとチェックサムでファイル無し判定を食らう
                     downloadFile.Refresh();
@@ -1936,6 +1938,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         async Task<bool> CheckPluginNewVersionAsync(Guid pluginId, Version pluginVersion)
         {
+            var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
             var newVersionChecker = ApplicationDiContainer.Build<NewVersionChecker>();
             var mainDatabaseBarrier = ApplicationDiContainer.Get<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
@@ -1947,12 +1950,45 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 urls = pluginVersionChecksEntityDao.SelectPluginVersionCheckUrls(pluginId).ToList();
             }
 
-            var item = await newVersionChecker.CheckPluginNewVersionAsync(pluginId, pluginVersion, urls);
-            if(item is null) {
+            var newVersionItem = await newVersionChecker.CheckPluginNewVersionAsync(pluginId, pluginVersion, urls);
+            if(newVersionItem is null) {
                 return false;
             }
 
             // 最新バージョンアーカイブ取得
+            var newVersionDownloader = ApplicationDiContainer.Build<NewVersionDownloader>();
+            var notifyProgress = ApplicationDiContainer.Build<NullNotifyProgress>();
+            var versionConverter = ApplicationDiContainer.Build<VersionConverter>();
+
+            var pluginDownloadDirectoryPath = Path.Join(environmentParameters.MachineUpdatePluginDirectory.FullName, PluginUtility.ConvertDirectoryName(pluginId));
+            var pluginDownloadFileName = PathUtility.AddExtension(versionConverter.ToFileString(newVersionItem.Version), newVersionChecker.GetExtension(newVersionItem));
+            var pluginArchivePath = Path.Join(pluginDownloadDirectoryPath, pluginDownloadFileName);
+            var pluginArchiveFile = new FileInfo(pluginArchivePath);
+            pluginArchiveFile.Refresh();
+            var skipDownload = false;
+            if(pluginArchiveFile.Exists) {
+                skipDownload = await newVersionDownloader.ChecksumAsync(newVersionItem, pluginArchiveFile, notifyProgress);
+                if(skipDownload) {
+                    Logger.LogInformation("[{0}] 既存ファイルのチェックサムは正常", pluginId);
+                } else {
+                    pluginArchiveFile.Delete();
+                }
+            }
+            if(!skipDownload) {
+                FileUtility.MakeFileParentDirectory(pluginArchiveFile);
+                await newVersionDownloader.DownloadArchiveAsync(newVersionItem, pluginArchiveFile, notifyProgress);
+
+                // ここで更新しないとチェックサムでファイル無し判定を食らう(知らんけど CheckApplicationNewVersionAsync でそう言ってる)
+                pluginArchiveFile.Refresh();
+
+                var checksumOk = await newVersionDownloader.ChecksumAsync(newVersionItem, pluginArchiveFile, notifyProgress);
+                if(!checksumOk) {
+                    Logger.LogError("[{0}] チェックサム異常あり", pluginId);
+                    return false;
+                }
+            }
+
+            // ファイル展開
 
             using(var context = mainDatabaseBarrier.WaitWrite()) {
 

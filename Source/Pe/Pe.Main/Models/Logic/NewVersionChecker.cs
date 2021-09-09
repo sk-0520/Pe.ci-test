@@ -176,6 +176,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return null;
         }
 
+        /// <summary>
+        /// アーカイブ種別から拡張子を取得。
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public string GetExtension(NewVersionItemData data)
+        {
+            var kind = (data.ArchiveKind ?? string.Empty).Trim().ToLowerInvariant();
+
+            return kind switch {
+                "zip" => "zip",
+                "7z" => "7z",
+                _ => kind ?? string.Empty,
+            };
+        }
+
         #endregion
     }
 }

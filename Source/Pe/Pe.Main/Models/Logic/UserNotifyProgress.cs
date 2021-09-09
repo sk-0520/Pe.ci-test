@@ -1,4 +1,6 @@
 using System;
+using ContentTypeTextNet.Pe.Core.Models;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
@@ -42,5 +44,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         }
 
         #endregion
+    }
+
+    public sealed class NullNotifyProgress: UserNotifyProgress
+    {
+        public NullNotifyProgress(ILoggerFactory loggerFactory)
+            : base(new DoubleProgress(loggerFactory), new StringProgress(loggerFactory))
+        { }
     }
 }
