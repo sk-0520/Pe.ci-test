@@ -1936,7 +1936,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        async Task<bool> CheckPluginNewVersionAsync(Guid pluginId, Version pluginVersion)
+        PluginInstaller CreatePluginInstaller(EnvironmentParameters environmentParameters)
+        {
+            var pluginInstaller = new PluginInstaller(
+                ApplicationDiContainer.Build<PluginContainer>(),
+                ApplicationDiContainer.Build<PluginConstructorContext>(),
+                Logging.PauseReceiveLog,
+                environmentParameters,
+                ApplicationDiContainer.Build<IDatabaseStatementLoader>(),
+                ApplicationDiContainer.Build<LoggerFactory>()
+            );
+
+            return pluginInstaller;
+        }
+
+        async Task<bool> CheckPluginNewVersionAsync(Guid pluginId, string pluginName, Version pluginVersion)
         {
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
             var newVersionChecker = ApplicationDiContainer.Build<NewVersionChecker>();
@@ -1989,6 +2003,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             // ファイル展開
+            var installItems = Enumerable.Empty<PluginInstallData>();
+            var pluginInstaller = CreatePluginInstaller(environmentParameters);
+            var pluginInstallData = await pluginInstaller.InstallPluginArchiveAsync(pluginName, pluginArchiveFile, newVersionItem.ArchiveKind, false, installItems, ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>());
 
             using(var context = mainDatabaseBarrier.WaitWrite()) {
 
@@ -2007,7 +2024,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
             var newVersionPlugins = new Dictionary<Guid, bool>(lastUsedPlugins.Count);
             foreach(var lastUsePlugin in lastUsedPlugins) {
-                var newVersion = await CheckPluginNewVersionAsync(lastUsePlugin.PluginId, lastUsePlugin.Version);
+                var newVersion = await CheckPluginNewVersionAsync(lastUsePlugin.PluginId, lastUsePlugin.Name, lastUsePlugin.Version);
                 newVersionPlugins[lastUsePlugin.PluginId] = newVersion;
             }
             foreach(var pair in newVersionPlugins) {

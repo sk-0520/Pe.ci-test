@@ -148,6 +148,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     /// <param name="Version">最終使用バージョン。</param>
     public record PluginLastUsedData(
         Guid PluginId,
+        string Name,
         Version Version
     ): IPluginId;
 }

@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginFileName;
         }
 
-        private async Task<PluginInstallData> InstallPluginArchiveAsync(string pluginName, FileInfo archiveFile, string archiveKind, bool isManual, IEnumerable<PluginInstallData> installPluginItems, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
+        public async Task<PluginInstallData> InstallPluginArchiveAsync(string pluginName, FileInfo archiveFile, string archiveKind, bool isManual, IEnumerable<PluginInstallData> installPluginItems, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
         {
             var extractedDirectory = await ExtractArchiveAsync(archiveFile, archiveKind, isManual);
 
