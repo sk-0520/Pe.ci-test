@@ -1494,7 +1494,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     var pluginDirPath = Path.GetDirectoryName(plugin.GetType().Assembly.Location)!;
                     var srcDir = new DirectoryInfo(installDataItem.PluginDirectoryPath);
-                    var destDir = new DirectoryInfo(pluginDirPath);
+                    var destDirPath = Path.Combine(environmentParameters.MachinePluginInstallDirectory.FullName, PluginUtility.ConvertDirectoryName(installDataItem.PluginId));
+                    var destDir = new DirectoryInfo(destDirPath);
                     Logger.LogInformation("インストール対象: 更新プラグイン: {0}, {1} -> {2}", installDataItem.PluginId, srcDir.FullName, destDir.FullName);
                     directoryMover.Move(srcDir, destDir);
                 }
@@ -1955,6 +1956,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
             var newVersionChecker = ApplicationDiContainer.Build<NewVersionChecker>();
             var mainDatabaseBarrier = ApplicationDiContainer.Get<IMainDatabaseBarrier>();
+            var temporaryDatabaseBarrier = ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
 
             // 新バージョンチェック
@@ -2003,13 +2005,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             // ファイル展開
-            var installItems = Enumerable.Empty<PluginInstallData>();
+            IReadOnlyList<PluginInstallData> installItems;
+            using(var context = temporaryDatabaseBarrier.WaitRead()) {
+                var installPluginsEntityDao = ApplicationDiContainer.Build<InstallPluginsEntityDao>(context, context.Implementation);
+                installItems = installPluginsEntityDao.SelectInstallPlugins().ToList();
+            }
+
             var pluginInstaller = CreatePluginInstaller(environmentParameters);
             var pluginInstallData = await pluginInstaller.InstallPluginArchiveAsync(pluginName, pluginArchiveFile, newVersionItem.ArchiveKind, false, installItems, ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>());
-
-            using(var context = mainDatabaseBarrier.WaitWrite()) {
-
-            }
 
             return true;
         }
