@@ -2014,6 +2014,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var pluginInstaller = CreatePluginInstaller(environmentParameters);
             var pluginInstallData = await pluginInstaller.InstallPluginArchiveAsync(pluginName, pluginArchiveFile, newVersionItem.ArchiveKind, false, installItems, ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>());
 
+            Logger.LogInformation("{0}", pluginInstallData);
+
             return true;
         }
 
@@ -2027,8 +2029,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
             var newVersionPlugins = new Dictionary<Guid, bool>(lastUsedPlugins.Count);
             foreach(var lastUsePlugin in lastUsedPlugins) {
-                var newVersion = await CheckPluginNewVersionAsync(lastUsePlugin.PluginId, lastUsePlugin.Name, lastUsePlugin.Version);
-                newVersionPlugins[lastUsePlugin.PluginId] = newVersion;
+                try {
+                    var newVersion = await CheckPluginNewVersionAsync(lastUsePlugin.PluginId, lastUsePlugin.Name, lastUsePlugin.Version);
+                    newVersionPlugins[lastUsePlugin.PluginId] = newVersion;
+                } catch(Exception ex) {
+                    Logger.LogError(ex, $"[{lastUsePlugin.PluginId}] {ex.Message}");
+                    newVersionPlugins[lastUsePlugin.PluginId] = false;
+                }
             }
             foreach(var pair in newVersionPlugins) {
                 Logger.LogInformation("{0}: {1}", pair.Key, pair.Value);

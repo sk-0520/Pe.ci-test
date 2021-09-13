@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         private Task<FileInfo?> GetPluginFileAsync(DirectoryInfo pluginDirectory, string pluginName, IReadOnlyList<string> extensions)
         {
-            var file = PluginContainer.GetPluginFile(pluginDirectory, pluginName, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions);
+            var file = PluginContainer.GetPluginFile(pluginDirectory, pluginName, extensions);
             if(file != null) {
                 return Task.FromResult<FileInfo?>(file);
             }
@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return Task.Run(() => {
                 var dirs = pluginDirectory.EnumerateDirectories();
                 foreach(var dir in dirs) {
-                    var file = PluginContainer.GetPluginFile(dir, pluginName, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions);
+                    var file = PluginContainer.GetPluginFile(dir, pluginName, extensions);
                     if(file != null) {
                         return file;
                     }
