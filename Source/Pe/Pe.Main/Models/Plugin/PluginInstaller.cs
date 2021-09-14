@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     internal class PluginInstaller
     {
-        public PluginInstaller(PluginContainer pluginContainer, IPluginConstructorContext pluginConstructorContext, Func<IDisposable> pauseReceiveLog, EnvironmentParameters environmentParameters, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public PluginInstaller(PluginContainer pluginContainer, IPluginConstructorContext pluginConstructorContext, PauseReceiveLogDelegate pauseReceiveLog, EnvironmentParameters environmentParameters, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         PluginContainer PluginContainer { get; }
         IPluginConstructorContext PluginConstructorContext { get; }
-        Func<IDisposable> PauseReceiveLog { get; }
+        PauseReceiveLogDelegate PauseReceiveLog { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
