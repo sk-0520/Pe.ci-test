@@ -56,13 +56,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="installPluginItems">インストール対象プラグイン。</param>
         /// <param name="temporaryDatabaseBarrier"></param>
         /// <returns>キャンセルできたか。偽の場合はキャンセル失敗って言うより対象になかったって感じ。</returns>
-        public bool CancelInstall(Guid pluginId, ICollection<IPluginId> installPluginItems, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
+        public bool CancelInstall(Guid pluginId, IEnumerable<IPluginId> installPluginItems, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
         {
             var removeTarget = installPluginItems.FirstOrDefault(i => i.PluginId == pluginId);
             if(removeTarget == null) {
                 return false;
             }
-            installPluginItems.Remove(removeTarget);
 
             //string extractDirectoryPath;
             using(var context = temporaryDatabaseBarrier.WaitWrite()) {
@@ -129,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             });
         }
 
-        private string GetArchiveExtension(FileInfo archiveFile)
+        public string GetArchiveExtension(FileInfo archiveFile)
         {
             var ext = archiveFile.Extension.Substring(1)?.ToLowerInvariant() ?? string.Empty;
             if(!Extensions.Contains(ext)) {
@@ -138,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return ext;
         }
 
-        private string GetPluginName(FileInfo archiveFile)
+        public string GetPluginName(FileInfo archiveFile)
         {
             var pluginFileName = Path.GetFileNameWithoutExtension(archiveFile.Name);
             if(string.IsNullOrEmpty(pluginFileName)) {

@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         PluginInstallMode PluginInstallMode,
         string ExtractedDirectoryPath,
         string PluginDirectoryPath
-    );
+    ): IPluginId;
 
     /// <summary>
     ///
