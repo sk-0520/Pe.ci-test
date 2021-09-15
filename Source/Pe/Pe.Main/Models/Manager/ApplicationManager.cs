@@ -1876,8 +1876,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #if DEBUG
             }
 #endif
-            // #735 ここにすべてをかけろ
-            CheckNewVersionsAsync(DelayCheckApplicationNewVersionAsync).ConfigureAwait(false);
+            CheckNewVersionsAsync(true).ConfigureAwait(false);
 #if DEBUG
             DebugStartupEnd();
 #endif

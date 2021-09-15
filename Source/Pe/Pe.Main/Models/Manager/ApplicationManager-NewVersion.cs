@@ -26,7 +26,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region function
 
-        public Task CheckNewVersionsAsync(Func<Task> newVersionChecker)
+        public Task CheckNewVersionsAsync(bool isDelay)
+        {
+            return isDelay
+                ? CheckNewVersionsCoreAsync(DelayCheckApplicationNewVersionAsync)
+                : CheckNewVersionsCoreAsync(() => CheckApplicationNewVersionAsync(Models.Data.UpdateCheckKind.CheckOnly))
+            ;
+        }
+
+        private Task CheckNewVersionsCoreAsync(Func<Task> newVersionChecker)
         {
             var checkTask = newVersionChecker();
             checkTask.ConfigureAwait(false);
@@ -76,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         /// <param name="updateCheckKind"></param>
         /// <returns></returns>
-        public async Task CheckApplicationNewVersionAsync(UpdateCheckKind updateCheckKind)
+        private async Task CheckApplicationNewVersionAsync(UpdateCheckKind updateCheckKind)
         {
             if(ApplicationUpdateInfo.State == NewVersionState.None || ApplicationUpdateInfo.State == NewVersionState.Error) {
                 if(ApplicationUpdateInfo.State == NewVersionState.Error) {
@@ -235,7 +243,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        PluginInstaller CreatePluginInstaller(EnvironmentParameters environmentParameters)
+        private PluginInstaller CreatePluginInstaller(EnvironmentParameters environmentParameters)
         {
             var pluginInstaller = new PluginInstaller(
                 ApplicationDiContainer.Build<PluginContainer>(),
@@ -249,7 +257,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return pluginInstaller;
         }
 
-        async Task<bool> CheckPluginNewVersionAsync(Guid pluginId, string pluginName, Version pluginVersion)
+        private async Task<bool> CheckPluginNewVersionAsync(Guid pluginId, string pluginName, Version pluginVersion)
         {
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
             var newVersionChecker = ApplicationDiContainer.Build<NewVersionChecker>();
@@ -317,7 +325,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return true;
         }
 
-        async Task<bool> CheckPluginsNewVersionAsync()
+        private async Task<bool> CheckPluginsNewVersionAsync()
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Get<IMainDatabaseBarrier>();
             IList<PluginLastUsedData> lastUsedPlugins;
@@ -341,7 +349,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             return newVersionPlugins.Any(i => i.Value);
         }
-
 
         #endregion
     }
