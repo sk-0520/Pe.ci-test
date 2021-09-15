@@ -717,7 +717,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 DelayResetScreenViewElements();
                 if(e.Reason == SessionSwitchReason.SessionUnlock) {
                     // アップデート処理とかとか
-                    DelayCheckApplicationNewVersionAsync().ConfigureAwait(false);
+                    CheckNewVersionsAsync(DelayCheckApplicationNewVersionAsync).ConfigureAwait(false);
                 }
             } else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
                 BackupSettingsDefault(ApplicationDiContainer);

@@ -26,12 +26,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region function
 
+        public Task CheckNewVersionsAsync(Func<Task> newVersionChecker)
+        {
+            var checkTask = newVersionChecker();
+            checkTask.ConfigureAwait(false);
+            return checkTask.ContinueWith(t => {
+                if(t.IsCompletedSuccessfully) {
+                    if(ApplicationUpdateInfo.NewVersionItem is null && !ExistsPluginNewVersion) {
+                        var pluginTask = CheckPluginsNewVersionAsync();
+                        pluginTask.ConfigureAwait(false);
+                        pluginTask.ContinueWith(t => {
+                            if(t.IsCompletedSuccessfully) {
+                                ExistsPluginNewVersion = t.Result;
+                            }
+                        });
+                    }
+                }
+            });
+        }
 
         /// <summary>
         /// アプリケーション新バージョン遅延チェック。
         /// </summary>
         /// <returns></returns>
-        public async Task DelayCheckApplicationNewVersionAsync()
+        private async Task DelayCheckApplicationNewVersionAsync()
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             UpdateKind updateKind;

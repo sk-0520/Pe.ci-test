@@ -204,6 +204,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         public NewVersionInfo ApplicationUpdateInfo { get; }
+        /// <summary>
+        /// プラグインの新規バージョンが存在するか。
+        /// </summary>
+        public bool ExistsPluginNewVersion { get; private set; }
 
         public bool CanCallNotifyAreaMenu { get; private set; }
 
@@ -1873,15 +1877,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 #endif
             // #735 ここにすべてをかけろ
-            var checkTask = DelayCheckApplicationNewVersionAsync();
-            checkTask.ConfigureAwait(false);
-            checkTask.ContinueWith(t => {
-                if(t.IsCompletedSuccessfully) {
-                    if(ApplicationUpdateInfo.NewVersionItem is null) {
-                        CheckPluginsNewVersionAsync().ConfigureAwait(false);
-                    }
-                }
-            });
+            CheckNewVersionsAsync(DelayCheckApplicationNewVersionAsync).ConfigureAwait(false);
 #if DEBUG
             DebugStartupEnd();
 #endif
