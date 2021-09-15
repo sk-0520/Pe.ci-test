@@ -2173,7 +2173,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var checkTask = DelayCheckApplicationNewVersionAsync();
             checkTask.ConfigureAwait(false);
             checkTask.ContinueWith(t => {
-                CheckPluginsNewVersionAsync().ConfigureAwait(false);
+                if(t.IsCompletedSuccessfully) {
+                    if(ApplicationUpdateInfo.NewVersionItem is null) {
+                        CheckPluginsNewVersionAsync().ConfigureAwait(false);
+                    }
+                }
             });
 #if DEBUG
             DebugStartupEnd();
