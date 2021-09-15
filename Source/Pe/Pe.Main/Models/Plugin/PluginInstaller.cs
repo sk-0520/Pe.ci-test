@@ -16,6 +16,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
+    /// <summary>
+    /// プラグインインストール。
+    /// </summary>
     internal class PluginInstaller
     {
         public PluginInstaller(PluginContainer pluginContainer, IPluginConstructorContext pluginConstructorContext, PauseReceiveLogDelegate pauseReceiveLog, EnvironmentParameters environmentParameters, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
@@ -137,11 +140,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return ext;
         }
 
+        /// <summary>
+        /// アーカイブファイルからプラグイン名を取得。
+        /// <para>性善説を信じたファイル名判定。</para>
+        /// </summary>
+        /// <param name="archiveFile"></param>
+        /// <returns></returns>
+        /// <exception cref="PluginArchiveNameException" />
         public string GetPluginName(FileInfo archiveFile)
         {
             var pluginFileName = Path.GetFileNameWithoutExtension(archiveFile.Name);
             if(string.IsNullOrEmpty(pluginFileName)) {
-                throw new Exception($"ファイル名不明: {archiveFile}");
+                throw new PluginArchiveNameException($"ファイル名不明: {archiveFile}");
             }
 
             var endWords = new[] {
@@ -158,6 +168,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginFileName;
         }
 
+        /// <summary>
+        /// プラグインアーカイブファイルをプラグインインストール完了(仮)状態へ処理する。
+        /// </summary>
+        /// <param name="pluginName"></param>
+        /// <param name="archiveFile"></param>
+        /// <param name="archiveKind"></param>
+        /// <param name="isManual"></param>
+        /// <param name="installPluginItems"></param>
+        /// <param name="temporaryDatabaseBarrier"></param>
+        /// <returns></returns>
         public async Task<PluginInstallData> InstallPluginArchiveAsync(string pluginName, FileInfo archiveFile, string archiveKind, bool isManual, IEnumerable<PluginInstallData> installPluginItems, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
         {
             var extractedDirectory = await ExtractArchiveAsync(archiveFile, archiveKind, isManual);

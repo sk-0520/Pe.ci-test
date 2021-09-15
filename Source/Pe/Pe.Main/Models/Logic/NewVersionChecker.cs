@@ -15,6 +15,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
+    /// <summary>
+    /// 新バージョン確認。
+    /// </summary>
     public class NewVersionChecker
     {
         public NewVersionChecker(ApplicationConfiguration applicationConfiguration, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
@@ -70,7 +73,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <returns>新バージョンがあれば新情報。なければ<c>null</c>。</returns>
         public async Task<NewVersionItemData?> CheckApplicationNewVersionAsync(CancellationToken token)
         {
-
             var uri = new Uri(
                 TextUtility.ReplaceFromDictionary(
                     ApplicationConfiguration.General.UpdateCheckUri.OriginalString,
@@ -116,6 +118,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public Task<NewVersionItemData?> CheckApplicationNewVersionAsync() => CheckApplicationNewVersionAsync(CancellationToken.None);
 
+        /// <summary>
+        /// プラグイン用URIの構築。
+        /// </summary>
+        /// <param name="baseUrl">元URL。</param>
+        /// <param name="pluginId">プラグインID。</param>
+        /// <param name="pluginVersion">プラグインバージョン。</param>
+        /// <returns>構築したURI。構築できなかった場合は<c>null</c></returns>
         Uri? BuildPluginUri(string baseUrl, Guid pluginId, Version pluginVersion)
         {
             if(string.IsNullOrWhiteSpace(baseUrl)) {

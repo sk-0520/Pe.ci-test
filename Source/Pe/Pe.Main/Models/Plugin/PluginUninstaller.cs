@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
+    /// <summary>
+    /// プラグインアンインストール処理。
+    /// </summary>
     public class PluginUninstaller
     {
         public PluginUninstaller(IDatabaseContextsPack databaseContextsPack, IDatabaseStatementLoader statementLoader, EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
