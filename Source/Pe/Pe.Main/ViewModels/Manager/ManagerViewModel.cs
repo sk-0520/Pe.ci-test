@@ -164,6 +164,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 SetProperty(ref this._isOpenContextMenu, value);
                 if(IsOpenContextMenu) {
                     RaisePropertyChanged(nameof(ShowPlatformOldVersion));
+                    RaisePropertyChanged(nameof(UpdateInfo));
+                    RaisePropertyChanged(nameof(ExistsNewVersion));
                 }
                 Logger.LogDebug("[#530調査] <IsOpenContextMenu> IsOpenContextMenu = {0}, IsEnabledManager = {1}", IsOpenContextMenu, IsEnabledManager);
             }
@@ -171,6 +173,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
 
         public IReadOnlyNewVersionInfo UpdateInfo => ApplicationManager.ApplicationUpdateInfo;
+
+        public bool ExistsNewVersion => ApplicationManager.ApplicationUpdateInfo.IsReady || ApplicationManager.ExistsPluginNewVersion;
 
         #endregion
 
