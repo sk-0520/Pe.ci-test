@@ -1464,7 +1464,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CefSharp.Cef.Shutdown();
         }
 
-        private void PrepareLatestPlugins()
+        /// <summary>
+        /// 最新バージョンプラグインを構築。
+        /// </summary>
+        /// <param name="ignoreUpdate"></param>
+        private void PrepareLatestPlugins(bool ignoreUpdate)
         {
             var temporaryBarrier = ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>();
             IList<PluginInstallData> installDataItems;
@@ -1488,7 +1492,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     var destDir = new DirectoryInfo(destDirPath);
                     Logger.LogInformation("インストール対象: 新規プラグイン: {0}, {1} -> {2}", installDataItem.PluginId, srcDir.FullName, destDir.FullName);
                     directoryMover.Move(srcDir, destDir);
-                } else {
+                } else if(!ignoreUpdate) {
                     Debug.Assert(installDataItem.PluginInstallMode == PluginInstallMode.Update);
                     // 更新の場合、元プラグインのディレクトリ名をあれこれ調整してほわー
                     if(!pluginMap.TryGetValue(installDataItem.PluginId, out var plugin)) {
@@ -1519,7 +1523,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 BackgroundAddon.RunShutdown(backgroundAddonProxyRunShutdownContext);
             }
 
-            PrepareLatestPlugins();
+            PrepareLatestPlugins(ignoreUpdate);
 
             UnloadPlugins();
 
@@ -1545,7 +1549,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Logger.LogError(ex, ex.Message);
                 }
             }
-
 
             StopHook();
             DisposeHook();
