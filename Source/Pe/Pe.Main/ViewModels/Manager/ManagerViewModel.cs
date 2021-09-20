@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 if(IsOpenContextMenu) {
                     RaisePropertyChanged(nameof(ShowPlatformOldVersion));
                     RaisePropertyChanged(nameof(UpdateInfo));
-                    RaisePropertyChanged(nameof(ChangedPlugin));
+                    RaisePropertyChanged(nameof(PluginChanges));
                 }
                 Logger.LogDebug("[#530調査] <IsOpenContextMenu> IsOpenContextMenu = {0}, IsEnabledManager = {1}", IsOpenContextMenu, IsEnabledManager);
             }
@@ -174,7 +174,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         public IReadOnlyNewVersionInfo UpdateInfo => ApplicationManager.ApplicationUpdateInfo;
 
-        public bool ChangedPlugin => ApplicationManager.ExistsPluginNewVersion;
+        /// <summary>
+        /// プラグイン変更有無。
+        /// </summary>
+        public bool PluginChanges => ApplicationManager.ExistsPluginNewVersion;
 
         #endregion
 
@@ -262,6 +265,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             }
         ));
 
+        public ICommand RebootCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 ApplicationManager.Reboot();
+             }
+         ));
 
         public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {

@@ -2197,4 +2197,7 @@ Pe を終了してから実行してください</value>
   <data name="String_Setting_Generals_Note_AutoHidden" xml:space="preserve">
     <value>自動的に隠す時間(秒)</value>
   </data>
+  <data name="String_AppManager_PluginApply_A" xml:space="preserve">
+    <value>プラグイン即時適用のため再起動(_R)</value>
+  </data>
 </root>

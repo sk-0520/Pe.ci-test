@@ -601,6 +601,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   プラグイン即時適用のため再起動(_R) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_PluginApply_A {
+            get {
+                return ResourceManager.GetString("String_AppManager_PluginApply_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   アップデートして再起動(_R) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_Reboot_Update_A {
