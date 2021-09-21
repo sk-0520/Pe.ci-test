@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 if(IsOpenContextMenu) {
                     RaisePropertyChanged(nameof(ShowPlatformOldVersion));
                     RaisePropertyChanged(nameof(UpdateInfo));
-                    RaisePropertyChanged(nameof(PluginChanges));
+                    RaisePropertyChanged(nameof(ExistsPluginChanges));
                 }
                 Logger.LogDebug("[#530調査] <IsOpenContextMenu> IsOpenContextMenu = {0}, IsEnabledManager = {1}", IsOpenContextMenu, IsEnabledManager);
             }
@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         /// <summary>
         /// プラグイン変更有無。
         /// </summary>
-        public bool PluginChanges => ApplicationManager.ExistsPluginNewVersion;
+        public bool ExistsPluginChanges => ApplicationManager.ExistsPluginChanges;
 
         #endregion
 

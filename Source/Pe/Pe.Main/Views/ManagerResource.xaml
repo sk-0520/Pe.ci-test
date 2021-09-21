@@ -215,7 +215,7 @@
       <MenuItem.Style>
         <Style TargetType="MenuItem">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding PluginChanges}" Value="True">
+            <DataTrigger Binding="{Binding ExistsPluginChanges}" Value="True">
               <Setter Property="Visibility" Value="Visible" />
               <Setter Property="IsEnabled" Value="True" />
             </DataTrigger>

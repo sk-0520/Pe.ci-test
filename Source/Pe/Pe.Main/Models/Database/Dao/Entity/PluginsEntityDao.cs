@@ -125,6 +125,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Query<PluginLastUsedData>(statement);
         }
 
+        public bool SelectExistsPluginByState(PluginState pluginState)
+        {
+            var pluginStateTransfer = new EnumTransfer<PluginState>();
+
+            var statement = LoadStatement();
+            var parameter = new {
+                State = pluginStateTransfer.ToString(pluginState),
+            };
+            return Context.QueryFirstOrDefault<bool>(statement, parameter);
+        }
+
         public bool InsertPluginStateData(PluginStateData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();

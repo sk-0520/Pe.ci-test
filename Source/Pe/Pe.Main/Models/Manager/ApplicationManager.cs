@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <summary>
         /// プラグインの新規バージョンが存在するか。
         /// </summary>
-        public bool ExistsPluginNewVersion { get; private set; }
+        public bool ExistsPluginChanges { get; private set; }
 
         public bool CanCallNotifyAreaMenu { get; private set; }
 
@@ -305,23 +305,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     .ToList()
                 ;
 
-                // バックアップ処理開始
-                //string userBackupDirectoryPath;
-                //using(var commander = container.Get<IMainDatabaseBarrier>().WaitRead()) {
-                //    var appGeneralSettingEntityDao = container.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
-                //    userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
-                //}
-                //try {
-                //    BackupSettingsCore(
-                //        environmentParameters.UserSettingDirectory,
-                //        environmentParameters.UserBackupDirectory,
-                //        DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"),
-                //        environmentParameters.Configuration.Backup.SettingCount,
-                //        userBackupDirectoryPath
-                //    );
-                //} catch(Exception ex) {
-                //    Logger.LogError(ex, "バックアップ処理失敗: {0}", ex.Message);
-                //}
                 BackupSettingsDefault(container);
 
                 var accessorPack = container.Get<IDatabaseAccessorPack>();
@@ -363,6 +346,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
                 NotifyLogElement.Refresh();
                 NotifyManager.SendSettingChanged();
+
+                ExistsPluginChanges = CheckPluginChanges();
             } else {
                 Logger.LogInformation("設定は保存されなかったため現在要素継続");
                 EndPreferences(settingElement, Logger);
@@ -1916,6 +1901,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 sizeConverter.ConvertHumanReadableByte(old - now), old - now,
                 endTimestamp - startTimestamp
             );
+        }
+
+        /// <summary>
+        /// プラグイン(DLL周り)に変更があったか。
+        /// </summary>
+        /// <returns>真: 変更があった。</returns>
+        private bool CheckPluginChanges()
+        {
+            var main = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+            var temp = ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>();
+
+            var existsUninstall = false;
+            using(var context = main.WaitRead()) {
+                var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
+                existsUninstall = pluginsEntityDao.SelectExistsPluginByState(PluginState.Uninstall);
+            }
+
+            var existsInstall = false;
+            using(var context = temp.WaitRead()) {
+                var installPluginsEntityDao = ApplicationDiContainer.Build<InstallPluginsEntityDao>(context, context.Implementation);
+                existsInstall = installPluginsEntityDao.SelectExistsInstallPlugin();
+            }
+
+            return existsUninstall || existsInstall;
         }
 
         #endregion

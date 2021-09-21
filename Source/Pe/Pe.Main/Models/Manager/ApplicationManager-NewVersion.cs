@@ -40,12 +40,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             checkTask.ConfigureAwait(false);
             return checkTask.ContinueWith(t => {
                 if(t.IsCompletedSuccessfully) {
-                    if(ApplicationUpdateInfo.NewVersionItem is null && !ExistsPluginNewVersion) {
+                    if(ApplicationUpdateInfo.NewVersionItem is null && !ExistsPluginChanges) {
                         var pluginTask = CheckPluginsNewVersionAsync();
                         pluginTask.ConfigureAwait(false);
                         pluginTask.ContinueWith(t => {
-                            if(t.IsCompletedSuccessfully) {
-                                ExistsPluginNewVersion = t.Result;
+                            if(t.IsCompletedSuccessfully && t.Result) {
+                                ExistsPluginChanges = CheckPluginChanges();
                             }
                         });
                     }
