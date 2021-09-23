@@ -168,6 +168,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginFileName;
         }
 
+        IPluginLoadState LoadDirectPlugin(FileInfo pluginFile, DirectoryInfo pluginDirectory)
+        {
+            var loadStateData2 = PluginContainer.LoadPlugin(pluginFile, Enumerable.Empty<PluginStateData>().ToList(), BuildStatus.Version, PluginConstructorContext, PauseReceiveLog);
+            if(loadStateData2.PluginId == Guid.Empty || loadStateData2.LoadState != PluginState.Enable) {
+                // なんかもうダメっぽい
+                throw new PluginBrokenException(pluginDirectory.FullName);
+            }
+            Debug.Assert(loadStateData2.Plugin != null);
+            Debug.Assert(loadStateData2.WeekLoadContext != null);
+            if(loadStateData2.WeekLoadContext.TryGetTarget(out var pluginLoadContext)) {
+                try {
+                    pluginLoadContext.Unload();
+                } catch(InvalidOperationException ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
+            }
+
+            return loadStateData2;
+        }
+
+        IPluginLoadState LoadProcessPlugin(FileInfo pluginFile, DirectoryInfo pluginDirectory)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// プラグインアーカイブファイルをプラグインインストール完了(仮)状態へ処理する。
         /// </summary>
@@ -176,34 +201,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="archiveKind"></param>
         /// <param name="isManual"></param>
         /// <param name="installPluginItems"></param>
+        /// <param name="pluginInstallAssemblyMode">直接読み込むか。偽の場合に新規プロセスを立ち上げて頑張る。</param>
         /// <param name="temporaryDatabaseBarrier"></param>
         /// <returns></returns>
-        public async Task<PluginInstallData> InstallPluginArchiveAsync(string pluginName, FileInfo archiveFile, string archiveKind, bool isManual, IEnumerable<PluginInstallData> installPluginItems, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
+        public async Task<PluginInstallData> InstallPluginArchiveAsync(string pluginName, FileInfo archiveFile, string archiveKind, bool isManual, IEnumerable<PluginInstallData> installPluginItems, PluginInstallAssemblyMode pluginInstallAssemblyMode, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
         {
-            var extractedDirectory = await ExtractArchiveAsync(archiveFile, archiveKind, isManual);
+            var extractedDirectory = await ExtractArchiveAsync(archiveFile, archiveKind, isManual).ConfigureAwait(false);
 
-            var pluginFile = await GetPluginFileAsync(extractedDirectory, pluginName, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions);
+            var pluginFile = await GetPluginFileAsync(extractedDirectory, pluginName, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions).ConfigureAwait(false);
             if(pluginFile == null) {
                 // プラグインが見つかんない
                 extractedDirectory.Delete(true);
                 throw new PluginNotFoundException(extractedDirectory.FullName);
             }
 
-            var loadStateData = PluginContainer.LoadPlugin(pluginFile, Enumerable.Empty<PluginStateData>().ToList(), BuildStatus.Version, PluginConstructorContext, PauseReceiveLog);
-            if(loadStateData.PluginId == Guid.Empty || loadStateData.LoadState != PluginState.Enable) {
-                // なんかもうダメっぽい
-                throw new PluginBrokenException(extractedDirectory.FullName);
-            }
-            Debug.Assert(loadStateData.Plugin != null);
-            Debug.Assert(loadStateData.WeekLoadContext != null);
-            if(loadStateData.WeekLoadContext.TryGetTarget(out var pluginLoadContext)) {
-                try {
-                    pluginLoadContext.Unload();
-                } catch(InvalidOperationException ex) {
-                    Logger.LogError(ex, ex.Message);
-                }
-            }
-
+            var loadStateData = pluginInstallAssemblyMode switch {
+                PluginInstallAssemblyMode.Direct => LoadDirectPlugin(pluginFile, extractedDirectory),
+                PluginInstallAssemblyMode.Process => LoadProcessPlugin(pluginFile, extractedDirectory),
+                _ => throw new NotImplementedException(),
+            };
 
             var isUpdate = false;
 

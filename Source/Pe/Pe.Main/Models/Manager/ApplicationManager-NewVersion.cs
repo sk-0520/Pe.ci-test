@@ -318,7 +318,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var pluginInstaller = CreatePluginInstaller(environmentParameters);
-            var pluginInstallData = await pluginInstaller.InstallPluginArchiveAsync(pluginName, pluginArchiveFile, newVersionItem.ArchiveKind, false, installItems, ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>());
+            var pluginInstallData = await pluginInstaller.InstallPluginArchiveAsync(pluginName, pluginArchiveFile, newVersionItem.ArchiveKind, false, installItems, PluginInstallAssemblyMode.Process, ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>());
 
             Logger.LogInformation("{0}", pluginInstallData);
 

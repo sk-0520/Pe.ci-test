@@ -45,6 +45,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Update,
     }
 
+    /// <summary>
+    /// プラグインインストール時のチェック用アセンブリ読み込み方法。
+    /// </summary>
+    public enum PluginInstallAssemblyMode
+    {
+        /// <summary>
+        /// 直接読み込み。
+        /// </summary>
+        Direct,
+        /// <summary>
+        /// 別プロセスで読み込む。
+        /// </summary>
+        Process,
+    }
+
     public interface IPluginId
     {
         #region property
@@ -66,8 +81,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public interface IPluginLoadState
+    {
+        #region property
 
-    public class PluginLoadStateData: DataBase
+        public Guid PluginId { get; }
+        public string PluginName { get; }
+        public Version PluginVersion { get; }
+        public PluginState LoadState { get; }
+
+        #endregion
+    }
+
+    public record PluginLoadStateInfo(
+        Guid PluginId,
+        string PluginName,
+        Version PluginVersion,
+        PluginState LoadState
+    ): IPluginLoadState;
+
+    public class PluginLoadStateData: DataBase, IPluginLoadState
     {
         public PluginLoadStateData(Guid pluginId, string pluginName, Version pluginVersion, PluginState loadState, WeakReference<PluginAssemblyLoadContext>? weekLoadContext, IPlugin? plugin)
         {
@@ -81,11 +114,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region property
 
-        public Guid PluginId { get; }
-        public string PluginName { get; }
-        public Version PluginVersion { get; }
-        public PluginState LoadState { get; }
-
         /// <summary>
         /// 対象プラグインの開放状態。
         /// <para><see cref="LoadState"/> が <see cref="PluginState.Disable"/> だと null。</para>
@@ -96,6 +124,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <para><see cref="LoadState"/> が <see cref="PluginState.Enable"/> のみ有効でそれ以外の場合はもうたぶん解放されてる(はず)。</para>
         /// </summary>
         public IPlugin? Plugin { get; }
+
+        #endregion
+
+        #region IPluginLoadState
+
+        public Guid PluginId { get; }
+        public string PluginName { get; }
+        public Version PluginVersion { get; }
+        public PluginState LoadState { get; }
+
         #endregion
     }
 

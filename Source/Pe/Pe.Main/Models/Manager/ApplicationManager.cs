@@ -1846,7 +1846,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var arg = string.Join(' ', args);
 
             var systemExecutor = new SystemExecutor();
-            var commandPath = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, "exe");
+            var commandPath = ApplicationBoot.CommandPath;
             Logger.LogInformation("path: {0}", commandPath);
             Logger.LogInformation("args: {0}", arg);
             systemExecutor.ExecuteFile(commandPath, arg);
