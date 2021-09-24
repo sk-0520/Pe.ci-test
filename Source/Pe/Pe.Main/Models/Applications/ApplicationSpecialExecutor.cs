@@ -18,6 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             None,
             DryRun,
+            ClientServer,
         }
 
         class ConsoleLifetime: DisposerBase
@@ -96,6 +97,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             switch(appSpecialMode) {
                 case "DRY-RUN":
                     mode = Mode.DryRun;
+                    break;
+
+                case "CLIENT-SERVER":
+                    mode = Mode.ClientServer;
                     break;
 
                 default:
