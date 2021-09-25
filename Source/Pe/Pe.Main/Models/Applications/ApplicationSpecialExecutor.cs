@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             None,
             DryRun,
-            ClientServer,
+            InterProcess,
         }
 
         class ConsoleLifetime: DisposerBase
@@ -99,8 +99,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     mode = Mode.DryRun;
                     break;
 
-                case "CLIENT-SERVER":
-                    mode = Mode.ClientServer;
+                case "IPC":
+                    mode = Mode.InterProcess;
                     break;
 
                 default:
