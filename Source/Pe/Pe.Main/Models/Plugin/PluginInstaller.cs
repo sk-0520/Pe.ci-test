@@ -190,6 +190,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         IPluginLoadState LoadProcessPlugin(FileInfo pluginFile, DirectoryInfo pluginDirectory)
         {
+            var applicationBoot = new ApplicationBoot(LoggerFactory);
             throw new NotImplementedException();
         }
 
