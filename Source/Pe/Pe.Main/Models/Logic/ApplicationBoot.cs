@@ -40,20 +40,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        public bool TryExecuteIpc(ApplicationSpecialExecuteIpcMode ipcMode, IEnumerable<string> arguments, Action<CommandLine> action)
+        public bool TryExecuteIpc(ApplicationSpecialExecuteIpcMode ipcMode, IEnumerable<string> arguments, Action<CommandLine, string> action)
         {
             try {
                 using var pipeServerStream = new AnonymousPipeServerStream(PipeDirection.In);
 
-                var argument = new[] {
-                    new {
-                        Key = "_mode",
-                        Value = "IPC",
-                    },
-                    new {
-                        Key = "_ipc-handle",
-                        Value = pipeServerStream.GetClientHandleAsString(),
-                    }
+                var argument = new Dictionary<string, string> {
+                    ["_mode"] = "IPC",
+                    ["_ipc-handle"] = pipeServerStream.GetClientHandleAsString(),
+                    ["_ipc-mode"] = ipcMode.ToString(),
                 }.Select(
                     i => "--" + i.Key + "=" + CommandLine.Escape(i.Value)
                 ).Concat(
@@ -64,7 +59,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 process.StartInfo.FileName = CommandPath;
                 process.StartInfo.Arguments = argument;
 
+                using var pipeServerReader = new StreamReader(pipeServerStream);
+
+                var commandLine = new CommandLine(arguments, false);
+
                 process.Start();
+
+                var output = pipeServerReader.ReadToEnd();
+
+                action(commandLine, output);
 
                 return true;
             } catch(Exception ex) {
