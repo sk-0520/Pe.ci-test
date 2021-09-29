@@ -672,4 +672,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
+    public static class CommandLineDictionaryExtensions
+    {
+        #region function
+
+        /// <summary>
+        /// <see cref="IDictionary{TKey, TValue}"/>をいい感じにつなげる。
+        /// </summary>
+        /// <param name="map"></param>
+        /// <returns></returns>
+        public static IEnumerable<string> ToCommandLineArguments(this IDictionary<string, string> map, string header = "--", char separator = '=')
+        {
+            return map.Select(i => header + i.Key + separator + CommandLine.Escape(i.Value));
+        }
+
+        #endregion
+    }
 }

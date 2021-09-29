@@ -191,6 +191,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         IPluginLoadState LoadProcessPlugin(FileInfo pluginFile, DirectoryInfo pluginDirectory)
         {
             var applicationBoot = new ApplicationBoot(LoggerFactory);
+            var arguments = new Dictionary<string, string> {
+                ["ipc-file"] = pluginFile.FullName,
+            }.ToCommandLineArguments();
+            applicationBoot.TryExecuteIpc(ApplicationSpecialExecuteIpcMode.PluginState, arguments, (c, o) => {
+
+            });
             throw new NotImplementedException();
         }
 
