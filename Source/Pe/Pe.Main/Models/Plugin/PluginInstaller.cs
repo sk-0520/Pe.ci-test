@@ -194,7 +194,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             var arguments = new Dictionary<string, string> {
                 ["ipc-file"] = pluginFile.FullName,
             }.ToCommandLineArguments();
-            applicationBoot.TryExecuteIpc(ApplicationSpecialExecuteIpcMode.PluginState, arguments, (c, o) => {
+            applicationBoot.TryExecuteIpc(IpcMode.PluginState, arguments, (c, o) => {
 
             });
             throw new NotImplementedException();

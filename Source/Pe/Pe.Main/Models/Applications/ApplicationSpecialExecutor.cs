@@ -10,11 +10,11 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
-    public enum ApplicationSpecialExecuteIpcMode
-    {
-        PluginState
-    }
 
+    /// <summary>
+    /// 本体特殊起動処理。
+    /// <para>設定・ディレクトリ・DI構築がなされていない状態で使用される。</para>
+    /// </summary>
     public class ApplicationSpecialExecutor
     {
         #region define
@@ -26,10 +26,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             /// ドライラン。
             /// </summary>
             DryRun,
-            /// <summary>
-            /// 一時的プロセス間通信。
-            /// </summary>
-            InterProcessCommunication,
         }
 
         class ConsoleLifetime: DisposerBase
@@ -86,11 +82,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return 0;
         }
 
-        private int RunInterProcessCommunication(IEnumerable<string> arguments)
-        {
-            return 0;
-        }
-
         private int RunCore(Mode mode, IEnumerable<string> arguments)
         {
             Debug.Assert(mode != Mode.None);
@@ -100,9 +91,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             switch(mode) {
                 case Mode.DryRun:
                     return RunDryRun(arguments);
-
-                case Mode.InterProcessCommunication:
-                    return RunInterProcessCommunication(arguments);
 
                 default:
                     throw new NotImplementedException();
@@ -116,10 +104,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             switch(appSpecialMode) {
                 case "DRY-RUN":
                     mode = Mode.DryRun;
-                    break;
-
-                case "IPC":
-                    mode = Mode.InterProcessCommunication;
                     break;
 
                 default:

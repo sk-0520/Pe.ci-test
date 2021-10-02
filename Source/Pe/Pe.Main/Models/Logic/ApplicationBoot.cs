@@ -15,6 +15,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public delegate void ExecuteIpcDelegate(CommandLine commandLine, string output);
 
+    public enum IpcMode
+    {
+        PluginState
+    }
+
     /// <summary>
     /// 本体アプリケーション起動処理。
     /// </summary>
@@ -42,18 +47,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        public bool TryExecuteIpc(ApplicationSpecialExecuteIpcMode ipcMode, IEnumerable<string> arguments, ExecuteIpcDelegate action)
+        public bool TryExecuteIpc(IpcMode ipcMode, IEnumerable<string> arguments, ExecuteIpcDelegate action)
         {
             try {
                 using var pipeServerStream = new AnonymousPipeServerStream(PipeDirection.In);
 
-                var argument = new Dictionary<string, string> {
-                    ["_mode"] = "IPC",
+                var args = new Dictionary<string, string> {
+                    [ApplicationInitializer.CommandLineKeyRunMode] = pipeServerStream.GetClientHandleAsString(),
                     ["ipc-handle"] = pipeServerStream.GetClientHandleAsString(),
                     ["ipc-mode"] = ipcMode.ToString(),
                 }.ToCommandLineArguments().Concat(
                     arguments.Select(i => CommandLine.Escape(i))
-                ).JoinString(" ");
+                );
+                var argument = args.JoinString(" ");
 
                 using var process = new Process();
                 process.StartInfo.FileName = CommandPath;
@@ -61,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
                 using var pipeServerReader = new StreamReader(pipeServerStream);
 
-                var commandLine = new CommandLine(arguments, false);
+                var commandLine = new CommandLine(args, false);
 
                 process.Start();
 
