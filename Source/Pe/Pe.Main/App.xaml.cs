@@ -111,6 +111,13 @@ namespace ContentTypeTextNet.Pe.Main
                     }
                     break;
 
+                case RunMode.InterProcessCommunication: {
+                        var ipcManager = new InterProcessCommunicationManager(initializer, e);
+                        ipcManager.Execute();
+                        Shutdown();
+                        return;
+                    }
+
                 default:
                     throw new NotImplementedException();
             }

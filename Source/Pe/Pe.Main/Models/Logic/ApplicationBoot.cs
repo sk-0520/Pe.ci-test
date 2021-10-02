@@ -9,16 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public delegate void ExecuteIpcDelegate(CommandLine commandLine, string output);
-
-    public enum IpcMode
-    {
-        PluginState
-    }
 
     /// <summary>
     /// 本体アプリケーション起動処理。
@@ -50,27 +46,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public bool TryExecuteIpc(IpcMode ipcMode, IEnumerable<string> arguments, ExecuteIpcDelegate action)
         {
             try {
-                using var pipeServerStream = new AnonymousPipeServerStream(PipeDirection.In);
+                using var pipeServerStream = new AnonymousPipeServerStream(PipeDirection.In, HandleInheritability.Inheritable);
 
                 var args = new Dictionary<string, string> {
-                    [ApplicationInitializer.CommandLineKeyRunMode] = pipeServerStream.GetClientHandleAsString(),
+                    [ApplicationInitializer.CommandLineKeyRunMode] = "ipc",
                     ["ipc-handle"] = pipeServerStream.GetClientHandleAsString(),
                     ["ipc-mode"] = ipcMode.ToString(),
+                    ["log"] = @"x:\a.log",
                 }.ToCommandLineArguments().Concat(
                     arguments.Select(i => CommandLine.Escape(i))
                 );
                 var argument = args.JoinString(" ");
 
-                using var process = new Process();
-                process.StartInfo.FileName = CommandPath;
-                process.StartInfo.Arguments = argument;
+                using var process = new Process() {
+                    EnableRaisingEvents = true,
+                    StartInfo = new ProcessStartInfo() {
+                        FileName = CommandPath,
+                        Arguments = argument,
+                        UseShellExecute = false,
+                    },
+                };
+                process.Exited += Process_Exited;
 
                 using var pipeServerReader = new StreamReader(pipeServerStream);
 
                 var commandLine = new CommandLine(args, false);
 
                 process.Start();
-
+                pipeServerStream.DisposeLocalCopyOfClientHandle();
                 var output = pipeServerReader.ReadToEnd();
 
                 action(commandLine, output);
@@ -82,6 +85,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             return false;
         }
+
+        private void Process_Exited(object? sender, EventArgs e)
+        {
+            var process = (Process?)sender;
+            Logger.LogInformation("プロセス終了: {0}", process);
+        }
+
+
 
         #endregion
     }
