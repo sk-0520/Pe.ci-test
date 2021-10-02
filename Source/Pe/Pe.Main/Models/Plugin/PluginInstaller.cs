@@ -194,8 +194,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             var arguments = new Dictionary<string, string> {
                 ["ipc-file"] = pluginFile.FullName,
             }.ToCommandLineArguments();
-            applicationBoot.TryExecuteIpc(IpcMode.PluginStatus, arguments, (c, o) => {
 
+            IpcDataPluginStatus? data;
+            applicationBoot.TryExecuteIpc(IpcMode.PluginStatus, arguments, (c, o) => {
+                using var stream = new MemoryStream();
+
+                var serializer = new JsonNetCoreSerializer();
+                data = serializer.Load<IpcDataPluginStatus>(stream);
             });
             throw new NotImplementedException();
         }

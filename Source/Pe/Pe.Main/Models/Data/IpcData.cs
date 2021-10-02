@@ -17,7 +17,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         PluginStatus,
     }
 
-    public record IpcDataPluginStatus
-    {
-    }
+    public class IpcDataPluginStatus: PluginStateData
+    { }
 }

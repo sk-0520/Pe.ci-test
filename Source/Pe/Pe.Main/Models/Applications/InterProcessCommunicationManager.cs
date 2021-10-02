@@ -88,13 +88,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region function
 
+        private void ExecutePluginStatus(TextWriter writer)
+        {
+            //JsonNetCoreSerializer
+            throw new NotImplementedException();
+        }
+
         public void Execute()
         {
             using var pipeClientStream = new AnonymousPipeClientStream(PipeDirection.Out, IpcPipeHandle);
             using var writer = new StreamWriter(pipeClientStream);
-            writer.WriteLine("asdasd");
-        }
 
+            switch(IpcMode) {
+                case IpcMode.PluginStatus:
+                    ExecutePluginStatus(writer);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
 
         #endregion
 
