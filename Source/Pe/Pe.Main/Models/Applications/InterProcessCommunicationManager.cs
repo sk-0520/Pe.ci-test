@@ -1,3 +1,8 @@
+#define NOT_IPC
+#if !DEBUG && NOT_IPC
+#error  NOT_IPC
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,9 +13,15 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
@@ -27,10 +38,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             ClipboardManager = initializer.ClipboardManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.ClipboardManager));
             UserAgentManager = initializer.UserAgentManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.UserAgentManager));
-
             ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
             ApplicationDiContainer.Register<IUserAgentManager, UserAgentManager>(UserAgentManager);
             ApplicationDiContainer.Register<IHttpUserAgentFactory, IHttpUserAgentFactory>(UserAgentManager);
+
+            ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(DiLifecycle.Singleton);
+            var factory = new ApplicationDatabaseFactoryPack(
+                new ApplicationDatabaseFactory(true, false),
+                new ApplicationDatabaseFactory(true, false),
+                new ApplicationDatabaseFactory(true, false)
+            );
+            var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
+            var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
+            ApplicationDiContainer.Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), null, environmentParameters.ApplicationConfiguration.File.GivePriorityToFile, LoggerFactory));
+            ApplicationDiContainer.RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory);
 
             CommandLine = new CommandLine(e.Args, false);
             var commandLineIpcHandle = CommandLine.Add(longKey: CommandLineKeyIpcHandle, hasValue: true);
@@ -52,15 +73,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             IpcMode = ipcMode;
             Logger.LogInformation("プロセス間通信処理方法: {0}", IpcMode);
 
+#if !NOT_IPC
             Logger.LogInformation("パイプハンドル取得開始");
             if(!CommandLine.Values.TryGetValue(commandLineIpcHandle, out var ipcHandleValue)) {
                 throw new ArgumentException(commandLineIpcHandle.ToString(), nameof(e) + "." + nameof(e.Args));
             }
             Logger.LogInformation("パイプハンドル: {0}", ipcHandleValue.First);
             IpcPipeHandle = ipcHandleValue.First;
+#endif
         }
 
         #region property
+
         public static string CommandLineKeyIpcHandle { get; } = "ipc-handle";
         public static string CommandLineKeyIpcMode { get; } = "ipc-mode";
         public static string CommandLineKeyIpcFile { get; } = "ipc-file";
@@ -76,11 +100,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         CommandLine CommandLine { get; }
 
         IpcMode IpcMode { get; }
+#if !NOT_IPC
         string IpcPipeHandle { get; }
+#endif
 
         #region 各処理ごとのコマンドライン
 
         public CommandLineKey CommandLineIpcFile { get; }
+
         #endregion
 
 
@@ -88,25 +115,40 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region function
 
-        private void ExecutePluginStatus(TextWriter writer)
+        private object ExecutePluginStatus()
         {
-            //JsonNetCoreSerializer
+            Logger.LogInformation("プラグインステータス取得");
+            //var serializer = new JsonTextSerializer();
+
+            var addonContainer = ApplicationDiContainer.Build<AddonContainer>();
+            var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
+            var pluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
+            var pluginInstaller = new PluginInstaller(
+                pluginContainer,
+                ApplicationDiContainer.Build<PluginConstructorContext>(),
+                Logging.PauseReceiveLog,
+                ApplicationDiContainer.Build<EnvironmentParameters>(),
+                ApplicationDiContainer.Build<IDatabaseStatementLoader>(),
+                ApplicationDiContainer.Build<LoggerFactory>()
+            );
+
             throw new NotImplementedException();
         }
 
         public void Execute()
         {
+#if !NOT_IPC
             using var pipeClientStream = new AnonymousPipeClientStream(PipeDirection.Out, IpcPipeHandle);
+#else
+            using var pipeClientStream = new MemoryStream();
+#endif
             using var writer = new StreamWriter(pipeClientStream);
 
-            switch(IpcMode) {
-                case IpcMode.PluginStatus:
-                    ExecutePluginStatus(writer);
-                    break;
+            var responseObject = IpcMode switch {
+                IpcMode.GetPluginStatus => ExecutePluginStatus(),
+                _ => throw new NotImplementedException(),
+            };
 
-                default:
-                    throw new NotImplementedException();
-            }
         }
 
         #endregion

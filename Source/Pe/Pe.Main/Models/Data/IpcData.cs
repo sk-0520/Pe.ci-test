@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// プラグインステータス。
         /// </summary>
-        PluginStatus,
+        GetPluginStatus,
     }
 
     public class IpcDataPluginStatus: PluginStateData

@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
 #if ENABLED_NETCoreJSON
 
-    public class JsonNetCoreSerializer: SerializerBase
+    public class JsonTextSerializer: SerializerBase
     {
         #region property
 

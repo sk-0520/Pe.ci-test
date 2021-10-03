@@ -196,10 +196,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             }.ToCommandLineArguments();
 
             IpcDataPluginStatus? data;
-            applicationBoot.TryExecuteIpc(IpcMode.PluginStatus, arguments, (c, o) => {
+            applicationBoot.TryExecuteIpc(IpcMode.GetPluginStatus, arguments, (c, o) => {
                 using var stream = new MemoryStream();
 
-                var serializer = new JsonNetCoreSerializer();
+                var serializer = new JsonTextSerializer();
                 data = serializer.Load<IpcDataPluginStatus>(stream);
             });
             throw new NotImplementedException();
