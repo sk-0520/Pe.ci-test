@@ -1,4 +1,4 @@
-#define NOT_IPC
+//#define NOT_IPC
 #if !DEBUG && NOT_IPC
 #error  NOT_IPC
 #endif
@@ -89,6 +89,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public static string CommandLineKeyIpcMode { get; } = "ipc-mode";
         public static string CommandLineKeyIpcFile { get; } = "ipc-file";
 
+        public static string CommandLineKeyIpcPluginName { get; } = "ipc-plugin-name";
+        public static string CommandLineKeyIpcPluginIsManualInstall { get; } = "ipc-plugin-is-manual-install";
+
         ApplicationLogging Logging { get; set; }
         ILogger Logger { get; set; }
         ILoggerFactory LoggerFactory => Logging.Factory;
@@ -132,7 +135,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 ApplicationDiContainer.Build<LoggerFactory>()
             );
 
-            throw new NotImplementedException();
+
+            var pluginInstallData = pluginInstaller.LoadPluginInfo(
+                new FileInfo(CommandLine.Values[CommandLineIpcFile].First)
+            );
+
+            return pluginInstallData;
         }
 
         public void Execute()
@@ -142,13 +150,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 #else
             using var pipeClientStream = new MemoryStream();
 #endif
-            using var writer = new StreamWriter(pipeClientStream);
-
             var responseObject = IpcMode switch {
                 IpcMode.GetPluginStatus => ExecutePluginStatus(),
                 _ => throw new NotImplementedException(),
             };
 
+            var serializer = new JsonTextSerializer();
+            serializer.Save(responseObject, pipeClientStream);
         }
 
         #endregion

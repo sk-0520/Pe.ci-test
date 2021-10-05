@@ -192,17 +192,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             var applicationBoot = new ApplicationBoot(LoggerFactory);
             var arguments = new Dictionary<string, string> {
-                ["ipc-file"] = pluginFile.FullName,
+                [InterProcessCommunicationManager.CommandLineKeyIpcFile] = pluginFile.FullName,
             }.ToCommandLineArguments();
 
             IpcDataPluginStatus? data;
             applicationBoot.TryExecuteIpc(IpcMode.GetPluginStatus, arguments, (c, o) => {
-                using var stream = new MemoryStream();
+                var binary = Encoding.UTF8.GetBytes(o);
+                using var stream = new MemoryStream(binary);
 
                 var serializer = new JsonTextSerializer();
                 data = serializer.Load<IpcDataPluginStatus>(stream);
             });
             throw new NotImplementedException();
+        }
+
+        public IPluginLoadState LoadPluginInfo(FileInfo pluginFile)
+        {
+            return LoadDirectPlugin(pluginFile, pluginFile.Directory!);
         }
 
         /// <summary>

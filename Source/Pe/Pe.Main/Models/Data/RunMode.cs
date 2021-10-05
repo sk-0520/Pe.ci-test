@@ -1,3 +1,5 @@
+using System;
+
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
     /// <summary>
@@ -26,6 +28,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
 
         #region function
+
+        public static string ToString(RunMode runMode) => runMode switch {
+            RunMode.Normal => "normal",
+            RunMode.CrashReport => "crash-report",
+            RunMode.InterProcessCommunication => "ipc",
+            _ => throw new NotImplementedException(),
+        };
 
         public static RunMode Parse(string? value)
         {

@@ -49,9 +49,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 using var pipeServerStream = new AnonymousPipeServerStream(PipeDirection.In, HandleInheritability.Inheritable);
 
                 var args = new Dictionary<string, string> {
-                    [ApplicationInitializer.CommandLineKeyRunMode] = "ipc",
-                    ["ipc-handle"] = pipeServerStream.GetClientHandleAsString(),
-                    ["ipc-mode"] = ipcMode.ToString(),
+                    [ApplicationInitializer.CommandLineKeyRunMode] = RunModeUtility.ToString(RunMode.InterProcessCommunication),
+                    [InterProcessCommunicationManager.CommandLineKeyIpcHandle] = pipeServerStream.GetClientHandleAsString(),
+                    [InterProcessCommunicationManager.CommandLineKeyIpcMode] = ipcMode.ToString(),
                     ["log"] = @"x:\a.log",
                 }.ToCommandLineArguments().Concat(
                     arguments.Select(i => CommandLine.Escape(i))
