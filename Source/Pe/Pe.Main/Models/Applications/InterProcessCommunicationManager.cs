@@ -168,6 +168,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
+                Logger.LogInformation("END IPC!");
             }
 
             base.Dispose(disposing);

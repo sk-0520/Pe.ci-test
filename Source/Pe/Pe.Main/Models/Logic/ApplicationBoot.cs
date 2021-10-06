@@ -52,7 +52,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     [ApplicationInitializer.CommandLineKeyRunMode] = RunModeUtility.ToString(RunMode.InterProcessCommunication),
                     [InterProcessCommunicationManager.CommandLineKeyIpcHandle] = pipeServerStream.GetClientHandleAsString(),
                     [InterProcessCommunicationManager.CommandLineKeyIpcMode] = ipcMode.ToString(),
+#if DEBUG
                     ["log"] = @"x:\a.log",
+#endif
                 }.ToCommandLineArguments().Concat(
                     arguments.Select(i => CommandLine.Escape(i))
                 );
