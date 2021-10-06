@@ -10,6 +10,11 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
+
+    /// <summary>
+    /// 本体特殊起動処理。
+    /// <para>設定・ディレクトリ・DI構築がなされていない状態で使用される。</para>
+    /// </summary>
     public class ApplicationSpecialExecutor
     {
         #region define
@@ -17,6 +22,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         enum Mode
         {
             None,
+            /// <summary>
+            /// ドライラン。
+            /// </summary>
             DryRun,
         }
 

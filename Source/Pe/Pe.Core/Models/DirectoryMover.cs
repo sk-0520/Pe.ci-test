@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Microsoft.Extensions.Logging;
 
@@ -36,7 +37,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 } catch(IOException ex) {
                     Logger.LogWarning(ex, ex.Message);
                     Copy(source, destination);
-                    source.Delete(true);
+                    try {
+                        source.Delete(true);
+                    } catch(UnauthorizedAccessException ex2) {
+                        Logger.LogError(ex2, ex2.Message);
+                    }
                 }
 
                 return;

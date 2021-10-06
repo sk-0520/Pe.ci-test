@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             );
         }
 
-        public bool SelectExistsInstallPlugin(Guid pluginId)
+        public bool SelectExistsInstallPluginByPluginId(Guid pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -78,6 +78,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Query<InstallPluginRowDto>(statement)
                 .Select(i => ConvertFromDto(i))
             ;
+        }
+
+        public bool SelectExistsInstallPlugin()
+        {
+            var statement = LoadStatement();
+            return Context.QueryFirstOrDefault<bool>(statement);
         }
 
         public void InsertInstallPlugin(PluginInstallData data, IDatabaseCommonStatus databaseCommonStatus)

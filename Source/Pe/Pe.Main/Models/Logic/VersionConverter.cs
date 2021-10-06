@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             var values = new List<string>() {
                 head,
                 "_",
-                ConvertDisplayVersion(version, "-")
+                ToFileString(version)
             };
             if(!string.IsNullOrWhiteSpace(tail)) {
                 values.Add("_");
@@ -38,6 +38,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             return string.Join(string.Empty, values);
         }
+
+        /// <summary>
+        /// バージョンをファイルとして使用できる形にする。
+        /// <para>ファイル名として扱う共通処理。</para>
+        /// </summary>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        public string ToFileString(Version version) => ConvertDisplayVersion(version, "-");
 
         #endregion
     }

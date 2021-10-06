@@ -4,12 +4,21 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
+    /// <summary>
+    /// プラグイン処理ユーティリティ。
+    /// </summary>
     public static class PluginUtility
     {
+        #region property
+
+        public static int CheckVersionStep { get; } = 10;
+
+        #endregion
+
         #region function
 
         /// <summary>
-        /// プラグインバージョンは Pe バージョンに制限されるか。
+        /// 指定プラグイン制限バージョンは Pe バージョンに関係なく使用可能か。
         /// </summary>
         /// <param name="version"></param>
         /// <returns></returns>
@@ -18,11 +27,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return version.Major == 0 && version.Minor == 0 && version.Build == 0;
         }
 
+        /// <summary>
+        /// プラグインIDをディレクトリ名として使用可能な文字列に変換。
+        /// </summary>
+        /// <param name="pluginId"></param>
+        /// <returns></returns>
         public static string ConvertDirectoryName(Guid pluginId)
         {
             return pluginId.ToString("D");
         }
+        /// <inheritdoc cref="ConvertDirectoryName(Guid)"/>
         public static string ConvertDirectoryName(IPluginId pluginId) => ConvertDirectoryName(pluginId.PluginId);
+        /// <inheritdoc cref="ConvertDirectoryName(Guid)"/>
         public static string ConvertDirectoryName(IPluginIdentifiers pluginIdentifiers) => ConvertDirectoryName(pluginIdentifiers.PluginId);
 
         #endregion

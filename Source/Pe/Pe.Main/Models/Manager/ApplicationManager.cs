@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             CronScheduler = new CronScheduler(LoggerFactory);
 
-            ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
+            ApplicationUpdateInfo = ApplicationDiContainer.Build<NewVersionInfo>();
 
             NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
             NotifyLogElement.Initialize();
@@ -203,7 +203,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
-        public UpdateInfo ApplicationUpdateInfo { get; }
+        public NewVersionInfo ApplicationUpdateInfo { get; }
+        /// <summary>
+        /// プラグインの新規バージョンが存在するか。
+        /// </summary>
+        public bool ExistsPluginChanges { get; private set; }
 
         public bool CanCallNotifyAreaMenu { get; private set; }
 
@@ -301,23 +305,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     .ToList()
                 ;
 
-                // バックアップ処理開始
-                //string userBackupDirectoryPath;
-                //using(var commander = container.Get<IMainDatabaseBarrier>().WaitRead()) {
-                //    var appGeneralSettingEntityDao = container.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
-                //    userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
-                //}
-                //try {
-                //    BackupSettingsCore(
-                //        environmentParameters.UserSettingDirectory,
-                //        environmentParameters.UserBackupDirectory,
-                //        DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"),
-                //        environmentParameters.Configuration.Backup.SettingCount,
-                //        userBackupDirectoryPath
-                //    );
-                //} catch(Exception ex) {
-                //    Logger.LogError(ex, "バックアップ処理失敗: {0}", ex.Message);
-                //}
                 BackupSettingsDefault(container);
 
                 var accessorPack = container.Get<IDatabaseAccessorPack>();
@@ -359,6 +346,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
                 NotifyLogElement.Refresh();
                 NotifyManager.SendSettingChanged();
+
+                ExistsPluginChanges = CheckPluginChanges();
             } else {
                 Logger.LogInformation("設定は保存されなかったため現在要素継続");
                 EndPreferences(settingElement, Logger);
@@ -577,7 +566,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        void ShowUpdateReleaseNoteCore(UpdateItemData updateItem, bool isCheckOnly)
+        void ShowNewVersionReleaseNoteCore(NewVersionItemData updateItem, bool isCheckOnly)
         {
             var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(ApplicationUpdateInfo, updateItem, isCheckOnly);
             element.Initialize();
@@ -587,7 +576,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             view.Show();
         }
 
-        private void ShowUpdateReleaseNote(UpdateItemData updateItem, bool isCheckOnly)
+        private void ShowNewVersionReleaseNote(NewVersionItemData updateItem, bool isCheckOnly)
         {
             var windowItem = WindowManager.GetWindowItems(WindowKind.Release);
             if(windowItem.Any()) {
@@ -597,14 +586,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     if(window != null) {
                         window.Window.Activate();
                     } else {
-                        ShowUpdateReleaseNoteCore(updateItem, isCheckOnly);
+                        ShowNewVersionReleaseNoteCore(updateItem, isCheckOnly);
                     }
                 }, DispatcherPriority.ApplicationIdle);
                 return;
             }
 
             ApplicationDiContainer.Build<IDispatcherWrapper>().Begin(() => {
-                ShowUpdateReleaseNoteCore(updateItem, isCheckOnly);
+                ShowNewVersionReleaseNoteCore(updateItem, isCheckOnly);
             }, DispatcherPriority.ApplicationIdle);
         }
 
@@ -687,6 +676,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             using(var context = barrier.WaitWrite()) {
                 var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
+                var pluginVersionChecksEntityDao = ApplicationDiContainer.Build<PluginVersionChecksEntityDao>(context, context.Implementation);
                 foreach(var pluginLoadStateItem in pluginLoadStateItems) {
                     // プラグインIDすら取得できなかったぶっこわれアセンブリは無視
                     if(pluginLoadStateItem.PluginId == Guid.Empty && pluginLoadStateItem.LoadState == PluginState.IllegalAssembly) {
@@ -724,6 +714,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         pluginsEntityDao.UpdatePluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
                     } else {
                         pluginsEntityDao.InsertPluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
+                    }
+
+                    // 読み込みOKの際に更新URLの再設定
+                    if(pluginLoadStateItem.Plugin != null) {
+                        pluginVersionChecksEntityDao.DeletePluginVersionChecks(pluginLoadStateItem.PluginId);
+                        foreach(var countUrl in pluginLoadStateItem.Plugin.PluginInformations.PluginVersions.CheckUrls.Counting()) {
+                            pluginVersionChecksEntityDao.InsertPluginVersionCheckUrl(pluginLoadStateItem.PluginId, countUrl.Number * PluginUtility.CheckVersionStep, countUrl.Value, DatabaseCommonStatus.CreateCurrentAccount());
+                        }
                     }
                 }
 
@@ -1451,6 +1449,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CefSharp.Cef.Shutdown();
         }
 
+        /// <summary>
+        /// 最新バージョンプラグインを構築。
+        /// </summary>
         private void PrepareLatestPlugins()
         {
             var temporaryBarrier = ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>();
@@ -1485,7 +1486,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     var pluginDirPath = Path.GetDirectoryName(plugin.GetType().Assembly.Location)!;
                     var srcDir = new DirectoryInfo(installDataItem.PluginDirectoryPath);
-                    var destDir = new DirectoryInfo(pluginDirPath);
+                    var destDirPath = Path.Combine(environmentParameters.MachinePluginInstallDirectory.FullName, PluginUtility.ConvertDirectoryName(installDataItem.PluginId));
+                    var destDir = new DirectoryInfo(destDirPath);
                     Logger.LogInformation("インストール対象: 更新プラグイン: {0}, {1} -> {2}", installDataItem.PluginId, srcDir.FullName, destDir.FullName);
                     directoryMover.Move(srcDir, destDir);
                 }
@@ -1495,8 +1497,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <summary>
         ///
         /// </summary>
-        /// <param name="ignoreUpdate">アップデートを無視するか。</param>
-        public void Exit(bool ignoreUpdate)
+        /// <param name="ignoreApplicationUpdate">アプリケーションアップデートを無視するか。</param>
+        public void Exit(bool ignoreApplicationUpdate)
         {
             Logger.LogInformation("おわる！");
 
@@ -1511,7 +1513,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             BackupSettingsDefault(ApplicationDiContainer);
 
-            if(!ignoreUpdate && ApplicationUpdateInfo.IsReady) {
+            if(!ignoreApplicationUpdate && ApplicationUpdateInfo.IsReady) {
                 Debug.Assert(ApplicationUpdateInfo.Path != null);
 
                 Logger.LogInformation("アップデート処理起動");
@@ -1531,7 +1533,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Logger.LogError(ex, ex.Message);
                 }
             }
-
 
             StopHook();
             DisposeHook();
@@ -1737,185 +1738,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        public async Task DelayCheckUpdateAsync()
-        {
-            var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
-            UpdateKind updateKind;
-            using(var context = mainDatabaseBarrier.WaitRead()) {
-                var dao = ApplicationDiContainer.Build<AppUpdateSettingEntityDao>(context, context.Implementation);
-                updateKind = dao.SelectSettingUpdateSetting().UpdateKind;
-            }
-
-            if(updateKind == UpdateKind.None) {
-                return;
-            }
-
-            var updateWait = ApplicationDiContainer.Build<ApplicationConfiguration>().General.UpdateWait;
-            await Task.Delay(updateWait).ConfigureAwait(false);
-            var updateCheckKind = updateKind switch {
-                UpdateKind.Notify => UpdateCheckKind.CheckOnly,
-                _ => UpdateCheckKind.Update,
-            };
-            await ExecuteUpdateAsync(updateCheckKind).ConfigureAwait(false);
-        }
-
-        public async Task ExecuteUpdateAsync(UpdateCheckKind updateCheckKind)
-        {
-            if(ApplicationUpdateInfo.State == UpdateState.None || ApplicationUpdateInfo.State == UpdateState.Error) {
-                if(ApplicationUpdateInfo.State == UpdateState.Error) {
-                    Logger.LogInformation("エラーありのため再実施");
-                }
-            } else {
-                if(ApplicationUpdateInfo.IsReady) {
-                    Logger.LogInformation("アップデート準備完了");
-                } else {
-                    Logger.LogInformation("アップデート排他制御中");
-                }
-
-                if(ApplicationUpdateInfo.UpdateItem != null) {
-                    ShowUpdateReleaseNote(ApplicationUpdateInfo.UpdateItem, false);
-                } else {
-                    Logger.LogInformation("アップデート情報未取得");
-                }
-
-                return;
-            }
-
-            var updateChecker = ApplicationDiContainer.Build<UpdateChecker>();
-
-            ApplicationUpdateInfo.State = UpdateState.Checking;
-            {
-                var appVersion = await updateChecker.CheckApplicationUpdateAsync().ConfigureAwait(false);
-                if(appVersion == null) {
-                    Logger.LogInformation("アップデートなし");
-                    ApplicationUpdateInfo.State = UpdateState.None;
-                    return;
-                }
-                ApplicationUpdateInfo.UpdateItem = appVersion;
-            }
-
-            Logger.LogInformation("アップデートあり: {0}", ApplicationUpdateInfo.UpdateItem.Version);
-
-            // CheckApplicationUpdateAsync で弾いてる
-            //if(BuildStatus.Version < ApplicationUpdateInfo.UpdateItem.MinimumVersion) {
-            //    Logger.LogWarning("最低バージョン未満であるためバージョンアップ不可: 現在 = {0}, 要求 = {1}", BuildStatus.Version, appVersion.MinimumVersion);
-            //    UpdateInfo.State = UpdateState.None;
-            //    return;
-            //}
-
-            Logger.LogInformation("アップデート可能");
-
-            var updateDownloader = ApplicationDiContainer.Build<UpdateDownloader>();
-
-            if(updateCheckKind != UpdateCheckKind.ForceUpdate) {
-                try {
-                    ShowUpdateReleaseNote(ApplicationUpdateInfo.UpdateItem, updateCheckKind == UpdateCheckKind.CheckOnly);
-                } catch(Exception ex) {
-                    Logger.LogError(ex, ex.Message);
-                    ApplicationUpdateInfo.SetError(ex.Message);
-                    return;
-                }
-            }
-            if(updateCheckKind == UpdateCheckKind.CheckOnly) {
-                ApplicationUpdateInfo.State = UpdateState.None;
-                return;
-            }
-
-            var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
-            var versionConverter = new VersionConverter();
-            var downloadFileName = versionConverter.ConvertFileName(BuildStatus.Name, ApplicationUpdateInfo.UpdateItem.Version, ApplicationUpdateInfo.UpdateItem.Platform, ApplicationUpdateInfo.UpdateItem.ArchiveKind);
-            var downloadFilePath = Path.Combine(environmentParameters.MachineUpdateArchiveDirectory.FullName, downloadFileName);
-            var downloadFile = new FileInfo(downloadFilePath);
-            try {
-                var skipDownload = false;
-                downloadFile.Refresh();
-                if(downloadFile.Exists) {
-                    ApplicationUpdateInfo.State = UpdateState.Checksumming;
-                    skipDownload = await updateDownloader.ChecksumAsync(ApplicationUpdateInfo.UpdateItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
-                }
-                if(skipDownload) {
-                    Logger.LogInformation("チェックサムの結果ダウンロード不要");
-                    IProgress<double> progress = ApplicationUpdateInfo.DownloadProgress;
-                    progress.Report(1);
-                } else {
-                    downloadFile.Delete(); // ゴミは消しとく
-                    ApplicationUpdateInfo.State = UpdateState.Downloading;
-                    await updateDownloader.DownloadApplicationArchiveAsync(ApplicationUpdateInfo.UpdateItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.DownloadProgress, ApplicationUpdateInfo.CurrentLogProgress)).ConfigureAwait(false);
-
-                    // ここで更新しないとチェックサムでファイル無し判定を食らう
-                    downloadFile.Refresh();
-
-                    ApplicationUpdateInfo.State = UpdateState.Checksumming;
-                    var checksumOk = await updateDownloader.ChecksumAsync(ApplicationUpdateInfo.UpdateItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
-                    if(!checksumOk) {
-                        Logger.LogError("チェックサム異常あり");
-                        ApplicationUpdateInfo.SetError(Properties.Resources.String_Download_ChecksumError);
-                        return;
-                    }
-                }
-            } catch(Exception ex) {
-                ApplicationUpdateInfo.SetError(ex.Message);
-                return;
-            }
-
-            Logger.LogInformation("アップデートファイル展開");
-            ApplicationUpdateInfo.State = UpdateState.Extracting;
-            try {
-                var directoryCleaner = new DirectoryCleaner(environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitCount, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitTime, LoggerFactory);
-                directoryCleaner.Clear(false);
-
-                var archiveExtractor = ApplicationDiContainer.Build<ArchiveExtractor>();
-                archiveExtractor.Extract(downloadFile, environmentParameters.TemporaryApplicationExtractDirectory, ApplicationUpdateInfo.UpdateItem.ArchiveKind, new UserNotifyProgress(ApplicationUpdateInfo.ExtractProgress, ApplicationUpdateInfo.CurrentLogProgress));
-
-                // #766ここの例外はきちんと対応した際にはなくなる
-                var newAppPath = Path.Join(environmentParameters.TemporaryApplicationExtractDirectory.FullName, EnvironmentParameters.RootApplicationName);
-                Logger.LogInformation("アプリケーション試走: {0}", newAppPath);
-                using var process = new Process();
-                process.StartInfo.FileName = newAppPath;
-                process.StartInfo.Arguments = "-_mode dry-run";
-                try {
-                    if(process.Start()) {
-                        process.WaitForExit();
-                        if(process.ExitCode != 0) {
-                            Logger.LogError("アプリケーション試走失敗: {0}", process.ExitCode);
-                            //ApplicationUpdateInfo.SetError(#766-exec);
-                            //return;
-                        }
-                    } else {
-                        Logger.LogError("アプリケーション試走実行失敗");
-                        //ApplicationUpdateInfo.SetError(#766-run);
-                        //return;
-                    }
-                } catch(Exception innerEx) {
-                    Logger.LogError(innerEx, innerEx.Message);
-                }
-
-                var scriptFactory = ApplicationDiContainer.Build<ApplicationUpdateScriptFactory>();
-                var exeutePathParameter = scriptFactory.CreateUpdateExecutePathParameter(environmentParameters.EtcUpdateScriptFile, environmentParameters.TemporaryDirectory, environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.RootDirectory);
-                ApplicationUpdateInfo.Path = exeutePathParameter;
-                ApplicationUpdateInfo.State = UpdateState.Ready;
-
-                // アップデートアーカイブのローテート
-                var fileRotation = new FileRotation();
-                fileRotation.ExecuteExtensions(
-                    environmentParameters.MachineUpdateArchiveDirectory,
-                    new[] { "zip", "7z" },
-                    environmentParameters.ApplicationConfiguration.Backup.ArchiveCount,
-                    ex => {
-                        Logger.LogWarning(ex, ex.Message);
-                        return true;
-                    }
-                );
-
-                // リリースノート再表示
-                ShowUpdateReleaseNote(ApplicationUpdateInfo.UpdateItem, false);
-
-            } catch(Exception ex) {
-                Logger.LogError(ex, ex.Message);
-                ApplicationUpdateInfo.SetError(ex.Message);
-            }
-        }
-
         internal FileInfo OutputRawCrashReport(Exception exception)
         {
             var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
@@ -2024,7 +1846,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var arg = string.Join(' ', args);
 
             var systemExecutor = new SystemExecutor();
-            var commandPath = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, "exe");
+            var commandPath = ApplicationBoot.CommandPath;
             Logger.LogInformation("path: {0}", commandPath);
             Logger.LogInformation("args: {0}", arg);
             systemExecutor.ExecuteFile(commandPath, arg);
@@ -2041,8 +1863,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #if DEBUG
             }
 #endif
-
-            DelayCheckUpdateAsync().ConfigureAwait(false);
+            CheckNewVersionsAsync(true).ConfigureAwait(false);
 #if DEBUG
             DebugStartupEnd();
 #endif
@@ -2082,6 +1903,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             );
         }
 
+        /// <summary>
+        /// プラグイン(DLL周り)に変更があったか。
+        /// </summary>
+        /// <returns>真: 変更があった。</returns>
+        private bool CheckPluginChanges()
+        {
+            var main = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+            var temp = ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>();
+
+            var existsUninstall = false;
+            using(var context = main.WaitRead()) {
+                var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
+                existsUninstall = pluginsEntityDao.SelectExistsPluginByState(PluginState.Uninstall);
+            }
+
+            var existsInstall = false;
+            using(var context = temp.WaitRead()) {
+                var installPluginsEntityDao = ApplicationDiContainer.Build<InstallPluginsEntityDao>(context, context.Implementation);
+                existsInstall = installPluginsEntityDao.SelectExistsInstallPlugin();
+            }
+
+            return existsUninstall || existsInstall;
+        }
+
         #endregion
 
         #region IOrderManager
@@ -2094,7 +1939,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             switch(process) {
                 case UpdateProcess.Download:
-                    ExecuteUpdateAsync(UpdateCheckKind.Update).ConfigureAwait(false);
+                    CheckApplicationNewVersionAsync(UpdateCheckKind.Update).ConfigureAwait(false);
                     break;
 
                 case UpdateProcess.Update:

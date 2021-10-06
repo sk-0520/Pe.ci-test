@@ -8,11 +8,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
 {
     public class ReleaseNoteElement: ElementBase
     {
-        public ReleaseNoteElement(UpdateInfo updateInfo, IReadOnlyUpdateItemData updateItem, bool isCheckOnly, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public ReleaseNoteElement(NewVersionInfo newVersionInfo, IReadOnlyNewVersionItemData updateItem, bool isCheckOnly, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            UpdateInfoImpl = updateInfo;
-            UpdateItem = updateItem;
+            NewVersionInfoImpl = newVersionInfo;
+            NewVersionItem = updateItem;
 
             IsCheckOnly = isCheckOnly;
 
@@ -21,10 +21,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         }
 
         #region property
-        UpdateInfo UpdateInfoImpl { get; }
-        public IReadOnlyUpdateInfo UpdateInfo => UpdateInfoImpl;
+        NewVersionInfo NewVersionInfoImpl { get; }
+        public IReadOnlyNewVersionInfo NewVersionInfo => NewVersionInfoImpl;
 
-        public IReadOnlyUpdateItemData UpdateItem { get; }
+        public IReadOnlyNewVersionItemData NewVersionItem { get; }
         public bool IsCheckOnly { get; private set; }
         IOrderManager OrderManager { get; }
         IUserAgentManager UserAgentManager { get; }
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         public async Task<string> LoadReleaseNoteDocumentAsync()
         {
             using(var userAgent = UserAgentManager.CreateAppHttpUserAgent()) {
-                return await userAgent.GetStringAsync(UpdateItem.NoteUri);
+                return await userAgent.GetStringAsync(NewVersionItem.NoteUri);
                 //return await userAgent.GetStringAsync(new Uri("https://bitbucket.org/sk_0520/pe/downloads/update-release.html"));
             }
         }

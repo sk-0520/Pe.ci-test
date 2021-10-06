@@ -26,7 +26,7 @@ using ContentTypeTextNet.Pe.Core.Models.Data;
 */
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
-    public interface IReadOnlyUpdateItemData
+    public interface IReadOnlyNewVersionItemData
     {
         #region property
 
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [Serializable, DataContract]
-    public class UpdateItemData: DataBase, IReadOnlyUpdateItemData
+    public class NewVersionItemData: DataBase, IReadOnlyNewVersionItemData
     {
         #region property
 
@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
 
-        #region IReadOnlyUpdateItemData
+        #region IReadOnlyNewVersionItemData
 
         [DateTimeKind(DateTimeKind.Utc)]
         [DataMember]
@@ -157,18 +157,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [Serializable, DataContract]
-    public class UpdateData: DataBase
+    public class NewVersionData: DataBase
     {
         #region property
 
         [DataMember]
         [JsonPropertyName("items")]
-        public UpdateItemData[] Items { get; set; } = Array.Empty<UpdateItemData>();
+        public NewVersionItemData[] Items { get; set; } = Array.Empty<NewVersionItemData>();
 
         #endregion
     }
 
-    public enum UpdateState
+    public enum NewVersionState
     {
         /// <summary>
         /// なにもしてない。

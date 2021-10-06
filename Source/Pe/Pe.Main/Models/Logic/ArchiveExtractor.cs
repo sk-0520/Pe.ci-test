@@ -71,6 +71,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         }
 
+        /// <summary>
+        /// 展開処理。
+        /// </summary>
+        /// <param name="archiveFile">アーカイブファイル。</param>
+        /// <param name="extractDirectory">展開ディレクトリ。</param>
+        /// <param name="archive">アーカイブ種別。TODO: <c>enum</c>に置き換える。</param>
+        /// <param name="userNotifyProgress">展開状況進捗報告。</param>
         public void Extract(FileInfo archiveFile, DirectoryInfo extractDirectory, string archive, UserNotifyProgress userNotifyProgress)
         {
             void Extract(string archiveKind)

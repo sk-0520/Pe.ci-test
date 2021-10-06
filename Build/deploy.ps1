@@ -24,11 +24,14 @@ $securePassword = ConvertTo-SecureString $DeployPassword -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential($DeployAccount, $securePassword)
 
 $archiveFiles = Get-ChildItem -Path $outputDirectory -Filter "*.$Archive" | Select-Object -Expand FullName
-$updateFile = Join-Path $outputDirectory 'update.json'
-$version = GetAppVersion
-$releaseNoteFile = Join-Path $outputDirectory (ConvertReleaseNoteFileName $version)
+$releaseNoteFiles = Get-ChildItem -Path $outputDirectory -Filter "Pe*.html" | Select-Object -Expand FullName
+$updateFiles = Get-ChildItem -Path $outputDirectory -Filter "update*.json" | Select-Object -Expand FullName
 
-$currentUpdateFile = Join-Path $outputDirectory (ConvertFileName 'update' $version '' 'json')
+$version = GetAppVersion
+$versionFiles = $releaseNoteFiles + $updateFiles + (Get-ChildItem -Path $outputDirectory -Filter "Pe.Plugins.Reference.*.$Archive" | Select-Object -Expand FullName)
+$versionArchiveFile = Join-Path $outputDirectory (ConvertFileName 'Archive' $version '' 'zip')
+
+Compress-Archive -Force -Path $versionFiles -DestinationPath $versionArchiveFile
 
 function UploadFile([string] $filePath) {
 
@@ -78,11 +81,18 @@ switch ($TargetRepository) {
 		foreach ($archiveFile in $archiveFiles) {
 			UploadFile $archiveFile
 		}
-		UploadFile $releaseNoteFile
-		UploadFile $updateFile
+		foreach($releaseNoteFile in $releaseNoteFiles) {
+			UploadFile $releaseNoteFile
+		}
+		foreach($updateFile in $updateFiles) {
+			UploadFile $updateFile
+		}
+		UploadFile $versionArchiveFile
+		#UploadFile $releaseNoteFile
+		#UploadFile $updateFile
 
-		Copy-Item -Path $updateFile -Destination $currentUpdateFile
-		UploadFile $currentUpdateFile
+		#Copy-Item -Path $updateFile -Destination $currentUpdateFile
+		#UploadFile $currentUpdateFile
 	}
 }
 

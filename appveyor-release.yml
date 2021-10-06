@@ -1,7 +1,6 @@
 version: '{build}'
 image: Visual Studio 2019
 skip_tags: true
-clone_depth: 1
 environment:
   BUILD_TYPE:
   ARCHIVE: 7z
@@ -39,4 +38,5 @@ artifacts:
     name: document
 deploy_script:
   - ps: .\Build\deploy.ps1 -TargetDownloader bitbucket -TargetRepository bitbucket -Archive $env:ARCHIVE -DeployApiDownloadUrl $env:PE_API_DOWNLOAD_URL -DeployApiTagUrl $env:PE_API_TAG_URL -DeployAccount $env:PE_RELEASE_ACCOUNT -DeployPassword $env:PE_RELEASE_PASSWORD
-
+cache:
+  - 'node_modules'
