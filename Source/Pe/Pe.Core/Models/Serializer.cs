@@ -149,6 +149,38 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public class JsonTextSerializer: SerializerBase
     {
+        #region define
+        public class VersionConverter: JsonConverter<Version>
+        {
+            public override Version Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options
+            )
+            {
+                var s = reader.GetString();
+                if(string.IsNullOrWhiteSpace(s)) {
+                    return null!;
+                }
+                return new Version(s);
+            }
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                Version version,
+                JsonSerializerOptions options
+            )
+            {
+                if(version is null) {
+                    writer.WriteNullValue();
+                } else {
+                    writer.WriteStringValue(version.ToString());
+                }
+            }
+        }
+
+        #endregion
+
         #region property
 
         public JsonReaderOptions ReaderOptions { get; set; } = new JsonReaderOptions() {

@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
@@ -17,6 +19,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         GetPluginStatus,
     }
 
-    public class IpcDataPluginStatus: PluginStateData
-    { }
+    public class IpcDataPluginStatus: PluginStateData, IPluginLoadState
+    {
+        #region IPluginLoadState
+
+        [JsonConverter(typeof(JsonTextSerializer.VersionConverter))]
+        public Version PluginVersion { get; set; } = new Version();
+
+        public PluginState LoadState => PluginState.Disable;
+
+        #endregion
+    }
 }

@@ -1,6 +1,8 @@
 using System;
+using System.Text.Json.Serialization;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 
@@ -131,6 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public Guid PluginId { get; }
         public string PluginName { get; }
+        [JsonConverter(typeof(JsonTextSerializer.VersionConverter))]
         public Version PluginVersion { get; }
         public PluginState LoadState { get; }
 

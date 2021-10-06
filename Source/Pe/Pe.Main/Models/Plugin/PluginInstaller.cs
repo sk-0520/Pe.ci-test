@@ -195,7 +195,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 [InterProcessCommunicationManager.CommandLineKeyIpcFile] = pluginFile.FullName,
             }.ToCommandLineArguments();
 
-            IpcDataPluginStatus? data;
+            IpcDataPluginStatus? data = null;
             applicationBoot.TryExecuteIpc(IpcMode.GetPluginStatus, arguments, (c, o) => {
                 var binary = Encoding.UTF8.GetBytes(o);
                 using var stream = new MemoryStream(binary);
@@ -203,7 +203,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 var serializer = new JsonTextSerializer();
                 data = serializer.Load<IpcDataPluginStatus>(stream);
             });
-            throw new NotImplementedException();
+            if(data is null) {
+                throw new PluginBrokenException();
+            }
+
+            return data;
         }
 
         public IPluginLoadState LoadPluginInfo(FileInfo pluginFile)

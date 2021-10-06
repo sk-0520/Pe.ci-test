@@ -157,6 +157,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var serializer = new JsonTextSerializer();
             serializer.Save(responseObject, pipeClientStream);
+            //using var fs = new FileStream(@"x:\a.json", FileMode.Create);
+            //serializer.Save(responseObject, fs);
         }
 
         #endregion
