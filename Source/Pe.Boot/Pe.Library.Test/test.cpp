@@ -32,8 +32,8 @@ TEST_MODULE_CLEANUP(cleanup)
     auto  exists_resource_leak = rc__exists_resource_leak();
     rc__uninitialize();
     //TODO: なんかリソースチェックに引っかかったり引っかからなかったりなんでもう無理死ぬ
-#ifdef DEBUG
+//#ifdef DEBUG
     Assert::IsFalse(exists_resource_leak);
-#endif
+//#endif
 #endif
 }
