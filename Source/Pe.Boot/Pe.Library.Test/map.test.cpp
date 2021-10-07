@@ -141,8 +141,8 @@ namespace PeLibraryTest
 
             Assert::IsTrue(remove_map(&map, &key1));
             Assert::AreEqual((size_t)2, map.length);
-            Assert::AreEqual(22, ((BOX_INT*)pair1->value)->value);// ズレてるので当時の後ろのやつを指している(使用自体は想定していない)
-            Assert::AreEqual(11, ((BOX_INT*)pair1_2->value)->value);// ズレてるので当時の後ろのやつを指している(使用自体は想定していない)
+            //Assert::AreEqual(22, ((BOX_INT*)pair1->value)->value);// ズレてるので当時の後ろのやつを指している(使用自体は想定していない)
+            //Assert::AreEqual(11, ((BOX_INT*)pair1_2->value)->value);// ズレてるので当時の後ろのやつを指している(使用自体は想定していない)
 
             free_map(&map);
             Assert::IsNull(map.pairs);
