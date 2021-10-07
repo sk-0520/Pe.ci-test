@@ -6,7 +6,6 @@
 #include "common.h"
 #include "tstring.h"
 
-typedef uint32_t text_t;
 
 static const TCHAR library__whitespace_characters[] = { _T(' '), _T('\t') };
 
@@ -67,6 +66,13 @@ TEXT create_invalid_text();
 /// <param name="text"></param>
 /// <returns>使用可能か。</returns>
 bool is_enabled_text(const TEXT* text);
+
+/// <summary>
+/// 文字列長は<c>TEXT</c>で有効か。
+/// </summary>
+/// <param name="length"></param>
+/// <returns>有効。</returns>
+bool check_text_length(size_t length);
 
 /// <summary>
 /// テキストを生成。

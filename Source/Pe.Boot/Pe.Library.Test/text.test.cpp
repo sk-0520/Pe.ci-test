@@ -24,8 +24,8 @@ namespace PeLibraryTest
             Assert::IsFalse(c.value == input);
             Assert::IsTrue(w.value == input);
 
-            Assert::AreEqual(get_string_length(input), c.length);
-            Assert::AreEqual(get_string_length(input), w.length);
+            Assert::AreEqual(get_string_length(input), (size_t)c.length);
+            Assert::AreEqual(get_string_length(input), (size_t)w.length);
 
             input[0] = _T('え');
             input[1] = _T('お');
@@ -33,7 +33,7 @@ namespace PeLibraryTest
 
             Assert::AreNotEqual(_T("えお"), c.value);
             Assert::AreEqual(_T("えお"), w.value);
-            Assert::AreNotEqual(get_string_length(input), c.length);
+            Assert::AreNotEqual(get_string_length(input), (size_t)c.length);
 
             TEXT dc = clone_text(&c);
             TEXT dw = clone_text(&w);
