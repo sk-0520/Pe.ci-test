@@ -1,8 +1,11 @@
 ﻿#pragma once
+#include <stddef.h>
+
 #include <tchar.h>
 
 #include "common.h"
 #include "tstring.h"
+
 
 static const TCHAR library__whitespace_characters[] = { _T(' '), _T('\t') };
 
@@ -18,7 +21,7 @@ typedef struct tag_TEXT
     /// <summary>
     /// 長さ。
     /// </summary>
-    size_t length;
+    text_t length;
 
     /// <summary>
     /// 管理データ。
@@ -63,6 +66,13 @@ TEXT create_invalid_text();
 /// <param name="text"></param>
 /// <returns>使用可能か。</returns>
 bool is_enabled_text(const TEXT* text);
+
+/// <summary>
+/// 文字列長は<c>TEXT</c>で有効か。
+/// </summary>
+/// <param name="length"></param>
+/// <returns>有効。</returns>
+bool check_text_length(size_t length);
 
 /// <summary>
 /// テキストを生成。

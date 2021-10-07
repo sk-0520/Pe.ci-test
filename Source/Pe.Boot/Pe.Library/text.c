@@ -37,15 +37,25 @@ bool is_enabled_text(const TEXT* text)
     return true;
 }
 
+bool check_text_length(size_t length)
+{
+    return length <= TEXT_MAX;
+}
+
+
 TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length)
 {
+    if (!check_text_length(length)) {
+        return create_invalid_text();
+    }
+
     TCHAR* buffer = RC_HEAP_CALL(allocate_string, length);
     copy_memory(buffer, (void*)source, length * sizeof(TCHAR));
     buffer[length] = 0;
 
     TEXT result = {
         .value = buffer,
-        .length = length,
+        .length = (text_t)length,
         .library = {
             .need_release = true,
             .sentinel = true,
@@ -76,10 +86,13 @@ TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release
     if (!source) {
         return create_invalid_text();
     }
+    if (!check_text_length(length)) {
+        return create_invalid_text();
+    }
 
     TEXT result = {
         .value = source,
-        .length = length,
+        .length = (text_t)length,
         .library = {
             .need_release = need_release,
             .sentinel = false,
@@ -138,10 +151,13 @@ TEXT reference_text_width_length(const TEXT* source, size_t index, size_t length
     if (!length) {
         length = source->length - index;
     }
+    if (!check_text_length(length)) {
+        return create_invalid_text();
+    }
 
     TEXT result = {
         .value = source->value + index,
-        .length = length,
+        .length = (text_t)length,
         .library = {
             .need_release = false,
             .sentinel = false, //TODO: 番兵判定できるはず
