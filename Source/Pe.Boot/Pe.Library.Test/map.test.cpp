@@ -132,6 +132,7 @@ namespace PeLibraryTest
 
             BOX_INT value1_2 = BOX_INT::create(11);
             MAP_PAIR* pair1_2 = add_map(&map, &key1, &value1_2, false);
+            Assert::IsNotNull(pair1_2);
 
             TEXT key3 = wrap("key3");
             BOX_INT value3 = BOX_INT::create(3);
