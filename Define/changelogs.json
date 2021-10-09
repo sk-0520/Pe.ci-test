@@ -80,7 +80,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class":  "nuget",
+						"subject": "MSTest系更新"
 					},
 					{
 						"revision": "",
