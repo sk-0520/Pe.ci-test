@@ -1,27 +1,13 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.159+",
+		"date": "2021/10/09",
+		"version": "0.99.162",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "このバージョンちょっと怪しいかも"
 					}
 				]
 			},
@@ -29,45 +15,12 @@
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "e47231c06fc1264be420cfd9ddfdb9ec32da9c8f",
 						"subject": "#735: プラグイン参照実装を自動アップデート対象にする",
 						"comments": [
 							"全パターン検証できてないけど！",
 							"実装中に分かったけど、実行中アセンブリの上書きが誰も幸せにならくて辛いっていうか、そもそもプラグイン機構としてなんなのMSもうマジでもうマジで。doc見る限り同一(次バージョン)アセンブリの話ししてなかったやん！"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -75,21 +28,21 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "b0cf6184f4ecbea6cf7815de27c5a5522848feea",
 						"subject": "#773: 文字列フルフル64bitを考慮する必要ないでしょ"
 					},
 					{
-						"revision": "",
-						"class":  "nuget",
+						"revision": "3d68ef771907fc1faa825a65d80393350385a747",
+						"class": "nuget",
 						"subject": "MSTest系更新"
 					},
 					{
-						"revision": "",
+						"revision": "87d481a76b025df52b2cedd80f7d3adf5b734160",
 						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 1.7.3 -> 1.7.4"
 					},
 					{
-						"revision": "",
+						"revision": "112e8c4f9fa2e40629fbad55c21e82b53bc35c06",
 						"class": "nuget",
 						"subject": "System.Data.SQLite.Core 1.0.114.3 -> 1.0.115"
 					}
