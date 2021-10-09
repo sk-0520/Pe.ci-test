@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region property
 
-        string CommandLineKeyRunMode { get; } = "run-mode";
+        public static string CommandLineKeyRunMode { get; } = "run-mode";
         string CommandLineKeyAppLogLimit { get; } = "app-log-limit";
         string CommandLineKeyLog { get; } = "log";
         string CommandLineKeyWithLog { get; } = "with-log";
@@ -367,7 +367,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return true;
         }
 
-        ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, ApplicationDatabaseFactoryPack factory, CultureService cultureService, ILoggerFactory loggerFactory)
+        ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, ApplicationDatabaseFactoryPack? factory, CultureService cultureService, ILoggerFactory loggerFactory)
         {
             var container = new ApplicationDiContainer();
 
@@ -402,10 +402,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register(environmentParameters.ApplicationConfiguration.Platform)
                 .Register(environmentParameters.ApplicationConfiguration.Schedule)
 
-                .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), statementAccessor, environmentParameters.ApplicationConfiguration.File.GivePriorityToFile, loggerFactory))
-
-                .RegisterDatabase(factory, lazyWriterWaitTimePack, loggerFactory)
-
                 .Register<PluginContextFactory>(DiLifecycle.Transient)
                 .Register<PreferencesContextFactory>(DiLifecycle.Transient)
                 .Register<LauncherItemAddonContextFactory>(DiLifecycle.Transient)
@@ -422,6 +418,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
                 .Register<IKeyGestureGuide, KeyGestureGuide>(DiLifecycle.Transient)
             ;
+
+            if(factory is not null) {
+                container.Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), statementAccessor, environmentParameters.ApplicationConfiguration.File.GivePriorityToFile, loggerFactory));
+                container.RegisterDatabase(factory, lazyWriterWaitTimePack, loggerFactory);
+            }
+
 
             return container;
         }
@@ -498,7 +500,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var commandLine = CreateCommandLine(e.Args);
             RunMode = RunModeUtility.Parse(commandLine.GetValue(CommandLineKeyRunMode, string.Empty));
 #if BETA_MODE
-            if(RunMode != RunMode.CrashReport) {
+            if(RunModeUtility.CheckBetaModeAlert(RunMode)) {
                 if(!ShowCommandLineMessageIfUnspecified(commandLine)) {
                     return false;
                 }
@@ -530,9 +532,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var loggerFactory = Logging.Factory;
             var logger = Logging.Factory.CreateLogger(GetType());
 
-            if(RunMode == RunMode.Normal) {
+            if(RunModeUtility.IsSingleProcessOnly(RunMode)) {
                 var mutexName = environmentParameters.ApplicationConfiguration.General.MutexName;
-                logger.LogInformation("mutext: {0}", mutexName);
+                logger.LogInformation("ミューテックス名: {0}", mutexName);
                 var mutex = new Mutex(true, mutexName, out var createdNew);
                 if(!createdNew) {
                     //NOTE: 起動中プロセスになんかするならここかなぁ
@@ -546,9 +548,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var cultureService = new CultureService(EnumResourceManagerFactory.Create());
             CultureService.Initialize(cultureService);
 
-            if(RunMode == RunMode.CrashReport) {
+            if(!RunModeUtility.IsBuildInfrastructure(RunMode)) {
                 // DI/その他 の重要インフラは構築しない
-                logger.LogInformation("クラッシュレポート起動のため初期化処理 途中終了");
+                logger.LogInformation("インフラ構築スキップのため初期化処理 途中終了");
                 return true;
             }
 
@@ -567,63 +569,72 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 #endif
 
             AcceptResult? acceptResult = null;
-            IsFirstStartup = CheckFirstStartup(environmentParameters, logger);
-            if(IsFirstStartup) {
-                logger.LogInformation("初回実行");
-                if(!skipAccept) {
-                    // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                    acceptResult = ShowAcceptView(new DiContainer(false), environmentParameters, loggerFactory);
-                    if(!acceptResult.Accepted) {
-                        // 初回の使用許諾を得られなかったのでばいちゃ
-                        logger.LogInformation("使用許諾得られず");
-                        return false;
+            if(RunModeUtility.NeedFirstSetup(RunMode)) {
+                IsFirstStartup = CheckFirstStartup(environmentParameters, logger);
+                if(IsFirstStartup) {
+                    logger.LogInformation("初回実行");
+                    if(!skipAccept) {
+                        // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
+                        acceptResult = ShowAcceptView(new DiContainer(false), environmentParameters, loggerFactory);
+                        if(!acceptResult.Accepted) {
+                            // 初回の使用許諾を得られなかったのでばいちゃ
+                            logger.LogInformation("使用許諾得られず");
+                            return false;
+                        }
                     }
                 }
             }
 
-            if(RunMode != RunMode.CrashReport) {
+            if(RunModeUtility.CanTestPluginInstall(RunMode)) {
                 if(!ShowCommandLineTestPlugin(commandLine, environmentParameters)) {
                     return false;
                 }
             }
 
-            InitializeFileSystem(environmentParameters, logger);
+            if(RunModeUtility.IsBuildFileSystem(RunMode)) {
+                InitializeFileSystem(environmentParameters, logger);
+            }
             environmentParameters.SetFileSystemInitialized();
 
-            if(IsFirstStartup) {
-                FirstSetup(environmentParameters, loggerFactory, logger);
-            }
-
-            InitializeDirectory(environmentParameters, logger, loggerFactory);
-
-            var webViewinItializer = new WebViewinItializer(loggerFactory);
-            webViewinItializer.Initialize(environmentParameters, cultureService);
-            //try {
-            //    webViewinItializer.Initialize(environmentParameters);
-            //} catch(Exception ex) {
-            //    logger.LogWarning(ex, ex.Message);
-            //    webViewinItializer.AddVisualCppRuntimeRedist(environmentParameters);
-            //}
-
-            (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
-            if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {
-                logger.LogWarning("再初期化処理実施");
-                // データぶっ壊れてる系
-                FirstSetup(environmentParameters, loggerFactory, logger);
-                var retryResult = NormalSetup(out pack, environmentParameters, loggerFactory, logger);
-                if(!retryResult) {
-                    logger.LogWarning("あかんかったわ");
-                    throw new ApplicationException();
+            if(RunModeUtility.IsBuildPersistent(RunMode)) {
+                if(IsFirstStartup) {
+                    FirstSetup(environmentParameters, loggerFactory, logger);
                 }
             }
 
-            var factory = pack.factory;
-            pack.accessor.Dispose();
+            if(RunModeUtility.IsBuildFileSystem(RunMode)) {
+                InitializeDirectory(environmentParameters, logger, loggerFactory);
+            }
+
+            if(RunModeUtility.IsBuildWebView(RunMode)) {
+                var webViewinItializer = new WebViewinItializer(loggerFactory);
+                webViewinItializer.Initialize(environmentParameters, cultureService);
+            }
+
+            ApplicationDatabaseFactoryPack? factory = null;
+            if(RunModeUtility.IsBuildPersistent(RunMode)) {
+                (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
+                if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {
+                    logger.LogWarning("再初期化処理実施");
+                    // データぶっ壊れてる系
+                    FirstSetup(environmentParameters, loggerFactory, logger);
+                    var retryResult = NormalSetup(out pack, environmentParameters, loggerFactory, logger);
+                    if(!retryResult) {
+                        logger.LogWarning("あかんかったわ");
+                        throw new ApplicationException();
+                    }
+                }
+
+                factory = pack.factory;
+                pack.accessor.Dispose();
+            }
 
             DiContainer = SetupContainer(environmentParameters, factory, cultureService, loggerFactory);
-            var databaseSetupper = DiContainer.Build<DatabaseSetupper>();
-            var lastVersion = databaseSetupper.GetLastVersion(DiContainer.Build<IDatabaseAccessorPack>().Main)!;
-            databaseSetupper.Tune(DiContainer.Build<IDatabaseAccessorPack>(), lastVersion);
+            if(RunModeUtility.IsBuildPersistent(RunMode)) {
+                var databaseSetupper = DiContainer.Build<DatabaseSetupper>();
+                var lastVersion = databaseSetupper.GetLastVersion(DiContainer.Build<IDatabaseAccessorPack>().Main)!;
+                databaseSetupper.Tune(DiContainer.Build<IDatabaseAccessorPack>(), lastVersion);
+            }
 
             WindowManager = SetupWindowManager(DiContainer);
             //OrderManager = SetupOrderManager(DiContainer);
@@ -632,42 +643,45 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             ClipboardManager = SetupClipboardManager(DiContainer);
             UserAgentManager = SetupUserAgentManager(DiContainer);
 
-            var cultureServiceChanger = DiContainer.Build<CultureServiceChanger>(CultureService.Instance, WindowManager);
-            cultureServiceChanger.ChangeCulture();
+            if(RunModeUtility.IsBuildPersistent(RunMode)) {
+                var cultureServiceChanger = DiContainer.Build<CultureServiceChanger>(CultureService.Instance, WindowManager);
+                cultureServiceChanger.ChangeCulture();
+            }
+            if(RunModeUtility.NeedFirstSetup(RunMode)) {
+                if(acceptResult != null) {
+                    //Debug.Assert(IsFirstStartup);
+                    var mainDatabaseBarrier = DiContainer.Build<IMainDatabaseBarrier>();
+                    var userIdManager = DiContainer.Build<UserIdManager>();
+                    var userId = acceptResult.IsEnabledTelemetry
+                        ? userIdManager.CreateFromEnvironment()
+                        : string.Empty
+                    ;
+                    using(var context = mainDatabaseBarrier.WaitWrite()) {
+                        var appExecuteSettingEntityDao = DiContainer.Build<AppExecuteSettingEntityDao>(context, context.Implementation);
+                        appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(userId, acceptResult.IsEnabledTelemetry, DatabaseCommonStatus.CreateCurrentAccount());
 
-            if(acceptResult != null) {
-                //Debug.Assert(IsFirstStartup);
-                var mainDatabaseBarrier = DiContainer.Build<IMainDatabaseBarrier>();
-                var userIdManager = DiContainer.Build<UserIdManager>();
-                var userId = acceptResult.IsEnabledTelemetry
-                    ? userIdManager.CreateFromEnvironment()
-                    : string.Empty
-                ;
-                using(var context = mainDatabaseBarrier.WaitWrite()) {
-                    var appExecuteSettingEntityDao = DiContainer.Build<AppExecuteSettingEntityDao>(context, context.Implementation);
-                    appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(userId, acceptResult.IsEnabledTelemetry, DatabaseCommonStatus.CreateCurrentAccount());
+                        var appUpdateSettingEntityDao = DiContainer.Build<AppUpdateSettingEntityDao>(context, context.Implementation);
+                        appUpdateSettingEntityDao.UpdateReleaseVersion(acceptResult.UpdateKind, DatabaseCommonStatus.CreateCurrentAccount());
 
-                    var appUpdateSettingEntityDao = DiContainer.Build<AppUpdateSettingEntityDao>(context, context.Implementation);
-                    appUpdateSettingEntityDao.UpdateReleaseVersion(acceptResult.UpdateKind, DatabaseCommonStatus.CreateCurrentAccount());
-
-                    context.Commit();
-                }
-            } else {
-                var mainDatabaseBarrier = DiContainer.Build<IMainDatabaseBarrier>();
-                using(var context = mainDatabaseBarrier.WaitWrite()) {
-                    var appExecuteSettingEntityDao = DiContainer.Build<AppExecuteSettingEntityDao>(context, context.Implementation);
-                    var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
-
-                    if(setting.IsEnabledTelemetry) {
-                        var userIdManager = DiContainer.Build<UserIdManager>();
-                        if(!userIdManager.IsValidUserId(setting.UserId)) {
-                            logger.LogInformation("統計情報送信は有効だがユーザーIDが不正のため無効化: {0}", setting.UserId);
-                            appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(string.Empty, false, DatabaseCommonStatus.CreateCurrentAccount());
-                            context.Commit();
-                        }
+                        context.Commit();
                     }
+                } else {
+                    var mainDatabaseBarrier = DiContainer.Build<IMainDatabaseBarrier>();
+                    using(var context = mainDatabaseBarrier.WaitWrite()) {
+                        var appExecuteSettingEntityDao = DiContainer.Build<AppExecuteSettingEntityDao>(context, context.Implementation);
+                        var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
 
-                    context.Commit();
+                        if(setting.IsEnabledTelemetry) {
+                            var userIdManager = DiContainer.Build<UserIdManager>();
+                            if(!userIdManager.IsValidUserId(setting.UserId)) {
+                                logger.LogInformation("統計情報送信は有効だがユーザーIDが不正のため無効化: {0}", setting.UserId);
+                                appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(string.Empty, false, DatabaseCommonStatus.CreateCurrentAccount());
+                                context.Commit();
+                            }
+                        }
+
+                        context.Commit();
+                    }
                 }
             }
 

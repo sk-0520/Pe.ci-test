@@ -111,6 +111,13 @@ namespace ContentTypeTextNet.Pe.Main
                     }
                     break;
 
+                case RunMode.InterProcessCommunication: {
+                        var ipcManager = new InterProcessCommunicationManager(initializer, e);
+                        ipcManager.Execute();
+                        Shutdown();
+                        return;
+                    }
+
                 default:
                     throw new NotImplementedException();
             }
@@ -131,18 +138,21 @@ namespace ContentTypeTextNet.Pe.Main
 
             if(Logger != null) {
                 Logger.LogError(e.Exception, "{0}, {1}", e.Dispatcher.Thread.ManagedThreadId, e.Exception.Message);
-                Debug.Assert(ApplicationManager != null);
                 Logger.LogInformation("RunMode: {0}", RunMode);
-                Logger.LogInformation("CanSendCrashReport: {0}", ApplicationManager.CanSendCrashReport);
-                if(RunMode == RunMode.Normal && ApplicationManager.CanSendCrashReport) {
-                    // ふりしぼれ最後の輝き
-                    Logger.LogInformation("生クラッシュレポートファイルを吐き出し");
-                    var outputFile = ApplicationManager.OutputRawCrashReport(e.Exception);
-                    Logger.LogInformation("生クラッシュレポートファイル: {0}", outputFile);
-                    Logger.LogInformation("クラッシュレポート送信処理立ち上げ...");
-                    ApplicationManager.ExecuteCrashReport(outputFile);
+                if(ApplicationManager is not null) {
+                    Logger.LogInformation("CanSendCrashReport: {0}", ApplicationManager.CanSendCrashReport);
+                    if(ApplicationManager.CanSendCrashReport) {
+                        // ふりしぼれ最後の輝き
+                        Logger.LogInformation("生クラッシュレポートファイルを吐き出し");
+                        var outputFile = ApplicationManager.OutputRawCrashReport(e.Exception);
+                        Logger.LogInformation("生クラッシュレポートファイル: {0}", outputFile);
+                        Logger.LogInformation("クラッシュレポート送信処理立ち上げ...");
+                        ApplicationManager.ExecuteCrashReport(outputFile);
 
-                    e.Handled = ApplicationManager.UnhandledExceptionHandled;
+                        e.Handled = ApplicationManager.UnhandledExceptionHandled;
+                    }
+                } else {
+                    MessageBox.Show(e.Exception.ToString(), $"[{RunMode}]");
                 }
             } else {
                 MessageBox.Show(e.Exception.ToString());

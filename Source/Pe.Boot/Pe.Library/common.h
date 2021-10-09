@@ -9,6 +9,14 @@
 /// </summary>
 typedef size_t byte_t;
 
+/// <summary>
+/// テキスト長。
+/// <para>通常のC文字列としてもこの長さを最大長とする。</para>
+/// </summary>
+typedef uint32_t text_t;
+
+#define TEXT_MAX (UINT32_MAX)
+
 #define NEWLINE_CR "\r"
 #define NEWLINE_LF "\n"
 #define NEWLINE_CRLF "\r\n"

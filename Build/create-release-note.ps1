@@ -2,6 +2,7 @@
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
+$PSDefaultParameterValues['Out-File:Encoding'] = 'utf8'
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scriptFileNames = @(
 	'version.ps1',
@@ -18,6 +19,11 @@ $rawChangelogsFile = Join-Path $rootDirPath "Define/changelogs.json"
 $rawChangelogLinkFile = Join-Path $rootDirPath "Source/Help/script/changelog-link.ts"
 $rawChangelogStyleFile = Join-Path $rootDirPath "Source/Help/style/changelog.scss"
 $templateHtmlFile = Join-Path $currentDirPath 'release-note.html'
+$pluginTemplateHtmlFile = Join-Path $currentDirPath 'release-note.plugin.html'
+
+# -------------------------------
+# Pe
+# -------------------------------
 
 # ノード作らず適当に
 class Element {
@@ -133,7 +139,7 @@ foreach ($content in $currentVersion.contents) {
 		$logSubject.attributes['class'] = 'subject'
 
 		if ($log.PSObject.Properties.Match('revision').Count) {
-			if($log.revision.Length) {
+			if ($log.revision.Length) {
 				$logRevision = $logHeader.CreateChild('a')
 				$logRevision.CreateText($log.revision)
 				$logRevision.attributes['class'] = 'revision'
@@ -154,7 +160,7 @@ foreach ($content in $currentVersion.contents) {
 }
 
 $compiledChangelogLinkFile = Join-Path $outputDirectory 'changelog-link.js'
-$compiledChangelogStyleFile= Join-Path $outputDirectory 'changelog.css'
+$compiledChangelogStyleFile = Join-Path $outputDirectory 'changelog.css'
 
 npx tsc  "$rawChangelogLinkFile" --outFile "$compiledChangelogLinkFile"
 npx sass "$rawChangelogStyleFile" --style compressed --no-source-map "$compiledChangelogStyleFile"
@@ -166,3 +172,66 @@ $htmlContent = $htmlContent.Replace('/*STYLE*/', (Get-Content $compiledChangelog
 
 $version = GetAppVersion
 Set-Content (Join-Path $outputDirectory (ConvertReleaseNoteFileName $version)) -Value $htmlContent -Encoding UTF8
+
+
+# -------------------------------
+# プラグイン
+# -------------------------------
+$pluginProjectDirectoryPath = Join-Path $rootDirPath 'Source/Pe'
+
+#Set-WinSystemLocale ja-JP
+
+$logFile = '@.txt'
+$scriptFilePath = Join-Path $currentDirPath 'git-log-output.bat'
+
+$pluginProjectDirectories = Get-ChildItem -Path $pluginProjectDirectoryPath -Filter ('Pe.Plugins.Reference.*') -Directory
+foreach ($pluginProjectDirectory in $pluginProjectDirectories) {
+	$outputPath = $pluginProjectDirectory.Name + '.html'
+
+	Push-Location -Path $pluginProjectDirectory.FullName
+
+	Get-Location
+	& $scriptFilePath "$($pluginProjectDirectory.FullName)" "$logFile"
+
+	$pluginRoot = New-Object Element 'div'
+	$pluginContents = $pluginRoot.CreateChild('div');
+	$logSection = $pluginContents.CreateChild('section')
+	$logList = $logSection.CreateChild('ul')
+
+	$logContents = Get-Content $logFile -Encoding UTF8
+
+	foreach($logContent in $logContents) {
+		$values = $logContent.Split("`t", 3, [System.StringSplitOptions]::None)
+		$hash = $values[0]
+		$timestamp = $values[1]
+		$message = $values[2]
+
+		$logItem = $logList.CreateChild('li')
+
+		$logHeader = $logItem.CreateChild('span')
+		$logHeader.attributes['class'] = 'header'
+
+		$logSubject = $logHeader.CreateChild('time')
+		$logSubject.CreateText('[' + $timestamp + '] ')
+		$logSubject.attributes['datetime'] = $timestamp
+		$logSubject.attributes['class'] = 'timestamp'
+
+		$logSubject = $logHeader.CreateChild('span')
+		$logSubject.CreateText($message)
+		$logSubject.attributes['class'] = 'subject'
+
+		$logRevision = $logHeader.CreateChild('a')
+		$logRevision.CreateText($hash)
+		$logRevision.attributes['class'] = 'revision'
+	}
+
+	$pluginHtmlContent = (Get-Content $pluginTemplateHtmlFile -Encoding UTF8 -Raw)
+	$pluginHtmlContent = $pluginHtmlContent.Replace('<!--NAME-->', ($pluginProjectDirectory.Name + ', ' + $currentVersion.version))
+	$pluginHtmlContent = $pluginHtmlContent.Replace('<!--CONTENT-->', $pluginRoot.ToHtml());
+	$pluginHtmlContent = $pluginHtmlContent.Replace('//SCRIPT', (Get-Content $compiledChangelogLinkFile -Raw -Encoding UTF8))
+	$pluginHtmlContent = $pluginHtmlContent.Replace('/*STYLE*/', (Get-Content $compiledChangelogStyleFile -Raw -Encoding UTF8))
+
+	Set-Content (Join-Path $outputDirectory $outputPath) -Value $pluginHtmlContent -Encoding UTF8
+
+	Pop-Location
+}

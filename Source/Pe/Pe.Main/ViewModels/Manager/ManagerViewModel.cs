@@ -164,13 +164,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 SetProperty(ref this._isOpenContextMenu, value);
                 if(IsOpenContextMenu) {
                     RaisePropertyChanged(nameof(ShowPlatformOldVersion));
+                    RaisePropertyChanged(nameof(UpdateInfo));
+                    RaisePropertyChanged(nameof(ExistsPluginChanges));
                 }
                 Logger.LogDebug("[#530調査] <IsOpenContextMenu> IsOpenContextMenu = {0}, IsEnabledManager = {1}", IsOpenContextMenu, IsEnabledManager);
             }
         }
 
 
-        public IReadOnlyUpdateInfo UpdateInfo => ApplicationManager.ApplicationUpdateInfo;
+        public IReadOnlyNewVersionInfo UpdateInfo => ApplicationManager.ApplicationUpdateInfo;
+
+        /// <summary>
+        /// プラグイン変更有無。
+        /// </summary>
+        public bool ExistsPluginChanges => ApplicationManager.ExistsPluginChanges;
 
         #endregion
 
@@ -237,7 +244,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         public ICommand UpdateCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
-                 ApplicationManager.ExecuteUpdateAsync(Models.Data.UpdateCheckKind.CheckOnly).ConfigureAwait(false);
+                 ApplicationManager.CheckNewVersionsAsync(false);
              }
          ));
 
@@ -258,6 +265,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             }
         ));
 
+        public ICommand RebootCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 ApplicationManager.Reboot();
+             }
+         ));
 
         public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {

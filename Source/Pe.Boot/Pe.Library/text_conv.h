@@ -11,7 +11,7 @@ typedef struct tag_TEXT_PARSED_INT32_RESULT
     /// 変換値。
     /// <para>successが真の場合に有効値が設定される。</para>
     /// </summary>
-    __int32 value;
+    int32_t value;
     /// <summary>
     /// 変換成功状態。
     /// </summary>
@@ -27,7 +27,7 @@ typedef struct tag_TEXT_PARSED_INT64_RESULT
     /// 変換値。
     /// <para>successが真の場合に有効値が設定される。</para>
     /// </summary>
-    __int64 value;
+    int64_t value;
     /// <summary>
     /// 変換成功状態。
     /// </summary>

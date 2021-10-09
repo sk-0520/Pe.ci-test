@@ -1,4 +1,6 @@
 using System;
+using ContentTypeTextNet.Pe.Core.Models;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
@@ -42,5 +44,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// 処理経過をユーザーに通知しないダミー通知。
+    /// </summary>
+    public sealed class NullNotifyProgress: UserNotifyProgress
+    {
+        public NullNotifyProgress(ILoggerFactory loggerFactory)
+            : base(new DoubleProgress(loggerFactory), new StringProgress(loggerFactory))
+        { }
     }
 }

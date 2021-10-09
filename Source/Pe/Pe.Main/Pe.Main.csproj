@@ -39,7 +39,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="1.7.3" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.7.4" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
     <PackageReference Include="SevenZipExtractor" Version="1.0.15" />
     <PackageReference Include="System.DirectoryServices.AccountManagement" Version="5.0.0" />
@@ -61,6 +61,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Hooker.MouseHooker.tt</DependentUpon>
     </None>
+    <None Include="Models\Plugin\PluginException.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PluginException.tt</DependentUpon>
+    </None>
     <None Include="Resources\File\Accept\AcceptDocument.xaml">
       <Generator></Generator>
     </None>
@@ -80,6 +85,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MouseHooker.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Models\Plugin\PluginException.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PluginException.tt</DependentUpon>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -111,6 +121,10 @@
     <None Update="Models\Logic\Hooker.MouseHooker.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Hooker.MouseHooker.cs</LastGenOutput>
+    </None>
+    <None Update="Models\Plugin\PluginException.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PluginException.cs</LastGenOutput>
     </None>
   </ItemGroup>
 

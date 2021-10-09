@@ -9,6 +9,8 @@ using NLog;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
+    public delegate IDisposable PauseReceiveLogDelegate();
+
     internal class ApplicationLogging
     {
         public ApplicationLogging(int logLimit, string loggingConfigFilePath, string outputPath, string withLog, bool createDirectory, bool isFullTrace)
@@ -18,8 +20,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             Factory = new LoggerFactory();
             LogManager.LoadConfiguration(loggingConfigFilePath);
 
-            var op = new NLog.Extensions.Logging.NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties = true };
-            var prov = new NLog.Extensions.Logging.NLogLoggerProvider(op, LogManager.LogFactory);
+            var po = new NLog.Extensions.Logging.NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties = true };
+            var prov = new NLog.Extensions.Logging.NLogLoggerProvider(po, LogManager.LogFactory);
             Factory.AddProvider(prov);
 
             var appTarget = new NLog.Targets.MethodCallTarget("APPLOG", ReceiveLog);

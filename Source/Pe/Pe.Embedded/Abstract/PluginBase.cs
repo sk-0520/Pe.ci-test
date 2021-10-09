@@ -117,9 +117,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                 Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}", nameof(PluginCategoryAttribute), pluginCategoryAttr.Primary);
             }
 
-
             var pluginIdentifiers = new PluginIdentifiers(pluginIdentifiersAttr.PluginId, pluginIdentifiersAttr.PluginName);
-            var pluginVersions = new PluginVersions(assemblyName.Version!, supportVersionsAttr.MinimumVersion, supportVersionsAttr.MaximumVersion);
+            var pluginVersions = new PluginVersions(assemblyName.Version!, supportVersionsAttr.MinimumVersion, supportVersionsAttr.MaximumVersion, supportVersionsAttr.CheckUrls);
             var pluginAuthors = new PluginAuthors(new Author(pluginAuthorsAttr.Name), pluginAuthorsAttr.License);
             var pluginCategory = new PluginCategory(pluginCategoryAttr.Primary, pluginCategoryAttr.Secondaries);
 

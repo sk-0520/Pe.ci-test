@@ -3,7 +3,7 @@ image: Visual Studio 2019
 skip_tags: true
 skip_commits:
   message: /^init/
-clone_depth: 1
+# clone_depth: 1
 environment:
   BUILD_TYPE: BETA
   ARCHIVE: 7z
@@ -39,6 +39,7 @@ test_script:
 after_test:
   - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
   - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms $env:PLATFORM
+  - cmd: git config --global core.quotepath "false"
   - ps: .\Build\create-release-note.ps1
 artifacts:
   - path: Output\*.zip
@@ -50,6 +51,6 @@ artifacts:
 cache:
   #- '%USERPROFILE%\.nuget\packages'
   - 'node_modules'
+  # - 'C:\nuget'
   #- C:\ProgramData\chocolatey\bin -> appveyor.yml
   #- C:\ProgramData\chocolatey\lib -> appveyor.yml
-  - 'C:\nuget'

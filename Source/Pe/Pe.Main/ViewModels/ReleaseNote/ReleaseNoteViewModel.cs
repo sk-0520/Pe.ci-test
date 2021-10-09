@@ -29,12 +29,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         //PropertyChangedHooker PropertyChangedHooker { get; }
 
         [DateTimeKind(DateTimeKind.Utc)]
-        public DateTime Release => Model?.UpdateItem.Release ?? DateTime.UtcNow;
-        public Version Version => Model?.UpdateItem.Version ?? new Version();
-        public string Revision => Model?.UpdateItem.Revision ?? string.Empty;
+        public DateTime Release => Model?.NewVersionItem.Release ?? DateTime.UtcNow;
+        public Version Version => Model?.NewVersionItem.Version ?? new Version();
+        public string Revision => Model?.NewVersionItem.Revision ?? string.Empty;
         public bool IsCheckOnly => Model?.IsCheckOnly ?? true;
 
-        public IReadOnlyUpdateInfo? UpdateInfo => Model?.UpdateInfo;
+        public IReadOnlyNewVersionInfo? UpdateInfo => Model?.NewVersionInfo;
 
         #endregion
 
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         public ICommand DownloadCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 // CanExecute に対してどうこうする手間がしんどい
-                if(IsCheckOnly || UpdateInfo?.State == UpdateState.Error) {
+                if(IsCheckOnly || UpdateInfo?.State == NewVersionState.Error) {
                     Model.StartDownload();
                     RaisePropertyChanged(nameof(IsCheckOnly));
                 }
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
 
                 if(t.IsCompletedSuccessfully) {
                     var htmlSource = t.Result;
-                    view.webView.LoadHtml(htmlSource, Model.UpdateItem.NoteUri.ToString());
+                    view.webView.LoadHtml(htmlSource, Model.NewVersionItem.NoteUri.ToString());
                 } else {
                     view.webView.LoadHtml(Properties.Resources.File_ReleaseNote_ErrorReleaseNote, nameof(Properties.Resources.File_ReleaseNote_ErrorReleaseNote));
                 }

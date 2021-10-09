@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
 
-        public SettingContainerElement(IDiContainer diContainer, Func<IDisposable> pauseReceiveLog, ILoggerFactory loggerFactory)
+        public SettingContainerElement(IDiContainer diContainer, PauseReceiveLogDelegate pauseReceiveLog, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             PluginContainer = ServiceLocator.Build<PluginContainer>();

@@ -1,5 +1,56 @@
 [
 	{
+		"date": "2021/10/09",
+		"version": "0.99.162",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"subject": "このバージョンちょっと怪しいかも"
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "e47231c06fc1264be420cfd9ddfdb9ec32da9c8f",
+						"subject": "#735: プラグイン参照実装を自動アップデート対象にする",
+						"comments": [
+							"全パターン検証できてないけど！",
+							"実装中に分かったけど、実行中アセンブリの上書きが誰も幸せにならくて辛いっていうか、そもそもプラグイン機構としてなんなのMSもうマジでもうマジで。doc見る限り同一(次バージョン)アセンブリの話ししてなかったやん！"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "b0cf6184f4ecbea6cf7815de27c5a5522848feea",
+						"subject": "#773: 文字列フルフル64bitを考慮する必要ないでしょ"
+					},
+					{
+						"revision": "3d68ef771907fc1faa825a65d80393350385a747",
+						"class": "nuget",
+						"subject": "MSTest系更新"
+					},
+					{
+						"revision": "87d481a76b025df52b2cedd80f7d3adf5b734160",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 1.7.3 -> 1.7.4"
+					},
+					{
+						"revision": "112e8c4f9fa2e40629fbad55c21e82b53bc35c06",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.114.3 -> 1.0.115"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2021/08/04",
 		"version": "0.99.158",
 		"contents": [
@@ -9,7 +60,7 @@
 					{
 						"revision": "044fec4522372dced95bf9a001f870aad9fe5ef9",
 						"subject": "#527: 本体起動用処理をもうちっときれいにする",
-						"comment": [
+						"comments": [
 							"軽い感じで綺麗にするつもりが壮大な作り直しプロジェクトになった",
 							"本体を動かす程度は動くけどいまだ未完成(printf実装とかもうしんどい)"
 						]
@@ -17,7 +68,7 @@
 					{
 						"revision": "7427c3df835cedd1ce1cef7b6c4b1721cd794151",
 						"subject": "#769: ランチャーアイテム自動取り込み後に取り込んだ旨のメッセージを表示する",
-						"comment": [
+						"comments": [
 							"チェックマークを付けるようにしつつスタートアップも同じようにした"
 						]
 					},
@@ -28,7 +79,7 @@
 					{
 						"revision": "e001f7ff46078dce5fe81da1dc7cbc93e068d61b",
 						"subject": "[継続課題] #766: アップデート時に事前にEXEを一通り動かす",
-						"comment": [
+						"comments": [
 							"一旦は失敗しても処理を進めるようにした",
 							"次の次くらいのリリースで失敗処理をきちんとする"
 						]
@@ -51,7 +102,7 @@
 						"revision": "728aed2da2938b44c7ee04f037d44096289fe2a6",
 						"class": "nuget",
 						"subject": "MSTest系更新",
-						"Comments": [
+						"comments": [
 							"Microsoft.NET.Test.Sdk 16.9.4 -> 16.10.0",
 							"MSTest.TestAdapter 2.2.3 -> 2.2.5",
 							"MSTest.TestFramework 2.2.3 -> 2.2.5"

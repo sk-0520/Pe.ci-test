@@ -233,7 +233,7 @@ namespace PeLibraryTest
                 auto arg1 = std::get<0>(test.inputs);
                 TEXT actual = to_command_line_argument(arg1.data(), arg1.size());
                 Assert::AreEqual(test.expected, actual.value);
-                Assert::AreEqual(get_string_length(test.expected), actual.length);
+                Assert::AreEqual(get_string_length(test.expected), (size_t)actual.length);
                 free_text(&actual);
             }
         }

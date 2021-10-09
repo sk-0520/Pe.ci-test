@@ -1,7 +1,6 @@
 version: '{build}'
 image: Visual Studio 2019
 skip_tags: true
-clone_depth: 1
 environment:
   BUILD_TYPE: BETA
   ARCHIVE: 7z
@@ -38,4 +37,5 @@ artifacts:
   - path: Output\*.html
   - path: Output\help
     name: document
-
+cache:
+  - 'node_modules'
