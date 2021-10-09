@@ -85,7 +85,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 1.7.3 -> 1.7.4"
 					},
 					{
 						"revision": "",
