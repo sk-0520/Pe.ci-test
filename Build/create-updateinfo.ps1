@@ -40,7 +40,7 @@ function CreateUpdateItem([string] $archiveFilePath, [uri] $noteUri, [version] $
 		platform           = $platform
 		minimum_version    = $minimumVersion
 		note_uri           = $noteUri
-		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", $archiveFilePath)
+		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", (Split-Path $archiveFilePath -Leaf))
 		archive_size       = (Get-Item -Path $archiveFilePath).Length
 		archive_kind       = $Archive
 		archive_hash_kind  = $hashAlgorithm
