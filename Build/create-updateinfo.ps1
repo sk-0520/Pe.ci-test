@@ -79,7 +79,7 @@ foreach($pluginProjectDirectory in $pluginProjectDirectories) {
 		$pluginFileName = $pluginProjectDirectory.Name + '_' + $platform + '.' + $Archive
 		$pluginFilePath = Join-Path $outputDirectory $pluginFileName
 
-		$noteName = (ConvertFileName $pluginProjectDirectory.Name $version '' 'html')
+		$noteName = $pluginProjectDirectory.Name + '.html'
 		$noteUri = $NoteBaseUrl.Replace("@NOTENAME@", $noteName)
 		$item = CreateUpdateItem $pluginFilePath $noteUri $version
 
