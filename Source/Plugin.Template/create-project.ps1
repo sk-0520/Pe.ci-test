@@ -22,6 +22,9 @@ PS C:\DIR> .\create-project.ps1 -Param あれこれ
 .PARAMETER PluginId
 プラグインID
 
+.PARAMETER DefaultNamespace
+名前空間
+
 .PARAMETER AppTargetBranch
 対象 Pe のブランチ
 
@@ -39,6 +42,7 @@ Param(
 	[Parameter(mandatory = $true)][string] $ProjectDirectory,
 	[Parameter(mandatory = $true)][string] $PluginName,
 	[Guid] $PluginId,
+	[string] $DefaultNamespace,
 	[string] $AppTargetBranch = 'master',
 	[string] $GitPath = '%PROGRAMFILES%\Git\bin',
 	[string] $DotNetPath = '%PROGRAMFILES%\dotnet\'
@@ -146,8 +150,21 @@ $pluginProjectDirPath = Join-Path $parameters.source $PluginName
 $pluginProjectFilePath = Join-Path -Path $pluginProjectDirPath -ChildPath "$PluginName.csproj"
 
 Copy-Item -Path (Join-Path -Path $currentDirPath -ChildPath 'Template\*') -Destination ($parameters.directory.FullName + '\') -Force -Recurse
-Move-Item -Path (Join-Path -Path $parameters.source 'Project' | Join-Path -ChildPath 'Plugin.csproj') -Destination (Join-Path -Path $parameters.source 'Project' | Join-Path -ChildPath "$PluginName.csproj") -Force
-Move-Item -Path (Join-Path -Path $parameters.source 'Project') -Destination (Join-Path -Path $parameters.source $PluginName) -Force
+Move-Item -Path (Join-Path -Path $parameters.source 'Project') -Destination $pluginProjectDirPath -Force
+Move-Item -Path (Join-Path -Path $pluginProjectDirPath -ChildPath 'Plugin.csproj') -Destination (Join-Path -Path $pluginProjectDirPath -ChildPath "$PluginName.csproj") -Force
+Move-Item -Path (Join-Path -Path $pluginProjectDirPath -ChildPath 'Plugin.cs') -Destination (Join-Path -Path $pluginProjectDirPath -ChildPath "$PluginName.cs") -Force
+$removeItems = @('obj', 'bin')
+foreach($removeItem in $removeItems) {
+	Join-Path -Path $pluginProjectDirPath -ChildPath $removeItem
+	Remove-Item -Path (Join-Path -Path $pluginProjectDirPath -ChildPath $removeItem) -Force -Recurse
+}
+
+# テンプレート内置き換え
+if(![string]::IsNullOrEmpty($DefaultNamespace)) {
+	$namespace = $DefaultNamespace.Trim();
+
+
+}
 
 function New-Submodule {
 	param (
