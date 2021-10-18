@@ -160,10 +160,31 @@ foreach($removeItem in $removeItems) {
 }
 
 # テンプレート内置き換え
-if(![string]::IsNullOrEmpty($DefaultNamespace)) {
-	$namespace = $DefaultNamespace.Trim();
+function Replace-Template {
+	param (
+		[string] $Value
+	)
 
+	return [Regex]::Replace($Value, 'TEMPLATE_([\w\d_]+)', {
+		$namespace = 'TEMPLATE_Namespace'
+		if(![string]::IsNullOrEmpty($DefaultNamespace)) {
+			$namespace = $DefaultNamespace.Trim();
+		}
 
+		$map = @{
+			'Namespace' = $namespace
+			'PluginName' = $parameters.pluginName
+			'PluginId' = $parameters.pluginId
+		}
+
+		return $map[$args.Groups[1].Value]
+	})
+}
+
+foreach($file in Get-ChildItem -Path $pluginProjectDirPath -File -Recurse -Include @('*.cs','*.csproj')) {
+	Write-Verbose $file.FullName
+	$newContents = Get-Content -Path $file | ForEach-Object { Replace-Template $_ }
+	Set-Content -Path $file -Value $newContents
 }
 
 function New-Submodule {
