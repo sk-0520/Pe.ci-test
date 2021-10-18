@@ -264,13 +264,9 @@ try {
 		& $parameters.dotnet restore
 	}
 
-	# Write-Verbose "テンプレート的なのを複製(2)"
-	# $propertiesDirPath = Join-Path -Path $pluginProjectDirPath -ChildPath 'Properties'
-	# New-Item -Path $propertiesDirPath -ItemType Directory -Force
-	# Copy-Item -Path (Join-Path $currentDirPath 'Plugin.launchSettings.json') -Destination (Join-Path -Path $propertiesDirPath -ChildPath 'launchSettings.json') -Force
-
-	# $appEtcDir = Join-Path -Path $appDir -ChildPath 'Pe.Main' | Join-Path -ChildPath 'etc'
-	# Copy-Item -Path (Join-Path -Path $appEtcDir -ChildPath '@appsettings.debug.json') -Destination (Join-Path -Path $appEtcDir -ChildPath 'appsettings.debug.json')
+	Write-Verbose "プラグイン起動設定追加"
+	$appEtcDir = Join-Path -Path $appDir -ChildPath 'Pe.Main' | Join-Path -ChildPath 'etc'
+	Copy-Item -Path (Join-Path -Path $appEtcDir -ChildPath '@appsettings.debug.json') -Destination (Join-Path -Path $appEtcDir -ChildPath 'appsettings.debug.json')
 
 	Write-Verbose "ソリューションのショートカットをルートに作成"
 	$wsShell = New-Object -ComObject WScript.Shell

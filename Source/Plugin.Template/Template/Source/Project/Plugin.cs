@@ -5,8 +5,6 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
-using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon;
-using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences;
 
 namespace TEMPLATE_Namespace
 {
