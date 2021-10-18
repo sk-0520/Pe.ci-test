@@ -8,27 +8,20 @@ using ContentTypeTextNet.Pe.Embedded.Abstract;
 using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon;
 using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences;
 
-namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock
+namespace TEMPLATE_Namespace
 {
-    public class Clock: PluginBase, IAddon, IPreferences
+    public class TEMPLATE_PluginName: PluginBase// IAddon, ITheme, IPreferences
     {
         #region variable
-
-        ClockAddonImpl _addon;
-
         #endregion
 
-        public Clock(IPluginConstructorContext pluginConstructorContext)
+        public TEMPLATE_PluginName(IPluginConstructorContext pluginConstructorContext)
             : base(pluginConstructorContext)
         {
-            this._addon = new ClockAddonImpl(pluginConstructorContext, this);
+            //
         }
 
         #region PluginBase
-
-        internal override AddonBase Addon => this._addon;
-
-        protected override IPreferences CreatePreferences() => new ClockPreferences(this);
 
         protected override void InitializeImpl(IPluginInitializeContext pluginInitializeContext)
         { }

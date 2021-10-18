@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <RootNamespace>TEMPLATE_Namespace</RootNamespace>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
@@ -11,6 +12,7 @@
       <Private>false</Private>
       <ExcludeAssets>runtime</ExcludeAssets>
     </ProjectReference>
+    <
   </ItemGroup>
 
   <ItemGroup>
