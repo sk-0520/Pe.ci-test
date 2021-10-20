@@ -1,0 +1,13 @@
+extends template/_layout.pug
+
+block BLOCK_LAYOUT_VAR
+	- var VAR_LAYOUT_TITLE = pages.dev.plugin_template
+
+block BLOCK_LAYOUT_CONTENT
+	aside.warning
+		p 作業中
+
+	p プラグイン生成テンプレートを用いることでプラグインのひな形を生成する。
+	p
+		a(href="archives/plugin-template.zip") テンプレートを取得する
+
