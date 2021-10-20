@@ -35,7 +35,6 @@ PS C:\DIR> .\create-project.ps1 -Param あれこれ
 環境変数PATH に割り当てる dotnet がインストールされているパス
 
 .LINK
-https://bitbucket.org/sk_0520/pe.plugins.template/
 https://bitbucket.org/sk_0520/pe/
 #>
 Param(
@@ -160,12 +159,12 @@ foreach($removeItem in $removeItems) {
 }
 
 # テンプレート内置き換え
-function Replace-Template {
+function Update-Template {
 	param (
 		[string] $Value
 	)
 
-	return [Regex]::Replace($Value, 'TEMPLATE_([\w\d_]+)', {
+	return [Regex]::Replace($Value, '\bTEMPLATE_([\w\d_]+)\b', {
 		$namespace = 'TEMPLATE_Namespace'
 		if(![string]::IsNullOrEmpty($DefaultNamespace)) {
 			$namespace = $DefaultNamespace.Trim();
@@ -183,7 +182,7 @@ function Replace-Template {
 
 foreach($file in Get-ChildItem -Path $pluginProjectDirPath -File -Recurse -Include @('*.cs','*.csproj')) {
 	Write-Verbose $file.FullName
-	$newContents = Get-Content -Path $file | ForEach-Object { Replace-Template $_ }
+	$newContents = Get-Content -Path $file | ForEach-Object { Update-Template $_ }
 	Set-Content -Path $file -Value $newContents
 }
 
