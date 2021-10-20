@@ -55,14 +55,23 @@ $suppressScm = $false
 
 #===================================================
 #プラグインIDのチェック・採番
-$reservedPluginIds = [Guid[]]@(
-	[Guid]'4524FC23-EBB9-4C79-A26B-8F472C05095E', # DefaultTheme
+class PluginIdentity {
+	[Guid] $PluginId;
+	[string] $PluginName;
+
+	PluginIdentity([Guid] $pluginId, [string] $pluginName) {
+		$this.PluginId = $pluginId
+		$this.PluginName = $pluginName
+	}
+}
+$reservedPluginIds = [PluginIdentity[]]@(
+	[PluginIdentity]::new('4524FC23-EBB9-4C79-A26B-8F472C05095E', 'ContentTypeTextNet.Pe.Plugins.DefaultTheme'),
 	# ------------------------------------------
-	[Guid]'67F0FA7D-52D3-4889-B595-BE3703B224EB', # ClassicTheme
-	[Guid]'2E5C72C5-270F-4B05-AFB9-C87F3966ECC5', # Clock
-	[Guid]'799CE8BD-8F49-4E8F-9E47-4D4873084081', # Eyes
-	[Guid]'9DCF441D-9F8E-494F-89C1-814678BBC42C', # FileFinder
-	[Guid]'4FA1A634-6B32-4762-8AE8-3E1CF6DF9DB1'  # Html
+	[PluginIdentity]::new('67F0FA7D-52D3-4889-B595-BE3703B224EB', 'ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme'),
+	[PluginIdentity]::new('2E5C72C5-270F-4B05-AFB9-C87F3966ECC5', 'ContentTypeTextNet.Pe.Plugins.Reference.Clock'),
+	[PluginIdentity]::new('799CE8BD-8F49-4E8F-9E47-4D4873084081', 'ContentTypeTextNet.Pe.Plugins.Reference.Eyes'),
+	[PluginIdentity]::new('9DCF441D-9F8E-494F-89C1-814678BBC42C', 'ContentTypeTextNet.Pe.Plugins.Reference.FileFinder'),
+	[PluginIdentity]::new('4FA1A634-6B32-4762-8AE8-3E1CF6DF9DB1', 'ContentTypeTextNet.Pe.Plugins.Reference.Html')
 )
 
 $customPluginId = $PluginId
@@ -72,10 +81,10 @@ while (!$enabledGuid) {
 	$isGuid = [System.Guid]::TryParse($customPluginId, [System.Management.Automation.PSReference]$guid)
 
 	if ($isGuid) {
-		if ($reservedPluginIds.Contains([Guid]$customPluginId)) {
+		$reservedIds = $reservedPluginIds | Select-Object -ExpandProperty 'PluginId'
+		if ($reservedIds.Contains([Guid]$customPluginId)) {
 			Write-Warning ('予約済みプラグインID: ' + $customPluginId)
-		}
-		else {
+		} else {
 			$enabledGuid = $true
 		}
 	} else {
@@ -99,6 +108,12 @@ while (!$enabledGuid) {
 		} while (!$generatedGuid)
 	}
 }
+
+$reservedNames = $reservedPluginIds | Select-Object -ExpandProperty 'PluginName'
+if ($reservedNames.Contains($PluginName)) {
+	throw ('予約済みプラグイン名: ' + $PluginName)
+}
+
 
 #===================================================
 # 各種諸々の生成
