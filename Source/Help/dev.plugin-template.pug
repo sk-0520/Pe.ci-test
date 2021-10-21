@@ -3,11 +3,48 @@ extends template/_layout.pug
 block BLOCK_LAYOUT_VAR
 	- var VAR_LAYOUT_TITLE = pages.dev.plugin_template
 
+block BLOCK_LAYOUT_TAIL_SCRIPT
+	script(src="script/plugin-template.ts")
+
 block BLOCK_LAYOUT_CONTENT
 	aside.warning
 		p 作業中
 
-	p プラグイン生成テンプレートを用いることでプラグインのひな形を生成する。
-	p
+	p プラグイン生成テンプレートを用いることでプラグインのひな形を簡単に生成する。
+
+	.archive
 		a(href="archives/plugin-template.zip") テンプレートを取得する
+
+	section
+		h2 実行方法
+		p
+			| Powershell で
+			em(data-path='file-ps') create-project.ps1
+			| を実行することでプラグインプロジェクトが生成される。
+
+		p 以下コマンドでスクリプトドキュメントを表示。
+		pre: code Get-Help create-project.ps1 -full
+
+		section
+			h3 パラメータ生成
+			form#generator
+				dl
+					dt プロジェクトディレクトリ
+					dd
+						input#plugin-dir(type="text")
+
+					dt プラグインID
+					dd
+						input#plugin-id(type="")
+
+					dt プラグイン名
+					dd
+						input#plugin-name(type="")
+
+					dt 名前空間
+					dd
+						input#namespace(type="")
+			pre
+				code#output 実行例
+
 

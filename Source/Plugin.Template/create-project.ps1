@@ -2,15 +2,9 @@
 .SYNOPSIS
 Pe プラグインのテンプレート作成処理。
 
-<CommonParameters> は使用しない。
-
 
 .DESCRIPTION
 Pe リポジトリからいい感じのあれこれを取ってきてあれこれするんよ。
-
-
-.EXAMPLE
-PS C:\DIR> .\create-project.ps1 -Param あれこれ
 
 
 .PARAMETER ProjectDirectory
@@ -151,7 +145,7 @@ if (!$parameters.directory.Exists) {
 	$parameters.directory.Create()
 }
 if ((Get-ChildItem -Path $parameters.directory -Recurse -Force | Measure-Object).Count -ne 0) {
-	#	throw '指定ディレクトリが空じゃない'
+	throw '指定ディレクトリが空じゃない'
 }
 
 Write-Host "プロジェクトディレクトリ生成: " + $parameters.directory
