@@ -138,6 +138,34 @@ $parameters | Format-Table -AutoSize
 Write-Host ('git: ' + (& $parameters.git --version))
 Write-Host ('dotnet: ' + (& $parameters.dotnet --version))
 
+#---------------------------------------------------
+function Update-Template {
+	param (
+		[string] $Value
+	)
+
+	return [Regex]::Replace($Value, '\bTEMPLATE_([\w\d_]+)\b', {
+		$namespace = 'TEMPLATE_Namespace'
+		if(![string]::IsNullOrEmpty($DefaultNamespace)) {
+			$namespace = $DefaultNamespace.Trim();
+		}
+
+		$pluginShortName = $parameters.pluginName
+		if($parameters.pluginName.Contains('.')) {
+			$pluginShortName = $parameters.pluginName.Split('.')[-1]
+		}
+
+		$map = @{
+			'Namespace' = $namespace
+			'PluginName' = $parameters.pluginName
+			'PluginShortName' = $pluginShortName
+			'PluginId' = $parameters.pluginId
+		}
+
+		return $map[$args.Groups[1].Value]
+	})
+}
+
 #===================================================
 # プロジェクトディレクトリ構築
 $parameters.directory.Refresh()
@@ -168,32 +196,6 @@ foreach($removeItem in $removeItems) {
 }
 
 # テンプレート内置き換え
-function Update-Template {
-	param (
-		[string] $Value
-	)
-
-	return [Regex]::Replace($Value, '\bTEMPLATE_([\w\d_]+)\b', {
-		$namespace = 'TEMPLATE_Namespace'
-		if(![string]::IsNullOrEmpty($DefaultNamespace)) {
-			$namespace = $DefaultNamespace.Trim();
-		}
-
-		$pluginShortName = $parameters.pluginName
-		if($parameters.pluginName.Contains('.')) {
-			$pluginShortName = $parameters.pluginName.Split('.')[-1]
-		}
-
-		$map = @{
-			'Namespace' = $namespace
-			'PluginName' = $parameters.pluginName
-			'PluginShortName' = $pluginShortName
-			'PluginId' = $parameters.pluginId
-		}
-
-		return $map[$args.Groups[1].Value]
-	})
-}
 
 foreach($file in Get-ChildItem -Path $pluginProjectDirPath -File -Recurse -Include @('*.cs','*.csproj')) {
 	Write-Verbose $file.FullName
