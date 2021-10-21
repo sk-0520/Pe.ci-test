@@ -4,7 +4,7 @@
 
 このプロジェクトの各種ソースをリンクして使用する(共有プロジェクト使えりゃなぁ)。
 
-参照実装: `<Pe>/Source/Plugins/Plugins.sln`
+参考実装: `<Pe>/Source/Plugins/Plugins.sln`
 
 ## リンク方法
 

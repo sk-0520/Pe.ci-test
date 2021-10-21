@@ -183,7 +183,7 @@ try {
 			exit 1
 		}
 
-		# プラグイン参照実装
+		# プラグイン参考実装
 		$pluginProjectFiles = $projectFiles | Where-Object -Property "Name" -like "Pe.Plugins.Reference.*.csproj"
 		foreach($pluginProjectFile in $pluginProjectFiles) {
 			$name = $pluginProjectFile.BaseName
