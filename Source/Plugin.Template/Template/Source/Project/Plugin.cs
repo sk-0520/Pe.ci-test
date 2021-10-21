@@ -8,12 +8,12 @@ using ContentTypeTextNet.Pe.Embedded.Abstract;
 
 namespace TEMPLATE_Namespace
 {
-    public class TEMPLATE_PluginName: PluginBase// IAddon, ITheme, IPreferences
+    public class TEMPLATE_PluginShortName: PluginBase// IAddon, ITheme, IPreferences
     {
         #region variable
         #endregion
 
-        public TEMPLATE_PluginName(IPluginConstructorContext pluginConstructorContext)
+        public TEMPLATE_PluginShortName(IPluginConstructorContext pluginConstructorContext)
             : base(pluginConstructorContext)
         {
             //

@@ -179,9 +179,15 @@ function Update-Template {
 			$namespace = $DefaultNamespace.Trim();
 		}
 
+		$pluginShortName = $parameters.pluginName
+		if($parameters.pluginName.Contains('.')) {
+			$pluginShortName = $parameters.pluginName.Split('.')[-1]
+		}
+
 		$map = @{
 			'Namespace' = $namespace
 			'PluginName' = $parameters.pluginName
+			'PluginShortName' = $pluginShortName
 			'PluginId' = $parameters.pluginId
 		}
 
