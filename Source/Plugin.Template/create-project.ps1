@@ -182,13 +182,13 @@ if(!$suppressScm) {
 }
 
 # テンプレート的なのを複製(1)
-$pluginProjectDirPath = Join-Path $parameters.source $PluginName
-$pluginProjectFilePath = Join-Path -Path $pluginProjectDirPath -ChildPath "$PluginName.csproj"
+$pluginProjectDirPath = Join-Path $parameters.source (Update-Template 'TEMPLATE_PluginName')
+$pluginProjectFilePath = Join-Path -Path $pluginProjectDirPath -ChildPath (Update-Template 'TEMPLATE_PluginName.csproj')
 
 Copy-Item -Path (Join-Path -Path $currentDirPath -ChildPath 'Template\*') -Destination ($parameters.directory.FullName + '\') -Force -Recurse
-Move-Item -Path (Join-Path -Path $parameters.source 'Project') -Destination $pluginProjectDirPath -Force
-Move-Item -Path (Join-Path -Path $pluginProjectDirPath -ChildPath 'Plugin.csproj') -Destination (Join-Path -Path $pluginProjectDirPath -ChildPath "$PluginName.csproj") -Force
-Move-Item -Path (Join-Path -Path $pluginProjectDirPath -ChildPath 'Plugin.cs') -Destination (Join-Path -Path $pluginProjectDirPath -ChildPath "$PluginName.cs") -Force
+Move-Item -Path (Join-Path -Path $parameters.source 'TEMPLATE_PluginName') -Destination $pluginProjectDirPath -Force
+Move-Item -Path (Join-Path -Path $pluginProjectDirPath -ChildPath 'TEMPLATE_PluginName.csproj') -Destination (Join-Path -Path $pluginProjectDirPath -ChildPath (Update-Template 'TEMPLATE_PluginName.csproj')) -Force
+Move-Item -Path (Join-Path -Path $pluginProjectDirPath -ChildPath 'TEMPLATE_PluginName.cs') -Destination (Join-Path -Path $pluginProjectDirPath -ChildPath (Update-Template 'TEMPLATE_PluginName.cs')) -Force
 $removeItems = @('obj', 'bin')
 foreach($removeItem in $removeItems) {
 	Join-Path -Path $pluginProjectDirPath -ChildPath $removeItem
@@ -196,12 +196,19 @@ foreach($removeItem in $removeItems) {
 }
 
 # テンプレート内置き換え
-
-foreach($file in Get-ChildItem -Path $pluginProjectDirPath -File -Recurse -Include @('*.cs','*.csproj')) {
+function Update-TemplateFile {
+	param (
+		[System.IO.FileInfo] $file
+	)
 	Write-Verbose $file.FullName
-	$newContents = Get-Content -Path $file | ForEach-Object { Update-Template $_ }
+	$newContents = Get-Content -Path $file.FullName | ForEach-Object { Update-Template $_ }
 	Set-Content -Path $file -Value $newContents
 }
+
+foreach($file in Get-ChildItem -Path $pluginProjectDirPath -File -Recurse -Include @('*.cs','*.csproj')) {
+	Update-TemplateFile $file
+}
+Update-TemplateFile (Join-Path -Path $parameters.directory 'FullBuild.ps1')
 
 function New-Submodule {
 	param (
@@ -230,10 +237,10 @@ try {
 	Push-Location $parameters.source
 
 	Write-Verbose "ソリューション $PluginName を生成"
-	& $parameters.dotnet new sln --force --name "$PluginName"
+	& $parameters.dotnet new sln --force --name (Update-Template 'TEMPLATE_PluginShortName')
 
 	Write-Verbose "ソリューションからAnyCPUを破棄"
-	$solutionFileName = $PluginName + '.sln'
+	$solutionFileName = Update-Template 'TEMPLATE_PluginShortName.sln'
 	$solutionContent = Get-Content -Path $solutionFileName `
 		| Out-String -Stream `
 		| Where-Object { !$_.Contains('Any CPU') }

@@ -47,4 +47,22 @@ block BLOCK_LAYOUT_CONTENT
 			pre
 				code#output 実行例
 
+	section
+		h2 デバッグ方法
+		p テンプレートを使用した場合はVisual Studioのデバッグ実行で問題なく処理できる想定。
+
+		p 出来ない場合は以下のパラメータを付与したデバッグ実行を行えばできるはず。
+		pre: code --debug-dev-mode --log=.\data\log --force-log --full-trace-log --user-dir=.\data\user --machine-dir=.\data\machine --temp-dir=.\data\temp --test-plugin-dir $(TargetDir) --test-plugin-name $(TargetName)
+
+	section
+		h2 各種ファイル群
+		dl
+			dt: em(data-path='file-ps') build-project.ps1
+			dd プロジェクトのビルド処理。
+
+			dt: em(data-path='file-ps') archive-plugin.ps1
+			dd ビルドされたプラグインを圧縮。7z圧縮を行う場合はパスを指定すること。
+
+			dt: em(data-path='file-ps') create-release-note.ps1
+			dd アーカイブをもとにプラグイン情報を生成。
 
