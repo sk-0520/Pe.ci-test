@@ -12,6 +12,14 @@ $scriptDirPath = Join-Path -Path $currentDirPath -ChildPath 'Build'
 $sourceDirPath = Join-Path -Path $currentDirPath -ChildPath 'Source'
 $projectDirPath =  Join-Path -Path $sourceDirPath -ChildPath $pluginName | Join-Path -ChildPath "$pluginName.csproj"
 $propsFilePath = Join-Path -Path $sourceDirPath -ChildPath 'Directory.Build.props'
+$outputRootDirPath = Join-Path -Path $currentDirPath -ChildPath 'Output'
+
+function Get-OutputDirectoryPath {
+	param (
+		[Parameter(mandatory = $true)][ValidateSet("x86", "x64")][string] $Platform
+	)
+	return Join-Path -Path $outputRootDirPath -ChildPath "Release/$platform/$pluginName"
+}
 
 echo $projectDirPath
 echo $propsFilePath
@@ -32,6 +40,12 @@ $scripts = @{
 	createReleaseNote = Join-Path -Path $scriptDirPath -ChildPath 'create-release-note.ps1'
 }
 
-. $scripts.buildProject -ProjectName $pluginName -Platforms $platforms
+Write-Host 'プロジェクトビルド'
+& $scripts.buildProject -ProjectName $pluginName -Platforms $platforms
 
+Write-Host 'アーカイブ'
+foreach($platform in $platforms) {
+	$outputBaseName = "${pluginName}_${vesion}_${platform}"
+	& $scripts.archivePlugin -InputDirectory (Get-OutputDirectoryPath $platform) -DestinationDirectory $outputRootDirPath -OutputBaseName $outputBaseName -Archive 'zip' -Filter '*.pdb'
+}
 

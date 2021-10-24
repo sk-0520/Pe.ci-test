@@ -201,8 +201,8 @@ function Update-TemplateFile {
 		[System.IO.FileInfo] $file
 	)
 	Write-Verbose $file.FullName
-	$newContents = Get-Content -Path $file.FullName | ForEach-Object { Update-Template $_ }
-	Set-Content -Path $file -Value $newContents
+	$newContents = Get-Content -Path $file.FullName -Encoding UTF8 | ForEach-Object { Update-Template $_ }
+	Set-Content -Path $file -Value $newContents -Encoding UTF8
 }
 
 foreach($file in Get-ChildItem -Path $pluginProjectDirPath -File -Recurse -Include @('*.cs','*.csproj')) {
