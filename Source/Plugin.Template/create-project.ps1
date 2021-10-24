@@ -191,8 +191,10 @@ Move-Item -Path (Join-Path -Path $pluginProjectDirPath -ChildPath 'TEMPLATE_Plug
 Move-Item -Path (Join-Path -Path $pluginProjectDirPath -ChildPath 'TEMPLATE_PluginName.cs') -Destination (Join-Path -Path $pluginProjectDirPath -ChildPath (Update-Template 'TEMPLATE_PluginName.cs')) -Force
 $removeItems = @('obj', 'bin')
 foreach($removeItem in $removeItems) {
-	Join-Path -Path $pluginProjectDirPath -ChildPath $removeItem
-	Remove-Item -Path (Join-Path -Path $pluginProjectDirPath -ChildPath $removeItem) -Force -Recurse
+	$path = Join-Path -Path $pluginProjectDirPath -ChildPath $removeItem
+	if(Test-Path -Path $path) {
+		Remove-Item -Path $path -Force -Recurse
+	}
 }
 
 # テンプレート内置き換え

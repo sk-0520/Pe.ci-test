@@ -25,6 +25,9 @@ block BLOCK_LAYOUT_CONTENT
 		p 以下コマンドでスクリプトドキュメントを表示。
 		pre: code Get-Help create-project.ps1 -full
 
+		aside.warning
+			p ドライブ直下に作れたり作れなかったりする問題ありだけど🐛無視無視🐞
+
 		section
 			h3 パラメータ生成
 			form#generator
@@ -36,6 +39,7 @@ block BLOCK_LAYOUT_CONTENT
 					dt プラグインID
 					dd
 						input#plugin-id(type="")
+						button#set-auto-plugin-id(type="button") 自動生成
 
 					dt プラグイン名
 					dd
