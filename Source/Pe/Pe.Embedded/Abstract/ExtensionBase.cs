@@ -7,6 +7,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
+    /// <summary>
+    /// 拡張機能としての最下層クラス。
+    /// <para>プラグイン実装者がこのクラスに対して手を入れることはない。</para>
+    /// </summary>
     internal class ExtensionBase: IPlugin
     {
         protected ExtensionBase(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
@@ -17,25 +21,41 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region property
 
+        /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
+
+        /// <inheritdoc cref="PluginBase"/>
         protected PluginBase Plugin { get; }
 
         #endregion
 
         #region IPlugin
 
+        /// <inheritdoc cref="IPluginInformations"/>
         public IPluginInformations PluginInformations => Plugin.PluginInformations;
 
+        /// <inheritdoc cref="IPlugin.IsInitialized"/>
         public bool IsInitialized => Plugin.IsInitialized;
 
+        /// <summary>
+        /// プラグインのアイコンを取得。
+        /// </summary>
+        /// <param name="imageLoader">イメージ取得処理。</param>
+        /// <param name="iconScale">スケール。</param>
+        /// <returns>アイコン。</returns>
         public DependencyObject GetIcon(IImageLoader imageLoader, in IconScale iconScale) => throw new NotSupportedException();
 
+        /// <inheritdoc cref="IPlugin.Initialize(IPluginInitializeContext)"/>
         public void Initialize(IPluginInitializeContext pluginInitializeContext) => throw new NotSupportedException();
+        /// <inheritdoc cref="IPlugin.Uninitialize(IPluginUninitializeContext)"/>
         public void Uninitialize(IPluginUninitializeContext pluginUninitializeContext) => throw new NotSupportedException();
 
+        /// <inheritdoc cref="IPlugin.IsLoaded(PluginKind)"/>
         public bool IsLoaded(PluginKind pluginKind) => throw new NotSupportedException();
 
+        /// <inheritdoc cref="IPlugin.Load(PluginKind, IPluginLoadContext)"/>
         public void Load(PluginKind pluginKind, IPluginLoadContext pluginLoadContext) => throw new NotSupportedException();
+        /// <inheritdoc cref="IPlugin.Unload(PluginKind, IPluginUnloadContext)"/>
         public void Unload(PluginKind pluginKind, IPluginUnloadContext pluginUnloadContext) => throw new NotSupportedException();
 
         #endregion
