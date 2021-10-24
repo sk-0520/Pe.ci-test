@@ -32,7 +32,7 @@ function OutputJson([object] $json, [string] $outputPath) {
 	| Set-Content -Path $outputPath -Encoding Byte
 }
 
-function CreateUpdateItem([string] $archiveFilePath, [uri] $noteUri, [version] $minimumVersion) {
+function New-UpdateItem([string] $archiveFilePath, [uri] $noteUri, [version] $minimumVersion) {
 	return @{
 		release            = $releaseTimestamp.ToString("s")
 		version            = $version
@@ -40,7 +40,7 @@ function CreateUpdateItem([string] $archiveFilePath, [uri] $noteUri, [version] $
 		platform           = $platform
 		minimum_version    = $minimumVersion
 		note_uri           = $noteUri
-		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", (Split-Path $archiveFilePath -Leaf))
+		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVENAME@", (Split-Path $archiveFilePath -Leaf))
 		archive_size       = (Get-Item -Path $archiveFilePath).Length
 		archive_kind       = $Archive
 		archive_hash_kind  = $hashAlgorithm
@@ -56,7 +56,7 @@ foreach ($platform in $Platforms) {
 
 	$noteName = (ConvertReleaseNoteFileName $version)
 	$noteUri = $NoteBaseUrl.Replace("@NOTENAME@", $noteName)
-	$item = CreateUpdateItem $targetPath $noteUri $MinimumVersion
+	$item = New-UpdateItem $targetPath $noteUri $MinimumVersion
 
 	$updateJson.items += $item
 }
@@ -81,7 +81,7 @@ foreach($pluginProjectDirectory in $pluginProjectDirectories) {
 
 		$noteName = $pluginProjectDirectory.Name + '.html'
 		$noteUri = $NoteBaseUrl.Replace("@NOTENAME@", $noteName)
-		$item = CreateUpdateItem $pluginFilePath $noteUri $version
+		$item = New-UpdateItem $pluginFilePath $noteUri $version
 
 		$items += $item
 	}

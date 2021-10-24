@@ -57,12 +57,32 @@ block BLOCK_LAYOUT_CONTENT
 	section
 		h2 各種ファイル群
 		dl
-			dt: em(data-path='file-ps') build-project.ps1
+			dt: em(data-path='file-ps') Build\build-project.ps1
 			dd プロジェクトのビルド処理。
 
-			dt: em(data-path='file-ps') archive-plugin.ps1
-			dd ビルドされたプラグインを圧縮。7z圧縮を行う場合はパスを指定すること。
+			dt: em(data-path='file-ps') Build\archive-plugin.ps1
+			dd ビルドされたプラグインを圧縮。
 
-			dt: em(data-path='file-ps') create-release-note.ps1
+			dt: em(data-path='file-ps') Build\create-info.ps1
 			dd アーカイブをもとにプラグイン情報を生成。
+
+			dt: em(data-path='file-ps') FullBuild.ps1
+			dd Buildディレクトリ内スクリプトを使用したビルド一括処理
+
+		section
+			h3 FullBuild.ps1
+			p あらかじめ用意しているビルド処理で基本的にこれで自動ビルドに対応できる。
+			p 以下は最低限書き換えが必要な個所。
+			dl
+				dt: var $minimumVersion
+				dd 実行可能 Pe 最低バージョン
+
+				dt: var $archiveBaseUrl
+				dd 配布アーカイブURL。 @ARCHIVENAME@ がアーカイブ名に置き換えられる。
+
+				dt: var $releaseNoteUrl
+				dd いらんねんこれ。 @VERSION@ がバージョン値に置き換えられる。
+			aside.bugs
+				p プロジェクトソースから定義を取ってこれるようにしないと二重定義がしんどいなぁと。
+
 

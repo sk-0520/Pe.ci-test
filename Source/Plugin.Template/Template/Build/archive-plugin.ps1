@@ -2,7 +2,7 @@ Param(
 	[Parameter(mandatory = $true)][string] $InputDirectory,
 	[Parameter(mandatory = $true)][string] $DestinationDirectory,
 	[Parameter(mandatory = $true)][string] $OutputBaseName,
-	[ValidateSet("zip")][string] $Archive,
+	[Parameter(mandatory = $true)][ValidateSet("zip")][string] $Archive,
 	[string[]] $Filter
 )
 $ErrorActionPreference = 'Stop'

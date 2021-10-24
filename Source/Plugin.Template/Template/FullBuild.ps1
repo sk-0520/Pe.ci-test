@@ -8,9 +8,13 @@ $pluginName = 'TEMPLATE_PluginName'
 $pluginShortName = 'TEMPLATE_PluginShortName'
 $pluginId = 'TEMPLATE_PluginId'
 
+$minimumVersion = [version]"0.0.0"
+$archiveBaseUrl = "https://excample.com/download?@ARCHIVENAME@"
+$releaseNoteUrl = "https://excample.com/release?@VERSION@"
+$archive = 'zip'
+
 $scriptDirPath = Join-Path -Path $currentDirPath -ChildPath 'Build'
 $sourceDirPath = Join-Path -Path $currentDirPath -ChildPath 'Source'
-$projectDirPath =  Join-Path -Path $sourceDirPath -ChildPath $pluginName | Join-Path -ChildPath "$pluginName.csproj"
 $propsFilePath = Join-Path -Path $sourceDirPath -ChildPath 'Directory.Build.props'
 $outputRootDirPath = Join-Path -Path $currentDirPath -ChildPath 'Output'
 
@@ -21,23 +25,19 @@ function Get-OutputDirectoryPath {
 	return Join-Path -Path $outputRootDirPath -ChildPath "Release/$platform/$pluginName"
 }
 
-echo $projectDirPath
-echo $propsFilePath
-
-$rawVesion = [version]([XML](Get-Content -Path $propsFilePath -Encoding UTF8)).CreateNavigator().Select('/Project/PropertyGroup/Version').Value
+$cliVesion = [version]([XML](Get-Content -Path $propsFilePath -Encoding UTF8)).CreateNavigator().Select('/Project/PropertyGroup/Version').Value
 $vesion = @(
-	"{0}"     -f $rawVesion.Major
-	"{0:00}"  -f $rawVesion.Minor
-	"{0:000}" -f $rawVesion.Build
+	"{0}"     -f $cliVesion.Major
+	"{0:00}"  -f $cliVesion.Minor
+	"{0:000}" -f $cliVesion.Build
 ) -join '-'
-$vesion
 
 $platforms = @('x64', 'x86')
 
 $scripts = @{
 	buildProject = Join-Path -Path $scriptDirPath -ChildPath 'build-project.ps1'
 	archivePlugin = Join-Path -Path $scriptDirPath -ChildPath 'archive-plugin.ps1'
-	createReleaseNote = Join-Path -Path $scriptDirPath -ChildPath 'create-release-note.ps1'
+	createInfo = Join-Path -Path $scriptDirPath -ChildPath 'create-info.ps1'
 }
 
 Write-Host 'プロジェクトビルド'
@@ -46,6 +46,9 @@ Write-Host 'プロジェクトビルド'
 Write-Host 'アーカイブ'
 foreach($platform in $platforms) {
 	$outputBaseName = "${pluginName}_${vesion}_${platform}"
-	& $scripts.archivePlugin -InputDirectory (Get-OutputDirectoryPath $platform) -DestinationDirectory $outputRootDirPath -OutputBaseName $outputBaseName -Archive 'zip' -Filter '*.pdb'
+	& $scripts.archivePlugin -InputDirectory (Get-OutputDirectoryPath $platform) -DestinationDirectory $outputRootDirPath -OutputBaseName $outputBaseName -Archive $archive -Filter '*.pdb'
 }
 
+Write-Host 'リリース情報生成'
+$archiveBaseName = "${pluginName}_${vesion}"
+& $scripts.createInfo -ProjectName $pluginName -Version $cliVesion -ReleaseNoteUrl $releaseNoteUrl -ArchiveBaseUrl $archiveBaseUrl -ArchiveBaseName $archiveBaseName -Archive $archive -InputDirectory $outputRootDirPath -Destination (Join-Path -Path $outputRootDirPath -ChildPath "update-$pluginName.json") -MinimumVersion $minimumVersion -Platforms $platforms
