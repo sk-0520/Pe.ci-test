@@ -1,0 +1,10 @@
+{
+	"profiles": {
+		"Plugin:Debug": {
+			"commandName": "Executable",
+			"executablePath": ".\\Pe\\Source\\Pe\\Pe.Main\\bin\\$(Platform)\\$(Configuration)\\$(TargetFramework)\\Pe.Main.exe",
+			"commandLineArgs": "--debug-dev-mode --log=.\\data\\log --force-log --full-trace-log --user-dir=.\\data\\user --machine-dir=.\\data\\machine --temp-dir=.\\data\\temp --test-plugin-dir $(TargetDir) --test-plugin-name $(TargetName) ",
+			"workingDirectory": "$(SolutionDir)"
+		}
+	}
+}

@@ -17,6 +17,10 @@
             "path": "./Source/Help"
         },
         {
+            "name": "Template/Plugin",
+            "path": "./Source/Plugin.Template"
+        },
+        {
             "name": "ROOT",
             "path": "."
         }
