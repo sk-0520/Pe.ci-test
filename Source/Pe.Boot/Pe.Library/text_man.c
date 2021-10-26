@@ -164,3 +164,50 @@ TEXT trim_whitespace_text(const TEXT* text)
 {
     return trim_text(text, true, true, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters));
 }
+
+static int compare_object_list_value_text(const TEXT* a, const TEXT* b)
+{
+    return compare_text(a, b, false);
+}
+
+OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function)
+{
+    if (!text) {
+        OBJECT_LIST none = RC_HEAP_CALL(create_object_list, 2, compare_object_list_value_text, free_object_list_value_null);
+        return none;
+    }
+
+    OBJECT_LIST result = RC_HEAP_CALL(create_object_list, 64, compare_object_list_value_text, free_object_list_value_null);
+
+    TEXT source = *text;
+    size_t next_index = 0;
+    while (true) {
+        size_t current_next_index = 0;
+        TEXT item = function(&source, &current_next_index);
+        if (!is_enabled_text(&item)) {
+            break;
+        }
+        TEXT_WRAPPER element = {
+            .value = item,
+        };
+        push_object_list(&result, &element, false);
+
+        next_index += current_next_index;
+        if (text->length <= next_index) {
+            break;
+        }
+        source = wrap_text_with_length(text->value + next_index, text->length - next_index, false);
+    }
+
+    return result;
+}
+
+static TEXT split_newline_text_core(const TEXT* source, size_t* next_index)
+{
+    return create_invalid_text();
+}
+
+OBJECT_LIST RC_HEAP_FUNC(split_newline_text, const TEXT* text)
+{
+    return RC_HEAP_CALL(split_text, text, split_newline_text_core);
+}

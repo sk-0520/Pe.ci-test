@@ -181,5 +181,45 @@ namespace PeLibraryTest
                 free_text(&actual);
             }
         }
+
+        static TEXT split_text_CSV(const TEXT* source, size_t* next_index)
+        {
+            ssize_t index = index_of_character(source, _T(','));
+            if (index == -1) {
+                *next_index = source->length;
+                return wrap_text_with_length(source->value, source->length, false);
+            }
+
+            *next_index = index + 1;
+
+            TCHAR* s = allocate_string(source->length);
+            copy_string(s, source->value);
+            s[index] = 0;
+            Logger::WriteMessage(s);
+
+            return wrap_text_with_length(source->value, index, false);
+        }
+
+        TEST_METHOD(split_text_CSV_test)
+        {
+            TCHAR* expected[] = {
+                _T("a"),
+                _T("b"),
+                _T("c"),
+                _T("d"),
+                _T(""),
+                _T(" "),
+                _T("e"),
+                _T(""),
+            };
+            TEXT input = wrap("a,b,c,d,, ,e,");
+            OBJECT_LIST actual = split_text(&input, split_text_CSV);
+            for (size_t i = 0; i < actual.length; i++) {
+                OBJECT_RESULT_VALUE result = get_object_list(&actual, i);
+                TEXT_WRAPPER* t = (TEXT_WRAPPER*)result.value;
+                TCHAR* s = expected[i];
+                Assert::AreEqual(s, t->value.value);
+            }
+        }
     };
 }

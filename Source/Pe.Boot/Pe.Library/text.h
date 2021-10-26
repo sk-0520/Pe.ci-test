@@ -54,6 +54,14 @@ typedef struct tag_TEXT
 typedef TEXT* TEXT_LIST;
 
 /// <summary>
+/// <c>void*</c>へ設定する用。
+/// </summary>
+typedef struct tag_TEXT_WRAPPER
+{
+    TEXT value;
+} TEXT_WRAPPER;
+
+/// <summary>
 /// 無効テキストを生成。
 /// </summary>
 /// <returns>領域自体がNULLのテキスト(通常使用は出来ない)。</returns>
