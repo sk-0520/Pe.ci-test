@@ -164,3 +164,89 @@ TEXT trim_whitespace_text(const TEXT* text)
 {
     return trim_text(text, true, true, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters));
 }
+
+static int compare_object_list_value_text(const TEXT* a, const TEXT* b)
+{
+    return compare_text(a, b, false);
+}
+
+static void free_object_list_value_text(void* target)
+{
+    if (!target) {
+        return;
+    }
+    TEXT* text = (TEXT*)target;
+    free_text(text);
+    free_memory(text);
+}
+
+OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function)
+{
+    if (!text) {
+        OBJECT_LIST none = RC_HEAP_CALL(create_object_list, 2, compare_object_list_value_text, free_object_list_value_text);
+        return none;
+    }
+
+    OBJECT_LIST result = RC_HEAP_CALL(create_object_list, 64, compare_object_list_value_text, free_object_list_value_text);
+
+    TEXT source = *text;
+    size_t prev_index = 0;
+    size_t next_index = 0;
+    while (true) {
+        size_t current_next_index = 0;
+        TEXT item = function(&source, &current_next_index);
+        if (!is_enabled_text(&item)) {
+            break;
+        }
+
+        TEXT stack_text = clone_text(&item);
+        TEXT* heap_text = allocate_memory(sizeof(TEXT), false);
+        copy_memory(heap_text, &stack_text, sizeof(TEXT));
+        push_object_list(&result, heap_text, true);
+
+        next_index += current_next_index;
+        if (next_index == prev_index && text->length <= next_index) {
+            break;
+        }
+        prev_index = next_index;
+        source = wrap_text_with_length(text->value + next_index, text->length - next_index, false);
+    }
+
+    return result;
+}
+
+static TEXT split_newline_text_core(const TEXT* source, size_t* next_index)
+{
+    for (size_t i = 0; i < source->length; i++) {
+        TCHAR current = source->value[i];
+
+        if (current == '\n') {
+            *next_index = i + 1;
+            return wrap_text_with_length(source->value, i, false);
+        }
+
+        if (current == '\r') {
+            bool last = i + 1 == source->length;
+            if (last) {
+                *next_index = i + 1;
+                return wrap_text_with_length(source->value, i, false);
+            }
+
+            TCHAR next = source->value[i + 1];
+            if (next == '\n') {
+                *next_index = i + 2;
+                return wrap_text_with_length(source->value, i, false);
+            }
+            *next_index = i + 1;
+            return wrap_text_with_length(source->value, i, false);
+        }
+    }
+
+    *next_index = source->length;
+    return reference_text_width_length(source, 0, source->length);
+}
+
+OBJECT_LIST RC_HEAP_FUNC(split_newline_text, const TEXT* text)
+{
+    return RC_HEAP_CALL(split_text, text, split_newline_text_core);
+}

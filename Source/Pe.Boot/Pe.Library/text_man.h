@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "text.h"
+#include "object_list.h"
 
 
 /// <summary>
@@ -20,6 +21,14 @@ typedef enum tag_IGNORE_EMPTY
     /// </summary>
     IGNORE_EMPTY_WHITESPACE,
 } IGNORE_EMPTY;
+
+/// <summary>
+///
+/// </summary>
+/// <para name="source">元データ。</para>
+/// <para name="next_index">sourceから見た次の開始インデックス。</para>
+/// <returns>分割後の解放不要テキスト。無効の際に処理終了。</returns>
+typedef struct tag_TEXT (*func_split_text)(const TEXT* source, size_t* next_index);
 
 /// <summary>
 /// テキスト長の取得。
@@ -79,3 +88,25 @@ TEXT trim_text(const TEXT* text, bool start, bool end, const TCHAR* characters, 
 /// <param name="text">対象テキスト。</param>
 /// <returns>トリムされたテキスト。解放が必要。</returns>
 TEXT trim_whitespace_text(const TEXT* text);
+
+/// <summary>
+/// テキスト分割。
+/// </summary>
+/// <param name="text">対象テキスト。</param>
+/// <param name="function">処理。</param>
+/// <returns>分割後のテキスト一覧。解放が必要、各テキストの解放は不要。</returns>
+OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function);
+#ifdef RES_CHECK
+#   define split_text(text, function) RC_HEAP_WRAP(split_text, text, function)
+#endif
+
+/// <summary>
+/// 改行で分割。
+/// </summary>
+/// <param name="text"></param>
+/// <returns></returns>
+OBJECT_LIST RC_HEAP_FUNC(split_newline_text, const TEXT* text);
+#ifdef RES_CHECK
+#   define split_newline_text(text) RC_HEAP_WRAP(split_newline_text, text)
+#endif
+
