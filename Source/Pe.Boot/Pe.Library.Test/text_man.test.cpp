@@ -182,7 +182,7 @@ namespace PeLibraryTest
             }
         }
 
-        static TEXT split_text_CSV(const TEXT* source, size_t* next_index)
+        static TEXT split_text_EASY_CSV(const TEXT* source, size_t* next_index)
         {
             ssize_t index = index_of_character(source, _T(','));
             if (index == -1) {
@@ -194,7 +194,7 @@ namespace PeLibraryTest
             return wrap_text_with_length(source->value, index, false);
         }
 
-        TEST_METHOD(split_text_CSV_test)
+        TEST_METHOD(split_text_EASY_CSV_test)
         {
             TCHAR* expected[] = {
                 _T("a"),
@@ -207,7 +207,43 @@ namespace PeLibraryTest
                 _T(""),
             };
             TEXT input = wrap("a,b,c,d,, ,e,");
-            OBJECT_LIST actual = split_text(&input, split_text_CSV);
+            OBJECT_LIST actual = split_text(&input, split_text_EASY_CSV);
+            Assert::AreEqual(sizeof(expected) / sizeof(expected[0]), actual.length);
+            for (size_t i = 0; i < actual.length; i++) {
+                OBJECT_RESULT_VALUE result = get_object_list(&actual, i);
+                TEXT* t = (TEXT*)result.value;
+                TCHAR* s = expected[i];
+                Assert::AreEqual(s, t->value);
+            }
+            free_object_list(&actual);
+        }
+
+        TEST_METHOD(split_newline_text_test)
+        {
+            TCHAR* expected[] = {
+                _T("abc"),
+                _T("def"),
+                _T("ghi"),
+                _T("jkl"),
+                _T(""),
+                _T(""),
+                _T(""),
+                _T("xyz"),
+                _T(""),
+            };
+            TEXT input = wrap_text(
+                _T("abc\r")
+                _T("def\n")
+                _T("ghi\r\n")
+                _T("jkl\r\n")
+                _T("\r") //CRLF
+                _T("\n") //----
+                _T("\n")
+                _T("\r")
+                _T("xyz\r\n")
+            );
+            OBJECT_LIST actual = split_newline_text(&input);
+            Assert::AreEqual(sizeof(expected) / sizeof(expected[0]), actual.length);
             for (size_t i = 0; i < actual.length; i++) {
                 OBJECT_RESULT_VALUE result = get_object_list(&actual, i);
                 TEXT* t = (TEXT*)result.value;
