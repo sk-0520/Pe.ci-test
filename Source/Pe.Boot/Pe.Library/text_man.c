@@ -170,14 +170,24 @@ static int compare_object_list_value_text(const TEXT* a, const TEXT* b)
     return compare_text(a, b, false);
 }
 
+static void free_object_list_value_text(void* target)
+{
+    if (!target) {
+        return;
+    }
+    TEXT* text = (TEXT*)target;
+    free_text(text);
+    free_memory(text);
+}
+
 OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function)
 {
     if (!text) {
-        OBJECT_LIST none = RC_HEAP_CALL(create_object_list, 2, compare_object_list_value_text, free_object_list_value_null);
+        OBJECT_LIST none = RC_HEAP_CALL(create_object_list, 2, compare_object_list_value_text, free_object_list_value_text);
         return none;
     }
 
-    OBJECT_LIST result = RC_HEAP_CALL(create_object_list, 64, compare_object_list_value_text, free_object_list_value_null);
+    OBJECT_LIST result = RC_HEAP_CALL(create_object_list, 64, compare_object_list_value_text, free_object_list_value_text);
 
     TEXT source = *text;
     size_t next_index = 0;
@@ -187,10 +197,11 @@ OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function)
         if (!is_enabled_text(&item)) {
             break;
         }
-        TEXT_WRAPPER element = {
-            .value = item,
-        };
-        push_object_list(&result, &element, false);
+
+        TEXT stack_text = clone_text(&item);
+        TEXT* heap_text = allocate_memory(sizeof(TEXT), false);
+        copy_memory(heap_text, &stack_text, sizeof(TEXT));
+        push_object_list(&result, heap_text, true);
 
         next_index += current_next_index;
         if (text->length <= next_index) {

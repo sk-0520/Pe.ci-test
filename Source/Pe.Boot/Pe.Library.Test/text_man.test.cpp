@@ -191,12 +191,6 @@ namespace PeLibraryTest
             }
 
             *next_index = index + 1;
-
-            TCHAR* s = allocate_string(source->length);
-            copy_string(s, source->value);
-            s[index] = 0;
-            Logger::WriteMessage(s);
-
             return wrap_text_with_length(source->value, index, false);
         }
 
@@ -216,10 +210,11 @@ namespace PeLibraryTest
             OBJECT_LIST actual = split_text(&input, split_text_CSV);
             for (size_t i = 0; i < actual.length; i++) {
                 OBJECT_RESULT_VALUE result = get_object_list(&actual, i);
-                TEXT_WRAPPER* t = (TEXT_WRAPPER*)result.value;
+                TEXT* t = (TEXT*)result.value;
                 TCHAR* s = expected[i];
-                Assert::AreEqual(s, t->value.value);
+                Assert::AreEqual(s, t->value);
             }
+            free_object_list(&actual);
         }
     };
 }
