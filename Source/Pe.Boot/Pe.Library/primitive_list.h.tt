@@ -33,7 +33,7 @@
 #include "common.h"
 #include "res_check.h"
 
-#define LIST_DEFAULT_CAPACITY (32)
+#define PRIMITIVE_LIST_DEFAULT_CAPACITY (32)
 
 /// <summary>
 /// 設定可能な型。
@@ -122,7 +122,7 @@ bool push_list_<#= item.BaseName #>(<#= item.AliasList #>* list, <#= item.ValueT
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_<#= item.BaseName #>(<#= item.AliasList #>* list, const <#= item.ValueType #>* values, size_t count);
+bool add_range_list_<#= item.BaseName #>(<#= item.AliasList #>* list, const <#= item.ValueType #> values[], size_t count);
 <# } #>
 
 <# foreach(var item in items) { #>

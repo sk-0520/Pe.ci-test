@@ -1,10 +1,11 @@
 ﻿#pragma once
+/* 自動生成: primitive_list.h.tt */
 #include <stdint.h>
 
 #include "common.h"
 #include "res_check.h"
 
-#define LIST_DEFAULT_CAPACITY (32)
+#define PRIMITIVE_LIST_DEFAULT_CAPACITY (32)
 
 /// <summary>
 /// 設定可能な型。
@@ -214,7 +215,7 @@ bool push_list_tchar(PRIMITIVE_LIST_TCHAR* list, TCHAR value);
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_int8(PRIMITIVE_LIST_INT8* list, const int8_t* values, size_t count);
+bool add_range_list_int8(PRIMITIVE_LIST_INT8* list, const int8_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -222,7 +223,7 @@ bool add_range_list_int8(PRIMITIVE_LIST_INT8* list, const int8_t* values, size_t
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_uint8(PRIMITIVE_LIST_UINT8* list, const uint8_t* values, size_t count);
+bool add_range_list_uint8(PRIMITIVE_LIST_UINT8* list, const uint8_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -230,7 +231,7 @@ bool add_range_list_uint8(PRIMITIVE_LIST_UINT8* list, const uint8_t* values, siz
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_int16(PRIMITIVE_LIST_INT16* list, const int16_t* values, size_t count);
+bool add_range_list_int16(PRIMITIVE_LIST_INT16* list, const int16_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -238,7 +239,7 @@ bool add_range_list_int16(PRIMITIVE_LIST_INT16* list, const int16_t* values, siz
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_uint16(PRIMITIVE_LIST_UINT16* list, const uint16_t* values, size_t count);
+bool add_range_list_uint16(PRIMITIVE_LIST_UINT16* list, const uint16_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -246,7 +247,7 @@ bool add_range_list_uint16(PRIMITIVE_LIST_UINT16* list, const uint16_t* values, 
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_int32(PRIMITIVE_LIST_INT32* list, const int32_t* values, size_t count);
+bool add_range_list_int32(PRIMITIVE_LIST_INT32* list, const int32_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -254,7 +255,7 @@ bool add_range_list_int32(PRIMITIVE_LIST_INT32* list, const int32_t* values, siz
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_uint32(PRIMITIVE_LIST_UINT32* list, const uint32_t* values, size_t count);
+bool add_range_list_uint32(PRIMITIVE_LIST_UINT32* list, const uint32_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -262,7 +263,7 @@ bool add_range_list_uint32(PRIMITIVE_LIST_UINT32* list, const uint32_t* values, 
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_size(PRIMITIVE_LIST_SIZE* list, const size_t* values, size_t count);
+bool add_range_list_size(PRIMITIVE_LIST_SIZE* list, const size_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -270,7 +271,7 @@ bool add_range_list_size(PRIMITIVE_LIST_SIZE* list, const size_t* values, size_t
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_ssize(PRIMITIVE_LIST_SSIZE* list, const ssize_t* values, size_t count);
+bool add_range_list_ssize(PRIMITIVE_LIST_SSIZE* list, const ssize_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -278,7 +279,7 @@ bool add_range_list_ssize(PRIMITIVE_LIST_SSIZE* list, const ssize_t* values, siz
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_tchar(PRIMITIVE_LIST_TCHAR* list, const TCHAR* values, size_t count);
+bool add_range_list_tchar(PRIMITIVE_LIST_TCHAR* list, const TCHAR values[], size_t count);
 
 /// <summary>
 /// リストの末尾データを破棄。
