@@ -1,5 +1,7 @@
 ﻿#include "object_list.h"
 #include "memory.h"
+#include "debug.h"
+
 
 int compare_object_list_value_null(const void* a, const void* b)
 {
@@ -10,13 +12,16 @@ void free_object_list_value_null(void* value)
 {
 }
 
-OBJECT_LIST RC_HEAP_FUNC(create_object_list, size_t capacity, func_compare_object_list_value compare_object_list_value, func_free_object_list_value free_object_list_value)
+OBJECT_LIST RC_HEAP_FUNC(create_object_list, byte_t item_size, size_t capacity_count, func_compare_object_list_value compare_object_list_value, func_free_object_list_value free_object_list_value)
 {
+    assert(item_size);
+
     OBJECT_LIST result = {
         .length = 0,
-        .items = RC_HEAP_CALL(allocate_memory, sizeof(OBJECT_LIST_ITEM) * capacity, false),
+        .items = RC_HEAP_CALL(allocate_memory, capacity_count * item_size, false),
         .library = {
-            .capacity = capacity,
+            .item_size = item_size,
+            .capacity = capacity_count + item_size,
             .compare_object_list_value = compare_object_list_value,
             .free_object_list_value = free_object_list_value
         },
@@ -25,10 +30,10 @@ OBJECT_LIST RC_HEAP_FUNC(create_object_list, size_t capacity, func_compare_objec
     return result;
 }
 
-static void free_object_list_item(OBJECT_LIST* object_list, OBJECT_LIST_ITEM* item)
+static void free_object_list_item(OBJECT_LIST* object_list, void* item)
 {
-    if (item->library.need_release) {
-        object_list->library.free_object_list_value(item->value);
+    if (item) {
+        object_list->library.free_object_list_value(item);
     }
 }
 
@@ -39,7 +44,7 @@ bool RC_HEAP_FUNC(free_object_list, OBJECT_LIST* object_list)
     }
 
     for (size_t i = 0; i < object_list->length; i++) {
-        free_object_list_item(object_list, object_list->items + i);
+        free_object_list_item(object_list, object_list->items + (i * object_list->library.item_size));
     }
 
     RC_HEAP_CALL(free_memory, object_list->items);
@@ -54,17 +59,17 @@ bool RC_HEAP_FUNC(free_object_list, OBJECT_LIST* object_list)
 
 static void extend_capacity_if_not_enough_object_list(OBJECT_LIST* object_list, size_t need_length)
 {
-    byte_t need_bytes = need_length * sizeof(OBJECT_LIST_ITEM);
-    byte_t current_bytes = object_list->length * sizeof(OBJECT_LIST_ITEM);
-    byte_t default_capacity_bytes = OBJECT_LIST_DEFAULT_CAPACITY * sizeof(OBJECT_LIST_ITEM);
+    byte_t need_bytes = need_length * object_list->library.item_size;
+    byte_t current_bytes = object_list->length * object_list->library.item_size;
+    byte_t default_capacity_bytes = OBJECT_LIST_DEFAULT_CAPACITY_COUNT * object_list->library.item_size;
 
-    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&object_list->items, current_bytes, object_list->library.capacity * sizeof(OBJECT_LIST_ITEM), need_bytes, default_capacity_bytes);
+    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&object_list->items, current_bytes, object_list->library.capacity * object_list->library.item_size, need_bytes, default_capacity_bytes);
     if (extend_total_byte) {
-        object_list->library.capacity = extend_total_byte / sizeof(OBJECT_LIST_ITEM);
+        object_list->library.capacity = extend_total_byte / object_list->library.item_size;
     }
 }
 
-OBJECT_LIST_ITEM* push_object_list(OBJECT_LIST* object_list, void* value, bool need_release)
+void* push_object_list(OBJECT_LIST* object_list, const void* value)
 {
     if (!object_list) {
         return NULL;
@@ -72,25 +77,18 @@ OBJECT_LIST_ITEM* push_object_list(OBJECT_LIST* object_list, void* value, bool n
 
     extend_capacity_if_not_enough_object_list(object_list, 1);
 
-    OBJECT_LIST_ITEM item = {
-        .value = value,
-        .library = {
-            .need_release = need_release,
-    },
-    };
-
-    object_list->items[object_list->length] = item;
+    copy_memory(object_list->items + (object_list->length * object_list->library.item_size), value, object_list->library.item_size);
     object_list->length += 1;
 
-    return object_list->items + object_list->length - 1;
+    return object_list->items + ((object_list->length - 1) * object_list->library.item_size);
 }
 
-bool add_range_object_list(OBJECT_LIST* object_list, OBJECT_LIST_RANGE_ITEM items[], size_t length, bool need_release)
+bool add_range_object_list(OBJECT_LIST* object_list, const void* values, size_t length)
 {
     if (!object_list) {
         return false;
     }
-    if (!items) {
+    if (!values) {
         return false;
     }
     if (!length) {
@@ -99,22 +97,13 @@ bool add_range_object_list(OBJECT_LIST* object_list, OBJECT_LIST_RANGE_ITEM item
 
     extend_capacity_if_not_enough_object_list(object_list, length);
 
-    for (size_t i = 0; i < length; i++) {
-        OBJECT_LIST_ITEM item = {
-            .value = items[i].value,
-            .library = {
-                .need_release = need_release,
-            },
-        };
-        object_list->items[object_list->length + i] = item;
-    }
-
+    copy_memory(object_list->items + (object_list->length * object_list->library.item_size), values, object_list->library.item_size * length);
     object_list->length += length;
 
     return true;
 }
 
-bool pop_object_list(void** result, OBJECT_LIST* object_list)
+bool pop_object_list(void* result, OBJECT_LIST* object_list)
 {
     if (!object_list) {
         return false;
@@ -124,9 +113,7 @@ bool pop_object_list(void** result, OBJECT_LIST* object_list)
         return false;
     }
 
-    OBJECT_LIST_ITEM* item = object_list->items + (--object_list->length);
-
-    *result = item->value;
+    copy_memory(result, object_list->items + (--object_list->length * object_list->library.item_size), object_list->library.item_size);
 
     return true;
 }
@@ -134,9 +121,8 @@ bool pop_object_list(void** result, OBJECT_LIST* object_list)
 OBJECT_RESULT_VALUE get_object_list(OBJECT_LIST* object_list, size_t index)
 {
     if (index < object_list->length) {
-        OBJECT_LIST_ITEM* item = (OBJECT_LIST_ITEM*)object_list->items + index;
         OBJECT_RESULT_VALUE result = {
-            .value = item->value,
+            .value = object_list->items + (index * object_list->library.item_size),
             .exists = true,
         };
 
@@ -157,23 +143,21 @@ bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool n
     }
 
     if (index < object_list->length) {
-        OBJECT_LIST_ITEM item = {
-            .value = value,
-            .library = {
-                .need_release = need_release,
-            },
-        };
-        object_list->items[index] = item;
+        void* current = object_list->items + index * object_list->library.item_size;
+        if (need_release) {
+            object_list->library.free_object_list_value(current);
+        }
+        copy_memory(current, value, object_list->library.item_size);
         return true;
     }
 
     return false;
 }
 
-void clear_object_list(OBJECT_LIST* list)
+void clear_object_list(OBJECT_LIST* object_list)
 {
-    for (size_t i = 0; i < list->length; i++) {
-        list->library.free_object_list_value(list->items + i);
+    for (size_t i = 0; i < object_list->length; i++) {
+        object_list->library.free_object_list_value(object_list->items + (i * object_list->library.item_size));
     }
-    list->length = 0;
+    object_list->length = 0;
 }

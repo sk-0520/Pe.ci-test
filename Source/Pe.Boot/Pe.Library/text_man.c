@@ -177,17 +177,16 @@ static void free_object_list_value_text(void* target)
     }
     TEXT* text = (TEXT*)target;
     free_text(text);
-    free_memory(text);
 }
 
 OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function)
 {
     if (!text) {
-        OBJECT_LIST none = RC_HEAP_CALL(create_object_list, 2, compare_object_list_value_text, free_object_list_value_text);
+        OBJECT_LIST none = RC_HEAP_CALL(create_object_list, sizeof(TEXT), 2, compare_object_list_value_text, free_object_list_value_text);
         return none;
     }
 
-    OBJECT_LIST result = RC_HEAP_CALL(create_object_list, 64, compare_object_list_value_text, free_object_list_value_text);
+    OBJECT_LIST result = RC_HEAP_CALL(create_object_list, sizeof(TEXT), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_text, free_object_list_value_text);
 
     TEXT source = *text;
     size_t prev_index = 0;
@@ -200,9 +199,7 @@ OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function)
         }
 
         TEXT stack_text = clone_text(&item);
-        TEXT* heap_text = allocate_memory(sizeof(TEXT), false);
-        copy_memory(heap_text, &stack_text, sizeof(TEXT));
-        push_object_list(&result, heap_text, true);
+        push_object_list(&result, &stack_text);
 
         next_index += current_next_index;
         if (next_index == prev_index && text->length <= next_index) {

@@ -11,52 +11,56 @@ namespace PeLibraryTest
     TEST_CLASS(object_list_test)
     {
     public:
-        TEST_METHOD(life_test)
+        TEST_METHOD(life_int_test)
         {
-            OBJECT_LIST list = create_object_list(2, compare_object_list_value_null, free_object_list_value_null);
-            Assert::AreEqual((size_t)0, list.length);
-            Assert::AreEqual((size_t)2, list.library.capacity);
-            Assert::IsFalse(get_object_list(&list, 0).exists);
+            OBJECT_LIST list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
 
-            auto input1 = BOX_INT::create(1);
-            push_object_list(&list, &input1, false);
+            int input_1 = 100;
+            int* result_1 = (int*)push_object_list(&list, &input_1);
+            Assert::AreNotEqual(&input_1, result_1);
+            Assert::AreEqual(input_1, *result_1);
             Assert::AreEqual((size_t)1, list.length);
-            Assert::AreEqual((size_t)2, list.library.capacity);
 
-            auto input2 = BOX_INT::create(2);
-            push_object_list(&list, &input2, false);
+            int input_2 = 200;
+            int* result_2 = (int*)push_object_list(&list, &input_2);
+            Assert::AreNotEqual(&input_2, result_2);
+            Assert::AreEqual(input_2, *result_2);
             Assert::AreEqual((size_t)2, list.length);
-            Assert::AreEqual((size_t)2, list.library.capacity);
 
-            auto input3 = BOX_INT::create(3);
-            push_object_list(&list, &input3, false);
-            Assert::AreEqual((size_t)3, list.length);
-            Assert::AreEqual((size_t)4, list.library.capacity);
+            OBJECT_RESULT_VALUE value_1 = get_object_list(&list, 0);
+            Assert::IsTrue(value_1.exists);
+            Assert::AreEqual(result_1, (int*)value_1.value);
+            Assert::AreEqual(input_1, *(int*)value_1.value);
 
-            BOX_INT* result3 = new BOX_INT;
-            Assert::IsTrue(pop_object_list((void**)&result3, &list));
-            Assert::AreEqual(input3.value, result3->value);
-            Assert::AreEqual((size_t)2, list.length);
-            Assert::AreEqual((size_t)4, list.library.capacity);
-            //delete result3;
+            OBJECT_RESULT_VALUE value_2 = get_object_list(&list, 1);
+            Assert::IsTrue(value_2.exists);
+            Assert::AreEqual(result_2, (int*)value_2.value);
+            Assert::AreEqual(input_2, *(int*)value_2.value);
 
-            auto input3_2 = BOX_INT::create(32);
-            push_object_list(&list, &input3_2, false);
+            OBJECT_RESULT_VALUE value_3 = get_object_list(&list, 2);
+            Assert::IsFalse(value_3.exists);
 
-            Assert::IsFalse(get_object_list(&list, 3).exists);
-            Assert::IsTrue(get_object_list(&list, 2).exists);
-            Assert::AreEqual(input3_2.value, ((BOX_INT*)(get_object_list(&list, 2).value))->value);
+            int set_value_2 = 222;
+            bool set_result_2 = set_object_list(&list, 1, &set_value_2, true);
+            Assert::IsTrue(set_result_2);
 
-            auto input3_3 = BOX_INT::create(33);
-            Assert::IsFalse(set_object_list(&list, 3, &input3_3, false));
-            Assert::IsTrue(set_object_list(&list, 2, &input3_3, false));
-            Assert::IsTrue(get_object_list(&list, 2).exists);
-            Assert::AreNotEqual(input3_2.value, ((BOX_INT*)(get_object_list(&list, 2).value))->value);
-            Assert::AreEqual(input3_3.value, ((BOX_INT*)(get_object_list(&list, 2).value))->value);
+            int pop_value_2;
+            bool pop_result_2 = pop_object_list(&pop_value_2, &list);
+            Assert::IsTrue(pop_result_2);
+            Assert::AreEqual(set_value_2, pop_value_2);
 
-            clear_object_list(&list);
-            Assert::AreEqual((size_t)0, list.length);
-            Assert::AreEqual((size_t)4, list.library.capacity);
+            Assert::AreEqual((size_t)1, list.length);
+
+            int values_4[] = { 9, 99, 999 };
+            add_range_object_list(&list, values_4, sizeof(values_4) / sizeof(values_4[0]));
+            OBJECT_RESULT_VALUE values_4_1 = get_object_list(&list, 1);
+            OBJECT_RESULT_VALUE values_4_2 = get_object_list(&list, 2);
+            OBJECT_RESULT_VALUE values_4_3 = get_object_list(&list, 3);
+
+            Assert::AreEqual(values_4[0], *(int*)values_4_1.value);
+            Assert::AreEqual(values_4[1], *(int*)values_4_2.value);
+            Assert::AreEqual(values_4[2], *(int*)values_4_3.value);
+            Assert::AreEqual((size_t)4, list.length);
 
             free_object_list(&list);
         }
