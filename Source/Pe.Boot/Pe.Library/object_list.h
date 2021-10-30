@@ -137,6 +137,13 @@ bool add_range_object_list(OBJECT_LIST* object_list, const void* values, size_t 
 bool pop_object_list(void* result, OBJECT_LIST* object_list);
 
 /// <summary>
+/// 最後尾の値を参照。
+/// </summary>
+/// <param name="object_list">取得対象のリスト。</param>
+/// <returns>値が参照できる場合にその領域。参照できない場合は<c>NULL</c>。</returns>
+void* peek_object_list(OBJECT_LIST* object_list);
+
+/// <summary>
 /// 値の取得。
 /// </summary>
 /// <param name="object_list">取得対象のリスト。</param>

@@ -45,6 +45,9 @@ namespace PeLibraryTest
             bool set_result_2 = set_object_list(&list, 1, &set_value_2, true);
             Assert::IsTrue(set_result_2);
 
+            int* peek_2 = (int*)peek_object_list(&list);
+            Assert::AreEqual(set_value_2, *peek_2);
+
             int pop_value_2;
             bool pop_result_2 = pop_object_list(&pop_value_2, &list);
             Assert::IsTrue(pop_result_2);

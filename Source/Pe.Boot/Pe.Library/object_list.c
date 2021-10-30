@@ -118,6 +118,20 @@ bool pop_object_list(void* result, OBJECT_LIST* object_list)
     return true;
 }
 
+void* peek_object_list(OBJECT_LIST* object_list)
+{
+    if (!object_list) {
+        return NULL;
+    }
+
+    if (!object_list->length) {
+        return NULL;
+    }
+
+    return object_list->items + ((object_list->length - 1) * object_list->library.item_size);
+}
+
+
 OBJECT_RESULT_VALUE get_object_list(const OBJECT_LIST* object_list, size_t index)
 {
     if (index < object_list->length) {
