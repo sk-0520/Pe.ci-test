@@ -24,7 +24,7 @@ OBJECT_LIST RC_HEAP_FUNC(create_object_list, byte_t item_size, size_t capacity_c
             .capacity = capacity_count + item_size,
             .compare_object_list_value = compare_object_list_value,
             .free_object_list_value = free_object_list_value
-        },
+    },
     };
 
     return result;
@@ -118,7 +118,7 @@ bool pop_object_list(void* result, OBJECT_LIST* object_list)
     return true;
 }
 
-OBJECT_RESULT_VALUE get_object_list(OBJECT_LIST* object_list, size_t index)
+OBJECT_RESULT_VALUE get_object_list(const OBJECT_LIST* object_list, size_t index)
 {
     if (index < object_list->length) {
         OBJECT_RESULT_VALUE result = {
@@ -160,4 +160,21 @@ void clear_object_list(OBJECT_LIST* object_list)
         object_list->library.free_object_list_value(object_list->items + (i * object_list->library.item_size));
     }
     object_list->length = 0;
+}
+
+size_t foreach_object_list(const OBJECT_LIST* object_list, func_foreach_object_list func, void* data)
+{
+    assert(object_list);
+    assert(func);
+
+    size_t result = 0;
+    for (size_t i = 0; i < object_list->length; i++) {
+        void* item = object_list->items + (i * object_list->library.item_size);
+        if (!func(item, i, object_list->length, data)) {
+            break;
+        }
+        result += 1;
+    }
+
+    return result;
 }

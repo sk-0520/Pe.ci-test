@@ -38,6 +38,16 @@ typedef int (*func_compare_object_list_value)(const void* a, const void* b);
 /// </summary>
 typedef void (*func_free_object_list_value)(void* value);
 
+/// <summary>
+/// 値連続処理。
+/// </summary>
+/// <param name="value">現在値。</param>
+/// <param name="index">現在処理数。</param>
+/// <param name="length">最大件数。</param>
+/// <param name="data">ご自由にどうぞ。</param>
+/// <returns>継続状態。</returns>
+typedef bool (*func_foreach_object_list)(const void* value, size_t index, size_t length, void* data);
+
 typedef struct tag_OBJECT_LIST
 {
     /// <summary>
@@ -132,7 +142,7 @@ bool pop_object_list(void* result, OBJECT_LIST* object_list);
 /// <param name="object_list">取得対象のリスト。</param>
 /// <param name="index">取得対象インデックス。</param>
 /// <returns>値ラッパー。</returns>
-OBJECT_RESULT_VALUE get_object_list(OBJECT_LIST* object_list, size_t index);
+OBJECT_RESULT_VALUE get_object_list(const OBJECT_LIST* object_list, size_t index);
 
 /// <summary>
 /// 値の設定。
@@ -150,3 +160,12 @@ bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool n
 /// </summary>
 /// <param name="list">対象リスト。</param>
 void clear_object_list(OBJECT_LIST* object_list);
+
+/// <summary>
+/// 順々に処理する。
+/// </summary>
+/// <param name="object_list"></param>
+/// <param name="func"></param>
+/// <returns>処理件数。</returns>
+size_t foreach_object_list(const OBJECT_LIST* object_list, func_foreach_object_list func, void* data);
+
