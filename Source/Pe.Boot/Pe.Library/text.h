@@ -168,6 +168,6 @@ TEXT RC_HEAP_FUNC(format_text, const TEXT* format, ...);
 
 
 // 文字列操作ラッパー
-#include "text.h.search.h"
-#include "text.h.conv.h"
-#include "text.h.man.h"
+#include "text.z.search.h"
+#include "text.z.conv.h"
+#include "text.z.man.h"

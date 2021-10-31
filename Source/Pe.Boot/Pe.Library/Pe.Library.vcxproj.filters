@@ -72,13 +72,13 @@
     <ClCompile Include="text.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="text.c.conv.c">
+    <ClCompile Include="text.z.conv.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="text.c.man.c">
+    <ClCompile Include="text.z.man.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="text.c.search.c">
+    <ClCompile Include="text.z.search.c">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="tstring.c">
@@ -146,13 +146,13 @@
     <ClInclude Include="text.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="text.h.conv.h">
+    <ClInclude Include="text.z.conv.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="text.h.man.h">
+    <ClInclude Include="text.z.man.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="text.h.search.h">
+    <ClInclude Include="text.z.search.h">
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="tstring.h">
