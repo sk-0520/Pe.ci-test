@@ -5,25 +5,25 @@
 #include "text.h"
 
 
-static TEXT_PARSED_INT32_RESULT create_failed_integer_parse_result()
+static TEXT_PARSED_I32_RESULT create_failed_integer_parse_result()
 {
-    TEXT_PARSED_INT32_RESULT result = {
+    TEXT_PARSED_I32_RESULT result = {
         .success = false,
     };
 
     return result;
 }
 
-static TEXT_PARSED_INT64_RESULT create_failed_long_parse_result()
+static TEXT_PARSED_I64_RESULT create_failed_long_parse_result()
 {
-    TEXT_PARSED_INT64_RESULT result = {
+    TEXT_PARSED_I64_RESULT result = {
         .success = false,
     };
 
     return result;
 }
 
-TEXT_PARSED_INT32_RESULT parse_integer_from_text(const TEXT* input, bool support_hex)
+TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex)
 {
     if (!is_enabled_text(input)) {
         return create_failed_integer_parse_result();
@@ -31,14 +31,14 @@ TEXT_PARSED_INT32_RESULT parse_integer_from_text(const TEXT* input, bool support
 
 #pragma warning(push)
 #pragma warning(disable:6001)
-    TEXT_PARSED_INT32_RESULT result;
+    TEXT_PARSED_I32_RESULT result;
 #pragma warning(pop)
     result.success = StrToIntEx(input->value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
 
     return result;
 }
 
-TEXT_PARSED_INT64_RESULT parse_long_from_text(const TEXT* input, bool support_hex)
+TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, bool support_hex)
 {
     if (!is_enabled_text(input)) {
         return create_failed_long_parse_result();
@@ -46,12 +46,69 @@ TEXT_PARSED_INT64_RESULT parse_long_from_text(const TEXT* input, bool support_he
 
 #pragma warning(push)
 #pragma warning(disable:6001)
-    TEXT_PARSED_INT64_RESULT result;
+    TEXT_PARSED_I64_RESULT result;
 #pragma warning(pop)
     result.success = StrToInt64Ex(input->value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
 
     return result;
+}
 
+TEXT_PARSED_I32_RESULT parse_i32_from_bin_text(const TEXT* input)
+{
+    if (!is_enabled_text(input)) {
+        return create_failed_integer_parse_result();
+    }
+
+    if (!input->length) {
+        return create_failed_integer_parse_result();
+    }
+
+    TEXT_PARSED_I32_RESULT result = {
+        .success = true,
+        .value = 0,
+    };
+
+    for (size_t i = 0; i < input->length; i++) {
+        TCHAR c = input->value[i];
+        result.value <<= 1;
+        if (c == '1') {
+            result.value += 1;
+        } else if (c != '0') {
+            result.success = false;
+            return result;
+        }
+    }
+
+    return result;
+}
+
+TEXT_PARSED_I64_RESULT parse_i64_from_bin_text(const TEXT* input)
+{
+    if (!is_enabled_text(input)) {
+        return create_failed_long_parse_result();
+    }
+
+    if (!input->length) {
+        return create_failed_long_parse_result();
+    }
+
+    TEXT_PARSED_I64_RESULT result = {
+        .success = true,
+        .value = 0,
+    };
+
+    for (size_t i = 0; i < input->length; i++) {
+        TCHAR c = input->value[i];
+        result.value <<= 1;
+        if (c == '1') {
+            result.value += 1;
+        } else if (c != '0') {
+            result.success = false;
+            return result;
+        }
+    }
+
+    return result;
 }
 
 #ifdef _UNICODE

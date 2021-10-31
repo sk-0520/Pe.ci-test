@@ -12,7 +12,7 @@ namespace PeLibraryTest
     {
     public:
 
-        TEST_METHOD(parse_integer_from_text_success_test)
+        TEST_METHOD(parse_i32_from_text_success_test)
         {
             auto tests = {
                 DATA(false, wrap(""), false),
@@ -27,7 +27,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 bool arg2 = std::get<1>(test.inputs);
-                auto actual = parse_integer_from_text(&arg1, arg2);
+                auto actual = parse_i32_from_text(&arg1, arg2);
                 if (test.expected) {
                     Assert::IsTrue(actual.success);
                 } else {
@@ -36,7 +36,7 @@ namespace PeLibraryTest
             }
         }
 
-        TEST_METHOD(parse_integer_from_text_value_test)
+        TEST_METHOD(parse_i32_from_text_value_test)
         {
             auto tests = {
                 DATA(1, wrap("1"), false),
@@ -49,13 +49,13 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 bool arg2 = std::get<1>(test.inputs);
-                auto actual = parse_integer_from_text(&arg1, arg2);
+                auto actual = parse_i32_from_text(&arg1, arg2);
                 Assert::IsTrue(actual.success);
                 Assert::AreEqual(test.expected, actual.value);
             }
         }
 
-        TEST_METHOD(parse_long_from_text_success_test)
+        TEST_METHOD(parse_i64_from_text_success_test)
         {
             auto tests = {
                 DATA(false, wrap(""), false),
@@ -70,7 +70,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 bool arg2 = std::get<1>(test.inputs);
-                auto actual = parse_long_from_text(&arg1, arg2);
+                auto actual = parse_i64_from_text(&arg1, arg2);
                 if (test.expected) {
                     Assert::IsTrue(actual.success);
                 } else {
@@ -79,7 +79,7 @@ namespace PeLibraryTest
             }
         }
 
-        TEST_METHOD(parse_long_from_text_value_test)
+        TEST_METHOD(parse_i64_from_text_value_test)
         {
             auto tests = {
                 DATA((__int64)1, wrap("1"), false),
@@ -92,7 +92,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 bool arg2 = std::get<1>(test.inputs);
-                auto actual = parse_long_from_text(&arg1, arg2);
+                auto actual = parse_i64_from_text(&arg1, arg2);
                 Assert::IsTrue(actual.success);
                 Assert::AreEqual(test.expected, actual.value);
             }
@@ -116,5 +116,52 @@ namespace PeLibraryTest
             }
         }
 
+        TEST_METHOD(parse_i32_from_bin_text_test)
+        {
+            auto tests = {
+                DATA((int32_t)0, wrap("0")),
+                DATA((int32_t)1, wrap("1")),
+
+                DATA((int32_t)0, wrap("0000")),
+                DATA((int32_t)1, wrap("0001")),
+                DATA((int32_t)2, wrap("0010")),
+                DATA((int32_t)3, wrap("0011")),
+                DATA((int32_t)4, wrap("0100")),
+                DATA((int32_t)5, wrap("0101")),
+                DATA((int32_t)6, wrap("0110")),
+                DATA((int32_t)7, wrap("0111")),
+                DATA((int32_t)8, wrap("1000")),
+            };
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                TEXT_PARSED_I32_RESULT actual = parse_i32_from_bin_text(&arg1);
+                Assert::IsTrue(actual.success);
+                Assert::AreEqual(test.expected, actual.value);
+            }
+        }
+
+        TEST_METHOD(parse_i64_from_bin_text_test)
+        {
+            auto tests = {
+                DATA((int64_t)0, wrap("0")),
+                DATA((int64_t)1, wrap("1")),
+
+                DATA((int64_t)0, wrap("0000")),
+                DATA((int64_t)1, wrap("0001")),
+                DATA((int64_t)2, wrap("0010")),
+                DATA((int64_t)3, wrap("0011")),
+                DATA((int64_t)4, wrap("0100")),
+                DATA((int64_t)5, wrap("0101")),
+                DATA((int64_t)6, wrap("0110")),
+                DATA((int64_t)7, wrap("0111")),
+                DATA((int64_t)8, wrap("1000")),
+            };
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                TEXT_PARSED_I64_RESULT actual = parse_i64_from_bin_text(&arg1);
+                Assert::IsTrue(actual.success);
+                Assert::AreEqual(test.expected, actual.value);
+            }
+        }
     };
 }

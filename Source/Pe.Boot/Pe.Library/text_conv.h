@@ -5,7 +5,7 @@
 /// <summary>
 /// 数値(64bit幅)変換結果。
 /// </summary>
-typedef struct tag_TEXT_PARSED_INT32_RESULT
+typedef struct tag_TEXT_PARSED_I32_RESULT
 {
     /// <summary>
     /// 変換値。
@@ -16,12 +16,12 @@ typedef struct tag_TEXT_PARSED_INT32_RESULT
     /// 変換成功状態。
     /// </summary>
     bool success;
-} TEXT_PARSED_INT32_RESULT;
+} TEXT_PARSED_I32_RESULT;
 
 /// <summary>
 /// 数値(64bit幅)変換結果。
 /// </summary>
-typedef struct tag_TEXT_PARSED_INT64_RESULT
+typedef struct tag_TEXT_PARSED_I64_RESULT
 {
     /// <summary>
     /// 変換値。
@@ -32,7 +32,7 @@ typedef struct tag_TEXT_PARSED_INT64_RESULT
     /// 変換成功状態。
     /// </summary>
     bool success;
-} TEXT_PARSED_INT64_RESULT;
+} TEXT_PARSED_I64_RESULT;
 
 /// <summary>
 /// テキストを数値(32bit幅)に変換。
@@ -40,14 +40,14 @@ typedef struct tag_TEXT_PARSED_INT64_RESULT
 /// <param name="input">入力テキスト。</param>
 /// <param name="support_hex">16進数(0x)を考慮するか</param>
 /// <returns>結果データ。</returns>
-TEXT_PARSED_INT32_RESULT parse_integer_from_text(const TEXT* input, bool support_hex);
+TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex);
 /// <summary>
 /// テキストを数値(64bit幅)に変換。
 /// </summary>
 /// <param name="input">入力テキスト。</param>
 /// <param name="support_hex">16進数(0x)を考慮するか</param>
 /// <returns>結果データ。</returns>
-TEXT_PARSED_INT64_RESULT parse_long_from_text(const TEXT* input, bool support_hex);
+TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, bool support_hex);
 
 #ifdef _UNICODE
 
@@ -82,6 +82,9 @@ bool RC_HEAP_FUNC(free_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* m
 #ifdef RES_CHECK
 #   define free_multibyte_character_result(mbcr) RC_HEAP_WRAP(free_multibyte_character_result, (mbcr))
 #endif
+
+TEXT_PARSED_I32_RESULT parse_i32_from_bin_text(const TEXT* input);
+TEXT_PARSED_I64_RESULT parse_i64_from_bin_text(const TEXT* input);
 
 /// <summary>
 ///

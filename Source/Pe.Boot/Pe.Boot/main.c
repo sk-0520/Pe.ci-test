@@ -69,7 +69,7 @@ static void setup_logging_level(const COMMAND_LINE_OPTION* command_line_option)
     TEXT log_level_key = wrap_text(OPTION_LOG_LEVEL_KEY);
     const COMMAND_LINE_ITEM* log_level_item = get_command_line_item(command_line_option, &log_level_key);
     if (is_inputed_command_line_item(log_level_item)) {
-        TEXT_PARSED_INT32_RESULT num_result = parse_integer_from_text(&log_level_item->value, false);
+        TEXT_PARSED_I32_RESULT num_result = parse_i32_from_text(&log_level_item->value, false);
         int log_level = default_log_level;
         if (num_result.success) {
             log_level = num_result.value;
