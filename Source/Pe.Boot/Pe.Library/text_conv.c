@@ -33,7 +33,13 @@ TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex)
 #pragma warning(disable:6001)
     TEXT_PARSED_I32_RESULT result;
 #pragma warning(pop)
-    result.success = StrToIntEx(input->value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
+    if (input->library.sentinel) {
+        result.success = StrToIntEx(input->value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
+    } else {
+        TEXT sentinel = clone_text(input);
+        result.success = StrToIntEx(sentinel.value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
+        free_text(&sentinel);
+    }
 
     return result;
 }
@@ -48,7 +54,13 @@ TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, bool support_hex)
 #pragma warning(disable:6001)
     TEXT_PARSED_I64_RESULT result;
 #pragma warning(pop)
-    result.success = StrToInt64Ex(input->value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
+    if (input->library.sentinel) {
+        result.success = StrToInt64Ex(input->value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
+    } else {
+        TEXT sentinel = clone_text(input);
+        result.success = StrToInt64Ex(sentinel.value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
+        free_text(&sentinel);
+    }
 
     return result;
 }
