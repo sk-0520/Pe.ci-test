@@ -57,13 +57,13 @@
     <ClCompile Include="text.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="text_conv.test.cpp">
+    <ClCompile Include="text.test.cpp.conv.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="text_man.test.cpp">
+    <ClCompile Include="text.test.cpp.man.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="text_search.test.cpp">
+    <ClCompile Include="text.test.cpp.search.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="tstring.test.cpp">

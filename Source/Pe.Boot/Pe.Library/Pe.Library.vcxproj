@@ -413,10 +413,10 @@
     <ClCompile Include="platform.c" />
     <ClCompile Include="res_check.c" />
     <ClCompile Include="string_builder.c" />
-    <ClCompile Include="text_conv.c" />
-    <ClCompile Include="text_search.c" />
+    <ClCompile Include="text.c.conv.c" />
+    <ClCompile Include="text.c.search.c" />
     <ClCompile Include="text.c" />
-    <ClCompile Include="text_man.c" />
+    <ClCompile Include="text.c.man.c" />
     <ClCompile Include="tstring.c" />
     <ClCompile Include="writer.c" />
     <ClCompile Include="without_crt.c" />
@@ -442,10 +442,10 @@
     <ClInclude Include="platform.h" />
     <ClInclude Include="res_check.h" />
     <ClInclude Include="string_builder.h" />
-    <ClInclude Include="text_conv.h" />
-    <ClInclude Include="text_search.h" />
+    <ClInclude Include="text.h.conv.h" />
+    <ClInclude Include="text.h.search.h" />
     <ClInclude Include="text.h" />
-    <ClInclude Include="text_man.h" />
+    <ClInclude Include="text.h.man.h" />
     <ClInclude Include="tstring.h" />
     <ClInclude Include="writer.h" />
     <ClInclude Include="without_crt.h" />
