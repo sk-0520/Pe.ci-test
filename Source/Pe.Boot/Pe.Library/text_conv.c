@@ -5,7 +5,7 @@
 #include "text.h"
 
 
-static TEXT_PARSED_I32_RESULT create_failed_integer_parse_result()
+static TEXT_PARSED_I32_RESULT create_failed_i32_parse_result()
 {
     TEXT_PARSED_I32_RESULT result = {
         .success = false,
@@ -14,7 +14,8 @@ static TEXT_PARSED_I32_RESULT create_failed_integer_parse_result()
     return result;
 }
 
-static TEXT_PARSED_I64_RESULT create_failed_long_parse_result()
+#ifdef _WIN64
+static TEXT_PARSED_I64_RESULT create_failed_i64_parse_result()
 {
     TEXT_PARSED_I64_RESULT result = {
         .success = false,
@@ -22,11 +23,12 @@ static TEXT_PARSED_I64_RESULT create_failed_long_parse_result()
 
     return result;
 }
+#endif
 
 TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex)
 {
     if (!is_enabled_text(input)) {
-        return create_failed_integer_parse_result();
+        return create_failed_i32_parse_result();
     }
 
 #pragma warning(push)
@@ -44,10 +46,11 @@ TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex)
     return result;
 }
 
+#ifdef _WIN64
 TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, bool support_hex)
 {
     if (!is_enabled_text(input)) {
-        return create_failed_long_parse_result();
+        return create_failed_i64_parse_result();
     }
 
 #pragma warning(push)
@@ -64,15 +67,16 @@ TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, bool support_hex)
 
     return result;
 }
+#endif
 
 TEXT_PARSED_I32_RESULT parse_i32_from_bin_text(const TEXT* input)
 {
     if (!is_enabled_text(input)) {
-        return create_failed_integer_parse_result();
+        return create_failed_i32_parse_result();
     }
 
     if (!input->length) {
-        return create_failed_integer_parse_result();
+        return create_failed_i32_parse_result();
     }
 
     TEXT_PARSED_I32_RESULT result = {
@@ -94,14 +98,15 @@ TEXT_PARSED_I32_RESULT parse_i32_from_bin_text(const TEXT* input)
     return result;
 }
 
+#ifdef _WIN64
 TEXT_PARSED_I64_RESULT parse_i64_from_bin_text(const TEXT* input)
 {
     if (!is_enabled_text(input)) {
-        return create_failed_long_parse_result();
+        return create_failed_i64_parse_result();
     }
 
     if (!input->length) {
-        return create_failed_long_parse_result();
+        return create_failed_i64_parse_result();
     }
 
     TEXT_PARSED_I64_RESULT result = {
@@ -122,6 +127,7 @@ TEXT_PARSED_I64_RESULT parse_i64_from_bin_text(const TEXT* input)
 
     return result;
 }
+#endif
 
 #ifdef _UNICODE
 

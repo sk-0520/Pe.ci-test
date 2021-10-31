@@ -55,6 +55,7 @@ namespace PeLibraryTest
             }
         }
 
+#ifdef _WIN64
         TEST_METHOD(parse_i64_from_text_success_test)
         {
             auto tests = {
@@ -78,7 +79,9 @@ namespace PeLibraryTest
                 }
             }
         }
+#endif
 
+#ifdef _WIN64
         TEST_METHOD(parse_i64_from_text_value_test)
         {
             auto tests = {
@@ -97,6 +100,7 @@ namespace PeLibraryTest
                 Assert::AreEqual(test.expected, actual.value);
             }
         }
+#endif
 
         TEST_METHOD(multibyte_success_test)
         {
@@ -140,6 +144,7 @@ namespace PeLibraryTest
             }
         }
 
+#ifdef _WIN64
         TEST_METHOD(parse_i64_from_bin_text_test)
         {
             auto tests = {
@@ -163,5 +168,6 @@ namespace PeLibraryTest
                 Assert::AreEqual(test.expected, actual.value);
             }
         }
+#endif
     };
 }
