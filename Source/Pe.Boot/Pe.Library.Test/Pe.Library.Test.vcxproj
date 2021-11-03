@@ -302,6 +302,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='CI_TEST|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="tcharacter.test.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="text.test.cpp" />
     <ClCompile Include="text.test.z.conv.test.cpp" />

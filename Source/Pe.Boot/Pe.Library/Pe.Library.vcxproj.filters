@@ -93,6 +93,9 @@
     <ClCompile Include="console.c">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="tcharacter.c">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h">
@@ -165,6 +168,9 @@
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="console.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="tcharacter.h">
       <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>

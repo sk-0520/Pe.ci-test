@@ -4,6 +4,17 @@
 #include "debug.h"
 #include "text.h"
 
+TCHAR get_relative_character(const TEXT* text, size_t base_index, ssize_t next_position)
+{
+    assert(text);
+
+    size_t index = base_index + next_position;
+    if (index < text->length) {
+        return text->value[index];
+    }
+
+    return '\0';
+}
 
 TEXT find_text(const TEXT* haystack, const TEXT* needle, bool ignore_case)
 {

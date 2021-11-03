@@ -78,6 +78,9 @@
     <ClCompile Include="test.cpp">
       <Filter>source\test</Filter>
     </ClCompile>
+    <ClCompile Include="tcharacter.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
