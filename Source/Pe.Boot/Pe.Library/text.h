@@ -47,6 +47,10 @@ typedef struct tag_TEXT
     } library;
 } TEXT;
 
+// 静的初期化処理
+#define static_text_core(s) { .value = s, .length = SIZEOF_ARRAY(s), .library = { .need_release = false, .sentinel = true, .released = false, } }
+#define static_text(s) static_text_core(_T(s))
+
 /// <summary>
 /// テキストの配列的なもの。
 /// <para>構造体のポインタとして扱いたいのかテキスト配列を扱いたいのかパッと見分からないのでこれで見た目をよくする。</para>

@@ -5,7 +5,6 @@
 
 #define FORMAT_LENGTH (256)
 
-
 TEXT create_invalid_text()
 {
     TEXT result = {

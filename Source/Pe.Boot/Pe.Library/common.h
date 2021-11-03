@@ -31,6 +31,7 @@ typedef uint32_t text_t;
 #define TO_STRING_CORE(x) #x
 #define TO_STRING(literal) TO_STRING_CORE(literal)
 
+/// 配列サイズの取得
 #define SIZEOF_ARRAY(arr) (sizeof(arr) / sizeof(arr[0]))
 
 #define FILE_BASE_DIR TO_STRING(SOLUTION_DIR)
