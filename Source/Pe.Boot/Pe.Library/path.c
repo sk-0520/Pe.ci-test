@@ -31,7 +31,7 @@ TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path
 
 TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_t count)
 {
-    size_t total_path_length = base_path->length + 1 + count; // ディレクトリ区切り
+    size_t total_path_length = (size_t)base_path->length + 1 + count; // ディレクトリ区切り
 
     for (size_t i = 0; i < count; i++) {
         const TEXT* path = &paths[i];

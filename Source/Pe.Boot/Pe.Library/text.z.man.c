@@ -40,7 +40,7 @@ TEXT add_text(const TEXT* source, const TEXT* text)
         return clone_text(source);
     }
 
-    size_t buffer_length = source->length + text->length;
+    size_t buffer_length = (size_t)(source->length) + text->length;
     TCHAR* buffer = allocate_string(buffer_length);
     copy_memory(buffer, source->value, source->length * sizeof(TCHAR));
     copy_memory(buffer + source->length, text->value, text->length * sizeof(TCHAR));
