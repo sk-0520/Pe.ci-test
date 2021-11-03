@@ -85,7 +85,7 @@ bool is_equals_text(const TEXT* a, const TEXT* b, bool ignore_case)
         return true;
     }
 
-    return !compare_memory(a->value, b->value, a->length);
+    return !compare_memory(a->value, b->value, a->length * sizeof(TCHAR));
 }
 
 int compare_text(const TEXT* a, const TEXT* b, bool ignore_case)
