@@ -90,6 +90,12 @@ namespace PeLibraryTest
 
         TEST_METHOD(is_equals_text_test)
         {
+            TCHAR buffers[] = _T("abcDEFABCdef");
+            TEXT abc = wrap_text_with_length(buffers + (3 * 0), 3, false);
+            TEXT DEF = wrap_text_with_length(buffers + (3 * 1), 3, false);
+            TEXT ABC = wrap_text_with_length(buffers + (3 * 2), 3, false);
+            TEXT def = wrap_text_with_length(buffers + (3 * 3), 3, false);
+
             auto tests = {
                 DATA(true, wrap("abc"), wrap("abc"), false),
 
@@ -107,6 +113,16 @@ namespace PeLibraryTest
                 DATA(false, wrap("abc"), wrap("ABCD"), false),
                 DATA(false, wrap("abcd"), wrap("ABC"), true),
                 DATA(false, wrap("abc"), wrap("ABCD"), true),
+
+                DATA(true, abc, abc, false),
+                DATA(false, abc, ABC, false),
+                DATA(true, def, def, false),
+                DATA(false, def, DEF, false),
+
+                DATA(true, abc, abc, true),
+                DATA(true, abc, ABC, true),
+                DATA(true, def, def, true),
+                DATA(true, def, DEF, true),
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
