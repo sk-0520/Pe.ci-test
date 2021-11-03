@@ -127,6 +127,51 @@ namespace PeLibraryTest
             }
         }
 
+        TEST_METHOD(compare_text_length_test)
+        {
+            TCHAR buffers[] = _T("abcDEFABCdef");
+            TEXT abc = wrap_text_with_length(buffers + (3 * 0), 3, false);
+            TEXT DEF = wrap_text_with_length(buffers + (3 * 1), 3, false);
+            TEXT ABC = wrap_text_with_length(buffers + (3 * 2), 3, false);
+            TEXT def = wrap_text_with_length(buffers + (3 * 3), 3, false);
+
+            auto tests = {
+                DATA(0, abc, abc, false),
+                DATA(-1, abc, def, false),
+                DATA(+1, def, abc, false),
+                DATA(-1, abc, ABC, false),
+                DATA(-1, abc, DEF, false),
+                DATA(+1, def, ABC, false),
+
+                DATA(0, abc, abc, true),
+                DATA(-1, abc, def, true),
+                DATA(+1, def, abc, true),
+                DATA(0, abc, ABC, true),
+                DATA(-1, abc, DEF, true),
+                DATA(+1, def, ABC, true),
+            };
+
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                TEXT& arg2 = std::get<1>(test.inputs);
+                bool arg3 = std::get<2>(test.inputs);
+                auto actual = compare_text(&arg1, &arg2, arg3);
+                switch (test.expected) {
+                    case -1:
+                        Assert::IsTrue(actual < 0);
+                        break;
+                    case 0:
+                        Assert::IsTrue(actual == 0);
+                        break;
+                    case +1:
+                        Assert::IsTrue(0 < actual);
+                        break;
+                    default:
+                        _ASSERT(false);
+                }
+            }
+        }
+
         TEST_METHOD(compare_text_detail_compare_text_test_test)
         {
             auto tests = {
@@ -190,8 +235,7 @@ namespace PeLibraryTest
                 auto actual = starts_with_text(&arg1, &arg2);
                 if (test.expected) {
                     Assert::IsTrue(actual, arg2.value);
-                }
-                else {
+                } else {
                     Assert::IsFalse(actual, arg2.value);
                 }
             }

@@ -57,11 +57,16 @@ ssize_t index_of_character(const TEXT* haystack, TCHAR needle)
 
 int compare_text(const TEXT* a, const TEXT* b, bool ignore_case)
 {
-    //TODO: 番兵なし対応
-    return ignore_case
-        ? lstrcmpi(a->value, b->value)
-        : lstrcmp(a->value, b->value)
-        ;
+    if (a->library.sentinel && b->library.sentinel) {
+        // 番兵あり
+        return ignore_case
+            ? lstrcmpi(a->value, b->value)
+            : lstrcmp(a->value, b->value)
+            ;
+    }
+
+    // 番兵なし
+    return compare_text_detail(a, b, -1, ignore_case ? TEXT_COMPARE_MODE_IGNORE_CASE : TEXT_COMPARE_MODE_NONE, LOCALE_TYPE_INVARIANT).compare;
 }
 
 static int get_compare_text_length(const TEXT* text, ssize_t width)
