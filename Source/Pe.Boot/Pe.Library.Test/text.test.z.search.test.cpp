@@ -88,6 +88,39 @@ namespace PeLibraryTest
             }
         }
 
+        TEST_METHOD(is_equals_text_test)
+        {
+            auto tests = {
+                DATA(true, wrap("abc"), wrap("abc"), false),
+
+                DATA(false, wrap("abc"), wrap("Abc"), false),
+                DATA(false, wrap("aBc"), wrap("ABc"), false),
+                DATA(false, wrap("abC"), wrap("ABC"), false),
+                DATA(false, wrap("abc"), wrap("ABC"), false),
+
+                DATA(true, wrap("abc"), wrap("Abc"), true),
+                DATA(true, wrap("aBc"), wrap("ABc"), true),
+                DATA(true, wrap("abC"), wrap("ABC"), true),
+                DATA(true, wrap("abc"), wrap("ABC"), true),
+
+                DATA(false, wrap("abcd"), wrap("ABC"), false),
+                DATA(false, wrap("abc"), wrap("ABCD"), false),
+                DATA(false, wrap("abcd"), wrap("ABC"), true),
+                DATA(false, wrap("abc"), wrap("ABCD"), true),
+            };
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                TEXT& arg2 = std::get<1>(test.inputs);
+                bool arg3 = std::get<2>(test.inputs);
+                auto actual = is_equals_text(&arg1, &arg2, arg3);
+                if (test.expected) {
+                    Assert::IsTrue(actual);
+                } else {
+                    Assert::IsFalse(actual);
+                }
+            }
+        }
+
         TEST_METHOD(compare_text_test)
         {
             auto tests = {

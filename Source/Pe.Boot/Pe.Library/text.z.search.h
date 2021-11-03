@@ -85,6 +85,15 @@ TEXT find_character(const TEXT* haystack, TCHAR needle);
 ssize_t index_of_character(const TEXT* haystack, TCHAR needle);
 
 /// <summary>
+/// テキストは同じか。
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <param name="ignore_case"></param>
+/// <returns></returns>
+bool is_equals_text(const TEXT* a, const TEXT* b, bool ignore_case);
+
+/// <summary>
 /// テキスト比較。
 /// </summary>
 /// <param name="a">比較対象テキスト1。</param>

@@ -55,6 +55,39 @@ ssize_t index_of_character(const TEXT* haystack, TCHAR needle)
     return s - haystack->value;
 }
 
+bool is_equals_text(const TEXT* a, const TEXT* b, bool ignore_case)
+{
+    if (!a && !b) {
+        return true;
+    }
+    if ((a && !b) || (!a && b)) {
+        return false;
+    }
+
+    if (a->length != b->length) {
+        return false;
+    }
+
+    if (ignore_case) {
+        for (size_t i = 0; i < a->length; i++) {
+            TCHAR a1 = a->value[i];
+            TCHAR b1 = b->value[i];
+            if ('a' <= a1 && a1 <= 'z') {
+                a1 = a1 - 'a' + 'A';
+            }
+            if ('a' <= b1 && b1 <= 'z') {
+                b1 = b1 - 'a' + 'A';
+            }
+            if (a1 != b1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    return !compare_memory(a->value, b->value, a->length);
+}
+
 int compare_text(const TEXT* a, const TEXT* b, bool ignore_case)
 {
     if (a->library.sentinel && b->library.sentinel) {
