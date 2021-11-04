@@ -18,6 +18,7 @@ branches:
     - development
     - ci-test
 install:
+  - ps: if ($env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("[7z]")) { $env:ARCHIVE = "7z" }
   - cmd: dotnet --version
   #- cmd: choco install dotnetcore-sdk
   #- cmd: dotnet --version
