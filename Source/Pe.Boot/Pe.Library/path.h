@@ -7,6 +7,7 @@
 
 /// <summary>
 /// パスから親ディレクトリパスを取得。
+/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="path">対象パス。</param>
 /// <returns>親ディレクトリパス。解放が必要。</returns>
@@ -17,6 +18,7 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path);
 
 /// <summary>
 /// パスを結合する。
+/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="base_path">ベースのパス。</param>
 /// <param name="relative_path">結合するパス。</param>
@@ -28,6 +30,7 @@ TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path
 
 /// <summary>
 /// パスを結合する。
+/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="base_path">ベースのパス。</param>
 /// <param name="paths">結合するパス。</param>
@@ -40,6 +43,7 @@ TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_
 
 /// <summary>
 /// パスの正規化。
+/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="path"></param>
 /// <returns>正規化されたパス。</returns>

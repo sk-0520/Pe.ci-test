@@ -47,8 +47,16 @@ typedef struct tag_TEXT
     } library;
 } TEXT;
 
-// 静的初期化処理
+/// <summary>
+/// 内部用 静的初期化処理。
+/// <para><c>_T()</c>の面倒は見ない。</para>
+/// </summary>
 #define static_text_core(s) { .value = s, .length = SIZEOF_ARRAY(s) - 1, .library = { .need_release = false, .sentinel = true, .released = false, } }
+/// <summary>
+/// 静的初期化処理。
+/// <para>グローバル変数とか<c>static</c>変数のお供。</para>
+/// </summary>
+/// <param name="s">入力文字列リテラル。自動的に<c>_T(s)</c>される。</param>
 #define static_text(s) static_text_core(_T(s))
 
 /// <summary>
@@ -60,7 +68,7 @@ typedef TEXT* TEXT_LIST;
 /// <summary>
 /// 無効テキストを生成。
 /// </summary>
-/// <returns>領域自体がNULLのテキスト(通常使用は出来ない)。</returns>
+/// <returns>領域自体が<c>NULL</c>のテキスト(通常使用は出来ない)。</returns>
 TEXT create_invalid_text();
 
 /// <summary>
@@ -73,6 +81,7 @@ bool is_enabled_text(const TEXT* text);
 
 /// <summary>
 /// 文字列長は<c>TEXT</c>で有効か。
+/// <para>内部では<c>text_t</c>を使っているので<c>size_t</c>に収まらない。</para>
 /// </summary>
 /// <param name="length"></param>
 /// <returns>有効。</returns>

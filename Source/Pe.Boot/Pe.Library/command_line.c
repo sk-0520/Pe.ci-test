@@ -74,12 +74,12 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
             key = new_text_with_length(arg.value, (value_with_separator.value - arg.value));
             if (1 < value_with_separator.length) {
                 // 値は存在する
-                TEXT rawValue = wrap_text_with_length(value_with_separator.value + 1, (size_t)value_with_separator.length - 1, false);
-                if (rawValue.length && ((rawValue.value[0] == '"' || rawValue.value[0] == '\'') && rawValue.value[rawValue.length - 1] == rawValue.value[0]) ) {
+                TEXT raw_value = wrap_text_with_length(value_with_separator.value + 1, (size_t)value_with_separator.length - 1, false);
+                if (raw_value.length && ((raw_value.value[0] == '"' || raw_value.value[0] == '\'') && raw_value.value[raw_value.length - 1] == raw_value.value[0]) ) {
                     // 囲まれている
-                    item->value = new_text_with_length(rawValue.value + 1, (size_t)rawValue.length - 2);
+                    item->value = new_text_with_length(raw_value.value + 1, (size_t)raw_value.length - 2);
                 } else {
-                    item->value = rawValue;
+                    item->value = raw_value;
                 }
             } else {
                 // 値は存在しない、が=指定されてるなら空文字列

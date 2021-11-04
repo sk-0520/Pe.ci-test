@@ -6,6 +6,8 @@
 #include "tstring.h"
 #include "text.h"
 
+// 呼び出し側でヒープを確保して使用する前提。のはず。
+
 #define MAP_DEFAULT_CAPACITY (16)
 
 /// <summary>
