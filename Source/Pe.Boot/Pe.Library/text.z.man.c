@@ -3,7 +3,7 @@
 
 #include "debug.h"
 #include "text.h"
-
+#include "object_list.h"
 
 static bool contains_characters(TCHAR c, const TCHAR* characters, size_t count)
 {
@@ -138,13 +138,13 @@ TEXT trim_text(const TEXT* text, bool start, bool end, const TCHAR* characters, 
             begin_index = i;
             break;
         }
-        if (i == text->length - 1) {
+        if (i == (size_t)text->length - 1) {
             // 最後まで行っちゃった
             return new_text(_T(""));
         }
     }
 
-    size_t end_index = text->length - 1;
+    size_t end_index = (size_t)text->length - 1;
     for (size_t i = end_index; end; i--) {
         bool find = contains_characters(text->value[i], characters, count);
         if (!find) {

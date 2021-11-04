@@ -62,7 +62,7 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
 
         const TEXT* mark_text = mark_texts + mark_index;
         // 先頭のマークを外した引数取得
-        TEXT arg = wrap_text_with_length(current->value + mark_text->length, current->length - mark_text->length, false);
+        TEXT arg = wrap_text_with_length(current->value + mark_text->length, (size_t)current->length - mark_text->length, false);
 
         COMMAND_LINE_ITEM* item = allocate_clear_memory(1, sizeof(COMMAND_LINE_ITEM));
         item->key_index = i;
@@ -74,10 +74,10 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
             key = new_text_with_length(arg.value, (value_with_separator.value - arg.value));
             if (1 < value_with_separator.length) {
                 // 値は存在する
-                TEXT rawValue = wrap_text_with_length(value_with_separator.value + 1, value_with_separator.length - 1, false);
+                TEXT rawValue = wrap_text_with_length(value_with_separator.value + 1, (size_t)value_with_separator.length - 1, false);
                 if (rawValue.length && ((rawValue.value[0] == '"' || rawValue.value[0] == '\'') && rawValue.value[rawValue.length - 1] == rawValue.value[0]) ) {
                     // 囲まれている
-                    item->value = new_text_with_length(rawValue.value + 1, rawValue.length - 2);
+                    item->value = new_text_with_length(rawValue.value + 1, (size_t)rawValue.length - 2);
                 } else {
                     item->value = rawValue;
                 }
@@ -231,13 +231,13 @@ TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count)
         } else {
             ssize_t separator_index = index_of_character(argument, '=');
             if (separator_index == -1) {
-                total_length += argument->length + 2/* "" */;
+                total_length += (size_t)argument->length + 2/* "" */;
                 hasSpaceList[i] = true;
             } else if(separator_index < index_of_character(argument, '"')) {
                 // 最初から key="" として囲まれてる場合はあえて括る必要なし
                 total_length += argument->length;
             } else {
-                total_length += argument->length + 2/* "" */;
+                total_length += (size_t)argument->length + 2/* "" */;
                 hasSpaceList[i] = true;
             }
         }

@@ -22,7 +22,7 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path)
 
 TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path)
 {
-    size_t total_length = base_path->length + relative_path->length + sizeof(TCHAR)/* \ */;
+    size_t total_length = (size_t)base_path->length + relative_path->length + sizeof(TCHAR)/* \ */;
     TCHAR* buffer = RC_HEAP_CALL(allocate_string, total_length);
     PathCombine(buffer, base_path->value, relative_path->value);
 

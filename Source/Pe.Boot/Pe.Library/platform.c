@@ -8,10 +8,10 @@ TEXT RC_HEAP_FUNC(get_environment_variable, const TEXT* key)
         return create_invalid_text();
     }
 
-    TCHAR* env_value = RC_HEAP_CALL(allocate_string, env_length - 1);
+    TCHAR* env_value = RC_HEAP_CALL(allocate_string, (size_t)env_length - 1);
     GetEnvironmentVariable(key->value, env_value, env_length);
 
-    return wrap_text_with_length(env_value, env_length - 1, true);
+    return wrap_text_with_length(env_value, (size_t)env_length - 1, true);
 }
 
 bool set_environment_variable(const TEXT* key, const TEXT* value)
