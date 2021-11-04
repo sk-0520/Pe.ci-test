@@ -290,6 +290,7 @@
     <ClCompile Include="fsio_resource.test.cpp" />
     <ClCompile Include="fsio_textfile.test.cpp" />
     <ClCompile Include="object_list.test.cpp" />
+    <ClCompile Include="platform.test.cpp" />
     <ClCompile Include="primitive_list.test.cpp" />
     <ClCompile Include="map.test.cpp" />
     <ClCompile Include="memory.test.cpp" />

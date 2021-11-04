@@ -19,3 +19,23 @@ bool set_environment_variable(const TEXT* key, const TEXT* value)
     return SetEnvironmentVariable(key->value, value->value);
 }
 
+TEXT RC_HEAP_FUNC(expand_environment_variable, const TEXT* text)
+{
+    if (!is_enabled_text(text)) {
+        return create_invalid_text();
+    }
+
+    DWORD buffer_size = ExpandEnvironmentStrings(text->value, NULL, 0);
+    if (!buffer_size) {
+        return create_invalid_text();
+    }
+
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, buffer_size);
+    DWORD result = ExpandEnvironmentStrings(text->value, buffer, buffer_size);
+    if (!result) {
+        RC_HEAP_CALL(free_string, buffer);
+        return create_invalid_text();
+    }
+
+    return wrap_text_with_length(buffer, buffer_size, true);
+}

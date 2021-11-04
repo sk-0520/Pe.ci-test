@@ -23,3 +23,12 @@ TEXT RC_HEAP_FUNC(get_environment_variable, const TEXT* key);
 /// <returns>成功状態。</returns>
 bool set_environment_variable(const TEXT* key, const TEXT* value);
 
+/// <summary>
+/// 環境変数展開。
+/// </summary>
+/// <param name="text"></param>
+/// <returns>展開後テキスト。解放が必要。</returns>
+TEXT RC_HEAP_FUNC(expand_environment_variable, const TEXT* text);
+#ifdef RES_CHECK
+#   define expand_environment_variable(text) RC_HEAP_WRAP(expand_environment_variable, text)
+#endif
