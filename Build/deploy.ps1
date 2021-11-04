@@ -1,7 +1,8 @@
 ﻿Param(
 	[Parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetDownloader,
 	[Parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetRepository,
-	[Parameter(mandatory = $true)][ValidateSet("zip", "7z")][string] $Archive,
+	[Parameter(mandatory = $true)][ValidateSet('zip', '7z', 'tar')][string] $MainArchive,
+	[Parameter(mandatory = $true)][ValidateSet('zip', '7z', 'tar')][string] $DefaultArchive,
 	[Parameter(mandatory = $true)][string] $DeployApiDownloadUrl,
 	[Parameter(mandatory = $true)][string] $DeployApiTagUrl,
 	[Parameter(mandatory = $true)][string] $DeployAccount,
@@ -23,12 +24,15 @@ $outputDirectory = Join-Path $rootDirPath 'Output'
 $securePassword = ConvertTo-SecureString $DeployPassword -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential($DeployAccount, $securePassword)
 
-$archiveFiles = Get-ChildItem -Path $outputDirectory -Filter "*.$Archive" | Select-Object -Expand FullName
+$archiveFiles = @(
+	Get-ChildItem -Path $outputDirectory -Filter "*.$MainArchive"
+	Get-ChildItem -Path $outputDirectory -Filter "*.$DefaultArchive"
+) | Select-Object -Expand FullName
 $releaseNoteFiles = Get-ChildItem -Path $outputDirectory -Filter "Pe*.html" | Select-Object -Expand FullName
 $updateFiles = Get-ChildItem -Path $outputDirectory -Filter "update*.json" | Select-Object -Expand FullName
 
 $version = GetAppVersion
-$versionFiles = $releaseNoteFiles + $updateFiles + (Get-ChildItem -Path $outputDirectory -Filter "Pe.Plugins.Reference.*.$Archive" | Select-Object -Expand FullName)
+$versionFiles = $releaseNoteFiles + $updateFiles + (Get-ChildItem -Path $outputDirectory -Filter "Pe.Plugins.Reference.*.$DefaultArchive" | Select-Object -Expand FullName)
 $versionArchiveFile = Join-Path $outputDirectory (ConvertFileName 'Archive' $version '' 'zip')
 
 Compress-Archive -Force -Path $versionFiles -DestinationPath $versionArchiveFile
