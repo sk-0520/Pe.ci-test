@@ -14,25 +14,38 @@ namespace PeLibraryTest
 
         TEST_METHOD(get_parent_directory_path_test)
         {
-            TEXT expected = wrap("C:\\dir");
-            TEXT input = wrap("C:\\dir\\file");
+            auto tests = {
+                DATA(wrap("C:\\dir\\file"), wrap("C:\\dir\\file\\")),
+                DATA(wrap("C:\\dir"), wrap("C:\\dir\\file")),
+                DATA(wrap("C:\\"), wrap("C:\\dir")),
+                DATA(create_invalid_text(), wrap("C:\\")),
+            };
+            for (auto test : tests) {
+                TEXT arg1 = std::get<0>(test.inputs);
 
-            TEXT actual = get_parent_directory_path(&input);
-            Assert::AreEqual(expected.value, actual.value);
+                TEXT actual = get_parent_directory_path(&arg1);
+                Assert::AreEqual(test.expected.value, actual.value);
 
-            free_text(&actual);
+                free_text(&actual);
+            }
         }
 
         TEST_METHOD(combine_path_test)
         {
-            TEXT expected = wrap("C:\\dir\\file");
-            TEXT input1 = wrap("C:\\dir");
-            TEXT input2 = wrap("file");
+            auto tests = {
+                DATA(wrap("C:\\dir\\file"), wrap("C:\\dir"), wrap("file")),
+                DATA(wrap("a\\b"), wrap("a"), wrap("b")),
+                DATA(wrap("a\\b"), wrap("a\\"), wrap("b\\")),
+            };
+            for (auto test : tests) {
+                TEXT arg1 = std::get<0>(test.inputs);
+                TEXT arg2 = std::get<1>(test.inputs);
 
-            TEXT actual = combine_path(&input1, &input2);
-            Assert::AreEqual(expected.value, actual.value);
+                TEXT actual = combine_path(&arg1, &arg2);
+                Assert::AreEqual(test.expected.value, actual.value);
 
-            free_text(&actual);
+                free_text(&actual);
+            }
         }
 
         TEST_METHOD(join_path_test)

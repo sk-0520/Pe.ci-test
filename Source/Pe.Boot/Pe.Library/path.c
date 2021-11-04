@@ -25,8 +25,13 @@ TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path
     size_t total_length = (size_t)base_path->length + relative_path->length + sizeof(TCHAR)/* \ */;
     TCHAR* buffer = RC_HEAP_CALL(allocate_string, total_length);
     PathCombine(buffer, base_path->value, relative_path->value);
-
-    return wrap_text_with_length(buffer, get_string_length(buffer), true);
+    size_t buffer_length = get_string_length(buffer);
+    TCHAR* c = buffer + (buffer_length - 1);
+    if (*c == '\\' || *c == '/') {
+        *c = 0;
+        buffer_length -= 1;
+    }
+    return wrap_text_with_length(buffer, buffer_length, true);
 }
 
 TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_t count)
