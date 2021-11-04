@@ -108,6 +108,29 @@ namespace PeLibraryTest
             }
         }
 
+        TEST_METHOD(is_alphabet_character_test)
+        {
+            auto tests = {
+                DATA(true, 'a'),
+                DATA(true, 'z'),
+
+                DATA(true, 'A'),
+                DATA(true, 'Z'),
+
+                DATA(false, '0'),
+                DATA(false, '!'),
+            };
+
+            for (auto test : tests) {
+                auto actual = std::apply(is_alphabet_character, test.inputs);
+                if (test.expected) {
+                    Assert::IsTrue(actual);
+                } else {
+                    Assert::IsFalse(actual);
+                }
+            }
+        }
+
         TEST_METHOD(to_lower_character_test)
         {
             auto tests = {

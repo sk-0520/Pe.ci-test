@@ -31,6 +31,13 @@ bool is_lower_character(TCHAR c);
 bool is_upper_character(TCHAR c);
 
 /// <summary>
+/// 英字か。
+/// </summary>
+/// <param name="c"></param>
+/// <returns></returns>
+bool is_alphabet_character(TCHAR c);
+
+/// <summary>
 /// <summary>
 /// 小文字に変換。
 /// </summary>
