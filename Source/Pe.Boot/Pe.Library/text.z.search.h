@@ -77,6 +77,7 @@ TCHAR get_relative_character(const TEXT* text, size_t base_index, ssize_t next_p
 
 /// <summary>
 /// テキスト検索。
+/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索テキスト。</param>
@@ -86,6 +87,7 @@ TEXT find_text(const TEXT* haystack, const TEXT* needle, bool ignore_case);
 
 /// <summary>
 /// テキスト検索。
+/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索文字。</param>
@@ -94,6 +96,7 @@ TEXT find_character(const TEXT* haystack, TCHAR needle);
 
 /// <summary>
 /// テキスト内の文字位置を検索。
+/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索文字。</param>
