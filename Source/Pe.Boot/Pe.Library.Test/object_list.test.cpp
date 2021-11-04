@@ -145,5 +145,51 @@ namespace PeLibraryTest
             free_object_list(&data_list);
         }
 
+        TEST_METHOD(reference_object_list_value_test)
+        {
+            int inputs[] = {
+                1,
+                2,
+                3,
+                4,
+            };
+
+            OBJECT_LIST list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+
+            add_range_object_list(&list, inputs, sizeof(inputs) / sizeof(inputs[0]));
+
+            const int* actual = reference_value_object_list(int, list);
+            for (size_t i = 0; i < list.length; i++) {
+                Assert::AreEqual(inputs[i], actual[i]);
+            }
+
+            free_object_list(&list);
+
+        }
+
+        TEST_METHOD(reference_object_list_pointer_test)
+        {
+            int inputs[] = {
+                1,
+                2,
+                3,
+                4,
+            };
+
+            OBJECT_LIST list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+
+            add_range_object_list(&list, inputs, sizeof(inputs) / sizeof(inputs[0]));
+
+            const OBJECT_LIST* p = &list;
+
+            const int* actual = reference_ref_object_list(int, p);
+            for (size_t i = 0; i < p->length; i++) {
+                Assert::AreEqual(inputs[i], actual[i]);
+            }
+
+            free_object_list(&list);
+
+        }
+
     };
 }

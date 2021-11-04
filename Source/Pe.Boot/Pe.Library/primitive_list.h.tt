@@ -153,7 +153,6 @@ bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, const <#= item
 /// </summary>
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
-/// <param name="index">0基点の取得位置。</param>
 /// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
 <#= item.ValueType #>* reference_list_<#= item.BaseName #>(const <#= item.AliasList #>* list);
 <# } #>

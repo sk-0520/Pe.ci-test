@@ -14,6 +14,22 @@
 #define OBJECT_LIST_DEFAULT_CAPACITY_COUNT (64)
 
 /// <summary>
+/// (値)リストのデータを参照。
+/// <para>参照データ使用時はリストに対する処理を行ってはならない。</para>
+/// </summary>
+/// <param name="TYPE">型</param>
+/// <param name="LIST">対象リスト</param>
+#define reference_value_object_list(TYPE, LIST) (const TYPE*)(LIST.items)
+/// <summary>
+/// (ポインタ)リストのデータを参照。
+/// <para>参照データ使用時はリストに対する処理を行ってはならない。</para>
+/// <para>reference_value_object_listとやってることは同じだけど * 付きで呼び出すのもなぁという思いで作っただけ。</para>
+/// </summary>
+/// <param name="TYPE">型</param>
+/// <param name="LIST">対象リスト</param>
+#define reference_ref_object_list(TYPE, LIST) (const TYPE*)(LIST->items)
+
+/// <summary>
 /// 値ラッパー。
 /// </summary>
 typedef struct tag_OBJECT_RESULT_VALUE
