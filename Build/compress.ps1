@@ -1,6 +1,7 @@
 ﻿Param(
 	[switch] $Diet,
-	[Parameter(mandatory = $true)][ValidateSet("zip", "7z")][string] $Archive,
+	[Parameter(mandatory = $true)][ValidateSet('zip', '7z', 'tar')][string] $MainArchive,
+	[Parameter(mandatory = $true)][ValidateSet('zip', '7z', 'tar')][string] $DefaultArchive,
 	[Parameter(mandatory = $true)][string[]] $Platforms
 )
 $ErrorActionPreference = 'Stop'
@@ -20,7 +21,7 @@ $builToolDirPath = Join-Path $rootDirectory "Output\tools"
 $version = GetAppVersion
 
 foreach ($platform in $Platforms) {
-	$archiveFileName = (ConvertAppArchiveFileName $version $platform $Archive)
+	$archiveFileName = (ConvertAppArchiveFileName $version $platform $MainArchive)
 	$binRootDirPath = "Output\Release\$platform\Pe"
 	$pluginsRootDirPath = "Output\Release\$platform\Plugins"
 
@@ -59,30 +60,35 @@ foreach ($platform in $Platforms) {
 
 	$pluginDirs = Get-ChildItem -Path $pluginsRootDirPath -Directory
 
-	function Compress-Core([string] $directoryPath, [string] $outputFileName) {
-		switch ($Archive) {
-			'zip' {
-				$destinationPath = Join-Path 'Output' $outputFileName
-				Compress-Archive -Force -Path (Join-Path $directoryPath "*") -DestinationPath $destinationPath
-			}
-			'7z' {
-				try {
-					Push-Location "$directoryPath"
-					if (Test-Path "$outputFileName") {
-						Remove-Item "$outputFileName"
+	function Compress-Core([string] $archive, [string] $directoryPath, [string] $outputFileName) {
+		if($archive -eq 'zip') {
+			$destinationPath = Join-Path 'Output' $outputFileName
+			Compress-Archive -Force -Path (Join-Path $directoryPath "*") -DestinationPath $destinationPath
+		} else {
+			try {
+				Push-Location "$directoryPath"
+				if (Test-Path "$outputFileName") {
+					Remove-Item "$outputFileName"
+				}
+				switch ($archive) {
+					'7z' {
+						7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on -mmt=on "$outputFileName" * -r -bsp1
 					}
-					7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on -mmt=on "$outputFileName" * -r -bsp1
+					'tar' {
+						7z a -ttar "$outputFileName" * -r -bsp1
+					}
 				}
-				finally {
-					Pop-Location
-				}
-				Move-Item -Path (Join-Path "$directoryPath" "$outputFileName") -Destination 'Output'
 			}
+			finally {
+				Pop-Location
+			}
+			Move-Item -Path (Join-Path "$directoryPath" "$outputFileName") -Destination 'Output'
 		}
+
 	}
 
-	Compress-Core $binRootDirPath $archiveFileName
+	Compress-Core $MainArchive $binRootDirPath $archiveFileName
 	foreach ($pluginDir in $pluginDirs) {
-		Compress-Core $pluginDir.FullName ($pluginDir.Name + '_' + $platform + '.' + $Archive)
+		Compress-Core $DefaultArchive $pluginDir.FullName ($pluginDir.Name + '_' + $platform + '.' + $DefaultArchive)
 	}
 }

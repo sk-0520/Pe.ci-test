@@ -3,10 +3,11 @@ image: Visual Studio 2019
 skip_tags: true
 skip_commits:
   message: /^init/
-# clone_depth: 1
+clone_depth: 1
 environment:
   BUILD_TYPE: BETA
-  ARCHIVE: 7z
+  MAIN_ARCHIVE: tar
+  DEFAULT_ARCHIVE: 7z
   MINIMUM_VERSION: 0.00.0
   NUGET_PACKAGES: C:\nuget
 platform:
@@ -18,7 +19,23 @@ branches:
     - development
     - ci-test
 install:
-  - ps: if ($env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("[7z]")) { $env:ARCHIVE = "7z" }
+  # コミットメッセージの2行目以降のコメント「//KEY:VALUE」を割り当て可能な環境変数に上書きする
+  # 割り当て環境変数は $ciEnvs 定義する
+  - ps: >
+      $ciEnvs = @('BUILD_TYPE', 'MAIN_ARCHIVE', 'DEFAULT_ARCHIVE', 'MINIMUM_VERSION', 'NUGET_PACKAGES');
+      if($env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED) {
+        foreach($line in $env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED.Split("\n", [StringSplitOptions]::RemoveEmptyEntries)) {
+          if($line -match '^//\s*(?<KEY>\w+)\s*:\s*(?<VALUE>\w+)') {
+            $key = $Matches['KEY']
+            $value = $Matches['VALUE']
+            if($ciEnvs.Contains($key)) {
+              $oldValue = [Environment]::GetEnvironmentVariable($key)
+              [Environment]::SetEnvironmentVariable($key, $value)
+              Write-Host ("CHANGE: [$key] $oldValue -> $value")
+            }
+          }
+        }
+      }
   - cmd: dotnet --version
   #- cmd: choco install dotnetcore-sdk
   #- cmd: dotnet --version
@@ -32,14 +49,14 @@ before_build:
 build_script:
   - cmd: npm run help-ci
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
-  - ps: .\Build\build.ps1 -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
+  # - ps: .\Build\build.ps1 -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
 before_test:
   - cmd: for /d %%d in (Source\Pe\*.Test) do ( cd %%d & nuget install Appveyor.TestLogger & cd ..\..\..\ )
 test_script:
   - ps: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Logger Appveyor -Platforms $env:PLATFORM
 after_test:
-  - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
-  - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms $env:PLATFORM
+  - ps: .\Build\compress.ps1 -MainArchive $env:MAIN_ARCHIVE -DefaultArchive $env:DEFAULT_ARCHIVE -Platforms $env:PLATFORM
+  - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -MainArchive $env:MAIN_ARCHIVE -DefaultArchive $env:DEFAULT_ARCHIVE -Platforms $env:PLATFORM
   - cmd: git config --global core.quotepath "false"
   - ps: .\Build\create-release-note.ps1
 artifacts:
