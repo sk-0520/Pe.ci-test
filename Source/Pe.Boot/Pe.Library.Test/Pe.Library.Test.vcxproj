@@ -287,8 +287,8 @@
     <ClCompile Include="command_line.test.cpp" />
     <ClCompile Include="datetime.test.cpp" />
     <ClCompile Include="fsio.test.cpp" />
-    <ClCompile Include="fsio_resource.test.cpp" />
-    <ClCompile Include="fsio_textfile.test.cpp" />
+    <ClCompile Include="fsio.z.resource.test.cpp" />
+    <ClCompile Include="fsio.z.textfile.test.cpp" />
     <ClCompile Include="object_list.test.cpp" />
     <ClCompile Include="platform.test.cpp" />
     <ClCompile Include="primitive_list.test.cpp" />

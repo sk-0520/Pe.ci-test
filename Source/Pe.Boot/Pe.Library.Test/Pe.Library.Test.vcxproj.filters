@@ -30,10 +30,10 @@
     <ClCompile Include="fsio.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="fsio_resource.test.cpp">
+    <ClCompile Include="fsio.z.resource.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="fsio_textfile.test.cpp">
+    <ClCompile Include="fsio.z.textfile.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="map.test.cpp">
