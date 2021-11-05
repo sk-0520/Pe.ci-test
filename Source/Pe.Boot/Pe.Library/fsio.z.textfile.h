@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <stdarg.h>
 
-#include "fsio_resource.h"
+#include "fsio.z.resource.h"
 #include "string_builder.h"
 
 

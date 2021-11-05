@@ -1,6 +1,6 @@
 ﻿#include "common.h"
-#include "fsio_textfile.h"
-#include "fsio_resource.h"
+#include "fsio.z.textfile.h"
+#include "fsio.z.resource.h"
 #include "debug.h"
 
 

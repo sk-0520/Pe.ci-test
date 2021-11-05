@@ -39,10 +39,10 @@
     <ClCompile Include="fsio.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="fsio_resource.c">
+    <ClCompile Include="fsio.z.resource.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="fsio_textfile.c">
+    <ClCompile Include="fsio.z.textfile.c">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="logging.c">
@@ -116,10 +116,10 @@
     <ClInclude Include="fsio.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="fsio_resource.h">
+    <ClInclude Include="fsio.z.resource.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="fsio_textfile.h">
+    <ClInclude Include="fsio.z.textfile.h">
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="logging.h">

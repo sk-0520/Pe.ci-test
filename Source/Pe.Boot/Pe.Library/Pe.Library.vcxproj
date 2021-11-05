@@ -399,8 +399,8 @@
     <ClCompile Include="datetime.c" />
     <ClCompile Include="debug.c" />
     <ClCompile Include="fsio.c" />
-    <ClCompile Include="fsio_resource.c" />
-    <ClCompile Include="fsio_textfile.c" />
+    <ClCompile Include="fsio.z.resource.c" />
+    <ClCompile Include="fsio.z.textfile.c" />
     <None Include="primitive_list.c.tt">
       <FileType>Document</FileType>
     </None>
@@ -429,8 +429,8 @@
     <ClInclude Include="datetime.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="fsio.h" />
-    <ClInclude Include="fsio_resource.h" />
-    <ClInclude Include="fsio_textfile.h" />
+    <ClInclude Include="fsio.z.resource.h" />
+    <ClInclude Include="fsio.z.textfile.h" />
     <None Include="primitive_list.h.tt">
       <FileType>Document</FileType>
     </None>
