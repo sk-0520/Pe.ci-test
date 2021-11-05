@@ -32,14 +32,40 @@ typedef std::string tstring;
 template<typename TExpected, typename TInput1, typename... TInputN>
 struct DATA
 {
+    /// <summary>
+    /// テストデータ生成。
+    /// <para>簡易実行: <c>run(test_func)</c></para>
+    /// <para>通常実行: <c>std::apply(test_func, DATA.inputs)</c></para>
+    /// <para>引数指定: <c>test_func(std::get&lt;0&gt;(DATA.inputs))</c></para>
+    /// </summary>
+    /// <param name="expected">期待値。</param>
+    /// <param name="input1">入力値1。</param>
+    /// <param name="...inputN">入力値N。</param>
     DATA(TExpected expected, TInput1 input1, TInputN... inputN)
     {
         this->expected = expected;
         this->inputs = { input1, inputN... };
     }
 
+    /// <summary>
+    /// 期待値。
+    /// </summary>
     TExpected expected;
+    /// <summary>
+    /// 入力値一覧。
+    /// </summary>
     std::tuple<TInput1, TInputN...> inputs;
+
+    /// <summary>
+    /// 指定した関数に対して入力値一覧を適用して実行。
+    /// </summary>
+    /// <param name="func">テストする関数。</param>
+    /// <returns>実行結果。</returns>
+    template <class _Callable>
+    constexpr decltype(auto) run(_Callable&& func)
+    {
+        return std::apply(func, this->inputs);
+    }
 };
 
 template<typename TPrimitive>

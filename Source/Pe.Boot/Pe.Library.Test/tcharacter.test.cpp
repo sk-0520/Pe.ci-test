@@ -24,7 +24,7 @@ namespace PeLibraryTest
             };
 
             for (auto test : tests) {
-                auto actual = std::apply(is_newline_character, test.inputs);
+                auto actual = test.run(is_newline_character);
                 if (test.expected) {
                     Assert::IsTrue(actual);
                 } else {
