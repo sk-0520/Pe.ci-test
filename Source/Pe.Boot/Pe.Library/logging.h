@@ -11,10 +11,27 @@
 /// </summary>
 typedef enum tag_LOG_LEVEL
 {
+    /// <summary>
+    /// 細かいログ情報。
+    /// <para>開発時のみの出力を想定。</para>
+    /// </summary>
     LOG_LEVEL_TRACE,
+    /// <summary>
+    /// デバッグログ情報。
+    /// <para>開発時かデバッグ時の出力を想定。</para>
+    /// </summary>
     LOG_LEVEL_DEBUG,
+    /// <summary>
+    /// 通知ログ情報。
+    /// </summary>
     LOG_LEVEL_INFO,
+    /// <summary>
+    /// 警告ログ情報。
+    /// </summary>
     LOG_LEVEL_WARNING,
+    /// <summary>
+    /// 異常ログ情報。
+    /// </summary>
     LOG_LEVEL_ERROR,
 } LOG_LEVEL;
 
