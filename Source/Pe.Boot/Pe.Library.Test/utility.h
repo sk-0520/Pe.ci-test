@@ -3,9 +3,15 @@
 #include <tuple>
 #include <fstream>
 #include <filesystem>
+#include <iostream>
+#include <string>
 
 #include <tchar.h>
 #include <atlstr.h>
+
+extern "C" {
+#   include "../Pe.Library/logging.h"
+}
 
 namespace fs = std::filesystem;
 namespace mstest = Microsoft::VisualStudio::CppUnitTestFramework;
@@ -135,6 +141,53 @@ private:
         }
     }
 
+    void logging(const LOG_ITEM* log_item)
+    {
+        tstring message(_T("["));
+        message += this->test_namespace_name;
+        message += _T("] ");
+
+        switch (log_item->log_level) {
+            case LOG_LEVEL_TRACE:
+                message += _T("trace");
+                break;
+
+            case LOG_LEVEL_DEBUG:
+                message += _T("debug");
+                break;
+
+            case LOG_LEVEL_INFO:
+                message += _T("info ");
+                break;
+
+            case LOG_LEVEL_WARNING:
+                message += _T("warn ");
+                break;
+
+            case LOG_LEVEL_ERROR:
+                message += _T("error");
+                break;
+        }
+
+        message += _T(" | ");
+
+        message += log_item->message->value;
+
+        message += _T(" | ");
+        message += log_item->caller_file->value;
+        message += _T("(");
+        message += std::to_wstring(log_item->caller_line);
+        message += _T(")");
+
+        Microsoft::VisualStudio::CppUnitTestFramework::Logger::WriteMessage(message.c_str());
+    }
+
+    static void logging(const LOG_ITEM* log_item, void* data)
+    {
+        auto _this = (TestImpl*)data;
+        _this->logging(log_item);
+    }
+
 public:
     tstring work_dir_name = tstring(_T("work"));
 
@@ -144,6 +197,12 @@ public:
     TestImpl(tstring namespace_name)
     {
         test_namespace_name = namespace_name;
+
+        LOGGER logger;
+        logger.function = logging;
+        logger.data = this,
+        attach_logger(&logger);
+        logger_put_information(_T("TEST START"));
 
         // https://stackoverflow.com/a/25151971
         auto ut_dir = tstring(_T(TO_STRING(UT_DIR)));
@@ -169,6 +228,8 @@ public:
             auto path = tstring(file.path().c_str() + work_dir.size() + 1/* \ */);
             mstest::Logger::WriteMessage((tstring(_T("> ")) + (tstring(file.is_directory() ? _T("[D] ") : _T("[F] "))) + path).c_str());
         }
+
+        logger_put_information(_T("TEST END"));
     }
 
 
