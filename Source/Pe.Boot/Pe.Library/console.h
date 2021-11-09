@@ -52,7 +52,7 @@ typedef struct tag_CONSOLE_RESOURCE
 /// コンソール処理を開始。
 /// </summary>
 /// <returns></returns>
-CONSOLE_RESOURCE begin_console();
+CONSOLE_RESOURCE begin_console(void);
 /// <summary>
 /// コンソール処理を終了。
 /// </summary>

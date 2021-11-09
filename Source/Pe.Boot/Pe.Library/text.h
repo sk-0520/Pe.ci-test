@@ -69,7 +69,7 @@ typedef TEXT* TEXT_LIST;
 /// 無効テキストを生成。
 /// </summary>
 /// <returns>領域自体が<c>NULL</c>のテキスト(通常使用は出来ない)。</returns>
-TEXT create_invalid_text();
+TEXT create_invalid_text(void);
 
 /// <summary>
 /// テキストが使用可能か。

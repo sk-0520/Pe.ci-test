@@ -242,7 +242,7 @@ void rc__initialize(func_rc__output output, size_t path_length, size_t buffer_le
     rc_file__stock_item_count = 0;
 }
 
-void rc__uninitialize()
+void rc__uninitialize(void)
 {
     HeapFree(GetProcessHeap(), 0, rc_heap__stock_items);
     HeapFree(GetProcessHeap(), 0, rc_file__stock_items);

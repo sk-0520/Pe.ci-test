@@ -1,7 +1,7 @@
 ﻿#include "console.h"
 #include "logging.h"
 
-CONSOLE_RESOURCE begin_console()
+CONSOLE_RESOURCE begin_console(void)
 {
     bool attached = false;
     //HANDLE sdt_output_handle = GetStdHandle(STD_OUTPUT_HANDLE);

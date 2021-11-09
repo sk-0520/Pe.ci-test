@@ -113,7 +113,7 @@ static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
     logger_put_trace(_T("お馬さんパッカパッカ🏇"));
 }
 
-static void end_logging()
+static void end_logging(void)
 {
     logger_put_trace(_T("お魚さんブックブック🐟"));
 
@@ -168,7 +168,7 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 /// 非CRT版スタートアップ。
 /// </summary>
 /// <returns></returns>
-void WINAPI entry_main()
+void WINAPI entry_main(void)
 {
     HINSTANCE hInstance = GetModuleHandle(NULL);
     int return_code = application_main(hInstance);

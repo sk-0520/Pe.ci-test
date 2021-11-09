@@ -85,7 +85,7 @@ typedef enum tag_FILE_OPEN_MODE
 /// 無効ファイルリソースの生成。
 /// </summary>
 /// <returns></returns>
-FILE_RESOURCE create_invalid_file_resource();
+FILE_RESOURCE create_invalid_file_resource(void);
 
 FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE access_mode, FILE_SHARE_MODE shared_mode, FILE_OPEN_MODE open_mode, DWORD attributes);
 #if RES_CHECK

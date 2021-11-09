@@ -36,10 +36,10 @@ void rc__heap_check(void* p, bool allocate, RES_CHECK_FUNC_ARGS);
 void rc__file_check(void* p, const TCHAR* path, bool allocate, RES_CHECK_FUNC_ARGS);
 
 void rc__print(bool leak);
-bool rc__exists_resource_leak();
+bool rc__exists_resource_leak(void);
 
 void rc__initialize(func_rc__output output, size_t path_length, size_t buffer_length, size_t heap_count, size_t file_count);
-void rc__uninitialize();
+void rc__uninitialize(void);
 
 #endif
 

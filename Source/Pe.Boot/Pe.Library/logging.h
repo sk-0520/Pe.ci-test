@@ -99,7 +99,7 @@ void set_default_log_file(FILE_WRITER* file_writer);
 /// </summary>
 /// <param name="log_level"></param>
 void set_default_log_level(LOG_LEVEL log_level);
-void cleanup_default_log();
+void cleanup_default_log(void);
 
 /// <summary>
 /// ロガーを追加。
