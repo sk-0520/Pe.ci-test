@@ -3,6 +3,8 @@
 #include "../Pe.Library/logging.h"
 #include "app_main.h"
 
+#define WITHOUT_CRT
+
 #ifdef RES_CHECK
 static void output(const TCHAR* s)
 {
@@ -151,6 +153,18 @@ static int application_main(HINSTANCE hInstance)
     return return_code;
 }
 
+#ifdef WITHOUT_CRT
+/// <summary>
+/// 非CRT版スタートアップ。
+/// </summary>
+/// <returns></returns>
+void WINAPI entry_main(void)
+{
+    HINSTANCE hInstance = GetModuleHandle(NULL);
+    int return_code = application_main(hInstance);
+    ExitProcess(return_code);
+}
+#else
 /// <summary>
 /// CRT版スタートアップ。
 /// </summary>
@@ -163,15 +177,4 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 {
     return application_main(hInstance);
 }
-
-/// <summary>
-/// 非CRT版スタートアップ。
-/// </summary>
-/// <returns></returns>
-void WINAPI entry_main(void)
-{
-    HINSTANCE hInstance = GetModuleHandle(NULL);
-    int return_code = application_main(hInstance);
-    ExitProcess(return_code);
-}
-
+#endif
