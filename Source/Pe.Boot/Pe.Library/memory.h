@@ -12,11 +12,11 @@ typedef byte_t(*library__func_calc_extend_capacity)(byte_t input_bytes);
 /// メモリ管理データ。
 /// <para>ユーザーコードで各メンバにアクセスすることはない。</para>
 /// </summary>
-typedef struct tag_MEMORY_MANAGER
+typedef struct tag_MEMORY_RESOURCE
 {
     HANDLE hHeap;
     byte_t maximum_size;
-}MEMORY_MANAGER;
+} MEMORY_RESOURCE;
 
 /// <summary>
 /// メモリ管理: 自動初期サイズ。
@@ -28,26 +28,26 @@ typedef struct tag_MEMORY_MANAGER
 #define MEMORY_EXTENDABLE_MAXIMUM_SIZE (0)
 
 /// <summary>
-/// メモリ管理データの生成。
+/// メモリリソースの生成。
 /// </summary>
 /// <param name="initial_size">初期サイズ。</param>
 /// <param name="maximum_size">最大サイズ。</param>
 /// <returns>生成されたメモリ管理データ。解放が必要</returns>
-MEMORY_MANAGER create_memoty_manager(byte_t initial_size, byte_t maximum_size);
+MEMORY_RESOURCE create_memory_resource(byte_t initial_size, byte_t maximum_size);
 
 /// <summary>
-/// メモリ管理データの解放。
+/// メモリリソースの解放。
 /// </summary>
-/// <param name="memory_manager"></param>
+/// <param name="memory_resource"></param>
 /// <returns></returns>
-bool release_memoty_manager(MEMORY_MANAGER* memory_manager);
+bool release_memory_resource(MEMORY_RESOURCE* memory_resource);
 
 /// <summary>
 /// メモリ管理データが有効か。
 /// </summary>
-/// <param name="memory_manager"></param>
+/// <param name="memory_resource"></param>
 /// <returns></returns>
-bool is_enabled_memoty_manager(const MEMORY_MANAGER* memory_manager);
+bool is_enabled_memory_resource(const MEMORY_RESOURCE* memory_resource);
 
 /// <summary>
 /// 指定したサイズ以上のヒープ領域を確保。

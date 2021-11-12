@@ -3,9 +3,9 @@
 #include "common.h"
 #include "memory.h"
 
-MEMORY_MANAGER create_invalid_memoty_manager()
+MEMORY_RESOURCE create_invalid_memory_manager()
 {
-    MEMORY_MANAGER result = {
+    MEMORY_RESOURCE result = {
         .hHeap = NULL,
         .maximum_size = 0,
     };
@@ -13,10 +13,10 @@ MEMORY_MANAGER create_invalid_memoty_manager()
     return result;
 }
 
-MEMORY_MANAGER create_memoty_manager(byte_t initial_size, byte_t maximum_size)
+MEMORY_RESOURCE create_memory_resource(byte_t initial_size, byte_t maximum_size)
 {
     if (initial_size > maximum_size) {
-        return create_invalid_memoty_manager();
+        return create_invalid_memory_manager();
     }
 
     if (maximum_size) {
@@ -26,13 +26,13 @@ MEMORY_MANAGER create_memoty_manager(byte_t initial_size, byte_t maximum_size)
         size_t max_size_limit = 512 * 1024;
 #endif
         if (max_size_limit < maximum_size) {
-            return create_invalid_memoty_manager();
+            return create_invalid_memory_manager();
         }
     }
 
     HANDLE hHeap = HeapCreate(0, initial_size, maximum_size);
 
-    MEMORY_MANAGER result = {
+    MEMORY_RESOURCE result = {
         .hHeap = hHeap,
         .maximum_size = 0,
     };
@@ -40,29 +40,29 @@ MEMORY_MANAGER create_memoty_manager(byte_t initial_size, byte_t maximum_size)
     return result;
 }
 
-bool release_memoty_manager(MEMORY_MANAGER* memory_manager)
+bool release_memory_resource(MEMORY_RESOURCE* memory_resource)
 {
-    if (!is_enabled_memoty_manager(memory_manager)) {
+    if (!is_enabled_memory_resource(memory_resource)) {
         return false;
     }
 
-    bool success = HeapDestroy(memory_manager->hHeap);
+    bool success = HeapDestroy(memory_resource->hHeap);
     if (!success) {
         return false;
     }
 
-    memory_manager->hHeap = NULL;
+    memory_resource->hHeap = NULL;
 
     return true;
 }
 
-bool is_enabled_memoty_manager(const MEMORY_MANAGER* memory_manager)
+bool is_enabled_memory_resource(const MEMORY_RESOURCE* memory_resource)
 {
-    if (!memory_manager) {
+    if (!memory_resource) {
         return false;
     }
 
-    return memory_manager->hHeap;
+    return memory_resource->hHeap;
 }
 
 
