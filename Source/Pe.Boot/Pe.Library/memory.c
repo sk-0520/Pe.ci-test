@@ -3,6 +3,68 @@
 #include "common.h"
 #include "memory.h"
 
+MEMORY_MANAGER create_invalid_memoty_manager()
+{
+    MEMORY_MANAGER result = {
+        .hHeap = NULL,
+        .maximum_size = 0,
+    };
+
+    return result;
+}
+
+MEMORY_MANAGER create_memoty_manager(byte_t initial_size, byte_t maximum_size)
+{
+    if (initial_size > maximum_size) {
+        return create_invalid_memoty_manager();
+    }
+
+    if (maximum_size) {
+#if _WIN64
+        size_t max_size_limit = 1024 * 1024;
+#else
+        size_t max_size_limit = 512 * 1024;
+#endif
+        if (max_size_limit < maximum_size) {
+            return create_invalid_memoty_manager();
+        }
+    }
+
+    HANDLE hHeap = HeapCreate(0, initial_size, maximum_size);
+
+    MEMORY_MANAGER result = {
+        .hHeap = hHeap,
+        .maximum_size = 0,
+    };
+
+    return result;
+}
+
+bool release_memoty_manager(MEMORY_MANAGER* memory_manager)
+{
+    if (!is_enabled_memoty_manager(memory_manager)) {
+        return false;
+    }
+
+    bool success = HeapDestroy(memory_manager->hHeap);
+    if (!success) {
+        return false;
+    }
+
+    memory_manager->hHeap = NULL;
+
+    return true;
+}
+
+bool is_enabled_memoty_manager(const MEMORY_MANAGER* memory_manager)
+{
+    if (!memory_manager) {
+        return false;
+    }
+
+    return memory_manager->hHeap;
+}
+
 
 void* RC_HEAP_FUNC(allocate_memory, byte_t bytes, bool zero_fill)
 {
