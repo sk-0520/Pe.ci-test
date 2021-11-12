@@ -16,7 +16,7 @@ void free_map_value_null(MAP_PAIR* pair)
 MAP RC_HEAP_FUNC(create_map, size_t capacity, func_equals_map_key equals_map_key, func_free_map_value free_map_value)
 {
     MAP map = {
-        .pairs = allocate_memory(capacity * sizeof(MAP_PAIR), false),
+        .pairs = allocate_raw_memory(capacity * sizeof(MAP_PAIR), false),
         .length = 0,
         .library = {
             .capacity = capacity,

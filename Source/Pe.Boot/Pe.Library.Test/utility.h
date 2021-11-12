@@ -141,6 +141,11 @@ private:
         }
     }
 
+    static void output(const TCHAR* message)
+    {
+        Microsoft::VisualStudio::CppUnitTestFramework::Logger::WriteMessage(message);
+    }
+
     void logging(const LOG_ITEM* log_item)
     {
         tstring message(_T("["));
@@ -179,7 +184,7 @@ private:
         message += std::to_wstring(log_item->caller_line);
         message += _T(")");
 
-        Microsoft::VisualStudio::CppUnitTestFramework::Logger::WriteMessage(message.c_str());
+        output(message.c_str());
     }
 
     static void logging(const LOG_ITEM* log_item, void* data)
@@ -187,6 +192,7 @@ private:
         auto _this = (TestImpl*)data;
         _this->logging(log_item);
     }
+
 
 public:
     tstring work_dir_name = tstring(_T("work"));
@@ -197,6 +203,11 @@ public:
     TestImpl(tstring namespace_name)
     {
         test_namespace_name = namespace_name;
+
+#ifdef RES_CHECK
+        rc__initialize(output, RES_CHECK_INIT_PATH_LENGTH, RES_CHECK_INIT_BUFFER_LENGTH, RES_CHECK_INIT_HEAP_COUNT, RES_CHECK_INIT_FILE_COUNT);
+#endif
+
 
         LOGGER logger;
         logger.function = logging;
@@ -230,6 +241,16 @@ public:
         }
 
         logger_put_information(_T("TEST END"));
+
+#ifdef RES_CHECK
+        rc__print(true);
+        auto  exists_resource_leak = rc__exists_resource_leak();
+        rc__uninitialize();
+
+        //#ifdef DEBUG
+        Microsoft::VisualStudio::CppUnitTestFramework::Assert::IsFalse(exists_resource_leak);
+        //#endif
+#endif
     }
 
 

@@ -42,7 +42,7 @@ EXIT_CODE boot_with_option(HINSTANCE hInstance, const COMMAND_LINE_OPTION* comma
         logger_put_information(_T("待機終了"));
     }
 
-    TEXT_LIST args = allocate_clear_memory(command_line_option->count, sizeof(TEXT));
+    TEXT_LIST args = allocate_memory(command_line_option->count, sizeof(TEXT));
     size_t arg_count = filter_enable_command_line_items(args, command_line_option);
 
     TEXT argument = to_command_line_argument(args, arg_count);

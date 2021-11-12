@@ -27,7 +27,7 @@ TCHAR* RC_HEAP_FUNC(clone_string, const TCHAR* source)
 
     size_t length = get_string_length(source);
     size_t bytes = (length * sizeof(TCHAR)) + sizeof(TCHAR);
-    TCHAR* result = (TCHAR*)RC_HEAP_CALL(allocate_memory, bytes, false);
+    TCHAR* result = (TCHAR*)RC_HEAP_CALL(allocate_raw_memory, bytes, false);
     copy_memory(result, (void*)source, length * sizeof(TCHAR));
     result[length] = 0;
 
@@ -46,7 +46,7 @@ TCHAR* RC_HEAP_FUNC(clone_string_with_length, const TCHAR* source, size_t length
 TCHAR* RC_HEAP_FUNC(allocate_string, size_t length)
 {
     size_t bytes = sizeof(TCHAR) * length + sizeof(TCHAR);
-    TCHAR* result = RC_HEAP_CALL(allocate_memory, bytes, true);
+    TCHAR* result = RC_HEAP_CALL(allocate_raw_memory, bytes, true);
     return result;
 }
 

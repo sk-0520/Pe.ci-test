@@ -3,7 +3,12 @@
 #include "common.h"
 #include "memory.h"
 
-MEMORY_RESOURCE create_invalid_memory_manager()
+static MEMORY_RESOURCE library__default_memory_resource = {
+    .hHeap = NULL,
+    .maximum_size = 0,
+};
+
+MEMORY_RESOURCE create_invalid_memory_resource()
 {
     MEMORY_RESOURCE result = {
         .hHeap = NULL,
@@ -16,7 +21,7 @@ MEMORY_RESOURCE create_invalid_memory_manager()
 MEMORY_RESOURCE create_memory_resource(byte_t initial_size, byte_t maximum_size)
 {
     if (initial_size > maximum_size) {
-        return create_invalid_memory_manager();
+        return create_invalid_memory_resource();
     }
 
     if (maximum_size) {
@@ -26,7 +31,7 @@ MEMORY_RESOURCE create_memory_resource(byte_t initial_size, byte_t maximum_size)
         size_t max_size_limit = 512 * 1024;
 #endif
         if (max_size_limit < maximum_size) {
-            return create_invalid_memory_manager();
+            return create_invalid_memory_resource();
         }
     }
 
@@ -65,15 +70,27 @@ bool is_enabled_memory_resource(const MEMORY_RESOURCE* memory_resource)
     return memory_resource->hHeap;
 }
 
-
-void* RC_HEAP_FUNC(allocate_memory, byte_t bytes, bool zero_fill)
+void* allocate_raw_memory_from_memory_resource(byte_t bytes, bool zero_fill, const MEMORY_RESOURCE* memory_resource)
 {
-    HANDLE hHeap = GetProcessHeap();
-    if (!hHeap) {
+    if (!is_enabled_memory_resource(memory_resource)) {
         return NULL;
     }
 
-    void* heap = HeapAlloc(hHeap, zero_fill ? HEAP_ZERO_MEMORY : 0, bytes);
+    void* heap = HeapAlloc(memory_resource->hHeap, zero_fill ? HEAP_ZERO_MEMORY : 0, bytes);
+    if (!heap) {
+        return NULL;
+    }
+
+    return heap;
+}
+
+void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill)
+{
+    if (!library__default_memory_resource.hHeap) {
+        library__default_memory_resource.hHeap = GetProcessHeap();
+    }
+
+    void* heap = allocate_raw_memory_from_memory_resource(bytes, zero_fill, &library__default_memory_resource);
     if (!heap) {
         return NULL;
     }
@@ -85,9 +102,14 @@ void* RC_HEAP_FUNC(allocate_memory, byte_t bytes, bool zero_fill)
     return heap;
 }
 
-void* RC_HEAP_FUNC(allocate_clear_memory, size_t count, size_t type_size)
+void* allocate_memory_from_memory_resource(size_t count, byte_t type_size, const MEMORY_RESOURCE* memory_resource)
 {
-    return RC_HEAP_CALL(allocate_memory, count * type_size, true);
+    return allocate_raw_memory_from_memory_resource(count * type_size, true, memory_resource);
+}
+
+void* RC_HEAP_FUNC(allocate_memory, size_t count, byte_t type_size)
+{
+    return RC_HEAP_CALL(allocate_raw_memory, count * type_size, true);
 }
 
 bool RC_HEAP_FUNC(free_memory, void* p)
@@ -136,7 +158,7 @@ byte_t library__extend_capacity_if_not_enough_bytes(void** target, byte_t curren
         new_capacity_bytes = calc_extend_capacity(new_capacity_bytes);
     } while (new_capacity_bytes < need_total_bytes);
 
-    void* new_buffer = allocate_memory(new_capacity_bytes, false);
+    void* new_buffer = allocate_raw_memory(new_capacity_bytes, false);
     void* old_buffer = *target;
 
     copy_memory(new_buffer, old_buffer, new_capacity_bytes);

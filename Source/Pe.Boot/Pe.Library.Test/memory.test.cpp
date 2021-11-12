@@ -15,12 +15,12 @@ namespace PeLibraryTest
         TEST_METHOD(allocate_test)
         {
             size_t len = 16;
-            auto p1 = (unsigned char*)allocate_memory(len, false);
+            auto p1 = (unsigned char*)allocate_raw_memory(len, false);
             for (size_t i = 0; i < len; i++) {
                 p1[i] = (unsigned char)i;
             }
 
-            auto p2 = (unsigned char*)allocate_memory(len, true);
+            auto p2 = (unsigned char*)allocate_raw_memory(len, true);
             for (size_t i = 0; i < len; i++) {
                 unsigned char c = p2[i];
                 Assert::IsFalse(c);
@@ -38,7 +38,7 @@ namespace PeLibraryTest
         TEST_METHOD(library__extend_capacity_if_not_enough_bytes_x2_test)
         {
             const byte_t default_cap = 2;
-            void* p1 = allocate_memory(8, false);
+            void* p1 = allocate_raw_memory(8, false);
 
             void* old_p1 = p1;
 

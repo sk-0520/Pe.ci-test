@@ -64,7 +64,7 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
         // 先頭のマークを外した引数取得
         TEXT arg = wrap_text_with_length(current->value + mark_text->length, (size_t)current->length - mark_text->length, false);
 
-        COMMAND_LINE_ITEM* item = allocate_clear_memory(1, sizeof(COMMAND_LINE_ITEM));
+        COMMAND_LINE_ITEM* item = allocate_memory(1, sizeof(COMMAND_LINE_ITEM));
         item->key_index = i;
 
         TEXT key;
@@ -129,7 +129,7 @@ COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, b
     TCHAR** argv = CommandLineToArgvW(command_line->value, &temp_argc);
     size_t argc = (size_t)temp_argc;
 
-    TEXT* arguments = allocate_memory(argc * sizeof(TEXT), false);
+    TEXT* arguments = allocate_raw_memory(argc * sizeof(TEXT), false);
     for (size_t i = 0; i < argc; i++) {
         TCHAR* arg = argv[i];
         arguments[i] = wrap_text(arg);
@@ -221,7 +221,7 @@ TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count)
 
     size_t total_length = count - 1; // スペース分
 
-    bool* hasSpaceList = allocate_clear_memory(count, sizeof(bool));
+    bool* hasSpaceList = allocate_memory(count, sizeof(bool));
 
     for (size_t i = 0; i < count; i++) {
         const TEXT* argument = &arguments[i];

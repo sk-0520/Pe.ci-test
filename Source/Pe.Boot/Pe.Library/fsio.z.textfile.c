@@ -114,7 +114,7 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
     size_t file_length = (size_t)file_size.plain;
 
     size_t total_read_length = 0;
-    uint8_t* buffer = RC_HEAP_CALL(allocate_memory, file_length, false);
+    uint8_t* buffer = RC_HEAP_CALL(allocate_raw_memory, file_length, false);
     uint8_t read_buffer[FILE_READER_BUFFER_SIZE];
 
     seek_begin_file_resource(&file_reader->resource);

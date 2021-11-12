@@ -91,9 +91,9 @@ WRITE_RESULT write_primitive_boolean(func_string_writer writer, void* receiver, 
 static TCHAR* allocate_number(bool isHex, size_t width)
 {
     if (isHex) {
-        return allocate_clear_memory(sizeof(size_t) * 2 + 2 + width, sizeof(TCHAR));
+        return allocate_memory(sizeof(size_t) * 2 + 2 + width, sizeof(TCHAR));
     } else {
-        return allocate_clear_memory(sizeof(size_t) * 8 + 1 + width + ((sizeof(size_t) * 8) / 3), sizeof(TCHAR));
+        return allocate_memory(sizeof(size_t) * 8 + 1 + width + ((sizeof(size_t) * 8) / 3), sizeof(TCHAR));
     }
 }
 
@@ -331,7 +331,7 @@ WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, siz
 WRITE_RESULT write_primitive_character(func_string_writer writer, void* receiver, TCHAR character, WRITE_ALIGN write_align, size_t width)
 {
     size_t buffer_length = width ? width : 1;
-    TCHAR* buffer = allocate_clear_memory(buffer_length, sizeof(TCHAR));
+    TCHAR* buffer = allocate_memory(buffer_length, sizeof(TCHAR));
     buffer[0] = character;
 
     size_t fill_buffer_length = set_sign_and_fill(buffer, 1, buffer_length, 1, false, false, WRITE_PADDING_SPACE, write_align);

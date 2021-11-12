@@ -53,7 +53,7 @@ static byte_t get_type_bytes(PRIMITIVE_LIST_TYPE list_type, size_t length)
 PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity)
 {
     size_t capacity_bytes = get_type_bytes(list_type, capacity);
-    void* items = RC_HEAP_CALL(allocate_memory, capacity_bytes, false);
+    void* items = RC_HEAP_CALL(allocate_raw_memory, capacity_bytes, false);
 
     PRIMITIVE_LIST result = {
         .items = items,

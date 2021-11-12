@@ -18,7 +18,7 @@ OBJECT_LIST RC_HEAP_FUNC(create_object_list, byte_t item_size, size_t capacity_c
 
     OBJECT_LIST result = {
         .length = 0,
-        .items = RC_HEAP_CALL(allocate_memory, capacity_count * item_size, false),
+        .items = RC_HEAP_CALL(allocate_raw_memory, capacity_count * item_size, false),
         .library = {
             .item_size = item_size,
             .capacity = capacity_count + item_size,
