@@ -192,7 +192,7 @@ bool RC_HEAP_FUNC(free_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* m
         return false;
     }
 
-    bool result = RC_HEAP_CALL(free_memory, mbcr->buffer);
+    bool result = RC_HEAP_CALL(free_memory, mbcr->buffer, DEFAULT_MEMORY);
 
     mbcr->buffer = NULL;
     mbcr->length = 0;

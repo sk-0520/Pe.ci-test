@@ -50,7 +50,7 @@ EXIT_CODE boot_with_option(HINSTANCE hInstance, const COMMAND_LINE_OPTION* comma
 
     EXIT_CODE result = boot_core(hInstance, &argument);
     free_text(&argument);
-    free_memory(args);
+    free_memory(args, DEFAULT_MEMORY);
 
     return result;
 }

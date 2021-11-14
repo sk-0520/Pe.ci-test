@@ -83,22 +83,13 @@ void* RC_HEAP_FUNC(allocate_memory, size_t count, byte_t type_size, const MEMORY
 #endif
 
 /// <summary>
-/// メモリリソースから確保した領域を解放。
-/// <para><c>RES_CHECK</c>検知対象外。</para>
-/// </summary>
-/// <param name="p"></param>
-/// <param name="memory_resource"></param>
-/// <returns></returns>
-bool release_memory_from_memory_resource(void* p, const MEMORY_RESOURCE* memory_resource);
-
-/// <summary>
 /// 確保した領域を解放。
 /// </summary>
 /// <param name="p"></param>
 /// <returns></returns>
-bool RC_HEAP_FUNC(free_memory, void* p);
+bool RC_HEAP_FUNC(free_memory, void* p, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK
-#   define free_memory(p) RC_HEAP_WRAP(free_memory, p)
+#   define free_memory(p, memory_resource) RC_HEAP_WRAP(free_memory, p, memory_resource)
 #endif
 
 

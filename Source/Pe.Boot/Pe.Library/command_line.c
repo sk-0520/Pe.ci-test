@@ -11,7 +11,7 @@ static bool equals_command_line_item_key(const TEXT* a, const TEXT* b)
 static void free_command_line_item_core(COMMAND_LINE_ITEM* item)
 {
     free_text(&item->value);
-    free_memory(item);
+    free_memory(item, DEFAULT_MEMORY);
 }
 
 static void free_command_line_item_value(MAP_PAIR* pair)
@@ -176,7 +176,7 @@ bool RC_HEAP_FUNC(free_command_line, COMMAND_LINE_OPTION* command_line_option)
 
     free_map(&command_line_option->library.map);
 
-    RC_HEAP_CALL(free_memory, command_line_option->library.raw_arguments);
+    RC_HEAP_CALL(free_memory, command_line_option->library.raw_arguments, DEFAULT_MEMORY);
     command_line_option->library.raw_arguments = NULL;
 
     LocalFree((HLOCAL)command_line_option->library.argv);
@@ -265,7 +265,7 @@ TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count)
     }
     buffer[position] = 0;
 
-    free_memory(hasSpaceList);
+    free_memory(hasSpaceList, DEFAULT_MEMORY);
 
     return wrap_text_with_length(buffer, position, true);
 }

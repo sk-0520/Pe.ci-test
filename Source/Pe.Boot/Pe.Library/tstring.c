@@ -52,7 +52,7 @@ TCHAR* RC_HEAP_FUNC(allocate_string, size_t length)
 
 void RC_HEAP_FUNC(free_string, const TCHAR* s)
 {
-    RC_HEAP_CALL(free_memory, (void*)s);
+    RC_HEAP_CALL(free_memory, (void*)s, DEFAULT_MEMORY);
 }
 
 

@@ -122,7 +122,7 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
     do {
         ssize_t read_length = read_file_resource(&file_reader->resource, read_buffer, sizeof(read_buffer));
         if (read_length < 0) {
-            RC_HEAP_CALL(free_memory, buffer);
+            RC_HEAP_CALL(free_memory, buffer, DEFAULT_MEMORY);
             return create_invalid_text();
         }
         if (read_length) {
@@ -149,7 +149,7 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
         case FILE_ENCODING_UTF8:
         {
             TEXT text = RC_HEAP_CALL(make_text_from_multibyte, conv_buffer, conv_buffer_length, MULTI_BYTE_CHARACTER_TYPE_UTF8);
-            free_memory(buffer);
+            free_memory(buffer, DEFAULT_MEMORY);
             return text;
         }
 

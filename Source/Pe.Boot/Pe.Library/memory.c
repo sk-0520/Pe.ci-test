@@ -1,6 +1,7 @@
 ﻿#include <windows.h>
 
 #include "common.h"
+#include "debug.h"
 #include "memory.h"
 
 static MEMORY_RESOURCE library__default_memory_resource = {
@@ -16,6 +17,25 @@ static MEMORY_RESOURCE create_invalid_memory_resource()
     };
 
     return result;
+}
+
+/// <summary>
+/// メモリリソースがライブラリ管理の通常使用かどうかを判断。
+/// </summary>
+/// <param name="memory_resource"></param>
+/// <returns></returns>
+static bool is_default_memory_resource(const MEMORY_RESOURCE* memory_resource)
+{
+    assert(memory_resource);
+
+    if (memory_resource == &library__default_memory_resource) {
+        return true;
+    }
+    if (memory_resource->hHeap == library__default_memory_resource.hHeap) {
+        return true;
+    }
+
+    return false;
 }
 
 MEMORY_RESOURCE* get_default_memory_resource()
@@ -91,7 +111,9 @@ void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill, const MEMO
     }
 
 #ifdef RES_CHECK
-    rc__heap_check(heap, true, RES_CHECK_CALL_ARGS);
+    if (is_default_memory_resource(memory_resource)) {
+        rc__heap_check(heap, true, RES_CHECK_CALL_ARGS);
+    }
 #endif
 
     return heap;
@@ -102,26 +124,24 @@ void* RC_HEAP_FUNC(allocate_memory, size_t count, byte_t type_size, const MEMORY
     return RC_HEAP_CALL(allocate_raw_memory, count * type_size, true, memory_resource);
 }
 
-bool release_memory_from_memory_resource(void* p, const MEMORY_RESOURCE* memory_resource)
+bool RC_HEAP_FUNC(free_memory, void* p, const MEMORY_RESOURCE* memory_resource)
 {
     if (!p) {
         return false;
     }
 
-    return HeapFree(memory_resource->hHeap, 0, p);
-}
-
-bool RC_HEAP_FUNC(free_memory, void* p)
-{
-    //initialize_default_memory_resource_if_uninitialized();
-
-    bool result = release_memory_from_memory_resource(p, &library__default_memory_resource);
+    bool result = HeapFree(memory_resource->hHeap, 0, p);
     if (!result) {
         return false;
     }
 
 #ifdef RES_CHECK
-    rc__heap_check(p, false, RES_CHECK_CALL_ARGS);
+    if (is_default_memory_resource(memory_resource)) {
+#pragma warning(push)
+#pragma warning(disable:6001)
+        rc__heap_check(p, false, RES_CHECK_CALL_ARGS);
+#pragma warning(pop)
+    }
 #endif
 
     return result;
@@ -161,11 +181,11 @@ byte_t library__extend_capacity_if_not_enough_bytes(void** target, byte_t curren
         new_capacity_bytes = calc_extend_capacity(new_capacity_bytes);
     } while (new_capacity_bytes < need_total_bytes);
 
-    void* new_buffer = allocate_raw_memory(new_capacity_bytes, false, DEFAULT_MEMORY);
+    void* new_buffer = allocate_raw_memory(new_capacity_bytes, false, memory_resource);
     void* old_buffer = *target;
 
     copy_memory(new_buffer, old_buffer, new_capacity_bytes);
-    free_memory(old_buffer);
+    free_memory(old_buffer, memory_resource);
 
     *target = new_buffer;
 

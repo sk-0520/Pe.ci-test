@@ -54,7 +54,7 @@ bool RC_HEAP_FUNC(free_map, MAP* map)
         free_map_pair(map, pair);
     }
 
-    RC_HEAP_CALL(free_memory, map->pairs);
+    RC_HEAP_CALL(free_memory, map->pairs, DEFAULT_MEMORY);
     map->pairs = NULL;
     map->length = 0;
     map->library.capacity = 0;

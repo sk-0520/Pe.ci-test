@@ -47,7 +47,7 @@ bool RC_HEAP_FUNC(free_object_list, OBJECT_LIST* object_list)
         free_object_list_item(object_list, object_list->items + (i * object_list->library.item_size));
     }
 
-    RC_HEAP_CALL(free_memory, object_list->items);
+    RC_HEAP_CALL(free_memory, object_list->items, DEFAULT_MEMORY);
 
     object_list->items = NULL;
     object_list->length = 0;
