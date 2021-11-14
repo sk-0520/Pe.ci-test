@@ -14,7 +14,7 @@ namespace PeLibraryTest
     public:
         TEST_METHOD(life_int_test)
         {
-            OBJECT_LIST list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null, DEFAULT_MEMORY);
 
             int input_1 = 100;
             int* result_1 = (int*)push_object_list(&list, &input_1);
@@ -83,7 +83,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(foreach_object_list_func_test)
         {
-            OBJECT_LIST list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null, DEFAULT_MEMORY);
 
             int inputs[] = {
                 1,
@@ -92,7 +92,7 @@ namespace PeLibraryTest
                 4,
             };
 
-            OBJECT_LIST data_list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST data_list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null, DEFAULT_MEMORY);
 
             add_range_object_list(&list, inputs, sizeof(inputs) / sizeof(inputs[0]));
             size_t count = foreach_object_list(&list, foreach_object_list_func, &data_list);
@@ -124,7 +124,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(foreach_object_list_skip_test)
         {
-            OBJECT_LIST list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null, DEFAULT_MEMORY);
 
             int inputs[] = {
                 1,
@@ -133,7 +133,7 @@ namespace PeLibraryTest
                 4,
             };
 
-            OBJECT_LIST data_list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST data_list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null, DEFAULT_MEMORY);
 
             add_range_object_list(&list, inputs, sizeof(inputs) / sizeof(inputs[0]));
             size_t count = foreach_object_list(&list, foreach_object_list_skip, &data_list);
@@ -154,7 +154,7 @@ namespace PeLibraryTest
                 4,
             };
 
-            OBJECT_LIST list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null, DEFAULT_MEMORY);
 
             add_range_object_list(&list, inputs, sizeof(inputs) / sizeof(inputs[0]));
 
@@ -176,7 +176,7 @@ namespace PeLibraryTest
                 4,
             };
 
-            OBJECT_LIST list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null, DEFAULT_MEMORY);
 
             add_range_object_list(&list, inputs, sizeof(inputs) / sizeof(inputs[0]));
 

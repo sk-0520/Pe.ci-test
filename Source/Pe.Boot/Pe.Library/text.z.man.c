@@ -182,11 +182,11 @@ static void free_object_list_value_text(void* target)
 OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function, const MEMORY_RESOURCE* memory_resource)
 {
     if (!text) {
-        OBJECT_LIST none = RC_HEAP_CALL(create_object_list, sizeof(TEXT), 2, compare_object_list_value_text, free_object_list_value_text);
+        OBJECT_LIST none = RC_HEAP_CALL(new_object_list, sizeof(TEXT), 2, compare_object_list_value_text, free_object_list_value_text, memory_resource);
         return none;
     }
 
-    OBJECT_LIST result = RC_HEAP_CALL(create_object_list, sizeof(TEXT), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_text, free_object_list_value_text);
+    OBJECT_LIST result = RC_HEAP_CALL(new_object_list, sizeof(TEXT), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_text, free_object_list_value_text, memory_resource);
 
     TEXT source = *text;
     size_t prev_index = 0;

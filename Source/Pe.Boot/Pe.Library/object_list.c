@@ -12,7 +12,7 @@ void free_object_list_value_null(void* value)
 {
 }
 
-OBJECT_LIST RC_HEAP_FUNC(create_object_list, byte_t item_size, size_t capacity_count, func_compare_object_list_value compare_object_list_value, func_free_object_list_value free_object_list_value)
+OBJECT_LIST RC_HEAP_FUNC(new_object_list, byte_t item_size, size_t capacity_count, func_compare_object_list_value compare_object_list_value, func_free_object_list_value free_object_list_value, const MEMORY_RESOURCE* memory_resource)
 {
     assert(item_size);
 
@@ -20,6 +20,7 @@ OBJECT_LIST RC_HEAP_FUNC(create_object_list, byte_t item_size, size_t capacity_c
         .length = 0,
         .items = RC_HEAP_CALL(allocate_raw_memory, capacity_count * item_size, false, DEFAULT_MEMORY),
         .library = {
+            .memory_resource = memory_resource,
             .item_size = item_size,
             .capacity = capacity_count + item_size,
             .compare_object_list_value = compare_object_list_value,
