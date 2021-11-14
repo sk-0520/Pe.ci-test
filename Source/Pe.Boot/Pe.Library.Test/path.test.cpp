@@ -23,7 +23,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT arg1 = std::get<0>(test.inputs);
 
-                TEXT actual = get_parent_directory_path(&arg1);
+                TEXT actual = get_parent_directory_path(&arg1, DEFAULT_MEMORY);
                 Assert::AreEqual(test.expected.value, actual.value);
 
                 free_text(&actual);
@@ -41,7 +41,7 @@ namespace PeLibraryTest
                 TEXT arg1 = std::get<0>(test.inputs);
                 TEXT arg2 = std::get<1>(test.inputs);
 
-                TEXT actual = combine_path(&arg1, &arg2);
+                TEXT actual = combine_path(&arg1, &arg2, DEFAULT_MEMORY);
                 Assert::AreEqual(test.expected.value, actual.value);
 
                 free_text(&actual);
@@ -61,7 +61,7 @@ namespace PeLibraryTest
             };
             TEXT expected = wrap("C:\\dir1\\dir2+");
 
-            TEXT actual = join_path(&input1, input2, sizeof(input2) / sizeof(input2[0]));
+            TEXT actual = join_path(&input1, input2, sizeof(input2) / sizeof(input2[0]), DEFAULT_MEMORY);
             Assert::AreEqual(expected.value, actual.value);
 
             free_text(&actual);
@@ -71,7 +71,7 @@ namespace PeLibraryTest
         {
             TEXT input = wrap("C:\\dir\\file\\..\\x\\.\\file2");
             TCHAR expected[] = _T("C:\\dir\\x\\file2");
-            TEXT actual = canonicalize_path(&input);
+            TEXT actual = canonicalize_path(&input, DEFAULT_MEMORY);
 
             Assert::AreEqual(expected, actual.value);
 

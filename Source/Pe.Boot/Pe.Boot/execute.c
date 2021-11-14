@@ -16,7 +16,7 @@ void add_visual_cpp_runtime_redist_env_path(const TEXT* root_directory_path)
 #endif
     };
 
-    TEXT crt_path = join_path(root_directory_path, dirs, SIZEOF_ARRAY(dirs));
+    TEXT crt_path = join_path(root_directory_path, dirs, SIZEOF_ARRAY(dirs), DEFAULT_MEMORY);
     logger_put_debug(crt_path.value);
 
     TEXT env_path_key = wrap_text(_T("PATH"));
