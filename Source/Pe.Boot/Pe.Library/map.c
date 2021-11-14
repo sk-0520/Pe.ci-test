@@ -16,7 +16,7 @@ void free_map_value_null(MAP_PAIR* pair)
 MAP RC_HEAP_FUNC(create_map, size_t capacity, func_equals_map_key equals_map_key, func_free_map_value free_map_value)
 {
     MAP map = {
-        .pairs = allocate_raw_memory(capacity * sizeof(MAP_PAIR), false),
+        .pairs = allocate_raw_memory(capacity * sizeof(MAP_PAIR), false, DEFAULT_MEMORY),
         .length = 0,
         .library = {
             .capacity = capacity,
@@ -68,7 +68,7 @@ static void extend_capacity_if_not_enough_map(MAP* map, size_t need_length)
     byte_t current_bytes = map->length * sizeof(MAP_PAIR);
     byte_t default_capacity_bytes = MAP_DEFAULT_CAPACITY * sizeof(MAP_PAIR);
 
-    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&map->pairs, current_bytes, map->library.capacity * sizeof(MAP_PAIR), need_bytes, default_capacity_bytes);
+    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&map->pairs, current_bytes, map->library.capacity * sizeof(MAP_PAIR), need_bytes, default_capacity_bytes, DEFAULT_MEMORY);
     if (extend_total_byte) {
         map->library.capacity = extend_total_byte / sizeof(MAP_PAIR);
     }

@@ -158,7 +158,7 @@ MULTIBYTE_CHARACTER_RESULT RC_HEAP_FUNC(convert_to_multibyte_character, const TE
         return error;
     }
 
-    uint8_t* buffer = RC_HEAP_CALL(allocate_raw_memory, mc_length1 * sizeof(uint8_t) + sizeof(uint8_t), true);
+    uint8_t* buffer = RC_HEAP_CALL(allocate_raw_memory, mc_length1 * sizeof(uint8_t) + sizeof(uint8_t), true, DEFAULT_MEMORY);
     int mc_length2 = WideCharToMultiByte(mbc_type, flags, input->value, (int)input->length, (LPSTR)buffer, mc_length1, &default_char, NULL);
     if (!mc_length2) {
         MULTIBYTE_CHARACTER_RESULT error = {

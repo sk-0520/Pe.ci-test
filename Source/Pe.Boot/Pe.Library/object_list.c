@@ -18,7 +18,7 @@ OBJECT_LIST RC_HEAP_FUNC(create_object_list, byte_t item_size, size_t capacity_c
 
     OBJECT_LIST result = {
         .length = 0,
-        .items = RC_HEAP_CALL(allocate_raw_memory, capacity_count * item_size, false),
+        .items = RC_HEAP_CALL(allocate_raw_memory, capacity_count * item_size, false, DEFAULT_MEMORY),
         .library = {
             .item_size = item_size,
             .capacity = capacity_count + item_size,
@@ -63,7 +63,7 @@ static void extend_capacity_if_not_enough_object_list(OBJECT_LIST* object_list, 
     byte_t current_bytes = object_list->length * object_list->library.item_size;
     byte_t default_capacity_bytes = OBJECT_LIST_DEFAULT_CAPACITY_COUNT * object_list->library.item_size;
 
-    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&object_list->items, current_bytes, object_list->library.capacity * object_list->library.item_size, need_bytes, default_capacity_bytes);
+    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&object_list->items, current_bytes, object_list->library.capacity * object_list->library.item_size, need_bytes, default_capacity_bytes, DEFAULT_MEMORY);
     if (extend_total_byte) {
         object_list->library.capacity = extend_total_byte / object_list->library.item_size;
     }

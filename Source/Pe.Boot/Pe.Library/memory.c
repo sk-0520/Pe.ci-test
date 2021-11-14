@@ -79,25 +79,13 @@ bool is_enabled_memory_resource(const MEMORY_RESOURCE* memory_resource)
     return memory_resource->hHeap;
 }
 
-void* allocate_raw_memory_from_memory_resource(byte_t bytes, bool zero_fill, const MEMORY_RESOURCE* memory_resource)
+void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill, const MEMORY_RESOURCE* memory_resource)
 {
     if (!is_enabled_memory_resource(memory_resource)) {
         return NULL;
     }
 
     void* heap = HeapAlloc(memory_resource->hHeap, zero_fill ? HEAP_ZERO_MEMORY : 0, bytes);
-    if (!heap) {
-        return NULL;
-    }
-
-    return heap;
-}
-
-void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill)
-{
-    initialize_default_memory_resource_if_uninitialized();
-
-    void* heap = allocate_raw_memory_from_memory_resource(bytes, zero_fill, &library__default_memory_resource);
     if (!heap) {
         return NULL;
     }
@@ -109,14 +97,9 @@ void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill)
     return heap;
 }
 
-void* allocate_memory_from_memory_resource(size_t count, byte_t type_size, const MEMORY_RESOURCE* memory_resource)
+void* RC_HEAP_FUNC(allocate_memory, size_t count, byte_t type_size, const MEMORY_RESOURCE* memory_resource)
 {
-    return allocate_raw_memory_from_memory_resource(count * type_size, true, memory_resource);
-}
-
-void* RC_HEAP_FUNC(allocate_memory, size_t count, byte_t type_size)
-{
-    return RC_HEAP_CALL(allocate_raw_memory, count * type_size, true);
+    return RC_HEAP_CALL(allocate_raw_memory, count * type_size, true, memory_resource);
 }
 
 bool release_memory_from_memory_resource(void* p, const MEMORY_RESOURCE* memory_resource)
@@ -164,7 +147,7 @@ int compare_memory(const void* a, const void* b, byte_t bytes)
     return memcmp(a, b, bytes);
 }
 
-byte_t library__extend_capacity_if_not_enough_bytes_from_memory_resource(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, func_calc_extend_capacity calc_extend_capacity, const MEMORY_RESOURCE* memory_resource)
+byte_t library__extend_capacity_if_not_enough_bytes(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, func_calc_extend_capacity calc_extend_capacity, const MEMORY_RESOURCE* memory_resource)
 {
     // まだ大丈夫なら何もしない
     byte_t need_total_bytes = current_bytes + need_bytes;
@@ -178,7 +161,7 @@ byte_t library__extend_capacity_if_not_enough_bytes_from_memory_resource(void** 
         new_capacity_bytes = calc_extend_capacity(new_capacity_bytes);
     } while (new_capacity_bytes < need_total_bytes);
 
-    void* new_buffer = allocate_raw_memory(new_capacity_bytes, false);
+    void* new_buffer = allocate_raw_memory(new_capacity_bytes, false, DEFAULT_MEMORY);
     void* old_buffer = *target;
 
     copy_memory(new_buffer, old_buffer, new_capacity_bytes);
@@ -190,27 +173,12 @@ byte_t library__extend_capacity_if_not_enough_bytes_from_memory_resource(void** 
     return new_capacity_bytes;
 }
 
-byte_t library__extend_capacity_if_not_enough_bytes(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, func_calc_extend_capacity calc_extend_capacity)
-{
-    initialize_default_memory_resource_if_uninitialized();
-
-    return library__extend_capacity_if_not_enough_bytes_from_memory_resource(target, current_bytes, current_capacity_bytes, need_bytes, default_capacity_bytes, calc_extend_capacity, &library__default_memory_resource);
-}
-
-
 static byte_t extend_x2(byte_t input_bytes)
 {
     return input_bytes * 2;
 }
 
-byte_t library__extend_capacity_if_not_enough_bytes_x2_from_memory_resource(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, const MEMORY_RESOURCE* memory_resource)
+byte_t library__extend_capacity_if_not_enough_bytes_x2(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, const MEMORY_RESOURCE* memory_resource)
 {
-    return library__extend_capacity_if_not_enough_bytes_from_memory_resource(target, current_bytes, current_capacity_bytes, need_bytes, default_capacity_bytes, extend_x2, memory_resource);
-}
-
-byte_t library__extend_capacity_if_not_enough_bytes_x2(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes)
-{
-    initialize_default_memory_resource_if_uninitialized();
-
-    return library__extend_capacity_if_not_enough_bytes_from_memory_resource(target, current_bytes, current_capacity_bytes, need_bytes, default_capacity_bytes, extend_x2, &library__default_memory_resource);
+    return library__extend_capacity_if_not_enough_bytes(target, current_bytes, current_capacity_bytes, need_bytes, default_capacity_bytes, extend_x2, memory_resource);
 }
