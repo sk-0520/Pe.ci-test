@@ -668,7 +668,7 @@ bool write_vformat(func_string_writer string_writer, func_character_writer chara
                 continue;
             }
             size_t current_length = status.current_index - status.begin_index;
-            TEXT current_format = wrap_text_with_length(format->value + status.begin_index + 1, current_length, false);
+            TEXT current_format = wrap_text_with_length(format->value + status.begin_index + 1, current_length, false, NULL);
 
             WRITE_RESULT write_result = write_format_value(string_writer, character_writer, receiver, format_kind, &current_format, &ap);
             if (write_result.error == WRITE_ERROR_KIND_NONE) {

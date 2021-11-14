@@ -23,7 +23,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 TEXT& arg2 = std::get<1>(test.inputs);
-                TEXT actual = add_text(&arg1, &arg2);
+                TEXT actual = add_text(&arg1, &arg2, DEFAULT_MEMORY);
                 Assert::AreEqual(test.expected, actual.value);
                 free_text(&actual);
             }
@@ -34,13 +34,13 @@ namespace PeLibraryTest
             TEXT a = wrap("");
             TEXT b = create_invalid_text();
 
-            TEXT actual_ab = add_text(&a, &b);
+            TEXT actual_ab = add_text(&a, &b, DEFAULT_MEMORY);
             Assert::IsTrue(is_enabled_text(&actual_ab));
 
-            TEXT actual_ba = add_text(&b, &a);
+            TEXT actual_ba = add_text(&b, &a, DEFAULT_MEMORY);
             Assert::IsTrue(is_enabled_text(&actual_ba));
 
-            TEXT actual_bb = add_text(&b, &b);
+            TEXT actual_bb = add_text(&b, &b, DEFAULT_MEMORY);
             Assert::IsFalse(is_enabled_text(&actual_bb));
 
             free_text(&actual_ab);
@@ -57,7 +57,7 @@ namespace PeLibraryTest
                 wrap("3"),
             };
             TEXT sep1 = wrap(",");
-            TEXT actual1 = join_text(&sep1, input1, SIZEOF_ARRAY(input1), IGNORE_EMPTY_NONE);
+            TEXT actual1 = join_text(&sep1, input1, SIZEOF_ARRAY(input1), IGNORE_EMPTY_NONE, DEFAULT_MEMORY);
             Assert::AreEqual(expected1, actual1.value);
             free_text(&actual1);
 
@@ -72,7 +72,7 @@ namespace PeLibraryTest
                 wrap(""),
             };
             TEXT sep2 = wrap("");
-            TEXT actual2 = join_text(&sep2, input2, SIZEOF_ARRAY(input2), IGNORE_EMPTY_NONE);
+            TEXT actual2 = join_text(&sep2, input2, SIZEOF_ARRAY(input2), IGNORE_EMPTY_NONE, DEFAULT_MEMORY);
             Assert::AreEqual(expected2, actual2.value);
             free_text(&actual2);
 
@@ -90,15 +90,15 @@ namespace PeLibraryTest
                 wrap(""),
             };
             TEXT sep3 = wrap(",");
-            TEXT actual3_1 = join_text(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_NONE);
+            TEXT actual3_1 = join_text(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_NONE, DEFAULT_MEMORY);
             Assert::AreEqual(expected3_1, actual3_1.value);
             free_text(&actual3_1);
 
-            TEXT actual3_2 = join_text(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_ONLY);
+            TEXT actual3_2 = join_text(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_ONLY, DEFAULT_MEMORY);
             Assert::AreEqual(expected3_2, actual3_2.value);
             free_text(&actual3_2);
 
-            TEXT actual3_3 = join_text(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_WHITESPACE);
+            TEXT actual3_3 = join_text(&sep3, input3, SIZEOF_ARRAY(input3), IGNORE_EMPTY_WHITESPACE, DEFAULT_MEMORY);
             Assert::AreEqual(expected3_3, actual3_3.value);
             free_text(&actual3_3);
         }
@@ -163,7 +163,7 @@ namespace PeLibraryTest
                 bool arg2 = std::get<1>(test.inputs);
                 bool arg3 = std::get<2>(test.inputs);
                 auto arg4 = std::get<3>(test.inputs);
-                TEXT actual = trim_text(&arg1, arg2, arg3, arg4.data(), arg4.size());
+                TEXT actual = trim_text(&arg1, arg2, arg3, arg4.data(), arg4.size(), DEFAULT_MEMORY);
                 Assert::AreEqual(test.expected, actual.value);
                 free_text(&actual);
             }
@@ -176,22 +176,22 @@ namespace PeLibraryTest
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                TEXT actual = trim_whitespace_text(&arg1);
+                TEXT actual = trim_whitespace_text(&arg1, DEFAULT_MEMORY);
                 Assert::AreEqual(test.expected, actual.value);
                 free_text(&actual);
             }
         }
 
-        static TEXT split_text_EASY_CSV(const TEXT* source, size_t* next_index)
+        static TEXT split_text_EASY_CSV(const TEXT* source, size_t* next_index, const MEMORY_RESOURCE* memory_resource)
         {
             ssize_t index = index_of_character(source, _T(','));
             if (index == -1) {
                 *next_index = source->length;
-                return wrap_text_with_length(source->value, source->length, false);
+                return wrap_text_with_length(source->value, source->length, false, memory_resource);
             }
 
             *next_index = index + 1;
-            return wrap_text_with_length(source->value, index, false);
+            return wrap_text_with_length(source->value, index, false, memory_resource);
         }
 
         TEST_METHOD(split_text_EASY_CSV_test)
@@ -207,7 +207,7 @@ namespace PeLibraryTest
                 _T(""),
             };
             TEXT input = wrap("a,b,c,d,, ,e,");
-            OBJECT_LIST actual = split_text(&input, split_text_EASY_CSV);
+            OBJECT_LIST actual = split_text(&input, split_text_EASY_CSV, DEFAULT_MEMORY);
             Assert::AreEqual(sizeof(expected) / sizeof(expected[0]), actual.length);
             for (size_t i = 0; i < actual.length; i++) {
                 OBJECT_RESULT_VALUE result = get_object_list(&actual, i);
@@ -242,7 +242,7 @@ namespace PeLibraryTest
                 _T("\r")
                 _T("xyz\r\n")
             );
-            OBJECT_LIST actual = split_newline_text(&input);
+            OBJECT_LIST actual = split_newline_text(&input, DEFAULT_MEMORY);
             Assert::AreEqual(sizeof(expected) / sizeof(expected[0]), actual.length);
             for (size_t i = 0; i < actual.length; i++) {
                 OBJECT_RESULT_VALUE result = get_object_list(&actual, i);

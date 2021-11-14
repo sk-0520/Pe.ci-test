@@ -38,7 +38,7 @@ TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex)
     if (input->library.sentinel) {
         result.success = StrToIntEx(input->value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
     } else {
-        TEXT sentinel = clone_text(input);
+        TEXT sentinel = clone_text(input, DEFAULT_MEMORY);
         result.success = StrToIntEx(sentinel.value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
         free_text(&sentinel);
     }
@@ -60,7 +60,7 @@ TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, bool support_hex)
     if (input->library.sentinel) {
         result.success = StrToInt64Ex(input->value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
     } else {
-        TEXT sentinel = clone_text(input);
+        TEXT sentinel = clone_text(input, DEFAULT_MEMORY);
         result.success = StrToInt64Ex(sentinel.value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
         free_text(&sentinel);
     }
@@ -144,7 +144,7 @@ bool is_enabled_multibyte_character_result(const MULTIBYTE_CHARACTER_RESULT* mbc
     return true;
 }
 
-MULTIBYTE_CHARACTER_RESULT RC_HEAP_FUNC(convert_to_multibyte_character, const TEXT* input, MULTIBYTE_CHARACTER_TYPE mbc_type)
+MULTIBYTE_CHARACTER_RESULT RC_HEAP_FUNC(convert_to_multibyte_character, const TEXT* input, MULTIBYTE_CHARACTER_TYPE mbc_type, const MEMORY_RESOURCE* memory_resource)
 {
     DWORD flags = 0;
     CHAR default_char = '?';
@@ -158,7 +158,7 @@ MULTIBYTE_CHARACTER_RESULT RC_HEAP_FUNC(convert_to_multibyte_character, const TE
         return error;
     }
 
-    uint8_t* buffer = RC_HEAP_CALL(allocate_raw_memory, mc_length1 * sizeof(uint8_t) + sizeof(uint8_t), true, DEFAULT_MEMORY);
+    uint8_t* buffer = RC_HEAP_CALL(allocate_raw_memory, mc_length1 * sizeof(uint8_t) + sizeof(uint8_t), true, memory_resource);
     int mc_length2 = WideCharToMultiByte(mbc_type, flags, input->value, (int)input->length, (LPSTR)buffer, mc_length1, &default_char, NULL);
     if (!mc_length2) {
         MULTIBYTE_CHARACTER_RESULT error = {
@@ -183,7 +183,7 @@ MULTIBYTE_CHARACTER_RESULT RC_HEAP_FUNC(convert_to_multibyte_character, const TE
     return result;
 }
 
-bool RC_HEAP_FUNC(free_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* mbcr)
+bool RC_HEAP_FUNC(free_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* mbcr, const MEMORY_RESOURCE* memory_resource)
 {
     if (!mbcr) {
         return false;
@@ -192,7 +192,7 @@ bool RC_HEAP_FUNC(free_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* m
         return false;
     }
 
-    bool result = RC_HEAP_CALL(free_memory, mbcr->buffer, DEFAULT_MEMORY);
+    bool result = RC_HEAP_CALL(free_memory, mbcr->buffer, memory_resource);
 
     mbcr->buffer = NULL;
     mbcr->length = 0;
@@ -200,7 +200,7 @@ bool RC_HEAP_FUNC(free_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* m
     return result;
 }
 
-TEXT RC_HEAP_FUNC(make_text_from_multibyte, const uint8_t* input, size_t length, MULTIBYTE_CHARACTER_TYPE mbc_type)
+TEXT RC_HEAP_FUNC(make_text_from_multibyte, const uint8_t* input, size_t length, MULTIBYTE_CHARACTER_TYPE mbc_type, const MEMORY_RESOURCE* memory_resource)
 {
     DWORD flags = 0;
     int wc_length1 = MultiByteToWideChar(mbc_type, flags, (CHAR*)input, (int)length, NULL, 0);
@@ -208,18 +208,18 @@ TEXT RC_HEAP_FUNC(make_text_from_multibyte, const uint8_t* input, size_t length,
         return create_invalid_text();
     }
 
-    TCHAR* buffer = RC_HEAP_CALL(allocate_string, wc_length1, DEFAULT_MEMORY);
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, wc_length1, memory_resource);
     int wc_length2 = MultiByteToWideChar(mbc_type, flags, (CHAR*)input, (int)length, buffer, wc_length1);
     if (!wc_length2) {
-        RC_HEAP_CALL(free_string, buffer, DEFAULT_MEMORY);
+        RC_HEAP_CALL(free_string, buffer, memory_resource);
         return create_invalid_text();
     }
     if (wc_length1 != wc_length2) {
-        RC_HEAP_CALL(free_string, buffer, DEFAULT_MEMORY);
+        RC_HEAP_CALL(free_string, buffer, memory_resource);
         return create_invalid_text();
     }
 
-    return wrap_text_with_length(buffer, wc_length2, true);
+    return wrap_text_with_length(buffer, wc_length2, true, memory_resource);
 }
 
 

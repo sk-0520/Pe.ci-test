@@ -62,7 +62,7 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
 
         const TEXT* mark_text = mark_texts + mark_index;
         // 先頭のマークを外した引数取得
-        TEXT arg = wrap_text_with_length(current->value + mark_text->length, (size_t)current->length - mark_text->length, false);
+        TEXT arg = wrap_text_with_length(current->value + mark_text->length, (size_t)current->length - mark_text->length, false, NULL);
 
         COMMAND_LINE_ITEM* item = allocate_memory(1, sizeof(COMMAND_LINE_ITEM), DEFAULT_MEMORY);
         item->key_index = i;
@@ -71,19 +71,19 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
         TEXT value_with_separator = find_character(&arg, _T('='));
         if (is_enabled_text(&value_with_separator)) {
             // 引数が値とキーを持つ
-            key = new_text_with_length(arg.value, (value_with_separator.value - arg.value));
+            key = new_text_with_length(arg.value, (value_with_separator.value - arg.value), DEFAULT_MEMORY);
             if (1 < value_with_separator.length) {
                 // 値は存在する
-                TEXT raw_value = wrap_text_with_length(value_with_separator.value + 1, (size_t)value_with_separator.length - 1, false);
+                TEXT raw_value = wrap_text_with_length(value_with_separator.value + 1, (size_t)value_with_separator.length - 1, false, NULL);
                 if (raw_value.length && ((raw_value.value[0] == '"' || raw_value.value[0] == '\'') && raw_value.value[raw_value.length - 1] == raw_value.value[0]) ) {
                     // 囲まれている
-                    item->value = new_text_with_length(raw_value.value + 1, (size_t)raw_value.length - 2);
+                    item->value = new_text_with_length(raw_value.value + 1, (size_t)raw_value.length - 2, DEFAULT_MEMORY);
                 } else {
                     item->value = raw_value;
                 }
             } else {
                 // 値は存在しない、が=指定されてるなら空文字列
-                item->value = new_empty_text();
+                item->value = new_empty_text(DEFAULT_MEMORY);
             }
             item->value_index = i;
         } else if(i + 1 < count) {
@@ -97,7 +97,7 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
             } else {
                 // 次要素を値として取り込む
                 item->value_index = i + 1;
-                item->value = clone_text(current + 1);
+                item->value = clone_text(current + 1, DEFAULT_MEMORY);
                 // 次要素をスキップ
                 i += 1;
             }
@@ -216,7 +216,7 @@ bool is_inputed_command_line_item(const COMMAND_LINE_ITEM* item)
 TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count)
 {
     if (!arguments || !count) {
-        return new_empty_text();
+        return new_empty_text(DEFAULT_MEMORY);
     }
 
     size_t total_length = count - 1; // スペース分
@@ -267,6 +267,6 @@ TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count)
 
     free_memory(hasSpaceList, DEFAULT_MEMORY);
 
-    return wrap_text_with_length(buffer, position, true);
+    return wrap_text_with_length(buffer, position, true, DEFAULT_MEMORY);
 }
 

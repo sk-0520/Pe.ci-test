@@ -27,7 +27,7 @@ void add_visual_cpp_runtime_redist_env_path(const TEXT* root_directory_path)
         crt_path
     };
     TEXT env_sep = wrap_text(_T(";"));
-    TEXT path_new_value = join_text(&env_sep, values, SIZEOF_ARRAY(values), IGNORE_EMPTY_ONLY);
+    TEXT path_new_value = join_text(&env_sep, values, SIZEOF_ARRAY(values), IGNORE_EMPTY_ONLY, DEFAULT_MEMORY);
     set_environment_variable(&env_path_key, &path_new_value);
 
     free_text(&path_new_value);

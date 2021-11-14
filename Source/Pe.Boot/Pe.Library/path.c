@@ -10,7 +10,7 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path)
 {
     TCHAR* buffer = clone_string(path->value, DEFAULT_MEMORY);
     if (PathRemoveFileSpec(buffer)) {
-        TEXT result = new_text(buffer);
+        TEXT result = new_text(buffer, DEFAULT_MEMORY);
         free_string(buffer, DEFAULT_MEMORY);
         return result;
     }
@@ -31,7 +31,7 @@ TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path
         *c = 0;
         buffer_length -= 1;
     }
-    return wrap_text_with_length(buffer, buffer_length, true);
+    return wrap_text_with_length(buffer, buffer_length, true, DEFAULT_MEMORY);
 }
 
 TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_t count)
@@ -54,7 +54,7 @@ TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_
     PathCanonicalize(buffer, temp_buffer);
     free_string(temp_buffer, DEFAULT_MEMORY);
 
-    return wrap_text_with_length(buffer, get_string_length(buffer), true);
+    return wrap_text_with_length(buffer, get_string_length(buffer), true, DEFAULT_MEMORY);
 
 }
 
@@ -63,7 +63,7 @@ TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path)
     TCHAR* buffer = RC_HEAP_CALL(allocate_string, path->length, DEFAULT_MEMORY);
     PathCanonicalize(buffer, path->value);
 
-    return wrap_text_with_length(buffer, get_string_length(buffer), true);
+    return wrap_text_with_length(buffer, get_string_length(buffer), true, DEFAULT_MEMORY);
 }
 
 TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance)
@@ -93,7 +93,7 @@ TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance)
     }
 
     TEXT result = path_length
-        ? new_text_with_length(path, path_length)
+        ? new_text_with_length(path, path_length, DEFAULT_MEMORY)
         : create_invalid_text()
         ;
     free_string(path, DEFAULT_MEMORY);

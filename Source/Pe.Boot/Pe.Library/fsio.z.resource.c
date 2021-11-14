@@ -25,7 +25,7 @@ FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE
     }
 
     FILE_RESOURCE result = {
-        .path = clone_text(path),
+        .path = clone_text(path, DEFAULT_MEMORY),
         .handle = handle
     };
 

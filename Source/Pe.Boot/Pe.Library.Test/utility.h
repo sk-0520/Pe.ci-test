@@ -17,9 +17,9 @@ namespace fs = std::filesystem;
 namespace mstest = Microsoft::VisualStudio::CppUnitTestFramework;
 
 #ifdef RES_CHECK
-#   define text(s) rc_heap__new_text(RELATIVE_FILET, __LINE__, _T(s))
+#   define text(s) rc_heap__new_text(RELATIVE_FILET, __LINE__, _T(s), DEFAULT_MEMORY)
 #else
-#   define text(s) new_text(_T(s))
+#   define text(s) new_text(_T(s), DEFAULT_MEMORY)
 #endif
 
 #ifdef _UNICODE

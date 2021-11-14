@@ -91,10 +91,10 @@ namespace PeLibraryTest
         TEST_METHOD(is_equals_text_test)
         {
             TCHAR buffers[] = _T("abcDEFABCdef");
-            TEXT abc = wrap_text_with_length(buffers + (3 * 0), 3, false);
-            TEXT DEF = wrap_text_with_length(buffers + (3 * 1), 3, false);
-            TEXT ABC = wrap_text_with_length(buffers + (3 * 2), 3, false);
-            TEXT def = wrap_text_with_length(buffers + (3 * 3), 3, false);
+            TEXT abc = wrap_text_with_length(buffers + (3 * 0), 3, false, NULL);
+            TEXT DEF = wrap_text_with_length(buffers + (3 * 1), 3, false, NULL);
+            TEXT ABC = wrap_text_with_length(buffers + (3 * 2), 3, false, NULL);
+            TEXT def = wrap_text_with_length(buffers + (3 * 3), 3, false, NULL);
 
             auto tests = {
                 DATA(true, wrap("abc"), wrap("abc"), false),
@@ -179,10 +179,10 @@ namespace PeLibraryTest
         TEST_METHOD(compare_text_length_test)
         {
             TCHAR buffers[] = _T("abcDEFABCdef");
-            TEXT abc = wrap_text_with_length(buffers + (3 * 0), 3, false);
-            TEXT DEF = wrap_text_with_length(buffers + (3 * 1), 3, false);
-            TEXT ABC = wrap_text_with_length(buffers + (3 * 2), 3, false);
-            TEXT def = wrap_text_with_length(buffers + (3 * 3), 3, false);
+            TEXT abc = wrap_text_with_length(buffers + (3 * 0), 3, false, NULL);
+            TEXT DEF = wrap_text_with_length(buffers + (3 * 1), 3, false, NULL);
+            TEXT ABC = wrap_text_with_length(buffers + (3 * 2), 3, false, NULL);
+            TEXT def = wrap_text_with_length(buffers + (3 * 3), 3, false, NULL);
 
             auto tests = {
                 DATA(0, abc, abc, false),

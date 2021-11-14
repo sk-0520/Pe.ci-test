@@ -110,13 +110,13 @@ namespace PeLibraryTest
                 MULTI_BYTE_CHARACTER_TYPE_SJIS,
             };
             for (auto test : tests) {
-                auto res = convert_to_multibyte_character(&input, test);
+                auto res = convert_to_multibyte_character(&input, test, DEFAULT_MEMORY);
                 Assert::IsTrue(is_enabled_multibyte_character_result(&res));
-                auto text = make_text_from_multibyte(res.buffer, res.length, test);
+                auto text = make_text_from_multibyte(res.buffer, res.length, test, DEFAULT_MEMORY);
                 Assert::AreEqual(text.value, input.value);
-                Assert::IsTrue(free_multibyte_character_result(&res));
+                Assert::IsTrue(free_multibyte_character_result(&res, DEFAULT_MEMORY));
                 Assert::IsTrue(free_text(&text));
-                Assert::IsFalse(free_multibyte_character_result(&res));
+                Assert::IsFalse(free_multibyte_character_result(&res, DEFAULT_MEMORY));
             }
         }
 

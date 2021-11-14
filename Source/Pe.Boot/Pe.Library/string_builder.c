@@ -64,13 +64,13 @@ TEXT RC_HEAP_FUNC(build_text_string_builder, const STRING_BUILDER* string_builde
     }
 
     if (!string_builder->library.list.length) {
-        return RC_HEAP_CALL(new_text, _T(""));
+        return RC_HEAP_CALL(new_text, _T(""), DEFAULT_MEMORY);
     }
 
     TCHAR* s = RC_HEAP_CALL(allocate_string, string_builder->library.list.length, DEFAULT_MEMORY);
     const TCHAR* buffer = reference_list_tchar(&string_builder->library.list);
     copy_memory(s, buffer, string_builder->library.list.length * sizeof(TCHAR));
-    return wrap_text_with_length(s, string_builder->library.list.length, true);
+    return wrap_text_with_length(s, string_builder->library.list.length, true, DEFAULT_MEMORY);
 }
 
 TEXT reference_text_string_builder(STRING_BUILDER* string_builder)
@@ -83,7 +83,7 @@ TEXT reference_text_string_builder(STRING_BUILDER* string_builder)
         append_builder_character(string_builder, _T('0'), false);
         buffer = reference_list_tchar(&string_builder->library.list);
     }
-    return wrap_text_with_length(buffer, string_builder->library.list.length, false);
+    return wrap_text_with_length(buffer, string_builder->library.list.length, false, NULL);
 }
 
 STRING_BUILDER* clear_builder(STRING_BUILDER* string_builder)

@@ -107,7 +107,7 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
         return create_invalid_text();
     }
     if (!file_size.plain) {
-        return new_empty_text();
+        return new_empty_text(DEFAULT_MEMORY);
     }
 
     //TODO: x86は32bit値が限界
@@ -144,11 +144,11 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
     switch (file_reader->library.encoding) {
         case FILE_ENCODING_NATIVE:
         case FILE_ENCODING_UTF16LE:
-            return wrap_text_with_length((TCHAR*)conv_buffer, conv_buffer_length / sizeof(TCHAR), true);
+            return wrap_text_with_length((TCHAR*)conv_buffer, conv_buffer_length / sizeof(TCHAR), true, DEFAULT_MEMORY);
 
         case FILE_ENCODING_UTF8:
         {
-            TEXT text = RC_HEAP_CALL(make_text_from_multibyte, conv_buffer, conv_buffer_length, MULTI_BYTE_CHARACTER_TYPE_UTF8);
+            TEXT text = RC_HEAP_CALL(make_text_from_multibyte, conv_buffer, conv_buffer_length, MULTI_BYTE_CHARACTER_TYPE_UTF8, DEFAULT_MEMORY);
             free_memory(buffer, DEFAULT_MEMORY);
             return text;
         }
@@ -256,9 +256,9 @@ void flush_file_writer(FILE_WRITER* file_writer, bool force)
 
         case FILE_ENCODING_UTF8:
         {
-            MULTIBYTE_CHARACTER_RESULT mbcr = convert_to_multibyte_character(&text, MULTI_BYTE_CHARACTER_TYPE_UTF8);
+            MULTIBYTE_CHARACTER_RESULT mbcr = convert_to_multibyte_character(&text, MULTI_BYTE_CHARACTER_TYPE_UTF8, DEFAULT_MEMORY);
             write_file_resource(&file_writer->resource, mbcr.buffer, mbcr.length);
-            free_multibyte_character_result(&mbcr);
+            free_multibyte_character_result(&mbcr, DEFAULT_MEMORY);
         }
         break;
 

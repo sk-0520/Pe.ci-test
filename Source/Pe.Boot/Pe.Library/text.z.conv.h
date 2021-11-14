@@ -95,14 +95,14 @@ bool is_enabled_multibyte_character_result(const MULTIBYTE_CHARACTER_RESULT* mbc
 /// <param name="input"></param>
 /// <param name="convert_type"></param>
 /// <returns>変換データ。解放が必要。</returns>
-MULTIBYTE_CHARACTER_RESULT RC_HEAP_FUNC(convert_to_multibyte_character, const TEXT* input, MULTIBYTE_CHARACTER_TYPE mbc_type);
+MULTIBYTE_CHARACTER_RESULT RC_HEAP_FUNC(convert_to_multibyte_character, const TEXT* input, MULTIBYTE_CHARACTER_TYPE mbc_type, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define convert_to_multibyte_character(input, convert_type) RC_HEAP_WRAP(convert_to_multibyte_character, (input), (convert_type))
+#   define convert_to_multibyte_character(input, convert_type, memory_resource) RC_HEAP_WRAP(convert_to_multibyte_character, (input), (convert_type), memory_resource)
 #endif
 
-bool RC_HEAP_FUNC(free_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* mbcr);
+bool RC_HEAP_FUNC(free_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* mbcr, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define free_multibyte_character_result(mbcr) RC_HEAP_WRAP(free_multibyte_character_result, (mbcr))
+#   define free_multibyte_character_result(mbcr, memory_resource) RC_HEAP_WRAP(free_multibyte_character_result, (mbcr), memory_resource)
 #endif
 
 /// <summary>
@@ -112,9 +112,9 @@ bool RC_HEAP_FUNC(free_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* m
 /// <param name="length"></param>
 /// <param name="mbc_type"></param>
 /// <returns>解放が必要。</returns>
-TEXT RC_HEAP_FUNC(make_text_from_multibyte, const uint8_t* input, size_t length, MULTIBYTE_CHARACTER_TYPE mbc_type);
+TEXT RC_HEAP_FUNC(make_text_from_multibyte, const uint8_t* input, size_t length, MULTIBYTE_CHARACTER_TYPE mbc_type, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define make_text_from_multibyte(input, length, mbc_type) RC_HEAP_WRAP(make_text_from_multibyte, (input), (length), (mbc_type))
+#   define make_text_from_multibyte(input, length, mbc_type, memory_resource) RC_HEAP_WRAP(make_text_from_multibyte, (input), (length), (mbc_type), memory_resource)
 #endif
 
 #endif

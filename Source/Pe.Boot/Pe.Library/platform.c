@@ -11,7 +11,7 @@ TEXT RC_HEAP_FUNC(get_environment_variable, const TEXT* key)
     TCHAR* env_value = RC_HEAP_CALL(allocate_string, (size_t)env_length - 1, DEFAULT_MEMORY);
     GetEnvironmentVariable(key->value, env_value, env_length);
 
-    return wrap_text_with_length(env_value, (size_t)env_length - 1, true);
+    return wrap_text_with_length(env_value, (size_t)env_length - 1, true, DEFAULT_MEMORY);
 }
 
 bool set_environment_variable(const TEXT* key, const TEXT* value)
@@ -37,5 +37,5 @@ TEXT RC_HEAP_FUNC(expand_environment_variable, const TEXT* text)
         return create_invalid_text();
     }
 
-    return wrap_text_with_length(buffer, buffer_size, true);
+    return wrap_text_with_length(buffer, buffer_size, true, DEFAULT_MEMORY);
 }

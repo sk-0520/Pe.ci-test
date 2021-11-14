@@ -120,7 +120,7 @@ MAP_PAIR* add_map(MAP* map, const TEXT* key, void* value, bool need_release)
     }
 
     MAP_PAIR pair = {
-        .key = clone_text(key),
+        .key = clone_text(key, DEFAULT_MEMORY),
         .value = value,
         .library = {
             .need_release = need_release,
