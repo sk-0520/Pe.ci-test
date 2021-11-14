@@ -208,14 +208,14 @@ TEXT RC_HEAP_FUNC(make_text_from_multibyte, const uint8_t* input, size_t length,
         return create_invalid_text();
     }
 
-    TCHAR* buffer = RC_HEAP_CALL(allocate_string, wc_length1);
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, wc_length1, DEFAULT_MEMORY);
     int wc_length2 = MultiByteToWideChar(mbc_type, flags, (CHAR*)input, (int)length, buffer, wc_length1);
     if (!wc_length2) {
-        RC_HEAP_CALL(free_string, buffer);
+        RC_HEAP_CALL(free_string, buffer, DEFAULT_MEMORY);
         return create_invalid_text();
     }
     if (wc_length1 != wc_length2) {
-        RC_HEAP_CALL(free_string, buffer);
+        RC_HEAP_CALL(free_string, buffer, DEFAULT_MEMORY);
         return create_invalid_text();
     }
 

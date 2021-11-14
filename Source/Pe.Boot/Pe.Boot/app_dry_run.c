@@ -28,7 +28,7 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* conso
 
     TCHAR* argument = NULL;
     if (is_enabled_text(command_line)) {
-        argument = clone_string_with_length(command_line->value, command_line->length);
+        argument = clone_string_with_length(command_line->value, command_line->length, DEFAULT_MEMORY);
     }
 
     bool result = CreateProcess(
@@ -43,7 +43,7 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* conso
         &startupinfo,
         &process_information
     );
-    free_string(argument);
+    free_string(argument, DEFAULT_MEMORY);
 
     if (result) {
         WaitForSingleObject(process_information.hProcess, INFINITE);

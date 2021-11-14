@@ -41,7 +41,7 @@ TEXT add_text(const TEXT* source, const TEXT* text)
     }
 
     size_t buffer_length = (size_t)(source->length) + text->length;
-    TCHAR* buffer = allocate_string(buffer_length);
+    TCHAR* buffer = allocate_string(buffer_length, DEFAULT_MEMORY);
     copy_memory(buffer, source->value, source->length * sizeof(TCHAR));
     copy_memory(buffer + source->length, text->value, text->length * sizeof(TCHAR));
     buffer[buffer_length] = 0;
@@ -56,7 +56,7 @@ TEXT join_text(const TEXT* separator, const TEXT_LIST texts, size_t count, IGNOR
         total_length += (texts + i)->length;
     }
 
-    TCHAR* buffer = allocate_string(total_length);
+    TCHAR* buffer = allocate_string(total_length, DEFAULT_MEMORY);
     size_t current_position = 0;
     bool add_separator = false;
     for (size_t i = 0; i < count; i++) {

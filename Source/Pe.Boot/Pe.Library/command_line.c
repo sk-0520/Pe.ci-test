@@ -243,7 +243,7 @@ TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count)
         }
     }
 
-    TCHAR* buffer = allocate_string(total_length);
+    TCHAR* buffer = allocate_string(total_length, DEFAULT_MEMORY);
     size_t position = 0;
     for (size_t i = 0; i < count; i++) {
         const TEXT* argument = &arguments[i];

@@ -206,7 +206,7 @@ WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, 
 
     WRITE_RESULT result = writer(&data);
 
-    free_string(buffer);
+    free_string(buffer, DEFAULT_MEMORY);
 
     return result;
 }
@@ -249,7 +249,7 @@ WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver,
     };
     WRITE_RESULT result = writer(&data);
 
-    free_string(buffer);
+    free_string(buffer, DEFAULT_MEMORY);
 
     return result;
 }
@@ -286,7 +286,7 @@ WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, ssiz
     };
     WRITE_RESULT result = writer(&data);
 
-    free_string(buffer);
+    free_string(buffer, DEFAULT_MEMORY);
 
     return result;
 }
@@ -323,7 +323,7 @@ WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, siz
     };
     WRITE_RESULT result = writer(&data);
 
-    free_string(buffer);
+    free_string(buffer, DEFAULT_MEMORY);
 
     return result;
 }
@@ -347,7 +347,7 @@ WRITE_RESULT write_primitive_character(func_string_writer writer, void* receiver
     };
     WRITE_RESULT result = writer(&data);
 
-    free_string(buffer);
+    free_string(buffer, DEFAULT_MEMORY);
 
     return result;
 }

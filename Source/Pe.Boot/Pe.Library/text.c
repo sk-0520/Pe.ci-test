@@ -48,7 +48,7 @@ TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length)
         return create_invalid_text();
     }
 
-    TCHAR* buffer = RC_HEAP_CALL(allocate_string, length);
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, length, DEFAULT_MEMORY);
     copy_memory(buffer, (void*)source, length * sizeof(TCHAR));
     buffer[length] = 0;
 
@@ -121,7 +121,7 @@ TEXT RC_HEAP_FUNC(clone_text, const TEXT* source)
         return create_invalid_text();
     }
 
-    TCHAR* buffer = RC_HEAP_CALL(allocate_string, source->length);
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, source->length, DEFAULT_MEMORY);
     copy_memory(buffer, (void*)source->value, source->length * sizeof(TCHAR));
     buffer[source->length] = 0;
 
@@ -201,7 +201,7 @@ bool RC_HEAP_FUNC(free_text, TEXT* text)
         return false;
     }
 
-    RC_HEAP_CALL(free_string, text->value);
+    RC_HEAP_CALL(free_string, text->value, DEFAULT_MEMORY);
     text->value = 0;
     text->length = 0;
 
