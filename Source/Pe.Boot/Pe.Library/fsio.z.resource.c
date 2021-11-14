@@ -10,7 +10,7 @@ FILE_RESOURCE create_invalid_file_resource()
     return result;
 }
 
-FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE access_mode, FILE_SHARE_MODE shared_mode, FILE_OPEN_MODE open_mode, DWORD attributes)
+FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE access_mode, FILE_SHARE_MODE shared_mode, FILE_OPEN_MODE open_mode, DWORD attributes, const MEMORY_RESOURCE* memory_resource)
 {
     if (!path) {
         return create_invalid_file_resource();
@@ -36,19 +36,19 @@ FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE
     return result;
 }
 
-FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path)
+FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
 {
-    return RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_NEW, 0);
+    return RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_NEW, 0, memory_resource);
 }
 
-FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path)
+FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
 {
-    return RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0);
+    return RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0, memory_resource);
 }
 
-FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path)
+FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
 {
-    return RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN_OR_CREATE, 0);
+    return RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN_OR_CREATE, 0, memory_resource);
 }
 
 bool RC_FILE_FUNC(close_file_resource, FILE_RESOURCE* file_resource)

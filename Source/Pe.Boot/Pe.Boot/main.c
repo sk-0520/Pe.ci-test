@@ -53,7 +53,7 @@ static void setup_logging_file(const COMMAND_LINE_OPTION* command_line_option)
     if (is_inputed_command_line_item(log_file_item)) {
         TEXT default_log_path = log_file_item->value;
 
-        FILE_WRITER log_file_writer = new_file_writer(&default_log_path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM);
+        FILE_WRITER log_file_writer = new_file_writer(&default_log_path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM, DEFAULT_MEMORY);
         seek_end_file_resource(&log_file_writer.resource);
         set_default_log_file(&log_file_writer);
     } else {

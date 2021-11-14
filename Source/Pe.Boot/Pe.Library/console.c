@@ -24,9 +24,9 @@ CONSOLE_RESOURCE begin_console(void)
             .error = GetStdHandle(STD_ERROR_HANDLE),
         },
         .stdio = {
-            .input = open_file_resource(&stdio_input_test),
-            .output = open_file_resource(&stdio_output_test),
-            .error = open_file_resource(&stdio_error_test),
+            .input = open_file_resource(&stdio_input_test, DEFAULT_MEMORY),
+            .output = open_file_resource(&stdio_output_test, DEFAULT_MEMORY),
+            .error = open_file_resource(&stdio_error_test, DEFAULT_MEMORY),
         },
         .library = {
             .attached = attached,

@@ -40,11 +40,11 @@ static void write_bom_if_unicode(const FILE_RESOURCE* file_resource, FILE_ENCODI
     }
 }
 
-FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding)
+FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding, const MEMORY_RESOURCE* memory_resource)
 {
     FILE_READER result = {
         .has_bom = false,
-        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0),
+        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0, memory_resource),
         .library = {
             .encoding = encoding,
         },
@@ -160,13 +160,13 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
     return create_invalid_text();
 }
 
-FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options)
+FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options, const MEMORY_RESOURCE* memory_resource)
 {
     FILE_WRITER result = {
-        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, open_mode, 0),
+        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, open_mode, 0, memory_resource),
         .library = {
             .encoding = encoding,
-            .string_builder = RC_HEAP_CALL(create_string_builder, FILE_WRITER_BUFFER_SIZE, DEFAULT_MEMORY),
+            .string_builder = RC_HEAP_CALL(create_string_builder, FILE_WRITER_BUFFER_SIZE, memory_resource),
             .buffer_size = FILE_WRITER_BUFFER_SIZE,
         }
     };
