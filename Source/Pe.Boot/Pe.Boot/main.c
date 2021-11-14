@@ -23,7 +23,7 @@ static void logging(const LOG_ITEM* log_item, void* data)
         _T("WARNING"),
         _T("ERROR"),
     };
-    STRING_BUILDER sb = create_string_builder(256);
+    STRING_BUILDER sb = create_string_builder(256, DEFAULT_MEMORY);
     TEXT format = wrap_text(
         _T("[LOG:%s]")
         _T(" ")

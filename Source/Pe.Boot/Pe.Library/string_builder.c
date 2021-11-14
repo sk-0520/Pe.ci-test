@@ -5,13 +5,13 @@
 
 //TODO: 内部実装をPRIMITIVE_LIST_TCHARに置き換える
 
-STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t capacity)
+STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t capacity, const MEMORY_RESOURCE* memory_resource)
 {
     assert(s);
 
     size_t length = get_string_length(s);
 
-    PRIMITIVE_LIST_TCHAR list = RC_HEAP_CALL(new_primitive_list, PRIMITIVE_LIST_TYPE_TCHAR, capacity);
+    PRIMITIVE_LIST_TCHAR list = RC_HEAP_CALL(new_primitive_list, PRIMITIVE_LIST_TYPE_TCHAR, capacity, memory_resource);
 
     add_range_list_tchar(&list, s, length);
 
@@ -25,11 +25,11 @@ STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t ca
     return result;
 }
 
-STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity)
+STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity, const MEMORY_RESOURCE* memory_resource)
 {
     assert(capacity);
 
-    PRIMITIVE_LIST_TCHAR list = RC_HEAP_CALL(new_primitive_list, PRIMITIVE_LIST_TYPE_TCHAR, capacity);
+    PRIMITIVE_LIST_TCHAR list = RC_HEAP_CALL(new_primitive_list, PRIMITIVE_LIST_TYPE_TCHAR, capacity, memory_resource);
 
     STRING_BUILDER result = {
         .library = {

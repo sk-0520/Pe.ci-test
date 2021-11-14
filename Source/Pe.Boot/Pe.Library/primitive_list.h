@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include "common.h"
+#include "memory.h"
 #include "res_check.h"
 
 #define PRIMITIVE_LIST_DEFAULT_CAPACITY (32)
@@ -65,6 +66,10 @@ typedef struct tag_PRIMITIVE_LIST
     void* items;
     struct
     {
+        /// <summary>
+        /// メモリリソース。
+        /// </summary>
+        const MEMORY_RESOURCE* memory_resource;
         /// <summary>
         /// 型。
         /// </summary>
@@ -129,9 +134,9 @@ typedef PRIMITIVE_LIST PRIMITIVE_LIST_TCHAR;
 /// <param name="list_type">リストで使用する型。</param>
 /// <param name="capacity">予約サイズ。list_typeに影響されない理論的なサイズ。</param>
 /// <returns>解放が必要。</returns>
-PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity);
+PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define new_primitive_list(list_type, capacity) RC_HEAP_WRAP(new_primitive_list, (list_type), (capacity))
+#   define new_primitive_list(list_type, capacity, memory_resource) RC_HEAP_WRAP(new_primitive_list, (list_type), (capacity), memory_resource)
 #endif
 
 /// <summary>

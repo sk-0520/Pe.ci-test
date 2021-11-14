@@ -23,7 +23,7 @@ namespace PeLibraryTest
 
             for (auto test : tests) {
                 auto [arg1, arg2] = test.inputs;
-                auto actual = initialize_string_builder(arg1, arg2);
+                auto actual = initialize_string_builder(arg1, arg2, DEFAULT_MEMORY);
                 Assert::AreEqual(get_string_length(arg1), actual.library.list.length);
                 //Assert::AreEqual(test.expected, actual.library.capacity);
 
@@ -41,7 +41,7 @@ namespace PeLibraryTest
 
             for (auto test : tests) {
                 auto [arg1] = test.inputs;
-                auto actual = create_string_builder(arg1);
+                auto actual = create_string_builder(arg1, DEFAULT_MEMORY);
                 //Assert::AreEqual(test.expected, actual.library.capacity);
 
                 Assert::IsTrue(free_string_builder(&actual));
@@ -56,14 +56,14 @@ namespace PeLibraryTest
             STRING_BUILDER input2 = { 0 };
             Assert::IsFalse(free_string_builder(&input2));
 
-            STRING_BUILDER input3 = create_string_builder(1);
+            STRING_BUILDER input3 = create_string_builder(1, DEFAULT_MEMORY);
             Assert::IsTrue(free_string_builder(&input3));
         }
 
         TEST_METHOD(append_string_builder_test)
         {
             auto expected = _T("ABCDEFGtrue-1false1");
-            auto sb = create_string_builder(3);
+            auto sb = create_string_builder(3, DEFAULT_MEMORY);
 
             append_builder_string(&sb, _T("ABC"), false);
 
@@ -92,7 +92,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(append_builder_format_test)
         {
-            auto sb = create_string_builder(3);
+            auto sb = create_string_builder(3, DEFAULT_MEMORY);
 
             auto expected = _T("1 -1 +100 -100 -200 A abc def");
             TEXT format = wrap("%d %d %+d %d %+d %c %s %t");

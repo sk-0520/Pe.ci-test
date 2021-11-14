@@ -28,9 +28,9 @@ typedef struct tag_STRING_BUILDER
 /// <param name="s">初期化に使用する文字列。</param>
 /// <param name="capacity">初期予約領域。特に指定しない場合は<c>STRING_BUILDER_DEFAULT_CAPACITY</c>を使用する。<c>s</c>より小さい場合、<c>s</c>の長さまで拡張される。</param>
 /// <returns>生成した<c>STRING_BUILDER</c>。解放が必要。</returns>
-STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t capacity);
+STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t capacity, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define initialize_string_builder(s, capacity) RC_HEAP_WRAP(initialize_string_builder, (s), (capacity))
+#   define initialize_string_builder(s, capacity, memory_resource) RC_HEAP_WRAP(initialize_string_builder, (s), (capacity), memory_resource)
 #endif
 
 /// <summary>
@@ -39,9 +39,9 @@ STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t ca
 /// <param name=""></param>
 /// <param name="capacity">初期予約領域。特に指定しない場合は<c>STRING_BUILDER_DEFAULT_CAPACITY</c>を使用する。</param>
 /// <returns>生成した<c>STRING_BUILDER</c>。解放が必要。</returns>
-STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity);
+STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define create_string_builder(capacity) RC_HEAP_WRAP(create_string_builder, (capacity))
+#   define create_string_builder(capacity, memory_resource) RC_HEAP_WRAP(create_string_builder, (capacity), memory_resource)
 #endif
 
 /// <summary>

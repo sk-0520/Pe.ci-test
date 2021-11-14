@@ -85,7 +85,7 @@ static void logging_default(const LOG_ITEM* log_item)
             _T("ERROR"),
         };
 
-        STRING_BUILDER sb = create_string_builder(OUTPUT_LINE_CAPACITY);
+        STRING_BUILDER sb = create_string_builder(OUTPUT_LINE_CAPACITY, DEFAULT_MEMORY);
         TEXT format = wrap_text(
             _T("%tT%t")
             _T(" | ")
@@ -127,7 +127,7 @@ static void logging(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller
 
     TEXT caller_file_text = wrap_text(caller_file);
 
-    STRING_BUILDER sb = create_string_builder(LOG_FORMAT_CAPACITY);
+    STRING_BUILDER sb = create_string_builder(LOG_FORMAT_CAPACITY, DEFAULT_MEMORY);
 
     TEXT date_format = wrap_text(_T("%04d-%02d-%02d"));
     append_builder_format(&sb, &date_format, timestamp.year, timestamp.month, timestamp.day);
@@ -200,7 +200,7 @@ void library__format_log(LOG_LEVEL log_level, const TCHAR* caller_file, size_t c
     va_start(ap, format);
 
     TEXT text_format = wrap_text(format);
-    STRING_BUILDER sb = create_string_builder(MESSAGE_CAPACITY);
+    STRING_BUILDER sb = create_string_builder(MESSAGE_CAPACITY, DEFAULT_MEMORY);
     append_builder_vformat(&sb, &text_format, ap);
     TEXT message = build_text_string_builder(&sb);
 

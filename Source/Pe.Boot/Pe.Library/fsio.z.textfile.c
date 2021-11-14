@@ -166,7 +166,7 @@ FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encodi
         .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, open_mode, 0),
         .library = {
             .encoding = encoding,
-            .string_builder = RC_HEAP_CALL(create_string_builder, FILE_WRITER_BUFFER_SIZE),
+            .string_builder = RC_HEAP_CALL(create_string_builder, FILE_WRITER_BUFFER_SIZE, DEFAULT_MEMORY),
             .buffer_size = FILE_WRITER_BUFFER_SIZE,
         }
     };
