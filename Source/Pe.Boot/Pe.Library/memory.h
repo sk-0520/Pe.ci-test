@@ -6,7 +6,12 @@
 
 #include "res_check.h"
 
-typedef byte_t(*library__func_calc_extend_capacity)(byte_t input_bytes);
+/*
+* 自前で生成した<c>MEMORY_RESOURCE</c>を指定する場合は<c>RES_CHECK</c>検知対象外となる。
+* <c>MEMORY_RESOURCE</c>を指定しない場合はライブラリ側で取得した<c>MEMORY_RESOURCE</c>を用い、<c>RES_CHECK</c>が有効な場合には検知対象になる。
+*/
+
+typedef byte_t(*func_calc_extend_capacity)(byte_t input_bytes);
 
 /// <summary>
 /// メモリ管理データ。
@@ -26,6 +31,12 @@ typedef struct tag_MEMORY_RESOURCE
 /// メモリ管理: 自動拡張最大サイズ。
 /// </summary>
 #define MEMORY_EXTENDABLE_MAXIMUM_SIZE (0)
+
+/// <summary>
+/// デフォルトのメモリリソースを取得。
+/// </summary>
+/// <returns></returns>
+MEMORY_RESOURCE* get_default_memory_resource();
 
 /// <summary>
 /// メモリリソースの生成。
@@ -50,7 +61,7 @@ bool release_memory_resource(MEMORY_RESOURCE* memory_resource);
 bool is_enabled_memory_resource(const MEMORY_RESOURCE* memory_resource);
 
 /// <summary>
-/// メモリリソースからメモリ確保。
+/// メモリリソースから指定したサイズ以上のヒープ領域を確保。
 /// <para><c>RES_CHECK</c>検知対象外。</para>
 /// </summary>
 /// <param name="bytes"></param>
@@ -70,7 +81,8 @@ void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill);
 #endif
 
 /// <summary>
-/// 指定したサイズ以上のヒープ領域を0クリアで確保。
+/// メモリリソースから指定したサイズ以上のヒープ領域を0クリアで確保。
+/// <para><c>RES_CHECK</c>検知対象外。</para>
 /// </summary>
 /// <param name="count"></param>
 /// <param name="type_size"></param>
@@ -89,7 +101,16 @@ void* RC_HEAP_FUNC(allocate_memory, size_t count, byte_t type_size);
 #endif
 
 /// <summary>
-/// allocateMemory で確保した領域を解放。
+/// メモリリソースから確保した領域を解放。
+/// <para><c>RES_CHECK</c>検知対象外。</para>
+/// </summary>
+/// <param name="p"></param>
+/// <param name="memory_resource"></param>
+/// <returns></returns>
+bool release_memory_from_memory_resource(void* p, const MEMORY_RESOURCE* memory_resource);
+
+/// <summary>
+/// 確保した領域を解放。
 /// </summary>
 /// <param name="p"></param>
 /// <returns></returns>
@@ -137,6 +158,19 @@ void* move_memory(void* destination, const void* source, byte_t bytes);
 int compare_memory(const void* a, const void* b, byte_t bytes);
 
 /// <summary>
+/// メモリリソースから予約領域を持つバッファを拡張する基底処理。
+/// <para>ライブラリ側で使用する前提処理。アプリケーション側からは使用しない。</para>
+/// <para><c>RES_CHECK</c>検知対象外。</para>
+/// </summary>
+/// <param name="buffer">対象領域のポインタ。</param>
+/// <param name="current_bytes">現在のバイト数。</param>
+/// <param name="current_capacity_bytes">現在の予約バイト数。</param>
+/// <param name="need_bytes">必要なバイト数。</param>
+/// <param name="default_capacity_bytes">予約領域の標準値。</param>
+/// <param name="calc_extend_capacity">予約領域拡張方法。</param>
+/// <returns>拡張後の総バイト数。未実施の場合は0を返す。</returns>
+byte_t library__extend_capacity_if_not_enough_bytes_from_memory_resource(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, func_calc_extend_capacity calc_extend_capacity, const MEMORY_RESOURCE* memory_resource);
+/// <summary>
 /// 予約領域を持つバッファを拡張する基底処理。
 /// <para>ライブラリ側で使用する前提処理。アプリケーション側からは使用しない。</para>
 /// </summary>
@@ -147,6 +181,7 @@ int compare_memory(const void* a, const void* b, byte_t bytes);
 /// <param name="default_capacity_bytes">予約領域の標準値。</param>
 /// <param name="calc_extend_capacity">予約領域拡張方法。</param>
 /// <returns>拡張後の総バイト数。未実施の場合は0を返す。</returns>
-byte_t library__extend_capacity_if_not_enough_bytes(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, library__func_calc_extend_capacity calc_extend_capacity);
+byte_t library__extend_capacity_if_not_enough_bytes(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, func_calc_extend_capacity calc_extend_capacity);
 
+byte_t library__extend_capacity_if_not_enough_bytes_x2_from_memory_resource(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, const MEMORY_RESOURCE* memory_resource);
 byte_t library__extend_capacity_if_not_enough_bytes_x2(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes);
