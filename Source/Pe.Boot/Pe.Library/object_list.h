@@ -53,7 +53,7 @@ typedef int (*func_compare_object_list_value)(const void* a, const void* b);
 /// <summary>
 /// 格納値解放処理。
 /// </summary>
-typedef void (*func_free_object_list_value)(void* value);
+typedef void (*func_free_object_list_value)(void* value, const MEMORY_RESOURCE* memory_resource);
 
 /// <summary>
 /// 値連続処理。
@@ -105,7 +105,7 @@ int compare_object_list_value_null(const void* a, const void* b);
 /// リストの値解放不要処理。
 /// </summary>
 /// <param name="value"></param>
-void free_object_list_value_null(void* value);
+void free_object_list_value_null(void* value, const MEMORY_RESOURCE* memory_resource);
 
 /// <summary>
 /// オブジェクトリストの生成。

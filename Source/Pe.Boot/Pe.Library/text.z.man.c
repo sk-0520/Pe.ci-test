@@ -170,7 +170,7 @@ static int compare_object_list_value_text(const TEXT* a, const TEXT* b)
     return compare_text(a, b, false);
 }
 
-static void free_object_list_value_text(void* target)
+static void free_object_list_value_text(void* target, const MEMORY_RESOURCE* memory_resource)
 {
     if (!target) {
         return;
