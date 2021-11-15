@@ -13,6 +13,11 @@
 /// </summary>
 typedef struct tag_STRING_BUILDER
 {
+    /// <summary>
+    /// 改行に使用するテキスト。
+    /// <para>解放処理は問答無用で行われるので管理をきちんと行うこと。デフォルト値は<c>NEWLINE_TEXT</c></para>
+    /// </summary>
+    TEXT newline;
     struct
     {
         /// <summary>
@@ -20,7 +25,6 @@ typedef struct tag_STRING_BUILDER
         /// <para>各種確保処理は<c>PRIMITIVE_LIST_TCHAR.library.memory_resource</c>が使用される。</para>
         /// </summary>
         PRIMITIVE_LIST_TCHAR list;
-        TCHAR* newline;
     } library;
 } STRING_BUILDER;
 

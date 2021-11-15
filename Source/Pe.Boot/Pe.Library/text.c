@@ -5,6 +5,11 @@
 
 #define FORMAT_LENGTH (256)
 
+const TEXT NEWLINE_CR_TEXT = static_text(NEWLINE_CR);
+const TEXT NEWLINE_LF_TEXT = static_text(NEWLINE_LF);
+const TEXT NEWLINE_CRLF_TEXT = static_text(NEWLINE_CRLF);
+const TEXT NEWLINE_TEXT = static_text(NEWLINE);
+
 TEXT create_invalid_text()
 {
     TEXT result = {

@@ -14,9 +14,9 @@ STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t ca
     add_range_list_tchar(&list, s, length);
 
     STRING_BUILDER result = {
+        .newline = NEWLINE_TEXT,
         .library = {
             .list = list,
-            .newline = NEWLINET,
         }
     };
 
@@ -30,9 +30,9 @@ STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity, const MEMORY
     PRIMITIVE_LIST_TCHAR list = RC_HEAP_CALL(new_primitive_list, PRIMITIVE_LIST_TYPE_TCHAR, capacity, memory_resource);
 
     STRING_BUILDER result = {
+        .newline = NEWLINE_TEXT,
         .library = {
             .list = list,
-            .newline = NEWLINET,
         }
     };
 
@@ -44,6 +44,8 @@ bool RC_HEAP_FUNC(free_string_builder, STRING_BUILDER* string_builder)
     if (!string_builder) {
         return false;
     }
+
+    RC_HEAP_CALL(free_text, &string_builder->newline);
 
     return RC_HEAP_CALL(free_primitive_list, &string_builder->library.list);
 }
@@ -94,7 +96,7 @@ STRING_BUILDER* clear_builder(STRING_BUILDER* string_builder)
 
 STRING_BUILDER* append_builder_newline(STRING_BUILDER* string_builder)
 {
-    return append_string_core(string_builder, string_builder->library.newline, get_string_length(string_builder->library.newline));
+    return append_string_core(string_builder, string_builder->newline.value, string_builder->newline.length);
 }
 
 STRING_BUILDER* append_builder_string(STRING_BUILDER* string_builder, const TCHAR* s, bool newline)

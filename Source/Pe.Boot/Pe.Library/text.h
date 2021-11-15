@@ -65,6 +65,11 @@ typedef struct tag_TEXT
 /// <param name="s">入力文字列リテラル。自動的に<c>_T(s)</c>される。</param>
 #define static_text(s) static_text_core(_T(s))
 
+extern const TEXT NEWLINE_CR_TEXT;
+extern const TEXT NEWLINE_LF_TEXT;
+extern const TEXT NEWLINE_CRLF_TEXT;
+extern const TEXT NEWLINE_TEXT;
+
 /// <summary>
 /// テキストの配列的なもの。
 /// <para>構造体のポインタとして扱いたいのかテキスト配列を扱いたいのかパッと見分からないのでこれで見た目をよくする。</para>
