@@ -64,13 +64,13 @@ TEXT RC_HEAP_FUNC(build_text_string_builder, const STRING_BUILDER* string_builde
     }
 
     if (!string_builder->library.list.length) {
-        return RC_HEAP_CALL(new_text, _T(""), DEFAULT_MEMORY);
+        return RC_HEAP_CALL(new_text, _T(""), string_builder->library.list.library.memory_resource);
     }
 
-    TCHAR* s = RC_HEAP_CALL(allocate_string, string_builder->library.list.length, DEFAULT_MEMORY);
+    TCHAR* s = RC_HEAP_CALL(allocate_string, string_builder->library.list.length, string_builder->library.list.library.memory_resource);
     const TCHAR* buffer = reference_list_tchar(&string_builder->library.list);
     copy_memory(s, buffer, string_builder->library.list.length * sizeof(TCHAR));
-    return wrap_text_with_length(s, string_builder->library.list.length, true, DEFAULT_MEMORY);
+    return wrap_text_with_length(s, string_builder->library.list.length, true, string_builder->library.list.library.memory_resource);
 }
 
 TEXT reference_text_string_builder(STRING_BUILDER* string_builder)
