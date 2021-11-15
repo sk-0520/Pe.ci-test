@@ -15,6 +15,10 @@ typedef struct tag_STRING_BUILDER
 {
     struct
     {
+        /// <summary>
+        /// 内部文字列。
+        /// <para>各種確保処理は<c>PRIMITIVE_LIST_TCHAR.library.memory_resource</c>が使用される。</para>
+        /// </summary>
         PRIMITIVE_LIST_TCHAR list;
         TCHAR* newline;
     } library;

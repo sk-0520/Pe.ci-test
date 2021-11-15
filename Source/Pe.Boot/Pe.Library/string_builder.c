@@ -3,8 +3,6 @@
 #include "string_builder.h"
 #include "writer.h"
 
-//TODO: 内部実装をPRIMITIVE_LIST_TCHARに置き換える
-
 STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t capacity, const MEMORY_RESOURCE* memory_resource)
 {
     assert(s);
