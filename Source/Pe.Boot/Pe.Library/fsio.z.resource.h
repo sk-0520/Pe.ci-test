@@ -19,6 +19,10 @@ typedef struct tag_FILE_RESOURCE
     /// <c>NULL</c>の場合無効(その場合<see cref="path"/>も無効)。
     /// </summary>
     HANDLE handle;
+    struct
+    {
+        const MEMORY_RESOURCE* memory_resource;
+    } library;
 } FILE_RESOURCE;
 
 /// <summary>

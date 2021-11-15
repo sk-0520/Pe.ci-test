@@ -6,6 +6,9 @@ FILE_RESOURCE create_invalid_file_resource()
     FILE_RESOURCE result = {
         .path = create_invalid_text(),
         .handle = NULL,
+        .library = {
+            .memory_resource = NULL,
+        }
     };
     return result;
 }
@@ -25,8 +28,11 @@ FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE
     }
 
     FILE_RESOURCE result = {
-        .path = clone_text(path, DEFAULT_MEMORY),
-        .handle = handle
+        .path = clone_text(path, memory_resource),
+        .handle = handle,
+        .library = {
+            .memory_resource = memory_resource,
+        }
     };
 
 #ifdef RES_CHECK
