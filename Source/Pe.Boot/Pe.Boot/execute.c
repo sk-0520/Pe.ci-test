@@ -20,7 +20,7 @@ void add_visual_cpp_runtime_redist_env_path(const TEXT* root_directory_path)
     logger_put_debug(crt_path.value);
 
     TEXT env_path_key = wrap_text(_T("PATH"));
-    TEXT path_src_value = get_environment_variable(&env_path_key);
+    TEXT path_src_value = get_environment_variable(&env_path_key, DEFAULT_MEMORY);
 
     TEXT values[] = {
         path_src_value,
