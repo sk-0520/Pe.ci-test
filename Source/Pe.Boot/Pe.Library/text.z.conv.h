@@ -43,7 +43,7 @@ typedef struct tag_TEXT_PARSED_I64_RESULT
 /// <param name="input">入力テキスト。</param>
 /// <param name="support_hex">16進数(0x)を考慮するか</param>
 /// <returns>結果データ。</returns>
-TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex);
+TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex, const MEMORY_RESOURCE* memory_resource);
 
 #ifdef _WIN64
 /// <summary>
@@ -53,7 +53,7 @@ TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex);
 /// <param name="input">入力テキスト。</param>
 /// <param name="support_hex">16進数(0x)を考慮するか</param>
 /// <returns>結果データ。</returns>
-TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, bool support_hex);
+TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, bool support_hex, const MEMORY_RESOURCE* memory_resource);
 #endif
 
 /// <summary>

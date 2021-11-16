@@ -27,7 +27,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 bool arg2 = std::get<1>(test.inputs);
-                auto actual = parse_i32_from_text(&arg1, arg2);
+                auto actual = parse_i32_from_text(&arg1, arg2, DEFAULT_MEMORY);
                 if (test.expected) {
                     Assert::IsTrue(actual.success);
                 } else {
@@ -49,7 +49,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 bool arg2 = std::get<1>(test.inputs);
-                auto actual = parse_i32_from_text(&arg1, arg2);
+                auto actual = parse_i32_from_text(&arg1, arg2, DEFAULT_MEMORY);
                 Assert::IsTrue(actual.success);
                 Assert::AreEqual(test.expected, actual.value);
             }
@@ -71,7 +71,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 bool arg2 = std::get<1>(test.inputs);
-                auto actual = parse_i64_from_text(&arg1, arg2);
+                auto actual = parse_i64_from_text(&arg1, arg2, DEFAULT_MEMORY);
                 if (test.expected) {
                     Assert::IsTrue(actual.success);
                 } else {
@@ -95,7 +95,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 bool arg2 = std::get<1>(test.inputs);
-                auto actual = parse_i64_from_text(&arg1, arg2);
+                auto actual = parse_i64_from_text(&arg1, arg2, DEFAULT_MEMORY);
                 Assert::IsTrue(actual.success);
                 Assert::AreEqual(test.expected, actual.value);
             }

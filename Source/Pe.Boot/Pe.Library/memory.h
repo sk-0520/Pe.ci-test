@@ -19,7 +19,7 @@ typedef byte_t(*func_calc_extend_capacity)(byte_t input_bytes);
 /// </summary>
 typedef struct tag_MEMORY_RESOURCE
 {
-    HANDLE hHeap;
+    HANDLE handle;
     byte_t maximum_size;
 } MEMORY_RESOURCE;
 
@@ -34,9 +34,14 @@ typedef struct tag_MEMORY_RESOURCE
 
 /// <summary>
 /// デフォルトのメモリリソースを取得。
+/// <para>Pe.Libraryで明示的に使用することはない。</para>
 /// </summary>
 /// <returns></returns>
 MEMORY_RESOURCE* get_default_memory_resource();
+/// <summary>
+/// デフォルトメモリリソースの簡易呼び出し。
+/// <para>Pe.Libraryで明示的に使用することはない。</para>
+/// </summary>
 #define DEFAULT_MEMORY get_default_memory_resource()
 
 /// <summary>

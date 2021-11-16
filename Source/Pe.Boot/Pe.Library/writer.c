@@ -494,7 +494,7 @@ static FORMAT_KIND get_write_format_kind(TCHAR c)
     }
 }
 
-static size_t get_write_format_width(FORMAT_WIDTH* result, const TEXT* format)
+static size_t get_write_format_width(FORMAT_WIDTH* result, const TEXT* format, const MEMORY_RESOURCE* memory_resource)
 {
     result->width = 0;
     result->need_parameter = false;
@@ -514,7 +514,7 @@ static size_t get_write_format_width(FORMAT_WIDTH* result, const TEXT* format)
         }
 
         TEXT number = reference_text_width_length(format, 0, i);
-        TEXT_PARSED_I32_RESULT parsed_result = parse_i32_from_text(&number, false);
+        TEXT_PARSED_I32_RESULT parsed_result = parse_i32_from_text(&number, false, memory_resource);
 
         result->width = parsed_result.value;
         return i;
@@ -533,7 +533,7 @@ static WRITE_RESULT write_format_simple_character(func_character_writer characte
     return character_writer(&char_data);
 }
 
-static WRITE_RESULT write_format_value(func_string_writer string_writer, func_character_writer character_writer, void* receiver, FORMAT_KIND format_kind, const MEMORY_RESOURCE* memory_resource, const TEXT* format, va_list* ap)
+static WRITE_RESULT write_format_value(func_string_writer string_writer, func_character_writer character_writer, void* receiver, const MEMORY_RESOURCE* memory_resource, FORMAT_KIND format_kind, const TEXT* format, va_list* ap)
 {
     WRITE_FORMAT_FLAGS flags;
     size_t flag_skip_index = get_write_format_flags(&flags, format);
@@ -541,7 +541,7 @@ static WRITE_RESULT write_format_value(func_string_writer string_writer, func_ch
 
     // 幅
     FORMAT_WIDTH format_waidth;
-    size_t width_skip_index = get_write_format_width(&format_waidth, &convert_format);
+    size_t width_skip_index = get_write_format_width(&format_waidth, &convert_format, memory_resource);
 
     // 長さ
     TEXT format_length = reference_text_width_length(&convert_format, width_skip_index, convert_format.length - width_skip_index - 1);
@@ -670,7 +670,7 @@ bool write_vformat(func_string_writer string_writer, func_character_writer chara
             size_t current_length = status.current_index - status.begin_index;
             TEXT current_format = wrap_text_with_length(format->value + status.begin_index + 1, current_length, false, NULL);
 
-            WRITE_RESULT write_result = write_format_value(string_writer, character_writer, receiver, format_kind, memory_resource, &current_format, &ap);
+            WRITE_RESULT write_result = write_format_value(string_writer, character_writer, receiver, memory_resource, format_kind, &current_format, &ap);
             if (write_result.error == WRITE_ERROR_KIND_NONE) {
                 status.write_length += write_result.write_length;
             }

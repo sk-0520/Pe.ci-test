@@ -24,7 +24,9 @@ void initialize_logger(const MEMORY_RESOURCE* memory_resource)
 
 void set_default_log_file(FILE_WRITER* file_writer)
 {
-    free_file_writer(&library__default_log_file_writer);
+    if (is_enabled_file_writer(&library__default_log_file_writer)) {
+        free_file_writer(&library__default_log_file_writer);
+    }
 
     if (file_writer) {
         library__default_log_file_writer = *file_writer;

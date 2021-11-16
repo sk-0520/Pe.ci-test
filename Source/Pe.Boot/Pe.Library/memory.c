@@ -5,14 +5,14 @@
 #include "memory.h"
 
 static MEMORY_RESOURCE library__default_memory_resource = {
-    .hHeap = NULL,
+    .handle = NULL,
     .maximum_size = 0,
 };
 
 static MEMORY_RESOURCE create_invalid_memory_resource()
 {
     MEMORY_RESOURCE result = {
-        .hHeap = NULL,
+        .handle = NULL,
         .maximum_size = 0,
     };
 
@@ -31,7 +31,7 @@ static bool is_default_memory_resource(const MEMORY_RESOURCE* memory_resource)
     if (memory_resource == &library__default_memory_resource) {
         return true;
     }
-    if (memory_resource->hHeap == library__default_memory_resource.hHeap) {
+    if (memory_resource->handle == library__default_memory_resource.handle) {
         return true;
     }
 
@@ -40,8 +40,8 @@ static bool is_default_memory_resource(const MEMORY_RESOURCE* memory_resource)
 
 MEMORY_RESOURCE* get_default_memory_resource()
 {
-    if (!library__default_memory_resource.hHeap) {
-        library__default_memory_resource.hHeap = GetProcessHeap();
+    if (!library__default_memory_resource.handle) {
+        library__default_memory_resource.handle = GetProcessHeap();
     }
 
     return &library__default_memory_resource;
@@ -64,10 +64,10 @@ MEMORY_RESOURCE create_memory_resource(byte_t initial_size, byte_t maximum_size)
         }
     }
 
-    HANDLE hHeap = HeapCreate(0, initial_size, maximum_size);
+    HANDLE handle = HeapCreate(0, initial_size, maximum_size);
 
     MEMORY_RESOURCE result = {
-        .hHeap = hHeap,
+        .handle = handle,
         .maximum_size = 0,
     };
 
@@ -80,12 +80,12 @@ bool release_memory_resource(MEMORY_RESOURCE* memory_resource)
         return false;
     }
 
-    bool success = HeapDestroy(memory_resource->hHeap);
+    bool success = HeapDestroy(memory_resource->handle);
     if (!success) {
         return false;
     }
 
-    memory_resource->hHeap = NULL;
+    memory_resource->handle = NULL;
 
     return true;
 }
@@ -96,7 +96,7 @@ bool is_enabled_memory_resource(const MEMORY_RESOURCE* memory_resource)
         return false;
     }
 
-    return memory_resource->hHeap;
+    return memory_resource->handle;
 }
 
 void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill, const MEMORY_RESOURCE* memory_resource)
@@ -105,7 +105,7 @@ void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill, const MEMO
         return NULL;
     }
 
-    void* heap = HeapAlloc(memory_resource->hHeap, zero_fill ? HEAP_ZERO_MEMORY : 0, bytes);
+    void* heap = HeapAlloc(memory_resource->handle, zero_fill ? HEAP_ZERO_MEMORY : 0, bytes);
     if (!heap) {
         return NULL;
     }
@@ -130,7 +130,7 @@ bool RC_HEAP_FUNC(free_memory, void* p, const MEMORY_RESOURCE* memory_resource)
         return false;
     }
 
-    bool result = HeapFree(memory_resource->hHeap, 0, p);
+    bool result = HeapFree(memory_resource->handle, 0, p);
     if (!result) {
         return false;
     }
