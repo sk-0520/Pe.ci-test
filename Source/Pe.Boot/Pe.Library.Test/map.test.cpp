@@ -13,7 +13,7 @@ namespace PeLibraryTest
     public:
         TEST_METHOD(initialize_test)
         {
-            MAP map = create_map(2, equals_map_key_default, free_map_value_null);
+            MAP map = create_map(2, equals_map_key_default, free_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
             BOX_INT valies[] = {
                 BOX_INT::create(1),
                 BOX_INT::create(2),
@@ -40,7 +40,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(add_map_test)
         {
-            MAP map = create_map(2, equals_map_key_default, free_map_value_null);
+            MAP map = create_map(2, equals_map_key_default, free_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
             Assert::AreEqual((size_t)2, map.library.capacity);
             Assert::AreEqual((size_t)0, map.length);
 
@@ -81,7 +81,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(set_map_test)
         {
-            MAP map = create_map(2, equals_map_key_default, free_map_value_null);
+            MAP map = create_map(2, equals_map_key_default, free_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
 
             TEXT key1 = wrap("key1");
             BOX_INT value1 = BOX_INT::create(1);
@@ -107,7 +107,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(remove_map_test)
         {
-            MAP map = create_map(2, equals_map_key_default, free_map_value_null);
+            MAP map = create_map(2, equals_map_key_default, free_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
 
             TEXT key1 = wrap("key1");
             BOX_INT value1 = BOX_INT::create(1);
@@ -152,7 +152,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(get_map_test)
         {
-            MAP map = create_map(2, equals_map_key_default, free_map_value_null);
+            MAP map = create_map(2, equals_map_key_default, free_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
 
             TEXT key1 = wrap("key1");
             BOX_INT value1 = BOX_INT::create(1);
@@ -188,7 +188,7 @@ namespace PeLibraryTest
             Assert::AreEqual((size_t)0, map.length);
         }
 
-        static void freeTextTest(MAP_PAIR* pair)
+        static void freeTextTest(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource)
         {
             TEXT* p = (TEXT*)pair->value;
             free_text(p);
@@ -196,7 +196,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(free_map_test)
         {
-            MAP map = create_map(2, equals_map_key_default, freeTextTest);
+            MAP map = create_map(2, equals_map_key_default, freeTextTest, DEFAULT_MEMORY, DEFAULT_MEMORY);
 
             TEXT key1 = wrap("key1");
             TEXT value1 = text("あいうえお");
@@ -231,7 +231,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(compare_test)
         {
-            MAP map_default = create_map(2, equals_map_key_default, free_map_value_null);
+            MAP map_default = create_map(2, equals_map_key_default, free_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
 
             TEXT key1 = wrap("key1");
             TEXT key2 = wrap("key2");
@@ -247,7 +247,7 @@ namespace PeLibraryTest
             Assert::IsNull(add_map(&map_default, &key2_1, &value2_1, false));
             Assert::AreEqual((size_t)3, map_default.length);
 
-            MAP map_ignore = create_map(2, equals_map_key_ignore_case, free_map_value_null);
+            MAP map_ignore = create_map(2, equals_map_key_ignore_case, free_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
             add_map(&map_ignore, &key1, &value1, false);
             add_map(&map_ignore, &key2, &value2, false);
             Assert::IsNull(add_map(&map_ignore, &key2_1, &value2_1, false));

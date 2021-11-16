@@ -83,7 +83,7 @@ EXIT_CODE dry_run(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_o
     TEXT_LIST args = allocate_memory(command_line_option->count, sizeof(TEXT), DEFAULT_MEMORY);
     size_t arg_count = filter_enable_command_line_items(args, command_line_option);
 
-    TEXT argument = to_command_line_argument(args, arg_count);
+    TEXT argument = to_command_line_argument(args, arg_count, DEFAULT_MEMORY);
     logger_format_debug(_T("argument = %t"), &argument);
     free_memory(args, DEFAULT_MEMORY);
     EXIT_CODE exit_code = dry_run_core(hInstance, &console_resource, &argument);

@@ -51,6 +51,7 @@ typedef struct tag_COMMAND_LINE_OPTION
         /// キーと値のマッピング。
         /// <para>キー項目のみは値がない。</para>
         /// <para>同一キーは前が優先される。</para>
+        /// <para><see cref="COMMAND_LINE_OPTION"/>の各種メモリ操作はこいつのメモリリーソースを使用する。</para>
         /// </summary>
         MAP map;
         /// <summary>
@@ -78,9 +79,9 @@ typedef struct tag_COMMAND_LINE_OPTION
 /// <param name="command_line"></param>
 /// <param name="with_command"><c>command_line</c>に起動コマンド(プログラム)が含まれているか</param>
 /// <returns>分解結果。<see cref="free_command_line" /> による開放が必要。</returns>
-COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, bool with_command);
+COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, bool with_command, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define parse_command_line(command_line, with_command) RC_HEAP_WRAP(parse_command_line, (command_line), (with_command))
+#   define parse_command_line(command_line, with_command, memory_resource) RC_HEAP_WRAP(parse_command_line, (command_line), (with_command), memory_resource)
 #endif
 
 /// <summary>
@@ -122,5 +123,5 @@ bool is_inputed_command_line_item(const COMMAND_LINE_ITEM* item);
 /// <param name="arguments">コマンドライン引数一覧</param>
 /// <param name="count">argumentの個数</param>
 /// <returns>生成テキスト。解放が必要。</returns>
-TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count);
+TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count, const MEMORY_RESOURCE* memory_resource);
 

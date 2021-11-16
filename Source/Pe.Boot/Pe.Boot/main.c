@@ -131,7 +131,7 @@ static int application_main(HINSTANCE hInstance)
 #endif
 
     TEXT command_line = wrap_text(GetCommandLine());
-    COMMAND_LINE_OPTION command_line_option = parse_command_line(&command_line, true);
+    COMMAND_LINE_OPTION command_line_option = parse_command_line(&command_line, true, DEFAULT_MEMORY);
 
     start_logging(&command_line_option);
 

@@ -45,7 +45,7 @@ EXIT_CODE boot_with_option(HINSTANCE hInstance, const COMMAND_LINE_OPTION* comma
     TEXT_LIST args = allocate_memory(command_line_option->count, sizeof(TEXT), DEFAULT_MEMORY);
     size_t arg_count = filter_enable_command_line_items(args, command_line_option);
 
-    TEXT argument = to_command_line_argument(args, arg_count);
+    TEXT argument = to_command_line_argument(args, arg_count, DEFAULT_MEMORY);
     logger_put_information(argument.value);
 
     EXIT_CODE result = boot_core(hInstance, &argument);

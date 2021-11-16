@@ -75,7 +75,7 @@ typedef bool (*func_equals_map_key)(const TEXT* a, const TEXT* b);
 /// <summary>
 /// マップ値解放処理。
 /// </summary>
-typedef void (*func_free_map_value)(MAP_PAIR* pair);
+typedef void (*func_free_map_value)(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource);
 
 /// <summary>
 /// 連想配列データ。
@@ -98,6 +98,14 @@ typedef struct tag_MAP
     /// </summary>
     struct
     {
+        /// <summary>
+        /// 値解放時に使用するメモリリソース。
+        /// </summary>
+        const MEMORY_RESOURCE* value_memory_resource;
+        /// <summary>
+        /// <see cref="MAP"/>が使用するメモリリソース。
+        /// </summary>
+        const MEMORY_RESOURCE* map_memory_resource;
         /// <summary>
         /// 容量。
         /// </summary>
@@ -126,7 +134,7 @@ bool equals_map_key_default(const TEXT* a, const TEXT* b);
 /// マップの値解放不要処理。
 /// </summary>
 /// <param name="pair"></param>
-void free_map_value_null(MAP_PAIR* pair);
+void free_map_value_null(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource);
 
 /// <summary>
 /// マップの生成。
@@ -134,13 +142,13 @@ void free_map_value_null(MAP_PAIR* pair);
 /// <param name="capacity">初期予約領域。特に指定しない場合は<c>MAP_DEFAULT_CAPACITY</c>を使用する。</param>
 /// <param name="equals_map_key">キー比較処理。</param>
 /// <param name="free_map_value">値解放処理。</param>
+/// <param name="value_memory_resource">値解放で使用するメモリリソース。<see cref="MAP" />では使用側でメモリを確保する設計のため<param name="map_memory_resource"/>と必ずしも一緒のメモリリソースとは限らない。混在する場合はもうわからん。</param>
+/// <param name="map_memory_resource"><see cref="MAP" />の内部処理で使用するメモリリソース。</param>
 /// <returns></returns>
-MAP RC_HEAP_FUNC(create_map, size_t capacity, func_equals_map_key equals_map_key, func_free_map_value free_map_value);
+MAP RC_HEAP_FUNC(create_map, size_t capacity, func_equals_map_key equals_map_key, func_free_map_value free_map_value, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource);
 #ifdef RES_CHECK
-#   define create_map(capacity, equals_map_key, free_map_value) RC_HEAP_WRAP(create_map, (capacity), (equals_map_key), (free_map_value))
+#   define create_map(capacity, equals_map_key, free_map_value, value_memory_resource, map_memory_resource) RC_HEAP_WRAP(create_map, (capacity), (equals_map_key), (free_map_value), value_memory_resource, map_memory_resource)
 #endif
-
-#define create_map_default(freeMapValue) create_map(MAP_DEFAULT_CAPACITY, equals_map_key_default, free_map_value_null)
 
 /// <summary>
 /// 初期化処理。
