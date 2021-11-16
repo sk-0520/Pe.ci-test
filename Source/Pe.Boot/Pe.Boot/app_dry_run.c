@@ -71,7 +71,7 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* conso
 
 EXIT_CODE dry_run(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
 {
-    CONSOLE_RESOURCE console_resource = begin_console();
+    CONSOLE_RESOURCE console_resource = begin_console(DEFAULT_MEMORY);
 
     TEXT env_special_key = wrap_text(_T("PE_SPECIAL_MODE"));
     TEXT value = wrap_text(_T("DRY-RUN"));
