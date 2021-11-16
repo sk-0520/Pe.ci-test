@@ -8,10 +8,10 @@ int compare_object_list_value_null(const void* a, const void* b)
     return -1;
 }
 
-void free_object_list_value_null(void* value, const MEMORY_RESOURCE* memory_resource)
+void release_object_list_value_null(void* value, const MEMORY_RESOURCE* memory_resource)
 { }
 
-OBJECT_LIST RC_HEAP_FUNC(new_object_list, byte_t item_size, size_t capacity_count, func_compare_object_list_value compare_object_list_value, func_free_object_list_value free_object_list_value, const MEMORY_RESOURCE* memory_resource)
+OBJECT_LIST RC_HEAP_FUNC(new_object_list, byte_t item_size, size_t capacity_count, func_compare_object_list_value compare_object_list_value, func_release_object_list_value release_object_list_value, const MEMORY_RESOURCE* memory_resource)
 {
     assert(item_size);
 
@@ -23,36 +23,36 @@ OBJECT_LIST RC_HEAP_FUNC(new_object_list, byte_t item_size, size_t capacity_coun
             .item_size = item_size,
             .capacity = capacity_count + item_size,
             .compare_object_list_value = compare_object_list_value,
-            .free_object_list_value = free_object_list_value
+            .release_object_list_value = release_object_list_value
         },
     };
 
     return result;
 }
 
-static void free_object_list_item(OBJECT_LIST* object_list, void* item)
+static void release_object_list_item(OBJECT_LIST* object_list, void* item)
 {
     if (item) {
-        object_list->library.free_object_list_value(item, object_list->library.memory_resource);
+        object_list->library.release_object_list_value(item, object_list->library.memory_resource);
     }
 }
 
-bool RC_HEAP_FUNC(free_object_list, OBJECT_LIST* object_list)
+bool RC_HEAP_FUNC(release_object_list, OBJECT_LIST* object_list)
 {
     if (!object_list) {
         return false;
     }
 
     for (size_t i = 0; i < object_list->length; i++) {
-        free_object_list_item(object_list, object_list->items + (i * object_list->library.item_size));
+        release_object_list_item(object_list, object_list->items + (i * object_list->library.item_size));
     }
 
-    RC_HEAP_CALL(free_memory, object_list->items, object_list->library.memory_resource);
+    RC_HEAP_CALL(release_memory, object_list->items, object_list->library.memory_resource);
 
     object_list->items = NULL;
     object_list->length = 0;
     object_list->library.capacity = 0;
-    object_list->library.free_object_list_value = NULL;
+    object_list->library.release_object_list_value = NULL;
 
     return true;
 }
@@ -159,7 +159,7 @@ bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool n
     if (index < object_list->length) {
         void* current = object_list->items + index * object_list->library.item_size;
         if (need_release) {
-            object_list->library.free_object_list_value(current, object_list->library.memory_resource);
+            object_list->library.release_object_list_value(current, object_list->library.memory_resource);
         }
         copy_memory(current, value, object_list->library.item_size);
         return true;
@@ -171,7 +171,7 @@ bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool n
 void clear_object_list(OBJECT_LIST* object_list)
 {
     for (size_t i = 0; i < object_list->length; i++) {
-        object_list->library.free_object_list_value(object_list->items + (i * object_list->library.item_size), object_list->library.memory_resource);
+        object_list->library.release_object_list_value(object_list->items + (i * object_list->library.item_size), object_list->library.memory_resource);
     }
     object_list->length = 0;
 }

@@ -47,7 +47,7 @@ MEMORY_RESOURCE* get_default_memory_resource()
     return &library__default_memory_resource;
 }
 
-MEMORY_RESOURCE create_memory_resource(byte_t initial_size, byte_t maximum_size)
+MEMORY_RESOURCE new_memory_resource(byte_t initial_size, byte_t maximum_size)
 {
     if (initial_size > maximum_size) {
         return create_invalid_memory_resource();
@@ -124,7 +124,7 @@ void* RC_HEAP_FUNC(allocate_memory, size_t count, byte_t type_size, const MEMORY
     return RC_HEAP_CALL(allocate_raw_memory, count * type_size, true, memory_resource);
 }
 
-bool RC_HEAP_FUNC(free_memory, void* p, const MEMORY_RESOURCE* memory_resource)
+bool RC_HEAP_FUNC(release_memory, void* p, const MEMORY_RESOURCE* memory_resource)
 {
     if (!p) {
         return false;
@@ -187,7 +187,7 @@ byte_t library__extend_capacity_if_not_enough_bytes(void** target, byte_t curren
     void* old_buffer = *target;
 
     copy_memory(new_buffer, old_buffer, new_capacity_bytes);
-    free_memory(old_buffer, memory_resource);
+    release_memory(old_buffer, memory_resource);
 
     *target = new_buffer;
 

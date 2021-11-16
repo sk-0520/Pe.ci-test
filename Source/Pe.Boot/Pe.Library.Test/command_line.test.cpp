@@ -19,26 +19,26 @@ namespace PeLibraryTest
             Assert::AreEqual(_T("abc"), actual1_1.arguments[0].value);
             Assert::AreEqual(_T("def"), actual1_1.arguments[1].value);
             Assert::IsNull(actual1_1.library.command);
-            free_command_line(&actual1_1);
+            release_command_line(&actual1_1);
 
             COMMAND_LINE_OPTION actual1_2 = parse_command_line(&input1, true, DEFAULT_MEMORY);
             Assert::AreEqual((size_t)1, actual1_2.count);
             Assert::AreEqual(_T("def"), actual1_2.arguments[0].value);
             Assert::IsNotNull(actual1_2.library.command);
             Assert::AreEqual(_T("abc"), actual1_2.library.command->value);
-            free_command_line(&actual1_2);
+            release_command_line(&actual1_2);
 
 
             TEXT input2 = wrap("");
             COMMAND_LINE_OPTION actual2_1 = parse_command_line(&input2, false, DEFAULT_MEMORY);
             Assert::AreEqual((size_t)0, actual2_1.count);
             Assert::IsNull(actual2_1.library.command);
-            free_command_line(&actual2_1);
+            release_command_line(&actual2_1);
 
             COMMAND_LINE_OPTION actual2_2 = parse_command_line(&input2, true, DEFAULT_MEMORY);
             Assert::AreEqual((size_t)0, actual2_2.count);
             Assert::IsNull(actual2_2.library.command);
-            free_command_line(&actual2_2);
+            release_command_line(&actual2_2);
         }
 
         TEST_METHOD(parse_command_line_item_flag_test)
@@ -55,7 +55,7 @@ namespace PeLibraryTest
                 Assert::IsFalse(has_value_command_line_item(item));
             }
 
-            free_command_line(&actual);
+            release_command_line(&actual);
         }
 
         TEST_METHOD(parse_command_line_item_value_space_test)
@@ -75,7 +75,7 @@ namespace PeLibraryTest
                 Assert::AreEqual(expected_value->value, item->value.value);
             }
 
-            free_command_line(&actual);
+            release_command_line(&actual);
         }
 
         TEST_METHOD(parse_command_line_item_value_equal_test)
@@ -95,7 +95,7 @@ namespace PeLibraryTest
                 Assert::AreEqual(expected_value->value, item->value.value);
             }
 
-            free_command_line(&actual);
+            release_command_line(&actual);
         }
 
         TEST_METHOD(parse_command_line_item_value_space_with_equal_test)
@@ -115,7 +115,7 @@ namespace PeLibraryTest
                 Assert::AreEqual(expected_value->value, item->value.value);
             }
 
-            free_command_line(&actual);
+            release_command_line(&actual);
         }
 
         TEST_METHOD(parse_command_line_item_switch_width_value_test)
@@ -154,7 +154,7 @@ namespace PeLibraryTest
 
             Assert::IsFalse(has_value_command_line_item(item6));
 
-            free_command_line(&actual);
+            release_command_line(&actual);
         }
 
         TEST_METHOD(parse_command_line_item_value_with_space_test)
@@ -175,7 +175,7 @@ namespace PeLibraryTest
                 Assert::AreEqual(expected_value->value, item->value.value);
             }
 
-            free_command_line(&actual);
+            release_command_line(&actual);
         }
 
         TEST_METHOD(is_inputed_command_line_item_test)
@@ -214,7 +214,7 @@ namespace PeLibraryTest
 
             Assert::IsFalse(is_inputed_command_line_item(item6));
 
-            free_command_line(&actual);
+            release_command_line(&actual);
         }
 
         TEST_METHOD(to_command_line_argument_test)

@@ -53,9 +53,9 @@ FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encodi
     return result;
 }
 
-bool RC_FILE_FUNC(free_file_reader, FILE_READER* file_reader)
+bool RC_FILE_FUNC(release_file_reader, FILE_READER* file_reader)
 {
-    return RC_FILE_CALL(close_file_resource, &file_reader->resource);
+    return RC_FILE_CALL(release_file_resource, &file_reader->resource);
 }
 
 bool is_enabled_file_reader(const FILE_READER* file_reader)
@@ -124,7 +124,7 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
     do {
         ssize_t read_length = read_file_resource(&file_reader->resource, read_buffer, sizeof(read_buffer));
         if (read_length < 0) {
-            RC_HEAP_CALL(free_memory, buffer, memory_resource);
+            RC_HEAP_CALL(release_memory, buffer, memory_resource);
             return create_invalid_text();
         }
         if (read_length) {
@@ -151,7 +151,7 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
         case FILE_ENCODING_UTF8:
         {
             TEXT text = RC_HEAP_CALL(make_text_from_multibyte, conv_buffer, conv_buffer_length, MULTI_BYTE_CHARACTER_TYPE_UTF8, memory_resource);
-            free_memory(buffer, memory_resource);
+            release_memory(buffer, memory_resource);
             return text;
         }
 
@@ -168,7 +168,7 @@ FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encodi
         .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, open_mode, 0, memory_resource),
         .library = {
             .encoding = encoding,
-            .string_builder = RC_HEAP_CALL(create_string_builder, FILE_WRITER_BUFFER_SIZE, memory_resource),
+            .string_builder = RC_HEAP_CALL(new_string_builder, FILE_WRITER_BUFFER_SIZE, memory_resource),
             .buffer_size = FILE_WRITER_BUFFER_SIZE,
         }
     };
@@ -215,12 +215,12 @@ FILE_WRITER create_invalid_file_writer()
 }
 
 
-bool RC_FILE_FUNC(free_file_writer, FILE_WRITER* file_writer)
+bool RC_FILE_FUNC(release_file_writer, FILE_WRITER* file_writer)
 {
     flush_file_writer(file_writer, true);
 
-    bool fr = RC_FILE_CALL(close_file_resource, &file_writer->resource);
-    fr &= RC_HEAP_CALL(free_string_builder, &file_writer->library.string_builder);
+    bool fr = RC_FILE_CALL(release_file_resource, &file_writer->resource);
+    fr &= RC_HEAP_CALL(release_string_builder, &file_writer->library.string_builder);
     if (!fr) {
         return false;
     }
@@ -260,7 +260,7 @@ void flush_file_writer(FILE_WRITER* file_writer, bool force)
         {
             MULTIBYTE_CHARACTER_RESULT mbcr = convert_to_multibyte_character(&text, MULTI_BYTE_CHARACTER_TYPE_UTF8, file_writer->resource.library.memory_resource);
             write_file_resource(&file_writer->resource, mbcr.buffer, mbcr.length);
-            free_multibyte_character_result(&mbcr, file_writer->resource.library.memory_resource);
+            release_multibyte_character_result(&mbcr, file_writer->resource.library.memory_resource);
         }
         break;
 

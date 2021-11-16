@@ -3,27 +3,7 @@
 #include "string_builder.h"
 #include "writer.h"
 
-STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t capacity, const MEMORY_RESOURCE* memory_resource)
-{
-    assert(s);
-
-    size_t length = get_string_length(s);
-
-    PRIMITIVE_LIST_TCHAR list = RC_HEAP_CALL(new_primitive_list, PRIMITIVE_LIST_TYPE_TCHAR, capacity, memory_resource);
-
-    add_range_list_tchar(&list, s, length);
-
-    STRING_BUILDER result = {
-        .newline = NEWLINE_TEXT,
-        .library = {
-            .list = list,
-        }
-    };
-
-    return result;
-}
-
-STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity, const MEMORY_RESOURCE* memory_resource)
+STRING_BUILDER RC_HEAP_FUNC(new_string_builder, size_t capacity, const MEMORY_RESOURCE* memory_resource)
 {
     assert(capacity);
 
@@ -39,7 +19,7 @@ STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity, const MEMORY
     return result;
 }
 
-bool RC_HEAP_FUNC(free_string_builder, STRING_BUILDER* string_builder)
+bool RC_HEAP_FUNC(release_string_builder, STRING_BUILDER* string_builder)
 {
     if (!string_builder) {
         return false;

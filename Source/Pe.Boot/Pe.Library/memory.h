@@ -50,7 +50,7 @@ MEMORY_RESOURCE* get_default_memory_resource();
 /// <param name="initial_size">初期サイズ。</param>
 /// <param name="maximum_size">最大サイズ。</param>
 /// <returns>生成されたメモリ管理データ。解放が必要</returns>
-MEMORY_RESOURCE create_memory_resource(byte_t initial_size, byte_t maximum_size);
+MEMORY_RESOURCE new_memory_resource(byte_t initial_size, byte_t maximum_size);
 
 /// <summary>
 /// メモリリソースの解放。
@@ -92,9 +92,9 @@ void* RC_HEAP_FUNC(allocate_memory, size_t count, byte_t type_size, const MEMORY
 /// </summary>
 /// <param name="p"></param>
 /// <returns></returns>
-bool RC_HEAP_FUNC(free_memory, void* p, const MEMORY_RESOURCE* memory_resource);
+bool RC_HEAP_FUNC(release_memory, void* p, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK
-#   define free_memory(p, memory_resource) RC_HEAP_WRAP(free_memory, p, memory_resource)
+#   define release_memory(p, memory_resource) RC_HEAP_WRAP(release_memory, p, memory_resource)
 #endif
 
 

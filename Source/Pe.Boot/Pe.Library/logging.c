@@ -25,7 +25,7 @@ void initialize_logger(const MEMORY_RESOURCE* memory_resource)
 void set_default_log_file(FILE_WRITER* file_writer)
 {
     if (is_enabled_file_writer(&library__default_log_file_writer)) {
-        free_file_writer(&library__default_log_file_writer);
+        release_file_writer(&library__default_log_file_writer);
     }
 
     if (file_writer) {
@@ -81,7 +81,7 @@ bool detach_logger(ssize_t log_id)
 
 void cleanup_default_log()
 {
-    free_file_writer(&library__default_log_file_writer);
+    release_file_writer(&library__default_log_file_writer);
 }
 
 static void logging_default(const LOG_ITEM* log_item)
@@ -95,7 +95,7 @@ static void logging_default(const LOG_ITEM* log_item)
             _T("ERROR"),
         };
 
-        STRING_BUILDER sb = create_string_builder(OUTPUT_LINE_CAPACITY, library__log_memory_resource);
+        STRING_BUILDER sb = new_string_builder(OUTPUT_LINE_CAPACITY, library__log_memory_resource);
         TEXT format = wrap_text(
             _T("%tT%t")
             _T(" | ")
@@ -116,7 +116,7 @@ static void logging_default(const LOG_ITEM* log_item)
         write_text_file_writer(&library__default_log_file_writer, &log_message, true);
         flush_file_writer(&library__default_log_file_writer, true);
 
-        free_string_builder(&sb);
+        release_string_builder(&sb);
         free_text(&log_message);
     }
 }
@@ -137,7 +137,7 @@ static void logging(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller
 
     TEXT caller_file_text = wrap_text(caller_file);
 
-    STRING_BUILDER sb = create_string_builder(LOG_FORMAT_CAPACITY, library__log_memory_resource);
+    STRING_BUILDER sb = new_string_builder(LOG_FORMAT_CAPACITY, library__log_memory_resource);
 
     TEXT date_format = wrap_text(_T("%04d-%02d-%02d"));
     append_builder_format(&sb, &date_format, timestamp.year, timestamp.month, timestamp.day);
@@ -154,7 +154,7 @@ static void logging(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller
     TEXT caller_text = build_text_string_builder(&sb);
     //clear_builder(&sb);
 
-    free_string_builder(&sb);
+    release_string_builder(&sb);
 
     LOG_ITEM log_item = {
         .caller_file = &caller_file_text,
@@ -210,11 +210,11 @@ void library__format_log(LOG_LEVEL log_level, const TCHAR* caller_file, size_t c
     va_start(ap, format);
 
     TEXT text_format = wrap_text(format);
-    STRING_BUILDER sb = create_string_builder(MESSAGE_CAPACITY, library__log_memory_resource);
+    STRING_BUILDER sb = new_string_builder(MESSAGE_CAPACITY, library__log_memory_resource);
     append_builder_vformat(&sb, &text_format, ap);
     TEXT message = build_text_string_builder(&sb);
 
-    free_string_builder(&sb);
+    release_string_builder(&sb);
 
     va_end(ap);
 

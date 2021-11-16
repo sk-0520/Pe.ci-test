@@ -78,7 +78,7 @@ typedef struct tag_COMMAND_LINE_OPTION
 /// </summary>
 /// <param name="command_line"></param>
 /// <param name="with_command"><c>command_line</c>に起動コマンド(プログラム)が含まれているか</param>
-/// <returns>分解結果。<see cref="free_command_line" /> による開放が必要。</returns>
+/// <returns>分解結果。<see cref="release_command_line" /> による開放が必要。</returns>
 COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, bool with_command, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
 #   define parse_command_line(command_line, with_command, memory_resource) RC_HEAP_WRAP(parse_command_line, (command_line), (with_command), memory_resource)
@@ -88,9 +88,9 @@ COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, b
 /// コマンドラインオプションを解放。
 /// </summary>
 /// <param name="commandLineOption"></param>
-bool RC_HEAP_FUNC(free_command_line, COMMAND_LINE_OPTION* command_line_option);
+bool RC_HEAP_FUNC(release_command_line, COMMAND_LINE_OPTION* command_line_option);
 #ifdef RES_CHECK
-#   define free_command_line(command_line_option) RC_HEAP_WRAP(free_command_line, (command_line_option))
+#   define release_command_line(command_line_option) RC_HEAP_WRAP(release_command_line, (command_line_option))
 #endif
 
 /// <summary>

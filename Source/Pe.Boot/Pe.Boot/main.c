@@ -23,7 +23,7 @@ static void logging(const LOG_ITEM* log_item, void* data)
         _T("WARNING"),
         _T("ERROR"),
     };
-    STRING_BUILDER sb = create_string_builder(256, DEFAULT_MEMORY);
+    STRING_BUILDER sb = new_string_builder(256, DEFAULT_MEMORY);
     TEXT format = wrap_text(
         _T("[LOG:%s]")
         _T(" ")
@@ -43,7 +43,7 @@ static void logging(const LOG_ITEM* log_item, void* data)
     OutputDebugString(text.value);
 
     free_text(&text);
-    free_string_builder(&sb);
+    release_string_builder(&sb);
 }
 
 static void setup_logging_file(const COMMAND_LINE_OPTION* command_line_option)
@@ -143,7 +143,7 @@ static int application_main(HINSTANCE hInstance)
 
     logger_put_information(_T("Pe アプリケーション処理終了"));
 
-    free_command_line(&command_line_option);
+    release_command_line(&command_line_option);
 
     end_logging();
 

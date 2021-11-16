@@ -8,6 +8,6 @@ void oreore_test(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_op
     FILE_READER file_reader = new_file_reader(&input, FILE_ENCODING_UTF16LE, DEFAULT_MEMORY);
     TEXT text = read_content_file_reader(&file_reader);
     output_debug(text.value);
-    free_file_reader(&file_reader);
+    release_file_reader(&file_reader);
 }
 

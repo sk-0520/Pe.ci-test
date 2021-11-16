@@ -29,7 +29,7 @@ namespace PeBootTest
 #pragma warning(pop)
                 Assert::AreEqual((int)test.expected, (int)actual);
 
-                free_command_line(&command_line_optioin);
+                release_command_line(&command_line_optioin);
             }
         }
 
@@ -57,7 +57,7 @@ namespace PeBootTest
                     Assert::AreEqual(test.expected, actual.time);
                 }
 
-                free_command_line(&command_line_optioin);
+                release_command_line(&command_line_optioin);
             }
         }
 

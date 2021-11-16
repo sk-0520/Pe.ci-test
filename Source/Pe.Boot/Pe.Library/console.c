@@ -46,9 +46,9 @@ void end_console(CONSOLE_RESOURCE* console_resource)
         FreeConsole();
     }
 
-    close_file_resource(&console_resource->stdio.input);
-    close_file_resource(&console_resource->stdio.output);
-    close_file_resource(&console_resource->stdio.error);
+    release_file_resource(&console_resource->stdio.input);
+    release_file_resource(&console_resource->stdio.output);
+    release_file_resource(&console_resource->stdio.error);
 }
 
 size_t output_console_text(const CONSOLE_RESOURCE* console_resource, const TEXT* text, bool newline)

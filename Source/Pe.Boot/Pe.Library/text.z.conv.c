@@ -183,7 +183,7 @@ MULTIBYTE_CHARACTER_RESULT RC_HEAP_FUNC(convert_to_multibyte_character, const TE
     return result;
 }
 
-bool RC_HEAP_FUNC(free_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* mbcr, const MEMORY_RESOURCE* memory_resource)
+bool RC_HEAP_FUNC(release_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* mbcr, const MEMORY_RESOURCE* memory_resource)
 {
     if (!mbcr) {
         return false;
@@ -192,7 +192,7 @@ bool RC_HEAP_FUNC(free_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* m
         return false;
     }
 
-    bool result = RC_HEAP_CALL(free_memory, mbcr->buffer, memory_resource);
+    bool result = RC_HEAP_CALL(release_memory, mbcr->buffer, memory_resource);
 
     mbcr->buffer = NULL;
     mbcr->length = 0;

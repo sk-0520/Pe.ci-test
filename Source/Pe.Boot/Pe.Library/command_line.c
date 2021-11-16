@@ -8,20 +8,20 @@ static bool equals_command_line_item_key(const TEXT* a, const TEXT* b)
     return equals_map_key_default(a, b);
 }
 
-static void free_command_line_item_core(COMMAND_LINE_ITEM* item, const MEMORY_RESOURCE* memory_resource)
+static void release_command_line_item_core(COMMAND_LINE_ITEM* item, const MEMORY_RESOURCE* memory_resource)
 {
     free_text(&item->value);
-    free_memory(item, memory_resource);
+    release_memory(item, memory_resource);
 }
 
-static void free_command_line_item_value(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource)
+static void release_command_line_item_value(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource)
 {
-    free_command_line_item_core((COMMAND_LINE_ITEM*)pair->value, memory_resource);
+    release_command_line_item_core((COMMAND_LINE_ITEM*)pair->value, memory_resource);
 }
 
 static void set_command_line_map_setting(MAP* map, size_t capacity, const MEMORY_RESOURCE* memory_resource)
 {
-    *map = create_map(capacity, equals_command_line_item_key, free_command_line_item_value, memory_resource, memory_resource);
+    *map = new_map(capacity, equals_command_line_item_key, release_command_line_item_value, memory_resource, memory_resource);
 }
 
 /// <summary>
@@ -112,7 +112,7 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
 
         MAP_PAIR* pair = add_map(result, &key, item, true);
         if (!pair) {
-            free_command_line_item_core(item, memory_resource);
+            release_command_line_item_core(item, memory_resource);
         }
         free_text(&key);
     }
@@ -170,7 +170,7 @@ COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, b
     return result;
 }
 
-bool RC_HEAP_FUNC(free_command_line, COMMAND_LINE_OPTION* command_line_option)
+bool RC_HEAP_FUNC(release_command_line, COMMAND_LINE_OPTION* command_line_option)
 {
     if (!command_line_option) {
         return false;
@@ -178,9 +178,9 @@ bool RC_HEAP_FUNC(free_command_line, COMMAND_LINE_OPTION* command_line_option)
 
     const MEMORY_RESOURCE* memory_resource = command_line_option->library.map.library.map_memory_resource;
 
-    free_map(&command_line_option->library.map);
+    release_map(&command_line_option->library.map);
 
-    RC_HEAP_CALL(free_memory, command_line_option->library.raw_arguments, memory_resource);
+    RC_HEAP_CALL(release_memory, command_line_option->library.raw_arguments, memory_resource);
     command_line_option->library.raw_arguments = NULL;
 
     LocalFree((HLOCAL)command_line_option->library.argv);
@@ -269,7 +269,7 @@ TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count, const MEM
     }
     buffer[position] = 0;
 
-    free_memory(hasSpaceList, memory_resource);
+    release_memory(hasSpaceList, memory_resource);
 
     return wrap_text_with_length(buffer, position, true, memory_resource);
 }

@@ -133,9 +133,9 @@ FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path, const
 /// </summary>
 /// <param name="file">対象ファイルリソース。</param>
 /// <returns>成功状態。</returns>
-bool RC_FILE_FUNC(close_file_resource, FILE_RESOURCE* file_resource);
+bool RC_FILE_FUNC(release_file_resource, FILE_RESOURCE* file_resource);
 #if RES_CHECK
-#   define close_file_resource(file_resource) RC_FILE_WRAP(close_file_resource, (file_resource))
+#   define release_file_resource(file_resource) RC_FILE_WRAP(release_file_resource, (file_resource))
 #endif
 
 /// <summary>

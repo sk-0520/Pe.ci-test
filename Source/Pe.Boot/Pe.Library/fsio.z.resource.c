@@ -57,7 +57,7 @@ FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path, const
     return RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN_OR_CREATE, 0, memory_resource);
 }
 
-bool RC_FILE_FUNC(close_file_resource, FILE_RESOURCE* file_resource)
+bool RC_FILE_FUNC(release_file_resource, FILE_RESOURCE* file_resource)
 {
     if (!file_resource) {
         return false;

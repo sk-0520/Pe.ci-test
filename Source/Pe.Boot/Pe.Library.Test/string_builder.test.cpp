@@ -12,26 +12,7 @@ namespace PeLibraryTest
     TEST_CLASS(string_builder_test)
     {
     public:
-
-        TEST_METHOD(initialize_string_builder_test)
-        {
-            auto tests = {
-                DATA((size_t)4, _T("abcd"), 0),
-                DATA((size_t)1, _T(""), 1),
-                DATA((size_t)2, _T("ab"), 1),
-            };
-
-            for (auto test : tests) {
-                auto [arg1, arg2] = test.inputs;
-                auto actual = initialize_string_builder(arg1, arg2, DEFAULT_MEMORY);
-                Assert::AreEqual(get_string_length(arg1), actual.library.list.length);
-                //Assert::AreEqual(test.expected, actual.library.capacity);
-
-                Assert::IsTrue(free_string_builder(&actual));
-            }
-        }
-
-        TEST_METHOD(create_string_builder_test)
+        TEST_METHOD(new_string_builder_test)
         {
             auto tests = {
                 DATA((size_t)4, 4),
@@ -41,29 +22,29 @@ namespace PeLibraryTest
 
             for (auto test : tests) {
                 auto [arg1] = test.inputs;
-                auto actual = create_string_builder(arg1, DEFAULT_MEMORY);
+                auto actual = new_string_builder(arg1, DEFAULT_MEMORY);
                 //Assert::AreEqual(test.expected, actual.library.capacity);
 
-                Assert::IsTrue(free_string_builder(&actual));
+                Assert::IsTrue(release_string_builder(&actual));
             }
         }
 
-        TEST_METHOD(free_string_builder_test)
+        TEST_METHOD(release_string_builder_test)
         {
             STRING_BUILDER* input1 = NULL;
-            Assert::IsFalse(free_string_builder(input1));
+            Assert::IsFalse(release_string_builder(input1));
 
             STRING_BUILDER input2 = { 0 };
-            Assert::IsFalse(free_string_builder(&input2));
+            Assert::IsFalse(release_string_builder(&input2));
 
-            STRING_BUILDER input3 = create_string_builder(1, DEFAULT_MEMORY);
-            Assert::IsTrue(free_string_builder(&input3));
+            STRING_BUILDER input3 = new_string_builder(1, DEFAULT_MEMORY);
+            Assert::IsTrue(release_string_builder(&input3));
         }
 
         TEST_METHOD(append_string_builder_test)
         {
             auto expected = _T("ABCDEFGtrue-1false1");
-            auto sb = create_string_builder(3, DEFAULT_MEMORY);
+            auto sb = new_string_builder(3, DEFAULT_MEMORY);
 
             append_builder_string(&sb, _T("ABC"), false);
 
@@ -87,12 +68,12 @@ namespace PeLibraryTest
 
 
             Assert::IsTrue(free_text(&actual));
-            Assert::IsTrue(free_string_builder(&sb));
+            Assert::IsTrue(release_string_builder(&sb));
         }
 
         TEST_METHOD(append_builder_format_test)
         {
-            auto sb = create_string_builder(3, DEFAULT_MEMORY);
+            auto sb = new_string_builder(3, DEFAULT_MEMORY);
 
             auto expected = _T("1 -1 +100 -100 -200 A abc def");
             TEXT format = wrap("%d %d %+d %d %+d %c %s %t");
@@ -103,7 +84,7 @@ namespace PeLibraryTest
             Assert::AreEqual(expected, actual.value);
 
             Assert::IsTrue(free_text(&actual));
-            Assert::IsTrue(free_string_builder(&sb));
+            Assert::IsTrue(release_string_builder(&sb));
         }
     };
 }

@@ -114,9 +114,9 @@ namespace PeLibraryTest
                 Assert::IsTrue(is_enabled_multibyte_character_result(&res));
                 auto text = make_text_from_multibyte(res.buffer, res.length, test, DEFAULT_MEMORY);
                 Assert::AreEqual(text.value, input.value);
-                Assert::IsTrue(free_multibyte_character_result(&res, DEFAULT_MEMORY));
+                Assert::IsTrue(release_multibyte_character_result(&res, DEFAULT_MEMORY));
                 Assert::IsTrue(free_text(&text));
-                Assert::IsFalse(free_multibyte_character_result(&res, DEFAULT_MEMORY));
+                Assert::IsFalse(release_multibyte_character_result(&res, DEFAULT_MEMORY));
             }
         }
 

@@ -79,7 +79,7 @@ bool RC_HEAP_FUNC(free_primitive_list, PRIMITIVE_LIST* list)
         return false;
     }
 
-    return RC_HEAP_CALL(free_memory, list->items, list->library.memory_resource);
+    return RC_HEAP_CALL(release_memory, list->items, list->library.memory_resource);
 }
 
 static void extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t need_length)

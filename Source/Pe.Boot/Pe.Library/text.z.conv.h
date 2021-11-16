@@ -100,9 +100,9 @@ MULTIBYTE_CHARACTER_RESULT RC_HEAP_FUNC(convert_to_multibyte_character, const TE
 #   define convert_to_multibyte_character(input, convert_type, memory_resource) RC_HEAP_WRAP(convert_to_multibyte_character, (input), (convert_type), memory_resource)
 #endif
 
-bool RC_HEAP_FUNC(free_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* mbcr, const MEMORY_RESOURCE* memory_resource);
+bool RC_HEAP_FUNC(release_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* mbcr, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define free_multibyte_character_result(mbcr, memory_resource) RC_HEAP_WRAP(free_multibyte_character_result, (mbcr), memory_resource)
+#   define release_multibyte_character_result(mbcr, memory_resource) RC_HEAP_WRAP(release_multibyte_character_result, (mbcr), memory_resource)
 #endif
 
 /// <summary>

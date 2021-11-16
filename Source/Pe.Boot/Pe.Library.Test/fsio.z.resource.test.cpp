@@ -23,8 +23,8 @@ namespace PeLibraryTest
             Assert::IsTrue(is_enabled_file_resource(&actual1));
             Assert::IsFalse(is_enabled_file_resource(&actual2));
 
-            Assert::IsTrue(close_file_resource(&actual1));
-            Assert::IsFalse(close_file_resource(&actual2));
+            Assert::IsTrue(release_file_resource(&actual1));
+            Assert::IsFalse(release_file_resource(&actual2));
         }
 
         TEST_METHOD(open_file_resource_test)
@@ -42,8 +42,8 @@ namespace PeLibraryTest
             Assert::IsTrue(is_enabled_file_resource(&actual1));
             Assert::IsFalse(is_enabled_file_resource(&actual2));
 
-            Assert::IsTrue(close_file_resource(&actual1));
-            Assert::IsFalse(close_file_resource(&actual2));
+            Assert::IsTrue(release_file_resource(&actual1));
+            Assert::IsFalse(release_file_resource(&actual2));
         }
 
         TEST_METHOD(open_or_create_file_resource_test)
@@ -61,8 +61,8 @@ namespace PeLibraryTest
             Assert::IsTrue(is_enabled_file_resource(&actual1));
             Assert::IsTrue(is_enabled_file_resource(&actual2));
 
-            Assert::IsTrue(close_file_resource(&actual1));
-            Assert::IsTrue(close_file_resource(&actual2));
+            Assert::IsTrue(release_file_resource(&actual1));
+            Assert::IsTrue(release_file_resource(&actual2));
         }
 
         TEST_METHOD(write_read_file_resource_test)
@@ -79,7 +79,7 @@ namespace PeLibraryTest
             };
             ssize_t write_length = write_file_resource(&fr1, write_values, sizeof(write_values));
             Assert::AreEqual((ssize_t)sizeof(write_values), write_length);
-            close_file_resource(&fr1);
+            release_file_resource(&fr1);
             Assert::IsFalse(is_enabled_file_resource(&fr1));
 
             auto fr2 = open_file_resource(&path, DEFAULT_MEMORY);
@@ -92,7 +92,7 @@ namespace PeLibraryTest
                 Assert::AreEqual(actual_values[i], write_values[i]);
             }
 
-            close_file_resource(&fr2);
+            release_file_resource(&fr2);
         }
     };
 }

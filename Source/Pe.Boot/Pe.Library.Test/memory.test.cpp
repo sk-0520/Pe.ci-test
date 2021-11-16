@@ -31,8 +31,8 @@ namespace PeLibraryTest
                 Assert::AreEqual(p1[i], p2[i]);
             }
 
-            free_memory(p1, DEFAULT_MEMORY);
-            free_memory(p2, DEFAULT_MEMORY);
+            release_memory(p1, DEFAULT_MEMORY);
+            release_memory(p2, DEFAULT_MEMORY);
         }
 
         TEST_METHOD(library__extend_capacity_if_not_enough_bytes_x2_test)
@@ -64,7 +64,7 @@ namespace PeLibraryTest
             Assert::AreEqual((byte_t)8192, extends3);
 
 
-            free_memory(p1, DEFAULT_MEMORY);
+            release_memory(p1, DEFAULT_MEMORY);
         }
     };
 }

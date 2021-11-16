@@ -60,9 +60,9 @@ FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encodi
 #endif
 
 
-bool RC_FILE_FUNC(free_file_reader, FILE_READER* file_reader);
+bool RC_FILE_FUNC(release_file_reader, FILE_READER* file_reader);
 #if RES_CHECK
-#   define free_file_reader(file_reader) RC_FILE_WRAP(free_file_reader, (file_reader))
+#   define release_file_reader(file_reader) RC_FILE_WRAP(release_file_reader, (file_reader))
 #endif
 
 /// <summary>
@@ -107,9 +107,9 @@ FILE_WRITER create_invalid_file_writer(void);
 /// </summary>
 /// <param name="file_writer"></param>
 /// <returns></returns>
-bool RC_FILE_FUNC(free_file_writer, FILE_WRITER* file_writer);
+bool RC_FILE_FUNC(release_file_writer, FILE_WRITER* file_writer);
 #if RES_CHECK
-#   define free_file_writer(file_writer) RC_FILE_WRAP(free_file_writer, (file_writer))
+#   define release_file_writer(file_writer) RC_FILE_WRAP(release_file_writer, (file_writer))
 #endif
 
 /// <summary>

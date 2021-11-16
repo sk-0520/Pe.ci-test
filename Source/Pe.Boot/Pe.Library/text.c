@@ -226,7 +226,7 @@ bool RC_HEAP_FUNC(free_text, TEXT* text)
 
 TEXT RC_HEAP_FUNC(format_text, const MEMORY_RESOURCE* memory_resource, const TEXT* format, ...)
 {
-    STRING_BUILDER sb = RC_HEAP_CALL(create_string_builder, FORMAT_LENGTH, memory_resource);
+    STRING_BUILDER sb = RC_HEAP_CALL(new_string_builder, FORMAT_LENGTH, memory_resource);
     va_list ap;
     va_start(ap, format);
 
@@ -236,7 +236,7 @@ TEXT RC_HEAP_FUNC(format_text, const MEMORY_RESOURCE* memory_resource, const TEX
 
     TEXT result = RC_HEAP_CALL(build_text_string_builder, &sb);
 
-    RC_HEAP_CALL(free_string_builder, &sb);
+    RC_HEAP_CALL(release_string_builder, &sb);
 
     return result;
 }
