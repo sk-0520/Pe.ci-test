@@ -2,6 +2,7 @@
 
 #include <windows.h>
 
+#include "debug.h"
 #include "logging.h"
 
 #define LOGGER_LENGTH (4)
@@ -10,9 +11,16 @@
 #define LOG_FORMAT_CAPACITY (256)
 #define OUTPUT_LINE_CAPACITY (1024)
 
+static const MEMORY_RESOURCE* library__log_memory_resource;
 static FILE_WRITER library__default_log_file_writer;
 static LOG_LEVEL library__default_log_level;
 static LOGGER library__log_loggers[LOGGER_LENGTH];
+
+void initialize_logger(const MEMORY_RESOURCE* memory_resource)
+{
+    assert(memory_resource);
+    library__log_memory_resource = memory_resource;
+}
 
 void set_default_log_file(FILE_WRITER* file_writer)
 {
@@ -85,7 +93,7 @@ static void logging_default(const LOG_ITEM* log_item)
             _T("ERROR"),
         };
 
-        STRING_BUILDER sb = create_string_builder(OUTPUT_LINE_CAPACITY, DEFAULT_MEMORY);
+        STRING_BUILDER sb = create_string_builder(OUTPUT_LINE_CAPACITY, library__log_memory_resource);
         TEXT format = wrap_text(
             _T("%tT%t")
             _T(" | ")
@@ -127,7 +135,7 @@ static void logging(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller
 
     TEXT caller_file_text = wrap_text(caller_file);
 
-    STRING_BUILDER sb = create_string_builder(LOG_FORMAT_CAPACITY, DEFAULT_MEMORY);
+    STRING_BUILDER sb = create_string_builder(LOG_FORMAT_CAPACITY, library__log_memory_resource);
 
     TEXT date_format = wrap_text(_T("%04d-%02d-%02d"));
     append_builder_format(&sb, &date_format, timestamp.year, timestamp.month, timestamp.day);
@@ -200,7 +208,7 @@ void library__format_log(LOG_LEVEL log_level, const TCHAR* caller_file, size_t c
     va_start(ap, format);
 
     TEXT text_format = wrap_text(format);
-    STRING_BUILDER sb = create_string_builder(MESSAGE_CAPACITY, DEFAULT_MEMORY);
+    STRING_BUILDER sb = create_string_builder(MESSAGE_CAPACITY, library__log_memory_resource);
     append_builder_vformat(&sb, &text_format, ap);
     TEXT message = build_text_string_builder(&sb);
 

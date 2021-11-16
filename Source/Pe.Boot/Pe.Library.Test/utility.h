@@ -213,6 +213,7 @@ public:
         logger.function = logging;
         logger.data = this,
         attach_logger(&logger);
+        initialize_logger(DEFAULT_MEMORY);
         logger_put_information(_T("TEST START"));
 
         // https://stackoverflow.com/a/25151971
