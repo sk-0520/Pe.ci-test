@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #endregion
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             Stop();
             if(CanSend) {

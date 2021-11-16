@@ -736,7 +736,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DelayResetScreenViewElements();
         }
 
-        private void LowScheduler_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void LowScheduler_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
             LowScheduler.Stop();
             if(StatusManager.CanCallNotifyAreaMenu) {

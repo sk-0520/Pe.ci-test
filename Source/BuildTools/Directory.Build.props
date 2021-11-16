@@ -1,15 +1,11 @@
 <Project>
   <PropertyGroup>
-    <Version>0.99.165</Version>
-
     <TargetFramework>net6.0-windows</TargetFramework>
     <Platforms>x64;x86</Platforms>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Product>Pe</Product>
-    <Copyright>Copyright © 2014-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
     <Configurations>Debug;Release</Configurations>
     <PathMap>$(MSBuildThisFileDirectory)=.</PathMap>
   </PropertyGroup>

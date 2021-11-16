@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao
         protected Color ToColor(string raw)
         {
             var colorConverter = new ColorConverter();
-            var color = (Color)colorConverter.ConvertFrom(raw);
+            var color = (Color)colorConverter.ConvertFrom(raw)!;
             return color;
         }
 

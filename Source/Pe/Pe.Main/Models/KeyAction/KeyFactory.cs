@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 var keyConverter = new KeyConverter();
                 var data = new KeyActionReplaceData(
                     item.Action.KeyActionId,
-                    (Key)keyConverter.ConvertFromInvariantString(item.Action.KeyActionContent)
+                    (Key)keyConverter.ConvertFromInvariantString(item.Action.KeyActionContent)!
                 );
 
                 return new KeyActionReplaceJob(data, item.Mappings.First());

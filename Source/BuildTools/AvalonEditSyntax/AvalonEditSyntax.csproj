@@ -2,15 +2,8 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
-    <Platforms>x64;x86</Platforms>
     <UseWPF>true</UseWPF>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
-
 
   <ItemGroup>
     <ProjectReference Include="..\..\Pe\Pe.Main\Pe.Main.csproj" />

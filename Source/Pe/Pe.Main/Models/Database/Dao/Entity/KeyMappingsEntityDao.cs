@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var keyConverter = new KeyConverter();
 
             var result = new KeyMappingData() {
-                Key = (Key)keyConverter.ConvertFromInvariantString(dto.Key),
+                Key = (Key)keyConverter.ConvertFromInvariantString(dto.Key)!,
                 Shift = modifierKeyTransfer.ToEnum(dto.Shift),
                 Control = modifierKeyTransfer.ToEnum(dto.Control),
                 Alt = modifierKeyTransfer.ToEnum(dto.Alt),
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var dto = new KeyMappingsEntityDto() {
                 KeyActionId = keyActionId,
-                Key = keyConverter.ConvertToInvariantString(data.Key),
+                Key = keyConverter.ConvertToInvariantString(data.Key)!,
                 Sequence = sequence,
                 Shift = modifierKeyTransfer.ToString(data.Shift),
                 Control = modifierKeyTransfer.ToString(data.Control),

@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         protected Key ToKey(string content)
         {
             var keyConverter = new KeyConverter();
-            return (Key)keyConverter.ConvertFromInvariantString(content);
+            return (Key)keyConverter.ConvertFromInvariantString(content)!;
         }
 
         #endregion

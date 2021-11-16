@@ -359,9 +359,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        private void Window_Closing(object sender, CancelEventArgs e)
+        private void Window_Closing(object? sender, CancelEventArgs e)
         {
-            var window = (Window)sender;
+            var window = (Window?)sender;
             Logger.LogDebug("ウィンドウ破棄前: {0}", window);
 
             var item = Items.First(i => i.Window == window);
