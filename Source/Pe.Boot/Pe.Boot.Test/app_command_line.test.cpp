@@ -22,14 +22,14 @@ namespace PeBootTest
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                COMMAND_LINE_OPTION command_line_optioin = parse_command_line(&arg1, true);
+                COMMAND_LINE_OPTION command_line_optioin = parse_command_line(&arg1, true, DEFAULT_MEMORY);
 #pragma warning(push)
 #pragma warning(disable:26812)
                 EXECUTE_MODE actual = get_execute_mode(&command_line_optioin);
 #pragma warning(pop)
                 Assert::AreEqual((int)test.expected, (int)actual);
 
-                free_command_line(&command_line_optioin);
+                release_command_line(&command_line_optioin);
             }
         }
 
@@ -48,7 +48,7 @@ namespace PeBootTest
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                COMMAND_LINE_OPTION command_line_optioin = parse_command_line(&arg1, true);
+                COMMAND_LINE_OPTION command_line_optioin = parse_command_line(&arg1, true, DEFAULT_MEMORY);
                 WAIT_TIME_ARG actual = get_wait_time(&command_line_optioin);
                 if (test.expected == -1) {
                     Assert::IsFalse(actual.enabled);
@@ -57,7 +57,7 @@ namespace PeBootTest
                     Assert::AreEqual(test.expected, actual.time);
                 }
 
-                free_command_line(&command_line_optioin);
+                release_command_line(&command_line_optioin);
             }
         }
 

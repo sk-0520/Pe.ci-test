@@ -8,20 +8,20 @@ static bool equals_command_line_item_key(const TEXT* a, const TEXT* b)
     return equals_map_key_default(a, b);
 }
 
-static void free_command_line_item_core(COMMAND_LINE_ITEM* item)
+static void release_command_line_item_core(COMMAND_LINE_ITEM* item, const MEMORY_RESOURCE* memory_resource)
 {
-    free_text(&item->value);
-    free_memory(item);
+    release_text(&item->value);
+    release_memory(item, memory_resource);
 }
 
-static void free_command_line_item_value(MAP_PAIR* pair)
+static void release_command_line_item_value(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource)
 {
-    free_command_line_item_core((COMMAND_LINE_ITEM*)pair->value);
+    release_command_line_item_core((COMMAND_LINE_ITEM*)pair->value, memory_resource);
 }
 
-static void set_command_line_map_setting(MAP* map, size_t capacity)
+static void set_command_line_map_setting(MAP* map, size_t capacity, const MEMORY_RESOURCE* memory_resource)
 {
-    *map = create_map(capacity, equals_command_line_item_key, free_command_line_item_value);
+    *map = new_map(capacity, equals_command_line_item_key, release_command_line_item_value, memory_resource, memory_resource);
 }
 
 /// <summary>
@@ -45,6 +45,8 @@ static ssize_t get_key_mark_index(const TEXT* argument, TEXT_LIST mark_texts, si
 
 static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size_t count)
 {
+    const MEMORY_RESOURCE* memory_resource = result->library.map_memory_resource;
+
     TEXT mark_texts[] = {
         wrap_text(_T("--")),
         wrap_text(_T("-")),
@@ -62,28 +64,28 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
 
         const TEXT* mark_text = mark_texts + mark_index;
         // 先頭のマークを外した引数取得
-        TEXT arg = wrap_text_with_length(current->value + mark_text->length, (size_t)current->length - mark_text->length, false);
+        TEXT arg = wrap_text_with_length(current->value + mark_text->length, (size_t)current->length - mark_text->length, false, NULL);
 
-        COMMAND_LINE_ITEM* item = allocate_clear_memory(1, sizeof(COMMAND_LINE_ITEM));
+        COMMAND_LINE_ITEM* item = allocate_memory(1, sizeof(COMMAND_LINE_ITEM), memory_resource);
         item->key_index = i;
 
         TEXT key;
         TEXT value_with_separator = find_character(&arg, _T('='));
         if (is_enabled_text(&value_with_separator)) {
             // 引数が値とキーを持つ
-            key = new_text_with_length(arg.value, (value_with_separator.value - arg.value));
+            key = new_text_with_length(arg.value, (value_with_separator.value - arg.value), memory_resource);
             if (1 < value_with_separator.length) {
                 // 値は存在する
-                TEXT raw_value = wrap_text_with_length(value_with_separator.value + 1, (size_t)value_with_separator.length - 1, false);
+                TEXT raw_value = wrap_text_with_length(value_with_separator.value + 1, (size_t)value_with_separator.length - 1, false, NULL);
                 if (raw_value.length && ((raw_value.value[0] == '"' || raw_value.value[0] == '\'') && raw_value.value[raw_value.length - 1] == raw_value.value[0]) ) {
                     // 囲まれている
-                    item->value = new_text_with_length(raw_value.value + 1, (size_t)raw_value.length - 2);
+                    item->value = new_text_with_length(raw_value.value + 1, (size_t)raw_value.length - 2, memory_resource);
                 } else {
                     item->value = raw_value;
                 }
             } else {
                 // 値は存在しない、が=指定されてるなら空文字列
-                item->value = new_empty_text();
+                item->value = new_empty_text(memory_resource);
             }
             item->value_index = i;
         } else if(i + 1 < count) {
@@ -97,7 +99,7 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
             } else {
                 // 次要素を値として取り込む
                 item->value_index = i + 1;
-                item->value = clone_text(current + 1);
+                item->value = clone_text(current + 1, memory_resource);
                 // 次要素をスキップ
                 i += 1;
             }
@@ -110,18 +112,18 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
 
         MAP_PAIR* pair = add_map(result, &key, item, true);
         if (!pair) {
-            free_command_line_item_core(item);
+            release_command_line_item_core(item, memory_resource);
         }
-        free_text(&key);
+        release_text(&key);
     }
 }
 
-COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, bool with_command)
+COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, bool with_command, const MEMORY_RESOURCE* memory_resource)
 {
     if (!command_line || !command_line->length) {
         COMMAND_LINE_OPTION empty;
         set_memory(&empty, 0, sizeof(empty));
-        set_command_line_map_setting(&empty.library.map, 2);
+        set_command_line_map_setting(&empty.library.map, 2, memory_resource);
         return empty;
     }
 
@@ -129,7 +131,7 @@ COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, b
     TCHAR** argv = CommandLineToArgvW(command_line->value, &temp_argc);
     size_t argc = (size_t)temp_argc;
 
-    TEXT* arguments = allocate_memory(argc * sizeof(TEXT), false);
+    TEXT* arguments = allocate_raw_memory(argc * sizeof(TEXT), false, memory_resource);
     for (size_t i = 0; i < argc; i++) {
         TCHAR* arg = argv[i];
         arguments[i] = wrap_text(arg);
@@ -162,21 +164,23 @@ COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, b
             .command = command,
         },
     };
-    set_command_line_map_setting(&result.library.map, result.count);
+    set_command_line_map_setting(&result.library.map, result.count, memory_resource);
     convert_map_from_arguments(&result.library.map, result.arguments, result.count);
 
     return result;
 }
 
-bool RC_HEAP_FUNC(free_command_line, COMMAND_LINE_OPTION* command_line_option)
+bool RC_HEAP_FUNC(release_command_line, COMMAND_LINE_OPTION* command_line_option)
 {
     if (!command_line_option) {
         return false;
     }
 
-    free_map(&command_line_option->library.map);
+    const MEMORY_RESOURCE* memory_resource = command_line_option->library.map.library.map_memory_resource;
 
-    RC_HEAP_CALL(free_memory, command_line_option->library.raw_arguments);
+    release_map(&command_line_option->library.map);
+
+    RC_HEAP_CALL(release_memory, command_line_option->library.raw_arguments, memory_resource);
     command_line_option->library.raw_arguments = NULL;
 
     LocalFree((HLOCAL)command_line_option->library.argv);
@@ -213,15 +217,15 @@ bool is_inputed_command_line_item(const COMMAND_LINE_ITEM* item)
     return !is_whitespace_text(&item->value);
 }
 
-TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count)
+TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count, const MEMORY_RESOURCE* memory_resource)
 {
     if (!arguments || !count) {
-        return new_empty_text();
+        return new_empty_text(memory_resource);
     }
 
     size_t total_length = count - 1; // スペース分
 
-    bool* hasSpaceList = allocate_clear_memory(count, sizeof(bool));
+    bool* hasSpaceList = allocate_memory(count, sizeof(bool), memory_resource);
 
     for (size_t i = 0; i < count; i++) {
         const TEXT* argument = &arguments[i];
@@ -243,7 +247,7 @@ TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count)
         }
     }
 
-    TCHAR* buffer = allocate_string(total_length);
+    TCHAR* buffer = allocate_string(total_length, memory_resource);
     size_t position = 0;
     for (size_t i = 0; i < count; i++) {
         const TEXT* argument = &arguments[i];
@@ -265,8 +269,8 @@ TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count)
     }
     buffer[position] = 0;
 
-    free_memory(hasSpaceList);
+    release_memory(hasSpaceList, memory_resource);
 
-    return wrap_text_with_length(buffer, position, true);
+    return wrap_text_with_length(buffer, position, true, memory_resource);
 }
 

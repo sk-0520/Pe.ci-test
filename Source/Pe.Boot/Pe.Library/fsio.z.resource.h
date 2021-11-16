@@ -19,6 +19,10 @@ typedef struct tag_FILE_RESOURCE
     /// <c>NULL</c>の場合無効(その場合<see cref="path"/>も無効)。
     /// </summary>
     HANDLE handle;
+    struct
+    {
+        const MEMORY_RESOURCE* memory_resource;
+    } library;
 } FILE_RESOURCE;
 
 /// <summary>
@@ -87,9 +91,9 @@ typedef enum tag_FILE_OPEN_MODE
 /// <returns></returns>
 FILE_RESOURCE create_invalid_file_resource(void);
 
-FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE access_mode, FILE_SHARE_MODE shared_mode, FILE_OPEN_MODE open_mode, DWORD attributes);
+FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE access_mode, FILE_SHARE_MODE shared_mode, FILE_OPEN_MODE open_mode, DWORD attributes, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK
-#   define new_file_resource(path, access_mode, shared_mode, open_mode, attributes) RC_FILE_WRAP(new_file_resource, (path), (access_mode), (shared_mode), (open_mode), (attributes))
+#   define new_file_resource(path, access_mode, shared_mode, open_mode, attributes, memory_resource) RC_FILE_WRAP(new_file_resource, (path), (access_mode), (shared_mode), (open_mode), (attributes), memory_resource)
 #endif
 
 /// <summary>
@@ -98,9 +102,9 @@ FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE
 /// </summary>
 /// <param name="path">作成するファイルパス。</param>
 /// <returns>作成したファイルリソース。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
-FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path);
+FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK
-#   define create_file_resource(path) RC_FILE_WRAP(create_file_resource, path)
+#   define create_file_resource(path, memory_resource) RC_FILE_WRAP(create_file_resource, path, memory_resource)
 #endif
 
 /// <summary>
@@ -109,9 +113,9 @@ FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path);
 /// </summary>
 /// <param name="path">開くファイルパス。</param>
 /// <returns>開いたファイルリソース。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
-FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path);
+FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK
-#   define open_file_resource(path) RC_FILE_WRAP(open_file_resource, path)
+#   define open_file_resource(path, memory_resource) RC_FILE_WRAP(open_file_resource, path, memory_resource)
 #endif
 
 /// <summary>
@@ -119,9 +123,9 @@ FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path);
 /// </summary>
 /// <param name="path">ファイルパス。</param>
 /// <returns>ファイルリソース。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
-FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path);
+FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK
-#   define open_or_create_file_resource(path) RC_FILE_WRAP(open_or_create_file_resource, path)
+#   define open_or_create_file_resource(path, memory_resource) RC_FILE_WRAP(open_or_create_file_resource, path, memory_resource)
 #endif
 
 /// <summary>
@@ -129,9 +133,9 @@ FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path);
 /// </summary>
 /// <param name="file">対象ファイルリソース。</param>
 /// <returns>成功状態。</returns>
-bool RC_FILE_FUNC(close_file_resource, FILE_RESOURCE* file_resource);
+bool RC_FILE_FUNC(release_file_resource, FILE_RESOURCE* file_resource);
 #if RES_CHECK
-#   define close_file_resource(file_resource) RC_FILE_WRAP(close_file_resource, (file_resource))
+#   define release_file_resource(file_resource) RC_FILE_WRAP(release_file_resource, (file_resource))
 #endif
 
 /// <summary>

@@ -10,9 +10,9 @@
 /// </summary>
 /// <param name="key">環境変数名。</param>
 /// <returns>取得した環境変数。解放が必要。存在しない場合は無効テキスト。</returns>
-TEXT RC_HEAP_FUNC(get_environment_variable, const TEXT* key);
+TEXT RC_HEAP_FUNC(get_environment_variable, const TEXT* key, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define get_environment_variable(key) RC_HEAP_WRAP(get_environment_variable, key)
+#   define get_environment_variable(key, memory_resource) RC_HEAP_WRAP(get_environment_variable, key, memory_resource)
 #endif
 
 /// <summary>
@@ -28,7 +28,7 @@ bool set_environment_variable(const TEXT* key, const TEXT* value);
 /// </summary>
 /// <param name="text"></param>
 /// <returns>展開後テキスト。解放が必要。</returns>
-TEXT RC_HEAP_FUNC(expand_environment_variable, const TEXT* text);
+TEXT RC_HEAP_FUNC(expand_environment_variable, const TEXT* text, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define expand_environment_variable(text) RC_HEAP_WRAP(expand_environment_variable, text)
+#   define expand_environment_variable(text, memory_resource) RC_HEAP_WRAP(expand_environment_variable, text, memory_resource)
 #endif

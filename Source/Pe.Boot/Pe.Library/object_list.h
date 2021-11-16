@@ -3,6 +3,7 @@
 #include <stddef.h>
 
 #include "common.h"
+#include "memory.h"
 #include "debug.h"
 #include "res_check.h"
 
@@ -52,7 +53,7 @@ typedef int (*func_compare_object_list_value)(const void* a, const void* b);
 /// <summary>
 /// 格納値解放処理。
 /// </summary>
-typedef void (*func_free_object_list_value)(void* value);
+typedef void (*func_release_object_list_value)(void* value, const MEMORY_RESOURCE* memory_resource);
 
 /// <summary>
 /// 値連続処理。
@@ -77,6 +78,10 @@ typedef struct tag_OBJECT_LIST
     struct
     {
         /// <summary>
+        /// メモリリソース。
+        /// </summary>
+        const MEMORY_RESOURCE* memory_resource;
+        /// <summary>
         /// 格納アイテムのサイズ。
         /// </summary>
         byte_t item_size;
@@ -85,7 +90,7 @@ typedef struct tag_OBJECT_LIST
         /// </summary>
         byte_t capacity;
         func_compare_object_list_value compare_object_list_value;
-        func_free_object_list_value free_object_list_value;
+        func_release_object_list_value release_object_list_value;
     } library;
 } OBJECT_LIST;
 
@@ -100,7 +105,7 @@ int compare_object_list_value_null(const void* a, const void* b);
 /// リストの値解放不要処理。
 /// </summary>
 /// <param name="value"></param>
-void free_object_list_value_null(void* value);
+void release_object_list_value_null(void* value, const MEMORY_RESOURCE* memory_resource);
 
 /// <summary>
 /// オブジェクトリストの生成。
@@ -109,11 +114,11 @@ void free_object_list_value_null(void* value);
 /// <param name="item_size">アイテムのサイズ。</param>
 /// <param name="capacity_count">容量をアイテム数で指定。</param>
 /// <param name="compare_object_list_value">比較処理。</param>
-/// <param name="free_object_list_value">実データの解放処理。オブジェクトリストの解放や、アイテム変更時に使用される。</param>
+/// <param name="release_object_list_value">実データの解放処理。オブジェクトリストの解放や、アイテム変更時に使用される。</param>
 /// <returns>生成したオブジェクトリスト。</returns>
-OBJECT_LIST RC_HEAP_FUNC(create_object_list, byte_t item_size, size_t capacity_count, func_compare_object_list_value compare_object_list_value, func_free_object_list_value free_object_list_value);
+OBJECT_LIST RC_HEAP_FUNC(new_object_list, byte_t item_size, size_t capacity_count, func_compare_object_list_value compare_object_list_value, func_release_object_list_value release_object_list_value, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define create_object_list(item_size, capacity_count, compare_object_list_value, free_object_list_value) RC_HEAP_WRAP(create_object_list, (item_size), (capacity_count), (compare_object_list_value), (free_object_list_value))
+#   define new_object_list(item_size, capacity_count, compare_object_list_value, release_object_list_value, memory_resource) RC_HEAP_WRAP(new_object_list, (item_size), (capacity_count), (compare_object_list_value), (release_object_list_value), memory_resource)
 #endif
 
 /// <summary>
@@ -122,9 +127,9 @@ OBJECT_LIST RC_HEAP_FUNC(create_object_list, byte_t item_size, size_t capacity_c
 /// <param name=""></param>
 /// <param name="object_list"></param>
 /// <returns></returns>
-bool RC_HEAP_FUNC(free_object_list, OBJECT_LIST* object_list);
+bool RC_HEAP_FUNC(release_object_list, OBJECT_LIST* object_list);
 #ifdef RES_CHECK
-#   define free_object_list(object_list) RC_HEAP_WRAP(free_object_list, (object_list))
+#   define release_object_list(object_list) RC_HEAP_WRAP(release_object_list, (object_list))
 #endif
 
 /// <summary>

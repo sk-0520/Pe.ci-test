@@ -3,51 +3,31 @@
 #include "string_builder.h"
 #include "writer.h"
 
-//TODO: 内部実装をPRIMITIVE_LIST_TCHARに置き換える
-
-STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t capacity)
-{
-    assert(s);
-
-    size_t length = get_string_length(s);
-
-    PRIMITIVE_LIST_TCHAR list = RC_HEAP_CALL(new_primitive_list, PRIMITIVE_LIST_TYPE_TCHAR, capacity);
-
-    add_range_list_tchar(&list, s, length);
-
-    STRING_BUILDER result = {
-        .library = {
-            .list = list,
-            .newline = NEWLINET,
-        }
-    };
-
-    return result;
-}
-
-STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity)
+STRING_BUILDER RC_HEAP_FUNC(new_string_builder, size_t capacity, const MEMORY_RESOURCE* memory_resource)
 {
     assert(capacity);
 
-    PRIMITIVE_LIST_TCHAR list = RC_HEAP_CALL(new_primitive_list, PRIMITIVE_LIST_TYPE_TCHAR, capacity);
+    PRIMITIVE_LIST_TCHAR list = RC_HEAP_CALL(new_primitive_list, PRIMITIVE_LIST_TYPE_TCHAR, capacity, memory_resource);
 
     STRING_BUILDER result = {
+        .newline = NEWLINE_TEXT,
         .library = {
             .list = list,
-            .newline = NEWLINET,
         }
     };
 
     return result;
 }
 
-bool RC_HEAP_FUNC(free_string_builder, STRING_BUILDER* string_builder)
+bool RC_HEAP_FUNC(release_string_builder, STRING_BUILDER* string_builder)
 {
     if (!string_builder) {
         return false;
     }
 
-    return RC_HEAP_CALL(free_primitive_list, &string_builder->library.list);
+    RC_HEAP_CALL(release_text, &string_builder->newline);
+
+    return RC_HEAP_CALL(release_primitive_list, &string_builder->library.list);
 }
 
 static STRING_BUILDER* append_string_core(STRING_BUILDER* string_builder, const TCHAR* s, size_t length)
@@ -64,13 +44,13 @@ TEXT RC_HEAP_FUNC(build_text_string_builder, const STRING_BUILDER* string_builde
     }
 
     if (!string_builder->library.list.length) {
-        return RC_HEAP_CALL(new_text, _T(""));
+        return RC_HEAP_CALL(new_text, _T(""), string_builder->library.list.library.memory_resource);
     }
 
-    TCHAR* s = RC_HEAP_CALL(allocate_string, string_builder->library.list.length);
+    TCHAR* s = RC_HEAP_CALL(allocate_string, string_builder->library.list.length, string_builder->library.list.library.memory_resource);
     const TCHAR* buffer = reference_list_tchar(&string_builder->library.list);
     copy_memory(s, buffer, string_builder->library.list.length * sizeof(TCHAR));
-    return wrap_text_with_length(s, string_builder->library.list.length, true);
+    return wrap_text_with_length(s, string_builder->library.list.length, true, string_builder->library.list.library.memory_resource);
 }
 
 TEXT reference_text_string_builder(STRING_BUILDER* string_builder)
@@ -83,7 +63,7 @@ TEXT reference_text_string_builder(STRING_BUILDER* string_builder)
         append_builder_character(string_builder, _T('0'), false);
         buffer = reference_list_tchar(&string_builder->library.list);
     }
-    return wrap_text_with_length(buffer, string_builder->library.list.length, false);
+    return wrap_text_with_length(buffer, string_builder->library.list.length, false, NULL);
 }
 
 STRING_BUILDER* clear_builder(STRING_BUILDER* string_builder)
@@ -96,7 +76,7 @@ STRING_BUILDER* clear_builder(STRING_BUILDER* string_builder)
 
 STRING_BUILDER* append_builder_newline(STRING_BUILDER* string_builder)
 {
-    return append_string_core(string_builder, string_builder->library.newline, get_string_length(string_builder->library.newline));
+    return append_string_core(string_builder, string_builder->newline.value, string_builder->newline.length);
 }
 
 STRING_BUILDER* append_builder_string(STRING_BUILDER* string_builder, const TCHAR* s, bool newline)
@@ -164,7 +144,7 @@ STRING_BUILDER* append_builder_int(STRING_BUILDER* string_builder, ssize_t value
         return append_builder_character(string_builder, (uint8_t)value + '0', newline);
     }
 
-    write_primitive_integer(write_string, string_builder, value, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, 0, _T(' '));
+    write_primitive_integer(write_string, string_builder, string_builder->library.list.library.memory_resource, value, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, 0, _T(' '));
     if (newline) {
         append_builder_newline(string_builder);
     }
@@ -177,7 +157,7 @@ STRING_BUILDER* append_builder_uint(STRING_BUILDER* string_builder, size_t value
         return append_builder_character(string_builder, (uint8_t)value + '0', newline);
     }
 
-    write_primitive_uinteger(write_string, string_builder, value, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, 0, _T(' '));
+    write_primitive_uinteger(write_string, string_builder, string_builder->library.list.library.memory_resource, value, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, 0, _T(' '));
     if (newline) {
         append_builder_newline(string_builder);
     }
@@ -204,7 +184,7 @@ STRING_BUILDER* append_builder_pointer(STRING_BUILDER* string_builder, const voi
 
 STRING_BUILDER* append_builder_vformat(STRING_BUILDER* string_builder, const TEXT* format, va_list ap)
 {
-    write_vformat(write_string, write_character, string_builder, format, ap);
+    write_vformat(write_string, write_character, string_builder, string_builder->library.list.library.memory_resource, format, ap);
     return string_builder;
 }
 

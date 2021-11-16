@@ -5,12 +5,18 @@
 
 #define FORMAT_LENGTH (256)
 
+const TEXT NEWLINE_CR_TEXT = static_text(NEWLINE_CR);
+const TEXT NEWLINE_LF_TEXT = static_text(NEWLINE_LF);
+const TEXT NEWLINE_CRLF_TEXT = static_text(NEWLINE_CRLF);
+const TEXT NEWLINE_TEXT = static_text(NEWLINE);
+
 TEXT create_invalid_text()
 {
     TEXT result = {
         .value = NULL,
         .length = 0,
         .library = {
+            .memory_resource = NULL,
             .need_release = false,
             .sentinel = false,
             .released = false,
@@ -42,13 +48,13 @@ bool check_text_length(size_t length)
 }
 
 
-TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length)
+TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length, const MEMORY_RESOURCE* memory_resource)
 {
     if (!check_text_length(length)) {
         return create_invalid_text();
     }
 
-    TCHAR* buffer = RC_HEAP_CALL(allocate_string, length);
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, length, memory_resource);
     copy_memory(buffer, (void*)source, length * sizeof(TCHAR));
     buffer[length] = 0;
 
@@ -56,6 +62,7 @@ TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length)
         .value = buffer,
         .length = (text_t)length,
         .library = {
+            .memory_resource = memory_resource,
             .need_release = true,
             .sentinel = true,
             .released = false,
@@ -65,22 +72,22 @@ TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length)
     return result;
 }
 
-TEXT RC_HEAP_FUNC(new_empty_text)
-{
-    return RC_HEAP_CALL(new_text_with_length, _T(""), 0);
-}
-
-TEXT RC_HEAP_FUNC(new_text, const TCHAR* source)
+TEXT RC_HEAP_FUNC(new_text, const TCHAR* source, const MEMORY_RESOURCE* memory_resource)
 {
     if (!source) {
         return create_invalid_text();
     }
 
     size_t length = get_string_length(source);
-    return RC_HEAP_CALL(new_text_with_length, source, length);
+    return RC_HEAP_CALL(new_text_with_length, source, length, memory_resource);
 }
 
-TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release)
+TEXT RC_HEAP_FUNC(new_empty_text, const MEMORY_RESOURCE* memory_resource)
+{
+    return RC_HEAP_CALL(new_text_with_length, _T(""), 0, memory_resource);
+}
+
+TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release, const MEMORY_RESOURCE* memory_resource)
 {
     if (!source) {
         return create_invalid_text();
@@ -88,11 +95,15 @@ TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release
     if (!check_text_length(length)) {
         return create_invalid_text();
     }
+    if (need_release && !is_enabled_memory_resource(memory_resource)) {
+        return create_invalid_text();
+    }
 
     TEXT result = {
         .value = source,
         .length = (text_t)length,
         .library = {
+            .memory_resource = (need_release && memory_resource) ? memory_resource: NULL,
             .need_release = need_release,
             .sentinel = false,
             .released = false,
@@ -110,18 +121,18 @@ TEXT wrap_text(const TCHAR* source)
 
     size_t length = get_string_length(source);
 
-    TEXT result = wrap_text_with_length(source, length, false);
+    TEXT result = wrap_text_with_length(source, length, false, NULL);
     result.library.sentinel = true;
     return result;
 }
 
-TEXT RC_HEAP_FUNC(clone_text, const TEXT* source)
+TEXT RC_HEAP_FUNC(clone_text, const TEXT* source, const MEMORY_RESOURCE* memory_resource)
 {
     if (!is_enabled_text(source)) {
         return create_invalid_text();
     }
 
-    TCHAR* buffer = RC_HEAP_CALL(allocate_string, source->length);
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, source->length, memory_resource);
     copy_memory(buffer, (void*)source->value, source->length * sizeof(TCHAR));
     buffer[source->length] = 0;
 
@@ -129,6 +140,7 @@ TEXT RC_HEAP_FUNC(clone_text, const TEXT* source)
         .value = buffer,
         .length = source->length,
         .library = {
+            .memory_resource = memory_resource,
             .need_release = true,
             .sentinel = true,
             .released = false,
@@ -187,7 +199,7 @@ TEXT reference_text(const TEXT* source)
     return result;
 }
 
-bool RC_HEAP_FUNC(free_text, TEXT* text)
+bool RC_HEAP_FUNC(release_text, TEXT* text)
 {
     if (!is_enabled_text(text)) {
         return false;
@@ -201,19 +213,20 @@ bool RC_HEAP_FUNC(free_text, TEXT* text)
         return false;
     }
 
-    RC_HEAP_CALL(free_string, text->value);
+    RC_HEAP_CALL(release_string, text->value, text->library.memory_resource);
     text->value = 0;
     text->length = 0;
 
     text->library.released = true;
     text->library.need_release = false;
+    text->library.memory_resource = NULL;
 
     return true;
 }
 
-TEXT RC_HEAP_FUNC(format_text, const TEXT* format, ...)
+TEXT RC_HEAP_FUNC(format_text, const MEMORY_RESOURCE* memory_resource, const TEXT* format, ...)
 {
-    STRING_BUILDER sb = RC_HEAP_CALL(create_string_builder, FORMAT_LENGTH);
+    STRING_BUILDER sb = RC_HEAP_CALL(new_string_builder, FORMAT_LENGTH, memory_resource);
     va_list ap;
     va_start(ap, format);
 
@@ -223,7 +236,7 @@ TEXT RC_HEAP_FUNC(format_text, const TEXT* format, ...)
 
     TEXT result = RC_HEAP_CALL(build_text_string_builder, &sb);
 
-    RC_HEAP_CALL(free_string_builder, &sb);
+    RC_HEAP_CALL(release_string_builder, &sb);
 
     return result;
 }

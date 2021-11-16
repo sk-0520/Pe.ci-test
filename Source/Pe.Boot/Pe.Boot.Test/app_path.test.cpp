@@ -19,7 +19,7 @@ namespace PeBootTest
             TEXT actual = get_main_module_path(&input);
 
             Assert::AreEqual(expected.value, actual.value);
-            free_text(&actual);
+            release_text(&actual);
         }
     };
 }

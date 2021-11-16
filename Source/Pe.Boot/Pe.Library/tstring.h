@@ -35,9 +35,9 @@ TCHAR* copy_string(TCHAR* result, const TCHAR* value);
 /// </summary>
 /// <param name="source"></param>
 /// <returns>複製された文字列。解放が必要。</returns>
-TCHAR* RC_HEAP_FUNC(clone_string, const TCHAR* source);
+TCHAR* RC_HEAP_FUNC(clone_string, const TCHAR* source, const MEMORY_RESOURCE * memory_resource);
 #ifdef RES_CHECK
-#   define clone_string(source) RC_HEAP_WRAP(clone_string, source)
+#   define clone_string(source, memory_resource) RC_HEAP_WRAP(clone_string, source, memory_resource)
 #endif
 
 /// <summary>
@@ -46,28 +46,28 @@ TCHAR* RC_HEAP_FUNC(clone_string, const TCHAR* source);
 /// <param name="source"></param>
 /// <param name="length"></param>
 /// <returns>複製された文字列。解放が必要。</returns>
-TCHAR* RC_HEAP_FUNC(clone_string_with_length, const TCHAR * source, size_t length);
+TCHAR* RC_HEAP_FUNC(clone_string_with_length, const TCHAR * source, size_t length, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define clone_string_with_length(source, length) RC_HEAP_WRAP(clone_string_with_length, (source), (length))
+#   define clone_string_with_length(source, length, memory_resource) RC_HEAP_WRAP(clone_string_with_length, (source), (length), memory_resource)
 #endif
 
 /// <summary>
 /// 文字列を確保。
 /// </summary>
 /// <param name="length">文字列の長さ。</param>
-/// <returns>先頭 0 の番兵を考慮した領域(length + 1)。freeStringによる解放が必要。</returns>
-TCHAR* RC_HEAP_FUNC(allocate_string, size_t length);
+/// <returns>先頭 0 の番兵を考慮した領域(length + 1)。<see cref="release_string"/>による解放が必要。</returns>
+TCHAR* RC_HEAP_FUNC(allocate_string, size_t length, const MEMORY_RESOURCE * memory_resource);
 #ifdef RES_CHECK
-#   define allocate_string(length) RC_HEAP_WRAP(allocate_string, (length))
+#   define allocate_string(length, memory_resource) RC_HEAP_WRAP(allocate_string, (length), memory_resource)
 #endif
 
 /// <summary>
 /// 確保した文字列を解放。
-/// ドメインとしての関数で<c>freeMemory</c>のラッパー。
+/// ドメインとしての関数で<see cref="release_memory"/>のラッパー。
 /// </summary>
 /// <param name="s"></param>
-void RC_HEAP_FUNC(free_string, const TCHAR* s);
+void RC_HEAP_FUNC(release_string, const TCHAR* s, const MEMORY_RESOURCE * memory_resource);
 #ifdef RES_CHECK
-#   define free_string(s) RC_HEAP_WRAP(free_string, (s))
+#   define release_string(s, memory_resource) RC_HEAP_WRAP(release_string, (s), memory_resource)
 #endif
 

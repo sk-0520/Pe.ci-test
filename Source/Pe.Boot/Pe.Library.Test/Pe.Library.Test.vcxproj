@@ -149,6 +149,7 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <DisableSpecificWarnings>26817;26812;4100 </DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -171,6 +172,7 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <DisableSpecificWarnings>26817;26812;4100 </DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -195,6 +197,7 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <DisableSpecificWarnings>26817;26812;4100 </DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -221,6 +224,7 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <DisableSpecificWarnings>26817;26812;4100 </DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -247,6 +251,7 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <DisableSpecificWarnings>26817;26812;4100 </DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -273,6 +278,7 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <DisableSpecificWarnings>26817;26812;4100 </DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

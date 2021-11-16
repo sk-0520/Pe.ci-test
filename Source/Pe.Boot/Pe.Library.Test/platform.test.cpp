@@ -23,11 +23,11 @@ namespace PeLibraryTest
                 TEXT input = std::get<2>(test.inputs);
 
                 set_environment_variable(&key, &value);
-                TEXT actual = expand_environment_variable(&input);
+                TEXT actual = expand_environment_variable(&input, DEFAULT_MEMORY);
 
                 Assert::AreEqual(test.expected.value, actual.value, input.value);
 
-                free_text(&actual);
+                release_text(&actual);
             }
         }
     };

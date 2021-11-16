@@ -16,10 +16,10 @@ namespace PeLibraryTest
             TEST_INIT_DIR;
             TEST_GET_PATH(path, _T("path.txt"));
 
-            FILE_WRITER file_writer = new_file_writer(&path, FILE_ENCODING_NATIVE, FILE_OPEN_MODE_NEW, FILE_WRITER_OPTIONS_NONE);
+            FILE_WRITER file_writer = new_file_writer(&path, FILE_ENCODING_NATIVE, FILE_OPEN_MODE_NEW, FILE_WRITER_OPTIONS_NONE, DEFAULT_MEMORY);
             write_string_file_writer(&file_writer, _T("𩸽🍶"), true);
 
-            Assert::IsTrue(free_file_writer(&file_writer));
+            Assert::IsTrue(release_file_writer(&file_writer));
         }
 
 #ifdef _UNICODE
@@ -28,10 +28,10 @@ namespace PeLibraryTest
             TEST_INIT_DIR;
             TEST_GET_PATH(path, _T("path.txt"));
 
-            FILE_WRITER file_writer = new_file_writer(&path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_NEW, FILE_WRITER_OPTIONS_NONE);
+            FILE_WRITER file_writer = new_file_writer(&path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_NEW, FILE_WRITER_OPTIONS_NONE, DEFAULT_MEMORY);
             write_string_file_writer(&file_writer, _T("𩸽🍶"), true);
 
-            Assert::IsTrue(free_file_writer(&file_writer));
+            Assert::IsTrue(release_file_writer(&file_writer));
         }
 
         TEST_METHOD(writer_utf8bom_test)
@@ -39,10 +39,10 @@ namespace PeLibraryTest
             TEST_INIT_DIR;
             TEST_GET_PATH(path, _T("path.txt"));
 
-            FILE_WRITER file_writer = new_file_writer(&path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_NEW, FILE_WRITER_OPTIONS_BOM);
+            FILE_WRITER file_writer = new_file_writer(&path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_NEW, FILE_WRITER_OPTIONS_BOM, DEFAULT_MEMORY);
             write_string_file_writer(&file_writer, _T("𩸽🍶"), true);
 
-            Assert::IsTrue(free_file_writer(&file_writer));
+            Assert::IsTrue(release_file_writer(&file_writer));
         }
 #endif
     };

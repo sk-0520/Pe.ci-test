@@ -14,7 +14,7 @@ namespace PeLibraryTest
     public:
         TEST_METHOD(life_int_test)
         {
-            OBJECT_LIST list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, release_object_list_value_null, DEFAULT_MEMORY);
 
             int input_1 = 100;
             int* result_1 = (int*)push_object_list(&list, &input_1);
@@ -66,7 +66,7 @@ namespace PeLibraryTest
             Assert::AreEqual(values_4[2], *(int*)values_4_3.value);
             Assert::AreEqual((size_t)4, list.length);
 
-            free_object_list(&list);
+            release_object_list(&list);
         }
 
         static bool foreach_object_list_func(const void* value, size_t index, size_t length, void* data)
@@ -83,7 +83,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(foreach_object_list_func_test)
         {
-            OBJECT_LIST list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, release_object_list_value_null, DEFAULT_MEMORY);
 
             int inputs[] = {
                 1,
@@ -92,7 +92,7 @@ namespace PeLibraryTest
                 4,
             };
 
-            OBJECT_LIST data_list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST data_list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, release_object_list_value_null, DEFAULT_MEMORY);
 
             add_range_object_list(&list, inputs, sizeof(inputs) / sizeof(inputs[0]));
             size_t count = foreach_object_list(&list, foreach_object_list_func, &data_list);
@@ -102,8 +102,8 @@ namespace PeLibraryTest
             Assert::AreEqual(30, *(int*)get_object_list(&data_list, 2).value);
             Assert::AreEqual(40, *(int*)get_object_list(&data_list, 3).value);
 
-            free_object_list(&list);
-            free_object_list(&data_list);
+            release_object_list(&list);
+            release_object_list(&data_list);
         }
 
         static bool foreach_object_list_skip(const void* value, size_t index, size_t length, void* data)
@@ -124,7 +124,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(foreach_object_list_skip_test)
         {
-            OBJECT_LIST list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, release_object_list_value_null, DEFAULT_MEMORY);
 
             int inputs[] = {
                 1,
@@ -133,7 +133,7 @@ namespace PeLibraryTest
                 4,
             };
 
-            OBJECT_LIST data_list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST data_list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, release_object_list_value_null, DEFAULT_MEMORY);
 
             add_range_object_list(&list, inputs, sizeof(inputs) / sizeof(inputs[0]));
             size_t count = foreach_object_list(&list, foreach_object_list_skip, &data_list);
@@ -141,8 +141,8 @@ namespace PeLibraryTest
             Assert::AreEqual(100, *(int*)get_object_list(&data_list, 0).value);
             Assert::AreEqual(200, *(int*)get_object_list(&data_list, 1).value);
 
-            free_object_list(&list);
-            free_object_list(&data_list);
+            release_object_list(&list);
+            release_object_list(&data_list);
         }
 
         TEST_METHOD(reference_object_list_value_test)
@@ -154,7 +154,7 @@ namespace PeLibraryTest
                 4,
             };
 
-            OBJECT_LIST list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, release_object_list_value_null, DEFAULT_MEMORY);
 
             add_range_object_list(&list, inputs, sizeof(inputs) / sizeof(inputs[0]));
 
@@ -163,7 +163,7 @@ namespace PeLibraryTest
                 Assert::AreEqual(inputs[i], actual[i]);
             }
 
-            free_object_list(&list);
+            release_object_list(&list);
 
         }
 
@@ -176,7 +176,7 @@ namespace PeLibraryTest
                 4,
             };
 
-            OBJECT_LIST list = create_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, free_object_list_value_null);
+            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, compare_object_list_value_null, release_object_list_value_null, DEFAULT_MEMORY);
 
             add_range_object_list(&list, inputs, sizeof(inputs) / sizeof(inputs[0]));
 
@@ -187,7 +187,7 @@ namespace PeLibraryTest
                 Assert::AreEqual(inputs[i], actual[i]);
             }
 
-            free_object_list(&list);
+            release_object_list(&list);
 
         }
 

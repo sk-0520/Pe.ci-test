@@ -16,21 +16,21 @@ void add_visual_cpp_runtime_redist_env_path(const TEXT* root_directory_path)
 #endif
     };
 
-    TEXT crt_path = join_path(root_directory_path, dirs, SIZEOF_ARRAY(dirs));
+    TEXT crt_path = join_path(root_directory_path, dirs, SIZEOF_ARRAY(dirs), DEFAULT_MEMORY);
     logger_put_debug(crt_path.value);
 
     TEXT env_path_key = wrap_text(_T("PATH"));
-    TEXT path_src_value = get_environment_variable(&env_path_key);
+    TEXT path_src_value = get_environment_variable(&env_path_key, DEFAULT_MEMORY);
 
     TEXT values[] = {
         path_src_value,
         crt_path
     };
     TEXT env_sep = wrap_text(_T(";"));
-    TEXT path_new_value = join_text(&env_sep, values, SIZEOF_ARRAY(values), IGNORE_EMPTY_ONLY);
+    TEXT path_new_value = join_text(&env_sep, values, SIZEOF_ARRAY(values), IGNORE_EMPTY_ONLY, DEFAULT_MEMORY);
     set_environment_variable(&env_path_key, &path_new_value);
 
-    free_text(&path_new_value);
-    free_text(&path_src_value);
-    free_text(&crt_path);
+    release_text(&path_new_value);
+    release_text(&path_src_value);
+    release_text(&crt_path);
 }

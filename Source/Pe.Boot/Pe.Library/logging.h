@@ -90,6 +90,12 @@ typedef struct tag_LOGGER
 } LOGGER;
 
 /// <summary>
+/// ログ操作時に使用するメモリリソース。
+/// </summary>
+/// <param name="memory_resource"></param>
+void initialize_logger(const MEMORY_RESOURCE* memory_resource);
+
+/// <summary>
 /// 標準のログファイル設定。
 /// </summary>
 /// <param name="file_writer">書き込み処理。<c>NULL</c>の場合は無効化。</param>
