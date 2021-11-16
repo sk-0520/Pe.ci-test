@@ -88,12 +88,12 @@ WRITE_RESULT write_primitive_boolean(func_string_writer writer, void* receiver, 
     return writer(&data);
 }
 
-static TCHAR* allocate_number(bool isHex, size_t width)
+static TCHAR* allocate_number(bool isHex, size_t width, const MEMORY_RESOURCE* memory_resource)
 {
     if (isHex) {
-        return allocate_memory(sizeof(size_t) * 2 + 2 + width, sizeof(TCHAR), DEFAULT_MEMORY);
+        return allocate_memory(sizeof(size_t) * 2 + 2 + width, sizeof(TCHAR), memory_resource);
     } else {
-        return allocate_memory(sizeof(size_t) * 8 + 1 + width + ((sizeof(size_t) * 8) / 3), sizeof(TCHAR), DEFAULT_MEMORY);
+        return allocate_memory(sizeof(size_t) * 8 + 1 + width + ((sizeof(size_t) * 8) / 3), sizeof(TCHAR), memory_resource);
     }
 }
 
@@ -167,9 +167,9 @@ static size_t fill_last(TCHAR* buffer, size_t fill_buffer_length, size_t width, 
     return fill_buffer_length;
 }
 
-WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
+WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
 {
-    TCHAR* buffer = allocate_number(false, width);
+    TCHAR* buffer = allocate_number(false, width, memory_resource);
     size_t buffer_length = 0;
     bool is_negative = value < 0;
     ssize_t abs_value = is_negative ? -value : value;
@@ -206,14 +206,14 @@ WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, 
 
     WRITE_RESULT result = writer(&data);
 
-    free_string(buffer, DEFAULT_MEMORY);
+    free_string(buffer, memory_resource);
 
     return result;
 }
 
-WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
+WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
 {
-    TCHAR* buffer = allocate_number(false, width);
+    TCHAR* buffer = allocate_number(false, width, memory_resource);
     size_t buffer_length = 0;
     bool is_negative = false;
     size_t abs_value = value;
@@ -249,15 +249,15 @@ WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver,
     };
     WRITE_RESULT result = writer(&data);
 
-    free_string(buffer, DEFAULT_MEMORY);
+    free_string(buffer, memory_resource);
 
     return result;
 }
 
 //TODO: 諸々間違ってる
-WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width)
+WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width)
 {
-    TCHAR* buffer = allocate_number(true, width);
+    TCHAR* buffer = allocate_number(true, width, memory_resource);
     ssize_t work_value = value;
     size_t buffer_length = 0;
     do {
@@ -286,15 +286,15 @@ WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, ssiz
     };
     WRITE_RESULT result = writer(&data);
 
-    free_string(buffer, DEFAULT_MEMORY);
+    free_string(buffer, memory_resource);
 
     return result;
 }
 
 //TODO: 諸々間違ってる
-WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width)
+WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width)
 {
-    TCHAR* buffer = allocate_number(true, width);
+    TCHAR* buffer = allocate_number(true, width, memory_resource);
     size_t work_value = value;
     size_t buffer_length = 0;
     do {
@@ -323,15 +323,15 @@ WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, siz
     };
     WRITE_RESULT result = writer(&data);
 
-    free_string(buffer, DEFAULT_MEMORY);
+    free_string(buffer, memory_resource);
 
     return result;
 }
 
-WRITE_RESULT write_primitive_character(func_string_writer writer, void* receiver, TCHAR character, WRITE_ALIGN write_align, size_t width)
+WRITE_RESULT write_primitive_character(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, TCHAR character, WRITE_ALIGN write_align, size_t width)
 {
     size_t buffer_length = width ? width : 1;
-    TCHAR* buffer = allocate_memory(buffer_length, sizeof(TCHAR), DEFAULT_MEMORY);
+    TCHAR* buffer = allocate_memory(buffer_length, sizeof(TCHAR), memory_resource);
     buffer[0] = character;
 
     size_t fill_buffer_length = set_sign_and_fill(buffer, 1, buffer_length, 1, false, false, WRITE_PADDING_SPACE, write_align);
@@ -347,7 +347,7 @@ WRITE_RESULT write_primitive_character(func_string_writer writer, void* receiver
     };
     WRITE_RESULT result = writer(&data);
 
-    free_string(buffer, DEFAULT_MEMORY);
+    free_string(buffer, memory_resource);
 
     return result;
 }
@@ -533,7 +533,7 @@ static WRITE_RESULT write_format_simple_character(func_character_writer characte
     return character_writer(&char_data);
 }
 
-static WRITE_RESULT write_format_value(func_string_writer string_writer, func_character_writer character_writer, void* receiver, FORMAT_KIND format_kind, const TEXT* format, va_list* ap)
+static WRITE_RESULT write_format_value(func_string_writer string_writer, func_character_writer character_writer, void* receiver, FORMAT_KIND format_kind, const MEMORY_RESOURCE* memory_resource, const TEXT* format, va_list* ap)
 {
     WRITE_FORMAT_FLAGS flags;
     size_t flag_skip_index = get_write_format_flags(&flags, format);
@@ -560,14 +560,14 @@ static WRITE_RESULT write_format_value(func_string_writer string_writer, func_ch
 #else
                 ssize_t value = (ssize_t)va_arg(*ap, ssize_t);
 #endif
-                result = write_primitive_integer(string_writer, receiver, value, flags.padding, flags.align, flags.show_sign, format_waidth.width, _T('\0'));
+                result = write_primitive_integer(string_writer, receiver, memory_resource, value, flags.padding, flags.align, flags.show_sign, format_waidth.width, _T('\0'));
             } else {
 #ifdef _WIN64
                 long value = (long)va_arg(*ap, ssize_t);
 #else
                 ssize_t value = (ssize_t)va_arg(*ap, ssize_t);
 #endif
-                result = write_primitive_integer(string_writer, receiver, value, flags.padding, flags.align, flags.show_sign, format_waidth.width, _T('\0'));
+                result = write_primitive_integer(string_writer, receiver, memory_resource, value, flags.padding, flags.align, flags.show_sign, format_waidth.width, _T('\0'));
             }
         }
         break;
@@ -575,7 +575,7 @@ static WRITE_RESULT write_format_value(func_string_writer string_writer, func_ch
         case FORMAT_KIND_UINTEGER:
         {
             size_t value = (size_t)va_arg(*ap, size_t);
-            result = write_primitive_uinteger(string_writer, receiver, value, flags.padding, flags.align, flags.show_sign, format_waidth.width, _T('\0'));
+            result = write_primitive_uinteger(string_writer, receiver, memory_resource, value, flags.padding, flags.align, flags.show_sign, format_waidth.width, _T('\0'));
         }
         break;
 
@@ -584,14 +584,14 @@ static WRITE_RESULT write_format_value(func_string_writer string_writer, func_ch
             // 16進数は size_t を強制
             bool is_upper = format_type == _T('X');
             size_t value = va_arg(*ap, size_t);
-            result = write_primitive_hex(string_writer, receiver, value, flags.padding, flags.align, is_upper, flags.alternate_form, format_waidth.width);
+            result = write_primitive_hex(string_writer, receiver, memory_resource, value, flags.padding, flags.align, is_upper, flags.alternate_form, format_waidth.width);
         }
         break;
 
         case FORMAT_KIND_CHARACTER:
         {
             TCHAR value = va_arg(*ap, TCHAR);
-            result = write_primitive_character(string_writer, receiver, value, flags.align, format_waidth.width);
+            result = write_primitive_character(string_writer, receiver, memory_resource, value, flags.align, format_waidth.width);
         }
         break;
 
@@ -631,7 +631,7 @@ static WRITE_RESULT write_format_value(func_string_writer string_writer, func_ch
     return result;
 }
 
-bool write_vformat(func_string_writer string_writer, func_character_writer character_writer, void* receiver, const TEXT* format, va_list ap)
+bool write_vformat(func_string_writer string_writer, func_character_writer character_writer, void* receiver, const MEMORY_RESOURCE* memory_resource, const TEXT* format, va_list ap)
 {
     struct
     {
@@ -670,7 +670,7 @@ bool write_vformat(func_string_writer string_writer, func_character_writer chara
             size_t current_length = status.current_index - status.begin_index;
             TEXT current_format = wrap_text_with_length(format->value + status.begin_index + 1, current_length, false, NULL);
 
-            WRITE_RESULT write_result = write_format_value(string_writer, character_writer, receiver, format_kind, &current_format, &ap);
+            WRITE_RESULT write_result = write_format_value(string_writer, character_writer, receiver, format_kind, memory_resource, &current_format, &ap);
             if (write_result.error == WRITE_ERROR_KIND_NONE) {
                 status.write_length += write_result.write_length;
             }
@@ -709,12 +709,12 @@ bool write_vformat(func_string_writer string_writer, func_character_writer chara
     return true;
 }
 
-bool write_format(func_string_writer string_writer, func_character_writer character_writer, void* receiver, const TEXT* format, ...)
+bool write_format(func_string_writer string_writer, func_character_writer character_writer, void* receiver, const MEMORY_RESOURCE* memory_resource, const TEXT* format, ...)
 {
     va_list ap;
     va_start(ap, format);
 
-    bool result = write_vformat(string_writer, character_writer, receiver, format, ap);
+    bool result = write_vformat(string_writer, character_writer, receiver, memory_resource, format, ap);
 
     va_end(ap);
 

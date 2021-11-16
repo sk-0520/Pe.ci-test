@@ -164,7 +164,7 @@ STRING_BUILDER* append_builder_int(STRING_BUILDER* string_builder, ssize_t value
         return append_builder_character(string_builder, (uint8_t)value + '0', newline);
     }
 
-    write_primitive_integer(write_string, string_builder, value, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, 0, _T(' '));
+    write_primitive_integer(write_string, string_builder, string_builder->library.list.library.memory_resource, value, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, 0, _T(' '));
     if (newline) {
         append_builder_newline(string_builder);
     }
@@ -177,7 +177,7 @@ STRING_BUILDER* append_builder_uint(STRING_BUILDER* string_builder, size_t value
         return append_builder_character(string_builder, (uint8_t)value + '0', newline);
     }
 
-    write_primitive_uinteger(write_string, string_builder, value, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, 0, _T(' '));
+    write_primitive_uinteger(write_string, string_builder, string_builder->library.list.library.memory_resource, value, WRITE_PADDING_SPACE, WRITE_ALIGN_LEFT, false, 0, _T(' '));
     if (newline) {
         append_builder_newline(string_builder);
     }
@@ -204,7 +204,7 @@ STRING_BUILDER* append_builder_pointer(STRING_BUILDER* string_builder, const voi
 
 STRING_BUILDER* append_builder_vformat(STRING_BUILDER* string_builder, const TEXT* format, va_list ap)
 {
-    write_vformat(write_string, write_character, string_builder, format, ap);
+    write_vformat(write_string, write_character, string_builder, string_builder->library.list.library.memory_resource, format, ap);
     return string_builder;
 }
 
