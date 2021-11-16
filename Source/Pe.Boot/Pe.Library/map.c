@@ -16,7 +16,7 @@ void free_map_value_null(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource)
 MAP RC_HEAP_FUNC(create_map, size_t capacity, func_equals_map_key equals_map_key, func_free_map_value free_map_value, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource)
 {
     MAP map = {
-        .pairs = allocate_raw_memory(capacity * sizeof(MAP_PAIR), false, DEFAULT_MEMORY),
+        .pairs = allocate_raw_memory(capacity * sizeof(MAP_PAIR), false, map_memory_resource),
         .length = 0,
         .library = {
             .value_memory_resource = value_memory_resource,
