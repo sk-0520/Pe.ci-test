@@ -4,6 +4,17 @@
 #include "debug.h"
 #include "text.h"
 
+TCHAR get_relative_character(const TEXT* text, size_t base_index, ssize_t next_position)
+{
+    assert(text);
+
+    size_t index = base_index + next_position;
+    if (index < text->length) {
+        return text->value[index];
+    }
+
+    return '\0';
+}
 
 TEXT find_text(const TEXT* haystack, const TEXT* needle, bool ignore_case)
 {
@@ -55,13 +66,51 @@ ssize_t index_of_character(const TEXT* haystack, TCHAR needle)
     return s - haystack->value;
 }
 
+bool is_equals_text(const TEXT* a, const TEXT* b, bool ignore_case)
+{
+    if (!a && !b) {
+        return true;
+    }
+    if ((a && !b) || (!a && b)) {
+        return false;
+    }
+
+    if (a->length != b->length) {
+        return false;
+    }
+
+    if (ignore_case) {
+        for (size_t i = 0; i < a->length; i++) {
+            TCHAR a1 = a->value[i];
+            TCHAR b1 = b->value[i];
+            if ('a' <= a1 && a1 <= 'z') {
+                a1 = a1 - 'a' + 'A';
+            }
+            if ('a' <= b1 && b1 <= 'z') {
+                b1 = b1 - 'a' + 'A';
+            }
+            if (a1 != b1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    return !compare_memory(a->value, b->value, a->length * sizeof(TCHAR));
+}
+
 int compare_text(const TEXT* a, const TEXT* b, bool ignore_case)
 {
-    //TODO: 番兵なし対応
-    return ignore_case
-        ? lstrcmpi(a->value, b->value)
-        : lstrcmp(a->value, b->value)
-        ;
+    if (a->library.sentinel && b->library.sentinel) {
+        // 番兵あり
+        return ignore_case
+            ? lstrcmpi(a->value, b->value)
+            : lstrcmp(a->value, b->value)
+            ;
+    }
+
+    // 番兵なし
+    return compare_text_detail(a, b, -1, ignore_case ? TEXT_COMPARE_MODE_IGNORE_CASE : TEXT_COMPARE_MODE_NONE, LOCALE_TYPE_INVARIANT).compare;
 }
 
 static int get_compare_text_length(const TEXT* text, ssize_t width)

@@ -117,13 +117,13 @@ typedef struct tag_TIMESTAMP
     } library;
 } TIMESTAMP;
 
-TIME_ZONE get_current_time_zone();
+TIME_ZONE get_current_time_zone(void);
 
 /// <summary>
 /// 現在時間(UTC)の取得。
 /// </summary>
 /// <returns></returns>
-DATETIME get_current_datetime();
+DATETIME get_current_datetime(void);
 
 /// <summary>
 /// 指定の日時で時間を生成。

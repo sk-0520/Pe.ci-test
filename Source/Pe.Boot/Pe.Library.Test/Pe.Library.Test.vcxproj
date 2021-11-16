@@ -147,7 +147,9 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <DisableSpecificWarnings>26817;26812</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26817;26812;4100 </DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -168,7 +170,9 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <DisableSpecificWarnings>26817;26812</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26817;26812;4100 </DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -191,7 +195,9 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <DisableSpecificWarnings>26817;26812</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26817;26812;4100 </DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -216,7 +222,9 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <DisableSpecificWarnings>26817;26812</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26817;26812;4100 </DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -241,7 +249,9 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <DisableSpecificWarnings>26817;26812</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26817;26812;4100 </DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -266,7 +276,9 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <DisableSpecificWarnings>26817;26812</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26817;26812;4100 </DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -281,9 +293,10 @@
     <ClCompile Include="command_line.test.cpp" />
     <ClCompile Include="datetime.test.cpp" />
     <ClCompile Include="fsio.test.cpp" />
-    <ClCompile Include="fsio_resource.test.cpp" />
-    <ClCompile Include="fsio_textfile.test.cpp" />
+    <ClCompile Include="fsio.z.resource.test.cpp" />
+    <ClCompile Include="fsio.z.textfile.test.cpp" />
     <ClCompile Include="object_list.test.cpp" />
+    <ClCompile Include="platform.test.cpp" />
     <ClCompile Include="primitive_list.test.cpp" />
     <ClCompile Include="map.test.cpp" />
     <ClCompile Include="memory.test.cpp" />
@@ -296,11 +309,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='CI_TEST|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="tcharacter.test.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="text.test.cpp" />
-    <ClCompile Include="text_conv.test.cpp" />
-    <ClCompile Include="text_man.test.cpp" />
-    <ClCompile Include="text_search.test.cpp" />
+    <ClCompile Include="text.test.z.conv.test.cpp" />
+    <ClCompile Include="text.test.z.man.test.cpp" />
+    <ClCompile Include="text.test.z.search.test.cpp" />
     <ClCompile Include="tstring.test.cpp" />
     <ClCompile Include="string_builder.test.cpp" />
     <ClCompile Include="writer.test.cpp" />

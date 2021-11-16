@@ -58,9 +58,26 @@ typedef struct tag_TEXT_COMPARE_RESULT
     bool success;
 } TEXT_COMPARE_RESULT;
 
+/// <summary>
+/// テキストの位置からN進めた文字を取得。
+/// </summary>
+/// <param name="text">対象テキスト。</param>
+/// <param name="base_index">ベースインデックス。</param>
+/// <param name="next_position">進める量。</param>
+/// <returns>進めた先にある文字。進められない場合は \0 。</returns>
+TCHAR get_relative_character(const TEXT* text, size_t base_index, ssize_t next_position);
+
+/// <summary>
+/// テキストの位置から一文字進めた文字を取得。
+/// </summary>
+/// <param name="text">対象テキスト。</param>
+/// <param name="base_index">ベースインデックス。</param>
+/// <returns>1文字先の文字。進められない場合は \0 。</returns>
+#define get_next_character(text, base_index) get_relative_character(text, (base_index), 1)
 
 /// <summary>
 /// テキスト検索。
+/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索テキスト。</param>
@@ -70,6 +87,7 @@ TEXT find_text(const TEXT* haystack, const TEXT* needle, bool ignore_case);
 
 /// <summary>
 /// テキスト検索。
+/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索文字。</param>
@@ -78,11 +96,21 @@ TEXT find_character(const TEXT* haystack, TCHAR needle);
 
 /// <summary>
 /// テキスト内の文字位置を検索。
+/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索文字。</param>
 /// <returns>一致文字のインデックス。見つからない場合は0未満。</returns>
 ssize_t index_of_character(const TEXT* haystack, TCHAR needle);
+
+/// <summary>
+/// テキストは同じか。
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <param name="ignore_case"></param>
+/// <returns></returns>
+bool is_equals_text(const TEXT* a, const TEXT* b, bool ignore_case);
 
 /// <summary>
 /// テキスト比較。

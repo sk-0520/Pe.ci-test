@@ -31,6 +31,9 @@ foreach ($platform in $Platforms) {
 	}
 	foreach ($mainConfiguration in $MainConfigurations) {
 		dotnet test $mainSolutionPath --verbosity normal --no-build --no-restore --configuration $mainConfiguration --runtime win-$platform /p:Platform=$platform /p:DefineConstants="" --test-adapter-path:. $mainLoggerArg
+		if (-not $?) {
+			exit 1
+		}
 	}
 
 	$bootLoggerArg = ''
@@ -45,6 +48,9 @@ foreach ($platform in $Platforms) {
 			$testFilePath = Join-Path $testDirPath $testFileName
 
 			VSTest.Console $testFilePath /InIsolation /Platform:$platform $bootLoggerArg
+			if (-not $?) {
+				exit 1
+			}
 		}
 	}
 

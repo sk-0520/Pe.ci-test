@@ -1,4 +1,5 @@
-﻿#include "primitive_list.h"
+﻿/* 自動生成: primitive_list.c.tt */
+#include "primitive_list.h"
 #include "memory.h"
 #include "debug.h"
 
@@ -49,15 +50,18 @@ static byte_t get_type_bytes(PRIMITIVE_LIST_TYPE list_type, size_t length)
     return get_type_byte(list_type) * length;
 }
 
-PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity)
+PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity, const MEMORY_RESOURCE* memory_resource)
 {
+    assert(memory_resource);
+
     size_t capacity_bytes = get_type_bytes(list_type, capacity);
-    void* items = RC_HEAP_CALL(allocate_memory, capacity_bytes, false);
+    void* items = RC_HEAP_CALL(allocate_raw_memory, capacity_bytes, false, memory_resource);
 
     PRIMITIVE_LIST result = {
         .items = items,
         .length = 0,
         .library = {
+            .memory_resource = memory_resource,
             .capacity_bytes = capacity_bytes,
             .type = list_type,
         },
@@ -66,7 +70,7 @@ PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, s
     return result;
 }
 
-bool RC_HEAP_FUNC(free_primitive_list, PRIMITIVE_LIST* list)
+bool RC_HEAP_FUNC(release_primitive_list, PRIMITIVE_LIST* list)
 {
     if (!list) {
         return false;
@@ -75,16 +79,16 @@ bool RC_HEAP_FUNC(free_primitive_list, PRIMITIVE_LIST* list)
         return false;
     }
 
-    return RC_HEAP_CALL(free_memory, list->items);
+    return RC_HEAP_CALL(release_memory, list->items, list->library.memory_resource);
 }
 
 static void extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t need_length)
 {
     byte_t need_bytes = get_type_bytes(list->library.type, need_length);
     byte_t current_bytes = get_type_bytes(list->library.type, list->length);
-    byte_t default_capacity_bytes = get_type_bytes(list->library.type, LIST_DEFAULT_CAPACITY);
+    byte_t default_capacity_bytes = get_type_bytes(list->library.type, PRIMITIVE_LIST_DEFAULT_CAPACITY);
 
-    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&list->items, current_bytes, list->library.capacity_bytes, need_bytes, default_capacity_bytes);
+    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&list->items, current_bytes, list->library.capacity_bytes, need_bytes, default_capacity_bytes, list->library.memory_resource);
     if (extend_total_byte) {
         list->library.capacity_bytes = extend_total_byte;
     }
@@ -209,7 +213,7 @@ bool push_list_tchar(PRIMITIVE_LIST_TCHAR* list, TCHAR value)
     return true;
 }
 
-bool add_range_list_int8(PRIMITIVE_LIST_INT8* list, const int8_t* values, size_t count)
+bool add_range_list_int8(PRIMITIVE_LIST_INT8* list, const int8_t values[], size_t count)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_INT8) {
         return false;
@@ -231,7 +235,7 @@ bool add_range_list_int8(PRIMITIVE_LIST_INT8* list, const int8_t* values, size_t
 
     return true;
 }
-bool add_range_list_uint8(PRIMITIVE_LIST_UINT8* list, const uint8_t* values, size_t count)
+bool add_range_list_uint8(PRIMITIVE_LIST_UINT8* list, const uint8_t values[], size_t count)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_UINT8) {
         return false;
@@ -253,7 +257,7 @@ bool add_range_list_uint8(PRIMITIVE_LIST_UINT8* list, const uint8_t* values, siz
 
     return true;
 }
-bool add_range_list_int16(PRIMITIVE_LIST_INT16* list, const int16_t* values, size_t count)
+bool add_range_list_int16(PRIMITIVE_LIST_INT16* list, const int16_t values[], size_t count)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_INT16) {
         return false;
@@ -275,7 +279,7 @@ bool add_range_list_int16(PRIMITIVE_LIST_INT16* list, const int16_t* values, siz
 
     return true;
 }
-bool add_range_list_uint16(PRIMITIVE_LIST_UINT16* list, const uint16_t* values, size_t count)
+bool add_range_list_uint16(PRIMITIVE_LIST_UINT16* list, const uint16_t values[], size_t count)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_UINT16) {
         return false;
@@ -297,7 +301,7 @@ bool add_range_list_uint16(PRIMITIVE_LIST_UINT16* list, const uint16_t* values, 
 
     return true;
 }
-bool add_range_list_int32(PRIMITIVE_LIST_INT32* list, const int32_t* values, size_t count)
+bool add_range_list_int32(PRIMITIVE_LIST_INT32* list, const int32_t values[], size_t count)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_INT32) {
         return false;
@@ -319,7 +323,7 @@ bool add_range_list_int32(PRIMITIVE_LIST_INT32* list, const int32_t* values, siz
 
     return true;
 }
-bool add_range_list_uint32(PRIMITIVE_LIST_UINT32* list, const uint32_t* values, size_t count)
+bool add_range_list_uint32(PRIMITIVE_LIST_UINT32* list, const uint32_t values[], size_t count)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_UINT32) {
         return false;
@@ -341,7 +345,7 @@ bool add_range_list_uint32(PRIMITIVE_LIST_UINT32* list, const uint32_t* values, 
 
     return true;
 }
-bool add_range_list_size(PRIMITIVE_LIST_SIZE* list, const size_t* values, size_t count)
+bool add_range_list_size(PRIMITIVE_LIST_SIZE* list, const size_t values[], size_t count)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_SIZE) {
         return false;
@@ -363,7 +367,7 @@ bool add_range_list_size(PRIMITIVE_LIST_SIZE* list, const size_t* values, size_t
 
     return true;
 }
-bool add_range_list_ssize(PRIMITIVE_LIST_SSIZE* list, const ssize_t* values, size_t count)
+bool add_range_list_ssize(PRIMITIVE_LIST_SSIZE* list, const ssize_t values[], size_t count)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_SSIZE) {
         return false;
@@ -385,7 +389,7 @@ bool add_range_list_ssize(PRIMITIVE_LIST_SSIZE* list, const ssize_t* values, siz
 
     return true;
 }
-bool add_range_list_tchar(PRIMITIVE_LIST_TCHAR* list, const TCHAR* values, size_t count)
+bool add_range_list_tchar(PRIMITIVE_LIST_TCHAR* list, const TCHAR values[], size_t count)
 {
     if(list->library.type != PRIMITIVE_LIST_TYPE_TCHAR) {
         return false;

@@ -3,17 +3,23 @@
 #include <tuple>
 #include <fstream>
 #include <filesystem>
+#include <iostream>
+#include <string>
 
 #include <tchar.h>
 #include <atlstr.h>
+
+extern "C" {
+#   include "../Pe.Library/logging.h"
+}
 
 namespace fs = std::filesystem;
 namespace mstest = Microsoft::VisualStudio::CppUnitTestFramework;
 
 #ifdef RES_CHECK
-#   define text(s) rc_heap__new_text(RELATIVE_FILET, __LINE__, _T(s))
+#   define text(s) rc_heap__new_text(RELATIVE_FILET, __LINE__, _T(s), DEFAULT_MEMORY)
 #else
-#   define text(s) new_text(_T(s))
+#   define text(s) new_text(_T(s), DEFAULT_MEMORY)
 #endif
 
 #ifdef _UNICODE
@@ -32,14 +38,40 @@ typedef std::string tstring;
 template<typename TExpected, typename TInput1, typename... TInputN>
 struct DATA
 {
+    /// <summary>
+    /// テストデータ生成。
+    /// <para>簡易実行: <c>run(test_func)</c></para>
+    /// <para>通常実行: <c>std::apply(test_func, DATA.inputs)</c></para>
+    /// <para>引数指定: <c>test_func(std::get&lt;0&gt;(DATA.inputs))</c></para>
+    /// </summary>
+    /// <param name="expected">期待値。</param>
+    /// <param name="input1">入力値1。</param>
+    /// <param name="...inputN">入力値N。</param>
     DATA(TExpected expected, TInput1 input1, TInputN... inputN)
     {
         this->expected = expected;
         this->inputs = { input1, inputN... };
     }
 
+    /// <summary>
+    /// 期待値。
+    /// </summary>
     TExpected expected;
+    /// <summary>
+    /// 入力値一覧。
+    /// </summary>
     std::tuple<TInput1, TInputN...> inputs;
+
+    /// <summary>
+    /// 指定した関数に対して入力値一覧を適用して実行。
+    /// </summary>
+    /// <param name="func">テストする関数。</param>
+    /// <returns>実行結果。</returns>
+    template <class _Callable>
+    constexpr decltype(auto) run(_Callable&& func)
+    {
+        return std::apply(func, this->inputs);
+    }
 };
 
 template<typename TPrimitive>
@@ -109,6 +141,59 @@ private:
         }
     }
 
+    static void output(const TCHAR* message)
+    {
+        Microsoft::VisualStudio::CppUnitTestFramework::Logger::WriteMessage(message);
+    }
+
+    void logging(const LOG_ITEM* log_item)
+    {
+        tstring message(_T("["));
+        message += this->test_namespace_name;
+        message += _T("] ");
+
+        switch (log_item->log_level) {
+            case LOG_LEVEL_TRACE:
+                message += _T("trace");
+                break;
+
+            case LOG_LEVEL_DEBUG:
+                message += _T("debug");
+                break;
+
+            case LOG_LEVEL_INFO:
+                message += _T("info ");
+                break;
+
+            case LOG_LEVEL_WARNING:
+                message += _T("warn ");
+                break;
+
+            case LOG_LEVEL_ERROR:
+                message += _T("error");
+                break;
+        }
+
+        message += _T(" | ");
+
+        message += log_item->message->value;
+
+        message += _T(" | ");
+        message += log_item->caller_file->value;
+        message += _T("(");
+        message += std::to_wstring(log_item->caller_line);
+        message += _T(")");
+
+        output(message.c_str());
+    }
+
+    static void logging(const LOG_ITEM* log_item, void* data)
+    {
+        auto _this = (TestImpl*)data;
+        _this->logging(log_item);
+    }
+
+
 public:
     tstring work_dir_name = tstring(_T("work"));
 
@@ -118,6 +203,18 @@ public:
     TestImpl(tstring namespace_name)
     {
         test_namespace_name = namespace_name;
+
+#ifdef RES_CHECK
+        rc__initialize(output, RES_CHECK_INIT_PATH_LENGTH, RES_CHECK_INIT_BUFFER_LENGTH, RES_CHECK_INIT_HEAP_COUNT, RES_CHECK_INIT_FILE_COUNT);
+#endif
+
+
+        LOGGER logger;
+        logger.function = logging;
+        logger.data = this,
+        attach_logger(&logger);
+        initialize_logger(DEFAULT_MEMORY);
+        logger_put_information(_T("TEST START"));
 
         // https://stackoverflow.com/a/25151971
         auto ut_dir = tstring(_T(TO_STRING(UT_DIR)));
@@ -143,6 +240,18 @@ public:
             auto path = tstring(file.path().c_str() + work_dir.size() + 1/* \ */);
             mstest::Logger::WriteMessage((tstring(_T("> ")) + (tstring(file.is_directory() ? _T("[D] ") : _T("[F] "))) + path).c_str());
         }
+
+        logger_put_information(_T("TEST END"));
+
+#ifdef RES_CHECK
+        rc__print(true);
+        auto  exists_resource_leak = rc__exists_resource_leak();
+        rc__uninitialize();
+
+        //#ifdef DEBUG
+        Microsoft::VisualStudio::CppUnitTestFramework::Assert::IsFalse(exists_resource_leak);
+        //#endif
+#endif
     }
 
 

@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <stdarg.h>
 
-#include "fsio_resource.h"
+#include "fsio.z.resource.h"
 #include "string_builder.h"
 
 
@@ -54,15 +54,15 @@ typedef struct tag_FILE_WRITER
 /// </summary>
 /// <param name="path"></param>
 /// <returns>解放が必要。</returns>
-FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding);
+FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK
-#   define new_file_reader(path, encoding) RC_FILE_WRAP(new_file_reader, (path), (encoding))
+#   define new_file_reader(path, encoding, memory_resource) RC_FILE_WRAP(new_file_reader, (path), (encoding), memory_resource)
 #endif
 
 
-bool RC_FILE_FUNC(free_file_reader, FILE_READER* file_reader);
+bool RC_FILE_FUNC(release_file_reader, FILE_READER* file_reader);
 #if RES_CHECK
-#   define free_file_reader(file_reader) RC_FILE_WRAP(free_file_reader, (file_reader))
+#   define release_file_reader(file_reader) RC_FILE_WRAP(release_file_reader, (file_reader))
 #endif
 
 /// <summary>
@@ -91,25 +91,25 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader);
 /// <param name="open_mode"></param>
 /// <param name="options"></param>
 /// <returns>解放が必要。</returns>
-FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options);
+FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK
-#   define new_file_writer(path, encoding, open_mode, options) RC_FILE_WRAP(new_file_writer, (path), (encoding), (open_mode), (options))
+#   define new_file_writer(path, encoding, open_mode, options, memory_resource) RC_FILE_WRAP(new_file_writer, (path), (encoding), (open_mode), (options), memory_resource)
 #endif
 
 /// <summary>
 /// 無効なテキスト書き込み処理の生成。
 /// </summary>
 /// <returns></returns>
-FILE_WRITER create_invalid_file_writer();
+FILE_WRITER create_invalid_file_writer(void);
 
 /// <summary>
 /// テキストファイル書き込み処理の解放。
 /// </summary>
 /// <param name="file_writer"></param>
 /// <returns></returns>
-bool RC_FILE_FUNC(free_file_writer, FILE_WRITER* file_writer);
+bool RC_FILE_FUNC(release_file_writer, FILE_WRITER* file_writer);
 #if RES_CHECK
-#   define free_file_writer(file_writer) RC_FILE_WRAP(free_file_writer, (file_writer))
+#   define release_file_writer(file_writer) RC_FILE_WRAP(release_file_writer, (file_writer))
 #endif
 
 /// <summary>

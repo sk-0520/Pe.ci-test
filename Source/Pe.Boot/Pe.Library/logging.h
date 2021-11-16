@@ -11,10 +11,27 @@
 /// </summary>
 typedef enum tag_LOG_LEVEL
 {
+    /// <summary>
+    /// 細かいログ情報。
+    /// <para>開発時のみの出力を想定。</para>
+    /// </summary>
     LOG_LEVEL_TRACE,
+    /// <summary>
+    /// デバッグログ情報。
+    /// <para>開発時かデバッグ時の出力を想定。</para>
+    /// </summary>
     LOG_LEVEL_DEBUG,
+    /// <summary>
+    /// 通知ログ情報。
+    /// </summary>
     LOG_LEVEL_INFO,
+    /// <summary>
+    /// 警告ログ情報。
+    /// </summary>
     LOG_LEVEL_WARNING,
+    /// <summary>
+    /// 異常ログ情報。
+    /// </summary>
     LOG_LEVEL_ERROR,
 } LOG_LEVEL;
 
@@ -73,6 +90,12 @@ typedef struct tag_LOGGER
 } LOGGER;
 
 /// <summary>
+/// ログ操作時に使用するメモリリソース。
+/// </summary>
+/// <param name="memory_resource"></param>
+void initialize_logger(const MEMORY_RESOURCE* memory_resource);
+
+/// <summary>
 /// 標準のログファイル設定。
 /// </summary>
 /// <param name="file_writer">書き込み処理。<c>NULL</c>の場合は無効化。</param>
@@ -82,7 +105,7 @@ void set_default_log_file(FILE_WRITER* file_writer);
 /// </summary>
 /// <param name="log_level"></param>
 void set_default_log_level(LOG_LEVEL log_level);
-void cleanup_default_log();
+void cleanup_default_log(void);
 
 /// <summary>
 /// ロガーを追加。

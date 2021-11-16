@@ -8,41 +8,43 @@ bool equals_map_key_default(const TEXT* a, const TEXT* b)
     return !compare_text(a, b, false);
 }
 
-void free_map_value_null(MAP_PAIR* pair)
+void release_map_value_null(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource)
 {
     /* 何もしない */
 }
 
-MAP RC_HEAP_FUNC(create_map, size_t capacity, func_equals_map_key equals_map_key, func_free_map_value free_map_value)
+MAP RC_HEAP_FUNC(new_map, size_t capacity, func_equals_map_key equals_map_key, func_release_map_value release_map_value, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource)
 {
     MAP map = {
-        .pairs = allocate_memory(capacity * sizeof(MAP_PAIR), false),
+        .pairs = allocate_raw_memory(capacity * sizeof(MAP_PAIR), false, map_memory_resource),
         .length = 0,
         .library = {
+            .value_memory_resource = value_memory_resource,
+            .map_memory_resource = map_memory_resource,
             .capacity = capacity,
             .equals_map_key = equals_map_key,
-            .free_value = free_map_value,
+            .release_value = release_map_value,
         },
     };
 
     return map;
 }
 
-static void free_map_pair_value_only(MAP* map, MAP_PAIR* pair)
+static void release_map_pair_value_only(MAP* map, MAP_PAIR* pair)
 {
     if (pair->library.need_release) {
-        map->library.free_value(pair);
+        map->library.release_value(pair, map->library.value_memory_resource);
         pair->value = NULL;
     }
 }
 
-static void free_map_pair(MAP* map, MAP_PAIR* pair)
+static void release_map_pair(MAP* map, MAP_PAIR* pair)
 {
-    free_text(&pair->key);
-    free_map_pair_value_only(map, pair);
+    release_map_pair_value_only(map, pair);
+    release_text(&pair->key);
 }
 
-bool RC_HEAP_FUNC(free_map, MAP* map)
+bool RC_HEAP_FUNC(release_map, MAP* map)
 {
     if (!map) {
         return false;
@@ -51,10 +53,10 @@ bool RC_HEAP_FUNC(free_map, MAP* map)
     for (size_t i = 0; i < map->length; i++) {
         MAP_PAIR* pair = &(map->pairs[i]);
 
-        free_map_pair(map, pair);
+        release_map_pair(map, pair);
     }
 
-    RC_HEAP_CALL(free_memory, map->pairs);
+    RC_HEAP_CALL(release_memory, map->pairs, map->library.map_memory_resource);
     map->pairs = NULL;
     map->length = 0;
     map->library.capacity = 0;
@@ -68,7 +70,7 @@ static void extend_capacity_if_not_enough_map(MAP* map, size_t need_length)
     byte_t current_bytes = map->length * sizeof(MAP_PAIR);
     byte_t default_capacity_bytes = MAP_DEFAULT_CAPACITY * sizeof(MAP_PAIR);
 
-    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&map->pairs, current_bytes, map->library.capacity * sizeof(MAP_PAIR), need_bytes, default_capacity_bytes);
+    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&map->pairs, current_bytes, map->library.capacity * sizeof(MAP_PAIR), need_bytes, default_capacity_bytes, map->library.map_memory_resource);
     if (extend_total_byte) {
         map->library.capacity = extend_total_byte / sizeof(MAP_PAIR);
     }
@@ -120,7 +122,7 @@ MAP_PAIR* add_map(MAP* map, const TEXT* key, void* value, bool need_release)
     }
 
     MAP_PAIR pair = {
-        .key = clone_text(key),
+        .key = clone_text(key, map->library.map_memory_resource),
         .value = value,
         .library = {
             .need_release = need_release,
@@ -134,7 +136,7 @@ MAP_PAIR* set_map(MAP* map, const TEXT* key, void* value, bool need_release)
 {
     MAP_PAIR* current_pair = find_map(map, key);
     if (current_pair) {
-        free_map_pair_value_only(map, current_pair);
+        release_map_pair_value_only(map, current_pair);
 
         current_pair->value = value;
         current_pair->library.need_release = need_release;
@@ -154,13 +156,13 @@ bool remove_map(MAP* map, const TEXT* key)
 
     if (current_pair == &map->pairs[map->length - 1]) {
         // 最後尾の場合はずらさず要素の破棄のみ行う
-        free_map_pair(map, current_pair);
+        release_map_pair(map, current_pair);
         map->length -= 1;
         return true;
     }
 
     // 最後尾以外は前へずらす
-    free_map_pair(map, current_pair); // 解放するけどアドレスだけもうちと使う
+    release_map_pair(map, current_pair); // 解放するけどアドレスだけもうちと使う
     size_t index = (size_t)(current_pair - map->pairs);
     move_memory(current_pair, current_pair + 1, sizeof(MAP_PAIR) * (map->length - index - 1));
     map->length -= 1;

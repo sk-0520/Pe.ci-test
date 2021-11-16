@@ -72,15 +72,17 @@ static RES_CHECK_FILE_STOCK_ITEM* rc_file__stock_items;
 static size_t rc_file__stock_items_length;
 static size_t rc_file__stock_item_count;
 
+static HANDLE rc__heap = NULL;
+
 #pragma warning(push)
 #pragma warning(disable:6386)
 #define output_core(format, ...) do { \
     if(rc__output) { \
-        TCHAR* rc__buffer = HeapAlloc(GetProcessHeap(), 0, rc__buffer_length * sizeof(TCHAR)); \
+        TCHAR* rc__buffer = HeapAlloc(rc__heap, 0, rc__buffer_length * sizeof(TCHAR)); \
         assert(rc__buffer); \
         wsprintf(rc__buffer, /*rc__buffer_length - 1, */format, __VA_ARGS__); \
         rc__output(rc__buffer); \
-        HeapFree(GetProcessHeap(), 0, rc__buffer); \
+        HeapFree(rc__heap, 0, rc__buffer); \
     } \
 } while (0)
 #pragma warning(push)
@@ -149,7 +151,7 @@ static void rc_check_core(void* p, const void* data, bool allocate, RES_CHECK_TY
                     .p = p,
                     .line = RES_CHECK_ARG_LINE,
                 };
-                item.file = (TCHAR*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, rc__path_length * sizeof(TCHAR));
+                item.file = (TCHAR*)HeapAlloc(rc__heap, HEAP_ZERO_MEMORY, rc__path_length * sizeof(TCHAR));
 #pragma warning(push)
 #pragma warning(disable:6387)
                 lstrcpy(item.file, RES_CHECK_ARG_FLIE); // tstring.h を取り込みたくないのでAPIを直接呼び出し
@@ -170,7 +172,7 @@ static void rc_check_core(void* p, const void* data, bool allocate, RES_CHECK_TY
         for (size_t i = 0; p && i < rc_item.stock_items_length; i++) {
             if (rc_item.stock_items[i].p == p) {
                 output(rc_item.formats->free_mgs, p, RES_CHECK_CALL_ARGS, rc_item.stock_items[i].file, rc_item.stock_items[i].line);
-                //HeapFree(GetProcessHeap(), 0, rc_item.stock_items->file);
+                //HeapFree(rc__heap, 0, rc_item.stock_items->file);
 
                 *rc_item.stock_item_count = *rc_item.stock_item_count - 1;
                 memset(&rc_item.stock_items[i], 0, sizeof(RES_CHECK_STOCK_ITEM));
@@ -229,23 +231,27 @@ bool rc__exists_resource_leak()
 
 void rc__initialize(func_rc__output output, size_t path_length, size_t buffer_length, size_t heap_count, size_t file_count)
 {
+    rc__heap = HeapCreate(0, 0, 0);
+    assert(rc__heap);
+
     rc__output = output;
     rc__path_length = path_length;
     rc__buffer_length = buffer_length;
 
-    rc_heap__stock_items = HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, heap_count * sizeof(RES_CHECK_HEAP_STOCK_ITEM));
+    rc_heap__stock_items = HeapAlloc(rc__heap, HEAP_ZERO_MEMORY, heap_count * sizeof(RES_CHECK_HEAP_STOCK_ITEM));
     rc_heap__stock_items_length = heap_count;
     rc_heap__stock_item_count = 0;
 
-    rc_file__stock_items = HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, file_count * sizeof(RES_CHECK_FILE_STOCK_ITEM));
+    rc_file__stock_items = HeapAlloc(rc__heap, HEAP_ZERO_MEMORY, file_count * sizeof(RES_CHECK_FILE_STOCK_ITEM));
     rc_file__stock_items_length = file_count;
     rc_file__stock_item_count = 0;
 }
 
-void rc__uninitialize()
+void rc__uninitialize(void)
 {
-    HeapFree(GetProcessHeap(), 0, rc_heap__stock_items);
-    HeapFree(GetProcessHeap(), 0, rc_file__stock_items);
+    HeapFree(rc__heap, 0, rc_heap__stock_items);
+    HeapFree(rc__heap, 0, rc_file__stock_items);
+    HeapDestroy(rc__heap);
 }
 
 

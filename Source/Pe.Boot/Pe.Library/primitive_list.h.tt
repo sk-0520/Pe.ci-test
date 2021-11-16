@@ -27,12 +27,14 @@
     });
 #>
 #pragma once
+/* 自動生成: primitive_list.h.tt */
 #include <stdint.h>
 
 #include "common.h"
+#include "memory.h"
 #include "res_check.h"
 
-#define LIST_DEFAULT_CAPACITY (32)
+#define PRIMITIVE_LIST_DEFAULT_CAPACITY (32)
 
 /// <summary>
 /// 設定可能な型。
@@ -63,6 +65,10 @@ typedef struct tag_PRIMITIVE_LIST
     struct
     {
         /// <summary>
+        /// メモリリソース。
+        /// </summary>
+        const MEMORY_RESOURCE* memory_resource;
+        /// <summary>
         /// 型。
         /// </summary>
         PRIMITIVE_LIST_TYPE type;
@@ -88,9 +94,9 @@ typedef PRIMITIVE_LIST <#= item.AliasList #>;
 /// <param name="list_type">リストで使用する型。</param>
 /// <param name="capacity">予約サイズ。list_typeに影響されない理論的なサイズ。</param>
 /// <returns>解放が必要。</returns>
-PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity);
+PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define new_primitive_list(list_type, capacity) RC_HEAP_WRAP(new_primitive_list, (list_type), (capacity))
+#   define new_primitive_list(list_type, capacity, memory_resource) RC_HEAP_WRAP(new_primitive_list, (list_type), (capacity), memory_resource)
 #endif
 
 /// <summary>
@@ -98,9 +104,9 @@ PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, s
 /// </summary>
 /// <param name="list"></param>
 /// <returns></returns>
-bool RC_HEAP_FUNC(free_primitive_list, PRIMITIVE_LIST* list);
+bool RC_HEAP_FUNC(release_primitive_list, PRIMITIVE_LIST* list);
 #ifdef RES_CHECK
-#   define free_primitive_list(list) RC_HEAP_WRAP(free_primitive_list, (list))
+#   define release_primitive_list(list) RC_HEAP_WRAP(release_primitive_list, (list))
 #endif
 
 <# foreach(var item in items) { #>
@@ -121,7 +127,7 @@ bool push_list_<#= item.BaseName #>(<#= item.AliasList #>* list, <#= item.ValueT
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_<#= item.BaseName #>(<#= item.AliasList #>* list, const <#= item.ValueType #>* values, size_t count);
+bool add_range_list_<#= item.BaseName #>(<#= item.AliasList #>* list, const <#= item.ValueType #> values[], size_t count);
 <# } #>
 
 <# foreach(var item in items) { #>
@@ -152,7 +158,6 @@ bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, const <#= item
 /// </summary>
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
-/// <param name="index">0基点の取得位置。</param>
 /// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
 <#= item.ValueType #>* reference_list_<#= item.BaseName #>(const <#= item.AliasList #>* list);
 <# } #>

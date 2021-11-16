@@ -39,10 +39,10 @@
     <ClCompile Include="fsio.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="fsio_resource.c">
+    <ClCompile Include="fsio.z.resource.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="fsio_textfile.c">
+    <ClCompile Include="fsio.z.textfile.c">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="logging.c">
@@ -72,13 +72,13 @@
     <ClCompile Include="text.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="text_conv.c">
+    <ClCompile Include="text.z.conv.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="text_man.c">
+    <ClCompile Include="text.z.man.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="text_search.c">
+    <ClCompile Include="text.z.search.c">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="tstring.c">
@@ -91,6 +91,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="console.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="tcharacter.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -113,10 +116,10 @@
     <ClInclude Include="fsio.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="fsio_resource.h">
+    <ClInclude Include="fsio.z.resource.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="fsio_textfile.h">
+    <ClInclude Include="fsio.z.textfile.h">
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="logging.h">
@@ -146,13 +149,13 @@
     <ClInclude Include="text.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="text_conv.h">
+    <ClInclude Include="text.z.conv.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="text_man.h">
+    <ClInclude Include="text.z.man.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="text_search.h">
+    <ClInclude Include="text.z.search.h">
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="tstring.h">
@@ -165,6 +168,9 @@
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="console.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="tcharacter.h">
       <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>

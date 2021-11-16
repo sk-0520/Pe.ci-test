@@ -17,6 +17,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
+    /// <summary>
+    /// プラグイン最下層クラス。
+    /// </summary>
     public abstract class PluginBase: IPlugin
     {
         protected PluginBase(IPluginConstructorContext pluginConstructorContext)
@@ -31,18 +34,38 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region property
 
+        /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
+        /// <inheritdoc cref="IPluginInformations"/>
         IPluginInformations? Informations { get; set; }
 
+        /// <summary>
+        /// アドオン機能を所持しているか。
+        /// </summary>
         protected bool HasAddon { get; }
+        /// <summary>
+        /// テーマ機能を所持しているか。
+        /// </summary>
         protected bool HasTheme { get; }
 
+        /// <summary>
+        /// アドオン機能はロード済みか。
+        /// </summary>
         protected bool IsLoadedAddon { get; private set; }
+        /// <summary>
+        /// テーマ機能はロード済みか。
+        /// </summary>
         protected bool IsLoadedTheme { get; private set; }
+        /// <summary>
+        /// 設定機能を持つか。
+        /// </summary>
         protected bool HasPreferences { get; private set; }
 
+        /// <inheritdoc cref="AddonBase"/>
         internal virtual AddonBase Addon { get => throw new NotImplementedException(); }
+        /// <inheritdoc cref="ThemeBase"/>
         internal virtual ThemeBase Theme { get => throw new NotImplementedException(); }
+        /// <inheritdoc cref="IPreferences"/>
         private IPreferences? Preferences { get; set; }
 
         #endregion
@@ -51,11 +74,11 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         protected virtual DependencyObject GetIconImpl(in IconScale iconScale) => null!;
 
+
         /// <summary>
         /// プラグインアセンブリの /Plugin.icon を取得する。
         /// </summary>
-        /// <param name="iconScale"></param>
-        /// <returns></returns>
+        /// <inheritdoc cref="ExtensionBase.GetIcon(IImageLoader, in IconScale)"/>
         protected DependencyObject GetPluginIcon(IImageLoader imageLoader, in IconScale iconScale)
         {
             var asm = Assembly.GetExecutingAssembly();
@@ -75,10 +98,22 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             return null!;
         }
 
+        /// <summary>
+        /// 初期化処理内部実装。
+        /// </summary>
+        /// <inheritdoc cref="IPlugin.Initialize(IPluginInitializeContext)"/>
         protected abstract void InitializeImpl(IPluginInitializeContext pluginInitializeContext);
+        /// <summary>
+        /// 解放処理内部実装。
+        /// </summary>
+        /// <param name="pluginUninitializeContext"></param>
+        /// <inheritdoc cref="IPlugin.Uninitialize(IPluginUninitializeContext)"/>
         protected abstract void UninitializeImpl(IPluginUninitializeContext pluginUninitializeContext);
 
-
+        /// <summary>
+        /// アセンブリ設定から <see cref="IPluginInformations"/> を生成。
+        /// </summary>
+        /// <returns></returns>
         protected virtual IPluginInformations CreateInformations()
         {
             static string CreateRandomText(string format, int count)
@@ -211,7 +246,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             return GetPluginIcon(imageLoader, iconScale);
         }
 
-        /// <inheritdoc cref="IPlugin"/>
+        /// <inheritdoc cref="IPlugin.Initialize(IPluginInitializeContext)"/>
         public void Initialize(IPluginInitializeContext pluginInitializeContext)
         {
             if(IsInitialized) {

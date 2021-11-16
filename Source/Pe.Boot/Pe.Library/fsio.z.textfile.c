@@ -1,6 +1,6 @@
 ﻿#include "common.h"
-#include "fsio_textfile.h"
-#include "fsio_resource.h"
+#include "fsio.z.textfile.h"
+#include "fsio.z.resource.h"
 #include "debug.h"
 
 
@@ -40,11 +40,11 @@ static void write_bom_if_unicode(const FILE_RESOURCE* file_resource, FILE_ENCODI
     }
 }
 
-FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding)
+FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding, const MEMORY_RESOURCE* memory_resource)
 {
     FILE_READER result = {
         .has_bom = false,
-        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0),
+        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0, memory_resource),
         .library = {
             .encoding = encoding,
         },
@@ -53,9 +53,9 @@ FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encodi
     return result;
 }
 
-bool RC_FILE_FUNC(free_file_reader, FILE_READER* file_reader)
+bool RC_FILE_FUNC(release_file_reader, FILE_READER* file_reader)
 {
-    return RC_FILE_CALL(close_file_resource, &file_reader->resource);
+    return RC_FILE_CALL(release_file_resource, &file_reader->resource);
 }
 
 bool is_enabled_file_reader(const FILE_READER* file_reader)
@@ -107,14 +107,16 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
         return create_invalid_text();
     }
     if (!file_size.plain) {
-        return new_empty_text();
+        return new_empty_text(file_reader->resource.library.memory_resource);
     }
 
     //TODO: x86は32bit値が限界
     size_t file_length = (size_t)file_size.plain;
 
+    const MEMORY_RESOURCE* memory_resource = file_reader->resource.library.memory_resource;
+
     size_t total_read_length = 0;
-    uint8_t* buffer = RC_HEAP_CALL(allocate_memory, file_length, false);
+    uint8_t* buffer = RC_HEAP_CALL(allocate_raw_memory, file_length, false, memory_resource);
     uint8_t read_buffer[FILE_READER_BUFFER_SIZE];
 
     seek_begin_file_resource(&file_reader->resource);
@@ -122,7 +124,7 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
     do {
         ssize_t read_length = read_file_resource(&file_reader->resource, read_buffer, sizeof(read_buffer));
         if (read_length < 0) {
-            RC_HEAP_CALL(free_memory, buffer);
+            RC_HEAP_CALL(release_memory, buffer, memory_resource);
             return create_invalid_text();
         }
         if (read_length) {
@@ -144,12 +146,12 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
     switch (file_reader->library.encoding) {
         case FILE_ENCODING_NATIVE:
         case FILE_ENCODING_UTF16LE:
-            return wrap_text_with_length((TCHAR*)conv_buffer, conv_buffer_length / sizeof(TCHAR), true);
+            return wrap_text_with_length((TCHAR*)conv_buffer, conv_buffer_length / sizeof(TCHAR), true, memory_resource);
 
         case FILE_ENCODING_UTF8:
         {
-            TEXT text = RC_HEAP_CALL(make_text_from_multibyte, conv_buffer, conv_buffer_length, MULTI_BYTE_CHARACTER_TYPE_UTF8);
-            free_memory(buffer);
+            TEXT text = RC_HEAP_CALL(make_text_from_multibyte, conv_buffer, conv_buffer_length, MULTI_BYTE_CHARACTER_TYPE_UTF8, memory_resource);
+            release_memory(buffer, memory_resource);
             return text;
         }
 
@@ -160,13 +162,13 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
     return create_invalid_text();
 }
 
-FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options)
+FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options, const MEMORY_RESOURCE* memory_resource)
 {
     FILE_WRITER result = {
-        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, open_mode, 0),
+        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, open_mode, 0, memory_resource),
         .library = {
             .encoding = encoding,
-            .string_builder = RC_HEAP_CALL(create_string_builder, FILE_WRITER_BUFFER_SIZE),
+            .string_builder = RC_HEAP_CALL(new_string_builder, FILE_WRITER_BUFFER_SIZE, memory_resource),
             .buffer_size = FILE_WRITER_BUFFER_SIZE,
         }
     };
@@ -213,12 +215,12 @@ FILE_WRITER create_invalid_file_writer()
 }
 
 
-bool RC_FILE_FUNC(free_file_writer, FILE_WRITER* file_writer)
+bool RC_FILE_FUNC(release_file_writer, FILE_WRITER* file_writer)
 {
     flush_file_writer(file_writer, true);
 
-    bool fr = RC_FILE_CALL(close_file_resource, &file_writer->resource);
-    fr &= RC_HEAP_CALL(free_string_builder, &file_writer->library.string_builder);
+    bool fr = RC_FILE_CALL(release_file_resource, &file_writer->resource);
+    fr &= RC_HEAP_CALL(release_string_builder, &file_writer->library.string_builder);
     if (!fr) {
         return false;
     }
@@ -256,9 +258,9 @@ void flush_file_writer(FILE_WRITER* file_writer, bool force)
 
         case FILE_ENCODING_UTF8:
         {
-            MULTIBYTE_CHARACTER_RESULT mbcr = convert_to_multibyte_character(&text, MULTI_BYTE_CHARACTER_TYPE_UTF8);
+            MULTIBYTE_CHARACTER_RESULT mbcr = convert_to_multibyte_character(&text, MULTI_BYTE_CHARACTER_TYPE_UTF8, file_writer->resource.library.memory_resource);
             write_file_resource(&file_writer->resource, mbcr.buffer, mbcr.length);
-            free_multibyte_character_result(&mbcr);
+            release_multibyte_character_result(&mbcr, file_writer->resource.library.memory_resource);
         }
         break;
 
@@ -270,9 +272,9 @@ void flush_file_writer(FILE_WRITER* file_writer, bool force)
 #endif
 
     flush_file_resource(&file_writer->resource);
-    free_text(&text);
+    release_text(&text);
     clear_builder(&file_writer->library.string_builder);
-    }
+}
 
 void write_string_file_writer(FILE_WRITER* file_writer, const TCHAR* s, bool newline)
 {

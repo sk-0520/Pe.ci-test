@@ -13,25 +13,20 @@
 /// </summary>
 typedef struct tag_STRING_BUILDER
 {
+    /// <summary>
+    /// 改行に使用するテキスト。
+    /// <para>解放処理は問答無用で行われるので管理をきちんと行うこと。デフォルト値は<c>NEWLINE_TEXT</c></para>
+    /// </summary>
+    TEXT newline;
     struct
     {
+        /// <summary>
+        /// 内部文字列。
+        /// <para>各種確保処理は<c>PRIMITIVE_LIST_TCHAR.library.memory_resource</c>が使用される。</para>
+        /// </summary>
         PRIMITIVE_LIST_TCHAR list;
-        TCHAR* newline;
     } library;
 } STRING_BUILDER;
-
-
-
-/// <summary>
-/// <c>STRING_BUILDER</c>を初期化文字列から生成。
-/// </summary>
-/// <param name="s">初期化に使用する文字列。</param>
-/// <param name="capacity">初期予約領域。特に指定しない場合は<c>STRING_BUILDER_DEFAULT_CAPACITY</c>を使用する。<c>s</c>より小さい場合、<c>s</c>の長さまで拡張される。</param>
-/// <returns>生成した<c>STRING_BUILDER</c>。解放が必要。</returns>
-STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t capacity);
-#ifdef RES_CHECK
-#   define initialize_string_builder(s, capacity) RC_HEAP_WRAP(initialize_string_builder, (s), (capacity))
-#endif
 
 /// <summary>
 /// <c>STRING_BUILDER</c>を生成。
@@ -39,9 +34,9 @@ STRING_BUILDER RC_HEAP_FUNC(initialize_string_builder, const TCHAR* s, size_t ca
 /// <param name=""></param>
 /// <param name="capacity">初期予約領域。特に指定しない場合は<c>STRING_BUILDER_DEFAULT_CAPACITY</c>を使用する。</param>
 /// <returns>生成した<c>STRING_BUILDER</c>。解放が必要。</returns>
-STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity);
+STRING_BUILDER RC_HEAP_FUNC(new_string_builder, size_t capacity, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define create_string_builder(capacity) RC_HEAP_WRAP(create_string_builder, (capacity))
+#   define new_string_builder(capacity, memory_resource) RC_HEAP_WRAP(new_string_builder, (capacity), memory_resource)
 #endif
 
 /// <summary>
@@ -49,9 +44,9 @@ STRING_BUILDER RC_HEAP_FUNC(create_string_builder, size_t capacity);
 /// </summary>
 /// <param name=""></param>
 /// <param name="string_builder"></param>
-bool RC_HEAP_FUNC(free_string_builder, STRING_BUILDER* string_builder);
+bool RC_HEAP_FUNC(release_string_builder, STRING_BUILDER* string_builder);
 #ifdef RES_CHECK
-#   define free_string_builder(string_builder) RC_HEAP_WRAP(free_string_builder, (string_builder))
+#   define release_string_builder(string_builder) RC_HEAP_WRAP(release_string_builder, (string_builder))
 #endif
 
 /// <summary>

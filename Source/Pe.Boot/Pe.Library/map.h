@@ -6,6 +6,8 @@
 #include "tstring.h"
 #include "text.h"
 
+// 呼び出し側でヒープを確保して使用する前提。のはず。
+
 #define MAP_DEFAULT_CAPACITY (16)
 
 /// <summary>
@@ -73,7 +75,7 @@ typedef bool (*func_equals_map_key)(const TEXT* a, const TEXT* b);
 /// <summary>
 /// マップ値解放処理。
 /// </summary>
-typedef void (*func_free_map_value)(MAP_PAIR* pair);
+typedef void (*func_release_map_value)(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource);
 
 /// <summary>
 /// 連想配列データ。
@@ -97,6 +99,14 @@ typedef struct tag_MAP
     struct
     {
         /// <summary>
+        /// 値解放時に使用するメモリリソース。
+        /// </summary>
+        const MEMORY_RESOURCE* value_memory_resource;
+        /// <summary>
+        /// <see cref="MAP"/>が使用するメモリリソース。
+        /// </summary>
+        const MEMORY_RESOURCE* map_memory_resource;
+        /// <summary>
         /// 容量。
         /// </summary>
         size_t capacity;
@@ -107,7 +117,7 @@ typedef struct tag_MAP
         /// <summary>
         /// 値解放処理。
         /// </summary>
-        func_free_map_value free_value;
+        func_release_map_value release_value;
     } library;
 } MAP;
 
@@ -124,21 +134,21 @@ bool equals_map_key_default(const TEXT* a, const TEXT* b);
 /// マップの値解放不要処理。
 /// </summary>
 /// <param name="pair"></param>
-void free_map_value_null(MAP_PAIR* pair);
+void release_map_value_null(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource);
 
 /// <summary>
 /// マップの生成。
 /// </summary>
 /// <param name="capacity">初期予約領域。特に指定しない場合は<c>MAP_DEFAULT_CAPACITY</c>を使用する。</param>
 /// <param name="equals_map_key">キー比較処理。</param>
-/// <param name="free_map_value">値解放処理。</param>
+/// <param name="release_map_value">値解放処理。</param>
+/// <param name="value_memory_resource">値解放で使用するメモリリソース。<see cref="MAP" />では使用側でメモリを確保する設計のため<param name="map_memory_resource"/>と必ずしも一緒のメモリリソースとは限らない。混在する場合はもうわからん。</param>
+/// <param name="map_memory_resource"><see cref="MAP" />の内部処理で使用するメモリリソース。</param>
 /// <returns></returns>
-MAP RC_HEAP_FUNC(create_map, size_t capacity, func_equals_map_key equals_map_key, func_free_map_value free_map_value);
+MAP RC_HEAP_FUNC(new_map, size_t capacity, func_equals_map_key equals_map_key, func_release_map_value release_map_value, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource);
 #ifdef RES_CHECK
-#   define create_map(capacity, equals_map_key, free_map_value) RC_HEAP_WRAP(create_map, (capacity), (equals_map_key), (free_map_value))
+#   define new_map(capacity, equals_map_key, release_map_value, value_memory_resource, map_memory_resource) RC_HEAP_WRAP(new_map, (capacity), (equals_map_key), (release_map_value), value_memory_resource, map_memory_resource)
 #endif
-
-#define create_map_default(freeMapValue) create_map(MAP_DEFAULT_CAPACITY, equals_map_key_default, free_map_value_null)
 
 /// <summary>
 /// 初期化処理。
@@ -154,9 +164,9 @@ bool initialize_map(MAP* map, MAP_INIT init[], size_t length, bool need_release)
 /// マップの開放。
 /// </summary>
 /// <param name="map">対象マップ。</param>
-bool RC_HEAP_FUNC(free_map, MAP* map);
+bool RC_HEAP_FUNC(release_map, MAP* map);
 #ifdef RES_CHECK
-#   define free_map(map) RC_HEAP_WRAP(free_map, (map))
+#   define release_map(map) RC_HEAP_WRAP(release_map, (map))
 #endif
 
 /// <summary>

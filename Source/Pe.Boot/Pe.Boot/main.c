@@ -3,6 +3,8 @@
 #include "../Pe.Library/logging.h"
 #include "app_main.h"
 
+#define WITHOUT_CRT
+
 #ifdef RES_CHECK
 static void output(const TCHAR* s)
 {
@@ -21,7 +23,7 @@ static void logging(const LOG_ITEM* log_item, void* data)
         _T("WARNING"),
         _T("ERROR"),
     };
-    STRING_BUILDER sb = create_string_builder(256);
+    STRING_BUILDER sb = new_string_builder(256, DEFAULT_MEMORY);
     TEXT format = wrap_text(
         _T("[LOG:%s]")
         _T(" ")
@@ -40,18 +42,19 @@ static void logging(const LOG_ITEM* log_item, void* data)
     TEXT text = build_text_string_builder(&sb);
     OutputDebugString(text.value);
 
-    free_text(&text);
-    free_string_builder(&sb);
+    release_text(&text);
+    release_string_builder(&sb);
 }
 
 static void setup_logging_file(const COMMAND_LINE_OPTION* command_line_option)
 {
     TEXT log_file_key = wrap_text(OPTION_LOG_FILE_KEY);
     const COMMAND_LINE_ITEM* log_file_item = get_command_line_item(command_line_option, &log_file_key);
+    
     if (is_inputed_command_line_item(log_file_item)) {
         TEXT default_log_path = log_file_item->value;
 
-        FILE_WRITER log_file_writer = new_file_writer(&default_log_path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM);
+        FILE_WRITER log_file_writer = new_file_writer(&default_log_path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM, DEFAULT_MEMORY);
         seek_end_file_resource(&log_file_writer.resource);
         set_default_log_file(&log_file_writer);
     } else {
@@ -69,7 +72,7 @@ static void setup_logging_level(const COMMAND_LINE_OPTION* command_line_option)
     TEXT log_level_key = wrap_text(OPTION_LOG_LEVEL_KEY);
     const COMMAND_LINE_ITEM* log_level_item = get_command_line_item(command_line_option, &log_level_key);
     if (is_inputed_command_line_item(log_level_item)) {
-        TEXT_PARSED_INT32_RESULT num_result = parse_integer_from_text(&log_level_item->value, false);
+        TEXT_PARSED_I32_RESULT num_result = parse_i32_from_text(&log_level_item->value, false, command_line_option->library.map.library.map_memory_resource);
         int log_level = default_log_level;
         if (num_result.success) {
             log_level = num_result.value;
@@ -99,6 +102,7 @@ static void setup_logging_level(const COMMAND_LINE_OPTION* command_line_option)
 
 static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
 {
+    initialize_logger(DEFAULT_MEMORY);
     setup_logging_file(command_line_option);
     setup_logging_level(command_line_option);
 
@@ -113,7 +117,7 @@ static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
     logger_put_trace(_T("お馬さんパッカパッカ🏇"));
 }
 
-static void end_logging()
+static void end_logging(void)
 {
     logger_put_trace(_T("お魚さんブックブック🐟"));
 
@@ -129,7 +133,7 @@ static int application_main(HINSTANCE hInstance)
 #endif
 
     TEXT command_line = wrap_text(GetCommandLine());
-    COMMAND_LINE_OPTION command_line_option = parse_command_line(&command_line, true);
+    COMMAND_LINE_OPTION command_line_option = parse_command_line(&command_line, true, DEFAULT_MEMORY);
 
     start_logging(&command_line_option);
 
@@ -139,7 +143,7 @@ static int application_main(HINSTANCE hInstance)
 
     logger_put_information(_T("Pe アプリケーション処理終了"));
 
-    free_command_line(&command_line_option);
+    release_command_line(&command_line_option);
 
     end_logging();
 
@@ -151,6 +155,18 @@ static int application_main(HINSTANCE hInstance)
     return return_code;
 }
 
+#ifdef WITHOUT_CRT
+/// <summary>
+/// 非CRT版スタートアップ。
+/// </summary>
+/// <returns></returns>
+void WINAPI entry_main(void)
+{
+    HINSTANCE hInstance = GetModuleHandle(NULL);
+    int return_code = application_main(hInstance);
+    ExitProcess(return_code);
+}
+#else
 /// <summary>
 /// CRT版スタートアップ。
 /// </summary>
@@ -163,15 +179,4 @@ int WINAPI _tWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 {
     return application_main(hInstance);
 }
-
-/// <summary>
-/// 非CRT版スタートアップ。
-/// </summary>
-/// <returns></returns>
-void WINAPI entry_main()
-{
-    HINSTANCE hInstance = GetModuleHandle(NULL);
-    int return_code = application_main(hInstance);
-    ExitProcess(return_code);
-}
-
+#endif

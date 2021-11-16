@@ -48,12 +48,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// プラグインの初期化。
         /// <para>この段階ではあんまり小難しいことをしないこと。</para>
         /// </summary>
+        /// <param name="pluginInitializeContext"></param>
         void Initialize(IPluginInitializeContext pluginInitializeContext);
 
         /// <summary>
         /// プラグイン終了。
         /// <para>可能な限りプラグイン開放可能な状態になること。</para>
         /// </summary>
+        /// <param name="pluginUninitializeContext"></param>
         void Uninitialize(IPluginUninitializeContext pluginUninitializeContext);
 
         /// <summary>

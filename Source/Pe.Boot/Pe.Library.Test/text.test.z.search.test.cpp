@@ -88,6 +88,55 @@ namespace PeLibraryTest
             }
         }
 
+        TEST_METHOD(is_equals_text_test)
+        {
+            TCHAR buffers[] = _T("abcDEFABCdef");
+            TEXT abc = wrap_text_with_length(buffers + (3 * 0), 3, false, NULL);
+            TEXT DEF = wrap_text_with_length(buffers + (3 * 1), 3, false, NULL);
+            TEXT ABC = wrap_text_with_length(buffers + (3 * 2), 3, false, NULL);
+            TEXT def = wrap_text_with_length(buffers + (3 * 3), 3, false, NULL);
+
+            auto tests = {
+                DATA(true, wrap("abc"), wrap("abc"), false),
+
+                DATA(false, wrap("abc"), wrap("Abc"), false),
+                DATA(false, wrap("aBc"), wrap("ABc"), false),
+                DATA(false, wrap("abC"), wrap("ABC"), false),
+                DATA(false, wrap("abc"), wrap("ABC"), false),
+
+                DATA(true, wrap("abc"), wrap("Abc"), true),
+                DATA(true, wrap("aBc"), wrap("ABc"), true),
+                DATA(true, wrap("abC"), wrap("ABC"), true),
+                DATA(true, wrap("abc"), wrap("ABC"), true),
+
+                DATA(false, wrap("abcd"), wrap("ABC"), false),
+                DATA(false, wrap("abc"), wrap("ABCD"), false),
+                DATA(false, wrap("abcd"), wrap("ABC"), true),
+                DATA(false, wrap("abc"), wrap("ABCD"), true),
+
+                DATA(true, abc, abc, false),
+                DATA(false, abc, ABC, false),
+                DATA(true, def, def, false),
+                DATA(false, def, DEF, false),
+
+                DATA(true, abc, abc, true),
+                DATA(true, abc, ABC, true),
+                DATA(true, def, def, true),
+                DATA(true, def, DEF, true),
+            };
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                TEXT& arg2 = std::get<1>(test.inputs);
+                bool arg3 = std::get<2>(test.inputs);
+                auto actual = is_equals_text(&arg1, &arg2, arg3);
+                if (test.expected) {
+                    Assert::IsTrue(actual);
+                } else {
+                    Assert::IsFalse(actual);
+                }
+            }
+        }
+
         TEST_METHOD(compare_text_test)
         {
             auto tests = {
@@ -104,6 +153,51 @@ namespace PeLibraryTest
                 DATA(0, wrap("abc"), wrap("ABC"), true),
                 DATA(-1, wrap("abc"), wrap("DEF"), true),
                 DATA(+1, wrap("def"), wrap("ABC"), true),
+            };
+
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                TEXT& arg2 = std::get<1>(test.inputs);
+                bool arg3 = std::get<2>(test.inputs);
+                auto actual = compare_text(&arg1, &arg2, arg3);
+                switch (test.expected) {
+                    case -1:
+                        Assert::IsTrue(actual < 0);
+                        break;
+                    case 0:
+                        Assert::IsTrue(actual == 0);
+                        break;
+                    case +1:
+                        Assert::IsTrue(0 < actual);
+                        break;
+                    default:
+                        _ASSERT(false);
+                }
+            }
+        }
+
+        TEST_METHOD(compare_text_length_test)
+        {
+            TCHAR buffers[] = _T("abcDEFABCdef");
+            TEXT abc = wrap_text_with_length(buffers + (3 * 0), 3, false, NULL);
+            TEXT DEF = wrap_text_with_length(buffers + (3 * 1), 3, false, NULL);
+            TEXT ABC = wrap_text_with_length(buffers + (3 * 2), 3, false, NULL);
+            TEXT def = wrap_text_with_length(buffers + (3 * 3), 3, false, NULL);
+
+            auto tests = {
+                DATA(0, abc, abc, false),
+                DATA(-1, abc, def, false),
+                DATA(+1, def, abc, false),
+                DATA(-1, abc, ABC, false),
+                DATA(-1, abc, DEF, false),
+                DATA(+1, def, ABC, false),
+
+                DATA(0, abc, abc, true),
+                DATA(-1, abc, def, true),
+                DATA(+1, def, abc, true),
+                DATA(0, abc, ABC, true),
+                DATA(-1, abc, DEF, true),
+                DATA(+1, def, ABC, true),
             };
 
             for (auto test : tests) {
@@ -190,8 +284,7 @@ namespace PeLibraryTest
                 auto actual = starts_with_text(&arg1, &arg2);
                 if (test.expected) {
                     Assert::IsTrue(actual, arg2.value);
-                }
-                else {
+                } else {
                     Assert::IsFalse(actual, arg2.value);
                 }
             }

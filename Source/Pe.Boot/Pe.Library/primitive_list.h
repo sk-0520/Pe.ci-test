@@ -1,10 +1,12 @@
 ﻿#pragma once
+/* 自動生成: primitive_list.h.tt */
 #include <stdint.h>
 
 #include "common.h"
+#include "memory.h"
 #include "res_check.h"
 
-#define LIST_DEFAULT_CAPACITY (32)
+#define PRIMITIVE_LIST_DEFAULT_CAPACITY (32)
 
 /// <summary>
 /// 設定可能な型。
@@ -64,6 +66,10 @@ typedef struct tag_PRIMITIVE_LIST
     void* items;
     struct
     {
+        /// <summary>
+        /// メモリリソース。
+        /// </summary>
+        const MEMORY_RESOURCE* memory_resource;
         /// <summary>
         /// 型。
         /// </summary>
@@ -128,9 +134,9 @@ typedef PRIMITIVE_LIST PRIMITIVE_LIST_TCHAR;
 /// <param name="list_type">リストで使用する型。</param>
 /// <param name="capacity">予約サイズ。list_typeに影響されない理論的なサイズ。</param>
 /// <returns>解放が必要。</returns>
-PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity);
+PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define new_primitive_list(list_type, capacity) RC_HEAP_WRAP(new_primitive_list, (list_type), (capacity))
+#   define new_primitive_list(list_type, capacity, memory_resource) RC_HEAP_WRAP(new_primitive_list, (list_type), (capacity), memory_resource)
 #endif
 
 /// <summary>
@@ -138,9 +144,9 @@ PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, s
 /// </summary>
 /// <param name="list"></param>
 /// <returns></returns>
-bool RC_HEAP_FUNC(free_primitive_list, PRIMITIVE_LIST* list);
+bool RC_HEAP_FUNC(release_primitive_list, PRIMITIVE_LIST* list);
 #ifdef RES_CHECK
-#   define free_primitive_list(list) RC_HEAP_WRAP(free_primitive_list, (list))
+#   define release_primitive_list(list) RC_HEAP_WRAP(release_primitive_list, (list))
 #endif
 
 /// <summary>
@@ -214,7 +220,7 @@ bool push_list_tchar(PRIMITIVE_LIST_TCHAR* list, TCHAR value);
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_int8(PRIMITIVE_LIST_INT8* list, const int8_t* values, size_t count);
+bool add_range_list_int8(PRIMITIVE_LIST_INT8* list, const int8_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -222,7 +228,7 @@ bool add_range_list_int8(PRIMITIVE_LIST_INT8* list, const int8_t* values, size_t
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_uint8(PRIMITIVE_LIST_UINT8* list, const uint8_t* values, size_t count);
+bool add_range_list_uint8(PRIMITIVE_LIST_UINT8* list, const uint8_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -230,7 +236,7 @@ bool add_range_list_uint8(PRIMITIVE_LIST_UINT8* list, const uint8_t* values, siz
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_int16(PRIMITIVE_LIST_INT16* list, const int16_t* values, size_t count);
+bool add_range_list_int16(PRIMITIVE_LIST_INT16* list, const int16_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -238,7 +244,7 @@ bool add_range_list_int16(PRIMITIVE_LIST_INT16* list, const int16_t* values, siz
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_uint16(PRIMITIVE_LIST_UINT16* list, const uint16_t* values, size_t count);
+bool add_range_list_uint16(PRIMITIVE_LIST_UINT16* list, const uint16_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -246,7 +252,7 @@ bool add_range_list_uint16(PRIMITIVE_LIST_UINT16* list, const uint16_t* values, 
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_int32(PRIMITIVE_LIST_INT32* list, const int32_t* values, size_t count);
+bool add_range_list_int32(PRIMITIVE_LIST_INT32* list, const int32_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -254,7 +260,7 @@ bool add_range_list_int32(PRIMITIVE_LIST_INT32* list, const int32_t* values, siz
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_uint32(PRIMITIVE_LIST_UINT32* list, const uint32_t* values, size_t count);
+bool add_range_list_uint32(PRIMITIVE_LIST_UINT32* list, const uint32_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -262,7 +268,7 @@ bool add_range_list_uint32(PRIMITIVE_LIST_UINT32* list, const uint32_t* values, 
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_size(PRIMITIVE_LIST_SIZE* list, const size_t* values, size_t count);
+bool add_range_list_size(PRIMITIVE_LIST_SIZE* list, const size_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -270,7 +276,7 @@ bool add_range_list_size(PRIMITIVE_LIST_SIZE* list, const size_t* values, size_t
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_ssize(PRIMITIVE_LIST_SSIZE* list, const ssize_t* values, size_t count);
+bool add_range_list_ssize(PRIMITIVE_LIST_SSIZE* list, const ssize_t values[], size_t count);
 /// <summary>
 /// リストにデータ追加。
 /// </summary>
@@ -278,7 +284,7 @@ bool add_range_list_ssize(PRIMITIVE_LIST_SSIZE* list, const ssize_t* values, siz
 /// <param name="values">追加する値の一覧。</param>
 /// <param name="count">個数。</param>
 /// <returns>成功状態。</returns>
-bool add_range_list_tchar(PRIMITIVE_LIST_TCHAR* list, const TCHAR* values, size_t count);
+bool add_range_list_tchar(PRIMITIVE_LIST_TCHAR* list, const TCHAR values[], size_t count);
 
 /// <summary>
 /// リストの末尾データを破棄。
@@ -423,7 +429,6 @@ bool get_list_tchar(TCHAR* result, const PRIMITIVE_LIST_TCHAR* list, size_t inde
 /// </summary>
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
-/// <param name="index">0基点の取得位置。</param>
 /// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
 int8_t* reference_list_int8(const PRIMITIVE_LIST_INT8* list);
 /// <summary>
@@ -432,7 +437,6 @@ int8_t* reference_list_int8(const PRIMITIVE_LIST_INT8* list);
 /// </summary>
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
-/// <param name="index">0基点の取得位置。</param>
 /// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
 uint8_t* reference_list_uint8(const PRIMITIVE_LIST_UINT8* list);
 /// <summary>
@@ -441,7 +445,6 @@ uint8_t* reference_list_uint8(const PRIMITIVE_LIST_UINT8* list);
 /// </summary>
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
-/// <param name="index">0基点の取得位置。</param>
 /// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
 int16_t* reference_list_int16(const PRIMITIVE_LIST_INT16* list);
 /// <summary>
@@ -450,7 +453,6 @@ int16_t* reference_list_int16(const PRIMITIVE_LIST_INT16* list);
 /// </summary>
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
-/// <param name="index">0基点の取得位置。</param>
 /// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
 uint16_t* reference_list_uint16(const PRIMITIVE_LIST_UINT16* list);
 /// <summary>
@@ -459,7 +461,6 @@ uint16_t* reference_list_uint16(const PRIMITIVE_LIST_UINT16* list);
 /// </summary>
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
-/// <param name="index">0基点の取得位置。</param>
 /// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
 int32_t* reference_list_int32(const PRIMITIVE_LIST_INT32* list);
 /// <summary>
@@ -468,7 +469,6 @@ int32_t* reference_list_int32(const PRIMITIVE_LIST_INT32* list);
 /// </summary>
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
-/// <param name="index">0基点の取得位置。</param>
 /// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
 uint32_t* reference_list_uint32(const PRIMITIVE_LIST_UINT32* list);
 /// <summary>
@@ -477,7 +477,6 @@ uint32_t* reference_list_uint32(const PRIMITIVE_LIST_UINT32* list);
 /// </summary>
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
-/// <param name="index">0基点の取得位置。</param>
 /// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
 size_t* reference_list_size(const PRIMITIVE_LIST_SIZE* list);
 /// <summary>
@@ -486,7 +485,6 @@ size_t* reference_list_size(const PRIMITIVE_LIST_SIZE* list);
 /// </summary>
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
-/// <param name="index">0基点の取得位置。</param>
 /// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
 ssize_t* reference_list_ssize(const PRIMITIVE_LIST_SSIZE* list);
 /// <summary>
@@ -495,7 +493,6 @@ ssize_t* reference_list_ssize(const PRIMITIVE_LIST_SSIZE* list);
 /// </summary>
 /// <param name="result">取得データ。</param>
 /// <param name="list">対象リスト。</param>
-/// <param name="index">0基点の取得位置。</param>
 /// <returns>成功した場合は型指定されたポインタ。中身いじってもいいけどご安全に。失敗時はNULL。</returns>
 TCHAR* reference_list_tchar(const PRIMITIVE_LIST_TCHAR* list);
 

@@ -1729,12 +1729,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 });
             }
 
-            if(!ResetWaiting) {
-                ResetWaiting = true;
-                ClearScreenViewElements();
-                DelayExecuteElements();
-            } else {
-                DelayExecuteElements();
+            try {
+                StopHook();
+                if(!ResetWaiting) {
+                    ResetWaiting = true;
+                    ClearScreenViewElements();
+                    DelayExecuteElements();
+                } else {
+                    DelayExecuteElements();
+                }
+            } finally {
+                StartHook();
             }
         }
 

@@ -28,7 +28,7 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* conso
 
     TCHAR* argument = NULL;
     if (is_enabled_text(command_line)) {
-        argument = clone_string_with_length(command_line->value, command_line->length);
+        argument = clone_string_with_length(command_line->value, command_line->length, DEFAULT_MEMORY);
     }
 
     bool result = CreateProcess(
@@ -43,7 +43,7 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* conso
         &startupinfo,
         &process_information
     );
-    free_string(argument);
+    release_string(argument, DEFAULT_MEMORY);
 
     if (result) {
         WaitForSingleObject(process_information.hProcess, INFINITE);
@@ -71,7 +71,7 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* conso
 
 EXIT_CODE dry_run(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
 {
-    CONSOLE_RESOURCE console_resource = begin_console();
+    CONSOLE_RESOURCE console_resource = begin_console(DEFAULT_MEMORY);
 
     TEXT env_special_key = wrap_text(_T("PE_SPECIAL_MODE"));
     TEXT value = wrap_text(_T("DRY-RUN"));
@@ -80,14 +80,14 @@ EXIT_CODE dry_run(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_o
 
     logger_format_debug(_T("[ENV] %t = %t"), &env_special_key, &value);
 
-    TEXT_LIST args = allocate_clear_memory(command_line_option->count, sizeof(TEXT));
+    TEXT_LIST args = allocate_memory(command_line_option->count, sizeof(TEXT), DEFAULT_MEMORY);
     size_t arg_count = filter_enable_command_line_items(args, command_line_option);
 
-    TEXT argument = to_command_line_argument(args, arg_count);
+    TEXT argument = to_command_line_argument(args, arg_count, DEFAULT_MEMORY);
     logger_format_debug(_T("argument = %t"), &argument);
-    free_memory(args);
+    release_memory(args, DEFAULT_MEMORY);
     EXIT_CODE exit_code = dry_run_core(hInstance, &console_resource, &argument);
-    free_text(&argument);
+    release_text(&argument);
 
     end_console(&console_resource);
 

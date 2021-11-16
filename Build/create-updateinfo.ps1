@@ -4,7 +4,8 @@
 	[Parameter(mandatory = $true)][string] $ArchiveBaseUrl,
 	[Parameter(mandatory = $true)][string] $NoteBaseUrl,
 	[Parameter(mandatory = $true)][string] $ReleaseDirectory,
-	[Parameter(mandatory = $true)][ValidateSet("zip", "7z")][string] $Archive,
+	[Parameter(mandatory = $true)][ValidateSet('zip', '7z', 'tar')][string] $MainArchive,
+	[Parameter(mandatory = $true)][ValidateSet('zip', '7z', 'tar')][string] $DefaultArchive,
 	[Parameter(mandatory = $true)][string[]] $Platforms
 )
 $ErrorActionPreference = 'Stop'
@@ -32,7 +33,7 @@ function OutputJson([object] $json, [string] $outputPath) {
 	| Set-Content -Path $outputPath -Encoding Byte
 }
 
-function CreateUpdateItem([string] $archiveFilePath, [uri] $noteUri, [version] $minimumVersion) {
+function New-UpdateItem([string] $archive, [string] $archiveFilePath, [uri] $noteUri, [version] $minimumVersion) {
 	return @{
 		release            = $releaseTimestamp.ToString("s")
 		version            = $version
@@ -40,9 +41,9 @@ function CreateUpdateItem([string] $archiveFilePath, [uri] $noteUri, [version] $
 		platform           = $platform
 		minimum_version    = $minimumVersion
 		note_uri           = $noteUri
-		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", (Split-Path $archiveFilePath -Leaf))
+		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVENAME@", (Split-Path $archiveFilePath -Leaf))
 		archive_size       = (Get-Item -Path $archiveFilePath).Length
-		archive_kind       = $Archive
+		archive_kind       = $archive
 		archive_hash_kind  = $hashAlgorithm
 		archive_hash_value = (Get-FileHash -Path $archiveFilePath -Algorithm $hashAlgorithm).Hash
 	}
@@ -51,12 +52,12 @@ function CreateUpdateItem([string] $archiveFilePath, [uri] $noteUri, [version] $
 # アップデート情報の作成
 $updateJson = Get-Content -Path (Join-Path $currentDirPath "update.json") | ConvertFrom-Json
 foreach ($platform in $Platforms) {
-	$targetName = ConvertAppArchiveFileName $version $platform $Archive
+	$targetName = ConvertAppArchiveFileName $version $platform $MainArchive
 	$targetPath = Join-Path $ReleaseDirectory $targetName
 
 	$noteName = (ConvertReleaseNoteFileName $version)
 	$noteUri = $NoteBaseUrl.Replace("@NOTENAME@", $noteName)
-	$item = CreateUpdateItem $targetPath $noteUri $MinimumVersion
+	$item = New-UpdateItem $MainArchive $targetPath $noteUri $MinimumVersion
 
 	$updateJson.items += $item
 }
@@ -76,12 +77,12 @@ foreach($pluginProjectDirectory in $pluginProjectDirectories) {
 	# $targetName
 	$items = @()
 	foreach ($platform in $Platforms) {
-		$pluginFileName = $pluginProjectDirectory.Name + '_' + $platform + '.' + $Archive
+		$pluginFileName = $pluginProjectDirectory.Name + '_' + $platform + '.' + $DefaultArchive
 		$pluginFilePath = Join-Path $outputDirectory $pluginFileName
 
-		$noteName = (ConvertFileName $pluginProjectDirectory.Name $version '' 'html')
+		$noteName = $pluginProjectDirectory.Name + '.html'
 		$noteUri = $NoteBaseUrl.Replace("@NOTENAME@", $noteName)
-		$item = CreateUpdateItem $pluginFilePath $noteUri $version
+		$item = New-UpdateItem $DefaultArchive $pluginFilePath $noteUri $version
 
 		$items += $item
 	}

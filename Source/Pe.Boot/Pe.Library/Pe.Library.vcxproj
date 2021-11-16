@@ -154,6 +154,7 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -196,6 +197,7 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -241,6 +243,7 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -286,6 +289,7 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -331,6 +335,7 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -376,6 +381,7 @@
       <LanguageStandard_C>Default</LanguageStandard_C>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -399,8 +405,8 @@
     <ClCompile Include="datetime.c" />
     <ClCompile Include="debug.c" />
     <ClCompile Include="fsio.c" />
-    <ClCompile Include="fsio_resource.c" />
-    <ClCompile Include="fsio_textfile.c" />
+    <ClCompile Include="fsio.z.resource.c" />
+    <ClCompile Include="fsio.z.textfile.c" />
     <None Include="primitive_list.c.tt">
       <FileType>Document</FileType>
     </None>
@@ -413,10 +419,11 @@
     <ClCompile Include="platform.c" />
     <ClCompile Include="res_check.c" />
     <ClCompile Include="string_builder.c" />
-    <ClCompile Include="text_conv.c" />
-    <ClCompile Include="text_search.c" />
+    <ClCompile Include="tcharacter.c" />
+    <ClCompile Include="text.z.conv.c" />
+    <ClCompile Include="text.z.search.c" />
     <ClCompile Include="text.c" />
-    <ClCompile Include="text_man.c" />
+    <ClCompile Include="text.z.man.c" />
     <ClCompile Include="tstring.c" />
     <ClCompile Include="writer.c" />
     <ClCompile Include="without_crt.c" />
@@ -428,8 +435,8 @@
     <ClInclude Include="datetime.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="fsio.h" />
-    <ClInclude Include="fsio_resource.h" />
-    <ClInclude Include="fsio_textfile.h" />
+    <ClInclude Include="fsio.z.resource.h" />
+    <ClInclude Include="fsio.z.textfile.h" />
     <None Include="primitive_list.h.tt">
       <FileType>Document</FileType>
     </None>
@@ -442,10 +449,11 @@
     <ClInclude Include="platform.h" />
     <ClInclude Include="res_check.h" />
     <ClInclude Include="string_builder.h" />
-    <ClInclude Include="text_conv.h" />
-    <ClInclude Include="text_search.h" />
+    <ClInclude Include="tcharacter.h" />
+    <ClInclude Include="text.z.conv.h" />
+    <ClInclude Include="text.z.search.h" />
     <ClInclude Include="text.h" />
-    <ClInclude Include="text_man.h" />
+    <ClInclude Include="text.z.man.h" />
     <ClInclude Include="tstring.h" />
     <ClInclude Include="writer.h" />
     <ClInclude Include="without_crt.h" />

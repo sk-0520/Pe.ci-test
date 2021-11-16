@@ -25,6 +25,10 @@ $appIcons = @(
 		name  = 'App-beta'
 		color = '#8888ff'
 	}
+	@{
+		name  = 'App-plugin'
+		color = '#88ff88'
+	}
 )
 $iconSize = @(
 	16, 18, 20, 24, 28

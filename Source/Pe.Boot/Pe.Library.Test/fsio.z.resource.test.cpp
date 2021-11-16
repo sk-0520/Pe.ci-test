@@ -17,14 +17,14 @@ namespace PeLibraryTest
 
             TEST_GET_PATH(path1, _T("file"));
 
-            FILE_RESOURCE actual1 = create_file_resource(&path1);
-            FILE_RESOURCE actual2 = create_file_resource(&path1);
+            FILE_RESOURCE actual1 = create_file_resource(&path1, DEFAULT_MEMORY);
+            FILE_RESOURCE actual2 = create_file_resource(&path1, DEFAULT_MEMORY);
 
             Assert::IsTrue(is_enabled_file_resource(&actual1));
             Assert::IsFalse(is_enabled_file_resource(&actual2));
 
-            Assert::IsTrue(close_file_resource(&actual1));
-            Assert::IsFalse(close_file_resource(&actual2));
+            Assert::IsTrue(release_file_resource(&actual1));
+            Assert::IsFalse(release_file_resource(&actual2));
         }
 
         TEST_METHOD(open_file_resource_test)
@@ -36,14 +36,14 @@ namespace PeLibraryTest
 
             TEST.create_empty_file(test_path1);
 
-            FILE_RESOURCE actual1 = open_file_resource(&path1);
-            FILE_RESOURCE actual2 = open_file_resource(&path2);
+            FILE_RESOURCE actual1 = open_file_resource(&path1, DEFAULT_MEMORY);
+            FILE_RESOURCE actual2 = open_file_resource(&path2, DEFAULT_MEMORY);
 
             Assert::IsTrue(is_enabled_file_resource(&actual1));
             Assert::IsFalse(is_enabled_file_resource(&actual2));
 
-            Assert::IsTrue(close_file_resource(&actual1));
-            Assert::IsFalse(close_file_resource(&actual2));
+            Assert::IsTrue(release_file_resource(&actual1));
+            Assert::IsFalse(release_file_resource(&actual2));
         }
 
         TEST_METHOD(open_or_create_file_resource_test)
@@ -55,14 +55,14 @@ namespace PeLibraryTest
 
             TEST.create_empty_file(test_path1);
 
-            FILE_RESOURCE actual1 = open_or_create_file_resource(&path1);
-            FILE_RESOURCE actual2 = open_or_create_file_resource(&path2);
+            FILE_RESOURCE actual1 = open_or_create_file_resource(&path1, DEFAULT_MEMORY);
+            FILE_RESOURCE actual2 = open_or_create_file_resource(&path2, DEFAULT_MEMORY);
 
             Assert::IsTrue(is_enabled_file_resource(&actual1));
             Assert::IsTrue(is_enabled_file_resource(&actual2));
 
-            Assert::IsTrue(close_file_resource(&actual1));
-            Assert::IsTrue(close_file_resource(&actual2));
+            Assert::IsTrue(release_file_resource(&actual1));
+            Assert::IsTrue(release_file_resource(&actual2));
         }
 
         TEST_METHOD(write_read_file_resource_test)
@@ -73,16 +73,16 @@ namespace PeLibraryTest
 
             TEST_GET_PATH(path, _T("file"));
 
-            auto fr1 = create_file_resource(&path);
+            auto fr1 = create_file_resource(&path, DEFAULT_MEMORY);
             uint8_t write_values[] = {
                 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
             };
             ssize_t write_length = write_file_resource(&fr1, write_values, sizeof(write_values));
             Assert::AreEqual((ssize_t)sizeof(write_values), write_length);
-            close_file_resource(&fr1);
+            release_file_resource(&fr1);
             Assert::IsFalse(is_enabled_file_resource(&fr1));
 
-            auto fr2 = open_file_resource(&path);
+            auto fr2 = open_file_resource(&path, DEFAULT_MEMORY);
             Assert::IsTrue(is_enabled_file_resource(&fr2));
 
             uint8_t actual_values[sizeof(write_values)];
@@ -92,7 +92,7 @@ namespace PeLibraryTest
                 Assert::AreEqual(actual_values[i], write_values[i]);
             }
 
-            close_file_resource(&fr2);
+            release_file_resource(&fr2);
         }
     };
 }

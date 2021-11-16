@@ -50,5 +50,5 @@ bool exists_file_path(const TEXT* path);
 bool exists_directory_path(const TEXT* path);
 
 // ファイル処理諸々
-#include "fsio_resource.h"
-#include "fsio_textfile.h"
+#include "fsio.z.resource.h"
+#include "fsio.z.textfile.h"
