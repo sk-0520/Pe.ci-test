@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             DoAction(true);
         }

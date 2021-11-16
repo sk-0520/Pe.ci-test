@@ -669,7 +669,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #endregion
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             Debug.Assert(Timer != null);
             Timer.Stop();

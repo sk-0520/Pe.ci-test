@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html.Addon
 
         #endregion
 
-        private void SendTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void SendTimer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             Debug.Assert(SendTimer != null);
 

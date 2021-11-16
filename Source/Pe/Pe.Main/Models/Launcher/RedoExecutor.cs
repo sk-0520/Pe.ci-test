@@ -314,7 +314,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
         }
 
-        private void WaitEndTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void WaitEndTimer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             Debug.Assert(CurrentProcess != null);
             Debug.Assert(WaitEndTimer != null);
