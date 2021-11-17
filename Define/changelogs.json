@@ -84,7 +84,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "アーカイブ作成時の上書き問題対応"
 					},
 					{
 						"revision": "",

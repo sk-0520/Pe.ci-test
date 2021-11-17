@@ -66,9 +66,9 @@ foreach ($platform in $Platforms) {
 			Compress-Archive -Force -Path (Join-Path $directoryPath "*") -DestinationPath $destinationPath
 		} else {
 			try {
-				Push-Location "$directoryPath"
-				if (Test-Path "$outputFileName") {
-					Remove-Item "$outputFileName"
+				Push-Location $directoryPath
+				if (Test-Path $outputFileName) {
+					Remove-Item $outputFileName
 				}
 				switch ($archive) {
 					'7z' {
@@ -82,7 +82,11 @@ foreach ($platform in $Platforms) {
 			finally {
 				Pop-Location
 			}
-			Move-Item -Path (Join-Path "$directoryPath" "$outputFileName") -Destination 'Output'
+			$outputPath = Join-Path 'Output' $outputFileName
+			if(Test-Path $outputPath) {
+				Remove-Item $outputPath
+			}
+			Move-Item -Path (Join-Path $directoryPath $outputFileName) -Destination $outputPath
 		}
 
 	}
