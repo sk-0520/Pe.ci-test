@@ -116,35 +116,6 @@
 					{
 						"revision": "9e195424a687eb2dcb045b56e906fa27d1fbdc0b",
 						"subject": "ヘルプ: テーブル一覧のinputの幅を親サイズに収めた"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -162,14 +133,6 @@
 					{
 						"revision": "d66e07578efd46f7ad812311cde2f3a442dbac7d",
 						"subject": "#780: 開発中CIの圧縮を選択可能にする"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
