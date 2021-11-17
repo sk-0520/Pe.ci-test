@@ -61,34 +61,31 @@ foreach ($platform in $Platforms) {
 	$pluginDirs = Get-ChildItem -Path $pluginsRootDirPath -Directory
 
 	function Compress-Core([string] $archive, [string] $directoryPath, [string] $outputFileName) {
-		if($archive -eq 'zip') {
-			$destinationPath = Join-Path 'Output' $outputFileName
-			Compress-Archive -Force -Path (Join-Path $directoryPath "*") -DestinationPath $destinationPath
-		} else {
-			try {
-				Push-Location $directoryPath
-				if (Test-Path $outputFileName) {
-					Remove-Item $outputFileName
+		try {
+			Push-Location $directoryPath
+			if (Test-Path $outputFileName) {
+				Remove-Item $outputFileName
+			}
+			switch ($archive) {
+				'7z' {
+					7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on -mmt=on "$outputFileName" * -r -bsp1
 				}
-				switch ($archive) {
-					'7z' {
-						7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on -mmt=on "$outputFileName" * -r -bsp1
-					}
-					'tar' {
-						7z a -ttar "$outputFileName" * -r -bsp1
-					}
+				'zip' {
+					7z a -tzip "$outputFileName" * -r -bsp1
+				}
+				'tar' {
+					7z a -ttar "$outputFileName" * -r -bsp1
 				}
 			}
-			finally {
-				Pop-Location
-			}
-			$outputPath = Join-Path 'Output' $outputFileName
-			if(Test-Path $outputPath) {
-				Remove-Item $outputPath
-			}
-			Move-Item -Path (Join-Path $directoryPath $outputFileName) -Destination $outputPath
 		}
-
+		finally {
+			Pop-Location
+		}
+		$outputPath = Join-Path 'Output' $outputFileName
+		if (Test-Path $outputPath) {
+			Remove-Item $outputPath
+		}
+		Move-Item -Path (Join-Path $directoryPath $outputFileName) -Destination $outputPath
 	}
 
 	Compress-Core $MainArchive $binRootDirPath $archiveFileName
