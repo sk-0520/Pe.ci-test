@@ -196,7 +196,7 @@ try {
 		# テストプロジェクトのビルド(Pe.Main側, Pe.Boot は msbuild 実行時に同時ビルド)
 		foreach($testDirectory in $testDirectories) {
 			$testProjectFilePath = (Join-Path $testDirectory.FullName $testDirectory.Name) + ".csproj"
-			dotnet build $testProjectFilePath /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform
+			dotnet build $testProjectFilePath /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --no-self-contained
 			if (-not $?) {
 				exit 1
 			}
