@@ -22,7 +22,7 @@ Pe は Windows 上で動作するデスクトップユーティリティです�
 
 ## 開発
 
-* `dotnet --version`: [5.0.102](https://dotnet.microsoft.com/download/dotnet/5.0)
+* `dotnet --version`: [6.0.100](https://dotnet.microsoft.com/download/dotnet/6.0)
 * `node -v: 15.6.0`
 * `npm  -v: 7.4.0`
 * nodesit:
