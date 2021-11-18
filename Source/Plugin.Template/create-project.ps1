@@ -197,6 +197,13 @@ foreach($removeItem in $removeItems) {
 	}
 }
 
+$alternativeHiddenFiles = Get-ChildItem -Path $parameters.directory -Recurse -File | Where-Object { $_.Name -like '__.*' }
+foreach($alternativeHiddenFile in $alternativeHiddenFiles) {
+	$hiddenFileExtension = [System.IO.Path]::GetExtension($alternativeHiddenFile.Name)
+	$hiddenFilePath = Join-Path -Path $alternativeHiddenFile.Directory -ChildPath $hiddenFileExtension
+	Move-Item -Path $alternativeHiddenFile.FullName -Destination $hiddenFilePath
+}
+
 # テンプレート内置き換え
 function Update-TemplateFile {
 	param (
@@ -224,7 +231,7 @@ function New-Submodule {
 
 		$targetPath = Join-Path $parameters.directory $path
 		Write-Host "サブモジュール親ディレクトリ生成: " + $targetPath
-		& $parameters.git submodule add --depth 1 --branch $branch $uri $path
+		& $parameters.git submodule add --branch $branch $uri $path
 	} finally {
 		Pop-Location
 	}
@@ -240,13 +247,6 @@ try {
 
 	Write-Verbose "ソリューション $PluginName を生成"
 	& $parameters.dotnet new sln --force --name (Update-Template 'TEMPLATE_PluginShortName')
-
-	Write-Verbose "ソリューションからAnyCPUを破棄"
-	$solutionFileName = Update-Template 'TEMPLATE_PluginShortName.sln'
-	$solutionContent = Get-Content -Path $solutionFileName `
-		| Out-String -Stream `
-		| Where-Object { !$_.Contains('Any CPU') }
-	Set-Content -Path $solutionFileName -Value $solutionContent
 
 	Write-Verbose "プロジェクトを追加"
 	& $parameters.dotnet sln add $pluginProjectFilePath
@@ -283,6 +283,14 @@ try {
 		$projectFilePath = (Join-Path $appDir $item.project) | Join-Path -ChildPath ($item.project + '.csproj')
 		& $parameters.dotnet sln add $projectFilePath --solution-folder $item.directory
 	}
+
+	Write-Verbose "ソリューションからAnyCPUを破棄"
+	$solutionFileName = Update-Template 'TEMPLATE_PluginShortName.sln'
+	$solutionContent = Get-Content -Path $solutionFileName `
+		| Out-String -Stream `
+		| Where-Object { !$_.Contains('Any CPU') }
+	Set-Content -Path $solutionFileName -Value $solutionContent
+
 
 	Write-Verbose "NuGet 復元"
 	if(!$suppressBuild) {
