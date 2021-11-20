@@ -66,7 +66,7 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
         // 先頭のマークを外した引数取得
         TEXT arg = wrap_text_with_length(current->value + mark_text->length, (size_t)current->length - mark_text->length, false, NULL);
 
-        COMMAND_LINE_ITEM* item = allocate_memory(1, sizeof(COMMAND_LINE_ITEM), memory_resource);
+        COMMAND_LINE_ITEM* item = new_memory(1, sizeof(COMMAND_LINE_ITEM), memory_resource);
         item->key_index = i;
 
         TEXT key;
@@ -225,7 +225,7 @@ TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count, const MEM
 
     size_t total_length = count - 1; // スペース分
 
-    bool* hasSpaceList = allocate_memory(count, sizeof(bool), memory_resource);
+    bool* hasSpaceList = new_memory(count, sizeof(bool), memory_resource);
 
     for (size_t i = 0; i < count; i++) {
         const TEXT* argument = &arguments[i];

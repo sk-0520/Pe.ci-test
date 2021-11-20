@@ -119,7 +119,7 @@ void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill, const MEMO
     return heap;
 }
 
-void* RC_HEAP_FUNC(allocate_memory, size_t count, byte_t type_size, const MEMORY_RESOURCE* memory_resource)
+void* RC_HEAP_FUNC(new_memory, size_t count, byte_t type_size, const MEMORY_RESOURCE* memory_resource)
 {
     return RC_HEAP_CALL(allocate_raw_memory, count * type_size, true, memory_resource);
 }

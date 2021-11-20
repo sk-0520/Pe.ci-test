@@ -94,12 +94,12 @@ bool RC_HEAP_FUNC(release_linked_list, LINKED_LIST* linked_list)
 
 static LINK_NODE* RC_HEAP_FUNC(new_link_node, LINKED_LIST* linked_list, void* value)
 {
-    LINK_NODE* node = RC_HEAP_CALL(allocate_memory, 1, sizeof(LINK_NODE), linked_list->library.linked_list_memory_resource);
+    LINK_NODE* node = RC_HEAP_CALL(new_memory, 1, sizeof(LINK_NODE), linked_list->library.linked_list_memory_resource);
 
     node->next = NULL;
     node->prev = NULL;
     // 値の領域自体はLINKED_LISTで確保
-    node->value = RC_HEAP_CALL(allocate_memory, 1, linked_list->library.value_bytes, linked_list->library.linked_list_memory_resource);
+    node->value = RC_HEAP_CALL(new_memory, 1, linked_list->library.value_bytes, linked_list->library.linked_list_memory_resource);
 
     copy_memory(node->value, value, linked_list->library.value_bytes);
 

@@ -82,9 +82,9 @@ void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill, const MEMO
 /// <param name="count">確保する個数。</param>
 /// <param name="type_size">型サイズ。</param>
 /// <returns>確保した領域。<see cref="release_memory"/>にて開放が必要。失敗時は<c>NULL</c>を返す。</returns>
-void* RC_HEAP_FUNC(allocate_memory, size_t count, byte_t type_size, const MEMORY_RESOURCE* memory_resource);
+void* RC_HEAP_FUNC(new_memory, size_t count, byte_t type_size, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK
-#   define allocate_memory(count, type_size, memory_resource) RC_HEAP_WRAP(allocate_memory, count, type_size, memory_resource)
+#   define new_memory(count, type_size, memory_resource) RC_HEAP_WRAP(new_memory, count, type_size, memory_resource)
 #endif
 
 /// <summary>
