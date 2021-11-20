@@ -410,6 +410,7 @@
     <None Include="primitive_list.c.tt">
       <FileType>Document</FileType>
     </None>
+    <ClCompile Include="linked_list.c" />
     <ClCompile Include="object_list.c" />
     <ClCompile Include="primitive_list.c" />
     <ClCompile Include="map.c" />
@@ -440,6 +441,7 @@
     <None Include="primitive_list.h.tt">
       <FileType>Document</FileType>
     </None>
+    <ClInclude Include="linked_list.h" />
     <ClInclude Include="object_list.h" />
     <ClInclude Include="primitive_list.h" />
     <ClInclude Include="map.h" />

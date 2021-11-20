@@ -295,6 +295,7 @@
     <ClCompile Include="fsio.test.cpp" />
     <ClCompile Include="fsio.z.resource.test.cpp" />
     <ClCompile Include="fsio.z.textfile.test.cpp" />
+    <ClCompile Include="linked_list.test.cpp" />
     <ClCompile Include="object_list.test.cpp" />
     <ClCompile Include="platform.test.cpp" />
     <ClCompile Include="primitive_list.test.cpp" />

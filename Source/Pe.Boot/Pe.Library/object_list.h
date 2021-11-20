@@ -189,11 +189,3 @@ bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool n
 /// <param name="list">対象リスト。</param>
 void clear_object_list(OBJECT_LIST* object_list);
 
-/// <summary>
-/// 順々に処理する。
-/// </summary>
-/// <param name="object_list"></param>
-/// <param name="func"></param>
-/// <returns>処理件数。</returns>
-size_t foreach_object_list(const OBJECT_LIST* object_list, func_foreach_object_list func, void* data);
-

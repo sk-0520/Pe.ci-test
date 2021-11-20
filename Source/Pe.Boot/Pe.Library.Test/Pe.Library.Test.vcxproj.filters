@@ -84,6 +84,9 @@
     <ClCompile Include="platform.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="linked_list.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
