@@ -48,22 +48,12 @@ typedef struct tag_OBJECT_RESULT_VALUE
 /// <summary>
 /// 格納値比較処理。
 /// </summary>
-typedef int (*func_compare_object_list_value)(const void* a, const void* b);
+typedef int (*func_compare_object_list_value)(const void* a, const void* b, void* data);
 
 /// <summary>
 /// 格納値解放処理。
 /// </summary>
-typedef void (*func_release_object_list_value)(void* value, const MEMORY_RESOURCE* memory_resource);
-
-/// <summary>
-/// 値連続処理。
-/// </summary>
-/// <param name="value">現在値。</param>
-/// <param name="index">現在処理数。</param>
-/// <param name="length">最大件数。</param>
-/// <param name="data">ご自由にどうぞ。</param>
-/// <returns>継続状態。</returns>
-typedef bool (*func_foreach_object_list)(const void* value, size_t index, size_t length, void* data);
+typedef void (*func_release_object_list_value)(void* value, void* data, const MEMORY_RESOURCE* memory_resource);
 
 typedef struct tag_OBJECT_LIST
 {
@@ -75,6 +65,10 @@ typedef struct tag_OBJECT_LIST
     /// 実体。
     /// </summary>
     uint8_t* items;
+    /// <summary>
+    /// 各種関数ポインタに渡される追加情報。
+    /// </summary>
+    void* data;
     struct
     {
         /// <summary>
@@ -100,12 +94,12 @@ typedef struct tag_OBJECT_LIST
 /// <param name="a"></param>
 /// <param name="b"></param>
 /// <returns></returns>
-int compare_object_list_value_null(const void* a, const void* b);
+int compare_object_list_value_null(const void* a, const void* b, void* data);
 /// <summary>
 /// リストの値解放不要処理。
 /// </summary>
 /// <param name="value"></param>
-void release_object_list_value_null(void* value, const MEMORY_RESOURCE* memory_resource);
+void release_object_list_value_null(void* value, void* data, const MEMORY_RESOURCE* memory_resource);
 
 /// <summary>
 /// オブジェクトリストの生成。
@@ -116,9 +110,9 @@ void release_object_list_value_null(void* value, const MEMORY_RESOURCE* memory_r
 /// <param name="compare_object_list_value">比較処理。</param>
 /// <param name="release_object_list_value">実データの解放処理。オブジェクトリストの解放や、アイテム変更時に使用される。</param>
 /// <returns>生成したオブジェクトリスト。</returns>
-OBJECT_LIST RC_HEAP_FUNC(new_object_list, byte_t item_size, size_t capacity_count, func_compare_object_list_value compare_object_list_value, func_release_object_list_value release_object_list_value, const MEMORY_RESOURCE* memory_resource);
+OBJECT_LIST RC_HEAP_FUNC(new_object_list, byte_t item_size, size_t capacity_count, void* data, func_compare_object_list_value compare_object_list_value, func_release_object_list_value release_object_list_value, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define new_object_list(item_size, capacity_count, compare_object_list_value, release_object_list_value, memory_resource) RC_HEAP_WRAP(new_object_list, (item_size), (capacity_count), (compare_object_list_value), (release_object_list_value), memory_resource)
+#   define new_object_list(item_size, capacity_count, data, compare_object_list_value, release_object_list_value, memory_resource) RC_HEAP_WRAP(new_object_list, (item_size), (capacity_count), (data), (compare_object_list_value), (release_object_list_value), memory_resource)
 #endif
 
 /// <summary>
@@ -127,9 +121,9 @@ OBJECT_LIST RC_HEAP_FUNC(new_object_list, byte_t item_size, size_t capacity_coun
 /// <param name=""></param>
 /// <param name="object_list"></param>
 /// <returns></returns>
-bool RC_HEAP_FUNC(release_object_list, OBJECT_LIST* object_list);
+bool RC_HEAP_FUNC(release_object_list, OBJECT_LIST* object_list, bool value_release);
 #ifdef RES_CHECK
-#   define release_object_list(object_list) RC_HEAP_WRAP(release_object_list, (object_list))
+#   define release_object_list(object_list, value_release) RC_HEAP_WRAP(release_object_list, (object_list), (value_release))
 #endif
 
 /// <summary>
@@ -189,3 +183,10 @@ bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool n
 /// <param name="list">対象リスト。</param>
 void clear_object_list(OBJECT_LIST* object_list);
 
+/// <summary>
+/// オブジェクトリストの長さを強制的に0にする。
+/// <para>各種解放処理は実施されないが領域自体は0クリアするので事前にデータを保持しておくこと。</para>
+/// <para>ライブラリ内で使用する</para>
+/// </summary>
+/// <param name="object_list"></param>
+void library__clear_object_list_not_release(OBJECT_LIST* object_list);

@@ -215,7 +215,7 @@ namespace PeLibraryTest
                 TCHAR* s = expected[i];
                 Assert::AreEqual(s, t->value);
             }
-            release_object_list(&actual);
+            release_object_list(&actual, true);
         }
 
         TEST_METHOD(split_newline_text_test)
@@ -250,7 +250,7 @@ namespace PeLibraryTest
                 TCHAR* s = expected[i];
                 Assert::AreEqual(s, t->value);
             }
-            release_object_list(&actual);
+            release_object_list(&actual, true);
         }
     };
 }

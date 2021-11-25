@@ -99,6 +99,15 @@
     <ClCompile Include="linked_list.c">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="hash_map.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="hash.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_math.c">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h">
@@ -177,6 +186,15 @@
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="linked_list.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="hash_map.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="hash.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_math.h">
       <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>

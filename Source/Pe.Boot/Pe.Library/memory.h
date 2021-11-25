@@ -15,7 +15,7 @@ typedef byte_t(*func_calc_extend_capacity)(byte_t input_bytes);
 
 /// <summary>
 /// メモリ管理データ。
-/// <para>ユーザーコードで各メンバにアクセスすることはない。</para>
+/// <para>アプリケーション内では使用しない。</para>
 /// </summary>
 typedef struct tag_MEMORY_RESOURCE
 {

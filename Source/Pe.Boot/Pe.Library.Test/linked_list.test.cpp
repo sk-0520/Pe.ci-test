@@ -14,17 +14,17 @@ namespace PeLibraryTest
     public:
         TEST_METHOD(new_release_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
             Assert::AreEqual((size_t)0, linked_list.length);
             Assert::IsNull(linked_list.library.head);
             Assert::IsNull(linked_list.library.tail);
-            bool actual = release_linked_list(&linked_list);
+            bool actual = release_linked_list(&linked_list, true);
             Assert::IsTrue(actual);
         }
 
         TEST_METHOD(add_linked_list_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
 
             int input_1 = 1;
             int acutal_1 = *(int*)add_linked_list(&linked_list, &input_1);
@@ -36,12 +36,12 @@ namespace PeLibraryTest
             Assert::AreEqual(input_2, acutal_2);
             Assert::AreEqual((size_t)2, linked_list.length);
 
-            release_linked_list(&linked_list);
+            release_linked_list(&linked_list, true);
         }
 
         TEST_METHOD(get_linked_list_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
 
             int inputs[] = {
                 1, 2, 3, 4, 5
@@ -61,12 +61,12 @@ namespace PeLibraryTest
             LINK_RESULT_VALUE actual = get_linked_list(&linked_list, SIZEOF_ARRAY(inputs));
             Assert::IsFalse(actual.exists);
 
-            release_linked_list(&linked_list);
+            release_linked_list(&linked_list, true);
         }
 
         TEST_METHOD(insert_linked_list_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
 
             int inputs[] = {
                 10, 20, 30, 40, 50,
@@ -125,12 +125,12 @@ namespace PeLibraryTest
 
             Assert::AreEqual((size_t)SIZEOF_ARRAY(expecteds) + 1, linked_list.length);
 
-            release_linked_list(&linked_list);
+            release_linked_list(&linked_list, true);
         }
 
         TEST_METHOD(remove_linked_list_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
 
             int inputs[] = {
                 10, 20, 30, 40, 50,
@@ -166,12 +166,12 @@ namespace PeLibraryTest
             bool actual_remove = remove_linked_list(&linked_list, 0);
             Assert::IsFalse(actual_remove);
 
-            release_linked_list(&linked_list);
+            release_linked_list(&linked_list, true);
         }
 
         TEST_METHOD(set_linked_list_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
 
             int inputs[] = {
                 10, 20, 30, 40, 50,
@@ -202,7 +202,70 @@ namespace PeLibraryTest
                 Assert::AreEqual(expecteds[i], *(int*)actual.value);
             }
 
-            release_linked_list(&linked_list);
+            release_linked_list(&linked_list, true);
         }
+
+        static bool search_linked_list_num(const void* needle, const void* value, void* data, void* arg)
+        {
+            int needle_num = *(int*)needle;
+            int value_num = *(int*)value;
+
+            return needle_num == value_num;
+        }
+
+        TEST_METHOD(search_linked_list_test)
+        {
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+
+            int inputs[] = {
+                10, 20, 30, 40, 50,
+            };
+            for (size_t i = 0; i < SIZEOF_ARRAY(inputs); i++) {
+                add_linked_list(&linked_list, inputs + i);
+            }
+
+            auto tests = {
+                DATA(true, 10),
+                DATA(false, 11),
+            };
+            for (auto test: tests) {
+                auto arg1 = std::get<0>(test.inputs);
+                auto actual = search_linked_list(&linked_list, &arg1, NULL, search_linked_list_num);
+                if (test.expected) {
+                    Assert::IsNotNull(actual);
+                    const void* value = get_link_node_value(actual);
+                    Assert::AreEqual(arg1, *(const int*)value);
+                } else {
+                    Assert::IsNull(actual);
+                }
+            }
+
+            release_linked_list(&linked_list, true);
+        }
+
+        TEST_METHOD(to_object_from_linked_list_test)
+        {
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+
+            int inputs[] = {
+                10, 20, 30, 40, 50,
+            };
+            for (size_t i = 0; i < SIZEOF_ARRAY(inputs); i++) {
+                add_linked_list(&linked_list, inputs + i);
+            }
+
+            OBJECT_LIST object_list = to_object_list_from_linked_list(&linked_list);
+            Assert::AreEqual(SIZEOF_ARRAY(inputs), object_list.length);
+
+            for (size_t i = 0; i < object_list.length; i++) {
+                OBJECT_RESULT_VALUE acutal = get_object_list(&object_list, i);;
+                Assert::IsTrue(acutal.exists);
+                Assert::AreEqual(inputs[i], *(int*)acutal.value);
+            }
+            release_object_list(&object_list, true);
+
+            release_linked_list(&linked_list, true);
+        }
+
     };
 }

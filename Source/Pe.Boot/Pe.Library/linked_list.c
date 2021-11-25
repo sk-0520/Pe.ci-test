@@ -20,22 +20,50 @@ typedef struct tag_LINK_NODE
     /// <para>値の領域までは<see cref="LINKED_LIST" />で面倒見るが、値の中身は呼び出し側で責任を持つこと。</para>
     /// </summary>
     void* value;
-
 } LINK_NODE;
 
-int compare_linked_list_value_null(const void* a, const void* b)
+const void* get_link_node_value(const LINK_NODE* node)
+{
+    assert(node);
+
+    return node->value;
+}
+
+static LINK_NODE* search_linked_list_core(const LINKED_LIST* linked_list, const void* needle, void* arg, func_search_linked_list func)
+{
+    if (!linked_list) {
+        return NULL;
+    }
+
+    if (!linked_list->length) {
+        return NULL;
+    }
+
+    LINK_NODE* node = linked_list->library.head;
+    while (node) {
+        if (func(needle, node->value, linked_list->data, arg)) {
+            return node;
+        }
+        node = node->next;
+    }
+
+    return NULL;
+}
+
+int compare_linked_list_value_null(const void* a, const void* b, void* data)
 {
     return 0;
 }
 
-void release_linked_list_value_null(void* value, const MEMORY_RESOURCE* memory_resource)
+void release_linked_list_value_null(void* value, void* data, const MEMORY_RESOURCE* memory_resource)
 {
 }
 
-LINKED_LIST RC_HEAP_FUNC(new_linked_list, byte_t item_size, func_compare_linked_list_value compare_linked_list_value, func_release_linked_list_value release_linked_list_value, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* linked_list_memory_resource)
+LINKED_LIST RC_HEAP_FUNC(new_linked_list, byte_t item_size, void* data, func_compare_linked_list_value compare_linked_list_value, func_release_linked_list_value release_linked_list_value, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* linked_list_memory_resource)
 {
     LINKED_LIST result = {
         .length = 0,
+        .data = data,
         .library = {
             .value_bytes = item_size,
             .value_memory_resource = value_memory_resource,
@@ -53,7 +81,7 @@ LINKED_LIST RC_HEAP_FUNC(new_linked_list, byte_t item_size, func_compare_linked_
 static void release_linked_list_item(LINKED_LIST* linked_list, void* item)
 {
     if (item) {
-        linked_list->library.release_linked_list_value(item, linked_list->library.value_memory_resource);
+        linked_list->library.release_linked_list_value(item, linked_list->data, linked_list->library.value_memory_resource);
     }
 }
 
@@ -69,25 +97,30 @@ static void RC_HEAP_FUNC(release_linked_list_node, LINKED_LIST* linked_list, LIN
     RC_HEAP_CALL(release_memory, node, linked_list->library.linked_list_memory_resource);
 }
 
-bool RC_HEAP_FUNC(release_linked_list, LINKED_LIST* linked_list)
+static void RC_HEAP_FUNC(release_linked_list_core, LINKED_LIST* linked_list, bool value_release)
 {
-    if (!linked_list) {
-        return false;
-    }
-
     if (linked_list->length) {
         LINK_NODE* node = linked_list->library.head;
         while (node) {
             LINK_NODE* current_node = node;
             node = current_node->next;
 
-            RC_HEAP_CALL(release_linked_list_node, linked_list, current_node, true);
+            RC_HEAP_CALL(release_linked_list_node, linked_list, current_node, value_release);
         }
     }
 
     linked_list->length = 0;
     linked_list->library.head = NULL;
     linked_list->library.tail = NULL;
+}
+
+bool RC_HEAP_FUNC(release_linked_list, LINKED_LIST* linked_list, bool value_release)
+{
+    if (!linked_list) {
+        return false;
+    }
+
+    RC_HEAP_CALL(release_linked_list_core, linked_list, value_release);
 
     return true;
 }
@@ -288,7 +321,7 @@ bool RC_HEAP_FUNC(set_linked_list, LINKED_LIST* linked_list, size_t index, void*
     return true;
 }
 
-size_t foreach_linked_list(const LINKED_LIST* linked_list, func_foreach_linked_list func, void* data)
+size_t foreach_linked_list(const LINKED_LIST* linked_list, func_foreach_linked_list func, void* arg)
 {
     assert(linked_list);
     assert(func);
@@ -297,12 +330,50 @@ size_t foreach_linked_list(const LINKED_LIST* linked_list, func_foreach_linked_l
 
     LINK_NODE* node = linked_list->library.head;
     while (node) {
-        if (!func(node->value, result, linked_list->length, data)) {
+        if (!func(node->value, result, linked_list->length, linked_list->data, arg)) {
             break;
         }
         node = node->next;
         result += 1;
     }
+
+    return result;
+}
+
+const LINK_NODE* search_linked_list(const LINKED_LIST* linked_list, const void* needle, void* arg, func_search_linked_list func)
+{
+    return search_linked_list_core(linked_list, needle, arg, func);
+}
+
+bool RC_HEAP_FUNC(remove_linked_list_by_node, LINKED_LIST* linked_list, LINK_NODE* node)
+{
+    if (!linked_list) {
+        return false;
+    }
+
+    if (!node) {
+        return false;
+    }
+
+    RC_HEAP_CALL(remove_linked_list_core, linked_list, node);
+
+    return true;
+}
+
+static bool to_object_list_from_linked_list_core(const void* value, size_t index, size_t length, void* data, void* arg)
+{
+    OBJECT_LIST* list = (OBJECT_LIST*)arg;
+
+    push_object_list(list, value);
+
+    return true;
+}
+
+OBJECT_LIST RC_HEAP_FUNC(to_object_list_from_linked_list, const LINKED_LIST* linked_list)
+{
+    OBJECT_LIST result = RC_HEAP_CALL(new_object_list, linked_list->library.value_bytes, linked_list->length, NULL, compare_object_list_value_null, release_object_list_value_null, linked_list->library.linked_list_memory_resource);
+
+    foreach_linked_list(linked_list, to_object_list_from_linked_list_core, &result);
 
     return result;
 }
