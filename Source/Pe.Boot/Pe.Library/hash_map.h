@@ -133,7 +133,7 @@ bool RC_HEAP_FUNC(release_hash_map, HASH_MAP* map);
 #   define release_hash_map(map) RC_HEAP_WRAP(release_hash_map, map)
 #endif
 
-HASH_MAP_RESULT_VALUE get_hash_map(HASH_MAP* map, const TEXT* key);
+HASH_MAP_RESULT_VALUE get_hash_map(const HASH_MAP* map, const TEXT* key);
 
 /// <summary>
 /// 値を追加。

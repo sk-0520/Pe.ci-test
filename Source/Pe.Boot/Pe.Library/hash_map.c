@@ -32,7 +32,7 @@ static size_t get_next_limit(size_t capacity, double load_factor)
     return next_limit;
 }
 
-static size_t get_hash_index(HASH_MAP* map, const TEXT* key)
+static size_t get_hash_index(const HASH_MAP* map, const TEXT* key)
 {
     size_t row_index = map->library.calc_map_hash(key);
     size_t hash_index = row_index & map->library.mask;
@@ -206,7 +206,7 @@ static void RC_HEAP_FUNC(extend_map_if_over_load_factor, HASH_MAP* map)
 #endif
 }
 
-HASH_MAP_RESULT_VALUE get_hash_map(HASH_MAP* map, const TEXT* key)
+HASH_MAP_RESULT_VALUE get_hash_map(const HASH_MAP* map, const TEXT* key)
 {
     if (!map->length) {
         HASH_MAP_RESULT_VALUE none_item = {
