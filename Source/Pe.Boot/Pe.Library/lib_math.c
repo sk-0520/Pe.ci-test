@@ -1,5 +1,7 @@
 ﻿#include "lib_math.h"
 
+int _fltused = 0x9875;
+
 size_t power_of_2(size_t n)
 {
     if (!n) {
