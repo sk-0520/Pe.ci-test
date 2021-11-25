@@ -24,7 +24,7 @@ typedef bool (*func_equals_hash_map_key)(const TEXT* a, const TEXT* b);
 /// <summary>
 /// マップの値解放処理。
 /// </summary>
-typedef void (*func_release_hash_map_value)(const TEXT* key, void* value);
+typedef void (*func_release_hash_map_value)(const TEXT* key, void* value, const MEMORY_RESOURCE* memory_resource);
 
 
 

@@ -74,7 +74,7 @@ static void release_link_item_value(void* value, void* data, const MEMORY_RESOUR
     // 再構築時はdataが空のため値自体の解放はスキップさせる(NULL設定は再構築処理側)
     if (data) {
         func_release_hash_map_value release_value = (func_release_hash_map_value)data;
-        release_value(&pair->key, pair->value);
+        release_value(&pair->key, pair->value, memory_resource);
     }
 
     release_memory(pair->value, pair->key.library.memory_resource); // まぁ、うん
