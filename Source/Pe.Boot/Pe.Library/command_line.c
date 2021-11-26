@@ -11,17 +11,26 @@ static bool equals_command_line_item_key(const TEXT* a, const TEXT* b)
 static void release_command_line_item_core(COMMAND_LINE_ITEM* item, const MEMORY_RESOURCE* memory_resource)
 {
     release_text(&item->value);
-    release_memory(item, memory_resource);
+    //release_memory(item, memory_resource);
 }
 
-static void release_command_line_item_value(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource)
+static void release_command_line_item_value(const TEXT* key, void* value, const MEMORY_RESOURCE* memory_resource)
 {
-    release_command_line_item_core((COMMAND_LINE_ITEM*)pair->value, memory_resource);
+    COMMAND_LINE_ITEM*  item = (COMMAND_LINE_ITEM*)value;
+    release_command_line_item_core(item, memory_resource);
 }
 
 static void set_command_line_map_setting(MAP* map, size_t capacity, const MEMORY_RESOURCE* memory_resource)
 {
-    *map = new_map(capacity, equals_command_line_item_key, release_command_line_item_value, memory_resource, memory_resource);
+    *map = new_map(
+        sizeof(COMMAND_LINE_ITEM),
+        capacity,
+        MAP_DEFAULT_LOAD_FACTOR,
+        release_command_line_item_value,
+        calc_map_hash_default,
+        equals_command_line_item_key,
+        memory_resource, memory_resource
+    );
 }
 
 /// <summary>
@@ -66,10 +75,11 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
         // 先頭のマークを外した引数取得
         TEXT arg = wrap_text_with_length(current->value + mark_text->length, (size_t)current->length - mark_text->length, false, NULL);
 
-        COMMAND_LINE_ITEM* item = new_memory(1, sizeof(COMMAND_LINE_ITEM), memory_resource);
-        item->key_index = i;
+        COMMAND_LINE_ITEM item;
+        item.key_index = i;
 
         TEXT key;
+        TEXT option;
         TEXT value_with_separator = find_character(&arg, _T('='));
         if (is_enabled_text(&value_with_separator)) {
             // 引数が値とキーを持つ
@@ -79,40 +89,47 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
                 TEXT raw_value = wrap_text_with_length(value_with_separator.value + 1, (size_t)value_with_separator.length - 1, false, NULL);
                 if (raw_value.length && ((raw_value.value[0] == '"' || raw_value.value[0] == '\'') && raw_value.value[raw_value.length - 1] == raw_value.value[0]) ) {
                     // 囲まれている
-                    item->value = new_text_with_length(raw_value.value + 1, (size_t)raw_value.length - 2, memory_resource);
+                    option = new_text_with_length(raw_value.value + 1, (size_t)raw_value.length - 2, memory_resource);
                 } else {
-                    item->value = raw_value;
+                    option = raw_value;
                 }
             } else {
                 // 値は存在しない、が=指定されてるなら空文字列
-                item->value = new_empty_text(memory_resource);
+                option = new_empty_text(memory_resource);
             }
-            item->value_index = i;
+            item.value_index = i;
         } else if(i + 1 < count) {
             key = arg;
             // 値は次要素を用いる
             ssize_t next_mark_index = get_key_mark_index(current + 1, mark_texts, SIZEOF_ARRAY(mark_texts));
             if (next_mark_index != -1) {
                 // キーっぽいので値なし引数扱いにする
-                item->value_index = 0;
-                item->value = create_invalid_text();
+                item.value_index = 0;
+                option = create_invalid_text();
             } else {
                 // 次要素を値として取り込む
-                item->value_index = i + 1;
-                item->value = clone_text(current + 1, memory_resource);
+                item.value_index = i + 1;
+                option = clone_text(current + 1, memory_resource);
                 // 次要素をスキップ
                 i += 1;
             }
         } else {
             key = arg;
             // 次要素はないのでキーのみを用いる
-            item->value_index = 0;
-            item->value = create_invalid_text();
+            item.value_index = 0;
+            option = create_invalid_text();
         }
 
-        MAP_PAIR* pair = add_map(result, &key, item, true);
-        if (!pair) {
-            release_command_line_item_core(item, memory_resource);
+        if (is_enabled_text(&option)) {
+            item.value = clone_text(&option, memory_resource);
+        } else {
+            item.value = create_invalid_text();
+        }
+        release_text(&option);
+
+        bool success = add_map(result, &key, &item);
+        if (!success) {
+            release_command_line_item_core(&item, memory_resource);
         }
         release_text(&key);
     }
