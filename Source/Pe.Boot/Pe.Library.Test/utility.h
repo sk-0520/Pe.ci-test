@@ -214,7 +214,7 @@ public:
         logger.data = this,
         attach_logger(&logger);
         initialize_logger(DEFAULT_MEMORY);
-        logger_put_information(_T("TEST START"));
+        logger_put_info(_T("TEST START"));
 
         // https://stackoverflow.com/a/25151971
         auto ut_dir = tstring(_T(TO_STRING(UT_DIR)));
@@ -241,7 +241,7 @@ public:
             mstest::Logger::WriteMessage((tstring(_T("> ")) + (tstring(file.is_directory() ? _T("[D] ") : _T("[F] "))) + path).c_str());
         }
 
-        logger_put_information(_T("TEST END"));
+        logger_put_info(_T("TEST END"));
 
 #ifdef RES_CHECK
         rc__print(true);

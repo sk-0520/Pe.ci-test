@@ -148,7 +148,7 @@ OBJECT_RESULT_VALUE get_object_list(const OBJECT_LIST* object_list, size_t index
     return none;
 }
 
-bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool need_release)
+bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool value_release)
 {
     if (!object_list) {
         return false;
@@ -156,7 +156,7 @@ bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool n
 
     if (index < object_list->length) {
         void* current = object_list->items + index * object_list->library.item_size;
-        if (need_release) {
+        if (value_release) {
             object_list->library.release_object_list_value(current, object_list->data, object_list->library.memory_resource);
         }
         copy_memory(current, value, object_list->library.item_size);
@@ -166,11 +166,14 @@ bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool n
     return false;
 }
 
-void clear_object_list(OBJECT_LIST* object_list)
+void clear_object_list(OBJECT_LIST* object_list, bool value_release)
 {
-    for (size_t i = 0; i < object_list->length; i++) {
-        object_list->library.release_object_list_value(object_list->items + (i * object_list->library.item_size), object_list->data, object_list->library.memory_resource);
+    if (value_release) {
+        for (size_t i = 0; i < object_list->length; i++) {
+            object_list->library.release_object_list_value(object_list->items + (i * object_list->library.item_size), object_list->data, object_list->library.memory_resource);
+        }
     }
+
     object_list->length = 0;
 }
 

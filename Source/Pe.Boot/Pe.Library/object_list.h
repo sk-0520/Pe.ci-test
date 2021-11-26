@@ -172,21 +172,14 @@ OBJECT_RESULT_VALUE get_object_list(const OBJECT_LIST* object_list, size_t index
 /// <param name="object_list">設定対象のリスト。</param>
 /// <param name="index">設定対象インデックス。</param>
 /// <param name="value">値のポインタ。この領域からアイテムバイト数がリストに複製される。</param>
-/// <param name="need_release">設定前のデータを解放するか。</param>
+/// <param name="value_release">設定前の値を解放するか。</param>
 /// <returns>成功状態。</returns>
-bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool need_release);
+bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool value_release);
 
 /// <summary>
 /// リストを空にする。
 /// <para>領域自体はそのまま残る点に注意。</para>
 /// </summary>
 /// <param name="list">対象リスト。</param>
-void clear_object_list(OBJECT_LIST* object_list);
-
-/// <summary>
-/// オブジェクトリストの長さを強制的に0にする。
-/// <para>各種解放処理は実施されないが領域自体は0クリアするので事前にデータを保持しておくこと。</para>
-/// <para>ライブラリ内で使用する</para>
-/// </summary>
-/// <param name="object_list"></param>
-void library__clear_object_list_not_release(OBJECT_LIST* object_list);
+/// <param name="value_release">値を解放するか。</param>
+void clear_object_list(OBJECT_LIST* object_list, bool value_release);

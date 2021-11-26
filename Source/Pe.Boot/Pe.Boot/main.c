@@ -137,11 +137,11 @@ static int application_main(HINSTANCE hInstance)
 
     start_logging(&command_line_option);
 
-    logger_put_information(_T("Pe アプリケーション処理開始"));
+    logger_put_info(_T("Pe アプリケーション処理開始"));
 
     int return_code = app_main(hInstance, &command_line_option);
 
-    logger_put_information(_T("Pe アプリケーション処理終了"));
+    logger_put_info(_T("Pe アプリケーション処理終了"));
 
     release_command_line(&command_line_option);
 

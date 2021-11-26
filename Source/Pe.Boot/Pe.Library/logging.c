@@ -152,6 +152,7 @@ static void logging(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller
     append_builder_format(&sb, &time_format, timestamp.hour, timestamp.minute, timestamp.second, timestamp.milli_sec);
     TEXT ref_time_text = reference_text_string_builder(&sb);
     new_array_or_memory(time_buffer, time_array, TCHAR, ref_time_text.length + 1, 16, library__log_memory_resource);
+    copy_memory(time_buffer, ref_time_text.value, ref_time_text.length * sizeof(TCHAR));
     time_buffer[ref_time_text.length] = 0;
     TEXT time_text = wrap_text_with_length(time_buffer, ref_time_text.length, false, library__log_memory_resource);
     clear_builder(&sb);
@@ -160,6 +161,7 @@ static void logging(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller
     append_builder_format(&sb, &caller_format, &caller_file_text, caller_line);
     TEXT ref_caller_text = reference_text_string_builder(&sb);
     new_array_or_memory(caller_buffer, caller_array, TCHAR, ref_caller_text.length + 1, 1024, library__log_memory_resource);
+    copy_memory(caller_buffer, ref_caller_text.value, ref_caller_text.length * sizeof(TCHAR));
     TEXT caller_text = wrap_text_with_length(caller_buffer, ref_caller_text.length, false, library__log_memory_resource);
     //clear_builder(&sb);
 
