@@ -38,7 +38,6 @@ typedef struct tag_TEXT_PARSED_I64_RESULT
 
 /// <summary>
 /// テキストを数値(32bit幅)に変換。
-/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="input">入力テキスト。</param>
 /// <param name="support_hex">16進数(0x)を考慮するか</param>
@@ -48,7 +47,6 @@ TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex, 
 #ifdef _WIN64
 /// <summary>
 /// テキストを数値(64bit幅)に変換。
-/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="input">入力テキスト。</param>
 /// <param name="support_hex">16進数(0x)を考慮するか</param>

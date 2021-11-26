@@ -41,7 +41,7 @@ TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex, 
     } else {
         //TEXT sentinel = clone_text(input, memory_resource);
         new_array_or_memory(buffer, array, TCHAR, input->length + 1, TEXT_STACK_COUNT, memory_resource);
-        copy_memory(buffer, input->value, input->length);
+        copy_memory(buffer, input->value, input->length * sizeof(TCHAR));
         buffer[input->length] = 0;
         result.success = StrToIntEx(buffer, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
         //release_text(&sentinel);
@@ -67,7 +67,7 @@ TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, bool support_hex, 
     } else {
         //TEXT sentinel = clone_text(input, memory_resource);
         new_array_or_memory(buffer, array, TCHAR, input->length + 1, TEXT_STACK_COUNT, memory_resource);
-        copy_memory(buffer, input->value, input->length);
+        copy_memory(buffer, input->value, input->length * sizeof(TCHAR));
         buffer[input->length] = 0;
         result.success = StrToInt64Ex(buffer, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
         //release_text(&sentinel);
