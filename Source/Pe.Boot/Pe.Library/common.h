@@ -40,8 +40,10 @@ typedef uint32_t text_t;
 
 #ifdef _WIN64
 typedef int64_t ssize_t;
+typedef double real_t;
 #else
 typedef int32_t ssize_t;
+typedef float real_t;
 #endif
 
 #define MIN(a, b) (((a) < (b)) ? (a): (b))

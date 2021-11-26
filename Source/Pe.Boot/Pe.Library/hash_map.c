@@ -24,7 +24,7 @@ static size_t get_capacity(const HASH_MAP* map)
 /// <param name="capacity"></param>
 /// <param name="load_factor"></param>
 /// <returns></returns>
-static size_t get_next_limit(size_t capacity, double load_factor)
+static size_t get_next_limit(size_t capacity, real_t load_factor)
 {
     assert(capacity);
 
@@ -92,7 +92,7 @@ static LINKED_LIST* RC_HEAP_FUNC(new_items, size_t capacity, func_release_hash_m
     return item_lists;
 }
 
-HASH_MAP RC_HEAP_FUNC(new_hash_map, byte_t item_size, size_t capacity, double load_factor, func_release_hash_map_value release_hash_map_value, func_calc_hash_map_hash calc_map_hash, func_equals_hash_map_key equals_map_key, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource)
+HASH_MAP RC_HEAP_FUNC(new_hash_map, byte_t item_size, size_t capacity, real_t load_factor, func_release_hash_map_value release_hash_map_value, func_calc_hash_map_hash calc_map_hash, func_equals_hash_map_key equals_map_key, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource)
 {
     size_t adjusted_capacity = power_of_2(capacity ? capacity : HASH_MAP_DEFAULT_CAPACITY);
 

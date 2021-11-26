@@ -79,7 +79,7 @@ typedef struct tag_HASH_MAP
         /// <summary>
         /// 負荷係数。
         /// </summary>
-        double load_factor;
+        real_t load_factor;
         /// <summary>
         /// キーをハッシュ関数で割り当てる領域を保持する<see cref="LINKED_LIST" />のかたまり。
         /// <para>(なに書いてんのか分からん)</para>
@@ -123,7 +123,7 @@ size_t calc_map_hash_default(const TEXT* key);
 /// <returns></returns>
 bool equals_hash_map_key_default(const TEXT* a, const TEXT* b);
 
-HASH_MAP RC_HEAP_FUNC(new_hash_map, byte_t item_size, size_t capacity, double load_factor, func_release_linked_list_value release_linked_list_value, func_calc_hash_map_hash calc_map_hash, func_equals_hash_map_key equals_map_key, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource);
+HASH_MAP RC_HEAP_FUNC(new_hash_map, byte_t item_size, size_t capacity, real_t load_factor, func_release_linked_list_value release_linked_list_value, func_calc_hash_map_hash calc_map_hash, func_equals_hash_map_key equals_map_key, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource);
 #ifdef RES_CHECK
 #   define new_hash_map(item_size, capacity, load_factor, release_linked_list_value, calc_map_hash, equals_map_key, value_memory_resource, map_memory_resource) RC_HEAP_WRAP(new_hash_map, item_size, capacity, load_factor, release_linked_list_value, calc_map_hash, equals_map_key, value_memory_resource, map_memory_resource)
 #endif
