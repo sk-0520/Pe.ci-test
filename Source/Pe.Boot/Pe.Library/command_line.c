@@ -5,7 +5,7 @@
 
 static bool equals_command_line_item_key(const TEXT* a, const TEXT* b)
 {
-    return equals_hash_map_key_default(a, b);
+    return equals_map_key_default(a, b);
 }
 
 static void release_command_line_item_core(COMMAND_LINE_ITEM* item, const MEMORY_RESOURCE* memory_resource)
@@ -20,13 +20,12 @@ static void release_command_line_item_value(const TEXT* key, void* value, const 
     release_command_line_item_core(item, memory_resource);
 }
 
-static void set_command_line_map_setting(HASH_MAP* map, size_t capacity, const MEMORY_RESOURCE* memory_resource)
+static void set_command_line_map_setting(MAP* map, size_t capacity, const MEMORY_RESOURCE* memory_resource)
 {
-    //*map = new_map(capacity, equals_command_line_item_key, release_command_line_item_value, memory_resource, memory_resource);
-    *map = new_hash_map(
+    *map = new_map(
         sizeof(COMMAND_LINE_ITEM),
         capacity,
-        HASH_MAP_DEFAULT_LOAD_FACTOR,
+        MAP_DEFAULT_LOAD_FACTOR,
         release_command_line_item_value,
         calc_map_hash_default,
         equals_command_line_item_key,
@@ -53,7 +52,7 @@ static ssize_t get_key_mark_index(const TEXT* argument, TEXT_LIST mark_texts, si
     return -1;
 }
 
-static void convert_map_from_arguments(HASH_MAP* result, const TEXT arguments[], size_t count)
+static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size_t count)
 {
     const MEMORY_RESOURCE* memory_resource = result->library.map_memory_resource;
 
@@ -128,7 +127,7 @@ static void convert_map_from_arguments(HASH_MAP* result, const TEXT arguments[],
         }
         release_text(&option);
 
-        bool success = add_hash_map(result, &key, &item);
+        bool success = add_map(result, &key, &item);
         if (!success) {
             release_command_line_item_core(&item, memory_resource);
         }
@@ -196,7 +195,7 @@ bool RC_HEAP_FUNC(release_command_line, COMMAND_LINE_OPTION* command_line_option
 
     const MEMORY_RESOURCE* memory_resource = command_line_option->library.map.library.map_memory_resource;
 
-    release_hash_map(&command_line_option->library.map);
+    release_map(&command_line_option->library.map);
 
     RC_HEAP_CALL(release_memory, command_line_option->library.raw_arguments, memory_resource);
     command_line_option->library.raw_arguments = NULL;
@@ -209,7 +208,7 @@ bool RC_HEAP_FUNC(release_command_line, COMMAND_LINE_OPTION* command_line_option
 
 const COMMAND_LINE_ITEM* get_command_line_item(const COMMAND_LINE_OPTION* command_line_option, const TEXT* key)
 {
-    HASH_MAP_RESULT_VALUE result_value = get_hash_map(&command_line_option->library.map, key);
+    MAP_RESULT_VALUE result_value = get_map(&command_line_option->library.map, key);
     if (result_value.exists) {
         return (COMMAND_LINE_ITEM*)result_value.value;
     }

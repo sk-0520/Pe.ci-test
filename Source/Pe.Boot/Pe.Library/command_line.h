@@ -3,7 +3,7 @@
 
 #include "common.h"
 #include "text.h"
-#include "hash_map.h"
+#include "map.h"
 
 
 /// <summary>
@@ -53,7 +53,7 @@ typedef struct tag_COMMAND_LINE_OPTION
         /// <para>同一キーは前が優先される。</para>
         /// <para><see cref="COMMAND_LINE_OPTION"/>の各種メモリ操作はこいつのメモリリーソースを使用する。</para>
         /// </summary>
-        HASH_MAP map;
+        MAP map;
         /// <summary>
         ///解放用データ。
         /// </summary>

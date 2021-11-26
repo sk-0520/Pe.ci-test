@@ -36,9 +36,6 @@
     <ClCompile Include="fsio.z.textfile.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="map.test.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="memory.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
@@ -87,7 +84,7 @@
     <ClCompile Include="linked_list.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="hash_map.test.cpp">
+    <ClCompile Include="map.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="lib_math.test.cpp">

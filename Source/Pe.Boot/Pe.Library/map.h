@@ -1,57 +1,51 @@
 ﻿#pragma once
-#include <stdbool.h>
-
-#include <tchar.h>
-
-#include "tstring.h"
 #include "text.h"
+#include "object_list.h"
+#include "linked_list.h"
 
-// 呼び出し側でヒープを確保して使用する前提。のはず。
-
-#define MAP_DEFAULT_CAPACITY (16)
-
-/// <summary>
-/// 文字列キーと値のペア。
-/// </summary>
-typedef struct tag_MAP_PAIR
-{
-    /// <summary>
-    /// キー項目。
-    /// <para>キーそのものは<see cref="MAP" />にて管理される。</para>
-    /// </summary>
-    TEXT key;
-
-    /// <summary>
-    /// 値。
-    /// </summary>
-    void* value;
-
-    /// <summary>
-   /// 管理データ。
-   /// </summary>
-    struct
-    {
-        /// <summary>
-        /// 値の開放は必要か。
-        /// </summary>
-        bool need_release;
-    } library;
-} MAP_PAIR;
+/*
+* ハッシュマップ。
+* 値は連結リスト(linked_list.h)で管理する。
+*/
 
 /// <summary>
-/// マップ初期化データ。
+/// 標準の予約数。
 /// </summary>
-typedef struct tag_MAP_INIT
+#define MAP_DEFAULT_CAPACITY (32)
+/// <summary>
+/// 標準の負荷係数。
+/// </summary>
+#define MAP_DEFAULT_LOAD_FACTOR ((real_t)0.75)
+
+/// <summary>
+/// マップキーのハッシュ値作成処理。
+/// </summary>
+typedef size_t (*func_calc_map_hash)(const TEXT* key);
+/// <summary>
+/// マップキー比較処理。
+/// </summary>
+typedef bool (*func_equals_map_key)(const TEXT* a, const TEXT* b);
+/// <summary>
+/// マップの値解放処理。
+/// </summary>
+typedef void (*func_release_map_value)(const TEXT* key, void* value, const MEMORY_RESOURCE* memory_resource);
+
+/// <summary>
+/// キーと値のペア。
+/// <para><see cref="MAP"/>で管理される。</para>
+/// <para>NOTE: ハッシュテーブル再構築時にハッシュ値生成の負荷が無視できなくなったらここに計算済みの値を持たす予定(多分大丈夫でしょ)。</para>
+/// </summary>
+typedef struct tag_KEY_VALUE_PAIR
 {
     /// <summary>
     /// キー。
     /// </summary>
     TEXT key;
     /// <summary>
-    /// データ。
+    /// 値。
     /// </summary>
     void* value;
-} MAP_INIT;
+} KEY_VALUE_PAIR;
 
 /// <summary>
 /// 値ラッパー。
@@ -61,66 +55,69 @@ typedef struct tag_MAP_RESULT_VALUE
     /// <summary>
     /// 格納されている値。
     /// </summary>
-    void* value;
+    const void* value;
     /// <summary>
     /// 値は取得できたか。
     /// </summary>
     bool exists;
 } MAP_RESULT_VALUE;
 
-/// <summary>
-/// マップキー比較処理。
-/// </summary>
-typedef bool (*func_equals_map_key)(const TEXT* a, const TEXT* b);
-/// <summary>
-/// マップ値解放処理。
-/// </summary>
-typedef void (*func_release_map_value)(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource);
 
-/// <summary>
-/// 連想配列データ。
-///
-/// 注意: 連想配列とは名ばかりの線形検索。
-/// </summary>
 typedef struct tag_MAP
 {
     /// <summary>
-    /// キー・値の配列構造。
-    /// </summary>
-    MAP_PAIR* pairs;
-    /// <summary>
-    /// 現在の項目数。
+    /// 格納数。
     /// </summary>
     size_t length;
-
-    /// <summary>
-    /// 管理データ。
-    /// </summary>
     struct
     {
+        byte_t value_bytes;
         /// <summary>
-        /// 値解放時に使用するメモリリソース。
+        /// 倍々ゲームのマスク。
         /// </summary>
-        const MEMORY_RESOURCE* value_memory_resource;
+        size_t mask;
         /// <summary>
-        /// <see cref="MAP"/>が使用するメモリリソース。
+        /// この数を超過した際に拡張
+        /// </summary>
+        size_t next_limit;
+        /// <summary>
+        /// 負荷係数。
+        /// </summary>
+        real_t load_factor;
+        /// <summary>
+        /// キーをハッシュ関数で割り当てる領域を保持する<see cref="LINKED_LIST" />のかたまり。
+        /// <para>(なに書いてんのか分からん)</para>
+        /// </summary>
+        LINKED_LIST*/*KEY_VALUE_PAIR*/ items;
+        /// <summary>
+        /// <see cref="MAP" />で使用する<see cref="MEMORY_RESOURCE" />
         /// </summary>
         const MEMORY_RESOURCE* map_memory_resource;
-        /// <summary>
-        /// 容量。
-        /// </summary>
-        size_t capacity;
-        /// <summary>
-        /// キー比較処理。
-        /// </summary>
+        const MEMORY_RESOURCE* value_memory_resource;
+        func_release_map_value release_map_value;
+        func_calc_map_hash calc_map_hash;
         func_equals_map_key equals_map_key;
+#ifdef RES_CHECK
         /// <summary>
-        /// 値解放処理。
+        /// 再構築中か。
+        /// <para></para>
         /// </summary>
-        func_release_map_value release_value;
+        bool now_rehash;
+#endif
     } library;
 } MAP;
 
+/// <summary>
+/// 値連続処理。
+/// </summary>
+/// <param name="pair">ペア。</param>
+/// <param name="index">現在処理数。</param>
+/// <param name="length">最大件数。</param>
+/// <param name="arg">ご自由にどうぞ。</param>
+/// <returns>継続状態。</returns>
+typedef bool (*func_foreach_map)(const KEY_VALUE_PAIR* pair, size_t index, size_t length, void* arg);
+
+size_t calc_map_hash_default(const TEXT* key);
 /// <summary>
 /// キー項目比較の標準処理。
 /// <para>大文字小文字を区別する通常の文字列比較。</para>
@@ -131,86 +128,82 @@ typedef struct tag_MAP
 bool equals_map_key_default(const TEXT* a, const TEXT* b);
 
 /// <summary>
-/// マップの値解放不要処理。
-/// </summary>
-/// <param name="pair"></param>
-void release_map_value_null(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource);
-
-/// <summary>
 /// マップの生成。
 /// </summary>
-/// <param name="capacity">初期予約領域。特に指定しない場合は<c>MAP_DEFAULT_CAPACITY</c>を使用する。</param>
-/// <param name="equals_map_key">キー比較処理。</param>
-/// <param name="release_map_value">値解放処理。</param>
-/// <param name="value_memory_resource">値解放で使用するメモリリソース。<see cref="MAP" />では使用側でメモリを確保する設計のため<param name="map_memory_resource"/>と必ずしも一緒のメモリリソースとは限らない。混在する場合はもうわからん。</param>
-/// <param name="map_memory_resource"><see cref="MAP" />の内部処理で使用するメモリリソース。</param>
-/// <returns></returns>
-MAP RC_HEAP_FUNC(new_map, size_t capacity, func_equals_map_key equals_map_key, func_release_map_value release_map_value, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource);
+/// <param name="item_size"></param>
+/// <param name="capacity"></param>
+/// <param name="load_factor"></param>
+/// <param name="release_linked_list_value"></param>
+/// <param name="calc_map_hash"></param>
+/// <param name="equals_map_key"></param>
+/// <param name="value_memory_resource"></param>
+/// <param name="map_memory_resource"></param>
+/// <returns>解放が必要。</returns>
+MAP RC_HEAP_FUNC(new_map, byte_t item_size, size_t capacity, real_t load_factor, func_release_linked_list_value release_linked_list_value, func_calc_map_hash calc_map_hash, func_equals_map_key equals_map_key, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource);
 #ifdef RES_CHECK
-#   define new_map(capacity, equals_map_key, release_map_value, value_memory_resource, map_memory_resource) RC_HEAP_WRAP(new_map, (capacity), (equals_map_key), (release_map_value), value_memory_resource, map_memory_resource)
+#   define new_map(item_size, capacity, load_factor, release_linked_list_value, calc_map_hash, equals_map_key, value_memory_resource, map_memory_resource) RC_HEAP_WRAP(new_map, item_size, capacity, load_factor, release_linked_list_value, calc_map_hash, equals_map_key, value_memory_resource, map_memory_resource)
 #endif
 
 /// <summary>
-/// 初期化処理。
+/// マップの解放。
 /// </summary>
+/// <param name=""></param>
 /// <param name="map"></param>
-/// <param name="init"></param>
-/// <param name="length"></param>
-/// <param name="need_release"></param>
 /// <returns></returns>
-bool initialize_map(MAP* map, MAP_INIT init[], size_t length, bool need_release);
-
-/// <summary>
-/// マップの開放。
-/// </summary>
-/// <param name="map">対象マップ。</param>
 bool RC_HEAP_FUNC(release_map, MAP* map);
 #ifdef RES_CHECK
-#   define release_map(map) RC_HEAP_WRAP(release_map, (map))
+#   define release_map(map) RC_HEAP_WRAP(release_map, map)
 #endif
 
 /// <summary>
-/// 指定したキーが存在するか。
+/// マップから値の取得。
 /// </summary>
-/// <param name="map">対象マップ。</param>
-/// <param name="key">キー。</param>
-/// <returns>有無。</returns>
-bool exists_map(const MAP* map, const TEXT* key);
+/// <param name="map"></param>
+/// <param name="key"></param>
+/// <returns></returns>
+MAP_RESULT_VALUE get_map(const MAP* map, const TEXT* key);
 
 /// <summary>
-/// 値の追加。
-/// 既に存在する場合は失敗する。
+/// 値を追加。
+/// <para>既に存在する場合は失敗する。</para>
 /// </summary>
-/// <param name="map">対象マップ。</param>
-/// <param name="key">キー。</param>
-/// <param name="value">値。</param>
-/// <param name="need_release">解放が必要か</param>
-/// <returns>追加されたペア情報。追加できない場合は<c>NULL</c>。</returns>
-MAP_PAIR* add_map(MAP* map, const TEXT* key, void* value, bool need_release);
+/// <param name="map"></param>
+/// <param name="key"></param>
+/// <param name="value"></param>
+/// <returns>追加成功状態。</returns>
+bool RC_HEAP_FUNC(add_map, MAP* map, const TEXT* key, void* value);
+#ifdef RES_CHECK
+#   define add_map(map, key, value) RC_HEAP_WRAP(add_map, map, key, value)
+#endif
+
 /// <summary>
 /// 値の設定。
-/// 既に存在する場合は(解放処理とともに)上書き、存在しない場合は追加される。
+/// <para>既に存在していても存在していなくても設定処理が行われる。</para>
 /// </summary>
-/// <param name="map">対象マップ。</param>
-/// <param name="key">キー。</param>
-/// <param name="value">値。</param>
-/// <param name="need_release">解放が必要か</param>
-/// <returns>設定されたペア情報。</returns>
-MAP_PAIR* set_map(MAP* map, const TEXT* key, void* value, bool need_release);
-/// <summary>
-/// 削除。
-/// 詰め処理が行われているため呼び出し前の<c>MAP_PAIR*</c>は使用不可になる。
-/// </summary>
-/// <param name="map">対象マップ。</param>
-/// <param name="key">キー。</param>
-/// <returns>削除の成功状態。</returns>
-bool remove_map(MAP* map, const TEXT* key);
+/// <param name="map"></param>
+/// <param name="key"></param>
+/// <param name="value"></param>
+void RC_HEAP_FUNC(set_map, MAP* map, const TEXT* key, void* value);
+#ifdef RES_CHECK
+#   define set_map(map, key, value) RC_HEAP_WRAP(set_map, map, key, value)
+#endif
 
 /// <summary>
-/// 取得。
+/// 指定したキー項目を破棄。
 /// </summary>
-/// <param name="map">対象マップ。</param>
-/// <param name="key">キー。</param>
-/// <returns>取得データ。</returns>
-MAP_RESULT_VALUE get_map(const MAP* map, const TEXT* key);
+/// <param name="map"></param>
+/// <param name="key"></param>
+/// <returns></returns>
+bool RC_HEAP_FUNC(remove_map, MAP* map, const TEXT* key);
+#ifdef RES_CHECK
+#   define remove_map(map, key) RC_HEAP_WRAP(remove_map, map, key)
+#endif
+
+/// <summary>
+/// ぐるんぐるん回す
+/// </summary>
+/// <param name="map"></param>
+/// <param name="func"></param>
+/// <param name="arg"></param>
+void foreach_map(const MAP* map, func_foreach_map func, void* arg);
 
