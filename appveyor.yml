@@ -23,8 +23,8 @@ install:
   - cmd: dotnet --version
   #- cmd: choco install dotnetcore-sdk
   #- cmd: dotnet --version
-  - ps: Install-Product node 15.6.0
-  - cmd: npm -g install npm@7.4.0
+  - ps: Install-Product node 15.14.0
+  - cmd: npm -g install npm@7.7.6
   - cmd: npm install
 before_build:
   - cmd: git submodule init
