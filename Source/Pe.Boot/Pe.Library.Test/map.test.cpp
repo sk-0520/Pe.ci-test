@@ -124,7 +124,8 @@ namespace PeLibraryTest
         TEST_METHOD(extend_test)
         {
             MAP map = new_map(sizeof(int), 2, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
-            size_t length = 64;
+            //size_t length = 64;
+            size_t length = 8;
             TEXT format = wrap("key-%d");
             for (size_t i = 0; i < length; i++) {
                 TEXT key = format_text(DEFAULT_MEMORY, &format, i);
