@@ -362,13 +362,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         #endregion
 
-        private void IconClearTimerr_Elapsed(object sender, ElapsedEventArgs e)
+        private void IconClearTimerr_Elapsed(object? sender, ElapsedEventArgs e)
         {
             ClearIcon();
             StartViewClose();
         }
 
-        private void ViewCloseTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void ViewCloseTimer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             CloseView();
         }

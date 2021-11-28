@@ -80,7 +80,7 @@ EXIT_CODE dry_run(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_o
 
     logger_format_debug(_T("[ENV] %t = %t"), &env_special_key, &value);
 
-    TEXT_LIST args = allocate_memory(command_line_option->count, sizeof(TEXT), DEFAULT_MEMORY);
+    TEXT_LIST args = new_memory(command_line_option->count, sizeof(TEXT), DEFAULT_MEMORY);
     size_t arg_count = filter_enable_command_line_items(args, command_line_option);
 
     TEXT argument = to_command_line_argument(args, arg_count, DEFAULT_MEMORY);

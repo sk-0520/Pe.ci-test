@@ -11,6 +11,12 @@
 #define FALSE_UPPER "FALSE"
 #define FALSE_LOWER "false"
 
+/// スタック上に確保する領域の上限(これにTCHARを掛けるので普通使用:UNICODE環境では2倍)
+#define TEXT_STACK_COUNT (256)
+
+#define HEX_L_INDEX (0)
+#define HEX_U_INDEX (1)
+
 static const TCHAR decimals[] = _T("0123456789");
 static const TCHAR* hexs[] = { _T("0123456789abcdef"), _T("0123456789ABCDEF"), };
 
@@ -88,14 +94,20 @@ WRITE_RESULT write_primitive_boolean(func_string_writer writer, void* receiver, 
     return writer(&data);
 }
 
-static TCHAR* allocate_number(bool isHex, size_t width, const MEMORY_RESOURCE* memory_resource)
-{
-    if (isHex) {
-        return allocate_memory(sizeof(size_t) * 2 + 2 + width, sizeof(TCHAR), memory_resource);
-    } else {
-        return allocate_memory(sizeof(size_t) * 8 + 1 + width + ((sizeof(size_t) * 8) / 3), sizeof(TCHAR), memory_resource);
-    }
-}
+//static TCHAR* allocate_number(bool isHex, size_t width, const MEMORY_RESOURCE* memory_resource)
+//{
+//    if (isHex) {
+//        return new_memory(sizeof(size_t) * 2 + 2 + width, sizeof(TCHAR), memory_resource);
+//    } else {
+//        return new_memory(sizeof(size_t) * 8 + 1 + width + ((sizeof(size_t) * 8) / 3), sizeof(TCHAR), memory_resource);
+//    }
+//}
+
+#define number_bytes(is_hex, width) \
+(is_hex \
+    ? (sizeof(size_t) * 2 + 2 + width) \
+    : (sizeof(size_t) * 8 + 1 + width) \
+)
 
 TCHAR get_fill_character(WRITE_PADDING write_padding)
 {
@@ -169,7 +181,9 @@ static size_t fill_last(TCHAR* buffer, size_t fill_buffer_length, size_t width, 
 
 WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
 {
-    TCHAR* buffer = allocate_number(false, width, memory_resource);
+    //TCHAR* buffer = allocate_number(false, width, memory_resource);
+    new_array_or_memory(buffer, array, TCHAR, number_bytes(false, width), TEXT_STACK_COUNT, memory_resource);
+
     size_t buffer_length = 0;
     bool is_negative = value < 0;
     ssize_t abs_value = is_negative ? -value : value;
@@ -206,14 +220,16 @@ WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, 
 
     WRITE_RESULT result = writer(&data);
 
-    release_string(buffer, memory_resource);
+    //release_string(buffer, memory_resource);
+    release_array_or_memory(array);
 
     return result;
 }
 
 WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
 {
-    TCHAR* buffer = allocate_number(false, width, memory_resource);
+    //TCHAR* buffer = allocate_number(false, width, memory_resource);
+    new_array_or_memory(buffer, array, TCHAR, number_bytes(false, width), TEXT_STACK_COUNT, memory_resource);
     size_t buffer_length = 0;
     bool is_negative = false;
     size_t abs_value = value;
@@ -249,7 +265,8 @@ WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver,
     };
     WRITE_RESULT result = writer(&data);
 
-    release_string(buffer, memory_resource);
+    //release_string(buffer, memory_resource);
+    release_array_or_memory(array);
 
     return result;
 }
@@ -257,12 +274,13 @@ WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver,
 //TODO: 諸々間違ってる
 WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width)
 {
-    TCHAR* buffer = allocate_number(true, width, memory_resource);
+    //TCHAR* buffer = allocate_number(true, width, memory_resource);
+    new_array_or_memory(buffer, array, TCHAR, number_bytes(true, width), TEXT_STACK_COUNT, memory_resource);
     ssize_t work_value = value;
     size_t buffer_length = 0;
     do {
         int n = work_value % 16;
-        buffer[buffer_length++] = hexs[is_upper ? 1 : 0][n];
+        buffer[buffer_length++] = hexs[is_upper ? HEX_U_INDEX : HEX_L_INDEX][n];
         work_value /= 16;
     } while (work_value != 0);
 
@@ -286,7 +304,8 @@ WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, cons
     };
     WRITE_RESULT result = writer(&data);
 
-    release_string(buffer, memory_resource);
+    //release_string(buffer, memory_resource);
+    release_array_or_memory(array);
 
     return result;
 }
@@ -294,12 +313,13 @@ WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, cons
 //TODO: 諸々間違ってる
 WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width)
 {
-    TCHAR* buffer = allocate_number(true, width, memory_resource);
+    //TCHAR* buffer = allocate_number(true, width, memory_resource);
+    new_array_or_memory(buffer, array, TCHAR, number_bytes(true, width), TEXT_STACK_COUNT, memory_resource);
     size_t work_value = value;
     size_t buffer_length = 0;
     do {
         int n = work_value % 16;
-        buffer[buffer_length++] = hexs[is_upper ? 1 : 0][n];
+        buffer[buffer_length++] = hexs[is_upper ? HEX_U_INDEX : HEX_L_INDEX][n];
         work_value /= 16;
     } while (work_value != 0);
 
@@ -323,7 +343,8 @@ WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, con
     };
     WRITE_RESULT result = writer(&data);
 
-    release_string(buffer, memory_resource);
+    //release_string(buffer, memory_resource);
+    release_array_or_memory(array);
 
     return result;
 }
@@ -331,7 +352,12 @@ WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, con
 WRITE_RESULT write_primitive_character(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, TCHAR character, WRITE_ALIGN write_align, size_t width)
 {
     size_t buffer_length = width ? width : 1;
-    TCHAR* buffer = allocate_memory(buffer_length, sizeof(TCHAR), memory_resource);
+    TCHAR buffer_core[TEXT_STACK_COUNT * sizeof(TCHAR)];
+    //TCHAR* buffer = new_memory(buffer_length, sizeof(TCHAR), memory_resource);
+    TCHAR* buffer = buffer_length < TEXT_STACK_COUNT
+        ? buffer_core
+        : new_memory(buffer_length, sizeof(TCHAR), memory_resource)
+    ;
     buffer[0] = character;
 
     size_t fill_buffer_length = set_sign_and_fill(buffer, 1, buffer_length, 1, false, false, WRITE_PADDING_SPACE, write_align);
@@ -347,7 +373,9 @@ WRITE_RESULT write_primitive_character(func_string_writer writer, void* receiver
     };
     WRITE_RESULT result = writer(&data);
 
-    release_string(buffer, memory_resource);
+    if (buffer != buffer_core) {
+        release_string(buffer, memory_resource);
+    }
 
     return result;
 }
@@ -363,7 +391,7 @@ WRITE_RESULT write_primitive_pointer(func_string_writer writer, void* receiver, 
     size_t buffer_length = 0;
     do {
         int n = work_value % 16;
-        buffer[buffer_length++] = hexs[0][n];
+        buffer[buffer_length++] = hexs[HEX_L_INDEX][n];
         work_value /= 16;
     } while (work_value != 0);
 

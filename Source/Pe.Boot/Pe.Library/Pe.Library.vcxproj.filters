@@ -48,9 +48,6 @@
     <ClCompile Include="logging.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="map.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="memory.c">
       <Filter>source</Filter>
     </ClCompile>
@@ -96,6 +93,18 @@
     <ClCompile Include="tcharacter.c">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="linked_list.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="map.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="hash.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_math.c">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h">
@@ -123,9 +132,6 @@
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="logging.h">
-      <Filter>header</Filter>
-    </ClInclude>
-    <ClInclude Include="map.h">
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="memory.h">
@@ -171,6 +177,18 @@
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="tcharacter.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="linked_list.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="hash.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_math.h">
       <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>

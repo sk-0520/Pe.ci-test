@@ -32,7 +32,7 @@ typedef uint32_t text_t;
 #define TO_STRING(literal) TO_STRING_CORE(literal)
 
 /// 配列サイズの取得
-#define SIZEOF_ARRAY(arr) (sizeof(arr) / sizeof(arr[0]))
+#define SIZEOF_ARRAY(arr) (size_t)(sizeof(arr) / sizeof(arr[0]))
 
 #define FILE_BASE_DIR TO_STRING(SOLUTION_DIR)
 #define RELATIVE_FILE (__FILE__ + (sizeof(FILE_BASE_DIR) - 4 /* "\."\0 */))
@@ -40,8 +40,10 @@ typedef uint32_t text_t;
 
 #ifdef _WIN64
 typedef int64_t ssize_t;
+typedef double real_t;
 #else
 typedef int32_t ssize_t;
+typedef float real_t;
 #endif
 
 #define MIN(a, b) (((a) < (b)) ? (a): (b))

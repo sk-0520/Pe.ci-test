@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var keyConverter = new KeyConverter();
             var modifierKeyTransfer = new EnumTransfer<ModifierKey>();
             var result = new KeyMappingData() {
-                Key = (Key)keyConverter.ConvertFromInvariantString(dto.Key),
+                Key = (Key)keyConverter.ConvertFromInvariantString(dto.Key)!,
                 Shift = modifierKeyTransfer.ToEnum(dto.Shift),
                 Control = modifierKeyTransfer.ToEnum(dto.Control),
                 Alt = modifierKeyTransfer.ToEnum(dto.Alt),

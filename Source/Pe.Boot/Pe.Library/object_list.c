@@ -3,48 +3,46 @@
 #include "debug.h"
 
 
-int compare_object_list_value_null(const void* a, const void* b)
+int compare_object_list_value_null(const void* a, const void* b, void* data)
 {
     return -1;
 }
 
-void release_object_list_value_null(void* value, const MEMORY_RESOURCE* memory_resource)
-{ }
+void release_object_list_value_null(void* value, void* data, const MEMORY_RESOURCE* memory_resource)
+{
+}
 
-OBJECT_LIST RC_HEAP_FUNC(new_object_list, byte_t item_size, size_t capacity_count, func_compare_object_list_value compare_object_list_value, func_release_object_list_value release_object_list_value, const MEMORY_RESOURCE* memory_resource)
+OBJECT_LIST RC_HEAP_FUNC(new_object_list, byte_t item_size, size_t capacity_count, void* data, func_compare_object_list_value compare_object_list_value, func_release_object_list_value release_object_list_value, const MEMORY_RESOURCE* memory_resource)
 {
     assert(item_size);
 
     OBJECT_LIST result = {
         .length = 0,
         .items = RC_HEAP_CALL(allocate_raw_memory, capacity_count * item_size, false, memory_resource),
+        .data = data,
         .library = {
             .memory_resource = memory_resource,
             .item_size = item_size,
             .capacity = capacity_count + item_size,
             .compare_object_list_value = compare_object_list_value,
             .release_object_list_value = release_object_list_value
-        },
+    },
     };
 
     return result;
 }
 
-static void release_object_list_item(OBJECT_LIST* object_list, void* item)
-{
-    if (item) {
-        object_list->library.release_object_list_value(item, object_list->library.memory_resource);
-    }
-}
-
-bool RC_HEAP_FUNC(release_object_list, OBJECT_LIST* object_list)
+bool RC_HEAP_FUNC(release_object_list, OBJECT_LIST* object_list, bool value_release)
 {
     if (!object_list) {
         return false;
     }
 
-    for (size_t i = 0; i < object_list->length; i++) {
-        release_object_list_item(object_list, object_list->items + (i * object_list->library.item_size));
+    if (value_release) {
+        for (size_t i = 0; i < object_list->length; i++) {
+            void* item = object_list->items + (i * object_list->library.item_size);
+            object_list->library.release_object_list_value(item, object_list->data, object_list->library.memory_resource);
+        }
     }
 
     RC_HEAP_CALL(release_memory, object_list->items, object_list->library.memory_resource);
@@ -150,7 +148,7 @@ OBJECT_RESULT_VALUE get_object_list(const OBJECT_LIST* object_list, size_t index
     return none;
 }
 
-bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool need_release)
+bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool value_release)
 {
     if (!object_list) {
         return false;
@@ -158,8 +156,8 @@ bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool n
 
     if (index < object_list->length) {
         void* current = object_list->items + index * object_list->library.item_size;
-        if (need_release) {
-            object_list->library.release_object_list_value(current, object_list->library.memory_resource);
+        if (value_release) {
+            object_list->library.release_object_list_value(current, object_list->data, object_list->library.memory_resource);
         }
         copy_memory(current, value, object_list->library.item_size);
         return true;
@@ -168,27 +166,14 @@ bool set_object_list(OBJECT_LIST* object_list, size_t index, void* value, bool n
     return false;
 }
 
-void clear_object_list(OBJECT_LIST* object_list)
+void clear_object_list(OBJECT_LIST* object_list, bool value_release)
 {
-    for (size_t i = 0; i < object_list->length; i++) {
-        object_list->library.release_object_list_value(object_list->items + (i * object_list->library.item_size), object_list->library.memory_resource);
+    if (value_release) {
+        for (size_t i = 0; i < object_list->length; i++) {
+            object_list->library.release_object_list_value(object_list->items + (i * object_list->library.item_size), object_list->data, object_list->library.memory_resource);
+        }
     }
+
     object_list->length = 0;
 }
 
-size_t foreach_object_list(const OBJECT_LIST* object_list, func_foreach_object_list func, void* data)
-{
-    assert(object_list);
-    assert(func);
-
-    size_t result = 0;
-    for (size_t i = 0; i < object_list->length; i++) {
-        void* item = object_list->items + (i * object_list->library.item_size);
-        if (!func(item, i, object_list->length, data)) {
-            break;
-        }
-        result += 1;
-    }
-
-    return result;
-}

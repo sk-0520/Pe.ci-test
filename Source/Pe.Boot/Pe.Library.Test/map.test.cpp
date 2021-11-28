@@ -11,251 +11,162 @@ namespace PeLibraryTest
     TEST_CLASS(map_test)
     {
     public:
-        TEST_METHOD(initialize_test)
+        TEST_METHOD(new_release_test)
         {
-            MAP map = new_map(2, equals_map_key_default, release_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
-            BOX_INT valies[] = {
-                BOX_INT::create(1),
-                BOX_INT::create(2),
-                BOX_INT::create(3),
-                BOX_INT::create(4),
-                BOX_INT::create(5),
-            };
-            MAP_INIT init[] = {
-                { wrap("key1"), &valies[0] },
-                { wrap("key2"), &valies[1] },
-                { wrap("key3"), &valies[2] },
-                { wrap("key4"), &valies[3] },
-                { wrap("key5"), &valies[4] },
-            };
-            Assert::IsTrue(initialize_map(&map, init, sizeof(init) / sizeof(init[0]), false));
-
-            Assert::AreEqual((size_t)5, map.length);
-            Assert::AreEqual((size_t)8, map.library.capacity);
-
+            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
             release_map(&map);
-            Assert::IsNull(map.pairs);
-            Assert::AreEqual((size_t)0, map.length);
         }
 
         TEST_METHOD(add_map_test)
         {
-            MAP map = new_map(2, equals_map_key_default, release_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
-            Assert::AreEqual((size_t)2, map.library.capacity);
-            Assert::AreEqual((size_t)0, map.length);
+            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
 
-            TEXT key1 = wrap("key1");
-            BOX_INT value1 = BOX_INT::create(1);
-            MAP_PAIR* pair1 = add_map(&map, &key1, &value1, false);
-            Assert::IsNotNull(pair1);
-            Assert::AreEqual(1, ((BOX_INT*)pair1->value)->value);
-            Assert::AreEqual((size_t)1, map.length);
-            Assert::AreEqual((size_t)2, map.library.capacity);
+            TEXT input_key_1 = wrap("key-1");
+            int input_value_1 = 10;
+            bool actual_1 = add_map(&map, &input_key_1, &input_value_1);
+            Assert::IsTrue(actual_1);
 
-            TEXT key2 = wrap("key2");
-            BOX_INT value2 = BOX_INT::create(2);
-            MAP_PAIR* pair2 = add_map(&map, &key2, &value2, false);
-            Assert::IsNotNull(pair2);
-            Assert::AreEqual(2, ((BOX_INT*)pair2->value)->value);
-            Assert::AreEqual((size_t)2, map.length);
-            Assert::AreEqual((size_t)2, map.library.capacity);
+            TEXT input_key_2 = wrap("key-2");
+            int input_value_2 = 20;
+            bool actual_2 = add_map(&map, &input_key_2, &input_value_2);
+            Assert::IsTrue(actual_2);
 
-            TEXT key3 = wrap("key3");
-            BOX_INT value3 = BOX_INT::create(3);
-            MAP_PAIR* pair3 = add_map(&map, &key3, &value3, false);
-            Assert::IsNotNull(pair3);
-            Assert::AreEqual(3, ((BOX_INT*)pair3->value)->value);
-            Assert::AreEqual((size_t)3, map.length);
-            Assert::AreEqual((size_t)4, map.library.capacity);
-
-            BOX_INT value4 = BOX_INT::create(3);
-            MAP_PAIR* pairFailed = add_map(&map, &key1, &value4, false);
-            Assert::IsNull(pairFailed);
-            Assert::AreEqual((size_t)3, map.length);
-            Assert::AreEqual((size_t)4, map.library.capacity);
+            TEXT input_key_3 = wrap("key-1");
+            int input_value_3 = 30;
+            bool actual_3 = add_map(&map, &input_key_3, &input_value_3);
+            Assert::IsFalse(actual_3);
 
             release_map(&map);
-            Assert::IsNull(map.pairs);
-            Assert::AreEqual((size_t)0, map.length);
-        }
-
-        TEST_METHOD(set_map_test)
-        {
-            MAP map = new_map(2, equals_map_key_default, release_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
-
-            TEXT key1 = wrap("key1");
-            BOX_INT value1 = BOX_INT::create(1);
-            MAP_PAIR* pair1 = set_map(&map, &key1, &value1, false);
-            Assert::IsNotNull(pair1);
-            Assert::AreEqual(1, ((BOX_INT*)pair1->value)->value);
-            Assert::AreEqual((size_t)1, map.length);
-            Assert::AreEqual((size_t)2, map.library.capacity);
-
-            TEXT key1_2 = wrap("key1");
-            BOX_INT value1_2 = BOX_INT::create(11);
-            MAP_PAIR* pair1_2 = set_map(&map, &key1_2, &value1_2, false);
-            Assert::IsNotNull(pair1_2);
-            Assert::IsTrue(pair1_2 == pair1);
-            Assert::AreEqual(11, ((BOX_INT*)pair1_2->value)->value);
-            Assert::AreEqual((size_t)1, map.length);
-            Assert::AreEqual((size_t)2, map.library.capacity);
-
-            release_map(&map);
-            Assert::IsNull(map.pairs);
-            Assert::AreEqual((size_t)0, map.length);
-        }
-
-        TEST_METHOD(remove_map_test)
-        {
-            MAP map = new_map(2, equals_map_key_default, release_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
-
-            TEXT key1 = wrap("key1");
-            BOX_INT value1 = BOX_INT::create(1);
-            MAP_PAIR* pair1 = add_map(&map, &key1, &value1, false);
-
-            TEXT key2 = wrap("key2");
-            BOX_INT value2 = BOX_INT::create(2);
-            MAP_PAIR* pair2 = add_map(&map, &key2, &value2, false);
-
-            Assert::AreEqual((size_t)2, map.length);
-            Assert::IsTrue(remove_map(&map, &key2));
-            Assert::AreEqual((size_t)1, map.length);
-
-            BOX_INT value2_2 = BOX_INT::create(22);
-            MAP_PAIR* pair2_2 = add_map(&map, &key2, &value2_2, false);
-            Assert::AreEqual((size_t)2, map.length);
-            Assert::IsTrue(pair2_2 == pair2); // ズレてないので一応使える(使用自体は想定していない)
-
-            Assert::IsTrue(remove_map(&map, &key1));
-            Assert::AreEqual((size_t)1, map.length);
-            Assert::AreEqual(22, ((BOX_INT*)pair1->value)->value);// ズレてるので当時の後ろのやつを指している(使用自体は想定していない)
-
-            BOX_INT value1_2 = BOX_INT::create(11);
-            MAP_PAIR* pair1_2 = add_map(&map, &key1, &value1_2, false);
-            Assert::IsNotNull(pair1_2);
-
-            TEXT key3 = wrap("key3");
-            BOX_INT value3 = BOX_INT::create(3);
-            MAP_PAIR* pair3 = add_map(&map, &key3, &value3, false);
-            Assert::IsNotNull(pair3);
-            Assert::AreEqual((size_t)3, map.length);
-
-            Assert::IsTrue(remove_map(&map, &key1));
-            Assert::AreEqual((size_t)2, map.length);
-            //Assert::AreEqual(22, ((BOX_INT*)pair1->value)->value);// ズレてるので当時の後ろのやつを指している(使用自体は想定していない)
-            //Assert::AreEqual(11, ((BOX_INT*)pair1_2->value)->value);// ズレてるので当時の後ろのやつを指している(使用自体は想定していない)
-
-            release_map(&map);
-            Assert::IsNull(map.pairs);
-            Assert::AreEqual((size_t)0, map.length);
         }
 
         TEST_METHOD(get_map_test)
         {
-            MAP map = new_map(2, equals_map_key_default, release_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
 
-            TEXT key1 = wrap("key1");
-            BOX_INT value1 = BOX_INT::create(1);
-            add_map(&map, &key1, &value1, false);
+            TEXT input_key_0 = wrap("key-0");
+            MAP_RESULT_VALUE actual_0 = get_map(&map, &input_key_0);
+            Assert::IsFalse(actual_0.exists);
 
-            TEXT key2 = wrap("key2");
-            BOX_INT value2 = BOX_INT::create(2);
-            add_map(&map, &key2, &value2, false);
+            TEXT input_key_1 = wrap("key-1");
+            int input_value_1 = 10;
+            add_map(&map, &input_key_1, &input_value_1);
 
-            TEXT key3 = wrap("key3");
-            BOX_INT value3 = BOX_INT::create(3);
-            add_map(&map, &key3, &value3, false);
+            TEXT input_key_2 = wrap("key-2");
+            int input_value_2 = 20;
+            add_map(&map, &input_key_2, &input_value_2);
 
-            MAP_RESULT_VALUE result1 = get_map(&map, &key1);
-            Assert::IsTrue(result1.exists);
-            Assert::AreEqual(1, ((BOX_INT*)result1.value)->value);
+            TEXT input_key_3 = wrap("key-3");
+            int input_value_3 = 30;
+            add_map(&map, &input_key_3, &input_value_3);
 
-            MAP_RESULT_VALUE result2 = get_map(&map, &key2);
-            Assert::IsTrue(result2.exists);
-            Assert::AreEqual(2, ((BOX_INT*)result2.value)->value);
+            TEXT input_key_4 = wrap("key-4");
 
-            MAP_RESULT_VALUE result3 = get_map(&map, &key3);
-            Assert::IsTrue(result3.exists);
-            Assert::AreEqual(3, ((BOX_INT*)result3.value)->value);
+            MAP_RESULT_VALUE actual_1 = get_map(&map, &input_key_1);
+            Assert::IsTrue(actual_1.exists);
+            Assert::AreEqual(input_value_1, *(int*)actual_1.value);
 
-            remove_map(&map, &key2);
+            MAP_RESULT_VALUE actual_2 = get_map(&map, &input_key_2);
+            Assert::IsTrue(actual_2.exists);
+            Assert::AreEqual(input_value_2, *(int*)actual_2.value);
 
-            MAP_RESULT_VALUE result2_2 = get_map(&map, &key2);
-            Assert::IsFalse(result2_2.exists);
+            MAP_RESULT_VALUE actual_3 = get_map(&map, &input_key_3);
+            Assert::IsTrue(actual_3.exists);
+            Assert::AreEqual(input_value_3, *(int*)actual_3.value);
 
-            release_map(&map);
-            Assert::IsNull(map.pairs);
-            Assert::AreEqual((size_t)0, map.length);
-        }
-
-        static void freeTextTest(MAP_PAIR* pair, const MEMORY_RESOURCE* memory_resource)
-        {
-            TEXT* p = (TEXT*)pair->value;
-            release_text(p);
-        }
-
-        TEST_METHOD(release_map_test)
-        {
-            MAP map = new_map(2, equals_map_key_default, freeTextTest, DEFAULT_MEMORY, DEFAULT_MEMORY);
-
-            TEXT key1 = wrap("key1");
-            TEXT value1 = text("あいうえお");
-            add_map(&map, &key1, &value1, false);
-
-            MAP_RESULT_VALUE result1 = get_map(&map, &key1);
-            Assert::IsTrue(result1.exists);
-            TEXT* text1 = (TEXT*)result1.value;
-            Assert::AreEqual(value1.value, text1->value);
-            Assert::IsTrue(&value1 == text1);
-
-            TEXT value1_2 = text("アイウエオ");
-            set_map(&map, &key1, &value1_2, true);
-            Assert::IsFalse(value1.library.released);
-
-            release_text(&value1);
-            Assert::IsTrue(value1.library.released);
-
-            TEXT value1_3 = text("安以宇衣於");
-            set_map(&map, &key1, &value1_3, true);
-            Assert::IsTrue(value1_2.library.released);
+            MAP_RESULT_VALUE actual_4 = get_map(&map, &input_key_4);
+            Assert::IsFalse(actual_4.exists);
 
             release_map(&map);
-            Assert::IsNull(map.pairs);
+        }
+
+        TEST_METHOD(set_map_test)
+        {
+            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
+
+            TEXT input_key = wrap("key-1");
+
+            int input_value_1 = 10;
+
+            set_map(&map, &input_key, &input_value_1);
+            MAP_RESULT_VALUE actual_1 = get_map(&map, &input_key);
+            Assert::IsTrue(actual_1.exists);
+            Assert::AreEqual(input_value_1, *(int*)actual_1.value);
+
+            int input_value_2 = 20;
+
+            set_map(&map, &input_key, &input_value_2);
+            MAP_RESULT_VALUE actual_2 = get_map(&map, &input_key);
+            Assert::IsTrue(actual_2.exists);
+            Assert::AreEqual(input_value_2, *(int*)actual_2.value);
+
+            release_map(&map);
+        }
+
+        TEST_METHOD(remove_map_test)
+        {
+            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
+
+            TEXT key = wrap("key");
+            int value = 10;
+
+            Assert::IsFalse(remove_map(&map, &key));
             Assert::AreEqual((size_t)0, map.length);
+
+            set_map(&map, &key, &value);
+            Assert::AreEqual((size_t)1, map.length);
+            Assert::IsTrue(remove_map(&map, &key));
+
+            Assert::AreEqual((size_t)0, map.length);
+
+            release_map(&map);
         }
 
-        static bool equals_map_key_ignore_case(const TEXT* a, const TEXT* b)
+        TEST_METHOD(extend_test)
         {
-            return !compare_text(a, b, true);
+            MAP map = new_map(sizeof(int), 2, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            //size_t length = 64;
+            size_t length = 8;
+            TEXT format = wrap("key-%d");
+            for (size_t i = 0; i < length; i++) {
+                TEXT key = format_text(DEFAULT_MEMORY, &format, i);
+                add_map(&map, &key, &i);
+                release_text(&key);
+            }
+            Assert::AreEqual(length, map.length);
+
+            release_map(&map);
         }
 
-        TEST_METHOD(compare_test)
+        static bool foreach_map_test(const KEY_VALUE_PAIR* pair, size_t index, size_t length, void* arg)
         {
-            MAP map_default = new_map(2, equals_map_key_default, release_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            //TEXT format = wrap("key-%d");
+            //TEXT key = format_text(DEFAULT_MEMORY, &format, index);
+            //int* inputs = (int*)arg;
 
-            TEXT key1 = wrap("key1");
-            TEXT key2 = wrap("key2");
-            TEXT key2_1 = wrap("KEY2");
+            //Assert::IsTrue(is_equals_text(&pair->key, &key, false));
+            //Assert::AreEqual(*(int*)pair->value, inputs[index]);
 
-            BOX_INT value1 = BOX_INT::create(1);
-            BOX_INT value2 = BOX_INT::create(2);
-            BOX_INT value2_1= BOX_INT::create(22);
+            //release_text(&key);
 
-            add_map(&map_default, &key1, &value1, false);
-            add_map(&map_default, &key2, &value2, false);
-            Assert::IsNotNull(add_map(&map_default, &key2_1, &value2_1, false));
-            Assert::IsNull(add_map(&map_default, &key2_1, &value2_1, false));
-            Assert::AreEqual((size_t)3, map_default.length);
+            return true;
+        }
 
-            MAP map_ignore = new_map(2, equals_map_key_ignore_case, release_map_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
-            add_map(&map_ignore, &key1, &value1, false);
-            add_map(&map_ignore, &key2, &value2, false);
-            Assert::IsNull(add_map(&map_ignore, &key2_1, &value2_1, false));
-            Assert::IsNull(add_map(&map_ignore, &key2_1, &value2_1, false));
-            Assert::AreEqual((size_t)2, map_ignore.length);
+        TEST_METHOD(foreach_map_test)
+        {
+            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            int inputs[] = {
+                1, 2, 3, 4, 5
+            };
+            for (int input : inputs) {
+                TEXT format = wrap("key-%d");
+                TEXT key = format_text(DEFAULT_MEMORY, &format, input);
+                add_map(&map, &key, &input);
+                release_text(&key);
+            }
 
-            release_map(&map_default);
-            release_map(&map_ignore);
+            foreach_map(&map, foreach_map_test, inputs);
+
+            release_map(&map);
         }
     };
 }

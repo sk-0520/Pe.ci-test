@@ -1,11 +1,11 @@
 {
 	"library": [
 		{
-			"name": ".NET 5",
-			"uri": "https://dotnet.microsoft.com/download/dotnet/5.0",
+			"name": ".NET 6",
+			"uri": "https://dotnet.microsoft.com/download/dotnet/6.0",
 			"license": {
 				"name": "MIT License",
-				"uri": "https://github.com/dotnet/core/blob/v3.1.0/LICENSE.TXT"
+				"uri": "https://github.com/microsoft/dotnet/blob/master/LICENSE"
 			},
 			"comment": "Microsoft.Extension.*, MSTest.*, (MS)System.*　を含む"
 		},

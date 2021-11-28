@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29209.62
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Main", "Pe.Main\Pe.Main.csproj", "{24651B01-A648-4EB8-9032-E928A4EE4771}"
 EndProject
@@ -187,8 +187,8 @@ Global
 		{5874965B-F278-4112-9533-B5F40811825F} = {8253ACFA-E9A5-4F53-9D74-370093EAB2A4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_NeutralResourcesLanguage = ja-JP
-		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
 		RESX_PrefixTranslations = False
+		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
+		RESX_NeutralResourcesLanguage = ja-JP
 	EndGlobalSection
 EndGlobal

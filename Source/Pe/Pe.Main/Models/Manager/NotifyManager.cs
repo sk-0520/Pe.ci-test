@@ -541,7 +541,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #endregion
 
-        private void StreamTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void StreamTimer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             var time = DateTime.UtcNow;
             var removeLogs = StreamNotifyLogsImpl

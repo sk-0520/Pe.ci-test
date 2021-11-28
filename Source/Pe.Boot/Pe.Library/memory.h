@@ -15,7 +15,7 @@ typedef byte_t(*func_calc_extend_capacity)(byte_t input_bytes);
 
 /// <summary>
 /// メモリ管理データ。
-/// <para>ユーザーコードで各メンバにアクセスすることはない。</para>
+/// <para>アプリケーション内では使用しない。</para>
 /// </summary>
 typedef struct tag_MEMORY_RESOURCE
 {
@@ -31,6 +31,38 @@ typedef struct tag_MEMORY_RESOURCE
 /// メモリ管理: 自動拡張最大サイズ。
 /// </summary>
 #define MEMORY_EXTENDABLE_MAXIMUM_SIZE (0)
+
+/// <summary>
+/// 可能であればスタックに確保、無理ならヒープに配置。
+/// <para><c>release_array_or_memory</c>で解放(必須)。</para>
+/// </summary>
+#define new_array_or_memory(var_name, cpp_name, type, count, stack_count, memory_resource) \
+struct { \
+    type* elements; \
+    struct { \
+        type buffer[stack_count]; \
+        const MEMORY_RESOURCE* mr; \
+    } library; \
+} cpp_name; \
+set_memory(&cpp_name, 0, sizeof(cpp_name));  \
+do { \
+    cpp_name.library.mr = NULL; \
+    size_t cpp_name ## _stack_count = stack_count * sizeof(type); \
+    size_t cpp_name ## _heap_count = count * sizeof(type); \
+    if(cpp_name ## _stack_count < cpp_name ## _heap_count) { \
+        cpp_name.elements = new_memory(cpp_name ## _heap_count, sizeof(type), cpp_name.library.mr = memory_resource); \
+    } else { \
+        cpp_name.elements = cpp_name.library.buffer; \
+    } \
+} while(0); \
+type* var_name = cpp_name.elements; \
+
+#define is_stack_array(array_or_memory_item) (array_or_memory_item.elements == array_or_memory_item.library.buffer)
+
+#define release_array_or_memory(array_or_memory_item) \
+if(!is_stack_array(array_or_memory_item)) { \
+    release_memory(array_or_memory_item.elements, array_or_memory_item.library.mr); \
+}
 
 /// <summary>
 /// デフォルトのメモリリソースを取得。
@@ -82,9 +114,9 @@ void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill, const MEMO
 /// <param name="count">確保する個数。</param>
 /// <param name="type_size">型サイズ。</param>
 /// <returns>確保した領域。<see cref="release_memory"/>にて開放が必要。失敗時は<c>NULL</c>を返す。</returns>
-void* RC_HEAP_FUNC(allocate_memory, size_t count, byte_t type_size, const MEMORY_RESOURCE* memory_resource);
+void* RC_HEAP_FUNC(new_memory, size_t count, byte_t type_size, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK
-#   define allocate_memory(count, type_size, memory_resource) RC_HEAP_WRAP(allocate_memory, count, type_size, memory_resource)
+#   define new_memory(count, type_size, memory_resource) RC_HEAP_WRAP(new_memory, count, type_size, memory_resource)
 #endif
 
 /// <summary>

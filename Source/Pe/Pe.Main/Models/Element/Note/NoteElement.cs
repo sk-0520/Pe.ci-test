@@ -876,7 +876,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        private void HideWaitTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void HideWaitTimer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             StopHidden(false);
             Hide();
