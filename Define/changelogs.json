@@ -1,27 +1,16 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.xx.001",
+		"date": "2021/11/28",
+		"version": "0.99.166",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "実行基盤を .NET 5 から .NET 6 にバージョンアップ",
+						"comments": [
+							"たぶん大丈夫だと思うけどテスト全然してないのでなんとも"
+						]
 					}
 				]
 			},
@@ -29,7 +18,7 @@
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "8df5ebdcb506899ca295d12da0c9be8e1ac6b079",
 						"subject": "#782: VS 2022+.NET 6+C#10への移行",
 						"comments": [
 							"Microsoft.Extensions.Logging.Abstractions 5.0.0 -> 6.0.0",
@@ -45,20 +34,12 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "76aacc7dd4d1f0c5bfc0773dcb7a2e1a260d7095",
 						"subject": "#782 実施後にテストフレームワーク再更新",
 						"comments": [
 							"MSTest.TestAdapter 2.2.7 -> 2.2.8",
 							"MSTest.TestFramework 2.2.7 -> 2.2.8"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -66,7 +47,7 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "a87759b68c0ea6677bf3d38769aa935356014196",
 						"subject": "#784: プラグインテンプレートの取得ダメくない？",
 						"comments": [
 							"正直ダメでよかった",
@@ -74,16 +55,8 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "727409cc2fe086544b4c19c28dddc6a18ef8e0af",
 						"subject": "#786: プラグインのテンプレで隠しファイル(.ファイル)がアーカイブされていない"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -91,24 +64,20 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "6dd5f27c8fc8e9e4aedb7460a2cfb1d28bbd6d93",
 						"subject": "アーカイブ作成時の上書き問題対応"
 					},
 					{
-						"revision": "",
+						"revision": "53a01f75305f23a71813912188a5704d317d335d",
 						"subject": "ビルド時警告の抑制"
 					},
 					{
-						"revision": "",
+						"revision": "8404eed06f39e1d58b2bbba4a7b9f9ebbaa4cf2a",
 						"subject": "[継続課題] #730: node/npm のバージョンアップ",
 						"comments": [
 							"メジャーバージョン上げたら死ぬのでマイナーバージョンを最新化",
 							"各種パッケージモジュールも更新"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
