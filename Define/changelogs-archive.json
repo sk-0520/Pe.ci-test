@@ -1,4 +1,396 @@
 [
+{
+		"date": "2021/08/04",
+		"version": "0.99.158",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "044fec4522372dced95bf9a001f870aad9fe5ef9",
+						"subject": "#527: 本体起動用処理をもうちっときれいにする",
+						"comments": [
+							"軽い感じで綺麗にするつもりが壮大な作り直しプロジェクトになった",
+							"本体を動かす程度は動くけどいまだ未完成(printf実装とかもうしんどい)"
+						]
+					},
+					{
+						"revision": "7427c3df835cedd1ce1cef7b6c4b1721cd794151",
+						"subject": "#769: ランチャーアイテム自動取り込み後に取り込んだ旨のメッセージを表示する",
+						"comments": [
+							"チェックマークを付けるようにしつつスタートアップも同じようにした"
+						]
+					},
+					{
+						"revision": "b6bf99b19e1c3b0166913f6e2db212d7ef6b1f53",
+						"subject": "#767: β版実行時の警告メッセージにバッチから動かす旨を記載する"
+					},
+					{
+						"revision": "e001f7ff46078dce5fe81da1dc7cbc93e068d61b",
+						"subject": "[継続課題] #766: アップデート時に事前にEXEを一通り動かす",
+						"comments": [
+							"一旦は失敗しても処理を進めるようにした",
+							"次の次くらいのリリースで失敗処理をきちんとする"
+						]
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "25f76f2d57d629d7c79b79d579b986b21fab1ced",
+						"subject": "#770: 使用可能前にダイアログ系(スタートウィンドウとか)を動かすとスケジュール処理再起動で死ぬ"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "728aed2da2938b44c7ee04f037d44096289fe2a6",
+						"class": "nuget",
+						"subject": "MSTest系更新",
+						"comments": [
+							"Microsoft.NET.Test.Sdk 16.9.4 -> 16.10.0",
+							"MSTest.TestAdapter 2.2.3 -> 2.2.5",
+							"MSTest.TestFramework 2.2.3 -> 2.2.5"
+						]
+					},
+					{
+						"revision": "aa17bb39e838e7779f1e3e78f54f111c47a9ded7",
+						"subject": "#771: CI上のテストをスクリプトファイルにする"
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2021/06/29",
+		"version": "0.99.154",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "9dc9d3d047ac811efe1fa54a584983e6067468f4",
+						"subject": "#758: ランチャーツールバーから新規グループを作成可能にする"
+					},
+					{
+						"revision": "029208941d827d1d6e002d7c30dbf36b6cf9d8a7",
+						"subject": "ランチャーツールバーメニューの表示状態をグループ化"
+					},
+					{
+						"revision": "5b3e954d3f96174298e942e1620a79d91966bb6f",
+						"subject": "#745: ノートの自動的に隠す方法の時間を設定可能にする"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "a602d8004416b5e304d10bc5639a35ce1a5a114f",
+						"subject": "#761: 作業ディレクトリを開く機能死んでね？"
+					},
+					{
+						"revision": "c01a3d48ebb6b45ae8424742e70902a6d9f662f4",
+						"subject": "#764: 設定のバックアップにバージョン情報を付与する 二回目",
+						"comments": [
+							"一回目の #470 が #484 で死んだ"
+						]
+					},
+					{
+						"revision": "6e0ca7121c008b7d2fa4babf5303aa6f6b8b74b7",
+						"subject": "#760: ノートの新規追加時に前面に表示されない"
+					},
+					{
+						"revision": "9f9902716f40b59468c4195785206419063df8ec",
+						"subject": "#759: ランチャーツールバーへのD&Dで指定して実行ダイアログを開いた際に前面表示されない"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "bee9bcb3d8ed708c11c90de7ef26f86859665e3d",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.114.2 -> 1.0.114.3"
+					},
+					{
+						"revision": "dd5ea7febc409db086c8a9efcc6f4556180adccd",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 1.7.2 -> 1.7.3"
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2021/06/17",
+		"version": "0.99.143",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "9a22c9aedaafa6db2d2390ae5909b81a3067c184",
+						"subject": "#743: ノートのキャレット色を前景に合わせる"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "796994923e8ae4918f012ed25b890b651585fa05",
+						"subject": "#748: ノートリンクを切断時にファイル内容を本文に割り当てられていない"
+					},
+					{
+						"revision": "78f52fbb56083f521f2724214624d275feedecd8",
+						"subject": "#756: ノートリンクRTFでやたらとゴミが入る",
+						"comments": [
+							"RTFが目立つってだけでプレーンテキストもごみってた"
+						]
+					},
+					{
+						"revision": "21bb47b1262d33f219adf9d8575fc9f5677f2c95",
+						"subject": "#755: プラグインインストール時にアーカイブ名の x86/x64 で探しに行こうとするので該当プラグインが見つからない",
+						"comments": [
+							"拡張子を抜いたファイル名末尾 _x86, _64, _AnyCPU を無視するようにした(AnyCPUは意味あるか知らん)"
+						]
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2021/06/06",
+		"version": "0.99.137",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "658cd107e56b5fcd1ff988f9a9352f71a3566356",
+						"subject": "#741: 指定して実行の履歴アイテムを破棄できるようにする"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "02d65a0b5be0901078159e127515b6d33c3463d1",
+						"subject": "#738: アンインストール時のスタートアップ処理に対して \" の付与が過剰"
+					},
+					{
+						"revision": "b631b39b0707e7b61efa7c9b8d1fa07ac162f546",
+						"subject": "#739: フィードバック送信後のコンテンツ領域リンクが見づらい"
+					},
+					{
+						"revision": "92a93f4c1f3708c0494b0737271b19e7dd5fb002",
+						"subject": "#736: ノート リンク ファイルダイアログのエンコーディングに utf8bom が二件表示される"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "edf585a6fac1bef8fd6f80da0c89ae923d5fe4f1",
+						"class": "nuget",
+						"subject": "AvalonEdit 6.1.1 -> 6.1.2.30"
+					},
+					{
+						"revision": "2cd4b784fcca951b81b81049a27faa78b22163c9",
+						"class": "nuget",
+						"subject": "Prism.Wpf 8.0.0.1909 -> 8.1.97"
+					},
+					{
+						"revision": "3eda349d262ecb5cef233112c015dfebde43026b",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.113.7 -> 1.0.114.2"
+					},
+					{
+						"revision": "44c302a48804738f5fe326a0359318fafb42a56d",
+						"subject": "#744: アップデート通知用ファイルをバージョンごとに生成する"
+					},
+					{
+						"revision": "fa181e0e6b91926d7e76700048d5de3d07b91261",
+						"subject": "#737: 起動処理に渡すコマンドライン引数を本体側で将来的に絶対に競合しないものにする"
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2021/05/24",
+		"version": "0.99.126",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "b91bf956224ad1a6b7c54e73aa13e2f7c3b3b578",
+						"subject": "#732: アプリケーション構成ファイルのログ出力は独自実装ではなく.NET提供の出力方法を使用する"
+					},
+					{
+						"revision": "cb8153a7dfd3812be19d7a5e7b971f8e18e53833",
+						"subject": "#734: ファイルダイアログのフィルターがローカライズ未対応"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "d2084778d9542e7e76671232756a5a076e5bed67",
+						"subject": "#731: クラッシュレポートが死んでる"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "e3f802865b326f7520042e206f6eb8712691798e",
+						"subject": "update npm"
+					},
+					{
+						"revision": "e4209f76ce113309be1da6a98fb27a95eef1a21e",
+						"subject": "#727: プラグイン参照実装をCIにのせる",
+						"comments": [
+							"CIに乗せたのでCDでダウンロードページまで移送されることになった",
+							"参照実装プラグインの扱いについてはヘルプを参照のこと"
+						]
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2021/05/14",
+		"version": "0.99.119",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"class": "",
+						"subject": "0.99.118 は条件により確実に死ぬので 0.99.119 に統合"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "82c99121a5c96e9e955020e7ef2f05fc3eb5640f",
+						"subject": "#729: ディスプレイ設定変更を検知した場合に待機処理を挟むようにする",
+						"comments": [
+							"待機時間云々以前にいきなり処理が走っていたのが問題かと思われ"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "9777185271a9c3c3fb47bc78ffd129babf22252c",
+						"subject": "#728: プロキシ設定の構成を独立させる"
+					},
+					{
+						"revision": "554b04e0ba14a46dd4a967e6198bf9441bf70a5c",
+						"class": "nuget",
+						"subject": "#430: Hardcodet.Wpf.TaskbarNotificationの更新",
+						"comments": [
+							"Hardcodet.NotifyIcon.Wpf.NetCore から Hardcodet.NotifyIcon.Wpf に変更"
+						]
+					},
+					{
+						"revision": "f23f571caad5842ec90c451980c2fa3c976dc90a",
+						"class": "nuget",
+						"subject": "Dapper 2.0.78 -> Dapper 2.0.90"
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2021/04/19",
+		"version": "0.99.112",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "ec41e0eb2ae6c969b3bcf7f4540a2b4ac6b0151d",
+						"subject": "#709: プロキシ設定を追加",
+						"comments": [
+							"内容についてはヘルプ -> その他 -> プロキシ を参照"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "df82b87f5fb31fb88656b33cf3b9d7ce03ee0980",
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 16.9.1 -> 16.9.4"
+					},
+					{
+						"revision": "4943f4251564ec49c0ba8c90b24777e47cdd3bb3",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 1.7.1 -> 1.7.2"
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2021/03/22",
+		"version": "0.99.107",
+		"contents": [
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "993b1427b65a10be43a92504068f448230aadc07",
+						"subject": "DB読み込み専用処理の不具合対応",
+						"comments": [
+							"したはいいけど書き込み処理の異常さが際立つ"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "74725b7503da17adb8ba1ccecd4749348ba635b7",
+						"class": "nuget",
+						"subject": "MSTest系更新"
+					},
+					{
+						"revision": "0cc4b5f730ab1b87b511bb374b647cadf6dfaf3a",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 1.7.0 -> 1.7.1"
+					},
+					{
+						"revision": "fb070cbbe3f237b90230d148dbd8efb9966d42b4",
+						"class": "nuget",
+						"subject": "AvalonEdit 6.0.1 -> 6.1.1"
+					}
+				]
+			}
+		]
+	},
 	{
 		"date": "2021/02/07",
 		"version": "0.99.102",
