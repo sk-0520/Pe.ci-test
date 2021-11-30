@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include <stddef.h>
 
-extern int _fltused;
 
 /// <summary>
 /// 2のべき乗を取得。
