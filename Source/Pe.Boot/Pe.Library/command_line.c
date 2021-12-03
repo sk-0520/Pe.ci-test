@@ -80,7 +80,7 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
 
         TEXT key;
         TEXT option;
-        TEXT value_with_separator = find_character(&arg, _T('='));
+        TEXT value_with_separator = search_character(&arg, _T('='));
         if (is_enabled_text(&value_with_separator)) {
             // 引数が値とキーを持つ
             key = new_text_with_length(arg.value, (value_with_separator.value - arg.value), memory_resource);

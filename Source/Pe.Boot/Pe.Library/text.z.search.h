@@ -86,16 +86,14 @@ TEXT search_text(const TEXT* haystack, const TEXT* needle, bool ignore_case);
 
 /// <summary>
 /// テキスト検索。
-/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索文字。</param>
 /// <returns>見つかったテキストを開始とする参照テキスト、見つからない場合は無効テキスト。解放不要。</returns>
-TEXT find_character(const TEXT* haystack, TCHAR needle);
+TEXT search_character(const TEXT* haystack, TCHAR needle);
 
 /// <summary>
 /// テキスト内の文字位置を検索。
-/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索文字。</param>

@@ -45,7 +45,7 @@ namespace PeLibraryTest
             Assert::IsFalse(is_enabled_text(&actual));
         }
 
-        TEST_METHOD(find_character_test)
+        TEST_METHOD(search_character_test)
         {
             auto input = wrap("abcDEF-ABCdef");
             auto tests = {
@@ -57,16 +57,16 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 TCHAR arg2 = std::get<1>(test.inputs);
-                TEXT actual = find_character(&arg1, arg2);
+                TEXT actual = search_character(&arg1, arg2);
                 Assert::IsFalse(actual.library.need_release);
                 Assert::AreEqual(test.expected, actual.value);
             }
         }
 
-        TEST_METHOD(find_character_notfound_test)
+        TEST_METHOD(search_character_notfound_test)
         {
             auto input1 = wrap("abcDEF-ABCdef");
-            TEXT actual = find_character(&input1, 'x');
+            TEXT actual = search_character(&input1, 'x');
             Assert::IsFalse(is_enabled_text(&actual));
         }
 

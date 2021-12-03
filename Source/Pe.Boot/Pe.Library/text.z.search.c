@@ -101,34 +101,31 @@ TEXT search_text(const TEXT* haystack, const TEXT* needle, bool ignore_case)
         ;
 }
 
-static TCHAR* find_character_core(const TCHAR* haystack, TCHAR needle)
+static const TCHAR* search_character_core(const TEXT* haystack, TCHAR needle)
 {
-    while (*haystack != needle) {
-        if (!*haystack) {
-            return NULL;
+    for (size_t i = 0; i < haystack->length; i++) {
+        const TCHAR* c = haystack->value + i;
+        if (*c == needle) {
+            return c;
         }
-        haystack++;
     }
 
-    return (TCHAR*)haystack;
+    return NULL;
 }
 
-TEXT find_character(const TEXT* haystack, TCHAR needle)
+TEXT search_character(const TEXT* haystack, TCHAR needle)
 {
-    //TODO: 番兵なし対応
-
-    TCHAR* s = find_character_core(haystack->value, needle);
-    if (!s) {
+    ssize_t index = index_of_character(haystack, needle);
+    if (index < 0) {
         return create_invalid_text();
     }
 
-    return wrap_text(s);
+    return wrap_text_with_length(haystack->value + index, haystack->length - index, false, NULL);
 }
 
 ssize_t index_of_character(const TEXT* haystack, TCHAR needle)
 {
-    //TODO: 番兵なし対応
-    TCHAR* s = find_character_core(haystack->value, needle);
+    const TCHAR* s = search_character_core(haystack, needle);
     if (!s) {
         return -1;
     }
