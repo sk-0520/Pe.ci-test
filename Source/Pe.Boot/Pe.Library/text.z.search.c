@@ -3,6 +3,7 @@
 
 #include "debug.h"
 #include "text.h"
+#include "tcharacter.h"
 
 TCHAR get_relative_character(const TEXT* text, size_t base_index, ssize_t next_position)
 {
@@ -16,19 +17,88 @@ TCHAR get_relative_character(const TEXT* text, size_t base_index, ssize_t next_p
     return '\0';
 }
 
-TEXT find_text(const TEXT* haystack, const TEXT* needle, bool ignore_case)
+static TEXT search_text_case_core(const TEXT* haystack, const TEXT* needle)
 {
-    //TODO: 番兵なし対応
-    TCHAR* s = ignore_case
-        ? StrStrI(haystack->value, needle->value)
-        : StrStr(haystack->value, needle->value)
-        ;
+    assert(is_enabled_text(haystack));
+    assert(is_enabled_text(needle));
 
-    if (!s) {
+    assert(!(haystack->length < needle->length));
+    assert(!(haystack->length == needle->length && haystack->value == needle->value));
+
+    for (size_t haystack_index = 0; haystack_index < haystack->length - 1; haystack_index++) {
+        if (haystack->value[haystack_index] == needle->value[0]) {
+            if (needle->length == 1) {
+                return wrap_text_with_length(haystack->value + haystack_index, haystack->length - haystack_index, false, NULL);
+            }
+
+            const TCHAR* haystack_character = haystack->value + haystack_index + 1;
+            const TCHAR* needle_character = needle->value + 1;
+
+            bool is_equal = !compare_memory(haystack_character, needle_character, (needle->length - 1) * sizeof(TCHAR));
+            if (is_equal) {
+                return wrap_text_with_length(haystack->value + haystack_index, haystack->length - haystack_index, false, NULL);
+            }
+        }
+    }
+
+    return create_invalid_text();
+}
+
+static TEXT search_text_ignore_case_core(const TEXT* haystack, const TEXT* needle)
+{
+    assert(is_enabled_text(haystack));
+    assert(is_enabled_text(needle));
+
+    assert(!(haystack->length < needle->length));
+    assert(!(haystack->length == needle->length && haystack->value == needle->value));
+
+    for (size_t haystack_index = 0; haystack_index < haystack->length - 1; haystack_index++) {
+        if (to_lower_character(haystack->value[haystack_index]) == to_lower_character(needle->value[0])) {
+            if (needle->length == 1) {
+                return wrap_text_with_length(haystack->value + haystack_index, haystack->length - haystack_index, false, NULL);
+            }
+
+            const TCHAR* haystack_character = haystack->value + haystack_index + 1;
+            const TCHAR* needle_character = needle->value + 1;
+
+            bool is_equal = false;
+            for(size_t i = 1; i < haystack->length; i++) {
+                if (to_lower_character(*haystack_character++) == to_lower_character(*needle_character++)) {
+                    is_equal = true;
+                    continue;
+                }
+                break;
+            }
+
+            if (is_equal) {
+                return wrap_text_with_length(haystack->value + haystack_index, haystack->length - haystack_index, false, NULL);
+            }
+        }
+    }
+
+    return create_invalid_text();
+}
+
+TEXT search_text(const TEXT* haystack, const TEXT* needle, bool ignore_case)
+{
+    if (!is_enabled_text(haystack)) {
+        return create_invalid_text();
+    }
+    if (!is_enabled_text(needle)) {
         return create_invalid_text();
     }
 
-    return wrap_text(s);
+    if (haystack->length < needle->length) {
+        return create_invalid_text();
+    }
+    if (haystack->length == needle->length && haystack->value == needle->value) {
+        return create_invalid_text();
+    }
+
+    return ignore_case
+        ? search_text_ignore_case_core(haystack, needle)
+        : search_text_case_core(haystack, needle)
+        ;
 }
 
 static TCHAR* find_character_core(const TCHAR* haystack, TCHAR needle)

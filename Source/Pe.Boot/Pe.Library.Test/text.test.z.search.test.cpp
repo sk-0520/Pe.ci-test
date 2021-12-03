@@ -12,7 +12,7 @@ namespace PeLibraryTest
     {
     public:
 
-        TEST_METHOD(find_text_test)
+        TEST_METHOD(search_text_test)
         {
             auto input = wrap("abcDEF-ABCdef");
             auto tests = {
@@ -31,17 +31,17 @@ namespace PeLibraryTest
                 TEXT& arg1 = std::get<0>(test.inputs);
                 TEXT& arg2 = std::get<1>(test.inputs);
                 bool& arg3 = std::get<2>(test.inputs);
-                TEXT actual = find_text(&arg1, &arg2, arg3);
+                TEXT actual = search_text(&arg1, &arg2, arg3);
                 Assert::IsFalse(actual.library.need_release);
                 Assert::AreEqual(test.expected, actual.value);
             }
         }
 
-        TEST_METHOD(find_text_notfound_test)
+        TEST_METHOD(search_text_notfound_test)
         {
             auto input1 = wrap("abcDEF-ABCdef");
             auto input2 = wrap("Abc");
-            TEXT actual = find_text(&input1, &input2, false);
+            TEXT actual = search_text(&input1, &input2, false);
             Assert::IsFalse(is_enabled_text(&actual));
         }
 

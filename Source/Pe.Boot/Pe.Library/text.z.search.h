@@ -77,13 +77,12 @@ TCHAR get_relative_character(const TEXT* text, size_t base_index, ssize_t next_p
 
 /// <summary>
 /// テキスト検索。
-/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索テキスト。</param>
 /// <param name="ignore_case">大文字小文字を無視するか。</param>
 /// <returns>見つかったテキストを開始とする参照テキスト、見つからない場合は無効テキスト。解放不要。</returns>
-TEXT find_text(const TEXT* haystack, const TEXT* needle, bool ignore_case);
+TEXT search_text(const TEXT* haystack, const TEXT* needle, bool ignore_case);
 
 /// <summary>
 /// テキスト検索。
