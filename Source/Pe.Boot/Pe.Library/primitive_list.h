@@ -6,6 +6,9 @@
 #include "memory.h"
 #include "res_check.h"
 
+/// <summary>
+/// デフォルトキャパ。
+/// </summary>
 #define PRIMITIVE_LIST_DEFAULT_CAPACITY (32)
 
 /// <summary>
@@ -14,39 +17,39 @@
 typedef enum tag_PRIMITIVE_LIST_TYPE
 {
     /// <summary>
-    /// <c>int8_t</c>を設定。
+    /// <see cref="int8_t" />を設定。
     /// </summary>
     PRIMITIVE_LIST_TYPE_INT8,
     /// <summary>
-    /// <c>uint8_t</c>を設定。
+    /// <see cref="uint8_t" />を設定。
     /// </summary>
     PRIMITIVE_LIST_TYPE_UINT8,
     /// <summary>
-    /// <c>int16_t</c>を設定。
+    /// <see cref="int16_t" />を設定。
     /// </summary>
     PRIMITIVE_LIST_TYPE_INT16,
     /// <summary>
-    /// <c>uint16_t</c>を設定。
+    /// <see cref="uint16_t" />を設定。
     /// </summary>
     PRIMITIVE_LIST_TYPE_UINT16,
     /// <summary>
-    /// <c>int32_t</c>を設定。
+    /// <see cref="int32_t" />を設定。
     /// </summary>
     PRIMITIVE_LIST_TYPE_INT32,
     /// <summary>
-    /// <c>uint32_t</c>を設定。
+    /// <see cref="uint32_t" />を設定。
     /// </summary>
     PRIMITIVE_LIST_TYPE_UINT32,
     /// <summary>
-    /// <c>size_t</c>を設定。
+    /// <see cref="size_t" />を設定。
     /// </summary>
     PRIMITIVE_LIST_TYPE_SIZE,
     /// <summary>
-    /// <c>ssize_t</c>を設定。
+    /// <see cref="ssize_t" />を設定。
     /// </summary>
     PRIMITIVE_LIST_TYPE_SSIZE,
     /// <summary>
-    /// <c>TCHAR</c>を設定。
+    /// <see cref="TCHAR" />を設定。
     /// </summary>
     PRIMITIVE_LIST_TYPE_TCHAR,
 } PRIMITIVE_LIST_TYPE;
@@ -150,63 +153,63 @@ bool RC_HEAP_FUNC(release_primitive_list, PRIMITIVE_LIST* list);
 #endif
 
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="int8_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="value">追加する値。</param>
 /// <returns>成功状態。</returns>
 bool push_list_int8(PRIMITIVE_LIST_INT8* list, int8_t value);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="uint8_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="value">追加する値。</param>
 /// <returns>成功状態。</returns>
 bool push_list_uint8(PRIMITIVE_LIST_UINT8* list, uint8_t value);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="int16_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="value">追加する値。</param>
 /// <returns>成功状態。</returns>
 bool push_list_int16(PRIMITIVE_LIST_INT16* list, int16_t value);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="uint16_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="value">追加する値。</param>
 /// <returns>成功状態。</returns>
 bool push_list_uint16(PRIMITIVE_LIST_UINT16* list, uint16_t value);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="int32_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="value">追加する値。</param>
 /// <returns>成功状態。</returns>
 bool push_list_int32(PRIMITIVE_LIST_INT32* list, int32_t value);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="uint32_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="value">追加する値。</param>
 /// <returns>成功状態。</returns>
 bool push_list_uint32(PRIMITIVE_LIST_UINT32* list, uint32_t value);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="size_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="value">追加する値。</param>
 /// <returns>成功状態。</returns>
 bool push_list_size(PRIMITIVE_LIST_SIZE* list, size_t value);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="ssize_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="value">追加する値。</param>
 /// <returns>成功状態。</returns>
 bool push_list_ssize(PRIMITIVE_LIST_SSIZE* list, ssize_t value);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="TCHAR"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="value">追加する値。</param>
@@ -214,7 +217,7 @@ bool push_list_ssize(PRIMITIVE_LIST_SSIZE* list, ssize_t value);
 bool push_list_tchar(PRIMITIVE_LIST_TCHAR* list, TCHAR value);
 
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="int8_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="values">追加する値の一覧。</param>
@@ -222,7 +225,7 @@ bool push_list_tchar(PRIMITIVE_LIST_TCHAR* list, TCHAR value);
 /// <returns>成功状態。</returns>
 bool add_range_list_int8(PRIMITIVE_LIST_INT8* list, const int8_t values[], size_t count);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="uint8_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="values">追加する値の一覧。</param>
@@ -230,7 +233,7 @@ bool add_range_list_int8(PRIMITIVE_LIST_INT8* list, const int8_t values[], size_
 /// <returns>成功状態。</returns>
 bool add_range_list_uint8(PRIMITIVE_LIST_UINT8* list, const uint8_t values[], size_t count);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="int16_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="values">追加する値の一覧。</param>
@@ -238,7 +241,7 @@ bool add_range_list_uint8(PRIMITIVE_LIST_UINT8* list, const uint8_t values[], si
 /// <returns>成功状態。</returns>
 bool add_range_list_int16(PRIMITIVE_LIST_INT16* list, const int16_t values[], size_t count);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="uint16_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="values">追加する値の一覧。</param>
@@ -246,7 +249,7 @@ bool add_range_list_int16(PRIMITIVE_LIST_INT16* list, const int16_t values[], si
 /// <returns>成功状態。</returns>
 bool add_range_list_uint16(PRIMITIVE_LIST_UINT16* list, const uint16_t values[], size_t count);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="int32_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="values">追加する値の一覧。</param>
@@ -254,7 +257,7 @@ bool add_range_list_uint16(PRIMITIVE_LIST_UINT16* list, const uint16_t values[],
 /// <returns>成功状態。</returns>
 bool add_range_list_int32(PRIMITIVE_LIST_INT32* list, const int32_t values[], size_t count);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="uint32_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="values">追加する値の一覧。</param>
@@ -262,7 +265,7 @@ bool add_range_list_int32(PRIMITIVE_LIST_INT32* list, const int32_t values[], si
 /// <returns>成功状態。</returns>
 bool add_range_list_uint32(PRIMITIVE_LIST_UINT32* list, const uint32_t values[], size_t count);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="size_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="values">追加する値の一覧。</param>
@@ -270,7 +273,7 @@ bool add_range_list_uint32(PRIMITIVE_LIST_UINT32* list, const uint32_t values[],
 /// <returns>成功状態。</returns>
 bool add_range_list_size(PRIMITIVE_LIST_SIZE* list, const size_t values[], size_t count);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="ssize_t"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="values">追加する値の一覧。</param>
@@ -278,7 +281,7 @@ bool add_range_list_size(PRIMITIVE_LIST_SIZE* list, const size_t values[], size_
 /// <returns>成功状態。</returns>
 bool add_range_list_ssize(PRIMITIVE_LIST_SSIZE* list, const ssize_t values[], size_t count);
 /// <summary>
-/// リストにデータ追加。
+/// リストに<see cref="TCHAR"/>データ追加。
 /// </summary>
 /// <param name="list">対象リスト。</param>
 /// <param name="values">追加する値の一覧。</param>

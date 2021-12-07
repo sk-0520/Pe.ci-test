@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <stdint.h>
 
+extern int _fltused;
+
 void* __cdecl memset(void* dest, int c, size_t bytes);
 #pragma intrinsic(memset)
 
