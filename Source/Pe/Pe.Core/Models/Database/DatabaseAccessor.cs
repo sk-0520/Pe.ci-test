@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
-        /// <returns></returns>
+        /// <returns>問い合わせ結果。</returns>
         IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true);
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
-        /// <returns></returns>
+        /// <returns>問い合わせ結果。</returns>
         IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true);
 
         /// <summary>
