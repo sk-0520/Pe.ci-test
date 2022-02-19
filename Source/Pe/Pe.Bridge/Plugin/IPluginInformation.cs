@@ -214,22 +214,16 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// 作者情報。
         /// </summary>
         IPluginAuthors PluginAuthors { get; }
-
-        /// <summary>
-        /// プラグインカテゴリ。
-        /// </summary>
-        IPluginCategory PluginCategory { get; }
     }
 
     /// <inheritdoc cref="IPluginInformations"/>
     public class PluginInformations: IPluginInformations
     {
-        public PluginInformations(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IPluginAuthors pluginAuthors, IPluginCategory pluginCategory)
+        public PluginInformations(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IPluginAuthors pluginAuthors)
         {
             PluginIdentifiers = pluginIdentifiers;
             PluginVersions = pluginVersions;
             PluginAuthors = pluginAuthors;
-            PluginCategory = pluginCategory;
         }
 
         #region IPluginInformations
@@ -243,8 +237,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// <inheritdoc cref="IPluginInformations.PluginAuthors"/>
         public IPluginAuthors PluginAuthors { get; }
 
-        /// <inheritdoc cref="IPluginInformations.PluginCategory"/>
-        public IPluginCategory PluginCategory { get; }
         #endregion
     }
 }

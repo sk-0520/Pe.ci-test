@@ -45,9 +45,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
         public Guid PluginId => Model.PluginId;
-        public string? PrimaryCategory => Model.Plugin?.PluginInformations.PluginCategory.PluginPrimaryCategory;
-        public IReadOnlyList<string> SecondaryCategories => Model.Plugin?.PluginInformations.PluginCategory.PluginSecondaryCategories ?? new List<string>();
-        public bool HasSecondaryCategories => SecondaryCategories.Count != 0;
 
         public bool MarkedUninstall => Model.MarkedUninstall;
         public bool CanUninstall => Model.CanUninstall;
