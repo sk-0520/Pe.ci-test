@@ -51,7 +51,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#795: hash_map/linked_list の値解放処理型が腐ってる",
+						"comments":[
+							"久しぶり過ぎて何が正しいのかもう何もわからない"
+						]
 					},
 					{
 						"revision": "",

@@ -94,7 +94,7 @@ typedef struct tag_MAP
         /// </summary>
         const MEMORY_RESOURCE* map_memory_resource;
         const MEMORY_RESOURCE* value_memory_resource;
-        func_release_map_value release_map_value;
+        func_release_linked_list_value release_map_value;
         func_calc_map_hash calc_map_hash;
         func_equals_map_key equals_map_key;
 #ifdef RES_CHECK
