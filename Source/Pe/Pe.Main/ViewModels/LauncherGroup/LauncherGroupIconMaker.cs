@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup
     {
         #region function
 
-        string GetResourceKey(LauncherGroupImageName imageName)
+        private string GetResourceKey(LauncherGroupImageName imageName)
         {
             return imageName switch {
                 LauncherGroupImageName.DirectoryNormal => "Path-LauncherGroup-Directory-Normal",
@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup
             };
         }
 
-        DependencyObject GetGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconBox iconBox, Point dpiScale, bool isStrong)
+        private DependencyObject GetGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconBox iconBox, Point dpiScale, bool isStrong)
         {
             var viewBox = new Viewbox();
             using(Initializer.Begin(viewBox)) {

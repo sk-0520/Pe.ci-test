@@ -19,14 +19,14 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         #region property
 
-        Window Window { get; }
-        Popup Popup { get; }
+        private Window Window { get; }
+        private Popup Popup { get; }
 
         #endregion
 
         #region function
 
-        void ResetPopupPosition()
+        private void ResetPopupPosition()
         {
             Popup.HorizontalOffset += 1;
             Popup.HorizontalOffset -= 1;
@@ -63,6 +63,5 @@ namespace ContentTypeTextNet.Pe.Main.Views
         {
             Dispose();
         }
-
     }
 }

@@ -15,7 +15,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #region property
         #endregion
 
-
         #region ISkeletonImplements
 
         public SkeletonImplements Clone()

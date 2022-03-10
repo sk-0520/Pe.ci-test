@@ -17,9 +17,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
     {
         #region variable
 
-        bool _isVisible;
-        bool _preparatedReceive;
-        bool _processExited;
+        private bool _isVisible;
+        private bool _preparatedReceive;
+        private bool _processExited;
 
         #endregion
 
@@ -44,10 +44,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         public string CaptionName { get; }
         public Process Process { get; }
-        IScreen Screen { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        IOrderManager OrderManager { get; }
+        private IScreen Screen { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IOrderManager OrderManager { get; }
 
         public StreamReceiver? OutputStreamReceiver { get; private set; }
         public StreamReceiver? ErrorStreamReceiver { get; private set; }
@@ -214,7 +214,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             OutputStreamReceiver?.Dispose();
             ErrorStreamReceiver?.Dispose();
         }
-
-
     }
 }

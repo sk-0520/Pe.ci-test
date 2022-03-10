@@ -23,12 +23,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.ExtendsExecute
 
 
         #region property
-        DialogRequestReceiver DialogRequestReceiver { get; }
+        private DialogRequestReceiver DialogRequestReceiver { get; }
 
         [Inject]
-        ILogger? Logger { get; set; }
+        private ILogger? Logger { get; set; }
 
-        CommandStore CommandStore { get; } = new CommandStore();
+        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 

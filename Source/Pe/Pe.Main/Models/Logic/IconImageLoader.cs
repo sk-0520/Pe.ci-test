@@ -29,11 +29,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         //public IconBox IconBox { get; }
 
         /// <summary>
-        /// 非 null の場合に、<see cref="DependencyObject"/>操作時に指定の<see cref="IDispatcherWrapper"/>で処理する。
+        /// 非 <c>null</c> の場合に、<see cref="DependencyObject"/>操作時に指定の<see cref="IDispatcherWrapper"/>で処理する。
         /// </summary>
         protected IDispatcherWrapper? DispatcherWrapper { get; }
 
-        RunningStatus RunningStatusImpl { get; }
+        private RunningStatus RunningStatusImpl { get; }
         public IRunningStatus RunningStatus => RunningStatusImpl;
 
         public static IReadOnlyCollection<string> ImageFileExtensions { get; } = new[] { "png", "bmp", "jpeg", "jpg" };
@@ -59,7 +59,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
             return bitmapImage;
         }
-
 
         protected BitmapSource? ToImage(IReadOnlyList<byte[]>? imageBynaryItems)
         {
@@ -226,7 +225,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
-        IReadOnlyIconData IconData { get; }
+        private IReadOnlyIconData IconData { get; }
 
         #endregion
 

@@ -15,8 +15,8 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     {
         #region define
 
-        const double Dpi = 96;
-        const double Point = 72;
+        private const double Dpi = 96;
+        private const double Point = 72;
 
         #endregion
 

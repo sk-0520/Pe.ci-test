@@ -27,8 +27,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         #region function
 
-
-        string GetResourceBaseKey(NoteCaptionButtonKind noteCaption, bool isEnabled)
+        private string GetResourceBaseKey(NoteCaptionButtonKind noteCaption, bool isEnabled)
         {
             switch(noteCaption) {
                 case NoteCaptionButtonKind.Compact:
@@ -53,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             }
         }
 
-        DependencyObject GetCaptionImageCore(NoteCaptionButtonKind noteCaption, NoteCaptionPosition captionPosition, bool isEnabled, ColorPair<Color> baseColor)
+        private DependencyObject GetCaptionImageCore(NoteCaptionButtonKind noteCaption, NoteCaptionPosition captionPosition, bool isEnabled, ColorPair<Color> baseColor)
         {
             var viewBox = new Viewbox();
             using(Initializer.Begin(viewBox)) {
@@ -82,7 +81,6 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
             return viewBox;
         }
-
 
         #endregion
 

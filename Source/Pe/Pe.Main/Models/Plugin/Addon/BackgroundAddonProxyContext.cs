@@ -57,7 +57,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             KeyboardHookEventArgs = keyboardHookEventArgs;
         }
 
-
         #region property
 
         public KeyboardHookEventArgs KeyboardHookEventArgs { get; }
@@ -110,7 +109,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public MouseHookEventArgs MouseHookEventArgs { get; }
 
         #endregion
-
 
         #region IBackgroundAddonMouseButtonContext
 

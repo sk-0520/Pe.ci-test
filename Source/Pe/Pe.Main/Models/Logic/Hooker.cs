@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #region property
 
         protected IntPtr HookHandle { get; private set; }
-        HookProc HookProc { get; }
+        private HookProc HookProc { get; }
         protected ILogger Logger { get; }
 
         public bool IsEnabled => HookHandle != IntPtr.Zero;
@@ -65,7 +65,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
             return NativeMethods.CallNextHookEx(HookHandle, code, wParam, lParam);
         }
-
 
         #endregion
 
@@ -144,7 +143,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             this.super = super;
         }
 
-
         #region function
 
         public static ModifierKeyStatus Create()
@@ -172,7 +170,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         }
 
         #endregion
-
     }
 
     public class KeyboardHookEventArgs: EventArgs
@@ -209,7 +206,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public DateTime Timestamp { get; } = DateTime.UtcNow;
 
         #endregion
-
     }
 
     public class KeyboradHooker: HookerBase

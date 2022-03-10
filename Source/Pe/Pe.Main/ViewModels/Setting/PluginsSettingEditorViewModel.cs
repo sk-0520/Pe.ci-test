@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        PluginSettingEditorViewModel? _selectedPlugin;
+        private PluginSettingEditorViewModel? _selectedPlugin;
 
         #endregion
 
@@ -40,10 +40,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public RequestSender SelectPluginFileRequest { get; } = new RequestSender();
         public RequestSender ShowMessageRequest { get; } = new RequestSender();
 
-        ModelViewModelObservableCollectionManagerBase<PluginSettingEditorElement, PluginSettingEditorViewModel> PluginCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<PluginSettingEditorElement, PluginSettingEditorViewModel> PluginCollection { get; }
         public ICollectionView PluginItems { get; }
 
-        ModelViewModelObservableCollectionManagerBase<PluginInstallItemElement, PluginInstallItemViewModel> InstallPluginCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<PluginInstallItemElement, PluginInstallItemViewModel> InstallPluginCollection { get; }
         public ICollectionView InstallPluginItems { get; }
 
         public PluginSettingEditorViewModel? SelectedPlugin
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetProperty(ref this._selectedPlugin, value);
         }
 
-        IImageLoader ImageLoader { get; }
+        private IImageLoader ImageLoader { get; }
 
         #endregion
 
@@ -127,6 +127,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #endregion
-
     }
 }

@@ -29,14 +29,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         public LauncherItemKind LauncherItemKind { get; }
-        ILauncherItemAddonFinder LauncherItemAddonFinder { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private ILauncherItemAddonFinder LauncherItemAddonFinder { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         #endregion
 

@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
     {
         #region variable
 
-        bool _nowImporting;
+        private bool _nowImporting;
 
         #endregion
         public ImportProgramsViewModel(ImportProgramsElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -114,6 +114,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         { }
 
         #endregion
-
     }
 }

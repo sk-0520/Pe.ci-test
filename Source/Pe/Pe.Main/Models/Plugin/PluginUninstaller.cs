@@ -25,17 +25,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region property
 
-        IDatabaseContextsPack DatabaseContextsPack { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
-        EnvironmentParameters EnvironmentParameters { get; }
+        private IDatabaseContextsPack DatabaseContextsPack { get; }
+        private IDatabaseStatementLoader StatementLoader { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
 
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
-        IDatabaseContexts MainContexts => DatabaseContextsPack.Main;
-        IDatabaseContexts FileContexts => DatabaseContextsPack.Large;
+        private IDatabaseContexts MainContexts => DatabaseContextsPack.Main;
+        private IDatabaseContexts FileContexts => DatabaseContextsPack.Large;
 
         #endregion
 

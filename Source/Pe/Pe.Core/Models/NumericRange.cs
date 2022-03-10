@@ -112,7 +112,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
-        bool ParseCore(string? s, [NotNullWhen(true)] out IReadOnlyCollection<int>? result, [NotNullWhen(false)] out Exception? ex)
+        private bool ParseCore(string? s, [NotNullWhen(true)] out IReadOnlyCollection<int>? result, [NotNullWhen(false)] out Exception? ex)
         {
             ex = null;
             if(string.IsNullOrWhiteSpace(s)) {
@@ -198,7 +198,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             return ParseCore(s, out result, out _);
         }
-
 
         #endregion
     }

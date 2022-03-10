@@ -35,16 +35,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 
         #region property
 
-        EnvironmentParameters EnvironmentParameters { get; }
-        ApiConfiguration ApiConfiguration => EnvironmentParameters.ApplicationConfiguration.Api;
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        IOrderManager OrderManager { get; }
-        CultureService CultureService { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
+        private ApiConfiguration ApiConfiguration => EnvironmentParameters.ApplicationConfiguration.Api;
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IOrderManager OrderManager { get; }
+        private CultureService CultureService { get; }
 
-        TimeSpan RetryWaitTime { get; } = TimeSpan.FromSeconds(5);
+        private TimeSpan RetryWaitTime { get; } = TimeSpan.FromSeconds(5);
         public RunningStatus SendStatus { get; }
         public string ErrorMessage { get; private set; } = string.Empty;
+
         #endregion
 
         #region function

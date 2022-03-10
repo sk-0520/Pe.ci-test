@@ -92,19 +92,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public static string CommandLineKeyIpcPluginName { get; } = "ipc-plugin-name";
         public static string CommandLineKeyIpcPluginIsManualInstall { get; } = "ipc-plugin-is-manual-install";
 
-        ApplicationLogging Logging { get; set; }
-        ILogger Logger { get; set; }
-        ILoggerFactory LoggerFactory => Logging.Factory;
-        ApplicationDiContainer ApplicationDiContainer { get; set; }
+        private ApplicationLogging Logging { get; set; }
+        private ILogger Logger { get; set; }
+        private ILoggerFactory LoggerFactory => Logging.Factory;
+        private ApplicationDiContainer ApplicationDiContainer { get; set; }
 
-        ClipboardManager ClipboardManager { get; set; }
-        UserAgentManager UserAgentManager { get; set; }
+        private ClipboardManager ClipboardManager { get; set; }
+        private UserAgentManager UserAgentManager { get; set; }
 
-        CommandLine CommandLine { get; }
+        private CommandLine CommandLine { get; }
 
-        IpcMode IpcMode { get; }
+        private IpcMode IpcMode { get; }
 #if !NOT_IPC
-        string IpcPipeHandle { get; }
+        private string IpcPipeHandle { get; }
 #endif
 
         #region 各処理ごとのコマンドライン
@@ -112,7 +112,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public CommandLineKey CommandLineIpcFile { get; }
 
         #endregion
-
 
         #endregion
 

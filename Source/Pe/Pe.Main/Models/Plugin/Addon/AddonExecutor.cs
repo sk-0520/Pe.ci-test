@@ -23,10 +23,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #region property
 
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
-        IPluginInformations PluginInformations { get; }
+        private ILogger Logger { get; }
+        private IPluginInformations PluginInformations { get; }
 
         #endregion
 

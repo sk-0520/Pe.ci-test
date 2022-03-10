@@ -18,31 +18,29 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
     {
         #region variable
 
-        bool _existsPath;
-        bool _canExecutePath;
+        private bool _existsPath;
+        private bool _canExecutePath;
 
-        bool _existsParentDirectory;
-        bool _canOpenParentDirectory;
-        bool _canCopyParentDirectory;
+        private bool _existsParentDirectory;
+        private bool _canOpenParentDirectory;
+        private bool _canCopyParentDirectory;
 
-        bool _canCopyOption;
+        private bool _canCopyOption;
 
-        bool _existsWorkingDirectory;
-        bool _canOpenWorkingDirectory;
-        bool _canCopyWorkingDirectory;
+        private bool _existsWorkingDirectory;
+        private bool _canOpenWorkingDirectory;
+        private bool _canCopyWorkingDirectory;
 
         #endregion
 
         public LauncherFileViewModel(LauncherItemElement model, IScreen screen, IKeyGestureGuide keyGestureGuide, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, screen, keyGestureGuide, dispatcherWrapper, launcherToolbarTheme, loggerFactory)
-        {
-
-        }
+        { }
 
         #region property
 
-        LauncherFileDetailData? Detail { get; set; }
-        bool DelayWaiting { get; set; }
+        private LauncherFileDetailData? Detail { get; set; }
+        private bool DelayWaiting { get; set; }
 
         #endregion
 
@@ -114,7 +112,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region function
 
-        void StartDelayExecute()
+        private void StartDelayExecute()
         {
             if(DelayWaiting) {
                 Logger.LogWarning("抑制待機中: {0}", Model.LauncherItemId);
@@ -130,7 +128,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 PropertyChanged += LauncherFileViewModel_PropertyChanged;
             }
         }
-
 
         #endregion
 

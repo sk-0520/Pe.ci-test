@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region property
 
-        LazyAction CommentLazyChanger { get; }
+        private LazyAction CommentLazyChanger { get; }
         public TextDocument CommentDocument { get; }
 
 
@@ -37,10 +37,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region function
 
-        void ChangedComment()
+        private void ChangedComment()
         {
             Model.Comment = DispatcherWrapper.Get(() => CommentDocument.Text);
         }
+
         #endregion
 
         #region CustomizeLauncherDetailViewModelBase
@@ -76,6 +77,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         {
             CommentLazyChanger.DelayAction(ChangedComment);
         }
-
     }
 }

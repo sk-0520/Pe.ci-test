@@ -53,16 +53,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         #region property
 
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
-        IOrderManager OrderManager { get; }
-        IWindowManager WindowManager { get; }
-        INotifyManager NotifyManager { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        private IOrderManager OrderManager { get; }
+        private IWindowManager WindowManager { get; }
+        private INotifyManager NotifyManager { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
         public bool ViewCreated { get; private set; }
-        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+        private UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
         public FontElement? Font { get; private set; }
 
         public bool FindTag { get; private set; }
@@ -70,13 +70,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         public TimeSpan HideWaitTime { get; private set; }
         public IconBox IconBox { get; private set; }
 
-        Timer ViewCloseTimer { get; }
-        Timer IconClearTimer { get; }
+        private Timer ViewCloseTimer { get; }
+        private Timer IconClearTimer { get; }
 
-        LauncherItemCommandFinder? LauncherItemCommandFinder { get; set; }
+        private LauncherItemCommandFinder? LauncherItemCommandFinder { get; set; }
 
-        List<ICommandFinder> CommandFindersImpl { get; } = new List<ICommandFinder>(2);
-        IReadOnlyCollection<ICommandFinder> CommandFinders => CommandFindersImpl;
+        private List<ICommandFinder> CommandFindersImpl { get; } = new List<ICommandFinder>(2);
+        private IReadOnlyCollection<ICommandFinder> CommandFinders => CommandFindersImpl;
 
         #endregion
 
@@ -95,7 +95,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 StartIconClear();
             }
         }
-
 
         private void StartIconClear()
         {
@@ -183,7 +182,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             }
         }
 
-        IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        private IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
             var simpleRegexFactory = new SimpleRegexFactory(LoggerFactory);
             var regex = simpleRegexFactory.CreateFilterRegex(inputValue);
@@ -372,8 +371,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         {
             CloseView();
         }
-
-
-
     }
 }

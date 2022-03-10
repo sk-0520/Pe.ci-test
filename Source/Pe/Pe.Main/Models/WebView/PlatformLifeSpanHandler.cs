@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         #endregion
 
@@ -47,6 +47,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
         }
 
         #endregion
-
     }
 }

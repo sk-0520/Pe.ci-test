@@ -16,7 +16,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #region variable
 
         //List<LauncherItemCustomizeDetailViewModelBase>? _customizeItems;
-        bool _isChanged;
+        private bool _isChanged;
+
         #endregion
 
         public LauncherItemCustomizeEditorViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -111,7 +112,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-
         #region function
 
 
@@ -156,6 +156,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         {
             IsChanged = true;
         }
-
     }
 }

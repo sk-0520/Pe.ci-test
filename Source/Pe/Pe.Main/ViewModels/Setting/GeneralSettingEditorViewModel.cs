@@ -181,7 +181,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public RequestSender UserBackupDirectorySelecteRequest { get; } = new RequestSender();
 
-
         public ObservableCollection<CultureInfo> CultureInfoItems { get; }
         public CultureInfo SelectedCultureInfo
         {
@@ -301,13 +300,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetModelValue(value);
         }
 
-
         public NotifyLogPosition Position
         {
             get => Model.Position;
             set => SetModelValue(value);
         }
-
 
         #endregion
 
@@ -345,7 +342,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetModelValue(value);
         }
 
-
         #endregion
 
         #region command
@@ -372,7 +368,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        IGeneralTheme GeneralTheme { get; }
+        private IGeneralTheme GeneralTheme { get; }
 
         public FontViewModel? Font { get; private set; }
         public IconBox IconBox
@@ -455,8 +451,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        NoteConfiguration NoteConfiguration { get; }
-        IGeneralTheme GeneralTheme { get; }
+        private NoteConfiguration NoteConfiguration { get; }
+        private IGeneralTheme GeneralTheme { get; }
         public FontViewModel? Font { get; private set; }
         public NoteCreateTitleKind TitleKind
         {
@@ -553,7 +549,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #region property
-        IGeneralTheme GeneralTheme { get; }
+        private IGeneralTheme GeneralTheme { get; }
 
         public FontViewModel? Font { get; private set; }
         public Color OutputForegroundColor
@@ -615,6 +611,4 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
     }
-
-
 }

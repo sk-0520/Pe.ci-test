@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region variable
 
-        readonly object _timerLocker = new object();
+        private readonly object _timerLocker = new object();
 
         #endregion
 
@@ -32,7 +32,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Timer.Elapsed += Timer_Elapsed;
         }
 
-
         #region property
 
         /// <summary>
@@ -43,12 +42,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 遅延処理タイマー。
         /// </summary>
-        Timer Timer { get; }
+        private Timer Timer { get; }
         /// <summary>
         /// 遅延処理本体。
         /// <para>遅延処理待機中のみ非null</para>
         /// </summary>
-        Action? Action { get; set; }
+        private Action? Action { get; set; }
 
         #endregion
 
@@ -92,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
-        void DoAction(bool disposing)
+        private void DoAction(bool disposing)
         {
             ThrowIfDisposed();
 
@@ -146,7 +145,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             DoAction(true);
         }
-
-
     }
 }

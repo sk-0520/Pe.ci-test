@@ -26,9 +26,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 
         #region property
 
-        EnvironmentParameters EnvironmentParameters { get; }
-        ApplicationConfiguration ApplicationConfiguration { get; }
-        IClipboardManager ClipboardManager { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
+        private ApplicationConfiguration ApplicationConfiguration { get; }
+        private IClipboardManager ClipboardManager { get; }
 
         private List<AboutComponentItem> ComponentsImpl { get; } = new List<AboutComponentItem>();
         public IReadOnlyList<AboutComponentItem> Components => ComponentsImpl;

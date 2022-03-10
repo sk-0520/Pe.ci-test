@@ -23,8 +23,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region property
 
-        IIdFactory IdFactory { get; }
-        ILogger Logger { get; }
+        private IIdFactory IdFactory { get; }
+        private ILogger Logger { get; }
 
         public static IReadOnlyCollection<char> CodeSymbols { get; } = new[] { '-', '.', '^', '_', '[', ']', };
 

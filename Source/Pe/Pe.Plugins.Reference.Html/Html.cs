@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html
     {
         #region variable
 
-        HtmlAddonImpl _addon;
+        private HtmlAddonImpl _addon;
 
         #endregion
 
@@ -33,7 +33,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html
 
         protected override void UninitializeImpl(IPluginUninitializeContext pluginUninitializeContext)
         { }
-
 
         #endregion
 

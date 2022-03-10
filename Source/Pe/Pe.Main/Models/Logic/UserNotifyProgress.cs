@@ -18,8 +18,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
-        IProgress<double> Progress { get; }
-        IProgress<string> Logging { get; }
+        private IProgress<double> Progress { get; }
+        private IProgress<string> Logging { get; }
 
         #endregion
 

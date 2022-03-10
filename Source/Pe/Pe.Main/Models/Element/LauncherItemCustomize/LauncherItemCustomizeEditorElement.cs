@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
     {
         #region variable
 
-        bool _isLazyLoad;
+        private bool _isLazyLoad;
 
         #endregion
 
@@ -47,13 +47,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #region property
 
-        ILauncherItemAddonFinder LauncherItemAddonFinder { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
-        ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
-        IClipboardManager ClipboardManager { get; }
+        private ILauncherItemAddonFinder LauncherItemAddonFinder { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
+        private ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
+        private IClipboardManager ClipboardManager { get; }
 
         /// <summary>
         /// 一括用遅延読み込みモードか。
@@ -82,6 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         public LauncherFileData? File { get; private set; }
         public ObservableCollection<LauncherEnvironmentVariableData>? EnvironmentVariableItems { get; private set; }
         public LauncherRedoData? Redo { get; private set; }
+
         #endregion
 
         #region storeapp
@@ -93,18 +94,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         #region addon
 
         public bool LauncherItemSupportedPreferences { get; private set; }
-        IPlugin? LauncherItemPlugin { get; set; }
-        ILauncherItemExtension? LauncherItemExtension { get; set; }
-        ILauncherItemPreferences? LauncherItemPreferences { get; set; }
+        private IPlugin? LauncherItemPlugin { get; set; }
+        private ILauncherItemExtension? LauncherItemExtension { get; set; }
+        private ILauncherItemPreferences? LauncherItemPreferences { get; set; }
 
         #endregion
 
         #endregion
-
 
         #region function
 
-        void LoadFileCore(IDatabaseContext context, IDatabaseImplementation implementation)
+        private void LoadFileCore(IDatabaseContext context, IDatabaseImplementation implementation)
         {
             Debug.Assert(Kind == LauncherItemKind.File);
 
@@ -134,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
         }
 
-        void LoadAddonCore(IDatabaseContextsPack databaseContextsPack)
+        private void LoadAddonCore(IDatabaseContextsPack databaseContextsPack)
         {
             Debug.Assert(Kind == LauncherItemKind.Addon);
             Debug.Assert(LauncherItemPlugin == null);
@@ -231,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             return LauncherItemPlugin.PluginInformations.PluginIdentifiers.ToString()!;
         }
 
-        void LoadLauncherItem()
+        private void LoadLauncherItem()
         {
             ThrowIfDisposed();
 
@@ -422,7 +422,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         {
             return new LauncherIconFactory(LauncherItemId, Kind, LauncherItemAddonFinder, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
         }
-
 
         #endregion
 

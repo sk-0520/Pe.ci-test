@@ -23,19 +23,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         }
 
         #region property
-        IIdFactory IdFactory { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        private IIdFactory IdFactory { get; }
+        private IDatabaseStatementLoader StatementLoader { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
-        IDatabaseCommonStatus CommonStatus { get; } = DatabaseCommonStatus.CreateCurrentAccount();
+        private ILogger Logger { get; }
+        private IDatabaseCommonStatus CommonStatus { get; } = DatabaseCommonStatus.CreateCurrentAccount();
 
         #endregion
 
         #region function
 
-        SetupDto CreateSetupDto(Version lastVersion)
+        private SetupDto CreateSetupDto(Version lastVersion)
         {
             var result = new SetupDto() {
                 LastVersion = lastVersion,
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             return result;
         }
 
-        void ExecuteCore(IDatabaseAccessor accessor, IReadOnlySetupDto dto, Action<IDatabaseContext, IReadOnlySetupDto> ddl, Action<IDatabaseContext, IReadOnlySetupDto> dml)
+        private void ExecuteCore(IDatabaseAccessor accessor, IReadOnlySetupDto dto, Action<IDatabaseContext, IReadOnlySetupDto> ddl, Action<IDatabaseContext, IReadOnlySetupDto> dml)
         {
             if(accessor.DatabaseFactory.CreateImplementation().SupportedTransactionDDL) {
                 var result = accessor.Batch(context => {
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             }
         }
 
-        void Execute(IDatabaseAccessorPack accessorPack, IReadOnlySetupDto dto, SetupperBase setupper)
+        private void Execute(IDatabaseAccessorPack accessorPack, IReadOnlySetupDto dto, SetupperBase setupper)
         {
             Logger.LogInformation("セットアップ処理: バージョン{0}, {1}", setupper.Version, setupper.GetType().Name);
             var start = DateTime.UtcNow;
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             Execute(accessorPack, CreateSetupDto(lastVersion), setupper);
         }
 
-        bool ExistsExecuteTable(IDatabaseAccessor mainAccessor)
+        private bool ExistsExecuteTable(IDatabaseAccessor mainAccessor)
         {
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
             return mainAccessor.Query<bool>(statement, null, false).FirstOrDefault();

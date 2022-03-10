@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 {
     public class NoteContentElement: ElementBase, IFlushable
     {
-        #region
+        #region event
 
         public event EventHandler? LinkContentChanged;
 
@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #region variable
 
-        bool _isLink;
+        private bool _isLink;
 
         #endregion
 
@@ -55,14 +55,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             private set => SetProperty(ref this._isLink, value);
         }
 
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
-        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
-        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
+        private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        private UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
-        NoteLinkWatcher? LinkWatcher { get; set; }
-        LazyAction LinkContentLazyChanger { get; }
+        private NoteLinkWatcher? LinkWatcher { get; set; }
+        private LazyAction LinkContentLazyChanger { get; }
 
         #endregion
 
@@ -153,9 +153,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             return LoadRawContent();
         }
 
-        NoteLinkWatchParameter? GetLinkParameter() => (NoteLinkWatchParameter?)LinkWatcher?.WatchParameter;
+        private NoteLinkWatchParameter? GetLinkParameter() => (NoteLinkWatchParameter?)LinkWatcher?.WatchParameter;
 
-        string LoadLinkContent()
+        private string LoadLinkContent()
         {
             ThrowIfDisposed();
 
@@ -190,7 +190,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             LinkWatcher?.Stop();
         }
 
-        void SaveLinkContent(string? content)
+        private void SaveLinkContent(string? content)
         {
             ThrowIfDisposed();
 
@@ -210,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        void ChangeRawContentDelaySave(NoteContentKind contentKind, string content, object stockKey)
+        private void ChangeRawContentDelaySave(NoteContentKind contentKind, string content, object stockKey)
         {
             ThrowIfDisposed();
 
@@ -252,7 +252,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ChangeRawContentDelaySave(ContentKind, content, UniqueKeyPool.Get());
         }
 
-        void DisposeLinkWatcher()
+        private void DisposeLinkWatcher()
         {
             if(LinkWatcher != null) {
                 LinkWatcher.FileContentChanged -= LinkWatcher2_FileContentChanged;
@@ -320,6 +320,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 return;
             }
             DisposeLinkWatcher();
+
             parameter.File.Refresh();
             if(parameter.File.Exists) {
                 var content = LoadLinkContent();
@@ -360,7 +361,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        (bool success, bool isLink, NoteLinkWatchParameter parameter) LoadLinkWatchParameter()
+        private (bool success, bool isLink, NoteLinkWatchParameter parameter) LoadLinkWatchParameter()
         {
             ThrowIfDisposed();
 
@@ -450,6 +451,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             OnLinkContentChanged();
         }
-
     }
 }

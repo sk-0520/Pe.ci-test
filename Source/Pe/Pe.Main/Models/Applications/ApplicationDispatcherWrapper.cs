@@ -12,6 +12,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public ApplicationDispatcherWrapper(TimeSpan waitTime)
             : base(Application.Current.Dispatcher, waitTime)
         { }
-
     }
 }

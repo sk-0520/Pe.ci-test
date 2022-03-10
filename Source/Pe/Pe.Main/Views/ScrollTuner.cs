@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
         }
 
         #region property
-        Window View { get; }
+        private Window View { get; }
 
         public int ScrollNotch { get; set; } = 120;
         //public int ScrollLines { get; set; } = SystemParameters.WheelScrollLines;
@@ -98,8 +98,6 @@ namespace ContentTypeTextNet.Pe.Main.Views
                     }
                 }
             }
-
         }
-
     }
 }

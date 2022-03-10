@@ -5,6 +5,8 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
     public class LogicalMultiEqualConverter: IMultiValueConverter
     {
+        #region IValueConverter
+
         public virtual object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             return values[0] == values[1];
@@ -14,5 +16,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
         {
             throw new NotSupportedException();
         }
+
+        #endregion
     }
 }

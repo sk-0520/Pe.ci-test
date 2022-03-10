@@ -245,23 +245,22 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
 
         #region property
 
-        IFullscreenWatcher FullscreenWatcher { get; }
+        private IFullscreenWatcher FullscreenWatcher { get; }
 
-        string MessageString { get { return "appbar"; } }
-        uint CallbackMessage { get; set; }
-        DispatcherTimer AutoHideTimer { get; set; }
-        DispatcherOperation? DockingDispatcherOperation { get; set; }
-        DispatcherOperation? HiddenDispatcherOperation { get; set; }
+        private string MessageString { get { return "appbar"; } }
+        private uint CallbackMessage { get; set; }
+        private DispatcherTimer AutoHideTimer { get; set; }
+        private DispatcherOperation? DockingDispatcherOperation { get; set; }
+        private DispatcherOperation? HiddenDispatcherOperation { get; set; }
 
-        bool NowWorking { get; set; }
+        private bool NowWorking { get; set; }
 
-        ISet<string> DockingTriggerPropertyNames { get; } = new HashSet<string>(new[] {
+        private ISet<string> DockingTriggerPropertyNames { get; } = new HashSet<string>(new[] {
             nameof(IAppDesktopToolbarExtendData.IsAutoHide),
             nameof(IAppDesktopToolbarExtendData.ToolbarPosition),
         });
 
         #endregion
-
 
         #region function
 
@@ -307,7 +306,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             }
         }
 
-        void OnResizeEnd()
+        private void OnResizeEnd()
         {
             // AppBar のサイズを更新。
             switch(ExtendData.ToolbarPosition) {
@@ -328,7 +327,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             DockingFromProperty();
         }
 
-        bool RegisterAppbar()
+        private bool RegisterAppbar()
         {
             Debug.Assert(CallbackMessage == 0);
 
@@ -364,7 +363,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         /// <param name="dockType"></param>
         /// <returns></returns>
         [return: PixelKind(Px.Device)]
-        Rect CalcWantBarArea(AppDesktopToolbarPosition dockType)
+        private Rect CalcWantBarArea(AppDesktopToolbarPosition dockType)
         {
             var deviceDesktopArea = ExtendData.DockScreen.DeviceBounds;
 
@@ -401,7 +400,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         /// 現在の希望するサイズから実際のサイズ要求する
         /// </summary>
         /// <param name="appBar"></param>
-        void TuneSystemBarArea(ref APPBARDATA appBar)
+        private void TuneSystemBarArea(ref APPBARDATA appBar)
         {
             var deviceBarSize = UIUtility.ToDevicePixel(ExtendData.DisplaySize, View);
             NativeMethods.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
@@ -438,7 +437,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             return nowWnd;
         }
 
-        void DockingFromParameter(AppDesktopToolbarPosition dockType, bool autoHide)
+        private void DockingFromParameter(AppDesktopToolbarPosition dockType, bool autoHide)
         {
             ExtendData.ToolbarPosition = dockType;
 
@@ -484,7 +483,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             );
         }
 
-        void ResizeShowDeviceBarArea()
+        private void ResizeShowDeviceBarArea()
         {
             //if(View != null && ExtendData != null) {
             if(IsEnabledWindowHandle) {
@@ -545,7 +544,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         /// <summary>
         /// 非表示状態への待ちを取りやめ。
         /// </summary>
-        void StopHideWait()
+        private void StopHideWait()
         {
             Debug.Assert(ExtendData.IsAutoHide);
             if(AutoHideTimer.IsEnabled) {
@@ -559,7 +558,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         /// <summary>
         /// 非表示状態への待ちを開始。
         /// </summary>
-        void StartHideWait()
+        private void StartHideWait()
         {
             Debug.Assert(ExtendData.IsAutoHide);
 
@@ -856,7 +855,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
 
         #endregion
 
-        void View_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void View_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if(!IsEnabledWindowHandle) {
                 return;
@@ -874,7 +873,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             }
         }
 
-        void TimerAutoHide_Tick(object? sender, EventArgs e)
+        private void TimerAutoHide_Tick(object? sender, EventArgs e)
         {
             if(!IsEnabledWindowHandle) {
                 return;
@@ -887,14 +886,14 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             }
         }
 
-        void View_MouseEnter(object sender, MouseEventArgs e)
+        private void View_MouseEnter(object sender, MouseEventArgs e)
         {
             if(ExtendData.IsAutoHide && !ExtendData.PausingAutoHide) {
                 StopHideWait();
             }
         }
 
-        void View_MouseLeave(object sender, MouseEventArgs e)
+        private void View_MouseLeave(object sender, MouseEventArgs e)
         {
             if(ExtendData.IsAutoHide && !ExtendData.PausingAutoHide) {
                 StartHideWait();

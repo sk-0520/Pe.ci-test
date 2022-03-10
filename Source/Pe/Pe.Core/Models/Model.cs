@@ -132,7 +132,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region property
 
         public TData Data { get; private set; }
-        bool UseDispose { get; }
+        private bool UseDispose { get; }
+
         #endregion
 
         #region BindModelBase
@@ -163,7 +164,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             return new WrapModel<TData>(data, useDispose, loggerFactory);
         }
-
     }
-
 }

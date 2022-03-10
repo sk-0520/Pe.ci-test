@@ -193,12 +193,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region property
 
-        CultureService CultureService { get; }
-        ApplicationConfiguration ApplicationConfiguration { get; }
+        private CultureService CultureService { get; }
+        private ApplicationConfiguration ApplicationConfiguration { get; }
 
-        ISet<WindowItem> Items { get; } = new HashSet<WindowItem>();
-        ISet<Window> Windows { get; } = new HashSet<Window>();
-        IDictionary<WindowItem, HwndSource> WindowHandleSources { get; } = new Dictionary<WindowItem, HwndSource>();
+        private ISet<WindowItem> Items { get; } = new HashSet<WindowItem>();
+        private ISet<Window> Windows { get; } = new HashSet<Window>();
+        private IDictionary<WindowItem, HwndSource> WindowHandleSources { get; } = new Dictionary<WindowItem, HwndSource>();
 
         #endregion
 
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <see cref="Window.DataContext"/>に null 入れた際に死ぬやつを事前に調整。
         /// </summary>
         /// <param name="window"></param>
-        void ClearUnsafeElements(Window window)
+        private void ClearUnsafeElements(Window window)
         {
             var editors = UIUtility.FindChildren<ICSharpCode.AvalonEdit.TextEditor>(window);
             foreach(var editor in editors) {
@@ -429,7 +429,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
         }
-
-
     }
 }

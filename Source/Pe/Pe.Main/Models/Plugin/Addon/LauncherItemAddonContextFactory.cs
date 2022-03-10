@@ -24,11 +24,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region property
 
-        IPlatformTheme PlatformTheme { get; }
-        IImageLoader ImageLoader { get; }
-        IMediaConverter MediaConverter { get; }
-        IPolicy Policy { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IPlatformTheme PlatformTheme { get; }
+        private IImageLoader ImageLoader { get; }
+        private IMediaConverter MediaConverter { get; }
+        private IPolicy Policy { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
         #endregion
 
@@ -39,8 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return new LauncherItemAddonContextWorker(this, pluginInformations, launcherItemId, LoggerFactory);
         }
 
-
-        LauncherItemAddonFiles CreateLauncherItemAddonFile(IPluginInformations pluginInformations)
+        private LauncherItemAddonFiles CreateLauncherItemAddonFile(IPluginInformations pluginInformations)
         {
             var dirName = ConvertDirectoryName(pluginInformations.PluginIdentifiers);
 
@@ -53,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return pluginFile;
         }
 
-        LauncherItemAddonPersistents CreateLauncherItemAddonPersistentContext(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
+        private LauncherItemAddonPersistents CreateLauncherItemAddonPersistentContext(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
         {
             var pluginPersistent = new LauncherItemAddonPersistents(
                 new LauncherItemAddonPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseContextsPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
@@ -64,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return pluginPersistent;
         }
 
-        LauncherItemAddonStorage CreateLauncherItemAddonStorage(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
+        private LauncherItemAddonStorage CreateLauncherItemAddonStorage(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
         {
             var pluginStorage = new LauncherItemAddonStorage(
                 CreateLauncherItemAddonFile(pluginInformations),
@@ -134,6 +133,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         protected override string BaseDirectoryName => "launcher-item-data";
 
         #endregion
-
     }
 }

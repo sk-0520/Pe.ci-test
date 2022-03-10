@@ -31,6 +31,5 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html.Addon
         }
 
         #endregion
-
     }
 }

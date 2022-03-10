@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         /// <summary>
         /// 接続文字列。
         /// </summary>
-        string ConnectionString { get; }
+        private string ConnectionString { get; }
 
         #endregion
 
@@ -210,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #region define
 
         public const string IgnoreNamespace = "ContentTypeTextNet.Pe.Main";
-        const string SelectStatement = @"
+        private const string SelectStatement = @"
 select
     Statements.Statement
 from
@@ -248,14 +248,14 @@ limit
 
         #region property
 
-        DirectoryInfo BaseDirectory { get; }
-        ReferencePool<string, string> StatementCache { get; }
+        private DirectoryInfo BaseDirectory { get; }
+        private ReferencePool<string, string> StatementCache { get; }
 
         /// <summary>
         /// SQLファイルを優先して読み込む。
         /// </summary>
-        bool GivePriorityToFile { get; }
-        DatabaseAccessor? StatementAccessor { get; }
+        private bool GivePriorityToFile { get; }
+        private DatabaseAccessor? StatementAccessor { get; }
 
         public int SqlFileBufferSize { get; set; } = 4096;
         public Encoding SqlFileEncoding { get; set; } = Encoding.UTF8;
@@ -264,7 +264,7 @@ limit
 
         #region function
 
-        string ConvertFileName(string key)
+        private string ConvertFileName(string key)
         {
             var keyPath = key.Substring(IgnoreNamespace.Length + 1).Replace('.', Path.DirectorySeparatorChar) + ".sql";
             var filePath = Path.Combine(BaseDirectory.FullName, keyPath);
@@ -272,14 +272,14 @@ limit
             return filePath;
         }
 
-        string CreateCacheFromFile(string filePath)
+        private string CreateCacheFromFile(string filePath)
         {
             using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, SqlFileBufferSize);
             using var reader = new StreamReader(stream, SqlFileEncoding);
             return reader.ReadToEnd();
         }
 
-        string CreateCacheFromAccessor(string key)
+        private string CreateCacheFromAccessor(string key)
         {
             Debug.Assert(StatementAccessor != null);
 
@@ -287,7 +287,7 @@ limit
             return StatementAccessor.QueryFirst<string>(SelectStatement, statementAccessorParameter);
         }
 
-        string CreateCache(string key)
+        private string CreateCache(string key)
         {
 #if DEBUG
             using var x = ActionDisposerHelper.Create((d, sw) => Logger.LogTrace("SQL読み込み時間: {0}, {1}", sw.Elapsed, key), Stopwatch.StartNew());
@@ -307,7 +307,7 @@ limit
             return CreateCacheFromAccessor(key);
         }
 
-        string LoadStatementCore(string key)
+        private string LoadStatementCore(string key)
         {
             Debug.Assert(0 < key.Length);
 
@@ -351,6 +351,5 @@ limit
         }
 
         #endregion
-
     }
 }

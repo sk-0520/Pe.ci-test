@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 {
     public class StandardOutputColorizingTransformer: DocumentColorizingTransformer
     {
-        readonly struct OffsetPair
+        private readonly struct OffsetPair
         {
             public readonly int start;
             public readonly int end;
@@ -28,9 +28,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         #region property
 
-        Brush Foreground { get; }
+        private Brush Foreground { get; }
 
-        IList<OffsetPair> OffsetItems { get; } = new List<OffsetPair>(40);
+        private IList<OffsetPair> OffsetItems { get; } = new List<OffsetPair>(40);
 
         #endregion
 
@@ -42,7 +42,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         }
 
         #endregion
-
 
         #region DocumentColorizingTransformer
 

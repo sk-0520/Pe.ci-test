@@ -17,8 +17,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region property
 
-        ILogger Logger { get; }
-        DirectoryInfo WidgetDirectory { get; }
+        private ILogger Logger { get; }
+        private DirectoryInfo WidgetDirectory { get; }
 
         #endregion
 
@@ -64,8 +64,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #region property
 
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
-        DirectoryInfo WidgetDirectory { get; }
+        private ILoggerFactory LoggerFactory { get; }
+        private DirectoryInfo WidgetDirectory { get; }
 
         #endregion
 

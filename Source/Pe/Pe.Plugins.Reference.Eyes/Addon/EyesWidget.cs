@@ -27,17 +27,17 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
 
         #region property
 
-        ILoggerFactory LoggerFactory { get; }
-        ILogger Logger { get; }
-        IAddonExecutor AddonExecutor { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
-        ISkeletonImplements SkeletonImplements { get; }
-        IPluginInformations PluginInformations { get; }
+        private ILoggerFactory LoggerFactory { get; }
+        private ILogger Logger { get; }
+        private IAddonExecutor AddonExecutor { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
+        private ISkeletonImplements SkeletonImplements { get; }
+        private IPluginInformations PluginInformations { get; }
 
-        EyesWidgetWindow? WidgetView { get; set; }
-        EyesWidgetViewModel? ViewModel { get; set; }
+        private EyesWidgetWindow? WidgetView { get; set; }
+        private EyesWidgetViewModel? ViewModel { get; set; }
 
-        EyesBackground? EyesBackground { get; set; }
+        private EyesBackground? EyesBackground { get; set; }
 
         #endregion
 

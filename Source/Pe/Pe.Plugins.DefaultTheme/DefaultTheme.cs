@@ -34,11 +34,11 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
-        ResourceDictionary? ResourceDictionary { get; set; }
+        private ResourceDictionary? ResourceDictionary { get; set; }
 
-        bool IsThemeLoaded { get; set; }
+        private bool IsThemeLoaded { get; set; }
 
         #endregion
 
@@ -62,7 +62,6 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             };
             return image;
         }
-
 
         /// <inheritdoc cref="IPlugin.Initialize(IPluginInitializeContext)"/>
         public void Initialize(IPluginInitializeContext pluginInitializeContext)

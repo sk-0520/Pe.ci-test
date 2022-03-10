@@ -20,9 +20,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
     {
         #region variable
 
-        NotifyLogPosition _position;
-        HorizontalAlignment _cursorHorizontalAlignment = HorizontalAlignment.Left;
-        VerticalAlignment _cursorVerticalAlignment = VerticalAlignment.Top;
+        private NotifyLogPosition _position;
+        private HorizontalAlignment _cursorHorizontalAlignment = HorizontalAlignment.Left;
+        private VerticalAlignment _cursorVerticalAlignment = VerticalAlignment.Top;
 
         #endregion
         public NotifyLogElement(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, INotifyManager notifyManager, IOrderManager orderManager, IWindowManager windowManager, ILoggerFactory loggerFactory)
@@ -39,8 +39,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 
         #region property
 
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         private INotifyManager NotifyManager { get; }
         private IOrderManager OrderManager { get; }
@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         public ReadOnlyObservableCollection<NotifyLogItemElement> StreamNotifyLogs => NotifyManager.StreamNotifyLogs;
         public bool ViewCreated { get; private set; }
 
-        bool IsVisible { get; set; }
+        private bool IsVisible { get; set; }
         public NotifyLogPosition Position
         {
             get => this._position;
@@ -281,7 +281,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 
         #endregion
 
-
         private void NotifyManager_NotifyLogChanged(object? sender, NotifyLogEventArgs e)
         {
             if(NowSilent) {
@@ -309,7 +308,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
                     throw new NotImplementedException();
             }
         }
-
-
     }
 }

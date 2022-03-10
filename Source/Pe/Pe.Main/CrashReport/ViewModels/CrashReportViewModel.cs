@@ -17,9 +17,10 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
     {
         #region variable
 
-        double _waitCount;
+        private double _waitCount;
 
         #endregion
+
         public CrashReportViewModel(CrashReportElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
@@ -33,10 +34,10 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
 
         #region property
 
-        TimeSpan AutoSendWaitTime { get; } = TimeSpan.FromSeconds(10);
-        DateTime AutoSendStartTime { get; set; }
-        DateTime AutoSendEndTime { get; set; }
-        DispatcherTimer? AutoSendWaitTimer { get; set; }
+        private TimeSpan AutoSendWaitTime { get; } = TimeSpan.FromSeconds(10);
+        private DateTime AutoSendStartTime { get; set; }
+        private DateTime AutoSendEndTime { get; set; }
+        private DispatcherTimer? AutoSendWaitTimer { get; set; }
 
         public double WaitCount
         {
@@ -130,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
 
         #region function
 
-        void StopAutoSend()
+        private void StopAutoSend()
         {
             if(AutoSendWaitTimer != null) {
                 AutoSendWaitTimer.Stop();
@@ -180,6 +181,5 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
                 WaitCount = (current - AutoSendStartTime).TotalMilliseconds / AutoSendWaitTime.TotalMilliseconds;
             }
         }
-
     }
 }

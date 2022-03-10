@@ -24,16 +24,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
-        ApplicationConfiguration ApplicationConfiguration { get; }
-        IUserAgentManager UserAgentManager { get; }
+        private ApplicationConfiguration ApplicationConfiguration { get; }
+        private IUserAgentManager UserAgentManager { get; }
 
         #endregion
 
         #region function
 
-        string ToCompareValue(string s)
+        private string ToCompareValue(string s)
         {
             return s
                 .Trim()

@@ -44,11 +44,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #region property
 
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
-        EnvironmentParameters EnvironmentParameters { get; }
-        HashSet<IPlugin> PluginsImpl { get; } = new HashSet<IPlugin>();
+        private ILoggerFactory LoggerFactory { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
+        private HashSet<IPlugin> PluginsImpl { get; } = new HashSet<IPlugin>();
         /// <summary>
         /// アドオン用コンテナ。
         /// </summary>

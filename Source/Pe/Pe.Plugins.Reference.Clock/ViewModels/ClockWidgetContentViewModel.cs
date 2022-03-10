@@ -13,18 +13,19 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
     {
         #region variable
 
-        DateTime _currentTime;
-        double _hourAngle;
-        double _minutesAngle;
-        double _secondsAngle;
+        private DateTime _currentTime;
+        private double _hourAngle;
+        private double _minutesAngle;
+        private double _secondsAngle;
 
-        double _hourOppositeAngle;
-        double _minutesOppositeAngle;
-        double _secondsOppositeAngle;
+        private double _hourOppositeAngle;
+        private double _minutesOppositeAngle;
+        private double _secondsOppositeAngle;
 
-        bool _isPm;
+        private bool _isPm;
 
         #endregion
+
         protected ClockWidgetContentBaseViewModel(ISkeletonImplements skeletonImplements, IDispatcherWrapper dispatcherWrapper,ILoggerFactory loggerFactory)
             : base(skeletonImplements, dispatcherWrapper, loggerFactory)
         { }
@@ -68,7 +69,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
             get => this._secondsOppositeAngle;
             set => SetProperty(ref this._secondsOppositeAngle, value);
         }
-
 
         public bool IsPm
         {

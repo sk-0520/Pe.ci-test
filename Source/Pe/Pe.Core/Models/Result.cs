@@ -103,7 +103,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         #endregion
-
     }
 
     public struct ResultFailureValue<TFailure>: IResultFailureValue<TFailure>
@@ -139,7 +138,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         #endregion
-
     }
 
     public struct ResultValue<TSuccess, TFailure>: IResultValue<TSuccess, TFailure>

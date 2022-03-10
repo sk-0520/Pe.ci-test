@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     {
         #region variable
 
-        readonly LauncherItemAddonStorage _storage;
+        private readonly LauncherItemAddonStorage _storage;
 
         #endregion
 

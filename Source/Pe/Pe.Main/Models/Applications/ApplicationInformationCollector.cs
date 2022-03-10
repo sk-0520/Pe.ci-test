@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region property
 
-        EnvironmentParameters EnvironmentParameters { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
 
         public string Header { get; set; } = "____________" + Environment.NewLine;
         public string SubjectFormat { get; set; } = "{0} =================";

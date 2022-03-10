@@ -33,14 +33,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         #region property
 
-        bool IsDevDebug { get; } = !true;
+        private bool IsDevDebug { get; } = !true;
 
         #endregion
 
 
         #region function
 
-        void DebugExecuteBefore()
+        private void DebugExecuteBefore()
         {
             Logger.LogDebug("デバッグ用前処理");
 
@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //Exit(true);
         }
 
-        void DebugExecuteAfter()
+        private void DebugExecuteAfter()
         {
             Logger.LogDebug("デバッグ用後処理");
 
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //Exit(true);
         }
 
-        void DebugCustomize()
+        private void DebugCustomize()
         {
             // LauncherGroups.Sequence を調整すること
             var i = LauncherToolbarElements.First().LauncherItems.FirstOrDefault();
@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        void DebugExtendsExecute()
+        private void DebugExtendsExecute()
         {
             var i = LauncherToolbarElements.First().LauncherItems.FirstOrDefault();
             if(i != null) {
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        void DebugStdIoExecute()
+        private void DebugStdIoExecute()
         {
             var batchPath = @".\temp.bat";
             File.WriteAllText(batchPath, @"
@@ -113,9 +113,9 @@ echo end
             var result = launcherExecutor.Execute(LauncherItemKind.File, data, data, env, LauncherRedoData.GetDisable(), Screen.PrimaryScreen);
         }
 
-        KeyboradHooker? dbgKeyboradHooker { get; set; }
-        MouseHooker? dbgMouseHooker { get; set; }
-        void DebugHook()
+        private KeyboradHooker? dbgKeyboradHooker { get; set; }
+        private MouseHooker? dbgMouseHooker { get; set; }
+        private void DebugHook()
         {
             dbgKeyboradHooker = new KeyboradHooker(LoggerFactory);
             dbgKeyboradHooker.KeyDown += (sender, e) => {
@@ -130,9 +130,9 @@ echo end
             //dbgMouseHooker.Register();
         }
 
-        KeyActionChecker? dbgKeyActionChecker { get; set; }
-        KeyActionAssistant? dbgKeyActionAssistant { get; set; }
-        void DebugKeyAction()
+        private KeyActionChecker? dbgKeyActionChecker { get; set; }
+        private KeyActionAssistant? dbgKeyActionAssistant { get; set; }
+        private void DebugKeyAction()
         {
             dbgKeyActionChecker = new KeyActionChecker(LoggerFactory);
             dbgKeyActionAssistant = new KeyActionAssistant(LoggerFactory);
@@ -198,11 +198,11 @@ echo end
             dbgKeyboradHooker.Register();
         }
 
-        void DebugSetting()
+        private void DebugSetting()
         {
             ShowSettingView();
         }
-        void DebugColorPicker()
+        private void DebugColorPicker()
         {
             using(var di = ApplicationDiContainer.CreateChildContainer()) {
                 di.RegisterMvvm<DebugColorPickerElement, DebugColorPickerViewModel, DebugColorPickerWindow>();
@@ -214,7 +214,7 @@ echo end
             }
         }
 
-        void DebugEnvironmentExecuteFile()
+        private void DebugEnvironmentExecuteFile()
         {
             var eef = ApplicationDiContainer.Build<Platform.EnvironmentExecuteFile>();
             var pef = eef.GetPathExecuteFiles();
@@ -229,7 +229,7 @@ echo end
             //DebugSetting();
         }
 
-        void Uninstall()
+        private void Uninstall()
         {
             var about = ApplicationDiContainer.Build<Element.About.AboutElement>();
             var path = @"x:a.bat";
@@ -238,8 +238,7 @@ echo end
             about.CreateUninstallBatch(path, uninstallTarget);
         }
 
-
-        void DebugIssue714()
+        private void DebugIssue714()
         {
             var panel = new StackPanel();
             panel.Children.Add(new EllipsisTextBlock() {

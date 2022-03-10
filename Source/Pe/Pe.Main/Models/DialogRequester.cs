@@ -61,7 +61,6 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public string FileName { get; set; } = string.Empty;
         public int IconIndex { get; set; }
 
-
         #endregion
     }
 
@@ -74,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         #endregion
 
@@ -121,7 +120,6 @@ namespace ContentTypeTextNet.Pe.Main.Models
             SelectFileSystem(requestSender, path, FileSystemDialogMode.Directory, Enumerable.Empty<DialogFilterItem>(), response);
         }
 
-
         public void SelectIcon(IRequestSender requestSender, string path, int index, Action<IconSelectDialogRequestResponse> response)
         {
             var parameter = new IconSelectDialogRequestParameter() {
@@ -135,7 +133,6 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 }
                 response(r);
             });
-
         }
 
         #endregion

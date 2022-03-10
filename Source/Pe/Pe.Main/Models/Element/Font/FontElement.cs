@@ -14,10 +14,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
     {
         #region variable
 
-        string _familyName = string.Empty;
-        bool _isItalic;
-        bool _isBold;
-        double _size;
+        private string _familyName = string.Empty;
+        private bool _isItalic;
+        private bool _isBold;
+        private double _size;
 
         #endregion
 
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             }
         }
 
-        void LoadFont()
+        private void LoadFont()
         {
             ThrowIfDisposed();
 
@@ -141,11 +141,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
         #region property
         public DefaultFontKind DefaultFontKind { get; }
 
-        ParentUpdater ParentUpdater { get; }
-        IIdFactory IdFactory { get; }
+        private ParentUpdater ParentUpdater { get; }
+        private IIdFactory IdFactory { get; }
 
-        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
-        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+        private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        private UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         public bool IsDefaultFont { get; private set; } = true;
 
@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         #region function
 
-        void CreateAndSaveFontId(IDatabaseContext context, IDatabaseImplementation implementation)
+        private void CreateAndSaveFontId(IDatabaseContext context, IDatabaseImplementation implementation)
         {
             ThrowIfDisposed();
             if(!IsDefaultFont) {
@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             ParentUpdater(this, context, implementation);
         }
 
-        void UpdateValueDelaySave(Action<FontsEntityDao, IDatabaseCommonStatus> updater, object uniqueKey)
+        private void UpdateValueDelaySave(Action<FontsEntityDao, IDatabaseCommonStatus> updater, object uniqueKey)
         {
             ThrowIfDisposed();
 
@@ -200,7 +200,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         #endregion
 
-
         #region FontElementBase
 
         public override string FamilyName
@@ -212,6 +211,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
                 UpdateValueDelaySave((d, s) => d.UpdateFamilyName(FontId, FamilyName, s), UniqueKeyPool.Get());
             }
         }
+
         public override bool IsItalic
         {
             get => base.IsItalic;
@@ -230,6 +230,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
                 UpdateValueDelaySave((d, s) => d.UpdateBold(FontId, IsBold, s), UniqueKeyPool.Get());
             }
         }
+
         public override double Size
         {
             get => base.Size;
@@ -280,7 +281,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             return base.GetFontData();
         }
 
-
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
@@ -294,6 +294,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         #endregion
     }
-
-
 }

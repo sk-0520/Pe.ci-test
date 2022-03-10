@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        UserControl? _settingControl;
+        private UserControl? _settingControl;
 
         #endregion
 
@@ -32,8 +32,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        IImageLoader ImageLoader { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IImageLoader ImageLoader { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
         public string PluginName => Model.PluginState.PluginName;
         public string PluginVersion

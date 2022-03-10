@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
     {
         #region function
 
-        DependencyObject GetToolbarImageCore(IScreen currentScreen, IReadOnlyList<IScreen> allScreens, IconBox iconBox, bool isStrong)
+        private DependencyObject GetToolbarImageCore(IScreen currentScreen, IReadOnlyList<IScreen> allScreens, IconBox iconBox, bool isStrong)
         {
             var basePos = new Point(Math.Abs(allScreens.Min(s => s.DeviceBounds.Left)), Math.Abs(allScreens.Min(s => s.DeviceBounds.Top)));
             //var screenOperator = new ScreenOperator(NullLoggerFactory.Instance);
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             return canvas;
         }
 
-        DependencyObject GetToolbarPositionImageCore(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox)
+        private DependencyObject GetToolbarPositionImageCore(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox)
         {
             var drawSize = new Size((int)iconBox * 2, (int)iconBox);
             var strongSize = new Size(0.2f, 0.3f);
@@ -121,7 +121,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
             return canvas;
         }
-
 
         public DependencyObject GetToolbarImage(IScreen currentScreen, IReadOnlyList<IScreen> allScreens, IconBox iconBox, bool isStrong)
         {

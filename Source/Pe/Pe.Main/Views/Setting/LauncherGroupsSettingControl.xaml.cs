@@ -43,9 +43,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #region property
 
-        CommandStore CommandStore { get; } = new CommandStore();
+        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
-
     }
 }

@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
         #region define
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed", Justification = "<保留中>")]
-        class NoteScreenRowDto: RowDtoBase
+        private class NoteScreenRowDto: RowDtoBase
         {
             #region property
             public Guid NoteId { get; set; }
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 
         #region function
 
-        NoteScreenData ConvertFromDto(NoteScreenRowDto dto)
+        private NoteScreenData ConvertFromDto(NoteScreenRowDto dto)
         {
             var data = new NoteScreenData() {
                 NoteId = dto.NoteId,

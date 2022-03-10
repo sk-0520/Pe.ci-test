@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
     {
         #region variable
 
-        bool _nowCustomize;
+        private bool _nowCustomize;
 
         #endregion
 
@@ -50,19 +50,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         #region property
 
-        LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
-        ILauncherItemAddonFinder LauncherItemAddonFinder { get; }
-        LauncherItemAddonViewSupporterCollection LauncherItemAddonViewSupporterCollection { get; }
-        IWindowManager WindowManager { get; }
-        IOrderManager OrderManager { get; }
-        IClipboardManager ClipboardManager { get; }
-        INotifyManager NotifyManager { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
-        ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
-        EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
+        private LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
+        private ILauncherItemAddonFinder LauncherItemAddonFinder { get; }
+        private LauncherItemAddonViewSupporterCollection LauncherItemAddonViewSupporterCollection { get; }
+        private IWindowManager WindowManager { get; }
+        private IOrderManager OrderManager { get; }
+        private IClipboardManager ClipboardManager { get; }
+        private INotifyManager NotifyManager { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
+        private ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
+        private EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
 
         public string Name { get; private set; } = string.Empty;
         public string Code { get; private set; } = string.Empty;
@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         #region function
 
-        void LoadLauncherItem()
+        private void LoadLauncherItem()
         {
             ThrowIfDisposed();
 
@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return result;
         }
 
-        List<LauncherEnvironmentVariableData> GetMergeEnvironmentVariableItems(IDatabaseContext context, IDatabaseImplementation implementation)
+        private List<LauncherEnvironmentVariableData> GetMergeEnvironmentVariableItems(IDatabaseContext context, IDatabaseImplementation implementation)
         {
             ThrowIfDisposed();
 
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
         }
 
-        ILauncherExecuteResult ExecuteFile(string? customArgument, IScreen screen)
+        private ILauncherExecuteResult ExecuteFile(string? customArgument, IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -187,7 +187,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return result;
         }
 
-        LauncherAddonExecuteResult ExecuteAddon(string? customArgument, IScreen screen)
+        private LauncherAddonExecuteResult ExecuteAddon(string? customArgument, IScreen screen)
         {
             if(LauncherItemAddonViewSupporterCollection.ExistsInformations(LauncherItemId)) {
                 Logger.LogInformation("ランチャーアイテムはすでに起動している: {0}", LauncherItemId);
@@ -300,7 +300,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             element.StartView();
         }
 
-        ILauncherExecutePathParameter GetExecutePath()
+        private ILauncherExecutePathParameter GetExecutePath()
         {
             Debug.Assert(Kind == LauncherItemKind.File);
             ThrowIfDisposed();
@@ -488,6 +488,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 NowCustomizing = false;
             }
         }
-
     }
 }

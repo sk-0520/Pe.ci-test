@@ -34,36 +34,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     {
         #region define
 
-        const int AppLogLimit = 128;
+        private const int AppLogLimit = 128;
 
         #endregion
 
         #region property
 
         public static string CommandLineKeyRunMode { get; } = "run-mode";
-        string CommandLineKeyAppLogLimit { get; } = "app-log-limit";
-        string CommandLineKeyLog { get; } = "log";
-        string CommandLineKeyWithLog { get; } = "with-log";
-        string CommandLineSwitchFullTraceLog { get; } = "full-trace-log";
-        string CommandLineSwitchForceLog { get; } = "force-log";
+        private string CommandLineKeyAppLogLimit { get; } = "app-log-limit";
+        private string CommandLineKeyLog { get; } = "log";
+        private string CommandLineKeyWithLog { get; } = "with-log";
+        private string CommandLineSwitchFullTraceLog { get; } = "full-trace-log";
+        private string CommandLineSwitchForceLog { get; } = "force-log";
 
-        string CommandLineSwitchAcceptSkip { get; } = "skip-accept";
-        string CommandLineSwitchBetaVersion { get; } = "beta-version";
+        private string CommandLineSwitchAcceptSkip { get; } = "skip-accept";
+        private string CommandLineSwitchBetaVersion { get; } = "beta-version";
 
 #if DEBUG
-        string CommandLineSwitchDebugDevelopMode { get; } = "debug-dev-mode";
+        private string CommandLineSwitchDebugDevelopMode { get; } = "debug-dev-mode";
         public bool IsDebugDevelopMode { get; private set; }
 #endif
         /// <summary>
         /// テストプラグイン格納ディレクトリパス。
         /// </summary>
-        string CommandLineTestPluginDirectoryPath { get; } = "test-plugin-dir";
+        private string CommandLineTestPluginDirectoryPath { get; } = "test-plugin-dir";
         /// <summary>
         /// テストプラグイン名。
         /// <para>通常は<see cref="CommandLineTestPluginDirectoryPath"/>のディレクトリ名を使用するが、デバッグ実行時などのプラグインディレクトリ名とプラグイン名が異なる場合に指定する。</para>
         /// <para>なお指定の際には拡張子を除外すること(plugin-name.dll -> plugin-name)</para>
         /// </summary>
-        string CommandLineTestPluginName { get; } = "test-plugin-name";
+        private string CommandLineTestPluginName { get; } = "test-plugin-name";
 
         public bool IsFirstStartup { get; private set; }
         public RunMode RunMode { get; private set; }
@@ -80,21 +80,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public string TestPluginDirectoryPath { get; private set; } = string.Empty;
         public string TestPluginName { get; private set; } = string.Empty;
+
         #endregion
 
         #region function
 
-        void InitializeEnvironmentVariable()
+        private void InitializeEnvironmentVariable()
         {
             Environment.SetEnvironmentVariable("PE_DESKTOP", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
         }
 
-        void InitializeClr()
+        private void InitializeClr()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
-        CommandLine CreateCommandLine(IEnumerable<string> arguments)
+        private CommandLine CreateCommandLine(IEnumerable<string> arguments)
         {
             var commandLine = new CommandLine(arguments, false);
 
@@ -121,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         }
 
 #if BETA_MODE
-        bool ShowCommandLineMessageIfUnspecified(CommandLine commandLine)
+        private bool ShowCommandLineMessageIfUnspecified(CommandLine commandLine)
         {
             var knownBetaVersion = commandLine.ExistsSwitch(CommandLineSwitchBetaVersion);
             if(knownBetaVersion) {
@@ -151,7 +152,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return result == MessageBoxResult.OK;
         }
 #endif
-        bool ShowCommandLineTestPlugin(CommandLine commandLine, EnvironmentParameters environmentParameters)
+        private bool ShowCommandLineTestPlugin(CommandLine commandLine, EnvironmentParameters environmentParameters)
         {
             var testPluginDirectoryPath = commandLine.GetValue(CommandLineTestPluginDirectoryPath, string.Empty);
             if(string.IsNullOrWhiteSpace(testPluginDirectoryPath)) {
@@ -218,7 +219,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return new DirectoryInfo(rootDirectoryPath);
         }
 
-        ApplicationEnvironmentParameters InitializeEnvironment(CommandLine commandLine)
+        private ApplicationEnvironmentParameters InitializeEnvironment(CommandLine commandLine)
         {
             Debug.Assert(commandLine.IsParsed);
 
@@ -227,14 +228,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return new ApplicationEnvironmentParameters(rootDirectory, commandLine);
         }
 
-        bool CheckFirstStartup(EnvironmentParameters environmentParameters, ILogger logger)
+        private bool CheckFirstStartup(EnvironmentParameters environmentParameters, ILogger logger)
         {
             var file = environmentParameters.MainFile;
             file.Refresh();
             return !file.Exists;
         }
 
-        AcceptResult ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, EnvironmentParameters environmentParameters, ILoggerFactory? loggerFactory)
+        private AcceptResult ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, EnvironmentParameters environmentParameters, ILoggerFactory? loggerFactory)
         {
             using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
                 if(loggerFactory != null) {
@@ -263,7 +264,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
-        void InitializeFileSystem(EnvironmentParameters environmentParameters, ILogger logger)
+        private void InitializeFileSystem(EnvironmentParameters environmentParameters, ILogger logger)
         {
             var dirs = environmentParameters.GetType()
                 .GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
@@ -284,7 +285,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
-        ApplicationDatabaseFactoryPack CreateDatabaseFactoryPack(EnvironmentParameters environmentParameters, bool foreignKeys, ILogger logger)
+        private ApplicationDatabaseFactoryPack CreateDatabaseFactoryPack(EnvironmentParameters environmentParameters, bool foreignKeys, ILogger logger)
         {
             return new ApplicationDatabaseFactoryPack(
                 new ApplicationDatabaseFactory(environmentParameters.MainFile, foreignKeys, false),
@@ -292,7 +293,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 new ApplicationDatabaseFactory(true, false)
             );
         }
-        IDatabaseStatementLoader GetDatabaseStatementLoader(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
+        private IDatabaseStatementLoader GetDatabaseStatementLoader(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
         {
             DatabaseAccessor? statementAccessor = null;
             environmentParameters.SqlStatementAccessorFile.Refresh();
@@ -303,7 +304,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.Zero, statementAccessor, environmentParameters.ApplicationConfiguration.File.GivePriorityToFile, loggerFactory);
         }
 
-        void FirstSetup(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory, ILogger logger)
+        private void FirstSetup(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory, ILogger logger)
         {
             logger.LogInformation("初回セットアップ");
 
@@ -332,7 +333,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
-        bool NormalSetup(out (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack, EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory, ILogger logger)
+        private bool NormalSetup(out (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack, EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory, ILogger logger)
         {
             logger.LogInformation("DBセットアップ");
 
@@ -367,7 +368,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return true;
         }
 
-        ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, ApplicationDatabaseFactoryPack? factory, CultureService cultureService, ILoggerFactory loggerFactory)
+        private ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, ApplicationDatabaseFactoryPack? factory, CultureService cultureService, ILoggerFactory loggerFactory)
         {
             var container = new ApplicationDiContainer();
 
@@ -428,7 +429,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return container;
         }
 
-        WindowManager SetupWindowManager(IDiRegisterContainer diContainer)
+        private WindowManager SetupWindowManager(IDiRegisterContainer diContainer)
         {
             var manager = diContainer.Build<WindowManager>(CultureService.Instance);
 
@@ -444,35 +445,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         }
 
         */
-        NotifyManager SetupNotifyManager(IDiRegisterContainer diContainer)
+        private NotifyManager SetupNotifyManager(IDiRegisterContainer diContainer)
         {
             var manager = diContainer.Build<NotifyManager>();
 
             return manager;
         }
 
-        StatusManager SetupStatusManager(IDiRegisterContainer diContainer)
+        private StatusManager SetupStatusManager(IDiRegisterContainer diContainer)
         {
             var manager = diContainer.Build<StatusManager>();
 
             return manager;
         }
 
-        ClipboardManager SetupClipboardManager(IDiRegisterContainer diContainer)
+        private ClipboardManager SetupClipboardManager(IDiRegisterContainer diContainer)
         {
             var manager = diContainer.Build<ClipboardManager>();
 
             return manager;
         }
 
-        UserAgentManager SetupUserAgentManager(IDiRegisterContainer diContainer)
+        private UserAgentManager SetupUserAgentManager(IDiRegisterContainer diContainer)
         {
             var manager = diContainer.Build<UserAgentManager>();
 
             return manager;
         }
 
-        void InitializeDirectory(EnvironmentParameters environmentParameters, ILogger logger, ILoggerFactory loggerFactory)
+        private void InitializeDirectory(EnvironmentParameters environmentParameters, ILogger logger, ILoggerFactory loggerFactory)
         {
             // 限定的に一時ディレクトリ内きれいにする
             var dirs = new[] {
@@ -687,7 +688,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             return true;
         }
-
 
         #endregion
     }

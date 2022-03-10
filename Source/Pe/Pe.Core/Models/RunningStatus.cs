@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region variable
 
-        RunningState _state;
+        private RunningState _state;
 
         #endregion
 

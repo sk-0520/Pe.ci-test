@@ -356,8 +356,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             CurrentBarriers.Disposing -= CurrentBarriers_Disposing;
             CurrentBarriers = null;
         }
-
-
     }
-
 }

@@ -27,10 +27,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
         }
 
         #region property
-        INotifyManager NotifyManager { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        IIdFactory IdFactory { get; }
+        private INotifyManager NotifyManager { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IIdFactory IdFactory { get; }
 
         public string Name { get; private set; } = string.Empty;
         public LauncherGroupKind Kind { get; private set; }
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         public IReadOnlyList<Guid> GetLauncherItemIds() => LauncherItemIds.ToList();
 
-        void LoadGroup()
+        private void LoadGroup()
         {
             ThrowIfDisposed();
 
@@ -120,7 +120,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
                 LauncherItemIds.RemoveAt(removedItemIndex);
             }
         }
-
-
     }
 }

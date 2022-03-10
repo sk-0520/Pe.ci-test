@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         #region property
 
-        IWindowManager WindowManager { get; }
+        private IWindowManager WindowManager { get; }
         public bool IsRegisteredLauncher { get; private set; }
         public bool IsRegisteredStartup { get; private set; }
 
@@ -73,6 +73,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
         }
 
         #endregion
-
     }
 }

@@ -26,9 +26,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
             #region property
 
-            IDatabaseTransaction MainTransaction { get; }
-            IDatabaseTransaction FileTransaction { get; }
-            IDatabaseTransaction TemporaryTransaction { get; }
+            private IDatabaseTransaction MainTransaction { get; }
+            private IDatabaseTransaction FileTransaction { get; }
+            private IDatabaseTransaction TemporaryTransaction { get; }
 
             #endregion
 
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         #region function
 
-        static PersistentContextsPack WaitPack(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus, bool isReadOnly)
+        private static PersistentContextsPack WaitPack(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus, bool isReadOnly)
         {
             static IDatabaseTransaction Do(IDatabaseBarrier databaseBarrier, bool isReadOnly)
             {

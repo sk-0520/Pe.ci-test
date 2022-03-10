@@ -38,11 +38,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 生存時間。
         /// </summary>
-        Stopwatch LifeTime { get; set; }
+        private Stopwatch LifeTime { get; set; }
         /// <summary>
         /// 死ぬまでの猶予。
         /// </summary>
-        TimeSpan Timelimit { get; }
+        private TimeSpan Timelimit { get; }
         /// <summary>
         /// <typeparamref name="TValue"/>が<see cref="IDisposable"/>なら<see cref="IDisposable.Dispose"/>の面倒を見てあげるか。
         /// </summary>
@@ -90,10 +90,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Timer.Start();
         }
 
-
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         /// <summary>
         /// キャッシュの中身。
@@ -106,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public TimeSpan DefaultTimelimit { get; }
         public bool DefaultManage { get; }
 
-        Timer Timer { get; }
+        private Timer Timer { get; }
 
         #endregion
 
@@ -161,7 +160,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             return GetCore(key, timelimit, isManage, creator);
         }
-
 
         /// <summary>
         /// 破棄処理。

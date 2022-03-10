@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
     {
         #region variable
 
-        DefaultTheme? _defaultTheme;
+        private DefaultTheme? _defaultTheme;
 
         #endregion
         public ThemeContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -45,27 +45,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         #region property
 
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
-        IDatabaseBarrierPack DatabaseBarrierPack { get; }
-        IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        EnvironmentParameters EnvironmentParameters { get; }
-        IUserAgentManager UserAgentManager { get; }
+        private ILoggerFactory LoggerFactory { get; }
+        private IDatabaseBarrierPack DatabaseBarrierPack { get; }
+        private IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
+        private IUserAgentManager UserAgentManager { get; }
 
-        IPlatformTheme PlatformTheme { get; }
-        IImageLoader ImageLoader { get; }
-        IMediaConverter MediaConverter { get; }
-        IPolicy Policy { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IPlatformTheme PlatformTheme { get; }
+        private IImageLoader ImageLoader { get; }
+        private IMediaConverter MediaConverter { get; }
+        private IPolicy Policy { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
         /// <summary>
         /// テーマ一覧。
         /// </summary>
-        ISet<ITheme> Themes { get; } = new HashSet<ITheme>();
+        private ISet<ITheme> Themes { get; } = new HashSet<ITheme>();
 
-        DefaultTheme DefaultTheme => this._defaultTheme ??= (DefaultTheme)Themes.First(i => i.PluginInformations.PluginIdentifiers.PluginId == DefaultTheme.Informations.PluginIdentifiers.PluginId);
+        private DefaultTheme DefaultTheme => this._defaultTheme ??= (DefaultTheme)Themes.First(i => i.PluginInformations.PluginIdentifiers.PluginId == DefaultTheme.Informations.PluginIdentifiers.PluginId);
 
         /// <summary>
         /// 現在使用中テーマ。
@@ -193,6 +193,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         public override IEnumerable<IPlugin> Plugins => Themes;
 
         #endregion
-
     }
 }

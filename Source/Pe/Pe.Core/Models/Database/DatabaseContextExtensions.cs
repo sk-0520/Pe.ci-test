@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region function
 
         [Conditional("DEBUG")]
-        static void EnforceOrderBy(string statement)
+        private static void EnforceOrderBy(string statement)
         {
             if(!Regex.IsMatch(statement, @"\border\s+by\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
                 throw new DatabaseContextException("order by");
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         [Conditional("DEBUG")]
-        static void EnforceSingleCount(string statement)
+        private static void EnforceSingleCount(string statement)
         {
             if(!Regex.IsMatch(statement, @"\bselect\s+count\s*\(", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
                 throw new DatabaseContextException("select count()");
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region function
 
         [Conditional("DEBUG")]
-        static void EnforceUpdate(string statement)
+        private static void EnforceUpdate(string statement)
         {
             if(!Regex.IsMatch(statement, @"\bupdate\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
                 throw new DatabaseContextException("update");
@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         [Conditional("DEBUG")]
-        static void EnforceInsert(string statement)
+        private static void EnforceInsert(string statement)
         {
             if(!Regex.IsMatch(statement, @"\binsert\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
                 throw new DatabaseContextException("insert");
@@ -186,7 +186,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         [Conditional("DEBUG")]
-        static void EnforceDelete(string statement)
+        private static void EnforceDelete(string statement)
         {
             if(!Regex.IsMatch(statement, @"\bdelete\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
                 throw new DatabaseContextException("delete");
@@ -246,7 +246,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             return result == 1;
         }
-
 
         #endregion
     }

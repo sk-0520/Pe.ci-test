@@ -19,9 +19,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #region property
 
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         #endregion
 
@@ -40,12 +40,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return Regex.IsMatch(userId, @"[a-z0-9]{128}", RegexOptions.ExplicitCapture | RegexOptions.Singleline);
         }
 
-        HashAlgorithm CreateHash()
+        private HashAlgorithm CreateHash()
         {
             return SHA512.Create();
         }
 
-        string ComputeHash(byte[] buffer)
+        private string ComputeHash(byte[] buffer)
         {
             byte[] hashValue;
             using(var hash = CreateHash()) {

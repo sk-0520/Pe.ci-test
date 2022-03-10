@@ -24,15 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-        public PluginWidgetSettingsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-           : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -49,9 +41,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
+        public PluginWidgetSettingsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+           : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
 
-        PluginWidgetSettingData ConvertFromDto(PluginWidgetSettingDto dto)
+        private PluginWidgetSettingData ConvertFromDto(PluginWidgetSettingDto dto)
         {
             static double NullOrNanCoalescing(double? value)
             {
@@ -74,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        PluginWidgetSettingDto ConvertFromData(Guid pluginId, PluginWidgetSettingData data, IDatabaseCommonStatus databaseCommonStatus)
+        private PluginWidgetSettingDto ConvertFromData(Guid pluginId, PluginWidgetSettingData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var dto = new PluginWidgetSettingDto() {
                 PluginId = pluginId,

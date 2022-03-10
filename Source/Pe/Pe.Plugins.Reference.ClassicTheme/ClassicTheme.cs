@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme
     {
         #region variable
 
-        ClassicThemeImpl _theme;
+        private ClassicThemeImpl _theme;
 
         #endregion
 

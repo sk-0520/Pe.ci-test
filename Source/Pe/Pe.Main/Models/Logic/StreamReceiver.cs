@@ -42,12 +42,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public int BufferSize { get; set; } = 160;
         public TimeSpan WaitTime { get; set; } = TimeSpan.FromMilliseconds(250);
 
-        StreamReader Reader { get; }
-        ILogger Logger { get; }
+        private StreamReader Reader { get; }
+        private ILogger Logger { get; }
 
-        CancellationTokenSource CancellationTokenSource { get; } = new CancellationTokenSource();
-        Task RunningTask { get; set; } = Task.CompletedTask;
-        ManualResetEventSlim LastWorkWait { get; } = new ManualResetEventSlim(false);
+        private CancellationTokenSource CancellationTokenSource { get; } = new CancellationTokenSource();
+        private Task RunningTask { get; set; } = Task.CompletedTask;
+        private ManualResetEventSlim LastWorkWait { get; } = new ManualResetEventSlim(false);
 
         #endregion
 
@@ -131,6 +131,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         }
 
         #endregion
-
     }
 }

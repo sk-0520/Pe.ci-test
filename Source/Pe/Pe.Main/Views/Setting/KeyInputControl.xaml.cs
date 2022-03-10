@@ -295,8 +295,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #region property
 
-        Key InputUserKey { get; set; }
-        ModifierKeys InputUserModifierKeys { get; set; }
+        private Key InputUserKey { get; set; }
+        private ModifierKeys InputUserModifierKeys { get; set; }
 
         #endregion
 

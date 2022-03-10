@@ -24,11 +24,11 @@ namespace ContentTypeTextNet.Pe.Main.Views.StandardInputOutput
         #region property
 
         [Inject]
-        ILogger? Logger { get; set; }
-        StandardInputOutputViewModel ViewModel => (StandardInputOutputViewModel)DataContext;
+        private ILogger? Logger { get; set; }
+        private StandardInputOutputViewModel ViewModel => (StandardInputOutputViewModel)DataContext;
 
-        DialogRequestReceiver DialogRequestReceiver { get; }
-        CommandStore CommandStore { get; } = new CommandStore();
+        private DialogRequestReceiver DialogRequestReceiver { get; }
+        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 

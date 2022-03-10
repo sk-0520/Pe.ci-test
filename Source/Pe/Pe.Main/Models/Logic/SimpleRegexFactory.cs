@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         public Regex AllMatchRegex { get; } = new Regex("");
 
@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        bool IsCaseSensitivePattern(string pattern)
+        private bool IsCaseSensitivePattern(string pattern)
         {
             foreach(var c in pattern) {
                 if(char.IsLetter(c)) {
@@ -92,6 +92,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         }
 
         #endregion
-
     }
 }

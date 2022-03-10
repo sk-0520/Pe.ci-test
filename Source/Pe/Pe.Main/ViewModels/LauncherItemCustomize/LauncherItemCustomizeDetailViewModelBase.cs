@@ -99,7 +99,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 Initialize();
             }
         }
-
-
     }
 }

@@ -25,11 +25,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        bool _isPopupCreateGroupMenu;
-        LauncherGroupSettingEditorViewModel? _selectedGroup;
-        LauncherItemSettingEditorViewModel? _selectedLauncherItem;
+        private bool _isPopupCreateGroupMenu;
+        private LauncherGroupSettingEditorViewModel? _selectedGroup;
+        private LauncherItemSettingEditorViewModel? _selectedLauncherItem;
 
-        string _nameFilterQuery = string.Empty;
+        private string _nameFilterQuery = string.Empty;
 
         #endregion
 
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        SimpleRegexFactory SimpleRegexFactory { get; }
+        private SimpleRegexFactory SimpleRegexFactory { get; }
 
         public IDragAndDrop GroupsDragAndDrop { get; }
         public IDragAndDrop LauncherItemDragAndDrop { get; }
@@ -104,12 +104,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         //ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherCollection { get; }
         //public ICollectionView LauncherItems { get; }
         [IgnoreValidation]
-        ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
         [IgnoreValidation]
         public ICollectionView AllLauncherItems { get; }
 
         [IgnoreValidation]
-        ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> GroupCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> GroupCollection { get; }
         [IgnoreValidation]
         public ICollectionView GroupItems { get; }
 
@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
-        Regex NameFilterQueryRegex { get; set; }
+        private Regex NameFilterQueryRegex { get; set; }
         public string NameFilterQuery
         {
             get => this._nameFilterQuery;
@@ -276,7 +276,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         }
 
-        void ChangeGroupIconColorFromCurrentGroup()
+        private void ChangeGroupIconColorFromCurrentGroup()
         {
             if(SelectedGroup != null) {
                 foreach(var groupIcon in GroupIconItems) {
@@ -570,6 +570,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 ChangeGroupIconColorFromCurrentGroup();
             }
         }
-
     }
 }

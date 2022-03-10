@@ -22,9 +22,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
 
         #region property
 
-        CommandStore CommandStore { get; } = new CommandStore();
+        private CommandStore CommandStore { get; } = new CommandStore();
         [Inject]
-        ILogger? Logger { get; set; }
+        private ILogger? Logger { get; set; }
 
 
         #endregion

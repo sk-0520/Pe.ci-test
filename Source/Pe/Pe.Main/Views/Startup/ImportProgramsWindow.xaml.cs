@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Startup
         #region property
 
         [Inject]
-        ILogger? Logger { get; set; }
+        private ILogger? Logger { get; set; }
 
         #endregion
 
@@ -42,7 +42,5 @@ namespace ContentTypeTextNet.Pe.Main.Views.Startup
         }
 
         #endregion
-
-
     }
 }

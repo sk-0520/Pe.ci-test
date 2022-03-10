@@ -35,8 +35,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
     {
         #region variable
 
-        LauncherDetailViewModelBase? _contextMenuOpendItem;
-        bool _showWaiting;
+        private LauncherDetailViewModelBase? _contextMenuOpendItem;
+        private bool _showWaiting;
 
         #endregion
 
@@ -100,15 +100,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public RequestSender ExpandShortcutFileRequest { get; } = new RequestSender();
 
         public AppDesktopToolbarExtend? AppDesktopToolbarExtend { get; set; }
-        IKeyGestureGuide KeyGestureGuide { get; }
-        LauncherToolbarConfiguration LauncherToolbarConfiguration { get; }
-        IPlatformTheme PlatformThemeLoader { get; }
-        ILauncherToolbarTheme LauncherToolbarTheme { get; }
-        IGeneralTheme GeneralTheme { get; }
-        PropertyChangedHooker PropertyChangedHooker { get; }
-        ThemeProperties ThemeProperties { get; }
+        private IKeyGestureGuide KeyGestureGuide { get; }
+        private LauncherToolbarConfiguration LauncherToolbarConfiguration { get; }
+        private IPlatformTheme PlatformThemeLoader { get; }
+        private ILauncherToolbarTheme LauncherToolbarTheme { get; }
+        private IGeneralTheme GeneralTheme { get; }
+        private PropertyChangedHooker PropertyChangedHooker { get; }
+        private ThemeProperties ThemeProperties { get; }
 
-        DispatcherTimer? AutoHideShowWaitTimer { get; set; }
+        private DispatcherTimer? AutoHideShowWaitTimer { get; set; }
 
         public IconBox IconBox => Model.IconBox;
         public Thickness ButtonPadding => Model.ButtonPadding;
@@ -182,10 +182,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             set => SetProperty(ref this._showWaiting, value);
         }
 
-        ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
         public ReadOnlyObservableCollection<LauncherGroupViewModel> LauncherGroupItems { get; }
 
-        ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherDetailViewModelBase> LauncherItemCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherDetailViewModelBase> LauncherItemCollection { get; }
         public ICollectionView LauncherItems { get; }
 
         public RequestSender CloseRequest { get; } = new RequestSender();
@@ -204,7 +204,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public LauncherToolbarContentDropMode ContentDropMode => Model.ContentDropMode;
         public LauncherGroupPosition GroupMenuPosition => Model.GroupMenuPosition;
 
-        LauncherToolbarIconMaker IconMaker { get; } = new LauncherToolbarIconMaker();
+        private LauncherToolbarIconMaker IconMaker { get; } = new LauncherToolbarIconMaker();
 
         #region theme
 
@@ -343,7 +343,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #region function
 
-        void ChangeLauncherGroup(LauncherGroupViewModel targetGroup)
+        private void ChangeLauncherGroup(LauncherGroupViewModel targetGroup)
         {
             var currentLauncherItems = LauncherItemCollection.ViewModels.ToList();
 
@@ -440,7 +440,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-
         void ExecuteExtendDropData(Guid launcherItemId, string argument)
         {
             switch(ContentDropMode) {
@@ -453,7 +452,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                     break;
             }
         }
-
 
         /// <summary>
         /// 自動的に隠すツールバーを隠して一時的に表示を停止する。
@@ -655,6 +653,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 AutoHideShowWaitTimer = null;
             }
         }
-
     }
 }

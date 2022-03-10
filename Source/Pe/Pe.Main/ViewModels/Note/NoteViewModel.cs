@@ -37,20 +37,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
     {
         #region variable
 
-        double _windowLeft;
-        double _windowTop;
-        double _windowWidth;
-        double _windowHeight;
+        private double _windowLeft;
+        private double _windowTop;
+        private double _windowWidth;
+        private double _windowHeight;
 
-        bool _titleEditMode;
-        string? _editingTile;
+        private bool _titleEditMode;
+        private string? _editingTile;
 
-        bool _showContentKindChangeConfim;
-        NoteContentKind _changingContentKind;
-        NoteContentViewModelBase? _content;
+        private bool _showContentKindChangeConfim;
+        private NoteContentKind _changingContentKind;
+        private NoteContentViewModelBase? _content;
 
-        bool _showLinkChangeConfim;
-        bool _isPopupRemoveNote;
+        private bool _showLinkChangeConfim;
+        private bool _isPopupRemoveNote;
 
         #endregion
 
@@ -98,6 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         }
 
         #region property
+
         public RequestSender CloseRequest { get; } = new RequestSender();
 
         public RequestSender TitleEditStartRequest { get; } = new RequestSender();
@@ -107,19 +108,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         bool CanLayoutNotify { get; set; }
 
-        NoteConfiguration NoteConfiguration { get; }
-        INoteTheme NoteTheme { get; }
-        IGeneralTheme GeneralTheme { get; }
-        IPlatformTheme PlatformTheme { get; }
-        IOrderManager OrderManager { get; }
-        IClipboardManager ClipboardManager { get; }
-        PropertyChangedHooker PropertyChangedHooker { get; }
+        private NoteConfiguration NoteConfiguration { get; }
+        private INoteTheme NoteTheme { get; }
+        private IGeneralTheme GeneralTheme { get; }
+        private IPlatformTheme PlatformTheme { get; }
+        private IOrderManager OrderManager { get; }
+        private IClipboardManager ClipboardManager { get; }
+        private PropertyChangedHooker PropertyChangedHooker { get; }
 
-        IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
-        FrameworkElement? CaptionElement { get; set; }
-        IDisposable? WindowHandleSource { get; set; }
+        private IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
+        private FrameworkElement? CaptionElement { get; set; }
+        private IDisposable? WindowHandleSource { get; set; }
 
-        ApplicationConfiguration ApplicationConfiguration { get; }
+        private ApplicationConfiguration ApplicationConfiguration { get; }
 
         public Guid NoteId => Model.NoteId;
         public bool IsLink
@@ -327,7 +328,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public IDragAndDrop DragAndDrop { get; }
 
-        bool PrepareToRemove { get; set; }
+        private bool PrepareToRemove { get; set; }
         public bool IsPopupRemoveNote
         {
             get => this._isPopupRemoveNote;
@@ -629,7 +630,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region function
 
-        void ToggleCompact()
+        private void ToggleCompact()
         {
             // 未変更情報
             if(!IsCompact) {
@@ -656,14 +657,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             RaisePropertyChanged(nameof(WindowHeight));
         }
 
-        void HideCompact()
+        private void HideCompact()
         {
             if(Model.HiddenCompact && !IsCompact) {
                 ToggleCompact();
             }
         }
 
-        NoteLinkChangeRequestParameter CreateLinkParameter(bool isOpen)
+        private NoteLinkChangeRequestParameter CreateLinkParameter(bool isOpen)
         {
             var encodingConverter = new EncodingConverter(LoggerFactory!);
 
@@ -698,8 +699,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             return parameter;
         }
 
-
-        (bool isCreated, NoteLayoutData layout) GetOrCreateLayout(NoteStartupPosition startupPosition)
+        private (bool isCreated, NoteLayoutData layout) GetOrCreateLayout(NoteStartupPosition startupPosition)
         {
             if(startupPosition == NoteStartupPosition.Setting) {
                 var settingLayout = Model.GetLayout();
@@ -777,7 +777,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             return (true, layout);
         }
 
-        Rect AbsoluteLayoutToWindow(NoteLayoutData layout)
+        private Rect AbsoluteLayoutToWindow(NoteLayoutData layout)
         {
             var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
             return new Rect(
@@ -787,7 +787,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 layout.Height
             );
         }
-        Rect RelativeLayoutToWindow(NoteLayoutData layout)
+
+        private Rect RelativeLayoutToWindow(NoteLayoutData layout)
         {
             var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
             var area = new Size(
@@ -808,7 +809,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 height
             );
         }
-        Rect CurrentWindowToAbsoluteLayout()
+
+        private Rect CurrentWindowToAbsoluteLayout()
         {
             var logicalScreenLocation = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Location, DpiScaleOutputor);
             return new Rect(
@@ -818,7 +820,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 NormalWindowHeight
             );
         }
-        Rect CurrentWindowToRelativeLayout()
+
+        private Rect CurrentWindowToRelativeLayout()
         {
             var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
             var area = new Size(
@@ -838,7 +841,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             );
         }
 
-        void SetLayout(NoteLayoutData layout)
+        private void SetLayout(NoteLayoutData layout)
         {
             var rect = layout.LayoutKind switch {
                 NoteLayoutKind.Absolute => AbsoluteLayoutToWindow(layout),
@@ -858,7 +861,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         }
 
-        void ApplyCaption()
+        private void ApplyCaption()
         {
             DispatcherWrapper.VerifyAccess();
 
@@ -886,7 +889,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
-        void ApplyBorder()
+        private void ApplyBorder()
         {
             DispatcherWrapper.VerifyAccess();
 
@@ -900,7 +903,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
-        void ApplyContent()
+        private void ApplyContent()
         {
             DispatcherWrapper.VerifyAccess();
 
@@ -912,7 +915,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
-        void ApplyBlind()
+        private void ApplyBlind()
         {
             DispatcherWrapper.VerifyAccess();
 
@@ -925,7 +928,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
-        void ApplyTheme()
+        private void ApplyTheme()
         {
             ThrowIfDisposed();
 
@@ -943,7 +946,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }, this, DispatcherPriority.Render);
         }
 
-        void DelayNotifyWindowAreaChanged()
+        private void DelayNotifyWindowAreaChanged()
         {
             if(IsDisposed) {
                 return;
@@ -977,7 +980,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Model.ChangeViewAreaDelaySave(viewAreaChangeTargets, rect.Location, rect.Size);
         }
 
-        ColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
+        private ColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
@@ -1204,7 +1207,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 ShowLinkChangeConfim = false;
             }
         }
-
-
     }
 }

@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        bool _isPopupCreateJobMenu;
+        private bool _isPopupCreateJobMenu;
 
         #endregion
 
@@ -83,18 +83,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        ModelViewModelObservableCollectionManagerBase<KeyboardReplaceJobSettingEditorElement, KeyboardReplaceJobSettingEditorViewMode> ReplaceJobEditorCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<KeyboardReplaceJobSettingEditorElement, KeyboardReplaceJobSettingEditorViewMode> ReplaceJobEditorCollection { get; }
         public ICollectionView ReplaceJobEditors { get; }
 
-        ModelViewModelObservableCollectionManagerBase<KeyboardDisableJobSettingEditorElement, KeyboardDisableJobSettingEditorViewModel> DisableJobEditorCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<KeyboardDisableJobSettingEditorElement, KeyboardDisableJobSettingEditorViewModel> DisableJobEditorCollection { get; }
         public ICollectionView DisableJobEditors { get; }
 
-        ModelViewModelObservableCollectionManagerBase<KeyboardPressedJobSettingEditorElement, KeyboardPressedJobSettingEditorViewModelBase> PressedJobEditorCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<KeyboardPressedJobSettingEditorElement, KeyboardPressedJobSettingEditorViewModelBase> PressedJobEditorCollection { get; }
         public ICollectionView PressedJobEditors { get; }
 
 
         [IgnoreValidation]
-        ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
 
         public bool IsPopupCreateJobMenu
         {
@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        void AddPressedJob(KeyActionKind kind)
+        private void AddPressedJob(KeyActionKind kind)
         {
             Model.AddPressedJob(kind);
             IsPopupCreateJobMenu = false;

@@ -12,9 +12,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region define
 
         [Obsolete]
-        const string formatTimestampFileName = "yyyy-MM-dd_HH-mm-ss";
+        private const string formatTimestampFileName = "yyyy-MM-dd_HH-mm-ss";
         [Obsolete]
-        const string extensionTemporaryFile = "tmp";
+        private const string extensionTemporaryFile = "tmp";
 
         #endregion
 
@@ -46,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var reg = new Regex("([" + pattern + "])");
             return reg.Replace(name.Trim(), m => fn(m.Groups[0].Value[0]));
         }
+
         /// <summary>
         /// ファイル名のシステムで使用できない文字を '_' に置き換える。
         /// </summary>
@@ -141,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="role">役割。</param>
         /// <param name="extension">拡張子。</param>
         /// <returns></returns>
-        static string CreateFileNameCore(string name, string? role, string extension)
+        private static string CreateFileNameCore(string name, string? role, string extension)
         {
             return $"{name}{(role == null ? string.Empty : "-" + role)}.{extension}";
         }

@@ -19,8 +19,8 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #region property
 
-        Regex IntegerRegex { get; } = new Regex(@"[\+\-,0-9]");
-        Regex DecimalRegex { get; } = new Regex(@"[\+\-,0-9\.]");
+        private Regex IntegerRegex { get; } = new Regex(@"[\+\-,0-9]");
+        private Regex DecimalRegex { get; } = new Regex(@"[\+\-,0-9\.]");
 
         public int ScrollNotch { get; set; } = 120;
         //public int ScrollLines { get; set; } = SystemParameters.WheelScrollLines;

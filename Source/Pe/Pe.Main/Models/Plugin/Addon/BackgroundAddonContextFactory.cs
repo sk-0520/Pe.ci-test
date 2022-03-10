@@ -68,6 +68,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         protected override string BaseDirectoryName => CommonDirectoryName;
 
         #endregion
-
     }
 }

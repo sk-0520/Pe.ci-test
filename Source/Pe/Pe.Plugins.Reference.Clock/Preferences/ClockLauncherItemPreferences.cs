@@ -22,9 +22,9 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
 
         #region property
 
-        ClockLauncherItemSetting? Setting { get; set; }
-        ClockLauncherItemPreferencesViewModel? ViewModel { get; set; }
-        UserControl? View { get; set; }
+        private ClockLauncherItemSetting? Setting { get; set; }
+        private ClockLauncherItemPreferencesViewModel? ViewModel { get; set; }
+        private UserControl? View { get; set; }
 
         #endregion
 

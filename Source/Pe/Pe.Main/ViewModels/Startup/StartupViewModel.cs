@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
     {
         #region variable
 
-        bool _isRegisteredStartup;
+        private bool _isRegisteredStartup;
 
         #endregion
 
@@ -58,8 +58,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
                 systemExecutor.OpenNotificationAreaHistory();
             }
         ));
-
-
 
         #endregion
     }

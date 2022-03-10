@@ -15,13 +15,13 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         #region property
 
-        byte BaseAlplha { get; } = 180;
+        private byte BaseAlplha { get; } = 180;
 
         #endregion
 
         #region function
 
-        Color ToBaseColor(Color color)
+        private Color ToBaseColor(Color color)
         {
             color.A = BaseAlplha;
             return color;
@@ -85,7 +85,6 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             ;
             return new SolidColorBrush(color);
         }
-
 
         #endregion
     }

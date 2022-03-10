@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     {
         #region variable
 
-        ReadOnlyObservableCollection<TViewModel>? _readOnlyViewModels;
+        private ReadOnlyObservableCollection<TViewModel>? _readOnlyViewModels;
 
         #endregion
 
@@ -270,7 +270,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #region variable
 
-        ToViewModelDelegate? _toViewModel;
+        private ToViewModelDelegate? _toViewModel;
 
         #endregion
 
@@ -284,7 +284,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #region property
 
-        IList<TModel>? StockModels { get; set; } = new List<TModel>();
+        private IList<TModel>? StockModels { get; set; } = new List<TModel>();
 
         /// <summary>
         /// <typeparamref name="TModel"/>から<typeparamref name="TViewModel"/>への変換処理。

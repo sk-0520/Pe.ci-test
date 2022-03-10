@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        class LauncherItemIconLastUpdatedStatusDto: DtoBase
+        private class LauncherItemIconLastUpdatedStatusDto: DtoBase
         {
             #region property
 
@@ -28,16 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-
-        public LauncherItemIconStatusEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -51,9 +42,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
+        public LauncherItemIconStatusEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
 
-        LauncherIconStatus ConvertFromDto(LauncherItemIconLastUpdatedStatusDto dto)
+        private LauncherIconStatus ConvertFromDto(LauncherItemIconLastUpdatedStatusDto dto)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
             return new LauncherIconStatus(

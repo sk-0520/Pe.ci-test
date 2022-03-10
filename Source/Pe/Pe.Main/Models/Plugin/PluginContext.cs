@@ -37,13 +37,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
-
     /// <inheritdoc cref="IPluginConstructorContext"/>
     public class PluginConstructorContext: PluginCommonContextBase, IPluginConstructorContext
     {
         #region variable
 
-        readonly ILoggerFactory _loggerFactory;
+        private readonly ILoggerFactory _loggerFactory;
 
         #endregion
 
@@ -79,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     {
         #region variable
 
-        readonly PluginStorage _storage;
+        private readonly PluginStorage _storage;
 
         #endregion
 
@@ -103,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     {
         #region variable
 
-        readonly PluginStorage _storage;
+        private readonly PluginStorage _storage;
 
         #endregion
 
@@ -127,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     {
         #region variable
 
-        readonly PluginStorage _storage;
+        private readonly PluginStorage _storage;
 
         #endregion
 
@@ -151,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     {
         #region variable
 
-        readonly PluginStorage _storage;
+        private readonly PluginStorage _storage;
 
         #endregion
 
@@ -175,7 +174,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     {
         #region variable
 
-        readonly PluginStorage _storage;
+        private readonly PluginStorage _storage;
 
         #endregion
 

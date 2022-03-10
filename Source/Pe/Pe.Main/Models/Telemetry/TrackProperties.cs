@@ -20,17 +20,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
 
         public static TrackProperties Empty => new TrackProperties();
 
-        IDictionary<string, string> Items { get; } = new Dictionary<string, string>();
+        private IDictionary<string, string> Items { get; } = new Dictionary<string, string>();
+
         #endregion
 
         #region function
 
-        void ThrowIfInvalidKey(string key)
+        private void ThrowIfInvalidKey(string key)
         { }
-        void ThrowIfInvalidValue(string value)
+        private void ThrowIfInvalidValue(string value)
         { }
 
-        void ThrowIfInvalid(string key, string value)
+        private void ThrowIfInvalid(string key, string value)
         {
             ThrowIfInvalidKey(key);
             ThrowIfInvalidValue(key);

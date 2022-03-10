@@ -103,13 +103,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region function
 
-        void OnStatusChanged(StatusChangedMode mode, StatusProperty statusProperty, Type valueType, object? oldValue, object? newValue)
+        private void OnStatusChanged(StatusChangedMode mode, StatusProperty statusProperty, Type valueType, object? oldValue, object? newValue)
         {
             var e = new StatusChangedEventArgs(mode, statusProperty, valueType, oldValue, newValue);
             StatusChanged?.Invoke(this, e);
         }
 
-        void OnStatusChanged<T>(StatusChangedMode mode, StatusProperty statusProperty, T oldValue, T newValue)
+        private void OnStatusChanged<T>(StatusChangedMode mode, StatusProperty statusProperty, T oldValue, T newValue)
         {
             OnStatusChanged(mode, statusProperty, typeof(T), oldValue, newValue);
         }
@@ -187,6 +187,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
 
         #endregion
-
     }
 }

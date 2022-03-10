@@ -19,8 +19,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region property
 
-        EnvironmentParameters EnvironmentParameters { get; }
-        string BaseDirectoryName { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
+        private string BaseDirectoryName { get; }
 
         #endregion
 

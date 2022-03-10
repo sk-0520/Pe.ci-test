@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #region property
 
         public UserControl? PreferencesControl { get; set; }
-        INotifyPropertyChanged? PreferencesNotifyPropertyChanged { get; set; }
+        private INotifyPropertyChanged? PreferencesNotifyPropertyChanged { get; set; }
         public string LauncherItemHeader => Model.GetLauncherItemPluginHeader();
 
         #endregion
@@ -80,7 +80,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         {
             RaisePropertyChanged(e.PropertyName);
         }
-
-
     }
 }

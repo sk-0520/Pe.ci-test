@@ -30,7 +30,9 @@ namespace ContentTypeTextNet.Pe.Core.Views
         }
 
         #region property
+
         public FOS Fos { get; }
+
         #endregion
     }
 
@@ -52,10 +54,9 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #region property
 
-        ComWrapper<object> FileDialogImpl { get; }
-
-        ComWrapper<IFileDialog> FileDialog { get; }
-        ComWrapper<IFileDialogCustomize> FileDialogCustomize { get; }
+        private ComWrapper<object> FileDialogImpl { get; }
+        private ComWrapper<IFileDialog> FileDialog { get; }
+        private ComWrapper<IFileDialogCustomize> FileDialogCustomize { get; }
 
         /// <summary>
         /// フォルダ選択を行うか。
@@ -157,7 +158,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             return null;
         }
 
-        string TuneExtension(string path)
+        private string TuneExtension(string path)
         {
             var dotExt = Path.GetExtension(path);
             if(!string.IsNullOrWhiteSpace(dotExt)) {

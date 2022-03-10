@@ -27,10 +27,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
         #region property
-        ObservableCollection<LauncherGroupSettingEditorElement> AllLauncherGroups { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private ObservableCollection<LauncherGroupSettingEditorElement> AllLauncherGroups { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         public FontElement? Font { get; private set; }
         public Guid LauncherGroupId { get; set; }
@@ -147,6 +147,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public Guid LauncherToolbarId { get; }
 
         #endregion
-
     }
 }

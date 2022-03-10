@@ -6,6 +6,8 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
     public class LogicalMultiAndConverter: IMultiValueConverter
     {
+        #region IMultiValueConverter
+
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             var targets = values.OfType<bool>().ToArray();
@@ -20,5 +22,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
         {
             throw new NotSupportedException();
         }
+
+        #endregion
     }
 }

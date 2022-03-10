@@ -26,10 +26,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region property
 
-        FileInfo PluginFile { get; }
-        ILogger Logger { get; }
-        AssemblyDependencyResolver AssemblyDependencyResolver { get; }
-        IReadOnlyList<DirectoryInfo> LibraryDirectories { get; }
+        private FileInfo PluginFile { get; }
+        private ILogger Logger { get; }
+        private AssemblyDependencyResolver AssemblyDependencyResolver { get; }
+        private IReadOnlyList<DirectoryInfo> LibraryDirectories { get; }
+
         #endregion
 
         #region function

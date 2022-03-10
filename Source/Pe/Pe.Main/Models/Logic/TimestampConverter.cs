@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        DateTime ToLocal(DateTime dateTime) => dateTime.Kind != DateTimeKind.Local ? dateTime.ToLocalTime() : dateTime;
+        private DateTime ToLocal(DateTime dateTime) => dateTime.Kind != DateTimeKind.Local ? dateTime.ToLocalTime() : dateTime;
 
         /// <summary>
         /// 指定日時をローカル日時文字列に変換。

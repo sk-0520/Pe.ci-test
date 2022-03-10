@@ -63,6 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public event EventHandler? Injected;
 
         #endregion
+
         public WebViewWidgetCallbacks(IPluginIdentifiers pluginIdentifiers, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
@@ -70,14 +71,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         }
 
         #region property
-        IPluginIdentifiers PluginIdentifiers { get; }
-        ILogger Logger { get; }
+
+        private IPluginIdentifiers PluginIdentifiers { get; }
+        private ILogger Logger { get; }
 
         #endregion
 
         #region function
 
-        void OnMoveStarted()
+        private void OnMoveStarted()
         {
             MoveStarted?.Invoke(this, EventArgs.Empty);
         }
@@ -87,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             OnMoveStarted();
         }
 
-        void OnResizeStart(string direction)
+        private void OnResizeStart(string direction)
         {
             var resizeStarted = ResizeStarted;
             if(resizeStarted != null) {
@@ -112,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             OnResizeStart(direction);
         }
 
-        void OnInjected()
+        private void OnInjected()
         {
             Injected?.Invoke(this, EventArgs.Empty);
         }

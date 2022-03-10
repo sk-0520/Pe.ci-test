@@ -158,7 +158,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        static int Enforce(int value, int min, int max, string valueArgumentName)
+        private static int Enforce(int value, int min, int max, string valueArgumentName)
         {
             if(min <= value && value <= max) {
                 return value;
@@ -167,16 +167,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             throw new ArgumentException(valueArgumentName);
         }
 
-        static int EnforceMinutes(int value, string valueArgumentName) => Enforce(value, 0, 59, valueArgumentName);
-        static int EnforceHour(int value, string valueArgumentName) => Enforce(value, 0, 23, valueArgumentName);
+        private static int EnforceMinutes(int value, string valueArgumentName) => Enforce(value, 0, 59, valueArgumentName);
+        private static int EnforceHour(int value, string valueArgumentName) => Enforce(value, 0, 23, valueArgumentName);
         /// <summary>
         /// 年情報がないのでうるう年とか月最終日は知らん。
         /// </summary>
         /// <param name="value"></param>
         /// <param name="valueArgumentName"></param>
         /// <returns></returns>
-        static int EnforceDay(int value, string valueArgumentName) => Enforce(value, 1, 31, valueArgumentName);
-        static int EnforceMonth(int value, string valueArgumentName) => Enforce(value, 1, 12, valueArgumentName);
+        private static int EnforceDay(int value, string valueArgumentName) => Enforce(value, 1, 31, valueArgumentName);
+        private static int EnforceMonth(int value, string valueArgumentName) => Enforce(value, 1, 12, valueArgumentName);
 
         #endregion
 
@@ -218,15 +218,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             : this(Environment.TickCount)
         { }
 
-        #region function
+        #region property
 
-        Random Random { get; }
+        private Random Random { get; }
 
         #endregion
 
         #region function
 
-        IEnumerable<int> ConvertRange(string value, int min, int max)
+        private IEnumerable<int> ConvertRange(string value, int min, int max)
         {
             if(value == "*") {
                 return Enumerable.Range(min, max);
@@ -244,7 +244,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
         }
 
-        IEnumerable<DayOfWeek> ConvertWeek(string value)
+        private IEnumerable<DayOfWeek> ConvertWeek(string value)
         {
             if(value == "*") {
                 return Enum.GetValues<DayOfWeek>();
@@ -257,7 +257,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
         }
 
-        bool TryParseCore(string cronPattern, [NotNullWhen(false)] out Exception? resultException, [NotNullWhen(true)] out CronItemSetting? resultSetting)
+        private bool TryParseCore(string cronPattern, [NotNullWhen(false)] out Exception? resultException, [NotNullWhen(true)] out CronItemSetting? resultSetting)
         {
             if(string.IsNullOrWhiteSpace(cronPattern)) {
                 resultException = new ArgumentException(nameof(cronPattern));
@@ -377,12 +377,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <summary>
         /// 実行処理。
         /// </summary>
-        ICronExecutor Executor { get; }
+        private ICronExecutor Executor { get; }
 
         /// <summary>
         /// 自身の実行キャンセル通知。
         /// </summary>
-        CancellationTokenSource? CancellationTokenSource { get; set; }
+        private CancellationTokenSource? CancellationTokenSource { get; set; }
 
         /// <summary>
         /// 最後に実行した時間。
@@ -489,7 +489,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region define
 
-        class CronExecutorWrapper: ICronExecutor
+        private class CronExecutorWrapper: ICronExecutor
         {
             public CronExecutorWrapper(Func<CancellationToken, Task> executor)
             {
@@ -528,13 +528,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #region property
 
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
-        ISet<CronJob> Jobs { get; } = new HashSet<CronJob>();
+        private ISet<CronJob> Jobs { get; } = new HashSet<CronJob>();
 
-        System.Timers.Timer? Timer { get; set; }
+        private System.Timers.Timer? Timer { get; set; }
 
         public bool IsRunning => Timer != null && Timer.Enabled;
 
@@ -580,7 +580,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             Timer = null;
         }
 
-        CronJob AddScheduleCore(IReadOnlyCronItemSetting setting, ICronExecutor executor)
+        private CronJob AddScheduleCore(IReadOnlyCronItemSetting setting, ICronExecutor executor)
         {
             var cronJobId = Guid.NewGuid();
             var item = new CronJob(cronJobId, setting, executor, LoggerFactory);
@@ -680,7 +680,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             Timer.Interval = GetNextJobWaitTime(DateTime.Now).TotalMilliseconds;
             Timer.Start();
         }
-
-
     }
 }

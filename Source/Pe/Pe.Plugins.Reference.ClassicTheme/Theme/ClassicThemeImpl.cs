@@ -17,10 +17,9 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme.Theme
 
         #region property
 
-        ResourceDictionary? ResourceDictionary { get; set; }
+        private ResourceDictionary? ResourceDictionary { get; set; }
 
         #endregion
-
 
         #region ThemeBase
 

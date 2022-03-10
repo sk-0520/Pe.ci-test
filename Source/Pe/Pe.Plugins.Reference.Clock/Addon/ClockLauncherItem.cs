@@ -25,8 +25,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
     {
         #region variable
 
-        ClockLauncherItemSetting? _setting;
-        DateTime _currentTime = DateTime.Now;
+        private ClockLauncherItemSetting? _setting;
+        private DateTime _currentTime = DateTime.Now;
 
         internal void Test()
         {
@@ -47,8 +47,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         #region property
 
-        PluginBase Plugin { get; }
-        ClockLauncherItemSetting Setting
+        private PluginBase Plugin { get; }
+        private ClockLauncherItemSetting Setting
         {
             get
             {
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
                 return this._setting;
             }
         }
-        DispatcherTimer ClockTimer { get; }
+        private DispatcherTimer ClockTimer { get; }
 
         public DateTime CurrentTime
         {
@@ -72,12 +72,11 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
             }
         }
 
-
         #endregion
 
         #region function
 
-        void ReloadSetting()
+        private void ReloadSetting()
         {
             ContextWorker.RunLauncherItemAddon(c => {
                 if(!c.Storage.Persistent.Normal.TryGet<ClockLauncherItemSetting>(LauncherItemId, string.Empty, out this._setting)) {
@@ -182,7 +181,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         #endregion
 
-
         private void ClockTimer_Tick(object? sender, EventArgs e)
         {
             ClockTimer.Stop();
@@ -194,6 +192,5 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
             ClockTimer.Interval = TimeSpan.FromMilliseconds(TimeSpan.FromSeconds(1).TotalMilliseconds - CurrentTime.Millisecond);
             ClockTimer.Start();
         }
-
     }
 }

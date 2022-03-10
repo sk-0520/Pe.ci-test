@@ -40,9 +40,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
-        string StartupFileName { get; } =
+        private string StartupFileName { get; } =
 #if DEBUG
             "Pe-debug.lnk"
 #elif BETA
@@ -52,10 +52,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 #endif
         ;
 
-        string OldStartupFileName { get; } = "PeMain.lnk";
+        private string OldStartupFileName { get; } = "PeMain.lnk";
 
-        string StartupFilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), StartupFileName);
-        string OldStartupFilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), OldStartupFileName);
+        private string StartupFilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), StartupFileName);
+        private string OldStartupFilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), OldStartupFileName);
 
         #endregion
 

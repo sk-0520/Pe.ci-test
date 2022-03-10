@@ -30,15 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-        public NoteContentsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -53,13 +45,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public static string RefreshTime { get; } = "RefreshTime";
             public static string IsEnabledRefresh { get; } = "IsEnabledRefresh";
 
-
             #endregion
         }
 
         #endregion
 
+        public NoteContentsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
+
         private NoteContentsEntityDto ConvertFromData(NoteContentData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteContentKindTransfer = new EnumTransfer<NoteContentKind>();

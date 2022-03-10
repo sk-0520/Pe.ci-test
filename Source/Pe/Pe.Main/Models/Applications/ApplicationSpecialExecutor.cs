@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     {
         #region define
 
-        enum Mode
+        private enum Mode
         {
             None,
             /// <summary>
@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             DryRun,
         }
 
-        class ConsoleLifetime: DisposerBase
+        private class ConsoleLifetime: DisposerBase
         {
             public ConsoleLifetime()
             {
@@ -41,11 +41,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             #region property
 
-            bool _attached = true;
+            private bool _attached = true;
 
             #endregion
 
-            #region MyRegion
+            #region DisposerBase
 
             protected override void Dispose(bool disposing)
             {
@@ -96,7 +96,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     throw new NotImplementedException();
             }
         }
-
 
         public int Run(string appSpecialMode, IEnumerable<string> arguments)
         {

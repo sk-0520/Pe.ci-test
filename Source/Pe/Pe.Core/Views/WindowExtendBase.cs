@@ -27,7 +27,6 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #region DisposerBase
         #endregion
-
     }
 
     public abstract class WndProcExtendBase<TWindow, TExtendData>: WindowExtendBase<TWindow, TExtendData>
@@ -59,14 +58,14 @@ namespace ContentTypeTextNet.Pe.Core.Views
         protected virtual void InitializedWindowHandleImpl()
         { }
 
-        void InitializedWindowHandle()
+        private void InitializedWindowHandle()
         {
             Debug.Assert(WindowHandle.ToInt32() != 0);
 
             InitializedWindowHandleImpl();
         }
 
-        void AttachHwndSource()
+        private void AttachHwndSource()
         {
             WindowHandle = GetWindowHandle();
             IsEnabledWindowHandle = true;
@@ -108,7 +107,5 @@ namespace ContentTypeTextNet.Pe.Core.Views
             View.SourceInitialized -= View_SourceInitialized!;
             AttachHwndSource();
         }
-
-
     }
 }

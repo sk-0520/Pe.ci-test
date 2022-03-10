@@ -35,6 +35,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemExtension
         }
 
         #endregion
-
     }
 }

@@ -7,7 +7,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     {
         #region variable
 
-        readonly PluginStorage _storage;
+        private readonly PluginStorage _storage;
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     {
         #region variable
 
-        readonly PluginStorage _storage;
+        private readonly PluginStorage _storage;
 
         #endregion
 

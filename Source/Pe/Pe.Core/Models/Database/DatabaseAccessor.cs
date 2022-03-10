@@ -217,9 +217,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region property
 
-        Lazy<IDbConnection> LazyConnection { get; set; }
+        private Lazy<IDbConnection> LazyConnection { get; set; }
 
-        Lazy<IDatabaseImplementation> LazyImplementation { get; }
+        private Lazy<IDatabaseImplementation> LazyImplementation { get; }
         protected IDatabaseImplementation Implementation => LazyImplementation.Value;
 
         protected ILogger Logger { get; }

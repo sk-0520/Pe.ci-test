@@ -38,8 +38,6 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #endregion
 
-
-
         //#region BaseColorProperty
 
         //public static readonly DependencyProperty BaseColorProperty = DependencyProperty.Register(

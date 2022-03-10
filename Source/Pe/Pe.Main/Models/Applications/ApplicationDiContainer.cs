@@ -117,7 +117,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             });
         }
 
-
         public static TContainer RegisterDatabase<TContainer>(this TContainer container, ApplicationDatabaseFactoryPack factoryPack, LazyWriterWaitTimePack lazyWriterWaitTimePack, ILoggerFactory loggerFactory)
             where TContainer : IDiRegisterContainer
         {

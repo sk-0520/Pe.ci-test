@@ -16,26 +16,26 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.ViewModels
     {
         #region variable
 
-        double _mouseX;
-        double _mouseY;
+        private double _mouseX;
+        private double _mouseY;
 
-        double _leftPupilX;
-        double _leftPupilY;
+        private double _leftPupilX;
+        private double _leftPupilY;
 
-        double _rightPupilX;
-        double _rightPupilY;
+        private double _rightPupilX;
+        private double _rightPupilY;
 
-        Color _leftEyeColor = Colors.White;
-        Color _rightEyeColor = Colors.White;
+        private Color _leftEyeColor = Colors.White;
+        private Color _rightEyeColor = Colors.White;
 
-        Color _leftStrokeColor = Colors.Black;
-        Color _rightStrokeColor = Colors.Black;
+        private Color _leftStrokeColor = Colors.Black;
+        private Color _rightStrokeColor = Colors.Black;
 
-        Color _leftPupilColor = Colors.Black;
-        Color _rightPupilColor = Colors.Black;
+        private Color _leftPupilColor = Colors.Black;
+        private Color _rightPupilColor = Colors.Black;
 
-        bool _leftPressed;
-        bool _rightPressed;
+        private bool _leftPressed;
+        private bool _rightPressed;
 
         #endregion
 
@@ -51,8 +51,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.ViewModels
 
         #region property
 
-        Ellipse LeftEye { get; }
-        Ellipse RightEye { get; }
+        private Ellipse LeftEye { get; }
+        private Ellipse RightEye { get; }
 
         public double EyeWidth { get; } = 100;
         public double EyeHeight { get; } = 100;
@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.ViewModels
             private set => SetProperty(ref this._mouseY, value);
         }
 
-        EyesBackground? EyesBackground { get; set; }
+        private EyesBackground? EyesBackground { get; set; }
 
         #endregion
 
@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.ViewModels
             EyesBackground = null;
         }
 
-        Point GetDipScale(Visual visual)
+        private Point GetDipScale(Visual visual)
         {
             var source = PresentationSource.FromVisual(visual);
             if(source != null && source.CompositionTarget != null) {
@@ -263,8 +263,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.ViewModels
             }
         }
 
-
-
         private void EyesBackground_KeyDown(object? sender, BackgroundKeyEventArgs e)
         {
             if(e.Key == System.Windows.Input.Key.LeftShift) {
@@ -312,9 +310,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.ViewModels
             if(e.Key == System.Windows.Input.Key.RightCtrl) {
                 RightPupilColor = Colors.Black;
             }
-
         }
-
-
     }
 }

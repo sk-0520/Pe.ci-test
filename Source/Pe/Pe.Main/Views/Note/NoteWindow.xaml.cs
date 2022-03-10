@@ -34,18 +34,18 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
         #region property
 
         [Inject]
-        ILogger? Logger { get; set; }
+        private ILogger? Logger { get; set; }
         [Inject]
-        ILoggerFactory? LoggerFactory { get; set; }
+        private ILoggerFactory? LoggerFactory { get; set; }
 
-        PopupAttacher? PopupAttacher { get; set; }
-        CommandStore CommandStore { get; } = new CommandStore();
+        private PopupAttacher? PopupAttacher { get; set; }
+        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
         #region command
 
-        ICommand? _TitleEditStartCommand;
+        private ICommand? _TitleEditStartCommand;
         public ICommand TitleEditStartCommand
         {
             get
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             }
         }
 
-        ICommand? _CloseCommand;
+        private ICommand? _CloseCommand;
         public ICommand CloseCommand
         {
             get

@@ -30,10 +30,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
 
         #region property
 
-        PopupAttacher PopupAttacher { get; }
-        CommandStore CommandStore { get; } = new CommandStore();
+        private PopupAttacher PopupAttacher { get; }
+        private CommandStore CommandStore { get; } = new CommandStore();
         [Inject]
-        ILogger? Logger { get; set; }
+        private ILogger? Logger { get; set; }
 
         #endregion
 

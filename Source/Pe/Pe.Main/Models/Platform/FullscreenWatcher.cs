@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         public IList<string> IgnoreFullscreenWindowClassNames { get; } = new List<string>();
 

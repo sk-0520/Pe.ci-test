@@ -353,6 +353,5 @@ namespace ContentTypeTextNet.Pe.Main.Views
         }
 
         #endregion
-
     }
 }

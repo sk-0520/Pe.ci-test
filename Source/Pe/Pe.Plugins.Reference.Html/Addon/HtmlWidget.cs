@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html.Addon
     {
         #region define
 
-        public class Extensions
+        private class Extensions
         {
             #region property
 
@@ -28,8 +28,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html.Addon
 
             public string SampleCallback(string value)
             {
-                return value switch
-                {
+                return value switch {
                     "1" => "おはよう！",
                     "2" => "こんちは！",
                     "3" => "おつかれ！",
@@ -53,21 +52,22 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html.Addon
 
         #region property
 
-        ILoggerFactory LoggerFactory { get; }
-        ILogger Logger { get; }
-        IAddonExecutor AddonExecutor { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
-        ISkeletonImplements SkeletonImplements { get; }
-        IPluginInformations PluginInformations { get; }
+        private ILoggerFactory LoggerFactory { get; }
+        private ILogger Logger { get; }
+        private IAddonExecutor AddonExecutor { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
+        private ISkeletonImplements SkeletonImplements { get; }
+        private IPluginInformations PluginInformations { get; }
 
-        IWebViewGrass? WebViewGrass { get; set; }
+        private IWebViewGrass? WebViewGrass { get; set; }
 
-        Timer? SendTimer { get; set; }
+        private Timer? SendTimer { get; set; }
+
         #endregion
 
         #region function
 
-        void OnInitialized(IWebViewGrass webViewGrass)
+        private void OnInitialized(IWebViewGrass webViewGrass)
         {
             WebViewGrass = webViewGrass;
 
@@ -144,6 +144,5 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html.Addon
 
             SendTimer.Start();
         }
-
     }
 }

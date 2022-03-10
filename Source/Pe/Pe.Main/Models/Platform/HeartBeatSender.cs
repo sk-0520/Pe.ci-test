@@ -27,12 +27,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
-        Timer Timer { get; }
+        private Timer Timer { get; }
 
         [DateTimeKind(DateTimeKind.Utc)]
-        DateTime LastSendTime { get; set; } = DateTime.MinValue;
+        private DateTime LastSendTime { get; set; } = DateTime.MinValue;
 
         public TimeSpan SendSpan { get; }
 
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             Timer.Stop();
         }
 
-        void Send()
+        private void Send()
         {
             Logger.LogDebug("ロック抑制");
 
@@ -101,6 +101,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             }
             Start();
         }
-
     }
 }

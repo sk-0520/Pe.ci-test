@@ -21,13 +21,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         }
 
         #region property
-        NewVersionInfo NewVersionInfoImpl { get; }
+        private NewVersionInfo NewVersionInfoImpl { get; }
         public IReadOnlyNewVersionInfo NewVersionInfo => NewVersionInfoImpl;
 
         public IReadOnlyNewVersionItemData NewVersionItem { get; }
         public bool IsCheckOnly { get; private set; }
-        IOrderManager OrderManager { get; }
-        IUserAgentManager UserAgentManager { get; }
+        private IOrderManager OrderManager { get; }
+        private IUserAgentManager UserAgentManager { get; }
 
         #endregion
 

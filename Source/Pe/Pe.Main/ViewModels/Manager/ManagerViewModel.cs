@@ -28,11 +28,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
     {
         #region variable
 
-        bool _isOpenNoteMenu;
-        bool _isOpenSystemMenu;
-        bool _isOpenWidgetsMenu;
-        bool _isOpenContextMenu;
-        bool _isEnabledManager = true;
+        private bool _isOpenNoteMenu;
+        private bool _isOpenSystemMenu;
+        private bool _isOpenWidgetsMenu;
+        private bool _isOpenContextMenu;
+        private bool _isEnabledManager = true;
 
         #endregion
 
@@ -64,11 +64,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         // 月初だけ windows アイコンを古くする(理由はない)
         public bool ShowPlatformOldVersion => DateTime.Now.Day == 1;
 
-        ApplicationManager ApplicationManager { get; }
-        IKeyGestureGuide KeyGestureGuide { get; }
-        IUserTracker UserTracker { get; }
+        private ApplicationManager ApplicationManager { get; }
+        private IKeyGestureGuide KeyGestureGuide { get; }
+        private IUserTracker UserTracker { get; }
 
-        ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> LauncherToolbarCollection { get; }
+        private ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> LauncherToolbarCollection { get; }
         public ReadOnlyObservableCollection<LauncherToolbarNotifyAreaViewModel> LauncherToolbarItems { get; }
 
 
@@ -94,11 +94,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             }
         }
 
-        ModelViewModelObservableCollectionManagerBase<NoteElement, NoteNotifyAreaViewModel> NoteCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<NoteElement, NoteNotifyAreaViewModel> NoteCollection { get; }
         public ICollectionView NoteVisibleItems { get; }
         public ICollectionView NoteHiddenItems { get; }
 
-        ModelViewModelObservableCollectionManagerBase<WidgetElement, WidgetNotifyAreaViewModel> WidgetCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<WidgetElement, WidgetNotifyAreaViewModel> WidgetCollection { get; }
         public ICollectionView WidgetItems { get; }
 
         #endregion
@@ -170,7 +170,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 Logger.LogDebug("[#530調査] <IsOpenContextMenu> IsOpenContextMenu = {0}, IsEnabledManager = {1}", IsOpenContextMenu, IsEnabledManager);
             }
         }
-
 
         public IReadOnlyNewVersionInfo UpdateInfo => ApplicationManager.ApplicationUpdateInfo;
 
@@ -322,6 +321,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 RaisePropertyChanged(member.Name);
             }
         }
-
     }
 }

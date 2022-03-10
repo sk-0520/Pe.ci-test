@@ -53,17 +53,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 
         #region property
 
-        INotifyLogTheme NotifyLogTheme { get; }
-        IPlatformTheme PlatformTheme { get; }
+        private INotifyLogTheme NotifyLogTheme { get; }
+        private IPlatformTheme PlatformTheme { get; }
 
-        IDpiScaleOutputor? DpiScaleOutputor { get; set; }
+        private IDpiScaleOutputor? DpiScaleOutputor { get; set; }
 
-        ThemeProperties ThemeProperties { get; }
-        PropertyChangedHooker PropertyChangedHooker { get; }
+        private ThemeProperties ThemeProperties { get; }
+        private PropertyChangedHooker PropertyChangedHooker { get; }
 
-        ModelViewModelObservableCollectionManagerBase<NotifyLogItemElement, NotifyLogItemViewModel> TopmostNotifyLogCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<NotifyLogItemElement, NotifyLogItemViewModel> TopmostNotifyLogCollection { get; }
         public ICollectionView TopmostNotifyLogItems { get; }
-        ModelViewModelObservableCollectionManagerBase<NotifyLogItemElement, NotifyLogItemViewModel> StreamNotifyLogCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<NotifyLogItemElement, NotifyLogItemViewModel> StreamNotifyLogCollection { get; }
         public ICollectionView StreamNotifyLogItems { get; }
 
         public NotifyLogPosition Position => Model.Position;
@@ -195,6 +195,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }
-
     }
 }

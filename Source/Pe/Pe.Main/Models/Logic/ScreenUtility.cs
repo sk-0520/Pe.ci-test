@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        static string DeviceToId(string? deviceName)
+        private static string DeviceToId(string? deviceName)
         {
             if(string.IsNullOrEmpty(deviceName)) {
                 return string.Empty;
@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return new string(deviceName.Trim().SkipWhile(c => !char.IsNumber(c)).ToArray());
         }
 
-        static IEnumerable<Win32_DesktopMonitor> GetScreens(string? deviceName, ILoggerFactory loggerFactory)
+        private static IEnumerable<Win32_DesktopMonitor> GetScreens(string? deviceName, ILoggerFactory loggerFactory)
         {
             ILogger? logger = null;
             string query = "SELECT * FROM Win32_DesktopMonitor";

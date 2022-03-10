@@ -8,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
     {
         #region variable
 
-        readonly PluginStorage _storage;
+        private readonly PluginStorage _storage;
 
         #endregion
 
@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
     {
         #region variable
 
-        readonly PluginStorage _storage;
+        private readonly PluginStorage _storage;
 
         #endregion
 
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
     {
         #region variable
 
-        readonly PluginStorage _storage;
+        private readonly PluginStorage _storage;
 
         #endregion
 
@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
     {
         #region variable
 
-        readonly PluginStorage _storage;
+        private readonly PluginStorage _storage;
 
         #endregion
 

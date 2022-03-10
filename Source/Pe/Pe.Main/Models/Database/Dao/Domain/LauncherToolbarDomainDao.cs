@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 
         #region function
 
-        LauncherToolbarsScreenData ConvertFromDto(LauncherToolbarScreenRowDto dto)
+        private LauncherToolbarsScreenData ConvertFromDto(LauncherToolbarScreenRowDto dto)
         {
             var data = new LauncherToolbarsScreenData() {
                 LauncherToolbarId = dto.LauncherToolbarId,
@@ -71,7 +71,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
                 .Select(i => ConvertFromDto(i))
             ;
         }
-
 
         #endregion
     }

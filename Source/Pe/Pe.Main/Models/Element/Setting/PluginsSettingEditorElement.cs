@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     {
         #region define
 
-        class StringProgress: IProgress<string>
+        private class StringProgress: IProgress<string>
         {
             public StringProgress(ILoggerFactory loggerFactory)
             {
@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             #region property
 
-            ILogger Logger { get; }
+            private ILogger Logger { get; }
 
             #endregion
 
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             #region property
 
-            ILogger Logger { get; }
+            private ILogger Logger { get; }
 
             #endregion
 
@@ -93,22 +93,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
-        PreferencesContextFactory PreferencesContextFactory { get; }
-        IHttpUserAgentFactory UserAgentFactory { get; }
-        IPlatformTheme PlatformTheme { get; }
-        EnvironmentParameters EnvironmentParameters { get; }
+        private PreferencesContextFactory PreferencesContextFactory { get; }
+        private IHttpUserAgentFactory UserAgentFactory { get; }
+        private IPlatformTheme PlatformTheme { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
 
-        PluginContainer PluginContainer { get; }
-        IPluginConstructorContext PluginConstructorContext { get; }
-        PauseReceiveLogDelegate PauseReceiveLog { get; }
+        private PluginContainer PluginContainer { get; }
+        private IPluginConstructorContext PluginConstructorContext { get; }
+        private PauseReceiveLogDelegate PauseReceiveLog { get; }
 
-        ObservableCollection<PluginSettingEditorElement> PluginItemsImpl { get; } = new ObservableCollection<PluginSettingEditorElement>();
+        private ObservableCollection<PluginSettingEditorElement> PluginItemsImpl { get; } = new ObservableCollection<PluginSettingEditorElement>();
         public ReadOnlyObservableCollection<PluginSettingEditorElement> PluginItems { get; }
 
-        ObservableCollection<PluginInstallItemElement> InstallPluginItemsImpl { get; } = new ObservableCollection<PluginInstallItemElement>();
+        private ObservableCollection<PluginInstallItemElement> InstallPluginItemsImpl { get; } = new ObservableCollection<PluginInstallItemElement>();
         public ReadOnlyObservableCollection<PluginInstallItemElement> InstallPluginItems { get; }
 
-        PluginInstaller PluginInstaller { get; }
+        private PluginInstaller PluginInstaller { get; }
+
         #endregion
 
         #region function

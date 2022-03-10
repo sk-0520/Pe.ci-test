@@ -31,17 +31,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #region property
 
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
-        ILoggerFactory LoggerFactory { get; }
+        private ILogger Logger { get; }
+        private ILoggerFactory LoggerFactory { get; }
 
-        ApplicationConfiguration ApplicationConfiguration { get; }
-        IUserAgentManager UserAgentManager { get; }
+        private ApplicationConfiguration ApplicationConfiguration { get; }
+        private IUserAgentManager UserAgentManager { get; }
 
         #endregion
 
         #region function
 
-        async Task<NewVersionData?> RequestUpdateDataAsync(Uri uri)
+        private async Task<NewVersionData?> RequestUpdateDataAsync(Uri uri)
         {
             using var agent = UserAgentManager.CreateUserAgent();
             try {
@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <param name="pluginId">プラグインID。</param>
         /// <param name="pluginVersion">プラグインバージョン。</param>
         /// <returns>構築したURI。構築できなかった場合は<c>null</c></returns>
-        Uri? BuildPluginUri(string baseUrl, Guid pluginId, Version pluginVersion)
+        private Uri? BuildPluginUri(string baseUrl, Guid pluginId, Version pluginVersion)
         {
             if(string.IsNullOrWhiteSpace(baseUrl)) {
                 return null;

@@ -22,15 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-        public PluginSettingsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -44,9 +36,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
+        public PluginSettingsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
 
-        PluginSettingRawValue ConvertFromDto(PluginSettingDto dto)
+        private PluginSettingRawValue ConvertFromDto(PluginSettingDto dto)
         {
             var pluginPersistentFormatTransfer = new EnumTransfer<PluginPersistentFormat>();
 
@@ -57,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        PluginSettingDto ConvertFromData(Guid pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        private PluginSettingDto ConvertFromData(Guid pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var pluginPersistentFormatTransfer = new EnumTransfer<PluginPersistentFormat>();
 

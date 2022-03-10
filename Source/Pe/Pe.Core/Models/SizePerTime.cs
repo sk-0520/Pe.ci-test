@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         public TimeSpan BaseTime { get; }
 
-        Stopwatch Stopwatch { get; } = new Stopwatch();
+        private Stopwatch Stopwatch { get; } = new Stopwatch();
 
         /// <summary>
         /// <see cref="BaseTime"/>中での使用量。

@@ -31,13 +31,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region property
 
-        IWindowManager WindowManager { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
-        INoteTheme NoteTheme { get; }
+        private IWindowManager WindowManager { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
+        private INoteTheme NoteTheme { get; }
 
-        PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedHooker PropertyChangedHooker { get; }
 
-        NoteIconMaker NoteIconFactory { get; } = new NoteIconMaker();
+        private NoteIconMaker NoteIconFactory { get; } = new NoteIconMaker();
 
         public bool IsVisible => Model.IsVisible;
 
@@ -100,7 +100,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }
-
-
     }
 }

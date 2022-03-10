@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
 
         #region function
 
-        Task TrackCoreAsync(string eventName, TrackProperties properties, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
+        private Task TrackCoreAsync(string eventName, TrackProperties properties, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
             Logger.LogTrace("{0}: {1}, {2} {3}[{4}]", eventName, properties, callerMemberName, callerFilePath, callerLineNumber);
             return Task.CompletedTask;

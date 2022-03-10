@@ -21,21 +21,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         #region property
 
         /// <inheritdoc cref="IIdFactory"/>
-        IIdFactory IdFactory { get; }
+        private IIdFactory IdFactory { get; }
         /// <inheritdoc cref="IDatabaseAccessorPack"/>
-        IDatabaseAccessorPack AccessorPack { get; }
+        private IDatabaseAccessorPack AccessorPack { get; }
         /// <inheritdoc cref="IDatabaseStatementLoader"/>
-        IDatabaseStatementLoader StatementLoader { get; }
+        private IDatabaseStatementLoader StatementLoader { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         #endregion
 
         #region function
 
-        void TuneImpl(IDatabaseAccessor accessor, IEnumerable<TunerBase> tuners)
+        private void TuneImpl(IDatabaseAccessor accessor, IEnumerable<TunerBase> tuners)
         {
             using(var transaction = accessor.BeginTransaction()) {
                 foreach(var tuner in tuners) {
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             }
         }
 
-        void TuneMain()
+        private void TuneMain()
         {
             var tuners = new TunerBase[] {
                 new Tuner_LauncherGroups(IdFactory, StatementLoader, LoggerFactory),
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             TuneImpl(AccessorPack.Main, tuners);
         }
 
-        void TuneFile()
+        private void TuneFile()
         {
             var tuners = System.Array.Empty<TunerBase>();
             TuneImpl(AccessorPack.Large, tuners);

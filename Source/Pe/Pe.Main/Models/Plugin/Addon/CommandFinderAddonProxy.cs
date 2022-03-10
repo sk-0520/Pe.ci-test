@@ -34,7 +34,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
-
         #region ICommandFinder
 
 

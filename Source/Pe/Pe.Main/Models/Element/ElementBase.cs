@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
     {
         #region variable
 
-        bool _isInitialized;
+        private bool _isInitialized;
 
         #endregion
         protected ElementBase(ILoggerFactory loggerFactory)

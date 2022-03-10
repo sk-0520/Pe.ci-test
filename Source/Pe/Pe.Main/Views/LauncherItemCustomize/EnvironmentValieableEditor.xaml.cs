@@ -170,6 +170,5 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
                 AvalonEditHelper.SetSyntaxHighlightingDefault((ICSharpCode.AvalonEdit.TextEditor)sender, stream);
             }
         }
-
     }
 }

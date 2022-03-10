@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        LauncherItemSettingEditorViewModel? _selectedLauncherItem;
+        private LauncherItemSettingEditorViewModel? _selectedLauncherItem;
 
         #endregion
 
@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         /// <para>親元でアイコンと共通項目構築済みのランチャーアイテム。毎回作るのあれだし。</para>
         /// </summary>
         [IgnoreValidation]
-        ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
 
         /// <summary>
         /// 所属ランチャーアイテム。
@@ -57,11 +57,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         /// </summary>
         //public ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherItems { get; }
         [IgnoreValidation]
-        ModelViewModelObservableCollectionManagerBase<WrapModel<Guid>, LauncherItemSettingEditorViewModel> LauncherCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<WrapModel<Guid>, LauncherItemSettingEditorViewModel> LauncherCollection { get; }
         [IgnoreValidation]
         public ReadOnlyObservableCollection<LauncherItemSettingEditorViewModel> LauncherItems { get; }
 
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
 
         [Required]
@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public LauncherGroupKind Kind => Model.Kind;
 
-        LauncherGroupIconMaker IconMaker { get; } = new LauncherGroupIconMaker();
+        private LauncherGroupIconMaker IconMaker { get; } = new LauncherGroupIconMaker();
 
         public object GroupIcon => IconMaker.GetGroupImage(ImageName, ImageColor, IconBox.Small, IconSize.DefaultScale, false);
 
@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        void ReloadGroupIcon()
+        private void ReloadGroupIcon()
         {
             RaisePropertyChanged(nameof(GroupIcon));
         }
@@ -179,6 +179,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #endregion
-
     }
 }

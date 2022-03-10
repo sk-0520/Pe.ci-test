@@ -29,19 +29,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #region property
 
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="IOrderManager"/>
-        IOrderManager OrderManager { get; }
+        private IOrderManager OrderManager { get; }
         /// <inheritdoc cref="IWindowManager"/>
-        IWindowManager WindowManager { get; }
+        private IWindowManager WindowManager { get; }
         /// <inheritdoc cref="IUserTracker"/>
-        IUserTracker UserTracker { get; }
+        private IUserTracker UserTracker { get; }
         /// <inheritdoc cref="IDispatcherWrapper"/>
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
-        ISet<LauncherItemAddonViewSupporter> LauncherItemAddonViewSupporters { get; } = new HashSet<LauncherItemAddonViewSupporter>();
+        private ISet<LauncherItemAddonViewSupporter> LauncherItemAddonViewSupporters { get; } = new HashSet<LauncherItemAddonViewSupporter>();
 
         #endregion
 
@@ -109,8 +109,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
-        static bool DefaultUserClosing() => false;
-        static void DefaultClosedWindow() { }
+        private static bool DefaultUserClosing() => false;
+        private static void DefaultClosedWindow() { }
 
         #endregion
     }
@@ -132,19 +132,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #region property
 
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="IPluginInformations"/>
-        IPluginInformations PluginInformations { get; }
+        private IPluginInformations PluginInformations { get; }
         /// <inheritdoc cref="IWindowManager"/>
-        IWindowManager WindowManager { get; }
+        private IWindowManager WindowManager { get; }
         /// <inheritdoc cref="IOrderManager"/>
-        IOrderManager OrderManager { get; }
+        private IOrderManager OrderManager { get; }
         /// <inheritdoc cref="IUserTracker"/>
-        IUserTracker UserTracker { get; }
+        private IUserTracker UserTracker { get; }
         /// <inheritdoc cref="IDispatcherWrapper"/>
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
         public LauncherItemExtensionElement? Element { get; private set; }
 

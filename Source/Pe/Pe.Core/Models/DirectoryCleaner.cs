@@ -31,16 +31,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 対象ディレクトリ。
         /// </summary>
-        DirectoryInfo Directory { get; }
+        private DirectoryInfo Directory { get; }
         /// <summary>
         /// 待機回数。
         /// </summary>
-        int RetryCount { get; }
+        private int RetryCount { get; }
         /// <summary>
         /// 一回の待機に対する待ち時間。
         /// </summary>
-        TimeSpan WaitTime { get; }
-        ILogger Logger { get; }
+        private TimeSpan WaitTime { get; }
+        private ILogger Logger { get; }
+
         #endregion
 
         #region function

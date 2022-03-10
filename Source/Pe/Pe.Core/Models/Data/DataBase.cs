@@ -19,8 +19,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
     public abstract class DataBase: IData
     { }
 
-
-
     public interface IRawModel: IReadOnlyData
     {
         #region property

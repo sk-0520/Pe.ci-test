@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    class HookItemCache
+    internal class HookItemCache
     {
         public HookItemCache(IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands, IEnumerable<DelegateCommandBase> raiseDelegateCommands, IEnumerable<Action> callbacks)
         {
@@ -111,13 +111,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         protected ILogger Logger { get; }
 
         protected IDictionary<string, List<HookItem>> Hookers { get; } = new Dictionary<string, List<HookItem>>();
-        IDictionary<string, HookItemCache> Cache { get; } = new Dictionary<string, HookItemCache>();
+        private IDictionary<string, HookItemCache> Cache { get; } = new Dictionary<string, HookItemCache>();
 
         #endregion
 
         #region function
 
-        IReadOnlyHookItem AddHookCore(HookItem hookItem)
+        private IReadOnlyHookItem AddHookCore(HookItem hookItem)
         {
             ThrowIfDisposed();
 
@@ -319,7 +319,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return AddHookCore(hookItem);
         }
 
-        HookItemCache MakeCache(IEnumerable<IReadOnlyHookItem> hookItems)
+        private HookItemCache MakeCache(IEnumerable<IReadOnlyHookItem> hookItems)
         {
             ThrowIfDisposed();
 
@@ -339,7 +339,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return result;
         }
 
-        bool ExecutePropertyies(IReadOnlyList<string> raisePropertyNames, Action<string> raiser)
+        private bool ExecutePropertyies(IReadOnlyList<string> raisePropertyNames, Action<string> raiser)
         {
             ThrowIfDisposed();
 
@@ -359,7 +359,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return true;
         }
-        bool ExecuteCommands(IReadOnlyList<ICommand> raiseCommands, IReadOnlyList<DelegateCommandBase> raiseDelegateCommands)
+        private bool ExecuteCommands(IReadOnlyList<ICommand> raiseCommands, IReadOnlyList<DelegateCommandBase> raiseDelegateCommands)
         {
             ThrowIfDisposed();
 
@@ -386,7 +386,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return true;
         }
-        bool ExecuteCallback(IReadOnlyList<Action> callbacks)
+        private bool ExecuteCallback(IReadOnlyList<Action> callbacks)
         {
             ThrowIfDisposed();
 
@@ -407,7 +407,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return true;
         }
 
-        bool ExecuteCache(HookItemCache hookItemCache, Action<string> raiser)
+        private bool ExecuteCache(HookItemCache hookItemCache, Action<string> raiser)
         {
             ThrowIfDisposed();
 

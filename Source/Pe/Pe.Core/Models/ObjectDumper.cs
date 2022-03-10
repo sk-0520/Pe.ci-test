@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    class DummyInfo: MemberInfo
+    internal class DummyInfo: MemberInfo
     {
         public DummyInfo(string name, Type declaringType, Type reflectedType)
         {
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
-        static IReadOnlyList<ObjectDumpItem> EmptyChildren { get; } = Array.Empty<ObjectDumpItem>();
+        private static IReadOnlyList<ObjectDumpItem> EmptyChildren { get; } = Array.Empty<ObjectDumpItem>();
 
         public ISet<Type> IgnoreNestedMembers { get; } = new HashSet<Type>() {
             typeof(bool),
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
-        bool CanGetValue(MemberInfo memberInfo, bool ignoreAutoMember)
+        private bool CanGetValue(MemberInfo memberInfo, bool ignoreAutoMember)
         {
             if(ignoreAutoMember) {
                 if(memberInfo.GetCustomAttribute<CompilerGeneratedAttribute>() != null) {
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return false;
         }
 
-        object? GetMemberValue(object target, MemberInfo memberInfo)
+        private object? GetMemberValue(object target, MemberInfo memberInfo)
         {
             return memberInfo.MemberType switch {
                 MemberTypes.Field => ((FieldInfo)memberInfo).GetValue(target),
@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             };
         }
 
-        int GetNextNest(int nest) => nest < 0 ? -1 : nest - 1;
+        private int GetNextNest(int nest) => nest < 0 ? -1 : nest - 1;
 
         private ObjectDumpItem DumpEnumerableItem(string key, object? current, Type collectiontype, int nest, bool ignoreAutoMember)
         {
@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return new ObjectDumpItem(new DummyInfo(key, collectiontype, targetType), target, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
         }
 
-        IReadOnlyList<ObjectDumpItem> DumpDictionary(IDictionary dictionary, int nest, bool ignoreAutoMember)
+        private IReadOnlyList<ObjectDumpItem> DumpDictionary(IDictionary dictionary, int nest, bool ignoreAutoMember)
         {
             var result = new List<ObjectDumpItem>(dictionary.Count);
             var dictionaryType = dictionary.GetType();
@@ -201,8 +201,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         }
 
-
-        IReadOnlyList<ObjectDumpItem> DumpFileSystemInfo(FileSystemInfo fileSystemInfo, int nest, bool ignoreAutoMember)
+        private IReadOnlyList<ObjectDumpItem> DumpFileSystemInfo(FileSystemInfo fileSystemInfo, int nest, bool ignoreAutoMember)
         {
             var result = new List<ObjectDumpItem>() {
                 new ObjectDumpItem(new DummyInfo(string.Empty, typeof(FileSystemInfo), fileSystemInfo.GetType()), fileSystemInfo.ToString(), EmptyChildren),
@@ -211,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return result;
         }
 
-        IReadOnlyList<ObjectDumpItem> DumpUri(Uri uri, int nest, bool ignoreAutoMember)
+        private IReadOnlyList<ObjectDumpItem> DumpUri(Uri uri, int nest, bool ignoreAutoMember)
         {
             var result = new List<ObjectDumpItem>() {
                 new ObjectDumpItem(new DummyInfo(string.Empty, typeof(Uri), uri.GetType()), uri.ToString(), EmptyChildren),
@@ -220,7 +219,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return result;
         }
 
-        IReadOnlyList<ObjectDumpItem> DumpCore(object target, int nest, bool ignoreAutoMember)
+        private IReadOnlyList<ObjectDumpItem> DumpCore(object target, int nest, bool ignoreAutoMember)
         {
             if(nest == 0) {
                 return EmptyChildren;
@@ -311,6 +310,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             return new string('-', nest) + "> ";
         }
+
         protected virtual string GetMemberValue(ObjectDumpItem dumpItem)
         {
             return $"{dumpItem.MemberInfo.Name}: {dumpItem.Value} [{dumpItem.MemberInfo.DeclaringType}]";
@@ -339,7 +339,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
             using var writer = new StreamWriter(stream, Encoding.UTF8, 1024 * 4, true);
             WriteDump(dumpItems, writer);
         }
-
 
         public static string GetDumpString(object? target)
         {

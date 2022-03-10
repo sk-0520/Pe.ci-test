@@ -20,7 +20,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Preferences
 
         #region proeprty
 
-        FileFinderSettingViewModel? SettingViewModel { get; set; }
+        private FileFinderSettingViewModel? SettingViewModel { get; set; }
+
         #endregion
 
         #region function

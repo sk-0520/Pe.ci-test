@@ -37,22 +37,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         #region property
 
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        IOrderManager OrderManager { get; }
-        INotifyManager NotifyManager { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IOrderManager OrderManager { get; }
+        private INotifyManager NotifyManager { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
         internal bool FindTag { get; set; }
         internal IconBox IconBox { get; set; }
 
-        IList<LauncherItemElement> LauncherItemElements { get; } = new List<LauncherItemElement>();
-        IDictionary<Guid, LauncherItemElement> LauncherItemElementMap { get; } = new Dictionary<Guid, LauncherItemElement>();
-        IDictionary<Guid, IReadOnlyCollection<string>> LauncherTags { get; } = new Dictionary<Guid, IReadOnlyCollection<string>>();
+        private IList<LauncherItemElement> LauncherItemElements { get; } = new List<LauncherItemElement>();
+        private IDictionary<Guid, LauncherItemElement> LauncherItemElementMap { get; } = new Dictionary<Guid, LauncherItemElement>();
+        private IDictionary<Guid, IReadOnlyCollection<string>> LauncherTags { get; } = new Dictionary<Guid, IReadOnlyCollection<string>>();
 
 
         #endregion
@@ -90,8 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             return null;
         }
 
-
-        void AddItem(LauncherItemElement launcherItemElement)
+        private void AddItem(LauncherItemElement launcherItemElement)
         {
             LauncherItemElements.Add(launcherItemElement);
             LauncherItemElementMap.Add(launcherItemElement.LauncherItemId, launcherItemElement);
@@ -100,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             }
         }
 
-        void LoadTag(Guid launcherItemId)
+        private void LoadTag(Guid launcherItemId)
         {
             Debug.Assert(FindTag);
 

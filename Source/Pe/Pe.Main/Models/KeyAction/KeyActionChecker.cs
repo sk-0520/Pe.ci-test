@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     {
         #region variable
 
-        uint _selfJobInputId = 1234;
+        private uint _selfJobInputId = 1234;
 
         #endregion
         public KeyActionChecker(ILoggerFactory loggerFactory)
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         /// <summary>
         /// キー無効化処理にてこの時間内の入力に限り有効化する。
@@ -85,6 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         public IList<KeyActionDisableJob> DisableJobs { get; } = new List<KeyActionDisableJob>();
         public IList<KeyActionReplaceJob> ReplaceJobs { get; } = new List<KeyActionReplaceJob>();
         public IList<KeyActionPressedJobBase> PressedJobs { get; } = new List<KeyActionPressedJobBase>();
+
         #endregion
 
         #region function

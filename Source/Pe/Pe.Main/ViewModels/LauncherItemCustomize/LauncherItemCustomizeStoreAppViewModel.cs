@@ -21,7 +21,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         }
 
         #region property
-        LauncherStoreAppData StoreApp { get; }
+
+        private LauncherStoreAppData StoreApp { get; }
 
         public string ProtocolAlias
         {

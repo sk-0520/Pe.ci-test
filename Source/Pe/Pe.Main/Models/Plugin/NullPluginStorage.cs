@@ -18,8 +18,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region property
 
-        ILogger Logger { get; }
-        IPluginIdentifiers PluginIdentifiers { get; }
+        private ILogger Logger { get; }
+        private IPluginIdentifiers PluginIdentifiers { get; }
 
         #endregion
 
@@ -65,8 +65,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region property
 
-        ILogger Logger { get; }
-        IPluginIdentifiers PluginIdentifiers { get; }
+        private ILogger Logger { get; }
+        private IPluginIdentifiers PluginIdentifiers { get; }
 
         #endregion
 

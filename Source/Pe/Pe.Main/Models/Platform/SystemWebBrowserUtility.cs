@@ -11,18 +11,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
     {
         #region define
 
-        const string webbrowserEmulationPath = @"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION";
-        const string webbrowserRenderingPath = @"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_DOCUMENT_COMPATIBLE_MODE";
-        const int webbrowserDefaultVersion = 7000;
-        const string internetExplorerPath = @"Software\Microsoft\Internet Explorer";
-        const string internetExplorer10Key = "svcVersion";
-        const string internetExplorer9Key = "Version";
+        private const string webbrowserEmulationPath = @"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION";
+        private const string webbrowserRenderingPath = @"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_DOCUMENT_COMPATIBLE_MODE";
+        private const int webbrowserDefaultVersion = 7000;
+        private const string internetExplorerPath = @"Software\Microsoft\Internet Explorer";
+        private const string internetExplorer10Key = "svcVersion";
+        private const string internetExplorer9Key = "Version";
 
         #endregion
 
         #region function
 
-        static int ToIEVersion(Version version)
+        private static int ToIEVersion(Version version)
         {
             var versionNumber = version.Major * 1000;
             return versionNumber;
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             SetUsingBrowserVersion(ToIEVersion(version), programName);
         }
 
-        static string GetExecutingAssemblyFileName()
+        private static string GetExecutingAssemblyFileName()
         {
             var path = Assembly.GetEntryAssembly()!.Location;
             var name = Path.GetFileName(path)!;
@@ -60,13 +60,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         }
 
 #if DEBUG
-        static string GetDebugName(string programName)
+        private static string GetDebugName(string programName)
         {
             var ext = Path.GetExtension(programName);
             return Path.ChangeExtension(programName, "vshost" + ext);
         }
 #endif
-        static IEnumerable<string> GetBrowserControlUseProgram()
+        private static IEnumerable<string> GetBrowserControlUseProgram()
         {
             return new[] {
                 GetExecutingAssemblyFileName(),

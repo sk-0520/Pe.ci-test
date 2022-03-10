@@ -27,9 +27,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         #region property
 
-        ICommandItem Item { get; }
-        IconScale IconScale { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private ICommandItem Item { get; }
+        private IconScale IconScale { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
         public CommandItemKind Kind => Item.Kind;
         public double Score => Item.Score;
 
@@ -79,12 +79,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         {
             return Item.IsEquals(commandItemViewModel.Item);
         }
-
-
-        #endregion
-
-        #region IEquatable>
-
 
         #endregion
     }

@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         #region property
 
-        DiNamedContainer<ConcurrentHashSet<Type>> RegisteredTypeSet { get; } = new DiNamedContainer<ConcurrentHashSet<Type>>();
+        private DiNamedContainer<ConcurrentHashSet<Type>> RegisteredTypeSet { get; } = new DiNamedContainer<ConcurrentHashSet<Type>>();
 
         #endregion
 

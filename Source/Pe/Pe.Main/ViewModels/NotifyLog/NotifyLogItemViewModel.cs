@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 
         #region property
 
-        PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedHooker PropertyChangedHooker { get; }
 
         public NotifyLogKind Kind => Model.Kind;
         public string Header => Model.Header;
@@ -63,6 +63,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }
-
     }
 }

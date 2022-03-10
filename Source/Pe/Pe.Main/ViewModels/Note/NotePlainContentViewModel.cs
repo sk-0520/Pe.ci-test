@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
     {
         #region variable
 
-        string _content = string.Empty;
+        private string _content = string.Empty;
 
         #endregion
 

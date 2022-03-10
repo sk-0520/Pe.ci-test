@@ -20,13 +20,13 @@ namespace ContentTypeTextNet.Pe.Main.Views.Accept
         #region property
 
         [Inject]
-        ILogger? Logger { get; set; }
+        private ILogger? Logger { get; set; }
 
         #endregion
 
         #region command
 
-        ICommand? _closeCommand;
+        private ICommand? _closeCommand;
         public ICommand CloseCommand
         {
             get

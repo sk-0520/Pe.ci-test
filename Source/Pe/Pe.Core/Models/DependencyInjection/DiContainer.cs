@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             Factory[name].TryAdd(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
         }
 
-        void RegisterFactorySingleton(Type interfaceType, Type objectType, string name, DiCreator creator)
+        private void RegisterFactorySingleton(Type interfaceType, Type objectType, string name, DiCreator creator)
         {
             var lazy = new Lazy<object>(() => creator());
             RegisterFactoryCore(interfaceType, objectType, name, DiLifecycle.Singleton, () => lazy.Value);
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             ObjectPool[name].TryAdd(interfaceType, value);
         }
 
-        void Register(Type interfaceType, Type objectType, string name, DiLifecycle lifecycle, DiCreator creator)
+        private void Register(Type interfaceType, Type objectType, string name, DiLifecycle lifecycle, DiCreator creator)
         {
             if(!interfaceType.IsAssignableFrom(objectType)) {
                 throw new ArgumentException($"error: {interfaceType} <- {objectType}");
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
         }
 
-        Type GetMappingType(Type type, string name)
+        private Type GetMappingType(Type type, string name)
         {
             return Mapping[name].TryGetValue(type, out var objectType) ? objectType : type;
         }
@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             throw new DiException($"get error: {interfaceType} [{name}]");
         }
 
-        static List<KeyValuePair<Type, object?>> BuildManualParameters(IReadOnlyList<object> manualParameters)
+        private static List<KeyValuePair<Type, object?>> BuildManualParameters(IReadOnlyList<object> manualParameters)
         {
             using var arrayPoolDisposer = new ArrayPoolValue<KeyValuePair<Type, object?>>(manualParameters.Count);
             int resultIndex = 0;
@@ -170,7 +170,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return result;
         }
 
-        static KeyValuePair<Type, object?> GetParameter(ParameterInfo parameterInfo, IReadOnlyList<KeyValuePair<Type, object?>> manualParameterItems)
+        private static KeyValuePair<Type, object?> GetParameter(ParameterInfo parameterInfo, IReadOnlyList<KeyValuePair<Type, object?>> manualParameterItems)
         {
             foreach(var manualParameterItem in manualParameterItems) {
                 if(manualParameterItem.Key == parameterInfo.ParameterType) {
@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return default;
         }
 
-        static IReadOnlyList<KeyValuePair<string, ConcurrentDictionary<Type, T>>> GetIgnoreNamedPools<T>(DiNamedContainer<ConcurrentDictionary<Type, T>> pool, string ignoreName)
+        private static IReadOnlyList<KeyValuePair<string, ConcurrentDictionary<Type, T>>> GetIgnoreNamedPools<T>(DiNamedContainer<ConcurrentDictionary<Type, T>> pool, string ignoreName)
         {
             var result = new List<KeyValuePair<string, ConcurrentDictionary<Type, T>>>(pool.Container.Count);
 
@@ -199,7 +199,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return result;
         }
 
-        object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
+        private object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
         {
             var manualParameterItems = BuildManualParameters(manualParameters);
 
@@ -277,7 +277,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         }
 
-        bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IReadOnlyList<object> manualParameters, [NotNullWhen(true)] out object? createdObject)
+        private bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IReadOnlyList<object> manualParameters, [NotNullWhen(true)] out object? createdObject)
         {
             var parameters = constructorCache.ParameterInfos;
             var parameterInjections = constructorCache.ParameterInjections;
@@ -307,7 +307,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return true;
         }
 
-        bool TryNewObject(Type objectType, string name, IReadOnlyList<object> manualParameters, bool useFactoryCache, [NotNullWhen(true)] out object? createdObject)
+        private bool TryNewObject(Type objectType, string name, IReadOnlyList<object> manualParameters, bool useFactoryCache, [NotNullWhen(true)] out object? createdObject)
         {
             if(ObjectPool[name].TryGetValue(objectType, out var poolValue)) {
                 createdObject = poolValue;
@@ -360,7 +360,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return false;
         }
 
-        object NewCore(Type type, string name, IReadOnlyList<object> manualParameters, bool useFactoryCache)
+        private object NewCore(Type type, string name, IReadOnlyList<object> manualParameters, bool useFactoryCache)
         {
             if(ObjectPool[name].TryGetValue(type, out var poolValue)) {
                 return poolValue;
@@ -373,7 +373,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             throw new DiException($"{type}: create error {name}");
         }
 
-        bool TryGetInstance(Type interfaceType, string name, IReadOnlyList<object> manualParameters, [MaybeNullWhen(false)] out object value)
+        private bool TryGetInstance(Type interfaceType, string name, IReadOnlyList<object> manualParameters, [MaybeNullWhen(false)] out object value)
         {
             if(ObjectPool[name].TryGetValue(interfaceType, out var poolValue)) {
                 value = poolValue;
@@ -389,7 +389,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return TryNewObject(GetMappingType(interfaceType, name), name, manualParameters, true, out value);
         }
 
-        static Type GetMemberType(MemberInfo memberInfo)
+        private static Type GetMemberType(MemberInfo memberInfo)
         {
             switch(memberInfo.MemberType) {
                 case MemberTypes.Field:
@@ -403,7 +403,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
         }
 
-        void SetMemberValue<TObject>(ref TObject target, MemberInfo memberInfo, Type valueType, string name)
+        private void SetMemberValue<TObject>(ref TObject target, MemberInfo memberInfo, Type valueType, string name)
         {
             switch(memberInfo.MemberType) {
                 case MemberTypes.Field:
@@ -429,7 +429,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
         }
 
-        void InjectCore<TObject>(ref TObject target, string name)
+        private void InjectCore<TObject>(ref TObject target, string name)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
