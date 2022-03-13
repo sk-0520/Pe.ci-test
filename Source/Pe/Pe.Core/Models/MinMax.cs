@@ -90,7 +90,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return false;
             }
         }
-
     }
 
     /// <summary>

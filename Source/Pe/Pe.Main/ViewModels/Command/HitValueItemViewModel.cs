@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             IsHit = hitValue.IsHit;
         }
 
-        #region MyRegion
+        #region property
 
         public string Value { get; }
         public bool IsHit { get; }

@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Feedback
 
         #region property
 
-        CommandStore CommandStore { get; } = new CommandStore();
+        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 

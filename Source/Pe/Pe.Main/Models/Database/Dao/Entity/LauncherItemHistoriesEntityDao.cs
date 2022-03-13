@@ -26,15 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-        public LauncherItemHistoriesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -48,9 +40,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
+        public LauncherItemHistoriesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
 
-        LauncherHistoryData ConvertFromDto(LauncherItemHistoriesEntityDto dto)
+        private LauncherHistoryData ConvertFromDto(LauncherItemHistoriesEntityDto dto)
         {
             var launcherHistoryKindTransfer = new EnumTransfer<LauncherHistoryKind>();
 

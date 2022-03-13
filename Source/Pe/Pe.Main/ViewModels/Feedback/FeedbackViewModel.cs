@@ -20,8 +20,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
     {
         #region variable
 
-        string _subject = string.Empty;
-        FeedbackKind _selectedFeedbackKind;
+        private string _subject = string.Empty;
+        private FeedbackKind _selectedFeedbackKind;
 
         #endregion
         public FeedbackViewModel(FeedbackElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)

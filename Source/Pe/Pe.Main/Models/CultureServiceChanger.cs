@@ -25,21 +25,21 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         #region property
 
-        CultureService CultureService { get; }
-        IWindowManager WindowManager { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        ApplicationConfiguration ApplicationConfiguration { get; }
+        private CultureService CultureService { get; }
+        private IWindowManager WindowManager { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private ApplicationConfiguration ApplicationConfiguration { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         #endregion
 
         #region function
 
-        string LoadLanguageName()
+        private string LoadLanguageName()
         {
             string lang;
             using(var context = MainDatabaseBarrier.WaitRead()) {

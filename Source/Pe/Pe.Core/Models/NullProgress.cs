@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         #endregion
 
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         #endregion
 

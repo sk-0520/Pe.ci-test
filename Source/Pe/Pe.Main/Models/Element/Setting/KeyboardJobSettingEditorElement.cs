@@ -48,6 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public Dictionary<string, string> Options { get; } = new Dictionary<string, string>();
         public ObservableCollection<WrapModel<KeyMappingData>> Mappings { get; } = new ObservableCollection<WrapModel<KeyMappingData>>();
+
         #endregion
 
         #region IKeyActionId
@@ -169,7 +170,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
         #endregion
-
     }
 
     public sealed class KeyboardPressedJobSettingEditorElement: KeyboardJobSettingEditorElementBase

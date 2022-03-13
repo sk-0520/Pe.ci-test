@@ -20,11 +20,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region property
 
-        EnvironmentParameters EnvironmentParameters { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         #endregion
 

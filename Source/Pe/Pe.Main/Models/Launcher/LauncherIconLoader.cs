@@ -34,19 +34,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region property
 
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        static EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private static EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
 
-        int RetryMaxCount { get; } = 5;
-        TimeSpan RetryWaitTime { get; } = TimeSpan.FromSeconds(1);
+        private int RetryMaxCount { get; } = 5;
+        private TimeSpan RetryWaitTime { get; } = TimeSpan.FromSeconds(1);
 
         #endregion
 
         #region function
 
-        Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync(IconScale iconScale)
+        private Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync(IconScale iconScale)
         {
             ThrowIfDisposed();
 
@@ -180,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         }
 
-        async Task<BitmapSource?> MakeImageAsync(IconScale iconScale, CancellationToken cancellationToken)
+        private async Task<BitmapSource?> MakeImageAsync(IconScale iconScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -198,7 +198,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             return iconImage;
         }
-
 
         #endregion
 
@@ -237,6 +236,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         public Guid LauncherItemId { get; }
 
         #endregion
-
     }
 }

@@ -27,16 +27,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #region property
 
-        ILogger Logger { get; }
-        PlatformConfiguration PlatformConfiguration { get; }
+        private ILogger Logger { get; }
+        private PlatformConfiguration PlatformConfiguration { get; }
 
-        LazyAction LazyChanger { get; }
+        private LazyAction LazyChanger { get; }
 
         #endregion
 
         #region function
 
-        void ApplyFromRegistry()
+        private void ApplyFromRegistry()
         {
             using var reg = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
             if(reg == null) {
@@ -58,13 +58,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         }
 
-        void ApplyAccentColor()
+        private void ApplyAccentColor()
         {
             NativeMethods.DwmGetColorizationColor(out var color, out var blend);
             SetAccentColor(MediaUtility.ConvertColorFromRawColor(color));
         }
 
-        void SetAccentColor(Color color)
+        private void SetAccentColor(Color color)
         {
             if(color.A < PlatformConfiguration.ThemeAccentColorMinimumAlpha) {
                 var newAlpha = PlatformConfiguration.ThemeAccentColorDefaultAlpha;
@@ -205,5 +205,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #endregion
     }
-
 }

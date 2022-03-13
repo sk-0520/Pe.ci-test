@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
-        string ToDirectoryName(Guid launcherItemId) => launcherItemId.ToString("D");
+        private string ToDirectoryName(Guid launcherItemId) => launcherItemId.ToString("D");
 
         #endregion
 
@@ -176,7 +176,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         {
             File = file;
             Persistent = persistent;
-
         }
 
         #region ILauncherItemAddonStorage

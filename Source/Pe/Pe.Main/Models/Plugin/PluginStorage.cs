@@ -205,7 +205,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             #region property
 
-        /// <inheritdoc cref="ILoggerFactory"/>
+            /// <inheritdoc cref="ILoggerFactory"/>
             public ILoggerFactory LoggerFactory { get; }
             public IDatabaseStatementLoader DatabaseStatementLoader { get; }
             public IDatabaseContexts DatabaseContexts { get; }
@@ -588,7 +588,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     {
         /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseContexts, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
         public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseContexts databaseContexts, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
-                   : base(pluginIdentifiers, pluginVersions, databaseContexts, databaseStatementLoader, isReadOnly, loggerFactory)
+            : base(pluginIdentifiers, pluginVersions, databaseContexts, databaseStatementLoader, isReadOnly, loggerFactory)
         { }
 
         /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseStatementLoader, bool, ILoggerFactory)"/>

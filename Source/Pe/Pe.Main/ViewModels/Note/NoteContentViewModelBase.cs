@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
     {
         #region variable
 
-        bool _canVisible;
+        private bool _canVisible;
 
         #endregion
 
@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public bool IsLink => Model.IsLink;
 
-        PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedHooker PropertyChangedHooker { get; }
 
         protected bool EnabledUpdate { get; private set; } = true;
 
@@ -157,8 +157,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 EnabledUpdate = true;
             }).ConfigureAwait(false);
         }
-
-
     }
 
     public static class NoteContentViewModelFactory
@@ -183,8 +181,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         }
 
-
         #endregion
     }
-
 }

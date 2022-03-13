@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        StringBuilder Buffer { get; }
+        private StringBuilder Buffer { get; }
         public bool IsAppend { get; private set; }
         #endregion
 
@@ -77,20 +77,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region define
 
-        const char KatakanaDakuten = '゙';
-        const char KatakanaHanDakuten = '゚';
+        private const char KatakanaDakuten = '゙';
+        private const char KatakanaHanDakuten = '゚';
 
         #endregion
+
         #region variable
 
-        IDictionary<char, char>? _halfwidthKatakanaDakutenMap;
-        IDictionary<char, char>? _halfwidthKatakanaHandakutenMap;
-        IDictionary<char, char>? _katakanaHalfToFullMap;
-        IDictionary<char, char>? _katakanaFullToHalfMap;
-        IDictionary<char, string>? _dakutenKatakanaFullToHalfMap;
+        private IDictionary<char, char>? _halfwidthKatakanaDakutenMap;
+        private IDictionary<char, char>? _halfwidthKatakanaHandakutenMap;
+        private IDictionary<char, char>? _katakanaHalfToFullMap;
+        private IDictionary<char, char>? _katakanaFullToHalfMap;
+        private IDictionary<char, string>? _dakutenKatakanaFullToHalfMap;
 
-        IDictionary<char, string>? _hiraganaToRomeMap;
-        IDictionary<string, string>? _hiraganaExToRomeMap;
+        private IDictionary<char, string>? _hiraganaToRomeMap;
+        private IDictionary<string, string>? _hiraganaExToRomeMap;
+
         #endregion
 
         #region property
@@ -98,16 +100,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 3040..309F; Hiragana
         /// </summary>
-        IReadOnlyMinMax<char> HiraganaRange { get; } = MinMax.Create('\u3040', '\u309F');
+        private IReadOnlyMinMax<char> HiraganaRange { get; } = MinMax.Create('\u3040', '\u309F');
         /// <summary>
         /// 30A0..30FF; Katakana
         /// </summary>
-        IReadOnlyMinMax<char> KatakanaRange { get; } = MinMax.Create('\u30A0', '\u30FF');
+        private IReadOnlyMinMax<char> KatakanaRange { get; } = MinMax.Create('\u30A0', '\u30FF');
         /// <summary>
         /// 半角カナ
         /// </summary>
-        IReadOnlyMinMax<char> HalfwidthKatakanaRange { get; } = MinMax.Create('\uFF60', '\uFF9D');
-        IReadOnlyMinMax<char> HalfwidthKatakanaDakutenRange { get; } = MinMax.Create('ﾞ', 'ﾟ');
+        private IReadOnlyMinMax<char> HalfwidthKatakanaRange { get; } = MinMax.Create('\uFF60', '\uFF9D');
+        private IReadOnlyMinMax<char> HalfwidthKatakanaDakutenRange { get; } = MinMax.Create('ﾞ', 'ﾟ');
 
         protected virtual IDictionary<char, char> HalfwidthKatakanaDakutenMap
         {
@@ -522,7 +524,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return sb.ToString();
         }
 
-        int ConvertHiraganaToKatakanaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        private int ConvertHiraganaToKatakanaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
             if(currentText.Length == 1 && IsHiragana(currentText[0])) {
                 resultBuffer.Append((char)(currentText[0] + 'ァ' - 'ぁ'));
@@ -530,6 +532,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return 0;
         }
+
         /// <summary>
         /// 平仮名からカタカナへ変換。
         /// </summary>
@@ -546,7 +549,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             });
         }
 
-        int ConvertKatakanaToHiraganaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        private int ConvertKatakanaToHiraganaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
             if(currentText.Length == 1 && IsKatakana(currentText[0])) {
                 resultBuffer.Append((char)(currentText[0] + 'ぁ' - 'ァ'));
@@ -571,9 +574,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             });
         }
 
-
-
-        int ConvertHankakuKatakanaToZenkakuKatakanaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        private int ConvertHankakuKatakanaToZenkakuKatakanaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
             var skip = 0;
             if(currentText.Length == 1 && IsHalfwidthKatakana(currentText[0])) {
@@ -659,8 +660,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             });
         }
 
-
-        int ConvertZenkakuKatakanaToHankakuKatakanaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        private int ConvertZenkakuKatakanaToHankakuKatakanaCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
             if(currentText.Length == 1) {
                 if(KatakanaFullToHalfMap.TryGetValue(currentText[0], out var normal)) {
@@ -717,7 +717,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             });
         }
 
-        int ConvertAsciiAlphabetToZenkakuAlphabetCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        private int ConvertAsciiAlphabetToZenkakuAlphabetCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
             if(currentText.Length == 1) {
                 var c = currentText[0];
@@ -750,7 +750,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             });
         }
 
-        int ConvertZenkakuAlphabetToAsciiAlphabetCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        private int ConvertZenkakuAlphabetToAsciiAlphabetCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
             if(currentText.Length == 1) {
                 var c = currentText[0];
@@ -783,7 +783,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             });
         }
 
-        int ConvertAsciiDigitToZenkakuDigitCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        private int ConvertAsciiDigitToZenkakuDigitCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
             if(currentText.Length == 1) {
                 var c = currentText[0];
@@ -811,7 +811,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             });
         }
 
-        int ConvertZenkakuDigitToAsciiDigitCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        private int ConvertZenkakuDigitToAsciiDigitCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
             if(currentText.Length == 1) {
                 var c = currentText[0];
@@ -839,7 +839,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             });
         }
 
-        int ConvertHiraganaToAsciiRomeCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        private int ConvertHiraganaToAsciiRomeCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
         {
             if(currentText.Length != 1) {
                 return 0;

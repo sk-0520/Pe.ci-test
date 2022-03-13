@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     {
         #region variable
 
-        bool _isVisible;
+        private bool _isVisible;
 
         #endregion
 
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public PluginsSettingEditorElement PluginsSettingEditor { get; }
         public IReadOnlyList<SettingEditorElementBase> Editors { get; }
 
-        PluginContainer PluginContainer { get; }
+        private PluginContainer PluginContainer { get; }
 
         #endregion
 

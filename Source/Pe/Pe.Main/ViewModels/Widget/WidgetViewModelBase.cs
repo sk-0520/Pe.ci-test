@@ -62,6 +62,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         public Guid PluginId => Model.PluginId;
 
         #endregion
-
     }
 }

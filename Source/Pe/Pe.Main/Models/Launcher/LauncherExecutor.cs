@@ -142,20 +142,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region property
 
-        IOrderManager OrderManager { get; }
-        INotifyManager NotifyManager { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IOrderManager OrderManager { get; }
+        private INotifyManager NotifyManager { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
-        EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; }
+        private ILogger Logger { get; }
+        private EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; }
 
         #endregion
 
         #region function
 
-        ILauncherExecuteResult ExecuteFilePath(ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
+        private ILauncherExecuteResult ExecuteFilePath(ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
         {
             var process = new Process();
             var startInfo = process.StartInfo;
@@ -349,10 +349,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         }
 
         #endregion
-
-        #region
-        #endregion
     }
-
-
 }

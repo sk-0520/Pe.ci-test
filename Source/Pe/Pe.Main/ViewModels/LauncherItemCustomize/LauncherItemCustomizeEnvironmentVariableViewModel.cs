@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         }
 
         #region property
-        LazyAction EnvironmentVariableLazyChanger { get; }
+        private LazyAction EnvironmentVariableLazyChanger { get; }
         public TextDocument? MergeTextDocument { get; private set; }
         public TextDocument? RemoveTextDocument { get; private set; }
 
@@ -116,7 +116,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
             EnvironmentVariableLazyChanger.DelayAction(ChangedEnvironmentVariable);
         }
-
-
     }
 }

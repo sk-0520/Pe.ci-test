@@ -237,6 +237,5 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
         }
 
         #endregion
-
     }
 }

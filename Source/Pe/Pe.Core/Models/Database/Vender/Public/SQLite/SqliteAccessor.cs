@@ -135,6 +135,5 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         }
 
         #endregion
-
     }
 }

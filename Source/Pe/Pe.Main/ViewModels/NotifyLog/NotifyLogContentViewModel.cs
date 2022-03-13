@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 
         #region property
 
-        IReadOnlyNotifyLogContent Content { get; }
+        private IReadOnlyNotifyLogContent Content { get; }
 
         public string Message => Content.Message;
         [DateTimeKind(DateTimeKind.Utc)]

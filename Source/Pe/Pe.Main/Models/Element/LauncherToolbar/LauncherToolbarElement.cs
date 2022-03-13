@@ -30,17 +30,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
     {
         #region variable
 
-        bool _isVisible;
-        bool _isTopmost;
-        LauncherToolbarIconDirection _iconDirection;
-        LauncherGroupElement? _selectedLauncherGroup;
+        private bool _isVisible;
+        private bool _isTopmost;
+        private LauncherToolbarIconDirection _iconDirection;
+        private LauncherGroupElement? _selectedLauncherGroup;
 
-        bool _isOpendAppMenu;
-        bool _isOpendFileItemMenu;
-        bool _isOpendStoreAppItemMenu;
-        bool _isOpendAddonItemMenu;
+        private bool _isOpendAppMenu;
+        private bool _isOpendFileItemMenu;
+        private bool _isOpendStoreAppItemMenu;
+        private bool _isOpendAddonItemMenu;
 
-        bool _isHiding;
+        private bool _isHiding;
 
         #endregion
 
@@ -62,15 +62,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         #region property
 
-        IOrderManager OrderManager { get; }
-        INotifyManager NotifyManager { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        IIdFactory IdFactory { get; }
-        ILauncherToolbarTheme LauncherToolbarTheme { get; }
+        private IOrderManager OrderManager { get; }
+        private INotifyManager NotifyManager { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IIdFactory IdFactory { get; }
+        private ILauncherToolbarTheme LauncherToolbarTheme { get; }
 
-        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
-        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+        private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        private UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         public ReadOnlyObservableCollection<LauncherGroupElement> LauncherGroups { get; }
 
@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         /// </summary>
         /// <param name="rows"></param>
         /// <returns>見つかったツールバー。見つからない場合は<see cref="Guid.Empty"/>を返す。</returns>
-        Guid FindMaybeToolbarId(IEnumerable<LauncherToolbarsScreenData> rows)
+        private Guid FindMaybeToolbarId(IEnumerable<LauncherToolbarsScreenData> rows)
         {
             ThrowIfDisposed();
 
@@ -204,7 +204,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             return Guid.Empty;
         }
 
-        Guid GetLauncherToolbarId()
+        private Guid GetLauncherToolbarId()
         {
             ThrowIfDisposed();
 
@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             }
         }
 
-        Guid CreateLauncherToolbar()
+        private Guid CreateLauncherToolbar()
         {
             ThrowIfDisposed();
 
@@ -291,7 +291,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             return LauncherGroups.First(i => i.LauncherGroupId == groupData.LauncherGroupId);
         }
 
-        void UpdateDesign()
+        private void UpdateDesign()
         {
             ThrowIfDisposed();
 
@@ -303,7 +303,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             HiddenSize = LauncherToolbarTheme.GetHiddenSize(ButtonPadding, IconMargin, iconScale, IsIconOnly, TextWidth);
         }
 
-        void LoadLauncherToolbar()
+        private void LoadLauncherToolbar()
         {
             Logger.LogInformation("toolbar id: {0}", LauncherToolbarId);
             ThrowIfDisposed();
@@ -340,7 +340,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             Font.Initialize();
         }
 
-        IEnumerable<LauncherItemElement> GetLauncherItems()
+        private IEnumerable<LauncherItemElement> GetLauncherItems()
         {
             Debug.Assert(SelectedLauncherGroup != null);
 
@@ -355,7 +355,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             return result;
         }
 
-        void LoadLauncherItems()
+        private void LoadLauncherItems()
         {
             ThrowIfDisposed();
 
@@ -726,7 +726,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 LauncherItems.RemoveAt(removedItemIndex);
             }
         }
-
-
     }
 }

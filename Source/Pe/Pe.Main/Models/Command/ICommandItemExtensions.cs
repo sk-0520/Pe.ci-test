@@ -8,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
     {
         #region function
 
-        static string Join(IEnumerable<HitValue> values) => string.Join(string.Empty, values.Select(i => i.Value));
+        private static string Join(IEnumerable<HitValue> values) => string.Join(string.Empty, values.Select(i => i.Value));
 
         public static string GetHeaderText(this ICommandItem commandItem) => Join(commandItem.HeaderValues);
         public static string GetDescriptionText(this ICommandItem commandItem) => Join(commandItem.DescriptionValues);

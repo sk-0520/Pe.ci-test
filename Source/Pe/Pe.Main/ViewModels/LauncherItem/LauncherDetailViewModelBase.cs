@@ -57,11 +57,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region variable
 
-        bool _nowLoading;
-        bool _nowMainExecuting;
+        private bool _nowLoading;
+        private bool _nowMainExecuting;
 
-        object? _mainIcon;
-        object? _tooltipIcon;
+        private object? _mainIcon;
+        private object? _tooltipIcon;
 
         #endregion
 
@@ -82,7 +82,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         protected ILauncherToolbarTheme LauncherToolbarTheme { get; }
         public object MainIcon => this._mainIcon ??= GetIcon(IconKind.Main);
         public object TooltipIcon => this._tooltipIcon ??= GetIcon(IconKind.Tooltip);
-
 
         public virtual string? Name => Model.Name;
         public string? Comment => Model.Comment;
@@ -142,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         protected abstract Task InitializeImplAsync();
         protected abstract Task UninitializeImplAsync();
 
-        Task InitializeAsync()
+        private Task InitializeAsync()
         {
             NowLoading = true;
             return InitializeImplAsync().ContinueWith(_ => {
@@ -157,7 +156,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             });
         }
 
-        Task UninitializeAsync()
+        private Task UninitializeAsync()
         {
             return UninitializeImplAsync();
         }

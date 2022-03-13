@@ -51,6 +51,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         #region function
 
         #endregion
-
     }
 }

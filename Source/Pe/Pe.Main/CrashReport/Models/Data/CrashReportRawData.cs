@@ -28,7 +28,6 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         [DataMember]
         public List<LogItem> LogItems { get; set; } = new List<LogItem>();
 
-
         #endregion
     }
 }

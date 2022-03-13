@@ -22,10 +22,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
         #region property
 
         [Inject]
-        ILogger? Logger { get; set; }
-        ScrollTuner ScrollTuner { get; }
+        private ILogger? Logger { get; set; }
+        private ScrollTuner ScrollTuner { get; }
 
-        CommandStore CommandStore { get; } = new CommandStore();
+        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
@@ -51,6 +51,5 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
         }
 
         #endregion
-
     }
 }

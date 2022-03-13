@@ -24,15 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-        public LauncherGroupsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -48,9 +40,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
+        public LauncherGroupsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
 
-        LauncherGroupsRowDto ConvertFromData(LauncherGroupData data, IDatabaseCommonStatus commonStatus)
+        private LauncherGroupsRowDto ConvertFromData(LauncherGroupData data, IDatabaseCommonStatus commonStatus)
         {
             var imgNameEnumTransfer = new EnumTransfer<LauncherGroupImageName>();
             var launcherGroupKindTransfer = new EnumTransfer<LauncherGroupKind>();
@@ -67,10 +63,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             commonStatus.WriteCommonTo(dto);
 
             return dto;
-
         }
 
-        LauncherGroupData ConvertFromDto(LauncherGroupsRowDto dto)
+        private LauncherGroupData ConvertFromDto(LauncherGroupsRowDto dto)
         {
             var imgNameEnumTransfer = new EnumTransfer<LauncherGroupImageName>();
             var launcherGroupKindTransfer = new EnumTransfer<LauncherGroupKind>();

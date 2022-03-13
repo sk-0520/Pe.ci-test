@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        ISettingEditorViewModel _selectedEditor;
+        private ISettingEditorViewModel _selectedEditor;
 
         #endregion
 
@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        IGeneralTheme GeneralTheme { get; }
+        private IGeneralTheme GeneralTheme { get; }
 
         public RequestSender CloseRequest { get; } = new RequestSender();
 
@@ -90,6 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public LauncherToobarsSettingEditorViewModel LauncherToobarsSettingEditor { get; }
         public KeyboardSettingEditorViewModel KeyboardSettingEditor { get; }
         public PluginsSettingEditorViewModel PluginsSettingEditor { get; }
+
         #endregion
 
         #region command
@@ -159,6 +160,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #endregion
-
     }
 }

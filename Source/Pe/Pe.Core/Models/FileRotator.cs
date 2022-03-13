@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// ファイルのローテートを行う。
     /// </summary>
-    public class FileRotation
+    public class FileRotator
     {
         #region function
 

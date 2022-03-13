@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         #region function
 
-        IReadOnlyList<ApplicationCommandParameter> CreateApplicationCommandParameters()
+        private IReadOnlyList<ApplicationCommandParameter> CreateApplicationCommandParameters()
         {
             var factory = ApplicationDiContainer.Build<ApplicationCommandParameterFactory>();
 

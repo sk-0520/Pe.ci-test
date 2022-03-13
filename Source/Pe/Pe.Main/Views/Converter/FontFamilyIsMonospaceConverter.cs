@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
     {
         #region property
 
-        IDictionary<FontFamily, bool> Cache { get; } = new Dictionary<FontFamily, bool>();
+        private IDictionary<FontFamily, bool> Cache { get; } = new Dictionary<FontFamily, bool>();
 
         #endregion
 

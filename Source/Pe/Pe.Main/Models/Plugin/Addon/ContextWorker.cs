@@ -54,6 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #region property
         public IPluginInformations PluginInformations { get; }
         public Guid LauncherItemId { get; }
+
         #endregion
 
         #region ILauncherItemAddonContextWorker

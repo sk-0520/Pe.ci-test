@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region property
 
-        LazyAction TagLazyChanger { get; }
+        private LazyAction TagLazyChanger { get; }
 
         public TextDocument TagDocument { get; }
 
@@ -88,11 +88,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-
         private void TagDocument_TextChanged(object? sender, EventArgs e)
         {
             TagLazyChanger.DelayAction(ChangedTag);
         }
-
     }
 }

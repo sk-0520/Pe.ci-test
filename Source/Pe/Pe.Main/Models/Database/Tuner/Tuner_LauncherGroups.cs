@@ -15,19 +15,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Tuner
 
         #region property
 
-        IIdFactory IdFactory { get; }
+        private IIdFactory IdFactory { get; }
 
         #endregion
 
         #region TunerBase
 
-        bool ExistsRows(IDatabaseContext context)
+        private bool ExistsRows(IDatabaseContext context)
         {
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
             return context.QuerySingle<bool>(statement, GetCommonDto());
         }
 
-        int InsertEmptyGroup(IDatabaseContext context)
+        private int InsertEmptyGroup(IDatabaseContext context)
         {
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
             var param = GetCommonDto();

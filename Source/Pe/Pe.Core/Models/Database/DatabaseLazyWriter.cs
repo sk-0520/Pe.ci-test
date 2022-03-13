@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         #region define
 
-        readonly struct LazyStockItem
+        private readonly struct LazyStockItem
         {
             public LazyStockItem(Action<IDatabaseTransaction> action)
             {
@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region variable
 
-        readonly object _timerLocker = new object();
+        private readonly object _timerLocker = new object();
 
         #endregion
 
@@ -99,35 +99,35 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region property
 
-        IDatabaseBarrier DatabaseBarrier { get; }
+        private IDatabaseBarrier DatabaseBarrier { get; }
 
         /// <summary>
         /// リトライ間隔。
         /// </summary>
-        TimeSpan PauseRetryTime { get; }
-        ILogger Logger { get; }
+        private TimeSpan PauseRetryTime { get; }
+        private ILogger Logger { get; }
 
-        Timer LazyTimer { get; [Unuse(UnuseKinds.Dispose)] set; }
+        private Timer LazyTimer { get; [Unuse(UnuseKinds.Dispose)] set; }
 
-        IList<LazyStockItem> StockItems { get; } = new List<LazyStockItem>();
-        IDictionary<object, LazyStockItem> UniqueItems { get; } = new Dictionary<object, LazyStockItem>();
+        private IList<LazyStockItem> StockItems { get; } = new List<LazyStockItem>();
+        private IDictionary<object, LazyStockItem> UniqueItems { get; } = new Dictionary<object, LazyStockItem>();
 
         #endregion
 
         #region function
 
-        void StopTimer()
+        private void StopTimer()
         {
             LazyTimer.Change(Timeout.Infinite, Timeout.Infinite);
         }
-        void StartTimer()
+        private void StartTimer()
         {
             ThrowIfDisposed();
 
             LazyTimer.Change(PauseRetryTime, PauseRetryTime);
         }
 
-        void StockCore(Action<IDatabaseTransaction> action, object? uniqueKey)
+        private void StockCore(Action<IDatabaseTransaction> action, object? uniqueKey)
         {
             lock(this._timerLocker) {
                 StopTimer();
@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }
         }
 
-        void LazyCallback(object state)
+        private void LazyCallback(object state)
         {
             if(IsPausing) {
                 return;
@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             Flush();
         }
 
-        void FlushCore(LazyStockItem[] stockItems)
+        private void FlushCore(LazyStockItem[] stockItems)
         {
             using var transaction = DatabaseBarrier.WaitWrite();
             foreach(var stockItem in stockItems) {

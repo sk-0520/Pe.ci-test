@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region variable
 
         //bool _isChangeDefaultGroup;
-        bool _showGroupPopupMenu;
+        private bool _showGroupPopupMenu;
 
         #endregion
 
@@ -34,9 +34,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        Func<bool> IsSelectedGetter { get; }
-        ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> AllLauncherGroups { get; }
-        IGeneralTheme GeneralTheme { get; }
+        private Func<bool> IsSelectedGetter { get; }
+        private ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> AllLauncherGroups { get; }
+        private IGeneralTheme GeneralTheme { get; }
         public FontViewModel? Font { get; private set; }
 
         //public bool IsChangeDefaultGroup

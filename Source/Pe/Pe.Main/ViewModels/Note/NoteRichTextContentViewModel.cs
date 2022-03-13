@@ -22,10 +22,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
     {
         #region variable
 
-        FontFamily? _selectionFontFamily;
-        decimal _selectionFontHeight;
-        Color _foregroundColor;
-        Color _backgroundColor;
+        private FontFamily? _selectionFontFamily;
+        private decimal _selectionFontHeight;
+        private Color _foregroundColor;
+        private Color _backgroundColor;
 
         #endregion
 
@@ -40,16 +40,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #region property
 
         //Xceed.Wpf.Toolkit.RichTextBox Control { get; set; }
-        RichTextBox? RichText { get; set; }
-        FlowDocument Document => RichText?.Document ?? throw new NullReferenceException(nameof(RichText));
+        private RichTextBox? RichText { get; set; }
+        private FlowDocument Document => RichText?.Document ?? throw new NullReferenceException(nameof(RichText));
 
-        LazyAction TextChangeLazyAction { get; }
+        private LazyAction TextChangeLazyAction { get; }
 
         public double FontMinimumSize => NoteConfiguration.FontSize.Minimum;
         public double FontMaximumSize => NoteConfiguration.FontSize.Maximum;
 
 
-        bool NowSelectionProcess { get; set; }
+        private bool NowSelectionProcess { get; set; }
 
         public FontFamily? SelectionFontFamily
         {
@@ -315,7 +315,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             return data;
         }
 
-        void ChangedText()
+        private void ChangedText()
         {
             if(CanVisible && EnabledUpdate) {
                 DispatcherWrapper.Begin(vm => {
@@ -407,6 +407,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 new Size(endRect.Width, endRect.Height)
             );
         }
-
     }
 }

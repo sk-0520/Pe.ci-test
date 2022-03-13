@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Views
 
         #region property
 
-        CommandStore CommandStore { get; } = new CommandStore();
+        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
@@ -32,7 +32,6 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Views
         ));
 
         #endregion
-
 
         #region Window
 

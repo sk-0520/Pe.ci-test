@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public bool IsLazyLoad => Editor.IsLazyLoad;
 
         [IgnoreValidation]
-        LauncherItemSettingEditorElement Editor { get; }
+        private LauncherItemSettingEditorElement Editor { get; }
 
         [IgnoreValidation]
         public object Icon

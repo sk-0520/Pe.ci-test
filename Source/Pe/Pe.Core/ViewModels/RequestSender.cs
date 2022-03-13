@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #region property
 
-        static RequestParameter EmptyParameter { get; } = new RequestParameter();
+        private static RequestParameter EmptyParameter { get; } = new RequestParameter();
 
         #endregion
 
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         static void EmptyCallback(RequestResponse requestResponse)
         { }
 
-        void OnRaised(RequestParameter requestParameter, Action<RequestResponse> callback)
+        private void OnRaised(RequestParameter requestParameter, Action<RequestResponse> callback)
         {
             Raised!.Invoke(this, new RequestEventArgs(requestParameter, callback));
         }
@@ -84,7 +84,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
                 return result ?? new RequestSilentResponse();
             });
         }
-
 
         #endregion
     }

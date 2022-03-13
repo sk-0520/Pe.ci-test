@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="newItems"></param>
         protected abstract void AddItemsImpl(IReadOnlyList<TValue> newItems);
-        void AddItems(IReadOnlyList<TValue> newItems)
+        private void AddItems(IReadOnlyList<TValue> newItems)
         {
             ThrowIfDisposed();
 
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="insertIndex"></param>
         /// <param name="newItems"></param>
         protected abstract void InsertItemsImpl(int insertIndex, IReadOnlyList<TValue> newItems);
-        void InsertItems(int insertIndex, IReadOnlyList<TValue> newItems)
+        private void InsertItems(int insertIndex, IReadOnlyList<TValue> newItems)
         {
             ThrowIfDisposed();
 
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="oldStartingIndex"></param>
         /// <param name="oldItems"></param>
         protected abstract void RemoveItemsImpl(int oldStartingIndex, IReadOnlyList<TValue> oldItems);
-        void RemoveItems(IReadOnlyList<TValue> oldItems, int oldStartingIndex)
+        private void RemoveItems(IReadOnlyList<TValue> oldItems, int oldStartingIndex)
         {
             ThrowIfDisposed();
 
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="newItems"></param>
         /// <param name="oldItems"></param>
         protected abstract void ReplaceItemsImpl(IReadOnlyList<TValue> newItems, IReadOnlyList<TValue> oldItems);
-        void ReplaceItems(IReadOnlyList<TValue> newItems, IReadOnlyList<TValue> oldItems)
+        private void ReplaceItems(IReadOnlyList<TValue> newItems, IReadOnlyList<TValue> oldItems)
         {
             ThrowIfDisposed();
 
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="newStartingIndex"></param>
         /// <param name="oldStartingIndex"></param>
         protected abstract void MoveItemsImpl(int newStartingIndex, int oldStartingIndex);
-        void MoveItems(int newStartingIndex, int oldStartingIndex)
+        private void MoveItems(int newStartingIndex, int oldStartingIndex)
         {
             ThrowIfDisposed();
 
@@ -113,7 +113,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// コレクションリセット処理実装部。
         /// </summary>
         protected abstract void ResetItemsImpl();
-        void ResetItems()
+
+        private void ResetItems()
         {
             ThrowIfDisposed();
 
@@ -125,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        IReadOnlyList<TValue> ConvertList(IList list)
+        private IReadOnlyList<TValue> ConvertList(IList list)
         {
             return list.Cast<TValue>().ToList();
         }
@@ -169,7 +170,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     throw new NotImplementedException();
             }
         }
-
 
         /// <summary>
         /// インデックスを取得。
@@ -217,6 +217,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             CollectionChanged(e);
         }
-
     }
 }

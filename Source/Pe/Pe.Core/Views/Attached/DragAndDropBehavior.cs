@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
 
         #endregion
 
-        void AssociatedObject_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void AssociatedObject_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
             }
         }
 
-        void AssociatedObject_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void AssociatedObject_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {
@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
             }
         }
 
-        void AssociatedObject_DragEnter(object sender, DragEventArgs e)
+        private void AssociatedObject_DragEnter(object sender, DragEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
             }
         }
 
-        void AssociatedObject_DragOver(object sender, DragEventArgs e)
+        private void AssociatedObject_DragOver(object sender, DragEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {
@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
             }
         }
 
-        void AssociatedObject_DragLeave(object sender, DragEventArgs e)
+        private void AssociatedObject_DragLeave(object sender, DragEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
             }
         }
 
-        void AssociatedObject_Drop(object sender, DragEventArgs e)
+        private void AssociatedObject_Drop(object sender, DragEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {
@@ -170,6 +170,5 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
         {
             OnDetaching();
         }
-
     }
 }

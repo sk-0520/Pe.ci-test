@@ -23,9 +23,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region property
 
-        HttpUserAgentFactory UserAgentFactory { get; }
+        private HttpUserAgentFactory UserAgentFactory { get; }
 
-        string AppName { get; } = BuildStatus.Name;
+        private string AppName { get; } = BuildStatus.Name;
 
         #endregion
 

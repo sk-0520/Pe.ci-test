@@ -77,6 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region property
 
         public Guid LauncherItemId { get; }
+
         #endregion
     }
 
@@ -121,7 +122,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <para><see cref="IsFullscreen"/>が真の場合に有効値が設定される。</para>
         /// </summary>
         public IntPtr FullscreenWindowHandle { get; }
-
 
         #endregion
     }
@@ -305,7 +305,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         [Conditional("DEBUG")]
         private void ThrowIfEmptyLauncherGroupItemId(Guid launcherGroupItemId) => ThrowIfEmptyGuid(launcherGroupItemId);
 
-        void OnLauncherItemChanged(Guid launcherItemId)
+        private void OnLauncherItemChanged(Guid launcherItemId)
         {
             ThrowIfEmptyLauncherItemId(launcherItemId);
 
@@ -313,7 +313,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             LauncherItemChanged?.Invoke(this, e);
         }
 
-        void OnLauncherItemRegistered(Guid launcherGroupId, Guid launcherItemId)
+        private void OnLauncherItemRegistered(Guid launcherGroupId, Guid launcherItemId)
         {
             ThrowIfEmptyLauncherItemId(launcherItemId);
 
@@ -321,7 +321,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             LauncherItemRegistered?.Invoke(this, e);
         }
 
-        void OnLauncherItemRemovedInGroup(Guid launcherGroupId, Guid launcherItemId, int index)
+        private void OnLauncherItemRemovedInGroup(Guid launcherGroupId, Guid launcherItemId, int index)
         {
             ThrowIfEmptyLauncherItemId(launcherItemId);
 
@@ -329,7 +329,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             LauncherItemRemovedInLauncherGroup?.Invoke(this, e);
         }
 
-        void OnCustomizeLauncherItemExited(Guid launcherItemId)
+        private void OnCustomizeLauncherItemExited(Guid launcherItemId)
         {
             ThrowIfEmptyLauncherItemId(launcherItemId);
 
@@ -337,7 +337,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CustomizeLauncherItemExited?.Invoke(this, e);
         }
 
-        void OnLauncherGroupItemRegistered(Guid launcherGroupItemId)
+        private void OnLauncherGroupItemRegistered(Guid launcherGroupItemId)
         {
             ThrowIfEmptyLauncherGroupItemId(launcherGroupItemId);
 
@@ -345,19 +345,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             LauncherGroupItemRegistered?.Invoke(this, e);
         }
 
-        void OnSettingChanged()
+        private void OnSettingChanged()
         {
             var e = new NotifyEventArgs();
             SettingChanged?.Invoke(this, e);
         }
 
-        void OnFullscreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd)
+        private void OnFullscreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd)
         {
             var e = new FullscreenEventArgs(screen, isFullScreen, hWnd);
             FullscreenChanged?.Invoke(this, e);
         }
 
-        void OnNotifyEventChanged(NotifyEventKind kind, IReadOnlyNotifyMessage message)
+        private void OnNotifyEventChanged(NotifyEventKind kind, IReadOnlyNotifyMessage message)
         {
             var e = new NotifyLogEventArgs(kind, message);
             NotifyLogChanged?.Invoke(this, e);
@@ -419,7 +419,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             OnSettingChanged();
         }
 
-
         public void SendFullscreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd)
         {
             var fire = false;
@@ -452,8 +451,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 OnFullscreenChanged(screen, isFullScreen, hWnd);
             }
         }
-
-
 
         /// <inheritdoc cref="INotifyManager.ExistsLog(Guid)" />
         public bool ExistsLog(Guid notifyLogId)

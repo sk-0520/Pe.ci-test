@@ -15,15 +15,15 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
     {
         #region variable
 
-        double _progressValue;
-        TimeSpan _currentTime;
+        private double _progressValue;
+        private TimeSpan _currentTime;
 
-        TimeSpan _selectedTime;
-        bool _canStart = true;
-        bool _canStop;
+        private TimeSpan _selectedTime;
+        private bool _canStart = true;
+        private bool _canStop;
 
-        ICommand? _startCommand;
-        ICommand? _stopCommand;
+        private ICommand? _startCommand;
+        private ICommand? _stopCommand;
 
         #endregion
 
@@ -41,11 +41,11 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         #region property
 
-        ClockLauncherItem Item { get; }
-        DispatcherTimer Timer { get; }
+        private ClockLauncherItem Item { get; }
+        private DispatcherTimer Timer { get; }
 
         [DateTimeKind(DateTimeKind.Utc)]
-        DateTime StartTimestamp { get; set; }
+        private DateTime StartTimestamp { get; set; }
 
         public TimeSpan CurrentTime
         {
@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         #region function
 
-        void StopTimer()
+        private void StopTimer()
         {
             ProgressValue = 1;
             Timer.Stop();

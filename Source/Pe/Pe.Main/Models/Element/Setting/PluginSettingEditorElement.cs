@@ -60,18 +60,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public PluginStateData PluginState { get; }
         public IPlugin? Plugin { get; }
-        PreferencesContextFactory PreferencesContextFactory { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        IHttpUserAgentFactory UserAgentFactory { get; }
-        IPlatformTheme PlatformTheme { get; }
-        IImageLoader ImageLoader { get; }
-        IMediaConverter MediaConverter { get; }
-        IPolicy Policy { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private PreferencesContextFactory PreferencesContextFactory { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IHttpUserAgentFactory UserAgentFactory { get; }
+        private IPlatformTheme PlatformTheme { get; }
+        private IImageLoader ImageLoader { get; }
+        private IMediaConverter MediaConverter { get; }
+        private IPolicy Policy { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
         public bool SupportedPreferences { get; }
-        IPreferences? Preferences { get; }
+        private IPreferences? Preferences { get; }
 
         public bool StartedPreferences { get; private set; }
 

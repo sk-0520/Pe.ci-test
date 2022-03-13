@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
     {
         #region variable
 
-        string _uninstallBatchFilePath = string.Empty;
+        private string _uninstallBatchFilePath = string.Empty;
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
         public RequestSender FileSelectRequest { get; } = new RequestSender();
         public RequestSender ShowMessageRequest { get; } = new RequestSender();
 
-        ObservableCollection<AboutComponentItemViewModel> ComponentCollection { get; }
+        private ObservableCollection<AboutComponentItemViewModel> ComponentCollection { get; }
         public ICollectionView ComponentItems { get; }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
 
         #region function
 
-        void ChangeUninstallTarget(UninstallTarget uninstallTarget, bool isEnabled, [CallerMemberName] string callerMemberName = "")
+        private void ChangeUninstallTarget(UninstallTarget uninstallTarget, bool isEnabled, [CallerMemberName] string callerMemberName = "")
         {
             if(isEnabled) {
                 UninstallTargets |= uninstallTarget;

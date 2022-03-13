@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Windows
 
         #region function
 
-        void ResetCore()
+        private void ResetCore()
         {
             IconPath = string.Empty;
             IconIndex = 0;

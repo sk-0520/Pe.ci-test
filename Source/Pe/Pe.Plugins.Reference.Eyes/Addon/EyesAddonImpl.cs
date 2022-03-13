@@ -15,9 +15,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
 
         #region proeprty
 
-        EyesWidget? EyesWidget { get; set; }
-        EyesBackground? EyesBackground { get; set; }
-
+        private EyesWidget? EyesWidget { get; set; }
+        private EyesBackground? EyesBackground { get; set; }
 
         #endregion
 

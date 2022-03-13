@@ -29,15 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-        public NoteLayoutsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -53,9 +45,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
+        public NoteLayoutsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
 
-        NoteLayoutsEntityDto ConvertFromData(NoteLayoutData data, IDatabaseCommonStatus databaseCommonStatus)
+        private NoteLayoutsEntityDto ConvertFromData(NoteLayoutData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
@@ -73,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-        NoteLayoutData ConvertFromDto(NoteLayoutsEntityDto dto)
+        private NoteLayoutData ConvertFromDto(NoteLayoutsEntityDto dto)
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 

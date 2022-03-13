@@ -37,6 +37,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
         }
 
         #endregion
-
     }
 }

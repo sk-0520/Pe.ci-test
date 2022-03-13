@@ -34,13 +34,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public bool IsEnabledHook { get; private set; }
 
-        HeartBeatSender? HeartBeatSender { get; set; }
-        ExplorerSupporter? ExplorerSupporter { get; set; }
+        private HeartBeatSender? HeartBeatSender { get; set; }
+        private ExplorerSupporter? ExplorerSupporter { get; set; }
 
         public bool IsDisabledSystemIdle => HeartBeatSender != null;
         public bool IsSupportedExplorer => ExplorerSupporter != null;
 
-        Guid KeyboardNotifyLogId { get; set; }
+        private Guid KeyboardNotifyLogId { get; set; }
         private BackgroundAddonProxy? BackgroundAddon { get; set; }
 
         private CronScheduler CronScheduler { get; }
@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             MouseHooker.Dispose();
         }
 
-        void StartHook()
+        private void StartHook()
         {
             var hookConfiguration = ApplicationDiContainer.Build<HookConfiguration>();
 
@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             IsEnabledHook = hooked;
         }
 
-        void StopHook()
+        private void StopHook()
         {
             if(KeyboradHooker.IsEnabled) {
                 KeyboradHooker.Unregister();
@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             IsEnabledHook = false;
         }
 
-        void StartBackground()
+        private void StartBackground()
         {
             BackgroundAddon = PluginContainer.Addon.GetBackground();
 
@@ -231,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
 
-        void ExecuteKeyPressedJob(KeyActionPressedJobBase job)
+        private void ExecuteKeyPressedJob(KeyActionPressedJobBase job)
         {
             void PutNotifyLog(string message)
             {
@@ -332,7 +332,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        Task ExecuteKeyDownJobsAsync(IReadOnlyCollection<KeyActionJobBase> jobs, in ModifierKeyStatus modifierKeyStatus)
+        private Task ExecuteKeyDownJobsAsync(IReadOnlyCollection<KeyActionJobBase> jobs, in ModifierKeyStatus modifierKeyStatus)
         {
             var localModifierKeyStatus = modifierKeyStatus;
             return Task.Run(() => {
@@ -396,7 +396,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             });
         }
 
-        Task ExecuteKeyUpJobsAsync(IReadOnlyCollection<KeyActionJobBase> jobs, Key key, in ModifierKeyStatus modifierKeyStatus)
+        private Task ExecuteKeyUpJobsAsync(IReadOnlyCollection<KeyActionJobBase> jobs, Key key, in ModifierKeyStatus modifierKeyStatus)
         {
             var localModifierKeyStatus = modifierKeyStatus;
             return Task.Run(() => {
@@ -413,7 +413,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         /// <param name="jobs"></param>
         /// <returns></returns>
-        bool IsThroughSystem(IReadOnlyCollection<KeyActionJobBase> jobs)
+        private bool IsThroughSystem(IReadOnlyCollection<KeyActionJobBase> jobs)
         {
             Debug.Assert(0 < jobs.Count);
 
@@ -424,7 +424,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return jobs.OfType<KeyActionPressedJobBase>().Any(i => i.ThroughSystem);
         }
 
-        void CatchDeviceChanged(DeviceChangedData deviceChangedData)
+        private void CatchDeviceChanged(DeviceChangedData deviceChangedData)
         {
             Logger.LogInformation("デバイス状態検知: {0}", deviceChangedData.DBT);
 
@@ -698,7 +698,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
 
-        void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
+        private void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
             Logger.LogInformation("セッション終了検知: Reason = {0}, Cancel = {1}", e.Reason, e.Cancel);
 
@@ -708,7 +708,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
 
-        void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        private void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
         {
             Logger.LogInformation("セッション変更検知: Reason = {0}", e.Reason);
             // そろそろ switch すべきちゃうんかと
@@ -729,7 +729,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        void SystemEvents_DisplaySettingsChanging(object? sender, EventArgs e)
+        private void SystemEvents_DisplaySettingsChanging(object? sender, EventArgs e)
         {
             Logger.LogInformation("ディスプレイ変更検知");
 

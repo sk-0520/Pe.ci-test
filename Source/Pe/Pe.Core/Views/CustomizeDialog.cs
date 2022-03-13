@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         /// </summary>
         public string Header { get; set; }
 
-        ISet<CustomizeDialogControlBase> Controls { get; } = new HashSet<CustomizeDialogControlBase>();
+        private ISet<CustomizeDialogControlBase> Controls { get; } = new HashSet<CustomizeDialogControlBase>();
 
         #endregion
 
@@ -196,7 +196,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         /// <summary>
         /// アイテム一覧。
         /// </summary>
-        IList<CustomizeDialogComboBoxItem<TValue>> Items { get; } = new List<CustomizeDialogComboBoxItem<TValue>>();
+        private IList<CustomizeDialogComboBoxItem<TValue>> Items { get; } = new List<CustomizeDialogComboBoxItem<TValue>>();
         /// <summary>
         /// 選択インデックス。
         /// </summary>

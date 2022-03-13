@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="head">置き換え開始文字列。</param>
         /// <param name="tail">置き換え終了文字列。</param>
         /// <param name="dg">処理。</param>
-        /// <returns></returns>
+        /// <returns>置き換え後文字列。</returns>
         public static string ReplacePlaceholder(string source, string head, string tail, Func<string, string> dg)
         {
             var escHead = Regex.Escape(head);
@@ -101,17 +101,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="head">置き換え開始文字列。</param>
         /// <param name="tail">置き換え終了文字列。</param>
         /// <param name="map">置き換え対象文字列と置き換え後文字列のペアであるコレクション。</param>
-        /// <returns></returns>
+        /// <returns>置き換え後文字列。</returns>
         public static string ReplacePlaceholderFromDictionary(string source, string head, string tail, IReadOnlyDictionary<string, string> map)
         {
             return ReplacePlaceholder(source, head, tail, s => map.ContainsKey(s) ? map[s] : head + s + tail);
         }
         /// <summary>
-        /// ${key}をvalueに置き変える。
+        /// 文字列中の<c>${key}</c>を<see cref="IReadOnlyDictionary{string, string}"/>の対応で置き換える。
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="map"></param>
-        /// <returns></returns>
+        /// <param name="source">対象文字列。</param>
+        /// <param name="map">マップ。</param>
+        /// <returns>置き換え後文字列。</returns>
         public static string ReplaceFromDictionary(string source, IReadOnlyDictionary<string, string> map)
         {
             return ReplacePlaceholderFromDictionary(source, "${", "}", map);
@@ -120,16 +120,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 文字列から行毎に分割する。
         /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
+        /// <param name="s">対象文字列。</param>
+        /// <returns>分割文字列。</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S4456:Parameter validation in yielding methods should be wrapped")]
-        public static IEnumerable<string> ReadLines(string text)
+        public static IEnumerable<string> ReadLines(string s)
         {
-            if(text == null) {
-                throw new ArgumentNullException(nameof(text));
+            if(s == null) {
+                throw new ArgumentNullException(nameof(s));
             }
 
-            using var reader = new StringReader(text);
+            using var reader = new StringReader(s);
             string? line;
             while((line = reader.ReadLine()) != null) {
                 yield return line;
@@ -158,8 +158,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 文字のなんちゃってな長さを取得。
         /// </summary>
-        /// <param name="s"></param>
-        /// <returns>A: 1, ｱ: 1, あ: 1, 🐙: 1</returns>
+        /// <param name="s">対象文字列。</param>
+        /// <returns>A: 1, ｱ: 1, あ: 1, 🐙: 1。<para><see cref="GetCharacters"/>も参照のこと。</para></returns>
         public static int TextWidth(string s)
         {
             if(s == null) {
@@ -173,8 +173,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 文字列をなんちゃって一文字単位に分解。
         /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
+        /// <param name="s">対象文字列。</param>
+        /// <returns>文字列としての一文字で分解された集合。<para><see cref="TextWidth"/>も参照のこと。</para></returns>
         public static IEnumerable<string> GetCharacters(string s)
         {
             var textElements = StringInfo.GetTextElementEnumerator(s);
@@ -186,8 +186,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 安全に<see cref="string.Trim"/>を行う。
         /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
+        /// <inheritdoc cref="string.Trim"/>
+        /// <param name="s">対象文字列。</param>
+        /// <returns><paramref name="s"/>が<c>null</c>の場合は空文字列、それ以外はトリムされた文字列。</returns>
         public static string SafeTrim(string? s)
         {
             if(s == null) {
@@ -200,35 +201,35 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 複数行を指定文字列で結合。
         /// </summary>
-        /// <param name="lines"></param>
-        /// <param name="separator"></param>
-        /// <returns></returns>
+        /// <param name="lines">行分割された文字列。</param>
+        /// <param name="separator">結合文字列。</param>
+        /// <returns><paramref name="separator"/> で結合された文字列。</returns>
         public static string JoinLines(string lines, string separator) => string.Join(separator, ReadLines(lines));
         /// <summary>
         /// 複数行データを半角スペースで結合。
         /// </summary>
-        /// <param name="lines"></param>
-        /// <returns></returns>
+        /// <param name="lines">行分割された文字列。</param>
+        /// <returns>半角スペースで結合された文字列。</returns>
         public static string JoinLines(string lines) => JoinLines(lines, " ");
 
         /// <summary>
         /// 指定文字を破棄。
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="characters"></param>
-        /// <returns></returns>
-        public static string RemoveCharacters(string input, ISet<char> characters)
+        /// <param name="target">対象文字列。</param>
+        /// <param name="characters">削除対象文字。</param>
+        /// <returns>削除後文字列。</returns>
+        public static string RemoveCharacters(string target, IReadOnlySet<char> characters)
         {
             if(characters.Count == 0) {
-                return input;
+                return target;
             }
 
-            if(input.IndexOfAny(characters.ToArray()) == -1) {
-                return input;
+            if(target.IndexOfAny(characters.ToArray()) == -1) {
+                return target;
             }
 
-            var sb = new StringBuilder(input.Length);
-            foreach(var c in input) {
+            var sb = new StringBuilder(target.Length);
+            foreach(var c in target) {
                 if(characters.Contains(c)) {
                     continue;
                 }
@@ -238,18 +239,24 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return sb.ToString();
         }
 
-        public static string ReplaceCharacters(string input, IReadOnlyDictionary<char, char> characters)
+        /// <summary>
+        /// 文字列の特定の文字を置き換える。
+        /// </summary>
+        /// <param name="target">対象文字列。</param>
+        /// <param name="characters"><see cref="IReadOnlyDictionary{char}.Keys"/>に対して<see cref="IReadOnlyDictionary{char}.Values"/>に置き換える。</param>
+        /// <returns>置き換え後文字列。</returns>
+        public static string ReplaceCharacters(string target, IReadOnlyDictionary<char, char> characters)
         {
             if(characters.Count == 0) {
-                return input;
+                return target;
             }
 
-            if(input.IndexOfAny(characters.Keys.ToArray()) == -1) {
-                return input;
+            if(target.IndexOfAny(characters.Keys.ToArray()) == -1) {
+                return target;
             }
 
-            var sb = new StringBuilder(input.Length);
-            foreach(var c in input) {
+            var sb = new StringBuilder(target.Length);
+            foreach(var c in target) {
                 if(characters.TryGetValue(c, out var newChar)) {
                     sb.Append(newChar);
                 } else {

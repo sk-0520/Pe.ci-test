@@ -18,8 +18,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
         public static readonly PluginInformations Informations = new PluginInformations(
             new PluginIdentifiers(new Guid("4524FC23-EBB9-4C79-A26B-8F472C05095E"), "Pe.Plugins.DefaultTheme"),
             new PluginVersions(Assembly.GetExecutingAssembly()!.GetName()!.Version!, new Version(0, 0, 0), new Version(0, 0, 0), Array.Empty<string>()),
-            new PluginAuthors(new Author("sk"), PluginLicense.DoWhatTheF_ckYouWantToPublicLicense2),
-            new PluginCategory(PluginCategories.Design)
+            new PluginAuthors(new Author("sk"), PluginLicense.DoWhatTheF_ckYouWantToPublicLicense2)
         );
 
         #endregion
@@ -35,11 +34,11 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
-        ResourceDictionary? ResourceDictionary { get; set; }
+        private ResourceDictionary? ResourceDictionary { get; set; }
 
-        bool IsThemeLoaded { get; set; }
+        private bool IsThemeLoaded { get; set; }
 
         #endregion
 
@@ -63,7 +62,6 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             };
             return image;
         }
-
 
         /// <inheritdoc cref="IPlugin.Initialize(IPluginInitializeContext)"/>
         public void Initialize(IPluginInitializeContext pluginInitializeContext)

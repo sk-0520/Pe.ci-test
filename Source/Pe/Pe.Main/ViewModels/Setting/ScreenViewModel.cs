@@ -12,8 +12,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        Color _foregroundColor;
-        Color _backgroundColor;
+        private Color _foregroundColor;
+        private Color _backgroundColor;
 
         #endregion
         public ScreenViewModel(Screen screen, ILoggerFactory loggerFactory)
@@ -61,6 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
         public string ScreenDeviceName => Screen.DeviceName;
         public bool IsPrimaryScreen => Screen.Primary;
+
         #endregion
     }
 }

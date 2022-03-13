@@ -22,15 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-        public LauncherEnvVarsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -43,9 +35,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
+        public LauncherEnvVarsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
 
-        LauncherEnvironmentVariableData ConvertFromDto(LauncherEnvVarsEntityDto dto)
+        private LauncherEnvironmentVariableData ConvertFromDto(LauncherEnvVarsEntityDto dto)
         {
             var data = new LauncherEnvironmentVariableData() {
                 Name = dto.EnvName,
@@ -55,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        LauncherEnvVarsEntityDto ConvertFromData(Guid launcherItemId, LauncherEnvironmentVariableData data, IDatabaseCommonStatus databaseCommonStatus)
+private         LauncherEnvVarsEntityDto ConvertFromData(Guid launcherItemId, LauncherEnvironmentVariableData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var dto = new LauncherEnvVarsEntityDto() {
                 LauncherItemId = launcherItemId,

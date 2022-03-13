@@ -17,9 +17,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #region property
 
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         #endregion
 
@@ -56,8 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             //    Logger.LogWarning(ex, ex.Message);
             //    return true;
             //});
-            var fileRotation = new FileRotation();
-            fileRotation.ExecuteWildcard(targetDirectory, "*.zip", enabledCount, ex => {
+            var fileRotator = new FileRotator();
+            fileRotator.ExecuteWildcard(targetDirectory, "*.zip", enabledCount, ex => {
                 Logger.LogWarning(ex, ex.Message);
                 return true;
             });

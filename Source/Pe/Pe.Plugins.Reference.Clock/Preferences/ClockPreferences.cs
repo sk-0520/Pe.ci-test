@@ -20,7 +20,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
 
         #region proeprty
 
-        ClockSettingViewModel? SettingViewModel { get; set; }
+        private ClockSettingViewModel? SettingViewModel { get; set; }
+
         #endregion
 
         #region function

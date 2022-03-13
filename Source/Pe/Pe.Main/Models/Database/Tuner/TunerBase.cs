@@ -21,7 +21,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Tuner
         protected IDatabaseStatementLoader StatementLoader { get; }
         protected ILogger Logger { get; }
 
-        IDictionary<string, object> TuneCommonDtoSource { get; }
+        private IDictionary<string, object> TuneCommonDtoSource { get; }
+
         #endregion
 
         #region function

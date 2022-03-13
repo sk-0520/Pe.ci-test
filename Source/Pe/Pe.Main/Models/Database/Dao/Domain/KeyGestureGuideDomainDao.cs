@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
     {
         #region define
 
-        class KeyGestureGuidRowDto: RowDtoBase
+        private class KeyGestureGuidRowDto: RowDtoBase
         {
             #region property
 
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 
         #region function
 
-        KeyMappingData ConvertFromDto(KeyGestureGuidRowDto dto)
+        private KeyMappingData ConvertFromDto(KeyGestureGuidRowDto dto)
         {
             var keyConverter = new KeyConverter();
             var modifierKeyTransfer = new EnumTransfer<ModifierKey>();

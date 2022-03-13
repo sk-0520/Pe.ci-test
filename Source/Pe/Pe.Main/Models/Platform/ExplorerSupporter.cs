@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
     {
         #region define
 
-        const string Windows10ChildClass = "win10";
+        private const string Windows10ChildClass = "win10";
 
 
         #endregion
@@ -37,19 +37,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
-        Timer Timer { get; }
+        private Timer Timer { get; }
 
         public TimeSpan CheckSpan { get; }
 
-        int WindowClassNameLength { get; } = WindowsUtility.classNameLength;
+        private int WindowClassNameLength { get; } = WindowsUtility.classNameLength;
 
-        IReadOnlyList<string> ExplorerClassNames { get; } = new string[] {
+        private IReadOnlyList<string> ExplorerClassNames { get; } = new string[] {
             "CabinetWClass", // win10だけならこれでいいはず(他は知らん)
         };
 
-        IReadOnlyDictionary<string, IReadOnlyList<string>> ChildClassNameTrees { get; } = new Dictionary<string, IReadOnlyList<string>> {
+        private IReadOnlyDictionary<string, IReadOnlyList<string>> ChildClassNameTrees { get; } = new Dictionary<string, IReadOnlyList<string>> {
             [Windows10ChildClass] = new string[] {
                 "ShellTabWindowClass",
                 "DUIViewWndClassName",
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             }
         };
 
-        IFixedQueue<IntPtr> SettedHorizontalScrollbarExplorerHandles { get; }
+        private IFixedQueue<IntPtr> SettedHorizontalScrollbarExplorerHandles { get; }
 
         #endregion
 

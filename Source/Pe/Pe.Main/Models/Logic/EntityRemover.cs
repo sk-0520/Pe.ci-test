@@ -21,6 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public string EntityName { get; }
         public int Count { get; }
+
         #endregion
     }
 
@@ -109,8 +110,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region property
 
-        IList<EntityDaoBase> EntityDaos { get; } = new List<EntityDaoBase>();
-        IDictionary<EntityDaoBase, IList<Func<int>>> DeleteFunctions { get; } = new Dictionary<EntityDaoBase, IList<Func<int>>>();
+        private IList<EntityDaoBase> EntityDaos { get; } = new List<EntityDaoBase>();
+        private IDictionary<EntityDaoBase, IList<Func<int>>> DeleteFunctions { get; } = new Dictionary<EntityDaoBase, IList<Func<int>>>();
 
         #endregion
 
@@ -162,8 +163,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
-        IDictionary<Pack, IApplicationDatabaseBarrier> Barriers { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        private IDictionary<Pack, IApplicationDatabaseBarrier> Barriers { get; }
+        private IDatabaseStatementLoader StatementLoader { get; }
 
         public IList<EntityRemoverBase> Items { get; } = new List<EntityRemoverBase>();
 
@@ -171,7 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        IDatabaseTransaction? BeginTransaction(Pack pack)
+        private IDatabaseTransaction? BeginTransaction(Pack pack)
         {
             if(Items.Any(i => i.IsTarget(pack))) {
                 var barrier = Barriers[pack];
@@ -181,7 +182,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return null;
         }
 
-        IEnumerable<EntityRemoverResult> ExecuteCore(Pack pack, IDatabaseContext context, IDatabaseImplementation implementation)
+        private IEnumerable<EntityRemoverResult> ExecuteCore(Pack pack, IDatabaseContext context, IDatabaseImplementation implementation)
         {
             var items = Items.Where(i => i.IsTarget(pack));
             foreach(var item in items) {

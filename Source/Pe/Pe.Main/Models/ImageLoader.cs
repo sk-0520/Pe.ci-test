@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         #endregion
 

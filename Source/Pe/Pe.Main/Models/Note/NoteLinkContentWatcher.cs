@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
         /// 作っといてなんやけど、いるかこれ？
         /// </summary>
         public Encoding? Encoding { get; set; }
+
         #endregion
     }
 
@@ -40,7 +41,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
         public NoteLinkWatcher(NoteLinkWatchParameter noteLinkWatchParameter, ILoggerFactory loggerFactory)
             : base(noteLinkWatchParameter, loggerFactory)
         { }
-
-
     }
 }

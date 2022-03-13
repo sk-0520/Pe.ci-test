@@ -22,16 +22,16 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
         #region property
 
         [Inject]
-        ILogger? Logger { get; set; }
-        LauncherToolbarViewModel ViewModel => (LauncherToolbarViewModel)DataContext;
+        private ILogger? Logger { get; set; }
+        private LauncherToolbarViewModel ViewModel => (LauncherToolbarViewModel)DataContext;
 
-        CommandStore CommandStore { get; } = new CommandStore();
+        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
         #region command
 
-        ICommand? _CloseCommand;
+        private ICommand? _CloseCommand;
         public ICommand CloseCommand
         {
             get

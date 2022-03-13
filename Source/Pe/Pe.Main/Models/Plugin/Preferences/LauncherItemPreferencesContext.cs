@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
     {
         #region variable
 
-        readonly LauncherItemAddonStorage _storage;
+        private readonly LauncherItemAddonStorage _storage;
 
         #endregion
 
@@ -19,7 +19,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
         {
             this._storage = storage;
         }
-
 
         #region ILauncherItemPreferencesLoadContext
 
@@ -34,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
     {
         #region variable
 
-        readonly LauncherItemAddonStorage _storage;
+        private readonly LauncherItemAddonStorage _storage;
 
         #endregion
 
@@ -43,7 +42,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
         {
             this._storage = storage;
         }
-
 
         #region ILauncherItemPreferencesCheckContext
 
@@ -59,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
     {
         #region variable
 
-        readonly LauncherItemAddonStorage _storage;
+        private readonly LauncherItemAddonStorage _storage;
 
         #endregion
 
@@ -68,7 +66,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
         {
             this._storage = storage;
         }
-
 
         #region ILauncherItemPreferencesSaveContext
 
@@ -88,7 +85,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
         public LauncherItemPreferencesEndContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId)
             : base(pluginIdentifiers, launcherItemId)
         { }
-
 
         #region ILauncherItemPreferencesCheckContext
 

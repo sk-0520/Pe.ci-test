@@ -21,8 +21,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.Startup
         #region property
 
         [Inject]
-        ILogger? Logger { get; set; }
-        CommandStore CommandStore { get; } = new CommandStore();
+        private ILogger? Logger { get; set; }
+        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Startup
         public ICommand CloseCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
             () => Close()
         ));
+
         #endregion
 
         private void root_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

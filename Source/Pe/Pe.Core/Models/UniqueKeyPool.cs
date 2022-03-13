@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
-        ConcurrentDictionary<string, object> Pool { get; } = new ConcurrentDictionary<string, object>();
+        private ConcurrentDictionary<string, object> Pool { get; } = new ConcurrentDictionary<string, object>();
 
         #endregion
 

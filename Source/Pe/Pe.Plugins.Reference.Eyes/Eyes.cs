@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes
     {
         #region variable
 
-        EyesAddonImpl _addon;
+        private EyesAddonImpl _addon;
 
         #endregion
 

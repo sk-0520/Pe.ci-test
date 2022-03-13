@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region define
 
-        readonly struct IconPathData
+        private readonly struct IconPathData
         {
             public IconPathData(string path)
                 : this(path, 0)
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region variable
 
-        ComWrapper<IPersistFile>? _persistFile;
+        private ComWrapper<IPersistFile>? _persistFile;
 
         #endregion
 

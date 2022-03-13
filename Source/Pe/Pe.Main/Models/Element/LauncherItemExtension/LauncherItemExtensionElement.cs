@@ -22,8 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #region property
 
-        IPluginInformations PluginInformations { get; }
-        ISet<LauncherItemAddonViewInformation> Informations { get; } = new HashSet<LauncherItemAddonViewInformation>();
+        private IPluginInformations PluginInformations { get; }
+        private ISet<LauncherItemAddonViewInformation> Informations { get; } = new HashSet<LauncherItemAddonViewInformation>();
 
         public bool HasView => Informations.Any(i => i.WindowItem.Window.IsVisible);
 
@@ -67,7 +67,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             information.ClosedWindow();
             Informations.Remove(information);
         }
-
 
         #endregion
 

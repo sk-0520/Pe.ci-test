@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        FrameworkElement? View { get; set; }
+        private FrameworkElement? View { get; set; }
 
         #endregion
 
@@ -111,7 +111,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
             View.Unloaded -= View_Unloaded;
             View = null;
         }
-
     }
-
 }

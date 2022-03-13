@@ -152,11 +152,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region define
         public class VersionConverter: JsonConverter<Version>
         {
-            public override Version Read(
-                ref Utf8JsonReader reader,
-                Type typeToConvert,
-                JsonSerializerOptions options
-            )
+            public override Version Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var s = reader.GetString();
                 if(string.IsNullOrWhiteSpace(s)) {
@@ -165,11 +161,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return new Version(s);
             }
 
-            public override void Write(
-                Utf8JsonWriter writer,
-                Version version,
-                JsonSerializerOptions options
-            )
+            public override void Write(Utf8JsonWriter writer, Version version, JsonSerializerOptions options)
             {
                 if(version is null) {
                     writer.WriteNullValue();

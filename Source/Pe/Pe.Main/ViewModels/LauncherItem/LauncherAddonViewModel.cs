@@ -20,8 +20,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         { }
 
         #region property
-        LauncherAddonDetailData? Detail { get; set; }
-        PropertyChangedHooker? ExtensionPropertyChangedHooker { get; set; }
+        private LauncherAddonDetailData? Detail { get; set; }
+        private PropertyChangedHooker? ExtensionPropertyChangedHooker { get; set; }
 
         #endregion
 

@@ -50,6 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected IDispatcherWrapper DispatcherWrapper { get; }
 
         public bool IsLoaded { get; private set; }
+
         #endregion
 
         #region function
@@ -107,7 +108,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             ReceiveLauncherItemRemoved(e.LauncherItemId);
         }
-
-
     }
 }

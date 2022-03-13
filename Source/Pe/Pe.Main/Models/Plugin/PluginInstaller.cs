@@ -34,16 +34,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region property
 
-        ILoggerFactory LoggerFactory { get; }
-        ILogger Logger { get; }
+        private ILoggerFactory LoggerFactory { get; }
+        private ILogger Logger { get; }
 
-        PluginContainer PluginContainer { get; }
-        IPluginConstructorContext PluginConstructorContext { get; }
-        PauseReceiveLogDelegate PauseReceiveLog { get; }
-        EnvironmentParameters EnvironmentParameters { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private PluginContainer PluginContainer { get; }
+        private IPluginConstructorContext PluginConstructorContext { get; }
+        private PauseReceiveLogDelegate PauseReceiveLog { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
-        IReadOnlySet<string> Extensions { get; } = new HashSet<string>() {
+        private IReadOnlySet<string> Extensions { get; } = new HashSet<string>() {
             "7z",
             "zip",
         };
@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginFileName;
         }
 
-        IPluginLoadState LoadDirectPlugin(FileInfo pluginFile, DirectoryInfo pluginDirectory)
+        private IPluginLoadState LoadDirectPlugin(FileInfo pluginFile, DirectoryInfo pluginDirectory)
         {
             var loadStateData2 = PluginContainer.LoadPlugin(pluginFile, Enumerable.Empty<PluginStateData>().ToList(), BuildStatus.Version, PluginConstructorContext, PauseReceiveLog);
             if(loadStateData2.PluginId == Guid.Empty || loadStateData2.LoadState != PluginState.Enable) {
@@ -188,7 +188,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return loadStateData2;
         }
 
-        IPluginLoadState LoadProcessPlugin(FileInfo pluginFile, DirectoryInfo pluginDirectory)
+        private IPluginLoadState LoadProcessPlugin(FileInfo pluginFile, DirectoryInfo pluginDirectory)
         {
             var applicationBoot = new ApplicationBoot(LoggerFactory);
             var arguments = new Dictionary<string, string> {

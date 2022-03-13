@@ -83,7 +83,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-
     internal static class PropertyExpressionFactory
     {
         #region function
@@ -189,8 +188,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public PropertyInfo PropertyInfo { get; }
 
-        Func<object, object?> Getter { get; }
-        Action<object, object?> Setter { get; }
+        private Func<object, object?> Getter { get; }
+        private Action<object, object?> Setter { get; }
 
         #endregion
 
@@ -237,8 +236,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        Func<TOwner, TValue> Getter { get; }
-        Action<TOwner, TValue> Setter { get; }
+        private Func<TOwner, TValue> Getter { get; }
+        private Action<TOwner, TValue> Setter { get; }
 
         #endregion
 
@@ -315,13 +314,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        object Owner { get; }
+        private object Owner { get; }
 
-        ParameterExpression OwnerExpression { get; }
+        private ParameterExpression OwnerExpression { get; }
 
-        IReadOnlyDictionary<string, PropertyInfo> Properties { get; }
+        private IReadOnlyDictionary<string, PropertyInfo> Properties { get; }
 
-        ConcurrentDictionary<string, PropertyAccesser> AccesserCache { get; } = new ConcurrentDictionary<string, PropertyAccesser>(); // CPUの数とかこの層で取得するのしんどいのでコンストラクタでキャパ指定せず。
+        private ConcurrentDictionary<string, PropertyAccesser> AccesserCache { get; } = new ConcurrentDictionary<string, PropertyAccesser>(); // CPUの数とかこの層で取得するのしんどいのでコンストラクタでキャパ指定せず。
 
         #endregion
 

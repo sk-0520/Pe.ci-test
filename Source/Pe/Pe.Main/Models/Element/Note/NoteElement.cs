@@ -31,27 +31,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
     {
         #region variable
 
-        bool _isVisible;
-        bool _isTopmost;
-        bool _isCompact;
-        bool _isLocked;
-        bool _textWrap;
-        bool _isLink;
-        string _title = string.Empty;
-        IScreen? _dockScreen;
-        NoteHiddenMode _hiddenMode;
-        NoteCaptionPosition _captionPosition;
+        private bool _isVisible;
+        private bool _isTopmost;
+        private bool _isCompact;
+        private bool _isLocked;
+        private bool _textWrap;
+        private bool _isLink;
+        private string _title = string.Empty;
+        private IScreen? _dockScreen;
+        private NoteHiddenMode _hiddenMode;
+        private NoteCaptionPosition _captionPosition;
 
-        NoteLayoutKind _layoutKind;
-        NoteContentKind _contentKind;
+        private NoteLayoutKind _layoutKind;
+        private NoteContentKind _contentKind;
 
-        Color _foregroundColor;
-        Color _backegroundColor;
+        private Color _foregroundColor;
+        private Color _backegroundColor;
 
-        NoteContentElement? _contentElement;
+        private NoteContentElement? _contentElement;
 
-        bool _isVisibleBlind;
-        bool _hiddenCompact;
+        private bool _isVisibleBlind;
+        private bool _hiddenCompact;
+
         #endregion
 
         public NoteElement(Guid noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, NoteConfiguration noteConfiguration, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
@@ -76,8 +77,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public Guid NoteId { get; }
 
-        NoteConfiguration NoteConfiguration { get; }
-        Timer? HideWaitTimer { get; set; }
+        private NoteConfiguration NoteConfiguration { get; }
+        private Timer? HideWaitTimer { get; set; }
 
         /// <summary>
         /// DB から取得して設定したりそれでも保存しなかったりするまさに変数。
@@ -88,19 +89,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             private set => SetProperty(ref this._dockScreen, value);
         }
         public NoteStartupPosition StartupPosition { get; private set; }
-        IOrderManager OrderManager { get; }
-        INotifyManager NotifyManager { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
-        INoteTheme NoteTheme { get; }
+        private IOrderManager OrderManager { get; }
+        private INotifyManager NotifyManager { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
+        private INoteTheme NoteTheme { get; }
         public SavingFontElement? FontElement { get; private set; }
 
-        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
-        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+        private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        private UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
-        bool ViewCreated { get; set; }
+        private bool ViewCreated { get; set; }
 
         public bool IsTopmost
         {
@@ -200,7 +201,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #region function
 
-        NoteData? GetNoteData()
+        private NoteData? GetNoteData()
         {
             ThrowIfDisposed();
 
@@ -211,7 +212,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         }
 
 
-        NoteData CreateNoteData([PixelKind(Px.Device)] Point cursorLocation)
+        private NoteData CreateNoteData([PixelKind(Px.Device)] Point cursorLocation)
         {
             ThrowIfDisposed();
 
@@ -282,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             return noteData;
         }
 
-        IScreen GetDockScreen(string screenDeviceName)
+        private IScreen GetDockScreen(string screenDeviceName)
         {
             ThrowIfDisposed();
 
@@ -305,7 +306,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             return Screen.PrimaryScreen;
         }
 
-        void LoadNote()
+        private void LoadNote()
         {
             ThrowIfDisposed();
 
@@ -338,7 +339,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             oldContentElement?.Dispose();
         }
 
-        void UpdateFontId(SavingFontElement fontElement, IDatabaseContext context, IDatabaseImplementation implementation)
+        private void UpdateFontId(SavingFontElement fontElement, IDatabaseContext context, IDatabaseImplementation implementation)
         {
             ThrowIfDisposed();
 
@@ -543,7 +544,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ContentElement!.Unlink(isRemove);
         }
 
-        string ConvertContent(NoteContentKind fromKind, string fromRawContent, NoteContentKind toKind)
+        private string ConvertContent(NoteContentKind fromKind, string fromRawContent, NoteContentKind toKind)
         {
             ThrowIfDisposed();
 
@@ -621,7 +622,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
 
             oldContentElement?.Dispose();
-
         }
 
         public void ChangeLayoutKind(NoteLayoutData layoutData)
@@ -738,7 +738,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        void Hide()
+        private void Hide()
         {
             Logger.LogInformation("自動的に隠す: {0}, {1}", HiddenMode, NoteId);
 
@@ -881,6 +881,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             StopHidden(false);
             Hide();
         }
-
     }
 }

@@ -81,7 +81,7 @@ static void release_link_item_value(void* value, void* data, const MEMORY_RESOUR
     release_text(&pair->key);
 }
 
-static LINKED_LIST* RC_HEAP_FUNC(new_items, size_t capacity, func_release_map_value release_map_value, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource)
+static LINKED_LIST* RC_HEAP_FUNC(new_items, size_t capacity, func_release_linked_list_value release_map_value, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource)
 {
     LINKED_LIST* item_lists = RC_HEAP_CALL(new_memory, capacity, sizeof(LINKED_LIST), map_memory_resource);
     for (size_t i = 0; i < capacity; i++) {
@@ -92,7 +92,7 @@ static LINKED_LIST* RC_HEAP_FUNC(new_items, size_t capacity, func_release_map_va
     return item_lists;
 }
 
-MAP RC_HEAP_FUNC(new_map, byte_t item_size, size_t capacity, real_t load_factor, func_release_map_value release_map_value, func_calc_map_hash calc_map_hash, func_equals_map_key equals_map_key, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource)
+MAP RC_HEAP_FUNC(new_map, byte_t item_size, size_t capacity, real_t load_factor, func_release_linked_list_value release_map_value, func_calc_map_hash calc_map_hash, func_equals_map_key equals_map_key, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource)
 {
     size_t adjusted_capacity = power_of_2(capacity ? capacity : MAP_DEFAULT_CAPACITY);
 

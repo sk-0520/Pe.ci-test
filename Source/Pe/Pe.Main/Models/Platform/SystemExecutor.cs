@@ -88,5 +88,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #endregion
     }
-
 }

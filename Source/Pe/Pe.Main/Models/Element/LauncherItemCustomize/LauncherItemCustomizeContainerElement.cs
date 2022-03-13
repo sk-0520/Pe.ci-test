@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
     {
         #region variable
 
-        bool _isVisible;
+        private bool _isVisible;
 
         #endregion
 
@@ -37,11 +37,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         public IScreen Screen { get; }
         public LauncherItemCustomizeEditorElement Editor { get; }
 
-        IOrderManager OrderManager { get; }
-        INotifyManager NotifyManager { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IOrderManager OrderManager { get; }
+        private INotifyManager NotifyManager { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         private bool ViewCreated { get; set; }
 
@@ -63,7 +63,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             OrderManager.RefreshLauncherItemElement(LauncherItemId);
             NotifyManager.SendLauncherItemChanged(LauncherItemId);
         }
-
 
         #endregion
 

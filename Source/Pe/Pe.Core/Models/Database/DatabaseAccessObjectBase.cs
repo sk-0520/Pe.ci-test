@@ -16,8 +16,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         #region variable
 
-        Regex? _processBodyRegex;
-        Regex? _processContentRegex;
+        /// <summary>
+        /// <see cref="ProcessBodyRegex"/> 実体。
+        /// </summary>
+        private Regex? _processBodyRegex;
+        /// <summary>
+        /// <see cref="ProcessContentRegex"/> 実体。
+        /// </summary>
+        private Regex? _processContentRegex;
 
         #endregion
 

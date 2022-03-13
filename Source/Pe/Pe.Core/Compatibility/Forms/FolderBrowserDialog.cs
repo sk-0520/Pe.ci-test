@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
 
         #region property
 
-        WinForms.FolderBrowserDialog Dialog { get; set; }
+        private WinForms.FolderBrowserDialog Dialog { get; set; }
 
         /// <inheritdoc cref="System.ComponentModel.Component.Container"/>
         [BrowsableAttribute(false)]

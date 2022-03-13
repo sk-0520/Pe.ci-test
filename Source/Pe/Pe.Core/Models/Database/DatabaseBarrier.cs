@@ -17,8 +17,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region property
 
-        IDisposable Locker { get; [Unuse(UnuseKinds.Dispose)]set; }
-        IDatabaseTransaction Transaction { get; [Unuse(UnuseKinds.Dispose)] set; }
+        private IDisposable Locker { get; [Unuse(UnuseKinds.Dispose)]set; }
+        public IDatabaseTransaction Transaction { get; [Unuse(UnuseKinds.Dispose)] set; }
 
         IDbTransaction IDatabaseTransaction.Transaction => Transaction.Transaction;
 
@@ -261,5 +261,4 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #endregion
     }
-
 }

@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
     {
         #region property
 
-        IDictionary<Type, EnumResourceMapping> Map { get; } = new Dictionary<Type, EnumResourceMapping>();
+        private IDictionary<Type, EnumResourceMapping> Map { get; } = new Dictionary<Type, EnumResourceMapping>();
 
         public string NameHeader { get; } = "String:Enum";
         public string Separator { get; } = "-";
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             return this;
         }
 
-        string GetResourceName(EnumResourceMapping mapping, Type enumType, object enumValue)
+        private string GetResourceName(EnumResourceMapping mapping, Type enumType, object enumValue)
         {
             var item = mapping.Items.FirstOrDefault(i => i.RawMember == (int)enumValue);
             if(item.ResourceName == string.Empty) {
@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             return item.ResourceName;
         }
 
-        string GetResourceName(Type enumType, object enumValue)
+        private string GetResourceName(Type enumType, object enumValue)
         {
             var fieldInfo = enumType.GetField(enumValue.ToString()!)!;
             var attribute = fieldInfo.GetCustomAttribute<EnumResourceAttribute>();
@@ -174,8 +174,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
             if(undefinedIsRaw) {
                 return enumValue.ToString() ?? string.Empty;
             }
-            return string.Empty;
 
+            return string.Empty;
         }
 
         #endregion

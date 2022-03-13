@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 
         #region function
 
-        void OpenUri(Uri uri)
+        private void OpenUri(Uri uri)
         {
             var process = Process.Start(new ProcessStartInfo(uri.ToString()) {
                 UseShellExecute = true,
@@ -143,6 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
         public BuildType BuildType => BuildStatus.BuildType;
         public Version Version => BuildStatus.Version;
         public string Revision => BuildStatus.Revision;
+
         #endregion
     }
 }

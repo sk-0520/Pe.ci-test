@@ -43,6 +43,5 @@ namespace ContentTypeTextNet.Pe.Main.Views.About
         ));
 
         #endregion
-
     }
 }

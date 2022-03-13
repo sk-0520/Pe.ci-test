@@ -7,6 +7,8 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
     public class LogicalMultiOrConverter: IMultiValueConverter
     {
+        #region IValueConverter
+
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if(values == null) {
@@ -30,5 +32,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
         {
             throw new NotSupportedException();
         }
+
+        #endregion
     }
 }

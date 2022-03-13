@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
     {
         #region variable
 
-        bool _isVisible;
+        private bool _isVisible;
 
         #endregion
 
@@ -48,11 +48,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         public IScreen Screen { get; }
 
-        IOrderManager OrderManager { get; }
-        INotifyManager NotifyManager { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IOrderManager OrderManager { get; }
+        private INotifyManager NotifyManager { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
-        bool ViewCreated { get; set; }
+        private bool ViewCreated { get; set; }
 
         public bool IsVisible
         {
@@ -153,8 +153,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #region property
 
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         /// <summary>
         /// 後付けオプション設定。
@@ -291,6 +291,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
         }
 
         #endregion
-
     }
 }

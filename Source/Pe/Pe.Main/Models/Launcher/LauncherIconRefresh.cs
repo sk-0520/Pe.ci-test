@@ -80,28 +80,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         #region property
 
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
-        TimeSpan RefreshTime { get; }
+        private TimeSpan RefreshTime { get; }
 
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
-        IOrderManager OrderManager { get; }
-        INotifyManager NotifyManager { get; }
+        private IOrderManager OrderManager { get; }
+        private INotifyManager NotifyManager { get; }
+
         #endregion
 
         #region function
 
-        bool IsNeedUpdate(LauncherIconStatus launcherIconStatus, [DateTimeKind(DateTimeKind.Utc)] DateTime dateTime)
+        private bool IsNeedUpdate(LauncherIconStatus launcherIconStatus, [DateTimeKind(DateTimeKind.Utc)] DateTime dateTime)
         {
             return RefreshTime < (dateTime - launcherIconStatus.LastUpdatedTimestamp);
         }
 
-        IReadOnlyList<LauncherIconStatus> GetUpdateTartget(Guid launcherItemIs)
+        private IReadOnlyList<LauncherIconStatus> GetUpdateTartget(Guid launcherItemIs)
         {
             using var context = LargeDatabaseBarrier.WaitRead();
             var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
@@ -130,7 +131,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             var loader = new LauncherIconRefreshLoader(launcherItemId, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             return loader.LoadAndSaveAsync(target.IconScale, cancellationToken);
         }
-
 
         #endregion
 

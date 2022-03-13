@@ -25,15 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-        public FontsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -50,9 +42,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
+        public FontsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
 
-        FontData ConvertFromDto(FontsRowDto dto)
+        private FontData ConvertFromDto(FontsRowDto dto)
         {
             var data = new FontData() {
                 FamilyName = dto.FamilyName,
@@ -66,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        FontsRowDto ConvertFromData(IFont font, IDatabaseCommonStatus databaseCommonStatus)
+        private FontsRowDto ConvertFromData(IFont font, IDatabaseCommonStatus databaseCommonStatus)
         {
             var dto = new FontsRowDto() {
                 FamilyName = font.FamilyName,

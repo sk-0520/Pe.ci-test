@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        Func<TValue, TKey> ToKey { get; }
+        private Func<TValue, TKey> ToKey { get; }
 
         #endregion
 

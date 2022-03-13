@@ -25,8 +25,8 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 
         #region property
 
-        TimeSpan RetryWaitTime { get; } = TimeSpan.FromSeconds(5);
-        CrashReportOptions Options { get; }
+        private TimeSpan RetryWaitTime { get; } = TimeSpan.FromSeconds(5);
+        private CrashReportOptions Options { get; }
         public CrashReportSaveData Data { get; set; } = new CrashReportSaveData();
 
         public bool AutoSend => Options.AutoSend;
@@ -38,6 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
         public RunningStatus SendStatus { get; }
         public string ErrorMessage { get; private set; } = string.Empty;
         public string CrashReportSaveFilePath { get; private set; } = string.Empty;
+
         #endregion
 
         #region function
@@ -133,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
             SendStatus.State = RunningState.None;
         }
 
-        CrashReportRawData LoadRawData()
+        private CrashReportRawData LoadRawData()
         {
             using var stream = new FileStream(Options.CrashReportRawFilePath, FileMode.Open);
             var serializer = new CrashReportSerializer();

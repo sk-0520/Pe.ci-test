@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
 
         #region property
 
-        CommandStore CommandStore { get; } = new CommandStore();
+        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
         public ICommand CloseCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
             () => Close()
         ));
+
         #endregion
     }
 }

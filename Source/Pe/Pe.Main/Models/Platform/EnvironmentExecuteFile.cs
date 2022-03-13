@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         #endregion
 
@@ -178,6 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
             return PathItemsCache;
         }
+
         #endregion
     }
 
@@ -216,7 +217,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
             return path;
         }
-
 
         #endregion
     }

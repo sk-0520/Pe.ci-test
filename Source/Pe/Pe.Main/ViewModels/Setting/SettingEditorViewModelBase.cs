@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        bool _isSelected;
+        private bool _isSelected;
 
         #endregion
 
@@ -84,6 +84,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public abstract void Refresh();
 
         #endregion
-
     }
 }

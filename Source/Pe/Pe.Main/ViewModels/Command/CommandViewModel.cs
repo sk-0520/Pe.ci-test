@@ -27,11 +27,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
     {
         #region variable
 
-        bool _isOpend;
-        CommandItemViewModel? _currentSelectedItem;
-        CommandItemViewModel? _selectedItem;
-        string _inputValue = string.Empty;
-        InputState _inputState;
+        private bool _isOpend;
+        private CommandItemViewModel? _currentSelectedItem;
+        private CommandItemViewModel? _selectedItem;
+        private string _inputValue = string.Empty;
+        private InputState _inputState;
         //bool _isActive;
         private List<CommandItemViewModel> _commandItems = new List<CommandItemViewModel>();
 
@@ -64,16 +64,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             //PropertyChangedHooker.AddHook(nameof(Model.CommandItems), BuildCommandItems);
         }
 
-
         #region property
         public RequestSender ScrollSelectedItemRequest { get; } = new RequestSender();
         public RequestSender FocusEndRequest { get; } = new RequestSender();
 
-        IGeneralTheme GeneralTheme { get; }
-        ICommandTheme CommandTheme { get; }
-        IPlatformTheme PlatformTheme { get; }
+        private IGeneralTheme GeneralTheme { get; }
+        private ICommandTheme CommandTheme { get; }
+        private IPlatformTheme PlatformTheme { get; }
 
-        DispatcherTimer HideWaitTimer { get; }
+        private DispatcherTimer HideWaitTimer { get; }
 
         //ModelViewModelObservableCollectionManagerBase<WrapModel<ICommandItem>, CommandItemViewModel> CommandItemCollection { get; }
         public IReadOnlyList<CommandItemViewModel> CommandItems
@@ -100,11 +99,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             }
         }
 
-        ThemeProperties ThemeProperties { get; }
-        PropertyChangedHooker PropertyChangedHooker { get; }
+        private ThemeProperties ThemeProperties { get; }
+        private PropertyChangedHooker PropertyChangedHooker { get; }
 
-        IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
-        TextBox? InputCommand { get; set; }
+        private IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
+        private TextBox? InputCommand { get; set; }
 
         public double WindowWidth
         {
@@ -120,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         public IconBox IconBox => Model.IconBox;
 
-        CancellationTokenSource? InputCancellationTokenSource { get; set; }
+        private CancellationTokenSource? InputCancellationTokenSource { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Bug", "S4275:Getters and setters should access the expected fields")]
         public string InputValue
@@ -354,7 +353,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         #region function
 
-        void UpDownSelectItem(bool isUp)
+        private void UpDownSelectItem(bool isUp)
         {
             if(CommandItems.Count == 0) {
                 Logger.LogTrace("列挙アイテムなし");
@@ -492,7 +491,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             HideWaitTimer.Stop();
             HideView();
         }
-
-
     }
 }

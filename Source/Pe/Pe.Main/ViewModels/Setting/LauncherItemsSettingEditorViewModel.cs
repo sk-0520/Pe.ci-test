@@ -21,10 +21,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        bool _isPopupAddItemMenu;
-        LauncherItemSettingEditorViewModel? _selectedItem;
+        private bool _isPopupAddItemMenu;
+        private LauncherItemSettingEditorViewModel? _selectedItem;
 
-        string _nameFilterQuery = string.Empty;
+        private string _nameFilterQuery = string.Empty;
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        SimpleRegexFactory SimpleRegexFactory { get; }
+        private SimpleRegexFactory SimpleRegexFactory { get; }
 
         public RequestSender ScrollSelectedItemRequest { get; } = new RequestSender();
         public RequestSender ScrollToTopCustomizeRequest { get; } = new RequestSender();
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public IDragAndDrop DragAndDrop { get; }
 
         // このViewModelが有効な際に検証が必要なため IgnoreValidation は付与しない
-        ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
         public ICollectionView AllLauncherItemItems { get; }
 
         public bool IsPopupAddItemMenu
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
-        Regex NameFilterQueryRegex { get; set; }
+        private Regex NameFilterQueryRegex { get; set; }
         public string NameFilterQuery
         {
             get => this._nameFilterQuery;
@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        void AddNewItem(LauncherItemKind kind, Guid pluginId)
+        private void AddNewItem(LauncherItemKind kind, Guid pluginId)
         {
             IsPopupAddItemMenu = false;
             var newLauncherItemId = Model.AddNewItem(kind, pluginId);

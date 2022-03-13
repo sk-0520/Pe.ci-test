@@ -81,7 +81,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return CombinePathCore(uri, appendLastSeparator, allPaths);
         }
 
-
         #endregion
     }
 }

@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
-        /// <returns></returns>
+        /// <returns>問い合わせ結果。</returns>
         IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true);
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
-        /// <returns></returns>
+        /// <returns>問い合わせ結果。</returns>
         IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true);
 
         /// <summary>
@@ -167,7 +167,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         IDatabaseTransaction BeginTransaction(IsolationLevel isolationLevel);
 
-
         /// <inheritdoc cref="BeginReadOnlyTransaction(IsolationLevel)"/>
         IDatabaseTransaction BeginReadOnlyTransaction();
         /// <summary>
@@ -217,9 +216,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region property
 
-        Lazy<IDbConnection> LazyConnection { get; set; }
+        private Lazy<IDbConnection> LazyConnection { get; set; }
 
-        Lazy<IDatabaseImplementation> LazyImplementation { get; }
+        private Lazy<IDatabaseImplementation> LazyImplementation { get; }
         protected IDatabaseImplementation Implementation => LazyImplementation.Value;
 
         protected ILogger Logger { get; }
@@ -242,7 +241,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// DB接続を開く。
         /// </summary>
         /// <returns></returns>
-        IDbConnection OpenConnection()
+        private IDbConnection OpenConnection()
         {
             if(ConnectionPausing) {
                 throw new InvalidOperationException(nameof(ConnectionPausing));
@@ -653,7 +652,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         { }
 
         #region property
-
 
         /// <summary>
         /// 接続元。

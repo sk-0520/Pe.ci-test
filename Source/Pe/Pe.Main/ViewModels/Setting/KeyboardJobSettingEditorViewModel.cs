@@ -93,7 +93,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
         #endregion
-
     }
 
     public sealed class KeyboardDisableJobSettingEditorViewModel: KeyboardJobSettingEditorViewModelBase<KeyboardDisableJobSettingEditorElement>
@@ -156,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        KeyMappingData Mapping { get; }
+        private KeyMappingData Mapping { get; }
 
         public Key Key
         {
@@ -187,8 +186,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             get => Mapping.Super;
             set => SetPropertyValue(Mapping, value);
         }
-
-
 
         #endregion
     }
@@ -226,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
-        ModelViewModelObservableCollectionManagerBase<WrapModel<KeyMappingData>, KeyMappingEditorViewModel> MappingCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<WrapModel<KeyMappingData>, KeyMappingEditorViewModel> MappingCollection { get; }
         public ICollectionView MappingItems { get; }
 
         #endregion
@@ -303,7 +300,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region property
 
         [IgnoreValidation]
-        ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
         [IgnoreValidation]
         public ICollectionView AllLauncherItems { get; }
 
@@ -390,7 +387,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #endregion
-
     }
 
     public sealed class KeyboardNoteJobSettingEditorViewModel: KeyboardPressedJobSettingEditorViewModelBase<KeyActionContentNote>
@@ -433,7 +429,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #endregion
-
     }
-
 }

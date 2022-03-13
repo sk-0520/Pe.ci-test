@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
 
         #region property
 
-        PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedHooker PropertyChangedHooker { get; }
 
         public FontFamily FontFamily
         {

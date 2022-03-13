@@ -19,16 +19,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         #region property
 
-        IDatabaseContext Context { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
-        IDatabaseImplementation Implementation { get; }
+        private IDatabaseContext Context { get; }
+        private IDatabaseStatementLoader StatementLoader { get; }
+        private IDatabaseImplementation Implementation { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
+
         #endregion
 
         #region function
 
-        IEnumerable<Guid> LoadNormalIds(Guid launcherGroupId)
+        private IEnumerable<Guid> LoadNormalIds(Guid launcherGroupId)
         {
             var dao = new LauncherGroupItemsEntityDao(Context, StatementLoader, Implementation, LoggerFactory);
             return dao.SelectLauncherItemIds(launcherGroupId);

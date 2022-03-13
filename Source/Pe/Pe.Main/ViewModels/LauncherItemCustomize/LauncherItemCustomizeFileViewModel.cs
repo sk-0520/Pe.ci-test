@@ -15,7 +15,6 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-
     public class LauncherItemCustomizeFileViewModel: LauncherItemCustomizeDetailViewModelBase
     {
         #region variable
@@ -28,8 +27,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         //bool _isEnabledStandardInputOutput;
         //Encoding? _standardInputOutputEncoding;
         //bool _runAdministrator;
-        bool _isDropDownPathItems;
-        EncodingViewModel? _selectedStandardInputOutputEncoding;
+        private bool _isDropDownPathItems;
+        private EncodingViewModel? _selectedStandardInputOutputEncoding;
 
         #endregion
 
@@ -50,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region property
 
-        LauncherFileData File => Model.File!;
+        private LauncherFileData File => Model.File!;
 
         public bool IsDropDownPathItems
         {
@@ -162,8 +161,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 IsDropDownPathItems = false;
             }
         ));
-
-
 
         public ICommand OptionFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {

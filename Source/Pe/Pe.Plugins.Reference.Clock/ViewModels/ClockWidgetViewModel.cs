@@ -31,9 +31,9 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         #region property
 
-        ClockWidgetSetting Setting { get; }
+        private ClockWidgetSetting Setting { get; }
 
-        DispatcherTimer ClockTimer { get; } = new DispatcherTimer(DispatcherPriority.Normal);
+        private DispatcherTimer ClockTimer { get; } = new DispatcherTimer(DispatcherPriority.Normal);
 
         public ClockWidgetContentBaseViewModel Content { get; private set; }
 

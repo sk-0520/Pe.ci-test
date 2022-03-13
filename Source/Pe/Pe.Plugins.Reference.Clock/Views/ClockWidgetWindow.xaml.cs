@@ -22,15 +22,15 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Views
     {
         #region define
 
-        const int WM_SYSCOMMAND = 0x0112;
-        const int SC_SIZE = 0xF000;
+        private const int WM_SYSCOMMAND = 0x0112;
+        private const int SC_SIZE = 0xF000;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, IntPtr lParam);
+        private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, IntPtr lParam);
         [DllImport("User32.dll")]
-        static extern bool SetCapture(IntPtr hWnd);
+        private static extern bool SetCapture(IntPtr hWnd);
         [DllImport("user32.dll")]
-        static extern bool ReleaseCapture();
+        private static extern bool ReleaseCapture();
 
         #endregion
         public ClockWidgetWindow()

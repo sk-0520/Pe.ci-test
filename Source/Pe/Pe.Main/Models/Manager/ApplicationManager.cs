@@ -161,47 +161,47 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region property
 
-        ApplicationLogging Logging { get; set; }
-        ILoggerFactory LoggerFactory => Logging.Factory;
-        ApplicationDiContainer ApplicationDiContainer { get; set; }
-        bool IsFirstStartup { get; }
+        private ApplicationLogging Logging { get; set; }
+        private ILoggerFactory LoggerFactory => Logging.Factory;
+        private ApplicationDiContainer ApplicationDiContainer { get; set; }
+        private bool IsFirstStartup { get; }
 
 #if DEBUG
-        bool IsDebugDevelopMode { get; }
+        private bool IsDebugDevelopMode { get; }
 #endif
-        ILogger Logger { get; set; }
-        PlatformThemeLoader PlatformThemeLoader { get; }
+        private ILogger Logger { get; set; }
+        private PlatformThemeLoader PlatformThemeLoader { get; }
 
-        WindowManager WindowManager { get; set; }
-        OrderManagerImpl OrderManager { get; set; }
-        NotifyManager NotifyManagerImpl { get; set; }
+        private WindowManager WindowManager { get; set; }
+        private OrderManagerImpl OrderManager { get; set; }
+        private NotifyManager NotifyManagerImpl { get; set; }
         public INotifyManager NotifyManager => NotifyManagerImpl;
-        StatusManager StatusManagerImpl { get; set; }
+        private StatusManager StatusManagerImpl { get; set; }
         public IStatusManager StatusManager => StatusManagerImpl;
-        ClipboardManager ClipboardManager { get; set; }
-        UserAgentManager UserAgentManager { get; set; }
+        private ClipboardManager ClipboardManager { get; set; }
+        private UserAgentManager UserAgentManager { get; set; }
 
-        Mutex ApplicationMutex { get; }
+        private Mutex ApplicationMutex { get; }
 
-        ObservableCollection<LauncherGroupElement> LauncherGroupElements { get; } = new ObservableCollection<LauncherGroupElement>();
-        ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
-        ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
-        ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
-        ObservableCollection<LauncherItemExtensionElement> LauncherItemExtensions { get; } = new ObservableCollection<LauncherItemExtensionElement>();
-        CommandElement? CommandElement { get; set; }
-        NotifyLogElement NotifyLogElement { get; }
+        private ObservableCollection<LauncherGroupElement> LauncherGroupElements { get; } = new ObservableCollection<LauncherGroupElement>();
+        private ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
+        private ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
+        private ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
+        private ObservableCollection<LauncherItemExtensionElement> LauncherItemExtensions { get; } = new ObservableCollection<LauncherItemExtensionElement>();
+        private CommandElement? CommandElement { get; set; }
+        private NotifyLogElement NotifyLogElement { get; }
         //FeedbackElement? FeedbackElement { get; set; }
-        HwndSource? MessageWindowHandleSource { get; set; }
+        private HwndSource? MessageWindowHandleSource { get; set; }
         //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
 
-        KeyboradHooker KeyboradHooker { get; }
-        MouseHooker MouseHooker { get; }
-        KeyActionChecker KeyActionChecker { get; }
-        KeyActionAssistant KeyActionAssistant { get; }
+        private KeyboradHooker KeyboradHooker { get; }
+        private MouseHooker MouseHooker { get; }
+        private KeyActionChecker KeyActionChecker { get; }
+        private KeyActionAssistant KeyActionAssistant { get; }
 
         PluginContainer PluginContainer { get; }
 
-        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+        private UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         public NewVersionInfo ApplicationUpdateInfo { get; }
         /// <summary>
@@ -221,6 +221,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private string TestPluginName { get; } = string.Empty;
 
         private ObservableCollection<WidgetElement> Widgets { get; } = new ObservableCollection<WidgetElement>();
+
         #endregion
 
         #region function
@@ -372,7 +373,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <para>モーダルダイアログ表示の際に使用する。</para>
         /// </summary>
         /// <returns></returns>
-        IDisposable PauseAllViews()
+        private IDisposable PauseAllViews()
         {
             StopPlatform();
             StopScheduler();
@@ -452,7 +453,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
 #if DEBUG
-        async Task StartDebugDevelopModeAsync()
+        private async Task StartDebugDevelopModeAsync()
         {
             var importProgramsElement = ApplicationDiContainer.Build<Element.Startup.ImportProgramsElement>();
             await importProgramsElement.LoadProgramsAsync();
@@ -566,7 +567,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        void ShowNewVersionReleaseNoteCore(NewVersionItemData updateItem, bool isCheckOnly)
+        private void ShowNewVersionReleaseNoteCore(NewVersionItemData updateItem, bool isCheckOnly)
         {
             var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(ApplicationUpdateInfo, updateItem, isCheckOnly);
             element.Initialize();
@@ -901,7 +902,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             PluginContainer.Theme.SetCurrentTheme(themePluginId, pluginContextFactory);
         }
 
-        void SetStaticPlatformTheme()
+        private void SetStaticPlatformTheme()
         {
             var themes = new[] { PlatformThemeKind.Dark, PlatformThemeKind.Light };
             foreach(var theme in themes) {
@@ -916,11 +917,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-ForegroundBrush"] = FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Foreground));
                 Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-ControlBrush"] = FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Control));
                 Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-BorderBrush"] = FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Border));
-
             }
         }
 
-        void SetDynamicPlatformTheme()
+        private void SetDynamicPlatformTheme()
         {
             ApplicationDiContainer.Get<IDispatcherWrapper>().VerifyAccess();
 
@@ -993,7 +993,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        (bool isEnabledTelemetry, string userId) GetTelemetry()
+        private (bool isEnabledTelemetry, string userId) GetTelemetry()
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             SettingAppExecuteSettingData setting;
@@ -1016,7 +1016,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return (setting.IsEnabledTelemetry, setting.UserId);
         }
 
-        void StartupUsageStatistics()
+        private void StartupUsageStatistics()
         {
             var userTracker = new UserTracker(LoggerFactory);
             ApplicationDiContainer.Register<IUserTracker, UserTracker>(userTracker);
@@ -1114,7 +1114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return viewModel;
         }
 
-        IReadOnlyList<LauncherGroupElement> CreateLauncherGroupElements()
+        private IReadOnlyList<LauncherGroupElement> CreateLauncherGroupElements()
         {
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
@@ -1134,7 +1134,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return result;
         }
 
-        IReadOnlyList<LauncherToolbarElement> CreateLauncherToolbarElements(ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
+        private IReadOnlyList<LauncherToolbarElement> CreateLauncherToolbarElements(ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
         {
             var screens = Screen.AllScreens;
             var result = new List<LauncherToolbarElement>(screens.Length);
@@ -1147,7 +1147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return result;
         }
 
-        IReadOnlyList<NoteElement> CreateNoteElements()
+        private IReadOnlyList<NoteElement> CreateNoteElements()
         {
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
@@ -1249,7 +1249,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        void ExecuteElements()
+        private void ExecuteElements()
         {
             var currentActiveWindowHandle = NativeMethods.GetActiveWindow();
             //if(currentActiveWindowHandle == IntPtr.Zero) {
@@ -1295,7 +1295,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }, DispatcherPriority.SystemIdle);
         }
 
-        void ExecuteWidgets()
+        private void ExecuteWidgets()
         {
             //TODO: 表示・非表示状態を読み込んだりの諸々が必要
             if(Widgets.Count == 0) {
@@ -1335,21 +1335,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        void SaveWidgets()
+        private void SaveWidgets()
         {
             foreach(var widget in Widgets.Where(i => i.ViewCreated)) {
                 widget.SaveStatus(true);
             }
         }
 
-        void CloseWidgets()
+        private void CloseWidgets()
         {
             foreach(var widget in Widgets.Where(i => i.ViewCreated)) {
                 widget.HideView();
             }
         }
 
-        void CloseLauncherItemExtensions()
+        private void CloseLauncherItemExtensions()
         {
             foreach(var launcherItemExtension in LauncherItemExtensions.Where(i => i.HasView)) {
                 launcherItemExtension.CloseView();
@@ -1375,7 +1375,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #endif
         }
 
-        void CloseViewsCore(WindowKind windowKind)
+        private void CloseViewsCore(WindowKind windowKind)
         {
             var windowItems = WindowManager.GetWindowItems(windowKind).ToList();
             foreach(var windowItem in windowItems) {
@@ -1400,16 +1400,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        void CloseLauncherToolbarViews() => CloseViewsCore(WindowKind.LauncherToolbar);
+        private void CloseLauncherToolbarViews() => CloseViewsCore(WindowKind.LauncherToolbar);
 
-        void CloseNoteViews() => CloseViewsCore(WindowKind.Note);
+        private void CloseNoteViews() => CloseViewsCore(WindowKind.Note);
 
-        void CloseLauncherCustomizeViews() => CloseViewsCore(WindowKind.LauncherCustomize);
+        private void CloseLauncherCustomizeViews() => CloseViewsCore(WindowKind.LauncherCustomize);
 
-        void CloseExtendsExecuteViews() => CloseViewsCore(WindowKind.ExtendsExecute);
+        private void CloseExtendsExecuteViews() => CloseViewsCore(WindowKind.ExtendsExecute);
         void CloseStandardInputOutputViews() => CloseViewsCore(WindowKind.StandardInputOutput);
 
-        void CloseViews(bool saveWidgets)
+        private void CloseViews(bool saveWidgets)
         {
             CloseStandardInputOutputViews();
             CloseLauncherCustomizeViews();
@@ -1424,7 +1424,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CloseLauncherItemExtensions();
         }
 
-        void DisposeElementsCore<TElement>(ICollection<TElement> elements)
+        private void DisposeElementsCore<TElement>(ICollection<TElement> elements)
             where TElement : ElementBase
         {
             foreach(var element in elements) {
@@ -1433,11 +1433,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             elements.Clear();
         }
 
-        void DisposeLauncherToolbarElements() => DisposeElementsCore(LauncherToolbarElements);
-        void DisposeLauncherGroupElements() => DisposeElementsCore(LauncherGroupElements);
-        void DisposeNoteElements() => DisposeElementsCore(NoteElements);
+        private void DisposeLauncherToolbarElements() => DisposeElementsCore(LauncherToolbarElements);
+        private void DisposeLauncherGroupElements() => DisposeElementsCore(LauncherGroupElements);
+        private void DisposeNoteElements() => DisposeElementsCore(NoteElements);
 
-        void DisposeElements()
+        private void DisposeElements()
         {
             DisposeLauncherToolbarElements();
             DisposeLauncherGroupElements();
@@ -1645,7 +1645,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <param name="backupFileWithoutExtensionName">バックアップファイルの拡張子抜きファイル名。</param>
         /// <param name="enabledCount">ローテート処理で残すファイル数。</param>
         /// <param name="userBackupDirectoryPath">ユーザー設定バックアップディレクトリパス。</param>
-        void BackupSettings(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, string backupFileWithoutExtensionName, int enabledCount, string userBackupDirectoryPath)
+        private void BackupSettings(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, string backupFileWithoutExtensionName, int enabledCount, string userBackupDirectoryPath)
         {
             try {
                 // アプリケーション側バックアップ
@@ -1663,7 +1663,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        void BackupSettingsDefault(IDiContainer diContainer)
+        private void BackupSettingsDefault(IDiContainer diContainer)
         {
             var environmentParameters = diContainer.Get<EnvironmentParameters>();
 
@@ -1706,7 +1706,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ExecuteElements();
         }
 
-        void ResetNotifyArea()
+        private void ResetNotifyArea()
         {
             var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)Application.Current.FindResource("root");
             var viewModel = notifyIcon.DataContext;
@@ -2170,8 +2170,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 SetDynamicPlatformTheme();
             }, DispatcherPriority.ApplicationIdle);
         }
-
-
-
     }
 }

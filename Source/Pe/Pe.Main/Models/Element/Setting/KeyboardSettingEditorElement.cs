@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         /// 削除したアイテム。
         /// <para>最後にdelete流してあげる用。</para>
         /// </summary>
-        IList<KeyboardJobSettingEditorElementBase> RemovedJobEditors { get; } = new List<KeyboardJobSettingEditorElementBase>();
+        private IList<KeyboardJobSettingEditorElementBase> RemovedJobEditors { get; } = new List<KeyboardJobSettingEditorElementBase>();
 
         #endregion
 
@@ -147,7 +147,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             PressedJobEditors.Remove(editor);
             StockRemoveItemIfSavedJob(editor);
         }
-
 
         #endregion
 

@@ -30,11 +30,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #region property
 
-        ILauncherToolbarTheme LauncherToolbarTheme { get; }
-        IWindowManager WindowManager { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
-        PropertyChangedHooker PropertyChangedHooker { get; }
-
+        private ILauncherToolbarTheme LauncherToolbarTheme { get; }
+        private IWindowManager WindowManager { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
+        private PropertyChangedHooker PropertyChangedHooker { get; }
 
         #endregion
 

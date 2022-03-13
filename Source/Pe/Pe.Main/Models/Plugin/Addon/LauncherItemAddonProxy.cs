@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region property
 
-        LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
+        private LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
 
         #endregion
 

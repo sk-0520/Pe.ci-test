@@ -34,10 +34,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         #region variable
 
-        bool _isTopmost = false;
-        bool _autoScroll = true;
-        bool _wordWrap = false;
-        string _inputValue = string.Empty;
+        private bool _isTopmost = false;
+        private bool _autoScroll = true;
+        private bool _wordWrap = false;
+        private string _inputValue = string.Empty;
 
         #endregion
 
@@ -62,9 +62,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         public TextDocument TextDocument { get; } = new TextDocument();
 
-        PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedHooker PropertyChangedHooker { get; }
 
-        TextEditor? Terminal { get; set; }
+        private TextEditor? Terminal { get; set; }
 
         public FontViewModel Font { get; }
 
@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         public Brush StandardOutputBackground => new SolidColorBrush(Model.OutputBackgroundColor);
         public Brush StandardOutputForeground => new SolidColorBrush(Model.OutputForegroundColor);
         public Brush StandardErrorForegound => new SolidColorBrush(Model.ErrorForegroundColor);
-        StandardOutputColorizingTransformer? StandardOutputColorizingTransformer { get; set; }
+        private StandardOutputColorizingTransformer? StandardOutputColorizingTransformer { get; set; }
 
         #endregion
 

@@ -35,15 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-        public NotesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -68,9 +60,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
+        public NotesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
 
-        NoteData ConvertFromDto(NotesEntityDto dto)
+        private NoteData ConvertFromDto(NotesEntityDto dto)
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
             var contentKindTransfer = new EnumTransfer<NoteContentKind>();
@@ -98,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        NotesEntityDto ConvertFromData(NoteData data, IDatabaseCommonStatus commonStatus)
+        private NotesEntityDto ConvertFromData(NoteData data, IDatabaseCommonStatus commonStatus)
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
             var contentKindTransfer = new EnumTransfer<NoteContentKind>();
@@ -126,7 +122,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             commonStatus.WriteCommonTo(result);
 
             return result;
-
         }
 
         public IEnumerable<Guid> SelectAllNoteIds()

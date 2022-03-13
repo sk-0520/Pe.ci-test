@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
     {
         #region variable
 
-        bool _isExpanded = true;
+        private bool _isExpanded = true;
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
 
         #region property
 
-        ObjectDumpItem Item { get; }
+        private ObjectDumpItem Item { get; }
         public object? Value { get; }
         public string Name { get; }
 

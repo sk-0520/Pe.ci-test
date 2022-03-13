@@ -38,13 +38,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
     {
         #region variable
 
-        NewVersionState _state;
+        private NewVersionState _state;
 
-        string _currentLog = string.Empty;
+        private string _currentLog = string.Empty;
 
-        double _checksumValue;
-        double _downloadedValue;
-        double _extractedValue;
+        private double _checksumValue;
+        private double _downloadedValue;
+        private double _extractedValue;
 
         #endregion
 

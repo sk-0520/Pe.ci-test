@@ -25,8 +25,8 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         #region property
 
-        FrameworkElement? View { get; set; }
-        Window? OwnerWindow { get; set; }
+        private FrameworkElement? View { get; set; }
+        private Window? OwnerWindow { get; set; }
 
         #endregion
 
@@ -112,7 +112,5 @@ namespace ContentTypeTextNet.Pe.Main.Views
             //View = null;
             //OwnerWindow = null;
         }
-
-
     }
 }

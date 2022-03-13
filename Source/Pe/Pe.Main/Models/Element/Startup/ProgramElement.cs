@@ -30,13 +30,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         #region property
 
-        IconBox IconBox { get; } = IconBox.Small;
+        private IconBox IconBox { get; } = IconBox.Small;
 
         public FileInfo FileInfo { get; }
 
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
         public bool IsShortcut => PathUtility.IsShortcut(FileInfo.Name);
-        IReadOnlyList<Regex> AutoImportExcludeRegexItems { get; }
+        private IReadOnlyList<Regex> AutoImportExcludeRegexItems { get; }
         public bool IsImport { get; set; }
         public IconImageLoader IconImageLoader { get; private set; }
 
@@ -44,12 +44,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         #region function
 
-        bool IsAutoImportTarget(string path)
+        private bool IsAutoImportTarget(string path)
         {
             return !AutoImportExcludeRegexItems.Any(i => i.IsMatch(path));
         }
 
-        void ApplyShortcutFileIconLoader(string targetPath, string targetIconPath, int targetIconIndex)
+        private void ApplyShortcutFileIconLoader(string targetPath, string targetIconPath, int targetIconIndex)
         {
             if(string.IsNullOrWhiteSpace(targetPath)) {
                 return;

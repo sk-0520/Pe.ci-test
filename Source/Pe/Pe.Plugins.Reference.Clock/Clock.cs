@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock
     {
         #region variable
 
-        ClockAddonImpl _addon;
+        private ClockAddonImpl _addon;
 
         #endregion
 
@@ -38,6 +38,5 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock
 
 
         #endregion
-
     }
 }

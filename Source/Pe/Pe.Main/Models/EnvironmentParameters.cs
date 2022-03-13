@@ -233,7 +233,6 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo MachineCrashReportDirectory => CombineDirectory(true, MachineDirectory, "crash");
 
-
         /// <summary>
         /// 一時ディレクトリ。
         /// </summary>
@@ -356,8 +355,6 @@ namespace ContentTypeTextNet.Pe.Main.Models
         }
 
         #endregion
-
-
     }
 
     internal class ApplicationEnvironmentParameters: EnvironmentParameters

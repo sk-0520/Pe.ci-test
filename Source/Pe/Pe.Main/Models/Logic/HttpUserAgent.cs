@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region variable
 
-        int _referenceCount;
+        private int _referenceCount;
 
         #endregion
         public HttpUserAgent(string name, HttpClient httpClient, ILoggerFactory loggerFactory)
@@ -45,12 +45,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
         protected private HttpClient HttpClient { get; }
 
         public string Name { get; }
 
-        Stopwatch Stopwatch { get; } = new Stopwatch();
+        private Stopwatch Stopwatch { get; } = new Stopwatch();
         /// <summary>
         /// 最後に使用してからの経過時間。
         /// </summary>
@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region function
 
-        string JoinCore(string name, bool isEnabledSession, bool isEnabledCache)
+        private string JoinCore(string name, bool isEnabledSession, bool isEnabledCache)
         {
             var builder = new StringBuilder(32);
 
@@ -205,7 +205,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         }
 
         #endregion
-
 
         #region IUserAgentName
 
@@ -254,20 +253,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #region property
 
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
-        WebConfiguration WebConfiguration { get; }
-        ProxyConfiguration ProxyConfiguration { get; }
-        IDictionary<string, HttpUserAgent> Pool { get; } = new Dictionary<string, HttpUserAgent>();
+        private ILogger Logger { get; }
+        private WebConfiguration WebConfiguration { get; }
+        private ProxyConfiguration ProxyConfiguration { get; }
+        private IDictionary<string, HttpUserAgent> Pool { get; } = new Dictionary<string, HttpUserAgent>();
 
-        TimeSpan ClearTime { get; } = TimeSpan.FromSeconds(30);
+        private TimeSpan ClearTime { get; } = TimeSpan.FromSeconds(30);
 
         #endregion
 
         #region function
 
-        void SetProxy(SocketsHttpHandler handler)
+        private void SetProxy(SocketsHttpHandler handler)
         {
             Debug.Assert(ProxyConfiguration.IsEnabled);
 
@@ -280,8 +279,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             handler.UseProxy = true;
         }
 
-
-        HttpUserAgent Create(string name)
+        private HttpUserAgent Create(string name)
         {
             var param = name.Split(UserAgentName.Separator, StringSplitOptions.RemoveEmptyEntries);
 
@@ -304,7 +302,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return newUserAgent;
         }
 
-        HttpUserAgent CreateUserAgentCore(string name)
+        private HttpUserAgent CreateUserAgentCore(string name)
         {
             Debug.Assert(name != null);
 

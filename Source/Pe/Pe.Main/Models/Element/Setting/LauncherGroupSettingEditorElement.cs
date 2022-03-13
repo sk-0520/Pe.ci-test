@@ -27,12 +27,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IdFactory = idFactory;
         }
 
-
         #region property
 
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        IIdFactory IdFactory { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IIdFactory IdFactory { get; }
 
         public string Name { get; set; } = string.Empty;
         public LauncherGroupKind Kind { get; set; }
@@ -41,7 +40,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public long Sequence { get; set; }
 
         public ObservableCollection<WrapModel<Guid>> LauncherItems { get; } = new ObservableCollection<WrapModel<Guid>>();
-
 
         #endregion
 

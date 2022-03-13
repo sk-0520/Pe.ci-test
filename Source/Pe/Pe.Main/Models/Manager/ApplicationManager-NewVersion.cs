@@ -223,8 +223,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 ApplicationUpdateInfo.State = NewVersionState.Ready;
 
                 // アップデートアーカイブのローテート
-                var fileRotation = new FileRotation();
-                fileRotation.ExecuteExtensions(
+                var fileRotator = new FileRotator();
+                fileRotator.ExecuteExtensions(
                     environmentParameters.MachineUpdateArchiveDirectory,
                     new[] { "zip", "7z" },
                     environmentParameters.ApplicationConfiguration.Backup.ArchiveCount,

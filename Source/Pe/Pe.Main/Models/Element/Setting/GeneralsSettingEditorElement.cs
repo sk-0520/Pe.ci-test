@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public AppNoteSettingEditorElement AppNoteSettingEditor { get; }
         public AppStandardInputOutputSettingEditorElement AppStandardInputOutputSettingEditor { get; }
 
-        IList<GeneralSettingEditorElementBase> Editors { get; }
+        private IList<GeneralSettingEditorElementBase> Editors { get; }
 
         #endregion
 

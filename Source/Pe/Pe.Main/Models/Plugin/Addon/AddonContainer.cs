@@ -16,13 +16,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     {
         #region variable
 
-        List<IAddon>? _launcherItemSupportAddons;
-        List<IAddon>? _commandFinderSupportAddons;
-        List<IAddon>? _widgetSupportAddons;
-        List<IAddon>? _backgroundSupportAddons;
-
+        private List<IAddon>? _launcherItemSupportAddons;
+        private List<IAddon>? _commandFinderSupportAddons;
+        private List<IAddon>? _widgetSupportAddons;
+        private List<IAddon>? _backgroundSupportAddons;
 
         #endregion
+
         public AddonContainer(PluginContextFactory pluginContextFactory, LauncherItemAddonContextFactory launcherItemAddonContextFactory, BackgroundAddonContextFactory backgroundAddonContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
@@ -43,32 +43,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #region property
 
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
 
-        PluginContextFactory PluginContextFactory { get; }
-        LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
-        BackgroundAddonContextFactory BackgroundAddonContextFactory { get; }
+        private PluginContextFactory PluginContextFactory { get; }
+        private LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
+        private BackgroundAddonContextFactory BackgroundAddonContextFactory { get; }
 
-        IHttpUserAgentFactory UserAgentFactory { get; }
-        IPlatformTheme PlatformTheme { get; }
-        IImageLoader ImageLoader { get; }
-        IMediaConverter MediaConverter { get; }
-        IPolicy Policy { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IHttpUserAgentFactory UserAgentFactory { get; }
+        private IPlatformTheme PlatformTheme { get; }
+        private IImageLoader ImageLoader { get; }
+        private IMediaConverter MediaConverter { get; }
+        private IPolicy Policy { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
         /// <summary>
         /// アドオン一覧。
         /// </summary>
-        ISet<IAddon> Addons { get; } = new HashSet<IAddon>();
+        private ISet<IAddon> Addons { get; } = new HashSet<IAddon>();
 
-        List<IAddon> LauncherItemSupportAddons => this._launcherItemSupportAddons ??= GetSupportAddons(AddonKind.LauncherItem);
-        List<IAddon> CommandFinderSupportAddons => this._commandFinderSupportAddons ??= GetSupportAddons(AddonKind.CommandFinder);
-        List<IAddon> WidgetSupportAddons => this._widgetSupportAddons ??= GetSupportAddons(AddonKind.Widget);
-        List<IAddon> BackgroundSupportAddons => this._backgroundSupportAddons ??= GetSupportAddons(AddonKind.Background);
+        private List<IAddon> LauncherItemSupportAddons => this._launcherItemSupportAddons ??= GetSupportAddons(AddonKind.LauncherItem);
+        private List<IAddon> CommandFinderSupportAddons => this._commandFinderSupportAddons ??= GetSupportAddons(AddonKind.CommandFinder);
+        private List<IAddon> WidgetSupportAddons => this._widgetSupportAddons ??= GetSupportAddons(AddonKind.Widget);
+        private List<IAddon> BackgroundSupportAddons => this._backgroundSupportAddons ??= GetSupportAddons(AddonKind.Background);
 
-        ConcurrentDictionary<Guid, LauncherItemAddonProxy> LauncherItemAddonProxies { get; } = new System.Collections.Concurrent.ConcurrentDictionary<Guid, LauncherItemAddonProxy>();
+        private ConcurrentDictionary<Guid, LauncherItemAddonProxy> LauncherItemAddonProxies { get; } = new System.Collections.Concurrent.ConcurrentDictionary<Guid, LauncherItemAddonProxy>();
 
         #endregion
 
@@ -145,6 +145,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public override IEnumerable<IPlugin> Plugins => Addons;
 
         #endregion
-
     }
 }

@@ -24,20 +24,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region property
 
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
-
+        private ILogger Logger { get; }
 
         #endregion
 
         #region function
 
-        KeyItem CreateKeyItem(KeyActionData keyAction, KeyOptionsEntityDao keyOptionsEntityDao, KeyMappingsEntityDao keyMappingsEntityDao)
+        private KeyItem CreateKeyItem(KeyActionData keyAction, KeyOptionsEntityDao keyOptionsEntityDao, KeyMappingsEntityDao keyMappingsEntityDao)
         {
             var options = keyOptionsEntityDao.SelectOptions(keyAction.KeyActionId);
             var mappings = keyMappingsEntityDao.SelectMappings(keyAction.KeyActionId);
@@ -51,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return result;
         }
 
-        IReadOnlyList<KeyItem> LoadKeyItems(KeyActionKind keyActionKind)
+        private IReadOnlyList<KeyItem> LoadKeyItems(KeyActionKind keyActionKind)
         {
             var result = new List<KeyItem>();
 
@@ -69,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return result;
         }
 
-        IReadOnlyList<KeyItem> LoadKeyActionPressedData()
+        private IReadOnlyList<KeyItem> LoadKeyActionPressedData()
         {
             var result = new List<KeyItem>();
 
@@ -88,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return result;
         }
 
-        IEnumerable<TJob> CreateJobs<TJob>(IReadOnlyList<KeyItem> items, Func<Guid, KeyItem, TJob> func)
+        private IEnumerable<TJob> CreateJobs<TJob>(IReadOnlyList<KeyItem> items, Func<Guid, KeyItem, TJob> func)
         {
             foreach(var item in items) {
                 TJob result;
@@ -142,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             });
         }
 
-        KeyActionCommandJob CreateCommandJob(KeyItem item)
+        private KeyActionCommandJob CreateCommandJob(KeyItem item)
         {
             var pressedOptionConverter = new PressedOptionConverter();
 
@@ -153,7 +152,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return new KeyActionCommandJob(data, item.Mappings);
         }
 
-        KeyActionLauncherItemJob CreateLauncherItemJob(KeyItem item)
+        private KeyActionLauncherItemJob CreateLauncherItemJob(KeyItem item)
         {
             var launcherItemContentConverter = new LauncherItemContentConverter();
             var launcherItemOptionConverter = new LauncherItemOptionConverter();
@@ -169,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return new KeyActionLauncherItemJob(data, item.Mappings);
         }
 
-        KeyActionLauncherToolbarJob CreateLauncherToolbarJob(KeyItem item)
+        private KeyActionLauncherToolbarJob CreateLauncherToolbarJob(KeyItem item)
         {
             var launcherToolbarContentConverter = new LauncherToolbarContentConverter();
             var pressedOptionConverter = new PressedOptionConverter();
@@ -184,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return new KeyActionLauncherToolbarJob(data, item.Mappings);
         }
 
-        KeyActionNoteJob CreateNoteJon(KeyItem item)
+        private KeyActionNoteJob CreateNoteJon(KeyItem item)
         {
             var noteContentConverter = new NoteContentConverter();
             var pressedOptionConverter = new PressedOptionConverter();

@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region variable
 
-        string? _notifyLogHeader;
+        private string? _notifyLogHeader;
 
         #endregion
 
@@ -77,29 +77,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
         }
 
-
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
-        Guid NotifyLogId { get; set; }
+        private Guid NotifyLogId { get; set; }
 
-        LauncherFileExecuteResult FirstResult { get; }
-        LauncherExecutor Executor { get; }
-        RedoParameter Parameter { get; }
+        private LauncherFileExecuteResult FirstResult { get; }
+        private LauncherExecutor Executor { get; }
+        private RedoParameter Parameter { get; }
 
-        INotifyManager NotifyManager { get; }
+        private INotifyManager NotifyManager { get; }
 
-        Stopwatch? Stopwatch { get; }
+        private Stopwatch? Stopwatch { get; }
 
-        Process? CurrentProcess { get; set; }
-        Timer? WaitEndTimer { get; set; }
+        private Process? CurrentProcess { get; set; }
+        private Timer? WaitEndTimer { get; set; }
 
-        int RetryCount { get; set; }
+        private int RetryCount { get; set; }
 
         public bool IsExited { get; private set; }
 
-        string NotifyLogHeader
+        private string NotifyLogHeader
         {
             get
             {
@@ -116,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        void PutNotifyLog(bool isComplete, string message)
+        private void PutNotifyLog(bool isComplete, string message)
         {
             if(isComplete) {
                 if(NotifyLogId != Guid.Empty) {
@@ -136,11 +135,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
         }
 
+        private bool IsTimeout() => Stopwatch != null && Parameter.RedoData.WaitTime < Stopwatch.Elapsed;
+        private bool IsMaxRetry() => Parameter.RedoData.RetryCount <= RetryCount;
 
-        bool IsTimeout() => Stopwatch != null && Parameter.RedoData.WaitTime < Stopwatch.Elapsed;
-        bool IsMaxRetry() => Parameter.RedoData.RetryCount <= RetryCount;
-
-        void OnExited()
+        private void OnExited()
         {
             IsExited = true;
             Exited?.Invoke(this, EventArgs.Empty);
@@ -150,14 +148,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             Dispose();
         }
 
-        void StopWatch()
+        private void StopWatch()
         {
             Logger.LogInformation("{0}: 再試行中断", Parameter.Custom.Caption);
             Dispose();
         }
 
-
-        void Watching(Process process, bool isContinue)
+        private void Watching(Process process, bool isContinue)
         {
             CurrentProcess = process;
             CurrentProcess.EnableRaisingEvents = true;
@@ -178,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         /// </summary>
         /// <param name="process"></param>
         /// <returns>真: 再試行が可能。</returns>
-        bool Check(Process process)
+        private bool Check(Process process)
         {
             if(!process.HasExited) {
                 Logger.LogWarning("到達不可");
@@ -229,7 +226,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return true;
         }
 
-        string CreateRedoNotifyLogMessage()
+        private string CreateRedoNotifyLogMessage()
         {
             //var message = "@再試行";
             var message = Parameter.RedoData.RedoMode switch {
@@ -267,7 +264,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             );
         }
 
-        void Execute()
+        private void Execute()
         {
             PutNotifyLog(false, CreateRedoNotifyLogMessage());
 

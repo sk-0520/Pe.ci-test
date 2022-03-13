@@ -21,15 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-        public LauncherStoreAppsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        static class Column
+        private static class Column
         {
             #region property
             #endregion
@@ -37,9 +29,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
+        public LauncherStoreAppsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
 
-        LauncherStoreAppsEntityDto ConvertFromData(Guid launcherItemId, LauncherStoreAppData data, IDatabaseCommonStatus commonStatus)
+        private LauncherStoreAppsEntityDto ConvertFromData(Guid launcherItemId, LauncherStoreAppData data, IDatabaseCommonStatus commonStatus)
         {
             var dto = new LauncherStoreAppsEntityDto() {
                 LauncherItemId = launcherItemId,
@@ -50,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-        LauncherStoreAppData ConvertFromDto(LauncherStoreAppsEntityDto dto)
+        private LauncherStoreAppData ConvertFromDto(LauncherStoreAppsEntityDto dto)
         {
             var data = new LauncherStoreAppData() {
                 ProtocolAlias = dto.ProtocolAlias,

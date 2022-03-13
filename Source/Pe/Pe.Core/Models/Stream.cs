@@ -91,12 +91,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// <see cref="Stream.Dispose"/> 時に <see cref="Stream.Position"/> を初期状態に戻すか。
         /// </summary>
-        bool KeepPosition { get; }
+        private bool KeepPosition { get; }
         /// <summary>
         /// <see cref="Stream.Dispose"/> 時に移動させるストリーム位置。
         /// <para><see cref="KeepPosition"/>が真の場合に有効値が設定される。</para>
         /// </summary>
-        long RestorePosition { get; }
+        private long RestorePosition { get; }
 
         #endregion
 
@@ -138,6 +138,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 BaseStream.Dispose();
                 BaseStream = null!;
             }
+
             base.Dispose(disposing);
         }
 

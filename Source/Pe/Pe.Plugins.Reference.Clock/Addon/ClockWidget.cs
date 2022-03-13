@@ -30,15 +30,14 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         #region property
 
-        ILoggerFactory LoggerFactory { get; }
-        ILogger Logger { get; }
-        IAddonExecutor AddonExecutor { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
-        ISkeletonImplements SkeletonImplements { get; }
-        IPluginInformations PluginInformations { get; }
-
-        ClockWidgetWindow? WidgetView { get; set; }
-        ClockWidgetViewModel? ViewModel { get; set; }
+        private ILoggerFactory LoggerFactory { get; }
+        private ILogger Logger { get; }
+        private IAddonExecutor AddonExecutor { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
+        private ISkeletonImplements SkeletonImplements { get; }
+        private IPluginInformations PluginInformations { get; }
+        private ClockWidgetWindow? WidgetView { get; set; }
+        private ClockWidgetViewModel? ViewModel { get; set; }
 
         #endregion
 
@@ -117,6 +116,5 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
         }
 
         #endregion
-
     }
 }

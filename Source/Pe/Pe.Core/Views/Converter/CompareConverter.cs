@@ -78,7 +78,6 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
         }
 
         #endregion
-
     }
 
     public class DoubleCompareConverter: CompareConverterBase<double>

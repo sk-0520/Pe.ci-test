@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
 
         #region property
 
-        AboutComponentItem Item { get; }
+        private AboutComponentItem Item { get; }
 
         public AboutComponentKind Kind => Item.Kind;
 

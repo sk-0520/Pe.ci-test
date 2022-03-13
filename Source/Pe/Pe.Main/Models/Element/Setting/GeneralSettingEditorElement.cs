@@ -31,6 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
         protected ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
         protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
+
         #endregion
 
         #region function
@@ -55,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
-        EnvironmentParameters EnvironmentParameters { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
         public string UserId { get; set; } = string.Empty;
         public bool IsEnabledTelemetry { get; set; }
 
@@ -130,7 +131,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public bool DelayStartup { get; set; }
         public TimeSpan StartupWaitTime { get; set; }
         public string StartupArgument { get; set; } = string.Empty;
-
 
         #endregion
 
@@ -563,7 +563,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
     }
-
-
-
 }

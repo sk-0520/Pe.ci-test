@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock
 {
-    public static class ClockConstants
+    internal static class ClockConstants
     {
         #region proprety
 

@@ -8,6 +8,8 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
     /// </summary>
     public class EnumToBooleanConverter: IValueConverter
     {
+        #region IValueConverter
+
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if(value == null) {
@@ -20,5 +22,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
         {
             return value.Equals(true) ? parameter : Binding.DoNothing;
         }
+
+        #endregion
     }
 }

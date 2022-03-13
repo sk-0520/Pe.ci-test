@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager.Setting
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         #endregion
 

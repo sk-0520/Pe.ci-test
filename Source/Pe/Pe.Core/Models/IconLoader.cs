@@ -19,12 +19,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public class IconLoader
     {
-        const int sizeofGRPICONDIR_idCount = 4;
-        const int offsetGRPICONDIRENTRY_nID = 12;
-        const int offsetGRPICONDIRENTRY_dwBytesInRes = 8;
-        static readonly int sizeofICONDIR = Marshal.SizeOf<ICONDIR>();
-        static readonly int sizeofICONDIRENTRY = Marshal.SizeOf<ICONDIRENTRY>();
-        static readonly int sizeofGRPICONDIRENTRY = Marshal.SizeOf<GRPICONDIRENTRY>();
+        private const int sizeofGRPICONDIR_idCount = 4;
+        private const int offsetGRPICONDIRENTRY_nID = 12;
+        private const int offsetGRPICONDIRENTRY_dwBytesInRes = 8;
+        private static readonly int sizeofICONDIR = Marshal.SizeOf<ICONDIR>();
+        private static readonly int sizeofICONDIRENTRY = Marshal.SizeOf<ICONDIRENTRY>();
+        private static readonly int sizeofGRPICONDIRENTRY = Marshal.SizeOf<GRPICONDIRENTRY>();
 
         public IconLoader(ILogger logger)
         {
@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
 
         #endregion
 
@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="resType"><inheritdoc cref="RT"/></param>
         /// <returns>取得成功した場合のリソースバイナリ。</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
-        byte[]? GetResourceBinaryData(IntPtr hModule, IntPtr name, RT resType)
+        private byte[]? GetResourceBinaryData(IntPtr hModule, IntPtr name, RT resType)
         {
             var hGroup = NativeMethods.FindResource(hModule, name, new IntPtr((int)resType));
             if(hGroup == IntPtr.Zero) {
@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="resourcePath"></param>
         /// <returns>取得したリソースのバイナリ群。</returns>
-        IList<byte[]> LoadIconResource(string resourcePath)
+        private IList<byte[]> LoadIconResource(string resourcePath)
         {
             var hModule = NativeMethods.LoadLibraryEx(resourcePath, IntPtr.Zero, LOAD_LIBRARY.LOAD_LIBRARY_AS_DATAFILE);
             if(hModule == IntPtr.Zero) {
@@ -200,7 +200,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="iconIndex"></param>
         /// <param name="hasIcon"></param>
         /// <returns></returns>
-        BitmapSource? LoadNormalIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
+        private BitmapSource? LoadNormalIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
         {
             Debug.Assert(iconSize.Width == (int)IconBox.Small || iconSize.Width == (int)IconBox.Normal);
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
@@ -263,7 +263,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="hasIcon"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        BitmapSource? LoadLargeIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
+        private BitmapSource? LoadLargeIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
         {
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
@@ -344,6 +344,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         #endregion
-
     }
 }

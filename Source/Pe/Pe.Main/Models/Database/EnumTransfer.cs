@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         #region property
 
-        Type EnumType { get; } = typeof(TEnum);
+        private Type EnumType { get; } = typeof(TEnum);
 
         #endregion
 

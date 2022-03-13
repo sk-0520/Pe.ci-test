@@ -27,15 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-        public KeyMappingsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -53,9 +45,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
+        public KeyMappingsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
 
-        KeyMappingData ConvertFromDto(KeyMappingsEntityDto dto)
+        private KeyMappingData ConvertFromDto(KeyMappingsEntityDto dto)
         {
             var modifierKeyTransfer = new EnumTransfer<ModifierKey>();
             var keyConverter = new KeyConverter();
@@ -71,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
-        KeyMappingsEntityDto ConvertFromData(Guid keyActionId, KeyMappingData data, int sequence, IDatabaseCommonStatus databaseCommonStatus)
+        private KeyMappingsEntityDto ConvertFromData(Guid keyActionId, KeyMappingData data, int sequence, IDatabaseCommonStatus databaseCommonStatus)
         {
             var modifierKeyTransfer = new EnumTransfer<ModifierKey>();
             var keyConverter = new KeyConverter();

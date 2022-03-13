@@ -161,8 +161,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        ReaderWriterLockSlim Locker { get; set; }
-
+        private ReaderWriterLockSlim Locker { get; set; }
 
         #endregion
 
@@ -214,7 +213,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return false;
         }
-
 
         /// <summary>
         /// ロックを待機し、ロックを取得できない場合に例外処理。

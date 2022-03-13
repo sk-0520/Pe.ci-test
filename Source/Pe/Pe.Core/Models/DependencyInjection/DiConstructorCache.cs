@@ -37,27 +37,27 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         public ConstructorInfo ConstructorInfo { get; }
         public IReadOnlyList<ParameterInfo> ParameterInfos { get; }
         public IReadOnlyDictionary<ParameterInfo, InjectAttribute> ParameterInjections { get; }
-        Func<object[], object>? Creator { get; set; }
+        private Func<object[], object>? Creator { get; set; }
 
         #endregion
 
         #region function
 
-        IEnumerable<ParameterExpression> CreateParameterExpressions()
+        private IEnumerable<ParameterExpression> CreateParameterExpressions()
         {
             return ParameterInfos
                 .Select((p, i) => Expression.Parameter(typeof(object), "wrapperArg_" + i.ToString()))
             ;
         }
 
-        IEnumerable<UnaryExpression> CreateConvertExpressions(IEnumerable<ParameterExpression> parameterExpressions)
+        private IEnumerable<UnaryExpression> CreateConvertExpressions(IEnumerable<ParameterExpression> parameterExpressions)
         {
             return ParameterInfos
                 .Zip(parameterExpressions, (pi, pe) => Expression.Convert(pe, pi.ParameterType))
             ;
         }
 
-        FuncN CreateFunction<FuncN>()
+        private FuncN CreateFunction<FuncN>()
         {
             var parameterExpressions = CreateParameterExpressions().ToList();
             var convertExpressions = CreateConvertExpressions(parameterExpressions).ToList();

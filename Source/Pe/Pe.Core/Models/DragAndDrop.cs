@@ -47,7 +47,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-
     public class DragParameter
     {
         public DragParameter(UIElement element, DragDropEffects effects, DataObject data)
@@ -122,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         protected ILogger Logger { get; }
 
         [PixelKind(Px.Logical)]
-        Point DragStartPosition { get; set; }
+        private Point DragStartPosition { get; set; }
 
         /// <summary>
         /// ドラッグ中か。
@@ -148,12 +147,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         protected abstract IResultSuccessValue<DragParameter> GetDragParameterImpl(UIElement sender, MouseEventArgs e);
 
-        void MouseDownCore(UIElement sender, MouseEventArgs e)
+        private void MouseDownCore(UIElement sender, MouseEventArgs e)
         {
             DragStartPosition = e.GetPosition(null);
         }
 
-        void MouseMoveCore(UIElement sender, MouseEventArgs e)
+        private void MouseMoveCore(UIElement sender, MouseEventArgs e)
         {
             var nowPosition = e.GetPosition(null);
 

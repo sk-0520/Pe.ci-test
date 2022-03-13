@@ -41,24 +41,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
         #region property
 
-        IDispatcherWrapper DispatcherWrapper { get; }
-        IWidget Widget { get; }
-        IPlugin Plugin { get; }
-        IPluginInformations PluginInformations => Plugin.PluginInformations;
+        private IDispatcherWrapper DispatcherWrapper { get; }
+        private IWidget Widget { get; }
+        private IPlugin Plugin { get; }
+        private IPluginInformations PluginInformations => Plugin.PluginInformations;
         //PluginContextFactory PluginContextFactory { get; }
-        WidgetAddonContextFactory WidgetAddonContextFactory { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        CultureService CultureService { get; }
-        IWindowManager WindowManager { get; }
-        INotifyManager NotifyManager { get; }
-        EnvironmentParameters EnvironmentParameters { get; }
+        private WidgetAddonContextFactory WidgetAddonContextFactory { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private CultureService CultureService { get; }
+        private IWindowManager WindowManager { get; }
+        private INotifyManager NotifyManager { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
         public bool ViewCreated { get; private set; }
 
         public bool IsTopmost { get; private set; }
 
-        WindowItem? WindowItem { get; set; }
+        private WindowItem? WindowItem { get; set; }
 
         #endregion
 
@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             }
         }
 
-        Window CreateWindowWidget(WidgetAddonCreateContext context)
+        private Window CreateWindowWidget(WidgetAddonCreateContext context)
         {
             Debug.Assert(Widget.ViewType == WidgetViewType.Window);
 
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             return window;
         }
 
-        Window CreateWebViewWidget(WidgetAddonCreateContext context)
+        private Window CreateWebViewWidget(WidgetAddonCreateContext context)
         {
             Debug.Assert(Widget.ViewType == WidgetViewType.WebView);
 
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
         /// <para>生成時のスタイル変更は<see cref="WidgetViewModelBase.ReceiveViewInitialized(Window)"/>を参照。</para>
         /// </summary>
         /// <param name="window"></param>
-        void TuneWindow(Window window)
+        private void TuneWindow(Window window)
         {
             Debug.Assert(!window.IsVisible);
 

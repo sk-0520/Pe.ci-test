@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
     {
         #region define
 
-        enum IconImageKind
+        private enum IconImageKind
         {
             IconImageLoader,
             LauncherItemExtension,
@@ -57,8 +57,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         #region variable
 
-        ViewModelBase? _icon = null;
-        bool _useCache = false;
+        private ViewModelBase? _icon = null;
+        private bool _useCache = false;
 
         #endregion
 
@@ -89,8 +89,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         #region property
 
-        IconImageKind IconKind { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IconImageKind IconKind { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
         #region IconImageLoader
 
@@ -110,9 +110,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
         ILauncherItemExtension? LauncherItemExtension { get; }
 
         #endregion
-
-
-
 
         public ViewModelBase? Icon => this._icon;
 
@@ -201,6 +198,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
         {
             PropertyChangedHooker!.Execute(e, RaisePropertyChanged);
         }
-
     }
 }

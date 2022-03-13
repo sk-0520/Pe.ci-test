@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region property
 
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -80,8 +80,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             commonStatus.WriteCommonTo(dto);
             Context.UpdateByKey(statement, dto);
         }
-
-
 
         #endregion
     }

@@ -14,15 +14,15 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
     {
         #region variable
 
-        DateTime _currentTime;
-        double _hourAngle;
-        double _minutesAngle;
-        double _secondsAngle;
+        private DateTime _currentTime;
+        private double _hourAngle;
+        private double _minutesAngle;
+        private double _secondsAngle;
 
-        Brush? _hourForeground;
-        Brush? _minutesForeground;
-        Brush? _secondsForeground;
-        Brush? _baseForeground;
+        private Brush? _hourForeground;
+        private Brush? _minutesForeground;
+        private Brush? _secondsForeground;
+        private Brush? _baseForeground;
 
         #endregion
 
@@ -41,9 +41,9 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         #region property
 
-        ClockLauncherItem Item { get; }
-        IPlatformTheme PlatformTheme { get; }
-        IMediaConverter MediaConverter { get; }
+        private ClockLauncherItem Item { get; }
+        private IPlatformTheme PlatformTheme { get; }
+        private IMediaConverter MediaConverter { get; }
         public DateTime CurrentTime
         {
             get => this._currentTime;
@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         #region function
 
-        void ApplyTheme()
+        private void ApplyTheme()
         {
             DispatcherWrapper.Begin(() => {
                 var color = PlatformTheme.GetTaskbarColor();
@@ -134,6 +134,5 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
         {
             ApplyTheme();
         }
-
     }
 }

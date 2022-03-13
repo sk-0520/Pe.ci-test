@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        bool _isInitialized;
+        private bool _isInitialized;
 
         #endregion
 
@@ -105,6 +105,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }
-
     }
 }

@@ -30,10 +30,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
             : this(CultureInfo.CurrentUICulture)
         { }
 
-
         #region property
 
-        CultureInfo CultureInfo { get; }
+        private CultureInfo CultureInfo { get; }
 
         #endregion
 
@@ -124,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
 
         #region property
 
-        Func<string, string> BuildFunction { get; }
+        private Func<string, string> BuildFunction { get; }
 
         #endregion
 

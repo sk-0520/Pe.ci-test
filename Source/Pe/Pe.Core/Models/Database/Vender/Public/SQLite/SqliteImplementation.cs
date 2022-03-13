@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
     /// booleanを制御
     /// <para>0: 偽, 0以外: 真</para>
     /// </summary>
-    class SqliteBooleanHandler: SqlMapper.TypeHandler<bool>
+    internal class SqliteBooleanHandler: SqlMapper.TypeHandler<bool>
     {
         public override void SetValue(IDbDataParameter parameter, bool value)
         {
@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         }
     }
 
-    class SqliteVersionHandler: SqlMapper.TypeHandler<Version>
+    internal class SqliteVersionHandler: SqlMapper.TypeHandler<Version>
     {
         public override void SetValue(IDbDataParameter parameter, Version value)
         {
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         }
     }
 
-    class SqliteGuidHandler: SqlMapper.TypeHandler<Guid>
+    internal class SqliteGuidHandler: SqlMapper.TypeHandler<Guid>
     {
         public override void SetValue(IDbDataParameter parameter, Guid value)
         {
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         }
     }
 
-    class SqliteTimeSpanHandler: SqlMapper.TypeHandler<TimeSpan>
+    internal class SqliteTimeSpanHandler: SqlMapper.TypeHandler<TimeSpan>
     {
         public override void SetValue(IDbDataParameter parameter, TimeSpan value)
         {

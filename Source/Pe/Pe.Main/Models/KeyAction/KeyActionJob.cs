@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         /// <param name="modifierKey">装飾キー位置。</param>
         /// <param name="state">装飾キー状態。</param>
         /// <returns>入力されているか否かの真偽値。</returns>
-        bool TestModifierKey(ModifierKey modifierKey, in ModifierKeyState state)
+        private bool TestModifierKey(ModifierKey modifierKey, in ModifierKeyState state)
         {
             return modifierKey switch {
                 ModifierKey.None => !state.Left && !state.Right,
@@ -227,7 +227,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         /// <summary>
         /// 次に調べるインデックス。
         /// </summary>
-        int NextIndex { get; set; }
+        private int NextIndex { get; set; }
         /// <summary>
         /// キー設定にヒットしたか。
         /// <para><see cref="Check"/>ではあくまで今のキー設定にヒットしたかどうかを確認するのでキー設定全てに該当したかを判定するために使用する。</para>
@@ -247,7 +247,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         public bool ThroughSystem { get; private set; }
 
         #endregion
-
 
         #region function
 
@@ -324,7 +323,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         public TActionData PressedData { get; }
 
         #endregion
-
     }
 
     public sealed class KeyActionPressJob: KeyActionPressedJobBase<KeyActionPressedDataBase>
@@ -345,13 +343,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-
     public sealed class KeyActionLauncherItemJob: KeyActionPressedJobBase<KeyActionLauncherItemData>
     {
         public KeyActionLauncherItemJob(KeyActionLauncherItemData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
-        {
-        }
+        { }
 
         #region property
         #endregion
@@ -361,8 +357,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     {
         public KeyActionLauncherToolbarJob(KeyActionLauncherToolbarData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
-        {
-        }
+        { }
 
         #region property
         #endregion
@@ -374,5 +369,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             : base(actionData, mappings)
         { }
     }
-
 }

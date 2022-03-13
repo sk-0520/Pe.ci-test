@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 
         #region function
 
-        LauncherIconData ConvertFromDto(LauncherItemIconRowDto dto)
+        private LauncherIconData ConvertFromDto(LauncherItemIconRowDto dto)
         {
             var kindEnumTransfer = new EnumTransfer<LauncherItemKind>();
 
@@ -58,7 +58,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var data = ConvertFromDto(dto);
             return data;
         }
-
 
         #endregion
     }

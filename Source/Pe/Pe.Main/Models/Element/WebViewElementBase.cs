@@ -25,7 +25,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
 
         #endregion
 
-
         protected WebViewElementBase(IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {

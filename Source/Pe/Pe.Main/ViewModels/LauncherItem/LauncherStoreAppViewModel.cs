@@ -12,8 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
     {
         protected LauncherStoreAppViewModel(LauncherItemElement model, IScreen screen, IKeyGestureGuide keyGestureGuide, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, screen, keyGestureGuide, dispatcherWrapper, launcherToolbarTheme, loggerFactory)
-        {
-        }
+        { }
 
         #region property
 

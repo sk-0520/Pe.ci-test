@@ -19,19 +19,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region property
 
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
         /// <summary>
         /// <see cref="KeyActionChecker.SelfJobInputId"/>
         /// </summary>
         public uint SelfJobInputId { get; set; }
 
-        KeyActionReplaceJob? LastExecuteReplaceJob { get; set; }
-        ModifierKeyStatus ReplacedModifierKeyStatus { get; set; }
+        private KeyActionReplaceJob? LastExecuteReplaceJob { get; set; }
+        private ModifierKeyStatus ReplacedModifierKeyStatus { get; set; }
+
         #endregion
 
         #region function
 
-        INPUT CreateKeyboardInputData(Key key, bool isDown, bool isExtended = true)
+        private INPUT CreateKeyboardInputData(Key key, bool isDown, bool isExtended = true)
         {
             var input = new INPUT() {
                 type = INPUT_type.INPUT_KEYBOARD,
@@ -45,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return input;
         }
 
-        void SendInput(IReadOnlyList<INPUT> inputs)
+        private void SendInput(IReadOnlyList<INPUT> inputs)
         {
             Debug.Assert(0 < inputs.Count);
 

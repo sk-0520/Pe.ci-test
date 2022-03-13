@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
     {
         #region variable
 
-        string _successExitCodes = string.Empty;
+        private string _successExitCodes = string.Empty;
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region property
 
-        LauncherRedoData Redo => Model.Redo!;
+        private LauncherRedoData Redo => Model.Redo!;
 
         public RedoMode RedoMode
         {

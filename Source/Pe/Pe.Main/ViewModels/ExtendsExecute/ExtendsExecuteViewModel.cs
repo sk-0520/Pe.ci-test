@@ -29,21 +29,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
     {
         #region variable
 
-        string _option;
-        string _workDirectoryPath;
+        private string _option;
+        private string _workDirectoryPath;
 
-        TextDocument _mergeTextDocument;
-        TextDocument _removeTextDocument;
+        private TextDocument _mergeTextDocument;
+        private TextDocument _removeTextDocument;
 
-        bool _isEnabledCustomEnvironmentVariable;
-        bool _isEnabledStandardInputOutput;
-        Encoding _standardInputOutputEncoding;
-        bool _runAdministrator;
+        private bool _isEnabledCustomEnvironmentVariable;
+        private bool _isEnabledStandardInputOutput;
+        private Encoding _standardInputOutputEncoding;
+        private bool _runAdministrator;
 
-        RedoMode _redoMode;
-        int _waitTimeSeconds;
-        int _retryCount;
-        string _successExitCodes = string.Empty;
+        private RedoMode _redoMode;
+        private int _waitTimeSeconds;
+        private int _retryCount;
+        private string _successExitCodes = string.Empty;
 
         #endregion
 
@@ -108,11 +108,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         public RequestSender CloseRequest { get; } = new RequestSender();
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 
-        IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
+        private IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
 
         public IDragAndDrop OptionDragAndDrop { get; }
         public IDragAndDrop WorkDirectoryDragAndDrop { get; }
-
 
         public string Title
         {
@@ -469,6 +468,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         }
 
         #endregion
-
     }
 }

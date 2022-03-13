@@ -13,6 +13,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <typeparam name="TCast"></typeparam>
         /// <param name="arg"></param>
         /// <param name="action"></param>
+        [Obsolete]
         public static bool AsAction<TCast>(object arg, Action<TCast> action)
             where TCast : class
         {

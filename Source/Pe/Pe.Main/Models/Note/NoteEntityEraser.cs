@@ -23,7 +23,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
 
         #region property
 
-        Guid NoteId { get; }
+        private Guid NoteId { get; }
+
         #endregion
 
         #region EntityEraserBase

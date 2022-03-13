@@ -50,14 +50,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         #region property
 
         public IPluginIdentifiers PluginIdentifiers { get; }
-        WebViewWidgetWindow WidgetWindow { get; }
-        HtmlSourceBase HtmlSource { get; }
-        Action<IWebViewGrass>? WidgetCallback { get; }
-        EnvironmentParameters EnvironmentParameters { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
-        TimeSpan ScriptTimeout { get; } = TimeSpan.FromMinutes(1);
-        WebViewWidgetCallbacks Callbacks { get; }
-        object? PluginExtensions { get; }
+        private WebViewWidgetWindow WidgetWindow { get; }
+        private HtmlSourceBase HtmlSource { get; }
+        private Action<IWebViewGrass>? WidgetCallback { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
+        private TimeSpan ScriptTimeout { get; } = TimeSpan.FromMinutes(1);
+        private WebViewWidgetCallbacks Callbacks { get; }
+        private object? PluginExtensions { get; }
+
         #endregion
 
         #region command
@@ -66,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
         #region function
 
-        void InjectWidget()
+        private void InjectWidget()
         {
             string injectionScript;
             using(var reader = EnvironmentParameters.WebViewWidgetInjectionScriptFile.OpenText()) {
@@ -100,8 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
         }
 
-
-        void LoadHtmlSource(HtmlSourceBase htmlSource)
+        private void LoadHtmlSource(HtmlSourceBase htmlSource)
         {
             Debug.Assert(WebView.IsLoaded);
 
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             }
         }
 
-        IWebViewScriptResult EvaluateScriptAsyncCore(Task<JavascriptResponse> javascriptResponse)
+        private IWebViewScriptResult EvaluateScriptAsyncCore(Task<JavascriptResponse> javascriptResponse)
         {
             if(!javascriptResponse.IsCompletedSuccessfully) {
                 Logger.LogError(javascriptResponse.Exception, "{0} スクリプト実行失敗: {2}, {1}", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId, javascriptResponse.Exception?.Message);
@@ -280,6 +280,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
                 }
             }
         }
-
     }
 }

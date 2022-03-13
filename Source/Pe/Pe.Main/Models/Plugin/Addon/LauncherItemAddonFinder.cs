@@ -29,8 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region property
 
-        AddonContainer AddonContainer { get; }
-        ILogger Logger { get; }
+        private AddonContainer AddonContainer { get; }
+        private ILogger Logger { get; }
 
         #endregion
 

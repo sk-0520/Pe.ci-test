@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
         public TValue Value { get; }
-        Func<Color, object> IconGetter { get; }
+        private Func<Color, object> IconGetter { get; }
 
         public Color IconColor { get; private set; }
         public object Icon => IconGetter(IconColor);

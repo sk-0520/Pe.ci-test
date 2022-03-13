@@ -5,6 +5,8 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
     public class LogicalIsNullConverter: IValueConverter
     {
+        #region IValueConverter
+
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             return value == null;
@@ -14,5 +16,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
         {
             throw new NotSupportedException();
         }
+
+        #endregion
     }
 }

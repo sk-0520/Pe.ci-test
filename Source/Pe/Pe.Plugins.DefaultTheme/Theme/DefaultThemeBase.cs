@@ -74,7 +74,6 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return box;
         }
 
-
         protected TValue GetResourceValue<TValue>(string parentName, string targetName)
         {
             var key = parentName + '.' + targetName;

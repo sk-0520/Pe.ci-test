@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region property
 
-        EnvironmentPathExecuteItem Item { get; }
+        private EnvironmentPathExecuteItem Item { get; }
 
         public string Name => Path.GetFileNameWithoutExtension(Item.File.Name);
         public string DirectoryPath
@@ -38,6 +38,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public override string ToString() => Name;
 
         #endregion
-
     }
 }

@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        IAddon Addon { get; }
+        private IAddon Addon { get; }
 
         public string AddonName => Addon.PluginInformations.PluginIdentifiers.PluginName;
 

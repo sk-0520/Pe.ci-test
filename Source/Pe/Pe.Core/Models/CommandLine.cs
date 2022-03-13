@@ -290,7 +290,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             throw new NotImplementedException();
         }
 
-        void SetValue(CommandLineKey key, string value)
+        private void SetValue(CommandLineKey key, string value)
         {
             if(ValueItems.TryGetValue(key, out var val)) {
                 ((CommandLineValue)val).Add(value);
@@ -301,12 +301,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        void SetSwitch(CommandLineKey value)
+        private void SetSwitch(CommandLineKey value)
         {
             SwitchItems.Add(value);
         }
 
-        void SetUnknown(string value)
+        private void SetUnknown(string value)
         {
             UnknownItems.Add(value);
         }
@@ -433,6 +433,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return "\"" + result + "\"";
             }
         }
+
         #endregion
     }
 
@@ -523,7 +524,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
-        IDictionary<PropertyInfo, CommandLineAttribute> GetPropertyAttributeMapping(Type type)
+        private IReadOnlyDictionary<PropertyInfo, CommandLineAttribute> GetPropertyAttributeMapping(Type type)
         {
             var properties = type.GetProperties();
 
@@ -538,7 +539,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return map;
         }
 
-        IDictionary<PropertyInfo, CommandLineKey> SetPropertyKeyMapping(CommandLine commandLine, IDictionary<PropertyInfo, CommandLineAttribute> propertyAttributeMap)
+        private IReadOnlyDictionary<PropertyInfo, CommandLineKey> SetPropertyKeyMapping(CommandLine commandLine, IReadOnlyDictionary<PropertyInfo, CommandLineAttribute> propertyAttributeMap)
         {
             var map = new Dictionary<PropertyInfo, CommandLineKey>();
             foreach(var pair in propertyAttributeMap) {
@@ -563,7 +564,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
-        object GetTrueSwitch(Type type)
+        private object GetTrueSwitch(Type type)
         {
             if(type == typeof(bool)) {
                 return true;

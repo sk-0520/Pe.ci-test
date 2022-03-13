@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
     {
         #region define
 
-        class PathItem
+        private  class PathItem
         {
             public PathItem(string path)
             {
@@ -43,7 +43,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
 
         #endregion
 
-
         public FileFinderCommandFinder(IAddonParameter parameter)
         {
             Logger = parameter.LoggerFactory.CreateLogger(GetType());
@@ -54,35 +53,35 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
 
         #region property
 
-        ILogger Logger { get; }
-        IAddonExecutor AddonExecutor { get; }
-        IImageLoader ImageLoader { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
-        List<PathItem> PathItems { get; } = new List<PathItem>(512);
+        private ILogger Logger { get; }
+        private IAddonExecutor AddonExecutor { get; }
+        private IImageLoader ImageLoader { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
+        private List<PathItem> PathItems { get; } = new List<PathItem>(512);
 
         /// <summary>
         /// 隠しファイルを列挙するか。
         /// </summary>
-        bool IncludeHiddenFile { get; set; }
+        private bool IncludeHiddenFile { get; set; }
         /// <summary>
         /// PATHの通っている実行ファイルを列挙するか。
         /// </summary>
-        bool IncludePath { get; set; }
+        private bool IncludePath { get; set; }
         /// <summary>
         /// パスからの列挙において列挙する上限数。
         /// <para>0 で制限しない。</para>
         /// </summary>
-        int MaximumPathItem { get; set; }
+        private int MaximumPathItem { get; set; }
         /// <summary>
         /// パス検索を有効にする入力文字数(以上)。
         /// </summary>
-        int PathEnabledInputCharCount { get; set; }
+        private int PathEnabledInputCharCount { get; set; }
 
         #endregion
 
         #region function
 
-        string GetDriveName(DriveInfo drive)
+        private string GetDriveName(DriveInfo drive)
         {
             if(drive.DriveType == DriveType.CDRom || drive.DriveType == DriveType.Removable) {
                 return string.Format("{0} ({1})", drive.Name, drive.DriveType);
@@ -91,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
             }
         }
 
-        bool IsPath(string path)
+        private bool IsPath(string path)
         {
             if(path.Length < "C:\\".Length) {
                 return false;
@@ -105,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
             return path.IndexOfAny(new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }) != -1;
         }
 
-        (string directoryPath, string filePattern) SplitPath(string path)
+        private (string directoryPath, string filePattern) SplitPath(string path)
         {
             if(Path.EndsInDirectorySeparator(path)) {
                 return (Path.TrimEndingDirectorySeparator(path), string.Empty);
@@ -114,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
             return (Path.GetDirectoryName(path)!, Path.GetFileName(path)!);
         }
 
-        string ConvertSearchPattern(string filePattern)
+        private string ConvertSearchPattern(string filePattern)
         {
             if(string.IsNullOrWhiteSpace(filePattern)) {
                 return "*";
@@ -127,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
             return filePattern;
         }
 
-        IEnumerable<ICommandItem> GetOwnerAndChildren(string directoryPath, string filePattern, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        private IEnumerable<ICommandItem> GetOwnerAndChildren(string directoryPath, string filePattern, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
             if(!Directory.Exists(directoryPath)) {
                 yield break;

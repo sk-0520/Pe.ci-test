@@ -21,15 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-        public LauncherRedoItemsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -40,9 +32,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
+        public LauncherRedoItemsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
 
-        LauncherRedoData ConvertFromDto(LauncherRedoItemsDto dto)
+        private LauncherRedoData ConvertFromDto(LauncherRedoItemsDto dto)
         {
             var redoModeTransfer = new EnumTransfer<RedoMode>();
 
@@ -53,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
         }
 
-        LauncherRedoItemsDto ConvertFromData(Guid launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus commonStatus)
+        private LauncherRedoItemsDto ConvertFromData(Guid launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus commonStatus)
         {
             var redoModeTransfer = new EnumTransfer<RedoMode>();
 

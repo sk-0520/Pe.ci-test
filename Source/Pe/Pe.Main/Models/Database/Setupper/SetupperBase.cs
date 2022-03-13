@@ -41,9 +41,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 #endif
         */
 
-        const string TitleMark = "--//";
-        const string TitleCapture = "TITLE";
-        Regex TitleRegex { get; } = new Regex($@"^{TitleMark}\s*(?<{TitleCapture}>.+)", RegexOptions.ExplicitCapture);
+        private const string TitleMark = "--//";
+        private const string TitleCapture = "TITLE";
+        private Regex TitleRegex { get; } = new Regex($@"^{TitleMark}\s*(?<{TitleCapture}>.+)", RegexOptions.ExplicitCapture);
 
         #endregion
 
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
             }
         }
 
-        void ExecuteStatementCore(IDatabaseContext context, string statement, IReadOnlyDictionary<string, object> parameters)
+        private void ExecuteStatementCore(IDatabaseContext context, string statement, IReadOnlyDictionary<string, object> parameters)
         {
             var pairs = SplitMultiStatement(statement);
             foreach(var pair in pairs) {
@@ -135,7 +135,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
             ExecuteStatementCore(context, statement, parameters);
         }
-
 
         #endregion
     }

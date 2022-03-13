@@ -83,21 +83,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public FileWatchParameter WatchParameter { get; }
         protected ILogger Logger { get; }
-        FileSystemWatcher? FileSystemWatcher { get; set; }
+        private FileSystemWatcher? FileSystemWatcher { get; set; }
 
-        LazyAction DelayWatcher { get; }
+        private LazyAction DelayWatcher { get; }
+
         #endregion
 
         #region function
 
-        void OnFileContentChanged(FileChangedEventArgs e)
+        private void OnFileContentChanged(FileChangedEventArgs e)
         {
             ThrowIfDisposed();
 
             FileContentChanged?.Invoke(this, e);
         }
 
-        void DisposeFileSystemWatcher()
+        private void DisposeFileSystemWatcher()
         {
             if(FileSystemWatcher != null) {
                 FileSystemWatcher.Changed -= FileSystemWatcher_Changed;
@@ -162,7 +163,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 OnFileContentChanged(args);
             });
         }
-
-
     }
 }

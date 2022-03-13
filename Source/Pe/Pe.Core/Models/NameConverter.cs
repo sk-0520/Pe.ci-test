@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return builder.ToString();
         }
 
-        string ToPascalCore(string source, char separator)
+        private string ToPascalCore(string source, char separator)
         {
             Debug.Assert(!string.IsNullOrWhiteSpace(source));
             Debug.Assert(!char.IsControl(separator));

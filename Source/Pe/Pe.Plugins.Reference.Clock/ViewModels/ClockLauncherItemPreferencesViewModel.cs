@@ -12,9 +12,10 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
     {
         #region variable
 
-        string formattedValue = string.Empty;
+        private string formattedValue = string.Empty;
 
         #endregion
+
         public ClockLauncherItemPreferencesViewModel(ClockLauncherItemSetting setting, ISkeletonImplements skeletonImplements, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(skeletonImplements, dispatcherWrapper, loggerFactory)
         {
@@ -25,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         #region property
 
-        ClockLauncherItemSetting Setting { get; }
+        private ClockLauncherItemSetting Setting { get; }
 
         #endregion
 
@@ -51,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         #region function
 
-        void ApplyFormat()
+        private void ApplyFormat()
         {
             try {
                 FormattedValue = GetFormattedTimestamp(Format, DateTime.Now);
@@ -60,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
             }
         }
 
-        string GetFormattedTimestamp(string format, DateTime dateTime)
+        private string GetFormattedTimestamp(string format, DateTime dateTime)
         {
             return dateTime.ToString(format);
         }

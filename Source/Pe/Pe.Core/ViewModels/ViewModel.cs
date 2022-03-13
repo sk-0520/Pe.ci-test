@@ -66,12 +66,12 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// <summary>
         /// プロパティアクセス処理キャッシュ。
         /// </summary>
-        ConcurrentDictionary<object, PropertyCacher> PropertyCacher { get; } = new ConcurrentDictionary<object, PropertyCacher>();
+        private ConcurrentDictionary<object, PropertyCacher> PropertyCacher { get; } = new ConcurrentDictionary<object, PropertyCacher>();
 #endif
         /// <summary>
         /// プロパティ変更時のイベントキャッシュ。
         /// </summary>
-        ConcurrentDictionary<string, PropertyChangedEventArgs> PropertyChangedEventArgsCache { get; } = new ConcurrentDictionary<string, PropertyChangedEventArgs>();
+        private ConcurrentDictionary<string, PropertyChangedEventArgs> PropertyChangedEventArgsCache { get; } = new ConcurrentDictionary<string, PropertyChangedEventArgs>();
 
         /// <summary>
         /// このVMは検証対象か。
@@ -292,7 +292,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
         }
 
-        bool HasChildrenErros()
+        private bool HasChildrenErros()
         {
             ThrowIfDisposed();
 
@@ -558,7 +558,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     {
         #region variable
 
-        TData _data;
+        private TData _data;
 
         #endregion
 

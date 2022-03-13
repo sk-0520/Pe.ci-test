@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models
 
         #region property
 
-        CrashReportOptions Options { get; }
+        private CrashReportOptions Options { get; }
 
         #endregion
 
@@ -39,7 +39,6 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models
             //throw new NotImplementedException();
             return null!;
         }
-
 
         #endregion
     }

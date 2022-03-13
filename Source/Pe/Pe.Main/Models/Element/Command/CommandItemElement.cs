@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
     {
         #region variable
 
-        object? _icon;
+        private object? _icon;
 
         #endregion
         protected CommandItemElementBase(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -111,7 +111,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         }
 
         #endregion
-
     }
 
     public sealed class LauncherCommandItemElement: CommandItemElementBase
@@ -125,8 +124,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         #region property
 
-        LauncherItemElement LauncherItemElement { get; }
+        private LauncherItemElement LauncherItemElement { get; }
         public CommandItemKind EditableKind { get; set; } = CommandItemKind.LauncherItem;
+
         #endregion
 
         #region CommandItemElementBase
@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         #region property
 
-        ApplicationCommandParameter Parameter { get; }
+        private ApplicationCommandParameter Parameter { get; }
 
         #endregion
 

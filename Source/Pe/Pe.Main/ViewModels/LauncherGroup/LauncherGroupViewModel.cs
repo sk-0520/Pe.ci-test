@@ -23,12 +23,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup
         public Guid LauncherGroupId => Model.LauncherGroupId;
 
         public int RowIndex { get; set; }
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
         public string? Name => Model.Name;
         public LauncherGroupImageName ImageName => Model.ImageName;
         public Color ImageColor => Model.ImageColor;
 
-        LauncherGroupIconMaker IconMaker { get; } = new LauncherGroupIconMaker();
+        private LauncherGroupIconMaker IconMaker { get; } = new LauncherGroupIconMaker();
 
         public DependencyObject NormalGroupIcon => IconMaker.GetGroupImage(ImageName, ImageColor, IconBox.Small, IconSize.DefaultScale, false);
         public DependencyObject StrongGroupIcon => IconMaker.GetGroupImage(ImageName, ImageColor, IconBox.Small, IconSize.DefaultScale, true);

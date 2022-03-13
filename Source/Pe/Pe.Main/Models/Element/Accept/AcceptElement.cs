@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Accept
         }
 
         #region property
-        ApplicationConfiguration ApplicationConfiguration { get; }
+        private ApplicationConfiguration ApplicationConfiguration { get; }
         public bool Accepted { get; set; }
         public UpdateKind UpdateKind { get; set; } = UpdateKind.Auto;
         public bool IsEnabledTelemetry { get; set; } = true;

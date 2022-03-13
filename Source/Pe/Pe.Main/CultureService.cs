@@ -21,9 +21,9 @@ namespace ContentTypeTextNet.Pe.Main
 
         #region property
 
-        EnumResourceManager EnumResourceManager { get; }
+        private EnumResourceManager EnumResourceManager { get; }
 
-        static CultureInfo StartupCulture { get; } = CultureInfo.CurrentCulture;
+        private static CultureInfo StartupCulture { get; } = CultureInfo.CurrentCulture;
 
         /// <summary>
         /// TODO: あまり使わない方針で行きたい
@@ -38,12 +38,12 @@ namespace ContentTypeTextNet.Pe.Main
 
         #region function
 
-        void OnPropertyChanged(string propertyName)
+        private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        void ChangeCultureCore(CultureInfo culture)
+        private void ChangeCultureCore(CultureInfo culture)
         {
             Properties.Resources.Culture = culture;
 

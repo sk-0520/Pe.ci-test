@@ -16,8 +16,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
 
         #region property
 
-        ILogger Logger { get; }
-        EnvironmentParameters EnvironmentParameters { get; }
+        private ILogger Logger { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
 
         public static string SchemeName => "pe";
         public static string DomainName => "storage";

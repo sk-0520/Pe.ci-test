@@ -85,20 +85,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         #region property
 
-        CommandConfiguration CommandConfiguration { get; }
+        private CommandConfiguration CommandConfiguration { get; }
 
         #endregion
 
         #region function
 
-        string ToHeader(ApplicationCommand applicationCommand)
+        private string ToHeader(ApplicationCommand applicationCommand)
         {
             var rawValue = CommandConfiguration.Application.Mapping[applicationCommand];
             var joinedValue = string.Join(CommandConfiguration.Application.Separator, rawValue.Split());
             return CommandConfiguration.Application.Prefix + joinedValue;
         }
 
-        (string narmal, string extend) ToDescriptions(ApplicationCommand applicationCommand)
+        private (string narmal, string extend) ToDescriptions(ApplicationCommand applicationCommand)
         {
             // テスト側でもろもろ担保
             var descriptionAttributes = applicationCommand.GetType().GetField(applicationCommand.ToString())!.GetCustomAttributes<CommandDescriptionAttribute>().ToList();
@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
     {
         #region variable
 
-        bool _isInitialize;
+        private bool _isInitialize;
 
         #endregion
 
@@ -184,14 +184,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         #region property
 
         /// <inheritdoc cref="ILoggerFactory"/>
-        ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
-        ILogger Logger { get; }
+        private ILogger Logger { get; }
         /// <inheritdoc cref="IDispatcherWrapper"/>
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
         /// <inheritdoc cref="CommandConfiguration"/>
-        CommandConfiguration CommandConfiguration { get; }
-        IReadOnlyList<ApplicationCommandParameter> Parameters { get; }
+        private CommandConfiguration CommandConfiguration { get; }
+        private IReadOnlyList<ApplicationCommandParameter> Parameters { get; }
 
         #endregion
 

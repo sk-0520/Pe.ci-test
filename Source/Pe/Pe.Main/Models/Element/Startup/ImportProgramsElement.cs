@@ -35,22 +35,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         #region property
 
-        LauncherItemConfiguration LauncherItemConfiguration { get; }
+        private LauncherItemConfiguration LauncherItemConfiguration { get; }
 
-        IMainDatabaseBarrier DatabaseBarrier { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        IWindowManager WindowManager { get; }
-        IIdFactory IdFactory { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
+        private IMainDatabaseBarrier DatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IWindowManager WindowManager { get; }
+        private IIdFactory IdFactory { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
         public ObservableCollection<ProgramElement> ProgramItems { get; } = new ObservableCollection<ProgramElement>();
 
         public bool IsRegisteredLauncher { get; private set; }
+
         #endregion
 
         #region function
 
-        IReadOnlyCollection<FileInfo> GetFiles(DirectoryInfo directory)
+        private IReadOnlyCollection<FileInfo> GetFiles(DirectoryInfo directory)
         {
             ThrowIfDisposed();
 
@@ -71,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             return result;
         }
 
-        IReadOnlyList<Regex> GetAutoImportExcludeRegexItems()
+        private IReadOnlyList<Regex> GetAutoImportExcludeRegexItems()
         {
             return LauncherItemConfiguration.AutoImportExcludePatterns
                 .Select(i => new Regex(i, RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace))
@@ -79,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             ;
         }
 
-        void LoadPrograms()
+        private void LoadPrograms()
         {
             ThrowIfDisposed();
 
@@ -115,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             return Task.Run(() => LoadPrograms());
         }
 
-        void Import()
+        private void Import()
         {
             ThrowIfDisposed();
 
@@ -194,7 +195,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             //return Task.CompletedTask;
         }
 
-
         #endregion
 
         #region ContextElementBase
@@ -205,6 +205,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
         }
 
         #endregion
-
     }
 }

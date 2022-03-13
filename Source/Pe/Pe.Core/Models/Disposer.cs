@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        Action<bool> Action { get; set; }
+        private Action<bool> Action { get; set; }
 
         #endregion
 
@@ -154,8 +154,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        Action<bool, TArgument> Action { get; set; }
-        TArgument Argument { get; set; }
+        private Action<bool, TArgument> Action { get; set; }
+        private TArgument Argument { get; set; }
 
         #endregion
 
@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
-        IList<IDisposable> StockItems { get; } = new List<IDisposable>();
+        private IList<IDisposable> StockItems { get; } = new List<IDisposable>();
 
         #endregion
 
@@ -298,7 +298,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        ArrayPool<T> Pool { get; }
+        private ArrayPool<T> Pool { get; }
         public T[] Items { get; }
 
         public int Length { get; }
@@ -340,7 +340,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        ArrayPool<T> Pool { get; }
+        private ArrayPool<T> Pool { get; }
         public T[] Items { get; }
 
         public int Length { get; }

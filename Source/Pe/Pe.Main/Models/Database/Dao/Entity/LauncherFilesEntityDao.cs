@@ -44,15 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        #endregion
-
-        public LauncherFilesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-         : base(context, statementLoader, implementation, loggerFactory)
-        { }
-
-        #region property
-
-        public static class Column
+        private static class Column
         {
             #region property
 
@@ -71,9 +63,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #endregion
 
+        public LauncherFilesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+         : base(context, statementLoader, implementation, loggerFactory)
+        { }
+
         #region function
 
-        LauncherExecutePathData ConvertFromDto(LauncherFilesEntityPathDto dto)
+        private LauncherExecutePathData ConvertFromDto(LauncherFilesEntityPathDto dto)
         {
             var data = new LauncherExecutePathData() {
                 Path = dto.File ?? string.Empty,
@@ -84,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        LauncherFileData ConvertFromDto(LauncherFilesEntityDto dto)
+        private LauncherFileData ConvertFromDto(LauncherFilesEntityDto dto)
         {
             var encodingConverter = new EncodingConverter(LoggerFactory);
 

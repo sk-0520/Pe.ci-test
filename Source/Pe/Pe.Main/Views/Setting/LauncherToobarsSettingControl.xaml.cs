@@ -24,9 +24,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #region property
 
-        CommandStore CommandStore { get; } = new CommandStore();
+        private CommandStore CommandStore { get; } = new CommandStore();
 
-        IList<ScreenWindow> ScreenWindows { get; set; } = new List<ScreenWindow>();
+        private IList<ScreenWindow> ScreenWindows { get; set; } = new List<ScreenWindow>();
+
         #endregion
 
         #region Editor
@@ -57,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #region function
 
-        void CloseWindows()
+        private void CloseWindows()
         {
             foreach(var window in ScreenWindows) {
                 window.MouseUp -= CloseScreenWindow;

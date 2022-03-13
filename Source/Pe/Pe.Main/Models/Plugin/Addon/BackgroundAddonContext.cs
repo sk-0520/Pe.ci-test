@@ -152,6 +152,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public DateTime Timestamp { get; }
 
         #endregion
-
     }
 }

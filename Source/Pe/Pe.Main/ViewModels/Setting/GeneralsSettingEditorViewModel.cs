@@ -36,14 +36,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        AppExecuteSettingEditorViewModel AppExecuteSettingEditor { get; }
-        AppGeneralSettingEditorViewModel AppGeneralSettingEditor { get; }
-        AppUpdateSettingEditorViewModel AppUpdateSettingEditor { get; }
-        AppNotifyLogSettingEditorViewModel AppNotifyLogSettingEditor { get; }
-        AppLauncherToolbarSettingEditorViewModel AppLauncherToolbarSettingEditor { get; }
-        AppCommandSettingEditorViewModel AppCommandSettingEditor { get; }
-        AppNoteSettingEditorViewModel AppNoteSettingEditor { get; }
-        AppStandardInputOutputSettingEditorViewModel AppStandardInputOutputSettingEditor { get; }
+        private AppExecuteSettingEditorViewModel AppExecuteSettingEditor { get; }
+        private AppGeneralSettingEditorViewModel AppGeneralSettingEditor { get; }
+        private AppUpdateSettingEditorViewModel AppUpdateSettingEditor { get; }
+        private AppNotifyLogSettingEditorViewModel AppNotifyLogSettingEditor { get; }
+        private AppLauncherToolbarSettingEditorViewModel AppLauncherToolbarSettingEditor { get; }
+        private AppCommandSettingEditorViewModel AppCommandSettingEditor { get; }
+        private AppNoteSettingEditorViewModel AppNoteSettingEditor { get; }
+        private AppStandardInputOutputSettingEditorViewModel AppStandardInputOutputSettingEditor { get; }
 
         [IgnoreValidation]
         public ObservableCollection<IGeneralSettingEditor> EditorItems { get; }

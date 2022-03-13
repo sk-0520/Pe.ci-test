@@ -65,6 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         Application,
     }
+
     public enum UpdateProcess
     {
         Download,
@@ -123,8 +124,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             #region property
 
-            ConcurrentDictionary<Guid, LauncherItemElement> LauncherItems { get; } = new ConcurrentDictionary<Guid, LauncherItemElement>();
-            ISet<RedoExecutor> RedoItems { get; } = new HashSet<RedoExecutor>();
+            private ConcurrentDictionary<Guid, LauncherItemElement> LauncherItems { get; } = new ConcurrentDictionary<Guid, LauncherItemElement>();
+            private ISet<RedoExecutor> RedoItems { get; } = new HashSet<RedoExecutor>();
 
             #endregion
 

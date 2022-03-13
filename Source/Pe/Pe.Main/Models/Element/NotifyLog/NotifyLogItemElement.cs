@@ -9,9 +9,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
     {
         #region variable
 
-        IReadOnlyNotifyLogContent _content;
+        private IReadOnlyNotifyLogContent _content;
 
         #endregion
+
         public NotifyLogItemElement(Guid notifyLogId, NotifyMessage message, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -25,8 +26,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 
         #region property
 
-        NotifyMessage Message { get; }
-        ObservableCollection<NotifyLogContent> ContentHistoriesImpl { get; }
+        private NotifyMessage Message { get; }
+        private ObservableCollection<NotifyLogContent> ContentHistoriesImpl { get; }
         public ReadOnlyObservableCollection<NotifyLogContent> ContentHistories { get; }
 
         #endregion

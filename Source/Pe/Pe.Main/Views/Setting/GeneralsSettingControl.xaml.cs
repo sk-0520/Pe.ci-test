@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
         #region property
 
         //DialogRequestReceiver DialogRequestReceiver { get; }
-        ElementCommandStore CommandStore { get; }
+        private ElementCommandStore CommandStore { get; }
 
         #endregion
 

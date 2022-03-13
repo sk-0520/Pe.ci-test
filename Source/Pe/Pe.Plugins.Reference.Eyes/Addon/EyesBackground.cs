@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
 
         public Point Location { get; }
         public DateTime Timestamp { get; }
+
         #endregion
     }
 
@@ -51,10 +52,12 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
             Key = key;
             Timestamp = timestamp;
         }
+
         #region property
 
         public Key Key { get; }
         public DateTime Timestamp { get; }
+
         #endregion
     }
 
@@ -69,6 +72,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
         public event EventHandler<BackgroundKeyEventArgs>? KeyUp;
 
         #endregion
+
         public EyesBackground(IAddonParameter parameter, IPluginInformations pluginInformations)
         {
             LoggerFactory = parameter.LoggerFactory;
@@ -81,12 +85,12 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
 
         #region proeprty
 
-        ILoggerFactory LoggerFactory { get; }
-        ILogger Logger { get; }
-        IAddonExecutor AddonExecutor { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
-        ISkeletonImplements SkeletonImplements { get; }
-        IPluginInformations PluginInformations { get; }
+        private ILoggerFactory LoggerFactory { get; }
+        private ILogger Logger { get; }
+        private IAddonExecutor AddonExecutor { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
+        private ISkeletonImplements SkeletonImplements { get; }
+        private IPluginInformations PluginInformations { get; }
 
         #endregion
 

@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        LauncherToobarSettingEditorViewModel? _selectedToolbar;
+        private LauncherToobarSettingEditorViewModel? _selectedToolbar;
 
         #endregion
         public LauncherToobarsSettingEditorViewModel(LauncherToobarsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> allLauncherGroupCollection, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -30,13 +30,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #region property
-        IGeneralTheme GeneralTheme { get; }
+        private IGeneralTheme GeneralTheme { get; }
         public RequestSender ShowAllScreensRequest { get; } = new RequestSender();
 
-        ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> AllLauncherGroupCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> AllLauncherGroupCollection { get; }
         public ICollectionView AllLauncherGroupItems { get; }
 
-        ModelViewModelObservableCollectionManagerBase<LauncherToobarSettingEditorElement, LauncherToobarSettingEditorViewModel> ToolbarCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<LauncherToobarSettingEditorElement, LauncherToobarSettingEditorViewModel> ToolbarCollection { get; }
         public ICollectionView ToolbarItems { get; }
 
         public LauncherToobarSettingEditorViewModel? SelectedToolbar

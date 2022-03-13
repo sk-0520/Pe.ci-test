@@ -40,6 +40,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels._Debug_
         }
 
         #endregion
-
     }
 }

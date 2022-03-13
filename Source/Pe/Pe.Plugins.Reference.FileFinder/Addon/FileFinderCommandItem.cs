@@ -20,10 +20,10 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
         #region define
 
         [DllImport("shell32.dll")]
-        static extern IntPtr ExtractAssociatedIcon(IntPtr hInst, StringBuilder lpIconPath, out ushort lpiIcon);
+        private static extern IntPtr ExtractAssociatedIcon(IntPtr hInst, StringBuilder lpIconPath, out ushort lpiIcon);
 
         [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
-        extern static bool DestroyIcon(IntPtr handle);
+        private extern static bool DestroyIcon(IntPtr handle);
 
         #endregion
 
@@ -44,13 +44,12 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
         private string Path { get; }
 
         //System.Windows.Controls.Image? ImageControl { get; set; }
-        ImageSource? ImageSource { get; set; }
+        private ImageSource? ImageSource { get; set; }
 
-        IImageLoader ImageLoader { get; }
-        IAddonExecutor AddonExecutor { get; }
+        private IImageLoader ImageLoader { get; }
+        private IAddonExecutor AddonExecutor { get; }
 
         #endregion
-
 
         #region ICommandItem
 

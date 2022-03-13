@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder
 {
-    public static class FileFinderConstants
+    internal static class FileFinderConstants
     {
         #region proprety
 

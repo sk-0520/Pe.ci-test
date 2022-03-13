@@ -16,16 +16,16 @@ namespace ContentTypeTextNet.Pe.Main
     {
         #region property
 
-        ApplicationManager? ApplicationManager { get; set; }
-        ILogger? Logger { get; set; }
-        RunMode RunMode { get; set; }
-        bool CachedUnhandledException { get; set; }
+        private ApplicationManager? ApplicationManager { get; set; }
+        private ILogger? Logger { get; set; }
+        private RunMode RunMode { get; set; }
+        private bool CachedUnhandledException { get; set; }
 
         #endregion
 
         #region function
 
-        (bool runSpecialMode, int exitCode) ExecuteIfExistsSpecialModeEnvironment(string[] arguments)
+        private (bool runSpecialMode, int exitCode) ExecuteIfExistsSpecialModeEnvironment(string[] arguments)
         {
             //var ce = new ApplicationConsoleExecutor();
             //ce.Run("DRY-RUN", arguments);
