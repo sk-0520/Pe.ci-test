@@ -1,48 +1,13 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.167+",
+		"date": "2022/03/13",
+		"version": "0.99.168",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "機能的には特に何もないリリース。"
 					}
 				]
 			},
@@ -55,18 +20,6 @@
 						"comments": [
 							"久しぶり過ぎて何が正しいのかもう何もわからない"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -74,27 +27,23 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "83e5488401e9dfcc711c0c4a8a4bab743eb2eab9",
 						"subject": "update npm"
 					},
 					{
-						"revision": "",
+						"revision": "794d92324bdb42b9fe206883d579f886774acaeb",
 						"class": "nuget",
 						"subject": "AvalonEdit 6.1.2.30 -> 6.1.3.50"
 					},
 					{
-						"revision": "",
+						"revision": "27cef0ae10a59c1f71d8a69a5ebf2af055d32345",
 						"class": "nuget",
 						"subject": "Microsoft.NET.Test.Sdk 17.0.0 -> 17.1.0"
 					},
 					{
-						"revision": "",
+						"revision": "80ffcf3d7ba368800440534640dc3db6e1c544cf",
 						"class": "nuget",
 						"subject": "SevenZipExtractor 1.0.15 -> 1.0.16"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
