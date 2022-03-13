@@ -41,7 +41,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         public virtual IDatabaseImplementation CreateImplementation() => new SqliteImplementation();
 
         #endregion
-
     }
 }
 

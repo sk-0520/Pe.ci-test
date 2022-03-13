@@ -167,7 +167,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         IDatabaseTransaction BeginTransaction(IsolationLevel isolationLevel);
 
-
         /// <inheritdoc cref="BeginReadOnlyTransaction(IsolationLevel)"/>
         IDatabaseTransaction BeginReadOnlyTransaction();
         /// <summary>
@@ -242,7 +241,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// DB接続を開く。
         /// </summary>
         /// <returns></returns>
-        IDbConnection OpenConnection()
+        private IDbConnection OpenConnection()
         {
             if(ConnectionPausing) {
                 throw new InvalidOperationException(nameof(ConnectionPausing));
@@ -653,7 +652,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         { }
 
         #region property
-
 
         /// <summary>
         /// 接続元。

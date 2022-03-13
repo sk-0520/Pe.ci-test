@@ -68,7 +68,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-
         /// <summary>
         /// 遅延処理。
         /// <para>複数回呼び出した場合、最後に渡された処理が遅延処理対象となる。</para>

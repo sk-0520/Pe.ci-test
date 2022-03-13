@@ -5,6 +5,10 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
+    /// <summary>
+    /// DBMS依存DBブロックコメントとコメント文中で特殊処理する起点・終点。
+    /// <para>あえてなんかすることはないはず。</para>
+    /// </summary>
     public readonly struct DatabaseBlockComment
     {
         /// <summary>

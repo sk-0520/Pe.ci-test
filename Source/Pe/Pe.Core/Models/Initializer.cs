@@ -4,7 +4,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
-    /// <see cref="ISupportInitialize"/>の初期化から初期化終了までを using で実施できるようにする。
+    /// <see cref="ISupportInitialize"/>の初期化から初期化終了までを<c>using</c>で実施できるようにする。
     /// </summary>
     public class Initializer: DisposerBase
     {
