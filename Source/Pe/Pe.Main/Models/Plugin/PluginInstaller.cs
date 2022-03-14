@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 }
 
                 var archiveExtractor = new ArchiveExtractor(LoggerFactory);
-                var progress = new UserNotifyProgress(new DoubleProgress(LoggerFactory), new StringProgress(LoggerFactory));
+                var progress = new UserNotifyProgress(new NullDoubleProgress(LoggerFactory), new NullStringProgress(LoggerFactory));
                 archiveExtractor.Extract(archiveFile, extractDirectory, archiveKind, progress);
 
                 return extractDirectory;

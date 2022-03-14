@@ -8,7 +8,7 @@ using System.Linq;
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
-    /// <see cref="ObservableCollection"/> の変更通知を受け取ってなんかする人。
+    /// <see cref="ObservableCollection{TValue}"/> の変更通知を受け取ってなんかする人。
     /// <para>管理者が誰かもうワケわからんことになるのです。</para>
     /// </summary>
     public abstract class ObservableCollectionManagerBase<TValue>: NotifyPropertyBase

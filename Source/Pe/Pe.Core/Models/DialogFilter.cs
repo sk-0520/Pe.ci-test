@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public DialogFilterItem(string display, string defaultExtension, IEnumerable<string> wildcard)
         {
             Display = display;
-            Wildcard = new List<string>(wildcard);
+            Wildcards = new List<string>(wildcard);
             DefaultExtension = defaultExtension;
         }
 
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// フィルタリングに使用するワイルドカード一覧。
         /// </summary>
-        public IReadOnlyList<string> Wildcard { get; }
+        public IReadOnlyList<string> Wildcards { get; }
 
         /// <summary>
         /// デフォルト拡張子。
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("{0}|{1}", Display, string.Join(";", Wildcard));
+            return string.Format("{0}|{1}", Display, string.Join(";", Wildcards));
         }
 
         #endregion
@@ -105,5 +105,4 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
-
 }

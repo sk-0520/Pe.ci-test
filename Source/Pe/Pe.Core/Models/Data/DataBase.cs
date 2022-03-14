@@ -69,5 +69,4 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
 
         #endregion
     }
-
 }

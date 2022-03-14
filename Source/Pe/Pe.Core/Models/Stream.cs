@@ -165,9 +165,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region function
 
         public byte[] GetBuffer() => ((MemoryStream)BaseStream).GetBuffer();
+
         #endregion
-
     }
-
-
 }

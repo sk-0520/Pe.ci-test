@@ -114,6 +114,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    /// <summary>
+    /// その場で破棄する処理。
+    /// <para><c>using var xxx = new ActionDisposer(d => ...)</c>で実装する前提。</para>
+    /// </summary>
     public sealed class ActionDisposer: DisposerBase
     {
         public ActionDisposer(Action<bool> action)

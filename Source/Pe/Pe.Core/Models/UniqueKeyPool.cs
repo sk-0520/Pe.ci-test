@@ -23,8 +23,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 呼び出し箇所で一意なオブジェクトを生成。
         /// <para>継承クラスにて一意なデータを取得できるように調整して使用することは想定していない。</para>
         /// </summary>
-        /// <param name="callerMemberName"></param>
-        /// <param name="callerLineNumber"></param>
+        /// <param name="callerMemberName"><see cref="CallerMemberNameAttribute"/></param>
+        /// <param name="callerLineNumber"><see cref="CallerLineNumberAttribute"/></param>
         /// <returns></returns>
         public object Get([CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
         {

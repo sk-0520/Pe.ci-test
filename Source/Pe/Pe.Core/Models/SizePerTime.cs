@@ -7,7 +7,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// 時間単位でのオクテット使用量を算出。
     /// <para><see cref="Size"/>を使っておけば幸せになれる。</para>
-    /// <para>色々あったけど byte 基準。</para>
+    /// <para>色々あったけど byte 基準(<see cref="SizeConverter"/>も参照のこと)。</para>
     /// </summary>
     /// <example>
     /// <code>
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public SizePerTime(TimeSpan baseTime)
         {
             if(Timeout.InfiniteTimeSpan == baseTime) {
-                throw new ArgumentException(nameof(baseTime));
+                throw new ArgumentException(nameof(Timeout) + "." + nameof(Timeout.InfiniteTimeSpan), nameof(baseTime));
             }
 
             BaseTime = baseTime;
