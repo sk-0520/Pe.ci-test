@@ -275,6 +275,35 @@ ___
 
 ___
 
+
+___
+
+## AppProxySetting
+
+### layout
+
+| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
+|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
+| o  | o  |    | 世代                     | Generation            | integer      | System.Int64    |              | 最大のものを使用する |
+|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり              |
+|    | o  |    | 有効状態                 | ProxyIsEnabled        | boolean      | System.Boolean  |              |                      |
+|    | o  |    | プロキシURL              | ProxyUrl              | text         | System.String   |              |                      |
+|    | o  |    | 認証有効状態             | CredentialIsEnabled   | boolean      | System.Boolean  |              |                      |
+|    | o  |    | 認証ユーザー             | CredentialUser        | text         | System.String   |              |                      |
+|    | o  |    | 認証パスワード           | CredentialPassword    | blob         | System.Byte[]   |              |                      |
+
+### index
+
+*NONE*
+
 ## AppNotifyLogSetting
 
 ### layout
@@ -301,6 +330,8 @@ ___
 
 
 ___
+
+
 
 ## LauncherItems
 
