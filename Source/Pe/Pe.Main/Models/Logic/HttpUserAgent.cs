@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -241,13 +242,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     /// <inheritdoc cref="IHttpUserAgentFactory"/>
     internal class HttpUserAgentFactory: IHttpUserAgentFactory
     {
-        public HttpUserAgentFactory(WebConfiguration webConfiguration, ProxyConfiguration proxyConfiguration, ILoggerFactory loggerFactory)
+        public HttpUserAgentFactory(WebConfiguration webConfiguration, ProxyConfiguration proxyConfiguration, IMainDatabaseBarrier mainDatabaseBarrier, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
             WebConfiguration = webConfiguration;
             ProxyConfiguration = proxyConfiguration;
+            MainDatabaseBarrier = mainDatabaseBarrier;
         }
 
         #region property
@@ -258,6 +260,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         private ILogger Logger { get; }
         private WebConfiguration WebConfiguration { get; }
         private ProxyConfiguration ProxyConfiguration { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
         private IDictionary<string, HttpUserAgent> Pool { get; } = new Dictionary<string, HttpUserAgent>();
 
         private TimeSpan ClearTime { get; } = TimeSpan.FromSeconds(30);
@@ -289,9 +292,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             var handler = new SocketsHttpHandler() {
                 UseCookies = isEnabledSession,
             };
-            if(ProxyConfiguration.IsEnabled) {
-                SetProxy(handler);
+
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                if(ProxyConfiguration.IsEnabled) {
+                    SetProxy(handler);
+                }
             }
+
             var cacheControl = new CacheControlHeaderValue() {
                 NoCache = !isEnabledCache
             };
