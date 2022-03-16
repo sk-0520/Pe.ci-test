@@ -10,8 +10,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
@@ -242,14 +245,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     /// <inheritdoc cref="IHttpUserAgentFactory"/>
     internal class HttpUserAgentFactory: IHttpUserAgentFactory
     {
-        public HttpUserAgentFactory(WebConfiguration webConfiguration, ProxyConfiguration proxyConfiguration, IMainDatabaseBarrier mainDatabaseBarrier, ILoggerFactory loggerFactory)
+        public HttpUserAgentFactory(WebConfiguration webConfiguration, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
             WebConfiguration = webConfiguration;
-            ProxyConfiguration = proxyConfiguration;
             MainDatabaseBarrier = mainDatabaseBarrier;
+            DatabaseStatementLoader = databaseStatementLoader;
         }
 
         #region property
@@ -259,8 +262,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <inheritdoc cref="ILogger"/>
         private ILogger Logger { get; }
         private WebConfiguration WebConfiguration { get; }
-        private ProxyConfiguration ProxyConfiguration { get; }
         private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
         private IDictionary<string, HttpUserAgent> Pool { get; } = new Dictionary<string, HttpUserAgent>();
 
         private TimeSpan ClearTime { get; } = TimeSpan.FromSeconds(30);
@@ -269,14 +272,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        private void SetProxy(SocketsHttpHandler handler)
+        private void SetProxy(SocketsHttpHandler handler, SettingAppProxySettingData proxySetting)
         {
-            Debug.Assert(ProxyConfiguration.IsEnabled);
+            Debug.Assert(proxySetting.ProxyIsEnabled);
 
-            Logger.LogInformation("プロキシを使用: {0}, {1}", ProxyConfiguration.Uri, ProxyConfiguration.CredentialIsEnabled);
-            var proxy = new WebProxy(ProxyConfiguration.Uri);
-            if(ProxyConfiguration.CredentialIsEnabled) {
-                proxy.Credentials = new NetworkCredential(ProxyConfiguration.CredentialUser, ProxyConfiguration.CredentialPassword);
+            if(!Uri.TryCreate(proxySetting.ProxyUrl, UriKind.Absolute, out var proxyUri)) {
+                Logger.LogWarning("プロキシURLが不正: {0}", proxySetting.ProxyUrl);
+                return;
+            }
+
+            Logger.LogInformation("プロキシを使用: {0}, {1}", proxyUri, proxySetting.CredentialIsEnabled);
+            var proxy = new WebProxy(proxyUri);
+            if(proxySetting.CredentialIsEnabled) {
+                proxy.Credentials = new NetworkCredential(proxySetting.CredentialUser, proxySetting.CredentialPassword);
             }
             handler.Proxy = proxy;
             handler.UseProxy = true;
@@ -293,10 +301,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 UseCookies = isEnabledSession,
             };
 
+            SettingAppProxySettingData? settingAppProxySettingData = null;
             using(var context = MainDatabaseBarrier.WaitRead()) {
-                if(ProxyConfiguration.IsEnabled) {
-                    SetProxy(handler);
-                }
+                var appProxySettingEntityDao = new AppProxySettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                settingAppProxySettingData = appProxySettingEntityDao.SelectProxySetting();
+            }
+            if(settingAppProxySettingData.ProxyIsEnabled) {
+                SetProxy(handler, settingAppProxySettingData);
             }
 
             var cacheControl = new CacheControlHeaderValue() {
