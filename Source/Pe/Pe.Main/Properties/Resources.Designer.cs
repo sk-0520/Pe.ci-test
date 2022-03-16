@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -5272,6 +5272,78 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_Generals_NotifyLog_VisibleRemark {
             get {
                 return ResourceManager.GetString("String_Setting_Generals_NotifyLog_VisibleRemark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   通常設定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Proxy_Basic_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Proxy_Basic_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   認証設定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Proxy_Credential_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Proxy_Credential_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   認証が必要 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Proxy_CredentialIsEnabled_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Proxy_CredentialIsEnabled_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   パスワード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Proxy_CredentialPassword_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Proxy_CredentialPassword_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ユーザー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Proxy_CredentialUser_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Proxy_CredentialUser_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プロキシ設定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Proxy_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Proxy_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プロキシを使用する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Proxy_ProxyIsEnabled_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Proxy_ProxyIsEnabled_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プロキシURL に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Proxy_ProxyUrl_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Proxy_ProxyUrl_A", resourceCulture);
             }
         }
         

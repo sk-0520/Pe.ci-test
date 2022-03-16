@@ -110,7 +110,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #endregion
     }
 
-
     public class AppGeneralSettingEditorElement: GeneralSettingEditorElementBase
     {
         public AppGeneralSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IReadOnlyList<IPlugin> themePlugins, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
@@ -198,7 +197,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
     }
-
 
     public class AppUpdateSettingEditorElement: GeneralSettingEditorElementBase
     {
@@ -325,7 +323,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #endregion
     }
 
-
     public class AppCommandSettingEditorElement: GeneralSettingEditorElementBase
     {
         public AppCommandSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
@@ -397,8 +394,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
     }
-
-
 
     public class AppNoteSettingEditorElement: GeneralSettingEditorElementBase
     {
@@ -488,8 +483,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #endregion
     }
 
-
-
     public class AppStandardInputOutputSettingEditorElement: GeneralSettingEditorElementBase
     {
         public AppStandardInputOutputSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
@@ -547,7 +540,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             var fontsEntityDao = new FontsEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
             fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, contextsPack.CommonStatus);
-
         }
 
         protected override void Dispose(bool disposing)
@@ -559,6 +551,55 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             base.Dispose(disposing);
+        }
+
+        #endregion
+    }
+
+    public class AppProxySettingEditorElement: GeneralSettingEditorElementBase
+    {
+        public AppProxySettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        { }
+
+        #region property
+
+        public bool ProxyIsEnabled { get; set; }
+        public string ProxyUrl { get; set; } = string.Empty;
+        public bool CredentialIsEnabled { get; set; }
+        public string CredentialUser { get; set; } = string.Empty;
+        public string CredentialPassword { get; set; } = string.Empty;
+
+        #endregion
+
+        #region GeneralSettingEditorElementBase
+
+        protected override void InitializeImpl()
+        {
+            SettingAppProxySettingData data;
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var appProxySettingEntityDao = new AppProxySettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                data = appProxySettingEntityDao.SelectProxySetting();
+            }
+
+            ProxyIsEnabled = data.ProxyIsEnabled;
+            ProxyUrl = data.ProxyUrl;
+            CredentialIsEnabled = data.CredentialIsEnabled;
+            CredentialUser = data.CredentialUser;
+            CredentialPassword = data.CredentialPassword;
+        }
+
+        protected override void SaveImpl(IDatabaseContextsPack contextsPack)
+        {
+            var appProxySettingEntityDao = new AppProxySettingEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
+            var data = new SettingAppProxySettingData() {
+                ProxyIsEnabled = ProxyIsEnabled,
+                ProxyUrl = ProxyUrl,
+                CredentialIsEnabled = CredentialIsEnabled,
+                CredentialUser = CredentialUser,
+                CredentialPassword = CredentialPassword,
+            };
+            appProxySettingEntityDao.UpdateProxySetting(data, contextsPack.CommonStatus);
         }
 
         #endregion

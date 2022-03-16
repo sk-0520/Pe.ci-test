@@ -40,9 +40,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao
         }
 
         /// <inheritdoc cref="Cryptography.EncryptStringByCurrentUser" />
-        protected string EncryptByCurrentUser(string s)
+        protected byte[] EncryptByCurrentUser(string s)
         {
-            return Cryptography.EncryptStringByCurrentUser(s);
+            return Cryptography.EncryptBinaryByCurrentUser(s);
         }
 
         /// <summary>

@@ -301,7 +301,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 UseCookies = isEnabledSession,
             };
 
-            SettingAppProxySettingData? settingAppProxySettingData = null;
+            SettingAppProxySettingData settingAppProxySettingData;
             using(var context = MainDatabaseBarrier.WaitRead()) {
                 var appProxySettingEntityDao = new AppProxySettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 settingAppProxySettingData = appProxySettingEntityDao.SelectProxySetting();

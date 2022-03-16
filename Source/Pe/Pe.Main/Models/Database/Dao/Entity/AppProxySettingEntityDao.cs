@@ -51,6 +51,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
+        private SettingAppProxySettingDto ConvertFromData(SettingAppProxySettingData data, IDatabaseCommonStatus commonStatus)
+        {
+            var dto = new SettingAppProxySettingDto() {
+                ProxyIsEnabled = data.ProxyIsEnabled,
+                ProxyUrl = data.ProxyUrl,
+                CredentialIsEnabled = data.CredentialIsEnabled,
+                CredentialUser = data.CredentialUser,
+                CredentialPassword = EncryptByCurrentUser(data.CredentialPassword),
+            };
+            commonStatus.WriteCommonTo(dto);
+
+            return dto;
+        }
+
         public SettingAppProxySettingData SelectProxySetting()
         {
             var statement = LoadStatement();
@@ -63,6 +77,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 CredentialUser = dto.CredentialUser,
                 CredentialPassword = DecryptByCurrentUser(dto.CredentialPassword),
             };
+        }
+
+        public void UpdateProxySetting(SettingAppProxySettingData data, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var parameter = ConvertFromData(data, commonStatus);
+            Context.UpdateByKey(statement, parameter);
         }
 
         #endregion
