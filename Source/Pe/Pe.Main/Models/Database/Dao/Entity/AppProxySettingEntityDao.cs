@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 ProxyUrl = dto.ProxyUrl,
                 CredentialIsEnabled = dto.CredentialIsEnabled,
                 CredentialUser = dto.CredentialUser,
-                CredentialPassword = dto.CredentialPassword,
+                CredentialPassword = DecryptByCurrentUser(dto.CredentialPassword),
             };
         }
 

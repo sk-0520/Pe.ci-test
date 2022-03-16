@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public string ProxyUrl { get; set; } = string.Empty;
         public bool CredentialIsEnabled { get; init; }
         public string CredentialUser { get; set; } = string.Empty;
-        public byte[] CredentialPassword { get; set; } = Array.Empty<byte>();
+        public string CredentialPassword { get; set; } = string.Empty;
 
         #endregion
     }
