@@ -10,9 +10,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 {
-    public class Setupper_V_00_99_160: SetupperBase
+    public class Setupper_V_00_99_169: SetupperBase
     {
-        public Setupper_V_00_99_160(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public Setupper_V_00_99_169(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(idFactory, statementLoader, loggerFactory)
         { }
 
@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
 
         /// <inheritdoc cref="SetupperBase.Version"/>
-        public override Version Version { get; } = new Version(0, 99, 160);
+        public override Version Version { get; } = new Version(0, 99, 169);
 
         public override void ExecuteMainDDL(IDatabaseContext context, IReadOnlySetupDto dto)
         {
@@ -28,7 +28,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         }
 
         public override void ExecuteMainDML(IDatabaseContext context, IReadOnlySetupDto dto)
-        { }
+        {
+            ExecuteStatement(context, StatementLoader.LoadStatementByCurrent(GetType()), dto);
+        }
 
         public override void ExecuteFileDDL(IDatabaseContext context, IReadOnlySetupDto dto)
         { }

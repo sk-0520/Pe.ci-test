@@ -21,6 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             AppCommandSettingEditor = new AppCommandSettingEditorViewModel(Model.AppCommandSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
             AppNoteSettingEditor = new AppNoteSettingEditorViewModel(Model.AppNoteSettingEditor, applicationConfiguration.Note, generalTheme, DispatcherWrapper, LoggerFactory);
             AppStandardInputOutputSettingEditor = new AppStandardInputOutputSettingEditorViewModel(Model.AppStandardInputOutputSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
+            AppProxySettingEditor = new AppProxySettingEditorViewModel(Model.AppProxySettingEditor, DispatcherWrapper, LoggerFactory);
 
             EditorItems = new ObservableCollection<IGeneralSettingEditor>() {
                 AppExecuteSettingEditor,
@@ -31,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 AppCommandSettingEditor,
                 AppNoteSettingEditor,
                 AppStandardInputOutputSettingEditor,
+                AppProxySettingEditor,
             };
         }
 
@@ -44,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private AppCommandSettingEditorViewModel AppCommandSettingEditor { get; }
         private AppNoteSettingEditorViewModel AppNoteSettingEditor { get; }
         private AppStandardInputOutputSettingEditorViewModel AppStandardInputOutputSettingEditor { get; }
+        private AppProxySettingEditorViewModel AppProxySettingEditor { get; }
 
         [IgnoreValidation]
         public ObservableCollection<IGeneralSettingEditor> EditorItems { get; }

@@ -8,8 +8,8 @@
 				"logs": [
 					{
 						"revision": "",
-						"class": "",
-						"subject": ""
+						"class": "compatibility",
+						"subject": "#778 対応によりプロキシ設定は本体設定機能に取り込まれました"
 					},
 					{
 						"revision": "",
@@ -30,7 +30,11 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#778: プロキシをアプリケーション設定から編集可能にする",
+						"comments": [
+							"残課題は #797 で対応する",
+							"既存プロキシ設定はすべて無視"
+						]
 					},
 					{
 						"revision": "",
