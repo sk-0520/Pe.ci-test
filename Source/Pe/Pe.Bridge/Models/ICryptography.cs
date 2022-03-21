@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models
 {
+    /// <summary>
+    /// <para>Pe から提供される。</para>
+    /// </summary>
     public interface ICryptography
     {
         #region function

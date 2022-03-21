@@ -576,7 +576,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
-            SettingAppProxySettingData data;
+            AppProxySettingData data;
             using(var context = MainDatabaseBarrier.WaitRead()) {
                 var appProxySettingEntityDao = new AppProxySettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 data = appProxySettingEntityDao.SelectProxySetting();
@@ -592,7 +592,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void SaveImpl(IDatabaseContextsPack contextsPack)
         {
             var appProxySettingEntityDao = new AppProxySettingEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
-            var data = new SettingAppProxySettingData() {
+            var data = new AppProxySettingData() {
                 ProxyIsEnabled = ProxyIsEnabled,
                 ProxyUrl = ProxyUrl,
                 CredentialIsEnabled = CredentialIsEnabled,

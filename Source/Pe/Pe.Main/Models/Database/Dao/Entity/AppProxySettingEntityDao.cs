@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        private SettingAppProxySettingDto ConvertFromData(SettingAppProxySettingData data, IDatabaseCommonStatus commonStatus)
+        private SettingAppProxySettingDto ConvertFromData(AppProxySettingData data, IDatabaseCommonStatus commonStatus)
         {
             var dto = new SettingAppProxySettingDto() {
                 ProxyIsEnabled = data.ProxyIsEnabled,
@@ -65,12 +65,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-        public SettingAppProxySettingData SelectProxySetting()
+        public AppProxySettingData SelectProxySetting()
         {
             var statement = LoadStatement();
             var dto = Context.QuerySingle<SettingAppProxySettingDto>(statement);
 
-            return new SettingAppProxySettingData() {
+            return new AppProxySettingData() {
                 ProxyIsEnabled = dto.ProxyIsEnabled,
                 ProxyUrl = dto.ProxyUrl,
                 CredentialIsEnabled = dto.CredentialIsEnabled,
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
         }
 
-        public void UpdateProxySetting(SettingAppProxySettingData data, IDatabaseCommonStatus commonStatus)
+        public void UpdateProxySetting(AppProxySettingData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = ConvertFromData(data, commonStatus);

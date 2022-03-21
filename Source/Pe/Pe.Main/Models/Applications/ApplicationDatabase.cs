@@ -204,12 +204,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-
     public class ApplicationDatabaseStatementLoader: DatabaseStatementLoaderBase, IDisposable
     {
         #region define
 
-        public const string IgnoreNamespace = "ContentTypeTextNet.Pe.Main";
+        private const string IgnoreNamespace = "ContentTypeTextNet.Pe.Main";
         private const string SelectStatement = @"
 select
     Statements.Statement

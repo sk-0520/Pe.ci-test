@@ -13,17 +13,33 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public sealed class SimpleKeyedCollection<TKey, TValue>: KeyedCollection<TKey, TValue>
         where TKey : notnull
     {
+        /// <summary>
+        /// 生成。
+        /// </summary>
+        /// <param name="toKey"><inheritdoc cref="ToKey"/></param>
         public SimpleKeyedCollection(Func<TValue, TKey> toKey)
         {
             ToKey = toKey;
         }
 
+        /// <summary>
+        /// 比較処理付きで生成。
+        /// </summary>
+        /// <param name="comparer">比較処理。</param>
+        /// <param name="toKey"><inheritdoc cref="ToKey"/></param>
         public SimpleKeyedCollection(IEqualityComparer<TKey> comparer, Func<TValue, TKey> toKey)
             : base(comparer)
         {
             ToKey = toKey;
         }
 
+        /// <summary>
+        /// <inheritdoc cref="SimpleKeyedCollection{TKey, TValue}(IEqualityComparer{TKey}, Func{TValue, TKey})"/>
+        /// <para>閾値付き。</para>
+        /// </summary>
+        /// <param name="comparer">比較処理。</param>
+        /// <param name="dictionaryCreationThreshold"></param>
+        /// <param name="toKey"><inheritdoc cref="ToKey"/></param>
         public SimpleKeyedCollection(IEqualityComparer<TKey> comparer, int dictionaryCreationThreshold, Func<TValue, TKey> toKey)
             : base(comparer, dictionaryCreationThreshold)
         {
@@ -32,6 +48,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
+        /// <summary>
+        /// <typeparamref name="TKey"/>から<typeparamref name="TValue"/>への変換処理。
+        /// </summary>
         private Func<TValue, TKey> ToKey { get; }
 
         #endregion

@@ -5,7 +5,10 @@ using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Views
 {
-    public class PopupAttacher: DisposerBase
+    /// <summary>
+    /// <see cref="Popup"/>をいい感じに自動で動かす。
+    /// </summary>
+    public sealed class PopupAttacher: DisposerBase
     {
         public PopupAttacher(Window window, Popup popup)
         {
@@ -19,8 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         #region property
 
-        private Window Window { get; }
-        private Popup Popup { get; }
+        private Window? Window { get; set; }
+        private Popup? Popup { get; set; }
 
         #endregion
 
@@ -28,8 +31,10 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         private void ResetPopupPosition()
         {
-            Popup.HorizontalOffset += 1;
-            Popup.HorizontalOffset -= 1;
+            if(Popup is not null) {
+                Popup.HorizontalOffset += 1;
+                Popup.HorizontalOffset -= 1;
+            }
         }
 
         #endregion
@@ -39,9 +44,13 @@ namespace ContentTypeTextNet.Pe.Main.Views
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                Window.LocationChanged -= Window_LocationChanged!;
-                Window.SizeChanged -= Window_SizeChanged!;
-                Window.Closed -= Window_Closed!;
+                if(Window is not null) {
+                    Window.LocationChanged -= Window_LocationChanged!;
+                    Window.SizeChanged -= Window_SizeChanged!;
+                    Window.Closed -= Window_Closed!;
+                }
+                Window = null;
+                Popup = null;
             }
 
             base.Dispose(disposing);

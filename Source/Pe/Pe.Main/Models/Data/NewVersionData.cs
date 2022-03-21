@@ -225,6 +225,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// </summary>
         ForceUpdate
     }
-
 }
-

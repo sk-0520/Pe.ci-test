@@ -10,6 +10,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 {
     public class Cryptography: ICryptography
     {
+        #region property
+
+        public Encoding Encoding { get; init; } = Encoding.UTF8;
+
+        #endregion
+
         #region ICryptography
 
         /// <inheritdoc cref="ICryptography.EncryptBinaryByCurrentUser"/>
@@ -20,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public byte[] EncryptBinaryByCurrentUser(string raw)
         {
-            var rawBinary = Encoding.UTF8.GetBytes(raw);
+            var rawBinary = Encoding.GetBytes(raw);
             var encryptBinary = EncryptBinaryByCurrentUser(rawBinary);
             return encryptBinary;
         }
@@ -43,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public string DecryptStringByCurrentUser(byte[] encryptBinary)
         {
             var rawBinary = DecryptBinaryByCurrentUser(encryptBinary);
-            return Encoding.UTF8.GetString(rawBinary);
+            return Encoding.GetString(rawBinary);
         }
 
         /// <inheritdoc cref="ICryptography.DecryptBinaryByCurrentUser"/>

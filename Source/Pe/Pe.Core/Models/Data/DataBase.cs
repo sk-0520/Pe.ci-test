@@ -14,6 +14,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
     /// <summary>
     /// なんかしらのデータ永続化用オブジェクト。
     /// <para>コンストラクタのみで永続化できないかもしれんけどもうええんちゃう？</para>
+    /// <para>こいつ癌やなぁ。</para>
     /// </summary>
     [Serializable, DataContract]
     public abstract class DataBase: IData

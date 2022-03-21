@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element
 {
-
     public abstract class WebViewElementBase: ElementBase
     {
         #region define

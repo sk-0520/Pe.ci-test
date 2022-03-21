@@ -7,7 +7,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     /// <para>これをつけたからと何がどうなるわけでもないがソースに埋め込むことになるので流し見するときに楽な気がする。</para>
     /// </summary>
     [AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = false)]
-    public class DateTimeKindAttribute: Attribute
+    public sealed class DateTimeKindAttribute: Attribute
     {
         /// <summary>
         ///

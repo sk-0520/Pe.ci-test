@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public class ReferenceReleaseStream: WrapStreamBase
     {
         /// <summary>
-        /// 
+        /// 生成。
         /// </summary>
         /// <param name="stream">内部参照とするストリーム。</param>
         public ReferenceReleaseStream(Stream stream)

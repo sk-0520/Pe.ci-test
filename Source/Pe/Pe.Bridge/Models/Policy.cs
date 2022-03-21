@@ -16,5 +16,4 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         #region function
         #endregion
     }
-
 }

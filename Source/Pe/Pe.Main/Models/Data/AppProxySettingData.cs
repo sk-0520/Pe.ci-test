@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
-    public record class SettingAppProxySettingData
+    public record class AppProxySettingData
     {
         #region property
 
         public bool ProxyIsEnabled { get; init; }
-        public string ProxyUrl { get; set; } = string.Empty;
+        public string ProxyUrl { get; init; } = string.Empty;
         public bool CredentialIsEnabled { get; init; }
-        public string CredentialUser { get; set; } = string.Empty;
-        public string CredentialPassword { get; set; } = string.Empty;
+        public string CredentialUser { get; init; } = string.Empty;
+        public string CredentialPassword { get; init; } = string.Empty;
 
         #endregion
     }

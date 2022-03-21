@@ -6,6 +6,28 @@ using ContentTypeTextNet.Pe.Main.Models;
 
 namespace ContentTypeTextNet.Pe.Main
 {
+    public interface ICultureService
+    {
+        #region function
+
+        /// <summary>
+        /// 現在カルチャから XML の言語を取得。
+        /// </summary>
+        /// <returns></returns>
+        XmlLanguage GetXmlLanguage();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="enumValue"></param>
+        /// <param name="resourceNameKind"></param>
+        /// <returns></returns>
+        string GetString(object enumValue, ResourceNameKind resourceNameKind);
+        string GetString(object enumValue, ResourceNameKind resourceNameKind, bool undefinedIsRaw);
+
+        #endregion
+    }
+
     public sealed class CultureService: INotifyPropertyChanged
     {
         #region event
@@ -74,6 +96,20 @@ namespace ContentTypeTextNet.Pe.Main
             ChangeCultureCore(StartupCulture);
         }
 
+        internal static void Initialize(CultureService cultureService)
+        {
+            if(Instance != null) {
+                throw new InvalidOperationException();
+            }
+
+            Instance = cultureService;
+            Instance.ChangeAutoCulture();
+        }
+
+        #endregion
+
+        #region ICultureService
+
         public XmlLanguage GetXmlLanguage() => XmlLanguage.GetLanguage(Culture.IetfLanguageTag);
 
         public string GetString(object enumValue, ResourceNameKind resourceNameKind)
@@ -83,16 +119,6 @@ namespace ContentTypeTextNet.Pe.Main
         public string GetString(object enumValue, ResourceNameKind resourceNameKind, bool undefinedIsRaw)
         {
             return EnumResourceManager.GetString(enumValue, resourceNameKind, undefinedIsRaw);
-        }
-
-        internal static void Initialize(CultureService cultureService)
-        {
-            if(Instance != null) {
-                throw new InvalidOperationException();
-            }
-
-            Instance = cultureService;
-            Instance.ChangeAutoCulture();
         }
 
         #endregion

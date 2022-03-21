@@ -218,7 +218,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// アイコン取得。
         /// </summary>
         /// <returns></returns>
-        IconPathData GetIcon()
+        private IconPathData GetIcon()
         {
             ThrowIfDisposed();
 
@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// アイコン設定。
         /// </summary>
         /// <param name="iconPath"></param>
-        void SetIcon(in IconPathData iconPath)
+        private void SetIcon(in IconPathData iconPath)
         {
             ThrowIfDisposed();
 

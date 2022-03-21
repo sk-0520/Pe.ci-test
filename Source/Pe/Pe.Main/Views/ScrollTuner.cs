@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
     /// マウスホイールでスクロールする際にいろんな要因で吸い取られるイベントを自然に処理する。
     /// <para>WPFが標準で用意してるやつは基本的に大丈夫そうだけどサードパーティ製のやつとか自前のやつとかに特化。</para>
     /// </summary>
-    public class ScrollTuner: DisposerBase
+    public sealed class ScrollTuner: DisposerBase
     {
         /// <summary>
         ///
@@ -21,11 +21,16 @@ namespace ContentTypeTextNet.Pe.Main.Views
         public ScrollTuner(Window view)
         {
             View = view;
+            View.PreviewMouseWheel -= View_PreviewMouseWheel;
             View.PreviewMouseWheel += View_PreviewMouseWheel;
         }
 
         #region property
-        private Window View { get; }
+
+        /// <summary>
+        /// 対象ウィンドウ。
+        /// </summary>
+        private Window? View { get; set; }
 
         public int ScrollNotch { get; set; } = 120;
         //public int ScrollLines { get; set; } = SystemParameters.WheelScrollLines;
@@ -36,8 +41,11 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         private void DetachView()
         {
-            View.PreviewMouseWheel -= View_PreviewMouseWheel;
-            View.Closed -= View_Closed;
+            if(View is not null) {
+                View.PreviewMouseWheel -= View_PreviewMouseWheel;
+                View.Closed -= View_Closed;
+                View = null;
+            }
         }
 
         #endregion

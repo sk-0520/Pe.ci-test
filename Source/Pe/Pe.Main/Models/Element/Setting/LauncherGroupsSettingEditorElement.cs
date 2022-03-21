@@ -153,5 +153,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
     }
-
 }

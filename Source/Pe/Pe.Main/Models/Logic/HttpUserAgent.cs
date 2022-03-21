@@ -272,7 +272,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        private void SetProxy(SocketsHttpHandler handler, SettingAppProxySettingData proxySetting)
+        private void SetProxy(SocketsHttpHandler handler, AppProxySettingData proxySetting)
         {
             Debug.Assert(proxySetting.ProxyIsEnabled);
 
@@ -301,7 +301,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 UseCookies = isEnabledSession,
             };
 
-            SettingAppProxySettingData settingAppProxySettingData;
+            AppProxySettingData settingAppProxySettingData;
             using(var context = MainDatabaseBarrier.WaitRead()) {
                 var appProxySettingEntityDao = new AppProxySettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 settingAppProxySettingData = appProxySettingEntityDao.SelectProxySetting();
