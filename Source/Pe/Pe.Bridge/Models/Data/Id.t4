@@ -1,0 +1,59 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#+
+    public class IdDefine
+    {
+        #region define
+
+        public class GuidDefine: IdDefine
+        {
+            public GuidDefine(string description, string name)
+            {
+                Description = description;
+                Name = name;
+                Type = typeof(System.Guid);
+                Options = new Dictionary<string, object>() {
+                    { "Dapper", true } ,
+                    { "Dapper.SetValue", "value.ToString(\"D\")" } ,
+                    { "Dapper.GetValue",
+                        @"
+                        var s = (string)value;
+                        if(s != null) {
+                            if(System.Guid.TryParse(s, out var ret)) {
+                                return ret;
+                            }
+                        }
+
+                        return System.Guid.Empty;
+                        "
+                    } ,
+                };
+            }
+        }
+
+        #endregion
+
+        #region property
+
+        public string Description { get; set; }
+        public string Name { get; set; }
+        public Type Type { get; set; }
+        public Dictionary<string, object> Options { get; set; } = new Dictionary<string, object>();
+
+        #endregion
+
+        #region function
+
+        public static IEnumerable<IdDefine> GetItems()
+        {
+            return new [] {
+                new GuidDefine("ランチャーアイテムID", "LauncherItemId"),
+            };
+        }
+
+        #endregion
+    }
+#>
