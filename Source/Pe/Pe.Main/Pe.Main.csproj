@@ -76,7 +76,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Models\Data\IdImpl.cs">
+    <Compile Update="IdImpl.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>IdImpl.tt</DependentUpon>
@@ -123,7 +123,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Models\Data\IdImpl.tt">
+    <None Update="IdImpl.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IdImpl.cs</LastGenOutput>
     </None>
