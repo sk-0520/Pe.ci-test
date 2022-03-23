@@ -14,14 +14,37 @@
 using System.Data;
 using Dapper;
 using ContentTypeTextNet.Pe.Main.Models.Database;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
 <# foreach(var item in items.Where(i => (bool)i.Options["Dapper"])) { #>
 <# switch(item.Type.FullName) { #>
 <# case "System.Guid": #>
-    internal class ApplicationDatabase<#= item.Name #>Handler: GuidTypeHandler
-    { }
+    internal class ApplicationDatabase<#= item.Name #>Handler: SqlMapper.TypeHandler<<#= item.Name #>>
+    {
+        #region TypeHandler
+
+        public override void SetValue(IDbDataParameter parameter, <#= item.Name #> value)
+        {
+            parameter.Value = value.Id.ToString("D");
+        }
+
+        public override <#= item.Name #> Parse(object value)
+        {
+
+            var s = (string)value;
+            if(s != null) {
+                if(<#= item.Name #>.TryParse(s, out var ret)) {
+                    return ret;
+                }
+            }
+
+            return <#= item.Name #>.Empty;
+        }
+
+        #endregion
+    }
 <# break; #>
 <# } #>
 <# } #>
@@ -34,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         static ApplicationDatabaseImplementation()
         {
 <# foreach(var item in items.Where(i => (bool)i.Options["Dapper"])) { #>
-            SqlMapper.AddTypeHandler(typeof(<#= item.Type.FullName #>), new ContentTypeTextNet.Pe.Main.Models.Data.ApplicationDatabase<#= item.Name #>Handler());
+            SqlMapper.AddTypeHandler(typeof(<#= item.Name #>), new ContentTypeTextNet.Pe.Main.Models.Data.ApplicationDatabase<#= item.Name #>Handler());
 <# } #>
         }
     }

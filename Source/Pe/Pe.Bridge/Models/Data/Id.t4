@@ -17,19 +17,6 @@
                 Type = typeof(System.Guid);
                 Options = new Dictionary<string, object>() {
                     { "Dapper", true } ,
-                    { "Dapper.SetValue", "value.ToString(\"D\")" } ,
-                    { "Dapper.GetValue",
-                        @"
-                        var s = (string)value;
-                        if(s != null) {
-                            if(System.Guid.TryParse(s, out var ret)) {
-                                return ret;
-                            }
-                        }
-
-                        return System.Guid.Empty;
-                        "
-                    } ,
                 };
             }
         }

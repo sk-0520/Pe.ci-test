@@ -45,6 +45,42 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         #endregion
 
+        #region property
+
+        /// <summary>
+        /// 空ID。
+        /// </summary>
+        public static <#= item.Name #> Empty
+        {
+            get
+            {
+                return new <#= item.Name #>(default(<#= item.Type.FullName #>));
+            }
+        }
+
+        #endregion
+
+        #region function
+
+        /// <summary>
+        ///  <see cref="<#= item.Name #>"/>に変換。
+        /// </summary>
+        /// <param name="s">入力文字列。</param>
+        /// <param name="result">変更成功。</param>
+        /// <returns></returns>
+        public static  bool TryParse(string s, out <#= item.Name #> result)
+        {
+            if(<#= item.Type.FullName #>.TryParse(s, out var val)) {
+                result = new <#= item.Name #>(val);
+                return true;
+            }
+
+            result = default;
+            return false;
+        }
+
+        #endregion
+
         #region IEquatable
 
         public bool Equals(LauncherItemId other)
