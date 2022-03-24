@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     internal class LauncherItemAddonProxy: AddonProxyBase<ILauncherItemExtension>, ILauncherItemExtension, ILauncherItemId
     {
-        public LauncherItemAddonProxy(Guid launcherItemId, IAddon addon, PluginContextFactory pluginContextFactory, LauncherItemAddonContextFactory launcherItemAddonContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemAddonProxy(LauncherItemId launcherItemId, IAddon addon, PluginContextFactory pluginContextFactory, LauncherItemAddonContextFactory launcherItemAddonContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(addon, pluginContextFactory, userAgentFactory, platformTheme, imageLoader, mediaConverter, policy, dispatcherWrapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;
@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region ILauncherItemId
 
-        public Guid LauncherItemId { get; }
+        public LauncherItemId LauncherItemId { get; }
 
         #endregion
 

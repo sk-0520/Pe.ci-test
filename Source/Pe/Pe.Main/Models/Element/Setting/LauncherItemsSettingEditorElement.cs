@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -56,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
-        public void RemoveItem(Guid launcherItemId)
+        public void RemoveItem(LauncherItemId launcherItemId)
         {
             ThrowIfDisposed();
 
@@ -104,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             SettingNotifyManager.SendLauncherItemRemove(launcherItemId);
         }
 
-        public Guid AddNewItem(LauncherItemKind kind, Guid pluginId)
+        public LauncherItemId AddNewItem(LauncherItemKind kind, Guid pluginId)
         {
             ThrowIfDisposed();
 
@@ -181,7 +182,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         /// </summary>
         /// <param name="filePath">対象ファイルパス。</param>
         /// <param name="expandShortcut"><paramref name="filePath"/>がショートカットの場合にショートカットの内容を登録するか</param>
-        public Guid RegisterFile(string filePath, bool expandShortcut)
+        public LauncherItemId RegisterFile(string filePath, bool expandShortcut)
         {
             ThrowIfDisposed();
 

@@ -1,5 +1,6 @@
 using System;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -34,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
-        public LauncherItemAddonContextWorker CreateWorker(IPluginInformations pluginInformations, Guid launcherItemId)
+        public LauncherItemAddonContextWorker CreateWorker(IPluginInformations pluginInformations, LauncherItemId launcherItemId)
         {
             return new LauncherItemAddonContextWorker(this, pluginInformations, launcherItemId, LoggerFactory);
         }
@@ -73,31 +74,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return pluginStorage;
         }
 
-        public LauncherItemAddonContext CreateContext(IPluginInformations pluginInformations, Guid launcherItemId, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
+        public LauncherItemAddonContext CreateContext(IPluginInformations pluginInformations, LauncherItemId launcherItemId, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
         {
             var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginInformations, databaseContextsPack, isReadOnly);
             return new LauncherItemAddonContext(pluginInformations.PluginIdentifiers, launcherItemId, launcherItemAddonStorage);
         }
 
-        public LauncherItemPreferencesLoadContext CreatePreferencesLoadContext(IPluginInformations pluginInformations, Guid launcherItemId, IDatabaseContextsPack databaseContextsPack)
+        public LauncherItemPreferencesLoadContext CreatePreferencesLoadContext(IPluginInformations pluginInformations, LauncherItemId launcherItemId, IDatabaseContextsPack databaseContextsPack)
         {
             var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginInformations, databaseContextsPack, true);
             return new LauncherItemPreferencesLoadContext(pluginInformations.PluginIdentifiers, launcherItemId, launcherItemAddonStorage);
         }
 
-        public LauncherItemPreferencesCheckContext CreatePreferencesCheckContext(IPluginInformations pluginInformations, Guid launcherItemId, IDatabaseContextsPack databaseContextsPack)
+        public LauncherItemPreferencesCheckContext CreatePreferencesCheckContext(IPluginInformations pluginInformations, LauncherItemId launcherItemId, IDatabaseContextsPack databaseContextsPack)
         {
             var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginInformations, databaseContextsPack, true);
             return new LauncherItemPreferencesCheckContext(pluginInformations.PluginIdentifiers, launcherItemId, launcherItemAddonStorage);
         }
 
-        public LauncherItemPreferencesSaveContext CreatePreferencesSaveContext(IPluginInformations pluginInformations, Guid launcherItemId, IDatabaseContextsPack databaseContextsPack)
+        public LauncherItemPreferencesSaveContext CreatePreferencesSaveContext(IPluginInformations pluginInformations, LauncherItemId launcherItemId, IDatabaseContextsPack databaseContextsPack)
         {
             var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginInformations, databaseContextsPack, false);
             return new LauncherItemPreferencesSaveContext(pluginInformations.PluginIdentifiers, launcherItemId, launcherItemAddonStorage);
         }
 
-        public LauncherItemPreferencesEndContext CreatePreferencesEndContext(IPluginInformations pluginInformations, Guid launcherItemId)
+        public LauncherItemPreferencesEndContext CreatePreferencesEndContext(IPluginInformations pluginInformations, LauncherItemId launcherItemId)
         {
             return new LauncherItemPreferencesEndContext(pluginInformations.PluginIdentifiers, launcherItemId);
         }
@@ -108,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// <param name="pluginInformations"></param>
         /// <param name="launcherItemId"></param>
         /// <returns></returns>
-        internal LauncherItemExtensionExecuteParameter CreateExtensionExecuteParameter(IPluginInformations pluginInformations, Guid launcherItemId, ILauncherItemAddonViewSupporter launcherItemAddonViewSupporter)
+        internal LauncherItemExtensionExecuteParameter CreateExtensionExecuteParameter(IPluginInformations pluginInformations, LauncherItemId launcherItemId, ILauncherItemAddonViewSupporter launcherItemAddonViewSupporter)
         {
             var launcherItemExtensionExecuteParameter = new LauncherItemExtensionExecuteParameter(
                 launcherItemId,

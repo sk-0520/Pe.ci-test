@@ -7,7 +7,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     public abstract class PluginIdentifiersLauncherItemAddonContextBase: PluginIdentifiersContextBase, ILauncherItemId
     {
-        protected PluginIdentifiersLauncherItemAddonContextBase(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId)
+        protected PluginIdentifiersLauncherItemAddonContextBase(IPluginIdentifiers pluginIdentifiers, LauncherItemId launcherItemId)
             : base(pluginIdentifiers)
         {
             LauncherItemId = launcherItemId;
@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region ILauncherItemId
 
-        public Guid LauncherItemId { get; }
+        public LauncherItemId LauncherItemId { get; }
 
         #endregion
     }
@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
-        public LauncherItemAddonContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId, LauncherItemAddonStorage storage)
+        public LauncherItemAddonContext(IPluginIdentifiers pluginIdentifiers, LauncherItemId launcherItemId, LauncherItemAddonStorage storage)
             : base(pluginIdentifiers, launcherItemId)
         {
             this._storage = storage;

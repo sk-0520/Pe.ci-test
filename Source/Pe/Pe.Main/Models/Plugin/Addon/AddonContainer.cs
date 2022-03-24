@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using Microsoft.Extensions.Logging;
@@ -68,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         private List<IAddon> WidgetSupportAddons => this._widgetSupportAddons ??= GetSupportAddons(AddonKind.Widget);
         private List<IAddon> BackgroundSupportAddons => this._backgroundSupportAddons ??= GetSupportAddons(AddonKind.Background);
 
-        private ConcurrentDictionary<Guid, LauncherItemAddonProxy> LauncherItemAddonProxies { get; } = new System.Collections.Concurrent.ConcurrentDictionary<Guid, LauncherItemAddonProxy>();
+        private ConcurrentDictionary<LauncherItemId, LauncherItemAddonProxy> LauncherItemAddonProxies { get; } = new System.Collections.Concurrent.ConcurrentDictionary<LauncherItemId, LauncherItemAddonProxy>();
 
         #endregion
 
@@ -125,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             ;
         }
 
-        public LauncherItemAddonProxy GetLauncherItemAddon(Guid launcherItemId, Guid pluginId)
+        public LauncherItemAddonProxy GetLauncherItemAddon(LauncherItemId launcherItemId, Guid pluginId)
         {
             return LauncherItemAddonProxies.GetOrAdd(launcherItemId, (launcherItemId, pluginId) => {
                 var addon = LauncherItemSupportAddons.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);

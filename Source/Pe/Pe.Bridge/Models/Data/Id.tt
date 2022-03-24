@@ -69,13 +69,19 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
             return false;
         }
 
+        public static <#= item.Name #> Parse(string s)
+        {
+            var id = <#= item.Type.FullName #>.Parse(s);
+            return new <#= item.Name #>(id);
+        }
+
         #endregion
 
         #region object
 
-        public override int GetHashCode()
+        public override string ToString()
         {
-            return Id.GetHashCode();
+            return Id.ToString("D");
         }
 
         #endregion

@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -48,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             return data;
         }
 
-        public LauncherIconData SelectFileIcon(Guid launcherItemId)
+        public LauncherIconData SelectFileIcon(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var param = new {

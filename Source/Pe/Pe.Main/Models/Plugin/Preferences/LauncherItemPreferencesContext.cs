@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
@@ -14,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
 
         #endregion
 
-        public LauncherItemPreferencesLoadContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId, LauncherItemAddonStorage storage)
+        public LauncherItemPreferencesLoadContext(IPluginIdentifiers pluginIdentifiers, LauncherItemId launcherItemId, LauncherItemAddonStorage storage)
             : base(pluginIdentifiers, launcherItemId)
         {
             this._storage = storage;
@@ -37,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
 
         #endregion
 
-        public LauncherItemPreferencesCheckContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId, LauncherItemAddonStorage storage)
+        public LauncherItemPreferencesCheckContext(IPluginIdentifiers pluginIdentifiers, LauncherItemId launcherItemId, LauncherItemAddonStorage storage)
             : base(pluginIdentifiers, launcherItemId)
         {
             this._storage = storage;
@@ -61,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
 
         #endregion
 
-        public LauncherItemPreferencesSaveContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId, LauncherItemAddonStorage storage)
+        public LauncherItemPreferencesSaveContext(IPluginIdentifiers pluginIdentifiers, LauncherItemId launcherItemId, LauncherItemAddonStorage storage)
             : base(pluginIdentifiers, launcherItemId)
         {
             this._storage = storage;
@@ -82,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
 
         #endregion
 
-        public LauncherItemPreferencesEndContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId)
+        public LauncherItemPreferencesEndContext(IPluginIdentifiers pluginIdentifiers, LauncherItemId launcherItemId)
             : base(pluginIdentifiers, launcherItemId)
         { }
 

@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
             PropertyChangedHooker.AddHook(nameof(RunningStatus), nameof(RunningStatus), nameof(ImageSource));
         }
 
-        public IconViewerViewModel(Guid launcherItemId, ILauncherItemExtension launcherItemExtension, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public IconViewerViewModel(LauncherItemId launcherItemId, ILauncherItemExtension launcherItemExtension, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             IconKind = IconImageKind.LauncherItemExtension;
@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         #region LauncherItemExtension
 
-        Guid LauncherItemId { get; }
+        LauncherItemId LauncherItemId { get; }
         ILauncherItemExtension? LauncherItemExtension { get; }
 
         #endregion

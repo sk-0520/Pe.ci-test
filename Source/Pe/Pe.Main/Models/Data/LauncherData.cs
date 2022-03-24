@@ -259,7 +259,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public Guid LauncherItemId { get; set; }
+        public LauncherItemId LauncherItemId { get; set; }
 
         public string Code { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;

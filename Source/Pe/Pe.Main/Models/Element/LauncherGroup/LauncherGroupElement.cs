@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -38,20 +39,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
         public Color ImageColor { get; private set; }
         public long Sequence { get; private set; }
 
-        public List<Guid> LauncherItemIds { get; } = new List<Guid>();
+        public List<LauncherItemId> LauncherItemIds { get; } = new List<LauncherItemId>();
 
         #endregion
 
         #region function
 
-        public IReadOnlyList<Guid> GetLauncherItemIds() => LauncherItemIds.ToList();
+        public IReadOnlyList<LauncherItemId> GetLauncherItemIds() => LauncherItemIds.ToList();
 
         private void LoadGroup()
         {
             ThrowIfDisposed();
 
             LauncherGroupData data;
-            IEnumerable<Guid> launcherItemIds;
+            IEnumerable<LauncherItemId> launcherItemIds;
             using(var context = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherGroupsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 data = dao.SelectLauncherGroup(LauncherGroupId);

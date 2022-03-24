@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager.Setting
@@ -8,14 +9,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager.Setting
 
     public class LauncherItemRemovedEventArgs: SettingNotifyEventArgs
     {
-        public LauncherItemRemovedEventArgs(Guid launcherItemId)
+        public LauncherItemRemovedEventArgs(LauncherItemId launcherItemId)
         {
             LauncherItemId = launcherItemId;
         }
 
         #region property
 
-        public Guid LauncherItemId { get; }
+        public LauncherItemId LauncherItemId { get; }
 
         #endregion
     }
@@ -31,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager.Setting
 
         #region function
 
-        void SendLauncherItemRemove(Guid launcherItemId);
+        void SendLauncherItemRemove(LauncherItemId launcherItemId);
 
         #endregion
     }
@@ -51,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager.Setting
 
         #region function
 
-        private void OnLauncherItemRemoved(Guid launcherItemId)
+        private void OnLauncherItemRemoved(LauncherItemId launcherItemId)
         {
             LauncherItemRemoved?.Invoke(this, new LauncherItemRemovedEventArgs(launcherItemId));
         }
@@ -64,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager.Setting
         public event EventHandler<LauncherItemRemovedEventArgs>? LauncherItemRemoved;
 
         /// <inheritdoc cref="ISettingNotifyManager.SendLauncherItemRemove(Guid)"/>
-        public void SendLauncherItemRemove(Guid launcherItemId)
+        public void SendLauncherItemRemove(LauncherItemId launcherItemId)
         {
             OnLauncherItemRemoved(launcherItemId);
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
@@ -109,10 +110,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
-            IReadOnlyList<Guid> launcherItemIds;
+            IReadOnlyList<LauncherItemId> launcherItemIds;
             IReadOnlyList<Guid> groupIds;
 
-            var appLauncherItemsMap = new Dictionary<Guid, LauncherSettingCommonData>();
+            var appLauncherItemsMap = new Dictionary<LauncherItemId, LauncherSettingCommonData>();
 
             using(var context = ServiceLocator.Get<IMainDatabaseBarrier>().WaitRead()) {
                 var launcherItemsEntityDao = ServiceLocator.Build<LauncherItemsEntityDao>(context, context.Implementation);

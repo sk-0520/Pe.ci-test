@@ -86,7 +86,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         #endregion
 
         #region ILauncherItemId
-        public Guid LauncherItemId { get; }
+
+        public LauncherItemId LauncherItemId { get; }
+
         #endregion
 
         #region IViewShowStarter

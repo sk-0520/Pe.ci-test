@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             DispatcherWrapper = dispatcherWrapper;
             AllLauncherItemCollection = allLauncherItemCollection;
 
-            LauncherCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<Guid>, LauncherItemSettingEditorViewModel>(Model.LauncherItems) {
+            LauncherCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<LauncherItemId>, LauncherItemSettingEditorViewModel>(Model.LauncherItems) {
                 ManagingResource = false, // 共有アイテムを使用しているので破棄させない
                 ToViewModel = (m) => {
                     var itemVm = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == m.Data);
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         /// </summary>
         //public ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherItems { get; }
         [IgnoreValidation]
-        private ModelViewModelObservableCollectionManagerBase<WrapModel<Guid>, LauncherItemSettingEditorViewModel> LauncherCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<WrapModel<LauncherItemId>, LauncherItemSettingEditorViewModel> LauncherCollection { get; }
         [IgnoreValidation]
         public ReadOnlyObservableCollection<LauncherItemSettingEditorViewModel> LauncherItems { get; }
 

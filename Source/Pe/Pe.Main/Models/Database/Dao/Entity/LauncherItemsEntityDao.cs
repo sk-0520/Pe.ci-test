@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -16,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            Guid LauncherItemId { get; }
+            LauncherItemId LauncherItemId { get; }
 
             string Code { get; }
             string Name { get; }
@@ -36,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region IReadOnlyLauncherItemRowDto
 
-            public Guid LauncherItemId { get; set; }
+            public LauncherItemId LauncherItemId { get; set; }
 
             public string Code { get; set; } = string.Empty;
             public string Name { get; set; } = string.Empty;
@@ -120,13 +121,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Query<string>(statement, new { BaseCode = baseCode });
         }
 
-        public IEnumerable<Guid> SelectAllLauncherItemIds()
+        public IEnumerable<LauncherItemId> SelectAllLauncherItemIds()
         {
             var statement = LoadStatement();
-            return Context.Query<Guid>(statement);
+            return Context.Query<LauncherItemId>(statement);
         }
 
-        public LauncherItemData SelectLauncherItem(Guid launcherItemId)
+        public LauncherItemData SelectLauncherItem(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var param = new {
@@ -145,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public bool SelectExistsLauncherItem(Guid launcherItemId)
+        public bool SelectExistsLauncherItem(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -161,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.Execute(statement, dto);
         }
 
-        public bool UpdateExecuteCountIncrement(Guid launcherItemId, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateExecuteCountIncrement(LauncherItemId launcherItemId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
@@ -177,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, dto) == 1;
         }
 
-        public bool DeleteLauncherItem(Guid launcherItemId)
+        public bool DeleteLauncherItem(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {

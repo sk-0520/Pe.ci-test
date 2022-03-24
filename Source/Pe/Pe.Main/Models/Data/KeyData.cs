@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
@@ -253,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class KeyActionLauncherItemData: KeyActionPressedDataBase
     {
-        public KeyActionLauncherItemData(Guid keyActionId, KeyActionContentLauncherItem launcherItemKind, Guid launcherItemId)
+        public KeyActionLauncherItemData(Guid keyActionId, KeyActionContentLauncherItem launcherItemKind, LauncherItemId launcherItemId)
             : base(keyActionId, KeyActionKind.LauncherItem)
         {
             LauncherItemKind = launcherItemKind;
@@ -263,7 +264,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region property
 
         public KeyActionContentLauncherItem LauncherItemKind { get; }
-        public Guid LauncherItemId { get; }
+        public LauncherItemId LauncherItemId { get; }
 
         #endregion
     }

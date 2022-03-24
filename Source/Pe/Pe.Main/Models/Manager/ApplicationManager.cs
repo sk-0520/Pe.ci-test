@@ -1960,13 +1960,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.CreateLauncherToolbarElement(dockScreen, launcherGroups);
         }
 
-        public LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId)
+        public LauncherItemElement GetOrCreateLauncherItemElement(LauncherItemId launcherItemId)
         {
             return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
         }
-        public void RefreshLauncherItemElement(Guid launcherItemId) => OrderManager.RefreshLauncherItemElement(launcherItemId);
+        public void RefreshLauncherItemElement(LauncherItemId launcherItemId) => OrderManager.RefreshLauncherItemElement(launcherItemId);
 
-        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen)
+        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(LauncherItemId launcherItemId, IScreen screen)
         {
             return OrderManager.CreateCustomizeLauncherItemContainerElement(launcherItemId, screen);
         }
@@ -1976,7 +1976,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.CreateExtendsExecuteElement(captionName, launcherFileData, launcherEnvironmentVariables, screen);
         }
 
-        public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen)
+        public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(LauncherItemId launcherItemId, IScreen screen)
         {
             return OrderManager.CreateLauncherExtendsExecuteElement(launcherItemId, screen);
         }
@@ -2031,8 +2031,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return element;
         }
 
-        /// <inheritdoc cref="IOrderManager.CreateLauncherItemExtensionElement(IPluginInformations, Guid)"/>
-        public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, Guid launcherItemId)
+        /// <inheritdoc cref="IOrderManager.CreateLauncherItemExtensionElement(IPluginInformations, LauncherItemId)"/>
+        public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, LauncherItemId launcherItemId)
         {
             var element = OrderManager.CreateLauncherItemExtensionElement(pluginInformations, launcherItemId);
             LauncherItemExtensions.Add(element);

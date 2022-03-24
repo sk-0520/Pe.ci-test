@@ -51,8 +51,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         internal IconBox IconBox { get; set; }
 
         private IList<LauncherItemElement> LauncherItemElements { get; } = new List<LauncherItemElement>();
-        private IDictionary<Guid, LauncherItemElement> LauncherItemElementMap { get; } = new Dictionary<Guid, LauncherItemElement>();
-        private IDictionary<Guid, IReadOnlyCollection<string>> LauncherTags { get; } = new Dictionary<Guid, IReadOnlyCollection<string>>();
+        private IDictionary<LauncherItemId, LauncherItemElement> LauncherItemElementMap { get; } = new Dictionary<LauncherItemId, LauncherItemElement>();
+        private IDictionary<LauncherItemId, IReadOnlyCollection<string>> LauncherTags { get; } = new Dictionary<LauncherItemId, IReadOnlyCollection<string>>();
 
 
         #endregion
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             }
         }
 
-        private void LoadTag(Guid launcherItemId)
+        private void LoadTag(LauncherItemId launcherItemId)
         {
             Debug.Assert(FindTag);
 
@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                 throw new InvalidOperationException(nameof(IsInitialized));
             }
 
-            IReadOnlyList<Guid> ids;
+            IReadOnlyList<LauncherItemId> ids;
             using(var context = MainDatabaseBarrier.WaitRead()) {
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 ids = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             }
 
             if(FindTag) {
-                var tagItems = new Dictionary<Guid, IReadOnlyCollection<string>>(ids.Count);
+                var tagItems = new Dictionary<LauncherItemId, IReadOnlyCollection<string>>(ids.Count);
                 using(var context = MainDatabaseBarrier.WaitRead()) {
                     var launcherTagsEntityDao = new LauncherTagsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                     foreach(var id in ids) {

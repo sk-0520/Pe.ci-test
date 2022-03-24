@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
@@ -7,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region function
 
-        Guid CreateLauncherItemId();
+        LauncherItemId CreateLauncherItemId();
         Guid CreateCredentId();
         Guid CreateLauncherToolbarId();
         Guid CreateFontId();
@@ -34,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region IIdFactory
 
-        public Guid CreateLauncherItemId() => Guid.NewGuid();
+        public LauncherItemId CreateLauncherItemId() => new LauncherItemId(Guid.NewGuid());
         public Guid CreateCredentId() => Guid.NewGuid();
         public Guid CreateLauncherToolbarId() => Guid.NewGuid();
         public Guid CreateFontId() => Guid.NewGuid();
