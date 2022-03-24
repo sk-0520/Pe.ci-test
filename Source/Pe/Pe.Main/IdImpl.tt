@@ -21,6 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     partial class ApplicationDatabaseImplementation
     {
         #region define
+
 <# foreach(var item in items.Where(i => (bool)i.Options["Dapper"])) { #>
 <# switch(item.Type.FullName) { #>
 <# case "System.Guid": #>
@@ -51,6 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 <# break; #>
 <# } #>
 <# } #>
+
         #endregion
 
 
