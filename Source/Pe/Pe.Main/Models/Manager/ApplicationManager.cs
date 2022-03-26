@@ -680,7 +680,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var pluginVersionChecksEntityDao = ApplicationDiContainer.Build<PluginVersionChecksEntityDao>(context, context.Implementation);
                 foreach(var pluginLoadStateItem in pluginLoadStateItems) {
                     // プラグインIDすら取得できなかったぶっこわれアセンブリは無視
-                    if(pluginLoadStateItem.PluginId == Guid.Empty && pluginLoadStateItem.LoadState == PluginState.IllegalAssembly) {
+                    if(pluginLoadStateItem.PluginId == PluginId.Empty && pluginLoadStateItem.LoadState == PluginState.IllegalAssembly) {
                         Logger.LogWarning("プラグイン {0} はもろもろおかしい", pluginLoadStateItem.PluginName);
                         if(pluginLoadStateItem == testPluginLoadState) {
 #if DEBUG
@@ -895,7 +895,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplyCurrentTheme(themePluginId);
         }
 
-        private void ApplyCurrentTheme(Guid themePluginId)
+        private void ApplyCurrentTheme(PluginId themePluginId)
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
 

@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             SettingNotifyManager.SendLauncherItemRemove(launcherItemId);
         }
 
-        public LauncherItemId AddNewItem(LauncherItemKind kind, Guid pluginId)
+        public LauncherItemId AddNewItem(LauncherItemKind kind, PluginId pluginId)
         {
             ThrowIfDisposed();
 
@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
                 switch(kind) {
                     case LauncherItemKind.File: {
-                            Debug.Assert(pluginId == Guid.Empty);
+                            Debug.Assert(pluginId == PluginId.Empty);
 
                             var launcherFilesDao = new LauncherFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                             var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                         break;
 
                     case LauncherItemKind.StoreApp: {
-                            Debug.Assert(pluginId == Guid.Empty);
+                            Debug.Assert(pluginId == PluginId.Empty);
 
                             var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
 
@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                         break;
 
                     case LauncherItemKind.Addon: {
-                            Debug.Assert(pluginId != Guid.Empty);
+                            Debug.Assert(pluginId != PluginId.Empty);
 
                             var launcherAddonsEntityDao = new LauncherAddonsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
 

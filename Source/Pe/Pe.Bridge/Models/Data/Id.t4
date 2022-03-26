@@ -45,6 +45,7 @@
                 new GuidDefine("ノートID", "NoteId"),
                 new GuidDefine("ノートファイルID", "NoteFileId"),
                 new GuidDefine("キーアクションID", "KeyActionId"),
+                new GuidDefine("プラグインID", "PluginId"),
             };
         }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid PluginId { get; set; }
+            public PluginId PluginId { get; set; }
 
             public string Name { get; set; } = string.Empty;
             public string State { get; set; } = string.Empty;
@@ -83,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public PluginStateData? SelectePlguinStateDataByPLuginId(Guid pluginId)
+        public PluginStateData? SelectePlguinStateDataByPLuginId(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -97,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public Version? SelectLastUsePluginVersion(Guid pluginId)
+        public Version? SelectLastUsePluginVersion(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -106,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirstOrDefault<Version>(statement, parameter);
         }
 
-        public bool SelecteExistsPlugin(Guid pluginId)
+        public bool SelecteExistsPlugin(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -146,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, dto) == 1;
         }
 
-        public bool UpdatePluginRunningState(Guid pluginId, Version pluginVersion, Version applicationVersio, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdatePluginRunningState(PluginId pluginId, Version pluginVersion, Version applicationVersio, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
@@ -157,7 +158,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        public bool DeletePlugin(Guid pluginId)
+        public bool DeletePlugin(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {

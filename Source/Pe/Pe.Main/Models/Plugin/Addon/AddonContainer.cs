@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             ;
         }
 
-        public IReadOnlyList<Guid> GetLauncherItemAddonIds()
+        public IReadOnlyList<PluginId> GetLauncherItemAddonIds()
         {
             return LauncherItemSupportAddons
                 .Select(i => i.PluginInformations.PluginIdentifiers.PluginId)
@@ -126,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             ;
         }
 
-        public LauncherItemAddonProxy GetLauncherItemAddon(LauncherItemId launcherItemId, Guid pluginId)
+        public LauncherItemAddonProxy GetLauncherItemAddon(LauncherItemId launcherItemId, PluginId pluginId)
         {
             return LauncherItemAddonProxies.GetOrAdd(launcherItemId, (launcherItemId, pluginId) => {
                 var addon = LauncherItemSupportAddons.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);

@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -14,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid PluginId { get; set; }
+            public PluginId PluginId { get; set; }
             public string PluginSettingKey { get; set; } = string.Empty;
             public string DataType { get; set; } = string.Empty;
             public string DataValue { get; set; } = string.Empty;
@@ -53,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        private PluginSettingDto ConvertFromData(Guid pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        private PluginSettingDto ConvertFromData(PluginId pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var pluginPersistentFormatTransfer = new EnumTransfer<PluginPersistentFormat>();
 
@@ -68,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-        public bool SelecteExistsPluginSetting(Guid pluginId, string key)
+        public bool SelecteExistsPluginSetting(PluginId pluginId, string key)
         {
             var statement = LoadStatement();
             var parameter = new PluginSettingDto() {
@@ -79,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirst<bool>(statement, parameter);
         }
 
-        public PluginSettingRawValue? SelectPluginSettingValue(Guid pluginId, string key)
+        public PluginSettingRawValue? SelectPluginSettingValue(PluginId pluginId, string key)
         {
             var statement = LoadStatement();
             var parameter = new PluginSettingDto() {
@@ -96,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public bool InsertPluginSetting(Guid pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        public bool InsertPluginSetting(PluginId pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, key, data, databaseCommonStatus);
@@ -104,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        public bool UpdatePluginSetting(Guid pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdatePluginSetting(PluginId pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, key, data, databaseCommonStatus);
@@ -112,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        public bool DeletePluginSetting(Guid pluginId, string key)
+        public bool DeletePluginSetting(PluginId pluginId, string key)
         {
             var statement = LoadStatement();
             var parameter = new PluginSettingDto() {
@@ -123,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        public int DeleteAllPluginSettings(Guid pluginId)
+        public int DeleteAllPluginSettings(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new PluginSettingDto() {

@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using Microsoft.Extensions.Logging;
@@ -19,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public string AddonName => Addon.PluginInformations.PluginIdentifiers.PluginName;
 
-        public Guid PluginId => Addon.PluginInformations.PluginIdentifiers.PluginId;
+        public PluginId PluginId => Addon.PluginInformations.PluginIdentifiers.PluginId;
 
         #endregion
 

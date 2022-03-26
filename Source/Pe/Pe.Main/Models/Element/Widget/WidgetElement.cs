@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -328,7 +329,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
         #region IPluginId
 
-        public Guid PluginId => PluginInformations.PluginIdentifiers.PluginId;
+        public PluginId PluginId => PluginInformations.PluginIdentifiers.PluginId;
 
         #endregion
 

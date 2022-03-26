@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -114,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
-        public void CancelInstall(Guid pluginId)
+        public void CancelInstall(PluginId pluginId)
         {
             var cancelled = PluginInstaller.CancelInstall(pluginId, InstallPluginItemsImpl.Select(i => i.Data), TemporaryDatabaseBarrier);
             if(cancelled) {
