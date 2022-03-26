@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         FontId CreateFontId();
         LauncherGroupId CreateLauncherGroupId();
         NoteId CreateNoteId();
-        Guid CreateNoteFileId();
+        NoteFileId CreateNoteFileId();
         Guid CreateKeyActionId();
 
         #endregion
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public FontId CreateFontId() => new FontId(Guid.NewGuid());
         public LauncherGroupId CreateLauncherGroupId() => new LauncherGroupId(Guid.NewGuid());
         public NoteId CreateNoteId() => new NoteId(Guid.NewGuid());
-        public Guid CreateNoteFileId() => Guid.NewGuid();
+        public NoteFileId CreateNoteFileId() => new NoteFileId(Guid.NewGuid());
         public Guid CreateKeyActionId() => Guid.NewGuid();
 
         #endregion

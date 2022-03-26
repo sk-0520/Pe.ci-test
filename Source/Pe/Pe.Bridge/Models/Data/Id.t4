@@ -43,6 +43,7 @@
                 new GuidDefine("フォントID", "FontId"),
                 new GuidDefine("ランチャーグループID", "LauncherGroupId"),
                 new GuidDefine("ノートID", "NoteId"),
+                new GuidDefine("ノートファイルID", "NoteFileId"),
             };
         }
 
