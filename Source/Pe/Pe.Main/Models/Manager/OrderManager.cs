@@ -92,9 +92,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen);
         LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(LauncherItemId launcherItemId, IScreen screen);
 
-        NoteElement CreateNoteElement(Guid noteId, IScreen? screen, NoteStartupPosition startupPosition);
-        bool RemoveNoteElement(Guid noteId);
-        NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind);
+        NoteElement CreateNoteElement(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition);
+        bool RemoveNoteElement(NoteId noteId);
+        NoteContentElement CreateNoteContentElement(NoteId noteId, NoteContentKind contentKind);
         SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater);
 
         StandardInputOutputElement CreateStandardInputOutputElement(string caption, Process process, IScreen screen);
@@ -200,7 +200,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
-            public NoteElement CreateNoteElement(Guid noteId, IScreen? screen, NoteStartupPosition startupPosition)
+            public NoteElement CreateNoteElement(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition)
             {
                 var element = screen == null
                     ? DiContainer.Build<NoteElement>(noteId, DiDefaultParameter.Create<IScreen>(), startupPosition)
@@ -210,12 +210,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
-            public bool RemoveNoteElement(Guid noteId)
+            public bool RemoveNoteElement(NoteId noteId)
             {
                 throw new NotSupportedException($"{nameof(ApplicationManager)}.{nameof(RemoveNoteElement)}");
             }
 
-            public NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind)
+            public NoteContentElement CreateNoteContentElement(NoteId noteId, NoteContentKind contentKind)
             {
                 var element = DiContainer.Build<NoteContentElement>(noteId, contentKind);
                 element.Initialize();

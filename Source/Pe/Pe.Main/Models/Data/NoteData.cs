@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public Guid NoteId { get; set; }
+        public NoteId NoteId { get; set; }
         public string ScreenName { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
         public NoteLayoutKind LayoutKind { get; set; }
@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public Guid NoteId { get; set; }
+        public NoteId NoteId { get; set; }
         public NoteLayoutKind LayoutKind { get; set; }
 
         [PixelKind(Px.Logical)]
@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public Guid NoteId { get; set; }
+        public NoteId NoteId { get; set; }
 
         public NoteContentKind ContentKind { get; set; }
 
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public Guid NoteId { get; set; }
+        public NoteId NoteId { get; set; }
 
         #endregion
 

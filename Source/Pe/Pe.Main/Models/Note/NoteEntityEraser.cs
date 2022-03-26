@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Database;
@@ -9,13 +10,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
 {
     public class NoteEntityEraser: EntityEraserBase
     {
-        public NoteEntityEraser(Guid noteId, IDatabaseContextsPack contextsPack, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public NoteEntityEraser(NoteId noteId, IDatabaseContextsPack contextsPack, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(contextsPack, statementLoader, loggerFactory)
         {
             NoteId = noteId;
         }
 
-        public NoteEntityEraser(Guid noteId, IDatabaseContexts mainContexts, IDatabaseContexts fileContexts, IDatabaseContexts temporaryContexts, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public NoteEntityEraser(NoteId noteId, IDatabaseContexts mainContexts, IDatabaseContexts fileContexts, IDatabaseContexts temporaryContexts, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(mainContexts, fileContexts, temporaryContexts, statementLoader, loggerFactory)
         {
             NoteId = noteId;
@@ -23,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
 
         #region property
 
-        private Guid NoteId { get; }
+        private NoteId NoteId { get; }
 
         #endregion
 

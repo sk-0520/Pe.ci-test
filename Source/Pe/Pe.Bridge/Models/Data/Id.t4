@@ -42,6 +42,7 @@
                 new GuidDefine("ランチャーツールバーID", "LauncherToolbarId"),
                 new GuidDefine("フォントID", "FontId"),
                 new GuidDefine("ランチャーグループID", "LauncherGroupId"),
+                new GuidDefine("ノートID", "NoteId"),
             };
         }
 

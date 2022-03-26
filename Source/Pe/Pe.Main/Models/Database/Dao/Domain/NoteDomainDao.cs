@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -16,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
         private class NoteScreenRowDto: RowDtoBase
         {
             #region property
-            public Guid NoteId { get; set; }
+            public NoteId NoteId { get; set; }
 
             public string ScreenName { get; set; } = string.Empty;
             [PixelKind(Px.Device)]
@@ -53,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             return data;
         }
 
-        public IEnumerable<NoteScreenData> SelectNoteScreens(Guid noteId)
+        public IEnumerable<NoteScreenData> SelectNoteScreens(NoteId noteId)
         {
             var statement = LoadStatement();
             var param = new {

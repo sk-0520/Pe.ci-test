@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         LauncherToolbarId CreateLauncherToolbarId();
         FontId CreateFontId();
         LauncherGroupId CreateLauncherGroupId();
-        Guid CreateNoteId();
+        NoteId CreateNoteId();
         Guid CreateNoteFileId();
         Guid CreateKeyActionId();
 
@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public LauncherToolbarId CreateLauncherToolbarId() => new LauncherToolbarId(Guid.NewGuid());
         public FontId CreateFontId() => new FontId(Guid.NewGuid());
         public LauncherGroupId CreateLauncherGroupId() => new LauncherGroupId(Guid.NewGuid());
-        public Guid CreateNoteId() => Guid.NewGuid();
+        public NoteId CreateNoteId() => new NoteId(Guid.NewGuid());
         public Guid CreateNoteFileId() => Guid.NewGuid();
         public Guid CreateKeyActionId() => Guid.NewGuid();
 

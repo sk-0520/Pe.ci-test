@@ -1152,7 +1152,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
 
-            IList<Guid> noteIds;
+            IList<NoteId> noteIds;
             using(var context = barrier.WaitRead()) {
                 var dao = ApplicationDiContainer.Build<NotesEntityDao>(context, context.Implementation);
                 noteIds = dao.SelectAllNoteIds().ToList();
@@ -1982,11 +1982,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
 
-        public NoteElement CreateNoteElement(Guid noteId, IScreen? screen, NoteStartupPosition startupPosition)
+        public NoteElement CreateNoteElement(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition)
         {
             return OrderManager.CreateNoteElement(noteId, screen, startupPosition);
         }
-        public bool RemoveNoteElement(Guid noteId)
+        public bool RemoveNoteElement(NoteId noteId)
         {
             var targetElement = NoteElements.FirstOrDefault(i => i.NoteId == noteId);
             if(targetElement == null) {
@@ -2013,7 +2013,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return false;
         }
 
-        public NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind)
+        public NoteContentElement CreateNoteContentElement(NoteId noteId, NoteContentKind contentKind)
         {
             return OrderManager.CreateNoteContentElement(noteId, contentKind);
         }
