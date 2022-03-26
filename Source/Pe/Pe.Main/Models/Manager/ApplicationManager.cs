@@ -2018,7 +2018,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.CreateNoteContentElement(noteId, contentKind);
         }
 
-        public SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater)
+        public SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater)
         {
             return OrderManager.CreateFontElement(defaultFontKind, fontId, parentUpdater);
         }

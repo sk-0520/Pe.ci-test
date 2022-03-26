@@ -375,7 +375,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public AppDesktopToolbarPosition ToolbarPosition { get; set; }
         public LauncherToolbarIconDirection IconDirection { get; set; }
         public IconBox IconBox { get; set; }
-        public Guid FontId { get; set; }
+        public FontId FontId { get; set; }
         public TimeSpan AutoHideTime { get; set; }
         public int TextWidth { get; set; }
         public bool IsVisible { get; set; }

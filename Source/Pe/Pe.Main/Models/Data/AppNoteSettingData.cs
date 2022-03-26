@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// フォントID。
         /// </summary>
-        public Guid FontId { get; set; }
+        public FontId FontId { get; set; }
         /// <summary>
         /// タイトル新規作成種別。
         /// </summary>

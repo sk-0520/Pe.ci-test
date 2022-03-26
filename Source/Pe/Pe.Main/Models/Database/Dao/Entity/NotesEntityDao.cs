@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public string ScreenName { get; set; } = string.Empty;
             public string LayoutKind { get; set; } = string.Empty;
             public bool IsVisible { get; set; }
-            public Guid FontId { get; set; }
+            public FontId FontId { get; set; }
             public string ForegroundColor { get; set; } = string.Empty;
             public string BackgroundColor { get; set; } = string.Empty;
             public bool IsLocked { get; set; }
@@ -213,7 +213,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, param) == 1;
         }
 
-        public bool UpdateFontId(Guid noteId, Guid fontId, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateFontId(Guid noteId, FontId fontId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();

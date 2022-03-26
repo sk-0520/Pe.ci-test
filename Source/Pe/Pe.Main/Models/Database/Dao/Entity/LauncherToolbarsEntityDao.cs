@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public string PositionKind { get; set; } = string.Empty;
             public string Direction { get; set; } = string.Empty;
             public string IconBox { get; set; } = string.Empty;
-            public Guid FontId { get; set; }
+            public FontId FontId { get; set; }
             public TimeSpan AutoHideTime { get; set; }
             public long TextWidth { get; set; }
             public bool IsVisible { get; set; }
@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirst<string>(statement, parameter);
         }
 
-        public bool InsertNewToolbar(LauncherToolbarId toolbarId, Guid fontId, string? screenName, IDatabaseCommonStatus commonStatus)
+        public bool InsertNewToolbar(LauncherToolbarId toolbarId, FontId fontId, string? screenName, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 

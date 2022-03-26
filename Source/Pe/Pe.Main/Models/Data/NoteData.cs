@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public NoteLayoutKind LayoutKind { get; set; }
         public bool IsVisible { get; set; }
 
-        public Guid FontId { get; set; }
+        public FontId FontId { get; set; }
         public Color ForegroundColor { get; set; }
         public Color BackgroundColor { get; set; }
         public bool IsLocked { get; set; }

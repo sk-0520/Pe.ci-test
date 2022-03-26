@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         LauncherItemId CreateLauncherItemId();
         CredentialIdId CreateCredentialId();
         LauncherToolbarId CreateLauncherToolbarId();
-        Guid CreateFontId();
+        FontId CreateFontId();
         LauncherGroupId CreateLauncherGroupId();
         Guid CreateNoteId();
         Guid CreateNoteFileId();
@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public LauncherItemId CreateLauncherItemId() => new LauncherItemId(Guid.NewGuid());
         public CredentialIdId CreateCredentialId() => new CredentialIdId(Guid.NewGuid());
         public LauncherToolbarId CreateLauncherToolbarId() => new LauncherToolbarId(Guid.NewGuid());
-        public Guid CreateFontId() => Guid.NewGuid();
+        public FontId CreateFontId() => new FontId(Guid.NewGuid());
         public LauncherGroupId CreateLauncherGroupId() => new LauncherGroupId(Guid.NewGuid());
         public Guid CreateNoteId() => Guid.NewGuid();
         public Guid CreateNoteFileId() => Guid.NewGuid();

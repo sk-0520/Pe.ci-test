@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -33,10 +34,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public Guid SelectAppLauncherToolbarSettingFontId()
+        public FontId SelectAppLauncherToolbarSettingFontId()
         {
             var statement = LoadStatement();
-            return Context.QueryFirst<Guid>(statement);
+            return Context.QueryFirst<FontId>(statement);
         }
 
         public AppLauncherToolbarSettingData SelectSettingLauncherToolbarSetting()
