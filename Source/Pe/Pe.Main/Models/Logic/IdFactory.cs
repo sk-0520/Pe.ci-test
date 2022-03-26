@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #region function
 
         LauncherItemId CreateLauncherItemId();
-        Guid CreateCredentId();
+        CredentialIdId CreateCredentialId();
         Guid CreateLauncherToolbarId();
         Guid CreateFontId();
         LauncherGroupId CreateLauncherGroupId();
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #region IIdFactory
 
         public LauncherItemId CreateLauncherItemId() => new LauncherItemId(Guid.NewGuid());
-        public Guid CreateCredentId() => Guid.NewGuid();
+        public CredentialIdId CreateCredentialId() => new CredentialIdId(Guid.NewGuid());
         public Guid CreateLauncherToolbarId() => Guid.NewGuid();
         public Guid CreateFontId() => Guid.NewGuid();
         public LauncherGroupId CreateLauncherGroupId() => new LauncherGroupId(Guid.NewGuid());
