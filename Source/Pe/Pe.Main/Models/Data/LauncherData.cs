@@ -339,7 +339,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        Guid LauncherToolbarId { get; }
+        LauncherToolbarId LauncherToolbarId { get; }
 
         #endregion
     }
@@ -348,7 +348,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region ILauncherToolbarId
 
-        public Guid LauncherToolbarId { get; set; }
+        public LauncherToolbarId LauncherToolbarId { get; set; }
 
         #endregion
 
@@ -387,7 +387,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region ILauncherToolbarId
 
-        public Guid LauncherToolbarId { get; set; }
+        public LauncherToolbarId LauncherToolbarId { get; set; }
 
         #endregion
 

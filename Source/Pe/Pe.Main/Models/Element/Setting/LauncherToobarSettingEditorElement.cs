@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherToobarSettingEditorElement: ElementBase, ILauncherToolbarId
     {
-        public LauncherToobarSettingEditorElement(Guid launcherToolbarId, ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory) : base(loggerFactory)
+        public LauncherToobarSettingEditorElement(LauncherToolbarId launcherToolbarId, ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory) : base(loggerFactory)
         {
             LauncherToolbarId = launcherToolbarId;
             AllLauncherGroups = allLauncherGroups;
@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region ILauncherToolbarId
 
-        public Guid LauncherToolbarId { get; }
+        public LauncherToolbarId LauncherToolbarId { get; }
 
         #endregion
     }

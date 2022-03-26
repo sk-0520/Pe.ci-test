@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid LauncherToolbarId { get; set; }
+            public LauncherToolbarId LauncherToolbarId { get; set; }
             public LauncherGroupId LauncherGroupId { get; set; }
             public string PositionKind { get; set; } = string.Empty;
             public string Direction { get; set; } = string.Empty;
@@ -102,13 +102,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
-        public IEnumerable<Guid> SelectAllLauncherToolbarIds()
+        public IEnumerable<LauncherToolbarId> SelectAllLauncherToolbarIds()
         {
             var statement = LoadStatement();
-            return Context.Query<Guid>(statement);
+            return Context.Query<LauncherToolbarId>(statement);
         }
 
-        public LauncherToolbarsDisplayData SelectDisplayData(Guid launcherToolbarId)
+        public LauncherToolbarsDisplayData SelectDisplayData(LauncherToolbarId launcherToolbarId)
         {
             var statement = LoadStatement();
             var param = new {
@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirst<string>(statement, parameter);
         }
 
-        public bool InsertNewToolbar(Guid toolbarId, Guid fontId, string? screenName, IDatabaseCommonStatus commonStatus)
+        public bool InsertNewToolbar(LauncherToolbarId toolbarId, Guid fontId, string? screenName, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, param) == 1;
         }
 
-        public bool UpdateToolbarPosition(Guid launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, IDatabaseCommonStatus commonStatus)
+        public bool UpdateToolbarPosition(LauncherToolbarId launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, IDatabaseCommonStatus commonStatus)
         {
             var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
 
@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, param) == 1;
         }
 
-        public bool UpdatIsTopmost(Guid launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
+        public bool UpdatIsTopmost(LauncherToolbarId launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
@@ -164,7 +164,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, param) == 1;
         }
 
-        public bool UpdatIsAutoHide(Guid launcherToolbarId, bool isAutoHide, IDatabaseCommonStatus commonStatus)
+        public bool UpdatIsAutoHide(LauncherToolbarId launcherToolbarId, bool isAutoHide, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
@@ -175,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, param) == 1;
         }
 
-        public bool UpdatIsVisible(Guid launcherToolbarId, bool isVisible, IDatabaseCommonStatus commonStatus)
+        public bool UpdatIsVisible(LauncherToolbarId launcherToolbarId, bool isVisible, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 

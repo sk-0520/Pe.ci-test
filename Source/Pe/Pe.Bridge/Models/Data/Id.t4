@@ -39,6 +39,7 @@
             return new [] {
                 new GuidDefine("ランチャーアイテムID", "LauncherItemId"),
                 new GuidDefine("資格情報ID", "CredentialIdId"),
+                new GuidDefine("ランチャーツールバーID", "LauncherToolbarId"),
                 new GuidDefine("ランチャーグループID", "LauncherGroupId"),
             };
         }
