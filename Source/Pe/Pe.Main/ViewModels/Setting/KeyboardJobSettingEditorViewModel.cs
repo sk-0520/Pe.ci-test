@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region IKeyActionId
 
-        public Guid KeyActionId => Model.KeyActionId;
+        public KeyActionId KeyActionId => Model.KeyActionId;
 
         #endregion
     }

@@ -79,9 +79,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         #region object
 
-        public override string ToString()
+        public override int GetHashCode()
         {
-            return Id.ToString("D");
+            return Id.GetHashCode();
         }
 
         #endregion

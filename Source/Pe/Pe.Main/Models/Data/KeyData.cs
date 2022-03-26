@@ -146,14 +146,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        Guid KeyActionId { get; }
+        KeyActionId KeyActionId { get; }
 
         #endregion
     }
 
     public class KeyActionCommonData: DataBase, IKeyActionId
     {
-        public KeyActionCommonData(Guid keyActionId, KeyActionKind keyActionKind)
+        public KeyActionCommonData(KeyActionId keyActionId, KeyActionKind keyActionKind)
         {
             KeyActionId = keyActionId;
             KeyActionKind = keyActionKind;
@@ -166,7 +166,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
 
         #region IKeyActionId
-        public Guid KeyActionId { get; }
+
+        public KeyActionId KeyActionId { get; }
+
         #endregion
     }
 
@@ -178,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class KeyActionReplaceData: KeyActionCommonData
     {
-        public KeyActionReplaceData(Guid keyActionId, Key replaceKey)
+        public KeyActionReplaceData(KeyActionId keyActionId, Key replaceKey)
             : base(keyActionId, KeyActionKind.Replace)
         {
             ReplaceKey = replaceKey;
@@ -203,7 +205,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class KeyActionDisableData: KeyActionCommonData
     {
-        public KeyActionDisableData(Guid keyActionId, bool forever)
+        public KeyActionDisableData(KeyActionId keyActionId, bool forever)
             : base(keyActionId, KeyActionKind.Disable)
         {
             Forever = forever;
@@ -227,7 +229,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public abstract class KeyActionPressedDataBase: KeyActionCommonData
     {
-        protected KeyActionPressedDataBase(Guid keyActionId, KeyActionKind keyActionKind)
+        protected KeyActionPressedDataBase(KeyActionId keyActionId, KeyActionKind keyActionKind)
             : base(keyActionId, keyActionKind)
         { }
 
@@ -240,21 +242,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public sealed class KeyActionCommandData: KeyActionPressedDataBase
     {
-        public KeyActionCommandData(Guid keyActionId)
+        public KeyActionCommandData(KeyActionId keyActionId)
             : base(keyActionId, KeyActionKind.Command)
         { }
     }
 
     public enum KeyActionLauncherItemOption
     {
-        [KeyActionOption(typeof(Guid), nameof(LauncherItemId))]
+        [KeyActionOption(typeof(LauncherItemId), nameof(LauncherItemId))]
         LauncherItemId
     }
 
 
     public class KeyActionLauncherItemData: KeyActionPressedDataBase
     {
-        public KeyActionLauncherItemData(Guid keyActionId, KeyActionContentLauncherItem launcherItemKind, LauncherItemId launcherItemId)
+        public KeyActionLauncherItemData(KeyActionId keyActionId, KeyActionContentLauncherItem launcherItemKind, LauncherItemId launcherItemId)
             : base(keyActionId, KeyActionKind.LauncherItem)
         {
             LauncherItemKind = launcherItemKind;
@@ -271,7 +273,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class KeyActionLauncherToolbarData: KeyActionPressedDataBase
     {
-        public KeyActionLauncherToolbarData(Guid keyActionId, KeyActionContentLauncherToolbar launcherToolbarKind)
+        public KeyActionLauncherToolbarData(KeyActionId keyActionId, KeyActionContentLauncherToolbar launcherToolbarKind)
             : base(keyActionId, KeyActionKind.LauncherToolbar)
         {
             LauncherToolbarKind = launcherToolbarKind;
@@ -286,7 +288,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class KeyActionNoteData: KeyActionPressedDataBase
     {
-        public KeyActionNoteData(Guid keyActionId, KeyActionContentNote noteKind)
+        public KeyActionNoteData(KeyActionId keyActionId, KeyActionContentNote noteKind)
             : base(keyActionId, KeyActionKind.Note)
         {
             NoteKind = noteKind;
@@ -329,7 +331,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public Guid KeyActionId { get; set; }
+        public KeyActionId KeyActionId { get; set; }
         public KeyActionKind KeyActionKind { get; set; }
         public string KeyActionContent { get; set; } = string.Empty;
         public string Comment { get; set; } = string.Empty;
@@ -352,7 +354,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class KeyGestureItem: IKeyActionId
     {
-        public KeyGestureItem(Guid keyActionId, IReadOnlyList<IReadOnlyKeyMappingData> mappings)
+        public KeyGestureItem(KeyActionId keyActionId, IReadOnlyList<IReadOnlyKeyMappingData> mappings)
         {
             KeyActionId = keyActionId;
             Mappings = mappings;
@@ -367,7 +369,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region IKeyActionId
 
         /// <inheritdoc cref="IKeyActionId.KeyActionId"/>
-        public Guid KeyActionId { get; }
+        public KeyActionId KeyActionId { get; }
 
         #endregion
     }

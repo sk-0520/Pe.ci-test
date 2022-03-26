@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             #region property
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed")]
-            public Guid KeyActionId { get; set; }
+            public KeyActionId KeyActionId { get; set; }
             public long Sequence { get; set; }
 
             public string Key { get; set; } = string.Empty;
