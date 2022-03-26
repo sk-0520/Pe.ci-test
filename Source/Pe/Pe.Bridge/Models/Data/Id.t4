@@ -38,6 +38,7 @@
         {
             return new [] {
                 new GuidDefine("ランチャーアイテムID", "LauncherItemId"),
+                new GuidDefine("ランチャーグループID", "LauncherGroupId"),
             };
         }
 

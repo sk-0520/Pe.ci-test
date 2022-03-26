@@ -254,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             LoadLauncherItems();
         }
 
-        public void RemoveLauncherItem(Guid launcherGroupId, LauncherItemId launcherItemId, int index)
+        public void RemoveLauncherItem(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId, int index)
         {
             using(var context = MainDatabaseBarrier.WaitWrite()) {
                 var launcherGroupItemsEntityDao = new LauncherGroupItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);

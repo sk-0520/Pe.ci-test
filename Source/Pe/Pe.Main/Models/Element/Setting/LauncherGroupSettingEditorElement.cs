@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherGroupSettingEditorElement: ElementBase, ILauncherGroupId
     {
-        public LauncherGroupSettingEditorElement(Guid launcherGroupId, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public LauncherGroupSettingEditorElement(LauncherGroupId launcherGroupId, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherGroupId = launcherGroupId;
@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region ILauncherGroupId
 
-        public Guid LauncherGroupId { get; }
+        public LauncherGroupId LauncherGroupId { get; }
 
         #endregion
     }

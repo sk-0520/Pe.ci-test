@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup
 
         #region property
 
-        public Guid LauncherGroupId => Model.LauncherGroupId;
+        public LauncherGroupId LauncherGroupId => Model.LauncherGroupId;
 
         public int RowIndex { get; set; }
         private IDispatcherWrapper DispatcherWrapper { get; }

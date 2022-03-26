@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
     public class LauncherItemRemoveInLauncherGroupEventArgs: NotifyEventArgs
     {
-        public LauncherItemRemoveInLauncherGroupEventArgs(Guid launcherGroupId, LauncherItemId launcherItemId, int index)
+        public LauncherItemRemoveInLauncherGroupEventArgs(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId, int index)
         {
             LauncherGroupId = launcherGroupId;
             LauncherItemId = launcherItemId;
@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region property
 
-        public Guid LauncherGroupId { get; }
+        public LauncherGroupId LauncherGroupId { get; }
         public LauncherItemId LauncherItemId { get; }
         public int Index { get; }
 
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
     public class LauncherItemRegisteredEventArgs: NotifyEventArgs
     {
-        public LauncherItemRegisteredEventArgs(Guid launcherGroupId, LauncherItemId launcherItemId)
+        public LauncherItemRegisteredEventArgs(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId)
         {
             LauncherGroupId = launcherGroupId;
             LauncherItemId = launcherItemId;
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region property
 
-        public Guid LauncherGroupId { get; }
+        public LauncherGroupId LauncherGroupId { get; }
         public LauncherItemId LauncherItemId { get; }
 
         #endregion
@@ -83,14 +83,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
     public class LauncherGroupItemRegisteredEventArgs: NotifyEventArgs
     {
-        public LauncherGroupItemRegisteredEventArgs(Guid launcherGroupId)
+        public LauncherGroupItemRegisteredEventArgs(LauncherGroupId launcherGroupId)
         {
             LauncherGroupId = launcherGroupId;
         }
 
         #region property
 
-        public Guid LauncherGroupId { get; }
+        public LauncherGroupId LauncherGroupId { get; }
 
         #endregion
     }
@@ -182,20 +182,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         /// <param name="launcherItemId">変更されたランチャーアイテムID。</param>
         void SendLauncherItemChanged(LauncherItemId launcherItemId);
-        void SendLauncherItemRegistered(Guid launcherGroupId, LauncherItemId launcherItemId);
+        void SendLauncherItemRegistered(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId);
         /// <summary>
         /// グループからランチャーアイテムが破棄されたことを通知。
         /// </summary>
         /// <param name="launcherGroupId"></param>
         /// <param name="launcherItemId"></param>
         /// <param name="index">同一の<see cref="launcherItemId"/>に該当するもののうち何番目のアイテムかを示す。</param>
-        void SendLauncherItemRemoveInLauncherGroup(Guid launcherGroupId, LauncherItemId launcherItemId, int index);
+        void SendLauncherItemRemoveInLauncherGroup(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId, int index);
         void SendCustomizeLauncherItemExited(LauncherItemId launcherItemId);
         /// <summary>
         /// ランチャーグループアイテムが追加されたことを通知。
         /// </summary>
-        /// <param name="launcherGroupItemId"></param>
-        void SendLauncherGroupItemRegistered(Guid launcherGroupItemId);
+        /// <param name="launcherGroupId"></param>
+        void SendLauncherGroupItemRegistered(LauncherGroupId launcherGroupId);
         /// <summary>
         /// アプリケーション設定の変更を通知。
         /// </summary>
@@ -300,6 +300,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
         [Conditional("DEBUG")]
+        private void ThrowIfEmptyGuid(LauncherGroupId launcherItemId)
+        {
+            if(launcherItemId == LauncherGroupId.Empty) {
+                throw new InvalidOperationException();
+            }
+        }
+
+        [Conditional("DEBUG")]
         private void ThrowIfEmptyGuid(Guid launcherGroupItemId)
         {
             if(launcherGroupItemId == Guid.Empty) {
@@ -311,7 +319,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private void ThrowIfEmptyLauncherItemId(LauncherItemId launcherItemId) => ThrowIfEmptyGuid(launcherItemId);
 
         [Conditional("DEBUG")]
-        private void ThrowIfEmptyLauncherGroupItemId(Guid launcherGroupItemId) => ThrowIfEmptyGuid(launcherGroupItemId);
+        private void ThrowIfEmptyLauncherGroupItemId(LauncherGroupId launcherGroupItemId) => ThrowIfEmptyGuid(launcherGroupItemId);
 
         private void OnLauncherItemChanged(LauncherItemId launcherItemId)
         {
@@ -321,7 +329,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             LauncherItemChanged?.Invoke(this, e);
         }
 
-        private void OnLauncherItemRegistered(Guid launcherGroupId, LauncherItemId launcherItemId)
+        private void OnLauncherItemRegistered(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId)
         {
             ThrowIfEmptyLauncherItemId(launcherItemId);
 
@@ -329,7 +337,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             LauncherItemRegistered?.Invoke(this, e);
         }
 
-        private void OnLauncherItemRemovedInGroup(Guid launcherGroupId, LauncherItemId launcherItemId, int index)
+        private void OnLauncherItemRemovedInGroup(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId, int index)
         {
             ThrowIfEmptyLauncherItemId(launcherItemId);
 
@@ -345,7 +353,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CustomizeLauncherItemExited?.Invoke(this, e);
         }
 
-        private void OnLauncherGroupItemRegistered(Guid launcherGroupItemId)
+        private void OnLauncherGroupItemRegistered(LauncherGroupId launcherGroupItemId)
         {
             ThrowIfEmptyLauncherGroupItemId(launcherGroupItemId);
 
@@ -402,12 +410,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             OnLauncherItemChanged(launcherItemId);
         }
-        public void SendLauncherItemRemoveInLauncherGroup(Guid launcherGroupId, LauncherItemId launcherItemId, int index)
+        public void SendLauncherItemRemoveInLauncherGroup(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId, int index)
         {
             OnLauncherItemRemovedInGroup(launcherGroupId, launcherItemId, index);
         }
 
-        public void SendLauncherItemRegistered(Guid launcherGroupId, LauncherItemId launcherItemId)
+        public void SendLauncherItemRegistered(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId)
         {
             OnLauncherItemRegistered(launcherGroupId, launcherItemId);
         }
@@ -417,7 +425,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             OnCustomizeLauncherItemExited(launcherItemId);
         }
 
-        public void SendLauncherGroupItemRegistered(Guid launcherGroupItemId)
+        public void SendLauncherGroupItemRegistered(LauncherGroupId launcherGroupItemId)
         {
             OnLauncherGroupItemRegistered(launcherGroupItemId);
         }

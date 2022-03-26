@@ -243,14 +243,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
 
         #region ILauncherGroupId
-        public Guid LauncherGroupId { get; set; }
+
+        public LauncherGroupId LauncherGroupId { get; set; }
+
         #endregion
     }
     public interface ILauncherGroupId
     {
         #region property
 
-        Guid LauncherGroupId { get; }
+        LauncherGroupId LauncherGroupId { get; }
 
         #endregion
     }
@@ -369,7 +371,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public Guid LauncherGroupId { get; set; }
+        public LauncherGroupId LauncherGroupId { get; set; }
         public AppDesktopToolbarPosition ToolbarPosition { get; set; }
         public LauncherToolbarIconDirection IconDirection { get; set; }
         public IconBox IconBox { get; set; }

@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region ILauncherGroupId
 
-        public Guid LauncherGroupId => Model.LauncherGroupId;
+        public LauncherGroupId LauncherGroupId => Model.LauncherGroupId;
 
         #endregion
 

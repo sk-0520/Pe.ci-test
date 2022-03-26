@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid LauncherGroupId { get; set; }
+            public LauncherGroupId LauncherGroupId { get; set; }
             public LauncherItemId LauncherItemId { get; set; }
             public long Sequence { get; set; }
 
@@ -41,19 +41,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public long SelectMaxSequence(Guid groupId)
+        public long SelectMaxSequence(LauncherGroupId groupId)
         {
             var statement = LoadStatement();
             return Context.QuerySingle<long>(statement, new { LauncherGroupId = groupId });
         }
 
-        public IEnumerable<Guid> SelectAllLauncherGroupItemIds()
+        public IEnumerable<LauncherGroupId> SelectAllLauncherGroupItemIds()
         {
             var statement = LoadStatement();
-            return Context.Query<Guid>(statement);
+            return Context.Query<LauncherGroupId>(statement);
         }
 
-        public IEnumerable<LauncherItemId> SelectLauncherItemIds(Guid launcherGroupId)
+        public IEnumerable<LauncherItemId> SelectLauncherItemIds(LauncherGroupId launcherGroupId)
         {
             var statement = LoadStatement();
             var param = new {
@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Query<LauncherItemId>(statement, param);
         }
 
-        public void InsertNewItems(Guid groupId, IEnumerable<LauncherItemId> itemIds, long startSequence, int sortStep, IDatabaseCommonStatus commonStatus)
+        public void InsertNewItems(LauncherGroupId groupId, IEnumerable<LauncherItemId> itemIds, long startSequence, int sortStep, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var counter = 0;
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter);
         }
 
-        public int DeleteGroupItemsByLauncherGroupId(Guid launcherGroupId)
+        public int DeleteGroupItemsByLauncherGroupId(LauncherGroupId launcherGroupId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter);
         }
 
-        public bool DeleteGroupItemsLauncherItem(Guid launcherGroupId, LauncherItemId launcherItemId, int index)
+        public bool DeleteGroupItemsLauncherItem(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId, int index)
         {
             var statement = LoadStatement();
             var parameter = new {

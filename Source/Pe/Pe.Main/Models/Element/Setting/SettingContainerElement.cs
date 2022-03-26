@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
             IReadOnlyList<LauncherItemId> launcherItemIds;
-            IReadOnlyList<Guid> groupIds;
+            IReadOnlyList<LauncherGroupId> groupIds;
 
             var appLauncherItemsMap = new Dictionary<LauncherItemId, LauncherSettingCommonData>();
 

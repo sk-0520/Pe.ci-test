@@ -1119,7 +1119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
 
-            IList<Guid> launcherGroupIds;
+            IList<LauncherGroupId> launcherGroupIds;
             using(var context = barrier.WaitRead()) {
                 var dao = ApplicationDiContainer.Build<LauncherGroupsEntityDao>(context, context.Implementation);
                 launcherGroupIds = dao.SelectAllLauncherGroupIds().ToList();
@@ -1951,7 +1951,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        public LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId)
+        public LauncherGroupElement CreateLauncherGroupElement(LauncherGroupId launcherGroupId)
         {
             return OrderManager.CreateLauncherGroupElement(launcherGroupId);
         }

@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void StartUpdate(UpdateTarget target, UpdateProcess process);
 
-        LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId);
+        LauncherGroupElement CreateLauncherGroupElement(LauncherGroupId launcherGroupId);
         LauncherToolbarElement CreateLauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(LauncherItemId launcherItemId);
         void RefreshLauncherItemElement(LauncherItemId launcherItemId);
@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
 
-            public LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId)
+            public LauncherGroupElement CreateLauncherGroupElement(LauncherGroupId launcherGroupId)
             {
                 var element = DiContainer.Build<LauncherGroupElement>(launcherGroupId);
                 element.Initialize();

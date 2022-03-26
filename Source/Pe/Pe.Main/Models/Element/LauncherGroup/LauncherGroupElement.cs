@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 {
     public class LauncherGroupElement: ElementBase, ILauncherGroupId
     {
-        public LauncherGroupElement(Guid launcherGroupId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public LauncherGroupElement(LauncherGroupId launcherGroupId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherGroupId = launcherGroupId;
@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         #region ILauncherGroupId
 
-        public Guid LauncherGroupId { get; }
+        public LauncherGroupId LauncherGroupId { get; }
 
         #endregion
 

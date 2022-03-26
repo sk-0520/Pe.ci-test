@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         private IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         public FontElement? Font { get; private set; }
-        public Guid LauncherGroupId { get; set; }
+        public LauncherGroupId LauncherGroupId { get; set; }
         public AppDesktopToolbarPosition ToolbarPosition { get; set; }
         public LauncherToolbarIconDirection IconDirection { get; set; }
         public IconBox IconBox { get; set; }
@@ -59,10 +59,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commadPack.CommonStatus);
 
             var defaultLauncherGroupId = LauncherGroupId;
-            if(defaultLauncherGroupId != Guid.Empty) {
+            if(defaultLauncherGroupId != LauncherGroupId.Empty) {
                 if(!AllLauncherGroups.Any(i => i.LauncherGroupId == defaultLauncherGroupId)) {
                     Logger.LogTrace("存在しないランチャーグループIDのため補正: {0}", defaultLauncherGroupId);
-                    defaultLauncherGroupId = Guid.Empty;
+                    defaultLauncherGroupId = LauncherGroupId.Empty;
                 }
             }
 

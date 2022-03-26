@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 <# foreach(var item in items.Where(i => (bool)i.Options["Dapper"])) { #>
 <# switch(item.Type.FullName) { #>
 <# case "System.Guid": #>
-        private class ApplicationDatabase<#= item.Name #>Handler: SqlMapper.TypeHandler<<#= item.Name #>>
+        private class <#= item.Name #>Handler: SqlMapper.TypeHandler<<#= item.Name #>>
         {
             #region TypeHandler
 
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         static ApplicationDatabaseImplementation()
         {
 <# foreach(var item in items.Where(i => (bool)i.Options["Dapper"])) { #>
-            SqlMapper.AddTypeHandler(typeof(<#= item.Name #>), new ApplicationDatabase<#= item.Name #>Handler());
+            SqlMapper.AddTypeHandler(typeof(<#= item.Name #>), new <#= item.Name #>Handler());
 <# } #>
         }
     }

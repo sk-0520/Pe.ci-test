@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //}
         }
 
-        public void RemoveGroup(Guid launcherGroupId)
+        public void RemoveGroup(LauncherGroupId launcherGroupId)
         {
             var targetItem = GroupItems.First(i => i.LauncherGroupId == launcherGroupId);
             GroupItems.Remove(targetItem);
@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             targetItem.Dispose();
         }
 
-        public Guid AddNewGroup(LauncherGroupKind kind)
+        public LauncherGroupId AddNewGroup(LauncherGroupKind kind)
         {
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
             var newGroupName = launcherFactory.CreateUniqueGroupName(GroupItems.Select(i => i.Name).ToList());

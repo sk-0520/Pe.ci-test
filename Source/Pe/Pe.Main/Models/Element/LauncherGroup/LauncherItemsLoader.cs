@@ -30,13 +30,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         #region function
 
-        private IEnumerable<LauncherItemId> LoadNormalIds(Guid launcherGroupId)
+        private IEnumerable<LauncherItemId> LoadNormalIds(LauncherGroupId launcherGroupId)
         {
             var dao = new LauncherGroupItemsEntityDao(Context, StatementLoader, Implementation, LoggerFactory);
             return dao.SelectLauncherItemIds(launcherGroupId);
         }
 
-        public IEnumerable<LauncherItemId> LoadLauncherItemIds(Guid launcherGroupId, LauncherGroupKind kind)
+        public IEnumerable<LauncherItemId> LoadLauncherItemIds(LauncherGroupId launcherGroupId, LauncherGroupKind kind)
         {
             switch(kind) {
                 case LauncherGroupKind.Normal:
