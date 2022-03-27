@@ -83,23 +83,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void StartUpdate(UpdateTarget target, UpdateProcess process);
 
-        LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId);
+        LauncherGroupElement CreateLauncherGroupElement(LauncherGroupId launcherGroupId);
         LauncherToolbarElement CreateLauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
-        LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
-        void RefreshLauncherItemElement(Guid launcherItemId);
+        LauncherItemElement GetOrCreateLauncherItemElement(LauncherItemId launcherItemId);
+        void RefreshLauncherItemElement(LauncherItemId launcherItemId);
 
-        LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen);
+        LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(LauncherItemId launcherItemId, IScreen screen);
         ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen);
-        LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen);
+        LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(LauncherItemId launcherItemId, IScreen screen);
 
-        NoteElement CreateNoteElement(Guid noteId, IScreen? screen, NoteStartupPosition startupPosition);
-        bool RemoveNoteElement(Guid noteId);
-        NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind);
-        SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater);
+        NoteElement CreateNoteElement(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition);
+        bool RemoveNoteElement(NoteId noteId);
+        NoteContentElement CreateNoteContentElement(NoteId noteId, NoteContentKind contentKind);
+        SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater);
 
         StandardInputOutputElement CreateStandardInputOutputElement(string caption, Process process, IScreen screen);
 
-        LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, Guid launcherItemId);
+        LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, LauncherItemId launcherItemId);
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeContainerElement element);
@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             #region property
 
-            private ConcurrentDictionary<Guid, LauncherItemElement> LauncherItems { get; } = new ConcurrentDictionary<Guid, LauncherItemElement>();
+            private ConcurrentDictionary<LauncherItemId, LauncherItemElement> LauncherItems { get; } = new ConcurrentDictionary<LauncherItemId, LauncherItemElement>();
             private ISet<RedoExecutor> RedoItems { get; } = new HashSet<RedoExecutor>();
 
             #endregion
@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
 
-            public LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId)
+            public LauncherGroupElement CreateLauncherGroupElement(LauncherGroupId launcherGroupId)
             {
                 var element = DiContainer.Build<LauncherGroupElement>(launcherGroupId);
                 element.Initialize();
@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
-            public LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId)
+            public LauncherItemElement GetOrCreateLauncherItemElement(LauncherItemId launcherItemId)
             {
                 return LauncherItems.GetOrAdd(launcherItemId, launcherItemIdKey => {
                     var launcherItemElement = DiContainer.Build<LauncherItemElement>(launcherItemIdKey);
@@ -171,14 +171,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             /// <inheritdoc cref="IOrderManager.RefreshLauncherItemElement(Guid)"/>
-            public void RefreshLauncherItemElement(Guid launcherItemId)
+            public void RefreshLauncherItemElement(LauncherItemId launcherItemId)
             {
                 if(LauncherItems.TryGetValue(launcherItemId, out var element)) {
                     element.Refresh();
                 }
             }
 
-            public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen)
+            public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(LauncherItemId launcherItemId, IScreen screen)
             {
                 var customizeLauncherEditorElement = DiContainer.Build<LauncherItemCustomizeEditorElement>(launcherItemId);
                 customizeLauncherEditorElement.Initialize();
@@ -193,14 +193,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 element.Initialize();
                 return element;
             }
-            public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen)
+            public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(LauncherItemId launcherItemId, IScreen screen)
             {
                 var element = DiContainer.Build<LauncherExtendsExecuteElement>(launcherItemId, screen);
                 element.Initialize();
                 return element;
             }
 
-            public NoteElement CreateNoteElement(Guid noteId, IScreen? screen, NoteStartupPosition startupPosition)
+            public NoteElement CreateNoteElement(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition)
             {
                 var element = screen == null
                     ? DiContainer.Build<NoteElement>(noteId, DiDefaultParameter.Create<IScreen>(), startupPosition)
@@ -210,19 +210,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
-            public bool RemoveNoteElement(Guid noteId)
+            public bool RemoveNoteElement(NoteId noteId)
             {
                 throw new NotSupportedException($"{nameof(ApplicationManager)}.{nameof(RemoveNoteElement)}");
             }
 
-            public NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind)
+            public NoteContentElement CreateNoteContentElement(NoteId noteId, NoteContentKind contentKind)
             {
                 var element = DiContainer.Build<NoteContentElement>(noteId, contentKind);
                 element.Initialize();
                 return element;
             }
 
-            public SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater)
+            public SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater)
             {
                 var element = DiContainer.Build<SavingFontElement>(defaultFontKind, fontId, parentUpdater);
                 element.Initialize();
@@ -236,7 +236,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
-            public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, Guid launcherItemId)
+            public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, LauncherItemId launcherItemId)
             {
                 var element = DiContainer.Build<LauncherItemExtensionElement>(pluginInformations, launcherItemId);
                 element.Initialize();

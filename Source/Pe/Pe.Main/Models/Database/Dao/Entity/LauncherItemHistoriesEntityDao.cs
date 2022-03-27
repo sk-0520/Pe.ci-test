@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -16,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid LauncherItemId { get; set; }
+            public LauncherItemId LauncherItemId { get; set; }
             public string Kind { get; set; } = string.Empty;
             public string Value { get; set; } = string.Empty;
 
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
-        public IEnumerable<LauncherHistoryData> SelectHistories(Guid launcherItemId)
+        public IEnumerable<LauncherHistoryData> SelectHistories(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -70,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public bool InsertHistory(Guid launcherItemId, LauncherHistoryKind kind, string value, IDatabaseCommonStatus commonStatus)
+        public bool InsertHistory(LauncherItemId launcherItemId, LauncherHistoryKind kind, string value, IDatabaseCommonStatus commonStatus)
         {
             var launcherHistoryKindTransfer = new EnumTransfer<LauncherHistoryKind>();
 
@@ -86,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, dto) == 1;
         }
 
-        public bool DeleteHistory(Guid launcherItemId, LauncherHistoryKind kind, string value)
+        public bool DeleteHistory(LauncherItemId launcherItemId, LauncherHistoryKind kind, string value)
         {
             var launcherHistoryKindTransfer = new EnumTransfer<LauncherHistoryKind>();
 
@@ -104,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return 0 < result;
         }
 
-        public int DeleteHistoryByLauncherItemId(Guid launcherItemId, LauncherHistoryKind kind, [DateTimeKind(DateTimeKind.Utc)] DateTime lastExecuteTimestamp)
+        public int DeleteHistoryByLauncherItemId(LauncherItemId launcherItemId, LauncherHistoryKind kind, [DateTimeKind(DateTimeKind.Utc)] DateTime lastExecuteTimestamp)
         {
             var launcherHistoryKindTransfer = new EnumTransfer<LauncherHistoryKind>();
 
@@ -118,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Delete(statement, parameter);
         }
 
-        public int DeleteHistoriesByLauncherItemId(Guid launcherItemId)
+        public int DeleteHistoriesByLauncherItemId(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new LauncherItemHistoriesEntityDto() {

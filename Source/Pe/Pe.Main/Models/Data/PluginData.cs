@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Data;
@@ -66,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        Guid PluginId { get; }
+        PluginId PluginId { get; }
 
         #endregion
     }
@@ -75,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public Guid PluginId { get; set; }
+        public PluginId PluginId { get; set; }
 
         public string PluginName { get; set; } = string.Empty;
         public PluginState State { get; set; }
@@ -87,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public Guid PluginId { get; }
+        public PluginId PluginId { get; }
         public string PluginName { get; }
         public Version PluginVersion { get; }
         public PluginState LoadState { get; }
@@ -96,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     public record PluginLoadStateInfo(
-        Guid PluginId,
+        PluginId PluginId,
         string PluginName,
         Version PluginVersion,
         PluginState LoadState
@@ -104,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class PluginLoadStateData: DataBase, IPluginLoadState
     {
-        public PluginLoadStateData(Guid pluginId, string pluginName, Version pluginVersion, PluginState loadState, WeakReference<PluginAssemblyLoadContext>? weekLoadContext, IPlugin? plugin)
+        public PluginLoadStateData(PluginId pluginId, string pluginName, Version pluginVersion, PluginState loadState, WeakReference<PluginAssemblyLoadContext>? weekLoadContext, IPlugin? plugin)
         {
             PluginId = pluginId;
             PluginName = pluginName;
@@ -131,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region IPluginLoadState
 
-        public Guid PluginId { get; }
+        public PluginId PluginId { get; }
         public string PluginName { get; }
         [JsonConverter(typeof(JsonTextSerializer.VersionConverter))]
         public Version PluginVersion { get; }
@@ -175,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     public record PluginInstallData(
-        Guid PluginId,
+        PluginId PluginId,
         string PluginName,
         Version PluginVersion,
         PluginInstallMode PluginInstallMode,
@@ -188,7 +189,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     /// </summary>
     /// <param name="Version">最終使用バージョン。</param>
     public record PluginLastUsedData(
-        Guid PluginId,
+        PluginId PluginId,
         string Name,
         Version Version
     ): IPluginId;

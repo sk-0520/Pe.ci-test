@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -218,7 +219,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region IPLuginId
 
-        public Guid PluginId => PluginState.PluginId;
+        public PluginId PluginId => PluginState.PluginId;
 
         #endregion
     }

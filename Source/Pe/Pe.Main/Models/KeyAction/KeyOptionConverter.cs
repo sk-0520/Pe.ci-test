@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
@@ -131,26 +132,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     {
         #region function
 
-        public Guid ToLauncherItemId(IReadOnlyDictionary<string, string> map)
+        public LauncherItemId ToLauncherItemId(IReadOnlyDictionary<string, string> map)
         {
             var attribute = GetAttribute(KeyActionLauncherItemOption.LauncherItemId);
             return Convert(attribute, map, (a, s) => {
-                return Guid.Parse(s);
+                return LauncherItemId.Parse(s);
             });
         }
 
-        public bool TryGetLauncherItemId(IReadOnlyDictionary<string, string> map, out Guid result)
+        public bool TryGetLauncherItemId(IReadOnlyDictionary<string, string> map, out LauncherItemId result)
         {
             var attribute = GetAttribute(KeyActionLauncherItemOption.LauncherItemId);
             return TryConvert(attribute, map, (a, s) => {
-                return Guid.Parse(s);
+                return LauncherItemId.Parse(s);
             }, out result);
         }
 
-        public void WriteLauncherItemId(IDictionary<string, string> map, Guid launcherItemId)
+        public void WriteLauncherItemId(IDictionary<string, string> map, LauncherItemId launcherItemId)
         {
             var attribute = GetAttribute(KeyActionLauncherItemOption.LauncherItemId);
-            map[attribute.OptionName] = launcherItemId.ToString("D");
+            map[attribute.OptionName] = launcherItemId.Id.ToString("D");
         }
 
         #endregion

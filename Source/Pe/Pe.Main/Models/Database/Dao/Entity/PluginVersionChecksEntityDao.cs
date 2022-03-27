@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid PluginId { get; set; }
+            public PluginId PluginId { get; set; }
             public long Sequence { get; set; }
             public string CheckUrl { get; set; } = string.Empty;
 
@@ -41,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public IEnumerable<string> SelectPluginVersionCheckUrls(Guid pluginId)
+        public IEnumerable<string> SelectPluginVersionCheckUrls(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -51,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.SelectOrdered<string>(statement, parameter);
         }
 
-        public void InsertPluginVersionCheckUrl(Guid pluginId, long sequence, string checkUrl, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertPluginVersionCheckUrl(PluginId pluginId, long sequence, string checkUrl, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = new PluginVersionCheckDto() {
@@ -64,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.InsertSingle(statement, parameter);
         }
 
-        public int DeletePluginVersionChecks(Guid pluginId)
+        public int DeletePluginVersionChecks(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {

@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
     public class LauncherItemExtensionElement: ElementBase, ILauncherItemId
     {
 
-        public LauncherItemExtensionElement(IPluginInformations pluginInformations, Guid launcherItemId, ILoggerFactory loggerFactory)
+        public LauncherItemExtensionElement(IPluginInformations pluginInformations, LauncherItemId launcherItemId, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             PluginInformations = pluginInformations;
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #region ILauncherItemId
 
-        public Guid LauncherItemId { get; }
+        public LauncherItemId LauncherItemId { get; }
 
         #endregion
     }

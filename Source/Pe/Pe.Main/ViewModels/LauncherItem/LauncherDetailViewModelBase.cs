@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region ILauncherItemId
 
-        public Guid LauncherItemId => Model.LauncherItemId;
+        public LauncherItemId LauncherItemId => Model.LauncherItemId;
 
         #endregion
     }

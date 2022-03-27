@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private ApplicationConfiguration ApplicationConfiguration { get; }
 
-        public Guid NoteId => Model.NoteId;
+        public NoteId NoteId => Model.NoteId;
         public bool IsLink
         {
             get

@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <summary>
         /// ランチャーアイテムID。
         /// </summary>
-        Guid LauncherItemId { get; }
+        LauncherItemId LauncherItemId { get; }
 
         #endregion
     }

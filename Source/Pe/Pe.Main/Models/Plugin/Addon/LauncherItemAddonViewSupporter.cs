@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
-        public bool ExistsInformations(Guid launcherItemId)
+        public bool ExistsInformations(LauncherItemId launcherItemId)
         {
             var target = LauncherItemAddonViewSupporters.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
             if(target == null) {
@@ -65,12 +65,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// 対象のランチャーアイテムアドオンを活性化。
         /// </summary>
         /// <param name="launcherItemId"></param>
-        public void Foreground(Guid launcherItemId)
+        public void Foreground(LauncherItemId launcherItemId)
         {
             // TODO: ウィンドウ位置移動
         }
 
-        public ILauncherItemAddonViewSupporter Create(IPluginInformations pluginInformations, Guid launcherItemId)
+        public ILauncherItemAddonViewSupporter Create(IPluginInformations pluginInformations, LauncherItemId launcherItemId)
         {
             var createdViewSupporter = LauncherItemAddonViewSupporters.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
             if(createdViewSupporter != null) {
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
     internal class LauncherItemAddonViewSupporter: ILauncherItemAddonViewSupporter, ILauncherItemId
     {
-        public LauncherItemAddonViewSupporter(IPluginInformations pluginInformations, Guid launcherItemId, IOrderManager orderManager, IWindowManager windowManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemAddonViewSupporter(IPluginInformations pluginInformations, LauncherItemId launcherItemId, IOrderManager orderManager, IWindowManager windowManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region ILauncherItemId
 
-        public Guid LauncherItemId { get; }
+        public LauncherItemId LauncherItemId { get; }
 
         #endregion
 

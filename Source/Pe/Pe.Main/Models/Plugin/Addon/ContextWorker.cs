@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using Microsoft.Extensions.Logging;
@@ -44,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
     public class LauncherItemAddonContextWorker: ContextWorkerBase<LauncherItemAddonContextFactory>, ILauncherItemAddonContextWorker
     {
-        public LauncherItemAddonContextWorker(LauncherItemAddonContextFactory launcherItemAddonContextFactory, IPluginInformations pluginInformations, Guid launcherItemId, ILoggerFactory loggerFactory)
+        public LauncherItemAddonContextWorker(LauncherItemAddonContextFactory launcherItemAddonContextFactory, IPluginInformations pluginInformations, LauncherItemId launcherItemId, ILoggerFactory loggerFactory)
             : base(launcherItemAddonContextFactory, loggerFactory)
         {
             PluginInformations = pluginInformations;
@@ -53,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region property
         public IPluginInformations PluginInformations { get; }
-        public Guid LauncherItemId { get; }
+        public LauncherItemId LauncherItemId { get; }
 
         #endregion
 

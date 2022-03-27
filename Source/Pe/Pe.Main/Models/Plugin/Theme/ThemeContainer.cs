@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -85,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             Themes.Add(theme);
         }
 
-        public void SetCurrentTheme(Guid themePluginId, PluginContextFactory pluginContextFactory)
+        public void SetCurrentTheme(PluginId themePluginId, PluginContextFactory pluginContextFactory)
         {
             var theme = Themes.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == themePluginId);
             if(theme == null) {

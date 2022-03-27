@@ -10,4 +10,28 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Models\Data\Id.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Id.cs</LastGenOutput>
+    </None>
+    <None Update="Models\Data\Id.txt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Id.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Models\Data\Id.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Id.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

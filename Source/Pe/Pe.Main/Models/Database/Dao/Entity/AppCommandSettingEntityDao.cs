@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid FontId { get; set; }
+            public FontId FontId { get; set; }
             public string IconBox { get; set; } = string.Empty;
             public double Width { get; set; }
             public TimeSpan HideWaitTime { get; set; }
@@ -40,10 +40,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public Guid SelectCommandSettingFontId()
+        public FontId SelectCommandSettingFontId()
         {
             var statement = LoadStatement();
-            return Context.QueryFirst<Guid>(statement);
+            return Context.QueryFirst<FontId>(statement);
         }
 
 

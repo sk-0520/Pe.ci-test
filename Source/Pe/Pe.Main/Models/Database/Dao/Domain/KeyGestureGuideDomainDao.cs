@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -17,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             #region property
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed")]
-            public Guid KeyActionId { get; set; }
+            public KeyActionId KeyActionId { get; set; }
             public long Sequence { get; set; }
 
             public string Key { get; set; } = string.Empty;
@@ -70,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             return new KeyGestureSetting(items);
         }
 
-        public KeyGestureSetting SelectLauncherKeyMappings(Guid launcherItemId)
+        public KeyGestureSetting SelectLauncherKeyMappings(LauncherItemId launcherItemId)
         {
             var keyActionKindTransfer = new EnumTransfer<KeyActionKind>();
 
@@ -78,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var parameter = new {
                 KeyActionKind = keyActionKindTransfer.ToString(KeyActionKind.LauncherItem),
                 KeyActionContents = Enum.GetValues<KeyActionContentLauncherItem>().Select(i => i.ToString()).ToArray(),
-                LauncherItemId = launcherItemId.ToString("D"),
+                LauncherItemId = launcherItemId.Id.ToString("D"),
             };
 
             var map = new Dictionary<Guid, KeyGestureSetting>();

@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region ILauncherItemId
 
-        public Guid LauncherItemId { get; }
+        public LauncherItemId LauncherItemId { get; }
 
         #endregion
 

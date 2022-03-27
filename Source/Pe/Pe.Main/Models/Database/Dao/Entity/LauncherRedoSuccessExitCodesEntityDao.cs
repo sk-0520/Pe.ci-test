@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -14,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid LauncherItemId { get; set; }
+            public LauncherItemId LauncherItemId { get; set; }
             public int SuccessExitCode { get; set; }
 
             #endregion
@@ -37,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public IEnumerable<int> SelectRedoSuccessExitCodes(Guid launcherItemId)
+        public IEnumerable<int> SelectRedoSuccessExitCodes(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -46,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Query<int>(statement, parameter);
         }
 
-        public int InsertSuccessExitCodes(Guid launcherItemId, IEnumerable<int> successExitCodes, IDatabaseCommonStatus commonStatus)
+        public int InsertSuccessExitCodes(LauncherItemId launcherItemId, IEnumerable<int> successExitCodes, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = new LauncherRedoSuccessExitCodesDto() {
@@ -64,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return insertCount;
         }
 
-        public int DeleteSuccessExitCodes(Guid launcherItemId)
+        public int DeleteSuccessExitCodes(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {

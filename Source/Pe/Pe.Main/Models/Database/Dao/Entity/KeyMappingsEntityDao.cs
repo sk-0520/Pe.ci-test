@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -16,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid KeyActionId { get; set; }
+            public KeyActionId KeyActionId { get; set; }
             public long Sequence { get; set; }
 
             public string Key { get; set; } = string.Empty;
@@ -67,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
-        private KeyMappingsEntityDto ConvertFromData(Guid keyActionId, KeyMappingData data, int sequence, IDatabaseCommonStatus databaseCommonStatus)
+        private KeyMappingsEntityDto ConvertFromData(KeyActionId keyActionId, KeyMappingData data, int sequence, IDatabaseCommonStatus databaseCommonStatus)
         {
             var modifierKeyTransfer = new EnumTransfer<ModifierKey>();
             var keyConverter = new KeyConverter();
@@ -86,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-        public IEnumerable<KeyMappingData> SelectMappings(Guid keyActionId)
+        public IEnumerable<KeyMappingData> SelectMappings(KeyActionId keyActionId)
         {
             var statement = LoadStatement();
             var parameter = new { KeyActionId = keyActionId };
@@ -95,14 +96,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public bool InsertMapping(Guid keyActionId, KeyMappingData mapping, int sequence, IDatabaseCommonStatus commonStatus)
+        public bool InsertMapping(KeyActionId keyActionId, KeyMappingData mapping, int sequence, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(keyActionId, mapping, sequence, commonStatus);
             return Context.Execute(statement, dto) == 1;
         }
 
-        public int DeleteByKeyActionId(Guid keyActionId)
+        public int DeleteByKeyActionId(KeyActionId keyActionId)
         {
             var statement = LoadStatement();
             var parameter = new {

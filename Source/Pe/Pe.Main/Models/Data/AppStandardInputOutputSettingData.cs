@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
@@ -14,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// フォントID。
         /// </summary>
-        public Guid FontId { get; set; }
+        public FontId FontId { get; set; }
         /// <summary>
         /// 標準出力 前景色。
         /// </summary>

@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             IDispatcherWrapper DispatcherWrapper { get; }
 
             public string Name => Plugin.PluginInformations.PluginIdentifiers.PluginName;
-            public Guid Id => Plugin.PluginInformations.PluginIdentifiers.PluginId;
+            public PluginId Id => Plugin.PluginInformations.PluginIdentifiers.PluginId;
 
             public DependencyObject PluginIcon
             {

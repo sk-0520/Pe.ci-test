@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -16,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid NoteId { get; set; }
+            public NoteId NoteId { get; set; }
             public string ContentKind { get; set; } = string.Empty;
             public string Content { get; set; } = string.Empty;
             public bool IsLink { get; set; }
@@ -100,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public bool SelectExistsContent(Guid noteId)
+        public bool SelectExistsContent(NoteId noteId)
         {
             var statement = LoadStatement();
             var param = new {
@@ -109,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirst<bool>(statement, param);
         }
 
-        public string SelectFullContent(Guid noteId)
+        public string SelectFullContent(NoteId noteId)
         {
             var statement = LoadStatement();
             var param = new {
@@ -118,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirst<string>(statement, param);
         }
 
-        public NoteContentData SelectLinkParameter(Guid noteId)
+        public NoteContentData SelectLinkParameter(NoteId noteId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -142,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.UpdateByKey(statement, param);
         }
 
-        public void UpdateLinkEnabled(Guid noteId, string path, Encoding encoding, FileWatchParameter fileWatchParameter, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateLinkEnabled(NoteId noteId, string path, Encoding encoding, FileWatchParameter fileWatchParameter, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
@@ -158,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.UpdateByKey(statement, parameter);
         }
 
-        public void UpdateLinkDisabled(Guid noteId, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateLinkDisabled(NoteId noteId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
@@ -169,7 +170,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.UpdateByKey(statement, parameter);
         }
 
-        public int DeleteContents(Guid noteId)
+        public int DeleteContents(NoteId noteId)
         {
             var statement = LoadStatement();
             var parameter = new {

@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 {
@@ -84,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="launcherItemId">ランチャーアイテムID。</param>
         /// <param name="key">キー</param>
         /// <returns></returns>
-        bool Exists(Guid launcherItemId, string key);
+        bool Exists(LauncherItemId launcherItemId, string key);
 
         /// <summary>
         /// 指定データを取得する。
@@ -94,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="key">キー</param>
         /// <param name="value">取得・変換できた場合に格納。</param>
         /// <returns>取得・変換できたか。</returns>
-        bool TryGet<TValue>(Guid launcherItemId, string key, [MaybeNullWhen(returnValue: false)] out TValue value);
+        bool TryGet<TValue>(LauncherItemId launcherItemId, string key, [MaybeNullWhen(returnValue: false)] out TValue value);
 
         /// <summary>
         /// 指定データを保存する。
@@ -106,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="value">値。</param>
         /// <param name="format">変換種別。</param>
         /// <returns>保存成功・失敗。</returns>
-        bool Set<TValue>(Guid launcherItemId, string key, TValue value, PluginPersistentFormat format);
+        bool Set<TValue>(LauncherItemId launcherItemId, string key, TValue value, PluginPersistentFormat format);
         /// <summary>
         /// 現行バージョンにおける最適な型を使用して指定データを保存する。
         /// </summary>
@@ -115,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="key">キー。</param>
         /// <param name="value">値。</param>
         /// <returns>保存成功・失敗。</returns>
-        bool Set<TValue>(Guid launcherItemId, string key, TValue value);
+        bool Set<TValue>(LauncherItemId launcherItemId, string key, TValue value);
 
         /// <summary>
         /// 指定データを破棄する。
@@ -123,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="launcherItemId">ランチャーアイテムID。</param>
         /// <param name="key"></param>
         /// <returns>破棄成功。</returns>
-        bool Delete(Guid launcherItemId, string key);
+        bool Delete(LauncherItemId launcherItemId, string key);
 
         #endregion
     }

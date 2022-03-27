@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Embedded.Attributes
 {
@@ -12,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Attributes
         /// [アセンブリ] プラグインID設定。
         /// </summary>
         /// <param name="pluginName">プラグイン名。</param>
-        /// <param name="pluginId">プラグインID。<see cref="Guid"/>へ変換可能な値を指定すること。</param>
+        /// <param name="pluginId">プラグインID。<see cref="PluginId"/>へ変換可能な値を指定すること。</param>
         public PluginIdentifiersAttribute(string pluginName, string pluginId)
         {
             if(string.IsNullOrWhiteSpace(pluginName)) {
@@ -23,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Attributes
                 throw new ArgumentException(nameof(pluginName));
             }
 
-            if(Guid.TryParse(pluginId, out var guid)) {
+            if(PluginId.TryParse(pluginId, out var guid)) {
                 PluginId = guid;
             } else {
                 throw new ArgumentException(nameof(pluginId));
@@ -38,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Attributes
         /// <summary>
         /// プラグインID。
         /// </summary>
-        public Guid PluginId { get; }
+        public PluginId PluginId { get; }
 
         #endregion
     }

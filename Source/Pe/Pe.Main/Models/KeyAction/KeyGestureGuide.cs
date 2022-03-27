@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -19,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         string GetCommandKey();
         string GetNoteKey(KeyActionContentNote keyActionContentNote);
-        IEnumerable<string> GetLauncherItemKeys(Guid launcherItemId);
+        IEnumerable<string> GetLauncherItemKeys(LauncherItemId launcherItemId);
 
         #endregion
     }
@@ -80,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return ConvertFirstKeyText(setting);
         }
 
-        private IEnumerable<string> GetLauncherItemKeyMappingStings(Guid launcherItemId)
+        private IEnumerable<string> GetLauncherItemKeyMappingStings(LauncherItemId launcherItemId)
         {
             KeyGestureSetting? setting = null;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -114,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         }
 
         /// <inheritdoc cref="IKeyGestureGuide.GetLauncherItemKeys(Guid)"/>
-        public IEnumerable<string> GetLauncherItemKeys(Guid launcherItemId)
+        public IEnumerable<string> GetLauncherItemKeys(LauncherItemId launcherItemId)
         {
             return GetLauncherItemKeyMappingStings(launcherItemId);
         }

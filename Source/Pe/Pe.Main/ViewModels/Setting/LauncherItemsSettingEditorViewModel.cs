@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -114,10 +115,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region command
 
         public ICommand AddNewFileItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            AddNewItem(LauncherItemKind.File, Guid.Empty);
+            AddNewItem(LauncherItemKind.File, PluginId.Empty);
         }));
         public ICommand AddNewStoreAppItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            AddNewItem(LauncherItemKind.StoreApp, Guid.Empty);
+            AddNewItem(LauncherItemKind.StoreApp, PluginId.Empty);
         }));
         public ICommand AddNewAddonItemCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherItemAddonViewModel>(
             o => {
@@ -137,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        private void AddNewItem(LauncherItemKind kind, Guid pluginId)
+        private void AddNewItem(LauncherItemKind kind, PluginId pluginId)
         {
             IsPopupAddItemMenu = false;
             var newLauncherItemId = Model.AddNewItem(kind, pluginId);

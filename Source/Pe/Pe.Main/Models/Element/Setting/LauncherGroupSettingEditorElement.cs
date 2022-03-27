@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -17,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherGroupSettingEditorElement: ElementBase, ILauncherGroupId
     {
-        public LauncherGroupSettingEditorElement(Guid launcherGroupId, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public LauncherGroupSettingEditorElement(LauncherGroupId launcherGroupId, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherGroupId = launcherGroupId;
@@ -39,13 +40,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public Color ImageColor { get; set; }
         public long Sequence { get; set; }
 
-        public ObservableCollection<WrapModel<Guid>> LauncherItems { get; } = new ObservableCollection<WrapModel<Guid>>();
+        public ObservableCollection<WrapModel<LauncherItemId>> LauncherItems { get; } = new ObservableCollection<WrapModel<LauncherItemId>>();
 
         #endregion
 
         #region function
 
-        public void InsertLauncherItemId(int index, Guid launcherItemId)
+        public void InsertLauncherItemId(int index, LauncherItemId launcherItemId)
         {
             LauncherItems.Insert(index, WrapModel.Create(launcherItemId, LoggerFactory));
         }
@@ -102,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
             LauncherGroupData data;
-            IEnumerable<Guid> launcherItemIds;
+            IEnumerable<LauncherItemId> launcherItemIds;
             using(var context = MainDatabaseBarrier.WaitRead()) {
                 var launcherGroupsEntityDao = new LauncherGroupsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 data = launcherGroupsEntityDao.SelectLauncherGroup(LauncherGroupId);
@@ -137,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region ILauncherGroupId
 
-        public Guid LauncherGroupId { get; }
+        public LauncherGroupId LauncherGroupId { get; }
 
         #endregion
     }

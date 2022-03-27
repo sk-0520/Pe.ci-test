@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="installPluginItems">インストール対象プラグイン。</param>
         /// <param name="temporaryDatabaseBarrier"></param>
         /// <returns>キャンセルできたか。偽の場合はキャンセル失敗って言うより対象になかったって感じ。</returns>
-        public bool CancelInstall(Guid pluginId, IEnumerable<IPluginId> installPluginItems, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
+        public bool CancelInstall(PluginId pluginId, IEnumerable<IPluginId> installPluginItems, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
         {
             var removeTarget = installPluginItems.FirstOrDefault(i => i.PluginId == pluginId);
             if(removeTarget == null) {
@@ -171,7 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         private IPluginLoadState LoadDirectPlugin(FileInfo pluginFile, DirectoryInfo pluginDirectory)
         {
             var loadStateData2 = PluginContainer.LoadPlugin(pluginFile, Enumerable.Empty<PluginStateData>().ToList(), BuildStatus.Version, PluginConstructorContext, PauseReceiveLog);
-            if(loadStateData2.PluginId == Guid.Empty || loadStateData2.LoadState != PluginState.Enable) {
+            if(loadStateData2.PluginId == PluginId.Empty || loadStateData2.LoadState != PluginState.Enable) {
                 // なんかもうダメっぽい
                 throw new PluginBrokenException(pluginDirectory.FullName);
             }

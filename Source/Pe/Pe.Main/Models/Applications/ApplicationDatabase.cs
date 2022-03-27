@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     /// <summary>
     /// アプリケーション用<see cref="IDatabaseImplementation"/>実装。
     /// </summary>
-    internal class ApplicationDatabaseImplementation: SqliteImplementation
+    internal partial class ApplicationDatabaseImplementation: SqliteImplementation
     { }
 
     /// <summary>

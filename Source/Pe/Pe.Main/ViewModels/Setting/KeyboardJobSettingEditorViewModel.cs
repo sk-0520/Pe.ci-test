@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -40,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region IKeyActionId
 
-        public Guid KeyActionId => Model.KeyActionId;
+        public KeyActionId KeyActionId => Model.KeyActionId;
 
         #endregion
     }
@@ -320,7 +321,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 if(value != null) {
                     lioc.WriteLauncherItemId(Model.Options, value.LauncherItemId);
                 } else {
-                    lioc.WriteLauncherItemId(Model.Options, Guid.Empty);
+                    lioc.WriteLauncherItemId(Model.Options, LauncherItemId.Empty);
                 }
             }
         }
@@ -352,7 +353,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #endregion
-
     }
 
     public sealed class KeyboardLauncherToolbarJobSettingEditorViewModel: KeyboardPressedJobSettingEditorViewModelBase<KeyActionContentLauncherToolbar>

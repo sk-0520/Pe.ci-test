@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -13,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid LauncherItemId { get; set; }
+            public LauncherItemId LauncherItemId { get; set; }
             public string RedoMode { get; set; } = string.Empty;
             public TimeSpan WaitTime { get; set; }
             public long RetryCount { get; set; }
@@ -49,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
         }
 
-        private LauncherRedoItemsDto ConvertFromData(Guid launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus commonStatus)
+        private LauncherRedoItemsDto ConvertFromData(LauncherItemId launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus commonStatus)
         {
             var redoModeTransfer = new EnumTransfer<RedoMode>();
 
@@ -64,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-        public bool SelectExistsLauncherRedoItem(Guid launcherItemId)
+        public bool SelectExistsLauncherRedoItem(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -73,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirst<bool>(statement, parameter);
         }
 
-        public LauncherRedoData SelectLauncherRedoItem(Guid launcherItemId)
+        public LauncherRedoData SelectLauncherRedoItem(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -83,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public bool InsertRedoItem(Guid launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus databaseCommonStatus)
+        public bool InsertRedoItem(LauncherItemId launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(launcherItemId, data, databaseCommonStatus);
@@ -91,14 +92,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         }
 
 
-        public bool UpdateRedoItem(Guid launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateRedoItem(LauncherItemId launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(launcherItemId, data, databaseCommonStatus);
             return Context.Execute(statement, dto) == 1;
         }
 
-        public bool DeleteRedoItemByLauncherItemId(Guid launcherItemId)
+        public bool DeleteRedoItemByLauncherItemId(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {

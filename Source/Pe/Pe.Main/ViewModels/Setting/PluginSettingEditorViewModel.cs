@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 return versionConverter.ConvertNormalVersion(Model.PluginVersion);
             }
         }
-        public Guid PluginId => Model.PluginId;
+        public PluginId PluginId => Model.PluginId;
 
         public bool MarkedUninstall => Model.MarkedUninstall;
         public bool CanUninstall => Model.CanUninstall;

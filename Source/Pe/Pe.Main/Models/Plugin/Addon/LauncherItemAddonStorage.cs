@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -78,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region ILauncherItemAddonPersistentStorage
 
-        public bool Exists(Guid launcherItemId, string key)
+        public bool Exists(LauncherItemId launcherItemId, string key)
         {
             return ExistsImpl((launcherItemId, key), (p, d) => {
                 var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
@@ -86,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             });
         }
 
-        public bool TryGet<TValue>(Guid launcherItemId, string key, [MaybeNullWhen(returnValue: false)] out TValue value)
+        public bool TryGet<TValue>(LauncherItemId launcherItemId, string key, [MaybeNullWhen(returnValue: false)] out TValue value)
         {
             return TryGetImpl((launcherItemId, key), (p, d) => {
                 var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
@@ -94,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             }, out value);
         }
 
-        public bool Set<TValue>(Guid launcherItemId, string key, TValue value, PluginPersistentFormat format)
+        public bool Set<TValue>(LauncherItemId launcherItemId, string key, TValue value, PluginPersistentFormat format)
         {
             return SetImpl(value, format, (launcherItemId, key), (p, d, v) => {
                 var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
@@ -106,9 +107,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 }
             });
         }
-        public bool Set<TValue>(Guid launcherItemId, string key, TValue value) => Set(launcherItemId, key, value, PluginPersistentFormat.Json);
+        public bool Set<TValue>(LauncherItemId launcherItemId, string key, TValue value) => Set(launcherItemId, key, value, PluginPersistentFormat.Json);
 
-        public bool Delete(Guid launcherItemId, string key)
+        public bool Delete(LauncherItemId launcherItemId, string key)
         {
             return DeleteImpl((launcherItemId, key), (p, d) => {
                 var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);

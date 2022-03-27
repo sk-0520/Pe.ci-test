@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid FontId { get; set; }
+            public FontId FontId { get; set; }
             public string TitleKind { get; set; } = string.Empty;
             public string LayoutKind { get; set; } = string.Empty;
             public string ForegroundColor { get; set; } = string.Empty;
@@ -41,10 +41,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public Guid SelectAppNoteSettingFontId()
+        public FontId SelectAppNoteSettingFontId()
         {
             var statement = LoadStatement();
-            return Context.QueryFirst<Guid>(statement);
+            return Context.QueryFirst<FontId>(statement);
         }
 
         public SettingAppNoteSettingData SelectSettingNoteSetting()

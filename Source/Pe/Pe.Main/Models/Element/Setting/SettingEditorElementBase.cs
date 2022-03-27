@@ -1,5 +1,6 @@
 using System;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -79,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             SaveImpl(contextsPack);
         }
 
-        protected virtual void ReceiveLauncherItemRemoved(Guid launcherItemId)
+        protected virtual void ReceiveLauncherItemRemoved(LauncherItemId launcherItemId)
         { }
 
         #endregion

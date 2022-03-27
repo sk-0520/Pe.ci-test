@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -14,8 +15,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid PluginId { get; set; }
-            public Guid LauncherItemId { get; set; }
+            public PluginId PluginId { get; set; }
+            public LauncherItemId LauncherItemId { get; set; }
             public string PluginSettingKey { get; set; } = string.Empty;
             public string DataType { get; set; } = string.Empty;
             public string DataValue { get; set; } = string.Empty;
@@ -55,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        private PluginLauncherItemSettingDto ConvertFromData(Guid pluginId, Guid launcherItemId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        private PluginLauncherItemSettingDto ConvertFromData(PluginId pluginId, LauncherItemId launcherItemId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var pluginPersistentFormatTransfer = new EnumTransfer<PluginPersistentFormat>();
 
@@ -71,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-        public bool SelecteExistsPluginLauncherItemSetting(Guid pluginId, Guid launcherItemId, string key)
+        public bool SelecteExistsPluginLauncherItemSetting(PluginId pluginId, LauncherItemId launcherItemId, string key)
         {
             var statement = LoadStatement();
             var parameter = new PluginLauncherItemSettingDto() {
@@ -83,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirstOrDefault<bool>(statement, parameter);
         }
 
-        public PluginSettingRawValue? SelectPluginLauncherItemValue(Guid pluginId, Guid launcherItemId, string key)
+        public PluginSettingRawValue? SelectPluginLauncherItemValue(PluginId pluginId, LauncherItemId launcherItemId, string key)
         {
             var statement = LoadStatement();
             var parameter = new PluginLauncherItemSettingDto() {
@@ -101,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        internal bool InsertPluginLauncherItemSetting(Guid pluginId, Guid launcherItemId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        internal bool InsertPluginLauncherItemSetting(PluginId pluginId, LauncherItemId launcherItemId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, launcherItemId, key, data, databaseCommonStatus);
@@ -109,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        internal bool UpdatePluginLauncherItemSetting(Guid pluginId, Guid launcherItemId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        internal bool UpdatePluginLauncherItemSetting(PluginId pluginId, LauncherItemId launcherItemId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, launcherItemId, key, data, databaseCommonStatus);
@@ -117,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        public bool DeletePluginLauncherItemSetting(Guid pluginId, Guid launcherItemId, string key)
+        public bool DeletePluginLauncherItemSetting(PluginId pluginId, LauncherItemId launcherItemId, string key)
         {
             var statement = LoadStatement();
             var parameter = new PluginLauncherItemSettingDto() {
@@ -129,7 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        public int DeletePluginLauncherItemSettingsByPluginId(Guid pluginId)
+        public int DeletePluginLauncherItemSettingsByPluginId(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {

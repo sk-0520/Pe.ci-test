@@ -410,7 +410,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         private void ItemDrop(UIElement sender, DragEventArgs e)
         {
-            Guid launcherItemId = Guid.Empty;
+            LauncherItemId launcherItemId = LauncherItemId.Empty;
             var frameworkElement = (FrameworkElement)sender;
             var launcherContentControl = (LauncherContentControl)frameworkElement.DataContext;
             if(launcherContentControl != null) {
@@ -418,7 +418,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 launcherItemId = launcherItem.LauncherItemId;
             }
 
-            if(Guid.Empty == launcherItemId) {
+            if(LauncherItemId.Empty == launcherItemId) {
                 Logger.LogError("ランチャーアイテムID取得できず, {0}, {1}", sender, e);
                 return;
             }
@@ -440,7 +440,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        void ExecuteExtendDropData(Guid launcherItemId, string argument)
+        void ExecuteExtendDropData(LauncherItemId launcherItemId, string argument)
         {
             switch(ContentDropMode) {
                 case LauncherToolbarContentDropMode.ExtendsExecute:
