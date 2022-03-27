@@ -5,39 +5,7 @@ block BLOCK_LAYOUT_VAR
 
 block BLOCK_LAYOUT_CONTENT
 	section
-		p Pe 本体でプロキシ設定は行えません。
 		p
 			| プロキシ設定を行うには環境変数
 			var HTTP_PROXY
-			| を使用するか
-			a(href="help.others-appsettings.pug") アプリケーション構成ファイル
-			| を設定する必要があります。
-
-	section
-		h2 アプリケーション構成ファイル
-
-		table
-			tr
-				th キー
-				th 型
-				th 値
-			tr
-				td: code proxy:is_enabled
-				td: code boolean
-				td プロキシを使用するか
-			tr
-				td: code proxy:uri
-				td: code string
-				td プロキシサーバーURLを指定
-			tr
-				td: code proxy:credential_is_enabled
-				td: code boolean
-				td プロキシサーバーに対して認証を使用するか
-			tr
-				td: code proxy:credential_user
-				td: code string
-				td 認証ユーザー名
-			tr
-				td: code proxy:credential_password
-				td: code string
-				td 認証パスワード
+			| を使用するか設定(基本→プロキシ設定)が必要です。

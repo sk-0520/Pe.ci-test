@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -21,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
                 KeyDisableToEnableTime = TimeSpan.Zero,
             };
             keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
-                new KeyActionDisableData(Guid.NewGuid(), false),
+                new KeyActionDisableData(new KeyActionId(Guid.NewGuid()), false),
                 new KeyMappingData() {
                     Key = Key.B
                 }
@@ -50,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
         {
             var keyActionChecker = new KeyActionChecker(Test.LoggerFactory);
             keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
-                new KeyActionDisableData(Guid.NewGuid(), false),
+                new KeyActionDisableData(new KeyActionId(Guid.NewGuid()), false),
                 new KeyMappingData() {
                     Key = Key.A
                 }
@@ -73,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
         {
             var keyActionChecker = new KeyActionChecker(Test.LoggerFactory);
             keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
-                new KeyActionDisableData(Guid.NewGuid(), true),
+                new KeyActionDisableData(new KeyActionId(Guid.NewGuid()), true),
                 new KeyMappingData() {
                     Key = Key.A
                 }
@@ -96,19 +97,19 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
         {
             var keyActionChecker = new KeyActionChecker(Test.LoggerFactory);
             keyActionChecker.ReplaceJobs.Add(new KeyActionReplaceJob(
-                new KeyActionReplaceData(Guid.NewGuid(), Key.B),
+                new KeyActionReplaceData(new KeyActionId(Guid.NewGuid()), Key.B),
                 new KeyMappingData() {
                     Key = Key.A
                 }
             ));
             keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
-                new KeyActionDisableData(Guid.NewGuid(), false),
+                new KeyActionDisableData(new KeyActionId(Guid.NewGuid()), false),
                 new KeyMappingData() {
                     Key = Key.C
                 }
             ));
             keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
-                new KeyActionDisableData(Guid.NewGuid(), false),
+                new KeyActionDisableData(new KeyActionId(Guid.NewGuid()), false),
                 new KeyMappingData() {
                     Key = Key.C
                 }
@@ -123,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
             Assert.AreEqual(1, expected2.Count);
 
             keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
-                new KeyActionDisableData(Guid.NewGuid(), false),
+                new KeyActionDisableData(new KeyActionId(Guid.NewGuid()), false),
                 new KeyMappingData() {
                     Key = Key.A
                 }

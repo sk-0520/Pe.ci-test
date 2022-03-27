@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="owner">対象オブジェクト。</param>
         /// <param name="value">値。</param>
-        void Set(object owner, object value);
+        void Set(object owner, object? value);
 
         #endregion
     }
@@ -209,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region IPropertySetter
 
-        /// <inheritdoc cref="IPropertySetter.Set(object, object)"/>
+        /// <inheritdoc cref="IPropertySetter.Set(object, object?)"/>
         public void Set(object owner, object? value) => Setter(owner, value);
 
         #endregion
@@ -222,10 +223,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <typeparam name="TValue"></typeparam>
     public class PropertyAccesser<TOwner, TValue>: PropertyAccesser, IPropertyGetter<TOwner, TValue>, IPropertySetter<TOwner, TValue>
     {
-        public PropertyAccesser(TOwner owner, string propertyName)
-            : base(owner!, propertyName)
+        public PropertyAccesser([DisallowNull] TOwner owner, string propertyName)
+            : base(owner, propertyName)
         {
-            var ownerProperty = PropertyExpressionFactory.CreateOwner(owner!);
+            var ownerProperty = PropertyExpressionFactory.CreateOwner(owner);
             if(PropertyInfo.CanWrite) {
                 Setter = PropertyExpressionFactory.CreateSetter<TOwner, TValue>(ownerProperty, propertyName);
             } else {
@@ -285,7 +286,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="owner"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        public static PropertyAccesser<TOwner, TValue> Create<TOwner, TValue>(TOwner owner, string propertyName) => new PropertyAccesser<TOwner, TValue>(owner, propertyName);
+        public static PropertyAccesser<TOwner, TValue> Create<TOwner, TValue>([DisallowNull] TOwner owner, string propertyName) => new PropertyAccesser<TOwner, TValue>(owner, propertyName);
 
         #endregion
     }

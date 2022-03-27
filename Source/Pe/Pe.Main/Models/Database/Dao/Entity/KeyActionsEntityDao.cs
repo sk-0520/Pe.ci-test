@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid KeyActionId { get; set; }
+            public KeyActionId KeyActionId { get; set; }
             public string KeyActionKind { get; set; } = string.Empty;
             public string KeyActionContent { get; set; } = string.Empty;
             public string Comment { get; set; } = string.Empty;
@@ -109,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, dto) == 1;
         }
 
-        public bool UpdateUsageCountIncrement(Guid keyActionId, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateUsageCountIncrement(KeyActionId keyActionId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
@@ -117,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        public bool DeleteKeyAciton(Guid keyActionId)
+        public bool DeleteKeyAciton(KeyActionId keyActionId)
         {
             var statement = LoadStatement();
             var parameter = new { KeyActionId = keyActionId };

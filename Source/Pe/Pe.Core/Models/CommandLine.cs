@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
 
         /// <summary>
-        ///
+        /// 生成。
         /// </summary>
         /// <param name="shortKey">短いキー。</param>
         /// <param name="longKey">長いキー。</param>
@@ -132,6 +132,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public class CommandLine
     {
         /// <summary>
+        /// アプリ状態から生成。
         /// <para><see cref="Environment.GetCommandLineArgs()"/>からコマンドライン分解。</para>
         /// <para><see cref="CommandName"/>を含む。</para>
         /// </summary>
@@ -140,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         { }
 
         /// <summary>
-        /// 引数からコマンドライン分解。
+        /// 指定引数から生成。
         /// </summary>
         /// <param name="arguments">コマンドライン引数。</param>
         /// <param name="withCommand"><see cref="arguments"/>の先頭はプログラム/コマンドか。<para>Main関数だと含まれず、<see cref="Environment.GetCommandLineArgs()"/>だと含まれてる的な。</para></param>
@@ -159,7 +160,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         /// <summary>
         /// プログラム/コマンド名。
-        /// <para>nullが入ることはない。</para>
+        /// <para><c>null</c>が入ることはない。</para>
         /// </summary>
         public string CommandName { get; }
         /// <summary>
@@ -182,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public IReadOnlyList<CommandLineKey> Keys => KeyItems;
 
         /// <summary>
-        /// 値一覧。
+        /// 値一覧実体。
         /// </summary>
         private Dictionary<CommandLineKey, ICommandLineValue> ValueItems { get; } = new Dictionary<CommandLineKey, ICommandLineValue>();
         /// <summary>
@@ -191,7 +192,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public IReadOnlyDictionary<CommandLineKey, ICommandLineValue> Values => ValueItems;
 
         /// <summary>
-        /// スイッチ一覧。
+        /// スイッチ一覧実体。
         /// </summary>
         private HashSet<CommandLineKey> SwitchItems { get; } = new HashSet<CommandLineKey>();
         /// <summary>
@@ -200,7 +201,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public IReadOnlyCollection<CommandLineKey> Switches => SwitchItems;
 
         /// <summary>
-        /// 不明アイテム一覧。
+        /// 不明アイテム一覧実体。
         /// </summary>
         private List<string> UnknownItems { get; } = new List<string>();
         /// <summary>
@@ -394,8 +395,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 短いキーから値取得。
         /// </summary>
-        /// <param name="shortKey"></param>
-        /// <returns>取得した値。取得できない場合は null 。</returns>
+        /// <param name="shortKey">短いキー。</param>
+        /// <returns>取得した値。取得できない場合は<c>null</c>。</returns>
         public CommandLineKey? GetKey(char shortKey)
         {
             return KeyItems
@@ -408,8 +409,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 長いキーから値取得。
         /// </summary>
-        /// <param name="shortKey"></param>
-        /// <returns>取得した値。取得できない場合は null 。</returns>
+        /// <param name="longKey">長いキー。</param>
+        /// <returns>取得した値。取得できない場合は<c>null</c>。</returns>
         public CommandLineKey? GetKey(string longKey)
         {
             return KeyItems
@@ -419,6 +420,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             ;
         }
 
+        /// <summary>
+        /// 文字列をコマンド実行可能な書式に変換する。
+        /// </summary>
+        /// <param name="input">対象文字列。</param>
+        /// <returns></returns>
         public static string Escape(string input)
         {
             if(string.IsNullOrWhiteSpace(input)) {
@@ -441,6 +447,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region function
 
+        /// <summary>
+        /// <see cref="CommandLine"/>のキーから値を取得。
+        /// </summary>
+        /// <param name="commandLine">対象の<see cref="CommandLine"/>。</param>
+        /// <param name="key">キー。</param>
+        /// <param name="defaultValue"><paramref name="key"/>が存在しない場合の戻り値。</param>
+        /// <returns><paramref name="key"/>に対する値。存在しない場合は<paramref name="defaultValue"/>を返す。</returns>
         public static string GetValue(this CommandLine commandLine, string key, string defaultValue)
         {
             var commandLineKey = commandLine.GetKey(key);
@@ -453,6 +466,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return defaultValue;
         }
 
+        /// <summary>
+        /// <see cref="CommandLine"/>のスイッチを取得。
+        /// </summary>
+        /// <param name="commandLine">対象の<see cref="CommandLine"/>。</param>
+        /// <param name="key">キー。</param>
+        /// <returns>スイッチ状態。</returns>
         public static bool ExistsSwitch(this CommandLine commandLine, string key)
         {
             var commandLineKey = commandLine.GetKey(key);

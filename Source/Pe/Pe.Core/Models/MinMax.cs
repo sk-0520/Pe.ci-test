@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Maximum = maximum;
         }
 
-        #region IReadOnlyRange
+        #region IReadOnlyMinMax
 
         [DataMember]
         public T Minimum { get; set; }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid LauncherItemId { get; set; }
+            public LauncherItemId LauncherItemId { get; set; }
             public string TagName { get; set; } = string.Empty;
 
             #endregion
@@ -39,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public IEnumerable<string> SelectTags(Guid launcherItemId)
+        public IEnumerable<string> SelectTags(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -48,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Query<string>(statement, parameter);
         }
 
-        public IEnumerable<string> SelectUniqueTags(Guid launcherItemId)
+        public IEnumerable<string> SelectUniqueTags(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -57,17 +58,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Query<string>(statement, parameter);
         }
 
-        public IDictionary<Guid, List<string>> SelectAllTags()
+        public IDictionary<LauncherItemId, List<string>> SelectAllTags()
         {
             var statement = LoadStatement();
-            var map = Context.Query<(Guid id, string tag)>(statement)
+            var map = Context.Query<(LauncherItemId id, string tag)>(statement)
                 .GroupBy(i => i.id, i => i.tag)
                 .ToDictionary(i => i.Key, i => i.ToList())
             ;
             return map;
         }
 
-        public void InsertTags(Guid launcherItemId, IEnumerable<string> tags, IDatabaseCommonStatus commonStatus)
+        public void InsertTags(LauncherItemId launcherItemId, IEnumerable<string> tags, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             foreach(var tag in tags) {
@@ -80,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             }
         }
 
-        public int DeleteTagByLauncherItemId(Guid launcherItemId)
+        public int DeleteTagByLauncherItemId(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {

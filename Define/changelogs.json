@@ -1,5 +1,50 @@
 [
 	{
+		"date": "2022/03/27",
+		"version": "0.99.169",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"class": "compatibility",
+						"subject": "#778 対応によりプロキシ設定は本体設定機能に取り込まれました",
+						"comments": [
+							"既存のプロキシ設定は無効化されます"
+						]
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "0f75a88e690fef216ef5fb6332e137bbaf938cb0",
+						"subject": "#778: プロキシをアプリケーション設定から編集可能にする",
+						"comments": [
+							"残課題は #797 で対応する",
+							"既存プロキシ設定はすべて無視"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "4a5e6d54456eed5a6981862813a345867a329e0f",
+						"subject": "#798: IDの型を専用にする "
+					},
+					{
+						"revision": "8e635213f723db5b8ab93b915e38513d42a70add",
+						"class": "nuget",
+						"subject": "Microsoft.Extensions.Logging.Abstractions 6.0.0 -> 6.0.1"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2022/03/13",
 		"version": "0.99.168",
 		"contents": [

@@ -83,6 +83,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static string JoinString<T>(this IEnumerable<T> source, string? separator) => string.Join(separator, source);
     }
 
+    /// <summary>
+    /// コレクション LINQ。
+    /// </summary>
     public static class CollectionExtensions
     {
         /// <summary>

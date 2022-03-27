@@ -8,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     {
         public NullPluginInformation()
             : base(
-                  new PluginIdentifiers(Guid.Empty, "NullPlugin"),
+                  new PluginIdentifiers(PluginId.Empty, "NullPlugin"),
                   new PluginVersions(new Version(), new Version(), new Version(), Array.Empty<string>()),
                   new PluginAuthors(new Author("Pe"), PluginLicense.Unknown)
             )

@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -13,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid LauncherItemId { get; set; }
+            public LauncherItemId LauncherItemId { get; set; }
 
             public string ProtocolAlias { get; set; } = string.Empty;
             public string Option { get; set; } = string.Empty;
@@ -35,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        private LauncherStoreAppsEntityDto ConvertFromData(Guid launcherItemId, LauncherStoreAppData data, IDatabaseCommonStatus commonStatus)
+        private LauncherStoreAppsEntityDto ConvertFromData(LauncherItemId launcherItemId, LauncherStoreAppData data, IDatabaseCommonStatus commonStatus)
         {
             var dto = new LauncherStoreAppsEntityDto() {
                 LauncherItemId = launcherItemId,
@@ -55,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public LauncherStoreAppData SelectStoreApp(Guid launcherItemId)
+        public LauncherStoreAppData SelectStoreApp(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -65,14 +66,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public bool InsertStoreApp(Guid launcherItemId, LauncherStoreAppData data, IDatabaseCommonStatus commonStatus)
+        public bool InsertStoreApp(LauncherItemId launcherItemId, LauncherStoreAppData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(launcherItemId, data, commonStatus);
             return Context.Execute(statement, dto) == 1;
         }
 
-        public bool UpdateStoreApp(Guid launcherItemId, LauncherStoreAppData data, IDatabaseCommonStatus commonStatus)
+        public bool UpdateStoreApp(LauncherItemId launcherItemId, LauncherStoreAppData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(launcherItemId, data, commonStatus);

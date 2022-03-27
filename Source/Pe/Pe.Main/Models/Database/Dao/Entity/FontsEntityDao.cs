@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid FontId { get; set; }
+            public FontId FontId { get; set; }
             public string FamilyName { get; set; } = string.Empty;
             public double Height { get; set; }
             public bool IsBold { get; set; }
@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-        public FontData SelectFont(Guid fontId)
+        public FontData SelectFont(FontId fontId)
         {
             var statement = LoadStatement();
             var param = new {
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public bool InsertFont(Guid fontId, IFont font, IDatabaseCommonStatus databaseCommonStatus)
+        public bool InsertFont(FontId fontId, IFont font, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = ConvertFromData(font, databaseCommonStatus);
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, param) == 1;
         }
 
-        public bool InsertCopyFont(Guid sourceFontId, Guid destinationFontId, IDatabaseCommonStatus commonStatus)
+        public bool InsertCopyFont(FontId sourceFontId, FontId destinationFontId, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         }
 
 
-        public bool UpdateFamilyName(Guid fontId, string familyName, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateFamilyName(FontId fontId, string familyName, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        public bool UpdateBold(Guid fontId, bool isBold, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateBold(FontId fontId, bool isBold, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        public bool UpdateItalic(Guid fontId, bool isItalic, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateItalic(FontId fontId, bool isItalic, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        public bool UpdateHeight(Guid fontId, double height, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateHeight(FontId fontId, double height, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        public bool UpdateFont(Guid fontId, IFont font, IDatabaseCommonStatus commonStatus)
+        public bool UpdateFont(FontId fontId, IFont font, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = ConvertFromData(font, commonStatus);

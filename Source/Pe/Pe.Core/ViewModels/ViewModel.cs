@@ -130,9 +130,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// </summary>
         /// <typeparam name="TCommand"></typeparam>
         /// <param name="creator"></param>
-        /// <param name="callerMemberName"></param>
+        /// <param name="callerMemberName"><see cref="CallerMemberNameAttribute"/></param>
         /// <param name="callerFilePath"></param>
-        /// <param name="callerLineNumber"></param>
+        /// <param name="callerLineNumber"><see cref="CallerLineNumberAttribute"/></param>
         /// <returns></returns>
         protected TCommand GetOrCreateCommand<TCommand>(Func<TCommand> creator, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
             where TCommand : ICommand

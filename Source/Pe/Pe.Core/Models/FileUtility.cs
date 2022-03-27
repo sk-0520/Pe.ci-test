@@ -20,6 +20,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(dirPath == null) {
                 return string.Empty;
             }
+
             var dirInfo = Directory.CreateDirectory(dirPath);
             return dirInfo.FullName;
         }
@@ -31,8 +32,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// ファイル・ディレクトリ問わずに存在するか
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
+        /// <param name="path">対象パス。</param>
+        /// <returns>存在状態。</returns>
         public static bool Exists(string? path)
         {
             if(path == null) {
@@ -43,10 +44,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <summary>
-        /// 対象パスを削除。
+        /// ファイル・ディレクトリ問わずに対象パスを削除。
         /// <para>ファイル・ディレクトリを問わない(ディレクトリの場合は再帰的削除)。</para>
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">対象パス。</param>
+        /// <exception cref="IOException">ファイルでもディレクトリでもなかった。</exception>
         public static void Delete(string path)
         {
             if(File.Exists(path)) {
@@ -61,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// パスから名前取得。
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">対象パス。</param>
         /// <returns></returns>
         public static string GetName(string path)
         {

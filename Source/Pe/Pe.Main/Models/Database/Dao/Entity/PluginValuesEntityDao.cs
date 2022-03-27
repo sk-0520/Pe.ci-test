@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using Microsoft.Extensions.Logging;
 
@@ -24,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public int DeletePluginValuesByPluginId(Guid pluginId)
+        public int DeletePluginValuesByPluginId(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -14,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid LauncherGroupId { get; set; }
+            public LauncherGroupId LauncherGroupId { get; set; }
             public string Kind { get; set; } = string.Empty;
             public string Name { get; set; } = string.Empty;
             public string ImageName { get; set; } = string.Empty;
@@ -88,10 +89,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QuerySingle<long>(statement);
         }
 
-        public IEnumerable<Guid> SelectAllLauncherGroupIds()
+        public IEnumerable<LauncherGroupId> SelectAllLauncherGroupIds()
         {
             var statement = LoadStatement();
-            return Context.Query<Guid>(statement);
+            return Context.Query<LauncherGroupId>(statement);
         }
 
         public IEnumerable<string> SelectAllLauncherGroupNames()
@@ -101,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         }
 
 
-        public LauncherGroupData SelectLauncherGroup(Guid launcherGroupId)
+        public LauncherGroupData SelectLauncherGroup(LauncherGroupId launcherGroupId)
         {
             var statement = LoadStatement();
             var param = new {
@@ -127,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, dto) == 1;
         }
 
-        public int DeleteGroup(Guid launcherGroupId)
+        public int DeleteGroup(LauncherGroupId launcherGroupId)
         {
             var statement = LoadStatement();
             var parameter = new {

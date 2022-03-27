@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             AppCommandSettingEditor = new AppCommandSettingEditorElement(MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             AppNoteSettingEditor = new AppNoteSettingEditorElement(MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             AppStandardInputOutputSettingEditor = new AppStandardInputOutputSettingEditorElement(MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+            AppProxySettingEditor = new AppProxySettingEditorElement(MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
 
             Editors = new List<GeneralSettingEditorElementBase>() {
                 AppExecuteSettingEditor,
@@ -33,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 AppCommandSettingEditor,
                 AppNoteSettingEditor,
                 AppStandardInputOutputSettingEditor,
+                AppProxySettingEditor,
             };
         }
 
@@ -46,6 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public AppCommandSettingEditorElement AppCommandSettingEditor { get; }
         public AppNoteSettingEditorElement AppNoteSettingEditor { get; }
         public AppStandardInputOutputSettingEditorElement AppStandardInputOutputSettingEditor { get; }
+        public AppProxySettingEditorElement AppProxySettingEditor { get; }
 
         private IList<GeneralSettingEditorElementBase> Editors { get; }
 

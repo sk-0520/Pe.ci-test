@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid LauncherItemId { get; set; }
+            public LauncherItemId LauncherItemId { get; set; }
             public string EnvName { get; set; } = string.Empty;
             public string EnvValue { get; set; } = string.Empty;
 
@@ -51,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-private         LauncherEnvVarsEntityDto ConvertFromData(Guid launcherItemId, LauncherEnvironmentVariableData data, IDatabaseCommonStatus databaseCommonStatus)
+        private LauncherEnvVarsEntityDto ConvertFromData(LauncherItemId launcherItemId, LauncherEnvironmentVariableData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var dto = new LauncherEnvVarsEntityDto() {
                 LauncherItemId = launcherItemId,
@@ -64,7 +65,7 @@ private         LauncherEnvVarsEntityDto ConvertFromData(Guid launcherItemId, La
             return dto;
         }
 
-        public IEnumerable<LauncherEnvironmentVariableData> SelectEnvVarItems(Guid launcherItemId)
+        public IEnumerable<LauncherEnvironmentVariableData> SelectEnvVarItems(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -77,7 +78,7 @@ private         LauncherEnvVarsEntityDto ConvertFromData(Guid launcherItemId, La
 
         }
 
-        public void InsertEnvVarItems(Guid launcherItemId, IEnumerable<LauncherEnvironmentVariableData> items, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertEnvVarItems(LauncherItemId launcherItemId, IEnumerable<LauncherEnvironmentVariableData> items, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
 
@@ -86,7 +87,7 @@ private         LauncherEnvVarsEntityDto ConvertFromData(Guid launcherItemId, La
             }
         }
 
-        public int DeleteEnvVarItemsByLauncherItemId(Guid launcherItemId)
+        public int DeleteEnvVarItemsByLauncherItemId(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
@@ -140,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインアセンブリ読み込み失敗: {0}", pluginFile.Name);
                 loadContext.Unload();
-                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? PluginId.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
             }
 
             Type? pluginInterfaceImpl = null;
@@ -166,13 +167,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインアセンブリ リフレクション失敗: {0}", pluginFile.Name);
                 loadContext.Unload();
-                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? PluginId.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
             }
 
             if(pluginInterfaceImpl == null) {
                 Logger.LogError("プラグインアセンブリからプラグインインターフェイス取得できず: {0}, {1}", pluginAssembly.FullName, pluginFile.FullName);
                 loadContext.Unload();
-                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? PluginId.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
             }
 
             Logger.LogDebug("[{0}]", pluginInterfaceImpl.FullName);
@@ -196,7 +197,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインインターフェイスを生成できず: {0}, {1}, {2}", ex.Message, pluginAssembly.FullName, pluginFile.FullName);
                 loadContext.Unload();
-                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? PluginId.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
             }
 
             var pluginId = pluginInformations.PluginIdentifiers.PluginId;

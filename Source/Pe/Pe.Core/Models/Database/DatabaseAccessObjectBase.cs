@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <summary>
         /// <see cref="IDatabaseStatementLoader.LoadStatementByCurrent(Type, string)"/>のヘルパー関数。
         /// </summary>
-        /// <param name="callerMemberName"></param>
+        /// <param name="callerMemberName"><see cref="CallerMemberNameAttribute"/></param>
         /// <returns></returns>
         protected string LoadStatement([CallerMemberName] string callerMemberName = "")
         {
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </example>
         /// <param name="statement"></param>
         /// <param name="blocks"></param>
-        /// <param name="callerMemberName"></param>
+        /// <param name="callerMemberName"><see cref="CallerMemberNameAttribute"/></param>
         /// <returns></returns>
         protected string ProcessStatement(string statement, IReadOnlyDictionary<string, string> blocks, [CallerMemberName] string callerMemberName = "")
         {

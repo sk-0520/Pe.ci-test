@@ -2,6 +2,9 @@ using System.Collections.Generic;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// (バイト: IEC_80000-13)サイズ変換処理。
+    /// </summary>
     public class SizeConverter
     {
         #region property

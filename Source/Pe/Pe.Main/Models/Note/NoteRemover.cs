@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
@@ -9,14 +10,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
 {
     public class NoteRemover: EntityRemoverBase
     {
-        public NoteRemover(Guid noteId, ILoggerFactory loggerFactory) : base(loggerFactory)
+        public NoteRemover(NoteId noteId, ILoggerFactory loggerFactory) : base(loggerFactory)
         {
             NoteId = noteId;
         }
 
         #region property
 
-        private Guid NoteId { get; }
+        private NoteId NoteId { get; }
 
         #endregion
 

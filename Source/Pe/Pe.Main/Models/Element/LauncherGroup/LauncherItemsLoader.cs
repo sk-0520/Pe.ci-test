@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
@@ -29,13 +30,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         #region function
 
-        private IEnumerable<Guid> LoadNormalIds(Guid launcherGroupId)
+        private IEnumerable<LauncherItemId> LoadNormalIds(LauncherGroupId launcherGroupId)
         {
             var dao = new LauncherGroupItemsEntityDao(Context, StatementLoader, Implementation, LoggerFactory);
             return dao.SelectLauncherItemIds(launcherGroupId);
         }
 
-        public IEnumerable<Guid> LoadLauncherItemIds(Guid launcherGroupId, LauncherGroupKind kind)
+        public IEnumerable<LauncherItemId> LoadLauncherItemIds(LauncherGroupId launcherGroupId, LauncherGroupKind kind)
         {
             switch(kind) {
                 case LauncherGroupKind.Normal:

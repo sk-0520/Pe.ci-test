@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
@@ -257,7 +258,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return pluginInstaller;
         }
 
-        private async Task<bool> CheckPluginNewVersionAsync(Guid pluginId, string pluginName, Version pluginVersion)
+        private async Task<bool> CheckPluginNewVersionAsync(PluginId pluginId, string pluginName, Version pluginVersion)
         {
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
             var newVersionChecker = ApplicationDiContainer.Build<NewVersionChecker>();
@@ -333,7 +334,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
                 lastUsedPlugins = pluginsEntityDao.SelectAllLastUsedPlugins().ToList();
             }
-            var newVersionPlugins = new Dictionary<Guid, bool>(lastUsedPlugins.Count);
+            var newVersionPlugins = new Dictionary<PluginId, bool>(lastUsedPlugins.Count);
             foreach(var lastUsePlugin in lastUsedPlugins) {
                 try {
                     var newVersion = await CheckPluginNewVersionAsync(lastUsePlugin.PluginId, lastUsePlugin.Name, lastUsePlugin.Version);

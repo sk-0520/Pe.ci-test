@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
@@ -7,14 +8,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region function
 
-        Guid CreateLauncherItemId();
-        Guid CreateCredentId();
-        Guid CreateLauncherToolbarId();
-        Guid CreateFontId();
-        Guid CreateLauncherGroupId();
-        Guid CreateNoteId();
-        Guid CreateNoteFileId();
-        Guid CreateKeyActionId();
+        LauncherItemId CreateLauncherItemId();
+        CredentialIdId CreateCredentialId();
+        LauncherToolbarId CreateLauncherToolbarId();
+        FontId CreateFontId();
+        LauncherGroupId CreateLauncherGroupId();
+        NoteId CreateNoteId();
+        NoteFileId CreateNoteFileId();
+        KeyActionId CreateKeyActionId();
 
         #endregion
     }
@@ -34,14 +35,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region IIdFactory
 
-        public Guid CreateLauncherItemId() => Guid.NewGuid();
-        public Guid CreateCredentId() => Guid.NewGuid();
-        public Guid CreateLauncherToolbarId() => Guid.NewGuid();
-        public Guid CreateFontId() => Guid.NewGuid();
-        public Guid CreateLauncherGroupId() => Guid.NewGuid();
-        public Guid CreateNoteId() => Guid.NewGuid();
-        public Guid CreateNoteFileId() => Guid.NewGuid();
-        public Guid CreateKeyActionId() => Guid.NewGuid();
+        public LauncherItemId CreateLauncherItemId() => new LauncherItemId(Guid.NewGuid());
+        public CredentialIdId CreateCredentialId() => new CredentialIdId(Guid.NewGuid());
+        public LauncherToolbarId CreateLauncherToolbarId() => new LauncherToolbarId(Guid.NewGuid());
+        public FontId CreateFontId() => new FontId(Guid.NewGuid());
+        public LauncherGroupId CreateLauncherGroupId() => new LauncherGroupId(Guid.NewGuid());
+        public NoteId CreateNoteId() => new NoteId(Guid.NewGuid());
+        public NoteFileId CreateNoteFileId() => new NoteFileId(Guid.NewGuid());
+        public KeyActionId CreateKeyActionId() => new KeyActionId(Guid.NewGuid());
 
         #endregion
     }

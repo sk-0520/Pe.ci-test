@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -97,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ReplaceJobEditors.Add(editor);
         }
 
-        public void RemoveReplaceJob(Guid keyActionId)
+        public void RemoveReplaceJob(KeyActionId keyActionId)
         {
             var editor = ReplaceJobEditors.First(i => i.KeyActionId == keyActionId);
             ReplaceJobEditors.Remove(editor);
@@ -117,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             DisableJobEditors.Add(editor);
         }
 
-        public void RemoveDisableJob(Guid keyActionId)
+        public void RemoveDisableJob(KeyActionId keyActionId)
         {
             var editor = DisableJobEditors.First(i => i.KeyActionId == keyActionId);
             DisableJobEditors.Remove(editor);
@@ -141,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             PressedJobEditors.Add(editor);
         }
 
-        public void RemovePressedJob(Guid keyActionId)
+        public void RemovePressedJob(KeyActionId keyActionId)
         {
             var editor = PressedJobEditors.First(i => i.KeyActionId == keyActionId);
             PressedJobEditors.Remove(editor);

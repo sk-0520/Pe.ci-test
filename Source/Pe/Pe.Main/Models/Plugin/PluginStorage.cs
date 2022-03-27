@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -578,7 +579,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region IPluginId
 
-        public Guid PluginId => PluginIdentifiers.PluginId;
+        public PluginId PluginId => PluginIdentifiers.PluginId;
 
         #endregion
     }

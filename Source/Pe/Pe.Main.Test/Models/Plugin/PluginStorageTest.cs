@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
         const string pluginDataDirName = "__test-plugin__";
 
         readonly PluginInformations Informations = new PluginInformations(
-            new PluginIdentifiers(new Guid("00000000-1111-2222-3333-444444444444"), "test-plugin"),
+            new PluginIdentifiers(new PluginId(new Guid("00000000-1111-2222-3333-444444444444")), "test-plugin"),
             new PluginVersions(new Version(1, 2, 3), new Version(), new Version(), Array.Empty<string>()),
             new PluginAuthors(new Author("testman"), PluginLicense.Unknown)
         );
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
         [TestMethod]
         public void FileTest()
         {
-            var dir = new DirectoryInfo(Path.Combine(".", pluginDataDirName, "user", this.Informations.PluginIdentifiers.PluginId.ToString("D")));
+            var dir = new DirectoryInfo(Path.Combine(".", pluginDataDirName, "user", this.Informations.PluginIdentifiers.PluginId.Id.ToString("D")));
             dir.Refresh();
             if(dir.Exists) {
                 var directoryCleaner = Test.DiContainer.Build<DirectoryCleaner>(dir, 10, TimeSpan.FromMilliseconds(300));

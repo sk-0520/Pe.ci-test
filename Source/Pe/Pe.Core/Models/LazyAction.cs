@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         private Timer Timer { get; }
         /// <summary>
         /// 遅延処理本体。
-        /// <para>遅延処理待機中のみ非null</para>
+        /// <para>遅延処理待機中のみ非<c>null</c>。</para>
         /// </summary>
         private Action? Action { get; set; }
 

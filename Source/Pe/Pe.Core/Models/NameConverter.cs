@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// 命名変換処理。
+    /// </summary>
     public class NameConverter
     {
         #region function

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -27,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
 
         public ObservableCollection<LauncherGroupSettingEditorElement> GroupItems { get; }
-        public ObservableCollection<WrapModel<Guid>> LauncherItems { get; } = new ObservableCollection<WrapModel<Guid>>();
+        public ObservableCollection<WrapModel<LauncherItemId>> LauncherItems { get; } = new ObservableCollection<WrapModel<LauncherItemId>>();
 
 
         #endregion
@@ -47,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //}
         }
 
-        public void RemoveGroup(Guid launcherGroupId)
+        public void RemoveGroup(LauncherGroupId launcherGroupId)
         {
             var targetItem = GroupItems.First(i => i.LauncherGroupId == launcherGroupId);
             GroupItems.Remove(targetItem);
@@ -66,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             targetItem.Dispose();
         }
 
-        public Guid AddNewGroup(LauncherGroupKind kind)
+        public LauncherGroupId AddNewGroup(LauncherGroupKind kind)
         {
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
             var newGroupName = launcherFactory.CreateUniqueGroupName(GroupItems.Select(i => i.Name).ToList());
@@ -94,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             ThrowIfDisposed();
 
-            IReadOnlyList<Guid> launcherItemIds;
+            IReadOnlyList<LauncherItemId> launcherItemIds;
             //IReadOnlyList<Guid> groupIds;
             using(var context = MainDatabaseBarrier.WaitRead()) {
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
@@ -139,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             base.Dispose(disposing);
         }
 
-        protected override void ReceiveLauncherItemRemoved(Guid launcherItemId)
+        protected override void ReceiveLauncherItemRemoved(LauncherItemId launcherItemId)
         {
             base.ReceiveLauncherItemRemoved(launcherItemId);
 
@@ -153,5 +154,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
     }
-
 }

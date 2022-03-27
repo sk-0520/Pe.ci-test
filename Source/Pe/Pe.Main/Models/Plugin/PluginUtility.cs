@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 
@@ -32,13 +33,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// </summary>
         /// <param name="pluginId"></param>
         /// <returns></returns>
-        public static string ConvertDirectoryName(Guid pluginId)
+        public static string ConvertDirectoryName(PluginId pluginId)
         {
-            return pluginId.ToString("D");
+            return pluginId.Id.ToString("D");
         }
-        /// <inheritdoc cref="ConvertDirectoryName(Guid)"/>
+        /// <inheritdoc cref="ConvertDirectoryName(PluginId)"/>
         public static string ConvertDirectoryName(IPluginId pluginId) => ConvertDirectoryName(pluginId.PluginId);
-        /// <inheritdoc cref="ConvertDirectoryName(Guid)"/>
+        /// <inheritdoc cref="ConvertDirectoryName(PluginId)"/>
         public static string ConvertDirectoryName(IPluginIdentifiers pluginIdentifiers) => ConvertDirectoryName(pluginIdentifiers.PluginId);
 
         #endregion

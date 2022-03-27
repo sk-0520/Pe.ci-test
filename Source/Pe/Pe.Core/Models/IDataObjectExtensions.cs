@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
-        static string[] Formats { get; } = new[] {
+        private static string[] Formats { get; } = new[] {
             DataFormats.UnicodeText,
             DataFormats.OemText,
             DataFormats.Text,
@@ -36,6 +36,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     return true;
                 }
             }
+
             value = default;
             return false;
         }

@@ -10,9 +10,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
     internal class ApplicationDiContainer: DiContainer
     {
-        #region DiContainer
-        #endregion
-
         #region function
 
         /// <summary>

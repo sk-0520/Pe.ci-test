@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -13,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid FontId { get; set; }
+            public FontId FontId { get; set; }
             public string OutputForegroundColor { get; set; } = string.Empty;
             public string OutputBackgroundColor { get; set; } = string.Empty;
             public string ErrorForegroundColor { get; set; } = string.Empty;

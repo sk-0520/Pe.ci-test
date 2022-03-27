@@ -680,7 +680,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var pluginVersionChecksEntityDao = ApplicationDiContainer.Build<PluginVersionChecksEntityDao>(context, context.Implementation);
                 foreach(var pluginLoadStateItem in pluginLoadStateItems) {
                     // プラグインIDすら取得できなかったぶっこわれアセンブリは無視
-                    if(pluginLoadStateItem.PluginId == Guid.Empty && pluginLoadStateItem.LoadState == PluginState.IllegalAssembly) {
+                    if(pluginLoadStateItem.PluginId == PluginId.Empty && pluginLoadStateItem.LoadState == PluginState.IllegalAssembly) {
                         Logger.LogWarning("プラグイン {0} はもろもろおかしい", pluginLoadStateItem.PluginName);
                         if(pluginLoadStateItem == testPluginLoadState) {
 #if DEBUG
@@ -895,7 +895,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplyCurrentTheme(themePluginId);
         }
 
-        private void ApplyCurrentTheme(Guid themePluginId)
+        private void ApplyCurrentTheme(PluginId themePluginId)
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
 
@@ -1119,7 +1119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
 
-            IList<Guid> launcherGroupIds;
+            IList<LauncherGroupId> launcherGroupIds;
             using(var context = barrier.WaitRead()) {
                 var dao = ApplicationDiContainer.Build<LauncherGroupsEntityDao>(context, context.Implementation);
                 launcherGroupIds = dao.SelectAllLauncherGroupIds().ToList();
@@ -1152,7 +1152,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
 
-            IList<Guid> noteIds;
+            IList<NoteId> noteIds;
             using(var context = barrier.WaitRead()) {
                 var dao = ApplicationDiContainer.Build<NotesEntityDao>(context, context.Implementation);
                 noteIds = dao.SelectAllNoteIds().ToList();
@@ -1951,7 +1951,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        public LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId)
+        public LauncherGroupElement CreateLauncherGroupElement(LauncherGroupId launcherGroupId)
         {
             return OrderManager.CreateLauncherGroupElement(launcherGroupId);
         }
@@ -1960,13 +1960,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.CreateLauncherToolbarElement(dockScreen, launcherGroups);
         }
 
-        public LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId)
+        public LauncherItemElement GetOrCreateLauncherItemElement(LauncherItemId launcherItemId)
         {
             return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
         }
-        public void RefreshLauncherItemElement(Guid launcherItemId) => OrderManager.RefreshLauncherItemElement(launcherItemId);
+        public void RefreshLauncherItemElement(LauncherItemId launcherItemId) => OrderManager.RefreshLauncherItemElement(launcherItemId);
 
-        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen)
+        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(LauncherItemId launcherItemId, IScreen screen)
         {
             return OrderManager.CreateCustomizeLauncherItemContainerElement(launcherItemId, screen);
         }
@@ -1976,17 +1976,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.CreateExtendsExecuteElement(captionName, launcherFileData, launcherEnvironmentVariables, screen);
         }
 
-        public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen)
+        public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(LauncherItemId launcherItemId, IScreen screen)
         {
             return OrderManager.CreateLauncherExtendsExecuteElement(launcherItemId, screen);
         }
 
 
-        public NoteElement CreateNoteElement(Guid noteId, IScreen? screen, NoteStartupPosition startupPosition)
+        public NoteElement CreateNoteElement(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition)
         {
             return OrderManager.CreateNoteElement(noteId, screen, startupPosition);
         }
-        public bool RemoveNoteElement(Guid noteId)
+        public bool RemoveNoteElement(NoteId noteId)
         {
             var targetElement = NoteElements.FirstOrDefault(i => i.NoteId == noteId);
             if(targetElement == null) {
@@ -2013,12 +2013,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return false;
         }
 
-        public NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind)
+        public NoteContentElement CreateNoteContentElement(NoteId noteId, NoteContentKind contentKind)
         {
             return OrderManager.CreateNoteContentElement(noteId, contentKind);
         }
 
-        public SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater)
+        public SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater)
         {
             return OrderManager.CreateFontElement(defaultFontKind, fontId, parentUpdater);
         }
@@ -2031,8 +2031,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return element;
         }
 
-        /// <inheritdoc cref="IOrderManager.CreateLauncherItemExtensionElement(IPluginInformations, Guid)"/>
-        public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, Guid launcherItemId)
+        /// <inheritdoc cref="IOrderManager.CreateLauncherItemExtensionElement(IPluginInformations, LauncherItemId)"/>
+        public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, LauncherItemId launcherItemId)
         {
             var element = OrderManager.CreateLauncherItemExtensionElement(pluginInformations, launcherItemId);
             LauncherItemExtensions.Add(element);

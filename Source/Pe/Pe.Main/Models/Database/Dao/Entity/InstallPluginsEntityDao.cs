@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid PluginId { get; set; }
+            public PluginId PluginId { get; set; }
             public string PluginName { get; set; } = string.Empty;
             public Version? PluginVersion { get; set; }
             public string PluginInstallMode { get; set; } = string.Empty;
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             );
         }
 
-        public bool SelectExistsInstallPluginByPluginId(Guid pluginId)
+        public bool SelectExistsInstallPluginByPluginId(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -100,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.Execute(statement, parameter);
         }
 
-        public bool DeleteInstallPlugin(Guid pluginId)
+        public bool DeleteInstallPlugin(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {

@@ -121,7 +121,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-
     public sealed class AppGeneralSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppGeneralSettingEditorElement>
     {
         #region define
@@ -143,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             IDispatcherWrapper DispatcherWrapper { get; }
 
             public string Name => Plugin.PluginInformations.PluginIdentifiers.PluginName;
-            public Guid Id => Plugin.PluginInformations.PluginIdentifiers.PluginId;
+            public PluginId Id => Plugin.PluginInformations.PluginIdentifiers.PluginId;
 
             public DependencyObject PluginIcon
             {
@@ -321,7 +320,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-
     public sealed class AppLauncherToolbarSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppLauncherToolbarSettingEditorElement>
     {
         public AppLauncherToolbarSettingEditorViewModel(AppLauncherToolbarSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -356,7 +354,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
     }
-
 
     public sealed class AppCommandSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppCommandSettingEditorElement>
     {
@@ -438,7 +435,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
     }
-
 
     public sealed class AppNoteSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppNoteSettingEditorElement>
     {
@@ -539,7 +535,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-
     public sealed class AppStandardInputOutputSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppStandardInputOutputSettingEditorElement>
     {
         public AppStandardInputOutputSettingEditorViewModel(AppStandardInputOutputSettingEditorElement model, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -608,6 +603,49 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             base.Dispose(disposing);
         }
+
+        #endregion
+    }
+
+    public sealed class AppProxySettingEditorViewModel: GeneralSettingEditorViewModelBase<AppProxySettingEditorElement>
+    {
+        public AppProxySettingEditorViewModel(AppProxySettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, dispatcherWrapper, loggerFactory)
+        { }
+
+        #region property
+
+        public bool ProxyIsEnabled
+        {
+            get => Model.ProxyIsEnabled;
+            set => SetModelValue(value);
+        }
+        public string ProxyUrl
+        {
+            get => Model.ProxyUrl;
+            set => SetModelValue(value);
+        }
+        public bool CredentialIsEnabled
+        {
+            get => Model.CredentialIsEnabled;
+            set => SetModelValue(value);
+        }
+        public string CredentialUser
+        {
+            get => Model.CredentialUser;
+            set => SetModelValue(value);
+        }
+        public string CredentialPassword
+        {
+            get => Model.CredentialPassword;
+            set => SetModelValue(value);
+        }
+
+        #endregion
+
+        #region GeneralSettingEditorViewModelBase
+
+        public override string Header => Properties.Resources.String_Setting_Generals_Proxy_Header;
 
         #endregion
     }

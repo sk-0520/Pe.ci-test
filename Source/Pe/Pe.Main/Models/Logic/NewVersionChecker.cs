@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -125,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <param name="pluginId">プラグインID。</param>
         /// <param name="pluginVersion">プラグインバージョン。</param>
         /// <returns>構築したURI。構築できなかった場合は<c>null</c></returns>
-        private Uri? BuildPluginUri(string baseUrl, Guid pluginId, Version pluginVersion)
+        private Uri? BuildPluginUri(string baseUrl, PluginId pluginId, Version pluginVersion)
         {
             if(string.IsNullOrWhiteSpace(baseUrl)) {
                 return null;
@@ -167,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         /// <param name="plugin">プラグイン。</param>
         /// <returns>新バージョンがあれば新情報。なければ<c>null</c>。</returns>
-        public async Task<NewVersionItemData?> CheckPluginNewVersionAsync(Guid pluginId, Version pluginVersion, IEnumerable<string> urls)
+        public async Task<NewVersionItemData?> CheckPluginNewVersionAsync(PluginId pluginId, Version pluginVersion, IEnumerable<string> urls)
         {
             Debug.Assert(pluginId != ContentTypeTextNet.Pe.Plugins.DefaultTheme.DefaultTheme.Informations.PluginIdentifiers.PluginId);
 
@@ -197,14 +198,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return null;
         }
 
-        private async Task<NewVersionItemData?> GetPluginItem_Issue775Async(Guid pluginId, Version pluginVersion)
+        private async Task<NewVersionItemData?> GetPluginItem_Issue775Async(PluginId pluginId, Version pluginVersion)
         {
-            var map = new Dictionary<Guid, string>() {
-                [new Guid("67F0FA7D-52D3-4889-B595-BE3703B224EB")] = "update-Pe.Plugins.Reference.ClassicTheme.json",
-                [new Guid("2E5C72C5-270F-4B05-AFB9-C87F3966ECC5")] = "update-Pe.Plugins.Reference.Clock.json",
-                [new Guid("799CE8BD-8F49-4E8F-9E47-4D4873084081")] = "update-Pe.Plugins.Reference.Eyes.json",
-                [new Guid("9DCF441D-9F8E-494F-89C1-814678BBC42C")] = "update-Pe.Plugins.Reference.FileFinder.json",
-                [new Guid("4FA1A634-6B32-4762-8AE8-3E1CF6DF9DB1")] = "update-Pe.Plugins.Reference.Html.json",
+            var map = new Dictionary<PluginId, string>() {
+                [new PluginId(new Guid("67F0FA7D-52D3-4889-B595-BE3703B224EB"))] = "update-Pe.Plugins.Reference.ClassicTheme.json",
+                [new PluginId(new Guid("2E5C72C5-270F-4B05-AFB9-C87F3966ECC5"))] = "update-Pe.Plugins.Reference.Clock.json",
+                [new PluginId(new Guid("799CE8BD-8F49-4E8F-9E47-4D4873084081"))] = "update-Pe.Plugins.Reference.Eyes.json",
+                [new PluginId(new Guid("9DCF441D-9F8E-494F-89C1-814678BBC42C"))] = "update-Pe.Plugins.Reference.FileFinder.json",
+                [new PluginId(new Guid("4FA1A634-6B32-4762-8AE8-3E1CF6DF9DB1"))] = "update-Pe.Plugins.Reference.Html.json",
             };
 
             if(map.TryGetValue(pluginId, out var path)) {

@@ -68,7 +68,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-
     /// <summary>
     /// 参照をふわっと管理。
     /// </summary>

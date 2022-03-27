@@ -7,32 +7,12 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public sealed class StringProgress: IProgress<string>
+    /// <summary>
+    /// 無効なパーセント(0-1)進行状況の更新のプロバイダー。
+    /// </summary>
+    public sealed class NullDoubleProgress: IProgress<double>
     {
-        public StringProgress(ILoggerFactory loggerFactory)
-        {
-            Logger = loggerFactory.CreateLogger(GetType());
-        }
-
-        #region property
-
-        private ILogger Logger { get; }
-
-        #endregion
-
-        #region IProgress
-
-        public void Report(string value)
-        {
-            Logger.LogDebug("{0}", value);
-        }
-
-        #endregion
-    }
-
-    public sealed class DoubleProgress: IProgress<double>
-    {
-        public DoubleProgress(ILoggerFactory loggerFactory)
+        public NullDoubleProgress(ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
         }
@@ -46,6 +26,32 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region IProgress
 
         public void Report(double value)
+        {
+            Logger.LogDebug("{0}", value);
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 無効な文字列進行状況の更新のプロバイダー。
+    /// </summary>
+    public sealed class NullStringProgress: IProgress<string>
+    {
+        public NullStringProgress(ILoggerFactory loggerFactory)
+        {
+            Logger = loggerFactory.CreateLogger(GetType());
+        }
+
+        #region property
+
+        private ILogger Logger { get; }
+
+        #endregion
+
+        #region IProgress
+
+        public void Report(string value)
         {
             Logger.LogDebug("{0}", value);
         }

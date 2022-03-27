@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
     internal sealed class LauncherIconRefreshLoader: LauncherIconLoader
     {
-        public LauncherIconRefreshLoader(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public LauncherIconRefreshLoader(LauncherItemId launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(launcherItemId, mainDatabaseBarrier, largeDatabaseBarrier, databaseStatementLoader, null, loggerFactory)
         { }
 
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return RefreshTime < (dateTime - launcherIconStatus.LastUpdatedTimestamp);
         }
 
-        private IReadOnlyList<LauncherIconStatus> GetUpdateTartget(Guid launcherItemIs)
+        private IReadOnlyList<LauncherIconStatus> GetUpdateTartget(LauncherItemId launcherItemIs)
         {
             using var context = LargeDatabaseBarrier.WaitRead();
             var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return status;
         }
 
-        private Task UpdateTargetAsync(Guid launcherItemId, LauncherIconStatus target, CancellationToken cancellationToken)
+        private Task UpdateTargetAsync(LauncherItemId launcherItemId, LauncherIconStatus target, CancellationToken cancellationToken)
         {
             using(var context = LargeDatabaseBarrier.WaitRead()) {
                 var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return Task.Run(async () => {
                 Logger.LogInformation("ランチャーアイテムのアイコンを更新開始");
 
-                var refreshedLauncherItemsIds = new List<Guid>(allLauncherItemIds.Count);
+                var refreshedLauncherItemsIds = new List<LauncherItemId>(allLauncherItemIds.Count);
 
                 foreach(var launcherItemId in allLauncherItemIds) {
                     cancellationToken.ThrowIfCancellationRequested();

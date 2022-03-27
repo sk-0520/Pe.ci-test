@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public FontElement? Font { get; private set; }
 
-        public Guid LauncherToolbarId { get; private set; }
+        public LauncherToolbarId LauncherToolbarId { get; private set; }
 
         bool ViewCreated { get; set; }
 
@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         /// </summary>
         /// <param name="rows"></param>
         /// <returns>見つかったツールバー。見つからない場合は<see cref="Guid.Empty"/>を返す。</returns>
-        private Guid FindMaybeToolbarId(IEnumerable<LauncherToolbarsScreenData> rows)
+        private LauncherToolbarId FindMaybeToolbarId(IEnumerable<LauncherToolbarsScreenData> rows)
         {
             ThrowIfDisposed();
 
@@ -201,10 +201,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 return row.LauncherToolbarId;
             }
 
-            return Guid.Empty;
+            return LauncherToolbarId.Empty;
         }
 
-        private Guid GetLauncherToolbarId()
+        private LauncherToolbarId GetLauncherToolbarId()
         {
             ThrowIfDisposed();
 
@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             }
         }
 
-        private Guid CreateLauncherToolbar()
+        private LauncherToolbarId CreateLauncherToolbar()
         {
             ThrowIfDisposed();
 
@@ -254,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             LoadLauncherItems();
         }
 
-        public void RemoveLauncherItem(Guid launcherGroupId, Guid launcherItemId, int index)
+        public void RemoveLauncherItem(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId, int index)
         {
             using(var context = MainDatabaseBarrier.WaitWrite()) {
                 var launcherGroupItemsEntityDao = new LauncherGroupItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
@@ -455,7 +455,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             NotifyManager.SendLauncherItemRegistered(SelectedLauncherGroup.LauncherGroupId, data.Item.LauncherItemId);
         }
 
-        public void OpenExtendsExecuteView(Guid launcherItemId, string argument, IScreen screen)
+        public void OpenExtendsExecuteView(LauncherItemId launcherItemId, string argument, IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -468,7 +468,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             launcherItem.OpenExtendsExecuteViewWidthArgument(argument, screen);
         }
 
-        public void ExecuteWithArgument(Guid launcherItemId, string argument)
+        public void ExecuteWithArgument(LauncherItemId launcherItemId, string argument)
         {
             ThrowIfDisposed();
 
@@ -494,7 +494,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             NotifyManager.LauncherItemRemovedInLauncherGroup += NotifyManager_LauncherItemRemovedInLauncherGroup;
 
             var launcherToolbarId = GetLauncherToolbarId();
-            if(launcherToolbarId == Guid.Empty) {
+            if(launcherToolbarId == LauncherToolbarId.Empty) {
                 launcherToolbarId = CreateLauncherToolbar();
             }
             LauncherToolbarId = launcherToolbarId;

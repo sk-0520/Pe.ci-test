@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -52,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #endregion
 
         #region IKeyActionId
-        public Guid KeyActionId => ActionData.KeyActionId;
+        public KeyActionId KeyActionId => ActionData.KeyActionId;
         #endregion
 
         #region ElementBase

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -41,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public IEnumerable<KeyValuePair<string, string>> SelectOptions(Guid keyActionId)
+        public IEnumerable<KeyValuePair<string, string>> SelectOptions(KeyActionId keyActionId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -52,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public bool InsertOption(Guid keyActionId, string name, string value, IDatabaseCommonStatus commonStatus)
+        public bool InsertOption(KeyActionId keyActionId, string name, string value, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();
@@ -63,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         }
 
 
-        public int DeleteByKeyActionId(Guid keyActionId)
+        public int DeleteByKeyActionId(KeyActionId keyActionId)
         {
             var statement = LoadStatement();
             var parameter = new {

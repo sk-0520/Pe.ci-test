@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -28,28 +29,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public Guid SelectAddonPluginId(Guid launcherItemId)
+        public PluginId SelectAddonPluginId(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
 
-            return Context.QueryFirst<Guid>(statement, parameter);
+            return Context.QueryFirst<PluginId>(statement, parameter);
         }
 
-        public IEnumerable<Guid> SelectLauncherItemIdsByPluginId(Guid pluginId)
+        public IEnumerable<LauncherItemId> SelectLauncherItemIdsByPluginId(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {
                 PluginId = pluginId,
             };
 
-            return Context.Query<Guid>(statement, parameter);
+            return Context.Query<LauncherItemId>(statement, parameter);
         }
 
 
-        public bool InsertAddonPluginId(Guid launcherItemId, Guid pluginId, IDatabaseCommonStatus databaseCommonStatus)
+        public bool InsertAddonPluginId(LauncherItemId launcherItemId, PluginId pluginId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
-        public int DeleteLauncherAddonsByPluginId(Guid pluginId)
+        public int DeleteLauncherAddonsByPluginId(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {

@@ -8,6 +8,9 @@ using System.Windows.Input;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// <see cref="ICommand"/>管理。
+    /// </summary>
     public class CommandStore: DisposerBase
     {
         #region property
@@ -60,11 +63,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    /// <summary>
+    /// View要素に対する<see cref="ICommand"/>管理。
+    /// </summary>
     public class ElementCommandStore: CommandStore
     {
+        /// <summary>
+        /// 生成。
+        /// </summary>
+        /// <param name="view">対象View。</param>
         public ElementCommandStore(FrameworkElement view)
         {
             View = view;
+
             if(View.IsLoaded) {
                 View.Unloaded += View_Unloaded;
             } else {

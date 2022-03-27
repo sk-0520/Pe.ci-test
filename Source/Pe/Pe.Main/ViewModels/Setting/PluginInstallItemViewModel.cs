@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
@@ -14,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        public Guid PluginId => Model.Data.PluginId;
+        public PluginId PluginId => Model.Data.PluginId;
         public string PluginName => Model.Data.PluginName;
         public Version PluginVersion => Model.Data.PluginVersion;
         public PluginInstallMode InstallMode => Model.Data.PluginInstallMode;

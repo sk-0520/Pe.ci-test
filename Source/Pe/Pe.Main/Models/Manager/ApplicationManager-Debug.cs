@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -139,32 +140,32 @@ echo end
             dbgKeyActionAssistant.SelfJobInputId = dbgKeyActionChecker.SelfJobInputId;
 
             dbgKeyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
-                new KeyActionDisableData(Guid.NewGuid(), false),
+                new KeyActionDisableData(new KeyActionId(Guid.NewGuid()), false),
                 new KeyMappingData() {
                     Key = System.Windows.Input.Key.X,
                 }
             ));
             dbgKeyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
-                new KeyActionDisableData(Guid.NewGuid(), false),
+                new KeyActionDisableData(new KeyActionId(Guid.NewGuid()), false),
                 new KeyMappingData() {
                     Key = System.Windows.Input.Key.L,
                 }
             ));
             dbgKeyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
-                new KeyActionDisableData(Guid.NewGuid(), false),
+                new KeyActionDisableData(new KeyActionId(Guid.NewGuid()), false),
                 new KeyMappingData() {
                     Key = System.Windows.Input.Key.E,
                     Super = ModifierKey.Any,
                 }
             ));
             dbgKeyActionChecker.ReplaceJobs.Add(new KeyActionReplaceJob(
-                new KeyActionReplaceData(Guid.NewGuid(), Key.LeftShift),
+                new KeyActionReplaceData(new KeyActionId(Guid.NewGuid()), Key.LeftShift),
                 new KeyMappingData() {
                     Key = System.Windows.Input.Key.LeftCtrl,
                 }
             ));
             dbgKeyActionChecker.ReplaceJobs.Add(new KeyActionReplaceJob(
-                new KeyActionReplaceData(Guid.NewGuid(), Key.X),
+                new KeyActionReplaceData(new KeyActionId(Guid.NewGuid()), Key.X),
                 new KeyMappingData() {
                     Key = System.Windows.Input.Key.RightShift,
                 }

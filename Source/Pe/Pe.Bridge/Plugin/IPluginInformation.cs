@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// プラグインの識別ID。
         /// <para>重複してるとバグる。</para>
         /// </summary>
-        Guid PluginId { get; }
+        PluginId PluginId { get; }
 
         /// <summary>
         /// プラグインを人が見て判断するための名前。
@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <inheritdoc cref="IPluginIdentifiers"/>
     public class PluginIdentifiers: IPluginIdentifiers
     {
-        public PluginIdentifiers(Guid pluginId, string pluginName)
+        public PluginIdentifiers(PluginId pluginId, string pluginName)
         {
             PluginId = pluginId;
             PluginName = pluginName;
@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         #region IPluginIdentifiers
 
         /// <inheritdoc cref="IPluginIdentifiers.PluginId"/>
-        public Guid PluginId { get; }
+        public PluginId PluginId { get; }
         /// <inheritdoc cref="IPluginIdentifiers.PluginName"/>
         public string PluginName { get; }
 
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
             sb.Append(PluginName);
             sb.Append('(');
-            sb.Append(PluginId.ToString("D")); // P でええやんと思う今日この頃
+            sb.Append(PluginId.Id.ToString("D")); // P でええやんと思う今日この頃
             sb.Append(')');
 
             return sb.ToString();

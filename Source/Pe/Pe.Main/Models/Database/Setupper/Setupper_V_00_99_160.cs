@@ -43,6 +43,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         { }
 
         #endregion
-
     }
 }

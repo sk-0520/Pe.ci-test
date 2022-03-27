@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     /// <summary>
     /// アプリケーション用<see cref="IDatabaseImplementation"/>実装。
     /// </summary>
-    internal class ApplicationDatabaseImplementation: SqliteImplementation
+    internal partial class ApplicationDatabaseImplementation: SqliteImplementation
     { }
 
     /// <summary>
@@ -204,12 +204,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-
     public class ApplicationDatabaseStatementLoader: DatabaseStatementLoaderBase, IDisposable
     {
         #region define
 
-        public const string IgnoreNamespace = "ContentTypeTextNet.Pe.Main";
+        private const string IgnoreNamespace = "ContentTypeTextNet.Pe.Main";
         private const string SelectStatement = @"
 select
     Statements.Statement

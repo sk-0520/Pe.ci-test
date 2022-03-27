@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
 using Microsoft.Extensions.Logging;
@@ -9,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
     internal abstract class LauncherItemPreferencesBase: ILauncherItemPreferences
     {
-        protected LauncherItemPreferencesBase(PluginBase plugin, Guid launcherItemId, IAddonExecutor addonExecutor, IDispatcherWrapper dispatcherWrapper, ISkeletonImplements skeletonImplements, IImageLoader imageLoader, IHttpUserAgentFactory httpUserAgentFactory, ILoggerFactory loggerFactory)
+        protected LauncherItemPreferencesBase(PluginBase plugin, LauncherItemId launcherItemId, IAddonExecutor addonExecutor, IDispatcherWrapper dispatcherWrapper, ISkeletonImplements skeletonImplements, IImageLoader imageLoader, IHttpUserAgentFactory httpUserAgentFactory, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -31,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         protected ILogger Logger { get; }
 
         protected PluginBase Plugin { get; }
-        protected Guid LauncherItemId { get; }
+        protected LauncherItemId LauncherItemId { get; }
         protected IAddonExecutor AddonExecutor { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ISkeletonImplements SkeletonImplements { get; }

@@ -76,6 +76,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="IdImpl.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IdImpl.tt</DependentUpon>
+    </Compile>
     <Compile Update="Models\Logic\Hooker.MouseHooker.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -118,6 +123,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="IdImpl.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IdImpl.cs</LastGenOutput>
+    </None>
     <None Update="Models\Logic\Hooker.MouseHooker.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Hooker.MouseHooker.cs</LastGenOutput>

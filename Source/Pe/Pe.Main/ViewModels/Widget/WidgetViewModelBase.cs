@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Widget;
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
         #region IPluginId
 
-        public Guid PluginId => Model.PluginId;
+        public PluginId PluginId => Model.PluginId;
 
         #endregion
     }

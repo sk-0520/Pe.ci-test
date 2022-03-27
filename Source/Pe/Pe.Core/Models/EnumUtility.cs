@@ -3,7 +3,8 @@ using System;
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
-    /// enumのしょうもない処理ユーティリティ。
+    /// <c>enum</c>のしょうもない処理ユーティリティ。
+    /// <para>.NET Framework 時代から考えると結構色々削られた。</para>
     /// </summary>
     public static class EnumUtility
     {

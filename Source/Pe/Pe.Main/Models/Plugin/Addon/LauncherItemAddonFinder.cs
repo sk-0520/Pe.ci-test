@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using Microsoft.Extensions.Logging;
@@ -10,11 +11,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     {
         #region function
 
-        bool Exists(Guid pluginId);
+        bool Exists(PluginId pluginId);
 
-        IPlugin GetPlugin(Guid pluginId);
+        IPlugin GetPlugin(PluginId pluginId);
 
-        ILauncherItemExtension Find(Guid launcherItemId, Guid pluginId);
+        ILauncherItemExtension Find(LauncherItemId launcherItemId, PluginId pluginId);
 
         #endregion
     }
@@ -36,22 +37,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region ILauncherItemAddonFinder
 
-        public bool Exists(Guid pluginId)
+        public bool Exists(PluginId pluginId)
         {
             return AddonContainer.Plugins.Any(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
         }
 
-        public IPlugin GetPlugin(Guid pluginId)
+        public IPlugin GetPlugin(PluginId pluginId)
         {
             return AddonContainer.Plugins.First(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
         }
 
-        public LauncherItemAddonProxy Find(Guid launcherItemId, Guid pluginId)
+        public LauncherItemAddonProxy Find(LauncherItemId launcherItemId, PluginId pluginId)
         {
             return AddonContainer.GetLauncherItemAddon(launcherItemId, pluginId);
         }
 
-        ILauncherItemExtension ILauncherItemAddonFinder.Find(Guid launcherItemId, Guid pluginId) => Find(launcherItemId, pluginId);
+        ILauncherItemExtension ILauncherItemAddonFinder.Find(LauncherItemId launcherItemId, PluginId pluginId) => Find(launcherItemId, pluginId);
 
         #endregion
     }

@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public LauncherGroupSettingEditorViewModel? SelectedLauncherGroup => AllLauncherGroups.ViewModels.FirstOrDefault(i => i.LauncherGroupId == LauncherGroupId);
 
-        public Guid LauncherGroupId
+        public LauncherGroupId LauncherGroupId
         {
             get => Model.LauncherGroupId;
             set
@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             var selectedItem = SelectedLauncherGroup;
             RaisePropertyChanged(nameof(SelectedLauncherGroup));
             if(selectedItem == null) {
-                LauncherGroupId = Guid.Empty;
+                LauncherGroupId = LauncherGroupId.Empty;
             }
         }
 
@@ -187,7 +187,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public ICommand SelectDefaultLauncherGroupCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherGroupSettingEditorViewModel?>(
             o => {
-                LauncherGroupId = o?.LauncherGroupId ?? Guid.Empty;
+                LauncherGroupId = o?.LauncherGroupId ?? LauncherGroupId.Empty;
                 ShowGroupPopupMenu = false;
                 Refresh();
             }

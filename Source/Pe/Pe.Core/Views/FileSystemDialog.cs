@@ -217,7 +217,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             }
 
             var filters = Filters
-                .Select(i => new COMDLG_FILTERSPEC() { pszName = i.Display, pszSpec = string.Join(";", i.Wildcard) })
+                .Select(i => new COMDLG_FILTERSPEC() { pszName = i.Display, pszSpec = string.Join(";", i.Wildcards) })
                 .ToArray()
             ;
             if(filters.Any()) {

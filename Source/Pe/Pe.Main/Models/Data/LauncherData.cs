@@ -243,14 +243,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
 
         #region ILauncherGroupId
-        public Guid LauncherGroupId { get; set; }
+
+        public LauncherGroupId LauncherGroupId { get; set; }
+
         #endregion
     }
     public interface ILauncherGroupId
     {
         #region property
 
-        Guid LauncherGroupId { get; }
+        LauncherGroupId LauncherGroupId { get; }
 
         #endregion
     }
@@ -259,7 +261,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public Guid LauncherItemId { get; set; }
+        public LauncherItemId LauncherItemId { get; set; }
 
         public string Code { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
@@ -337,7 +339,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        Guid LauncherToolbarId { get; }
+        LauncherToolbarId LauncherToolbarId { get; }
 
         #endregion
     }
@@ -346,7 +348,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region ILauncherToolbarId
 
-        public Guid LauncherToolbarId { get; set; }
+        public LauncherToolbarId LauncherToolbarId { get; set; }
 
         #endregion
 
@@ -369,11 +371,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public Guid LauncherGroupId { get; set; }
+        public LauncherGroupId LauncherGroupId { get; set; }
         public AppDesktopToolbarPosition ToolbarPosition { get; set; }
         public LauncherToolbarIconDirection IconDirection { get; set; }
         public IconBox IconBox { get; set; }
-        public Guid FontId { get; set; }
+        public FontId FontId { get; set; }
         public TimeSpan AutoHideTime { get; set; }
         public int TextWidth { get; set; }
         public bool IsVisible { get; set; }
@@ -385,7 +387,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region ILauncherToolbarId
 
-        public Guid LauncherToolbarId { get; set; }
+        public LauncherToolbarId LauncherToolbarId { get; set; }
 
         #endregion
 

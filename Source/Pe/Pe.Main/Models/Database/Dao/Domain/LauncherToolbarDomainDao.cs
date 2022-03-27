@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -17,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
         {
             #region property
 
-            public Guid LauncherToolbarId { get; set; }
+            public LauncherToolbarId LauncherToolbarId { get; set; }
 
             public string ScreenName { get; set; } = string.Empty;
             [PixelKind(Px.Device)]
@@ -54,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             return data;
         }
 
-        public LauncherToolbarsScreenData SelectScreenToolbar(Guid launcherToolbarId)
+        public LauncherToolbarsScreenData SelectScreenToolbar(LauncherToolbarId launcherToolbarId)
         {
             var statement = LoadStatement();
             var parameter = new {

@@ -1,5 +1,6 @@
 using System;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -14,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public Guid NoteId { get; set; }
+            public NoteId NoteId { get; set; }
             public string LayoutKind { get; set; } = string.Empty;
 
             [PixelKind(Px.Logical)]
@@ -85,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public NoteLayoutData? SelectLayout(Guid noteId, NoteLayoutKind layoutKind)
+        public NoteLayoutData? SelectLayout(NoteId noteId, NoteLayoutKind layoutKind)
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
@@ -96,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
             return Context.QueryFirstOrDefault<NoteLayoutData>(statement, param);
         }
-        public bool SelectExistsLayout(Guid noteId, NoteLayoutKind layoutKind)
+        public bool SelectExistsLayout(NoteId noteId, NoteLayoutKind layoutKind)
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
@@ -138,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, param) == 1;
         }
 
-        public int DeleteLayouts(Guid noteId)
+        public int DeleteLayouts(NoteId noteId)
         {
             var statement = LoadStatement();
             var parameter = new {

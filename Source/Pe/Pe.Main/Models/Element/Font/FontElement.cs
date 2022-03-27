@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -21,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         #endregion
 
-        public FontElement(Guid fontId, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public FontElement(FontId fontId, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             FontId = fontId;
@@ -31,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         #region property
 
-        public Guid FontId { get; protected set; }
+        public FontId FontId { get; protected set; }
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
         protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
@@ -128,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
     public class SavingFontElement: FontElement
     {
-        public SavingFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public SavingFontElement(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(fontId, mainDatabaseBarrier, statementLoader, loggerFactory)
         {
             DefaultFontKind = defaultFontKind;
@@ -250,7 +251,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         protected override FontData GetFontData()
         {
-            Guid defaultFontId;
+            FontId defaultFontId;
             using(var context = MainDatabaseBarrier.WaitRead()) {
                 switch(DefaultFontKind) {
                     case DefaultFontKind.Note: {
