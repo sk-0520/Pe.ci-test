@@ -194,6 +194,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             var applicationBoot = new ApplicationBoot(LoggerFactory);
             var arguments = new Dictionary<string, string> {
                 [InterProcessCommunicationManager.CommandLineKeyIpcFile] = pluginFile.FullName,
+                [EnvironmentParameters.CommandLineKeyUserDirectory] = EnvironmentParameters.UserRoamingDirectory.FullName,
+                [EnvironmentParameters.CommandLineKeyMachineDirectory] = EnvironmentParameters.MachineDirectory.FullName,
+                [EnvironmentParameters.CommandLineKeyTemporaryDirectory] = EnvironmentParameters.TemporaryDirectory.FullName,
             }.ToCommandLineArguments();
 
             IpcDataPluginStatus? data = null;
