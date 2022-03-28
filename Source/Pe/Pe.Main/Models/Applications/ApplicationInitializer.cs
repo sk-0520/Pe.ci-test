@@ -627,6 +627,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
                 factory = pack.factory;
                 pack.accessor.Dispose();
+            } else {
+                // セットアップしないにしてもDB使用可能にしておく(TODO: クラッシュレポートの場合はもう少し異常系を試した方がいいかも)
+                factory = CreateDatabaseFactoryPack(environmentParameters, true, logger);
             }
 
             DiContainer = SetupContainer(environmentParameters, factory, cultureService, loggerFactory);
