@@ -35,7 +35,7 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "07448dfb753985cc29e5c6366799ab44a760e117",
 						"subject": "#799: プラグイン更新の通信処理が腐ってる",
 						"comments": [
 							"IPC(プラグイン処理)の場合にDBデータを取得できずに死んでいた",
@@ -76,7 +76,7 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "421f89eea122ff04e166da7623415a30935fa157",
 						"subject": "#795: hash_map/linked_list の値解放処理型が腐ってる",
 						"comments": [
 							"久しぶり過ぎて何が正しいのかもう何もわからない"
