@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public CultureInfo CultureInfo { get; set; } = CultureInfo.CurrentCulture;
         public string UserBackupDirectoryPath { get; set; } = string.Empty;
-        public Guid ThemePluginId { get; set; }
+        public PluginId ThemePluginId { get; set; }
 
         public bool IsRegisterStartup { get; set; }
         public bool DelayStartup { get; set; }

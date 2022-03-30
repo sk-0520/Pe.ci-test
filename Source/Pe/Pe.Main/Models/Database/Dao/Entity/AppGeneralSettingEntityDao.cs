@@ -13,9 +13,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         private class AppGeneralSettingEntityDto: CommonDtoBase
         {
             #region property
+
             public string Language { get; set; } = string.Empty;
             public string UserBackupDirectoryPath { get; set; } = string.Empty;
-            public Guid ThemePluginId { get; set; }
+            public PluginId ThemePluginId { get; set; }
+
             #endregion
         }
 

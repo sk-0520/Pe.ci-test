@@ -1,5 +1,6 @@
 using System;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
@@ -28,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// 使用テーマのプラグインID。
         /// </summary>
-        public Guid ThemePluginId { get; set; }
+        public PluginId ThemePluginId { get; set; }
 
         #endregion
     }
