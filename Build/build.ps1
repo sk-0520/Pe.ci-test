@@ -101,7 +101,7 @@ try {
 	InsertElement $version $projectCommonXml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
 	InsertElement $revision $projectCommonXml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
 	$repMap = @{
-		'@YYYY@' = '2020'
+		'@YYYY@' = (Get-Date).Year
 		'@NAME@' = 'sk'
 		'@SITE@' = 'content-type-text.net'
 	}
