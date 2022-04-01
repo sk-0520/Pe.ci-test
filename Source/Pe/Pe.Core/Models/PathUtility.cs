@@ -142,6 +142,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="role">役割。</param>
         /// <param name="extension">拡張子。</param>
         /// <returns></returns>
+        [Obsolete]
         private static string CreateFileNameCore(string name, string? role, string extension)
         {
             return $"{name}{(role == null ? string.Empty : "-" + role)}.{extension}";
@@ -153,6 +154,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="role">役割。</param>
         /// <param name="extension">拡張子。</param>
         /// <returns></returns>
+        [Obsolete]
         public static string CreateFileName(string name, string role, string extension)
         {
             Debug.Assert(!string.IsNullOrWhiteSpace(role));
@@ -164,6 +166,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="name">ファイル名。</param>
         /// <param name="extension">拡張子。</param>
         /// <returns></returns>
+        [Obsolete]
         public static string CreateFileName(string name, string extension)
         {
             return CreateFileNameCore(name, null, extension);
