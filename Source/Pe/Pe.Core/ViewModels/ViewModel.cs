@@ -1,5 +1,3 @@
-#define PROPERTY_CACHE
-
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -7,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -22,10 +21,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     /// <summary>
     /// 検証無視。
     /// </summary>
-    [System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
     public sealed class IgnoreValidationAttribute: Attribute
     {
-        // This is a positional argument
         public IgnoreValidationAttribute()
         { }
     }
@@ -35,12 +33,30 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     /// </summary>
     public abstract class ViewModelBase: BindableBase, INotifyDataErrorInfo, IDisposer
     {
-        protected ViewModelBase(ILoggerFactory loggerFactory)
+        /// <summary>
+        /// 生成。
+        /// </summary>
+        /// <param name="cacheProperty">プロパティ情報をキャッシュするか。</param>
+        /// <param name="loggerFactory"><inheritdoc cref="ILoggerFactory"/></param>
+        protected ViewModelBase(bool cacheProperty, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = loggerFactory.CreateLogger(GetType());
             ErrorsContainer = new ErrorsContainer<string>(OnErrorsChanged);
+
+            if(cacheProperty) {
+                PropertyCacher = new ConcurrentDictionary<object, PropertyCacher>();
+            }
         }
+
+        /// <summary>
+        /// プロパティ情報をキャッシュする状態で生成。
+        /// </summary>
+        /// <param name="loggerFactory"><inheritdoc cref="ILoggerFactory"/></param>
+        protected ViewModelBase(ILoggerFactory loggerFactory)
+            : this(true, loggerFactory)
+        { }
+
 
         ~ViewModelBase()
         {
@@ -60,14 +76,14 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// コマンド一覧。
         /// </summary>
         protected IEnumerable<ICommand> Commands => CommandStore.Commands;
-        CommandStore CommandStore { get; } = new CommandStore();
+        /// <inheritdoc cref="Models.CommandStore"/>
+        private CommandStore CommandStore { get; } = new CommandStore();
 
-#if PROPERTY_CACHE
         /// <summary>
         /// プロパティアクセス処理キャッシュ。
         /// </summary>
-        private ConcurrentDictionary<object, PropertyCacher> PropertyCacher { get; } = new ConcurrentDictionary<object, PropertyCacher>();
-#endif
+        private ConcurrentDictionary<object, PropertyCacher>? PropertyCacher { get; }
+
         /// <summary>
         /// プロパティ変更時のイベントキャッシュ。
         /// </summary>
@@ -94,27 +110,33 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected virtual bool SetPropertyValue<TValue>(object obj, TValue value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string notifyPropertyName = "")
         {
 #if DEBUG
-            using var _a_ = ActionDisposerHelper.Create((d, sw) => Logger.LogTrace("PROP TIME: {0}", sw.Elapsed), Stopwatch.StartNew());
+            using var _ = ActionDisposerHelper.Create((d, sw) => Logger.LogTrace("PROP TIME: {0}", sw.Elapsed), Stopwatch.StartNew());
 #endif
             ThrowIfDisposed();
 
-#if PROPERTY_CACHE
-            var propertyCacher = PropertyCacher.GetOrAdd(obj, o => new PropertyCacher(o));
-            var nowValue = propertyCacher.Get(targetMemberName);
-#else
-            var type = obj.GetType();
-            var propertyInfo = type.GetProperty(targetMemberName);
-            Debug.Assert(propertyInfo != null);
+            PropertyInfo? propertyInfo = null;
+            PropertyCacher? propertyCacher = null;
+            object? nowValue;
 
-            var nowValue = (TValue)propertyInfo.GetValue(obj);
-#endif
+            if(PropertyCacher is null) {
+                var type = obj.GetType();
+                propertyInfo = type.GetProperty(targetMemberName);
+                Debug.Assert(propertyInfo != null);
 
-            if(!IComparable<TValue>.Equals(nowValue, value)) {
-#if PROPERTY_CACHE
-                propertyCacher.Set(targetMemberName, value);
-#else
-                propertyInfo.SetValue(obj, value);
-#endif
+                nowValue = propertyInfo.GetValue(obj);
+            } else {
+                propertyCacher = PropertyCacher.GetOrAdd(obj, o => new PropertyCacher(o));
+
+                nowValue = propertyCacher.Get(targetMemberName);
+            }
+
+            if(!Equals(nowValue, value)) {
+                if(PropertyCacher is null) {
+                    propertyInfo!.SetValue(obj, value);
+                } else {
+                    propertyCacher!.Set(targetMemberName, value);
+                }
+
                 var e = PropertyChangedEventArgsCache.GetOrAdd(notifyPropertyName, s => new PropertyChangedEventArgs(s));
                 OnPropertyChanged(e);
 
@@ -142,25 +164,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
                 return default!;
             }
 
-            //var sb = new StringBuilder();
-            //sb.Append(GetType().FullName);
-            //sb.Append(':');
-            //sb.Append(callerMemberName);
-            //sb.Append(':');
-            //sb.Append(callerFilePath.GetHashCode());
-            //sb.Append(':');
-            //sb.Append(callerLineNumber);
-
-            //var key = sb.ToString();
-
-            //if(CommandCache.TryGetValue(key, out var cahceCommand)) {
-            //    return (TCommand)cahceCommand;
-            //}
-
-            //var command = creator();
-            //CommandCache.Add(key, command);
-
-            //return command;
             return CommandStore.GetOrCreate(creator, callerMemberName, callerFilePath, callerLineNumber);
         }
 
@@ -173,7 +176,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         {
             ThrowIfDisposed();
 
-            var context = new ValidationContext(this) { MemberName = propertyName };
+            var context = new ValidationContext(this) {
+                MemberName = propertyName
+            };
             var validationErrors = new List<ValidationResult>();
             if(!Validator.TryValidateProperty(value, context, validationErrors)) {
                 var errors = validationErrors.Select(error => error.ErrorMessage ?? string.Empty);
@@ -183,6 +188,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
         }
 
+        /// <summary>
+        /// 子を含む全ての検証要素を取得。
+        /// </summary>
+        /// <returns></returns>
         private (IReadOnlyCollection<PropertyInfo> properties, IReadOnlyCollection<ViewModelBase> childViewModels) GetValidationItems()
         {
             ThrowIfDisposed();
@@ -192,7 +201,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
 
             var type = GetType();
-            //var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             var properties = type.GetProperties()
                 .Select(i => new { Property = i, Attribute = i.GetCustomAttribute<IgnoreValidationAttribute>() })
                 .Where(i => i.Attribute == null)
@@ -230,57 +238,36 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         }
 
         /// <summary>
-        /// 全プロパティ検証。
+        /// 子を含む全てのプロパティ検証。
         /// </summary>
         private void ValidateAllProperty()
         {
             ThrowIfDisposed();
 
-            var v = GetValidationItems();
-            //var type = GetType();
-            //var properties = type.GetProperties();
-            //var targetProperties = properties
-            //    .Select(i => new { Property = i, Attributes = i.GetCustomAttributes<ValidationAttribute>() })
-            //    .Where(i => i.Attributes != null)
-            //    .Select(i => i.Property)
-            //    .ToList()
-            //;
-            foreach(var property in v.properties) {
+            var validationItems = GetValidationItems();
+
+            foreach(var property in validationItems.properties) {
                 var rawValue = property.GetValue(this);
                 ValidateProperty(rawValue!, property.Name);
             }
 
-            //var childProperties = properties.Except(targetProperties);
-            //foreach(var property in childProperties) {
-            //    var rawValue = property.GetValue(this);
-            //    switch(rawValue) {
-            //        case ViewModelBase viewModel:
-            //            viewModel.ValidateAllProperty();
-            //            break;
-
-            //        case IEnumerable enumerable:
-            //            foreach(var element in enumerable.OfType<ViewModelBase>()) {
-            //                element.ValidateAllProperty();
-            //            }
-            //            break;
-
-            //        default:
-            //            break;
-            //    }
-            //}
-            foreach(var childViewModel in v.childViewModels) {
+            foreach(var childViewModel in validationItems.childViewModels) {
                 childViewModel.ValidateAllProperty();
             }
         }
 
         /// <summary>
         /// ビジネスロジックの検証。
+        /// <para>継承先でこいつを最初に呼び出すこと。</para>
         /// </summary>
         protected virtual void ValidateDomain()
         {
             ThrowIfDisposed();
         }
 
+        /// <summary>
+        /// 子を含む全てのビジネスロジックの検証。
+        /// </summary>
         private void ValidateAllDomain()
         {
             ThrowIfDisposed();
@@ -377,6 +364,13 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
         }
 
+        protected void ThrowIfDisposed([CallerMemberName] string _callerMemberName = "")
+        {
+            if(IsDisposed) {
+                throw new ObjectDisposedException(_callerMemberName);
+            }
+        }
+
         #endregion
 
         #region INotifyDataErrorInfo
@@ -400,13 +394,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         #endregion
 
         #region IDisposable
-
-        protected void ThrowIfDisposed([CallerMemberName] string _callerMemberName = "")
-        {
-            if(IsDisposed) {
-                throw new ObjectDisposedException(_callerMemberName);
-            }
-        }
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
@@ -436,9 +423,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
                 Disposing(this, EventArgs.Empty);
             }
 
-#if PROPERTY_CACHE
-            PropertyCacher.Clear();
-#endif
+            if(PropertyCacher is not null) {
+                PropertyCacher.Clear();
+            }
+
             ErrorsContainer.ClearErrors();
             PropertyChangedEventArgsCache.Clear();
 
@@ -455,7 +443,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             IsDisposed = true;
         }
 
+
         /// <inheritdoc cref="IDisposable.Dispose" />
+        [SuppressMessage("Usage", "CA1816:Dispose メソッドは、SuppressFinalize を呼び出す必要があります")]
         public void Dispose()
         {
             Dispose(true);
@@ -512,7 +502,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected virtual void AttachModelEventsImpl()
         {
             ThrowIfDisposed();
-
         }
 
         protected void AttachModelEvents()
