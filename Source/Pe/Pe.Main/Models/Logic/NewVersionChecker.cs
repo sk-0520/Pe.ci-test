@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -10,6 +13,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Data.ServerApi;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -193,54 +197,91 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return issue775;
             }
 
-            // ここから #706 予定
+            // ここから #706
+            var apiResult = await CheckPluginNewVersionByApiAsync(pluginId, pluginVersion);
 
-            return null;
+            return apiResult;
+        }
+
+        private async Task<NewVersionItemData?> CheckPluginNewVersionByApiAsync(PluginId pluginId, Version pluginVersion)
+        {
+            var json = JsonSerializer.Serialize(new {
+                plugin_ids = new[] {
+                    pluginId.ToString(),
+                },
+            });
+            var content = new StringContent(
+                json,
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            using var agent = UserAgentManager.CreateUserAgent();
+            var response = await agent.PostAsync(ApplicationConfiguration.Api.ServerPluginInformation, content);
+
+            if(!response.IsSuccessStatusCode) {
+                return null;
+            }
+
+            using var stream = await response.Content.ReadAsStreamAsync();
+            var serializer = new JsonTextSerializer();
+            var result = serializer.Load<ServerApiResultData<PluginInformationResultData>>(stream);
+            if(result.Data is null || !result.Data.Plugins.TryGetValue(pluginId.Id, out var item)) {
+                return null;
+            }
+
+            var uri = new Uri(item.CheckUrl);
+            var updateData = await RequestUpdateDataAsync(uri);
+            if(updateData is null) {
+                return null;
+            }
+
+            return GetNewVersionItem(pluginVersion, updateData.Items);
         }
 
         private async Task<NewVersionItemData?> GetPluginItem_Issue775Async(PluginId pluginId, Version pluginVersion)
-        {
-            var map = new Dictionary<PluginId, string>() {
-                [new PluginId(new Guid("67F0FA7D-52D3-4889-B595-BE3703B224EB"))] = "update-Pe.Plugins.Reference.ClassicTheme.json",
-                [new PluginId(new Guid("2E5C72C5-270F-4B05-AFB9-C87F3966ECC5"))] = "update-Pe.Plugins.Reference.Clock.json",
-                [new PluginId(new Guid("799CE8BD-8F49-4E8F-9E47-4D4873084081"))] = "update-Pe.Plugins.Reference.Eyes.json",
-                [new PluginId(new Guid("9DCF441D-9F8E-494F-89C1-814678BBC42C"))] = "update-Pe.Plugins.Reference.FileFinder.json",
-                [new PluginId(new Guid("4FA1A634-6B32-4762-8AE8-3E1CF6DF9DB1"))] = "update-Pe.Plugins.Reference.Html.json",
-            };
+    {
+        var map = new Dictionary<PluginId, string>() {
+            [new PluginId(new Guid("67F0FA7D-52D3-4889-B595-BE3703B224EB"))] = "update-Pe.Plugins.Reference.ClassicTheme.json",
+            [new PluginId(new Guid("2E5C72C5-270F-4B05-AFB9-C87F3966ECC5"))] = "update-Pe.Plugins.Reference.Clock.json",
+            [new PluginId(new Guid("799CE8BD-8F49-4E8F-9E47-4D4873084081"))] = "update-Pe.Plugins.Reference.Eyes.json",
+            [new PluginId(new Guid("9DCF441D-9F8E-494F-89C1-814678BBC42C"))] = "update-Pe.Plugins.Reference.FileFinder.json",
+            [new PluginId(new Guid("4FA1A634-6B32-4762-8AE8-3E1CF6DF9DB1"))] = "update-Pe.Plugins.Reference.Html.json",
+        };
 
-            if(map.TryGetValue(pluginId, out var path)) {
-                var url = TextUtility.ReplaceFromDictionary(ApplicationConfiguration.Plugin.Issue775, new Dictionary<string, string> {
-                    ["PATH"] = path,
-                });
-                var uri = new Uri(url);
-                var updateData = await RequestUpdateDataAsync(uri);
-                if(updateData == null) {
-                    return null;
-                }
-
-                var result = GetNewVersionItem(pluginVersion, updateData.Items);
-                return result;
+        if(map.TryGetValue(pluginId, out var path)) {
+            var url = TextUtility.ReplaceFromDictionary(ApplicationConfiguration.Plugin.Issue775, new Dictionary<string, string> {
+                ["PATH"] = path,
+            });
+            var uri = new Uri(url);
+            var updateData = await RequestUpdateDataAsync(uri);
+            if(updateData == null) {
+                return null;
             }
 
-            return null;
+            var result = GetNewVersionItem(pluginVersion, updateData.Items);
+            return result;
         }
 
-        /// <summary>
-        /// アーカイブ種別から拡張子を取得。
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public string GetExtension(NewVersionItemData data)
-        {
-            var kind = (data.ArchiveKind ?? string.Empty).Trim().ToLowerInvariant();
-
-            return kind switch {
-                "zip" => "zip",
-                "7z" => "7z",
-                _ => kind ?? string.Empty,
-            };
-        }
-
-        #endregion
+        return null;
     }
+
+    /// <summary>
+    /// アーカイブ種別から拡張子を取得。
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public string GetExtension(NewVersionItemData data)
+    {
+        var kind = (data.ArchiveKind ?? string.Empty).Trim().ToLowerInvariant();
+
+        return kind switch {
+            "zip" => "zip",
+            "7z" => "7z",
+            _ => kind ?? string.Empty,
+        };
+    }
+
+    #endregion
+}
 }

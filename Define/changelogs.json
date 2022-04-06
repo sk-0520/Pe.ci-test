@@ -74,8 +74,13 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
-						"subject": ""
+						"subject": "#706: プラグイン配布サイトの構築",
+						"comments": [
+							"https://peserver.gq/plugin",
+							"とりあえず作るだけ作った",
+							"運用云々は後で考えるとして Pe 本体の課題からは外す",
+							"更新用URI処理もえいやで取り込んだ"
+						]
 					},
 					{
 						"revision": "",
