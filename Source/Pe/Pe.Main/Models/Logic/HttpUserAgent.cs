@@ -23,6 +23,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region function
 
+        /// <summary>
+        /// アプリケーション用のUAを生成。
+        /// </summary>
+        /// <returns></returns>
         IHttpUserAgent CreateAppHttpUserAgent();
 
         #endregion

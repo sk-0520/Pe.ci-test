@@ -20,6 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public Uri FeedbackUri { get; } = default!;
         [Configuration]
         public Uri FeedbackSourceUri { get; } = default!;
+        [Configuration]
         public Uri ServerPluginInformation { get; } = default!;
 
         #endregion
