@@ -54,6 +54,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         private IImageLoader ImageLoader { get; }
 
+        public bool WebInstallMode
+        {
+            get => Model.WebInstallMode;
+            set => SetModelValue(value);
+        }
+
+
         #endregion
 
         #region command
@@ -89,6 +96,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                         ShowMessageRequest.Send(parameter);
                     }
                 });
+            }
+        ));
+
+        public ICommand WebInstallCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                WebInstallMode = true;
             }
         ));
 

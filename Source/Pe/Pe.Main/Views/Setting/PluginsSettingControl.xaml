@@ -78,7 +78,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Command="{Binding Editor.LocalInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="{Binding Resources.String_Setting_Plugins_Install_Local_A, Source={x:Static app_main:CultureService.Instance}}" />
-            <Button Grid.Column="1" IsEnabled="False" Content="{Binding Resources.String_Setting_Plugins_Install_Web_A, Source={x:Static app_main:CultureService.Instance}}" />
+            <Button Grid.Column="1" Command="{Binding Editor.WebInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="{Binding Resources.String_Setting_Plugins_Install_Web_A, Source={x:Static app_main:CultureService.Instance}}" />
           </Grid>
 
           <TextBlock FontSize="10" TextWrapping="Wrap" Text="{Binding Resources.String_Setting_Plugins_Install_Description, Source={x:Static app_main:CultureService.Instance}}" />
@@ -231,6 +231,10 @@
       </GroupBox>
 
     </Grid>
+    
+    <Canvas Grid.ColumnSpan="3" Background="#aaff0000" Visibility="{Binding Editor.WebInstallMode, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BooleanToVisibilityConverter}}">
+      <TextBlock>あああ</TextBlock>
+    </Canvas>
 
   </Grid>
 </UserControl>

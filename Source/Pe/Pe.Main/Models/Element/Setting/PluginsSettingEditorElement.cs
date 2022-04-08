@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             #endregion
         }
 
-        class DoubleProgress: IProgress<double>
+        private class DoubleProgress: IProgress<double>
         {
             public DoubleProgress(ILoggerFactory loggerFactory)
             {
@@ -110,6 +110,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public ReadOnlyObservableCollection<PluginInstallItemElement> InstallPluginItems { get; }
 
         private PluginInstaller PluginInstaller { get; }
+
+        internal bool WebInstallMode { get; set; }
 
         #endregion
 

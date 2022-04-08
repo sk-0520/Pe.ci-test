@@ -31,9 +31,9 @@
         <ComboBox.ItemsPanel>
           <ItemsPanelTemplate>
             <VirtualizingStackPanel
-            VirtualizingStackPanel.IsVirtualizing="True"
-            VirtualizingStackPanel.VirtualizationMode="Recycling"
-          />
+              VirtualizingStackPanel.IsVirtualizing="True"
+              VirtualizingStackPanel.VirtualizationMode="Recycling"
+            />
           </ItemsPanelTemplate>
         </ComboBox.ItemsPanel>
         <ComboBox.ItemTemplate>
