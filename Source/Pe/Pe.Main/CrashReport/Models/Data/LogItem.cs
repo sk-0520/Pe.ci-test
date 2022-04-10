@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
                 SequenceID = logEventInfo.SequenceID,
                 TimeStamp = logEventInfo.TimeStamp.ToUniversalTime(),
             };
-            foreach(var parameter in logEventInfo.Parameters) {
+            foreach(var parameter in logEventInfo.Parameters ?? Array.Empty<object>()) {
                 item.Parameters.Add(System.Convert.ToString(parameter));
             }
 

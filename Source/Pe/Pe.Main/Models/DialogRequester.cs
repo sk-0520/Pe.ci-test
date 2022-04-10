@@ -137,4 +137,17 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         #endregion
     }
+
+    public class PluginWebInstallRequestParameter: RequestParameter
+    {
+        #region property
+        #endregion
+    }
+
+    public class PluginWebInstallRequestResponse: CancelResponse
+    {
+        #region property
+        #endregion
+    }
+
 }

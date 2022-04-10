@@ -111,8 +111,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         private PluginInstaller PluginInstaller { get; }
 
-        internal bool WebInstallMode { get; set; }
-
         #endregion
 
         #region function

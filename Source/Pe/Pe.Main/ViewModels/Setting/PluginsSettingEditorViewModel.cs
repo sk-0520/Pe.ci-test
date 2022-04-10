@@ -39,6 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public RequestSender SelectPluginFileRequest { get; } = new RequestSender();
         public RequestSender ShowMessageRequest { get; } = new RequestSender();
+        public RequestSender WebInstallRequest { get; } = new RequestSender();
 
         private ModelViewModelObservableCollectionManagerBase<PluginSettingEditorElement, PluginSettingEditorViewModel> PluginCollection { get; }
         public ICollectionView PluginItems { get; }
@@ -53,13 +54,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         private IImageLoader ImageLoader { get; }
-
-        public bool WebInstallMode
-        {
-            get => Model.WebInstallMode;
-            set => SetModelValue(value);
-        }
-
 
         #endregion
 
@@ -101,7 +95,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public ICommand WebInstallCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                WebInstallMode = true;
+                var parameter = new PluginWebInstallRequestParameter() {
+                };
+                WebInstallRequest.Send(parameter, response => {
+                    var res = (PluginWebInstallRequestResponse)response;
+                });
             }
         ));
 

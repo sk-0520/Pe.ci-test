@@ -4680,6 +4680,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   プラグイン Web インストール に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_Caption {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   再試行待機方法 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_RedoEditor_RedoMode {

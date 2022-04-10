@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
 using Prism.Commands;
 
@@ -40,6 +41,20 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
                  var result = MessageBox.Show(UIUtility.GetLogicalClosest<Window>(this)!, parameter.Message, parameter.Caption, parameter.Button, parameter.Icon, parameter.DefaultResult, parameter.Options);
              }
          ));
+
+        public ICommand WebInstallCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+                var parameter = (PluginWebInstallRequestParameter)o.Parameter;
+
+                var dialog = new PluginWebInstallWindow() {
+                    Owner = UIUtility.GetRootView(this),
+                };
+                dialog.ShowDialog();
+
+                o.Callback(new PluginWebInstallRequestResponse() {
+                });
+            }
+        ));
 
         #endregion
 

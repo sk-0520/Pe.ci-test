@@ -214,6 +214,27 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <summary>
+        /// 表示要素から親となる<see cref="Window"/>を取得する。
+        /// </summary>
+        /// <param name="dependencyObject"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static Window GetRootView(DependencyObject dependencyObject)
+        {
+            if(dependencyObject is Window) {
+                throw new ArgumentException("window", nameof(dependencyObject));
+            };
+
+            var window = GetClosest<Window>(dependencyObject);
+
+            if(window is null) {
+                throw new ArgumentException("root is not window", nameof(dependencyObject));
+            }
+
+            return window;
+        }
+
+        /// <summary>
         /// 対象要素群の<see cref="FrameworkElement.ApplyTemplate"/> を再帰的に呼び出し。
         /// </summary>
         /// <param name="elements"></param>

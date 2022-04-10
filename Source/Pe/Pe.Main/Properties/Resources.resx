@@ -2224,4 +2224,7 @@ Pe を終了してから実行してください</value>
   <data name="String_Setting_Generals_Proxy_ProxyUrl_A" xml:space="preserve">
     <value>プロキシURL</value>
   </data>
+  <data name="String_PluginWebInstall_Caption" xml:space="preserve">
+    <value>プラグイン Web インストール</value>
+  </data>
 </root>
