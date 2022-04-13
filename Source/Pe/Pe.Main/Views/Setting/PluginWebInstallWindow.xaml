@@ -5,25 +5,91 @@
 
   xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
   
+  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
 
   WindowStyle="ToolWindow"
-  ResizeMode="CanResizeWithGrip"
+  ResizeMode="NoResize"
+  SizeToContent="WidthAndHeight"
   Height="350"
   Width="500"
   WindowStartupLocation="CenterOwner"
+  Padding="{StaticResource BasePadding}"
   
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
   <Window.Resources>
+    <app_core_views_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
   </Window.Resources>
   <Window.Title>
     <Binding Path="Resources.String_PluginWebInstall_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
   <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
 
+    <Grid Grid.Row="0">
+      <Grid.Resources>
+        <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
+          <Setter Property="Width" Value="Auto" />
+          <Setter Property="SharedSizeGroup" Value="Header" />
+        </Style>
+        <Style x:Key="ContentDefinition" TargetType="ColumnDefinition">
+          <Setter Property="Width" Value="*" />
+        </Style>
+      </Grid.Resources>
+
+      <StackPanel Grid.IsSharedSizeScope="True">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+            <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+          </Grid.ColumnDefinitions>
+
+          <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_PluginWebInstall_PluginIdOrInfoUrl_A, Source={x:Static app_main:CultureService.Instance}}" />
+          <TextBox Grid.Column="1" Style="{StaticResource Horizontal-TextBox}" Text="{Binding PluginIdOrInfoUrl, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding NowInstalling}" />
+        </Grid>
+
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+            <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+          </Grid.ColumnDefinitions>
+
+          <StackPanel Grid.Column="1" >
+            <TextBlock Margin="{StaticResource AllMargin}" Text="{Binding Resources.String_PluginWebInstall_PluginIdOrInfoUrlInformation, Source={x:Static app_main:CultureService.Instance}}" />
+          </StackPanel>
+        </Grid>
+
+        <Button Margin="20" Padding="8" Content="{Binding Resources.String_PluginWebInstall_Install_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding InstallCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" IsEnabled="{Binding NowInstalling, Converter={StaticResource LogicalNotConverter}}" />
+
+        <StackPanel Margin="{StaticResource AllMargin}">
+          <StackPanel.Style>
+            <Style TargetType="StackPanel">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding NowInstalling}" Value="True">
+                  <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+              </Style.Triggers>
+
+              <Setter Property="Visibility" Value="Hidden" />
+            </Style>
+          </StackPanel.Style>
+
+          <ProgressBar Height="18" IsIndeterminate="True" />
+
+        </StackPanel>
+
+      </StackPanel>
+    </Grid>
+
+    <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
+      <Button IsCancel="True" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CloseCommand, ElementName=root}" />
+    </UniformGrid>
   </Grid>
 </Window>

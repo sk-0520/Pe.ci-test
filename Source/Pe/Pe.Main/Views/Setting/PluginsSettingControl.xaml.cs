@@ -3,6 +3,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models;
+using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.ViewModels.Plugin;
 using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
 using Prism.Commands;
 
@@ -44,15 +46,30 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         public ICommand WebInstallCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
             o => {
-                var parameter = (PluginWebInstallRequestParameter)o.Parameter;
+                using var parameter = (PluginWebInstallRequestParameter)o.Parameter;
 
+                var viewModel = new PluginWebInstallViewModel(
+                    parameter.Element,
+                    parameter.UserTracker,
+                    parameter.DispatcherWrapper,
+                    parameter.LoggerFactory
+                );
                 var dialog = new PluginWebInstallWindow() {
                     Owner = UIUtility.GetRootView(this),
+                    DataContext = viewModel,
                 };
+                var windowItem = new WindowItem(WindowKind.PluginWebInstaller, parameter.Element, viewModel, dialog);
+                parameter.WindowManager.Register(windowItem);
                 dialog.ShowDialog();
 
-                o.Callback(new PluginWebInstallRequestResponse() {
-                });
+                var response = new PluginWebInstallRequestResponse() {
+                    ResponseIsCancel = !parameter.Element.IsDownloaded,
+                };
+                if(!response.ResponseIsCancel) {
+                    response.ArchiveFile = parameter.Element.GetArchiveFile();
+                }
+
+                o.Callback(response);
             }
         ));
 

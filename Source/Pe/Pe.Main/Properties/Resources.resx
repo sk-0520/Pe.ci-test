@@ -2227,4 +2227,14 @@ Pe を終了してから実行してください</value>
   <data name="String_PluginWebInstall_Caption" xml:space="preserve">
     <value>プラグイン Web インストール</value>
   </data>
+  <data name="String_PluginWebInstall_Install_A" xml:space="preserve">
+    <value>インストール(_I)</value>
+  </data>
+  <data name="String_PluginWebInstall_PluginIdOrInfoUrlInformation" xml:space="preserve">
+    <value>プラグインID: Pe.Server に登録されているプラグインはプラグインID指定できます
+URL: バージョンチェックURLを指定すればその内容からプラグインを取得します</value>
+  </data>
+  <data name="String_PluginWebInstall_PluginIdOrInfoUrl_A" xml:space="preserve">
+    <value>プラグインID/URL</value>
+  </data>
 </root>

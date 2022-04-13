@@ -4689,6 +4689,34 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   インストール(_I) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_Install_A {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_Install_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグインID/URL に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_PluginIdOrInfoUrl_A {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_PluginIdOrInfoUrl_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグインID: Pe.Server に登録されているプラグインはプラグインID指定できます
+        ///URL: バージョンチェックURLを指定すればその内容からプラグインを取得します に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_PluginIdOrInfoUrlInformation {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_PluginIdOrInfoUrlInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   再試行待機方法 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_RedoEditor_RedoMode {
