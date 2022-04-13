@@ -75,10 +75,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
 
-        internal PluginsSettingEditorElement(PluginContainer pluginContainer, IPluginConstructorContext pluginConstructorContext, PauseReceiveLogDelegate pauseReceiveLog, PreferencesContextFactory preferencesContextFactory, IWindowManager windowManager, IUserTracker userTracker, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal PluginsSettingEditorElement(PluginContainer pluginContainer, NewVersionChecker newVersionChecker, IPluginConstructorContext pluginConstructorContext, PauseReceiveLogDelegate pauseReceiveLog, PreferencesContextFactory preferencesContextFactory, IWindowManager windowManager, IUserTracker userTracker, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, statementLoader, idFactory, imageLoader, mediaConverter, policy, dispatcherWrapper, loggerFactory)
         {
             PluginContainer = pluginContainer;
+            NewVersionChecker = newVersionChecker;
             PluginConstructorContext = pluginConstructorContext;
             PreferencesContextFactory = preferencesContextFactory;
             PauseReceiveLog = pauseReceiveLog;
@@ -99,6 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
 
         private PreferencesContextFactory PreferencesContextFactory { get; }
+        private NewVersionChecker NewVersionChecker { get; }
         private IHttpUserAgentFactory UserAgentFactory { get; }
         private IPlatformTheme PlatformTheme { get; }
         private EnvironmentParameters EnvironmentParameters { get; }
@@ -153,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         internal PluginWebInstallRequestParameter CreatePluginWebInstallRequestParameter()
         {
-            var element = new Plugin.PluginWebInstallElement(UserAgentFactory, LoggerFactory);
+            var element = new Plugin.PluginWebInstallElement(NewVersionChecker, UserAgentFactory, LoggerFactory);
             element.Initialize();
 
             return new PluginWebInstallRequestParameter() {

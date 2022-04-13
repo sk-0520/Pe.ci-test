@@ -5,27 +5,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
 {
     public class PluginWebInstallElement: ElementBase, IViewShowStarter, IViewCloseReceiver
     {
-        public PluginWebInstallElement(IHttpUserAgentFactory userAgentFactory, ILoggerFactory loggerFactory)
+        public PluginWebInstallElement(NewVersionChecker newVersionChecker, IHttpUserAgentFactory userAgentFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
+            NewVersionChecker = newVersionChecker;
             UserAgentFactory = userAgentFactory;
         }
 
         #region property
 
-        private bool ViewCreated { get; set; }
-
-        public bool IsDownloaded { get;  set; }
-
+        private NewVersionChecker NewVersionChecker { get; }
         private IHttpUserAgentFactory UserAgentFactory { get; }
 
         internal string PluginIdOrInfoUrl { get; set; } = string.Empty;
+
+        private bool ViewCreated { get; set; }
+
+        public bool IsDownloaded { get; set; }
 
         private FileInfo? ArchiveFile { get; set; }
 
@@ -53,6 +56,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
 
         private Task GetPluginAsync(string pluginIdOrInfoUrl)
         {
+            //Uri archiveUri;
+            if(!Guid.TryParse(pluginIdOrInfoUrl, out var guid)) {
+                NewVersionChecker.CheckPluginNewVersionAsync
+            }
             
             throw new NotImplementedException();
         }

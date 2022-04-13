@@ -203,7 +203,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return apiResult;
         }
 
-        private async Task<NewVersionItemData?> CheckPluginNewVersionByApiAsync(PluginId pluginId, Version pluginVersion)
+        public async Task<PluginInformationItemData?> GetPluginVersionInfoByApiAsync(PluginId pluginId)
         {
             var json = JsonSerializer.Serialize(new {
                 plugin_ids = new[] {
@@ -226,7 +226,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             using var stream = await response.Content.ReadAsStreamAsync();
             var serializer = new JsonTextSerializer();
             var result = serializer.Load<ServerApiResultData<PluginInformationResultData>>(stream);
-            if(result.Data is null || !result.Data.Plugins.TryGetValue(pluginId.Id, out var item)) {
+            if(result.Data is not null && result.Data.Plugins.TryGetValue(pluginId.Id, out var item)) {
+                return item;
+            }
+
+            return null;
+        }
+
+        private async Task<NewVersionItemData?> CheckPluginNewVersionByApiAsync(PluginId pluginId, Version pluginVersion)
+        {
+            var item = await GetPluginVersionInfoByApiAsync(pluginId);
+            if(item is null) {
                 return null;
             }
 
