@@ -22,6 +22,8 @@
 >
   <Window.Resources>
     <app_core_views_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+    <app_core_views_converter:StringIsNullOrEmptyConverter x:Key="StringIsNullOrEmptyConverter" />
+    
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
   </Window.Resources>
   <Window.Title>
@@ -69,19 +71,33 @@
         <Button Margin="20" Padding="8" Content="{Binding Resources.String_PluginWebInstall_Install_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding InstallCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" IsEnabled="{Binding NowInstalling, Converter={StaticResource LogicalNotConverter}}" />
 
         <StackPanel Margin="{StaticResource AllMargin}">
-          <StackPanel.Style>
-            <Style TargetType="StackPanel">
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding NowInstalling}" Value="True">
-                  <Setter Property="Visibility" Value="Visible" />
-                </DataTrigger>
-              </Style.Triggers>
+          <ProgressBar Height="18" IsIndeterminate="True">
+            <ProgressBar.Style>
+              <Style TargetType="ProgressBar">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding NowInstalling}" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                  </DataTrigger>
+                </Style.Triggers>
 
-              <Setter Property="Visibility" Value="Hidden" />
-            </Style>
-          </StackPanel.Style>
+                <Setter Property="Visibility" Value="Hidden" />
+              </Style>
+            </ProgressBar.Style>
+          </ProgressBar>
 
-          <ProgressBar Height="18" IsIndeterminate="True" />
+          <TextBox IsReadOnly="True" Height="80" Text="{Binding ExceptionMessage, Mode=OneWay}" AcceptsReturn="True" TextWrapping="Wrap">
+            <TextBox.Style>
+              <Style TargetType="TextBox">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding ExceptionMessage, Converter={StaticResource StringIsNullOrEmptyConverter}}" Value="True">
+                    <Setter Property="Visibility" Value="Hidden" />
+                  </DataTrigger>
+                </Style.Triggers>
+                
+                <Setter Property="Visibility" Value="Visible" />
+              </Style>
+            </TextBox.Style>
+          </TextBox>
 
         </StackPanel>
 

@@ -2237,4 +2237,7 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_PluginWebInstall_PluginIdOrInfoUrl_A" xml:space="preserve">
     <value>プラグインID/URL</value>
   </data>
+  <data name="String_PluginWebInstall_PluginIdOrInfoUrl_Empty" xml:space="preserve">
+    <value>プラグインID/URL が未入力</value>
+  </data>
 </root>

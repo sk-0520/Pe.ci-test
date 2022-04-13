@@ -42,6 +42,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
             return ArchiveFile;
         }
 
+        public Task GetPluginAsync()
+        {
+            if(string.IsNullOrWhiteSpace(PluginIdOrInfoUrl)) {
+                throw new Exception(Properties.Resources.String_PluginWebInstall_PluginIdOrInfoUrl_Empty);
+            }
+
+            return GetPluginAsync(PluginIdOrInfoUrl);
+        }
+
+        private Task GetPluginAsync(string pluginIdOrInfoUrl)
+        {
+            
+            throw new NotImplementedException();
+        }
+
+
         #endregion
 
         #region ElementBase

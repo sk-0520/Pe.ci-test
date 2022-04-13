@@ -19,6 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Plugin
         #region variable
 
         bool _nowInstalling;
+        string? _exceptionMessage;
 
         #endregion
 
@@ -37,11 +38,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Plugin
         public bool NowInstalling
         {
             get => this._nowInstalling;
-            set
-            {
-                SetProperty(ref this._nowInstalling, value);
-            }
+            private set => SetProperty(ref this._nowInstalling, value);
         }
+
+        public string ExceptionMessage
+        {
+            get => this._exceptionMessage ?? string.Empty;
+            private set => SetProperty(ref this._exceptionMessage, value);
+        }
+
 
         #endregion
 
@@ -49,9 +54,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Plugin
 
         public ICommand InstallCommand => GetOrCreateCommand(() => new DelegateCommand<Window>(
             async o => {
+                ExceptionMessage = string.Empty;
                 NowInstalling = true;
                 try {
-                    await Task.Delay(1000);
+                    await Model.GetPluginAsync();
+                } catch(Exception ex) {
+                    ExceptionMessage = ex.Message;
                 } finally {
                     NowInstalling = false;
                 }

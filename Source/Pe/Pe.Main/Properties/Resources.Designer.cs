@@ -4707,6 +4707,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   プラグインID/URL が未入力 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_PluginIdOrInfoUrl_Empty {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_PluginIdOrInfoUrl_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   プラグインID: Pe.Server に登録されているプラグインはプラグインID指定できます
         ///URL: バージョンチェックURLを指定すればその内容からプラグインを取得します に類似しているローカライズされた文字列を検索します。
         /// </summary>
