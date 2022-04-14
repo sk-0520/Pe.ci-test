@@ -2230,6 +2230,12 @@ Pe を終了してから実行してください</value>
   <data name="String_PluginWebInstall_Install_A" xml:space="preserve">
     <value>インストール(_I)</value>
   </data>
+  <data name="String_PluginWebInstall_NewVersionData_NotFound" xml:space="preserve">
+    <value>バージョンデータ取得失敗</value>
+  </data>
+  <data name="String_PluginWebInstall_NotFoundByPluginId" xml:space="preserve">
+    <value>プラグインIDが見つからない</value>
+  </data>
   <data name="String_PluginWebInstall_PluginIdOrInfoUrlInformation" xml:space="preserve">
     <value>プラグインID: Pe.Server に登録されているプラグインはプラグインID指定できます
 URL: バージョンチェックURLを指定すればその内容からプラグインを取得します</value>
@@ -2239,5 +2245,11 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   </data>
   <data name="String_PluginWebInstall_PluginIdOrInfoUrl_Empty" xml:space="preserve">
     <value>プラグインID/URL が未入力</value>
+  </data>
+  <data name="String_PluginWebInstall_PluginIdOrInfoUrl_ProtocolError" xml:space="preserve">
+    <value>URLはHTTP/HTTPSのみ対応</value>
+  </data>
+  <data name="String_PluginWebInstall_PluginIdOrInfoUrl_UrlParseError" xml:space="preserve">
+    <value>URL変換失敗</value>
   </data>
 </root>

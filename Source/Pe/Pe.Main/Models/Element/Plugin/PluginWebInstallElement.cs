@@ -5,22 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
 {
     public class PluginWebInstallElement: ElementBase, IViewShowStarter, IViewCloseReceiver
     {
-        public PluginWebInstallElement(NewVersionChecker newVersionChecker, IHttpUserAgentFactory userAgentFactory, ILoggerFactory loggerFactory)
+        internal PluginWebInstallElement(PluginContainer pluginContainer, NewVersionChecker newVersionChecker, IHttpUserAgentFactory userAgentFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
+            PluginContainer = pluginContainer;
             NewVersionChecker = newVersionChecker;
             UserAgentFactory = userAgentFactory;
         }
 
         #region property
 
+        private PluginContainer PluginContainer { get; }
         private NewVersionChecker NewVersionChecker { get; }
         private IHttpUserAgentFactory UserAgentFactory { get; }
 
@@ -45,6 +49,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
             return ArchiveFile;
         }
 
+        private async Task<Uri> GetCheckUriAsync(string pluginIdOrInfoUrl)
+        {
+            if(Guid.TryParse(pluginIdOrInfoUrl, out var guid)) {
+                var info = await NewVersionChecker.GetPluginVersionInfoByApiAsync(new PluginId(guid));
+                if(info is null) {
+                    throw new Exception(Properties.Resources.String_PluginWebInstall_NotFoundByPluginId);
+                }
+                return new Uri(info.CheckUrl);
+            }
+
+            if(!Uri.TryCreate(pluginIdOrInfoUrl, UriKind.Absolute, out var uri)) {
+                throw new Exception(Properties.Resources.String_PluginWebInstall_PluginIdOrInfoUrl_UrlParseError);
+            }
+            if(!(uri.Scheme == Uri.UriSchemeHttps || uri.Scheme == Uri.UriSchemeHttp)) {
+                throw new Exception(Properties.Resources.String_PluginWebInstall_PluginIdOrInfoUrl_ProtocolError);
+            }
+
+            return uri;
+        }
+
+        private async Task GetPluginAsync(string pluginIdOrInfoUrl)
+        {
+            var checkUri = await GetCheckUriAsync(pluginIdOrInfoUrl);
+            var data = await NewVersionChecker.RequestUpdateDataAsync(checkUri);
+            if(data is null) {
+                throw new Exception(Properties.Resources.String_PluginWebInstall_NewVersionData_NotFound);
+            }
+
+            throw new NotImplementedException();
+        }
+
         public Task GetPluginAsync()
         {
             if(string.IsNullOrWhiteSpace(PluginIdOrInfoUrl)) {
@@ -53,17 +88,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
 
             return GetPluginAsync(PluginIdOrInfoUrl);
         }
-
-        private Task GetPluginAsync(string pluginIdOrInfoUrl)
-        {
-            //Uri archiveUri;
-            if(!Guid.TryParse(pluginIdOrInfoUrl, out var guid)) {
-                NewVersionChecker.CheckPluginNewVersionAsync
-            }
-            
-            throw new NotImplementedException();
-        }
-
 
         #endregion
 

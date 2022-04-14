@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         internal PluginWebInstallRequestParameter CreatePluginWebInstallRequestParameter()
         {
-            var element = new Plugin.PluginWebInstallElement(NewVersionChecker, UserAgentFactory, LoggerFactory);
+            var element = new Plugin.PluginWebInstallElement(PluginContainer, NewVersionChecker, UserAgentFactory, LoggerFactory);
             element.Initialize();
 
             return new PluginWebInstallRequestParameter() {

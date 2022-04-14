@@ -4698,6 +4698,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   バージョンデータ取得失敗 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_NewVersionData_NotFound {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_NewVersionData_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグインIDが見つからない に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_NotFoundByPluginId {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_NotFoundByPluginId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   プラグインID/URL に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_PluginWebInstall_PluginIdOrInfoUrl_A {
@@ -4712,6 +4730,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_PluginWebInstall_PluginIdOrInfoUrl_Empty {
             get {
                 return ResourceManager.GetString("String_PluginWebInstall_PluginIdOrInfoUrl_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   URLはHTTP/HTTPSのみ対応 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_PluginIdOrInfoUrl_ProtocolError {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_PluginIdOrInfoUrl_ProtocolError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   URL変換失敗 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_PluginIdOrInfoUrl_UrlParseError {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_PluginIdOrInfoUrl_UrlParseError", resourceCulture);
             }
         }
         
