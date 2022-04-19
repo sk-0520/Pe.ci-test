@@ -6,6 +6,7 @@ using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.ViewModels.Plugin;
 using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
+using ContentTypeTextNet.Pe.Main.Views.Plugin;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Setting
@@ -62,9 +63,11 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
                 parameter.WindowManager.Register(windowItem);
                 dialog.ShowDialog();
 
+                var hasPluginArchiveFile = parameter.Element.PluginArchiveFile is not null;
                 var response = new PluginWebInstallRequestResponse() {
-                    ResponseIsCancel = !parameter.Element.IsDownloaded,
+                    ResponseIsCancel = !hasPluginArchiveFile,
                 };
+
                 if(!response.ResponseIsCancel) {
                     response.ArchiveFile = parameter.Element.GetArchiveFile();
                 }

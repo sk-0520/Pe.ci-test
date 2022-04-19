@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
@@ -29,6 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Plugin
 
         #region property
 
+        public RequestSender CloseRequest { get; } = new RequestSender();
+
         public string PluginIdOrInfoUrl
         {
             get => Model.PluginIdOrInfoUrl;
@@ -47,6 +51,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Plugin
             private set => SetProperty(ref this._exceptionMessage, value);
         }
 
+        public FileInfo? PluginArchiveFile
+        {
+            get => Model.PluginArchiveFile;
+            set => SetModelValue(value);
+        }
 
         #endregion
 
@@ -58,6 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Plugin
                 NowInstalling = true;
                 try {
                     await Model.GetPluginAsync();
+                    CloseRequest.Send();
                 } catch(Exception ex) {
                     ExceptionMessage = ex.Message;
                 } finally {

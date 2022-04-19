@@ -1,17 +1,19 @@
 <Window
-  x:Class="ContentTypeTextNet.Pe.Main.Views.Setting.PluginWebInstallWindow"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.Plugin.PluginWebInstallWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:prism="http://prismlibrary.com/"
   
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
 
   WindowStyle="ToolWindow"
   ResizeMode="NoResize"
-  SizeToContent="WidthAndHeight"
+  SizeToContent="Height"
   Height="350"
   Width="500"
   WindowStartupLocation="CenterOwner"
@@ -20,6 +22,11 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
+  <behaviors:Interaction.Triggers>
+    <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
+      <prism:InvokeCommandAction Command="{Binding CloseCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+    </app_core_views:RequestTrigger>
+  </behaviors:Interaction.Triggers>
   <Window.Resources>
     <app_core_views_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
     <app_core_views_converter:StringIsNullOrEmptyConverter x:Key="StringIsNullOrEmptyConverter" />

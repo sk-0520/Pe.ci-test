@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using Microsoft.Extensions.Logging;
@@ -14,10 +15,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
 {
     public class PluginWebInstallElement: ElementBase, IViewShowStarter, IViewCloseReceiver
     {
-        internal PluginWebInstallElement(PluginContainer pluginContainer, NewVersionChecker newVersionChecker, IHttpUserAgentFactory userAgentFactory, ILoggerFactory loggerFactory)
+        internal PluginWebInstallElement(PluginContainer pluginContainer, EnvironmentParameters environmentParameters, NewVersionChecker newVersionChecker, NewVersionDownloader newVersionDownloader, IHttpUserAgentFactory userAgentFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             PluginContainer = pluginContainer;
+            EnvironmentParameters = environmentParameters;
+            NewVersionDownloader = newVersionDownloader;
             NewVersionChecker = newVersionChecker;
             UserAgentFactory = userAgentFactory;
         }
@@ -25,6 +28,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
         #region property
 
         private PluginContainer PluginContainer { get; }
+        private EnvironmentParameters EnvironmentParameters { get; }
+        private NewVersionDownloader NewVersionDownloader { get; }
         private NewVersionChecker NewVersionChecker { get; }
         private IHttpUserAgentFactory UserAgentFactory { get; }
 
@@ -34,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
 
         public bool IsDownloaded { get; set; }
 
-        private FileInfo? ArchiveFile { get; set; }
+        internal FileInfo? PluginArchiveFile { get; private set; }
 
         #endregion
 
@@ -42,11 +47,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
 
         internal FileInfo GetArchiveFile()
         {
-            if(ArchiveFile is null) {
+            if(PluginArchiveFile is null) {
                 throw new InvalidOperationException();
             }
 
-            return ArchiveFile;
+            return PluginArchiveFile;
         }
 
         private async Task<Uri> GetCheckUriAsync(string pluginIdOrInfoUrl)
@@ -71,13 +76,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
 
         private async Task GetPluginAsync(string pluginIdOrInfoUrl)
         {
+            var notifyProgress = new NullNotifyProgress(LoggerFactory);
             var checkUri = await GetCheckUriAsync(pluginIdOrInfoUrl);
-            var data = await NewVersionChecker.RequestUpdateDataAsync(checkUri);
-            if(data is null) {
+            var updateData = await NewVersionChecker.RequestUpdateDataAsync(checkUri);
+            if(updateData is null) {
                 throw new Exception(Properties.Resources.String_PluginWebInstall_NewVersionData_NotFound);
             }
 
-            throw new NotImplementedException();
+            var versionConverter = new VersionConverter();
+            var newVersionItem = NewVersionChecker.GetNewVersionItem(new Version(), updateData.Items);
+            if(newVersionItem is null) {
+                throw new Exception(Properties.Resources.String_PluginWebInstall_NewVersionData_NotFound);
+            }
+
+            var baseDirName = PathUtility.ToSafeNameDefault(pluginIdOrInfoUrl);
+            var pluginDownloadDirectoryPath = Path.Join(EnvironmentParameters.MachinePluginInstallDirectory.FullName, baseDirName);
+            var pluginDownloadFileName = PathUtility.AddExtension(versionConverter.ToFileString(newVersionItem.Version), NewVersionChecker.GetExtension(newVersionItem));
+            var pluginArchivePath = Path.Join(pluginDownloadDirectoryPath, pluginDownloadFileName);
+            var pluginArchiveFile = new FileInfo(pluginArchivePath);
+            pluginArchiveFile.Refresh();
+
+            FileUtility.MakeFileParentDirectory(pluginArchiveFile);
+            await NewVersionDownloader.DownloadArchiveAsync(newVersionItem, pluginArchiveFile, notifyProgress);
+
+            pluginArchiveFile.Refresh();
+
+            var checksumOk = await NewVersionDownloader.ChecksumAsync(newVersionItem, pluginArchiveFile, notifyProgress);
+            if(!checksumOk) {
+                throw new Exception("チェックサム異常あり");
+            }
+
+            PluginArchiveFile = pluginArchiveFile;
         }
 
         public Task GetPluginAsync()

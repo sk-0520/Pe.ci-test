@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return null;
         }
 
-        private static NewVersionItemData? GetNewVersionItem(Version pluginVersion, IEnumerable<NewVersionItemData> items)
+        public static NewVersionItemData? GetNewVersionItem(Version pluginVersion, IEnumerable<NewVersionItemData> items)
         {
             return items
                 .Where(i => i.Platform == ProcessArchitecture.ApplicationArchitecture)

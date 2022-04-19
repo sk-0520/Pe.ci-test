@@ -81,6 +81,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 }
             }
 
+            foreach(var extension in extensions) {
+                var pluginPaths = Directory.EnumerateFiles(pluginDirectory.FullName, "*." + extension);
+                foreach(var pluginPath in pluginPaths) {
+                    bool existsPlugin;
+                    try {
+                        existsPlugin = File.Exists(pluginPath);
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, "プラグイン実ファイル取得失敗: {0}, {1}", ex.Message, pluginPath);
+                        continue;
+                    }
+
+                    if(existsPlugin) {
+                        return new FileInfo(pluginPath);
+                    }
+                }
+            }
+
             return null;
         }
 
