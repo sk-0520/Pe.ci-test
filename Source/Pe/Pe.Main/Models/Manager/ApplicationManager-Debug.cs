@@ -227,7 +227,7 @@ echo end
 
         public void DebugStartupEnd()
         {
-            //DebugSetting();
+            DebugSetting();
         }
 
         private void Uninstall()

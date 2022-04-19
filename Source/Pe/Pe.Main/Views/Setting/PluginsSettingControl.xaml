@@ -23,6 +23,9 @@
     <app_core_views:RequestTrigger SourceObject="{Binding Editor.ShowMessageRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <prism:InvokeCommandAction Command="{Binding ShowMessageCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
     </app_core_views:RequestTrigger>
+    <app_core_views:RequestTrigger SourceObject="{Binding Editor.WebInstallRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <prism:InvokeCommandAction Command="{Binding WebInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    </app_core_views:RequestTrigger>
   </behaviors:Interaction.Triggers>
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -78,7 +81,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Command="{Binding Editor.LocalInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="{Binding Resources.String_Setting_Plugins_Install_Local_A, Source={x:Static app_main:CultureService.Instance}}" />
-            <Button Grid.Column="1" IsEnabled="False" Content="{Binding Resources.String_Setting_Plugins_Install_Web_A, Source={x:Static app_main:CultureService.Instance}}" />
+            <Button Grid.Column="1" Command="{Binding Editor.WebInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="{Binding Resources.String_Setting_Plugins_Install_Web_A, Source={x:Static app_main:CultureService.Instance}}" />
           </Grid>
 
           <TextBlock FontSize="10" TextWrapping="Wrap" Text="{Binding Resources.String_Setting_Plugins_Install_Description, Source={x:Static app_main:CultureService.Instance}}" />
@@ -231,6 +234,6 @@
       </GroupBox>
 
     </Grid>
-
+    
   </Grid>
 </UserControl>

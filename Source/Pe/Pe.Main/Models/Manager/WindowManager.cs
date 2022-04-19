@@ -82,6 +82,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// 通知ログ。
         /// </summary>
         NotifyLog,
+        /// <summary>
+        /// プラグインインストーラ(Web)。
+        /// </summary>
+        PluginWebInstaller,
 
         /// <summary>
         /// プラグイン ウィジェット。

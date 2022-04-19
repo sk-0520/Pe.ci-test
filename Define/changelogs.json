@@ -30,7 +30,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#803: プラグインをWebからインストール可能にする",
+						"comments": [
+							"動くかどうかは知らん"
+						]
 					},
 					{
 						"revision": "",

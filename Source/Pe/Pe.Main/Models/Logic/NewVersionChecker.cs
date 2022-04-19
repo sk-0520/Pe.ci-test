@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        private async Task<NewVersionData?> RequestUpdateDataAsync(Uri uri)
+        public async Task<NewVersionData?> RequestUpdateDataAsync(Uri uri)
         {
             using var agent = UserAgentManager.CreateUserAgent();
             try {
@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return null;
         }
 
-        private static NewVersionItemData? GetNewVersionItem(Version pluginVersion, IEnumerable<NewVersionItemData> items)
+        public static NewVersionItemData? GetNewVersionItem(Version pluginVersion, IEnumerable<NewVersionItemData> items)
         {
             return items
                 .Where(i => i.Platform == ProcessArchitecture.ApplicationArchitecture)
@@ -203,7 +203,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return apiResult;
         }
 
-        private async Task<NewVersionItemData?> CheckPluginNewVersionByApiAsync(PluginId pluginId, Version pluginVersion)
+        public async Task<PluginInformationItemData?> GetPluginVersionInfoByApiAsync(PluginId pluginId)
         {
             var json = JsonSerializer.Serialize(new {
                 plugin_ids = new[] {
@@ -226,7 +226,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             using var stream = await response.Content.ReadAsStreamAsync();
             var serializer = new JsonTextSerializer();
             var result = serializer.Load<ServerApiResultData<PluginInformationResultData>>(stream);
-            if(result.Data is null || !result.Data.Plugins.TryGetValue(pluginId.Id, out var item)) {
+            if(result.Data is not null && result.Data.Plugins.TryGetValue(pluginId.Id, out var item)) {
+                return item;
+            }
+
+            return null;
+        }
+
+        private async Task<NewVersionItemData?> CheckPluginNewVersionByApiAsync(PluginId pluginId, Version pluginVersion)
+        {
+            var item = await GetPluginVersionInfoByApiAsync(pluginId);
+            if(item is null) {
                 return null;
             }
 
@@ -240,48 +250,48 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         }
 
         private async Task<NewVersionItemData?> GetPluginItem_Issue775Async(PluginId pluginId, Version pluginVersion)
-    {
-        var map = new Dictionary<PluginId, string>() {
-            [new PluginId(new Guid("67F0FA7D-52D3-4889-B595-BE3703B224EB"))] = "update-Pe.Plugins.Reference.ClassicTheme.json",
-            [new PluginId(new Guid("2E5C72C5-270F-4B05-AFB9-C87F3966ECC5"))] = "update-Pe.Plugins.Reference.Clock.json",
-            [new PluginId(new Guid("799CE8BD-8F49-4E8F-9E47-4D4873084081"))] = "update-Pe.Plugins.Reference.Eyes.json",
-            [new PluginId(new Guid("9DCF441D-9F8E-494F-89C1-814678BBC42C"))] = "update-Pe.Plugins.Reference.FileFinder.json",
-            [new PluginId(new Guid("4FA1A634-6B32-4762-8AE8-3E1CF6DF9DB1"))] = "update-Pe.Plugins.Reference.Html.json",
-        };
+        {
+            var map = new Dictionary<PluginId, string>() {
+                [new PluginId(new Guid("67F0FA7D-52D3-4889-B595-BE3703B224EB"))] = "update-Pe.Plugins.Reference.ClassicTheme.json",
+                [new PluginId(new Guid("2E5C72C5-270F-4B05-AFB9-C87F3966ECC5"))] = "update-Pe.Plugins.Reference.Clock.json",
+                [new PluginId(new Guid("799CE8BD-8F49-4E8F-9E47-4D4873084081"))] = "update-Pe.Plugins.Reference.Eyes.json",
+                [new PluginId(new Guid("9DCF441D-9F8E-494F-89C1-814678BBC42C"))] = "update-Pe.Plugins.Reference.FileFinder.json",
+                [new PluginId(new Guid("4FA1A634-6B32-4762-8AE8-3E1CF6DF9DB1"))] = "update-Pe.Plugins.Reference.Html.json",
+            };
 
-        if(map.TryGetValue(pluginId, out var path)) {
-            var url = TextUtility.ReplaceFromDictionary(ApplicationConfiguration.Plugin.Issue775, new Dictionary<string, string> {
-                ["PATH"] = path,
-            });
-            var uri = new Uri(url);
-            var updateData = await RequestUpdateDataAsync(uri);
-            if(updateData == null) {
-                return null;
+            if(map.TryGetValue(pluginId, out var path)) {
+                var url = TextUtility.ReplaceFromDictionary(ApplicationConfiguration.Plugin.Issue775, new Dictionary<string, string> {
+                    ["PATH"] = path,
+                });
+                var uri = new Uri(url);
+                var updateData = await RequestUpdateDataAsync(uri);
+                if(updateData == null) {
+                    return null;
+                }
+
+                var result = GetNewVersionItem(pluginVersion, updateData.Items);
+                return result;
             }
 
-            var result = GetNewVersionItem(pluginVersion, updateData.Items);
-            return result;
+            return null;
         }
 
-        return null;
+        /// <summary>
+        /// アーカイブ種別から拡張子を取得。
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public string GetExtension(NewVersionItemData data)
+        {
+            var kind = (data.ArchiveKind ?? string.Empty).Trim().ToLowerInvariant();
+
+            return kind switch {
+                "zip" => "zip",
+                "7z" => "7z",
+                _ => kind ?? string.Empty,
+            };
+        }
+
+        #endregion
     }
-
-    /// <summary>
-    /// アーカイブ種別から拡張子を取得。
-    /// </summary>
-    /// <param name="data"></param>
-    /// <returns></returns>
-    public string GetExtension(NewVersionItemData data)
-    {
-        var kind = (data.ArchiveKind ?? string.Empty).Trim().ToLowerInvariant();
-
-        return kind switch {
-            "zip" => "zip",
-            "7z" => "7z",
-            _ => kind ?? string.Empty,
-        };
-    }
-
-    #endregion
-}
 }

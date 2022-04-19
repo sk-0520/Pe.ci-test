@@ -4680,6 +4680,88 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   プラグイン Web インストール に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_Caption {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   インストール(_I) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_Install_A {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_Install_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   バージョンデータ取得失敗 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_NewVersionData_NotFound {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_NewVersionData_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグインIDが見つからない に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_NotFoundByPluginId {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_NotFoundByPluginId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグインID/URL に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_PluginIdOrInfoUrl_A {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_PluginIdOrInfoUrl_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグインID/URL が未入力 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_PluginIdOrInfoUrl_Empty {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_PluginIdOrInfoUrl_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   URLはHTTP/HTTPSのみ対応 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_PluginIdOrInfoUrl_ProtocolError {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_PluginIdOrInfoUrl_ProtocolError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   URL変換失敗 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_PluginIdOrInfoUrl_UrlParseError {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_PluginIdOrInfoUrl_UrlParseError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグインID: Pe.Server に登録されているプラグインはプラグインID指定できます
+        ///URL: バージョンチェックURLを指定すればその内容からプラグインを取得します に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_PluginIdOrInfoUrlInformation {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_PluginIdOrInfoUrlInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   再試行待機方法 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_RedoEditor_RedoMode {
