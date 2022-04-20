@@ -93,11 +93,11 @@
 							"MSTest.TestAdapter 2.2.8 -> 2.2.9",
 							"MSTest.TestFramework 2.2.8 -> 2.2.9"
 						]
-
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "SevenZipExtractor 1.0.16 -> 1.0.17"
 					},
 					{
 						"revision": "",
