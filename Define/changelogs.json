@@ -87,6 +87,16 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
+						"subject": "MSTest系更新",
+						"comments": [
+							"MSTest.TestAdapter 2.2.8 -> 2.2.9",
+							"MSTest.TestFramework 2.2.8 -> 2.2.9"
+						]
+
+					},
+					{
+						"revision": "",
 						"subject": ""
 					},
 					{
