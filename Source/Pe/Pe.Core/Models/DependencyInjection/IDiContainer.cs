@@ -181,7 +181,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         #endregion
 
-        #region MemberRegister
+        #region RegisterMember
 
         /// <summary>
         /// <see cref="IDiContainer.Inject{TObject}(TObject)"/> を行う際に <see cref="InjectAttribute"/> を設定できないプロパティに無理やり設定する。
