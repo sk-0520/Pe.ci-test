@@ -324,7 +324,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
             // コンストラクタのキャッシュを使用
             if(Constructors[name].TryGetValue(objectType, out var constructorCache)) {
-                if(TryNewObjectCore(objectType, name, true, constructorCache, manualParameters, out createdObject!)) {
+                if(TryNewObjectCore(objectType, name, true, constructorCache, manualParameters, out createdObject)) {
                     return true;
                 }
                 // 生成できなきゃ下の処理に流してキャッシュも多分変わる
@@ -351,7 +351,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 #endif
 
             foreach(var constructorItem in constructorItems) {
-                if(TryNewObjectCore(objectType, name, false, constructorItem, manualParameters, out createdObject!)) {
+                if(TryNewObjectCore(objectType, name, false, constructorItem, manualParameters, out createdObject)) {
                     return true;
                 }
             }
