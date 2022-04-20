@@ -81,14 +81,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
 
             if(!WebView.JavascriptObjectRepository.IsBound("pe_callbacks")) {
-                WebView.JavascriptObjectRepository.Register("pe_callbacks", Callbacks, true);
+                WebView.JavascriptObjectRepository.Register("pe_callbacks", Callbacks, BindingOptions.DefaultBinder);
             }
             if(!WebView.JavascriptObjectRepository.IsBound("pe_extensions")) {
                 if(PluginExtensions != null) {
-                    WebView.JavascriptObjectRepository.Register("pe_extensions", PluginExtensions, true);
+                    WebView.JavascriptObjectRepository.Register("pe_extensions", PluginExtensions, BindingOptions.DefaultBinder);
                 } else {
                     // 一応ダミーで作っておく
-                    WebView.JavascriptObjectRepository.Register("pe_extensions", new object(), true);
+                    WebView.JavascriptObjectRepository.Register("pe_extensions", new object(), BindingOptions.DefaultBinder);
                 }
             }
 
@@ -269,13 +269,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         {
             if(e.ObjectName == "pe_callbacks") {
                 if(!e.ObjectRepository.IsBound("pe_callbacks")) {
-                    e.ObjectRepository.Register("pe_callbacks", Callbacks, true);
+                    e.ObjectRepository.Register("pe_callbacks", Callbacks, BindingOptions.DefaultBinder);
                     Logger.LogDebug("register: pe_callbacks");
                 }
             }
             if(e.ObjectName == "pe_extensions") {
                 if(!e.ObjectRepository.IsBound("pe_extensions")) {
-                    e.ObjectRepository.Register("pe_extensions", PluginExtensions, true);
+                    e.ObjectRepository.Register("pe_extensions", PluginExtensions, BindingOptions.DefaultBinder);
                     Logger.LogDebug("register: pe_extensions");
                 }
             }

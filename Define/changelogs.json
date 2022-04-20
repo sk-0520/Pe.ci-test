@@ -101,7 +101,11 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "CefSharp を CefSharp.Wpf から CefSharp.Wpf.NETCore に変更",
+						"comments": [
+							"CefSharp.Wpf 86.0.241 -> CefSharp.Wpf.NETCore 100.0.230"
+						]
+
 					},
 					{
 						"revision": "",
