@@ -187,7 +187,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
                 default:
                     throw new NotImplementedException();
             }
-            NativeMethods.SetWindowPos(HandleUtility.GetWindowHandle(windowItem.Window), IntPtr.Zero, (int)deviceWindowLocation.X, (int)deviceWindowLocation.Y, 0, 0, SWP.SWP_NOSIZE);
+            NativeMethods.SetWindowPos(HandleUtility.GetWindowHandle(windowItem.Window), IntPtr.Zero, (int)deviceWindowLocation.X, (int)deviceWindowLocation.Y, 0, 0, SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
         }
 
         public void ExecuteLogById(Guid notifyLogId)
