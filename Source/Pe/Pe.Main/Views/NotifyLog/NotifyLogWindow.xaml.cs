@@ -43,8 +43,13 @@ namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
 
             // アクティブなるのを抑制
             var hWnd = HandleUtility.GetWindowHandle(this);
-            var exStyle = NativeMethods.GetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE);
-            NativeMethods.SetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE, exStyle | (int)WS_EX.WS_EX_NOACTIVATE);
+            var exStyle = NativeMethods.GetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE);
+
+            if(Environment.Is64BitProcess) {
+                NativeMethods.SetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE, new IntPtr(exStyle.ToInt64() | (long)WS_EX.WS_EX_NOACTIVATE));
+            } else {
+                NativeMethods.SetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE, new IntPtr(exStyle.ToInt32() | (int)WS_EX.WS_EX_NOACTIVATE));
+            }
         }
 
         protected override void OnActivated(EventArgs e)

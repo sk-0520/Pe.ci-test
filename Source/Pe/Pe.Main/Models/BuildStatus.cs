@@ -83,20 +83,34 @@ namespace ContentTypeTextNet.Pe.Main.Models
         ;
 
         /// <inheritdoc cref="IBuildStatus.Version"/>
-        public static Version Version { get; } = Assembly.GetExecutingAssembly()!.GetName()!.Version!;
+        public static Version Version { get; } = GetAssembly().GetName()!.Version!;
 
         /// <inheritdoc cref="IBuildStatus.Revision"/>
-        public static string Revision { get; } = Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
+        public static string Revision { get; } = GetAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
 
         /// <summary>
         /// アプリケーション名。
         /// </summary>
-        public static string Name { get; } = Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyProductAttribute>()!.Product;
+        public static string Name { get; } = GetAssembly().GetCustomAttribute<AssemblyProductAttribute>()!.Product;
 
         /// <summary>
         /// 著作権。
         /// </summary>
-        public static string Copyright { get; } = Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyCopyrightAttribute>()!.Copyright;
+        public static string Copyright { get; } = GetAssembly().GetCustomAttribute<AssemblyCopyrightAttribute>()!.Copyright;
+
+        #endregion
+
+        #region function
+
+        private static Assembly GetAssembly()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            if(assembly is null) {
+                throw new InvalidOperationException();
+            }
+
+            return assembly;
+        }
 
         #endregion
     }

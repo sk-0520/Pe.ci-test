@@ -22,8 +22,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <summary>
         /// コンストラクタの限定、対象プロパティ(or フィールド)を名前付きでマーク。
         /// </summary>
+        /// <param name="name">名前。</param>
         public InjectAttribute(string name)
         {
+            if(string.IsNullOrWhiteSpace(name)) {
+                throw new ArgumentException("empty", nameof(name));
+            }
+
             Name = name;
         }
 

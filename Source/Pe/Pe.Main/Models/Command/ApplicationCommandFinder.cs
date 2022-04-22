@@ -78,14 +78,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
     internal class ApplicationCommandParameterFactory
     {
-        public ApplicationCommandParameterFactory(CommandConfiguration commandConfiguration)
+        public ApplicationCommandParameterFactory(CommandConfiguration commandConfiguration, IDispatcherWrapper dispatcherWrapper)
         {
             CommandConfiguration = commandConfiguration;
+            DispatcherWrapper = dispatcherWrapper;
         }
 
         #region property
 
         private CommandConfiguration CommandConfiguration { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }   
 
         #endregion
 
@@ -118,6 +120,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         public ApplicationCommandParameter CreateParameter(ApplicationCommand applicationCommand, Action<ICommandExecuteParameter> executor)
         {
+            DispatcherWrapper.VerifyAccess();
+
             var descriptions = ToDescriptions(applicationCommand);
             return new ApplicationCommandParameter(ToHeader(applicationCommand), descriptions.narmal, descriptions.extend, (in IconScale iconScale) => {
                 var control = new Control();

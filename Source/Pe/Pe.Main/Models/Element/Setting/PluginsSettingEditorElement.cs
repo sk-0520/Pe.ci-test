@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
+using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using Microsoft.Extensions.Logging;
 
@@ -49,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             #endregion
         }
 
-        class DoubleProgress: IProgress<double>
+        private class DoubleProgress: IProgress<double>
         {
             public DoubleProgress(ILoggerFactory loggerFactory)
             {
@@ -74,13 +75,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
 
-        internal PluginsSettingEditorElement(PluginContainer pluginContainer, IPluginConstructorContext pluginConstructorContext, PauseReceiveLogDelegate pauseReceiveLog, PreferencesContextFactory preferencesContextFactory, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal PluginsSettingEditorElement(PluginContainer pluginContainer, NewVersionChecker newVersionChecker, NewVersionDownloader newVersionDownloader, IPluginConstructorContext pluginConstructorContext, PauseReceiveLogDelegate pauseReceiveLog, PreferencesContextFactory preferencesContextFactory, IWindowManager windowManager, IUserTracker userTracker, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, statementLoader, idFactory, imageLoader, mediaConverter, policy, dispatcherWrapper, loggerFactory)
         {
             PluginContainer = pluginContainer;
+            NewVersionChecker = newVersionChecker;
+            NewVersionDownloader = newVersionDownloader;
             PluginConstructorContext = pluginConstructorContext;
             PreferencesContextFactory = preferencesContextFactory;
             PauseReceiveLog = pauseReceiveLog;
+
+            UserTracker = userTracker;
+            WindowManager = windowManager;
 
             UserAgentFactory = userAgentFactory;
             PlatformTheme = platformTheme;
@@ -95,6 +101,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
 
         private PreferencesContextFactory PreferencesContextFactory { get; }
+        private NewVersionChecker NewVersionChecker { get; }
+        private NewVersionDownloader NewVersionDownloader { get; }
         private IHttpUserAgentFactory UserAgentFactory { get; }
         private IPlatformTheme PlatformTheme { get; }
         private EnvironmentParameters EnvironmentParameters { get; }
@@ -102,6 +110,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         private PluginContainer PluginContainer { get; }
         private IPluginConstructorContext PluginConstructorContext { get; }
         private PauseReceiveLogDelegate PauseReceiveLog { get; }
+        private IUserTracker UserTracker { get; }
+        private IWindowManager WindowManager { get; }
 
         private ObservableCollection<PluginSettingEditorElement> PluginItemsImpl { get; } = new ObservableCollection<PluginSettingEditorElement>();
         public ReadOnlyObservableCollection<PluginSettingEditorElement> PluginItems { get; }
@@ -134,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
-        internal async Task InstallLocalPluginAsync(FileInfo archiveFile)
+        internal async Task InstallPluginArchiveAsync(FileInfo archiveFile)
         {
             var ext = PluginInstaller.GetArchiveExtension(archiveFile);
             var pluginFileName = PluginInstaller.GetPluginName(archiveFile);
@@ -143,6 +153,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var element = new PluginInstallItemElement(pluginInstallData, LoggerFactory);
             element.Initialize();
             MergeInstallPlugin(element);
+        }
+
+        internal PluginWebInstallRequestParameter CreatePluginWebInstallRequestParameter()
+        {
+            var element = new Plugin.PluginWebInstallElement(PluginContainer, EnvironmentParameters, NewVersionChecker, NewVersionDownloader, UserAgentFactory, LoggerFactory);
+            element.Initialize();
+
+            return new PluginWebInstallRequestParameter() {
+                Element = element,
+                WindowManager = WindowManager,
+                UserTracker = UserTracker,
+                DispatcherWrapper = DispatcherWrapper,
+                LoggerFactory = LoggerFactory,
+            };
         }
 
         #endregion

@@ -1,8 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Element.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models
@@ -137,4 +144,86 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         #endregion
     }
+
+    public class PluginWebInstallRequestParameter: RequestParameter, IDisposable
+    {
+        #region property
+
+        public PluginWebInstallElement Element { get; init; } = default!;
+        public IWindowManager WindowManager { get; init; } = default!;
+        public IUserTracker UserTracker { get; init; } = default!;
+        public IDispatcherWrapper DispatcherWrapper { get; init; } = default!;
+        public ILoggerFactory LoggerFactory { get; init; } = default!;
+
+        #endregion
+
+        #region IDisposable
+
+        private bool _disposedValue;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if(!this._disposedValue) {
+                if(disposing) {
+                    // TODO: マネージド状態を破棄します (マネージド オブジェクト)
+                    Element.Dispose();
+                }
+
+                // TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、ファイナライザーをオーバーライドします
+                // TODO: 大きなフィールドを null に設定します
+                this._disposedValue = true;
+            }
+        }
+
+        // // TODO: 'Dispose(bool disposing)' にアンマネージド リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします
+        // ~PluginWebInstallRequestParameter()
+        // {
+        //     // このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+    }
+
+    public class PluginWebInstallRequestResponse: CancelResponse
+    {
+        #region variable
+
+        private FileInfo? _archiveFile;
+
+        #endregion
+
+        #region property
+
+        public FileInfo ArchiveFile
+        {
+            get
+            {
+                if(ResponseIsCancel) {
+                    throw new InvalidOperationException();
+                }
+                Debug.Assert(this._archiveFile is not null);
+
+                return this._archiveFile;
+            }
+            set
+            {
+                if(value is null) {
+                    throw new ArgumentNullException();
+                }
+
+                this._archiveFile = value;
+            }
+        }
+
+        #endregion
+    }
+
 }

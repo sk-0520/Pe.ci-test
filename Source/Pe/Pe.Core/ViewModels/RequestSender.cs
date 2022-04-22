@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         private void OnRaised(RequestParameter requestParameter, Action<RequestResponse> callback)
         {
-            Raised!.Invoke(this, new RequestEventArgs(requestParameter, callback));
+            Raised?.Invoke(this, new RequestEventArgs(requestParameter, callback));
         }
 
         #endregion

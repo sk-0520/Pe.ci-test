@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -10,6 +13,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Data.ServerApi;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -42,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        private async Task<NewVersionData?> RequestUpdateDataAsync(Uri uri)
+        public async Task<NewVersionData?> RequestUpdateDataAsync(Uri uri)
         {
             using var agent = UserAgentManager.CreateUserAgent();
             try {
@@ -150,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return null;
         }
 
-        private static NewVersionItemData? GetNewVersionItem(Version pluginVersion, IEnumerable<NewVersionItemData> items)
+        public static NewVersionItemData? GetNewVersionItem(Version pluginVersion, IEnumerable<NewVersionItemData> items)
         {
             return items
                 .Where(i => i.Platform == ProcessArchitecture.ApplicationArchitecture)
@@ -193,9 +197,56 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return issue775;
             }
 
-            // ここから #706 予定
+            // ここから #706
+            var apiResult = await CheckPluginNewVersionByApiAsync(pluginId, pluginVersion);
+
+            return apiResult;
+        }
+
+        public async Task<PluginInformationItemData?> GetPluginVersionInfoByApiAsync(PluginId pluginId)
+        {
+            var json = JsonSerializer.Serialize(new {
+                plugin_ids = new[] {
+                    pluginId.ToString(),
+                },
+            });
+            var content = new StringContent(
+                json,
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            using var agent = UserAgentManager.CreateUserAgent();
+            var response = await agent.PostAsync(ApplicationConfiguration.Api.ServerPluginInformation, content);
+
+            if(!response.IsSuccessStatusCode) {
+                return null;
+            }
+
+            using var stream = await response.Content.ReadAsStreamAsync();
+            var serializer = new JsonTextSerializer();
+            var result = serializer.Load<ServerApiResultData<PluginInformationResultData>>(stream);
+            if(result.Data is not null && result.Data.Plugins.TryGetValue(pluginId.Id, out var item)) {
+                return item;
+            }
 
             return null;
+        }
+
+        private async Task<NewVersionItemData?> CheckPluginNewVersionByApiAsync(PluginId pluginId, Version pluginVersion)
+        {
+            var item = await GetPluginVersionInfoByApiAsync(pluginId);
+            if(item is null) {
+                return null;
+            }
+
+            var uri = new Uri(item.CheckUrl);
+            var updateData = await RequestUpdateDataAsync(uri);
+            if(updateData is null) {
+                return null;
+            }
+
+            return GetNewVersionItem(pluginVersion, updateData.Items);
         }
 
         private async Task<NewVersionItemData?> GetPluginItem_Issue775Async(PluginId pluginId, Version pluginVersion)

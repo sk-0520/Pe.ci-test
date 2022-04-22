@@ -15,13 +15,11 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
                 return false;
             }
 
-            foreach(var b in values) {
-                try {
-                    if(CastUtility.GetCastWPFValue<bool>(b, false)) {
+            foreach(var value in values) {
+                if(value is bool b) {
+                    if(b) {
                         return true;
                     }
-                } catch(Exception ex) {
-                    Debug.WriteLine(ex);
                 }
             }
 

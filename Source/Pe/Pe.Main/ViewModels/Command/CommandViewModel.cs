@@ -215,6 +215,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 thickness.Bottom = 0;
                 return thickness;
             }
+            [Unuse(UnuseKinds.TwoWayBinding)]
+            set { }
         }
         [ThemeProperty]
         public Brush ViewActiveBorderBrush => CommandTheme.GetViewBorderBrush(true);

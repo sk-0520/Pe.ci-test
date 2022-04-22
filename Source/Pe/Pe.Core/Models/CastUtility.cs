@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    [Obsolete]
     public static class CastUtility
     {
         /// <summary>

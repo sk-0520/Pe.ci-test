@@ -45,6 +45,7 @@
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
 
     <!--#region アイコン表示部分-->
+    
     <DataTemplate DataType="{x:Type app_main_viewmodels_iconviewer:IconViewerViewModel}">
       <app_main_views:ImageViewerControl LauncherItemIconMode="Command" IconViewer="{Binding }" IconBox="{Binding DataContext.IconBox, RelativeSource={RelativeSource AncestorType=Window}}" />
     </DataTemplate>
@@ -89,7 +90,7 @@
         <Setter.Value>
           <WindowChrome
             CaptionHeight="0"
-            ResizeBorderThickness="{Binding ViewResizeThickness}"
+            ResizeBorderThickness="{Binding ViewResizeThickness, Mode=TwoWay}"
           />
         </Setter.Value>
       </Setter>
@@ -131,7 +132,6 @@
     <Grid VerticalAlignment="Center">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
@@ -149,19 +149,7 @@
         </Border.Style>
       </Border>
 
-      <!-- アイコン描画領域 跡地 -->
-      <Grid Grid.Column="1" Margin="{Binding SelectedIconMargin}">
-        <!-- 別にいらんなぁ、と。 -->
-        <ContentControl
-          Focusable="False"
-          IsTabStop="False"
-          Width="{Binding IconBox, Converter={StaticResource IconBoxToWidthConverter}}"
-          Height="{Binding IconBox, Converter={StaticResource IconBoxToHeightConverter}}"
-          Content="{Binding CurrentSelectedItem.Icon}"
-        />
-      </Grid>
-
-      <Grid Grid.Column="2">
+      <Grid Grid.Column="1">
         <Border VerticalAlignment="Center" BorderThickness="{Binding InputBorderThickness}" >
           <Border.Style>
             <Style TargetType="Border">
@@ -324,7 +312,7 @@
       </Grid>
 
       <Border
-        Grid.Column="3"
+        Grid.Column="2"
         Margin="{Binding SelectedIconMargin}"
         ToolTip="{Binding Resources.String_Command_Execute, Source={x:Static app_main:CultureService.Instance}}"
       >
@@ -338,7 +326,6 @@
         />
 
       </Border>
-
     </Grid>
   </Border>
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -20,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return CastUtility.AsFunc<FontFamily, bool>(value, fontFamily => {
+            if(value is FontFamily fontFamily) {
                 if(Cache.TryGetValue(fontFamily, out var result)) {
                     return result;
                 }
@@ -46,7 +47,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
                 }
 
                 return Cache[fontFamily] = widths.Distinct().Count() == 1;
-            });
+            }
+
+            return DependencyProperty.UnsetValue;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

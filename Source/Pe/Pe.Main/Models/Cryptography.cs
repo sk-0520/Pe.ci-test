@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Main.Models
 {
-    public class Cryptography: ICryptography
+    internal class Cryptography: ICryptography
     {
         #region property
 

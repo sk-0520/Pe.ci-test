@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -12,10 +13,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return CastUtility.AsFunc<FontFamily, string>(value, fontFamily => {
+            if(value is FontFamily fontFamily) {
                 var currentLang = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
                 return fontFamily.FamilyNames.FirstOrDefault(o => o.Key == currentLang).Value ?? fontFamily?.Source ?? string.Empty;
-            });
+            }
+
+            return DependencyProperty.UnsetValue;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

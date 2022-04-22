@@ -6,6 +6,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
+using ContentTypeTextNet.Pe.Main.Models.Element.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -39,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public RequestSender SelectPluginFileRequest { get; } = new RequestSender();
         public RequestSender ShowMessageRequest { get; } = new RequestSender();
+        public RequestSender WebInstallRequest { get; } = new RequestSender();
 
         private ModelViewModelObservableCollectionManagerBase<PluginSettingEditorElement, PluginSettingEditorViewModel> PluginCollection { get; }
         public ICollectionView PluginItems { get; }
@@ -78,7 +80,31 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     }
                     var file = new FileInfo(r.ResponseFilePaths[0]);
                     try {
-                        await Model.InstallLocalPluginAsync(file);
+                        await Model.InstallPluginArchiveAsync(file);
+                    } catch(Exception ex) {
+                        var parameter = new CommonMessageDialogRequestParameter() {
+                            Message = ex.ToString(),
+                            Button = System.Windows.MessageBoxButton.OK,
+                            Caption = ex.Message,
+                            Icon = System.Windows.MessageBoxImage.Error,
+                        };
+                        ShowMessageRequest.Send(parameter);
+                    }
+                });
+            }
+        ));
+
+        public ICommand WebInstallCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                var parameter = Model.CreatePluginWebInstallRequestParameter();
+                WebInstallRequest.Send(parameter, async r => {
+                    var response = (PluginWebInstallRequestResponse)r;
+                    if(response.ResponseIsCancel) {
+                        Logger.LogTrace("cancel");
+                        return;
+                    }
+                    try {
+                        await Model.InstallPluginArchiveAsync(response.ArchiveFile);
                     } catch(Exception ex) {
                         var parameter = new CommonMessageDialogRequestParameter() {
                             Message = ex.ToString(),

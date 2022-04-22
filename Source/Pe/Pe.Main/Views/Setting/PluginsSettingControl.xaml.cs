@@ -2,7 +2,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models;
+using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.ViewModels.Plugin;
 using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
+using ContentTypeTextNet.Pe.Main.Views.Plugin;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Setting
@@ -40,6 +44,37 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
                  var result = MessageBox.Show(UIUtility.GetLogicalClosest<Window>(this)!, parameter.Message, parameter.Caption, parameter.Button, parameter.Icon, parameter.DefaultResult, parameter.Options);
              }
          ));
+
+        public ICommand WebInstallCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+                using var parameter = (PluginWebInstallRequestParameter)o.Parameter;
+
+                var viewModel = new PluginWebInstallViewModel(
+                    parameter.Element,
+                    parameter.UserTracker,
+                    parameter.DispatcherWrapper,
+                    parameter.LoggerFactory
+                );
+                var dialog = new PluginWebInstallWindow() {
+                    Owner = UIUtility.GetRootView(this),
+                    DataContext = viewModel,
+                };
+                var windowItem = new WindowItem(WindowKind.PluginWebInstaller, parameter.Element, viewModel, dialog);
+                parameter.WindowManager.Register(windowItem);
+                dialog.ShowDialog();
+
+                var hasPluginArchiveFile = parameter.Element.PluginArchiveFile is not null;
+                var response = new PluginWebInstallRequestResponse() {
+                    ResponseIsCancel = !hasPluginArchiveFile,
+                };
+
+                if(!response.ResponseIsCancel) {
+                    response.ArchiveFile = parameter.Element.GetArchiveFile();
+                }
+
+                o.Callback(response);
+            }
+        ));
 
         #endregion
 

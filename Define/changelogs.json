@@ -1,5 +1,107 @@
 [
 	{
+		"date": "2022/04/22",
+		"version": "0.99.171",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"subject": "このバージョンは動くかどうかよくわからん"
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "e0a91e3c49b211bc122ac8fca8e68b560024f615",
+						"subject": "#803: プラグインをWebからインストール可能にする",
+						"comments": [
+							"動くかどうかは知らん"
+						]
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "7c300ea378f2e226ac1041f2fcdf738d30ff8c9a",
+						"subject": "#802: テーマ選択ができていない"
+					},
+					{
+						"revision": "16927da11c417e60bc36e2628f3b90083436e2e5",
+						"subject": "#801: Pe 情報コピーでコピーライトの年表示がおかしい",
+						"comments": [
+							"おかしいも何も固定文字列だった"
+						]
+					},
+					{
+						"revision": "f007ada3012531ed414c1d4057af4c28607cadf4",
+						"subject": "#794: ノートのタブインデックスが狂ってる"
+					},
+					{
+						"revision": "b60ed63402db3379d44f6d6e5f59fd089ac74b6e",
+						"subject": "#722: 通知ログがウィンドウアクティブ状態をまだまだまだまだ奪う",
+						"comments": [
+							"そろそろコレしんどい"
+						]
+					},
+					{
+						"revision": "40b928bf3a446ae23e5662f5c6f8c2e5eec97c29",
+						"subject": "#772: コマンドランチャーのアイコンがプラグインIF経由時に壊れる",
+						"comments": [
+							"めんどいのでアイコンを破棄した",
+							"ソースのコメントでもいらんっぽかったし"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "602531069fc0f6a8bdf68d12346b2f43bebb5f90",
+						"subject": "#706: プラグイン配布サイトの構築",
+						"comments": [
+							"https://peserver.gq/plugin",
+							"とりあえず作るだけ作った",
+							"運用云々は後で考えるとして Pe 本体の課題からは外す",
+							"更新用URI処理もえいやで取り込んだ"
+						]
+					},
+					{
+						"revision": "a6c52c8fbd1e533798dbd5e088a7fa41c9b5eb88",
+						"class": "nuget",
+						"subject": "MSTest系更新",
+						"comments": [
+							"MSTest.TestAdapter 2.2.8 -> 2.2.9",
+							"MSTest.TestFramework 2.2.8 -> 2.2.9"
+						]
+					},
+					{
+						"revision": "46e47ad39571171c215201cfc3b5dde1365dba06",
+						"class": "nuget",
+						"subject": "SevenZipExtractor 1.0.16 -> 1.0.17"
+					},
+					{
+						"revision": "a770e264650d5540f322b339f1247bc090e63b1a",
+						"subject": "CefSharp を CefSharp.Wpf から CefSharp.Wpf.NETCore に変更",
+						"comments": [
+							"CefSharp.Wpf 86.0.241 -> CefSharp.Wpf.NETCore 100.0.230"
+						]
+
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2022/03/28",
 		"version": "0.99.170",
 		"contents": [

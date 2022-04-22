@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// <see cref="PathUtility.ToSafeName(string, ToSafeNameDelegate)"/>で使用する想定。
+    /// </summary>
+    /// <param name="character">文字。</param>
+    /// <returns>変換後文字列。</returns>
+    public delegate string ToSafeNameDelegate(char character);
+
     public static class PathUtility
     {
         #region define
@@ -38,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="name"></param>
         /// <param name="fn"></param>
         /// <returns></returns>
-        public static string ToSafeName(string name, Func<char, string> fn)
+        public static string ToSafeName(string name, ToSafeNameDelegate fn)
         {
             Debug.Assert(fn != null);
 
@@ -142,6 +150,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="role">役割。</param>
         /// <param name="extension">拡張子。</param>
         /// <returns></returns>
+        [Obsolete]
         private static string CreateFileNameCore(string name, string? role, string extension)
         {
             return $"{name}{(role == null ? string.Empty : "-" + role)}.{extension}";
@@ -153,6 +162,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="role">役割。</param>
         /// <param name="extension">拡張子。</param>
         /// <returns></returns>
+        [Obsolete]
         public static string CreateFileName(string name, string role, string extension)
         {
             Debug.Assert(!string.IsNullOrWhiteSpace(role));
@@ -164,6 +174,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="name">ファイル名。</param>
         /// <param name="extension">拡張子。</param>
         /// <returns></returns>
+        [Obsolete]
         public static string CreateFileName(string name, string extension)
         {
             return CreateFileNameCore(name, null, extension);
@@ -236,6 +247,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <summary>
+        /// ファイル名は同じか。
+        /// <para>パス適用は不可。</para>
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool IsEqualsFileName(string a, string b)
+        {
+            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                return string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
+            }
+
+            return string.Equals(a, b, StringComparison.Ordinal);
+        }
+
+        /// <summary>
         /// パスを比較。
         ///<para>Windows で動けば満足です！</para>
         /// </summary>
@@ -257,10 +284,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var a3 = a2.TrimEnd('\\');
             var b3 = b2.TrimEnd('\\');
 
-            var a4 = a3.ToUpperInvariant();
-            var b4 = b3.ToUpperInvariant();
-
-            return a4 == b4;
+            return IsEqualsFileName(a3, b3);
         }
     }
 }

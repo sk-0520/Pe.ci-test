@@ -313,9 +313,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         private void NotifyManager_SettingChanged(object? sender, NotifyEventArgs e)
         {
-            var members = GetType().GetMembers(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.GetProperty)
-                .Where(i => i.GetCustomAttribute<SettingChangedTargetAttribute>() != null)
-            ;
+            var members = SettingChangedTargetHelper.GetMembers(GetType());
             foreach(var member in members) {
                 Logger.LogTrace("{0}", member);
                 RaisePropertyChanged(member.Name);

@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetModelValue(value);
         }
 
-        public Guid ThemePluginId
+        public PluginId ThemePluginId
         {
             get => Model.ThemePluginId;
             set => SetModelValue(value);
