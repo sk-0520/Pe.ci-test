@@ -607,7 +607,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             if(RunModeUtility.IsBuildWebView(RunMode)) {
-                var webViewinItializer = new WebViewinItializer(loggerFactory);
+                var webViewinItializer = new WebViewItializer(loggerFactory);
                 webViewinItializer.Initialize(environmentParameters, cultureService);
             }
 

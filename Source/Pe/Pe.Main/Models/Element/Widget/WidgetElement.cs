@@ -117,6 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 window.webView.RequestHandler = new WebViewWidgetRequestHandler(publicDir, LoggerFactory);
                 window.webView.LifeSpanHandler = new PlatformLifeSpanHandler(LoggerFactory);
                 window.webView.MenuHandler = new DisableContextMenuHandler();
+                WebViewSetupper.SetupDefault(window.webView);
 
                 viewModel = new WebViewWidgetViewModel(context.PluginIdentifiers, window, seed.HtmlSource, seed.SoilCallback, seed.Extensions, EnvironmentParameters, DispatcherWrapper, LoggerFactory);
                 window.DataContext = viewModel;
@@ -130,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
         /// <para>生成時のスタイル変更は<see cref="WidgetViewModelBase.ReceiveViewInitialized(Window)"/>を参照。</para>
         /// </summary>
         /// <param name="window"></param>
-        private void AdjustWindow(Window window)
+        private void TuneWindow(Window window)
         {
             Debug.Assert(!window.IsVisible);
 
@@ -194,7 +195,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 window.Close();
                 return;
             }
-            AdjustWindow(window);
+            TuneWindow(window);
             WindowItem = new WindowItem(WindowKind.Widget, this, callerViewModel, window) {
                 CloseToDispose = callerViewModel is TemporaryWidgetViewModel, // ダミーのやつは殺して、通知領域のやつは生かしておく
             };
