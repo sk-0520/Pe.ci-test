@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
                 try {
                     Logger.LogDebug("読み込み開始");
-                    await LoadContentAsync(o);
+                    Model.IsLinkLoadError = !await LoadContentAsync(o);
                     Logger.LogDebug("読み込み終了");
                     CanVisible = true;
                 } catch(Exception ex) {
@@ -104,10 +104,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         /// <summary>
         /// コンテンツが必要になった際に呼び出される。
         /// <para>UI要素への購買処理も実施すること。</para>
+        /// <para>例外処理も対応が必要。</para>
         /// </summary>
         /// <param name="baseElement"></param>
-        /// <returns></returns>
-        protected abstract Task LoadContentAsync(FrameworkElement baseElement);
+        /// <returns>正常に読み込めたか</returns>
+        protected abstract Task<bool> LoadContentAsync(FrameworkElement baseElement);
         /// <summary>
         /// コンテンツが不要になった際に呼び出される。
         /// <para>UI要素への解除処理も実施すること。</para>
@@ -149,11 +150,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 Logger.LogTrace("リンク先内容変更を検知したが無効");
                 return;
             }
+            if(!CanVisible) {
+                return;
+            }
 
             Logger.LogDebug("リンク先内容変更検知");
             EnabledUpdate = false;
             UnloadContent();
             LoadContentAsync(BaseElement).ContinueWith(t => {
+                if(t.IsCompletedSuccessfully) {
+                    Model.IsLinkLoadError = !t.Result;
+                }
                 EnabledUpdate = true;
             }).ConfigureAwait(false);
         }

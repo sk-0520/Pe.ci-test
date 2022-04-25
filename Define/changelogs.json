@@ -51,7 +51,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#749: ノートリンクで元ファイルが掴まれている場合、死ぬ"
 					},
 					{
 						"revision": "",

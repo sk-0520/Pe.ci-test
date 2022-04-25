@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             get => this._isLink;
             private set => SetProperty(ref this._isLink, value);
         }
+        public bool IsLinkLoadError { get; set; }
 
         private IMainDatabaseBarrier MainDatabaseBarrier { get; }
         private IDatabaseStatementLoader DatabaseStatementLoader { get; }
@@ -194,6 +195,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         private void SaveLinkContent(string? content)
         {
             ThrowIfDisposed();
+            if(IsLinkLoadError) {
+                Logger.LogWarning("エラーありのため保存スキップ: {0}", NoteId);
+                return;
+            }
 
             var parameter = (NoteLinkWatchParameter?)LinkWatcher?.WatchParameter;
             if(parameter == null) {
@@ -203,10 +208,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
             StopLinkWatch();
             using(new ActionDisposer(d => StartLinkWatch(parameter))) {
-                using(var stream = parameter.File!.Open(FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
-                    using(var writer = new StreamWriter(stream, parameter.Encoding!)) {
-                        writer.Write(content);
+                try {
+                    using(var stream = parameter.File!.Open(FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
+                        using(var writer = new StreamWriter(stream, parameter.Encoding!)) {
+                            writer.Write(content);
+                        }
                     }
+                } catch(IOException ex) {
+                    Logger.LogError(ex, "{0} {1}", ex.Message, NoteId);
                 }
             }
         }
