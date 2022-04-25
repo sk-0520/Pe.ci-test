@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
         /// <para>生成時のスタイル変更は<see cref="WidgetViewModelBase.ReceiveViewInitialized(Window)"/>を参照。</para>
         /// </summary>
         /// <param name="window"></param>
-        private void TuneWindow(Window window)
+        private void AdjustWindow(Window window)
         {
             Debug.Assert(!window.IsVisible);
 
@@ -194,7 +194,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 window.Close();
                 return;
             }
-            TuneWindow(window);
+            AdjustWindow(window);
             WindowItem = new WindowItem(WindowKind.Widget, this, callerViewModel, window) {
                 CloseToDispose = callerViewModel is TemporaryWidgetViewModel, // ダミーのやつは殺して、通知領域のやつは生かしておく
             };
