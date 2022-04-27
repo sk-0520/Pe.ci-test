@@ -82,12 +82,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         public override string ToString()
         {
-            <#
-                var map = new Dictionary<Type, string>() {
-                    { typeof(Guid), "Id.ToString(\"D\")" },
-                };
-            #>
-
+<#
+    var map = new Dictionary<Type, string>() {
+        { typeof(Guid), "Id.ToString(\"D\")" },
+    };
+#>
             return <#= map[item.Type] #>;
         }
 

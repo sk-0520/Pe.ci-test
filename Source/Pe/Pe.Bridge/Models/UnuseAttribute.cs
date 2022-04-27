@@ -11,17 +11,17 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <summary>
         /// 知らん。
         /// </summary>
-        Unknown,
+        Unknown = 0b_0000,
         /// <summary>
         /// <see cref="IDisposable.Dispose"/> 時に null 設定する目的でセッターを公開。
         /// <para>破棄処理(と初期化)以外で<c>set</c>が呼ばれている場合はバグってる。</para>
         /// </summary>
-        Dispose,
+        Dispose = 0b_0001,
         /// <summary>
         /// WPF で TwoWay しないと動かないのでしゃあなしセッターを公開しているやつ。
         /// <para>この属性がついている場合、publicからのアクセスは多分実装ミスとなる。</para>
         /// </summary>
-        TwoWayBinding,
+        TwoWayBinding = 0b_0010,
     }
 
     /// <summary>

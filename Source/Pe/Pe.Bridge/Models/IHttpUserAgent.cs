@@ -105,7 +105,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
             }, cancellationToken).Unwrap();
         }
         /// <inheritdoc cref="GetStreamAsync(IHttpUserAgent, Uri, CancellationToken)"/>
-        public static Task<Stream> GetStreamAsync(this IHttpUserAgent httpUserAgent, Uri requestUri) => GetStreamAsync(httpUserAgent, requestUri, CancellationToken.None);
+        public static Task<Stream> GetStreamAsync(this IHttpUserAgent httpUserAgent, Uri requestUri)
+            => GetStreamAsync(httpUserAgent, requestUri, CancellationToken.None);
 
         /// <summary>
         /// 簡易 GET byte配列要求。
@@ -122,7 +123,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
             }, cancellationToken).Unwrap();
         }
         /// <inheritdoc cref="GetByteArrayAsync(IHttpUserAgent, Uri, CancellationToken)"/>
-        public static Task<byte[]> GetByteArrayAsync(this IHttpUserAgent httpUserAgent, Uri requestUri) => GetByteArrayAsync(httpUserAgent, requestUri, CancellationToken.None);
+        public static Task<byte[]> GetByteArrayAsync(this IHttpUserAgent httpUserAgent, Uri requestUri)
+            => GetByteArrayAsync(httpUserAgent, requestUri, CancellationToken.None);
 
         #endregion
     }
@@ -189,5 +191,4 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         #endregion
     }
-
 }

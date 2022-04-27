@@ -9,9 +9,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     [AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = false)]
     public sealed class DateTimeKindAttribute: Attribute
     {
-        /// <summary>
-        ///
-        /// </summary>
         /// <param name="kind">割り当てる種別。</param>
         public DateTimeKindAttribute(DateTimeKind kind)
         {
