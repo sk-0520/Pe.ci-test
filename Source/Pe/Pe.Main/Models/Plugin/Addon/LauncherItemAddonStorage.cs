@@ -20,38 +20,38 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
-        private string ToDirectoryName(Guid launcherItemId) => launcherItemId.ToString("D");
+        private string ToDirectoryName(LauncherItemId launcherItemId) => launcherItemId.ToString();
 
         #endregion
 
         #region ILauncherItemAddonFileStorage
 
-        /// <inheritdoc cref="ILauncherItemAddonFileStorage.Exists(Guid, string)"/>
-        public bool Exists(Guid launcherItemId, string name)
+        /// <inheritdoc cref="ILauncherItemAddonFileStorage.Exists(LauncherItemId, string)"/>
+        public bool Exists(LauncherItemId launcherItemId, string name)
         {
             return Exists(ToDirectoryName(launcherItemId), name);
         }
 
-        /// <inheritdoc cref="ILauncherItemAddonFileStorage.Rename(Guid, string, string, bool)"/>
-        public void Rename(Guid launcherItemId, string sourceName, string destinationName, bool overwrite)
+        /// <inheritdoc cref="ILauncherItemAddonFileStorage.Rename(LauncherItemId, string, string, bool)"/>
+        public void Rename(LauncherItemId launcherItemId, string sourceName, string destinationName, bool overwrite)
         {
             Rename(ToDirectoryName(launcherItemId), sourceName, destinationName, overwrite);
         }
 
-        /// <inheritdoc cref="ILauncherItemAddonFileStorage.Copy(Guid, string, string, bool)"/>
-        public void Copy(Guid launcherItemId, string sourceName, string destinationName, bool overwrite)
+        /// <inheritdoc cref="ILauncherItemAddonFileStorage.Copy(LauncherItemId, string, string, bool)"/>
+        public void Copy(LauncherItemId launcherItemId, string sourceName, string destinationName, bool overwrite)
         {
             Copy(ToDirectoryName(launcherItemId), sourceName, destinationName, overwrite);
         }
 
-        /// <inheritdoc cref="ILauncherItemAddonFileStorage.Delete(Guid, string)"/>
-        public void Delete(Guid launcherItemId, string name)
+        /// <inheritdoc cref="ILauncherItemAddonFileStorage.Delete(LauncherItemId, string)"/>
+        public void Delete(LauncherItemId launcherItemId, string name)
         {
             Delete(ToDirectoryName(launcherItemId), name);
         }
 
-        /// <inheritdoc cref="ILauncherItemAddonFileStorage.Open(Guid, string, FileMode)"/>
-        public Stream Open(Guid launcherItemId, string name, FileMode fileMode)
+        /// <inheritdoc cref="ILauncherItemAddonFileStorage.Open(LauncherItemId, string, FileMode)"/>
+        public Stream Open(LauncherItemId launcherItemId, string name, FileMode fileMode)
         {
             return Open(ToDirectoryName(launcherItemId), name, fileMode);
         }

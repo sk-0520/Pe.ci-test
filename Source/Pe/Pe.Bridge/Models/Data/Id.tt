@@ -76,6 +76,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
             return new <#= item.Name #>(id);
         }
 
+        //public string ToString(string s)
+        //{
+        //    return Id.ToString(s);
+        //}
+
         #endregion
 
         #region object

@@ -195,7 +195,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             private set => SetProperty(ref this._contentElement, value);
         }
 
-        private Guid RestoreVisibleNotifyLogId { get; set; }
+        private NotifyLogId RestoreVisibleNotifyLogId { get; set; }
 
         #endregion
 
@@ -819,7 +819,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public void StartView()
         {
-            if(RestoreVisibleNotifyLogId != Guid.Empty) {
+            if(RestoreVisibleNotifyLogId != NotifyLogId.Empty) {
                 NotifyManager.ClearLog(RestoreVisibleNotifyLogId);
             }
 
@@ -860,7 +860,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                         ),
                         () => {
                             if(!ViewCreated) {
-                                RestoreVisibleNotifyLogId = Guid.Empty;
+                                RestoreVisibleNotifyLogId = NotifyLogId.Empty;
                                 ChangeVisibleDelaySave(true);
                                 StartView();
                             }

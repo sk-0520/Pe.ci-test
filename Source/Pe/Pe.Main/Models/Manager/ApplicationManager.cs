@@ -382,7 +382,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             KeyActionChecker.Reset();
             NotifyManagerImpl.ClearAllLogs();
-            KeyboardNotifyLogId = Guid.Empty;
+            KeyboardNotifyLogId = NotifyLogId.Empty;
 
             if(CommandElement != null) {
                 if(CommandElement.ViewCreated) {

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -190,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             NativeMethods.SetWindowPos(HandleUtility.GetWindowHandle(windowItem.Window), IntPtr.Zero, (int)deviceWindowLocation.X, (int)deviceWindowLocation.Y, 0, 0, SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
         }
 
-        public void ExecuteLogById(Guid notifyLogId)
+        public void ExecuteLogById(NotifyLogId notifyLogId)
         {
             var logItem = StreamNotifyLogs.FirstOrDefault(i => i.NotifyLogId == notifyLogId);
             if(logItem == null) {

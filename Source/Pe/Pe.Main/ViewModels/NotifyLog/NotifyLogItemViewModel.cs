@@ -1,5 +1,6 @@
 using System;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
@@ -55,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 
         #region INotifyLogId
 
-        public Guid NotifyLogId => Model.NotifyLogId;
+        public NotifyLogId NotifyLogId => Model.NotifyLogId;
 
         #endregion
 
