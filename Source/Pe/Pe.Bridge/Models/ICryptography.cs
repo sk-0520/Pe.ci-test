@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace ContentTypeTextNet.Pe.Bridge.Models
 {
     /// <summary>
+    /// 暗号化処理。
     /// <para>Pe から提供される。</para>
     /// </summary>
     public interface ICryptography
