@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <returns></returns>
         public static string ConvertDirectoryName(PluginId pluginId)
         {
-            return pluginId.Id.ToString("D");
+            return pluginId.ToString();
         }
         /// <inheritdoc cref="ConvertDirectoryName(PluginId)"/>
         public static string ConvertDirectoryName(IPluginId pluginId) => ConvertDirectoryName(pluginId.PluginId);

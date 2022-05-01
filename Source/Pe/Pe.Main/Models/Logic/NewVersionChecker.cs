@@ -226,7 +226,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             using var stream = await response.Content.ReadAsStreamAsync();
             var serializer = new JsonTextSerializer();
             var result = serializer.Load<ServerApiResultData<PluginInformationResultData>>(stream);
-            if(result.Data is not null && result.Data.Plugins.TryGetValue(pluginId.Id, out var item)) {
+            if(result.Data is not null && result.Data.Plugins.TryGetValue(pluginId.GetRawId(), out var item)) {
                 return item;
             }
 

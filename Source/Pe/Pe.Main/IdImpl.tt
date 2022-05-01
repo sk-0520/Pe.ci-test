@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             public override void SetValue(IDbDataParameter parameter, <#= item.Name #> value)
             {
-                parameter.Value = value.Id.ToString("D");
+                parameter.Value = value.ToString();
             }
 
             public override <#= item.Name #> Parse(object value)

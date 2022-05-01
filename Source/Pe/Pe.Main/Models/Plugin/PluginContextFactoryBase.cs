@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         protected string ConvertDirectoryName(IPluginIdentifiers pluginId)
         {
-            return pluginId.PluginId.Id.ToString("D");
+            return pluginId.PluginId.ToString();
         }
 
         private DirectoryInfo GetDirectory(IPluginIdentifiers pluginId, DirectoryInfo pluginDataDirectory, string baseDirectoryName)

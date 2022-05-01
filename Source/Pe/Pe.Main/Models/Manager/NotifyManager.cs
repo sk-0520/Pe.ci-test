@@ -481,7 +481,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 throw new ArgumentNullException(nameof(notifyMessage));
             }
 
-            var element = DiContainer.Build<NotifyLogItemElement>(new NotifyLogId(Guid.NewGuid()), notifyMessage);
+            var element = DiContainer.Build<NotifyLogItemElement>(NotifyLogId.NewId(), notifyMessage);
             element.Initialize();
 
             Logger.LogDebug("[{0}] {1}: {2}, {3}", notifyMessage.Header, notifyMessage.Kind, notifyMessage.Content.Message, element.NotifyLogId);

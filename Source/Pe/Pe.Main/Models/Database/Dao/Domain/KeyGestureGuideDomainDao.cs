@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var parameter = new {
                 KeyActionKind = keyActionKindTransfer.ToString(KeyActionKind.LauncherItem),
                 KeyActionContents = Enum.GetValues<KeyActionContentLauncherItem>().Select(i => i.ToString()).ToArray(),
-                LauncherItemId = launcherItemId.Id.ToString("D"),
+                LauncherItemId = launcherItemId.ToString(),
             };
 
             var map = new Dictionary<Guid, KeyGestureSetting>();

@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         public void WriteLauncherItemId(IDictionary<string, string> map, LauncherItemId launcherItemId)
         {
             var attribute = GetAttribute(KeyActionLauncherItemOption.LauncherItemId);
-            map[attribute.OptionName] = launcherItemId.Id.ToString("D");
+            map[attribute.OptionName] = launcherItemId.ToString();
         }
 
         #endregion

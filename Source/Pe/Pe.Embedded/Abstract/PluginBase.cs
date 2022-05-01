@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
             var pluginIdentifiersAttr = assembly.GetCustomAttribute<PluginIdentifiersAttribute>();
             if(pluginIdentifiersAttr == null) {
-                pluginIdentifiersAttr = new PluginIdentifiersAttribute(CreateRandomText("DUMMY-PLUGIN-{0}", 16), Guid.NewGuid().ToString());
+                pluginIdentifiersAttr = new PluginIdentifiersAttribute(CreateRandomText("DUMMY-PLUGIN-{0}", 16), PluginId.NewId().ToString());
                 Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}, {2}", nameof(PluginIdentifiersAttribute), pluginIdentifiersAttr.PluginName, pluginIdentifiersAttr.PluginId);
             }
 
