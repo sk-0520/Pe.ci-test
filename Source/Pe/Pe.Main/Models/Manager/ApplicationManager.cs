@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
 
-            CronScheduler = new CronScheduler(LoggerFactory);
+            CronScheduler = ApplicationDiContainer.Build<CronScheduler>();
 
             ApplicationUpdateInfo = ApplicationDiContainer.Build<NewVersionInfo>();
 

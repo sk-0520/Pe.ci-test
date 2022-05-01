@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         NoteId CreateNoteId();
         NoteFileId CreateNoteFileId();
         KeyActionId CreateKeyActionId();
-
+        ScheduleJobId CreateScheduleJobId();
         #endregion
     }
 
@@ -43,6 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public NoteId CreateNoteId() => NoteId.NewId();
         public NoteFileId CreateNoteFileId() => NoteFileId.NewId();
         public KeyActionId CreateKeyActionId() => KeyActionId.NewId();
+        public ScheduleJobId CreateScheduleJobId() => ScheduleJobId.NewId();
 
         #endregion
     }
