@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         NoteId CreateNoteId();
         NoteFileId CreateNoteFileId();
         KeyActionId CreateKeyActionId();
-
+        ScheduleJobId CreateScheduleJobId();
         #endregion
     }
 
@@ -35,14 +35,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region IIdFactory
 
-        public LauncherItemId CreateLauncherItemId() => new LauncherItemId(Guid.NewGuid());
-        public CredentialIdId CreateCredentialId() => new CredentialIdId(Guid.NewGuid());
-        public LauncherToolbarId CreateLauncherToolbarId() => new LauncherToolbarId(Guid.NewGuid());
-        public FontId CreateFontId() => new FontId(Guid.NewGuid());
-        public LauncherGroupId CreateLauncherGroupId() => new LauncherGroupId(Guid.NewGuid());
-        public NoteId CreateNoteId() => new NoteId(Guid.NewGuid());
-        public NoteFileId CreateNoteFileId() => new NoteFileId(Guid.NewGuid());
-        public KeyActionId CreateKeyActionId() => new KeyActionId(Guid.NewGuid());
+        public LauncherItemId CreateLauncherItemId() => LauncherItemId.NewId();
+        public CredentialIdId CreateCredentialId() => CredentialIdId.NewId();
+        public LauncherToolbarId CreateLauncherToolbarId() => LauncherToolbarId.NewId();
+        public FontId CreateFontId() => FontId.NewId();
+        public LauncherGroupId CreateLauncherGroupId() => LauncherGroupId.NewId();
+        public NoteId CreateNoteId() => NoteId.NewId();
+        public NoteFileId CreateNoteFileId() => NoteFileId.NewId();
+        public KeyActionId CreateKeyActionId() => KeyActionId.NewId();
+        public ScheduleJobId CreateScheduleJobId() => ScheduleJobId.NewId();
 
         #endregion
     }

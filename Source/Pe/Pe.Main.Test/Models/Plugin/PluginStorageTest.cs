@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
         [TestMethod]
         public void FileTest()
         {
-            var dir = new DirectoryInfo(Path.Combine(".", pluginDataDirName, "user", this.Informations.PluginIdentifiers.PluginId.Id.ToString("D")));
+            var dir = new DirectoryInfo(Path.Combine(".", pluginDataDirName, "user", this.Informations.PluginIdentifiers.PluginId.ToString()));
             dir.Refresh();
             if(dir.Exists) {
                 var directoryCleaner = Test.DiContainer.Build<DirectoryCleaner>(dir, 10, TimeSpan.FromMilliseconds(300));

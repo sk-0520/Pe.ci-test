@@ -47,6 +47,7 @@
                 new GuidDefine("キーアクションID", "KeyActionId"),
                 new GuidDefine("プラグインID", "PluginId"),
                 new GuidDefine("通知ログID", "NotifyLogId"),
+                new GuidDefine("スケジュールジョブID", "ScheduleJobId"),
             };
         }
 
