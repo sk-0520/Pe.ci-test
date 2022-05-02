@@ -327,7 +327,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
         public void GetNextJobWaitTimeTest(double expected, string iso8601)
         {
             var input = DateTime.Parse(iso8601);
-            var cs = new CronScheduler(Test.LoggerFactory);
+            var cs = new CronScheduler(new IdFactory(Test.LoggerFactory),Test.LoggerFactory);
             var actual = cs.GetNextJobWaitTime(input);
             Assert.AreEqual(expected, actual.TotalMilliseconds);
         }

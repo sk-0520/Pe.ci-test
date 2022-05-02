@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <summary>
         /// 生ID。
         /// </summary>
-        private <#= item.Type.FullName #> Id { get; }
+        public <#= item.Type.FullName #> Id { get; }
 
         /// <summary>
         /// 空ID。
@@ -94,9 +94,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 #>
             return <#= newIdMap[item.Type] #>;
         }
-
-        public <#= item.Type.FullName #> GetRawId() => Id;
-
 
         #endregion
 
