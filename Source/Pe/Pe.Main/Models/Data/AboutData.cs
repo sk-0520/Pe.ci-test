@@ -5,7 +5,7 @@ using ContentTypeTextNet.Pe.Core.Models.Data;
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
     [Serializable, DataContract]
-    public class AboutComponentsData: DataBase
+    public class AboutComponentsData
     {
         #region property
         [DataMember(Name = "library")]
@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [Serializable, DataContract]
-    public class AboutComponentData: DataBase
+    public class AboutComponentData
     {
         #region property
 
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [Serializable, DataContract]
-    public class AboutLicenseData: DataBase
+    public class AboutLicenseData
     {
         #region property
 

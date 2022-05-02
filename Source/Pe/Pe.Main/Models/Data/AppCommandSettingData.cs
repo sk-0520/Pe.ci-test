@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
@@ -7,7 +8,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     /// <summary>
     /// コマンド設定。
     /// </summary>
-    public class SettingAppCommandSettingData: DataBase
+    [Serializable, DataContract]
+    public class SettingAppCommandSettingData
     {
         public SettingAppCommandSettingData()
         { }

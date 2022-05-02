@@ -110,7 +110,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Compact,
     }
 
-    public class NoteData: DataBase
+    [Serializable, DataContract]
+    public class NoteData
     {
         #region property
 
@@ -204,7 +205,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class NoteScreenData: DataBase, IScreenData
+    [Serializable, DataContract]
+    public class NoteScreenData: IScreenData
     {
         #region property
 

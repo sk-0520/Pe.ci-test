@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Data;
@@ -8,7 +9,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     /// <summary>
     /// ノートの設定。
     /// </summary>
-    public class SettingAppNoteSettingData: DataBase
+    [Serializable, DataContract]
+    public class SettingAppNoteSettingData
     {
         #region property
 

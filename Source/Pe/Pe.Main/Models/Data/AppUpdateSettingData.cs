@@ -1,3 +1,5 @@
+using System;
+using System.Runtime.Serialization;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
@@ -27,7 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     /// <summary>
     /// アップデート設定。
     /// </summary>
-    public class SettingAppUpdateSettingData: DataBase
+    [Serializable, DataContract]
+    public class SettingAppUpdateSettingData
     {
         #region property
 

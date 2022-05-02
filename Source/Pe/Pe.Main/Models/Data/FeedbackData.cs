@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     /// フィードバック入力データ。
     /// </summary>
     [Serializable, DataContract]
-    public class FeedbackInputData: DataBase
+    public class FeedbackInputData
     {
         #region property
 
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     /// フィードバック送信データ。
     /// </summary>
     [Serializable, DataContract]
-    public class FeedbackSendData: DataBase
+    public class FeedbackSendData
     {
         #region property
 
@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [Serializable, DataContract]
-    public class FeedbackResponse: DataBase
+    public class FeedbackResponse
     {
         #region property
 
