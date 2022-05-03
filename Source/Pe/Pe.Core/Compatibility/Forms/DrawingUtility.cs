@@ -68,14 +68,14 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
 
         public static BitmapSource ImageSourceFromBinaryIcon(byte[] binayIcon, Size iconSize)
         {
-            using(var ms = new MemoryStream(binayIcon)) {
+            using(var ms = new MemoryReleaseStream(binayIcon)) {
                 return ImageSourceFromBinaryStreamIcon(ms, iconSize);
             }
         }
 
         public static BitmapSource ImageSourceFromBinaryIcon(ArrayPoolObject<byte> binayIcon, Size iconSize)
         {
-            using(var ms = new MemoryStream(binayIcon.Items, 0, binayIcon.Length)) {
+            using(var ms = new MemoryReleaseStream(binayIcon.Items, 0, binayIcon.Length)) {
                 return ImageSourceFromBinaryStreamIcon(ms, iconSize);
             }
         }

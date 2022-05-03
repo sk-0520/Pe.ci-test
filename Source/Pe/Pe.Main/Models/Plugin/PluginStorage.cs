@@ -397,7 +397,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                         };
                         try {
                             var binary = Encoding.UTF8.GetBytes(data.Value);
-                            using(var stream = new MemoryStream(binary)) {
+                            using(var stream = new MemoryReleaseStream(binary)) {
                                 value = serializer.Load<TValue>(stream);
                                 return true;
                             }
@@ -457,7 +457,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                             _ => throw new NotImplementedException(),
                         };
                         try {
-                            using(var stream = new MemoryStream()) {
+                            using(var stream = new MemoryReleaseStream()) {
                                 serializer.Save(value, stream);
                                 textValue = serializer.Encoding.GetString(stream.GetBuffer(), 0, (int)stream.Length);
                             }

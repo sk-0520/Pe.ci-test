@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Accept
             var rawXml = TextUtility.ReplaceFromDictionary(Properties.Resources.File_Accept_AcceptDocument, map);
 
             // 受け渡し用に変更
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(rawXml));
+            var stream = new MemoryReleaseStream(Encoding.UTF8.GetBytes(rawXml));
             stream.Position = 0;
             return stream;
         }

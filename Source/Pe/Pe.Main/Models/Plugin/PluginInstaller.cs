@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             IpcDataPluginStatus? data = null;
             applicationBoot.TryExecuteIpc(IpcMode.GetPluginStatus, arguments, (c, o) => {
                 var binary = Encoding.UTF8.GetBytes(o);
-                using var stream = new MemoryStream(binary);
+                using var stream = new MemoryReleaseStream(binary);
 
                 var serializer = new JsonTextSerializer();
                 data = serializer.Load<IpcDataPluginStatus>(stream);

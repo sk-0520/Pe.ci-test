@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
         public string ToRtfString(FlowDocument document)
         {
             var range = new TextRange(document.ContentStart, document.ContentEnd);
-            using(var stream = new MemoryStream()) {
+            using(var stream = new MemoryReleaseStream()) {
                 range.Save(stream, RichTextFormat);
                 var contentValue = Encoding.GetString(stream.ToArray());
                 return contentValue;
@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
             var document = new FlowDocument();
             using(Initializer.Begin(document)) {
                 var range = new TextRange(document.ContentStart, document.ContentEnd);
-                using(var stream = new MemoryStream(Encoding.GetBytes(content))) {
+                using(var stream = new MemoryReleaseStream(Encoding.GetBytes(content))) {
                     stream.Seek(0, SeekOrigin.Begin);
                     range.Load(stream, RichTextFormat);
                 }
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
         public Stream ToRtfStream(string rtf)
         {
             var binary = Encoding.UTF8.GetBytes(rtf);
-            var stream = new MemoryStream(binary);
+            var stream = new MemoryReleaseStream(binary);
             return stream;
         }
 

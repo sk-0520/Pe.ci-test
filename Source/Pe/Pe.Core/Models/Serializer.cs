@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <para><see cref="InnerStreamFactory"/>を使用するが、未設定時は<see cref="MemoryStream"/>と<see cref="BufferSize"/>が使用される。</para>
         /// </summary>
         /// <returns></returns>
-        protected Stream CreateInnerStream() => InnerStreamFactory?.Invoke() ?? new MemoryStream(BufferSize);
+        protected Stream CreateInnerStream() => InnerStreamFactory?.Invoke() ?? new MemoryReleaseStream(BufferSize);
         /// <summary>
         /// ストリームからリーダーを取得。
         /// <para><see cref="Encoding"/>, <see cref="BufferSize"/>が使用される。</para>

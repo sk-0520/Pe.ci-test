@@ -162,9 +162,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
             : base(new MemoryStream(capacity))
         { }
 
+        public MemoryReleaseStream(byte[] buffer, int index, int count)
+            : base(new MemoryStream(buffer, index, count))
+        { }
+
         #region function
 
         public byte[] GetBuffer() => ((MemoryStream)BaseStream).GetBuffer();
+        public byte[] ToArray() => ((MemoryStream)BaseStream).ToArray();
 
         #endregion
     }

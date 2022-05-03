@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 #if !NOT_IPC
             using var pipeClientStream = new AnonymousPipeClientStream(PipeDirection.Out, IpcPipeHandle);
 #else
-            using var pipeClientStream = new MemoryStream();
+            using var pipeClientStream = new MemoryReleaseStream();
 #endif
             var responseObject = IpcMode switch {
                 IpcMode.GetPluginStatus => ExecutePluginStatus(),
