@@ -56,8 +56,8 @@ namespace ContentTypeTextNet.Pe.Core.Views
             ctrl.Value = Math.Round(rangeValue, ctrl.DecimalPlaces, MidpointRounding.ToEven);
 
             if(!ctrl.IsReadOnly) {
-                ctrl.PART_UP_BUTTON.IsEnabled = ctrl.Maximum != ctrl.Value;
-                ctrl.PART_DOWN_BUTTON.IsEnabled = ctrl.Minimum != ctrl.Value;
+                ctrl.PART_UP_BUTTON.IsEnabled = ctrl.Value < ctrl.Maximum;
+                ctrl.PART_DOWN_BUTTON.IsEnabled = ctrl.Minimum < ctrl.Value;
             }
         }
 
@@ -214,7 +214,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #region function
 
-        void UpValue()
+        private void UpValue()
         {
             if(IsReadOnly) {
                 return;
@@ -224,9 +224,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
             } else {
                 Value = Maximum;
             }
+
+            UpdateCursor();
         }
 
-        void DownValue()
+        private void DownValue()
         {
             if(IsReadOnly) {
                 return;
@@ -236,6 +238,13 @@ namespace ContentTypeTextNet.Pe.Core.Views
             } else {
                 Value = Minimum;
             }
+
+            UpdateCursor();
+        }
+
+        private void UpdateCursor()
+        {
+            this.PART_NUMERIC.SelectionStart = this.PART_NUMERIC.Text.Length;
         }
 
         #endregion
@@ -280,13 +289,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
         private void PART_UP_BUTTON_Click(object sender, RoutedEventArgs e)
         {
             UpValue();
-            this.PART_NUMERIC.SelectAll();
         }
 
         private void PART_DOWN_BUTTON_Click(object sender, RoutedEventArgs e)
         {
             DownValue();
-            this.PART_NUMERIC.SelectAll();
         }
 
         private void PART_NUMERIC_MouseWheel(object sender, MouseWheelEventArgs e)
