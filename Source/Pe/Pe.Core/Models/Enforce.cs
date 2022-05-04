@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static void ThrowIfNull<T>([AllowNull][NotNull] T value, [CallerArgumentExpression("value")] string callerArgument = "")
             => ThrowIfNull<T, EnforceException>(value, callerArgument);
 
-        public static void ThrowIfNullOrEmpty<TException>(string value, [CallerArgumentExpression("value")] string callerArgument = "")
+        public static void ThrowIfNullOrEmpty<TException>(string? value, [CallerArgumentExpression("value")] string callerArgument = "")
             where TException : Exception
         {
             if(string.IsNullOrEmpty(value)) {
@@ -68,10 +68,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        public static void ThrowIfNullOrEmpty(string value, [CallerArgumentExpression("value")] string callerArgument = "")
-            =>  ThrowIfNullOrEmpty<EnforceException>(value, callerArgument);
+        public static void ThrowIfNullOrEmpty(string? value, [CallerArgumentExpression("value")] string callerArgument = "")
+            => ThrowIfNullOrEmpty<EnforceException>(value, callerArgument);
 
-        public static void ThrowIfNullOrWhiteSpace<TException>(string value, [CallerArgumentExpression("value")] string callerArgument = "")
+        public static void ThrowIfNullOrWhiteSpace<TException>(string? value, [CallerArgumentExpression("value")] string callerArgument = "")
             where TException : Exception
         {
             if(string.IsNullOrWhiteSpace(value)) {
@@ -79,8 +79,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        public static void ThrowIfNullOrWhiteSpace(string value, [CallerArgumentExpression("value")] string callerArgument = "")
+        public static void ThrowIfNullOrWhiteSpace(string? value, [CallerArgumentExpression("value")] string callerArgument = "")
             => ThrowIfNullOrWhiteSpace<EnforceException>(value, callerArgument);
+
+        public static void ThrowIfFalse<TException>(bool value, [CallerArgumentExpression("value")] string callerArgument = "")
+            where TException : Exception
+        {
+            if(!value) {
+                Throw<TException>(callerArgument);
+            }
+        }
+
+        public static void ThrowIfFalse(bool value, [CallerArgumentExpression("value")] string callerArgument = "")
+            => ThrowIfFalse<EnforceException>(value, callerArgument);
 
         #endregion
     }
