@@ -30,8 +30,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Database.Vender.Public.SQLite
         {
             var logger = Test.LoggerFactory.CreateLogger(nameof(SqliteSimpleTest));
 
-            DatabaseAccessor.Batch(c => {
-                var sqls = new[] {
+            var sqls = new[] {
 @"
 create table TestTable1 (
     ColKey integer,
@@ -49,12 +48,11 @@ values
 "
                 };
 
-                foreach(var sql in sqls) {
-                    c.Execute(sql);
-                }
-
-                return true;
-            });
+            var c = DatabaseAccessor.BeginTransaction();
+            foreach(var sql in sqls) {
+                c.Execute(sql);
+            }
+            c.Commit();
         }
 
         [TestMethod]

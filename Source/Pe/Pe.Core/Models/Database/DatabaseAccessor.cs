@@ -178,6 +178,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         IDatabaseTransaction BeginReadOnlyTransaction(IsolationLevel isolationLevel);
 
         /// <inheritdoc cref="Batch(Func{IDatabaseContext, bool}, IsolationLevel)"/>
+        [Obsolete]
         IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor);
         /// <summary>
         /// バッチ処理の実行。
@@ -187,6 +188,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="isolationLevel"></param>
         /// <returns>処理実行結果。</returns>
         /// これもうなくしたいなぁ。
+        [Obsolete]
         IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor, IsolationLevel isolationLevel);
 
         #endregion
@@ -257,6 +259,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return con;
         }
 
+        [Obsolete]
         protected virtual IResultFailureValue<Exception> BatchImpl(Func<IDatabaseTransaction> transactionCreator, Func<IDatabaseContext, bool> function)
         {
             ThrowIfDisposed();
@@ -600,6 +603,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
 
+        [Obsolete]
         public IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor)
         {
             ThrowIfDisposed();
@@ -607,6 +611,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return BatchImpl(() => new DatabaseTransaction(this), executor);
         }
 
+        [Obsolete]
         public IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor, IsolationLevel isolationLevel)
         {
             ThrowIfDisposed();
