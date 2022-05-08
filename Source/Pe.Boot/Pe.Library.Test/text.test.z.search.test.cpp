@@ -265,7 +265,7 @@ namespace PeLibraryTest
 
         }
 
-        TEST_METHOD(starts_with_test)
+        TEST_METHOD(starts_with_text_test)
         {
             auto tests = {
                 DATA(true, wrap("abc"), wrap("a")),
