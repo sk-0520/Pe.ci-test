@@ -81,7 +81,11 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "MSTest系更新",
+						"comments": [
+							"MSTest.TestAdapter 2.2.9 -> 2.2.10",
+							"MSTest.TestFramework 2.2.9 -> 2.2.10"
+						]
 					},
 					{
 						"revision": "",
