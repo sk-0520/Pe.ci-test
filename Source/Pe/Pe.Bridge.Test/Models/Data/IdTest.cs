@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
         public void SerializeClassDataTest()
         {
             var input = new ClassData() {
-                LauncherItemId = new LauncherItemId(Guid.NewGuid()),
+                LauncherItemId = LauncherItemId.NewId(),
             };
             var clone = JsonSerializer.Serialize(input);
             var deserialize = JsonSerializer.Deserialize<ClassData>(clone)!;
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
         public void SerializeClassRecordDataTest()
         {
             var input = new ClassRecordData() {
-                LauncherItemId = new LauncherItemId(Guid.NewGuid()),
+                LauncherItemId = LauncherItemId.NewId(),
             };
             var clone = JsonSerializer.Serialize(input);
             var deserialize = JsonSerializer.Deserialize<ClassRecordData>(clone)!;
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
         public void SerializeStructDataTest()
         {
             var input = new StructData() {
-                LauncherItemId = new LauncherItemId(Guid.NewGuid()),
+                LauncherItemId = LauncherItemId.NewId(),
             };
             var clone = JsonSerializer.Serialize(input);
             var deserialize = JsonSerializer.Deserialize<StructData>(clone)!;
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
         public void SerializeStructRecordDataTest()
         {
             var input = new StructRecordData() {
-                LauncherItemId = new LauncherItemId(Guid.NewGuid()),
+                LauncherItemId = LauncherItemId.NewId(),
             };
             var clone = JsonSerializer.Serialize(input);
             var deserialize = JsonSerializer.Deserialize<StructRecordData>(clone)!;

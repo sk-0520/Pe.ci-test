@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 
@@ -352,10 +353,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     /// </summary>
     internal class CronJob: DisposerBase
     {
-        public CronJob(Guid cronJobId, IReadOnlyCronItemSetting setting, ICronExecutor executor, ILoggerFactory loggerFactory)
+        public CronJob(ScheduleJobId scheduleJobId, IReadOnlyCronItemSetting setting, ICronExecutor executor, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
-            CronJobId = cronJobId;
+            ScheduleJobId = scheduleJobId;
             Setting = setting;
             Executor = executor;
         }
@@ -367,7 +368,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <summary>
         /// ジョブ自身のID。
         /// </summary>
-        public Guid CronJobId { get; }
+        public ScheduleJobId ScheduleJobId { get; }
 
         /// <summary>
         /// 設定。
@@ -404,21 +405,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             if(IsRunning) {
                 switch(Setting.Mode) {
                     case MultipleExecuteMode.Skip:
-                        Logger.LogInformation("実行中ジョブのため未実行, {0}", CronJobId);
+                        Logger.LogInformation("実行中ジョブのため未実行, {0}", ScheduleJobId);
                         return Task.CompletedTask;
 
                     case MultipleExecuteMode.Start:
-                        Logger.LogTrace("実行中ジョブの重複実行, {0}", CronJobId);
+                        Logger.LogTrace("実行中ジョブの重複実行, {0}", ScheduleJobId);
                         break;
 
                     case MultipleExecuteMode.CancelAndStart: {
-                            Logger.LogTrace("実行中ジョブ停止からの実行, {0}", CronJobId);
+                            Logger.LogTrace("実行中ジョブ停止からの実行, {0}", ScheduleJobId);
                             var cts = CancellationTokenSource;
                             if(cts != null) {
                                 try {
                                     cts.Cancel();
                                 } catch(Exception ex) {
-                                    Logger.LogError(ex, "ジョブキャンセル失敗のため未実行, {0}, {1}", ex.Message, CronJobId);
+                                    Logger.LogError(ex, "ジョブキャンセル失敗のため未実行, {0}, {1}", ex.Message, ScheduleJobId);
                                     return Task.CompletedTask;
                                 }
                             }
@@ -443,7 +444,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return Executor.ExecuteAsync(cancelToken).ContinueWith(t => {
                 if(t.IsCompletedSuccessfully) {
                     if(!IsRunning) {
-                        Logger.LogWarning("実行終了したが実行中フラグが実行していないことになっている, {0}", CronJobId);
+                        Logger.LogWarning("実行終了したが実行中フラグが実行していないことになっている, {0}", ScheduleJobId);
                     }
 
                     IsRunning = false;
@@ -468,7 +469,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                             try {
                                 CancellationTokenSource.Cancel();
                             } catch(AggregateException ex) {
-                                Logger.LogWarning(ex, "{0}, {1}", ex.Message, CronJobId);
+                                Logger.LogWarning(ex, "{0}, {1}", ex.Message, ScheduleJobId);
                             }
                         }
                         CancellationTokenSource.Dispose();
@@ -519,14 +520,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <summary>
         ///
         /// </summary>
-        public CronScheduler(ILoggerFactory loggerFactory)
+        public CronScheduler(IIdFactory idFactory, ILoggerFactory loggerFactory)
         {
+            IdFactory = idFactory;
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
+        /// <inheritdoc cref="IIdFactory "/>
+        private IIdFactory IdFactory { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
         private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
@@ -582,36 +586,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         private CronJob AddScheduleCore(IReadOnlyCronItemSetting setting, ICronExecutor executor)
         {
-            var cronJobId = Guid.NewGuid();
-            var item = new CronJob(cronJobId, setting, executor, LoggerFactory);
+            var scheduleJobId = IdFactory.CreateScheduleJobId();
+            var item = new CronJob(scheduleJobId, setting, executor, LoggerFactory);
             Jobs.Add(item);
             return item;
         }
 
-        public Guid AddSchedule(IReadOnlyCronItemSetting setting, ICronExecutor executor)
+        public ScheduleJobId AddSchedule(IReadOnlyCronItemSetting setting, ICronExecutor executor)
         {
-            return AddScheduleCore(setting, executor).CronJobId;
+            return AddScheduleCore(setting, executor).ScheduleJobId;
         }
 
-        public Guid AddSchedule(IReadOnlyCronItemSetting setting, Func<CancellationToken, Task> executor)
+        public ScheduleJobId AddSchedule(IReadOnlyCronItemSetting setting, Func<CancellationToken, Task> executor)
         {
-            return AddScheduleCore(setting, new CronExecutorWrapper(executor)).CronJobId;
+            return AddScheduleCore(setting, new CronExecutorWrapper(executor)).ScheduleJobId;
         }
 
-        public Guid AddSchedule(IReadOnlyCronItemSetting setting, Func<Task> executor)
+        public ScheduleJobId AddSchedule(IReadOnlyCronItemSetting setting, Func<Task> executor)
         {
-            return AddScheduleCore(setting, new CronExecutorWrapper(executor)).CronJobId;
+            return AddScheduleCore(setting, new CronExecutorWrapper(executor)).ScheduleJobId;
         }
 
         /// <summary>
         /// 指定のスケジュールを破棄。
         /// <para>実行中のものは実行しっぱで参照が切れる。</para>
         /// </summary>
-        /// <param name="cronJobId"></param>
+        /// <param name="scheduleJobId"></param>
         /// <returns></returns>
-        public bool RemoveSchedule(Guid cronJobId)
+        public bool RemoveSchedule(ScheduleJobId scheduleJobId)
         {
-            var job = Jobs.FirstOrDefault(i => i.CronJobId == cronJobId);
+            var job = Jobs.FirstOrDefault(i => i.ScheduleJobId == scheduleJobId);
             if(job == null) {
                 return false;
             }
@@ -662,7 +666,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         private void ExecuteJobs(IEnumerable<CronJob> jobs)
         {
             foreach(var job in jobs) {
-                Logger.LogTrace("ジョブ実行: {0} = {1}, {2} = {3}, {4}", nameof(job.Setting.Mode), job.Setting.Mode, nameof(job.IsRunning), job.IsRunning, job.CronJobId);
+                Logger.LogTrace("ジョブ実行: {0} = {1}, {2} = {3}, {4}", nameof(job.Setting.Mode), job.Setting.Mode, nameof(job.IsRunning), job.IsRunning, job.ScheduleJobId);
                 job.ExecuteAsync().ConfigureAwait(false);
             }
         }

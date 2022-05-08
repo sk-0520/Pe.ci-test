@@ -254,36 +254,52 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region NoteContentViewModelBase
 
-        protected override Task LoadContentAsync(FrameworkElement baseElement)
+        protected override Task<bool> LoadContentAsync(FrameworkElement baseElement)
         {
             //Control = (Xceed.Wpf.Toolkit.RichTextBox)control;
             return DispatcherWrapper.InvokeAsync(() => {
                 RichText = (RichTextBox)baseElement.FindName("content");
                 if(RichText == null) {
-                    return;
+                    return false;
                 }
+
+                RichText.TextChanged -= Control_TextChanged;
+                RichText.SelectionChanged -= RichTextBox_SelectionChanged;
 
                 RichText.TextChanged += Control_TextChanged;
                 RichText.SelectionChanged += RichTextBox_SelectionChanged;
+
+                return true;
             }).ContinueWith(t => {
-                var content = Model.LoadRichTextContent();
-                //RtfContent = content;
+                bool success = false;
+                string content;
+                if(t.IsCompletedSuccessfully) {
+                    try {
+                        content = Model.LoadRichTextContent();
+                        success = t.Result;
+                    } catch(Exception ex) {
+                        content = ex.Message;
+                    }
+                } else {
+                    content = t.Exception?.Message ?? "";
+                }
 
-                var noteContentConverter = new NoteContentConverter(LoggerFactory);
-                var stream = noteContentConverter.ToRtfStream(content);
+                DispatcherWrapper.Begin(() => {
+                    var noteContentConverter = new NoteContentConverter(LoggerFactory);
+                    using var stream = noteContentConverter.ToRtfStream(content);
 
-                DispatcherWrapper.Begin(arg => {
-                    if(arg.@this.IsDisposed) {
+                    if(IsDisposed) {
                         return;
                     }
                     if(RichText == null) {
                         return;
                     }
 
-                    var range = new TextRange(arg.@this.Document.ContentStart, arg.@this.Document.ContentEnd);
-                    range.Load(arg.stream, DataFormats.Rtf);
-                    stream.Dispose();
-                }, (@this: this, stream), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                    var range = new TextRange(Document.ContentStart, Document.ContentEnd);
+                    range.Load(stream, DataFormats.Rtf);
+                }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+
+                return success;
             });
         }
 

@@ -10,21 +10,20 @@ using System.Threading.Tasks;
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
-    /// <see cref="Enforce"/>処理で継続できない場合に投げられる例外。
+    /// 別段指定しない<see cref="Enforce"/>処理で継続できない場合に投げられる例外。
     /// </summary>
     [Serializable]
-    public class EnforceException: Exception
+    public sealed class EnforceException: Exception
     {
         public EnforceException()
         { }
+
         public EnforceException(string message)
             : base(message)
         { }
+
         public EnforceException(string message, Exception inner)
             : base(message, inner)
-        { }
-        protected EnforceException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         { }
     }
 
@@ -35,33 +34,64 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region function
 
+        [DoesNotReturn]
+        private static void Throw<TException>(string callerArgument)
+            where TException : Exception
+        {
+            throw (TException)Activator.CreateInstance(typeof(TException), new object[] { callerArgument })!;
+        }
+
         /// <summary>
         /// 指定値が<c>null</c>の場合に例外を投げる。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">指定値</typeparam>
+        /// <typeparam name="TException">投げられる例外。</typeparam>
         /// <param name="value"></param>
         /// <param name="callerArgument"></param>
-        /// <exception cref="EnforceException"><paramref name="value"/>が<c>null</c></exception>。
-        public static void ThrowIfNull<T>([AllowNull][NotNull] T value, [CallerArgumentExpression("value")] string callerArgument = "")
+        /// <exception cref="TException"><paramref name="value"/>が<c>null</c></exception>。
+        public static void ThrowIfNull<T, TException>([AllowNull][NotNull] T value, [CallerArgumentExpression("value")] string callerArgument = "")
+            where TException : Exception
         {
             if(value is null) {
-                throw new EnforceException(callerArgument);
+                Throw<TException>(callerArgument);
             }
         }
 
-        public static void ThrowIfNullOrEmpty(string value, [CallerArgumentExpression("value")] string callerArgument = "")
+        public static void ThrowIfNull<T>([AllowNull][NotNull] T value, [CallerArgumentExpression("value")] string callerArgument = "")
+            => ThrowIfNull<T, EnforceException>(value, callerArgument);
+
+        public static void ThrowIfNullOrEmpty<TException>(string? value, [CallerArgumentExpression("value")] string callerArgument = "")
+            where TException : Exception
         {
             if(string.IsNullOrEmpty(value)) {
-                throw new EnforceException(callerArgument);
+                Throw<TException>(callerArgument);
             }
         }
 
-        public static void ThrowIfNullOrWhiteSpace(string value, [CallerArgumentExpression("value")] string callerArgument = "")
+        public static void ThrowIfNullOrEmpty(string? value, [CallerArgumentExpression("value")] string callerArgument = "")
+            => ThrowIfNullOrEmpty<EnforceException>(value, callerArgument);
+
+        public static void ThrowIfNullOrWhiteSpace<TException>(string? value, [CallerArgumentExpression("value")] string callerArgument = "")
+            where TException : Exception
         {
             if(string.IsNullOrWhiteSpace(value)) {
-                throw new EnforceException(callerArgument);
+                Throw<TException>(callerArgument);
             }
         }
+
+        public static void ThrowIfNullOrWhiteSpace(string? value, [CallerArgumentExpression("value")] string callerArgument = "")
+            => ThrowIfNullOrWhiteSpace<EnforceException>(value, callerArgument);
+
+        public static void ThrowIfFalse<TException>(bool value, [CallerArgumentExpression("value")] string callerArgument = "")
+            where TException : Exception
+        {
+            if(!value) {
+                Throw<TException>(callerArgument);
+            }
+        }
+
+        public static void ThrowIfFalse(bool value, [CallerArgumentExpression("value")] string callerArgument = "")
+            => ThrowIfFalse<EnforceException>(value, callerArgument);
 
         #endregion
     }

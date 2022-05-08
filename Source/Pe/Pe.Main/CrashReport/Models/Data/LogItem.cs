@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
 {
     [Serializable, DataContract]
-    internal class LogItem: DataBase
+    internal class LogItem
     {
         #region property
 

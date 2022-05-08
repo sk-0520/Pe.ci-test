@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
 
-            CronScheduler = new CronScheduler(LoggerFactory);
+            CronScheduler = ApplicationDiContainer.Build<CronScheduler>();
 
             ApplicationUpdateInfo = ApplicationDiContainer.Build<NewVersionInfo>();
 
@@ -382,7 +382,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             KeyActionChecker.Reset();
             NotifyManagerImpl.ClearAllLogs();
-            KeyboardNotifyLogId = Guid.Empty;
+            KeyboardNotifyLogId = NotifyLogId.Empty;
 
             if(CommandElement != null) {
                 if(CommandElement.ViewCreated) {
@@ -1796,7 +1796,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             using(var stream = file.Open(FileMode.Open)) {
                 var serializer = new CrashReportSerializer();
                 var data = serializer.Load<CrashReportRawData>(new KeepStream(stream));
-                var diffStream = new MemoryStream();
+                var diffStream = new MemoryReleaseStream();
                 serializer.Save(data, new KeepStream(diffStream));
                 stream.Position = 0;
                 diffStream.Position = 0;

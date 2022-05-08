@@ -3,9 +3,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.WebView
 {
-    public class WebViewinItializer
+    public class WebViewItializer
     {
-        public WebViewinItializer(ILoggerFactory loggerFactory)
+        public WebViewItializer(ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());

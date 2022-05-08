@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,6 +31,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public readonly TElement Value { get; }
 
         #endregion
+    }
+
+    /// <summary>
+    /// 順序。
+    /// </summary>
+    public enum Order
+    {
+        /// <summary>
+        /// 昇順。
+        /// </summary>
+        Ascending,
+        /// <summary>
+        /// 降順。
+        /// </summary>
+        Descending,
     }
 
     /// <summary>
@@ -119,5 +135,42 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 }
             }
         }
+
+        public static IOrderedEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> source, Order order, Func<TSource, TKey> keySelector)
+        {
+            return order switch {
+                Order.Ascending => source.OrderBy(keySelector),
+                Order.Descending => source.OrderByDescending(keySelector),
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        public static IOrderedEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> source, Order order, Func<TSource, TKey> keySelector, IComparer<TKey>? comparer)
+        {
+            return order switch {
+                Order.Ascending => source.OrderBy(keySelector, comparer),
+                Order.Descending => source.OrderByDescending(keySelector, comparer),
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Order order, Func<TSource, TKey> keySelector)
+        {
+            return order switch {
+                Order.Ascending => source.ThenBy(keySelector),
+                Order.Descending => source.ThenByDescending(keySelector),
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Order order, Func<TSource, TKey> keySelector, IComparer<TKey>? comparer)
+        {
+            return order switch {
+                Order.Ascending => source.ThenBy(keySelector, comparer),
+                Order.Descending => source.ThenByDescending(keySelector, comparer),
+                _ => throw new NotImplementedException(),
+            };
+        }
+
     }
 }

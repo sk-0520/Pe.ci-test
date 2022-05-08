@@ -117,6 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 window.webView.RequestHandler = new WebViewWidgetRequestHandler(publicDir, LoggerFactory);
                 window.webView.LifeSpanHandler = new PlatformLifeSpanHandler(LoggerFactory);
                 window.webView.MenuHandler = new DisableContextMenuHandler();
+                WebViewSetupper.SetupDefault(window.webView);
 
                 viewModel = new WebViewWidgetViewModel(context.PluginIdentifiers, window, seed.HtmlSource, seed.SoilCallback, seed.Extensions, EnvironmentParameters, DispatcherWrapper, LoggerFactory);
                 window.DataContext = viewModel;

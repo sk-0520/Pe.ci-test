@@ -43,7 +43,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <returns>取得したアイコン。取得失敗時は null が返る。</returns>
         public BitmapSource? LoadIconFromFile(string iconPath, int iconIndex, in IconScale iconScale);
 
-
         #endregion
     }
 }

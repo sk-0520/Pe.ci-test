@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Data;
@@ -151,7 +152,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class KeyActionCommonData: DataBase, IKeyActionId
+    [Serializable, DataContract]
+    public class KeyActionCommonData: IKeyActionId
     {
         public KeyActionCommonData(KeyActionId keyActionId, KeyActionKind keyActionKind)
         {
@@ -327,7 +329,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class KeyActionData: DataBase
+    public class KeyActionData
     {
         #region property
 

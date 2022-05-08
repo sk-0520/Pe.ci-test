@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models
 {
@@ -21,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public static Stream OpenSyntaxStream(string syntax)
         {
             var binary = Encoding.UTF8.GetBytes(syntax);
-            return new MemoryStream(binary);
+            return new MemoryReleaseStream(binary);
         }
 
         #endregion

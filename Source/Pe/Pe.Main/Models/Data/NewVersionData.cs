@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [Serializable, DataContract]
-    public class NewVersionItemData: DataBase, IReadOnlyNewVersionItemData
+    public class NewVersionItemData: IReadOnlyNewVersionItemData
     {
         #region property
 
@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [Serializable, DataContract]
-    public class NewVersionData: DataBase
+    public class NewVersionData
     {
         #region property
 

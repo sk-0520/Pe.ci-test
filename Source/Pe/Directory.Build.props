@@ -1,11 +1,11 @@
 <Project>
   <PropertyGroup>
-    <Version>0.99.171</Version>
+    <Version>0.99.172</Version>
 
     <TargetFramework>net6.0-windows</TargetFramework>
     <Platforms>x64;x86</Platforms>
+    <WarningLevel>9999</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <Product>Pe</Product>

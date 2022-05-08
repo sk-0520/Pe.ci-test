@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 
@@ -13,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 
         #endregion
 
-        public NotifyLogItemElement(Guid notifyLogId, NotifyMessage message, ILoggerFactory loggerFactory)
+        public NotifyLogItemElement(NotifyLogId notifyLogId, NotifyMessage message, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NotifyLogId = notifyLogId;
@@ -70,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 
         #region INotifyLogId
 
-        public Guid NotifyLogId { get; }
+        public NotifyLogId NotifyLogId { get; }
 
         #endregion
     }

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace SqlPack
 {
-    public class Executor : IDisposable
+    public class Executor: IDisposable
     {
         public Executor(string sqlRootDirectoryPath, string outputSqlitePath)
         {
@@ -27,8 +27,7 @@ namespace SqlPack
 
         private void InitializeDatabase()
         {
-            DatabaseAccessor.Batch(c => {
-                c.Execute(@"
+            DatabaseAccessor.Execute(@"
 create table Statements
 (
     Namespace text not null,
@@ -42,9 +41,6 @@ create table Statements
     )
 )
                 ");
-
-                return true;
-            });
         }
 
         void ImportSqlFile(IDatabaseContext context, FileInfo sqlFile)
@@ -79,15 +75,15 @@ insert into
 
         void ImportSqlFiles()
         {
-            DatabaseAccessor.Batch(c => {
-                var sqliFiles = SqlRootDirectory.EnumerateFiles("*.sql", SearchOption.AllDirectories);
+            using var context = DatabaseAccessor.BeginTransaction();
 
-                foreach(var sqlifile in sqliFiles) {
-                    ImportSqlFile(c, sqlifile);
-                }
+            var sqliFiles = SqlRootDirectory.EnumerateFiles("*.sql", SearchOption.AllDirectories);
 
-                return true;
-            });
+            foreach(var sqlifile in sqliFiles) {
+                ImportSqlFile(context, sqlifile);
+            }
+
+            context.Commit();
         }
 
         public void Run()

@@ -46,15 +46,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region NoteContentViewModelBase
 
-        protected override Task LoadContentAsync(FrameworkElement baseElement)
+        protected override Task<bool> LoadContentAsync(FrameworkElement baseElement)
         {
             return Task.Run(() => {
                 try {
                     var content = Model.LoadPlainContent();
                     Content = content;
+                    return true;
                 } catch(Exception ex) {
                     Content = ex.Message;
                 }
+                return false;
             });
         }
 

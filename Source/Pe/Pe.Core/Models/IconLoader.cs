@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     totalSize += length;
                 }
 
-                using(var stream = new MemoryStream(totalSize))
+                using(var stream = new MemoryReleaseStream(totalSize))
                 using(var writer = new BinaryWriter(stream)) {
                     writer.Write(binaryGroupIconData, 0, sizeofICONDIR);
 

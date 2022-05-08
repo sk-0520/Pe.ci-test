@@ -176,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             }
         }
 
-        Guid RestoreVisibleNotifyLogId { get; set; }
+        NotifyLogId RestoreVisibleNotifyLogId { get; set; }
 
         public LauncherToolbarContentDropMode ContentDropMode { get; private set; }
         public LauncherGroupPosition GroupMenuPosition { get; private set; }
@@ -543,7 +543,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public void StartView()
         {
-            if(RestoreVisibleNotifyLogId != Guid.Empty) {
+            if(RestoreVisibleNotifyLogId != NotifyLogId.Empty) {
                 NotifyManager.ClearLog(RestoreVisibleNotifyLogId);
             }
 
@@ -587,7 +587,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                        ),
                        () => {
                            if(!ViewCreated) {
-                               RestoreVisibleNotifyLogId = Guid.Empty;
+                               RestoreVisibleNotifyLogId = NotifyLogId.Empty;
                                ChangeVisibleDelaySave(true);
                                StartView();
                            }

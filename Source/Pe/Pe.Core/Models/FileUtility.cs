@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -43,6 +45,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return File.Exists(path) || Directory.Exists(path);
         }
 
+        public static Task<bool> ExistsAsync(string? path, CancellationToken cancellationToken = default)
+        {
+            return Task.Run(() => Exists(path), cancellationToken);
+        }
+
         /// <summary>
         /// ファイル・ディレクトリ問わずに対象パスを削除。
         /// <para>ファイル・ディレクトリを問わない(ディレクトリの場合は再帰的削除)。</para>
@@ -58,6 +65,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             } else {
                 throw new IOException($"not found: {path}");
             }
+        }
+
+        public static Task DeleteAsync(string path, CancellationToken cancellationToken = default)
+        {
+            return Task.Run(() => Delete(path), cancellationToken);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -72,7 +73,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class PluginStateData: DataBase, IPluginIdentifiers
+    [Serializable, DataContract]
+    public class PluginStateData: IPluginIdentifiers
     {
         #region property
 
@@ -103,7 +105,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         PluginState LoadState
     ): IPluginLoadState;
 
-    public class PluginLoadStateData: DataBase, IPluginLoadState
+    [Serializable, DataContract]
+    public class PluginLoadStateData: IPluginLoadState
     {
         public PluginLoadStateData(PluginId pluginId, string pluginName, Version pluginVersion, PluginState loadState, WeakReference<PluginAssemblyLoadContext>? weekLoadContext, IPlugin? plugin)
         {
@@ -157,7 +160,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class PluginWidgetSettingData: DataBase
+    [Serializable, DataContract]
+    public class PluginWidgetSettingData
     {
         #region property
 

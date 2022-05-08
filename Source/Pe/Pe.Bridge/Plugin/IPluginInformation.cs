@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
             sb.Append(PluginName);
             sb.Append('(');
-            sb.Append(PluginId.Id.ToString("D")); // P でええやんと思う今日この頃
+            sb.Append(PluginId.ToString()); // P でええやんと思う今日この頃
             sb.Append(')');
 
             return sb.ToString();

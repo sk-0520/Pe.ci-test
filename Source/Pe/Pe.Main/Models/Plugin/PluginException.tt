@@ -34,6 +34,10 @@
             Name = "PluginArchiveNameException",
             Comment = "プラグインアーカイブ名不正。",
         },
+        new {
+            Name = "PluginUnavailableContextException",
+            Comment = "プラグイン使用不可例外。",
+        },
     };
 #>
 #nullable enable
@@ -65,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
 <# foreach(var item in items) { #>
     /// <summary>
-    /// プラグインの読み込み失敗時に投げられる。
+    /// <#= item.Comment #>
     /// </summary>
     [Serializable]
     public sealed class <#= item.Name #>: PluginException

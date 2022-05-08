@@ -29,21 +29,21 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <summary>
         /// 明るさを算出。
         /// </summary>
-        /// <param name="color"></param>
+        /// <param name="color">指定色。</param>
         /// <returns></returns>
         double GetBrightness(Color color);
 
         /// <summary>
         /// 指定色から自動的に見やすそうな色を算出。
         /// </summary>
-        /// <param name="color"></param>
+        /// <param name="color">指定色。</param>
         /// <returns></returns>
         Color GetAutoColor(Color color);
 
         /// <summary>
         /// 指定色を非透明にする。
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">指定色。</param>
         /// <returns></returns>
         Color GetNonTransparentColor(Color value);
 
@@ -58,8 +58,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <summary>
         /// 明るさを加算する。
         /// </summary>
-        /// <param name="baseColor"></param>
-        /// <param name="brightness"></param>
+        /// <param name="baseColor">基本色。</param>
+        /// <param name="brightness">明るさ</param>
         /// <returns></returns>
         Color AddBrightness(Color baseColor, double brightness);
 

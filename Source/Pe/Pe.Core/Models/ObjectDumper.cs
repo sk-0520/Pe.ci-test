@@ -355,7 +355,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             sb.Append(':');
             sb.AppendLine();
 
-            using(var stream = new MemoryStream()) {
+            using(var stream = new MemoryReleaseStream()) {
                 objectDumper.WriteDump(dumpItems, stream);
                 var dumpValue = Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Length);
                 sb.Append(dumpValue);

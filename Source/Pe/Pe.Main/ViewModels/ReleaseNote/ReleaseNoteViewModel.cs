@@ -72,14 +72,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         #region IViewLifecycleReceiver
 
         public void ReceiveViewInitialized(Window window)
-        { }
-
-        public void ReceiveViewLoaded(Window window)
         {
             var view = (ReleaseNoteWindow)window;
             view.webView.LifeSpanHandler = new PlatformLifeSpanHandler(LoggerFactory);
             view.webView.RequestHandler = new PlatformRequestHandler(LoggerFactory);
             view.webView.MenuHandler = new DisableContextMenuHandler();
+            WebViewSetupper.SetupDefault(view.webView);
 
             Model.LoadReleaseNoteDocumentAsync().ContinueWith(t => {
                 if(IsDisposed) {
@@ -93,8 +91,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
                 } else {
                     view.webView.LoadHtml(Properties.Resources.File_ReleaseNote_ErrorReleaseNote, nameof(Properties.Resources.File_ReleaseNote_ErrorReleaseNote));
                 }
-            });
+            }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
+
+        public void ReceiveViewLoaded(Window window)
+        { }
 
         public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
         { }

@@ -7,7 +7,7 @@ using ContentTypeTextNet.Pe.Core.Models.Data;
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
 {
     [Serializable, DataContract]
-    internal class CrashReportSaveData: DataBase
+    internal class CrashReportSaveData
     {
         #region property
 

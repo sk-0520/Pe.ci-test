@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         private ILogger Logger { get; }
 
-        private Guid NotifyLogId { get; set; }
+        private NotifyLogId NotifyLogId { get; set; }
 
         private LauncherFileExecuteResult FirstResult { get; }
         private LauncherExecutor Executor { get; }
@@ -118,12 +118,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         private void PutNotifyLog(bool isComplete, string message)
         {
             if(isComplete) {
-                if(NotifyLogId != Guid.Empty) {
+                if(NotifyLogId != NotifyLogId.Empty) {
                     NotifyManager.ClearLog(NotifyLogId);
                 }
                 NotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, NotifyLogHeader, new NotifyLogContent(message)));
             } else {
-                if(NotifyLogId == Guid.Empty) {
+                if(NotifyLogId == NotifyLogId.Empty) {
                     NotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Command, NotifyLogHeader, new NotifyLogContent(message), StopWatch));
                 } else {
                     if(NotifyManager.ExistsLog(NotifyLogId)) {
@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             if(Parameter.RedoData.SuccessExitCodes.Any(i => i == process.ExitCode)) {
                 Logger.LogInformation("正常終了コードのため再試行不要: {0}", process.ExitCode);
-                if(NotifyLogId != Guid.Empty) {
+                if(NotifyLogId != NotifyLogId.Empty) {
                     PutNotifyLog(true, Properties.Resources.String_RedoExecutor_SuccessExit);
                 }
 
@@ -316,7 +316,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             Debug.Assert(CurrentProcess != null);
             Debug.Assert(WaitEndTimer != null);
 
-            if(NotifyLogId != Guid.Empty) {
+            if(NotifyLogId != NotifyLogId.Empty) {
                 PutNotifyLog(true, Properties.Resources.String_RedoExecutor_CancelWatch);
             }
 

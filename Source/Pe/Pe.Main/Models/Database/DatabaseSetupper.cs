@@ -48,28 +48,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         private void ExecuteCore(IDatabaseAccessor accessor, IReadOnlySetupDto dto, Action<IDatabaseContext, IReadOnlySetupDto> ddl, Action<IDatabaseContext, IReadOnlySetupDto> dml)
         {
-            if(accessor.DatabaseFactory.CreateImplementation().SupportedTransactionDDL) {
-                var result = accessor.Batch(context => {
-                    Logger.LogDebug("DDL");
-                    ddl(context, dto);
+            Logger.LogDebug("DDL");
+            ddl(accessor, dto);
 
-                    Logger.LogDebug("DML");
-                    dml(context, dto);
-
-                    return true;
-                });
-                if(!result.Success) {
-                    // この時点で FailureValue は例外が入っている
-                    throw result.FailureValue!;
-                }
-            } else {
-                Logger.LogDebug("DDL");
-                ddl(accessor, dto);
-
-                Logger.LogDebug("DML");
-                using(var tran = accessor.BeginTransaction()) {
-                    dml(tran, dto);
-                }
+            Logger.LogDebug("DML");
+            using(var tran = accessor.BeginTransaction()) {
+                dml(tran, dto);
+                tran.Commit();
             }
         }
 

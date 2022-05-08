@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
@@ -129,7 +130,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherExecutePathData: DataBase, ILauncherExecutePathParameter
+    [Serializable, DataContract]
+    public class LauncherExecutePathData: ILauncherExecutePathParameter
     {
         #region ILauncherExecutePathParameter
 
@@ -161,7 +163,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherEnvironmentVariableData: DataBase
+    public class LauncherEnvironmentVariableData
     {
         #region property
 
@@ -173,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherIconData: DataBase
+    public class LauncherIconData
     {
         #region property
 
@@ -185,7 +187,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class StandardStreamData: DataBase
+    public class StandardStreamData
     {
         #region property
 
@@ -230,7 +232,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
 
-    public class LauncherGroupData: DataBase, ILauncherGroupId
+    public class LauncherGroupData: ILauncherGroupId
     {
         #region property
 
@@ -257,7 +259,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherItemData: DataBase
+    public class LauncherItemData
     {
         #region property
 
@@ -344,7 +346,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherToolbarsScreenData: DataBase, ILauncherToolbarId, IScreenData
+    public class LauncherToolbarsScreenData: ILauncherToolbarId, IScreenData
     {
         #region ILauncherToolbarId
 
@@ -367,7 +369,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherToolbarsDisplayData: DataBase, ILauncherToolbarId
+    public class LauncherToolbarsDisplayData: ILauncherToolbarId
     {
         #region property
 
@@ -446,7 +448,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherRedoData: DataBase, IReadOnlyLauncherRedoData
+    public class LauncherRedoData: IReadOnlyLauncherRedoData
     {
         #region IReadOnlyLauncherRedoData
 

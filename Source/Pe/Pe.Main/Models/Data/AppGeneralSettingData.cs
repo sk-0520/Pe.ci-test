@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Data;
@@ -8,7 +9,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     /// <summary>
     /// 基本設定。
     /// </summary>
-    public class SettingAppGeneralSettingData: DataBase
+    [Serializable, DataContract]
+    public class SettingAppGeneralSettingData
     {
         public SettingAppGeneralSettingData()
         { }
@@ -37,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     /// <summary>
     /// 初回実行データ。
     /// </summary>
-    public class AppGeneralFirstData: DataBase
+    public class AppGeneralFirstData
     {
         #region property
 

@@ -51,8 +51,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     break;
 
                 case LauncherItemKind.Addon: {
-                        var addon = new LauncherItemCustomizeAddonViewModel(Model, DispatcherWrapper, LoggerFactory);
-                        items.Add(addon);
+                        if(Model.LauncherItemSupportedPreferences) {
+                            var addon = new LauncherItemCustomizeAddonViewModel(Model, DispatcherWrapper, LoggerFactory);
+                            items.Add(addon);
+                        }
                     }
                     break;
 

@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [DataContract, Serializable]
-    public class IconData: DataBase, IReadOnlyIconData
+    public class IconData: IReadOnlyIconData
     {
         public IconData()
         { }

@@ -8,6 +8,10 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models
 {
+    /// <summary>
+    /// 暗号化処理。
+    /// <para>プラグインでも使用される。</para>
+    /// </summary>
     internal class Cryptography: ICryptography
     {
         #region property

@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="launcherItemId">ランチャーアイテムID。</param>
         /// <param name="name">ファイル名として有効な名前。</param>
         /// <returns>存在すれば真。</returns>
-        bool Exists(Guid launcherItemId, string name);
+        bool Exists(LauncherItemId launcherItemId, string name);
 
         /// <summary>
         /// 指定ファイル名を変更する。
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="sourceName">元ファイル名。</param>
         /// <param name="destinationName">変更ファイル名。</param>
         /// <param name="overwrite">上書きを行うか。</param>
-        void Rename(Guid launcherItemId, string sourceName, string destinationName, bool overwrite);
+        void Rename(LauncherItemId launcherItemId, string sourceName, string destinationName, bool overwrite);
 
         /// <summary>
         /// 指定ファイル名を複製する。
@@ -39,14 +39,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="sourceName">元ファイル名。</param>
         /// <param name="destinationName">コピー先ファイル名。</param>
         /// <param name="overwrite">上書きを行うか。</param>
-        void Copy(Guid launcherItemId, string sourceName, string destinationName, bool overwrite);
+        void Copy(LauncherItemId launcherItemId, string sourceName, string destinationName, bool overwrite);
 
         /// <summary>
         /// 指定ファイル名を削除する。
         /// </summary>
         /// <param name="launcherItemId">ランチャーアイテムID。</param>
         /// <param name="name">ファイル名として有効な名前。</param>
-        void Delete(Guid launcherItemId, string name);
+        void Delete(LauncherItemId launcherItemId, string name);
 
         /// <summary>
         /// 指定ファイル名を開く。
@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="name">ファイル名として有効な名前。</param>
         /// <param name="fileMode"><see cref="System.IO.FileMode"/></param>
         /// <returns>ストリーム。</returns>
-        Stream Open(Guid launcherItemId, string name, FileMode fileMode);
+        Stream Open(LauncherItemId launcherItemId, string name, FileMode fileMode);
 
         #endregion
     }

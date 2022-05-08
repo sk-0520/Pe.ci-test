@@ -208,30 +208,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         /// <param name="notifyLogId"></param>
         /// <returns></returns>
-        bool ExistsLog(Guid notifyLogId);
+        bool ExistsLog(NotifyLogId notifyLogId);
 
         /// <summary>
         /// 通知ログ追加。
         /// </summary>
         /// <param name="notifyMessage"></param>
         /// <returns></returns>
-        Guid AppendLog(NotifyMessage notifyMessage);
+        NotifyLogId AppendLog(NotifyMessage notifyMessage);
         /// <summary>
         ///通知ログ置き換え。
         /// </summary>
         /// <param name="notifyLogId"></param>
         /// <param name="contentMessage"></param>
-        void ReplaceLog(Guid notifyLogId, string contentMessage);
+        void ReplaceLog(NotifyLogId notifyLogId, string contentMessage);
         /// <summary>
         /// 通知ログクリア。
         /// </summary>
         /// <param name="notifyLogId"></param>
-        bool ClearLog(Guid notifyLogId);
+        bool ClearLog(NotifyLogId notifyLogId);
         /// <summary>
         /// 通知ログを時間差で破棄。
         /// </summary>
         /// <param name="notifyLogId"></param>
-        void FadeoutLog(Guid notifyLogId);
+        void FadeoutLog(NotifyLogId notifyLogId);
 
         #endregion
     }
@@ -283,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         IDispatcherWrapper DispatcherWrapper { get; }
         private ObservableCollection<NotifyLogItemElement> TopmostNotifyLogsImpl { get; }
         private ObservableCollection<NotifyLogItemElement> StreamNotifyLogsImpl { get; }
-        private KeyedCollection<Guid, NotifyLogItemElement> NotifyLogs { get; } = new SimpleKeyedCollection<Guid, NotifyLogItemElement>(v => v.NotifyLogId);
+        private KeyedCollection<NotifyLogId, NotifyLogItemElement> NotifyLogs { get; } = new SimpleKeyedCollection<NotifyLogId, NotifyLogItemElement>(v => v.NotifyLogId);
 
         private IDictionary<IScreen, bool> FullscreenStatus { get; } = new Dictionary<IScreen, bool>();
 
@@ -468,20 +468,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        /// <inheritdoc cref="INotifyManager.ExistsLog(Guid)" />
-        public bool ExistsLog(Guid notifyLogId)
+        /// <inheritdoc cref="INotifyManager.ExistsLog(NotifyLogId)" />
+        public bool ExistsLog(NotifyLogId notifyLogId)
         {
             return NotifyLogs.Contains(notifyLogId);
         }
 
         /// <inheritdoc cref="INotifyManager.AppendLog(NotifyMessage)" />
-        public Guid AppendLog(NotifyMessage notifyMessage)
+        public NotifyLogId AppendLog(NotifyMessage notifyMessage)
         {
             if(notifyMessage == null) {
                 throw new ArgumentNullException(nameof(notifyMessage));
             }
 
-            var element = DiContainer.Build<NotifyLogItemElement>(Guid.NewGuid(), notifyMessage);
+            var element = DiContainer.Build<NotifyLogItemElement>(NotifyLogId.NewId(), notifyMessage);
             element.Initialize();
 
             Logger.LogDebug("[{0}] {1}: {2}, {3}", notifyMessage.Header, notifyMessage.Kind, notifyMessage.Content.Message, element.NotifyLogId);
@@ -499,8 +499,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             return element.NotifyLogId;
         }
-        /// <inheritdoc cref="INotifyManager.ReplaceLog(Guid, string)" />
-        public void ReplaceLog(Guid notifyLogId, string contentMessage)
+        /// <inheritdoc cref="INotifyManager.ReplaceLog(NotifyLogId, string)" />
+        public void ReplaceLog(NotifyLogId notifyLogId, string contentMessage)
         {
             if(!NotifyLogs.TryGetValue(notifyLogId, out var element)) {
                 throw new KeyNotFoundException(notifyLogId.ToString());
@@ -513,8 +513,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 OnNotifyEventChanged(NotifyEventKind.Change, element);
             });
         }
-        /// <inheritdoc cref="INotifyManager.ClearLog(Guid)" />
-        public bool ClearLog(Guid notifyLogId)
+        /// <inheritdoc cref="INotifyManager.ClearLog(NotifyLogId)" />
+        public bool ClearLog(NotifyLogId notifyLogId)
         {
             if(!NotifyLogs.TryGetValue(notifyLogId, out var element)) {
                 return false;
@@ -540,8 +540,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return false;
         }
 
-        /// <inheritdoc cref="INotifyManager.FadeoutLog(Guid)" />
-        public void FadeoutLog(Guid notifyLogId)
+        /// <inheritdoc cref="INotifyManager.FadeoutLog(NotifyLogId)" />
+        public void FadeoutLog(NotifyLogId notifyLogId)
         {
             if(!NotifyLogs.TryGetValue(notifyLogId, out var element)) {
                 return;

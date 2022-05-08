@@ -25,12 +25,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     /// ピクセル情報を指定。
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter | AttributeTargets.ReturnValue, AllowMultiple = false)]
-    public class PixelKindAttribute: System.Attribute
+    public sealed class PixelKindAttribute: System.Attribute
     {
         /// <summary>
         /// ピクセル情報を指定。
         /// </summary>
-        /// <param name="px"></param>
+        /// <param name="px">ピクセル情報。</param>
         public PixelKindAttribute(Px px)
         {
             Px = px;

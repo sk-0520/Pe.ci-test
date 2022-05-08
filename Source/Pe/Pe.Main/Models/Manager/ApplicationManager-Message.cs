@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
@@ -40,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public bool IsDisabledSystemIdle => HeartBeatSender != null;
         public bool IsSupportedExplorer => ExplorerSupporter != null;
 
-        private Guid KeyboardNotifyLogId { get; set; }
+        private NotifyLogId KeyboardNotifyLogId { get; set; }
         private BackgroundAddonProxy? BackgroundAddon { get; set; }
 
         private CronScheduler CronScheduler { get; }
@@ -235,9 +236,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             void PutNotifyLog(string message)
             {
-                if(KeyboardNotifyLogId != Guid.Empty) {
+                if(KeyboardNotifyLogId != NotifyLogId.Empty) {
                     NotifyManager.ClearLog(KeyboardNotifyLogId);
-                    KeyboardNotifyLogId = Guid.Empty;
+                    KeyboardNotifyLogId = NotifyLogId.Empty;
                 }
                 NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(message)));
             }
@@ -386,7 +387,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     var keyMessages = firstWaitingPressedJob.GetCurrentMappings().Select(i => factory.ToString(CultureService.Instance, i, Properties.Resources.String_Hook_Keyboard_Join));
                     var keyMessage = string.Join(Properties.Resources.String_Hook_Keyboard_Separator, keyMessages);
 
-                    if(KeyboardNotifyLogId == Guid.Empty) {
+                    if(KeyboardNotifyLogId == NotifyLogId.Empty) {
                         var logContent = new NotifyLogContent(keyMessage);
                         KeyboardNotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Topmost, Properties.Resources.String_Hook_Keyboard_Header, logContent));
                     } else {
@@ -618,11 +619,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 e.Handled = !IsThroughSystem(jobs);
                 ExecuteKeyDownJobsAsync(jobs, e.modifierKeyStatus).ConfigureAwait(false);
             } else {
-                if(KeyboardNotifyLogId != Guid.Empty) {
+                if(KeyboardNotifyLogId != NotifyLogId.Empty) {
                     if(!e.Key.IsModifierKey()) {
                         Logger.LogTrace("キー入力該当なし");
                         NotifyManager.ClearLog(KeyboardNotifyLogId);
-                        KeyboardNotifyLogId = Guid.Empty;
+                        KeyboardNotifyLogId = NotifyLogId.Empty;
                         NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(Properties.Resources.String_Hook_Keyboard_NotFound)));
                     }
                 }
@@ -674,7 +675,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             if(NotifyManager.ExistsLog(KeyboardNotifyLogId)) {
                 NotifyManager.ClearLog(KeyboardNotifyLogId);
-                KeyboardNotifyLogId = Guid.Empty;
+                KeyboardNotifyLogId = NotifyLogId.Empty;
                 Logger.LogTrace("キー入力待ちリセット");
             }
             KeyActionChecker.Reset();

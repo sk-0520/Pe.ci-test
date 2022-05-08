@@ -170,8 +170,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         internal UserControl BeginLauncherItemPreferences()
         {
-            Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPreferences != null);
 
             using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
@@ -182,8 +182,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         internal bool CheckLauncherItemPreferences()
         {
-            Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPreferences != null);
 
             using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
@@ -195,8 +195,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         internal void SaveLauncherPreferences(IDatabaseContextsPack databaseContextsPack)
         {
-            Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPreferences != null);
 
             using(var context = LauncherItemAddonContextFactory.CreatePreferencesSaveContext(LauncherItemPlugin.PluginInformations, LauncherItemId, databaseContextsPack)) {
@@ -207,8 +207,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         internal void EndLauncherPreferences()
         {
-            Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPreferences != null);
 
             using(var context = LauncherItemAddonContextFactory.CreatePreferencesEndContext(LauncherItemPlugin.PluginInformations, LauncherItemId)) {
@@ -224,8 +224,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
 
             Debug.Assert(LauncherItemPlugin != null);
-            Debug.Assert(LauncherItemSupportedPreferences);
-            Debug.Assert(LauncherItemPreferences != null);
+            if(LauncherItemSupportedPreferences) {
+                Debug.Assert(LauncherItemPreferences != null);
+            }
 
             //TODO: なんかこう、ヘッダ名のために仰々しいなぁ XAML でプラグインID薄くしたいし。。。
             return LauncherItemPlugin.PluginInformations.PluginIdentifiers.ToString()!;
@@ -370,12 +371,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                             Logger.LogWarning("読み込めてないプラグインはプラグイン設定箇所スキップ");
                             break;
                         }
-                        Debug.Assert(LauncherItemPlugin != null);
-                        Debug.Assert(LauncherItemSupportedPreferences);
-                        Debug.Assert(LauncherItemExtension != null);
-                        Debug.Assert(LauncherItemPreferences != null);
+                        if(LauncherItemSupportedPreferences) {
+                            Debug.Assert(LauncherItemPlugin != null);
+                            Debug.Assert(LauncherItemExtension != null);
+                            Debug.Assert(LauncherItemPreferences != null);
 
-                        SaveLauncherPreferences(commandsPack);
+                            SaveLauncherPreferences(commandsPack);
+                        }
                     }
                     break;
 
