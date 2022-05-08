@@ -1,48 +1,13 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.171+",
+		"date": "2022/05/08",
+		"version": "0.99.172",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "外部プラグイン(interfaceとPe.Embedded)のためのリリース"
 					}
 				]
 			},
@@ -50,20 +15,12 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "940ec5ae889bc624bed452b5eed3fa75e9aecf2b",
 						"subject": "#749: ノートリンクで元ファイルが掴まれている場合、死ぬ"
 					},
 					{
-						"revision": "",
+						"revision": "b6c88e2f1c367ed8d73d132f170f5aa5f0fca9df",
 						"subject": "#804: 専用型を拡張する"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -71,7 +28,7 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "2a9adba632c8ef122b5919cb44f9f200d64f20e9",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 100.0.230 -> 101.0.150",
 						"comments": [
@@ -80,20 +37,12 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "d2e17498a2aa8e125fd4ff202db642d6e181bb88",
 						"subject": "MSTest系更新",
 						"comments": [
 							"MSTest.TestAdapter 2.2.9 -> 2.2.10",
 							"MSTest.TestFramework 2.2.9 -> 2.2.10"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
