@@ -48,7 +48,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
-
         public void UpdateSettingUpdateSetting(SettingAppUpdateSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var updateKindTransfer = new EnumTransfer<UpdateKind>();
@@ -72,7 +71,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             commonStatus.WriteCommonTo(parameter);
             Context.UpdateByKey(statement, parameter);
         }
-
 
         #endregion
     }

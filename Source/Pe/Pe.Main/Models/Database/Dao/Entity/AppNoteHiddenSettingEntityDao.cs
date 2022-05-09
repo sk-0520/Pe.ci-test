@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             );
         }
 
-        internal void UpdateHiddenWaitTimes(IReadOnlyDictionary<NoteHiddenMode, TimeSpan> items, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateHiddenWaitTimes(IReadOnlyDictionary<NoteHiddenMode, TimeSpan> items, IDatabaseCommonStatus databaseCommonStatus)
         {
             foreach(var item in items) {
                 UpdateHiddenWaitTime(item.Key, item.Value, databaseCommonStatus);
