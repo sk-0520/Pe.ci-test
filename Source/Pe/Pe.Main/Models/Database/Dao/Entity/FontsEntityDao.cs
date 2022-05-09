@@ -87,66 +87,73 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public bool InsertFont(FontId fontId, IFont font, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertFont(FontId fontId, IFont font, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = ConvertFromData(font, databaseCommonStatus);
             param.FontId = fontId;
-            return Context.Execute(statement, param) == 1;
+
+            Context.InsertSingle(statement, param);
         }
 
-        public bool InsertCopyFont(FontId sourceFontId, FontId destinationFontId, IDatabaseCommonStatus commonStatus)
+        public void InsertCopyFont(FontId sourceFontId, FontId destinationFontId, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter["SrcFontId"] = sourceFontId;
             parameter["DstFontId"] = destinationFontId;
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.InsertSingle(statement, parameter);
         }
 
 
-        public bool UpdateFamilyName(FontId fontId, string familyName, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateFamilyName(FontId fontId, string familyName, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.FontId] = fontId;
             parameter[Column.FamilyName] = familyName;
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.UpdateByKey(statement, parameter);
         }
 
-        public bool UpdateBold(FontId fontId, bool isBold, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateBold(FontId fontId, bool isBold, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.FontId] = fontId;
             parameter[Column.IsBold] = isBold;
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.UpdateByKey(statement, parameter);
         }
 
-        public bool UpdateItalic(FontId fontId, bool isItalic, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateItalic(FontId fontId, bool isItalic, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.FontId] = fontId;
             parameter[Column.IsItalic] = isItalic;
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.UpdateByKey(statement, parameter);
         }
 
-        public bool UpdateHeight(FontId fontId, double height, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateHeight(FontId fontId, double height, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.FontId] = fontId;
             parameter[Column.Height] = height;
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.UpdateByKey(statement, parameter);
         }
 
-        public bool UpdateFont(FontId fontId, IFont font, IDatabaseCommonStatus commonStatus)
+        public void UpdateFont(FontId fontId, IFont font, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = ConvertFromData(font, commonStatus);
             parameter.FontId = fontId;
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.UpdateByKey(statement, parameter);
         }
 
         #endregion
