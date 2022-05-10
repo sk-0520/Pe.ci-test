@@ -102,20 +102,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        internal bool InsertPluginLauncherItemSetting(PluginId pluginId, LauncherItemId launcherItemId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertPluginLauncherItemSetting(PluginId pluginId, LauncherItemId launcherItemId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, launcherItemId, key, data, databaseCommonStatus);
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.InsertSingle(statement, parameter);
         }
 
-        internal bool UpdatePluginLauncherItemSetting(PluginId pluginId, LauncherItemId launcherItemId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdatePluginLauncherItemSetting(PluginId pluginId, LauncherItemId launcherItemId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, launcherItemId, key, data, databaseCommonStatus);
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.UpdateByKey(statement, parameter);
         }
 
         public bool DeletePluginLauncherItemSetting(PluginId pluginId, LauncherItemId launcherItemId, string key)
@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 PluginSettingKey = key,
             };
 
-            return Context.Execute(statement, parameter) == 1;
+            return Context.DeleteByKeyOrNothing(statement, parameter);
         }
 
         public int DeletePluginLauncherItemSettingsByPluginId(PluginId pluginId)
@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 PluginId = pluginId,
             };
 
-            return Context.Execute(statement, parameter);
+            return Context.Delete(statement, parameter);
         }
 
         #endregion
