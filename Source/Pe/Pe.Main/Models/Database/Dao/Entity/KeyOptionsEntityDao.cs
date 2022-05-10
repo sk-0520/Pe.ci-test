@@ -53,14 +53,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public bool InsertOption(KeyActionId keyActionId, string name, string value, IDatabaseCommonStatus commonStatus)
+        public void InsertOption(KeyActionId keyActionId, string name, string value, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.KeyActionId] = keyActionId;
             parameter[Column.KeyOptionName] = name;
             parameter[Column.KeyOptionValue] = value;
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.InsertSingle(statement, parameter);
         }
 
 
@@ -70,7 +71,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 KeyActionId = keyActionId,
             };
-            return Context.Execute(statement, parameter);
+
+            return Context.Delete(statement, parameter);
         }
 
         #endregion
