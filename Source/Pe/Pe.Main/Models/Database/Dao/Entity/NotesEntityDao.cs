@@ -163,86 +163,86 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.UpdateByKey(statement, parameter);
         }
 
-        public void UpdateCompact(NoteId noteId, bool isCompact, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateCompact(NoteId noteId, bool isCompact, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsCompact] = isCompact;
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public void UpdateTopmost(NoteId noteId, bool isTopmost, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateTopmost(NoteId noteId, bool isTopmost, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsTopmost] = isTopmost;
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public void UpdateLock(NoteId noteId, bool isLocked, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateLock(NoteId noteId, bool isLocked, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsLocked] = isLocked;
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public void UpdateTextWrap(NoteId noteId, bool textWrap, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateTextWrap(NoteId noteId, bool textWrap, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.TextWrap] = textWrap;
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public void UpdateTitle(NoteId noteId, string title, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateTitle(NoteId noteId, string title, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.Title] = title;
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public void UpdateFontId(NoteId noteId, FontId fontId, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateFontId(NoteId noteId, FontId fontId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.FontId] = fontId;
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public void UpdateForegroundColor(NoteId noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateForegroundColor(NoteId noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.ForegroundColor] = FromColor(color);
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
-        public void UpdateBackgroundColor(NoteId noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateBackgroundColor(NoteId noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.BackgroundColor] = FromColor(color);
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public void UpdateCaptionPosition(NoteId noteId, NoteCaptionPosition captionPosition, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateCaptionPosition(NoteId noteId, NoteCaptionPosition captionPosition, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteCaptionPositionTansfer = new EnumTransfer<NoteCaptionPosition>();
 
@@ -251,10 +251,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.NoteId] = noteId;
             param[Column.CaptionPosition] = noteCaptionPositionTansfer.ToString(captionPosition);
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public void UpdateContentKind(NoteId noteId, NoteContentKind contentKind, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateContentKind(NoteId noteId, NoteContentKind contentKind, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteContentKindTansfer = new EnumTransfer<NoteContentKind>();
 
@@ -263,10 +263,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.NoteId] = noteId;
             param[Column.ContentKind] = noteContentKindTansfer.ToString(contentKind);
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public void UpdateLayoutKind(NoteId noteId, NoteLayoutKind layoutKind, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateLayoutKind(NoteId noteId, NoteLayoutKind layoutKind, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteLayoutKindTansfer = new EnumTransfer<NoteLayoutKind>();
 
@@ -275,21 +275,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.NoteId] = noteId;
             param[Column.LayoutKind] = noteLayoutKindTansfer.ToString(layoutKind);
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-
-        public void UpdateVisible(NoteId noteId, bool isVisible, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateVisible(NoteId noteId, bool isVisible, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsVisible] = isVisible;
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public void UpdateHiddenMode(NoteId noteId, NoteHiddenMode hiddenMode, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateHiddenMode(NoteId noteId, NoteHiddenMode hiddenMode, IDatabaseCommonStatus databaseCommonStatus)
         {
             var hiddenModeTransfer = new EnumTransfer<NoteHiddenMode>();
 
@@ -298,7 +297,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.NoteId] = noteId;
             param[Column.HiddenMode] = hiddenModeTransfer.ToString(hiddenMode);
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
         public void DeleteNote(NoteId noteId)

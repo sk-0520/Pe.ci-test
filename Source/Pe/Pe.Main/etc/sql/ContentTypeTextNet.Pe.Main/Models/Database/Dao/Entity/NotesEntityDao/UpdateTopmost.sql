@@ -1,4 +1,4 @@
-﻿update
+update
 	Notes
 set
 	IsTopmost = @IsTopmost,
@@ -11,5 +11,5 @@ set
 where
 	NoteId = @NoteId
 	and
-	IsTopmost != @IsTopmost
+	IsTopmost <> @IsTopmost
 

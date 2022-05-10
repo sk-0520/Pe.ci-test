@@ -11,5 +11,5 @@ set
 where
 	NoteId = @NoteId
 	and
-	ContentKind != @ContentKind
+	ContentKind <> @ContentKind
 

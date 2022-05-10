@@ -1,4 +1,4 @@
-﻿update
+update
 	Notes
 set
 	FontId = @FontId,
@@ -11,5 +11,5 @@ set
 where
 	NoteId = @NoteId
 	and
-	FontId != @FontId
+	FontId <> @FontId
 

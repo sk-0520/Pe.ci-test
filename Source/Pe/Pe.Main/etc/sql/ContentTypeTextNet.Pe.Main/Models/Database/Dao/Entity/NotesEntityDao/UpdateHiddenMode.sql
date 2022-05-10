@@ -11,4 +11,4 @@ set
 where
 	NoteId = @NoteId
 	and
-	HiddenMode != @HiddenMode
+	HiddenMode <> @HiddenMode

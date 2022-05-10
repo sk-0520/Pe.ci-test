@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.InsertSingle(statement, param);
         }
 
-        public void UpdateToolbarPosition(LauncherToolbarId launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, IDatabaseCommonStatus commonStatus)
+        public bool UpdateToolbarPosition(LauncherToolbarId launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, IDatabaseCommonStatus commonStatus)
         {
             var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
 
@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.PositionKind] = toolbarPositionTransfer.ToString(toolbarPosition);
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
         public void UpdatIsTopmost(LauncherToolbarId launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
