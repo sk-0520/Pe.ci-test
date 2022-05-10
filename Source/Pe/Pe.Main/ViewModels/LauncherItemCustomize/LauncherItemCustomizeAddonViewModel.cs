@@ -19,6 +19,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         private INotifyPropertyChanged? PreferencesNotifyPropertyChanged { get; set; }
         public string LauncherItemHeader => Model.GetLauncherItemPluginHeader();
 
+        public bool LauncherItemSupportedPreferences => Model.LauncherItemSupportedPreferences;
+
         #endregion
 
         #region command

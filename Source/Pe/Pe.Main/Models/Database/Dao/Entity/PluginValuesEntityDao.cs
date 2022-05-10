@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 PluginId = pluginId,
             };
-            return Context.Execute(statement, parameter);
+            return Context.Delete(statement, parameter);
         }
 
         #endregion

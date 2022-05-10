@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
             var daoGroup = new EntityDeleteDaoGroup();
             daoGroup.Add(new NoteContentsEntityDao(context, statementLoader, implementation, LoggerFactory), dao => dao.DeleteContents(NoteId));
             daoGroup.Add(new NoteLayoutsEntityDao(context, statementLoader, implementation, LoggerFactory), dao => dao.DeleteLayouts(NoteId));
-            daoGroup.Add(new NotesEntityDao(context, statementLoader, implementation, LoggerFactory), dao => dao.DeleteNote(NoteId));
+            daoGroup.Add(new NotesEntityDao(context, statementLoader, implementation, LoggerFactory), dao => { dao.DeleteNote(NoteId); return 1; });
 
             foreach(var item in daoGroup.Execute()) {
                 reuslt.Items.Add(item);

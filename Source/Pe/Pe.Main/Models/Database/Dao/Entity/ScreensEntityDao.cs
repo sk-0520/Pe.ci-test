@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QuerySingle<bool>(statement, param);
         }
 
-        public bool InsertScreen(IScreen screen, IDatabaseCommonStatus commonStatus)
+        public void InsertScreen(IScreen screen, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = new ScreensRowDto() {
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
             commonStatus.WriteCommonTo(dto);
 
-            return Context.Execute(statement, dto) == 1;
+            Context.InsertSingle(statement, dto);
         }
 
         #endregion

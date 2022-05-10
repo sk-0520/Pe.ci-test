@@ -1,4 +1,4 @@
-﻿update
+update
 	LauncherToolbars
 set
 	PositionKind = @PositionKind,
@@ -11,4 +11,4 @@ set
 where
 	LauncherToolbarId = @LauncherToolbarId
 	and
-	PositionKind != @PositionKind
+	PositionKind <> @PositionKind

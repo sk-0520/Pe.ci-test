@@ -11,5 +11,5 @@ set
 where
 	NoteId = @NoteId
 	and
-	TextWrap != @TextWrap
+	TextWrap <> @TextWrap
 

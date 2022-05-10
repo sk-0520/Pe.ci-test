@@ -2252,4 +2252,7 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_PluginWebInstall_PluginIdOrInfoUrl_UrlParseError" xml:space="preserve">
     <value>URL変換失敗</value>
   </data>
+  <data name="String_LauncherItemCustomizeControl_Plugin_NotSupported" xml:space="preserve">
+    <value>このランチャーアイテムアドオンに設定機能はありません。</value>
+  </data>
 </root>

@@ -4050,6 +4050,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   このランチャーアイテムアドオンに設定機能はありません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Plugin_NotSupported {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Plugin_NotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   再試行 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_RedoEditor_Header {

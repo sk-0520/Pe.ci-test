@@ -96,33 +96,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public bool InsertKeyAction(KeyActionData keyActionData, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertKeyAction(KeyActionData keyActionData, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(keyActionData, databaseCommonStatus);
-            return Context.Execute(statement, dto) == 1;
+
+            Context.InsertSingle(statement, dto);
         }
 
-        public bool UpdateKeyAction(KeyActionData keyActionData, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateKeyAction(KeyActionData keyActionData, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(keyActionData, databaseCommonStatus);
-            return Context.Execute(statement, dto) == 1;
+
+            Context.UpdateByKey(statement, dto);
         }
 
-        public bool UpdateUsageCountIncrement(KeyActionId keyActionId, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateUsageCountIncrement(KeyActionId keyActionId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.KeyActionId] = keyActionId;
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.UpdateByKey(statement, parameter);
         }
 
-        public bool DeleteKeyAciton(KeyActionId keyActionId)
+        public void DeleteKeyAciton(KeyActionId keyActionId)
         {
             var statement = LoadStatement();
             var parameter = new { KeyActionId = keyActionId };
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.DeleteByKey(statement, parameter);
         }
 
         #endregion

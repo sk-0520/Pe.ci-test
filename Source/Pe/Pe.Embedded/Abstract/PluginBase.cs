@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Embedded.Attributes;
+using ContentTypeTextNet.Pe.Embedded.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Embedded.Abstract
@@ -72,30 +73,11 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region function
 
-        protected virtual DependencyObject GetIconImpl(in IconScale iconScale) => null!;
+        protected virtual DependencyObject? GetIconImpl(in IconScale iconScale) => null;
 
-
-        /// <summary>
-        /// プラグインアセンブリの /Plugin.icon を取得する。
-        /// </summary>
-        /// <inheritdoc cref="ExtensionBase.GetIcon(IImageLoader, in IconScale)"/>
         protected DependencyObject GetPluginIcon(IImageLoader imageLoader, in IconScale iconScale)
         {
-            var asm = Assembly.GetExecutingAssembly();
-            var asmName = asm.GetName().Name;
-            var uri = new Uri("pack://application:,,,/" + asmName + ";component/Plugin.ico");
-            try {
-                var decoder = BitmapDecoder.Create(uri, BitmapCreateOptions.DelayCreation, BitmapCacheOption.None);
-                var bitmap = imageLoader.GetImageFromFrames(decoder.Frames, iconScale);
-                //var bitmap = new BitmapImage(uri);
-                var image = new System.Windows.Controls.Image() {
-                    Source = bitmap,
-                };
-                return image;
-            } catch(IOException ex) {
-                Logger.LogError(ex, ex.Message);
-            }
-            return null!;
+            return PluginHelper.GetDefaultPluginIcon(imageLoader, iconScale);
         }
 
         /// <summary>

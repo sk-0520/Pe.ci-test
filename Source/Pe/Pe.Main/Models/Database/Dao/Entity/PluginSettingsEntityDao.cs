@@ -97,20 +97,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public bool InsertPluginSetting(PluginId pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertPluginSetting(PluginId pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, key, data, databaseCommonStatus);
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.InsertSingle(statement, parameter);
         }
 
-        public bool UpdatePluginSetting(PluginId pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdatePluginSetting(PluginId pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, key, data, databaseCommonStatus);
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.UpdateByKey(statement, parameter);
         }
 
         public bool DeletePluginSetting(PluginId pluginId, string key)
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 PluginSettingKey = key,
             };
 
-            return Context.Execute(statement, parameter) == 1;
+            return Context.DeleteByKeyOrNothing(statement, parameter);
         }
 
         public int DeleteAllPluginSettings(PluginId pluginId)
@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 PluginId = pluginId,
             };
 
-            return Context.Execute(statement, parameter);
+            return Context.Delete(statement, parameter);
         }
 
 

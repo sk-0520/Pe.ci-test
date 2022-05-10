@@ -245,8 +245,11 @@ if(!$suppressScm) {
 try {
 	Push-Location $parameters.source
 
-	Write-Verbose "ソリューション $PluginName を生成"
-	& $parameters.dotnet new sln --force --name (Update-Template 'TEMPLATE_PluginShortName')
+	# Write-Verbose "ソリューション $PluginName を生成"
+	# & $parameters.dotnet new sln --force --name (Update-Template 'TEMPLATE_PluginShortName')
+	Write-Verbose "テンプレソリューションを $PluginName に変換"
+	$solutionFileName = Update-Template 'TEMPLATE_PluginShortName.sln'
+	Move-Item -Path 'TEMPLATE_PluginName.sln' -Destination $solutionFileName -Force
 
 	Write-Verbose "プロジェクトを追加"
 	& $parameters.dotnet sln add $pluginProjectFilePath
@@ -284,12 +287,12 @@ try {
 		& $parameters.dotnet sln add $projectFilePath --solution-folder $item.directory
 	}
 
-	Write-Verbose "ソリューションからAnyCPUを破棄"
-	$solutionFileName = Update-Template 'TEMPLATE_PluginShortName.sln'
-	$solutionContent = Get-Content -Path $solutionFileName `
-		| Out-String -Stream `
-		| Where-Object { !$_.Contains('Any CPU') }
-	Set-Content -Path $solutionFileName -Value $solutionContent
+	# Write-Verbose "ソリューションからAnyCPUを破棄"
+	# $solutionFileName = Update-Template 'TEMPLATE_PluginShortName.sln'
+	# $solutionContent = Get-Content -Path $solutionFileName `
+	# 	| Out-String -Stream `
+	# 	| Where-Object { !$_.Contains('Any CPU') }
+	# Set-Content -Path $solutionFileName -Value $solutionContent
 
 
 	Write-Verbose "NuGet 復元"

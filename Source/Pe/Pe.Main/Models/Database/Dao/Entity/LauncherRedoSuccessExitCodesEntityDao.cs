@@ -47,22 +47,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Query<int>(statement, parameter);
         }
 
-        public int InsertSuccessExitCodes(LauncherItemId launcherItemId, IEnumerable<int> successExitCodes, IDatabaseCommonStatus commonStatus)
+        public void InsertSuccessExitCodes(LauncherItemId launcherItemId, IEnumerable<int> successExitCodes, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = new LauncherRedoSuccessExitCodesDto() {
                 LauncherItemId = launcherItemId,
             };
 
-            var insertCount = 0;
             foreach(var code in successExitCodes) {
                 parameter.SuccessExitCode = code;
                 commonStatus.WriteCreateTo(parameter);
-                var result = Context.Execute(statement, parameter);
-                insertCount += result;
+                Context.InsertSingle(statement, parameter);
             }
-
-            return insertCount;
         }
 
         public int DeleteSuccessExitCodes(LauncherItemId launcherItemId)
@@ -71,7 +67,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Context.Execute(statement, parameter);
+
+            return Context.Delete(statement, parameter);
         }
 
 

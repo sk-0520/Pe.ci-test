@@ -12,6 +12,38 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
     public class EnforceTest
     {
         [TestMethod]
+        public void ThrowIf_Target_Test()
+        {
+            Assert.ThrowsException<NullReferenceException>(() => Enforce.ThrowIf<NullReferenceException>(false));
+            Enforce.ThrowIf<NullReferenceException>(true);
+            Assert.IsTrue(true);
+
+            Assert.ThrowsException<NotImplementedException>(() => Enforce.ThrowIf<NotImplementedException>(false));
+            Enforce.ThrowIf<NotImplementedException>(true);
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void ThrowIf_Default_Test()
+        {
+            try {
+                Enforce.ThrowIf(1 == 0);
+                Assert.Fail();
+            } catch(EnforceException ex) {
+                Assert.AreEqual("1 == 0", ex.Message);
+            }
+
+            try {
+                var a = 1;
+                var b = 0;
+                Enforce.ThrowIf(a == b);
+                Assert.Fail();
+            } catch(EnforceException ex) {
+                Assert.AreEqual("a == b", ex.Message);
+            }
+        }
+
+        [TestMethod]
         public void ThrowIfNull_Target_Test()
         {
             Assert.ThrowsException<NullReferenceException>(() => Enforce.ThrowIfNull<object, NullReferenceException>(default));
@@ -54,38 +86,6 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.ThrowsException<NotImplementedException>(() => Enforce.ThrowIfNullOrWhiteSpace<NotImplementedException>(" "));
             Enforce.ThrowIfNullOrWhiteSpace<NotImplementedException>("a");
             Assert.IsTrue(true);
-        }
-
-        [TestMethod]
-        public void ThrowIfFalse_Target_Test()
-        {
-            Assert.ThrowsException<NullReferenceException>(() => Enforce.ThrowIfFalse<NullReferenceException>(false));
-            Enforce.ThrowIfFalse<NullReferenceException>(true);
-            Assert.IsTrue(true);
-
-            Assert.ThrowsException<NotImplementedException>(() => Enforce.ThrowIfFalse<NotImplementedException>(false));
-            Enforce.ThrowIfFalse<NotImplementedException>(true);
-            Assert.IsTrue(true);
-        }
-
-        [TestMethod]
-        public void ThrowIfFalse_Default_Test()
-        {
-            try {
-                Enforce.ThrowIfFalse(1 == 0);
-                Assert.Fail();
-            } catch(EnforceException ex) {
-                Assert.AreEqual("1 == 0", ex.Message);
-            }
-
-            try {
-                var a = 1;
-                var b = 0;
-                Enforce.ThrowIfFalse(a == b);
-                Assert.Fail();
-            } catch(EnforceException ex) {
-                Assert.AreEqual("a == b", ex.Message);
-            }
         }
     }
 }

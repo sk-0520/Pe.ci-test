@@ -302,7 +302,31 @@
       <!--#region アドイン -->
       <DataTemplate DataType="{x:Type app_main_viewmodels_launcher_item_customize:LauncherItemCustomizeAddonViewModel}">
         <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="{Binding LauncherItemHeader, Converter={StaticResource EscapeAccessKeyConverter}}">
-          <ContentControl Content="{Binding PreferencesControl}" />
+          <ContentControl>
+            <ContentControl.Style>
+              <Style TargetType="ContentControl" BasedOn="{StaticResource {x:Type ContentControl}}">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding LauncherItemSupportedPreferences}" Value="True">
+                    <Setter Property="Content" Value="{Binding PreferencesControl}" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                        <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                      </Grid.ColumnDefinitions>
+
+                      <Grid Grid.Column="1">
+                        <TextBlock Text="{Binding Resources.String_LauncherItemCustomizeControl_Plugin_NotSupported, Source={x:Static app_main:CultureService.Instance}}" />
+                      </Grid>
+                    </Grid>
+                  </Setter.Value>
+                </Setter>
+              </Style>
+            </ContentControl.Style>
+          </ContentControl>
         </GroupBox>
       </DataTemplate>
       <!--#endregion -->

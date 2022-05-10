@@ -65,9 +65,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.UpdateByKey(statement, parameter);
         }
 
-
-
         #endregion
-
     }
 }
