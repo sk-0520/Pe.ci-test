@@ -110,7 +110,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
             var screensDao = new ScreensEntityDao(context, databaseStatementLoader, implementation, loggerFactory);
             if(!screensDao.SelectExistsScreen(screen.DeviceName)) {
-                return screensDao.InsertScreen(screen, databaseCommonStatus);
+                screensDao.InsertScreen(screen, databaseCommonStatus);
+                return true;
             }
 
             return false;
