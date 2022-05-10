@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public bool InsertLastUpdatedIconTimestamp(LauncherItemId launcherItemId, in IconScale iconScale, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
+        public void InsertLastUpdatedIconTimestamp(LauncherItemId launcherItemId, in IconScale iconScale, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
@@ -109,10 +109,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.IconBox] = iconBoxTransfer.ToString(iconScale.Box);
             parameter[Column.IconScale] = iconScale.Dpi.X;
             parameter[Column.LastUpdatedTimestamp] = timestamp;
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.InsertSingle(statement, parameter);
         }
 
-        public bool UpdateLastUpdatedIconTimestamp(LauncherItemId launcherItemId, in IconScale iconScale, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
+        public void UpdateLastUpdatedIconTimestamp(LauncherItemId launcherItemId, in IconScale iconScale, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
@@ -122,7 +123,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.IconBox] = iconBoxTransfer.ToString(iconScale.Box);
             parameter[Column.IconScale] = iconScale.Dpi.X;
             parameter[Column.LastUpdatedTimestamp] = timestamp;
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.Update(statement, parameter);
         }
 
         public int DeleteAllSizeLauncherItemIconState(LauncherItemId launcherItemId)
@@ -132,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 LauncherItemId = launcherItemId,
             };
 
-            return Context.Execute(statement, parameter);
+            return Context.Delete(statement, parameter);
         }
 
         #endregion
