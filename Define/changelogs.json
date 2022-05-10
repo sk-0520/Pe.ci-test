@@ -1,48 +1,13 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.172+",
+		"date": "2022/05/10",
+		"version": "0.99.173",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "#808 死んでるし #807 も怪しいけど #808 が危なすぎる"
 					}
 				]
 			},
@@ -56,14 +21,6 @@
 					{
 						"revision": "",
 						"subject": "#808: ランチャープラグインアイテムとして設定可能なプラグインが本体設定時に死ぬ"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -73,18 +30,6 @@
 					{
 						"revision": "",
 						"subject": "#807: SQL処理に制約を追加"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
