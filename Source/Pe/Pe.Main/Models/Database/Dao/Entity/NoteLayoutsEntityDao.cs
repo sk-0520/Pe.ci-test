@@ -109,20 +109,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QuerySingle<bool>(statement, param);
         }
 
-        public bool InsertLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = ConvertFromData(noteLayout, databaseCommonStatus);
-            return Context.Execute(statement, param) == 1;
+
+            Context.InsertSingle(statement, param);
         }
 
-        public bool UpdateLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = ConvertFromData(noteLayout, databaseCommonStatus);
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
-        public bool UpdatePickupLayout(NoteLayoutData noteLayout, bool isEnabledLocation, bool isEnabledSize, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdatePickupLayout(NoteLayoutData noteLayout, bool isEnabledLocation, bool isEnabledSize, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
@@ -136,7 +138,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.Height] = noteLayout.Height;
             param[nameof(isEnabledLocation)] = isEnabledLocation;
             param[nameof(isEnabledSize)] = isEnabledSize;
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
 
         public int DeleteLayouts(NoteId noteId)
@@ -145,7 +148,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 NoteId = noteId,
             };
-            return Context.Execute(statement, parameter);
+
+            return Context.Delete(statement, parameter);
         }
 
         #endregion

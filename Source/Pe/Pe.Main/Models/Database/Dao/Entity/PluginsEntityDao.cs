@@ -133,18 +133,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirstOrDefault<bool>(statement, parameter);
         }
 
-        public bool InsertPluginStateData(PluginStateData data, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertPluginStateData(PluginStateData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, databaseCommonStatus);
-            return Context.Execute(statement, dto) == 1;
+
+            Context.InsertSingle(statement, dto);
         }
 
         public bool UpdatePluginStateData(PluginStateData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, databaseCommonStatus);
-            return Context.Execute(statement, dto) == 1;
+
+            return Context.UpdateByKeyOrNothing(statement, dto);
         }
 
         public bool UpdatePluginRunningState(PluginId pluginId, Version pluginVersion, Version applicationVersio, IDatabaseCommonStatus databaseCommonStatus)
@@ -155,17 +157,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.LastUseTimestamp] = DateTime.UtcNow; // DAO層でまぁいっかぁ
             parameter[Column.LastUsePluginVersion] = pluginVersion;
             parameter[Column.LastUseAppVersion] = applicationVersio;
-            return Context.Execute(statement, parameter) == 1;
+
+            return Context.UpdateByKeyOrNothing(statement, parameter);
         }
 
-        public bool DeletePlugin(PluginId pluginId)
+        public void DeletePlugin(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {
                 PluginId = pluginId,
             };
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.DeleteByKey(statement, parameter);
         }
 
         #endregion

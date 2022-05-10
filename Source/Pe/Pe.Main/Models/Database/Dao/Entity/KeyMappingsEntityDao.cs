@@ -96,11 +96,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public bool InsertMapping(KeyActionId keyActionId, KeyMappingData mapping, int sequence, IDatabaseCommonStatus commonStatus)
+        public void InsertMapping(KeyActionId keyActionId, KeyMappingData mapping, int sequence, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(keyActionId, mapping, sequence, commonStatus);
-            return Context.Execute(statement, dto) == 1;
+
+            Context.InsertSingle(statement, dto);
         }
 
         public int DeleteByKeyActionId(KeyActionId keyActionId)
@@ -109,7 +110,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 KeyActionId = keyActionId,
             };
-            return Context.Execute(statement, parameter);
+
+            return Context.Delete(statement, parameter);
         }
 
         #endregion

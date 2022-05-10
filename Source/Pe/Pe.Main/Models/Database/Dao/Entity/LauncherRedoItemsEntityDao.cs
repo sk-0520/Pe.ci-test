@@ -84,28 +84,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public bool InsertRedoItem(LauncherItemId launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertRedoItem(LauncherItemId launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(launcherItemId, data, databaseCommonStatus);
-            return Context.Execute(statement, dto) == 1;
+
+            Context.InsertSingle(statement, dto);
         }
 
 
-        public bool UpdateRedoItem(LauncherItemId launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateRedoItem(LauncherItemId launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(launcherItemId, data, databaseCommonStatus);
-            return Context.Execute(statement, dto) == 1;
+
+            Context.UpdateByKey(statement, dto);
         }
 
-        public bool DeleteRedoItemByLauncherItemId(LauncherItemId launcherItemId)
+        public void DeleteRedoItemByLauncherItemId(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.DeleteByKey(statement, parameter);
         }
 
         #endregion

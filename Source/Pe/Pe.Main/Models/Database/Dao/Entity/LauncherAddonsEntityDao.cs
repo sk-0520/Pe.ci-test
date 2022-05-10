@@ -49,15 +49,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Query<LauncherItemId>(statement, parameter);
         }
 
-
-        public bool InsertAddonPluginId(LauncherItemId launcherItemId, PluginId pluginId, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertAddonPluginId(LauncherItemId launcherItemId, PluginId pluginId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.LauncherItemId] = launcherItemId;
             parameter[Column.PluginId] = pluginId;
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.InsertSingle(statement, parameter);
         }
 
         public int DeleteLauncherAddonsByPluginId(PluginId pluginId)
@@ -67,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 PluginId = pluginId,
             };
 
-            return Context.Execute(statement, parameter);
+            return Context.Delete(statement, parameter);
         }
 
         #endregion

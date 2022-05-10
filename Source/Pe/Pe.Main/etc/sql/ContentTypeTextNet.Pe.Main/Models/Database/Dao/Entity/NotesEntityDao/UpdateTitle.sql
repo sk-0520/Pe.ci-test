@@ -1,4 +1,4 @@
-﻿update
+update
 	Notes
 set
 	Title = @Title,
@@ -11,5 +11,5 @@ set
 where
 	NoteId = @NoteId
 	and
-	Title != @Title
+	Title <> @Title
 

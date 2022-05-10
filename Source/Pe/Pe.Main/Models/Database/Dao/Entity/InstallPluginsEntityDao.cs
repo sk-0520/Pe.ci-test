@@ -101,13 +101,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.Execute(statement, parameter);
         }
 
-        public bool DeleteInstallPlugin(PluginId pluginId)
+        public void DeleteInstallPlugin(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {
                 PluginId = pluginId,
             };
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.DeleteByKey(statement, parameter);
         }
 
         #endregion

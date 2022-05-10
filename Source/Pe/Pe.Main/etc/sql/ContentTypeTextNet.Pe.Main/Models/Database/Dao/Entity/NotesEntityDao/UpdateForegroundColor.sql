@@ -11,4 +11,4 @@ set
 where
 	NoteId = @NoteId
 	and
-	ForegroundColor != @ForegroundColor
+	ForegroundColor <> @ForegroundColor

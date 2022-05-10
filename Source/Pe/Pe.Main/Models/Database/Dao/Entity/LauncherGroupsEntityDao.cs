@@ -118,23 +118,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
-            Context.Execute(statement, dto);
+
+            Context.InsertSingle(statement, dto);
         }
 
-        public bool UpdateGroup(LauncherGroupData data, IDatabaseCommonStatus commonStatus)
+        public void UpdateGroup(LauncherGroupData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
-            return Context.Execute(statement, dto) == 1;
+
+            Context.UpdateByKey(statement, dto);
         }
 
-        public int DeleteGroup(LauncherGroupId launcherGroupId)
+        public void DeleteGroup(LauncherGroupId launcherGroupId)
         {
             var statement = LoadStatement();
             var parameter = new {
                 LauncherGroupId = launcherGroupId,
             };
-            return Context.Execute(statement, parameter);
+
+            Context.DeleteByKey(statement, parameter);
         }
 
         #endregion

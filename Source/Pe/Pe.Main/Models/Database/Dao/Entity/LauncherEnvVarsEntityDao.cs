@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
 
             foreach(var dto in items.Select(i => ConvertFromData(launcherItemId, i, databaseCommonStatus))) {
-                Context.Execute(statement, dto);
+                Context.InsertSingle(statement, dto);
             }
         }
 
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Context.Execute(statement, parameter);
+            return Context.Delete(statement, parameter);
         }
 
 

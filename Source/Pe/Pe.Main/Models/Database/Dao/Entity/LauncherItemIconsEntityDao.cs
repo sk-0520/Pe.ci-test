@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return null;
         }
 
-        public int InsertImageBinary(LauncherItemId launcherItemId, in IconScale iconScale, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
+        public void InsertImageBinary(LauncherItemId launcherItemId, in IconScale iconScale, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
@@ -73,15 +73,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconBox = iconBoxTransfer.ToString(iconScale.Box),
                 IconScale = iconScale.Dpi.X,
             };
-            var resultCount = 0;
+            
             for(var i = 0; i < binaryImageItems.Length; i++) {
                 commonStatus.WriteCreateTo(dto);
                 dto.Sequence = i;
                 dto.Image = binaryImageItems[i].ToArray();
-                resultCount += Context.Execute(statement, dto);
+                Context.InsertSingle(statement, dto);
             }
-
-            return resultCount;
         }
 
         public int DeleteAllSizeImageBinary(LauncherItemId launcherItemId)
@@ -90,7 +88,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = new {
                 LauncherItemId = launcherItemId,
             };
-            return Context.Execute(statement, param);
+
+            return Context.Delete(statement, param);
         }
 
         public int DeleteImageBinary(LauncherItemId launcherItemId, in IconScale iconScale)
@@ -103,7 +102,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconBox = iconBoxTransfer.ToString(iconScale.Box),
                 IconScale = iconScale.Dpi.X,
             };
-            return Context.Execute(statement, param);
+
+            return Context.Delete(statement, param);
         }
 
         #endregion

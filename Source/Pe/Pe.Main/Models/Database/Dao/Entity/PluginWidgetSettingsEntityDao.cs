@@ -117,41 +117,41 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirstOrDefault<bool>(statement, parameter);
         }
 
-        public bool InsertPluginWidgetSetting(PluginId pluginId, PluginWidgetSettingData data, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertPluginWidgetSetting(PluginId pluginId, PluginWidgetSettingData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, data, databaseCommonStatus);
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.InsertSingle(statement, parameter);
         }
 
-        public bool InsertPluginWidgetTopmost(PluginId pluginId, bool isTopmost, IDatabaseCommonStatus databaseCommonStatus)
+        public void InsertPluginWidgetTopmost(PluginId pluginId, bool isTopmost, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.PluginId] = pluginId;
             parameter[Column.IsTopmost] = isTopmost;
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.InsertSingle(statement, parameter);
         }
 
-        public bool UpdatePluginWidgetSetting(PluginId pluginId, PluginWidgetSettingData data, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdatePluginWidgetSetting(PluginId pluginId, PluginWidgetSettingData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = ConvertFromData(pluginId, data, databaseCommonStatus);
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.UpdateByKey(statement, parameter);
         }
 
 
-        public bool UpdatePluginWidgetTopmost(PluginId pluginId, bool isTopmost, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdatePluginWidgetTopmost(PluginId pluginId, bool isTopmost, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.PluginId] = pluginId;
             parameter[Column.IsTopmost] = isTopmost;
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.UpdateByKey(statement, parameter);
         }
 
         public int DeletePluginWidgetSettingsByPluginId(PluginId pluginId)
@@ -160,7 +160,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 PluginId = pluginId,
             };
-            return Context.Execute(statement, parameter);
+            return Context.Delete(statement, parameter);
         }
 
         #endregion

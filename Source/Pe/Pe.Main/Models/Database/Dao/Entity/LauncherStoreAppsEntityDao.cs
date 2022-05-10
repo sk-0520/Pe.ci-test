@@ -66,18 +66,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public bool InsertStoreApp(LauncherItemId launcherItemId, LauncherStoreAppData data, IDatabaseCommonStatus commonStatus)
+        public void InsertStoreApp(LauncherItemId launcherItemId, LauncherStoreAppData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(launcherItemId, data, commonStatus);
-            return Context.Execute(statement, dto) == 1;
+
+            Context.InsertSingle(statement, dto);
         }
 
-        public bool UpdateStoreApp(LauncherItemId launcherItemId, LauncherStoreAppData data, IDatabaseCommonStatus commonStatus)
+        public void UpdateStoreApp(LauncherItemId launcherItemId, LauncherStoreAppData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(launcherItemId, data, commonStatus);
-            return Context.Execute(statement, dto) == 1;
+
+            Context.UpdateByKey(statement, dto);
         }
 
         #endregion

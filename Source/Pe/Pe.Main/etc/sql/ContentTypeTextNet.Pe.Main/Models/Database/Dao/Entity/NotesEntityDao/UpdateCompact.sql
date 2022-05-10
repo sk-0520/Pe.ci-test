@@ -1,4 +1,4 @@
-﻿update
+update
 	Notes
 set
 	IsCompact = @IsCompact,
@@ -11,5 +11,5 @@ set
 where
 	NoteId = @NoteId
 	and
-	IsCompact != @IsCompact
+	IsCompact <> @IsCompact
 
