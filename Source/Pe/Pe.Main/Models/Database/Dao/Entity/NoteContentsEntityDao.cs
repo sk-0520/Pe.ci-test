@@ -133,6 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var param = ConvertFromData(data, databaseCommonStatus);
+
             Context.InsertSingle(statement, param);
         }
 
@@ -140,6 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var param = ConvertFromData(data, databaseCommonStatus);
+
             Context.UpdateByKey(statement, param);
         }
 
@@ -176,8 +178,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 NoteId = noteId
             };
-            return Context.Execute(statement, parameter);
 
+            return Context.Delete(statement, parameter);
         }
 
         #endregion
