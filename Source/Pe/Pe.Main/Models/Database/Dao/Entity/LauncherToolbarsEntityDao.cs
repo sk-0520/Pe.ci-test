@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirst<string>(statement, parameter);
         }
 
-        public bool InsertNewToolbar(LauncherToolbarId toolbarId, FontId fontId, string? screenName, IDatabaseCommonStatus commonStatus)
+        public void InsertNewToolbar(LauncherToolbarId toolbarId, FontId fontId, string? screenName, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
@@ -137,10 +137,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.FontId] = fontId;
             param[Column.ScreenName] = screenName ?? string.Empty;
 
-            return Context.Execute(statement, param) == 1;
+            Context.InsertSingle(statement, param);
         }
 
-        public bool UpdateToolbarPosition(LauncherToolbarId launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, IDatabaseCommonStatus commonStatus)
+        public void UpdateToolbarPosition(LauncherToolbarId launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, IDatabaseCommonStatus commonStatus)
         {
             var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
 
@@ -150,10 +150,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.PositionKind] = toolbarPositionTransfer.ToString(toolbarPosition);
 
-            return Context.Execute(statement, param) == 1;
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdatIsTopmost(LauncherToolbarId launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
+        public void UpdatIsTopmost(LauncherToolbarId launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
@@ -161,10 +161,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.IsTopmost] = isTopmost;
 
-            return Context.Execute(statement, param) == 1;
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdatIsAutoHide(LauncherToolbarId launcherToolbarId, bool isAutoHide, IDatabaseCommonStatus commonStatus)
+        public void UpdatIsAutoHide(LauncherToolbarId launcherToolbarId, bool isAutoHide, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
@@ -172,10 +172,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.IsAutoHide] = isAutoHide;
 
-            return Context.Execute(statement, param) == 1;
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdatIsVisible(LauncherToolbarId launcherToolbarId, bool isVisible, IDatabaseCommonStatus commonStatus)
+        public void UpdatIsVisible(LauncherToolbarId launcherToolbarId, bool isVisible, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
@@ -183,14 +183,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.IsVisible] = isVisible;
 
-            return Context.Execute(statement, param) == 1;
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdateDisplayData(LauncherToolbarsDisplayData data, IDatabaseCommonStatus commonStatus)
+        public void UpdateDisplayData(LauncherToolbarsDisplayData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
-            return Context.Execute(statement, dto) == 1;
+
+            Context.UpdateByKey(statement, dto);
         }
         #endregion
     }
