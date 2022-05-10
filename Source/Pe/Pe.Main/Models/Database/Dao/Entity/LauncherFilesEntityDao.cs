@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         }
 
-        public bool InsertFile(LauncherItemId launcherItemId, LauncherExecutePathData data, IDatabaseCommonStatus commonStatus)
+        public void InsertFile(LauncherItemId launcherItemId, LauncherExecutePathData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var param = commonStatus.CreateCommonDtoMapping();
@@ -131,10 +131,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.WorkDirectory] = data.WorkDirectoryPath;
             param[Column.StandardIoEncoding] = EncodingUtility.ToString(EncodingConverter.DefaultStandardInputOutputEncoding);
 
-            return Context.Execute(statement, param) == 1;
+            Context.InsertSingle(statement, param);
         }
 
-        public bool UpdateCustomizeLauncherFile(LauncherItemId launcherItemId, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IDatabaseCommonStatus commonStatus)
+        public void UpdateCustomizeLauncherFile(LauncherItemId launcherItemId, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();
@@ -147,16 +147,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.RunAdministrator] = customParameter.RunAdministrator;
             parameter[Column.LauncherItemId] = launcherItemId;
 
-            return Context.Execute(statement, parameter) == 1;
+            Context.UpdateByKey(statement, parameter);
         }
 
-        public bool DeleteFileByLauncherItemId(LauncherItemId launcherItemId)
+        public void DeleteFileByLauncherItemId(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.DeleteByKey(statement, parameter);
         }
 
         #endregion
