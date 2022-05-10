@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                     TagName = tag,
                 };
                 commonStatus.WriteCommonTo(dto);
-                Context.Execute(statement, dto);
+                Context.InsertSingle(statement, dto);
             }
         }
 
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Context.Execute(statement, parameter);
+            return Context.Delete(statement, parameter);
         }
 
         #endregion
