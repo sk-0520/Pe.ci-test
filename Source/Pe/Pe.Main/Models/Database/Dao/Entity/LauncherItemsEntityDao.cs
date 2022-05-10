@@ -159,16 +159,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
-            Context.Execute(statement, dto);
+
+            Context.InsertSingle(statement, dto);
         }
 
-        public bool UpdateExecuteCountIncrement(LauncherItemId launcherItemId, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateExecuteCountIncrement(LauncherItemId launcherItemId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.LauncherItemId] = launcherItemId;
 
-            return Context.Execute(statement, param) == 1;
+            Context.UpdateByKey(statement, param);
         }
 
         public bool UpdateCustomizeLauncherItem(LauncherItemData data, IDatabaseCommonStatus commonStatus)
@@ -178,13 +179,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, dto) == 1;
         }
 
-        public bool DeleteLauncherItem(LauncherItemId launcherItemId)
+        public void DeleteLauncherItem(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.DeleteByKey(statement, parameter);
         }
 
         #endregion
