@@ -106,11 +106,11 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "7f5443ddb164cd18c9ade70e45b8311f8a277ec3",
 						"subject": "#792: プラグインテンプレートからいい感じにプロジェクトが生成できない"
 					},
 					{
-						"revision": "",
+						"revision": "9ed8dea46b1e8d0d35138fbcbb2460a599a6dde0",
 						"subject": "#808: ランチャープラグインアイテムとして設定可能なプラグインが本体設定時に死ぬ"
 					}
 				]
@@ -119,7 +119,7 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "d74633e9b734d0925b833445ae51889301b71c78",
 						"subject": "#807: SQL処理に制約を追加"
 					}
 				]
