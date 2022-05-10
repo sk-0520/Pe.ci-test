@@ -652,7 +652,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             return DeleteImpl(key, (p, d) => {
                 var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
-                return pluginSettingsEntityDao.DeletePluginSetting(PluginId, NormalizeKey(key));
+                pluginSettingsEntityDao.DeletePluginSetting(PluginId, NormalizeKey(key));
+                return true;
             });
         }
 
