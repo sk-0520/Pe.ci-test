@@ -145,102 +145,104 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public bool InsertNewNote(NoteData noteData, IDatabaseCommonStatus commonStatus)
+        public void InsertNewNote(NoteData noteData, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var param = ConvertFromData(noteData, commonStatus);
-            return Context.Execute(statement, param) == 1;
+
+            Context.InsertSingle(statement, param);
         }
 
-        internal bool InsertOldNote(NoteData noteData, IDatabaseCommonStatus commonStatus)
-        {
-            var statement = LoadStatement();
-            var param = ConvertFromData(noteData, commonStatus);
-            return Context.Execute(statement, param) == 1;
-        }
-
-        public bool UpdateScreen(NoteId noteId, string screenName, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateScreen(NoteId noteId, string screenName, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.NoteId] = noteId;
             parameter[Column.ScreenName] = screenName;
-            return Context.Execute(statement, parameter) == 1;
+
+            Context.UpdateByKey(statement, parameter);
         }
 
-        public bool UpdateCompact(NoteId noteId, bool isCompact, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateCompact(NoteId noteId, bool isCompact, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsCompact] = isCompact;
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdateTopmost(NoteId noteId, bool isTopmost, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateTopmost(NoteId noteId, bool isTopmost, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsTopmost] = isTopmost;
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdateLock(NoteId noteId, bool isLocked, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateLock(NoteId noteId, bool isLocked, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsLocked] = isLocked;
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdateTextWrap(NoteId noteId, bool textWrap, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateTextWrap(NoteId noteId, bool textWrap, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.TextWrap] = textWrap;
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdateTitle(NoteId noteId, string title, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateTitle(NoteId noteId, string title, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.Title] = title;
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdateFontId(NoteId noteId, FontId fontId, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateFontId(NoteId noteId, FontId fontId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.FontId] = fontId;
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdateForegroundColor(NoteId noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateForegroundColor(NoteId noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.ForegroundColor] = FromColor(color);
-            return Context.Execute(statement, param) == 1;
 
+            Context.UpdateByKey(statement, param);
         }
-        public bool UpdateBackgroundColor(NoteId noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateBackgroundColor(NoteId noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.BackgroundColor] = FromColor(color);
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdateCaptionPosition(NoteId noteId, NoteCaptionPosition captionPosition, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateCaptionPosition(NoteId noteId, NoteCaptionPosition captionPosition, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteCaptionPositionTansfer = new EnumTransfer<NoteCaptionPosition>();
 
@@ -248,10 +250,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.CaptionPosition] = noteCaptionPositionTansfer.ToString(captionPosition);
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdateContentKind(NoteId noteId, NoteContentKind contentKind, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateContentKind(NoteId noteId, NoteContentKind contentKind, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteContentKindTansfer = new EnumTransfer<NoteContentKind>();
 
@@ -259,10 +262,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.ContentKind] = noteContentKindTansfer.ToString(contentKind);
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdateLayoutKind(NoteId noteId, NoteLayoutKind layoutKind, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateLayoutKind(NoteId noteId, NoteLayoutKind layoutKind, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteLayoutKindTansfer = new EnumTransfer<NoteLayoutKind>();
 
@@ -270,20 +274,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.LayoutKind] = noteLayoutKindTansfer.ToString(layoutKind);
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
 
 
-        public bool UpdateVisible(NoteId noteId, bool isVisible, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateVisible(NoteId noteId, bool isVisible, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsVisible] = isVisible;
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
 
-        public bool UpdateHiddenMode(NoteId noteId, NoteHiddenMode hiddenMode, IDatabaseCommonStatus databaseCommonStatus)
+        public void UpdateHiddenMode(NoteId noteId, NoteHiddenMode hiddenMode, IDatabaseCommonStatus databaseCommonStatus)
         {
             var hiddenModeTransfer = new EnumTransfer<NoteHiddenMode>();
 
@@ -291,16 +297,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.HiddenMode] = hiddenModeTransfer.ToString(hiddenMode);
-            return Context.Execute(statement, param) == 1;
+
+            Context.UpdateByKey(statement, param);
         }
 
-        public int DeleteNote(NoteId noteId)
+        public void DeleteNote(NoteId noteId)
         {
             var statement = LoadStatement();
             var parameter = new {
                 NoteId = noteId,
             };
-            return Context.Execute(statement, parameter);
+
+            Context.DeleteByKey(statement, parameter);
         }
 
         #endregion
