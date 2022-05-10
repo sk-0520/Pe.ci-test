@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public bool InsertHistory(LauncherItemId launcherItemId, LauncherHistoryKind kind, string value, IDatabaseCommonStatus commonStatus)
+        public void InsertHistory(LauncherItemId launcherItemId, LauncherHistoryKind kind, string value, IDatabaseCommonStatus commonStatus)
         {
             var launcherHistoryKindTransfer = new EnumTransfer<LauncherHistoryKind>();
 
@@ -84,10 +84,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             commonStatus.WriteCreateTo(dto);
 
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
-            return Context.Execute(statement, dto) == 1;
+
+            Context.InsertSingle(statement, dto);
         }
 
-        public bool DeleteHistory(LauncherItemId launcherItemId, LauncherHistoryKind kind, string value)
+        public int DeleteHistory(LauncherItemId launcherItemId, LauncherHistoryKind kind, string value)
         {
             var launcherHistoryKindTransfer = new EnumTransfer<LauncherHistoryKind>();
 
@@ -98,11 +99,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
 
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
-            var result = Context.Execute(statement, dto);
+            var result = Context.Delete(statement, dto);
             if(1 < result) {
+                // これだけ正しさが分からん
                 Logger.LogWarning("削除件数がちょっとあれ: {0}", result);
             }
-            return 0 < result;
+            return result;
         }
 
         public int DeleteHistoryByLauncherItemId(LauncherItemId launcherItemId, LauncherHistoryKind kind, [DateTimeKind(DateTimeKind.Utc)] DateTime lastExecuteTimestamp)
@@ -125,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new LauncherItemHistoriesEntityDto() {
                 LauncherItemId = launcherItemId,
             };
-            return Context.Execute(statement, parameter);
+            return Context.Delete(statement, parameter);
         }
 
         #endregion
