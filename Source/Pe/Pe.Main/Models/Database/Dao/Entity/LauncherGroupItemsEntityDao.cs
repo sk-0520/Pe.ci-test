@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                     Sequence = startSequence + (sortStep * (counter++)),
                 };
                 commonStatus.WriteCommonTo(dto);
-                Context.Execute(statement, dto);
+                Context.InsertSingle(statement, dto);
             }
         }
 
@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Context.Execute(statement, parameter);
+            return Context.Delete(statement, parameter);
         }
 
         public int DeleteGroupItemsByLauncherGroupId(LauncherGroupId launcherGroupId)
@@ -92,10 +92,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherGroupId = launcherGroupId,
             };
-            return Context.Execute(statement, parameter);
+            return Context.Delete(statement, parameter);
         }
 
-        public bool DeleteGroupItemsLauncherItem(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId, int index)
+        public void DeleteGroupItemsLauncherItem(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId, int index)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 LauncherItemId = launcherItemId,
                 ItemIndex = index,
             };
-            return Context.Execute(statement, parameter) == 1;
+            Context.DeleteByKey(statement, parameter);
         }
 
         #endregion
