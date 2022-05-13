@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             if(View.IsLoaded) {
                 AttachHwndSource();
             } else {
-                View.SourceInitialized += View_SourceInitialized!;
+                View.SourceInitialized += View_SourceInitialized;
             }
         }
 
@@ -102,9 +102,9 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #endregion
 
-        private void View_SourceInitialized(object sender, EventArgs e)
+        private void View_SourceInitialized(object? sender, EventArgs e)
         {
-            View.SourceInitialized -= View_SourceInitialized!;
+            View.SourceInitialized -= View_SourceInitialized;
             AttachHwndSource();
         }
     }

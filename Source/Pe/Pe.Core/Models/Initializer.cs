@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models
@@ -15,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        private ISupportInitialize Target { get; [Unuse(UnuseKinds.Dispose)] set; }
+        private ISupportInitialize? Target { get; [Unuse(UnuseKinds.Dispose)] set; }
 
         #endregion
 
@@ -35,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static Initializer Begin(ISupportInitialize target)
         {
             var result = new Initializer(target);
-            result.Target.BeginInit();
+            target.BeginInit();
 
             return result;
         }
@@ -49,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(!IsDisposed) {
                 if(Target != null) {
                     Target.EndInit();
-                    Target = null!;
+                    Target = null;
                 }
             }
 

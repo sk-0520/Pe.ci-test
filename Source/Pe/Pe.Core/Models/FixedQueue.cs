@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -40,9 +41,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <inheritdoc cref="Queue{T}.Enqueue(T)"/>
         void Enqueue(T item);
         /// <inheritdoc cref="Queue{T}.TryDequeue(out T)"/>
-        bool TryDequeue(out T result);
+        bool TryDequeue([MaybeNullWhen(false)] out T result);
         /// <inheritdoc cref="Queue{T}.TryPeek(out T)"/>
-        bool TryPeek(out T result);
+        bool TryPeek([MaybeNullWhen(false)] out T result);
 
         #endregion
     }
@@ -96,10 +97,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <inheritdoc cref="IFixedQueue{T}.TryDequeue(out T)"/>
-        public bool TryDequeue(out T result) => Queue.TryDequeue(out result!);
+        public bool TryDequeue([MaybeNullWhen(false)] out T result) => Queue.TryDequeue(out result);
 
         /// <inheritdoc cref="IFixedQueue{T}.TryPeek(out T)"/>
-        public bool TryPeek(out T result) => Queue.TryPeek(out result!);
+        public bool TryPeek([MaybeNullWhen(false)] out T result) => Queue.TryPeek(out result);
 
 
         #endregion
@@ -164,10 +165,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <inheritdoc cref="IFixedQueue{T}.TryDequeue(out T)"/>
-        public bool TryDequeue(out T result) => Queue.TryDequeue(out result!);
+        public bool TryDequeue([MaybeNullWhen(false)] out T result) => Queue.TryDequeue(out result);
 
         /// <inheritdoc cref="IFixedQueue{T}.TryPeek(out T)"/>
-        public bool TryPeek(out T result) => Queue.TryPeek(out result!);
+        public bool TryPeek([MaybeNullWhen(false)] out T result) => Queue.TryPeek(out result);
 
         #endregion
 

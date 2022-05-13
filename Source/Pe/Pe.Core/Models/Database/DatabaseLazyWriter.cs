@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             PauseRetryTime = pauseRetryTime;
             Logger = loggerFactory.CreateLogger(GetType());
 
-            LazyTimer = new Timer(LazyCallback!);
+            LazyTimer = new Timer(LazyCallback);
         }
 
         #region property
@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }
         }
 
-        private void LazyCallback(object state)
+        private void LazyCallback(object? state)
         {
             if(IsPausing) {
                 return;

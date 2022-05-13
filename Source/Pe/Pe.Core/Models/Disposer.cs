@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        private Action<bool> Action { get; set; }
+        private Action<bool>? Action { get; set; }
 
         #endregion
 
@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(!IsDisposed) {
                 if(Action != null) {
                     Action(disposing);
-                    Action = null!;
+                    Action = null;
                 }
             }
 
@@ -158,7 +158,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        private Action<bool, TArgument> Action { get; set; }
+        private Action<bool, TArgument>? Action { get; set; }
         private TArgument Argument { get; set; }
 
         #endregion
@@ -170,7 +170,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(!IsDisposed) {
                 if(Action != null) {
                     Action(disposing, Argument);
-                    Action = null!;
+                    Action = null;
                     Argument = default!;
                 }
             }

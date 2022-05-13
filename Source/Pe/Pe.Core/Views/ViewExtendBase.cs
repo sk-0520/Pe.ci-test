@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
-            ExtendData.Disposing += ExtendData_Disposing!;
+            ExtendData.Disposing += ExtendData_Disposing;
             ExtendData.PropertyChanged += ExtendData_PropertyChanged;
 
             PropertyChangedHooker = new PropertyChangedHooker(new DispatcherWrapper(View.Dispatcher), loggerFactory);
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         {
             if(!IsDisposed) {
                 View = null!;
-                ExtendData.Disposing -= ExtendData_Disposing!;
+                ExtendData.Disposing -= ExtendData_Disposing;
                 ExtendData.PropertyChanged -= ExtendData_PropertyChanged;
             }
 
@@ -63,9 +63,9 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #endregion
 
-        private void ExtendData_Disposing(object sender, EventArgs e)
+        private void ExtendData_Disposing(object? sender, EventArgs e)
         {
-            ExtendData.Disposing -= ExtendData_Disposing!;
+            ExtendData.Disposing -= ExtendData_Disposing;
             ExtendData.PropertyChanged -= ExtendData_PropertyChanged;
         }
 
