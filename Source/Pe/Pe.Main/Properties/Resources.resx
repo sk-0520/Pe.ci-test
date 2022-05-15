@@ -2279,4 +2279,7 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Normal_A" xml:space="preserve">
     <value>通常(_O)</value>
   </data>
+  <data name="String_LauncherItemCustomizeControl_File_ShowMode_A" xml:space="preserve">
+    <value>表示方法</value>
+  </data>
 </root>

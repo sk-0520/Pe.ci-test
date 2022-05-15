@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
@@ -74,6 +75,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public string? Option
         {
             get => File.Option;
+            set => SetPropertyValue(File, value);
+        }
+
+        public ShowMode ShowMode
+        {
+            get => File.ShowMode;
             set => SetPropertyValue(File, value);
         }
 

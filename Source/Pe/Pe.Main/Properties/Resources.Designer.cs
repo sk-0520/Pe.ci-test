@@ -4113,6 +4113,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   表示方法 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_File_ShowMode_A {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_ShowMode_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   作業ディレクトリ(_W) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_File_WorkDirectory_A {
