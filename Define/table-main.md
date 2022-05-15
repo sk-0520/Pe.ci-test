@@ -30,8 +30,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## AppGeneralSetting
@@ -58,8 +56,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## AppUpdateSetting
@@ -84,8 +80,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -114,8 +108,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -147,8 +139,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## AppNoteHiddenSetting
@@ -175,8 +165,6 @@ ___
 | UK | カラム(CSV)            |
 |:--:|:-----------------------|
 | o  | Generation, HiddenMode |
-
-
 
 ___
 
@@ -206,8 +194,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -244,8 +230,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## AppPlatformSetting
@@ -271,10 +255,7 @@ ___
 
 *NONE*
 
-
-
 ___
-
 
 ## AppProxySetting
 
@@ -325,11 +306,7 @@ ___
 
 *NONE*
 
-
-
 ___
-
-
 
 ## LauncherItems
 
@@ -363,8 +340,6 @@ ___
 |:--:|:------------|
 | o  | Code        |
 
-
-
 ___
 
 ## LauncherFiles
@@ -396,8 +371,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## LauncherRedoItems
@@ -424,8 +397,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## LauncherRedoSuccessExitCodes
@@ -444,8 +415,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -472,8 +441,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## LauncherAddons
@@ -498,8 +465,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## LauncherEnvVars
@@ -520,8 +485,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## LauncherTags
@@ -540,8 +503,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -563,8 +524,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -595,8 +554,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## LauncherGroups
@@ -625,8 +582,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## LauncherGroupItems
@@ -646,8 +601,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -675,8 +628,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -712,8 +663,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -752,8 +701,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## NoteLayouts
@@ -781,8 +728,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -816,8 +761,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## NoteFiles
@@ -844,8 +787,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -874,8 +815,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## KeyOptions
@@ -895,8 +834,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -921,8 +858,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -953,8 +888,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## PluginVersionChecks
@@ -974,8 +907,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -1003,8 +934,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## PluginLauncherItemSettings
@@ -1031,8 +960,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -1062,4 +989,3 @@ ___
 ### index
 
 *NONE*
-
