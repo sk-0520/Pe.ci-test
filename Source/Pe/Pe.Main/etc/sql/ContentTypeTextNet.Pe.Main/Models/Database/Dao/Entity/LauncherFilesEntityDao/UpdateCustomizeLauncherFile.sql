@@ -5,6 +5,7 @@ set
 	Option                = @Option,
 	WorkDirectory         = @WorkDirectory,
 	IsEnabledCustomEnvVar = @IsEnabledCustomEnvVar,
+	ShowMode              = @ShowMode,
 	IsEnabledStandardIo   = @IsEnabledStandardIo,
 	StandardIoEncoding    = @StandardIoEncoding,
 	RunAdministrator      = @RunAdministrator,
