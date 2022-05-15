@@ -276,8 +276,6 @@ ___
 ___
 
 
-___
-
 ## AppProxySetting
 
 ### layout
@@ -388,6 +386,7 @@ ___
 |    | o  |                              | コマンド                   | File                  | text         | System.String   |              |          |
 |    | o  |                              | コマンドオプション         | Option                | text         | System.String   |              |          |
 |    | o  |                              | 作業ディレクトリ           | WorkDirectory         | text         | System.String   |              |          |
+|    | o  |                              | 表示方法                   | ShowMode              | text         | System.String   |              |          |
 |    | o  |                              | 環境変数使用               | IsEnabledCustomEnvVar | boolean      | System.Boolean  |              |          |
 |    | o  |                              | 標準入出力使用             | IsEnabledStandardIo   | boolean      | System.Boolean  |              |          |
 |    | o  |                              | 標準入出力エンコーディング | StandardIoEncoding    | text         | System.String   |              |          |
