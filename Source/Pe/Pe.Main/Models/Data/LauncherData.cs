@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region property
 
         string Caption { get; set; }
-
+        ShowMode ShowMode { get; set; }
         bool IsEnabledCustomEnvironmentVariable { get; set; }
         bool IsEnabledStandardInputOutput { get; set; }
         Encoding StandardInputOutputEncoding { get; set; }
@@ -145,8 +145,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     public class LauncherFileData: LauncherExecutePathData, ILauncherExecuteCustomParameter
     {
         #region ILauncherExecuteCustomParameter
-
         public string Caption { get; set; } = string.Empty;
+        public ShowMode ShowMode { get; set; } = ShowMode.Normal;
         public bool IsEnabledCustomEnvironmentVariable { get; set; }
         public bool IsEnabledStandardInputOutput { get; set; }
         public Encoding StandardInputOutputEncoding { get; set; } = EncodingConverter.DefaultStandardInputOutputEncoding;
