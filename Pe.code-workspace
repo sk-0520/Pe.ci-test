@@ -45,6 +45,10 @@
             "**/bin/**": true,
             "**/obj/**": true,
             "*.lnk": true,
+        },
+        "markdownlint.config": {
+            "MD024": false,
+            "MD036": false
         }
     }
 }

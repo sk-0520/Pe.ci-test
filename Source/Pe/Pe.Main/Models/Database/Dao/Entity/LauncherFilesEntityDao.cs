@@ -35,8 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public string File { get; set; } = string.Empty;
             public string Option { get; set; } = string.Empty;
             public string WorkDirectory { get; set; } = string.Empty;
-
-
+            public string ShowMode { get; set; } = string.Empty;
             public bool IsEnabledCustomEnvVar { get; set; }
             public bool IsEnabledStandardIo { get; set; }
             public string StandardIoEncoding { get; set; } = string.Empty;
@@ -53,6 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public static string File { get; } = "File";
             public static string Option { get; } = "Option";
             public static string WorkDirectory { get; } = "WorkDirectory";
+            public static string ShowMode { get; } = "ShowMode";
 
             public static string IsEnabledCustomEnvVar { get; } = "IsEnabledCustomEnvVar";
             public static string IsEnabledStandardIo { get; } = "IsEnabledStandardIo";
@@ -84,11 +84,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         private LauncherFileData ConvertFromDto(LauncherFilesEntityDto dto)
         {
             var encodingConverter = new EncodingConverter(LoggerFactory);
+            var showModeEnumTransfer = new EnumTransfer<ShowMode>();
 
             var data = new LauncherFileData() {
                 Path = dto.File,
                 Option = dto.Option,
                 WorkDirectoryPath = dto.WorkDirectory,
+                ShowMode = showModeEnumTransfer.ToEnum(dto.ShowMode),
                 IsEnabledCustomEnvironmentVariable = dto.IsEnabledCustomEnvVar,
                 IsEnabledStandardInputOutput = dto.IsEnabledStandardIo,
                 StandardInputOutputEncoding = encodingConverter.Parse(dto.StandardIoEncoding),
@@ -136,11 +138,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public void UpdateCustomizeLauncherFile(LauncherItemId launcherItemId, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IDatabaseCommonStatus commonStatus)
         {
+            var showModeEnumTransfer =  new EnumTransfer<ShowMode>();
+
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.File] = pathParameter.Path;
             parameter[Column.Option] = pathParameter.Option;
             parameter[Column.WorkDirectory] = pathParameter.WorkDirectoryPath;
+            parameter[Column.ShowMode] = showModeEnumTransfer.ToString(customParameter.ShowMode);
             parameter[Column.IsEnabledCustomEnvVar] = customParameter.IsEnabledCustomEnvironmentVariable;
             parameter[Column.IsEnabledStandardIo] = customParameter.IsEnabledStandardInputOutput;
             parameter[Column.StandardIoEncoding] = EncodingUtility.ToString(customParameter.StandardInputOutputEncoding);

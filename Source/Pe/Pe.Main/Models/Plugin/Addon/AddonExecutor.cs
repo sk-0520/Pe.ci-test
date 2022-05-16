@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
@@ -57,6 +58,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             Execute(path);
         }
 
+        /// <inheritdoc cref="IAddonExecutor.Execute(string, IEnumerable{string}, string, ShowMode)" />
+        public void Execute(string path, IEnumerable<string> options, string workDirectoryPath, ShowMode showMode)
+        {
+            Logger.LogWarning("未完成処理");
+            Execute(path);
+        }
+
         /// <inheritdoc cref="IAddonExecutor.ExtendsExecute(string)" />
         public void ExtendsExecute(string path)
         {
@@ -78,6 +86,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             Execute(path);
         }
 
+        /// <inheritdoc cref="IAddonExecutor.ExtendsExecute(string, IEnumerable{string}, string, ShowMode)" />
+        public void ExtendsExecute(string path, IEnumerable<string> options, string workDirectoryPath, ShowMode showMode)
+        {
+            Logger.LogWarning("未完成処理");
+            Execute(path);
+        }
         #endregion
     }
 }

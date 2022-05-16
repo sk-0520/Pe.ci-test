@@ -63,7 +63,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         private IDatabaseStatementLoader DatabaseStatementLoader { get; }
         private IDispatcherWrapper DispatcherWrapper { get; }
         private EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
-
         public string Name { get; private set; } = string.Empty;
         public string Code { get; private set; } = string.Empty;
         public LauncherItemKind Kind { get; private set; }

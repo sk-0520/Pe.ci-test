@@ -1454,6 +1454,78 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   非表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_ShowMode_Hidden {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Hidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   非表示(_H) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_ShowMode_Hidden_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Hidden_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最大化 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_ShowMode_Maximized {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Maximized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最大化(_X) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_ShowMode_Maximized_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Maximized_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最小化 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_ShowMode_Minimized {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Minimized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最小化(_N) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_ShowMode_Minimized_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Minimized_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   通常 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_ShowMode_Normal {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   通常(_O) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_ShowMode_Normal_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Normal_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   アプリケーション に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_AboutComponentKind_Application {
@@ -4037,6 +4109,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_LauncherItemCustomizeControl_File_Path_A {
             get {
                 return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Path_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示方法 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_File_ShowMode_A {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_ShowMode_A", resourceCulture);
             }
         }
         

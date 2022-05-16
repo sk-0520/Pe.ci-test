@@ -179,6 +179,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 startInfo.WorkingDirectory = Path.GetDirectoryName(startInfo.FileName)!;
             }
 
+            // 表示方法
+            startInfo.WindowStyle = customParameter.ShowMode switch {
+                ShowMode.Normal => ProcessWindowStyle.Normal,
+                ShowMode.Hidden => ProcessWindowStyle.Hidden,
+                ShowMode.Maximized => ProcessWindowStyle.Maximized,
+                ShowMode.Minimized => ProcessWindowStyle.Minimized,
+                _ => throw new Exception(customParameter.ShowMode.ToString()),
+            };
+
             // 環境変数
             if(customParameter.IsEnabledCustomEnvironmentVariable) {
                 startInfo.UseShellExecute = false;
