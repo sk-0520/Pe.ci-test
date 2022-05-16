@@ -230,11 +230,12 @@
               </Grid.ColumnDefinitions>
 
               <Label Grid.Column="0" Target="{Binding ElementName=inputShowMode}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_ShowMode_A, Source={x:Static app_main:CultureService.Instance}}" />
-              <WrapPanel Grid.Column="1">
+              <WrapPanel Grid.Column="1" VerticalAlignment="Center">
                 <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_model_data:ShowMode.Normal}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_model_data:ShowMode.Normal}}" />
-                <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_model_data:ShowMode.Hidden}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_model_data:ShowMode.Hidden}}" />
                 <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_model_data:ShowMode.Minimized}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_model_data:ShowMode.Minimized}}" />
                 <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_model_data:ShowMode.Maximized}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_model_data:ShowMode.Maximized}}" />
+                <Separator Style="{StaticResource Normal-Indent}" />
+                <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_model_data:ShowMode.Hidden}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ShowMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_model_data:ShowMode.Hidden}}" />
               </WrapPanel>
             </Grid>
 
