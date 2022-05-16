@@ -2282,4 +2282,7 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_LauncherItemCustomizeControl_File_ShowMode_A" xml:space="preserve">
     <value>表示方法</value>
   </data>
+  <data name="String_AppManager_System_ProxyIsEnabled_A" xml:space="preserve">
+    <value>設定したプロキシを使用する(_P)</value>
+  </data>
 </root>
