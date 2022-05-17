@@ -9,7 +9,7 @@
 					{
 						"revision": "",
 						"class": "",
-						"subject": ""
+						"subject": "プラグインデバッグのVS 17.2.0設定が\\をエスケープせずにJSONで使うので辛い"
 					},
 					{
 						"revision": "",
