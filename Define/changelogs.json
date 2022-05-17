@@ -77,11 +77,13 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 101.0.150 -> 101.0.180"
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 17.1.0 -> 17.2.0"
 					},
 					{
 						"revision": "",
