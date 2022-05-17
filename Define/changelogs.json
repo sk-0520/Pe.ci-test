@@ -1,27 +1,14 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.173+",
+		"date": "2022/05/17",
+		"version": "0.99.174",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
 						"revision": "",
-						"class": "",
 						"subject": "プラグインデバッグのVS 17.2.0設定が\\をエスケープせずにJSONで使うので辛い"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -29,41 +16,12 @@
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "d8aadcb40de2e3fb730098012a3afb2f212a058b",
 						"subject": "#810: ファイルランチャーアイテム起動時にウィンドウ状態を選択可能にする"
 					},
 					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"revision": "731ebfe8efe90483a1fcb1b4193e695941f917df",
+						"subject": "#806: プロキシ有効・無効を通知領域メニューから切り替えられるようにする"
 					}
 				]
 			},
@@ -71,23 +29,19 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "d6d4dee0ba4821aa729293f921010bbcb1b7f01b",
 						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 1.7.4 -> 5.0.0"
 					},
 					{
-						"revision": "",
+						"revision": "75aeed1613a21c772f29e4d84d9c36bc061c5532",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 101.0.150 -> 101.0.180"
 					},
 					{
-						"revision": "",
+						"revision": "c3474019535032b0e1170002de628391d11b5c71",
 						"class": "nuget",
 						"subject": "Microsoft.NET.Test.Sdk 17.1.0 -> 17.2.0"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
