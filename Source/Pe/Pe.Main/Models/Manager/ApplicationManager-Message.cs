@@ -560,6 +560,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }, UniqueKeyPool.Get());
         }
 
+        public bool GetProxyIsEnabled()
+        {
+            var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+            using var transaction = mainDatabaseBarrier.WaitRead();
+            var appProxySettingEntityDao = ApplicationDiContainer.Build<AppProxySettingEntityDao>(transaction, transaction.Implementation);
+            return appProxySettingEntityDao.SelectProxyIsEnabled();
+        }
+
+        public void ToggleProxyIsEnabled()
+        {
+            var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+            using var transaction = mainDatabaseBarrier.WaitWrite();
+            var appProxySettingEntityDao = ApplicationDiContainer.Build<AppProxySettingEntityDao>(transaction, transaction.Implementation);
+            appProxySettingEntityDao.UpdateToggleProxyIsEnabled(DatabaseCommonStatus.CreateCurrentAccount());
+            transaction.Commit();
+        }
+
         private void InitializeScheduler()
         {
             RebuildSchedulerSetting();

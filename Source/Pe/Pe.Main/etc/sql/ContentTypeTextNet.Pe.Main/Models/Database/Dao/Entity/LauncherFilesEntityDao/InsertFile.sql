@@ -1,10 +1,11 @@
-﻿insert into
+insert into
 	LauncherFiles
 	(
 		[LauncherItemId],
 		[File],
 		[Option],
 		[WorkDirectory],
+		[ShowMode],
 		[IsEnabledCustomEnvVar],
 		[IsEnabledStandardIo],
 		[StandardIoEncoding],
@@ -26,6 +27,7 @@
 /* File                     */ @File,
 /* Option                   */ @Option,
 /* WorkDirectory            */ @WorkDirectory,
+/* ShowMode                 */ 'normal',
 /* IsEnabledCustomEnvVar    */ false,
 /* IsEnabledStandardIo      */ false,
 /* StandardIoEncoding       */ @StandardIoEncoding,

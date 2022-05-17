@@ -122,6 +122,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                     RaisePropertyChanged(nameof(IsEnabledHook));
                     RaisePropertyChanged(nameof(IsDisabledSystemIdle));
                     RaisePropertyChanged(nameof(IsSupportedExplorer));
+
+                    ProxyIsEnabled = ApplicationManager.GetProxyIsEnabled();
+                    RaisePropertyChanged(nameof(ProxyIsEnabled));
                 }
             }
         }
@@ -129,6 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public bool IsEnabledHook => ApplicationManager.IsEnabledHook;
         public bool IsDisabledSystemIdle => ApplicationManager.IsDisabledSystemIdle;
         public bool IsSupportedExplorer => ApplicationManager.IsSupportedExplorer;
+        public bool ProxyIsEnabled { get; private set; }
 
         #endregion
 
@@ -261,6 +265,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public ICommand ToggleSupportExplorerCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ApplicationManager.ToggleSupportExplorer();
+            }
+        ));
+
+        public ICommand ToggleProxyIsEnabled => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ApplicationManager.ToggleProxyIsEnabled();
             }
         ));
 

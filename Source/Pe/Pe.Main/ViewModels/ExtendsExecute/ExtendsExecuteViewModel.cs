@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -31,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         private string _option;
         private string _workDirectoryPath;
+        private ShowMode _showMode;
 
         private TextDocument _mergeTextDocument;
         private TextDocument _removeTextDocument;
@@ -52,6 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         {
             this._option = Model.LauncherFileData.Option;
             this._workDirectoryPath = Model.LauncherFileData.WorkDirectoryPath;
+            this._showMode = Model.LauncherFileData.ShowMode;
 
             this._isEnabledCustomEnvironmentVariable = Model.LauncherFileData.IsEnabledCustomEnvironmentVariable;
             this._isEnabledStandardInputOutput = Model.LauncherFileData.IsEnabledStandardInputOutput;
@@ -139,6 +142,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             set => SetProperty(ref this._workDirectoryPath, value);
         }
 
+        public ShowMode ShowMode
+        {
+            get => this._showMode;
+            set => SetProperty(ref this._showMode, value);
+        }
         public ObservableCollection<HistoryViewModel> HistoryOptions { get; }
         public ObservableCollection<HistoryViewModel> HistoryWorkDirectories { get; }
 
@@ -289,6 +297,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                 Path = ExecuteValue,
                 Option = Option,
                 WorkDirectoryPath = WorkDirectoryPath,
+                ShowMode = ShowMode,
                 IsEnabledCustomEnvironmentVariable = IsEnabledCustomEnvironmentVariable,
                 IsEnabledStandardInputOutput = IsEnabledStandardInputOutput,
                 StandardInputOutputEncoding = StandardInputOutputEncoding,

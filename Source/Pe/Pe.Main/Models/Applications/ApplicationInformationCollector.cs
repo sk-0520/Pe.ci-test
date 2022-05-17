@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 ("Screen", GetScreen),
             };
 
-            var sb = new StringBuilder(4 * 1024);
+            var sb = new StringBuilder(80 * 1024);
             sb.AppendLine(Header);
             foreach(var info in infos) {
                 sb.Append(Indent);

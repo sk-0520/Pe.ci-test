@@ -79,6 +79,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
         }
 
+        public bool SelectProxyIsEnabled()
+        {
+            var statement = LoadStatement();
+            return Context.QuerySingle<bool>(statement);
+        }
+
         public void UpdateProxySetting(AppProxySettingData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
@@ -86,6 +92,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.UpdateByKey(statement, parameter);
         }
 
+        public void UpdateToggleProxyIsEnabled(IDatabaseCommonStatus commonStatus)
+        {
+            // トグルって嫌いなんよなぁ
+            var statement = LoadStatement();
+            var parameter = commonStatus.CreateCommonDtoMapping();
+            Context.UpdateByKey(statement, parameter);
+        }
         #endregion
     }
 }

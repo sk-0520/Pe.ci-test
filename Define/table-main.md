@@ -30,8 +30,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## AppGeneralSetting
@@ -58,8 +56,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## AppUpdateSetting
@@ -84,8 +80,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -114,8 +108,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -147,8 +139,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## AppNoteHiddenSetting
@@ -175,8 +165,6 @@ ___
 | UK | カラム(CSV)            |
 |:--:|:-----------------------|
 | o  | Generation, HiddenMode |
-
-
 
 ___
 
@@ -206,8 +194,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -244,8 +230,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## AppPlatformSetting
@@ -270,11 +254,6 @@ ___
 ### index
 
 *NONE*
-
-
-
-___
-
 
 ___
 
@@ -327,11 +306,7 @@ ___
 
 *NONE*
 
-
-
 ___
-
-
 
 ## LauncherItems
 
@@ -365,8 +340,6 @@ ___
 |:--:|:------------|
 | o  | Code        |
 
-
-
 ___
 
 ## LauncherFiles
@@ -388,6 +361,7 @@ ___
 |    | o  |                              | コマンド                   | File                  | text         | System.String   |              |          |
 |    | o  |                              | コマンドオプション         | Option                | text         | System.String   |              |          |
 |    | o  |                              | 作業ディレクトリ           | WorkDirectory         | text         | System.String   |              |          |
+|    | o  |                              | 表示方法                   | ShowMode              | text         | System.String   |              |          |
 |    | o  |                              | 環境変数使用               | IsEnabledCustomEnvVar | boolean      | System.Boolean  |              |          |
 |    | o  |                              | 標準入出力使用             | IsEnabledStandardIo   | boolean      | System.Boolean  |              |          |
 |    | o  |                              | 標準入出力エンコーディング | StandardIoEncoding    | text         | System.String   |              |          |
@@ -396,8 +370,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -425,8 +397,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## LauncherRedoSuccessExitCodes
@@ -445,8 +415,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -473,8 +441,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## LauncherAddons
@@ -499,8 +465,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## LauncherEnvVars
@@ -521,8 +485,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## LauncherTags
@@ -541,8 +503,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -564,8 +524,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -596,8 +554,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## LauncherGroups
@@ -626,8 +582,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## LauncherGroupItems
@@ -647,8 +601,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -676,8 +628,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -713,8 +663,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -753,8 +701,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## NoteLayouts
@@ -782,8 +728,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -817,8 +761,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## NoteFiles
@@ -845,8 +787,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -875,8 +815,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## KeyOptions
@@ -896,8 +834,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -922,8 +858,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -954,8 +888,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## PluginVersionChecks
@@ -975,8 +907,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -1004,8 +934,6 @@ ___
 
 *NONE*
 
-
-
 ___
 
 ## PluginLauncherItemSettings
@@ -1032,8 +960,6 @@ ___
 ### index
 
 *NONE*
-
-
 
 ___
 
@@ -1063,4 +989,3 @@ ___
 ### index
 
 *NONE*
-

@@ -13,6 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             enumResourceManager
                 .Register<Bridge.Models.Data.AppDesktopToolbarPosition>()
                 .Register<Bridge.Models.Data.NoteCaptionPosition>()
+                .Register<Bridge.Models.Data.ShowMode>()
                 .Register<Bridge.Models.Data.IconBox>()
                 .Register<Bridge.Models.Data.CommandItemKind>()
                 .Register<Key>()

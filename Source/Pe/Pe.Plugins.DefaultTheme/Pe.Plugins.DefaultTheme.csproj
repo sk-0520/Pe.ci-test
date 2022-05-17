@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Page Remove="Views\Resources\DefaultPathResource.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Pe.Bridge\Pe.Bridge.csproj">
       <Private>false</Private>
       <ExcludeAssets>runtime</ExcludeAssets>
@@ -23,9 +19,6 @@
 
   <ItemGroup>
     <Resource Include="App.ico" />
-    <Resource Include="Views\Resources\DefaultPathResource.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,53 @@
 [
 	{
+		"date": "2022/05/17",
+		"version": "0.99.174",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"subject": "プラグインデバッグのVS 17.2.0設定が\\をエスケープせずにJSONで使うので辛い"
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "d8aadcb40de2e3fb730098012a3afb2f212a058b",
+						"subject": "#810: ファイルランチャーアイテム起動時にウィンドウ状態を選択可能にする"
+					},
+					{
+						"revision": "731ebfe8efe90483a1fcb1b4193e695941f917df",
+						"subject": "#806: プロキシ有効・無効を通知領域メニューから切り替えられるようにする"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "d6d4dee0ba4821aa729293f921010bbcb1b7f01b",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 1.7.4 -> 5.0.0"
+					},
+					{
+						"revision": "75aeed1613a21c772f29e4d84d9c36bc061c5532",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf.NETCore 101.0.150 -> 101.0.180"
+					},
+					{
+						"revision": "c3474019535032b0e1170002de628391d11b5c71",
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 17.1.0 -> 17.2.0"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2022/05/10",
 		"version": "0.99.173",
 		"contents": [
@@ -15,11 +63,11 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "7f5443ddb164cd18c9ade70e45b8311f8a277ec3",
 						"subject": "#792: プラグインテンプレートからいい感じにプロジェクトが生成できない"
 					},
 					{
-						"revision": "",
+						"revision": "9ed8dea46b1e8d0d35138fbcbb2460a599a6dde0",
 						"subject": "#808: ランチャープラグインアイテムとして設定可能なプラグインが本体設定時に死ぬ"
 					}
 				]
@@ -28,7 +76,7 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "d74633e9b734d0925b833445ae51889301b71c78",
 						"subject": "#807: SQL処理に制約を追加"
 					}
 				]

@@ -2255,4 +2255,34 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_LauncherItemCustomizeControl_Plugin_NotSupported" xml:space="preserve">
     <value>このランチャーアイテムアドオンに設定機能はありません。</value>
   </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Hidden" xml:space="preserve">
+    <value>非表示</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Hidden_A" xml:space="preserve">
+    <value>非表示(_H)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Maximized" xml:space="preserve">
+    <value>最大化</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Maximized_A" xml:space="preserve">
+    <value>最大化(_X)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Minimized" xml:space="preserve">
+    <value>最小化</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Minimized_A" xml:space="preserve">
+    <value>最小化(_N)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Normal" xml:space="preserve">
+    <value>通常</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Normal_A" xml:space="preserve">
+    <value>通常(_O)</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_File_ShowMode_A" xml:space="preserve">
+    <value>表示方法</value>
+  </data>
+  <data name="String_AppManager_System_ProxyIsEnabled_A" xml:space="preserve">
+    <value>設定したプロキシを使用する(_P)</value>
+  </data>
 </root>

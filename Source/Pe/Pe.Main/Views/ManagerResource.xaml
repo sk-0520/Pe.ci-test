@@ -172,6 +172,7 @@
       <MenuItem Header="{Binding Resources.String_AppManager_System_Hook_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsEnabledHook, Mode=OneWay}" Command="{Binding ToggleHookCommand}" />
       <MenuItem Header="{Binding Resources.String_AppManager_System_IsDisabledSystemIdle_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsDisabledSystemIdle, Mode=OneWay}" Command="{Binding ToggleDisabledSystemIdleCommand}" />
       <MenuItem Header="{Binding Resources.String_AppManager_System_IsSupportedExplorer_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsSupportedExplorer, Mode=OneWay}" Command="{Binding ToggleSupportExplorerCommand}" />
+      <MenuItem Header="{Binding Resources.String_AppManager_System_ProxyIsEnabled_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding ProxyIsEnabled, Mode=OneWay}" Command="{Binding ToggleProxyIsEnabled}" />
     </MenuItem>
 
     <Separator />

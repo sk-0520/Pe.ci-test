@@ -106,6 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                 new Setupper_V_00_99_147(IdFactory, StatementLoader, LoggerFactory),
                 new Setupper_V_00_99_160(IdFactory, StatementLoader, LoggerFactory),
                 new Setupper_V_00_99_169(IdFactory, StatementLoader, LoggerFactory),
+                new Setupper_V_00_99_174(IdFactory, StatementLoader, LoggerFactory),
             };
 
             foreach(var setupper in setuppers) {
