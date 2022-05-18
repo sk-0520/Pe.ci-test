@@ -18,6 +18,7 @@ namespace PeLibraryTest
                 DATA(wrap("C:\\dir\\file"), wrap("C:\\dir\\file\\")),
                 DATA(wrap("C:\\dir"), wrap("C:\\dir\\file")),
                 DATA(wrap("C:\\"), wrap("C:\\dir")),
+                DATA(wrap(""), wrap("abc")),
                 DATA(create_invalid_text(), wrap("C:\\")),
             };
             for (auto test : tests) {

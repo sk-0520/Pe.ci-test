@@ -191,6 +191,16 @@ TEXT RC_HEAP_FUNC(format_text, const MEMORY_RESOURCE* memory_resource, const TEX
 #   define format_text(memory_resource, format, ...) RC_HEAP_WRAP(format_text, memory_resource, (format), __VA_ARGS__)
 #endif
 
+/// <summary>
+/// テキストから文字列を生成。
+/// </summary>
+/// <param name="text">対象文字列。</param>
+/// <param name="memory_resource"></param>
+/// <returns>文字列。<see cref="release_string"/>による解放が必要。</returns>
+TCHAR* RC_HEAP_FUNC(text_to_string, const TEXT* text, const MEMORY_RESOURCE* memory_resource);
+#ifdef RES_CHECK
+#   define text_to_string(text, memory_resource) RC_HEAP_WRAP(text_to_string, text, memory_resource)
+#endif
 
 // 文字列操作ラッパー
 #include "text.z.search.h"

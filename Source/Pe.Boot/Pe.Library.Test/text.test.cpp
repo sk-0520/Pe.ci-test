@@ -68,5 +68,28 @@ namespace PeLibraryTest
 
             release_text(&actual);
         }
+
+        TEST_METHOD(text_to_string_test)
+        {
+            auto tests = {
+                DATA(_T(""), wrap("")),
+                DATA(_T("1"), wrap("1")),
+                DATA(_T(""), create_invalid_text()),
+            };
+
+            for (auto test : tests) {
+                auto [arg1] = test.inputs;
+                TCHAR* actual = text_to_string(&arg1, DEFAULT_MEMORY);
+
+                if (is_enabled_text(&arg1)) {
+                    Assert::AreEqual(arg1.value, actual);
+                } else {
+                    Assert::AreEqual(_T(""), actual);
+                }
+
+                release_string(actual, DEFAULT_MEMORY);
+            }
+        }
+            
     };
 }
