@@ -184,7 +184,7 @@ namespace PeLibraryTest
 
         static TEXT split_text_EASY_CSV(const TEXT* source, size_t* next_index, const MEMORY_RESOURCE* memory_resource)
         {
-            ssize_t index = index_of_character(source, _T(','));
+            ssize_t index = index_of_character(source, _T(','), INDEX_START_POSITION_HEAD);
             if (index == -1) {
                 *next_index = source->length;
                 return wrap_text_with_length(source->value, source->length, false, memory_resource);
