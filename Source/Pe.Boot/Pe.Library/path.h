@@ -7,7 +7,6 @@
 
 /// <summary>
 /// パスから親ディレクトリパスを取得。
-/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="path">対象パス。</param>
 /// <returns>親ディレクトリパス。解放が必要。</returns>

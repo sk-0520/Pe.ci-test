@@ -1,23 +1,42 @@
 ﻿#include <windows.h>
 
 
+#include "tcharacter.h"
 #include "tstring.h"
 #include "path.h"
 #include "logging.h"
 
+static TCHAR DIRECTORY_SEPARATORS[] = { '\\', '/', };
+
 
 TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
 {
-    TCHAR* buffer = clone_string(path->value, memory_resource);
-    if (PathRemoveFileSpec(buffer)) {
-        TEXT result = new_text(buffer, memory_resource);
-        release_string(buffer, memory_resource);
-        return result;
+    bool hittingSeparator = false;
+    for (size_t i = 0; i < path->length; i++) {
+        const TCHAR* tail = path->value + (path->length - i - 1);
+
+        bool isSeparator = exists_character(*tail, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
+        if (isSeparator) {
+            if (hittingSeparator) {
+                continue;
+            }
+            hittingSeparator = true;
+            continue;
+        }
+
+        if (hittingSeparator) {
+            size_t length = tail - path->value + 1;
+
+            // ドライブの場合、セパレータを付与
+            if (length == 2 && path->value[1] == ':' && is_alphabet_character(path->value[0])) {
+                return new_text_with_length(path->value, length + 1, memory_resource);
+            }
+
+            return new_text_with_length(path->value, length, memory_resource);
+        }
     }
 
-    release_string(buffer, memory_resource);
-
-    return create_invalid_text();
+    return new_empty_text(memory_resource);
 }
 
 TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path, const MEMORY_RESOURCE* memory_resource)

@@ -19,7 +19,10 @@ namespace PeLibraryTest
                 DATA(wrap("C:\\dir"), wrap("C:\\dir\\file")),
                 DATA(wrap("C:\\"), wrap("C:\\dir")),
                 DATA(wrap(""), wrap("abc")),
-                DATA(create_invalid_text(), wrap("C:\\")),
+                DATA(wrap("C:/"), wrap("C:/")),
+                DATA(wrap("C:\\"), wrap("C:\\")),
+                DATA(wrap(""), wrap("C:")),
+                DATA(wrap(""), wrap("C")),
             };
             for (auto test : tests) {
                 TEXT arg1 = std::get<0>(test.inputs);
