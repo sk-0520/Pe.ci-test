@@ -53,7 +53,7 @@ TCHAR to_upper_character(TCHAR c)
     return c;
 }
 
-bool exists_character(TCHAR c, const TCHAR* characters, size_t length)
+bool contains_characters(TCHAR c, const TCHAR* characters, size_t length)
 {
     assert(characters);
 

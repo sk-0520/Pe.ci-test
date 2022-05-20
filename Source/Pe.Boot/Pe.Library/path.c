@@ -15,7 +15,7 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESO
     for (size_t i = 0; i < path->length; i++) {
         const TCHAR* tail = path->value + (path->length - i - 1);
 
-        bool isSeparator = exists_character(*tail, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
+        bool isSeparator = contains_characters(*tail, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
         if (isSeparator) {
             if (hittingSeparator) {
                 continue;

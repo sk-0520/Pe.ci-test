@@ -59,4 +59,4 @@ TCHAR to_upper_character(TCHAR c);
 /// <param name="characters">文字群。</param>
 /// <param name="length">文字群の数。</param>
 /// <returns>含まれている場合に真。</returns>
-bool exists_character(TCHAR c, const TCHAR* characters, size_t length);
+bool contains_characters(TCHAR c, const TCHAR* characters, size_t length);

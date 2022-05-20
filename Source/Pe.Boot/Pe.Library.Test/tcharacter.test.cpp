@@ -167,7 +167,7 @@ namespace PeLibraryTest
             }
         }
 
-        TEST_METHOD(exists_character_test)
+        TEST_METHOD(contains_characters_test)
         {
             auto tests = {
                 DATA(true, _T('a'), _T("a"), 1),
@@ -185,7 +185,7 @@ namespace PeLibraryTest
             };
 
             for (auto test : tests) {
-                auto actual = std::apply(exists_character, test.inputs);
+                auto actual = std::apply(contains_characters, test.inputs);
                 Assert::AreEqual(test.expected, actual);
             }
         }

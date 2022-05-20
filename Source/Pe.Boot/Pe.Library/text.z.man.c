@@ -2,19 +2,10 @@
 #include <shlwapi.h>
 
 #include "debug.h"
+#include "tcharacter.h"
 #include "text.h"
 #include "object_list.h"
 
-static bool contains_characters(TCHAR c, const TCHAR* characters, size_t count)
-{
-    for (size_t i = 0; i < count; i++) {
-        if (c == characters[i]) {
-            return true;
-        }
-    }
-
-    return false;
-}
 
 size_t get_text_length(const TEXT* text)
 {
