@@ -102,6 +102,10 @@ TEXT RC_HEAP_FUNC(trim_whitespace_text, const TEXT* text, const MEMORY_RESOURCE*
 #   define trim_whitespace_text(text, memory_resource) RC_HEAP_WRAP(trim_whitespace_text, text, memory_resource)
 #endif
 
+TEXT trim_text_stack(const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count);
+
+TEXT trim_whitespace_text_stack(const TEXT* text);
+
 
 /// <summary>
 /// テキスト分割。

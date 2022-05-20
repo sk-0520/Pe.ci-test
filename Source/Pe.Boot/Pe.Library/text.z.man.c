@@ -6,6 +6,11 @@
 #include "text.h"
 #include "object_list.h"
 
+typedef struct tag_TRIM_RESULT
+{
+    size_t index;
+    text_t length;
+} TRIM_RESULT;
 
 size_t get_text_length(const TEXT* text)
 {
@@ -114,11 +119,23 @@ bool is_whitespace_text(const TEXT* text)
     return true;
 }
 
-TEXT RC_HEAP_FUNC(trim_text, const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count, const MEMORY_RESOURCE* memory_resource)
+/// <summary>
+/// トリム内部処理。
+/// </summary>
+/// <param name="result">結果データ。</param>
+/// <param name="text"></param>
+/// <param name="start"></param>
+/// <param name="end"></param>
+/// <param name="characters"></param>
+/// <param name="count"></param>
+/// <returns>トリム可能か</returns>
+static bool trim_core(TRIM_RESULT* result, const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count)
 {
     assert(text);
-    if (false/**/ || (!start && !end) || !count) {
-        return clone_text(text, memory_resource);
+    if ((!start && !end) || !count) {
+        result->index = 0;
+        result->length = text->length;
+        return true;
     }
     assert(characters);
 
@@ -131,7 +148,7 @@ TEXT RC_HEAP_FUNC(trim_text, const TEXT* text, bool start, bool end, const TCHAR
         }
         if (i == (size_t)text->length - 1) {
             // 最後まで行っちゃった
-            return new_text(_T(""), memory_resource);
+            return false;
         }
     }
 
@@ -144,17 +161,46 @@ TEXT RC_HEAP_FUNC(trim_text, const TEXT* text, bool start, bool end, const TCHAR
         }
         if (!i) {
             // 最初まで行っちゃった
-            return new_text(_T(""), memory_resource);
+            return false;
         }
     }
 
-    return new_text_with_length(text->value + begin_index, end_index - begin_index + 1, memory_resource);
+    result->index = begin_index;
+    result->length = (text_t)(end_index - begin_index + 1);
+
+    return true;
+}
+
+TEXT RC_HEAP_FUNC(trim_text, const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count, const MEMORY_RESOURCE* memory_resource)
+{
+    TRIM_RESULT trim_result;
+    if (trim_core(&trim_result, text, start, end, characters, count)) {
+        return new_text_with_length(text->value + trim_result.index, trim_result.length, memory_resource);
+    }
+
+    return new_text(_T(""), memory_resource);
 }
 
 TEXT RC_HEAP_FUNC(trim_whitespace_text, const TEXT* text, const MEMORY_RESOURCE* memory_resource)
 {
     return trim_text(text, true, true, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters), memory_resource);
 }
+
+TEXT trim_text_stack(const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count)
+{
+    TRIM_RESULT trim_result;
+    if (trim_core(&trim_result, text, start, end, characters, count)) {
+        return wrap_text_with_length(text->value + trim_result.index, trim_result.length, false, NULL);
+    }
+
+    return wrap_text_with_length(text->value, 0, false, NULL);
+}
+
+TEXT trim_whitespace_text_stack(const TEXT* text)
+{
+    return trim_text_stack(text, true, true, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters));
+}
+
 
 static int compare_object_list_value_text(const TEXT* a, const TEXT* b, void* data)
 {
