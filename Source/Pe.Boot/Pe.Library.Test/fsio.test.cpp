@@ -11,7 +11,7 @@ namespace PeLibraryTest
     TEST_CLASS(fsio_test)
     {
     public:
-        TEST_METHOD(is_directory_path_test)
+        TEST_METHOD(exists_directory_fsio_test)
         {
             TEST_INIT_DIR;
 
@@ -23,12 +23,12 @@ namespace PeLibraryTest
 
             TEST_GET_PATH(unknown_path, _T("unknown"));
 
-            Assert::IsTrue(is_directory_path(&dir_path));
-            Assert::IsFalse(is_directory_path(&file_path));
-            Assert::IsFalse(is_directory_path(&unknown_path));
+            Assert::IsTrue(exists_directory_fsio(&dir_path));
+            Assert::IsFalse(exists_directory_fsio(&file_path));
+            Assert::IsFalse(exists_directory_fsio(&unknown_path));
         }
 
-        TEST_METHOD(exists_file_path_test)
+        TEST_METHOD(exists_file_fsio_test)
         {
             TEST_INIT_DIR;
 
@@ -40,12 +40,12 @@ namespace PeLibraryTest
 
             TEST_GET_PATH(unknown_path, _T("unknown"));
 
-            Assert::IsFalse(exists_file_path(&dir_path));
-            Assert::IsTrue(exists_file_path(&file_path));
-            Assert::IsFalse(exists_file_path(&unknown_path));
+            Assert::IsFalse(exists_file_fsio(&dir_path));
+            Assert::IsTrue(exists_file_fsio(&file_path));
+            Assert::IsFalse(exists_file_fsio(&unknown_path));
         }
 
-        TEST_METHOD(exists_directory_path_test)
+        TEST_METHOD(exists_fsio_test)
         {
             TEST_INIT_DIR;
 
@@ -57,9 +57,17 @@ namespace PeLibraryTest
 
             TEST_GET_PATH(unknown_path, _T("unknown"));
 
-            Assert::IsTrue(exists_directory_path(&dir_path));
-            Assert::IsFalse(exists_directory_path(&file_path));
-            Assert::IsFalse(exists_directory_path(&unknown_path));
+            Assert::IsTrue(exists_directory_fsio(&dir_path));
+            Assert::IsFalse(exists_file_fsio(&dir_path));
+            Assert::IsTrue(exists_fsio(&dir_path));
+
+            Assert::IsFalse(exists_directory_fsio(&file_path));
+            Assert::IsTrue(exists_file_fsio(&file_path));
+            Assert::IsTrue(exists_fsio(&file_path));
+
+            Assert::IsFalse(exists_directory_fsio(&unknown_path));
+            Assert::IsFalse(exists_file_fsio(&unknown_path));
+            Assert::IsFalse(exists_fsio(&unknown_path));
         }
 
     };

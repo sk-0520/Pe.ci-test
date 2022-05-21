@@ -1,18 +1,29 @@
-﻿#include <shlwapi.h>
+﻿#include "fsio.h"
 
-#include "fsio.h"
-
-bool is_directory_path(const TEXT* path)
+bool exists_directory_fsio(const TEXT* path)
 {
-    return PathIsDirectory(path->value);
+    DWORD attr = GetFileAttributes(path->value);
+    if (attr == -1) {
+        return false;
+    }
+    return (attr & FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY;
 }
 
-bool exists_file_path(const TEXT* path)
+bool exists_file_fsio(const TEXT* path)
 {
-    return PathFileExists(path->value) && !is_directory_path(path);
+    DWORD attr = GetFileAttributes(path->value);
+    if (attr == -1) {
+        return false;
+    }
+    return (attr & FILE_ATTRIBUTE_DIRECTORY) != FILE_ATTRIBUTE_DIRECTORY;
 }
 
-bool exists_directory_path(const TEXT* path)
+bool exists_fsio(const TEXT* path)
 {
-    return PathFileExists(path->value) && is_directory_path(path);
+    DWORD attr = GetFileAttributes(path->value);
+    if (attr == -1) {
+        return false;
+    }
+
+    return true;
 }
