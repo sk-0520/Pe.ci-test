@@ -34,6 +34,12 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESO
 #   define get_parent_directory_path(path, memory_resource) RC_HEAP_WRAP(get_parent_directory_path, (path), memory_resource)
 #endif
 
+/// <summary>
+/// パスをディレクトリ区切りで分割。
+/// </summary>
+/// <param name="path"></param>
+/// <param name="memory_resource"></param>
+/// <returns>分割後ディレクトリ・ファイル名のリスト。解放が必要。</returns>
 OBJECT_LIST RC_HEAP_FUNC(split_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
 #   define split_path(path, memory_resource) RC_HEAP_WRAP(split_path, (path), memory_resource)

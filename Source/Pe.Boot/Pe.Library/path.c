@@ -62,13 +62,37 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESO
     return new_empty_text(memory_resource);
 }
 
+static TEXT split_path_core(const TEXT* source, size_t* next_index, const MEMORY_RESOURCE* memory_resource)
+{
+    size_t skip_index = 0;
+    for (size_t i = 0; i < source->length; i++) {
+        TCHAR current = source->value[i];
+
+        if (is_directory_separator(current)) {
+            if (!i || skip_index == i) {
+                skip_index = i + 1;
+                continue;
+            }
+            *next_index = i + 1;
+            return wrap_text_with_length(source->value + skip_index, i - skip_index, false, NULL);
+        }
+    }
+
+    *next_index = source->length;
+    if (source->length && 0 < source->length - skip_index) {
+        return reference_text_width_length(source, skip_index, source->length - skip_index);
+    }
+
+    return create_invalid_text();
+}
+
 OBJECT_LIST RC_HEAP_FUNC(split_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
 {
     if (!path || !path->length) {
         return RC_HEAP_CALL(new_object_list, sizeof(TEXT), 0, NULL, compare_object_list_value_text, release_object_list_value_text, memory_resource);
     }
 
-    OBJECT_LIST list = RC_HEAP_CALL(new_object_list, sizeof(TEXT), 16, NULL, compare_object_list_value_text, release_object_list_value_text, memory_resource);
+    OBJECT_LIST list = RC_HEAP_CALL(split_text, path, split_path_core, memory_resource);
 
     return list;
 }

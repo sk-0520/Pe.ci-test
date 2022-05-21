@@ -1,4 +1,5 @@
 ﻿#include "pch.h"
+#include <vector>
 
 extern "C" {
 #   include "../Pe.Library/path.h"
@@ -64,6 +65,39 @@ namespace PeLibraryTest
                 Assert::AreEqual(test.expected.value, actual.value);
 
                 release_text(&actual);
+            }
+        }
+
+        TEST_METHOD(split_path_test)
+        {
+            auto tests = {
+                DATA(std::vector({ wrap("C:") }), wrap("C:")),
+                DATA(std::vector({ wrap("C:"), wrap("dir") }), wrap("C:\\dir")),
+                DATA(std::vector({ wrap("C:"), wrap("dir") }), wrap("C:\\\\dir")),
+                DATA(std::vector({ wrap("C:"), wrap("dir") }), wrap("C:\\\\\\dir")),
+                DATA(std::vector({ wrap("C:"), wrap("dir") }), wrap("C:/\\/\\/\\/dir")),
+                DATA(std::vector({ wrap("C:") }), wrap("\\C:")),
+                DATA(std::vector({ wrap("C:") }), wrap("\\C:\\")),
+                DATA(std::vector({ wrap("C:") }), wrap("\\/\\/\\/\\/C:")),
+                DATA(std::vector({ wrap("C:") }), wrap("C:\\/\\/\\/\\/")),
+                DATA(std::vector({ wrap("a"), wrap("b"), wrap("c") }), wrap("////////////a/////////////b/////////////c////////////")),
+            };
+            for (auto test : tests) {
+                TEXT arg1 = std::get<0>(test.inputs);
+
+                OBJECT_LIST actual = split_path(&arg1, DEFAULT_MEMORY);
+
+                Assert::AreEqual(test.expected.size(), actual.length);
+
+                for (size_t i = 0; i < test.expected.size(); i++) {
+                    OBJECT_RESULT_VALUE result = get_object_list(&actual, i);
+                    Assert::IsTrue(result.exists);
+                    const TEXT* actual_text = (TEXT*)result.value;
+                    
+                    Assert::IsTrue(is_equals_text(&test.expected[i], actual_text, false), test.expected[i].value);
+                }
+
+                release_object_list(&actual, true);
             }
         }
 

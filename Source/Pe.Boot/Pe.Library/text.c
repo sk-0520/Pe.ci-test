@@ -156,7 +156,7 @@ TEXT reference_text_width_length(const TEXT* source, size_t index, size_t length
         return *source;
     }
 
-    if (source->length <= index + length) {
+    if (source->length < index + length) {
         return create_invalid_text();
     }
     if (!length) {
