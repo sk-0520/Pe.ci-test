@@ -6,8 +6,31 @@
 #include "path.h"
 #include "logging.h"
 
-static TCHAR DIRECTORY_SEPARATORS[] = { '\\', '/', };
+static TCHAR DIRECTORY_SEPARATORS[] = { DIRECTORY_SEPARATOR_CHARACTER, ALT_DIRECTORY_SEPARATOR_CHARACTER, };
 
+bool is_directory_separator(TCHAR c)
+{
+    return contains_characters(c, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
+}
+
+bool has_root_path(const TEXT* text)
+{
+    assert(text);
+
+    if (text->length) {
+        if (is_directory_separator(text->value[0])) {
+            return true;
+        }
+
+        if (2 <= text->length) {
+            return text->value[1] == ':' && is_alphabet_character(text->value[0]);
+        }
+
+        //uncとか知らんし
+    }
+
+    return false;
+}
 
 TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
 {
@@ -15,7 +38,7 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESO
     for (size_t i = 0; i < path->length; i++) {
         const TCHAR* tail = path->value + (path->length - i - 1);
 
-        bool isSeparator = contains_characters(*tail, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
+        bool isSeparator = is_directory_separator(*tail);
         if (isSeparator) {
             if (hittingSeparator) {
                 continue;
@@ -28,7 +51,7 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESO
             size_t length = tail - path->value + 1;
 
             // ドライブの場合、セパレータを付与
-            if (length == 2 && path->value[1] == ':' && is_alphabet_character(path->value[0])) {
+            if (length == 2 && has_root_path(path)) {
                 return new_text_with_length(path->value, length + 1, memory_resource);
             }
 
@@ -41,16 +64,32 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESO
 
 TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path, const MEMORY_RESOURCE* memory_resource)
 {
-    size_t total_length = (size_t)base_path->length + relative_path->length + sizeof(TCHAR)/* \ */;
-    TCHAR* buffer = RC_HEAP_CALL(allocate_string, total_length, memory_resource);
-    PathCombine(buffer, base_path->value, relative_path->value);
-    size_t buffer_length = get_string_length(buffer);
-    TCHAR* c = buffer + (buffer_length - 1);
-    if (*c == '\\' || *c == '/') {
-        *c = 0;
-        buffer_length -= 1;
+    // 相対パスが絶対パスっぽければ相対パス自身を返す
+    if (relative_path->length && is_directory_separator(relative_path->value[0])) {
+        return RC_HEAP_CALL(trim_text, relative_path, false, true, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS), memory_resource);
     }
-    return wrap_text_with_length(buffer, buffer_length, true, memory_resource);
+
+    TEXT trimmed_base_path = trim_text_stack(base_path, false, true, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
+    TEXT trimmed_relative_path = trim_text_stack(relative_path, true, true, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
+
+    if (!trimmed_base_path.length || !trimmed_relative_path.length) {
+        if (trimmed_base_path.length) {
+            return clone_text(&trimmed_base_path, memory_resource);
+        }
+
+        return clone_text(&trimmed_relative_path, memory_resource);
+    }
+
+    size_t total_length = trimmed_base_path.length + sizeof(TCHAR/* \ */) + trimmed_relative_path.length;
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, total_length, memory_resource);
+
+    copy_memory(buffer, trimmed_base_path.value, trimmed_base_path.length * sizeof(TCHAR));
+    if (trimmed_relative_path.length) {
+        copy_memory(buffer + trimmed_base_path.length + 1, trimmed_relative_path.value, trimmed_relative_path.length * sizeof(TCHAR));
+        buffer[trimmed_base_path.length] = DIRECTORY_SEPARATOR_CHARACTER;
+    }
+
+    return wrap_text_with_length(buffer, total_length, true, memory_resource);
 }
 
 TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_t count, const MEMORY_RESOURCE* memory_resource)

@@ -4,6 +4,25 @@
 
 #include "text.h"
 
+/// ディレクトリの区切り文字
+#define DIRECTORY_SEPARATOR_CHARACTER _T('\\')
+/// ディレクトリの代替区切り文字
+#define ALT_DIRECTORY_SEPARATOR_CHARACTER _T('/')
+
+/// <summary>
+/// ディレクトリ区切りか。
+/// </summary>
+/// <param name="c"></param>
+/// <returns>ディレクトリ区切り文字の場合に真。</returns>
+bool is_directory_separator(TCHAR c);
+
+/// <summary>
+/// ルートが含まれているか。
+/// <para>Windowsの絶対パス難しいから適当にやる</para>
+/// </summary>
+/// <param name="text"></param>
+/// <returns>ルートが含まれている場合に真。</returns>
+bool has_root_path(const TEXT* text);
 
 /// <summary>
 /// パスから親ディレクトリパスを取得。
@@ -17,7 +36,6 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESO
 
 /// <summary>
 /// パスを結合する。
-/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="base_path">ベースのパス。</param>
 /// <param name="relative_path">結合するパス。</param>

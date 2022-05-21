@@ -12,6 +12,39 @@ namespace PeLibraryTest
     {
     public:
 
+        TEST_METHOD(is_directory_separator_test)
+        {
+            auto tests = {
+                DATA(true, _T('\\')),
+                DATA(true, _T('/')),
+                DATA(false, _T('￥')),
+                DATA(false, _T('¥')),
+            };
+            for (auto test : tests) {
+                bool actual = test.run(is_directory_separator);
+                Assert::AreEqual(test.expected, actual);
+            }
+        }
+
+        TEST_METHOD(has_root_path_test)
+        {
+            auto tests = {
+                DATA(true, wrap("\\")),
+                DATA(true, wrap("/")),
+                DATA(true, wrap("C:\\")),
+                DATA(true, wrap("C:")),
+                DATA(true, wrap("C:/")),
+                DATA(false, wrap("0:")),
+                DATA(false, wrap("abc")),
+            };
+            for (auto test : tests) {
+                TEXT arg1 = std::get<0>(test.inputs);
+
+                bool actual = has_root_path(&arg1);
+                Assert::AreEqual(test.expected, actual);
+            }
+        }
+
         TEST_METHOD(get_parent_directory_path_test)
         {
             auto tests = {
@@ -40,6 +73,10 @@ namespace PeLibraryTest
                 DATA(wrap("C:\\dir\\file"), wrap("C:\\dir"), wrap("file")),
                 DATA(wrap("a\\b"), wrap("a"), wrap("b")),
                 DATA(wrap("a\\b"), wrap("a\\"), wrap("b\\")),
+                DATA(wrap("a"), wrap("a"), wrap("")),
+                DATA(wrap("b"), wrap(""), wrap("b")),
+                DATA(wrap(""), wrap(""), wrap("")),
+                DATA(wrap("\\a\\b"), wrap("\\a"), wrap("b")),
             };
             for (auto test : tests) {
                 TEXT arg1 = std::get<0>(test.inputs);
