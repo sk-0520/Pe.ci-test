@@ -201,21 +201,6 @@ TEXT trim_whitespace_text_stack(const TEXT* text)
     return trim_text_stack(text, true, true, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters));
 }
 
-
-static int compare_object_list_value_text(const TEXT* a, const TEXT* b, void* data)
-{
-    return compare_text(a, b, false);
-}
-
-static void release_object_list_value_text(void* target, void* data, const MEMORY_RESOURCE* memory_resource)
-{
-    if (!target) {
-        return;
-    }
-    TEXT* text = (TEXT*)target;
-    release_text(text);
-}
-
 OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function, const MEMORY_RESOURCE* memory_resource)
 {
     if (!text) {

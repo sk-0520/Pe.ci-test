@@ -62,12 +62,16 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESO
     return new_empty_text(memory_resource);
 }
 
-//TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
-//{
-//    if (path || !path->length) {
-//        return create_invalid_text();
-//    }
-//}
+OBJECT_LIST RC_HEAP_FUNC(split_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
+{
+    if (!path || !path->length) {
+        return RC_HEAP_CALL(new_object_list, sizeof(TEXT), 0, NULL, compare_object_list_value_text, release_object_list_value_text, memory_resource);
+    }
+
+    OBJECT_LIST list = RC_HEAP_CALL(new_object_list, sizeof(TEXT), 16, NULL, compare_object_list_value_text, release_object_list_value_text, memory_resource);
+
+    return list;
+}
 
 TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path, const MEMORY_RESOURCE* memory_resource)
 {

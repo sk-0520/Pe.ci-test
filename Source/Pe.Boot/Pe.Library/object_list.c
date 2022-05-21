@@ -1,5 +1,6 @@
 ﻿#include "object_list.h"
 #include "memory.h"
+#include "text.h"
 #include "debug.h"
 
 
@@ -10,6 +11,22 @@ int compare_object_list_value_null(const void* a, const void* b, void* data)
 
 void release_object_list_value_null(void* value, void* data, const MEMORY_RESOURCE* memory_resource)
 {
+}
+
+int compare_object_list_value_text(const void* a, const void* b, void* data)
+{
+    const TEXT* aa = (TEXT*)a;
+    const TEXT* bb = (TEXT*)b;
+    return compare_text(aa, bb, false);
+}
+
+void release_object_list_value_text(void* target, void* data, const MEMORY_RESOURCE* memory_resource)
+{
+    if (!target) {
+        return;
+    }
+    TEXT* text = (TEXT*)target;
+    release_text(text);
 }
 
 OBJECT_LIST RC_HEAP_FUNC(new_object_list, byte_t item_size, size_t capacity_count, void* data, func_compare_object_list_value compare_object_list_value, func_release_object_list_value release_object_list_value, const MEMORY_RESOURCE* memory_resource)
