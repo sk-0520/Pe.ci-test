@@ -33,22 +33,22 @@ static const struct RES_CHECK_FORAMT
     const TCHAR* stock_leak;
 } res_check__formats[] = {
     {
-        .alloc_msg = _T("[HEAP:+] %p %s:") FMT_D_ZU,
-        .alloc_err = _T("[HEAP:STOCK:ERROR] %p %s") FMT_D_ZU,
-        .free_mgs = _T("[HEAP:-] %p %s:") FMT_D_ZU _T(" - %s:") FMT_D_ZU,
-        .free_err = _T("[HEAP:NOTFOUND:ERROR] %p %s:") FMT_D_ZU,
+        .alloc_msg = _T("[HEAP:+] %p (%s) %s:") FMT_D_ZU,
+        .alloc_err = _T("[HEAP:STOCK:ERROR] %p (%s) %s") FMT_D_ZU,
+        .free_mgs = _T("[HEAP:-] %p (%s) %s:") FMT_D_ZU _T(" - %s:") FMT_D_ZU,
+        .free_err = _T("[HEAP:NOTFOUND:ERROR] %p (%s) %s:") FMT_D_ZU,
         .stock_count = _T("[HEAP:%s:COUNT] ") FMT_D_ZU,
-        .stock_list = _T("[HEAP:STOCK] %p %s:") FMT_D_ZU,
-        .stock_leak = _T("[HEAP:WARNING:LEAK] %p %s:") FMT_D_ZU,
+        .stock_list = _T("[HEAP:STOCK] %p (%s) %s:") FMT_D_ZU,
+        .stock_leak = _T("[HEAP:WARNING:LEAK] %p (%s) %s:") FMT_D_ZU,
     },
     {
-        .alloc_msg = _T("[FILE:+] %p %s:") FMT_D_ZU _T(" -> %s"),
-        .alloc_err = _T("[FILE:STOCK:ERROR] %p %s:") FMT_D_ZU,
-        .free_mgs = _T("[FILE:-] %p %s:") FMT_D_ZU _T(" - %s:") FMT_D_ZU,
-        .free_err = _T("[FILE:NOTFOUND:ERROR] %p %s:") FMT_D_ZU,
+        .alloc_msg = _T("[FILE:+] %p (%s) %s:") FMT_D_ZU _T(" -> %s"),
+        .alloc_err = _T("[FILE:STOCK:ERROR] %p (%s) %s:") FMT_D_ZU,
+        .free_mgs = _T("[FILE:-] %p (%s) %s:") FMT_D_ZU _T(" - %s:") FMT_D_ZU,
+        .free_err = _T("[FILE:NOTFOUND:ERROR] %p (%s) %s:") FMT_D_ZU,
         .stock_count = _T("[FILE:%s:COUNT] ") FMT_D_ZU,
-        .stock_list = _T("[FILE:STOCK] %p %s:") FMT_D_ZU,
-        .stock_leak = _T("[FILE:WARNING:LEAK] %p %s:") FMT_D_ZU,
+        .stock_list = _T("[FILE:STOCK] %p (%s) %s:") FMT_D_ZU,
+        .stock_leak = _T("[FILE:WARNING:LEAK] %p (%s) %s:") FMT_D_ZU,
     },
 };
 

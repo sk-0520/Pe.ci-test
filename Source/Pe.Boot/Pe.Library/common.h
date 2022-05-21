@@ -37,6 +37,13 @@ typedef uint32_t text_t;
 #define FILE_BASE_DIR TO_STRING(SOLUTION_DIR)
 #define RELATIVE_FILE (__FILE__ + (sizeof(FILE_BASE_DIR) - 4 /* "\."\0 */))
 #define RELATIVE_FILET (_T(__FILE__) + ((sizeof(_T(FILE_BASE_DIR)) / sizeof(TCHAR)) - 4 /* "\."\0 */))
+#ifdef UNICODE
+#   define FUNCTIONT __FUNCTIONW__
+#else
+#   define FUNCTIONT __func__
+#endif // UNICODE
+
+
 
 #ifdef _WIN64
 typedef int64_t ssize_t;
