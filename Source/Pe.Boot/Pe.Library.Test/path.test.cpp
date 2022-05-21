@@ -155,7 +155,7 @@ namespace PeLibraryTest
             };
             TEXT expected = wrap("C:\\dir1\\dir2+");
 
-            TEXT actual = join_path(&input1, input2, sizeof(input2) / sizeof(input2[0]), DEFAULT_MEMORY);
+            TEXT actual = join_path(&input1, input2, SIZEOF_ARRAY(input2), DEFAULT_MEMORY);
             Assert::AreEqual(expected.value, actual.value);
 
             release_text(&actual);

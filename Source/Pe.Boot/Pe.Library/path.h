@@ -69,7 +69,6 @@ TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path
 
 /// <summary>
 /// パスを結合する。
-/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="base_path">ベースのパス。</param>
 /// <param name="paths">結合するパス。</param>
@@ -84,7 +83,7 @@ TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_
 /// 実行中モジュールパスの取得
 /// </summary>
 /// <param name="hInstance">実行モジュールインスタンスハンドル。</param>
-/// <returns></returns>
+/// <returns>実行中モジュールパス。解放が必要。</returns>
 TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
 #   define get_module_path(hInstance, memory_resource) RC_HEAP_WRAP(get_module_path, (hInstance), memory_resource)

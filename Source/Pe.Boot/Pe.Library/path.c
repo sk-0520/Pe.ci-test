@@ -180,18 +180,25 @@ TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_
         total_path_length += path->length;
     }
 
-    TCHAR* buffer = RC_HEAP_CALL(allocate_string, total_path_length, memory_resource);
-    copy_string(buffer, base_path->value);
+    STRING_BUILDER string_builder = RC_HEAP_CALL(new_string_builder, total_path_length, memory_resource);
+    TEXT trimmed_base_path = trim_text_stack(base_path, false, true, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
+    append_builder_text_word(&string_builder, &trimmed_base_path);
 
     for (size_t i = 0; i < count; i++) {
-        const TEXT* path = &paths[i];
-        PathCombine(buffer, buffer, path->value);
+        TEXT trimmed_path = trim_text_stack(paths + i, true, true, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
+        if (trimmed_path.length) {
+            append_builder_character_word(&string_builder, DIRECTORY_SEPARATOR_CHARACTER);
+            append_builder_text_word(&string_builder, &trimmed_path);
+        }
     }
-    TCHAR* temp_buffer = clone_string(buffer, memory_resource);
-    PathCanonicalize(buffer, temp_buffer);
-    release_string(temp_buffer, memory_resource);
 
-    return wrap_text_with_length(buffer, get_string_length(buffer), true, memory_resource);
+    TEXT joined_path = RC_HEAP_CALL(build_text_string_builder, &string_builder);
+    RC_HEAP_CALL(release_string_builder, &string_builder);
+
+    TEXT result = RC_HEAP_CALL(canonicalize_path, &joined_path, memory_resource);
+    RC_HEAP_CALL(release_text, &joined_path);
+
+    return result;
 }
 
 TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_RESOURCE* memory_resource)
