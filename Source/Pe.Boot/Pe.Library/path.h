@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <tchar.h>
-#include <shlwapi.h>
 
 #include "text.h"
 
