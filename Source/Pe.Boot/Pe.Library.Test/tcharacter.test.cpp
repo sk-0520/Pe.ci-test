@@ -166,5 +166,29 @@ namespace PeLibraryTest
                 Assert::AreEqual(test.expected, actual);
             }
         }
+
+        TEST_METHOD(contains_characters_test)
+        {
+            auto tests = {
+                DATA(true, _T('a'), _T("a"), 1),
+                DATA(false, _T('a'), _T("b"), 1),
+
+                DATA(true, _T('a'), _T("abc"), 3),
+                DATA(true, _T('b'), _T("abc"), 3),
+                DATA(true, _T('c'), _T("abc"), 3),
+
+                DATA(false, _T('d'), _T("abc"), 3),
+
+                DATA(false, _T('A'), _T("abc"), 3),
+                DATA(false, _T('B'), _T("abc"), 3),
+                DATA(false, _T('C'), _T("abc"), 3),
+            };
+
+            for (auto test : tests) {
+                auto actual = std::apply(contains_characters, test.inputs);
+                Assert::AreEqual(test.expected, actual);
+            }
+        }
+
     };
 }

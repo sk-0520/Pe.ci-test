@@ -20,7 +20,7 @@ TEXT create_invalid_text()
             .need_release = false,
             .sentinel = false,
             .released = false,
-        },
+    },
     };
 
     return result;
@@ -66,7 +66,7 @@ TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length, cons
             .need_release = true,
             .sentinel = true,
             .released = false,
-        },
+    },
     };
 
     return result;
@@ -103,11 +103,11 @@ TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release
         .value = source,
         .length = (text_t)length,
         .library = {
-            .memory_resource = (need_release && memory_resource) ? memory_resource: NULL,
+            .memory_resource = (need_release && memory_resource) ? memory_resource : NULL,
             .need_release = need_release,
             .sentinel = false,
             .released = false,
-        },
+    },
     };
 
     return result;
@@ -144,7 +144,7 @@ TEXT RC_HEAP_FUNC(clone_text, const TEXT* source, const MEMORY_RESOURCE* memory_
             .need_release = true,
             .sentinel = true,
             .released = false,
-        },
+    },
     };
 
     return result;
@@ -156,7 +156,7 @@ TEXT reference_text_width_length(const TEXT* source, size_t index, size_t length
         return *source;
     }
 
-    if(source->length <= index + length) {
+    if (source->length < index + length) {
         return create_invalid_text();
     }
     if (!length) {
@@ -173,7 +173,7 @@ TEXT reference_text_width_length(const TEXT* source, size_t index, size_t length
             .need_release = false,
             .sentinel = false, //TODO: 番兵判定できるはず
             .released = false,
-        }
+    }
     };
 
     return result;
@@ -192,7 +192,7 @@ TEXT reference_text(const TEXT* source)
             .need_release = false,
             //.sentinel = source->library.sentinel,
             .released = false,
-        }
+    }
     };
     result.library.sentinel = source->library.sentinel;
 
@@ -239,4 +239,29 @@ TEXT RC_HEAP_FUNC(format_text, const MEMORY_RESOURCE* memory_resource, const TEX
     RC_HEAP_CALL(release_string_builder, &sb);
 
     return result;
+}
+
+TCHAR* RC_HEAP_FUNC(text_to_string, const TEXT* text, const MEMORY_RESOURCE* memory_resource)
+{
+    if (!is_enabled_text(text)) {
+        return RC_HEAP_CALL(allocate_string, 0, memory_resource);
+    }
+    if (!text->length) {
+        return RC_HEAP_CALL(allocate_string, 0, memory_resource);
+    }
+
+    return RC_HEAP_CALL(clone_string_with_length, text->value, text->length, memory_resource);
+}
+
+TEXT get_sentinel_text(const TEXT* text)
+{
+    assert(text->library.sentinel);
+    assert(is_enabled_text(text));
+
+    const MEMORY_RESOURCE* memory_resource = text->library.memory_resource
+        ? text->library.memory_resource
+        : get_default_memory_resource()
+        ;
+
+    return clone_text(text, memory_resource);
 }

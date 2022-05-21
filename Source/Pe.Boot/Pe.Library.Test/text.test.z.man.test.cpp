@@ -165,6 +165,7 @@ namespace PeLibraryTest
                 auto arg4 = std::get<3>(test.inputs);
                 TEXT actual = trim_text(&arg1, arg2, arg3, arg4.data(), arg4.size(), DEFAULT_MEMORY);
                 Assert::AreEqual(test.expected, actual.value);
+                Assert::IsTrue(actual.library.need_release);
                 release_text(&actual);
             }
         }
@@ -178,13 +179,55 @@ namespace PeLibraryTest
                 TEXT& arg1 = std::get<0>(test.inputs);
                 TEXT actual = trim_whitespace_text(&arg1, DEFAULT_MEMORY);
                 Assert::AreEqual(test.expected, actual.value);
+                Assert::IsTrue(actual.library.need_release);
                 release_text(&actual);
+            }
+        }
+
+        TEST_METHOD(trim_text_stack_test)
+        {
+            auto tests = {
+                DATA(wrap("a"), wrap(" a "), true, true, std::vector<TCHAR>({ ' ', })),
+                DATA(wrap("a "), wrap(" a "), true, false, std::vector<TCHAR>({ ' ', })),
+                DATA(wrap(" a"), wrap(" a "), false, true, std::vector<TCHAR>({ ' ', })),
+                DATA(wrap("a b"), wrap("      a b    "), true, true, std::vector<TCHAR>({ ' ', })),
+                DATA(wrap("a"), wrap(" \t a\t \t"), true, true, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap("a\tb c"), wrap(" \t a\tb c\t \t"), true, true, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap(" \t a\tb c"), wrap(" \t a\tb c\t \t"), false, true, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap("a\tb c\t \t"), wrap(" \t a\tb c\t \t"), true, false, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap(" \t a\tb c\t \t"), wrap(" \t a\tb c\t \t"), false, false, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap(" \t \t \t"), wrap(" \t \t \t"), false, false, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap(""), wrap(" \t \t \t"), true, false, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap(""), wrap(" \t \t \t"), false, true, std::vector<TCHAR>({ ' ', '\t' })),
+            };
+
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                bool arg2 = std::get<1>(test.inputs);
+                bool arg3 = std::get<2>(test.inputs);
+                auto arg4 = std::get<3>(test.inputs);
+                TEXT actual = trim_text_stack(&arg1, arg2, arg3, arg4.data(), arg4.size());
+                Assert::IsTrue(is_equals_text(&test.expected, &actual, false), test.expected.value);
+                Assert::IsFalse(actual.library.need_release);
+            }
+        }
+
+        TEST_METHOD(trim_white_space_text_stack_test)
+        {
+            auto tests = {
+                DATA(wrap("a"), wrap(" a ")),
+            };
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                TEXT actual = trim_whitespace_text_stack(&arg1);
+                Assert::IsTrue(is_equals_text(&test.expected, &actual, false), test.expected.value);
+                Assert::IsFalse(actual.library.need_release);
             }
         }
 
         static TEXT split_text_EASY_CSV(const TEXT* source, size_t* next_index, const MEMORY_RESOURCE* memory_resource)
         {
-            ssize_t index = index_of_character(source, _T(','));
+            ssize_t index = index_of_character(source, _T(','), INDEX_START_POSITION_HEAD);
             if (index == -1) {
                 *next_index = source->length;
                 return wrap_text_with_length(source->value, source->length, false, memory_resource);

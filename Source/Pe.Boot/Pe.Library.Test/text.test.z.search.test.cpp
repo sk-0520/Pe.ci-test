@@ -12,7 +12,7 @@ namespace PeLibraryTest
     {
     public:
 
-        TEST_METHOD(find_text_test)
+        TEST_METHOD(search_text_test)
         {
             auto input = wrap("abcDEF-ABCdef");
             auto tests = {
@@ -31,59 +31,71 @@ namespace PeLibraryTest
                 TEXT& arg1 = std::get<0>(test.inputs);
                 TEXT& arg2 = std::get<1>(test.inputs);
                 bool& arg3 = std::get<2>(test.inputs);
-                TEXT actual = find_text(&arg1, &arg2, arg3);
+                TEXT actual = search_text(&arg1, &arg2, arg3);
                 Assert::IsFalse(actual.library.need_release);
                 Assert::AreEqual(test.expected, actual.value);
             }
         }
 
-        TEST_METHOD(find_text_notfound_test)
+        TEST_METHOD(search_text_notfound_test)
         {
             auto input1 = wrap("abcDEF-ABCdef");
             auto input2 = wrap("Abc");
-            TEXT actual = find_text(&input1, &input2, false);
+            TEXT actual = search_text(&input1, &input2, false);
             Assert::IsFalse(is_enabled_text(&actual));
         }
 
-        TEST_METHOD(find_character_test)
+        TEST_METHOD(search_character_test)
         {
-            auto input = wrap("abcDEF-ABCdef");
+            auto input = wrap("abcDEF-ABCdef@abcDEF-ABCdef!");
             auto tests = {
-                DATA(_T("abcDEF-ABCdef"), input, _T('a')),
-                DATA(_T("ABCdef"), input, _T('A')),
-                DATA(_T("def"), input, _T('d')),
-                DATA(_T("DEF-ABCdef"), input, _T('D')),
+                DATA(_T("abcDEF-ABCdef@abcDEF-ABCdef!"), input, _T('a'), INDEX_START_POSITION_HEAD),
+                DATA(_T("ABCdef@abcDEF-ABCdef!"), input, _T('A'), INDEX_START_POSITION_HEAD),
+                DATA(_T("def@abcDEF-ABCdef!"), input, _T('d'), INDEX_START_POSITION_HEAD),
+                DATA(_T("DEF-ABCdef@abcDEF-ABCdef!"), input, _T('D'), INDEX_START_POSITION_HEAD),
+
+                DATA(_T("abcDEF-ABCdef!"), input, _T('a'), INDEX_START_POSITION_TAIL),
+                DATA(_T("ABCdef!"), input, _T('A'), INDEX_START_POSITION_TAIL),
+                DATA(_T("def!"), input, _T('d'), INDEX_START_POSITION_TAIL),
+                DATA(_T("DEF-ABCdef!"), input, _T('D'), INDEX_START_POSITION_TAIL),
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 TCHAR arg2 = std::get<1>(test.inputs);
-                TEXT actual = find_character(&arg1, arg2);
+                INDEX_START_POSITION arg3 = std::get<2>(test.inputs);
+                TEXT actual = search_character(&arg1, arg2, arg3);
                 Assert::IsFalse(actual.library.need_release);
                 Assert::AreEqual(test.expected, actual.value);
             }
         }
 
-        TEST_METHOD(find_character_notfound_test)
+        TEST_METHOD(search_character_notfound_test)
         {
             auto input1 = wrap("abcDEF-ABCdef");
-            TEXT actual = find_character(&input1, 'x');
+            TEXT actual = search_character(&input1, 'x', INDEX_START_POSITION_HEAD);
             Assert::IsFalse(is_enabled_text(&actual));
         }
 
-        TEST_METHOD(index_character_test)
+        TEST_METHOD(index_of_character_test)
         {
-            TEXT input = wrap("abcdefgABCDEFG");
+            TEXT input = wrap("abcdefgABCDEFG@abcdefgABCDEFG");
             auto tests = {
-                DATA((ssize_t)0, input, _T('a')),
-                DATA((ssize_t)1, input, _T('b')),
-                DATA((ssize_t)7, input, _T('A')),
-                DATA((ssize_t)-1, input, _T('x')),
+                DATA((ssize_t)0 + 0, input, _T('a'), INDEX_START_POSITION_HEAD),
+                DATA((ssize_t)0 + 1, input, _T('b'), INDEX_START_POSITION_HEAD),
+                DATA((ssize_t)0 + 7, input, _T('A'), INDEX_START_POSITION_HEAD),
+                DATA((ssize_t)-1, input, _T('x'), INDEX_START_POSITION_HEAD),
+
+                DATA((ssize_t)15 + 0, input, _T('a'), INDEX_START_POSITION_TAIL),
+                DATA((ssize_t)15 + 1, input, _T('b'), INDEX_START_POSITION_TAIL),
+                DATA((ssize_t)15 + 7, input, _T('A'), INDEX_START_POSITION_TAIL),
+                DATA((ssize_t)-1, input, _T('x'), INDEX_START_POSITION_TAIL),
             };
 
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 TCHAR arg2 = std::get<1>(test.inputs);
-                auto actual = index_of_character(&arg1, arg2);
+                INDEX_START_POSITION arg3 = std::get<2>(test.inputs);
+                auto actual = index_of_character(&arg1, arg2, arg3);
                 Assert::AreEqual(test.expected, actual);
             }
         }
