@@ -34,6 +34,23 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESO
 #   define get_parent_directory_path(path, memory_resource) RC_HEAP_WRAP(get_parent_directory_path, (path), memory_resource)
 #endif
 
+//TEXT_LIST RC_HEAP_FUNC(split_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
+//#ifdef RES_CHECK
+//#   define split_path(path, memory_resource) RC_HEAP_WRAP(split_path, (path), memory_resource)
+//#endif
+
+///// <summary>
+///// パスの正規化。
+///// </summary>
+///// <param name=""></param>
+///// <param name="path"></param>
+///// <param name="memory_resource"></param>
+///// <returns></returns>
+//TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
+//#ifdef RES_CHECK
+//#   define canonicalize_path(path, memory_resource) RC_HEAP_WRAP(canonicalize_path, (path), memory_resource)
+//#endif
+
 /// <summary>
 /// パスを結合する。
 /// </summary>

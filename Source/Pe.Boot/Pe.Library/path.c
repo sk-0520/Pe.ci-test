@@ -62,6 +62,13 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESO
     return new_empty_text(memory_resource);
 }
 
+//TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
+//{
+//    if (path || !path->length) {
+//        return create_invalid_text();
+//    }
+//}
+
 TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path, const MEMORY_RESOURCE* memory_resource)
 {
     // 相対パスが絶対パスっぽければ相対パス自身を返す
