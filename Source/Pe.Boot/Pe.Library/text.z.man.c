@@ -219,9 +219,10 @@ OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function,
         if (!is_enabled_text(&item)) {
             break;
         }
+        assert(!item.library.need_release);
 
-        TEXT stack_text = RC_HEAP_CALL(clone_text, &item, memory_resource);
-        push_object_list(&result, &stack_text);
+        TEXT part_text = RC_HEAP_CALL(clone_text, &item, memory_resource);
+        push_object_list(&result, &part_text);
 
         next_index += current_next_index;
         if (next_index == prev_index && text->length <= next_index) {

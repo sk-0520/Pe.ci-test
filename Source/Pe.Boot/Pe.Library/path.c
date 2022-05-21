@@ -97,6 +97,50 @@ OBJECT_LIST RC_HEAP_FUNC(split_path, const TEXT* path, const MEMORY_RESOURCE* me
     return list;
 }
 
+TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
+{
+    OBJECT_LIST list = RC_HEAP_CALL(split_path, path, memory_resource);
+
+    const TEXT currentName = wrap_text(_T("."));
+    const TEXT parentName = wrap_text(_T(".."));
+
+    const TEXT** items = (TEXT**)RC_HEAP_CALL(new_memory, list.length, sizeof(TEXT*), memory_resource);
+    size_t item_length = 0;
+    size_t capacity = list.length;
+    for (size_t i = 0; i < list.length; i++) {
+        const TEXT* value = (TEXT*)(void*)list.items + i;
+        if (is_equals_text(value, &currentName, false)) {
+            continue;
+        }
+
+        if (is_equals_text(value, &parentName, false) && item_length) {
+            items[item_length - 1] = NULL;
+            item_length -= 1;
+            continue;
+        } else {
+            items[item_length++] = value;
+            capacity += value->length;
+        }
+    }
+
+    STRING_BUILDER string_builder = RC_HEAP_CALL(new_string_builder, capacity, memory_resource);
+    for (size_t i = 0; i < item_length; i++) {
+        if (i) {
+            append_builder_character_word(&string_builder, DIRECTORY_SEPARATOR_CHARACTER);
+        }
+        append_builder_text_word(&string_builder, items[i]);
+    }
+
+    RC_HEAP_CALL(release_memory, (TEXT**)items, memory_resource);
+    RC_HEAP_CALL(release_object_list, &list, true);
+
+    TEXT result = RC_HEAP_CALL(build_text_string_builder, &string_builder);
+
+    RC_HEAP_CALL(release_string_builder, &string_builder);
+
+    return result;
+}
+
 TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path, const MEMORY_RESOURCE* memory_resource)
 {
     // 相対パスが絶対パスっぽければ相対パス自身を返す
@@ -146,14 +190,6 @@ TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_
     TCHAR* temp_buffer = clone_string(buffer, memory_resource);
     PathCanonicalize(buffer, temp_buffer);
     release_string(temp_buffer, memory_resource);
-
-    return wrap_text_with_length(buffer, get_string_length(buffer), true, memory_resource);
-}
-
-TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
-{
-    TCHAR* buffer = RC_HEAP_CALL(allocate_string, path->length, memory_resource);
-    PathCanonicalize(buffer, path->value);
 
     return wrap_text_with_length(buffer, get_string_length(buffer), true, memory_resource);
 }

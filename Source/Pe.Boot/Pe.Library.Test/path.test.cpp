@@ -81,6 +81,7 @@ namespace PeLibraryTest
                 DATA(std::vector({ wrap("C:") }), wrap("\\/\\/\\/\\/C:")),
                 DATA(std::vector({ wrap("C:") }), wrap("C:\\/\\/\\/\\/")),
                 DATA(std::vector({ wrap("a"), wrap("b"), wrap("c") }), wrap("////////////a/////////////b/////////////c////////////")),
+                DATA(std::vector({ wrap("🥚"), wrap("🐤"), wrap("🐓"), wrap("🍗") }), wrap("🥚\\🐤\\🐓\\🍗")),
             };
             for (auto test : tests) {
                 TEXT arg1 = std::get<0>(test.inputs);
@@ -98,6 +99,24 @@ namespace PeLibraryTest
                 }
 
                 release_object_list(&actual, true);
+            }
+        }
+
+        TEST_METHOD(canonicalize_path_test)
+        {
+            auto tests = {
+                DATA(wrap("C:\\dir\\x\\file2"), wrap("C:\\dir\\file\\..\\x\\.\\file2")),
+                DATA(wrap("a"), wrap("..\\..\\a")),
+                DATA(wrap("a"), wrap("../../a")),
+            };
+            for (auto test : tests) {
+                TEXT arg1 = std::get<0>(test.inputs);
+
+                TEXT actual = canonicalize_path(&arg1, DEFAULT_MEMORY);
+
+                Assert::IsTrue(is_equals_text(&test.expected, &actual, true), test.expected.value);
+
+                release_text(&actual);
             }
         }
 
@@ -138,17 +157,6 @@ namespace PeLibraryTest
 
             TEXT actual = join_path(&input1, input2, sizeof(input2) / sizeof(input2[0]), DEFAULT_MEMORY);
             Assert::AreEqual(expected.value, actual.value);
-
-            release_text(&actual);
-        }
-
-        TEST_METHOD(canonicalize_path_test)
-        {
-            TEXT input = wrap("C:\\dir\\file\\..\\x\\.\\file2");
-            TCHAR expected[] = _T("C:\\dir\\x\\file2");
-            TEXT actual = canonicalize_path(&input, DEFAULT_MEMORY);
-
-            Assert::AreEqual(expected, actual.value);
 
             release_text(&actual);
         }

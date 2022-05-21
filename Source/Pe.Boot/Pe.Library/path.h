@@ -45,17 +45,16 @@ OBJECT_LIST RC_HEAP_FUNC(split_path, const TEXT* path, const MEMORY_RESOURCE* me
 #   define split_path(path, memory_resource) RC_HEAP_WRAP(split_path, (path), memory_resource)
 #endif
 
-///// <summary>
-///// パスの正規化。
-///// </summary>
-///// <param name=""></param>
-///// <param name="path"></param>
-///// <param name="memory_resource"></param>
-///// <returns></returns>
-//TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
-//#ifdef RES_CHECK
-//#   define canonicalize_path(path, memory_resource) RC_HEAP_WRAP(canonicalize_path, (path), memory_resource)
-//#endif
+/// <summary>
+/// パスの正規化。
+/// </summary>
+/// <param name="path"></param>
+/// <param name="memory_resource"></param>
+/// <returns>正規化されたパス。</returns>
+TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
+#ifdef RES_CHECK
+#   define canonicalize_path(path, memory_resource) RC_HEAP_WRAP(canonicalize_path, (path), memory_resource)
+#endif
 
 /// <summary>
 /// パスを結合する。
@@ -79,17 +78,6 @@ TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path
 TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_t count, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
 #   define join_path(base_path, paths, count, memory_resource) RC_HEAP_WRAP(join_path, (base_path), (paths), (count), memory_resource)
-#endif
-
-/// <summary>
-/// パスの正規化。
-/// <para>[番兵未対応]</para>
-/// </summary>
-/// <param name="path"></param>
-/// <returns>正規化されたパス。</returns>
-TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
-#ifdef RES_CHECK
-#   define canonicalize_path(path, memory_resource) RC_HEAP_WRAP(canonicalize_path, (path), memory_resource)
 #endif
 
 /// <summary>
