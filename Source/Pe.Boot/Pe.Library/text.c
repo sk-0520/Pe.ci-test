@@ -252,3 +252,16 @@ TCHAR* RC_HEAP_FUNC(text_to_string, const TEXT* text, const MEMORY_RESOURCE* mem
 
     return RC_HEAP_CALL(clone_string_with_length, text->value, text->length, memory_resource);
 }
+
+TEXT get_sentinel_text(const TEXT* text)
+{
+    assert(text->library.sentinel);
+    assert(is_enabled_text(text));
+
+    const MEMORY_RESOURCE* memory_resource = text->library.memory_resource
+        ? text->library.memory_resource
+        : get_default_memory_resource()
+        ;
+
+    return clone_text(text, memory_resource);
+}

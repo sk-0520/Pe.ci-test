@@ -10,14 +10,9 @@ static DWORD get_file_attributes_core(const TEXT* path)
         return GetFileAttributes(path->value);
     }
 
-    const MEMORY_RESOURCE* memory_resource = path->library.memory_resource
-        ? path->library.memory_resource
-        : get_default_memory_resource()
-        ;
-
-    TCHAR* cstr = text_to_string(path, memory_resource);
-    DWORD attr = GetFileAttributes(path->value);
-    release_string(cstr, memory_resource);
+    TEXT text = get_sentinel_text(path);
+    DWORD attr = GetFileAttributes(text.value);
+    release_text(&text);
 
     return attr;
 }
