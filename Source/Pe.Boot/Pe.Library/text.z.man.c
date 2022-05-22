@@ -129,10 +129,10 @@ bool is_whitespace_text(const TEXT* text)
 /// <param name="characters"></param>
 /// <param name="count"></param>
 /// <returns>トリム可能か</returns>
-static bool trim_core(TRIM_RESULT* result, const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count)
+static bool trim_core(TRIM_RESULT* result, const TEXT* text, TRIM_TARGETS targets, const TCHAR* characters, size_t count)
 {
     assert(text);
-    if ((!start && !end) || !count) {
+    if (!targets || !count) {
         result->index = 0;
         result->length = text->length;
         return true;
@@ -140,28 +140,32 @@ static bool trim_core(TRIM_RESULT* result, const TEXT* text, bool start, bool en
     assert(characters);
 
     size_t begin_index = 0;
-    for (size_t i = 0; start && i < text->length; i++) {
-        bool find = contains_characters(text->value[i], characters, count);
-        if (!find) {
-            begin_index = i;
-            break;
-        }
-        if (i == (size_t)text->length - 1) {
-            // 最後まで行っちゃった
-            return false;
+    if ((targets & TRIM_TARGETS_HEAD) == TRIM_TARGETS_HEAD) {
+        for (size_t i = 0; i < text->length; i++) {
+            bool find = contains_characters(text->value[i], characters, count);
+            if (!find) {
+                begin_index = i;
+                break;
+            }
+            if (i == (size_t)text->length - 1) {
+                // 最後まで行っちゃった
+                return false;
+            }
         }
     }
 
     size_t end_index = (size_t)text->length - 1;
-    for (size_t i = end_index; end; i--) {
-        bool find = contains_characters(text->value[i], characters, count);
-        if (!find) {
-            end_index = i;
-            break;
-        }
-        if (!i) {
-            // 最初まで行っちゃった
-            return false;
+    if ((targets & TRIM_TARGETS_TAIL) == TRIM_TARGETS_TAIL) {
+        for (size_t i = end_index; true; i--) {
+            bool find = contains_characters(text->value[i], characters, count);
+            if (!find) {
+                end_index = i;
+                break;
+            }
+            if (!i) {
+                // 最初まで行っちゃった
+                return false;
+            }
         }
     }
 
@@ -171,10 +175,10 @@ static bool trim_core(TRIM_RESULT* result, const TEXT* text, bool start, bool en
     return true;
 }
 
-TEXT RC_HEAP_FUNC(trim_text, const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count, const MEMORY_RESOURCE* memory_resource)
+TEXT RC_HEAP_FUNC(trim_text, const TEXT* text, TRIM_TARGETS targets, const TCHAR* characters, size_t count, const MEMORY_RESOURCE* memory_resource)
 {
     TRIM_RESULT trim_result;
-    if (trim_core(&trim_result, text, start, end, characters, count)) {
+    if (trim_core(&trim_result, text, targets, characters, count)) {
         return new_text_with_length(text->value + trim_result.index, trim_result.length, memory_resource);
     }
 
@@ -183,13 +187,13 @@ TEXT RC_HEAP_FUNC(trim_text, const TEXT* text, bool start, bool end, const TCHAR
 
 TEXT RC_HEAP_FUNC(trim_whitespace_text, const TEXT* text, const MEMORY_RESOURCE* memory_resource)
 {
-    return trim_text(text, true, true, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters), memory_resource);
+    return trim_text(text, TRIM_TARGETS_BOTH, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters), memory_resource);
 }
 
-TEXT trim_text_stack(const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count)
+TEXT trim_text_stack(const TEXT* text, TRIM_TARGETS targets, const TCHAR* characters, size_t count)
 {
     TRIM_RESULT trim_result;
-    if (trim_core(&trim_result, text, start, end, characters, count)) {
+    if (trim_core(&trim_result, text, targets, characters, count)) {
         return wrap_text_with_length(text->value + trim_result.index, trim_result.length, false, NULL);
     }
 
@@ -198,7 +202,7 @@ TEXT trim_text_stack(const TEXT* text, bool start, bool end, const TCHAR* charac
 
 TEXT trim_whitespace_text_stack(const TEXT* text)
 {
-    return trim_text_stack(text, true, true, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters));
+    return trim_text_stack(text, TRIM_TARGETS_BOTH, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters));
 }
 
 OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function, const MEMORY_RESOURCE* memory_resource)

@@ -144,26 +144,25 @@ namespace PeLibraryTest
         TEST_METHOD(trim_text_test)
         {
             auto tests = {
-                DATA(_T("a"), wrap(" a "), true, true, std::vector<TCHAR>({ ' ', })),
-                DATA(_T("a "), wrap(" a "), true, false, std::vector<TCHAR>({ ' ', })),
-                DATA(_T(" a"), wrap(" a "), false, true, std::vector<TCHAR>({ ' ', })),
-                DATA(_T("a b"), wrap("      a b    "), true, true, std::vector<TCHAR>({ ' ', })),
-                DATA(_T("a"), wrap(" \t a\t \t"), true, true, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(_T("a\tb c"), wrap(" \t a\tb c\t \t"), true, true, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(_T(" \t a\tb c"), wrap(" \t a\tb c\t \t"), false, true, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(_T("a\tb c\t \t"), wrap(" \t a\tb c\t \t"), true, false, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(_T(" \t a\tb c\t \t"), wrap(" \t a\tb c\t \t"), false, false, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(_T(" \t \t \t"), wrap(" \t \t \t"), false, false, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(_T(""), wrap(" \t \t \t"), true, false, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(_T(""), wrap(" \t \t \t"), false, true, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T("a"), wrap(" a "), TRIM_TARGETS_BOTH, std::vector<TCHAR>({ ' ', })),
+                DATA(_T("a "), wrap(" a "), TRIM_TARGETS_HEAD, std::vector<TCHAR>({ ' ', })),
+                DATA(_T(" a"), wrap(" a "), TRIM_TARGETS_TAIL, std::vector<TCHAR>({ ' ', })),
+                DATA(_T("a b"), wrap("      a b    "), TRIM_TARGETS_BOTH, std::vector<TCHAR>({ ' ', })),
+                DATA(_T("a"), wrap(" \t a\t \t"), TRIM_TARGETS_BOTH, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T("a\tb c"), wrap(" \t a\tb c\t \t"), TRIM_TARGETS_BOTH, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T(" \t a\tb c"), wrap(" \t a\tb c\t \t"), TRIM_TARGETS_TAIL, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T("a\tb c\t \t"), wrap(" \t a\tb c\t \t"), TRIM_TARGETS_HEAD, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T(" \t a\tb c\t \t"), wrap(" \t a\tb c\t \t"), TRIM_TARGETS_NONE, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T(" \t \t \t"), wrap(" \t \t \t"), TRIM_TARGETS_NONE, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T(""), wrap(" \t \t \t"), TRIM_TARGETS_HEAD, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(_T(""), wrap(" \t \t \t"), TRIM_TARGETS_TAIL, std::vector<TCHAR>({ ' ', '\t' })),
             };
 
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                bool arg2 = std::get<1>(test.inputs);
-                bool arg3 = std::get<2>(test.inputs);
-                auto arg4 = std::get<3>(test.inputs);
-                TEXT actual = trim_text(&arg1, arg2, arg3, arg4.data(), arg4.size(), DEFAULT_MEMORY);
+                TRIM_TARGETS arg2 = std::get<1>(test.inputs);
+                auto arg3 = std::get<2>(test.inputs);
+                TEXT actual = trim_text(&arg1, arg2, arg3.data(), arg3.size(), DEFAULT_MEMORY);
                 Assert::AreEqual(test.expected, actual.value);
                 Assert::IsTrue(actual.library.need_release);
                 release_text(&actual);
@@ -187,26 +186,25 @@ namespace PeLibraryTest
         TEST_METHOD(trim_text_stack_test)
         {
             auto tests = {
-                DATA(wrap("a"), wrap(" a "), true, true, std::vector<TCHAR>({ ' ', })),
-                DATA(wrap("a "), wrap(" a "), true, false, std::vector<TCHAR>({ ' ', })),
-                DATA(wrap(" a"), wrap(" a "), false, true, std::vector<TCHAR>({ ' ', })),
-                DATA(wrap("a b"), wrap("      a b    "), true, true, std::vector<TCHAR>({ ' ', })),
-                DATA(wrap("a"), wrap(" \t a\t \t"), true, true, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(wrap("a\tb c"), wrap(" \t a\tb c\t \t"), true, true, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(wrap(" \t a\tb c"), wrap(" \t a\tb c\t \t"), false, true, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(wrap("a\tb c\t \t"), wrap(" \t a\tb c\t \t"), true, false, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(wrap(" \t a\tb c\t \t"), wrap(" \t a\tb c\t \t"), false, false, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(wrap(" \t \t \t"), wrap(" \t \t \t"), false, false, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(wrap(""), wrap(" \t \t \t"), true, false, std::vector<TCHAR>({ ' ', '\t' })),
-                DATA(wrap(""), wrap(" \t \t \t"), false, true, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap("a"), wrap(" a "), TRIM_TARGETS_BOTH, std::vector<TCHAR>({ ' ', })),
+                DATA(wrap("a "), wrap(" a "), TRIM_TARGETS_HEAD, std::vector<TCHAR>({ ' ', })),
+                DATA(wrap(" a"), wrap(" a "), TRIM_TARGETS_TAIL, std::vector<TCHAR>({ ' ', })),
+                DATA(wrap("a b"), wrap("      a b    "), TRIM_TARGETS_BOTH, std::vector<TCHAR>({ ' ', })),
+                DATA(wrap("a"), wrap(" \t a\t \t"), TRIM_TARGETS_BOTH, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap("a\tb c"), wrap(" \t a\tb c\t \t"), TRIM_TARGETS_BOTH, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap(" \t a\tb c"), wrap(" \t a\tb c\t \t"), TRIM_TARGETS_TAIL, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap("a\tb c\t \t"), wrap(" \t a\tb c\t \t"), TRIM_TARGETS_HEAD, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap(" \t a\tb c\t \t"), wrap(" \t a\tb c\t \t"), TRIM_TARGETS_NONE, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap(" \t \t \t"), wrap(" \t \t \t"), TRIM_TARGETS_NONE, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap(""), wrap(" \t \t \t"), TRIM_TARGETS_HEAD, std::vector<TCHAR>({ ' ', '\t' })),
+                DATA(wrap(""), wrap(" \t \t \t"), TRIM_TARGETS_TAIL, std::vector<TCHAR>({ ' ', '\t' })),
             };
 
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                bool arg2 = std::get<1>(test.inputs);
-                bool arg3 = std::get<2>(test.inputs);
-                auto arg4 = std::get<3>(test.inputs);
-                TEXT actual = trim_text_stack(&arg1, arg2, arg3, arg4.data(), arg4.size());
+                TRIM_TARGETS arg2 = std::get<1>(test.inputs);
+                auto arg3 = std::get<2>(test.inputs);
+                TEXT actual = trim_text_stack(&arg1, arg2, arg3.data(), arg3.size());
                 Assert::IsTrue(is_equals_text(&test.expected, &actual, false), test.expected.value);
                 Assert::IsFalse(actual.library.need_release);
             }

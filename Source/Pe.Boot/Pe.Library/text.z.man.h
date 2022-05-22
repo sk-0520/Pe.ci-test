@@ -23,6 +23,26 @@ typedef enum tag_IGNORE_EMPTY
 } IGNORE_EMPTY;
 
 /// <summary>
+/// トリム対象。
+/// </summary>
+typedef enum tag_TRIM_TARGETS
+{
+    TRIM_TARGETS_NONE = 0b0000,
+    /// <summary>
+    /// 先頭。
+    /// </summary>
+    TRIM_TARGETS_HEAD = 0b0001,
+    /// <summary>
+    /// 終端。
+    /// </summary>
+    TRIM_TARGETS_TAIL = 0b0010,
+    /// <summary>
+    /// 両方
+    /// </summary>
+    TRIM_TARGETS_BOTH = TRIM_TARGETS_HEAD | TRIM_TARGETS_TAIL,
+} TRIM_TARGETS;
+
+/// <summary>
 ///
 /// </summary>
 /// <para name="source">元データ。</para>
@@ -80,14 +100,13 @@ bool is_whitespace_text(const TEXT* text);
 /// テキストのトリム処理。
 /// </summary>
 /// <param name="text">対象テキスト。</param>
-/// <param name="start">先頭をトリム対象とするか。</param>
-/// <param name="end">終端をトリム対象とするか。</param>
+/// <param name="targets">トリム方向。</param>
 /// <param name="characters">トリム対象文字一覧。</param>
 /// <param name="count">charactersの個数。</param>
 /// <returns>トリムされたテキスト。解放が必要。</returns>
-TEXT RC_HEAP_FUNC(trim_text, const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(trim_text, const TEXT* text, TRIM_TARGETS targets, const TCHAR* characters, size_t count, const MEMORY_RESOURCE* memory_resource);
 #ifdef RES_CHECK
-#   define trim_text(text, start, end, characters, count, memory_resource) RC_HEAP_WRAP(trim_text, text, start, end, characters, count, memory_resource)
+#   define trim_text(text, targets, characters, count, memory_resource) RC_HEAP_WRAP(trim_text, text, targets, characters, count, memory_resource)
 #endif
 
 /// <summary>
@@ -102,7 +121,7 @@ TEXT RC_HEAP_FUNC(trim_whitespace_text, const TEXT* text, const MEMORY_RESOURCE*
 #   define trim_whitespace_text(text, memory_resource) RC_HEAP_WRAP(trim_whitespace_text, text, memory_resource)
 #endif
 
-TEXT trim_text_stack(const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count);
+TEXT trim_text_stack(const TEXT* text, TRIM_TARGETS targets, const TCHAR* characters, size_t count);
 
 TEXT trim_whitespace_text_stack(const TEXT* text);
 

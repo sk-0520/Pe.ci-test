@@ -145,11 +145,11 @@ TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path
 {
     // 相対パスが絶対パスっぽければ相対パス自身を返す
     if (relative_path->length && is_directory_separator(relative_path->value[0])) {
-        return RC_HEAP_CALL(trim_text, relative_path, false, true, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS), memory_resource);
+        return RC_HEAP_CALL(trim_text, relative_path, TRIM_TARGETS_TAIL, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS), memory_resource);
     }
 
-    TEXT trimmed_base_path = trim_text_stack(base_path, false, true, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
-    TEXT trimmed_relative_path = trim_text_stack(relative_path, true, true, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
+    TEXT trimmed_base_path = trim_text_stack(base_path, TRIM_TARGETS_TAIL, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
+    TEXT trimmed_relative_path = trim_text_stack(relative_path, TRIM_TARGETS_BOTH, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
 
     if (!trimmed_base_path.length || !trimmed_relative_path.length) {
         if (trimmed_base_path.length) {
@@ -181,11 +181,11 @@ TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_
     }
 
     STRING_BUILDER string_builder = RC_HEAP_CALL(new_string_builder, total_path_length, memory_resource);
-    TEXT trimmed_base_path = trim_text_stack(base_path, false, true, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
+    TEXT trimmed_base_path = trim_text_stack(base_path, TRIM_TARGETS_TAIL, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
     append_builder_text_word(&string_builder, &trimmed_base_path);
 
     for (size_t i = 0; i < count; i++) {
-        TEXT trimmed_path = trim_text_stack(paths + i, true, true, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
+        TEXT trimmed_path = trim_text_stack(paths + i, TRIM_TARGETS_BOTH, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
         if (trimmed_path.length) {
             append_builder_character_word(&string_builder, DIRECTORY_SEPARATOR_CHARACTER);
             append_builder_text_word(&string_builder, &trimmed_path);

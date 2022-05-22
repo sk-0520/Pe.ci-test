@@ -66,7 +66,7 @@ if(!is_stack_array(array_or_memory_item)) { \
 
 /// <summary>
 /// デフォルトのメモリリソースを取得。
-/// <para>Pe.Libraryで明示的に使用することはない。</para>
+/// <para>呼び出し側でメモリ処理しないようなインターフェイスの場合、Pe.Libraryで明示的に使用することはない。</para>
 /// </summary>
 /// <returns></returns>
 MEMORY_RESOURCE* get_default_memory_resource();
