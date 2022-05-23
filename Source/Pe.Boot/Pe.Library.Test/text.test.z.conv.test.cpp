@@ -79,6 +79,30 @@ namespace PeLibraryTest
             }
         }
 
+        TEST_METHOD(parse_i32_from_text_2_value_test)
+        {
+            auto tests = {
+                DATA(1, wrap("1"), false),
+                DATA(-1, wrap("-1"), false),
+                DATA(123, wrap("123"), false),
+
+                DATA(1, wrap("1"), true),
+                DATA(15, wrap("f"), true),
+                DATA(0xf, wrap("0xf"), true),
+                DATA(0x1fff, wrap("1fff"), true),
+                DATA(0x1fff, wrap("0x1fff"), true),
+            };
+
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                bool arg2 = std::get<1>(test.inputs);
+                auto actual = parse_i32_from_text_2(&arg1, arg2);
+                Assert::IsTrue(actual.success);
+                Assert::AreEqual(test.expected, actual.value);
+            }
+        }
+
+
 #ifdef _WIN64
         TEST_METHOD(parse_i64_from_text_success_test)
         {
@@ -181,6 +205,16 @@ namespace PeLibraryTest
                 DATA((int32_t)6, wrap("0110")),
                 DATA((int32_t)7, wrap("0111")),
                 DATA((int32_t)8, wrap("1000")),
+
+                DATA((int32_t)0, wrap("0b0000")),
+                DATA((int32_t)1, wrap("0b0001")),
+                DATA((int32_t)2, wrap("0b0010")),
+                DATA((int32_t)3, wrap("0b0011")),
+                DATA((int32_t)4, wrap("0b0100")),
+                DATA((int32_t)5, wrap("0b0101")),
+                DATA((int32_t)6, wrap("0b0110")),
+                DATA((int32_t)7, wrap("0b0111")),
+                DATA((int32_t)8, wrap("0b1000")),
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);

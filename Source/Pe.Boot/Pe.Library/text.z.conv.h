@@ -44,6 +44,8 @@ typedef struct tag_TEXT_PARSED_I64_RESULT
 /// <returns>結果データ。</returns>
 TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex, const MEMORY_RESOURCE* memory_resource);
 
+TEXT_PARSED_I32_RESULT parse_i32_from_text_2(const TEXT* input, bool support_hex);
+
 #ifdef _WIN64
 /// <summary>
 /// テキストを数値(64bit幅)に変換。
