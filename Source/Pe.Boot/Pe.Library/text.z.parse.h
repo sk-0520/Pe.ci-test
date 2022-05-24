@@ -27,7 +27,7 @@ typedef enum tag_PARSE_BASE_NUMBER
 } PARSE_BASE_NUMBER;
 
 /// <summary>
-/// i32変換結果。
+/// 32bit符号あり整数変換結果。
 /// </summary>
 typedef struct tag_TEXT_PARSED_I32_RESULT
 {
@@ -42,9 +42,25 @@ typedef struct tag_TEXT_PARSED_I32_RESULT
     bool success;
 } TEXT_PARSED_I32_RESULT;
 
+/// <summary>
+/// 32bit符号なし整数変換結果。
+/// </summary>
+typedef struct tag_TEXT_PARSED_U32_RESULT
+{
+    /// <summary>
+    /// 変換値。
+    /// <para>successが真の場合に有効値が設定される。</para>
+    /// </summary>
+    uint32_t value;
+    /// <summary>
+    /// 変換成功状態。
+    /// </summary>
+    bool success;
+} TEXT_PARSED_U32_RESULT;
+
 #ifdef _WIN64
 /// <summary>
-/// i64変換結果。
+/// 64bit符号あり整数変換結果。
 /// </summary>
 typedef struct tag_TEXT_PARSED_I64_RESULT
 {
@@ -60,23 +76,59 @@ typedef struct tag_TEXT_PARSED_I64_RESULT
 } TEXT_PARSED_I64_RESULT;
 #endif
 
+#ifdef _WIN64
+/// <summary>
+/// 64bit符号なし整数変換結果。
+/// </summary>
+typedef struct tag_TEXT_PARSED_U64_RESULT
+{
+    /// <summary>
+    /// 変換値。
+    /// <para>successが真の場合に有効値が設定される。</para>
+    /// </summary>
+    uint64_t value;
+    /// <summary>
+    /// 変換成功状態。
+    /// </summary>
+    bool success;
+} TEXT_PARSED_U64_RESULT;
+#endif
+
 
 
 /// <summary>
-/// テキストをi32に変換。
+/// テキストを32bit符号あり整数に変換。
 /// </summary>
 /// <param name="input">入力テキスト。</param>
 /// <param name="base">入力テキストをN進数として扱う(N=10=10進数)</param>
 /// <returns>結果データ。</returns>
 TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, size_t base);
 
+/// <summary>
+/// テキストを32bit符号なし整数に変換。
+/// </summary>
+/// <param name="input">入力テキスト。</param>
+/// <param name="base">入力テキストをN進数として扱う(N=10=10進数)</param>
+/// <returns>結果データ。</returns>
+TEXT_PARSED_U32_RESULT parse_u32_from_text(const TEXT* input, size_t base);
+
 #ifdef _WIN64
 /// <summary>
-/// テキストをi64に変換。
+/// テキストを64bit符号あり整数に変換。
 /// </summary>
 /// <param name="input">入力テキスト。</param>
 /// <param name="base">入力テキストをN進数として扱う(N=10=10進数)</param>
 /// <returns>結果データ。</returns>
 TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, size_t base);
+#endif
+
+#ifdef _WIN64
+/// <summary>
+/// テキストを64bit符号なし整数に変換。
+/// </summary>
+/// <param name="input">入力テキスト。</param>
+/// <param name="base">入力テキストをN進数として扱う(N=10=10進数)</param>
+/// <returns>結果データ。</returns>
+TEXT_PARSED_U64_RESULT parse_u64_from_text(const TEXT* input, size_t base);
 #endif
 

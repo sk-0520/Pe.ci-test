@@ -41,7 +41,7 @@ typedef enum tag_PARSE_BASE_NUMBER
 #ifdef _WIN64
 <# } #>
 /// <summary>
-/// <#= item.Name #>変換結果。
+/// <#= item.Description #>変換結果。
 /// </summary>
 typedef struct tag_<#= item.ParsedResultStructName #>
 {
@@ -67,7 +67,7 @@ typedef struct tag_<#= item.ParsedResultStructName #>
 #ifdef _WIN64
 <# } #>
 /// <summary>
-/// テキストを<#= item.Name #>に変換。
+/// テキストを<#= item.Description #>に変換。
 /// </summary>
 /// <param name="input">入力テキスト。</param>
 /// <param name="base">入力テキストをN進数として扱う(N=10=10進数)</param>

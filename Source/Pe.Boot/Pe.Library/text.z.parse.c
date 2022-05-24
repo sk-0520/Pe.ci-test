@@ -10,10 +10,26 @@ static TEXT_PARSED_I32_RESULT create_failed_i32_parse_result()
         .success = false,
     };
 }
+static TEXT_PARSED_U32_RESULT create_failed_u32_parse_result()
+{
+    return (TEXT_PARSED_U32_RESULT) {
+        .value = 0,
+        .success = false,
+    };
+}
 #ifdef _WIN64
 static TEXT_PARSED_I64_RESULT create_failed_i64_parse_result()
 {
     return (TEXT_PARSED_I64_RESULT) {
+        .value = 0,
+        .success = false,
+    };
+}
+#endif
+#ifdef _WIN64
+static TEXT_PARSED_U64_RESULT create_failed_u64_parse_result()
+{
+    return (TEXT_PARSED_U64_RESULT) {
         .value = 0,
         .success = false,
     };
@@ -124,6 +140,61 @@ TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, size_t base)
     };
 }
 
+TEXT_PARSED_U32_RESULT parse_u32_from_text(const TEXT* input, size_t base)
+{
+    assert(2 <= base && base <= 36);
+
+    if (!is_enabled_text(input)) {
+        return create_failed_u32_parse_result();
+    }
+
+    TEXT trimmed_input = trim_whitespace_text_stack(input);
+    if (!trimmed_input.length) {
+        return create_failed_u32_parse_result();
+    }
+
+    bool has_signed = check_has_u_signed(&trimmed_input);
+
+    TEXT sign_skip_text = has_signed ? reference_text_width_length(&trimmed_input, 1, 0) : trimmed_input;
+    TEXT parse_target_text = skip_base_header(&sign_skip_text, base);
+
+    uint32_t total = 0;
+
+    for (size_t i = 0; i < parse_target_text.length; i++) {
+        TCHAR c = parse_target_text.value[i];
+        if (i) {
+            total *= (uint32_t)base;
+        }
+        if (base <= 10) {
+            int32_t n;
+            if (_T('0') <= c && c <= (_T('0') + base - 1)) {
+                n = c - '0';
+            } else {
+                return create_failed_u32_parse_result();
+            }
+            total += n;
+        } else {
+            int32_t n;
+            if ('a' <= c && c <= ((_T('a') + base - 1 - 10))) {
+                n = c - 'a' + 10;
+            } else if ('A' <= c && c <= ((_T('A') + base - 1 - 10))) {
+                n = c - 'A' + 10;
+            } else if (_T('0') <= c && c <= (_T('0') + base - 1)) {
+                n = c - '0';
+            } else {
+                return create_failed_u32_parse_result();
+            }
+            total += n;
+        }
+    }
+
+    
+    return (TEXT_PARSED_U32_RESULT) {
+        .success = true,
+        .value = total,
+    };
+}
+
 #ifdef _WIN64
 TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, size_t base)
 {
@@ -178,6 +249,63 @@ TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, size_t base)
     }
     
     return (TEXT_PARSED_I64_RESULT) {
+        .success = true,
+        .value = total,
+    };
+}
+#endif
+
+#ifdef _WIN64
+TEXT_PARSED_U64_RESULT parse_u64_from_text(const TEXT* input, size_t base)
+{
+    assert(2 <= base && base <= 36);
+
+    if (!is_enabled_text(input)) {
+        return create_failed_u64_parse_result();
+    }
+
+    TEXT trimmed_input = trim_whitespace_text_stack(input);
+    if (!trimmed_input.length) {
+        return create_failed_u64_parse_result();
+    }
+
+    bool has_signed = check_has_u_signed(&trimmed_input);
+
+    TEXT sign_skip_text = has_signed ? reference_text_width_length(&trimmed_input, 1, 0) : trimmed_input;
+    TEXT parse_target_text = skip_base_header(&sign_skip_text, base);
+
+    uint64_t total = 0;
+
+    for (size_t i = 0; i < parse_target_text.length; i++) {
+        TCHAR c = parse_target_text.value[i];
+        if (i) {
+            total *= (uint64_t)base;
+        }
+        if (base <= 10) {
+            int32_t n;
+            if (_T('0') <= c && c <= (_T('0') + base - 1)) {
+                n = c - '0';
+            } else {
+                return create_failed_u64_parse_result();
+            }
+            total += n;
+        } else {
+            int32_t n;
+            if ('a' <= c && c <= ((_T('a') + base - 1 - 10))) {
+                n = c - 'a' + 10;
+            } else if ('A' <= c && c <= ((_T('A') + base - 1 - 10))) {
+                n = c - 'A' + 10;
+            } else if (_T('0') <= c && c <= (_T('0') + base - 1)) {
+                n = c - '0';
+            } else {
+                return create_failed_u64_parse_result();
+            }
+            total += n;
+        }
+    }
+
+    
+    return (TEXT_PARSED_U64_RESULT) {
         .success = true,
         .value = total,
     };

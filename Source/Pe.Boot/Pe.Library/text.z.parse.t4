@@ -67,8 +67,10 @@ class TextParseItem
     public static IEnumerable<TextParseItem> GetItems()
     {
         return new [] {
-            new TextParseItem("32bit符号なし整数", "i32", "int32_t", true, 32),
-            new TextParseItem("64bit符号なし整数", "i64", "int64_t", true, 64),
+            new TextParseItem("32bit符号あり整数", "i32", "int32_t", true, 32),
+            new TextParseItem("32bit符号なし整数", "u32", "uint32_t", false, 32),
+            new TextParseItem("64bit符号あり整数", "i64", "int64_t", true, 64),
+            new TextParseItem("64bit符号なし整数", "u64", "uint64_t", false, 64),
         };
     }
 
