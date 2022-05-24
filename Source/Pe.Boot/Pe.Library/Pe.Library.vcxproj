@@ -427,12 +427,16 @@
     <ClCompile Include="string_builder.c" />
     <ClCompile Include="tcharacter.c" />
     <ClCompile Include="text.z.conv.c" />
+    <ClCompile Include="text.z.parse.c" />
     <ClCompile Include="text.z.search.c" />
     <ClCompile Include="text.c" />
     <ClCompile Include="text.z.man.c" />
     <ClCompile Include="tstring.c" />
     <ClCompile Include="writer.c" />
     <ClCompile Include="without_crt.c" />
+    <None Include="text.z.parse.c.tt" />
+    <None Include="text.z.parse.h.tt" />
+    <None Include="text.z.parse.t4" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="command_line.h" />
@@ -460,6 +464,7 @@
     <ClInclude Include="string_builder.h" />
     <ClInclude Include="tcharacter.h" />
     <ClInclude Include="text.z.conv.h" />
+    <ClInclude Include="text.z.parse.h" />
     <ClInclude Include="text.z.search.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="text.z.man.h" />

@@ -105,6 +105,9 @@
     <ClCompile Include="lib_math.c">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="text.z.parse.c">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h">
@@ -191,12 +194,24 @@
     <ClInclude Include="lib_math.h">
       <Filter>header</Filter>
     </ClInclude>
+    <ClInclude Include="text.z.parse.h">
+      <Filter>header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="primitive_list.c.tt">
       <Filter>template</Filter>
     </None>
     <None Include="primitive_list.h.tt">
+      <Filter>template</Filter>
+    </None>
+    <None Include="text.z.parse.c.tt">
+      <Filter>template</Filter>
+    </None>
+    <None Include="text.z.parse.h.tt">
+      <Filter>template</Filter>
+    </None>
+    <None Include="text.z.parse.t4">
       <Filter>template</Filter>
     </None>
   </ItemGroup>
