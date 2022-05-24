@@ -12,11 +12,27 @@
 #pragma once
 /* 自動生成: text.z.parse.h.tt */
 
+/// <summary>
+/// 変換値の今のとこ受け入れ可能基数。
+/// <para>多分普通の数値もいけると思うけど知らん。</para>
+/// </summary>
 typedef enum tag_PARSE_BASE_NUMBER
 {
+    /// <summary>
+    /// 2進数。
+    /// </summary>
     PARSE_BASE_NUMBER_B = 2,
+    /// <summary>
+    /// 8進数。
+    /// </summary>
     PARSE_BASE_NUMBER_O = 8,
+    /// <summary>
+    /// 10進数。
+    /// </summary>
     PARSE_BASE_NUMBER_D = 10,
+    /// <summary>
+    /// 16進数。
+    /// </summary>
     PARSE_BASE_NUMBER_X = 16,
 } PARSE_BASE_NUMBER;
 
