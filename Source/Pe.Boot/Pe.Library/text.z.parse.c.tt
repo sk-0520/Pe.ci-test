@@ -101,7 +101,7 @@ static TEXT skip_base_header(const TEXT* text, size_t base)
     for (size_t i = 0; i < parse_target_text.length; i++) {
         TCHAR c = parse_target_text.value[i];
         if (i) {
-            total *= base;
+            total *= (<#= item.Type #>)base;
         }
         if (base <= 10) {
             int32_t n;

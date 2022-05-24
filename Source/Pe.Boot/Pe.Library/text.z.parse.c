@@ -87,7 +87,7 @@ TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, size_t base)
     for (size_t i = 0; i < parse_target_text.length; i++) {
         TCHAR c = parse_target_text.value[i];
         if (i) {
-            total *= base;
+            total *= (int32_t)base;
         }
         if (base <= 10) {
             int32_t n;
@@ -146,7 +146,7 @@ TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, size_t base)
     for (size_t i = 0; i < parse_target_text.length; i++) {
         TCHAR c = parse_target_text.value[i];
         if (i) {
-            total *= base;
+            total *= (int64_t)base;
         }
         if (base <= 10) {
             int32_t n;
