@@ -90,3 +90,4 @@ typedef struct tag_<#= item.ParsedResultStructName #>
 #   define parse_ssize_from_text parse_i32_from_text
 #   define parse_size_from_text parse_u32_from_text
 #endif
+

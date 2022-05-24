@@ -134,13 +134,14 @@ TEXT_PARSED_U64_RESULT parse_u64_from_text(const TEXT* input, size_t base);
 
 
 #ifdef _WIN64
-#   define TEXT_PARSED_SIZE_RESULT TEXT_PARSED_U64_RESULT
 #   define TEXT_PARSED_SSIZE_RESULT TEXT_PARSED_I64_RESULT
-#   define parse_size_from_text parse_u64_from_text
+#   define TEXT_PARSED_SIZE_RESULT TEXT_PARSED_U64_RESULT
 #   define parse_ssize_from_text parse_i64_from_text
+#   define parse_size_from_text parse_u64_from_text
 #else
+#   define TEXT_PARSED_SSIZE_RESULT TEXT_PARSED_I32_RESULT
 #   define TEXT_PARSED_SIZE_RESULT TEXT_PARSED_U32_RESULT
-#   define TEXT_PARSED_SSIZE_RESULT TEXT_PARSED_I.0_RESULT
+#   define parse_ssize_from_text parse_i32_from_text
 #   define parse_size_from_text parse_u32_from_text
-#   define parse_ssize_from_text parse_32_from_text
 #endif
+
