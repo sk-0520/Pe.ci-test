@@ -45,9 +45,9 @@ typedef struct tag_<#= item.ParsedResultStructName #>
 /// テキストを<#= item.Name #>に変換。
 /// </summary>
 /// <param name="input">入力テキスト。</param>
-/// <param name="support_hex">16進数(0x)を考慮するか</param>
+/// <param name="base">入力テキストをN進数として扱う(N=10=10進数)</param>
 /// <returns>結果データ。</returns>
-<#= item.ParsedResultStructName #> parse_<#= item.Name #>_from_text_2(const TEXT* input, bool support_hex);
+<#= item.ParsedResultStructName #> <#= item.ParseFromTextFunctionName #>(const TEXT* input, size_t base);
 <# if(item.Is64BitOnly) { #>
 #endif
 <# } #>

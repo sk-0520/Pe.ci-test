@@ -44,6 +44,22 @@ class TextParseItem
         }
     }
 
+    public string CreateFailedFunctionName
+    {
+        get
+        {
+            return "create_failed_" + Name + "_parse_result";
+        }
+    }
+
+    public string ParseFromTextFunctionName
+    {
+        get
+        {
+            return "parse_" + Name + "_from_text";
+        }
+    }
+
     #endregion
 
     #region function

@@ -41,17 +41,17 @@ typedef struct tag_TEXT_PARSED_I64_RESULT
 /// テキストをi32に変換。
 /// </summary>
 /// <param name="input">入力テキスト。</param>
-/// <param name="support_hex">16進数(0x)を考慮するか</param>
+/// <param name="base">入力テキストをN進数として扱う(N=10=10進数)</param>
 /// <returns>結果データ。</returns>
-TEXT_PARSED_I32_RESULT parse_i32_from_text_2(const TEXT* input, bool support_hex);
+TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, size_t base);
 
 #ifdef _WIN64
 /// <summary>
 /// テキストをi64に変換。
 /// </summary>
 /// <param name="input">入力テキスト。</param>
-/// <param name="support_hex">16進数(0x)を考慮するか</param>
+/// <param name="base">入力テキストをN進数として扱う(N=10=10進数)</param>
 /// <returns>結果データ。</returns>
-TEXT_PARSED_I64_RESULT parse_i64_from_text_2(const TEXT* input, bool support_hex);
+TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, size_t base);
 #endif
 
