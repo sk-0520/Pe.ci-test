@@ -212,5 +212,6 @@ TEXT get_sentinel_text(const TEXT* text);
 
 // 文字列操作ラッパー
 #include "text.z.search.h"
+#include "text.z.parse.h"
 #include "text.z.conv.h"
 #include "text.z.man.h"

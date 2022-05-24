@@ -1,0 +1,55 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output encoding="utf-8" extension="" #>
+<#@ include file="text.z.parse.t4" once="true" #>
+<#
+    var items = TextParseItem.GetItems();
+#>
+#pragma once
+/* 自動生成: text.z.parse.h.tt */
+<# foreach(var item in items) { #>
+<# if(item.Is64BitOnly) { #>
+#ifdef _WIN64
+<# } #>
+/// <summary>
+/// <#= item.Name #>変換結果。
+/// </summary>
+typedef struct tag_<#= item.ParsedResultStructName #>
+{
+    /// <summary>
+    /// 変換値。
+    /// <para>successが真の場合に有効値が設定される。</para>
+    /// </summary>
+    <#= item.Type #> value;
+    /// <summary>
+    /// 変換成功状態。
+    /// </summary>
+    bool success;
+} <#= item.ParsedResultStructName #>;
+<# if(item.Is64BitOnly) { #>
+#endif
+<# } #>
+
+<# } #>
+
+
+<# foreach(var item in items) { #>
+<# if(item.Is64BitOnly) { #>
+#ifdef _WIN64
+<# } #>
+/// <summary>
+/// テキストを<#= item.Name #>に変換。
+/// </summary>
+/// <param name="input">入力テキスト。</param>
+/// <param name="support_hex">16進数(0x)を考慮するか</param>
+/// <returns>結果データ。</returns>
+<#= item.ParsedResultStructName #> parse_<#= item.Name #>_from_text_2(const TEXT* input, bool support_hex);
+<# if(item.Is64BitOnly) { #>
+#endif
+<# } #>
+
+<# } #>

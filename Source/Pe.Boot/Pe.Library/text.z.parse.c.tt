@@ -1,0 +1,36 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output encoding="utf-8" extension="" #>
+<#@ include file="text.z.parse.t4" once="true" #>
+<#
+    var items = TextParseItem.GetItems();
+#>
+/* 自動生成: text.z.parse.c.tt */
+#include "text.h"
+#include "debug.h"
+
+static bool check_has_i_sign(const TEXT* text)
+{
+    assert(text);
+    assert(text->length);
+
+    return text->value[0] == '-' || text->value[0] == '+';
+}
+
+static bool check_has_u_sign(const TEXT* text)
+{
+    assert(text);
+    assert(text->length);
+
+    return text->value[0] == '+';
+}
+
+<# foreach(var item in items) { #>
+
+
+
+<# } #>

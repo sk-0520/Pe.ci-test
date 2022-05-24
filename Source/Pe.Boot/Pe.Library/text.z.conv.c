@@ -42,7 +42,6 @@ static bool check_has_u_sign(const TEXT* text)
     return text->value[0] == '+';
 }
 
-
 static TEXT skip_base_header(const TEXT* text, size_t base)
 {
     if (2 <= text->length) {

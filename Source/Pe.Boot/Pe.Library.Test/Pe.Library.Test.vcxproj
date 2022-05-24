@@ -316,6 +316,7 @@
     <ClCompile Include="text.test.cpp" />
     <ClCompile Include="text.test.z.conv.test.cpp" />
     <ClCompile Include="text.test.z.man.test.cpp" />
+    <ClCompile Include="text.test.z.parse.test.cpp" />
     <ClCompile Include="text.test.z.search.test.cpp" />
     <ClCompile Include="tstring.test.cpp" />
     <ClCompile Include="string_builder.test.cpp" />
