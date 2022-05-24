@@ -26,13 +26,22 @@ static TEXT_PARSED_I64_RESULT create_failed_i64_parse_result()
 }
 #endif
 
-static bool check_has_sign(const TEXT* text)
+static bool check_has_i_sign(const TEXT* text)
 {
     assert(text);
     assert(text->length);
 
     return text->value[0] == '-' || text->value[0] == '+';
 }
+
+static bool check_has_u_sign(const TEXT* text)
+{
+    assert(text);
+    assert(text->length);
+
+    return text->value[0] == '+';
+}
+
 
 static TEXT skip_base_header(const TEXT* text, size_t base)
 {
@@ -64,31 +73,6 @@ static TEXT skip_base_header(const TEXT* text, size_t base)
     return *text;
 }
 
-TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex, const MEMORY_RESOURCE* memory_resource)
-{
-    if (!is_enabled_text(input)) {
-        return create_failed_i32_parse_result();
-    }
-
-#pragma warning(push)
-#pragma warning(disable:6001)
-    TEXT_PARSED_I32_RESULT result;
-#pragma warning(pop)
-    if (input->library.sentinel) {
-        result.success = StrToIntEx(input->value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
-    } else {
-        //TEXT sentinel = clone_text(input, memory_resource);
-        new_array_or_memory(buffer, array, TCHAR, input->length + 1, TEXT_STACK_COUNT, memory_resource);
-        copy_memory(buffer, input->value, input->length * sizeof(TCHAR));
-        buffer[input->length] = 0;
-        result.success = StrToIntEx(buffer, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
-        //release_text(&sentinel);
-        release_array_or_memory(array);
-    }
-
-    return result;
-}
-
 static TEXT_PARSED_I32_RESULT parse_i32_from_text_core(const TEXT* input, int32_t base)
 {
     assert(2 <= base && base <= 36);
@@ -102,7 +86,7 @@ static TEXT_PARSED_I32_RESULT parse_i32_from_text_core(const TEXT* input, int32_
         return create_failed_i32_parse_result();
     }
 
-    bool has_sign = check_has_sign(&trimmed_input);
+    bool has_sign = check_has_i_sign(&trimmed_input);
 
     TEXT sign_skip_text = has_sign ? reference_text_width_length(&trimmed_input, 1, 0) : trimmed_input;
     TEXT parse_target_text = skip_base_header(&sign_skip_text, base);
@@ -145,6 +129,31 @@ static TEXT_PARSED_I32_RESULT parse_i32_from_text_core(const TEXT* input, int32_
         .success = true,
         .value = total,
     };
+
+    return result;
+}
+
+TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex, const MEMORY_RESOURCE* memory_resource)
+{
+    if (!is_enabled_text(input)) {
+        return create_failed_i32_parse_result();
+    }
+
+#pragma warning(push)
+#pragma warning(disable:6001)
+    TEXT_PARSED_I32_RESULT result;
+#pragma warning(pop)
+    if (input->library.sentinel) {
+        result.success = StrToIntEx(input->value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
+    } else {
+        //TEXT sentinel = clone_text(input, memory_resource);
+        new_array_or_memory(buffer, array, TCHAR, input->length + 1, TEXT_STACK_COUNT, memory_resource);
+        copy_memory(buffer, input->value, input->length * sizeof(TCHAR));
+        buffer[input->length] = 0;
+        result.success = StrToIntEx(buffer, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
+        //release_text(&sentinel);
+        release_array_or_memory(array);
+    }
 
     return result;
 }
