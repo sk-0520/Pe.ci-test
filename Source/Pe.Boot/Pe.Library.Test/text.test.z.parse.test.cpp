@@ -15,18 +15,18 @@ namespace PeLibraryTest
         TEST_METHOD(parse_i32_from_text_success_test)
         {
             auto tests = {
-                DATA(false, wrap(""), false),
-                DATA(true, wrap("1"), false),
-                DATA(true, wrap("0xf"), false),
+                DATA(false, wrap(""), PARSE_BASE_NUMBER_D),
+                DATA(true, wrap("1"), PARSE_BASE_NUMBER_D),
+                DATA(false, wrap("0xf"), PARSE_BASE_NUMBER_D),
 
-                DATA(false, wrap(""), true),
-                DATA(true, wrap("1"), true),
-                DATA(true, wrap("0xf"), true),
+                DATA(false, wrap(""), PARSE_BASE_NUMBER_X),
+                DATA(true, wrap("1"), PARSE_BASE_NUMBER_X),
+                DATA(true, wrap("0xf"), PARSE_BASE_NUMBER_X),
             };
 
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                bool arg2 = std::get<1>(test.inputs);
+                PARSE_BASE_NUMBER arg2 = std::get<1>(test.inputs);
                 auto actual = parse_i32_from_text(&arg1, arg2);
                 if (test.expected) {
                     Assert::IsTrue(actual.success);
@@ -39,18 +39,17 @@ namespace PeLibraryTest
         TEST_METHOD(parse_i32_from_text_value_test)
         {
             auto tests = {
-                DATA(1, wrap("1"), 10),
-                DATA(0, wrap("0xf"), 10),
-                DATA(123, wrap("123"), 10),
+                DATA(1, wrap("1"), PARSE_BASE_NUMBER_D),
+                DATA(123, wrap("123"), PARSE_BASE_NUMBER_D),
 
-                DATA(1, wrap("1"), 16),
-                DATA(15, wrap("0xf"), 16),
-                DATA(8191, wrap("0x1fff"), 16),
+                DATA(1, wrap("1"), PARSE_BASE_NUMBER_X),
+                DATA(15, wrap("0xf"), PARSE_BASE_NUMBER_X),
+                DATA(8191, wrap("0x1fff"), PARSE_BASE_NUMBER_X),
             };
 
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                bool arg2 = std::get<1>(test.inputs);
+                PARSE_BASE_NUMBER arg2 = std::get<1>(test.inputs);
                 auto actual = parse_i32_from_text(&arg1, arg2);
                 Assert::IsTrue(actual.success);
                 Assert::AreEqual(test.expected, actual.value);
@@ -62,18 +61,18 @@ namespace PeLibraryTest
         TEST_METHOD(parse_i64_from_text_success_test)
         {
             auto tests = {
-                DATA(false, wrap(""), false),
-                DATA(true, wrap("1"), false),
-                DATA(true, wrap("0xf"), false),
+                DATA(false, wrap(""), PARSE_BASE_NUMBER_D),
+                DATA(true, wrap("1"), PARSE_BASE_NUMBER_D),
+                DATA(false, wrap("0xf"), PARSE_BASE_NUMBER_D),
 
-                DATA(false, wrap(""), true),
-                DATA(true, wrap("1"), true),
-                DATA(true, wrap("0xf"), true),
+                DATA(false, wrap(""), PARSE_BASE_NUMBER_X),
+                DATA(true, wrap("1"), PARSE_BASE_NUMBER_X),
+                DATA(true, wrap("0xf"), PARSE_BASE_NUMBER_X),
             };
 
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                bool arg2 = std::get<1>(test.inputs);
+                PARSE_BASE_NUMBER arg2 = std::get<1>(test.inputs);
                 auto actual = parse_i64_from_text(&arg1, arg2);
                 if (test.expected) {
                     Assert::IsTrue(actual.success);
@@ -86,18 +85,17 @@ namespace PeLibraryTest
         TEST_METHOD(parse_i64_from_text_value_test)
         {
             auto tests = {
-                DATA((__int64)1, wrap("1"), false),
-                DATA((__int64)0, wrap("0xf"), false),
-                DATA((__int64)123, wrap("123"), false),
+                DATA((__int64)1, wrap("1"), PARSE_BASE_NUMBER_D),
+                DATA((__int64)123, wrap("123"), PARSE_BASE_NUMBER_D),
 
-                DATA((__int64)1, wrap("1"), true),
-                DATA((__int64)15, wrap("0xf"), true),
-                DATA((__int64)8191, wrap("0x1fff"), true),
+                DATA((__int64)1, wrap("1"), PARSE_BASE_NUMBER_X),
+                DATA((__int64)15, wrap("0xf"), PARSE_BASE_NUMBER_X),
+                DATA((__int64)8191, wrap("0x1fff"), PARSE_BASE_NUMBER_X),
             };
 
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                bool arg2 = std::get<1>(test.inputs);
+                PARSE_BASE_NUMBER arg2 = std::get<1>(test.inputs);
                 auto actual = parse_i64_from_text(&arg1, arg2);
                 Assert::IsTrue(actual.success);
                 Assert::AreEqual(test.expected, actual.value);
@@ -107,19 +105,18 @@ namespace PeLibraryTest
         TEST_METHOD(parse_i64_from_text_sentinel_test)
         {
             auto tests = {
-                DATA((__int64)1, wrap("1"), false),
-                DATA((__int64)0, wrap("0xf"), false),
-                DATA((__int64)123, wrap("123"), false),
+                DATA((__int64)1, wrap("1"), PARSE_BASE_NUMBER_D),
+                DATA((__int64)123, wrap("123"), PARSE_BASE_NUMBER_D),
 
-                DATA((__int64)1, wrap("1"), true),
-                DATA((__int64)15, wrap("0xf"), true),
-                DATA((__int64)8191, wrap("0x1fff"), true),
+                DATA((__int64)1, wrap("1"), PARSE_BASE_NUMBER_X),
+                DATA((__int64)15, wrap("0xf"), PARSE_BASE_NUMBER_X),
+                DATA((__int64)8191, wrap("0x1fff"), PARSE_BASE_NUMBER_X),
             };
 
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 arg1.library.sentinel = false;
-                bool arg2 = std::get<1>(test.inputs);
+                PARSE_BASE_NUMBER arg2 = std::get<1>(test.inputs);
                 auto actual = parse_i64_from_text(&arg1, arg2);
                 Assert::IsTrue(actual.success);
                 Assert::AreEqual(test.expected, actual.value);
@@ -155,7 +152,7 @@ namespace PeLibraryTest
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                TEXT_PARSED_I32_RESULT actual = parse_i32_from_text(&arg1, 2);
+                TEXT_PARSED_I32_RESULT actual = parse_i32_from_text(&arg1, PARSE_BASE_NUMBER_B);
                 Assert::IsTrue(actual.success);
                 Assert::AreEqual(test.expected, actual.value);
             }
@@ -180,7 +177,7 @@ namespace PeLibraryTest
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                TEXT_PARSED_I64_RESULT actual = parse_i64_from_text(&arg1, 2);
+                TEXT_PARSED_I64_RESULT actual = parse_i64_from_text(&arg1, PARSE_BASE_NUMBER_B);
                 Assert::IsTrue(actual.success);
                 Assert::AreEqual(test.expected, actual.value);
             }

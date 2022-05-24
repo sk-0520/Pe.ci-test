@@ -20,6 +20,7 @@
 static <#= item.ParsedResultStructName #> <#= item.CreateFailedFunctionName #>()
 {
     return (<#= item.ParsedResultStructName #>) {
+        .value = 0,
         .success = false,
     };
 }
@@ -28,7 +29,7 @@ static <#= item.ParsedResultStructName #> <#= item.CreateFailedFunctionName #>()
 <# } #>
 <# } #>
 
-static bool check_has_i_sign(const TEXT* text)
+static bool check_has_i_signed(const TEXT* text)
 {
     assert(text);
     assert(text->length);
@@ -36,7 +37,7 @@ static bool check_has_i_sign(const TEXT* text)
     return text->value[0] == '-' || text->value[0] == '+';
 }
 
-static bool check_has_u_sign(const TEXT* text)
+static bool check_has_u_signed(const TEXT* text)
 {
     assert(text);
     assert(text->length);
@@ -91,9 +92,15 @@ static TEXT skip_base_header(const TEXT* text, size_t base)
         return <#= item.CreateFailedFunctionName #>();
     }
 
-    bool has_sign = check_has_i_sign(&trimmed_input);
+<#
+    var checkHasSignedFuncName = item.HasSigned
+        ? "check_has_i_signed"
+        : "check_has_u_signed"
+    ;
+#>
+    bool has_signed = <#= checkHasSignedFuncName #>(&trimmed_input);
 
-    TEXT sign_skip_text = has_sign ? reference_text_width_length(&trimmed_input, 1, 0) : trimmed_input;
+    TEXT sign_skip_text = has_signed ? reference_text_width_length(&trimmed_input, 1, 0) : trimmed_input;
     TEXT parse_target_text = skip_base_header(&sign_skip_text, base);
 
     <#= item.Type #> total = 0;
@@ -126,9 +133,11 @@ static TEXT skip_base_header(const TEXT* text, size_t base)
         }
     }
 
-    if (has_sign && trimmed_input.value[0] == _T('-')) {
+    <# if(item.HasSigned) { #>
+    if (has_signed && trimmed_input.value[0] == _T('-')) {
         total *= -1;
     }
+    <# } #>
 
     return (<#= item.ParsedResultStructName #>) {
         .success = true,

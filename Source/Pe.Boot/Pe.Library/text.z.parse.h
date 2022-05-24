@@ -1,6 +1,15 @@
 ﻿
 #pragma once
 /* 自動生成: text.z.parse.h.tt */
+
+typedef enum tag_PARSE_BASE_NUMBER
+{
+    PARSE_BASE_NUMBER_B = 2,
+    PARSE_BASE_NUMBER_O = 8,
+    PARSE_BASE_NUMBER_D = 10,
+    PARSE_BASE_NUMBER_X = 16,
+} PARSE_BASE_NUMBER;
+
 /// <summary>
 /// i32変換結果。
 /// </summary>

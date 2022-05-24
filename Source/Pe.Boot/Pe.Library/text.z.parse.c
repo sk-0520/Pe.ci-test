@@ -6,6 +6,7 @@
 static TEXT_PARSED_I32_RESULT create_failed_i32_parse_result()
 {
     return (TEXT_PARSED_I32_RESULT) {
+        .value = 0,
         .success = false,
     };
 }
@@ -13,12 +14,13 @@ static TEXT_PARSED_I32_RESULT create_failed_i32_parse_result()
 static TEXT_PARSED_I64_RESULT create_failed_i64_parse_result()
 {
     return (TEXT_PARSED_I64_RESULT) {
+        .value = 0,
         .success = false,
     };
 }
 #endif
 
-static bool check_has_i_sign(const TEXT* text)
+static bool check_has_i_signed(const TEXT* text)
 {
     assert(text);
     assert(text->length);
@@ -26,7 +28,7 @@ static bool check_has_i_sign(const TEXT* text)
     return text->value[0] == '-' || text->value[0] == '+';
 }
 
-static bool check_has_u_sign(const TEXT* text)
+static bool check_has_u_signed(const TEXT* text)
 {
     assert(text);
     assert(text->length);
@@ -77,9 +79,9 @@ TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, size_t base)
         return create_failed_i32_parse_result();
     }
 
-    bool has_sign = check_has_i_sign(&trimmed_input);
+    bool has_signed = check_has_i_signed(&trimmed_input);
 
-    TEXT sign_skip_text = has_sign ? reference_text_width_length(&trimmed_input, 1, 0) : trimmed_input;
+    TEXT sign_skip_text = has_signed ? reference_text_width_length(&trimmed_input, 1, 0) : trimmed_input;
     TEXT parse_target_text = skip_base_header(&sign_skip_text, base);
 
     int32_t total = 0;
@@ -112,10 +114,10 @@ TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, size_t base)
         }
     }
 
-    if (has_sign && trimmed_input.value[0] == _T('-')) {
+        if (has_signed && trimmed_input.value[0] == _T('-')) {
         total *= -1;
     }
-
+    
     return (TEXT_PARSED_I32_RESULT) {
         .success = true,
         .value = total,
@@ -136,9 +138,9 @@ TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, size_t base)
         return create_failed_i64_parse_result();
     }
 
-    bool has_sign = check_has_i_sign(&trimmed_input);
+    bool has_signed = check_has_i_signed(&trimmed_input);
 
-    TEXT sign_skip_text = has_sign ? reference_text_width_length(&trimmed_input, 1, 0) : trimmed_input;
+    TEXT sign_skip_text = has_signed ? reference_text_width_length(&trimmed_input, 1, 0) : trimmed_input;
     TEXT parse_target_text = skip_base_header(&sign_skip_text, base);
 
     int64_t total = 0;
@@ -171,10 +173,10 @@ TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, size_t base)
         }
     }
 
-    if (has_sign && trimmed_input.value[0] == _T('-')) {
+        if (has_signed && trimmed_input.value[0] == _T('-')) {
         total *= -1;
     }
-
+    
     return (TEXT_PARSED_I64_RESULT) {
         .success = true,
         .value = total,

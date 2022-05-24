@@ -7,12 +7,12 @@
 
 class TextParseItem
 {
-    public TextParseItem(string description, string name, string type, bool hasSign, int width)
+    public TextParseItem(string description, string name, string type, bool hasSigned, int width)
     {
         Description = description;
         Name = name;
         Type = type;
-        HasSign = hasSign;
+        HasSigned = hasSigned;
         Width = width;
     }
 
@@ -26,7 +26,7 @@ class TextParseItem
 
     public int Width { get; }
 
-    public bool HasSign { get; }
+    public bool HasSigned { get; }
 
     public bool Is64BitOnly
     {

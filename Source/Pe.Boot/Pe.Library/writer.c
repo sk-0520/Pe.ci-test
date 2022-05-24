@@ -542,7 +542,7 @@ static size_t get_write_format_width(FORMAT_WIDTH* result, const TEXT* format, c
         }
 
         TEXT number = reference_text_width_length(format, 0, i);
-        TEXT_PARSED_I32_RESULT parsed_result = parse_i32_from_text(&number, 10);
+        TEXT_PARSED_I32_RESULT parsed_result = parse_i32_from_text(&number, PARSE_BASE_NUMBER_D);
 
         result->width = parsed_result.value;
         return i;
