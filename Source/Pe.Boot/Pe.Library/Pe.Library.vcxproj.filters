@@ -108,6 +108,9 @@
     <ClCompile Include="text.z.parse.c">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="error.c">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h">
@@ -195,6 +198,9 @@
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="text.z.parse.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="error.h">
       <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>

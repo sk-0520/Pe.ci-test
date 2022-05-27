@@ -407,6 +407,7 @@
     <ClCompile Include="console.c" />
     <ClCompile Include="datetime.c" />
     <ClCompile Include="debug.c" />
+    <ClCompile Include="error.c" />
     <ClCompile Include="fsio.c" />
     <ClCompile Include="fsio.z.resource.c" />
     <ClCompile Include="fsio.z.textfile.c" />
@@ -444,6 +445,7 @@
     <ClInclude Include="console.h" />
     <ClInclude Include="datetime.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="error.h" />
     <ClInclude Include="fsio.h" />
     <ClInclude Include="fsio.z.resource.h" />
     <ClInclude Include="fsio.z.textfile.h" />
