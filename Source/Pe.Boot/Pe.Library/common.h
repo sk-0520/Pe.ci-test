@@ -21,9 +21,9 @@ typedef uint32_t text_t;
 #define NEWLINE_LF "\n"
 #define NEWLINE_CRLF "\r\n"
 
-#define NEWLINE_CRT _(NEWLINE_CR)
-#define NEWLINE_LFT _(NEWLINE_LF)
-#define NEWLINE_CRLFT _(NEWLINE_CRLF)
+#define NEWLINE_CRT _T(NEWLINE_CR)
+#define NEWLINE_LFT _T(NEWLINE_LF)
+#define NEWLINE_CRLFT _T(NEWLINE_CRLF)
 
 #define NEWLINE NEWLINE_CRLF
 #define NEWLINET _T(NEWLINE)
