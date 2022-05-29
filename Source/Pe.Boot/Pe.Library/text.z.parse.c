@@ -1,5 +1,4 @@
-﻿
-/* 自動生成: text.z.parse.c.tt */
+﻿/* 自動生成: text.z.parse.c.tt */
 #include "text.h"
 #include "debug.h"
 
@@ -311,4 +310,6 @@ TEXT_PARSED_U64_RESULT parse_u64_from_text(const TEXT* input, size_t base)
     };
 }
 #endif
+
+
 

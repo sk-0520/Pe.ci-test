@@ -1,5 +1,4 @@
-﻿
-#pragma once
+﻿#pragma once
 /* 自動生成: text.z.parse.h.tt */
 
 /// <summary>
@@ -144,4 +143,5 @@ TEXT_PARSED_U64_RESULT parse_u64_from_text(const TEXT* input, size_t base);
 #   define parse_ssize_from_text parse_i32_from_text
 #   define parse_size_from_text parse_u32_from_text
 #endif
+
 

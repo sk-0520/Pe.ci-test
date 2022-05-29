@@ -3,7 +3,6 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ include file="..\Pe.Bridge\Models\Data\Id.t4" once="true" #>
 <#@ output extension=".cs" #>
 <#
     var items = IdDefine.GetItems();
@@ -64,3 +63,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         }
     }
 }
+
+<#@ include file="..\Pe.Bridge\Models\Data\Id.t4" once="true" #>

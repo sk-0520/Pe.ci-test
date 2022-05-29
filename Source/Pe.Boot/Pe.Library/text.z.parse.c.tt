@@ -5,7 +5,6 @@
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output encoding="utf-8" extension="" #>
-<#@ include file="text.z.parse.t4" once="true" #>
 <#
     var items = TextParseItem.GetItems();
 #>
@@ -149,3 +148,5 @@ static TEXT skip_base_header(const TEXT* text, size_t base)
 <# } #>
 
 <# } #>
+
+<#@ include file="text.z.parse.t4" once="true" #>

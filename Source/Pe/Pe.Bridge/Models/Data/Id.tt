@@ -3,7 +3,6 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ include file="Id.t4" once="true" #>
 <#@ output extension=".cs" #>
 <#
     var items = IdDefine.GetItems();
@@ -118,3 +117,5 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
     }
 <# } #>
 }
+
+<#@ include file="Id.t4" once="true" #>
