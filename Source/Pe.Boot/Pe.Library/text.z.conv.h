@@ -1,6 +1,30 @@
 ﻿#pragma once
 #include "text.h"
 
+/// <summary>
+/// 小文字テキストに変換。
+/// </summary>
+/// <param name=""></param>
+/// <param name="text"></param>
+/// <param name="memory_resource"></param>
+/// <returns>解放が必要。</returns>
+TEXT RC_HEAP_FUNC(to_lower_text, const TEXT* text, const MEMORY_RESOURCE* memory_resource);
+#ifdef RES_CHECK
+#   define to_lower_text(text, memory_resource) RC_HEAP_WRAP(to_lower_text, text, memory_resource)
+#endif
+
+/// <summary>
+/// 大文字テキストに変換。
+/// </summary>
+/// <param name=""></param>
+/// <param name="text"></param>
+/// <param name="memory_resource"></param>
+/// <returns>解放が必要。</returns>
+TEXT RC_HEAP_FUNC(to_upper_text, const TEXT* text, const MEMORY_RESOURCE* memory_resource);
+#ifdef RES_CHECK
+#   define to_upper_text(text, memory_resource) RC_HEAP_WRAP(to_upper_text, text, memory_resource)
+#endif
+
 #ifdef _UNICODE
 
 typedef enum tag_MULTIBYTE_CHARACTER_TYPE

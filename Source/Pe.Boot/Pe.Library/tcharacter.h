@@ -10,6 +10,7 @@
 /// <returns></returns>
 bool is_newline_character(TCHAR c);
 
+/// <summary>
 /// 数字か。
 /// </summary>
 /// <param name="c"></param>
@@ -37,7 +38,6 @@ bool is_upper_character(TCHAR c);
 /// <returns></returns>
 bool is_alphabet_character(TCHAR c);
 
-/// <summary>
 /// <summary>
 /// 小文字に変換。
 /// </summary>

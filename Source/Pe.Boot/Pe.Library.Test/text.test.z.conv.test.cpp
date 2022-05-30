@@ -11,6 +11,43 @@ namespace PeLibraryTest
     TEST_CLASS(text_convert_test)
     {
     public:
+
+        TEST_METHOD(to_lower_text_test)
+        {
+            auto tests = {
+                DATA(wrap("abc"), wrap("abc")),
+                DATA(wrap("abc"), wrap("ABC")),
+                DATA(wrap("123"), wrap("123")),
+                DATA(wrap("sa🍶ke"), wrap("SA🍶KE")),
+            };
+
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+
+                auto actual = to_lower_text(&arg1, DEFAULT_MEMORY);
+                Assert::IsTrue(is_equals_text(&test.expected, &actual, false), test.expected.value);
+                release_text(&actual);
+            }
+        }
+
+        TEST_METHOD(to_upper_text_test)
+        {
+            auto tests = {
+                DATA(wrap("ABC"), wrap("abc")),
+                DATA(wrap("ABC"), wrap("ABC")),
+                DATA(wrap("123"), wrap("123")),
+                DATA(wrap("SA🍶KE"), wrap("sa🍶ke")),
+            };
+
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+
+                auto actual = to_upper_text(&arg1, DEFAULT_MEMORY);
+                Assert::IsTrue(is_equals_text(&test.expected, &actual, false), test.expected.value);
+                release_text(&actual);
+            }
+        }
+
 #ifdef _UNICODE
         TEST_METHOD(multibyte_success_test)
         {

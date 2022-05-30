@@ -2,10 +2,42 @@
 #include <shlwapi.h>
 
 #include "debug.h"
+#include "tcharacter.h"
 #include "text.h"
 
+/// <summary>
+/// 小文字/大文字テキストに変換。
+/// </summary>
+/// <param name="to_lower">小文字にするか。</param>
+/// <param name="text"></param>
+/// <param name="memory_resource"></param>
+/// <returns>解放が必要。</returns>
+static TEXT RC_HEAP_FUNC(to_lower_or_upper_text, bool to_lower, const TEXT* text, const MEMORY_RESOURCE* memory_resource)
+{
+    size_t length = get_text_length(text);
+    TCHAR* edit_characters = RC_HEAP_CALL(clone_string_with_length, text->value, length, memory_resource);
 
+    const TCHAR(*to_character_func)(TCHAR) = to_lower
+        ? to_lower_character
+        : to_upper_character
+        ;
 
+    for (size_t i = 0; i < length; i++) {
+        edit_characters[i] = to_character_func(edit_characters[i]);
+    }
+
+    return wrap_text_with_length(edit_characters, length, true, memory_resource);
+}
+
+TEXT RC_HEAP_FUNC(to_lower_text, const TEXT* text, const MEMORY_RESOURCE* memory_resource)
+{
+    return RC_HEAP_CALL(to_lower_or_upper_text, true, text, memory_resource);
+}
+
+TEXT RC_HEAP_FUNC(to_upper_text, const TEXT* text, const MEMORY_RESOURCE* memory_resource)
+{
+    return RC_HEAP_CALL(to_lower_or_upper_text, false, text, memory_resource);
+}
 
 #ifdef _UNICODE
 
