@@ -1,6 +1,4 @@
-﻿#include <shlwapi.h>
-
-#include "debug.h"
+﻿#include "debug.h"
 #include "res_check.h"
 #include "tstring.h"
 
