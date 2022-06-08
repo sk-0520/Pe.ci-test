@@ -3,7 +3,7 @@
 		"Plugin:Debug": {
 			"commandName": "Executable",
 			"executablePath": ".\\Pe\\Source\\Pe\\Pe.Main\\bin\\$(Platform)\\$(Configuration)\\$(TargetFramework)\\Pe.Main.exe",
-			"commandLineArgs": "--debug-dev-mode --log=.\\data\\log --force-log --full-trace-log --user-dir=.\\data\\user --machine-dir=.\\data\\machine --temp-dir=.\\data\\temp --test-plugin-dir $(TargetDir) --test-plugin-name $(TargetName) ",
+			"commandLineArgs": "--debug-dev-mode --log=X:\\pe\\log --force-log --full-trace-log --user-dir=X:\\pe\\user --machine-dir=X:\\pe\\machine --temp-dir=X:\\pe\\temp  --test-plugin-name $(TargetName) --test-plugin-dir \".\\$(ProjectName)\\bin\\$(Platform)\\$(Configuration)/$(TargetFramework)\"",
 			"workingDirectory": "$(SolutionDir)"
 		}
 	}

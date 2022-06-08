@@ -59,7 +59,7 @@ block BLOCK_LAYOUT_CONTENT
 		p テンプレートを使用した場合はVisual Studioのデバッグ実行で問題なく処理できる想定。
 
 		p 出来ない場合は以下のパラメータを付与したデバッグ実行を行えばできるはず。
-		pre: code --debug-dev-mode --log=.\data\log --force-log --full-trace-log --user-dir=.\data\user --machine-dir=.\data\machine --temp-dir=.\data\temp --test-plugin-dir $(TargetDir) --test-plugin-name $(TargetName)
+		pre: code --debug-dev-mode --log=.\data\log --force-log --full-trace-log --user-dir=.\data\user --machine-dir=.\data\machine --temp-dir=.\data\temp --test-plugin-name $(TargetName) --test-plugin-dir ".\$(ProjectName)\bin\$(Platform)\$(Configuration)\$(TargetFramework)"
 
 	section
 		h2 各種ファイル群
