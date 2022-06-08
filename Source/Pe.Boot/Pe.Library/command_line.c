@@ -225,7 +225,7 @@ bool has_value_command_line_item(const COMMAND_LINE_ITEM* item)
     return is_enabled_text(&item->value);
 }
 
-bool is_inputed_command_line_item(const COMMAND_LINE_ITEM* item)
+bool is_inputted_command_line_item(const COMMAND_LINE_ITEM* item)
 {
     if (!has_value_command_line_item(item)) {
         return false;

@@ -114,7 +114,7 @@ bool has_value_command_line_item(const COMMAND_LINE_ITEM* item);
 /// </summary>
 /// <param name="item"></param>
 /// <returns></returns>
-bool is_inputed_command_line_item(const COMMAND_LINE_ITEM* item);
+bool is_inputted_command_line_item(const COMMAND_LINE_ITEM* item);
 
 /// <summary>
 /// コマンドライン引数一覧から単体テキストとしてのコマンドライン引数を生成する。

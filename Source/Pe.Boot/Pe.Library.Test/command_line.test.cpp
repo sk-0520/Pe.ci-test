@@ -178,7 +178,7 @@ namespace PeLibraryTest
             release_command_line(&actual);
         }
 
-        TEST_METHOD(is_inputed_command_line_item_test)
+        TEST_METHOD(is_inputted_command_line_item_test)
         {
             TEXT expecteds[][2] = {
                 { wrap("def"), wrap("DEF") },
@@ -198,21 +198,21 @@ namespace PeLibraryTest
             const COMMAND_LINE_ITEM* item5 = get_command_line_item(&actual, expecteds[4]);
             const COMMAND_LINE_ITEM* item6 = get_command_line_item(&actual, expecteds[5]);
 
-            Assert::IsTrue(is_inputed_command_line_item(item1));
+            Assert::IsTrue(is_inputted_command_line_item(item1));
             Assert::AreEqual(expecteds[0][1].value, item1->value.value);
 
-            Assert::IsFalse(is_inputed_command_line_item(item2));
+            Assert::IsFalse(is_inputted_command_line_item(item2));
             Assert::AreEqual(expecteds[1][1].value, item2->value.value);
 
-            Assert::IsFalse(is_inputed_command_line_item(item3));
+            Assert::IsFalse(is_inputted_command_line_item(item3));
             Assert::AreEqual(expecteds[2][1].value, item3->value.value);
 
-            Assert::IsTrue(is_inputed_command_line_item(item4));
+            Assert::IsTrue(is_inputted_command_line_item(item4));
             Assert::AreEqual(expecteds[3][1].value, item4->value.value);
 
-            Assert::IsFalse(is_inputed_command_line_item(item5));
+            Assert::IsFalse(is_inputted_command_line_item(item5));
 
-            Assert::IsFalse(is_inputed_command_line_item(item6));
+            Assert::IsFalse(is_inputted_command_line_item(item6));
 
             release_command_line(&actual);
         }
