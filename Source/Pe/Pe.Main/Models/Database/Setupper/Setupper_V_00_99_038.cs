@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase")]
+    [DatabaseSetupVersion(0, 99, 38)]
     public class Setupper_V_00_99_038: SetupperBase
     {
         public Setupper_V_00_99_038(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)

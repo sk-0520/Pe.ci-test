@@ -10,6 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
     /// 通知ログが仲間入り。
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase")]
+    [DatabaseSetupVersion(0, 94, 0)]
     public class Setupper_V_00_94_000: SetupperBase
     {
         public Setupper_V_00_94_000(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
