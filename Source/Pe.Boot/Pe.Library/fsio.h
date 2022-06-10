@@ -49,6 +49,13 @@ bool exists_file_fsio(const TEXT* path);
 /// <returns>存在する場合に真。</returns>
 bool exists_fsio(const TEXT* path);
 
+/// <summary>
+/// ディレクトリを生成。
+/// </summary>
+/// <param name="path"></param>
+/// <returns></returns>
+bool create_directory_fsio(const TEXT* path);
+
 // ファイル処理諸々
 #include "fsio.z.resource.h"
 #include "fsio.z.textfile.h"

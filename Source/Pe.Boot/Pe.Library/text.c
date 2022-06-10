@@ -255,7 +255,7 @@ TCHAR* RC_HEAP_FUNC(text_to_string, const TEXT* text, const MEMORY_RESOURCE* mem
 
 TEXT get_sentinel_text(const TEXT* text)
 {
-    assert(text->library.sentinel);
+    assert(!text->library.sentinel);
     assert(is_enabled_text(text));
 
     const MEMORY_RESOURCE* memory_resource = text->library.memory_resource

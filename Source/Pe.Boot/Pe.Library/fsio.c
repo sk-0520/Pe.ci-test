@@ -44,3 +44,18 @@ bool exists_fsio(const TEXT* path)
 
     return true;
 }
+
+bool create_directory_fsio(const TEXT* path)
+{
+    SECURITY_ATTRIBUTES* attributes = NULL;
+
+    if (path->library.sentinel) {
+        return CreateDirectory(path->value, attributes);
+    }
+
+    TEXT text = get_sentinel_text(path);
+    BOOL result = CreateDirectory(text.value, attributes);
+    release_text(&text);
+
+    return result;
+}

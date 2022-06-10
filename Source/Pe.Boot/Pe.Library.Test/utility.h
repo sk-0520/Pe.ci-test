@@ -31,7 +31,7 @@ typedef std::string tstring;
 #define wrap(s) wrap_text(_T(s))
 
 /// テストパータン内で使用するディレクトリの初期化処理
-#define TEST_INIT_DIR TEST.initialize_test_pattern_work_directory(_T(__FUNCTION__));
+#define TEST_INIT_DIR TEST.initialize_test_pattern_work_directory(_T(__FUNCTION__))
 /// テストパターン内で使用可能なファイルパスを (C++)test_var, (C)var に設定する
 #define TEST_GET_PATH(var, file_name) tstring test_##var; TEST.get_test_pattern_work_path(test_##var, _T(__FUNCTION__), file_name); TEXT var = wrap_text(test_##var.c_str())
 

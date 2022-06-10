@@ -70,5 +70,15 @@ namespace PeLibraryTest
             Assert::IsFalse(exists_fsio(&unknown_path));
         }
 
+        TEST_METHOD(create_directory_fsio_test)
+        {
+            TEST_INIT_DIR;
+
+            TEST_GET_PATH(dir_path, _T("dir"));
+            Assert::IsFalse(exists_directory_fsio(&dir_path));
+            Assert::IsTrue(create_directory_fsio(&dir_path));
+            Assert::IsTrue(exists_directory_fsio(&dir_path));
+            Assert::IsFalse(create_directory_fsio(&dir_path));
+        }
     };
 }
