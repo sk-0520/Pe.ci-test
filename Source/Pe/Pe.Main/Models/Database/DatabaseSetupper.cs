@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -96,22 +97,38 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
             var dto = CreateSetupDto(lastVersion);
 
-            var setuppers = new SetupperBase[] {
-                new Setupper_V_00_94_000(IdFactory, StatementLoader, LoggerFactory),
-                new Setupper_V_00_98_000(IdFactory, StatementLoader, LoggerFactory),
-                new Setupper_V_00_99_000(IdFactory, StatementLoader, LoggerFactory),
-                new Setupper_V_00_99_010(IdFactory, StatementLoader, LoggerFactory),
-                new Setupper_V_00_99_038(IdFactory, StatementLoader, LoggerFactory),
-                new Setupper_V_00_99_063(IdFactory, StatementLoader, LoggerFactory),
-                new Setupper_V_00_99_147(IdFactory, StatementLoader, LoggerFactory),
-                new Setupper_V_00_99_160(IdFactory, StatementLoader, LoggerFactory),
-                new Setupper_V_00_99_169(IdFactory, StatementLoader, LoggerFactory),
-                new Setupper_V_00_99_174(IdFactory, StatementLoader, LoggerFactory),
+            //var setuppers = new SetupperBase[] {
+            //    new Setupper_V_00_94_000(IdFactory, StatementLoader, LoggerFactory),
+            //    new Setupper_V_00_98_000(IdFactory, StatementLoader, LoggerFactory),
+            //    new Setupper_V_00_99_000(IdFactory, StatementLoader, LoggerFactory),
+            //    new Setupper_V_00_99_010(IdFactory, StatementLoader, LoggerFactory),
+            //    new Setupper_V_00_99_038(IdFactory, StatementLoader, LoggerFactory),
+            //    new Setupper_V_00_99_063(IdFactory, StatementLoader, LoggerFactory),
+            //    new Setupper_V_00_99_147(IdFactory, StatementLoader, LoggerFactory),
+            //    new Setupper_V_00_99_160(IdFactory, StatementLoader, LoggerFactory),
+            //    new Setupper_V_00_99_169(IdFactory, StatementLoader, LoggerFactory),
+            //    new Setupper_V_00_99_174(IdFactory, StatementLoader, LoggerFactory),
+            //};
+            var setupperTypes = new[] {
+                typeof(Setupper_V_00_94_000),
+                typeof(Setupper_V_00_98_000),
+                typeof(Setupper_V_00_99_000),
+                typeof(Setupper_V_00_99_010),
+                typeof(Setupper_V_00_99_038),
+                typeof(Setupper_V_00_99_063),
+                typeof(Setupper_V_00_99_147),
+                typeof(Setupper_V_00_99_160),
+                typeof(Setupper_V_00_99_169),
+                typeof(Setupper_V_00_99_174),
             };
 
-            foreach(var setupper in setuppers) {
-                if(lastVersion < setupper.Version) {
-                    Logger.LogInformation("マイグレーション対象: {0} < {1}", lastVersion, setupper.Version);
+            foreach(var setupperType in setupperTypes) {
+                var databaseSetupVersion = setupperType.GetCustomAttribute<DatabaseSetupVersionAttribute>();
+                Enforce.ThrowIfNull(databaseSetupVersion);
+                if(lastVersion < databaseSetupVersion.Version) {
+                    Logger.LogInformation("マイグレーション対象: {0} < {1}", lastVersion, databaseSetupVersion.Version);
+                    var setupper = (SetupperBase?)Activator.CreateInstance(setupperType, new object[] { IdFactory, StatementLoader, LoggerFactory });
+                    Enforce.ThrowIfNull(setupper);
                     Execute(accessorPack, dto, setupper);
                 }
             }
