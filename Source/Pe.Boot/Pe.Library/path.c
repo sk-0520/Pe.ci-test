@@ -236,3 +236,28 @@ TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_RESOURCE* m
     return result;
 }
 
+PATH_INFO get_path_info(const TEXT* path)
+{
+    if (!path) {
+        return (PATH_INFO) {
+            .directory_path = create_invalid_text(),
+            .item_extension = create_invalid_text(),
+            .item_name = create_invalid_text(),
+            .item_without_extension = create_invalid_text(),
+            .library = {
+                .need_release = false,
+            },
+        };
+    }
+}
+
+PATH_INFO RC_HEAP_FUNC(clone_path_info, PATH_INFO* path_info, const MEMORY_RESOURCE* memory_resource)
+{
+    if (!path_info) {
+        return get_path_info(NULL);
+    }
+    if (!path_info->library.need_release) {
+        return get_path_info(NULL);
+    }
+}
+
