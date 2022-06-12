@@ -163,18 +163,18 @@ namespace PeLibraryTest
 
         TEST_METHOD(get_path_info_test)
         {
-            TEXT input1 = wrap("C:\\dir\\file.ext");
-            PATH_INFO expected {
-                wrap("C:\\dir"),
-                wrap("file.ext"),
-                wrap("file"),
-                wrap("ext"),
+            auto tests = {
+                DATA(PATH_INFO{ wrap("C:\\dir"), wrap("file.ext"), wrap("file"), wrap("ext") }, wrap("C:\\dir\\file.ext")),
+                DATA(PATH_INFO{ wrap("C:\\dir\\dir2"), wrap("file.ext"), wrap("file"), wrap("ext") }, wrap("C:\\dir\\dir2\\file.ext")),
             };
-            PATH_INFO actual1 = get_path_info(&input1);
-            Assert::IsTrue(is_equals_text(&expected.parent_path, &actual1.parent_path, false));
-            Assert::IsTrue(is_equals_text(&expected.name, &actual1.name, false));
-            Assert::IsTrue(is_equals_text(&expected.name_without_extension, &actual1.name_without_extension, false));
-            Assert::IsTrue(is_equals_text(&expected.extension, &actual1.extension, false));
+            for (auto test : tests) {
+                TEXT& arg1 = std::get<0>(test.inputs);
+                PATH_INFO actual = get_path_info(&arg1);
+                Assert::IsTrue(is_equals_text(&test.expected.parent_path, &actual.parent_path, false));
+                Assert::IsTrue(is_equals_text(&test.expected.name, &actual.name, false));
+                Assert::IsTrue(is_equals_text(&test.expected.name_without_extension, &actual.name_without_extension, false));
+                Assert::IsTrue(is_equals_text(&test.expected.extension, &actual.extension, false));
+            }
         }
     };
 }
