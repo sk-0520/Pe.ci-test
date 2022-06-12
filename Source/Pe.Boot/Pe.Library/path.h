@@ -8,6 +8,18 @@
 /// ディレクトリの代替区切り文字
 #define ALT_DIRECTORY_SEPARATOR_CHARACTER _T('/')
 
+typedef struct tag_PATH_INFO
+{
+    TEXT parent_path;
+    TEXT name;
+    TEXT name_without_extension;
+    TEXT extension;
+    struct
+    {
+        bool need_release;
+    } library;
+} PATH_INFO;
+
 /// <summary>
 /// ディレクトリ区切りか。
 /// </summary>
@@ -88,3 +100,19 @@ TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_RESOURCE* m
 #   define get_module_path(hInstance, memory_resource) RC_HEAP_WRAP(get_module_path, (hInstance), memory_resource)
 #endif
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="path"></param>
+/// <returns>解放は不要。持ちまわす場合は<c>clone_path_info</c>で複製すること。</returns>
+PATH_INFO get_path_info(const TEXT* path);
+
+PATH_INFO RC_HEAP_FUNC(clone_path_info, const PATH_INFO* path_info, const MEMORY_RESOURCE* memory_resource);
+#ifdef RES_CHECK
+#   define clone_path_info(path_info, memory_resource) RC_HEAP_WRAP(clone_path_info, path_info, memory_resource)
+#endif
+
+bool RC_HEAP_FUNC(release_path_info, PATH_INFO* path_info);
+#ifdef RES_CHECK
+#   define release_path_info(path_info) RC_HEAP_WRAP(release_path_info, (path_info))
+#endif
