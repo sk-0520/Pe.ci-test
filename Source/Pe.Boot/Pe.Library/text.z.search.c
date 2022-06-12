@@ -100,10 +100,10 @@ TEXT search_text(const TEXT* haystack, const TEXT* needle, bool ignore_case)
         ;
 }
 
-static const TCHAR* search_character_core(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION indexStartPosition)
+static const TCHAR* search_character_core(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION index_start_position)
 {
     if (haystack->length) {
-        switch (indexStartPosition) {
+        switch (index_start_position) {
             case INDEX_START_POSITION_HEAD:
                 for (size_t i = 0; i < haystack->length; i++) {
                     const TCHAR* c = haystack->value + i;
@@ -130,9 +130,9 @@ static const TCHAR* search_character_core(const TEXT* haystack, TCHAR needle, IN
     return NULL;
 }
 
-TEXT search_character(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION indexStartPosition)
+TEXT search_character(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION index_start_position)
 {
-    ssize_t index = index_of_character(haystack, needle, indexStartPosition);
+    ssize_t index = index_of_character(haystack, needle, index_start_position);
     if (index < 0) {
         return create_invalid_text();
     }
@@ -140,9 +140,9 @@ TEXT search_character(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION i
     return wrap_text_with_length(haystack->value + index, haystack->length - index, false, NULL);
 }
 
-ssize_t index_of_character(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION indexStartPosition)
+ssize_t index_of_character(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION index_start_position)
 {
-    const TCHAR* s = search_character_core(haystack, needle, indexStartPosition);
+    const TCHAR* s = search_character_core(haystack, needle, index_start_position);
     if (!s) {
         return -1;
     }

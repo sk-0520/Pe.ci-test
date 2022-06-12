@@ -95,18 +95,18 @@ TEXT search_text(const TEXT* haystack, const TEXT* needle, bool ignore_case);
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索文字。</param>
-/// <param name="indexStartPosition">検索位置。</param>
+/// <param name="index_start_position">検索位置。</param>
 /// <returns>見つかったテキストを開始とする参照テキスト、見つからない場合は無効テキスト。解放不要。</returns>
-TEXT search_character(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION indexStartPosition);
+TEXT search_character(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION index_start_position);
 
 /// <summary>
 /// テキスト内の文字位置を検索。
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索文字。</param>
-/// <param name="indexStartPosition">検索位置。</param>
+/// <param name="index_start_position">検索位置。</param>
 /// <returns>一致文字のインデックス。見つからない場合は0未満。</returns>
-ssize_t index_of_character(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION indexStartPosition);
+ssize_t index_of_character(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION index_start_position);
 
 /// <summary>
 /// テキストは同じか。
