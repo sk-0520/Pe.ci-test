@@ -8,7 +8,7 @@
 
 static TCHAR DIRECTORY_SEPARATORS[] = { DIRECTORY_SEPARATOR_CHARACTER, ALT_DIRECTORY_SEPARATOR_CHARACTER, };
 
-static PATH_INFO create_invalid_path_info()
+static PATH_INFO create_invalid_path_info(void)
 {
     return (PATH_INFO)
     {
@@ -222,7 +222,7 @@ TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_RESOURCE* m
     TCHAR* path = NULL;
 
     while (!path) {
-        path = allocate_string(length, memory_resource);
+        path = RC_HEAP_CALL(allocate_string, length, memory_resource);
         if (!path) {
             return create_invalid_text();
         }
@@ -232,7 +232,7 @@ TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_RESOURCE* m
             path_length = 0;
             break;
         } else if (module_path_length >= length - 1) {
-            release_string(path, memory_resource);
+            RC_HEAP_CALL(release_string, path, memory_resource);
             path = NULL;
             length *= 2;
         } else {
@@ -242,15 +242,15 @@ TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_RESOURCE* m
     }
 
     TEXT result = path_length
-        ? new_text_with_length(path, path_length, memory_resource)
+        ? RC_HEAP_CALL(new_text_with_length, path, path_length, memory_resource)
         : create_invalid_text()
         ;
-    release_string(path, memory_resource);
+    RC_HEAP_CALL(release_string, path, memory_resource);
 
     return result;
 }
 
-PATH_INFO get_path_info(const TEXT* path)
+PATH_INFO get_path_info_stack(const TEXT* path)
 {
     if (!path || !is_enabled_text(path) || is_empty_text(path)) {
         return create_invalid_path_info();
@@ -271,7 +271,13 @@ PATH_INFO get_path_info(const TEXT* path)
 
     ssize_t last_ext_index = index_of_character(&name, _T('.'), INDEX_START_POSITION_TAIL);
     //TODO: あまあま処理なのできちんと修正が必要
-    TEXT name_without_extension = last_ext_index < 0 ? create_invalid_text() : reference_text_width_length(&name, 0, last_ext_index);
+    TEXT name_without_extension = last_ext_index < 0
+        ? name
+        : (last_ext_index
+            ? reference_text_width_length(&name, 0, last_ext_index)
+            : create_invalid_text()
+        )
+        ;
     TEXT extension = last_ext_index < 0 ? create_invalid_text() : reference_text_width_length(&name, last_ext_index + 1, 0);
 
     return (PATH_INFO)
@@ -289,15 +295,15 @@ PATH_INFO get_path_info(const TEXT* path)
 PATH_INFO RC_HEAP_FUNC(clone_path_info, const PATH_INFO* path_info, const MEMORY_RESOURCE* memory_resource)
 {
     if (!path_info) {
-        return create_invalid_path_info(NULL);
+        return create_invalid_path_info();
     }
 
     return (PATH_INFO)
     {
-        .parent_path = clone_text(&path_info->parent_path, memory_resource),
-            .name = clone_text(&path_info->name, memory_resource),
-            .name_without_extension = clone_text(&path_info->name_without_extension, memory_resource),
-            .extension = clone_text(&path_info->extension, memory_resource),
+        .parent_path = RC_HEAP_CALL(clone_text, &path_info->parent_path, memory_resource),
+            .name = RC_HEAP_CALL(clone_text, &path_info->name, memory_resource),
+            .name_without_extension = RC_HEAP_CALL(clone_text, &path_info->name_without_extension, memory_resource),
+            .extension = RC_HEAP_CALL(clone_text, &path_info->extension, memory_resource),
             .library = {
             .need_release = true,
         }

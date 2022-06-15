@@ -94,7 +94,7 @@ namespace PeLibraryTest
                     OBJECT_RESULT_VALUE result = get_object_list(&actual, i);
                     Assert::IsTrue(result.exists);
                     const TEXT* actual_text = (TEXT*)result.value;
-                    
+
                     Assert::IsTrue(is_equals_text(&test.expected[i], actual_text, false), test.expected[i].value);
                 }
 
@@ -161,20 +161,46 @@ namespace PeLibraryTest
             release_text(&actual);
         }
 
-        TEST_METHOD(get_path_info_test)
+        TEST_METHOD(get_path_info_stack_test)
         {
             auto tests = {
                 DATA(PATH_INFO{ wrap("C:\\dir"), wrap("file.ext"), wrap("file"), wrap("ext") }, wrap("C:\\dir\\file.ext")),
                 DATA(PATH_INFO{ wrap("C:\\dir\\dir2"), wrap("file.ext"), wrap("file"), wrap("ext") }, wrap("C:\\dir\\dir2\\file.ext")),
+                DATA(PATH_INFO{ wrap(""), wrap(""), wrap(""), wrap("") }, wrap("")),
+                DATA(PATH_INFO{ wrap(""), wrap(""), wrap(""), wrap("") }, wrap("C:\\")),
+                DATA(PATH_INFO{ wrap("C:\\dir"), wrap("abc"), wrap("abc"), wrap("") }, wrap("C:\\dir\\abc")),
+                DATA(PATH_INFO{ wrap("C:\\dir"), wrap(".htaccess"), wrap(""), wrap("htaccess") }, wrap("C:\\dir\\.htaccess")),
+                DATA(PATH_INFO{ wrap("C:"), wrap(".htaccess"), wrap(""), wrap("htaccess") }, wrap("C:\\.htaccess")),
+                DATA(PATH_INFO{ wrap("C:"), wrap("dir"), wrap("dir"), wrap("") }, wrap("C:\\dir")),
+                DATA(PATH_INFO{ wrap("C:\\dir"), wrap("a.txt.ext"), wrap("a.txt"), wrap("ext") }, wrap("C:\\dir\\a.txt.ext")),
             };
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
-                PATH_INFO actual = get_path_info(&arg1);
+                PATH_INFO actual = get_path_info_stack(&arg1);
                 Assert::IsTrue(is_equals_text(&test.expected.parent_path, &actual.parent_path, false));
                 Assert::IsTrue(is_equals_text(&test.expected.name, &actual.name, false));
                 Assert::IsTrue(is_equals_text(&test.expected.name_without_extension, &actual.name_without_extension, false));
                 Assert::IsTrue(is_equals_text(&test.expected.extension, &actual.extension, false));
             }
+        }
+
+        TEST_METHOD(clone_path_info_and_release_path_info_test)
+        {
+            PATH_INFO expected = PATH_INFO{ wrap("C:\\dir\\sub"), wrap("file.ext"), wrap("file"), wrap("ext") };
+            PATH_INFO keep;
+            {
+                TEXT input = wrap("C:\\dir\\sub\\file.ext");
+                PATH_INFO stack = get_path_info_stack(&input);
+                keep = clone_path_info(&stack, DEFAULT_MEMORY);
+                Assert::IsFalse(release_path_info(&stack));
+            }
+
+            Assert::IsTrue(is_equals_text(&expected.parent_path, &keep.parent_path, false));
+            Assert::IsTrue(is_equals_text(&expected.name, &keep.name, false));
+            Assert::IsTrue(is_equals_text(&expected.name_without_extension, &keep.name_without_extension, false));
+            Assert::IsTrue(is_equals_text(&expected.extension, &keep.extension, false));
+
+            Assert::IsTrue(release_path_info(&keep));
         }
     };
 }
