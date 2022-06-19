@@ -12,10 +12,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [TestMethod]
         [DataRow("0 byte", 0, "{0} {1}", new[] { "byte" })]
         [DataRow("0.00 byte", 0, "{0:0.00} {1}", new[] { "byte" })]
-        public void ConvertHumanReadableByteTest(string expected, long byteSize, string sizeFormat, IReadOnlyList<string> terms)
+        public void ConvertHumanReadableByteTest(string expected, long byteSize, string sizeFormat, IReadOnlyList<string> units)
         {
             var sc = new SizeConverter();
-            var actual = sc.ConvertHumanReadableByte(byteSize, sizeFormat, terms);
+            var actual = sc.ConvertHumanReadableByte(byteSize, sizeFormat, units);
             Assert.AreEqual(expected, actual);
         }
 

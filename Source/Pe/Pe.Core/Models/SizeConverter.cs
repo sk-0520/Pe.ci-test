@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// サイズ単位。
         /// </summary>
-        public string[] Terms { get; } = new[] { "byte", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", }; // YB とか生きている間に見ることあるんだろうか
+        public string[] Units { get; } = new[] { "byte", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", }; // YB とか生きている間に見ることあるんだろうか
 
         /// <summary>
         /// 1KB のサイズ。
@@ -28,17 +28,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="byteSize"></param>
         /// <param name="sizeFormat"></param>
-        /// <param name="terms"></param>
+        /// <param name="units"></param>
         /// <returns></returns>
-        public string ConvertHumanReadableByte(long byteSize, string sizeFormat, IReadOnlyList<string> terms)
+        public string ConvertHumanReadableByte(long byteSize, string sizeFormat, IReadOnlyList<string> units)
         {
             double size = byteSize;
             int order = 0;
-            while(size >= KbSize && ++order < terms.Count) {
+            while(size >= KbSize && ++order < units.Count) {
                 size = size / KbSize;
             }
 
-            return string.Format(sizeFormat, size, terms[order]);
+            return string.Format(sizeFormat, size, units[order]);
         }
 
         /// <inheritdoc cref="ConvertHumanReadableByte(long, string, IReadOnlyList{string})"/>
@@ -50,13 +50,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <inheritdoc cref="ConvertHumanReadableByte(long, string, IReadOnlyList{string})"/>
         public string ConvertHumanReadableByte(long byteSize, string sizeFormat)
         {
-            return ConvertHumanReadableByte(byteSize, sizeFormat, Terms);
+            return ConvertHumanReadableByte(byteSize, sizeFormat, Units);
         }
 
         /// <inheritdoc cref="ConvertHumanReadableByte(long, string, IReadOnlyList{string})"/>
         public string ConvertHumanReadableByte(long byteSize)
         {
-            return ConvertHumanReadableByte(byteSize, Terms);
+            return ConvertHumanReadableByte(byteSize, Units);
         }
 
         #endregion
