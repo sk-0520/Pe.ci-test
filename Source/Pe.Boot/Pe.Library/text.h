@@ -53,6 +53,8 @@ typedef struct tag_TEXT
     } library;
 } TEXT;
 
+
+
 /// <summary>
 /// 内部用 静的初期化処理。
 /// <para><c>_T()</c>の面倒は見ない。</para>

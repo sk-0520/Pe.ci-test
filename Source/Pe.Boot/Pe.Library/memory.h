@@ -36,7 +36,7 @@ typedef struct tag_MEMORY_RESOURCE
 /// 可能であればスタックに確保、無理ならヒープに配置。
 /// <para><c>release_array_or_memory</c>で解放(必須)。</para>
 /// </summary>
-#define new_array_or_memory(var_name, cpp_name, type, count, stack_count, memory_resource) \
+#define new_stack_or_heap_array(var_name, cpp_name, type, count, stack_count, memory_resource) \
 struct { \
     type* elements; \
     struct { \
@@ -59,7 +59,7 @@ type* var_name = cpp_name.elements; \
 
 #define is_stack_array(array_or_memory_item) (array_or_memory_item.elements == array_or_memory_item.library.buffer)
 
-#define release_array_or_memory(array_or_memory_item) \
+#define release_stack_or_heap_array(array_or_memory_item) \
 if(!is_stack_array(array_or_memory_item)) { \
     release_memory(array_or_memory_item.elements, array_or_memory_item.library.mr); \
 }
