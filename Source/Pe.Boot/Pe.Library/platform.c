@@ -1,15 +1,22 @@
 ﻿#include "platform.h"
 
-
 TEXT RC_HEAP_FUNC(get_environment_variable, const TEXT* key, const MEMORY_RESOURCE* memory_resource)
 {
+    //new_stack_or_heap_array(env_key_buffer, env_key_array, TCHAR, key->length + 1, 128, memory_resource);
+    //copy_memory(env_key_buffer, key->value, sizeof(TCHAR) * key->length + 1);
+    //env_key_buffer[key->length + 1] = '\0';
     DWORD env_length = GetEnvironmentVariable(key->value, NULL, 0);
+    //DWORD env_length = GetEnvironmentVariable(env_key_buffer, NULL, 0);
     if (!env_length) {
+        //release_stack_or_heap_array(env_key_array);
         return create_invalid_text();
     }
 
     TCHAR* env_value = RC_HEAP_CALL(allocate_string, (size_t)env_length - 1, memory_resource);
     GetEnvironmentVariable(key->value, env_value, env_length);
+    //GetEnvironmentVariable(env_key_buffer, env_value, env_length);
+
+    //release_stack_or_heap_array(env_key_array);
 
     return wrap_text_with_length(env_value, (size_t)env_length - 1, true, memory_resource);
 }

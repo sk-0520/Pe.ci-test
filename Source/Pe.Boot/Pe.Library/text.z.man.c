@@ -1,20 +1,15 @@
 ﻿#include <windows.h>
-#include <shlwapi.h>
 
 #include "debug.h"
+#include "tcharacter.h"
 #include "text.h"
 #include "object_list.h"
 
-static bool contains_characters(TCHAR c, const TCHAR* characters, size_t count)
+typedef struct tag_TRIM_RESULT
 {
-    for (size_t i = 0; i < count; i++) {
-        if (c == characters[i]) {
-            return true;
-        }
-    }
-
-    return false;
-}
+    size_t index;
+    text_t length;
+} TRIM_RESULT;
 
 size_t get_text_length(const TEXT* text)
 {
@@ -123,60 +118,90 @@ bool is_whitespace_text(const TEXT* text)
     return true;
 }
 
-TEXT RC_HEAP_FUNC(trim_text, const TEXT* text, bool start, bool end, const TCHAR* characters, size_t count, const MEMORY_RESOURCE* memory_resource)
+/// <summary>
+/// トリム内部処理。
+/// </summary>
+/// <param name="result">結果データ。</param>
+/// <param name="text"></param>
+/// <param name="start"></param>
+/// <param name="end"></param>
+/// <param name="characters"></param>
+/// <param name="count"></param>
+/// <returns>トリム可能か</returns>
+static bool trim_core(TRIM_RESULT* result, const TEXT* text, TRIM_TARGETS targets, const TCHAR* characters, size_t count)
 {
     assert(text);
-    if (false/**/ || (!start && !end) || !count) {
-        return clone_text(text, memory_resource);
+    if (!targets || !count) {
+        result->index = 0;
+        result->length = text->length;
+        return true;
     }
     assert(characters);
 
     size_t begin_index = 0;
-    for (size_t i = 0; start && i < text->length; i++) {
-        bool find = contains_characters(text->value[i], characters, count);
-        if (!find) {
-            begin_index = i;
-            break;
-        }
-        if (i == (size_t)text->length - 1) {
-            // 最後まで行っちゃった
-            return new_text(_T(""), memory_resource);
+    if ((targets & TRIM_TARGETS_HEAD) == TRIM_TARGETS_HEAD) {
+        for (size_t i = 0; i < text->length; i++) {
+            bool find = contains_characters(text->value[i], characters, count);
+            if (!find) {
+                begin_index = i;
+                break;
+            }
+            if (i == (size_t)text->length - 1) {
+                // 最後まで行っちゃった
+                return false;
+            }
         }
     }
 
     size_t end_index = (size_t)text->length - 1;
-    for (size_t i = end_index; end; i--) {
-        bool find = contains_characters(text->value[i], characters, count);
-        if (!find) {
-            end_index = i;
-            break;
-        }
-        if (!i) {
-            // 最初まで行っちゃった
-            return new_text(_T(""), memory_resource);
+    if ((targets & TRIM_TARGETS_TAIL) == TRIM_TARGETS_TAIL) {
+        for (size_t i = end_index; true; i--) {
+            bool find = contains_characters(text->value[i], characters, count);
+            if (!find) {
+                end_index = i;
+                break;
+            }
+            if (!i) {
+                // 最初まで行っちゃった
+                return false;
+            }
         }
     }
 
-    return new_text_with_length(text->value + begin_index, end_index - begin_index + 1, memory_resource);
+    result->index = begin_index;
+    result->length = (text_t)(end_index - begin_index + 1);
+
+    return true;
+}
+
+TEXT RC_HEAP_FUNC(trim_text, const TEXT* text, TRIM_TARGETS targets, const TCHAR* characters, size_t count, const MEMORY_RESOURCE* memory_resource)
+{
+    TRIM_RESULT trim_result;
+    if (trim_core(&trim_result, text, targets, characters, count)) {
+        return new_text_with_length(text->value + trim_result.index, trim_result.length, memory_resource);
+    }
+
+    return new_text(_T(""), memory_resource);
 }
 
 TEXT RC_HEAP_FUNC(trim_whitespace_text, const TEXT* text, const MEMORY_RESOURCE* memory_resource)
 {
-    return trim_text(text, true, true, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters), memory_resource);
+    return trim_text(text, TRIM_TARGETS_BOTH, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters), memory_resource);
 }
 
-static int compare_object_list_value_text(const TEXT* a, const TEXT* b, void* data)
+TEXT trim_text_stack(const TEXT* text, TRIM_TARGETS targets, const TCHAR* characters, size_t count)
 {
-    return compare_text(a, b, false);
-}
-
-static void release_object_list_value_text(void* target, void* data, const MEMORY_RESOURCE* memory_resource)
-{
-    if (!target) {
-        return;
+    TRIM_RESULT trim_result;
+    if (trim_core(&trim_result, text, targets, characters, count)) {
+        return wrap_text_with_length(text->value + trim_result.index, trim_result.length, false, NULL);
     }
-    TEXT* text = (TEXT*)target;
-    release_text(text);
+
+    return wrap_text_with_length(text->value, 0, false, NULL);
+}
+
+TEXT trim_whitespace_text_stack(const TEXT* text)
+{
+    return trim_text_stack(text, TRIM_TARGETS_BOTH, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters));
 }
 
 OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function, const MEMORY_RESOURCE* memory_resource)
@@ -197,9 +222,10 @@ OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function,
         if (!is_enabled_text(&item)) {
             break;
         }
+        assert(!item.library.need_release);
 
-        TEXT stack_text = RC_HEAP_CALL(clone_text, &item, memory_resource);
-        push_object_list(&result, &stack_text);
+        TEXT part_text = RC_HEAP_CALL(clone_text, &item, memory_resource);
+        push_object_list(&result, &part_text);
 
         next_index += current_next_index;
         if (next_index == prev_index && text->length <= next_index) {

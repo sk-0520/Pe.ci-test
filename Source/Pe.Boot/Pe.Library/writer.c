@@ -182,7 +182,7 @@ static size_t fill_last(TCHAR* buffer, size_t fill_buffer_length, size_t width, 
 WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
 {
     //TCHAR* buffer = allocate_number(false, width, memory_resource);
-    new_array_or_memory(buffer, array, TCHAR, number_bytes(false, width), TEXT_STACK_COUNT, memory_resource);
+    new_stack_or_heap_array(buffer, array, TCHAR, number_bytes(false, width), TEXT_STACK_COUNT, memory_resource);
 
     size_t buffer_length = 0;
     bool is_negative = value < 0;
@@ -221,7 +221,7 @@ WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, 
     WRITE_RESULT result = writer(&data);
 
     //release_string(buffer, memory_resource);
-    release_array_or_memory(array);
+    release_stack_or_heap_array(array);
 
     return result;
 }
@@ -229,7 +229,7 @@ WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, 
 WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
 {
     //TCHAR* buffer = allocate_number(false, width, memory_resource);
-    new_array_or_memory(buffer, array, TCHAR, number_bytes(false, width), TEXT_STACK_COUNT, memory_resource);
+    new_stack_or_heap_array(buffer, array, TCHAR, number_bytes(false, width), TEXT_STACK_COUNT, memory_resource);
     size_t buffer_length = 0;
     bool is_negative = false;
     size_t abs_value = value;
@@ -266,7 +266,7 @@ WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver,
     WRITE_RESULT result = writer(&data);
 
     //release_string(buffer, memory_resource);
-    release_array_or_memory(array);
+    release_stack_or_heap_array(array);
 
     return result;
 }
@@ -275,7 +275,7 @@ WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver,
 WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width)
 {
     //TCHAR* buffer = allocate_number(true, width, memory_resource);
-    new_array_or_memory(buffer, array, TCHAR, number_bytes(true, width), TEXT_STACK_COUNT, memory_resource);
+    new_stack_or_heap_array(buffer, array, TCHAR, number_bytes(true, width), TEXT_STACK_COUNT, memory_resource);
     ssize_t work_value = value;
     size_t buffer_length = 0;
     do {
@@ -305,7 +305,7 @@ WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, cons
     WRITE_RESULT result = writer(&data);
 
     //release_string(buffer, memory_resource);
-    release_array_or_memory(array);
+    release_stack_or_heap_array(array);
 
     return result;
 }
@@ -314,7 +314,7 @@ WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, cons
 WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width)
 {
     //TCHAR* buffer = allocate_number(true, width, memory_resource);
-    new_array_or_memory(buffer, array, TCHAR, number_bytes(true, width), TEXT_STACK_COUNT, memory_resource);
+    new_stack_or_heap_array(buffer, array, TCHAR, number_bytes(true, width), TEXT_STACK_COUNT, memory_resource);
     size_t work_value = value;
     size_t buffer_length = 0;
     do {
@@ -344,7 +344,7 @@ WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, con
     WRITE_RESULT result = writer(&data);
 
     //release_string(buffer, memory_resource);
-    release_array_or_memory(array);
+    release_stack_or_heap_array(array);
 
     return result;
 }
@@ -542,7 +542,7 @@ static size_t get_write_format_width(FORMAT_WIDTH* result, const TEXT* format, c
         }
 
         TEXT number = reference_text_width_length(format, 0, i);
-        TEXT_PARSED_I32_RESULT parsed_result = parse_i32_from_text(&number, false, memory_resource);
+        TEXT_PARSED_I32_RESULT parsed_result = parse_i32_from_text(&number, PARSE_BASE_NUMBER_D);
 
         result->width = parsed_result.value;
         return i;

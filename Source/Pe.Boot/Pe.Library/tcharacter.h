@@ -10,6 +10,7 @@
 /// <returns></returns>
 bool is_newline_character(TCHAR c);
 
+/// <summary>
 /// 数字か。
 /// </summary>
 /// <param name="c"></param>
@@ -38,7 +39,6 @@ bool is_upper_character(TCHAR c);
 bool is_alphabet_character(TCHAR c);
 
 /// <summary>
-/// <summary>
 /// 小文字に変換。
 /// </summary>
 /// <param name="c"></param>
@@ -51,3 +51,12 @@ TCHAR to_lower_character(TCHAR c);
 /// <param name="c"></param>
 /// <returns></returns>
 TCHAR to_upper_character(TCHAR c);
+
+/// <summary>
+/// 対象文字が指定文字群に含まれているか
+/// </summary>
+/// <param name="c">対象文字。</param>
+/// <param name="characters">文字群。</param>
+/// <param name="length">文字群の数。</param>
+/// <returns>含まれている場合に真。</returns>
+bool contains_characters(TCHAR c, const TCHAR* characters, size_t length);

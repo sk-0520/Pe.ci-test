@@ -80,7 +80,7 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
 
         TEXT key;
         TEXT option;
-        TEXT value_with_separator = find_character(&arg, _T('='));
+        TEXT value_with_separator = search_character(&arg, _T('='), INDEX_START_POSITION_HEAD);
         if (is_enabled_text(&value_with_separator)) {
             // 引数が値とキーを持つ
             key = new_text_with_length(arg.value, (value_with_separator.value - arg.value), memory_resource);
@@ -225,7 +225,7 @@ bool has_value_command_line_item(const COMMAND_LINE_ITEM* item)
     return is_enabled_text(&item->value);
 }
 
-bool is_inputed_command_line_item(const COMMAND_LINE_ITEM* item)
+bool is_inputted_command_line_item(const COMMAND_LINE_ITEM* item)
 {
     if (!has_value_command_line_item(item)) {
         return false;
@@ -246,15 +246,15 @@ TEXT to_command_line_argument(const TEXT_LIST arguments, size_t count, const MEM
 
     for (size_t i = 0; i < count; i++) {
         const TEXT* argument = &arguments[i];
-        ssize_t space_index = index_of_character(argument, ' ');
+        ssize_t space_index = index_of_character(argument, ' ', INDEX_START_POSITION_HEAD);
         if (space_index == -1) {
             total_length += argument->length;
         } else {
-            ssize_t separator_index = index_of_character(argument, '=');
+            ssize_t separator_index = index_of_character(argument, '=', INDEX_START_POSITION_HEAD);
             if (separator_index == -1) {
                 total_length += (size_t)argument->length + 2/* "" */;
                 hasSpaceList[i] = true;
-            } else if(separator_index < index_of_character(argument, '"')) {
+            } else if(separator_index < index_of_character(argument, '"', INDEX_START_POSITION_HEAD)) {
                 // 最初から key="" として囲まれてる場合はあえて括る必要なし
                 total_length += argument->length;
             } else {

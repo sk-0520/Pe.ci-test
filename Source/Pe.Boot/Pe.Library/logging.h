@@ -53,6 +53,10 @@ typedef struct tag_LOG_ITEM
     /// ログ日時(ローカル)
     /// </summary>
     const TIMESTAMP* timestamp;
+    /// <summary>
+    /// ログ日時(ローカル)。
+    /// <para><c>timestamp</c>の素になったデータ。</para>
+    /// </summary>
     const DATETIME* datetime;
     /// <summary>
     /// ログ内容。

@@ -101,6 +101,10 @@ int compare_object_list_value_null(const void* a, const void* b, void* data);
 /// <param name="value"></param>
 void release_object_list_value_null(void* value, void* data, const MEMORY_RESOURCE* memory_resource);
 
+int compare_object_list_value_text(const void* a, const void* b, void* data);
+
+void release_object_list_value_text(void* target, void* data, const MEMORY_RESOURCE* memory_resource);
+
 /// <summary>
 /// オブジェクトリストの生成。
 /// <para>各アイテムはヒープ上で管理され、ヒープの制御はライブラリ側で行う。</para>

@@ -28,26 +28,33 @@ typedef enum tag_FILE_ENCODING
 } FILE_ENCODING;
 
 /// <summary>
-/// パスはディレクトリか。
-/// <para>パスが存在すること前提の処理。<see cref="exists_file_path" />, <see cref="exists_directory_path" />内部で使用されるためアプリケーション側であえて呼び出す必要なし。</para>
+/// 指定パスはディレクトリか。
+/// </summary>
+/// <param name="path">パス。</param>
+/// <returns>ディレクトリとして存在する場合に真。</returns>
+bool exists_directory_fsio(const TEXT* path);
+
+/// <summary>
+/// 指定パスはファイルか。
+/// </summary>
+/// <param name="path">パス。</param>
+/// <returns>ファイルとして存在する場合に真。</returns>
+bool exists_file_fsio(const TEXT* path);
+
+/// <summary>
+/// パスが存在するか。
+/// <para>それがファイル・ディレクトリを問わない。</para>
+/// </summary>
+/// <param name="path"></param>
+/// <returns>存在する場合に真。</returns>
+bool exists_fsio(const TEXT* path);
+
+/// <summary>
+/// ディレクトリを生成。
 /// </summary>
 /// <param name="path"></param>
 /// <returns></returns>
-bool is_directory_path(const TEXT* path);
-
-/// <summary>
-/// ファイルが存在するか。
-/// </summary>
-/// <param name="path">ファイルパス。</param>
-/// <returns></returns>
-bool exists_file_path(const TEXT* path);
-
-/// <summary>
-/// ディレクトリが存在するか。
-/// </summary>
-/// <param name="path"></param>
-/// <returns></returns>
-bool exists_directory_path(const TEXT* path);
+bool create_directory_fsio(const TEXT* path);
 
 // ファイル処理諸々
 #include "fsio.z.resource.h"

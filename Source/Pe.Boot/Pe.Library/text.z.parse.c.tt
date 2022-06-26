@@ -1,0 +1,152 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output encoding="utf-8" extension="" #>
+<#
+    var items = TextParseItem.GetItems();
+#>
+/* 自動生成: text.z.parse.c.tt */
+#include "text.h"
+#include "debug.h"
+
+<# foreach(var item in items) { #>
+<# if(item.Is64BitOnly) { #>
+#ifdef _WIN64
+<# } #>
+static <#= item.ParsedResultStructName #> <#= item.CreateFailedFunctionName #>()
+{
+    return (<#= item.ParsedResultStructName #>) {
+        .value = 0,
+        .success = false,
+    };
+}
+<# if(item.Is64BitOnly) { #>
+#endif
+<# } #>
+<# } #>
+
+static bool check_has_i_signed(const TEXT* text)
+{
+    assert(text);
+    assert(text->length);
+
+    return text->value[0] == '-' || text->value[0] == '+';
+}
+
+static bool check_has_u_signed(const TEXT* text)
+{
+    assert(text);
+    assert(text->length);
+
+    return text->value[0] == '+';
+}
+
+static TEXT skip_base_header(const TEXT* text, size_t base)
+{
+    if (2 <= text->length) {
+        switch (base) {
+            case 2:
+                if (text->value[0] == _T('0') && (text->value[1] == _T('b') || text->value[0] == _T('B'))) {
+                    return reference_text_width_length(text, 2, 0);
+                }
+                break;
+
+            case 8:
+                if (text->value[0] == _T('0') && (text->value[1] == _T('o') || text->value[0] == _T('O'))) {
+                    return reference_text_width_length(text, 2, 0);
+                }
+                break;
+
+            case 16:
+                if (text->value[0] == _T('0') && (text->value[1] == _T('x') || text->value[0] == _T('X'))) {
+                    return reference_text_width_length(text, 2, 0);
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    return *text;
+}
+
+<# foreach(var item in items) { #>
+<# if(item.Is64BitOnly) { #>
+#ifdef _WIN64
+<# } #>
+<#= item.ParsedResultStructName #> <#= item.ParseFromTextFunctionName #>(const TEXT* input, size_t base)
+{
+    assert(2 <= base && base <= 36);
+
+    if (!is_enabled_text(input)) {
+        return <#= item.CreateFailedFunctionName #>();
+    }
+
+    TEXT trimmed_input = trim_whitespace_text_stack(input);
+    if (!trimmed_input.length) {
+        return <#= item.CreateFailedFunctionName #>();
+    }
+
+<#
+    var checkHasSignedFuncName = item.HasSigned
+        ? "check_has_i_signed"
+        : "check_has_u_signed"
+    ;
+#>
+    bool has_signed = <#= checkHasSignedFuncName #>(&trimmed_input);
+
+    TEXT sign_skip_text = has_signed ? reference_text_width_length(&trimmed_input, 1, 0) : trimmed_input;
+    TEXT parse_target_text = skip_base_header(&sign_skip_text, base);
+
+    <#= item.Type #> total = 0;
+
+    for (size_t i = 0; i < parse_target_text.length; i++) {
+        TCHAR c = parse_target_text.value[i];
+        if (i) {
+            total *= (<#= item.Type #>)base;
+        }
+        if (base <= 10) {
+            int32_t n;
+            if (_T('0') <= c && c <= (_T('0') + base - 1)) {
+                n = c - '0';
+            } else {
+                return <#= item.CreateFailedFunctionName #>();
+            }
+            total += n;
+        } else {
+            int32_t n;
+            if ('a' <= c && c <= ((_T('a') + base - 1 - 10))) {
+                n = c - 'a' + 10;
+            } else if ('A' <= c && c <= ((_T('A') + base - 1 - 10))) {
+                n = c - 'A' + 10;
+            } else if (_T('0') <= c && c <= (_T('0') + base - 1)) {
+                n = c - '0';
+            } else {
+                return <#= item.CreateFailedFunctionName #>();
+            }
+            total += n;
+        }
+    }
+
+    <# if(item.HasSigned) { #>
+    if (has_signed && trimmed_input.value[0] == _T('-')) {
+        total *= -1;
+    }
+    <# } #>
+
+    return (<#= item.ParsedResultStructName #>) {
+        .success = true,
+        .value = total,
+    };
+}
+<# if(item.Is64BitOnly) { #>
+#endif
+<# } #>
+
+<# } #>
+
+<#@ include file="text.z.parse.t4" once="true" #>

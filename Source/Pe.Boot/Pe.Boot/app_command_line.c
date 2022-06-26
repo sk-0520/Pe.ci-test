@@ -46,8 +46,8 @@ WAIT_TIME_ARG get_wait_time(const COMMAND_LINE_OPTION* command_line_option)
             WAIT_TIME_ARG result = {
                 .item = item,
             };
-            if (is_inputed_command_line_item(item)) {
-                TEXT_PARSED_I32_RESULT time_result = parse_i32_from_text(&item->value, false, command_line_option->library.map.library.map_memory_resource);
+            if (is_inputted_command_line_item(item)) {
+                TEXT_PARSED_I32_RESULT time_result = parse_i32_from_text(&item->value, PARSE_BASE_NUMBER_D);
                 result.enabled = time_result.success && 0 < time_result.value;
                 if (result.enabled) {
                     result.time = time_result.value;

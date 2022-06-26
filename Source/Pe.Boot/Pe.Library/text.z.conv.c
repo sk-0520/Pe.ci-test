@@ -1,142 +1,42 @@
 ﻿#include <windows.h>
-#include <shlwapi.h>
 
 #include "debug.h"
+#include "tcharacter.h"
 #include "text.h"
 
-#define TEXT_STACK_COUNT (32)
-
-static TEXT_PARSED_I32_RESULT create_failed_i32_parse_result()
+/// <summary>
+/// 小文字/大文字テキストに変換。
+/// </summary>
+/// <param name="to_lower">小文字にするか。</param>
+/// <param name="text"></param>
+/// <param name="memory_resource"></param>
+/// <returns>解放が必要。</returns>
+static TEXT RC_HEAP_FUNC(to_lower_or_upper_text, bool to_lower, const TEXT* text, const MEMORY_RESOURCE* memory_resource)
 {
-    TEXT_PARSED_I32_RESULT result = {
-        .success = false,
-    };
+    size_t length = get_text_length(text);
+    TCHAR* edit_characters = RC_HEAP_CALL(clone_string_with_length, text->value, length, memory_resource);
 
-    return result;
+    const TCHAR(*to_character_func)(TCHAR) = to_lower
+        ? to_lower_character
+        : to_upper_character
+        ;
+
+    for (size_t i = 0; i < length; i++) {
+        edit_characters[i] = to_character_func(edit_characters[i]);
+    }
+
+    return wrap_text_with_length(edit_characters, length, true, memory_resource);
 }
 
-#ifdef _WIN64
-static TEXT_PARSED_I64_RESULT create_failed_i64_parse_result()
+TEXT RC_HEAP_FUNC(to_lower_text, const TEXT* text, const MEMORY_RESOURCE* memory_resource)
 {
-    TEXT_PARSED_I64_RESULT result = {
-        .success = false,
-    };
-
-    return result;
-}
-#endif
-
-TEXT_PARSED_I32_RESULT parse_i32_from_text(const TEXT* input, bool support_hex, const MEMORY_RESOURCE* memory_resource)
-{
-    if (!is_enabled_text(input)) {
-        return create_failed_i32_parse_result();
-    }
-
-#pragma warning(push)
-#pragma warning(disable:6001)
-    TEXT_PARSED_I32_RESULT result;
-#pragma warning(pop)
-    if (input->library.sentinel) {
-        result.success = StrToIntEx(input->value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
-    } else {
-        //TEXT sentinel = clone_text(input, memory_resource);
-        new_array_or_memory(buffer, array, TCHAR, input->length + 1, TEXT_STACK_COUNT, memory_resource);
-        copy_memory(buffer, input->value, input->length * sizeof(TCHAR));
-        buffer[input->length] = 0;
-        result.success = StrToIntEx(buffer, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
-        //release_text(&sentinel);
-        release_array_or_memory(array);
-    }
-
-    return result;
+    return RC_HEAP_CALL(to_lower_or_upper_text, true, text, memory_resource);
 }
 
-#ifdef _WIN64
-TEXT_PARSED_I64_RESULT parse_i64_from_text(const TEXT* input, bool support_hex, const MEMORY_RESOURCE* memory_resource)
+TEXT RC_HEAP_FUNC(to_upper_text, const TEXT* text, const MEMORY_RESOURCE* memory_resource)
 {
-    if (!is_enabled_text(input)) {
-        return create_failed_i64_parse_result();
-    }
-
-#pragma warning(push)
-#pragma warning(disable:6001)
-    TEXT_PARSED_I64_RESULT result;
-#pragma warning(pop)
-    if (input->library.sentinel) {
-        result.success = StrToInt64Ex(input->value, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
-    } else {
-        //TEXT sentinel = clone_text(input, memory_resource);
-        new_array_or_memory(buffer, array, TCHAR, input->length + 1, TEXT_STACK_COUNT, memory_resource);
-        copy_memory(buffer, input->value, input->length * sizeof(TCHAR));
-        buffer[input->length] = 0;
-        result.success = StrToInt64Ex(buffer, support_hex ? STIF_SUPPORT_HEX : STIF_DEFAULT, &result.value);
-        //release_text(&sentinel);
-        release_array_or_memory(array);
-    }
-
-    return result;
+    return RC_HEAP_CALL(to_lower_or_upper_text, false, text, memory_resource);
 }
-#endif
-
-TEXT_PARSED_I32_RESULT parse_i32_from_bin_text(const TEXT* input)
-{
-    if (!is_enabled_text(input)) {
-        return create_failed_i32_parse_result();
-    }
-
-    if (!input->length) {
-        return create_failed_i32_parse_result();
-    }
-
-    TEXT_PARSED_I32_RESULT result = {
-        .success = true,
-        .value = 0,
-    };
-
-    for (size_t i = 0; i < input->length; i++) {
-        TCHAR c = input->value[i];
-        result.value <<= 1;
-        if (c == '1') {
-            result.value += 1;
-        } else if (c != '0') {
-            result.success = false;
-            return result;
-        }
-    }
-
-    return result;
-}
-
-#ifdef _WIN64
-TEXT_PARSED_I64_RESULT parse_i64_from_bin_text(const TEXT* input)
-{
-    if (!is_enabled_text(input)) {
-        return create_failed_i64_parse_result();
-    }
-
-    if (!input->length) {
-        return create_failed_i64_parse_result();
-    }
-
-    TEXT_PARSED_I64_RESULT result = {
-        .success = true,
-        .value = 0,
-    };
-
-    for (size_t i = 0; i < input->length; i++) {
-        TCHAR c = input->value[i];
-        result.value <<= 1;
-        if (c == '1') {
-            result.value += 1;
-        } else if (c != '0') {
-            result.success = false;
-            return result;
-        }
-    }
-
-    return result;
-}
-#endif
 
 #ifdef _UNICODE
 

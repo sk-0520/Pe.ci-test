@@ -61,6 +61,9 @@ typedef enum tag_FILE_SHARE_MODE
     FILE_SHARE_MODE_WRITE = FILE_SHARE_WRITE,
 } FILE_SHARE_MODE;
 
+/// <summary>
+/// 開き方。
+/// </summary>
 typedef enum tag_FILE_OPEN_MODE
 {
     /// <summary>
@@ -91,6 +94,16 @@ typedef enum tag_FILE_OPEN_MODE
 /// <returns></returns>
 FILE_RESOURCE create_invalid_file_resource(void);
 
+/// <summary>
+/// ファイルリソースの生成。
+/// </summary>
+/// <param name="path">テキストは複製されるため呼び出し側で任意破棄可能。</param>
+/// <param name="access_mode">アクセスモード。</param>
+/// <param name="shared_mode">共有方法。</param>
+/// <param name="open_mode">開き方。</param>
+/// <param name="attributes">ここだけWindowsAPIでファイル属性。</param>
+/// <param name="memory_resource"></param>
+/// <returns></returns>
 FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE access_mode, FILE_SHARE_MODE shared_mode, FILE_OPEN_MODE open_mode, DWORD attributes, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK
 #   define new_file_resource(path, access_mode, shared_mode, open_mode, attributes, memory_resource) RC_FILE_WRAP(new_file_resource, (path), (access_mode), (shared_mode), (open_mode), (attributes), memory_resource)
@@ -100,7 +113,7 @@ FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE
 /// ファイルを新規作成。
 /// <para>既にファイルが存在する場合は失敗する。</para>
 /// </summary>
-/// <param name="path">作成するファイルパス。</param>
+/// <param name="path">作成するファイルパス。テキストは複製されるため呼び出し側で任意破棄可能。</param>
 /// <returns>作成したファイルリソース。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
 FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK
@@ -111,7 +124,7 @@ FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path, const MEMORY_
 /// 既存ファイルを開く。
 /// <para>ファイルが存在しない場合は失敗する。</para>
 /// </summary>
-/// <param name="path">開くファイルパス。</param>
+/// <param name="path">開くファイルパス。テキストは複製されるため呼び出し側で任意破棄可能。</param>
 /// <returns>開いたファイルリソース。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
 FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK
@@ -121,7 +134,7 @@ FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path, const MEMORY_RE
 /// <summary>
 /// ファイルが存在すれば開き、存在しない場合は作成する。
 /// </summary>
-/// <param name="path">ファイルパス。</param>
+/// <param name="path">ファイルパス。テキストは複製されるため呼び出し側で任意破棄可能。</param>
 /// <returns>ファイルリソース。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
 FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
 #if RES_CHECK

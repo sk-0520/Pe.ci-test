@@ -10,8 +10,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 {
+    [DatabaseSetupVersion(0, 99, 147)]
     public class Setupper_V_00_99_147: SetupperBase
     {
+    [DatabaseSetupVersion(0, 99, 147)]
         public Setupper_V_00_99_147(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(idFactory, statementLoader, loggerFactory)
         { }

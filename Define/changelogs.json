@@ -1,5 +1,31 @@
 [
 	{
+		"date": "2022/06/26",
+		"version": "0.99.175",
+		"contents": [
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "cf8aedc29c53d3649e985097c7283cec0597802f",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf.NETCore 101.0.180 -> 102.0.100"
+					},
+					{
+						"revision": "505de09688e97fe97c8a2f30a48b81af3fc9e42b",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 5.0.0 -> 5.0.1"
+					},
+					{
+						"revision": "4228e0ebc8c0f527dfe17c662d8176d5a8873ee0",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.115.5 -> 1.0.116"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2022/05/17",
 		"version": "0.99.174",
 		"contents": [

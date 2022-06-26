@@ -1,6 +1,12 @@
 ﻿#pragma once
 #include "text.h"
 
+typedef enum tag_INDEX_START_POSITION
+{
+    INDEX_START_POSITION_HEAD,
+    INDEX_START_POSITION_TAIL
+} INDEX_START_POSITION;
+
 typedef enum tag_LOCALE_TYPE
 {
     /// <summary>
@@ -77,31 +83,30 @@ TCHAR get_relative_character(const TEXT* text, size_t base_index, ssize_t next_p
 
 /// <summary>
 /// テキスト検索。
-/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索テキスト。</param>
 /// <param name="ignore_case">大文字小文字を無視するか。</param>
 /// <returns>見つかったテキストを開始とする参照テキスト、見つからない場合は無効テキスト。解放不要。</returns>
-TEXT find_text(const TEXT* haystack, const TEXT* needle, bool ignore_case);
+TEXT search_text(const TEXT* haystack, const TEXT* needle, bool ignore_case);
 
 /// <summary>
 /// テキスト検索。
-/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索文字。</param>
+/// <param name="index_start_position">検索位置。</param>
 /// <returns>見つかったテキストを開始とする参照テキスト、見つからない場合は無効テキスト。解放不要。</returns>
-TEXT find_character(const TEXT* haystack, TCHAR needle);
+TEXT search_character(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION index_start_position);
 
 /// <summary>
 /// テキスト内の文字位置を検索。
-/// <para>[番兵未対応]</para>
 /// </summary>
 /// <param name="haystack">検索対象テキスト。</param>
 /// <param name="needle">検索文字。</param>
+/// <param name="index_start_position">検索位置。</param>
 /// <returns>一致文字のインデックス。見つからない場合は0未満。</returns>
-ssize_t index_of_character(const TEXT* haystack, TCHAR needle);
+ssize_t index_of_character(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION index_start_position);
 
 /// <summary>
 /// テキストは同じか。

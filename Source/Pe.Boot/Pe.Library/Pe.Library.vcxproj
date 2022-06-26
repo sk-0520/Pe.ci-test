@@ -159,7 +159,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <EntryPointSymbol>entry_main</EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
@@ -203,7 +203,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <EntryPointSymbol>entry_main</EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
@@ -251,7 +251,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <EntryPointSymbol>entry_main</EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
@@ -297,7 +297,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <EntryPointSymbol>entry_main</EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
@@ -344,7 +344,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <EntryPointSymbol>entry_main</EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
@@ -391,7 +391,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <EntryPointSymbol>entry_main</EntryPointSymbol>
       <ShowProgress>NotSet</ShowProgress>
@@ -407,6 +407,7 @@
     <ClCompile Include="console.c" />
     <ClCompile Include="datetime.c" />
     <ClCompile Include="debug.c" />
+    <ClCompile Include="error.c" />
     <ClCompile Include="fsio.c" />
     <ClCompile Include="fsio.z.resource.c" />
     <ClCompile Include="fsio.z.textfile.c" />
@@ -427,12 +428,16 @@
     <ClCompile Include="string_builder.c" />
     <ClCompile Include="tcharacter.c" />
     <ClCompile Include="text.z.conv.c" />
+    <ClCompile Include="text.z.parse.c" />
     <ClCompile Include="text.z.search.c" />
     <ClCompile Include="text.c" />
     <ClCompile Include="text.z.man.c" />
     <ClCompile Include="tstring.c" />
     <ClCompile Include="writer.c" />
     <ClCompile Include="without_crt.c" />
+    <None Include="text.z.parse.c.tt" />
+    <None Include="text.z.parse.h.tt" />
+    <None Include="text.z.parse.t4" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="command_line.h" />
@@ -440,6 +445,7 @@
     <ClInclude Include="console.h" />
     <ClInclude Include="datetime.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="error.h" />
     <ClInclude Include="fsio.h" />
     <ClInclude Include="fsio.z.resource.h" />
     <ClInclude Include="fsio.z.textfile.h" />
@@ -460,6 +466,7 @@
     <ClInclude Include="string_builder.h" />
     <ClInclude Include="tcharacter.h" />
     <ClInclude Include="text.z.conv.h" />
+    <ClInclude Include="text.z.parse.h" />
     <ClInclude Include="text.z.search.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="text.z.man.h" />

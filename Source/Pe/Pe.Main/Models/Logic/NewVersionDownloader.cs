@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     using(var localStream = donwloadFile.Create()) {
                         var downloadChunk = new byte[downloadChunkSize];
                         var sizeConverter = new SizeConverter();
-                        var trems = new[] {
+                        var units = new[] {
                             Properties.Resources.String_Download_Seconds_Byte,
                             Properties.Resources.String_Download_Seconds_KB,
                             Properties.Resources.String_Download_Seconds_MB,
@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                                 await localStream.WriteAsync(downloadChunk, 0, donwloadSize);
                                 totalDownloadedSize += donwloadSize;
                                 sizePerTime.Add(donwloadSize);
-                                var size = sizeConverter.ConvertHumanReadableByte(sizePerTime.Size, format, trems);
+                                var size = sizeConverter.ConvertHumanReadableByte(sizePerTime.Size, format, units);
                                 userNotifyProgress.Report(totalDownloadedSize / (double)updateItem.ArchiveSize, size);
                             } else {
                                 userNotifyProgress.End();

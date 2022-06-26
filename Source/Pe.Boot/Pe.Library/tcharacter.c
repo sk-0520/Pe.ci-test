@@ -1,4 +1,5 @@
 ﻿#include "tcharacter.h"
+#include "debug.h"
 
 bool is_newline_character(TCHAR c)
 {
@@ -46,9 +47,23 @@ TCHAR to_lower_character(TCHAR c)
 TCHAR to_upper_character(TCHAR c)
 {
     if (is_lower_character(c)) {
-        return c - 'a'  + 'A';
+        return c - 'a' + 'A';
     }
 
     return c;
 }
+
+bool contains_characters(TCHAR c, const TCHAR* characters, size_t length)
+{
+    assert(characters);
+
+    for (size_t i = 0; i < length; i++) {
+        if (c == characters[i]) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 
