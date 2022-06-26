@@ -77,11 +77,13 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 5.0.0 -> 5.0.1"
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.115.5 -> 1.0.116"
 					},
 					{
 						"revision": "",
