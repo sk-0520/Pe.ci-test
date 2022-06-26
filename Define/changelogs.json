@@ -72,7 +72,8 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "CefSharp.Wpf.NETCore 101.0.180 -> 102.0.100"
 					},
 					{
 						"revision": "",
