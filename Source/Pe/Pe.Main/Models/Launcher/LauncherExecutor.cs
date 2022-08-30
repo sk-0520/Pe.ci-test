@@ -175,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             // 作業ディレクトリ
             if(!string.IsNullOrWhiteSpace(pathParameter.WorkDirectoryPath)) {
                 startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(pathParameter.WorkDirectoryPath);
-            } else if(Path.IsPathRooted(startInfo.FileName) && FileUtility.Exists(startInfo.FileName)) {
+            } else if(Path.IsPathRooted(startInfo.FileName) && IOUtility.Exists(startInfo.FileName)) {
                 startInfo.WorkingDirectory = Path.GetDirectoryName(startInfo.FileName)!;
             }
 

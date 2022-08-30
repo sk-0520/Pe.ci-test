@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 
             // 入力内容をファイルに保存及び、該当ファイルを転送する
             var path = Environment.ExpandEnvironmentVariables(Options.CrashReportSaveFilePath);
-            FileUtility.MakeFileParentDirectory(path);
+            IOUtility.MakeFileParentDirectory(path);
             var jsonValue = JsonSerializer.Serialize(Data, Data.GetType());
             using(var writer = new StreamWriter(new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), Encoding.UTF8)) {
                 await writer.WriteAsync(jsonValue);

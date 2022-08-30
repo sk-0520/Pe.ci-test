@@ -244,7 +244,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 }
                 CanCopyOption = !string.IsNullOrEmpty(Detail.PathData.Option);
 
-                ExistsPath = FileUtility.Exists(Detail.FullPath);
+                ExistsPath = IOUtility.Exists(Detail.FullPath);
                 CanExecutePath = ExistsPath;
 
                 var parentDirectoryPath = Path.GetDirectoryName(Detail.FullPath);

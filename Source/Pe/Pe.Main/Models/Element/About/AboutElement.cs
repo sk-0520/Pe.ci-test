@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
                 throw new InvalidOperationException();
             }
 
-            FileUtility.MakeFileParentDirectory(uninstallBatchFilePath);
+            IOUtility.MakeFileParentDirectory(uninstallBatchFilePath);
             using(var stream = new FileStream(uninstallBatchFilePath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read)) {
                 using var writer = new StreamWriter(stream, Encoding.UTF8);
                 writer.WriteLine("echo OFF");
