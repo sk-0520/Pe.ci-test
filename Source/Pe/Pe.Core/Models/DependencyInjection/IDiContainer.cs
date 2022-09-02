@@ -89,6 +89,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 #endif
         ;
 
+        TResult? Call<TResult, TObject>(TObject obj, string methodName)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        ;
+
         #endregion
 
         #region inject

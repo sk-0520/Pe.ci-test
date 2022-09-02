@@ -553,6 +553,22 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return (TObject)New(typeof(TObject), name, Array.Empty<object>());
         }
 
+        public TResult? Call<TResult, TObject>(TObject obj, string methodName)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        {
+            var type = obj.GetType();
+            var method = type.GetMethod(methodName, BindingFlags.Public);
+            if(method is null) {
+                throw new DiException(methodName);
+            }
+
+            var result = method.Invoke(obj, null);
+
+            return (TResult?)result;
+        }
+
         public void Inject<TObject>(TObject target)
             where TObject : class
         {

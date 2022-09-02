@@ -791,5 +791,25 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             Assert.AreEqual("a", nc.C);
         }
 
+        public class CallClass
+        {
+            public int FuncInt_0()
+            {
+                return 10;
+            }
+            public string FuncStr_0()
+            {
+                return "str";
+            }
+        }
+
+        public void Call_0_Test()
+        {
+            var dic = new DiContainer();
+            var callClass = new CallClass();
+            var acutal = dic.Call<int, CallClass>(callClass, nameof(callClass.FuncInt_0));
+            Assert.AreEqual(10, acutal);
+        }
+
     }
 }
