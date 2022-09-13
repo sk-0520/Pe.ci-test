@@ -126,8 +126,6 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
                     }
                 }
             }
-
-            System.Windows.MessageBox.Show("!");
         }
 
         public void Reboot()
