@@ -76,7 +76,7 @@
               <Setter Property="IsEnabled" Value="False" />
             </DataTrigger>
             <DataTrigger Binding="{Binding SendStatus.State}" Value="Error">
-              <Setter Property="IsEnabled" Value="False" />
+              <Setter Property="IsEnabled" Value="True" />
             </DataTrigger>
             <DataTrigger Binding="{Binding SendStatus.State}" Value="End">
               <Setter Property="IsEnabled" Value="False" />

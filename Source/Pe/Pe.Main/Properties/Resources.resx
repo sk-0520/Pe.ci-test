@@ -2285,4 +2285,7 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_AppManager_System_ProxyIsEnabled_A" xml:space="preserve">
     <value>設定したプロキシを使用する(_P)</value>
   </data>
+  <data name="String_ApplicationCommand_Description_Exception" xml:space="preserve">
+    <value>例外送出</value>
+  </data>
 </root>

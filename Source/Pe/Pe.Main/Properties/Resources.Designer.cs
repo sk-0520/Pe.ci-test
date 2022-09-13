@@ -394,6 +394,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   例外送出 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_Exception {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   終了 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ApplicationCommand_Description_Exit {

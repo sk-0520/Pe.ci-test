@@ -74,6 +74,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         CopyInformation,
         [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Help))]
         Help,
+#if DEBUG
+        [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Exception))]
+        Exception,
+#endif
     }
 
     internal class ApplicationCommandParameterFactory
@@ -87,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         #region property
 
         private CommandConfiguration CommandConfiguration { get; }
-        private IDispatcherWrapper DispatcherWrapper { get; }   
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
         #endregion
 
