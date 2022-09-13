@@ -34,7 +34,11 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
 
         #region property
 
+#if DEBUG
+        private TimeSpan AutoSendWaitTime { get; } = TimeSpan.FromSeconds(1);
+#else
         private TimeSpan AutoSendWaitTime { get; } = TimeSpan.FromSeconds(10);
+#endif
         private DateTime AutoSendStartTime { get; set; }
         private DateTime AutoSendEndTime { get; set; }
         private DispatcherTimer? AutoSendWaitTimer { get; set; }
@@ -73,9 +77,9 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
         public IReadOnlyList<CrashReportItemViewModel> RawProperties { get; }
 
         public string CrashReportSaveFilePath => Model.CrashReportSaveFilePath;
-        #endregion
+#endregion
 
-        #region command
+#region command
 
         public ICommand LoadedCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
@@ -127,9 +131,9 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
              }
          ));
 
-        #endregion
+#endregion
 
-        #region function
+#region function
 
         private void StopAutoSend()
         {
@@ -142,9 +146,9 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
             RaisePropertyChanged(nameof(AutoSend));
         }
 
-        #endregion
+#endregion
 
-        #region ElementViewModelBase
+#region ElementViewModelBase
 
         protected override void Dispose(bool disposing)
         {
@@ -158,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
             base.Dispose(disposing);
         }
 
-        #endregion
+#endregion
 
         private void SendStatus_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
