@@ -91,7 +91,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                 Subject = inputData.Subject,
                 Content = inputData.Content,
 
-                Timestamp = DateTime.UtcNow.ToString("u"),
                 Version = versionConverter.ConvertNormalVersion(BuildStatus.Version),
                 Revision = BuildStatus.Revision,
                 Build = BuildStatus.BuildType.ToString().ToLowerInvariant(),
