@@ -3704,7 +3704,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   ※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。 に類似しているローカライズされた文字列を検索します。
+        ///   ※受信側処理はリポジトリに格納されていないため Pe.Server ソースコードを参照してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Feedback_SourceAddress {
             get {

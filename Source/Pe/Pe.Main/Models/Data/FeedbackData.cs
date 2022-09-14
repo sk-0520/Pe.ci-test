@@ -38,22 +38,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// 種別。
         /// </summary>
-        [DataMember]
-        [JsonPropertyName("kind")]
+
+        [DataMember(Name = "kind")]
         public FeedbackKind Kind { get; set; }
 
         /// <summary>
         /// 件名。
         /// </summary>
-        [DataMember]
-        [JsonPropertyName("subject")]
+
+        [DataMember(Name = "subject")]
         public string Subject { get; set; } = string.Empty;
 
         /// <summary>
         /// 内容。
         /// </summary>
-        [DataMember]
-        [JsonPropertyName("content")]
+
+        [DataMember(Name = "content")]
         public string Content { get; set; } = string.Empty;
 
         #endregion
@@ -70,72 +70,58 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region input
 
-        [DataMember]
-        [JsonPropertyName("kind")]
+        [DataMember(Name = "kind")]
         public string Kind { get; set; } = string.Empty;
 
-        [DataMember]
-        [JsonPropertyName("subject")]
+        [DataMember(Name = "subject")]
         public string Subject { get; set; } = string.Empty;
 
-        [DataMember]
-        [JsonPropertyName("content")]
+        [DataMember(Name = "content")]
         public string Content { get; set; } = string.Empty;
 
         #endregion
 
         #region auto
 
-        [DataMember]
-        [JsonPropertyName("timestamp")]
+        [DataMember(Name = "timestamp")]
         public string Timestamp { get; set; } = string.Empty;
 
-        [DataMember]
-        [JsonPropertyName("version")]
+        [DataMember(Name = "version")]
         public string Version { get; set; } = string.Empty;
 
-        [DataMember]
-        [JsonPropertyName("revision")]
+        [DataMember(Name = "revision")]
         public string Revision { get; set; } = string.Empty;
 
-        [DataMember]
-        [JsonPropertyName("build")]
+        [DataMember(Name = "build")]
         public string Build { get; set; } = string.Empty;
 
         #endregion
 
         #region setting
 
-        [DataMember]
-        [JsonPropertyName("user_id")]
+        [DataMember(Name = "user_id")]
         public string UserId { get; set; } = string.Empty;
 
-        [DataMember]
-        [JsonPropertyName("first_execute_timestamp")]
+        [DataMember(Name = "first_execute_timestamp")]
         public string FirstExecuteTimestamp { get; set; } = string.Empty;
 
-        [DataMember]
-        [JsonPropertyName("first_execute_version")]
+        [DataMember(Name = "first_execute_version")]
         public string FirstExecuteVersion { get; set; } = string.Empty;
 
         #endregion
 
         #region platform
 
-        [DataMember]
-        [JsonPropertyName("process")]
+        [DataMember(Name = "process")]
         public string Process { get; set; } = string.Empty;
 
-        [DataMember]
-        [JsonPropertyName("platform")]
+        [DataMember(Name = "platform")]
         public string Platform { get; set; } = string.Empty;
 
-        [DataMember]
-        [JsonPropertyName("os")]
+        [DataMember(Name = "os")]
         public string Os { get; set; } = string.Empty;
 
-        [DataMember]
-        [JsonPropertyName("clr")]
+        [DataMember(Name = "clr")]
         public string Clr { get; set; } = string.Empty;
 
         #endregion

@@ -1644,7 +1644,7 @@
     <value>入力内容は破棄されます。</value>
   </data>
   <data name="String_Feedback_SourceAddress" xml:space="preserve">
-    <value>※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。</value>
+    <value>※受信側処理はリポジトリに格納されていないため Pe.Server ソースコードを参照してください。</value>
   </data>
   <data name="String_Feedback_SourceOpen" xml:space="preserve">
     <value>ソースコードを参照</value>
