@@ -91,7 +91,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                 Subject = inputData.Subject,
                 Content = inputData.Content,
 
-                Timestamp = DateTime.UtcNow.ToString("u"),
                 Version = versionConverter.ConvertNormalVersion(BuildStatus.Version),
                 Revision = BuildStatus.Revision,
                 Build = BuildStatus.BuildType.ToString().ToLowerInvariant(),
@@ -134,6 +133,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                     }
                     Logger.LogWarning("HTTP: {0}", result.StatusCode);
                     Logger.LogWarning("{0}", await result.Content.ReadAsStringAsync());
+                    if(!result.IsSuccessStatusCode && counter.IsLast) {
+                        ErrorMessage = result.StatusCode.ToString();
+                        SendStatus.State = RunningState.Error;
+                    }
                 } catch(Exception ex) {
                     Logger.LogWarning(ex, ex.Message);
                     if(!counter.IsLast) {

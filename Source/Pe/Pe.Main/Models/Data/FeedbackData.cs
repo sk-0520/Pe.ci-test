@@ -67,7 +67,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-
         #region input
 
         [DataMember]
@@ -85,10 +84,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
 
         #region auto
-
-        [DataMember]
-        [JsonPropertyName("timestamp")]
-        public string Timestamp { get; set; } = string.Empty;
 
         [DataMember]
         [JsonPropertyName("version")]

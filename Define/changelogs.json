@@ -30,7 +30,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#812: API に GAS 使ってると世話し忘れたときに権限で死ぬ"
 					},
 					{
 						"revision": "",

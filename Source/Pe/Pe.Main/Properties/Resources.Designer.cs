@@ -394,6 +394,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   例外送出 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_Exception {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   終了 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ApplicationCommand_Description_Exit {
@@ -1007,7 +1016,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   ※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。 に類似しているローカライズされた文字列を検索します。
+        ///   ※受信側処理はリポジトリに格納されていないため Pe.Server ソースコードを参照してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_CrashReport_Header_ReportSourceAddress {
             get {
@@ -3695,7 +3704,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   ※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。 に類似しているローカライズされた文字列を検索します。
+        ///   ※受信側処理はリポジトリに格納されていないため Pe.Server ソースコードを参照してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Feedback_SourceAddress {
             get {

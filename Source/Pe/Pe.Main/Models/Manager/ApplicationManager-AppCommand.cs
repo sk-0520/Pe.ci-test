@@ -50,6 +50,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 factory.CreateParameter(ApplicationCommand.Help, p => {
                     ShowHelp();
                 }),
+#if DEBUG
+                factory.CreateParameter(ApplicationCommand.Exception, p => {
+                    System.Windows.Application.Current.Dispatcher.Invoke(() => {
+                        throw new System.Exception($"{nameof(ApplicationCommand)}.{nameof(ApplicationCommand.Exception)}");
+                    });
+                }),
+#endif
             };
 
             return result;

@@ -22,8 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         public string Version { get; set; } = string.Empty;
         [JsonPropertyName("revision")]
         public string Revision { get; set; } = string.Empty;
-        [JsonPropertyName("timestamp")]
-        public string Timestamp { get; set; } = string.Empty;
+        [JsonPropertyName("build")]
+        public string Build { get; set; } = string.Empty;
         [JsonPropertyName("exception")]
         public string Exception { get; set; } = string.Empty;
         [JsonPropertyName("informations")]
