@@ -164,8 +164,8 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
             Data = new CrashReportSaveData() {
                 UserId = rawData.UserId,
                 Version = versionConverter.ConvertNormalVersion(rawData.Version),
+                Build = rawData.Build,
                 Revision = rawData.Revision,
-                Timestamp = rawData.Timestamp.ToString("u"),
                 Exception = rawData.Exception,
                 Informations = rawData.Informations,
                 LogItems = rawData.LogItems,
