@@ -1,69 +1,14 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.175+",
+		"date": "2022/09/19",
+		"version": "0.99.176",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "547d3e3452da76a9e952eca534fd917911198eac",
 						"subject": "#812: API に GAS 使ってると世話し忘れたときに権限で死ぬ"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -71,12 +16,12 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "2a9643b772c0b535276e1d4f1376544f37576bb0",
 						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 5.0.1 -> 5.0.4"
 					},
 					{
-						"revision": "",
+						"revision": "b620063858eeb6d4bc5f641ae5df60712ab32fef",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 102.0.100 -> 105.3.390",
 						"comments": [
@@ -86,12 +31,12 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "47250df7dfcb8233f5cb94612813251c8f5a850b",
 						"class": "nuget",
 						"subject": "Microsoft.Extensions.Logging.Abstractions 6.0.1 -> 6.0.2"
 					},
 					{
-						"revision": "",
+						"revision": "a67e4d796bd9456887accbdd0e2b44a1b8179834",
 						"class": "nuget",
 						"subject": "Microsoft.NET.Test.Sdk 17.2.0 -> 17.3.1"
 					}
