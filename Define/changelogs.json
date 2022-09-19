@@ -85,7 +85,7 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "Microsoft.Extensions.Logging.Abstractions 6.0.1 -> 6.0.2",
 						"subject": ""
 					},
 					{
