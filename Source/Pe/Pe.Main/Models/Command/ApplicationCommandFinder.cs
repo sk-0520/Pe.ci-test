@@ -74,10 +74,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         CopyInformation,
         [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Help))]
         Help,
-#if DEBUG
         [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Exception))]
         Exception,
-#endif
     }
 
     internal class ApplicationCommandParameterFactory
