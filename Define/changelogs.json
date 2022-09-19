@@ -77,7 +77,12 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "CefSharp.Wpf.NETCore 102.0.100 -> 105.3.390",
+						"comments": [
+							"chromiumembeddedframework.runtime.win-arm64 102.0.10 -> 105.3.39",
+							"chromiumembeddedframework.runtime.win-x64 102.0.10 -> 105.3.39",
+							"chromiumembeddedframework.runtime.win-x86 102.0.10 -> 105.3.39"
+						]
 					},
 					{
 						"revision": "",
