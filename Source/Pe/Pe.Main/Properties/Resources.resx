@@ -1525,7 +1525,7 @@
 レポートは開発側で共有されます。</value>
   </data>
   <data name="String_CrashReport_Header_ReportSourceAddress" xml:space="preserve">
-    <value>※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。</value>
+    <value>※受信側処理はリポジトリに格納されていないため Pe.Server ソースコードを参照してください。</value>
   </data>
   <data name="String_CrashReport_Header_ReportSourceOpen" xml:space="preserve">
     <value>ソースコードを参照</value>
@@ -1644,7 +1644,7 @@
     <value>入力内容は破棄されます。</value>
   </data>
   <data name="String_Feedback_SourceAddress" xml:space="preserve">
-    <value>※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。</value>
+    <value>※受信側処理はリポジトリに格納されていないため Pe.Server ソースコードを参照してください。</value>
   </data>
   <data name="String_Feedback_SourceOpen" xml:space="preserve">
     <value>ソースコードを参照</value>
@@ -2284,5 +2284,8 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   </data>
   <data name="String_AppManager_System_ProxyIsEnabled_A" xml:space="preserve">
     <value>設定したプロキシを使用する(_P)</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Exception" xml:space="preserve">
+    <value>例外送出</value>
   </data>
 </root>

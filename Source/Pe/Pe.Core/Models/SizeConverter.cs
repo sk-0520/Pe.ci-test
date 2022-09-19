@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             double size = byteSize;
             int order = 0;
-            while(size >= KbSize && ++order < units.Count) {
+            while(KbSize <= size && ++order < units.Count) {
                 size = size / KbSize;
             }
 

@@ -27,6 +27,21 @@
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
+    <Style x:Key="Parent" TargetType="Border">
+      <Setter Property="Padding" Value="20" />
+    </Style>
+    <DropShadowEffect
+      x:Key="Content-Element"
+      BlurRadius="10"
+      ShadowDepth="0"
+      Direction="0"
+      Opacity="0.5"
+    />
+    <Style x:Key="Content" TargetType="Border">
+      <Setter Property="Effect" Value="{StaticResource Content-Element}" />
+      <Setter Property="Margin" Value="10" />
+      <Setter Property="Padding" Value="10,10,10,20" />
+    </Style>
     <Style x:Key="Header" TargetType="TextBlock">
       <Setter Property="FontSize" Value="20" />
       <Setter Property="FontWeight" Value="Bold" />
@@ -76,7 +91,7 @@
               <Setter Property="IsEnabled" Value="False" />
             </DataTrigger>
             <DataTrigger Binding="{Binding SendStatus.State}" Value="Error">
-              <Setter Property="IsEnabled" Value="False" />
+              <Setter Property="IsEnabled" Value="True" />
             </DataTrigger>
             <DataTrigger Binding="{Binding SendStatus.State}" Value="End">
               <Setter Property="IsEnabled" Value="False" />
@@ -165,21 +180,23 @@
 
 
     <!--#region 自動送信 -->
-    <Border TextElement.Foreground="#ffffff" Background="#cc808080" Padding="20" Visibility="{Binding AutoSend, Converter={StaticResource BooleanToVisibilityConverter}}">
+    <Border TextElement.Foreground="#ffffff" Background="#cc808080" Visibility="{Binding AutoSend, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource Parent}">
       <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
-        <StackPanel>
-          <TextBlock Style="{StaticResource Header}" Text="{Binding Resources.String_CrashReport_AutoSendWaiting, Source={x:Static app_main:CultureService.Instance}}" />
-          <ProgressBar Minimum="0" Maximum="1" Value="{Binding WaitCount}" />
-          <Button Command="{Binding StopAutoSendCommand}" Content="{Binding Resources.String_CrashReport_CancelAutoSend, Source={x:Static app_main:CultureService.Instance}}" />
-        </StackPanel>
+        <Border Background="#808080" Style="{StaticResource Content}" >
+          <StackPanel>
+            <TextBlock Style="{StaticResource Header}" Text="{Binding Resources.String_CrashReport_AutoSendWaiting, Source={x:Static app_main:CultureService.Instance}}" />
+            <ProgressBar Minimum="0" Maximum="1" Value="{Binding WaitCount}" />
+            <Button Command="{Binding StopAutoSendCommand}" Content="{Binding Resources.String_CrashReport_CancelAutoSend, Source={x:Static app_main:CultureService.Instance}}" />
+          </StackPanel>
+        </Border>
       </Grid>
     </Border>
     <!--#endregion-->
 
     <!--#region 送信結果 -->
-    <Border Background="#aaffffff" Padding="20">
+    <Border Background="#aaffffff">
       <Border.Style>
-        <Style TargetType="Border">
+        <Style TargetType="Border" BasedOn="{StaticResource Parent}">
           <Style.Triggers>
             <DataTrigger Binding="{Binding SendStatus.State}" Value="Running">
               <Setter Property="Visibility" Value="Visible" />
@@ -207,10 +224,12 @@
             </Style>
           </ContentControl.Style>
           <ContentControl.Content>
-            <StackPanel>
-              <TextBlock Style="{StaticResource Header}" Text="{Binding Resources.String_CrashReport_Sending, Source={x:Static app_main:CultureService.Instance}}" />
-              <ProgressBar IsIndeterminate="True" />
-            </StackPanel>
+            <Border  Background="#ffffff" Style="{StaticResource Content}">
+              <StackPanel>
+                <TextBlock Style="{StaticResource Header}" Text="{Binding Resources.String_CrashReport_Sending, Source={x:Static app_main:CultureService.Instance}}" />
+                <ProgressBar IsIndeterminate="True" />
+              </StackPanel>
+            </Border>
           </ContentControl.Content>
         </ContentControl>
         <ContentControl IsTabStop="False">
@@ -225,20 +244,22 @@
             </Style>
           </ContentControl.Style>
           <ContentControl.Content>
-            <StackPanel>
-              <TextBlock Style="{StaticResource Header}" Text="{Binding Resources.String_CrashReport_Error, Source={x:Static app_main:CultureService.Instance}}" />
-              <TextBlock TextAlignment="Center" TextWrapping="Wrap" Text="{Binding ErrorMessage}" />
-              <TextBlock TextAlignment="Center" Style="{StaticResource Link}">
+            <Border Background="#ffffff" Style="{StaticResource Content}">
+              <StackPanel>
+                <TextBlock Style="{StaticResource Header}" Text="{Binding Resources.String_CrashReport_Error, Source={x:Static app_main:CultureService.Instance}}" />
+                <TextBlock TextAlignment="Center" TextWrapping="Wrap" Text="{Binding ErrorMessage}" />
+                <TextBlock TextAlignment="Center" Style="{StaticResource Link}">
                 <Hyperlink Command="{Binding SendCommand}" >
                   <TextBlock Text="{Binding Resources.String_CrashReport_RetrySend, Source={x:Static app_main:CultureService.Instance}}" />
                 </Hyperlink>
               </TextBlock>
-              <TextBlock TextAlignment="Center" Style="{StaticResource Link}">
+                <TextBlock TextAlignment="Center" Style="{StaticResource Link}">
                 <Hyperlink Command="{Binding CancelCommand}">
                   <TextBlock Text="{Binding Resources.String_Common_Cancel, Source={x:Static app_main:CultureService.Instance}}" />
                 </Hyperlink>
               </TextBlock>
-            </StackPanel>
+              </StackPanel>
+            </Border>
           </ContentControl.Content>
         </ContentControl>
         <ContentControl IsTabStop="False">
@@ -253,29 +274,31 @@
             </Style>
           </ContentControl.Style>
           <ContentControl.Content>
-            <StackPanel>
-              <TextBlock Style="{StaticResource Header}" Text="{Binding Resources.String_CrashReport_Sent, Source={x:Static app_main:CultureService.Instance}}" />
-              <TextBlock TextAlignment="Center" Style="{StaticResource Link}">
+            <Border Background="#ffffff" Style="{StaticResource Content}">
+              <StackPanel>
+                <TextBlock Style="{StaticResource Header}" Text="{Binding Resources.String_CrashReport_Sent, Source={x:Static app_main:CultureService.Instance}}" />
+                <TextBlock TextAlignment="Center" Style="{StaticResource Link}">
                 <Hyperlink Command="{Binding RebootCommand}">
                   <TextBlock Text="{Binding Resources.String_Common_Reboot, Source={x:Static app_main:CultureService.Instance}}" />
                 </Hyperlink>
               </TextBlock>
-              <TextBlock TextAlignment="Center" Style="{StaticResource Link}">
+                <TextBlock TextAlignment="Center" Style="{StaticResource Link}">
                 <Hyperlink Command="{Binding CloseCommand, ElementName=root}">
                     <TextBlock Text="{Binding Resources.String_Common_Close, Source={x:Static app_main:CultureService.Instance}}" />
                   </Hyperlink>
                 </TextBlock>
-              <Grid Margin="4">
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                <Grid Margin="4">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Resources.String_CrashReport_SaveFilePath, Source={x:Static app_main:CultureService.Instance}}" />
-                <TextBox Grid.Column="1" IsReadOnly="True" Text="{Binding CrashReportSaveFilePath, Mode=OneWay}" />
-              </Grid>
-              <TextBlock TextAlignment="Center" TextWrapping="Wrap" Text="{Binding Resources.String_CrashReport_SaveFileDescription, Source={x:Static app_main:CultureService.Instance}}" />
-            </StackPanel>
+                  <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Resources.String_CrashReport_SaveFilePath, Source={x:Static app_main:CultureService.Instance}}" />
+                  <TextBox Grid.Column="1" IsReadOnly="True" Text="{Binding CrashReportSaveFilePath, Mode=OneWay}" />
+                </Grid>
+                <TextBlock TextAlignment="Center" TextWrapping="Wrap" Text="{Binding Resources.String_CrashReport_SaveFileDescription, Source={x:Static app_main:CultureService.Instance}}" />
+              </StackPanel>
+            </Border>
           </ContentControl.Content>
         </ContentControl>
       </Grid>

@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element;
@@ -65,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 
             // 入力内容をファイルに保存及び、該当ファイルを転送する
             var path = Environment.ExpandEnvironmentVariables(Options.CrashReportSaveFilePath);
-            FileUtility.MakeFileParentDirectory(path);
+            IOUtility.MakeFileParentDirectory(path);
             var jsonValue = JsonSerializer.Serialize(Data, Data.GetType());
             using(var writer = new StreamWriter(new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.Read), Encoding.UTF8)) {
                 await writer.WriteAsync(jsonValue);
@@ -105,8 +107,13 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 
                             return;
                         }
+                        var s = await result.Content.ReadAsStringAsync();
                         Logger.LogWarning("HTTP: {0}", result.StatusCode);
-                        Logger.LogWarning("{0}", await result.Content.ReadAsStringAsync());
+                        Logger.LogWarning("{0}", s);
+                        if(!result.IsSuccessStatusCode && counter.IsLast) {
+                            ErrorMessage = result.StatusCode.ToString();
+                            SendStatus.State = RunningState.Error;
+                        }
                     }
                 } catch(Exception ex) {
                     Logger.LogWarning(ex, ex.Message);
@@ -157,8 +164,8 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
             Data = new CrashReportSaveData() {
                 UserId = rawData.UserId,
                 Version = versionConverter.ConvertNormalVersion(rawData.Version),
+                Build = rawData.Build,
                 Revision = rawData.Revision,
-                Timestamp = rawData.Timestamp.ToString("u"),
                 Exception = rawData.Exception,
                 Informations = rawData.Informations,
                 LogItems = rawData.LogItems,

@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// ファイル関連の共通処理。
     /// </summary>
-    public static class FileUtility
+    public static class IOUtility
     {
         /// <summary>
         /// ファイルパスを元にディレクトリを作成

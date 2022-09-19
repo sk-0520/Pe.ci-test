@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             var tunedFileName = TuneFileName(name);
             var path = CombinePath(directoryName, tunedFileName);
-            FileUtility.MakeFileParentDirectory(path);
+            IOUtility.MakeFileParentDirectory(path);
             var stream = new FileStream(path, fileMode, FileAccess.ReadWrite, FileShare.Read);
             return stream;
         }

@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
             var pluginArchiveFile = new FileInfo(pluginArchivePath);
             pluginArchiveFile.Refresh();
 
-            FileUtility.MakeFileParentDirectory(pluginArchiveFile);
+            IOUtility.MakeFileParentDirectory(pluginArchiveFile);
             await NewVersionDownloader.DownloadArchiveAsync(newVersionItem, pluginArchiveFile, notifyProgress);
 
             pluginArchiveFile.Refresh();

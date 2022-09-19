@@ -298,7 +298,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
             if(!skipDownload) {
-                FileUtility.MakeFileParentDirectory(pluginArchiveFile);
+                IOUtility.MakeFileParentDirectory(pluginArchiveFile);
                 await newVersionDownloader.DownloadArchiveAsync(newVersionItem, pluginArchiveFile, notifyProgress);
 
                 // ここで更新しないとチェックサムでファイル無し判定を食らう(知らんけど CheckApplicationNewVersionAsync でそう言ってる)

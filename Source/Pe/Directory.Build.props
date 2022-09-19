@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>0.99.175</Version>
+    <Version>0.99.176</Version>
 
     <TargetFramework>net6.0-windows</TargetFramework>
     <Platforms>x64;x86</Platforms>
@@ -8,6 +8,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <NoStandardLib>false</NoStandardLib>
     <Product>Pe</Product>
     <Copyright>Copyright © 2014-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
     <Configurations>Debug;Release</Configurations>

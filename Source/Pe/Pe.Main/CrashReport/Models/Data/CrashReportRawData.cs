@@ -16,11 +16,10 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         [DataMember]
         public Version Version { get; set; } = new Version();
         [DataMember]
+        public string Build { get; set; } = string.Empty;
+        [DataMember]
         public string Revision { get; set; } = string.Empty;
 
-        [DataMember]
-        [DateTimeKind(DateTimeKind.Utc)]
-        public DateTime Timestamp { get; set; }
         [DataMember]
         public string Exception { get; set; } = string.Empty;
         [DataMember]

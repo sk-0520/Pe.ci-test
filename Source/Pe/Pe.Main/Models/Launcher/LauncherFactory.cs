@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 LauncherItemId = IdFactory.CreateLauncherItemId(),
                 Kind = LauncherItemKind.File,
                 //TODO: 名称取得
-                Name = FileUtility.GetName(expandedPath),
+                Name = IOUtility.GetName(expandedPath),
                 IsEnabledCommandLauncher = true,
             };
             var fileResult = new LauncherFileData();
