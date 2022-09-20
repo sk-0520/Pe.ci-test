@@ -156,19 +156,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         private void SetHorizontalScrollbarForTreeView(IntPtr treeViewHandle, bool isSet)
         {
-            var rawStyle = WindowsUtility.GetWindowLong(treeViewHandle, (int)GWL.GWL_STYLE);
+            var rawStyle = WindowsUtility.GetWindowLongPtr(treeViewHandle, (int)GWL.GWL_STYLE);
             if(isSet) {
                 if(Environment.Is64BitProcess) {
                     var style = rawStyle.ToInt64();
                     if((style & (int)TVS.TVS_NOHSCROLL) == (int)TVS.TVS_NOHSCROLL) {
                         style &= ~(int)TVS.TVS_NOHSCROLL;
-                        WindowsUtility.SetWindowLong(treeViewHandle, (int)GWL.GWL_STYLE, new IntPtr(style));
+                        WindowsUtility.SetWindowLongPtr(treeViewHandle, (int)GWL.GWL_STYLE, new IntPtr(style));
                     }
                 } else {
                     var style = rawStyle.ToInt32();
                     if((style & (int)TVS.TVS_NOHSCROLL) == (int)TVS.TVS_NOHSCROLL) {
                         style &= ~(int)TVS.TVS_NOHSCROLL;
-                        WindowsUtility.SetWindowLong(treeViewHandle, (int)GWL.GWL_STYLE, new IntPtr(style));
+                        WindowsUtility.SetWindowLongPtr(treeViewHandle, (int)GWL.GWL_STYLE, new IntPtr(style));
                     }
                 }
             } else {
@@ -176,13 +176,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                     var style = rawStyle.ToInt64();
                     if((style & (int)TVS.TVS_NOHSCROLL) != (int)TVS.TVS_NOHSCROLL) {
                         style |= (int)TVS.TVS_NOHSCROLL;
-                        WindowsUtility.SetWindowLong(treeViewHandle, (int)GWL.GWL_STYLE, new IntPtr(style));
+                        WindowsUtility.SetWindowLongPtr(treeViewHandle, (int)GWL.GWL_STYLE, new IntPtr(style));
                     }
                 } else {
                     var style = rawStyle.ToInt32();
                     if((style & (int)TVS.TVS_NOHSCROLL) != (int)TVS.TVS_NOHSCROLL) {
                         style &= ~(int)TVS.TVS_NOHSCROLL;
-                        WindowsUtility.SetWindowLong(treeViewHandle, (int)GWL.GWL_STYLE, new IntPtr(style));
+                        WindowsUtility.SetWindowLongPtr(treeViewHandle, (int)GWL.GWL_STYLE, new IntPtr(style));
                     }
                 }
             }

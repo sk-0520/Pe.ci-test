@@ -51,7 +51,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#813: 32bit 実行ファイルがコマンドランチャー起動時に死ぬ",
+						"comments": [
+							"GetWindowLong(Ptr)/SetWindowLong(Ptr) の問題がまた今ここに"
+						]
 					},
 					{
 						"revision": "",
