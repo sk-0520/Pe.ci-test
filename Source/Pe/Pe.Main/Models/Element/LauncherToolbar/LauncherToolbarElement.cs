@@ -386,7 +386,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
             MainDatabaseLazyWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
-                dao.UpdatIsTopmost(LauncherToolbarId, IsTopmost, DatabaseCommonStatus.CreateCurrentAccount());
+                dao.UpdateIsTopmost(LauncherToolbarId, IsTopmost, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
 
@@ -399,7 +399,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
             MainDatabaseLazyWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
-                dao.UpdatIsAutoHide(LauncherToolbarId, IsAutoHide, DatabaseCommonStatus.CreateCurrentAccount());
+                dao.UpdateIsAutoHide(LauncherToolbarId, IsAutoHide, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
 
@@ -412,7 +412,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
             MainDatabaseLazyWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
-                dao.UpdatIsVisible(LauncherToolbarId, IsVisible, DatabaseCommonStatus.CreateCurrentAccount());
+                dao.UpdateIsVisible(LauncherToolbarId, IsVisible, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
 

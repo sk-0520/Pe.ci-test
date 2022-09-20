@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
             MainDatabaseLazyWriter.Stock(c => {
                 var dao = new AppCommandSettingEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
-                dao.UpdatCommandSettingWidth(Width, DatabaseCommonStatus.CreateCurrentAccount());
+                dao.UpdateCommandSettingWidth(Width, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
 

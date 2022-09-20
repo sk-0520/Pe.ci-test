@@ -176,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
-            return Context.Execute(statement, dto) == 1;
+            return Context.UpdateByKeyOrNothing(statement, dto);
         }
 
         public void DeleteLauncherItem(LauncherItemId launcherItemId)

@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public void UpdatIsTopmost(LauncherToolbarId launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
+        public bool UpdateIsTopmost(LauncherToolbarId launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
@@ -161,10 +161,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.IsTopmost] = isTopmost;
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public void UpdatIsAutoHide(LauncherToolbarId launcherToolbarId, bool isAutoHide, IDatabaseCommonStatus commonStatus)
+        public bool UpdateIsAutoHide(LauncherToolbarId launcherToolbarId, bool isAutoHide, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
@@ -172,10 +172,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.IsAutoHide] = isAutoHide;
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public void UpdatIsVisible(LauncherToolbarId launcherToolbarId, bool isVisible, IDatabaseCommonStatus commonStatus)
+        public bool UpdateIsVisible(LauncherToolbarId launcherToolbarId, bool isVisible, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.IsVisible] = isVisible;
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
         public void UpdateDisplayData(LauncherToolbarsDisplayData data, IDatabaseCommonStatus commonStatus)
