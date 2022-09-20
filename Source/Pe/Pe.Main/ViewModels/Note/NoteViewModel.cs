@@ -1050,6 +1050,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                                 }
                                 break;
 
+                            case SC.SC_MOVE:
+                                handled = IsLocked;
+                                break;
+                                
                             default:
                                 break;
                         }
