@@ -1040,6 +1040,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                                 handled = true;
                                 break;
 
+                            case SC.SC_MAXIMIZE:
+                                handled = true;
+                                break;
+
                             default:
                                 break;
                         }
