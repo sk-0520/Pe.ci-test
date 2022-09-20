@@ -60,7 +60,9 @@
 						"revision": "",
 						"subject": "#811: ノートの最小化・復元がWindowsのシステムメニューに準拠していない",
 						"comments": [
-							"コマンドウィンドウは今回ガン無視"
+							"コマンドウィンドウは今回ガン無視",
+							"Window.SourceInitialized の時点で反映されないしなんなのこれ",
+							"FrameworkElement.Initialized ならいけたんかもしれんけど泥臭い手法で対応した"
 						]
 					},
 					{
