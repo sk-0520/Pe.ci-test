@@ -1018,7 +1018,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     }
                     break;
 
-
                 case (int)WM.WM_NCMBUTTONDOWN:
                     if(WindowsUtility.ConvertHTFromWParam(wParam) == HT.HTCAPTION) {
                         if(!IsLocked) {
@@ -1027,9 +1026,30 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     }
                     break;
 
+                case (int)WM.WM_SYSCOMMAND: {
+                        var sc = WindowsUtility.ConvertSCFromWParam(wParam);
+                        switch(sc) {
+                            case SC.SC_MINIMIZE:
+                                /*
+                                if(!IsCompact) {
+                                    DispatcherWrapper.Begin(() => {
+                                        Model.ToggleCompactDelaySave();
+                                    });
+                                }
+                                */
+                                handled = true;
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                    break;
+
                 default:
                     break;
             }
+
             return IntPtr.Zero;
         }
 

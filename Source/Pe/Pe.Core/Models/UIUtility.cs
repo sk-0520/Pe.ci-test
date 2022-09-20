@@ -406,7 +406,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     ws |= WS.WS_MINIMIZEBOX;
                 }
                 style &= ~(nint)ws;
-                WindowsUtility.SetWindowLongPtr(hWnd, (int)GWL.GWL_STYLE, (IntPtr)style);
+                WindowsUtility.SetWindowLongPtr(hWnd, (int)GWL.GWL_STYLE, style);
             }
         }
 

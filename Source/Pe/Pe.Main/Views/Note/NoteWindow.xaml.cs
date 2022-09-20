@@ -218,8 +218,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
 
         #endregion
 
-
-
         private void CloseWindowCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
