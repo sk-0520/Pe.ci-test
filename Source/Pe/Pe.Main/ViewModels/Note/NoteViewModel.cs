@@ -1044,6 +1044,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                                 handled = true;
                                 break;
 
+                            case SC.SC_SIZE:
+                                if(IsLocked || IsCompact) {
+                                    handled = true;
+                                }
+                                break;
+
                             default:
                                 break;
                         }
