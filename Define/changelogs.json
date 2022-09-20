@@ -1,8 +1,44 @@
 [
 	{
+		"date": "2022/09/20",
+		"version": "0.99.177",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"subject": "普段操作しない部分が死んでるのほんとつらつら"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "",
+						"subject": "#814: ランチャーツールバーの「自動的に隠す」切り替えで死ぬ？",
+						"comments": [
+							"#807から死んでる疑惑"
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2022/09/19",
 		"version": "0.99.176",
 		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "71e361fcd9ba04d996e8c7d0635587d7486c0cc1",
+						"subject": "0.99.176 は内部的に 0.99.176+ を正とします！"
+					}
+				]
+			},
 			{
 				"type": "features",
 				"logs": [

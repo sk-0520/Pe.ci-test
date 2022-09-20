@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             Context.UpdateByKey(statement, param);
         }
-        public void UpdatePickupLayout(NoteLayoutData noteLayout, bool isEnabledLocation, bool isEnabledSize, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdatePickupLayout(NoteLayoutData noteLayout, bool isEnabledLocation, bool isEnabledSize, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[nameof(isEnabledLocation)] = isEnabledLocation;
             param[nameof(isEnabledSize)] = isEnabledSize;
 
-            Context.UpdateByKey(statement, param);
+            return Context.UpdateByKeyOrNothing(statement, param);
         }
 
         public int DeleteLayouts(NoteId noteId)
