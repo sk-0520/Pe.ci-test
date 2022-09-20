@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.UpdateByKey(statement, dto);
         }
 
-        public void UpdatCommandSettingWidth(double width, IDatabaseCommonStatus commonStatus)
+        public void UpdateCommandSettingWidth(double width, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();

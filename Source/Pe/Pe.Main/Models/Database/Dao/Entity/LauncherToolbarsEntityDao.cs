@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public bool UpdatIsTopmost(LauncherToolbarId launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
+        public bool UpdateIsTopmost(LauncherToolbarId launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
@@ -164,7 +164,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public bool UpdatIsAutoHide(LauncherToolbarId launcherToolbarId, bool isAutoHide, IDatabaseCommonStatus commonStatus)
+        public bool UpdateIsAutoHide(LauncherToolbarId launcherToolbarId, bool isAutoHide, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
@@ -175,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.UpdateByKeyOrNothing(statement, param);
         }
 
-        public bool UpdatIsVisible(LauncherToolbarId launcherToolbarId, bool isVisible, IDatabaseCommonStatus commonStatus)
+        public bool UpdateIsVisible(LauncherToolbarId launcherToolbarId, bool isVisible, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
