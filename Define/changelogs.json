@@ -50,7 +50,7 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "2617b9877576948cd0fe9e4fdf822f50a3166a83",
 						"subject": "#813: 32bit 実行ファイルがコマンドランチャー起動時に死ぬ",
 						"comments": [
 							"GetWindowLong(Ptr)/SetWindowLong(Ptr) の問題がまた今ここに"
@@ -110,7 +110,7 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "6a165d45f7d9ec2b5a126c4d39a8d313edb921b0",
 						"subject": "#814: ランチャーツールバーの「自動的に隠す」切り替えで死ぬ？",
 						"comments": [
 							"#807から死んでる疑惑"
