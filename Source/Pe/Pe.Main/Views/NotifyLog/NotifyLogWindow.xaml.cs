@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
             var hWnd = HandleUtility.GetWindowHandle(this);
             var exStyle = WindowsUtility.GetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE);
 
-            WindowsUtility.SetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE, WindowsUtility.AddIntPtr(exStyle, new IntPtr((nint)WS_EX.WS_EX_NOACTIVATE)));
+            WindowsUtility.SetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE, exStyle | (nint)WS_EX.WS_EX_NOACTIVATE);
         }
 
         protected override void OnActivated(EventArgs e)

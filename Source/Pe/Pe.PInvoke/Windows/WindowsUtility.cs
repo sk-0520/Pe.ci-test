@@ -158,28 +158,19 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
         #region function
 
-        public static IntPtr AddIntPtr(IntPtr baseValue, IntPtr addValue)
-        {
-            if(Environment.Is64BitProcess) {
-                return new IntPtr(baseValue.ToInt64() | addValue.ToInt64());
-            }
-
-            return new IntPtr(baseValue.ToInt32() | addValue.ToInt32());
-        }
-
         /// <summary>
         /// <c>GetWindowLongPtr/GetWindowLong</c> のプラットフォーム吸収処理。
         /// </summary>
         /// <param name="hWnd"></param>
         /// <param name="nIndex"></param>
         /// <returns></returns>
-        public static IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex)
+        public static nint GetWindowLongPtr(IntPtr hWnd, int nIndex)
         {
             if(Environment.Is64BitProcess) {
                 return NativeMethods.GetWindowLong64(hWnd, nIndex);
             }
 
-            return new IntPtr(NativeMethods.GetWindowLong32(hWnd, nIndex));
+            return NativeMethods.GetWindowLong32(hWnd, nIndex);
         }
 
         /// <summary>
@@ -190,7 +181,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         /// <param name="dwNewLong"></param>
         /// <returns></returns>
         /// <exception cref="System.ComponentModel.Win32Exception"></exception>
-        public static IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+        public static nint SetWindowLongPtr(IntPtr hWnd, int nIndex, nint dwNewLong)
         {
             int error = 0;
             var result = IntPtr.Zero;
@@ -201,7 +192,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
                 result = NativeMethods.SetWindowLong64(hWnd, nIndex, dwNewLong);
                 error = Marshal.GetLastWin32Error();
             } else {
-                Int32 tempResult = NativeMethods.SetWindowLong32(hWnd, nIndex, dwNewLong);
+                Int32 tempResult = NativeMethods.SetWindowLong32(hWnd, nIndex, (uint)dwNewLong);
                 error = Marshal.GetLastWin32Error();
                 result = new IntPtr(tempResult);
             }

@@ -2564,13 +2564,13 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
         internal static extern int GetWindowLong32(IntPtr hWnd, int nIndex);
 
-        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
+        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
         internal static extern IntPtr GetWindowLong64(IntPtr hWnd, int nIndex);
 
         [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
-        internal static extern int SetWindowLong32(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+        internal static extern int SetWindowLong32(IntPtr hWnd, int nIndex, uint dwNewLong);
 
         [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]

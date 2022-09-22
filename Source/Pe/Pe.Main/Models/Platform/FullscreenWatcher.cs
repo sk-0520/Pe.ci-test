@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             }
 
             if(TopmostOnly || ExcludeNoActive || ExcludeToolWindow) {
-                var exWindowStyle = WindowsUtility.GetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE).ToInt32();
+                var exWindowStyle = WindowsUtility.GetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE);
 
                 if(TopmostOnly) {
                     if((exWindowStyle & (int)WS_EX.WS_EX_TOPMOST) == (int)WS_EX.WS_EX_TOPMOST) {

@@ -393,7 +393,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var hWnd = HandleUtility.GetWindowHandle(window);
 
             var exStyle = WindowsUtility.GetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE);
-            exStyle = WindowsUtility.AddIntPtr(exStyle, (nint)WS_EX.WS_EX_TOOLWINDOW);
+            //exStyle = WindowsUtility.AddIntPtr(exStyle, (nint)WS_EX.WS_EX_TOOLWINDOW);
+            exStyle = exStyle | (nint)WS_EX.WS_EX_TOOLWINDOW;
             WindowsUtility.SetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE, exStyle);
 
             if(!enabledMaximizeBox || !enabledMinimizeBox) {
