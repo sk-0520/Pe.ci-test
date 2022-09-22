@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>ContentTypeTextNet.Pe.Main.Test</RootNamespace>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
