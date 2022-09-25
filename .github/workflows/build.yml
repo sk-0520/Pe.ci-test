@@ -29,6 +29,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 15.14.0
+          cache: npm
 
       - name: <Checkout> Repository
         uses: actions/checkout@v3
