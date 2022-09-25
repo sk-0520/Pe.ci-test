@@ -233,7 +233,7 @@ try {
 			# ライブラリの移送
 			robocopy /R:3 /S /E "Resource\Library\" "Output\Release\$platform\Pe\bin\lib\"
 			IF ($? -le 1) {
-				$LastExitCode = 0;
+				$Global:LastExitCode = $null;
 			}
 		}
 	}
