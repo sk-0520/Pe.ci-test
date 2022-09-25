@@ -1,15 +1,8 @@
 name: Build WORKS
 
 on:
-  push:
-    branches-ignore:
-      - master
-      - development
-      - ci-test
-  pull_request:
-      - master
-      - development
-      - ci-test
+  - push
+  - pull_request
 
 env:
   BUILD_TYPE: BETA
@@ -27,7 +20,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
 
       - name: tools
-        uses: |
+        run: |
           dotnet --version
           pwsh --version
 
