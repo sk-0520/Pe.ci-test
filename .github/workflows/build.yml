@@ -37,6 +37,7 @@ jobs:
         run: |
           dotnet --version
           pwsh --version
+          7z -version
 
       - name: <Install> NPM
         run: npm install
