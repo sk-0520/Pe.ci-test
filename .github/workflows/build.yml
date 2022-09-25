@@ -79,3 +79,12 @@ jobs:
       - name: <Archive> Application
         shell: pwsh
         run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
+
+      - name: <Artifact> Pe
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe-${{ matrix.PLATFORM }}
+          path: Output\Pe_*
+
+
+
