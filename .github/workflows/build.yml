@@ -15,6 +15,10 @@ jobs:
 
     runs-on: windows-latest
 
+    strategy:
+      matrix:
+        PLATFORM: ["x86", "x64"]
+
     steps:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
@@ -27,16 +31,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: tools
+      - name: Show Tools
         run: |
           dotnet --version
           pwsh --version
-          dir
-          tree
+
+      - name: Install NPM
+        run: npm install
 
       - name: Build BuildTools
         shell: pwsh
-        run: ./Build/make-buildtools.ps1
+        run: .\Build\make-buildtools.ps1
+
+      - name: Build Help
+        shell: pwsh
+        run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType ${{ BUILD_TYPE }} -Platforms ${{ matrix.PLATFORM }}
 
     # - uses: actions/checkout@v3
     # - name: Setup .NET
