@@ -44,7 +44,10 @@ jobs:
         shell: pwsh
         run: .\Build\make-buildtools.ps1
 
-      - name: Build Help
+      - name: Build Document
+        run: npm run help-ci
+
+      - name: Build Application
         shell: pwsh
         run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType ${{ env.BUILD_TYPE }} -Platforms ${{ matrix.PLATFORM }}
 
