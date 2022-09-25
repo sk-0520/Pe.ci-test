@@ -34,6 +34,9 @@ jobs:
           node-version: 15.14.0
           cache: npm
 
+      - name: <Add> VSTest
+        uses: darenm/Setup-VSTest@v1
+
       - name: <Cache> Nuget
         uses: actions/cache@v3
         with:
