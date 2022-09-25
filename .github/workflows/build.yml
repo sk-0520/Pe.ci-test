@@ -24,6 +24,9 @@ jobs:
         with:
           node-version: 15.14.0
 
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: tools
         run: |
           dotnet --version
