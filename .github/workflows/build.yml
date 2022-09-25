@@ -20,6 +20,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
       - name: <Add> msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
         with:
@@ -30,9 +33,6 @@ jobs:
         with:
           node-version: 15.14.0
           cache: npm
-
-      - name: <Checkout> Repository
-        uses: actions/checkout@v3
 
       - name: <Show> Tools
         run: |
