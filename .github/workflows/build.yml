@@ -45,7 +45,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-
       - name: <Show> Tools
         run: |
           dotnet --version
@@ -76,3 +75,7 @@ jobs:
       - name: <Test> Application
         shell: pwsh
         run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ matrix.PLATFORM }}
+
+      - name: <Archive> Application
+        shell: pwsh
+        run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
