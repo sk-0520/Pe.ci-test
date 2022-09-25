@@ -20,18 +20,20 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Add msbuild to PATH
+      - name: [Add] msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
 
-      - name: Node/NPM
+      - name: [Add] Node/NPM
         uses: actions/setup-node@v3
         with:
           node-version: 15.14.0
 
-      - name: Checkout
+      - name: [Checkout] Repository
         uses: actions/checkout@v3
 
-      - name: Show Tools
+      - name: [Show] Tools
         run: |
           dotnet --version
           pwsh --version
@@ -39,20 +41,20 @@ jobs:
       - name: Install NPM
         run: npm install
 
-      - name: Build BuildTools
+      - name: [Build] BuildTools
         shell: pwsh
         run: .\Build\make-buildtools.ps1
 
-      - name: Build Document
+      - name: [Build] Document
         run: npm run help-ci
 
-      - name: Artifact Document
+      - name: [Artifact] Document
         uses: actions/upload-artifact@v3
         with:
           name: Document
           path: Output\help
 
-      - name: Build Application
+      - name: [Build] Application
         shell: pwsh
         run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType ${{ env.BUILD_TYPE }} -Platforms ${{ matrix.PLATFORM }}
 
