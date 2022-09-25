@@ -38,6 +38,7 @@ jobs:
           dotnet --version
           pwsh --version
           7z -version
+          exit 0
 
       - name: <Install> NPM
         run: npm install
