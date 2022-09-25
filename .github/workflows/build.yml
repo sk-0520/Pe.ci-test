@@ -20,17 +20,6 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: <Add> msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
-        with:
-          msbuild-architecture: x64
-
-      - name: <Add> Node/NPM
-        uses: actions/setup-node@v3
-        with:
-          node-version: 15.14.0
-          cache: npm
-
       - name: <Checkout> Repository
         uses: actions/checkout@v3
 
@@ -41,8 +30,18 @@ jobs:
           7z -version
           exit 0
 
-      - name: <Install> NPM
+      - name: <Add> msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
+
+      - name: <Add/Install> Node/NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: 15.14.0
+          cache: 'npm'
         run: npm install
+
 
       - name: <Build> BuildTools
         shell: pwsh
