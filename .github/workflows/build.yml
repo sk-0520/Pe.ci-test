@@ -19,10 +19,21 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
 
+      - name: Node/NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: 15.14.0
+
       - name: tools
         run: |
           dotnet --version
           pwsh --version
+          dir
+          tree
+
+      - name: Build BuildTools
+        shell: pwsh
+        run: ./Build/make-buildtools.ps1
 
     # - uses: actions/checkout@v3
     # - name: Setup .NET
