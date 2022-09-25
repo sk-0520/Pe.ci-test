@@ -11,13 +11,14 @@ env:
   MINIMUM_VERSION: 0.00.0
 
 jobs:
-  build:
-
-    runs-on: windows-latest
+  matrix-build:
 
     strategy:
       matrix:
         PLATFORM: ["x86", "x64"]
+
+
+    runs-on: windows-latest
 
     steps:
       - name: Add msbuild to PATH
@@ -45,7 +46,7 @@ jobs:
 
       - name: Build Help
         shell: pwsh
-        run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType ${{ BUILD_TYPE }} -Platforms ${{ matrix.PLATFORM }}
+        run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType ${{ env.BUILD_TYPE }} -Platforms ${{ matrix.PLATFORM }}
 
     # - uses: actions/checkout@v3
     # - name: Setup .NET
