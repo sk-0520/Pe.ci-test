@@ -86,11 +86,35 @@ jobs:
           name: Pe-${{ matrix.PLATFORM }}
           path: Output\Pe_*.${{ env.MAIN_ARCHIVE }}
 
-      - name: <Artifact> Pe
+      #region artifact.bat で処理
+      - name: <Artifact> e.Plugins.Reference.ClassicTheme
         uses: actions/upload-artifact@v3
         with:
           name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}
           path: Output\Pe.Plugins.Reference.ClassicTheme_*.${{ env.DEFAULT_ARCHIVE }}
-
-
-
+      - name: <Artifact> e.Plugins.Reference.ClassicTheme
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.ClassicTheme_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> e.Plugins.Reference.ClassicTheme
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.ClassicTheme_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> e.Plugins.Reference.ClassicTheme
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.ClassicTheme_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> e.Plugins.Reference.ClassicTheme
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.ClassicTheme_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> e.Plugins.Reference.ClassicTheme
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.ClassicTheme_*.${{ env.DEFAULT_ARCHIVE }}
+      #endregion
