@@ -119,39 +119,6 @@ jobs:
           path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
       #endregion
 
-
-      - name: <Artifact> Pe.Plugins.Reference.Html
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
-          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
-      - name: <Artifact> Pe.Plugins.Reference.Html
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
-          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
-      - name: <Artifact> Pe.Plugins.Reference.Html
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
-          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
-      - name: <Artifact> Pe.Plugins.Reference.Html
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
-          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
-      - name: <Artifact> Pe.Plugins.Reference.Html
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
-          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
-      - name: <Artifact> Pe.Plugins.Reference.Html
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
-          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
-      #endregion
-
       - name: <Artifact> Pe.Plugin.Reference-${{ matrix.PLATFORM }}.html
         uses: actions/upload-artifact@v3
         with:
