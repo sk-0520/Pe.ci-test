@@ -86,35 +86,88 @@ jobs:
           name: Pe-${{ matrix.PLATFORM }}
           path: Output\Pe_*.${{ env.MAIN_ARCHIVE }}
 
-      #region artifact.bat で処理
-      - name: <Artifact>  Pe.Plugins.Reference.Html
+      #region artifact.bat
+      - name: <Artifact> Pe.Plugins.DefaultTheme
         uses: actions/upload-artifact@v3
         with:
-          name:  Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
-          path: Output\ Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
-      - name: <Artifact>  Pe.Plugins.Reference.Html
+          name: Pe.Plugins.DefaultTheme-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.DefaultTheme_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> Pe.Plugins.Reference.ClassicTheme
         uses: actions/upload-artifact@v3
         with:
-          name:  Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
-          path: Output\ Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
-      - name: <Artifact>  Pe.Plugins.Reference.Html
+          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.ClassicTheme_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> Pe.Plugins.Reference.Clock
         uses: actions/upload-artifact@v3
         with:
-          name:  Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
-          path: Output\ Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
-      - name: <Artifact>  Pe.Plugins.Reference.Html
+          name: Pe.Plugins.Reference.Clock-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.Clock_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> Pe.Plugins.Reference.Eyes
         uses: actions/upload-artifact@v3
         with:
-          name:  Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
-          path: Output\ Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
-      - name: <Artifact>  Pe.Plugins.Reference.Html
+          name: Pe.Plugins.Reference.Eyes-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.Eyes_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> Pe.Plugins.Reference.FileFinder
         uses: actions/upload-artifact@v3
         with:
-          name:  Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
-          path: Output\ Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
-      - name: <Artifact>  Pe.Plugins.Reference.Html
+          name: Pe.Plugins.Reference.FileFinder-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.FileFinder_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> Pe.Plugins.Reference.Html
         uses: actions/upload-artifact@v3
         with:
-          name:  Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
-          path: Output\ Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
+          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
       #endregion
+
+
+      - name: <Artifact> Pe.Plugins.Reference.Html
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> Pe.Plugins.Reference.Html
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> Pe.Plugins.Reference.Html
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> Pe.Plugins.Reference.Html
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> Pe.Plugins.Reference.Html
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
+      - name: <Artifact> Pe.Plugins.Reference.Html
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
+      #endregion
+
+      - name: <Artifact> Pe.Plugin.Reference-${{ matrix.PLATFORM }}.html
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugin.Reference-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugin.Reference.HTML
+
+      - name: <Artifact> update-*.html
+        uses: actions/upload-artifact@v3
+        with:
+          name: update
+          path: Output\Pe_*.html
+
+      - name: <Artifact> update-*.json
+        uses: actions/upload-artifact@v3
+        with:
+          name: update
+          path: Output\update.json
+
+
