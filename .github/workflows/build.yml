@@ -6,7 +6,7 @@ on:
 
 env:
   BUILD_TYPE: BETA
-  MAIN_ARCHIVE: 7z
+  MAIN_ARCHIVE: tar
   DEFAULT_ARCHIVE: 7z
   MINIMUM_VERSION: 0.00.0
 
@@ -84,7 +84,13 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Pe-${{ matrix.PLATFORM }}
-          path: Output\Pe_*
+          path: Output\Pe_*.${{ env.MAIN_ARCHIVE }}
+
+      - name: <Artifact> Pe
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}
+          path: Output\Pe.Plugins.Reference.ClassicTheme_*.${{ env.DEFAULT_ARCHIVE }}
 
 
 
