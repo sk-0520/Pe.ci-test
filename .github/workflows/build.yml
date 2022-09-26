@@ -90,7 +90,7 @@ jobs:
       - name: <Artifact> Pe.Plugins.DefaultTheme
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.DefaultTheme-${{ matrix.PLATFORM }}
+          name: Pe.Plugins.DefaultTheme-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.DefaultTheme_*.${{ env.DEFAULT_ARCHIVE }}
       - name: <Artifact> Pe.Plugins.DefaultTheme.json
         uses: actions/upload-artifact@v3
@@ -100,7 +100,7 @@ jobs:
       - name: <Artifact> Pe.Plugins.Reference.ClassicTheme
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}
+          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.ClassicTheme_*.${{ env.DEFAULT_ARCHIVE }}
       - name: <Artifact> Pe.Plugins.Reference.ClassicTheme.json
         uses: actions/upload-artifact@v3
@@ -110,7 +110,7 @@ jobs:
       - name: <Artifact> Pe.Plugins.Reference.Clock
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Clock-${{ matrix.PLATFORM }}
+          name: Pe.Plugins.Reference.Clock-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.Clock_*.${{ env.DEFAULT_ARCHIVE }}
       - name: <Artifact> Pe.Plugins.Reference.Clock.json
         uses: actions/upload-artifact@v3
@@ -120,7 +120,7 @@ jobs:
       - name: <Artifact> Pe.Plugins.Reference.Eyes
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Eyes-${{ matrix.PLATFORM }}
+          name: Pe.Plugins.Reference.Eyes-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.Eyes_*.${{ env.DEFAULT_ARCHIVE }}
       - name: <Artifact> Pe.Plugins.Reference.Eyes.json
         uses: actions/upload-artifact@v3
@@ -130,7 +130,7 @@ jobs:
       - name: <Artifact> Pe.Plugins.Reference.FileFinder
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.FileFinder-${{ matrix.PLATFORM }}
+          name: Pe.Plugins.Reference.FileFinder-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.FileFinder_*.${{ env.DEFAULT_ARCHIVE }}
       - name: <Artifact> Pe.Plugins.Reference.FileFinder.json
         uses: actions/upload-artifact@v3
@@ -140,7 +140,7 @@ jobs:
       - name: <Artifact> Pe.Plugins.Reference.Html
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}
+          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
       - name: <Artifact> Pe.Plugins.Reference.Html.json
         uses: actions/upload-artifact@v3
@@ -148,6 +148,7 @@ jobs:
           name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}.json
           path: Output\Pe.Plugins.Reference.Html.json
       #endregion
+
 
       - name: <Artifact> update-*.html
         uses: actions/upload-artifact@v3
