@@ -76,6 +76,10 @@ jobs:
         shell: pwsh
         run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ matrix.PLATFORM }}
 
+      - name: <UpdateInfo> Pe.*
+        shell: pwsh
+        run: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
+
       - name: <Archive> Application
         shell: pwsh
         run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
