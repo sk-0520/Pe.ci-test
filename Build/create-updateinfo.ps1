@@ -28,9 +28,11 @@ $releaseTimestamp = (Get-Date).ToUniversalTime()
 $revision = (git rev-parse HEAD)
 
 function OutputJson([object] $json, [string] $outputPath) {
-	ConvertTo-Json -InputObject $json `
+	$value = ConvertTo-Json -InputObject $json `
 	| ForEach-Object { [Text.Encoding]::UTF8.GetBytes($_) } `
-	| Set-Content -Path $outputPath -Encoding Byte
+
+	$utf8nEncoding = New-Object System.Text.UTF8Encoding $False
+	[System.IO.File]::WriteAllLines($outputPath, $value, $utf8nEncoding)
 }
 
 function New-UpdateItem([string] $archive, [string] $archiveFilePath, [uri] $noteUri, [version] $minimumVersion) {
