@@ -7,7 +7,7 @@ echo #region artifact.bat
 for /F %%D in ('dir Pe.Plugins.* /A D /B') do (
 	set DIR_NAME=%%D
 
-	echo - name: ^<Artifact^> archive: !DIR_NAME!
+	echo - name: ^<Artifact^> archive - !DIR_NAME!
 	echo   uses: actions/upload-artifact@v3
 	echo   with:
 	echo     name: !DIR_NAME!-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
@@ -15,7 +15,7 @@ for /F %%D in ('dir Pe.Plugins.* /A D /B') do (
 
 	echo.
 
-	echo - name: ^<Artifact^> update: !DIR_NAME!
+	echo - name: ^<Artifact^> update - !DIR_NAME!
 	echo   uses: actions/upload-artifact@v3
 	echo   with:
 	echo     name: !DIR_NAME!-${{ matrix.PLATFORM }}.json
