@@ -115,100 +115,95 @@ jobs:
           name: tag.json
           path: Output\*-tag.json
 
-      #region artifact-platform.bat
+      #region artifact-single.bat
       - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.ClassicTheme
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.ClassicTheme-x86,x64.${{ env.DEFAULT_ARCHIVE }}
+          name: Pe.Plugins.Reference.ClassicTheme-PLATFORMS[I].${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.ClassicTheme_*.${{ env.DEFAULT_ARCHIVE }}
 
       - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.ClassicTheme
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.ClassicTheme-x86,x64.json
+          name: Pe.Plugins.Reference.ClassicTheme-PLATFORMS[I].json
           path: Output\update-Pe.Plugins.Reference.ClassicTheme.json
 
       - name: <Artifact> Plugin - html - Pe.Plugins.Reference.ClassicTheme
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.ClassicTheme-x86,x64.html
+          name: Pe.Plugins.Reference.ClassicTheme-PLATFORMS[I].html
           path: Output\Pe.Plugins.Reference.ClassicTheme.html
-
 
       - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.Clock
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Clock-x86,x64.${{ env.DEFAULT_ARCHIVE }}
+          name: Pe.Plugins.Reference.Clock-PLATFORMS[I].${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.Clock_*.${{ env.DEFAULT_ARCHIVE }}
 
       - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.Clock
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Clock-x86,x64.json
+          name: Pe.Plugins.Reference.Clock-PLATFORMS[I].json
           path: Output\update-Pe.Plugins.Reference.Clock.json
 
       - name: <Artifact> Plugin - html - Pe.Plugins.Reference.Clock
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Clock-x86,x64.html
+          name: Pe.Plugins.Reference.Clock-PLATFORMS[I].html
           path: Output\Pe.Plugins.Reference.Clock.html
-
 
       - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.Eyes
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Eyes-x86,x64.${{ env.DEFAULT_ARCHIVE }}
+          name: Pe.Plugins.Reference.Eyes-PLATFORMS[I].${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.Eyes_*.${{ env.DEFAULT_ARCHIVE }}
 
       - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.Eyes
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Eyes-x86,x64.json
+          name: Pe.Plugins.Reference.Eyes-PLATFORMS[I].json
           path: Output\update-Pe.Plugins.Reference.Eyes.json
 
       - name: <Artifact> Plugin - html - Pe.Plugins.Reference.Eyes
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Eyes-x86,x64.html
+          name: Pe.Plugins.Reference.Eyes-PLATFORMS[I].html
           path: Output\Pe.Plugins.Reference.Eyes.html
-
 
       - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.FileFinder
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.FileFinder-x86,x64.${{ env.DEFAULT_ARCHIVE }}
+          name: Pe.Plugins.Reference.FileFinder-PLATFORMS[I].${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.FileFinder_*.${{ env.DEFAULT_ARCHIVE }}
 
       - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.FileFinder
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.FileFinder-x86,x64.json
+          name: Pe.Plugins.Reference.FileFinder-PLATFORMS[I].json
           path: Output\update-Pe.Plugins.Reference.FileFinder.json
 
       - name: <Artifact> Plugin - html - Pe.Plugins.Reference.FileFinder
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.FileFinder-x86,x64.html
+          name: Pe.Plugins.Reference.FileFinder-PLATFORMS[I].html
           path: Output\Pe.Plugins.Reference.FileFinder.html
-
 
       - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.Html
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Html-x86,x64.${{ env.DEFAULT_ARCHIVE }}
+          name: Pe.Plugins.Reference.Html-PLATFORMS[I].${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
 
       - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.Html
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Html-x86,x64.json
+          name: Pe.Plugins.Reference.Html-PLATFORMS[I].json
           path: Output\update-Pe.Plugins.Reference.Html.json
 
       - name: <Artifact> Plugin - html - Pe.Plugins.Reference.Html
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Html-x86,x64.html
+          name: Pe.Plugins.Reference.Html-PLATFORMS[I].html
           path: Output\Pe.Plugins.Reference.Html.html
-
 
       #endregion
