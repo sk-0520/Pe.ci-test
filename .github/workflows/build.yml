@@ -108,7 +108,7 @@ jobs:
           name: update
           path: Output\update.json
 
-      #region artifact.bat
+      #region artifact-platform.bat
       - name: <Artifact> archive - Pe.Plugins.Reference.ClassicTheme
         uses: actions/upload-artifact@v3
         with:
@@ -120,6 +120,12 @@ jobs:
         with:
           name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}.json
           path: Output\update-Pe.Plugins.Reference.ClassicTheme.json
+
+      - name: <Artifact> html - Pe.Plugins.Reference.ClassicTheme
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}.html
+          path: Output\Pe.Plugins.Reference.ClassicTheme.html
 
 
       - name: <Artifact> archive - Pe.Plugins.Reference.Clock
@@ -134,6 +140,12 @@ jobs:
           name: Pe.Plugins.Reference.Clock-${{ matrix.PLATFORM }}.json
           path: Output\update-Pe.Plugins.Reference.Clock.json
 
+      - name: <Artifact> html - Pe.Plugins.Reference.Clock
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.Clock-${{ matrix.PLATFORM }}.html
+          path: Output\Pe.Plugins.Reference.Clock.html
+
 
       - name: <Artifact> archive - Pe.Plugins.Reference.Eyes
         uses: actions/upload-artifact@v3
@@ -146,6 +158,12 @@ jobs:
         with:
           name: Pe.Plugins.Reference.Eyes-${{ matrix.PLATFORM }}.json
           path: Output\update-Pe.Plugins.Reference.Eyes.json
+
+      - name: <Artifact> html - Pe.Plugins.Reference.Eyes
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.Eyes-${{ matrix.PLATFORM }}.html
+          path: Output\Pe.Plugins.Reference.Eyes.html
 
 
       - name: <Artifact> archive - Pe.Plugins.Reference.FileFinder
@@ -160,6 +178,12 @@ jobs:
           name: Pe.Plugins.Reference.FileFinder-${{ matrix.PLATFORM }}.json
           path: Output\update-Pe.Plugins.Reference.FileFinder.json
 
+      - name: <Artifact> html - Pe.Plugins.Reference.FileFinder
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.FileFinder-${{ matrix.PLATFORM }}.html
+          path: Output\Pe.Plugins.Reference.FileFinder.html
+
 
       - name: <Artifact> archive - Pe.Plugins.Reference.Html
         uses: actions/upload-artifact@v3
@@ -173,8 +197,13 @@ jobs:
           name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}.json
           path: Output\update-Pe.Plugins.Reference.Html.json
 
+      - name: <Artifact> html - Pe.Plugins.Reference.Html
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}.html
+          path: Output\Pe.Plugins.Reference.Html.html
+
 
       #endregion
-
 
 
