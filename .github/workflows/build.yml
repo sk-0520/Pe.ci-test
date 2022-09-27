@@ -215,3 +215,6 @@ jobs:
 
 
       #endregion
+
+  release:
+    run: echo test
