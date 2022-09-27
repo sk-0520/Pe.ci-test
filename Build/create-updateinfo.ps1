@@ -1,5 +1,5 @@
 ﻿Param(
-	[Parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetRepository,
+	[Parameter(mandatory = $true)][ValidateSet("github","bitbucket")][string] $TargetRepository,
 	[Parameter(mandatory = $true)][version] $MinimumVersion,
 	[Parameter(mandatory = $true)][string] $ArchiveBaseUrl,
 	[Parameter(mandatory = $true)][string] $NoteBaseUrl,
@@ -99,6 +99,16 @@ foreach($pluginProjectDirectory in $pluginProjectDirectories) {
 }
 
 switch ($TargetRepository) {
+	'github' {
+		$tagJson = @{
+			tag     = $version
+			message = $version
+			object  = $revision
+			type    = 'commit'
+		}
+		$tagApiFile = Join-Path $outputDirectory "$TargetRepository-tag.json"
+		OutputJson $tagJson $tagApiFile
+	}
 	'bitbucket' {
 		$tagJson = @{
 			name   = $version
@@ -106,8 +116,7 @@ switch ($TargetRepository) {
 				hash = $revision
 			}
 		}
-		$bitbucketTagApiFile = Join-Path $outputDirectory "bitbucket-tag.json"
-		OutputJson $tagJson $bitbucketTagApiFile
-		#Get-Content $bitbucketTagApiFile
+		$tagApiFile = Join-Path $outputDirectory "$TargetRepository-tag.json"
+		OutputJson $tagJson $tagApiFile
 	}
 }

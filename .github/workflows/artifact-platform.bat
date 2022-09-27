@@ -33,7 +33,6 @@ for /F %%D in ('dir Pe.Plugins.Reference.* /A D /B') do (
 	echo %INDENT%    path: Output\!DIR_NAME!.html
 
 	echo.
-	echo.
 )
 echo %INDENT%#endregion
 

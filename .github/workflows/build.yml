@@ -82,7 +82,7 @@ jobs:
 
       - name: <Make> update info
         shell: pwsh
-        run: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
+        run: .\Build\create-updateinfo.ps1 -TargetRepository github -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
 
       - name: <Make> release note
         shell: pwsh
