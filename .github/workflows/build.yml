@@ -90,20 +90,25 @@ jobs:
           name: Pe-${{ matrix.PLATFORM }}
           path: Output\Pe_*.${{ env.MAIN_ARCHIVE }}
 
+      - name: <Artifact> update-Pe.Plugins.Reference.*.html
+        uses: actions/upload-artifact@v3
+        with:
+          name: update
+          path: Output\Pe.Plugins.Reference.*.html
+
+      - name: <Artifact> update-Pe*.html
+        uses: actions/upload-artifact@v3
+        with:
+          name: update
+          path: Output\Pe*.html
+
+      - name: <Artifact> Pe-update.json
+        uses: actions/upload-artifact@v3
+        with:
+          name: update
+          path: Output\update.json
+
       #region artifact.bat
-      - name: <Artifact> archive - Pe.Plugins.DefaultTheme
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.DefaultTheme-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
-          path: Output\Pe.Plugins.DefaultTheme_*.${{ env.DEFAULT_ARCHIVE }}
-
-      - name: <Artifact> update - Pe.Plugins.DefaultTheme
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.DefaultTheme-${{ matrix.PLATFORM }}.json
-          path: Output\update-Pe.Plugins.DefaultTheme.json
-
-
       - name: <Artifact> archive - Pe.Plugins.Reference.ClassicTheme
         uses: actions/upload-artifact@v3
         with:
@@ -171,16 +176,5 @@ jobs:
 
       #endregion
 
-      - name: <Artifact> update-*.html
-        uses: actions/upload-artifact@v3
-        with:
-          name: update
-          path: Output\Pe_*.html
-
-      - name: <Artifact> Pe-update.json
-        uses: actions/upload-artifact@v3
-        with:
-          name: update
-          path: Output\update.json
 
 

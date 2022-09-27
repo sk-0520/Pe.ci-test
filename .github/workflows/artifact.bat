@@ -1,29 +1,32 @@
 @echo off
 @setlocal enabledelayedexpansion
 
+set INDENT=
+set INDENT=      %INDENT%
+
 pushd ..\..\Source\Pe
 
-echo #region artifact.bat
-for /F %%D in ('dir Pe.Plugins.* /A D /B') do (
+echo %INDENT%#region artifact.bat
+for /F %%D in ('dir Pe.Plugins.Reference.* /A D /B') do (
 	set DIR_NAME=%%D
 
-	echo - name: ^<Artifact^> archive - !DIR_NAME!
-	echo   uses: actions/upload-artifact@v3
-	echo   with:
-	echo     name: !DIR_NAME!-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
-	echo     path: Output\!DIR_NAME!_*.${{ env.DEFAULT_ARCHIVE }}
+	echo %INDENT%- name: ^<Artifact^> archive - !DIR_NAME!
+	echo %INDENT%  uses: actions/upload-artifact@v3
+	echo %INDENT%  with:
+	echo %INDENT%    name: !DIR_NAME!-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
+	echo %INDENT%    path: Output\!DIR_NAME!_*.${{ env.DEFAULT_ARCHIVE }}
 
 	echo.
 
-	echo - name: ^<Artifact^> update - !DIR_NAME!
-	echo   uses: actions/upload-artifact@v3
-	echo   with:
-	echo     name: !DIR_NAME!-${{ matrix.PLATFORM }}.json
-	echo     path: Output\update-!DIR_NAME!.json
+	echo %INDENT%- name: ^<Artifact^> update - !DIR_NAME!
+	echo %INDENT%  uses: actions/upload-artifact@v3
+	echo %INDENT%  with:
+	echo %INDENT%    name: !DIR_NAME!-${{ matrix.PLATFORM }}.json
+	echo %INDENT%    path: Output\update-!DIR_NAME!.json
 
 	echo.
 	echo.
 )
-echo #endregion
+echo %INDENT%#endregion
 
 popd
