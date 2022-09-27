@@ -6,8 +6,8 @@ set INDENT=      %INDENT%
 
 pushd ..\..\Source\Pe
 
-set PLATFORMS_0 = x86
-set PLATFORMS_1 = x64
+set PLATFORMS[0]=x86
+set PLATFORMS[1]=x64
 
 echo %INDENT%#region artifact-single.bat
 for /l %%I in (0,1) do (
@@ -17,7 +17,7 @@ for /l %%I in (0,1) do (
 
 	for /F %%D in ('dir Pe.Plugins.Reference.* /A D /B') do (
 		set DIR_NAME=%%D
-		set PLATFORM=!PLATFORMS_%INDEX%!
+		set PLATFORM=%!PLATFORMS[%INDEX%]%
 
 		echo "PLATFORM: !PLATFORM!"
 
