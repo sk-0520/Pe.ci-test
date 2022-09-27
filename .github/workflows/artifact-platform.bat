@@ -10,7 +10,7 @@ echo %INDENT%#region artifact-platform.bat
 for /F %%D in ('dir Pe.Plugins.Reference.* /A D /B') do (
 	set DIR_NAME=%%D
 
-	echo %INDENT%- name: ^<Artifact^> archive - !DIR_NAME!
+	echo %INDENT%- name: ^<Artifact^> Plugin - archive - !DIR_NAME!
 	echo %INDENT%  uses: actions/upload-artifact@v3
 	echo %INDENT%  with:
 	echo %INDENT%    name: !DIR_NAME!-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
@@ -18,7 +18,7 @@ for /F %%D in ('dir Pe.Plugins.Reference.* /A D /B') do (
 
 	echo.
 
-	echo %INDENT%- name: ^<Artifact^> update - !DIR_NAME!
+	echo %INDENT%- name: ^<Artifact^> Plugin - update info - !DIR_NAME!
 	echo %INDENT%  uses: actions/upload-artifact@v3
 	echo %INDENT%  with:
 	echo %INDENT%    name: !DIR_NAME!-${{ matrix.PLATFORM }}.json
@@ -26,12 +26,11 @@ for /F %%D in ('dir Pe.Plugins.Reference.* /A D /B') do (
 
 	echo.
 
-	echo %INDENT%- name: ^<Artifact^> html - !DIR_NAME!
+	echo %INDENT%- name: ^<Artifact^> Plugin - html - !DIR_NAME!
 	echo %INDENT%  uses: actions/upload-artifact@v3
 	echo %INDENT%  with:
 	echo %INDENT%    name: !DIR_NAME!-${{ matrix.PLATFORM }}.html
 	echo %INDENT%    path: Output\!DIR_NAME!.html
-
 
 	echo.
 	echo.
