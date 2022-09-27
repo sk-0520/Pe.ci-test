@@ -80,9 +80,13 @@ jobs:
         shell: pwsh
         run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
 
-      - name: <UpdateInfo> Pe.*
+      - name: <Make> UpdateInfo
         shell: pwsh
         run: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
+
+      - name: <Make> release-note
+        shell: pwsh
+        run: .\Build\create-release-note.ps1
 
       - name: <Artifact> Pe
         uses: actions/upload-artifact@v3
@@ -93,19 +97,19 @@ jobs:
       - name: <Artifact> update-Pe.Plugins.Reference.*.html
         uses: actions/upload-artifact@v3
         with:
-          name: update
+          name: Pe.Plugins.Reference.html
           path: Output\Pe.Plugins.Reference.*.html
 
       - name: <Artifact> update-Pe*.html
         uses: actions/upload-artifact@v3
         with:
-          name: update
+          name: Pe.html
           path: Output\Pe*.html
 
       - name: <Artifact> Pe-update.json
         uses: actions/upload-artifact@v3
         with:
-          name: update
+          name: update.json
           path: Output\update.json
 
       #region artifact-platform.bat
