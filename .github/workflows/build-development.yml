@@ -12,11 +12,7 @@ env:
   MINIMUM_VERSION: 0.91.0
 
 jobs:
-  matrix-build:
-
-    strategy:
-      matrix:
-        PLATFORM: ["x86", "x64"]
+  build:
 
     runs-on: windows-latest
 
@@ -71,19 +67,19 @@ jobs:
 
       - name: <Build> Application
         shell: pwsh
-        run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType ${{ env.BUILD_TYPE }} -Platforms ${{ matrix.PLATFORM }}
+        run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType ${{ env.BUILD_TYPE }} -Platforms x86,x64
 
       - name: <Test> Application
         shell: pwsh
-        run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ matrix.PLATFORM }}
+        run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms x86,x64
 
       - name: <Archive> Application
         shell: pwsh
-        run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
+        run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms x86,x64
 
       - name: <Make> update info
         shell: pwsh
-        run: .\Build\create-updateinfo.ps1 -TargetRepository github -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
+        run: .\Build\create-updateinfo.ps1 -TargetRepository github -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms x86,x64
 
       - name: <Make> release note
         shell: pwsh
@@ -92,7 +88,7 @@ jobs:
       - name: <Artifact> Application
         uses: actions/upload-artifact@v3
         with:
-          name: Pe-${{ matrix.PLATFORM }}
+          name: Pe-x86,x64
           path: Output\Pe_*.${{ env.MAIN_ARCHIVE }}
 
       - name: <Artifact> Pe.Plugins.Reference.*.html
@@ -123,95 +119,95 @@ jobs:
       - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.ClassicTheme
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
+          name: Pe.Plugins.Reference.ClassicTheme-x86,x64.${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.ClassicTheme_*.${{ env.DEFAULT_ARCHIVE }}
 
       - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.ClassicTheme
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}.json
+          name: Pe.Plugins.Reference.ClassicTheme-x86,x64.json
           path: Output\update-Pe.Plugins.Reference.ClassicTheme.json
 
       - name: <Artifact> Plugin - html - Pe.Plugins.Reference.ClassicTheme
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}.html
+          name: Pe.Plugins.Reference.ClassicTheme-x86,x64.html
           path: Output\Pe.Plugins.Reference.ClassicTheme.html
 
 
       - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.Clock
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Clock-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
+          name: Pe.Plugins.Reference.Clock-x86,x64.${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.Clock_*.${{ env.DEFAULT_ARCHIVE }}
 
       - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.Clock
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Clock-${{ matrix.PLATFORM }}.json
+          name: Pe.Plugins.Reference.Clock-x86,x64.json
           path: Output\update-Pe.Plugins.Reference.Clock.json
 
       - name: <Artifact> Plugin - html - Pe.Plugins.Reference.Clock
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Clock-${{ matrix.PLATFORM }}.html
+          name: Pe.Plugins.Reference.Clock-x86,x64.html
           path: Output\Pe.Plugins.Reference.Clock.html
 
 
       - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.Eyes
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Eyes-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
+          name: Pe.Plugins.Reference.Eyes-x86,x64.${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.Eyes_*.${{ env.DEFAULT_ARCHIVE }}
 
       - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.Eyes
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Eyes-${{ matrix.PLATFORM }}.json
+          name: Pe.Plugins.Reference.Eyes-x86,x64.json
           path: Output\update-Pe.Plugins.Reference.Eyes.json
 
       - name: <Artifact> Plugin - html - Pe.Plugins.Reference.Eyes
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Eyes-${{ matrix.PLATFORM }}.html
+          name: Pe.Plugins.Reference.Eyes-x86,x64.html
           path: Output\Pe.Plugins.Reference.Eyes.html
 
 
       - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.FileFinder
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.FileFinder-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
+          name: Pe.Plugins.Reference.FileFinder-x86,x64.${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.FileFinder_*.${{ env.DEFAULT_ARCHIVE }}
 
       - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.FileFinder
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.FileFinder-${{ matrix.PLATFORM }}.json
+          name: Pe.Plugins.Reference.FileFinder-x86,x64.json
           path: Output\update-Pe.Plugins.Reference.FileFinder.json
 
       - name: <Artifact> Plugin - html - Pe.Plugins.Reference.FileFinder
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.FileFinder-${{ matrix.PLATFORM }}.html
+          name: Pe.Plugins.Reference.FileFinder-x86,x64.html
           path: Output\Pe.Plugins.Reference.FileFinder.html
 
 
       - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.Html
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
+          name: Pe.Plugins.Reference.Html-x86,x64.${{ env.DEFAULT_ARCHIVE }}
           path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
 
       - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.Html
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}.json
+          name: Pe.Plugins.Reference.Html-x86,x64.json
           path: Output\update-Pe.Plugins.Reference.Html.json
 
       - name: <Artifact> Plugin - html - Pe.Plugins.Reference.Html
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}.html
+          name: Pe.Plugins.Reference.Html-x86,x64.html
           path: Output\Pe.Plugins.Reference.Html.html
 
 

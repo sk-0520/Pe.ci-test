@@ -1,4 +1,4 @@
-name: Build WORKS
+name: Build Works
 
 on:
   push:
