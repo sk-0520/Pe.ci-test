@@ -112,6 +112,12 @@ jobs:
           name: update.json
           path: Output\update.json
 
+      - name: <Artifact> Application tag.json
+        uses: actions/upload-artifact@v3
+        with:
+          name: tag.json
+          path: Output\*-tag.json
+
       #region artifact-platform.bat
       - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.ClassicTheme
         uses: actions/upload-artifact@v3
