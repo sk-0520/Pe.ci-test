@@ -109,7 +109,7 @@ jobs:
         with:
           name: Pe.Plugins.Reference-${{ matrix.PLATFORM }}
           path: |
-            Output\Pe.Plugins.Reference.*-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
+            Output\Pe.Plugins.Reference.*_${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
             Output\Pe.Plugins.Reference.*.html
             Output\update-Pe.Plugins.Reference.*.json
 
