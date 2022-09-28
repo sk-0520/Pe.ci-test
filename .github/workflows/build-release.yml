@@ -109,11 +109,13 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: Pe
+          path: Pe
 
       - name: <Download> Pe.Plugins.Reference
         uses: actions/download-artifact@v3
         with:
           name: Pe.Plugins.Reference
+          path: Pe.Plugins.Reference
 
       - name: <Tag> set tag
         run: tree
