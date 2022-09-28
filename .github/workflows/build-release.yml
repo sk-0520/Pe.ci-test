@@ -114,5 +114,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: <Reuse>
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe
+
       - name: <Tag> set tag
-        run: echo test
+        run: tree
