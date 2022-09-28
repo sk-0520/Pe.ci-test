@@ -6,7 +6,7 @@ set INDENT=      %INDENT%
 
 pushd ..\..\Source\Pe
 
-echo %INDENT%#region artifact-platform.bat
+echo %INDENT%#region artifact-plugins-platform.bat
 for /F %%D in ('dir Pe.Plugins.Reference.* /A D /B') do (
 	set DIR_NAME=%%D
 
