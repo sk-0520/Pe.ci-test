@@ -98,126 +98,18 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Pe-${{ matrix.PLATFORM }}
-          path: Output\Pe_*.${{ env.MAIN_ARCHIVE }}
+          path: |
+            Output\Pe_*.${{ env.MAIN_ARCHIVE }}
+            Output\Pe_*.html
+            Output\*-tag.json
+            Output\update.json
 
-      - name: <Artifact> Pe.Plugins.Reference.*.html
+      - name: <Artifact> Pe.Plugins.Reference
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference.html
-          path: Output\Pe.Plugins.Reference.*.html
+          name: Pe.Plugins.Reference-${{ matrix.PLATFORM }}
+          path: |
+            Output\Pe.Plugins.Reference.*-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
+            Output\Pe.Plugins.Reference.*.html
+            Output\update-Pe.Plugins.Reference.*.json
 
-      - name: <Artifact> Pe.html
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.html
-          path: Output\Pe_*.html
-
-      - name: <Artifact> Application update.json
-        uses: actions/upload-artifact@v3
-        with:
-          name: update.json
-          path: Output\update.json
-
-      - name: <Artifact> Application tag.json
-        uses: actions/upload-artifact@v3
-        with:
-          name: tag.json
-          path: Output\*-tag.json
-
-      #region artifact-platform.bat
-      - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.ClassicTheme
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
-          path: Output\Pe.Plugins.Reference.ClassicTheme_*.${{ env.DEFAULT_ARCHIVE }}
-
-      - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.ClassicTheme
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}.json
-          path: Output\update-Pe.Plugins.Reference.ClassicTheme.json
-
-      - name: <Artifact> Plugin - html - Pe.Plugins.Reference.ClassicTheme
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.ClassicTheme-${{ matrix.PLATFORM }}.html
-          path: Output\Pe.Plugins.Reference.ClassicTheme.html
-
-
-      - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.Clock
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Clock-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
-          path: Output\Pe.Plugins.Reference.Clock_*.${{ env.DEFAULT_ARCHIVE }}
-
-      - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.Clock
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Clock-${{ matrix.PLATFORM }}.json
-          path: Output\update-Pe.Plugins.Reference.Clock.json
-
-      - name: <Artifact> Plugin - html - Pe.Plugins.Reference.Clock
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Clock-${{ matrix.PLATFORM }}.html
-          path: Output\Pe.Plugins.Reference.Clock.html
-
-
-      - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.Eyes
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Eyes-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
-          path: Output\Pe.Plugins.Reference.Eyes_*.${{ env.DEFAULT_ARCHIVE }}
-
-      - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.Eyes
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Eyes-${{ matrix.PLATFORM }}.json
-          path: Output\update-Pe.Plugins.Reference.Eyes.json
-
-      - name: <Artifact> Plugin - html - Pe.Plugins.Reference.Eyes
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Eyes-${{ matrix.PLATFORM }}.html
-          path: Output\Pe.Plugins.Reference.Eyes.html
-
-
-      - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.FileFinder
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.FileFinder-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
-          path: Output\Pe.Plugins.Reference.FileFinder_*.${{ env.DEFAULT_ARCHIVE }}
-
-      - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.FileFinder
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.FileFinder-${{ matrix.PLATFORM }}.json
-          path: Output\update-Pe.Plugins.Reference.FileFinder.json
-
-      - name: <Artifact> Plugin - html - Pe.Plugins.Reference.FileFinder
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.FileFinder-${{ matrix.PLATFORM }}.html
-          path: Output\Pe.Plugins.Reference.FileFinder.html
-
-
-      - name: <Artifact> Plugin - archive - Pe.Plugins.Reference.Html
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
-          path: Output\Pe.Plugins.Reference.Html_*.${{ env.DEFAULT_ARCHIVE }}
-
-      - name: <Artifact> Plugin - update info - Pe.Plugins.Reference.Html
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}.json
-          path: Output\update-Pe.Plugins.Reference.Html.json
-
-      - name: <Artifact> Plugin - html - Pe.Plugins.Reference.Html
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference.Html-${{ matrix.PLATFORM }}.html
-          path: Output\Pe.Plugins.Reference.Html.html
-
-
-      #endregion
