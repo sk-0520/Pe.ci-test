@@ -34,15 +34,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 15.14.0
-          cache: npm
-
-      - name: <Cache> Nuget
-        uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
 
       - name: <Show> Tools
         run: |
