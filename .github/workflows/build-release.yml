@@ -3,6 +3,8 @@ name: Build Development
 on:
   push:
     branches:
+    - master
+    - ci-test
     - development
 
 env:
@@ -104,3 +106,12 @@ jobs:
             Output\Pe.Plugins.Reference.*.html
             Output\update-Pe.Plugins.Reference.*.json
 
+  deploy:
+
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/ci-test'
+
+    runs-on: windows-latest
+
+    steps:
+      - name: <Tag> set tag
+        run: echo test
