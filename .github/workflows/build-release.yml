@@ -114,10 +114,15 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: <Reuse>
-        uses: actions/upload-artifact@v3
+      - name: <Download> Application
+        uses: actions/download-artifact@v3
         with:
           name: Pe
+
+      - name: <Download> Pe.Plugins.Reference
+        uses: actions/download-artifact@v3
+        with:
+          name: Pe.Plugins.Reference
 
       - name: <Tag> set tag
         run: tree
