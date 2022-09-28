@@ -117,5 +117,5 @@ jobs:
           name: Pe.Plugins.Reference
           path: Pe.Plugins.Reference
 
-      - name: <Tag> set tag
+      - name: <Show> 🌳🌲🌳🌲
         run: tree /f
