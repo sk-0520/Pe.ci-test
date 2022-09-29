@@ -15,6 +15,8 @@ env:
   MAIN_ARCHIVE: tar
   DEFAULT_ARCHIVE: 7z
   MINIMUM_VERSION: 0.00.0
+  PE_RELEASE_ARCHIVE_BASE_URL: https://example.com
+  PE_RELEASE_NOTE_BASE_URL: https://example.com
 
 jobs:
   matrix-build:
@@ -88,7 +90,7 @@ jobs:
 
       - name: <Make> update info
         shell: pwsh
-        run: .\Build\create-updateinfo.ps1 -TargetRepository github -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
+        run: .\Build\create-updateinfo.ps1 -TargetRepository github -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ env.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ env.PE_RELEASE_NOTE_BASE_URL }} -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
 
       - name: <Make> release note
         shell: pwsh
