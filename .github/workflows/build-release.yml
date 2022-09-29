@@ -128,7 +128,6 @@ jobs:
         run: tree /f
 
       - name: <Read> gen-version
-      - name: Read file
         id: version
         uses: juliangruber/read-file-action@v1
         with:
