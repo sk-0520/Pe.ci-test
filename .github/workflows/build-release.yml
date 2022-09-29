@@ -131,7 +131,7 @@ jobs:
         id: version
         uses: juliangruber/read-file-action@v1
         with:
-          path: ../../Output/gen-version.txt
+          path: Pe/gen-version.txt
 
       - name: <Create> Tag
         uses: actions/github-script@v6
