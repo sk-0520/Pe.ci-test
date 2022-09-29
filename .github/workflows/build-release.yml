@@ -44,6 +44,10 @@ jobs:
           7z -version
           exit 0
 
+      - name: <Generate> Data
+        shell: pwsh
+        run: .\Build\generate-data-files.ps1
+
       - name: <Install> NPM
         run: npm install
 
@@ -89,6 +93,7 @@ jobs:
             Output\Pe_*.html
             Output\*-tag.json
             Output\update.json
+            Output\gen-*
 
       - name: <Artifact> Pe.Plugins.Reference
         uses: actions/upload-artifact@v3
@@ -122,13 +127,20 @@ jobs:
       - name: <Show> 🌳🌲🌳🌲
         run: tree /f
 
+      - name: <Read> gen-version
+      - name: Read file
+        id: version
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: Output/gen-version.txt
+
       - name: <Create> Tag
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/<tagname>',
+              ref: "refs/tags/${{ steps.version.outputs.content }}",
               sha: context.sha
             })
