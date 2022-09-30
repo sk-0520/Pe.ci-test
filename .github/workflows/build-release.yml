@@ -17,7 +17,6 @@ env:
 
 jobs:
   deploy:
-    needs: build
 
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/ci-test'
 
