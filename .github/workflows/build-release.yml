@@ -16,102 +16,143 @@ env:
   PE_RELEASE_NOTE_BASE_URL: https://example.com
 
 jobs:
-  build:
+  # build:
 
-    runs-on: windows-latest
+  #   runs-on: windows-latest
 
-    steps:
-      - name: <Checkout> Repository
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: <Checkout> Repository
+  #       uses: actions/checkout@v3
 
-      - name: <Add> msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
-        with:
-          msbuild-architecture: x64
+  #     - name: <Add> msbuild to PATH
+  #       uses: microsoft/setup-msbuild@v1.1
+  #       with:
+  #         msbuild-architecture: x64
 
-      - name: <Add> VSTest
-        uses: darenm/Setup-VSTest@v1
+  #     - name: <Add> VSTest
+  #       uses: darenm/Setup-VSTest@v1
 
-      - name: <Add> Node/NPM
-        uses: actions/setup-node@v3
-        with:
-          node-version: 15.14.0
-          cache: npm
+  #     - name: <Add> Node/NPM
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 15.14.0
+  #         cache: npm
 
-      - name: <Cache> Nuget
-        uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
+  #     - name: <Cache> Nuget
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: ~/.nuget/packages
+  #         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-nuget-
 
-      - name: <Show> Tools
-        run: |
-          dotnet --version
-          pwsh --version
-          7z -version
-          exit 0
+  #     - name: <Show> Tools
+  #       run: |
+  #         dotnet --version
+  #         pwsh --version
+  #         7z -version
+  #         exit 0
 
-      - name: <Generate> Data
-        shell: pwsh
-        run: .\Build\generate-data-files.ps1
+  #     - name: <Generate> Data
+  #       shell: pwsh
+  #       run: .\Build\generate-data-files.ps1
 
-      - name: <Install> NPM
-        run: npm install
+  #     - name: <Install> NPM
+  #       run: npm install
 
-      - name: <Build> BuildTools
-        shell: pwsh
-        run: .\Build\make-buildtools.ps1
+  #     - name: <Build> BuildTools
+  #       shell: pwsh
+  #       run: .\Build\make-buildtools.ps1
 
-      - name: <Build> Document
-        run: npm run help-ci
+  #     - name: <Build> Document
+  #       run: npm run help-ci
 
-      - name: <Artifact> Document
-        uses: actions/upload-artifact@v3
-        with:
-          name: Document
-          path: Output\help
+  #     - name: <Artifact> Document
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: Document
+  #         path: Output\help
 
-      - name: <Build> Application
-        shell: pwsh
-        run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType ${{ env.BUILD_TYPE }} -Platforms x86,x64
+  #     - name: <Build> Application
+  #       shell: pwsh
+  #       run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType ${{ env.BUILD_TYPE }} -Platforms x86,x64
 
-      - name: <Test> Application
-        shell: pwsh
-        run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms x86,x64
+  #     - name: <Test> Application
+  #       shell: pwsh
+  #       run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms x86,x64
 
-      - name: <Archive> Application
-        shell: pwsh
-        run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms x86,x64
+  #     - name: <Archive> Application
+  #       shell: pwsh
+  #       run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms x86,x64
 
-      - name: <Make> update info
-        shell: pwsh
-        run: .\Build\create-updateinfo.ps1 -TargetRepository github -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ env.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ env.PE_RELEASE_NOTE_BASE_URL }} -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms x86,x64
+  #     - name: <Make> update info
+  #       shell: pwsh
+  #       run: .\Build\create-updateinfo.ps1 -TargetRepository github -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ env.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ env.PE_RELEASE_NOTE_BASE_URL }} -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms x86,x64
 
-      - name: <Make> release note
-        shell: pwsh
-        run: .\Build\create-release-note.ps1
+  #     - name: <Make> release note
+  #       shell: pwsh
+  #       run: .\Build\create-release-note.ps1
 
-      - name: <Artifact> Application
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe
-          path: |
-            Output\Pe_*.${{ env.MAIN_ARCHIVE }}
-            Output\Pe_*.html
-            Output\*-tag.json
-            Output\update.json
-            Output\gen-*
+  #     - name: <Artifact> Application
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: Pe
+  #         path: |
+  #           Output\Pe_*.${{ env.MAIN_ARCHIVE }}
+  #           Output\Pe_*.html
+  #           Output\*-tag.json
+  #           Output\update.json
+  #           Output\gen-*
 
-      - name: <Artifact> Pe.Plugins.Reference
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference
-          path: |
-            Output\Pe.Plugins.Reference.*_*.${{ env.DEFAULT_ARCHIVE }}
-            Output\Pe.Plugins.Reference.*.html
-            Output\update-Pe.Plugins.Reference.*.json
+  #     - name: <Artifact> Pe.Plugins.Reference
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: Pe.Plugins.Reference
+  #         path: |
+  #           Output\Pe.Plugins.Reference.*_*.${{ env.DEFAULT_ARCHIVE }}
+  #           Output\Pe.Plugins.Reference.*.html
+  #           Output\update-Pe.Plugins.Reference.*.json
+
+  # deploy:
+  #   needs: build
+
+  #   if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/ci-test'
+
+  #   runs-on: windows-latest
+
+  #   steps:
+  #     - name: <Download> Application
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: Pe
+  #         path: Pe
+
+  #     - name: <Download> Pe.Plugins.Reference
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: Pe.Plugins.Reference
+  #         path: Pe.Plugins.Reference
+
+  #     - name: <Show> 🌳🌲🌳🌲
+  #       run: tree /f
+
+  #     - name: <Read> gen-version
+  #       id: version
+  #       shell: pwsh
+  #       run: |
+  #         $content = (Get-Content Pe/gen-version.txt)
+  #         Write-Output "::set-output name=outputs::$content"
+
+  #     - name: <Create> Tag
+  #       uses: actions/github-script@v6
+  #       with:
+  #         script: |
+  #           github.rest.git.createRef({
+  #             owner: context.repo.owner,
+  #             repo: context.repo.repo,
+  #             ref: "refs/tags/${{ steps.version.outputs.content }}",
+  #             sha: context.sha
+  #           })
 
   deploy:
     needs: build
@@ -121,20 +162,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: <Download> Application
-        uses: actions/download-artifact@v3
-        with:
-          name: Pe
-          path: Pe
-
-      - name: <Download> Pe.Plugins.Reference
-        uses: actions/download-artifact@v3
-        with:
-          name: Pe.Plugins.Reference
-          path: Pe.Plugins.Reference
-
-      - name: <Show> 🌳🌲🌳🌲
-        run: tree /f
+      - name: <Generate> Data
+        shell: pwsh
+        run: .\Build\generate-data-files.ps1
 
       - name: <Read> gen-version
         id: version
