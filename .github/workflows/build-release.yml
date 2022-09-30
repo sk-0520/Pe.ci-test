@@ -37,10 +37,6 @@ jobs:
           $content = Get-Content Output/gen-version.txt
           Write-Output "::set-output name=content::$content"
 
-      - name: TEST
-        shell: pwsh
-        run: Write-Output ${{ steps.version.outputs.content }}
-
       - name: <Create> Tag
         uses: actions/github-script@v6
         with:
