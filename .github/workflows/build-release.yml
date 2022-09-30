@@ -41,13 +41,13 @@ jobs:
         shell: pwsh
         run: Write-Output ${{ steps.version.outputs.content }}
 
-      # - name: <Create> Tag
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       github.rest.git.createRef({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         ref: "refs/tags/${{ steps.version.outputs.content }}",
-      #         sha: context.sha
-      #       })
+      - name: <Create> Tag
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ steps.version.outputs.content }}",
+              sha: context.sha
+            })
