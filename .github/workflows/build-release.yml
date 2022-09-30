@@ -137,14 +137,11 @@ jobs:
         run: tree /f
 
       - name: <Read> gen-version
-        shell: pwsh
-        run: Get-Content Pe/gen-version.txt
-
-      - name: <Read> gen-version
         id: version
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: /Pe/gen-version.txt
+        shell: pwsh
+        run: |
+          $content = (Get-Content Pe/gen-version.txt)
+          Write-Output "::set-output name=outputs::$content"
 
       - name: <Create> Tag
         uses: actions/github-script@v6
