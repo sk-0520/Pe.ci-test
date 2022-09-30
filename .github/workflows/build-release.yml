@@ -37,6 +37,16 @@ jobs:
           $content = Get-Content Output/gen-version.txt
           Write-Output "::set-output name=content::$content"
 
+      - name: <Delete> TEST Tag
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.git.deleteRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              refId: "refs/tags/${{ steps.version.outputs.content }}",
+            })
+
       - name: <Create> Tag
         uses: actions/github-script@v6
         with:
