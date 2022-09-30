@@ -34,8 +34,8 @@ jobs:
         id: version
         shell: pwsh
         run: |
-          $content = (Get-Content Output/gen-version.txt)
-          Write-Output "::set-output name=outputs::$content"
+          $content = Get-Content Output/gen-version.txt
+          Write-Output "::set-output name=content::$content"
 
       - name: TEST
         shell: pwsh
