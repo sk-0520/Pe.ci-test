@@ -31,16 +31,16 @@ jobs:
         id: version
         shell: pwsh
         run: |
-          $content = (Get-Content Pe/gen-version.txt)
+          $content = (Get-Content Output/gen-version.txt)
           Write-Output "::set-output name=outputs::$content"
 
-      - name: <Create> Tag
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: "refs/tags/${{ steps.version.outputs.content }}",
-              sha: context.sha
-            })
+      # - name: <Create> Tag
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       github.rest.git.createRef({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         ref: "refs/tags/${{ steps.version.outputs.content }}",
+      #         sha: context.sha
+      #       })
