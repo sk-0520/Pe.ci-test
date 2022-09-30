@@ -38,14 +38,12 @@ jobs:
           Write-Output "::set-output name=content::$content"
 
       - name: <Delete> TEST Tag
-        uses: actions/github-script@v6
+        uses: dev-drprasad/delete-tag-and-release@v0.2.0
         with:
-          script: |
-            github.rest.git.deleteRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              refId: "refs/tags/${{ steps.version.outputs.content }}",
-            })
+          delete_release: true
+          tag_name: ${{ steps.version.outputs.content }}
+        env:
+          GITHUB_TOKEN: ${{ secrets. TEST_TOKEN }}
 
       - name: <Create> Tag
         uses: actions/github-script@v6
