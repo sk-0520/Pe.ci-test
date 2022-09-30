@@ -128,7 +128,8 @@ jobs:
         run: tree /f
 
       - name: <Read> gen-version
-        run: type /Pe/gen-version.txt
+        shell: pwsh
+        run: Get-Content Pe/gen-version.txt
 
       - name: <Read> gen-version
         id: version
