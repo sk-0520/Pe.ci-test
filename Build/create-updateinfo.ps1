@@ -34,6 +34,16 @@ function OutputJson([object] $json, [string] $outputPath) {
 	[System.IO.File]::WriteAllLines($outputPath, $value, $utf8nEncoding)
 }
 
+function ReplaceValues([string] $source)
+{
+	$work = $source
+
+	$work = $work.Replace("@VERSION@", $version)
+	$work = $work.Replace("@REVISION@", $revision)
+
+	return $work
+}
+
 function New-UpdateItem([string] $archive, [string] $archiveFilePath, [uri] $noteUri, [version] $minimumVersion) {
 	return @{
 		release            = $releaseTimestamp.ToString("s")
@@ -42,7 +52,7 @@ function New-UpdateItem([string] $archive, [string] $archiveFilePath, [uri] $not
 		platform           = $platform
 		minimum_version    = $minimumVersion
 		note_uri           = $noteUri
-		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVENAME@", (Split-Path $archiveFilePath -Leaf))
+		archive_uri        = (ReplaceValues $ArchiveBaseUrl).Replace("@ARCHIVENAME@", (Split-Path $archiveFilePath -Leaf))
 		archive_size       = (Get-Item -Path $archiveFilePath).Length
 		archive_kind       = $archive
 		archive_hash_kind  = $hashAlgorithm
@@ -57,7 +67,7 @@ foreach ($platform in $Platforms) {
 	$targetPath = Join-Path $ReleaseDirectory $targetName
 
 	$noteName = (ConvertReleaseNoteFileName $version)
-	$noteUri = $NoteBaseUrl.Replace("@NOTENAME@", $noteName)
+	$noteUri = (ReplaceValues $NoteBaseUrl).Replace("@NOTENAME@", $noteName)
 	$item = New-UpdateItem $MainArchive $targetPath $noteUri $MinimumVersion
 
 	$updateJson.items += $item
