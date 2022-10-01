@@ -1,4 +1,4 @@
-name: Build Development
+name: Build Release
 
 on:
   push:
@@ -12,8 +12,8 @@ env:
   MAIN_ARCHIVE: tar
   DEFAULT_ARCHIVE: 7z
   MINIMUM_VERSION: 0.91.0
-  PE_RELEASE_ARCHIVE_BASE_URL: https://example.com
-  PE_RELEASE_NOTE_BASE_URL: https://example.com
+  PE_RELEASE_ARCHIVE_BASE_URL: https://github.com/${{ context.repo.owner }}/${{ context.repo.repo }}/releases/download/@VERSION@/@ARCHIVENAME@
+  PE_RELEASE_NOTE_BASE_URL: https://github.com/${{ context.repo.owner }}/${{ context.repo.repo }}/releases/download/@VERSION@/@NOTENAME@
 
 jobs:
   build:
