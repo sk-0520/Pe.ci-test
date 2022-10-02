@@ -75,7 +75,6 @@ jobs:
       - name: <Build> Application
         shell: pwsh
         run: |
-          echo $Env:GITHUB_REF
           $BuildType = ''
           if($Env:GITHUB_REF -eq 'refs/heads/development') {
             $BuildType = 'BETA'
