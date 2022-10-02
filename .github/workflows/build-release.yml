@@ -13,6 +13,7 @@ env:
   MINIMUM_VERSION: 0.91.0
   PE_RELEASE_ARCHIVE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@ARCHIVENAME@
   PE_RELEASE_NOTE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@NOTENAME@
+  NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
 
 jobs:
   build:
@@ -40,7 +41,7 @@ jobs:
       - name: <Cache> Nuget
         uses: actions/cache@v3
         with:
-          path: ~/.nuget/packages
+          path: ${{ github.workspace }}/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
