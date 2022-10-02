@@ -76,7 +76,7 @@ jobs:
         shell: pwsh
         run: |
           $BuildType = ''
-          if($Env:GITHUB_REF) {
+          if($Env:GITHUB_REF -eq 'refs/heads/development') {
             $BuildType = 'BETA'
           }
           .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $BuildType -Platforms x86,x64
