@@ -169,16 +169,42 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: Pe/Pe_${{ steps.version.outputs.hyphen }}_x64.${{ env.MAIN_ARCHIVE }}
-          asset_name: Pe_${{ steps.version.outputs.hyphen }}_x64.${{ env.MAIN_ARCHIVE }}
+          file: Pe/Pe_*
+          file_glob: true
           tag: ${{ steps.version.outputs.dot }}
 
-      - name: <Upload> Application x86
+      # - name: <Upload> Application x64
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: Pe/Pe_${{ steps.version.outputs.hyphen }}_x64.${{ env.MAIN_ARCHIVE }}
+      #     asset_name: Pe_${{ steps.version.outputs.hyphen }}_x64.${{ env.MAIN_ARCHIVE }}
+      #     tag: ${{ steps.version.outputs.dot }}
+
+      # - name: <Upload> Application x86
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: Pe/Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
+      #     asset_name: Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
+      #     tag: ${{ steps.version.outputs.dot }}
+
+      # - name: <Upload> Application Release Note
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: Pe/Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
+      #     asset_name: Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
+      #     tag: ${{ steps.version.outputs.dot }}
+
+      # updateinfo.json
+
+      - name: <Upload> Application Update Information
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: Pe/Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
-          asset_name: Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
+          file: Pe/update.json
+          asset_name: update.json
           tag: ${{ steps.version.outputs.dot }}
 
           # target_commitish: ${{ github.repository }}
