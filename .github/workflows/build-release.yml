@@ -8,7 +8,6 @@ on:
     - development
 
 env:
-  BUILD_TYPE: BETA
   MAIN_ARCHIVE: tar
   DEFAULT_ARCHIVE: 7z
   MINIMUM_VERSION: 0.91.0
@@ -75,7 +74,12 @@ jobs:
 
       - name: <Build> Application
         shell: pwsh
-        run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType ${{ env.BUILD_TYPE }} -Platforms x86,x64
+        run: |
+          $BuildType = ''
+          if($Env:GITHUB_REF) {
+            $BuildType = 'BETA'
+          }
+          .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $BuildType -Platforms x86,x64
 
       - name: <Test> Application
         shell: pwsh

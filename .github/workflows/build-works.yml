@@ -13,7 +13,6 @@ on:
       - development
 
 env:
-  BUILD_TYPE: BETA
   MAIN_ARCHIVE: tar
   DEFAULT_ARCHIVE: 7z
   MINIMUM_VERSION: 0.91.0
@@ -84,7 +83,7 @@ jobs:
 
       - name: <Build> Application
         shell: pwsh
-        run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType ${{ env.BUILD_TYPE }} -Platforms ${{ matrix.PLATFORM }}
+        run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType BETA -Platforms ${{ matrix.PLATFORM }}
 
       - name: <Test> Application
         shell: pwsh
