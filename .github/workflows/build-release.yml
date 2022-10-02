@@ -154,11 +154,36 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: <Create> Release
-        uses: softprops/action-gh-release@v1
+        uses: actions/github-script@v6
         with:
-          files: |
-            Pe/Pe_*
-            Pe.Plugins.Reference/Pe.Plugins.Reference.*
+          script: |
+            const releaseId = await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ steps.version.outputs.content }}",
+              sha: context.sha
+            })
+
+      - name: <Upload> Application x64
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: Pe/Pe_${{ steps.version.outputs.hyphen }}_x64.${{ env.MAIN_ARCHIVE }}
+          asset_name: Pe_${{ steps.version.outputs.hyphen }}_x64.${{ env.MAIN_ARCHIVE }}
+          tag: ${{ github.ref }}
+
+      - name: <Upload> Application x86
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: Pe/Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
+          asset_name: Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
+          tag: ${{ github.ref }}
+
+          # target_commitish: ${{ github.repository }}
+          # files: |
+          #   Pe/Pe_*
+          #   Pe.Plugins.Reference/Pe.Plugins.Reference.*
 
 #            Pe/Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
       # - name: <Create> Release
