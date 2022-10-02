@@ -165,7 +165,7 @@ jobs:
               sha: context.sha
             })
 
-      - name: <Upload> Application x64
+      - name: <Upload> Applications
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -173,38 +173,28 @@ jobs:
           file_glob: true
           tag: ${{ steps.version.outputs.dot }}
 
-      # - name: <Upload> Application x64
-      #   uses: svenstaro/upload-release-action@v2
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: Pe/Pe_${{ steps.version.outputs.hyphen }}_x64.${{ env.MAIN_ARCHIVE }}
-      #     asset_name: Pe_${{ steps.version.outputs.hyphen }}_x64.${{ env.MAIN_ARCHIVE }}
-      #     tag: ${{ steps.version.outputs.dot }}
+      - name: <Upload> Pe.Plugins.Reference.*
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: Pe.Plugins.Reference/Pe.Plugins.Reference.*
+          file_glob: true
+          tag: ${{ steps.version.outputs.dot }}
 
-      # - name: <Upload> Application x86
-      #   uses: svenstaro/upload-release-action@v2
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: Pe/Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
-      #     asset_name: Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
-      #     tag: ${{ steps.version.outputs.dot }}
+      - name: <Upload> Update Information (Pe.Plugins.Reference)
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: Pe.Plugins.Reference/update*.json
+          file_glob: true
+          tag: ${{ steps.version.outputs.dot }}
 
-      # - name: <Upload> Application Release Note
-      #   uses: svenstaro/upload-release-action@v2
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: Pe/Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
-      #     asset_name: Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
-      #     tag: ${{ steps.version.outputs.dot }}
-
-      # updateinfo.json
-
-      - name: <Upload> Application Update Information
+      - name: <Upload> Update Information (Application)
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: Pe/update.json
-          asset_name: update.json
+          file_glob: false
           tag: ${{ steps.version.outputs.dot }}
 
           # target_commitish: ${{ github.repository }}
