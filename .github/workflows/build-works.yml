@@ -108,6 +108,7 @@ jobs:
           path: |
             Output\Pe_*.${{ env.MAIN_ARCHIVE }}
             Output\Pe_*.html
+            Output\Pe_*.md
             Output\*-tag.json
             Output\update.json
             Output\gen-*
