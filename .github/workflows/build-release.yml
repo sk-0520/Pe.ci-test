@@ -160,26 +160,3 @@ jobs:
             Pe/Pe_*
             Pe.Plugins.Reference/Pe.Plugins.Reference.*
 
-#            Pe/Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
-      # - name: <Create> Release
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       const releaseId = await github.rest.git.createRef({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         ref: "refs/tags/${{ steps.version.outputs.content }}",
-      #         sha: context.sha
-      #       })
-
-      # - name: <Attach> Pe
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       github.rest.repos.uploadReleaseAsset({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         release_id: release.data.id,
-      #         name: "app.zip",
-      #         data: await fs.readFileSync("app.zip")
-      #       });
