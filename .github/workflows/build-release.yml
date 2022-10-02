@@ -136,30 +136,50 @@ jobs:
       - name: <Show> 🌳🌲🌳🌲
         run: tree /f
 
-      - name: <Read> gen-version
+      - name: <Read> gen-data
         id: version
         shell: pwsh
         run: |
-          $content = Get-Content Pe\gen-version.txt
-          Write-Output "::set-output name=content::$content"
+          $dot = Get-Content Pe\gen-version-dot.txt
+          $hyphen = Get-Content Pe\gen-version-hyphen.txt
+          Write-Output "::set-output name=dot::$dot"
+          Write-Output "::set-output name=hyphen::$hyphen"
 
       - name: <Delete> TEST Tag
         uses: dev-drprasad/delete-tag-and-release@v0.2.0
         with:
           delete_release: true
-          tag_name: ${{ steps.version.outputs.content }}
+          tag_name: ${{ steps.version.outputs.dot }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: <Create> Tag
-        uses: actions/github-script@v6
+      - name: <Create> Release
+        use: softprops/action-gh-release@v1
         with:
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: "refs/tags/${{ steps.version.outputs.content }}",
-              sha: context.sha
-            })
+          files: |
+            Pe/Pe_*
+            Pe.Plugins.Reference/Pe.Plugins.Reference.*
 
+#            Pe/Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
+      # - name: <Create> Release
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       const releaseId = await github.rest.git.createRef({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         ref: "refs/tags/${{ steps.version.outputs.content }}",
+      #         sha: context.sha
+      #       })
 
+      # - name: <Attach> Pe
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       github.rest.repos.uploadReleaseAsset({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         release_id: release.data.id,
+      #         name: "app.zip",
+      #         data: await fs.readFileSync("app.zip")
+      #       });
