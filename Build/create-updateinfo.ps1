@@ -66,7 +66,7 @@ foreach ($platform in $Platforms) {
 	$targetName = ConvertAppArchiveFileName $version $platform $MainArchive
 	$targetPath = Join-Path $ReleaseDirectory $targetName
 
-	$noteName = (ConvertReleaseNoteFileName $version)
+	$noteName = (ConvertReleaseNoteFileName $version 'html')
 	$noteUri = (ReplaceValues $NoteBaseUrl).Replace("@NOTENAME@", $noteName)
 	$item = New-UpdateItem $MainArchive $targetPath $noteUri $MinimumVersion
 
