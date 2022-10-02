@@ -170,7 +170,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: Pe/Pe_${{ steps.version.outputs.hyphen }}_x64.${{ env.MAIN_ARCHIVE }}
           asset_name: Pe_${{ steps.version.outputs.hyphen }}_x64.${{ env.MAIN_ARCHIVE }}
-          tag: ${{ github.ref }}
+          tag: ${{ steps.version.outputs.content }}
 
       - name: <Upload> Application x86
         uses: svenstaro/upload-release-action@v2
@@ -178,7 +178,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: Pe/Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
           asset_name: Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
-          tag: ${{ github.ref }}
+          tag: ${{ steps.version.outputs.content }}
 
           # target_commitish: ${{ github.repository }}
           # files: |
