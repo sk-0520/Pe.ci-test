@@ -1,0 +1,233 @@
+name: Build Release
+
+on:
+  push:
+    branches:
+    - master
+    - ci-test
+    - development
+
+env:
+  MAIN_ARCHIVE: tar
+  DEFAULT_ARCHIVE: 7z
+  MINIMUM_VERSION: 0.91.0
+  PE_RELEASE_ARCHIVE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@ARCHIVENAME@
+  PE_RELEASE_NOTE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@NOTENAME@
+  NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Add> msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
+
+      - name: <Add> VSTest
+        uses: darenm/Setup-VSTest@v1
+
+      - name: <Add> Node/NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: 15.14.0
+          cache: npm
+
+      - name: <Cache> Nuget
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: <Show> Tools
+        run: |
+          dotnet --version
+          pwsh --version
+          7z -version
+          exit 0
+
+      - name: <Generate> Data
+        shell: pwsh
+        run: .\Build\generate-data-files.ps1
+
+      - name: <Install> NPM
+        run: npm install
+
+      - name: <Build> BuildTools
+        shell: pwsh
+        run: .\Build\make-buildtools.ps1
+
+      - name: <Build> Document
+        run: npm run help-ci
+
+      - name: <Artifact> Document
+        uses: actions/upload-artifact@v3
+        with:
+          name: Document
+          path: Output\help
+
+      - name: <Build> Application
+        shell: pwsh
+        run: |
+          $BuildType = ''
+          if($Env:GITHUB_REF -eq 'refs/heads/development') {
+            $BuildType = 'BETA'
+          }
+          .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $BuildType -Platforms x86,x64
+
+      - name: <Test> Application
+        shell: pwsh
+        run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms x86,x64
+
+      - name: <Archive> Application
+        shell: pwsh
+        run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms x86,x64
+
+      - name: <Make> update info
+        shell: pwsh
+        run: .\Build\create-updateinfo.ps1 -TargetRepository github -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ env.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ env.PE_RELEASE_NOTE_BASE_URL }} -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms x86,x64
+
+      - name: <Make> release note
+        shell: pwsh
+        run: .\Build\create-release-note.ps1
+
+      - name: <Artifact> Application
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe
+          path: |
+            Output\Pe_*.${{ env.MAIN_ARCHIVE }}
+            Output\Pe_*.html
+            Output\Pe_*.md
+            Output\*-tag.json
+            Output\update.json
+            Output\gen-*
+
+      - name: <Artifact> Pe.Plugins.Reference
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference
+          path: |
+            Output\Pe.Plugins.Reference.*_*.${{ env.DEFAULT_ARCHIVE }}
+            Output\Pe.Plugins.Reference.*.html
+            Output\update-Pe.Plugins.Reference.*.json
+
+  deploy:
+    needs: build
+
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/ci-test'
+
+    runs-on: windows-latest
+
+    steps:
+      - name: <Download> Application
+        uses: actions/download-artifact@v3
+        with:
+          name: Pe
+          path: Pe
+
+      - name: <Download> Pe.Plugins.Reference
+        uses: actions/download-artifact@v3
+        with:
+          name: Pe.Plugins.Reference
+          path: Pe.Plugins.Reference
+
+      - name: <Show> 🌳🌲🌳🌲
+        run: tree /f
+
+      - name: <Read> gen-data
+        id: version
+        shell: pwsh
+        run: |
+          $dot = Get-Content Pe\gen-version-dot.txt
+          $hyphen = Get-Content Pe\gen-version-hyphen.txt
+          Write-Output "::set-output name=dot::$dot"
+          Write-Output "::set-output name=hyphen::$hyphen"
+
+      - name: <Delete> TEST Tag
+        continue-on-error: true
+        uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          delete_release: true
+          tag_name: ${{ steps.version.outputs.dot }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: <Create> Release
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const releaseId = await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ steps.version.outputs.dot }}",
+              sha: context.sha
+            })
+
+      - name: <Upload> Applications
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: Pe/Pe_*
+          file_glob: true
+          tag: ${{ steps.version.outputs.dot }}
+
+      - name: <Upload> Pe.Plugins.Reference.*
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: Pe.Plugins.Reference/Pe.Plugins.Reference.*
+          file_glob: true
+          tag: ${{ steps.version.outputs.dot }}
+
+      - name: <Upload> Update Information (Pe.Plugins.Reference)
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: Pe.Plugins.Reference/update*.json
+          file_glob: true
+          tag: ${{ steps.version.outputs.dot }}
+
+      - name: <Upload> Update Information (Application)
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: Pe/update.json
+          file_glob: false
+          tag: ${{ steps.version.outputs.dot }}
+
+          # target_commitish: ${{ github.repository }}
+          # files: |
+          #   Pe/Pe_*
+          #   Pe.Plugins.Reference/Pe.Plugins.Reference.*
+
+#            Pe/Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
+      # - name: <Create> Release
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       const releaseId = await github.rest.git.createRef({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         ref: "refs/tags/${{ steps.version.outputs.content }}",
+      #         sha: context.sha
+      #       })
+
+      # - name: <Attach> Pe
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       github.rest.repos.uploadReleaseAsset({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         release_id: release.data.id,
+      #         name: "app.zip",
+      #         data: await fs.readFileSync("app.zip")
+      #       });

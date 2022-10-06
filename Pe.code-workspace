@@ -49,6 +49,11 @@
         "markdownlint.config": {
             "MD024": false,
             "MD036": false
-        }
+        },
+        "cSpell.words": [
+            "msbuild",
+            "pwsh",
+            "endregion"
+        ]
     }
 }
