@@ -8,7 +8,7 @@ on:
     - development
 
 env:
-  MAIN_ARCHIVE: tar
+  MAIN_ARCHIVE: 7z
   DEFAULT_ARCHIVE: 7z
   MINIMUM_VERSION: 0.91.0
   PE_RELEASE_ARCHIVE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@ARCHIVENAME@
