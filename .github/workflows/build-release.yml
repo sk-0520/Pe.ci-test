@@ -203,31 +203,7 @@ jobs:
           file_glob: false
           tag: ${{ steps.version.outputs.dot }}
 
-          # target_commitish: ${{ github.repository }}
-          # files: |
-          #   Pe/Pe_*
-          #   Pe.Plugins.Reference/Pe.Plugins.Reference.*
+      - name: <Update> Version
+        run: |
+          curl -H "X-API-KEY: ${{ secrets.PE_SERVER_API_KEY }}" -H "X-SECRET-KEY: ${{ secrets.PE_SERVER_API_SECRET }}" -X POST https://peserver.gq//api/administrator/pe/version --data '{ "version": "${{ steps.version.outputs.dot }}" }'
 
-#            Pe/Pe_${{ steps.version.outputs.hyphen }}_x86.${{ env.MAIN_ARCHIVE }}
-      # - name: <Create> Release
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       const releaseId = await github.rest.git.createRef({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         ref: "refs/tags/${{ steps.version.outputs.content }}",
-      #         sha: context.sha
-      #       })
-
-      # - name: <Attach> Pe
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       github.rest.repos.uploadReleaseAsset({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         release_id: release.data.id,
-      #         name: "app.zip",
-      #         data: await fs.readFileSync("app.zip")
-      #       });
