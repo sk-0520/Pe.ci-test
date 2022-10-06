@@ -3,7 +3,7 @@
 		"project_name": "Pe-debug",
 		"mutex_name": "Pe-debug",
 		"unhandled_exception_handled": false,
-		"version_check_uri": "https://bitbucket.org/sk_0520/pe-ci_test/downloads/update.json"
+		"version_check_uri": "http://localhost/api/application/version/update"
 	},
 	"api": {
 		"crash_report_uri": "http://localhost/api/application/crash-report",
