@@ -1,5 +1,5 @@
 ﻿#pragma once
-/* 自動生成: text.z.parse.h.tt */
+/* 自動生成: text.z.parse.gen.h.tt */
 
 /// <summary>
 /// 変換値の今のとこ受け入れ可能基数。

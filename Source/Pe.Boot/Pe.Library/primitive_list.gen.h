@@ -1,5 +1,5 @@
 ﻿#pragma once
-/* 自動生成: primitive_list.h.tt */
+/* 自動生成: primitive_list.gen.h.tt */
 #include <stdint.h>
 
 #include "common.h"

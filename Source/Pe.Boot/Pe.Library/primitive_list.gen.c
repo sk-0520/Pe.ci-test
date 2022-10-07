@@ -1,4 +1,4 @@
-﻿/* 自動生成: primitive_list.c.tt */
+﻿/* 自動生成: primitive_list.gen.c.tt */
 #include "primitive_list.gen.h"
 #include "memory.h"
 #include "debug.h"
