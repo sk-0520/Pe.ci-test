@@ -13,6 +13,7 @@ env:
   MINIMUM_VERSION: 0.91.0
   PE_RELEASE_ARCHIVE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@ARCHIVENAME@
   PE_RELEASE_NOTE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@NOTENAME@
+  PE_UPDATE_API_ENDPOINT: https://peserver.gq/api/administrator/pe/version
   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
 
 jobs:
@@ -203,7 +204,7 @@ jobs:
           file_glob: false
           tag: ${{ steps.version.outputs.dot }}
 
-      - name: <Update> Version
+      - name: <Update> Version API
         run: |
-          curl -H "X-API-KEY: ${{ secrets.PE_SERVER_API_KEY }}" -H "X-SECRET-KEY: ${{ secrets.PE_SERVER_API_SECRET }}" -X POST https://peserver.gq//api/administrator/pe/version --data '{ "version": "${{ steps.version.outputs.dot }}" }'
+          curl -H "X-API-KEY: ${{ secrets.PE_SERVER_API_KEY }}" -H "X-SECRET-KEY: ${{ secrets.PE_SERVER_API_SECRET }}" -X POST ${{ env.PE_UPDATE_API_ENDPOINT }} --data '{ "version": "${{ steps.version.outputs.dot }}" }'
 
