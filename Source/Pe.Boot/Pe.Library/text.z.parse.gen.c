@@ -1,4 +1,4 @@
-﻿/* 自動生成: text.z.parse.c.tt */
+﻿/* 自動生成: text.z.parse.gen.c.tt */
 #include "text.h"
 #include "debug.h"
 

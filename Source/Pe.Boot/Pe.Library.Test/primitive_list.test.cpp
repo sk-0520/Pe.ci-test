@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 
 extern "C" {
-#   include "../Pe.Library/primitive_list.h"
+#   include "../Pe.Library/primitive_list.gen.h"
 }
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
