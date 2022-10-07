@@ -411,7 +411,7 @@
     <ClCompile Include="fsio.c" />
     <ClCompile Include="fsio.z.resource.c" />
     <ClCompile Include="fsio.z.textfile.c" />
-    <None Include="primitive_list.c.tt">
+    <None Include="primitive_list.gen.c.tt">
       <FileType>Document</FileType>
     </None>
     <ClCompile Include="hash.c" />
@@ -419,24 +419,24 @@
     <ClCompile Include="lib_math.c" />
     <ClCompile Include="linked_list.c" />
     <ClCompile Include="object_list.c" />
-    <ClCompile Include="primitive_list.c" />
     <ClCompile Include="memory.c" />
     <ClCompile Include="path.c" />
     <ClCompile Include="logging.c" />
     <ClCompile Include="platform.c" />
+    <ClCompile Include="primitive_list.gen.c" />
     <ClCompile Include="res_check.c" />
     <ClCompile Include="string_builder.c" />
     <ClCompile Include="tcharacter.c" />
     <ClCompile Include="text.z.conv.c" />
-    <ClCompile Include="text.z.parse.c" />
+    <ClCompile Include="text.z.parse.gen.c" />
     <ClCompile Include="text.z.search.c" />
     <ClCompile Include="text.c" />
     <ClCompile Include="text.z.man.c" />
     <ClCompile Include="tstring.c" />
     <ClCompile Include="writer.c" />
     <ClCompile Include="without_crt.c" />
-    <None Include="text.z.parse.c.tt" />
-    <None Include="text.z.parse.h.tt" />
+    <None Include="text.z.parse.gen.c.tt" />
+    <None Include="text.z.parse.gen.h.tt" />
     <None Include="text.z.parse.t4" />
   </ItemGroup>
   <ItemGroup>
@@ -449,7 +449,7 @@
     <ClInclude Include="fsio.h" />
     <ClInclude Include="fsio.z.resource.h" />
     <ClInclude Include="fsio.z.textfile.h" />
-    <None Include="primitive_list.h.tt">
+    <None Include="primitive_list.gen.h.tt">
       <FileType>Document</FileType>
     </None>
     <ClInclude Include="hash.h" />
@@ -457,16 +457,16 @@
     <ClInclude Include="lib_math.h" />
     <ClInclude Include="linked_list.h" />
     <ClInclude Include="object_list.h" />
-    <ClInclude Include="primitive_list.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="path.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="platform.h" />
+    <ClInclude Include="primitive_list.gen.h" />
     <ClInclude Include="res_check.h" />
     <ClInclude Include="string_builder.h" />
     <ClInclude Include="tcharacter.h" />
     <ClInclude Include="text.z.conv.h" />
-    <ClInclude Include="text.z.parse.h" />
+    <ClInclude Include="text.z.parse.gen.h" />
     <ClInclude Include="text.z.search.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="text.z.man.h" />

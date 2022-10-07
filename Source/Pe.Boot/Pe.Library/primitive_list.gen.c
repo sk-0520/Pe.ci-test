@@ -1,5 +1,5 @@
 ﻿/* 自動生成: primitive_list.c.tt */
-#include "primitive_list.h"
+#include "primitive_list.gen.h"
 #include "memory.h"
 #include "debug.h"
 
