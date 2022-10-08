@@ -72,7 +72,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#821: リリース版CIのキャッシュは行わないようにする"
 					},
 					{
 						"revision": "",
