@@ -171,7 +171,7 @@ $htmlContent = $htmlContent.Replace('//SCRIPT', (Get-Content $compiledChangelogL
 $htmlContent = $htmlContent.Replace('/*STYLE*/', (Get-Content $compiledChangelogStyleFile -Raw -Encoding UTF8))
 
 $version = GetAppVersion
-Set-Content (Join-Path $outputDirectory (ConvertReleaseNoteFileName $version)) -Value $htmlContent -Encoding UTF8
+Set-Content (Join-Path $outputDirectory (ConvertReleaseNoteFileName $version 'html')) -Value $htmlContent -Encoding UTF8
 
 
 # -------------------------------
