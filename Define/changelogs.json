@@ -1,27 +1,20 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.177+",
+		"date": "2022/10/08",
+		"version": "0.99.178",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
 						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"class": "compatibility",
+						"subject": "色んなものを github に移動中で色んなものがうまく動かないかも",
+						"comments": [
+							"Pe.Server との兼ね合いもあり本体アップデートは危うい",
+							"参考実装プラグインはもっと危うい",
+							"取り急ぎ対応なので各ドキュメント等は bitbucket 状態"
+						]
 					}
 				]
 			},
@@ -29,20 +22,8 @@
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "b0c34ac6e51f58ca238b5da72abe422a3317fc9f",
 						"subject": "#817: github に移行できるか調査"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -57,42 +38,13 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "0e7eb01f1af9d0e4dde1358f1e259d9fa60a8b03",
 						"subject": "#811: ノートの最小化・復元がWindowsのシステムメニューに準拠していない",
 						"comments": [
 							"コマンドウィンドウは今回ガン無視",
 							"Window.SourceInitialized の時点で反映されないしなんなのこれ",
 							"FrameworkElement.Initialized ならいけたんかもしれんけど泥臭い手法で対応した"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "developer",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
