@@ -191,11 +191,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return result;
             }
 
-            // #775: プラグインIDから固定URLの取得
-            var issue775 = await GetPluginItem_Issue775Async(pluginId, pluginVersion);
-            if(issue775 is not null) {
-                return issue775;
-            }
+            //// #775: プラグインIDから固定URLの取得
+            //var issue775 = await GetPluginItem_Issue775Async(pluginId, pluginVersion);
+            //if(issue775 is not null) {
+            //    return issue775;
+            //}
 
             // ここから #706
             var apiResult = await CheckPluginNewVersionByApiAsync(pluginId, pluginVersion);
@@ -249,6 +249,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return GetNewVersionItem(pluginVersion, updateData.Items);
         }
 
+        [Obsolete]
         private async Task<NewVersionItemData?> GetPluginItem_Issue775Async(PluginId pluginId, Version pluginVersion)
         {
             var map = new Dictionary<PluginId, string>() {
