@@ -51,7 +51,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#818: リリース時にPe.Serverに対してバージョンアップ通知が行えていない"
 					},
 					{
 						"revision": "",
