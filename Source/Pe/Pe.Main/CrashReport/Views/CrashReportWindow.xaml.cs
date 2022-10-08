@@ -40,9 +40,9 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Views
             base.OnSourceInitialized(e);
 
             var hWnd = HandleUtility.GetWindowHandle(this);
-            var style = (int)WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_STYLE);
+            var style = (int)WindowsUtility.GetWindowLongPtr(hWnd, (int)GWL.GWL_STYLE);
             style &= ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX);
-            WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_STYLE, (IntPtr)style);
+            WindowsUtility.SetWindowLongPtr(hWnd, (int)GWL.GWL_STYLE, (IntPtr)style);
         }
 
         #endregion

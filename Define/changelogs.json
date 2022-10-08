@@ -1,5 +1,56 @@
 [
 	{
+		"date": "2022/10/08",
+		"version": "0.99.178",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"class": "compatibility",
+						"subject": "色んなものを github に移動中で色んなものがうまく動かないかも",
+						"comments": [
+							"Pe.Server との兼ね合いもあり本体アップデートは危うい",
+							"参考実装プラグインはもっと危うい",
+							"取り急ぎ対応なので各ドキュメント等は bitbucket 状態"
+						]
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "b0c34ac6e51f58ca238b5da72abe422a3317fc9f",
+						"subject": "#817: github に移行できるか調査"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "2617b9877576948cd0fe9e4fdf822f50a3166a83",
+						"subject": "#813: 32bit 実行ファイルがコマンドランチャー起動時に死ぬ",
+						"comments": [
+							"GetWindowLong(Ptr)/SetWindowLong(Ptr) の問題がまた今ここに"
+						]
+					},
+					{
+						"revision": "0e7eb01f1af9d0e4dde1358f1e259d9fa60a8b03",
+						"subject": "#811: ノートの最小化・復元がWindowsのシステムメニューに準拠していない",
+						"comments": [
+							"コマンドウィンドウは今回ガン無視",
+							"Window.SourceInitialized の時点で反映されないしなんなのこれ",
+							"FrameworkElement.Initialized ならいけたんかもしれんけど泥臭い手法で対応した"
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2022/09/20",
 		"version": "0.99.177",
 		"contents": [
@@ -16,7 +67,7 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "6a165d45f7d9ec2b5a126c4d39a8d313edb921b0",
 						"subject": "#814: ランチャーツールバーの「自動的に隠す」切り替えで死ぬ？",
 						"comments": [
 							"#807から死んでる疑惑"
@@ -28,7 +79,7 @@
 	},
 	{
 		"date": "2022/09/19",
-		"version": "0.99.176",
+		"version": "0.99.176+",
 		"contents": [
 			{
 				"type": "note",

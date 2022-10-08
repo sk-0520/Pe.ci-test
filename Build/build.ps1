@@ -232,6 +232,7 @@ try {
 
 			# ライブラリの移送
 			robocopy /R:3 /S /E "Resource\Library\" "Output\Release\$platform\Pe\bin\lib\"
+			$Global:LastExitCode = $null;
 		}
 	}
 }

@@ -1,5 +1,5 @@
 ﻿Param(
-	[Parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetRepository,
+	[Parameter(mandatory = $true)][ValidateSet("github","bitbucket")][string] $TargetRepository,
 	[Parameter(mandatory = $true)][version] $MinimumVersion,
 	[Parameter(mandatory = $true)][string] $ArchiveBaseUrl,
 	[Parameter(mandatory = $true)][string] $NoteBaseUrl,
@@ -28,9 +28,20 @@ $releaseTimestamp = (Get-Date).ToUniversalTime()
 $revision = (git rev-parse HEAD)
 
 function OutputJson([object] $json, [string] $outputPath) {
-	ConvertTo-Json -InputObject $json `
-	| ForEach-Object { [Text.Encoding]::UTF8.GetBytes($_) } `
-	| Set-Content -Path $outputPath -Encoding Byte
+	$value = ConvertTo-Json -InputObject $json
+
+	$utf8nEncoding = New-Object System.Text.UTF8Encoding $False
+	[System.IO.File]::WriteAllLines($outputPath, $value, $utf8nEncoding)
+}
+
+function ReplaceValues([string] $source)
+{
+	$work = $source
+
+	$work = $work.Replace("@VERSION@", $version)
+	$work = $work.Replace("@REVISION@", $revision)
+
+	return $work
 }
 
 function New-UpdateItem([string] $archive, [string] $archiveFilePath, [uri] $noteUri, [version] $minimumVersion) {
@@ -41,7 +52,7 @@ function New-UpdateItem([string] $archive, [string] $archiveFilePath, [uri] $not
 		platform           = $platform
 		minimum_version    = $minimumVersion
 		note_uri           = $noteUri
-		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVENAME@", (Split-Path $archiveFilePath -Leaf))
+		archive_uri        = (ReplaceValues $ArchiveBaseUrl).Replace("@ARCHIVENAME@", (Split-Path $archiveFilePath -Leaf))
 		archive_size       = (Get-Item -Path $archiveFilePath).Length
 		archive_kind       = $archive
 		archive_hash_kind  = $hashAlgorithm
@@ -55,8 +66,8 @@ foreach ($platform in $Platforms) {
 	$targetName = ConvertAppArchiveFileName $version $platform $MainArchive
 	$targetPath = Join-Path $ReleaseDirectory $targetName
 
-	$noteName = (ConvertReleaseNoteFileName $version)
-	$noteUri = $NoteBaseUrl.Replace("@NOTENAME@", $noteName)
+	$noteName = (ConvertReleaseNoteFileName $version 'html')
+	$noteUri = (ReplaceValues $NoteBaseUrl).Replace("@NOTENAME@", $noteName)
 	$item = New-UpdateItem $MainArchive $targetPath $noteUri $MinimumVersion
 
 	$updateJson.items += $item
@@ -81,7 +92,7 @@ foreach($pluginProjectDirectory in $pluginProjectDirectories) {
 		$pluginFilePath = Join-Path $outputDirectory $pluginFileName
 
 		$noteName = $pluginProjectDirectory.Name + '.html'
-		$noteUri = $NoteBaseUrl.Replace("@NOTENAME@", $noteName)
+		$noteUri = (ReplaceValues $NoteBaseUrl).Replace("@NOTENAME@", $noteName)
 		$item = New-UpdateItem $DefaultArchive $pluginFilePath $noteUri $version
 
 		$items += $item
@@ -97,6 +108,16 @@ foreach($pluginProjectDirectory in $pluginProjectDirectories) {
 }
 
 switch ($TargetRepository) {
+	'github' {
+		$tagJson = @{
+			tag     = $version
+			message = $version
+			object  = $revision
+			type    = 'commit'
+		}
+		$tagApiFile = Join-Path $outputDirectory "$TargetRepository-tag.json"
+		OutputJson $tagJson $tagApiFile
+	}
 	'bitbucket' {
 		$tagJson = @{
 			name   = $version
@@ -104,8 +125,7 @@ switch ($TargetRepository) {
 				hash = $revision
 			}
 		}
-		$bitbucketTagApiFile = Join-Path $outputDirectory "bitbucket-tag.json"
-		OutputJson $tagJson $bitbucketTagApiFile
-		#Get-Content $bitbucketTagApiFile
+		$tagApiFile = Join-Path $outputDirectory "$TargetRepository-tag.json"
+		OutputJson $tagJson $tagApiFile
 	}
 }

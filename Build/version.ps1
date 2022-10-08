@@ -45,6 +45,7 @@ function ConvertAppArchiveFileName([version] $version, [string] $platform, [stri
 	return ConvertFileName 'Pe' $version $platform $archive
 }
 
-function ConvertReleaseNoteFileName([version] $version) {
-	return ConvertFileName 'Pe' $version '' 'html'
+function ConvertReleaseNoteFileName([version] $version, [string] $extension) {
+	return ConvertFileName 'Pe' $version '' $extension
 }
+

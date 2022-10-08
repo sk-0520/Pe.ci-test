@@ -268,7 +268,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             // 新バージョンチェック
             IReadOnlyList<string> urls;
-            using(var context = mainDatabaseBarrier.WaitWrite()) {
+            using(var context = mainDatabaseBarrier.WaitRead()) {
                 var pluginVersionChecksEntityDao = new PluginVersionChecksEntityDao(context, statementLoader, context.Implementation, LoggerFactory);
                 urls = pluginVersionChecksEntityDao.SelectPluginVersionCheckUrls(pluginId).ToList();
             }

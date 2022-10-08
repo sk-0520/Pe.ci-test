@@ -392,12 +392,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             var hWnd = HandleUtility.GetWindowHandle(window);
 
-            int exStyle = (int)WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE);
-            exStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
-            WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
+            var exStyle = WindowsUtility.GetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE);
+            //exStyle = WindowsUtility.AddIntPtr(exStyle, (nint)WS_EX.WS_EX_TOOLWINDOW);
+            exStyle = exStyle | (nint)WS_EX.WS_EX_TOOLWINDOW;
+            WindowsUtility.SetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE, exStyle);
 
             if(!enabledMaximizeBox || !enabledMinimizeBox) {
-                var style = (int)WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_STYLE);
+                var style = WindowsUtility.GetWindowLongPtr(hWnd, (int)GWL.GWL_STYLE);
                 WS ws = (WS)0;
                 if(!enabledMaximizeBox) {
                     ws |= WS.WS_MAXIMIZEBOX;
@@ -405,8 +406,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 if(!enabledMinimizeBox) {
                     ws |= WS.WS_MINIMIZEBOX;
                 }
-                style &= ~(int)ws;
-                WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_STYLE, (IntPtr)style);
+                style &= ~(nint)ws;
+                WindowsUtility.SetWindowLongPtr(hWnd, (int)GWL.GWL_STYLE, style);
             }
         }
 
@@ -419,13 +420,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             var hWnd = HandleUtility.GetWindowHandle(window);
 
-            int exStyle = (int)WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE);
+            int exStyle = (int)WindowsUtility.GetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE);
             if(isTransparent) {
                 exStyle |= (int)WS_EX.WS_EX_TRANSPARENT;
             } else {
                 exStyle &= ~(int)WS_EX.WS_EX_TRANSPARENT;
             }
-            WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
+            WindowsUtility.SetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
         }
     }
 }

@@ -60,9 +60,6 @@
     <ClCompile Include="platform.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="primitive_list.c">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="string_builder.c">
       <Filter>source</Filter>
     </ClCompile>
@@ -105,10 +102,13 @@
     <ClCompile Include="lib_math.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="text.z.parse.c">
+    <ClCompile Include="error.c">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="error.c">
+    <ClCompile Include="primitive_list.gen.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="text.z.parse.gen.c">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -150,9 +150,6 @@
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="platform.h">
-      <Filter>header</Filter>
-    </ClInclude>
-    <ClInclude Include="primitive_list.h">
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="string_builder.h">
@@ -197,24 +194,27 @@
     <ClInclude Include="lib_math.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="text.z.parse.h">
+    <ClInclude Include="error.h">
       <Filter>header</Filter>
     </ClInclude>
-    <ClInclude Include="error.h">
+    <ClInclude Include="primitive_list.gen.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="text.z.parse.gen.h">
       <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="primitive_list.c.tt">
+    <None Include="primitive_list.gen.c.tt">
       <Filter>template</Filter>
     </None>
-    <None Include="primitive_list.h.tt">
+    <None Include="primitive_list.gen.h.tt">
       <Filter>template</Filter>
     </None>
-    <None Include="text.z.parse.c.tt">
+    <None Include="text.z.parse.gen.c.tt">
       <Filter>template</Filter>
     </None>
-    <None Include="text.z.parse.h.tt">
+    <None Include="text.z.parse.gen.h.tt">
       <Filter>template</Filter>
     </None>
     <None Include="text.z.parse.t4">

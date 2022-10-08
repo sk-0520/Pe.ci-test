@@ -158,16 +158,30 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
         #region function
 
-        public static IntPtr GetWindowLong(IntPtr hWnd, int nIndex)
+        /// <summary>
+        /// <c>GetWindowLongPtr/GetWindowLong</c> のプラットフォーム吸収処理。
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="nIndex"></param>
+        /// <returns></returns>
+        public static nint GetWindowLongPtr(IntPtr hWnd, int nIndex)
         {
             if(Environment.Is64BitProcess) {
-                return NativeMethods.GetWindowLongPtr(hWnd, nIndex);
-            } else {
-                return new IntPtr(NativeMethods.GetWindowLong(hWnd, nIndex));
+                return NativeMethods.GetWindowLong64(hWnd, nIndex);
             }
+
+            return NativeMethods.GetWindowLong32(hWnd, nIndex);
         }
 
-        public static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+        /// <summary>
+        /// <c>SetWindowLongPtr/SetWindowLong</c> のプラットフォーム吸収処理。
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="nIndex"></param>
+        /// <param name="dwNewLong"></param>
+        /// <returns></returns>
+        /// <exception cref="System.ComponentModel.Win32Exception"></exception>
+        public static nint SetWindowLongPtr(IntPtr hWnd, int nIndex, nint dwNewLong)
         {
             int error = 0;
             var result = IntPtr.Zero;
@@ -175,10 +189,10 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
             NativeMethods.SetLastError(0);
 
             if(Environment.Is64BitProcess) {
-                result = NativeMethods.SetWindowLongPtr(hWnd, nIndex, dwNewLong);
+                result = NativeMethods.SetWindowLong64(hWnd, nIndex, dwNewLong);
                 error = Marshal.GetLastWin32Error();
             } else {
-                Int32 tempResult = NativeMethods.SetWindowLong(hWnd, nIndex, dwNewLong.ToInt32());
+                Int32 tempResult = NativeMethods.SetWindowLong32(hWnd, nIndex, (uint)dwNewLong);
                 error = Marshal.GetLastWin32Error();
                 result = new IntPtr(tempResult);
             }
