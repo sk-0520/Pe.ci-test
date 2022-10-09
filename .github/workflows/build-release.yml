@@ -8,6 +8,7 @@ on:
     - development
 
 env:
+  OS: windows-2022
   MAIN_ARCHIVE: 7z
   DEFAULT_ARCHIVE: 7z
   MINIMUM_VERSION: 0.91.0
@@ -20,7 +21,7 @@ env:
 jobs:
   build:
 
-    runs-on: windows-2022
+    runs-on: ${{ env.OS }}
 
     steps:
       - name: <Checkout> Repository
@@ -117,7 +118,7 @@ jobs:
 
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/ci-test'
 
-    runs-on: windows-latest
+    runs-on: ${{ env.OS }}
 
     steps:
       - name: <Download> Application
