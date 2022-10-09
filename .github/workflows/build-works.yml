@@ -13,7 +13,6 @@ on:
       - development
 
 env:
-  OS: windows-2022
   MAIN_ARCHIVE: tar
   DEFAULT_ARCHIVE: 7z
   MINIMUM_VERSION: 0.91.0
@@ -28,7 +27,7 @@ jobs:
       matrix:
         PLATFORM: ["x86", "x64"]
 
-    runs-on: ${{ env.OS }}
+    runs-on: windows-2022
 
     steps:
       - name: <Checkout> Repository
