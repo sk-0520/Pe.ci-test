@@ -147,6 +147,7 @@ jobs:
           Write-Output "::set-output name=hyphen::$hyphen"
 
       - name: <Delete> TEST Tag
+        if: github.ref == 'refs/heads/ci-test'
         continue-on-error: true
         uses: dev-drprasad/delete-tag-and-release@v0.2.0
         with:
