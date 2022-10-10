@@ -1,6 +1,6 @@
 var targetName = 'PE_BROWSER';
-var issueLink = 'https://bitbucket.org/sk_0520/pe/issue/';
-var revisionLink = 'https://bitbucket.org/sk_0520/pe/commits/';
+var issueLink = 'https://github.com/sk-0520/Pe/issues/';
+var revisionLink = 'https://github.com/sk-0520/Pe/commit/';
 
 // 0.84.0 以降はもうちっとまともにする
 
