@@ -6,4 +6,4 @@ using ContentTypeTextNet.Pe.Embedded.Attributes;
 
 [assembly: PluginIdentifiers("Pe.Plugins.Reference.Eyes", "799CE8BD-8F49-4E8F-9E47-4D4873084081")]
 [assembly: PluginSupportVersions("0.0.0", "0.0.0")]
-[assembly: PluginAuthors("sk", PluginLicense.DoWhatTheF_ckYouWantToPublicLicense2, "https://content-type-text.net/", "https://bitbucket.org/sk_0520/pe/wiki/Home")]
+[assembly: PluginAuthors("sk", PluginLicense.DoWhatTheF_ckYouWantToPublicLicense2, "https://content-type-text.net/", "https://github.com/sk-0520/Pe")]
