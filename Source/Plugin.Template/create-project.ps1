@@ -29,7 +29,7 @@ Pe リポジトリからいい感じのあれこれを取ってきてあれこ�
 環境変数PATH に割り当てる dotnet がインストールされているパス
 
 .LINK
-https://bitbucket.org/sk_0520/pe/
+https://github.com/sk-0520/Pe
 #>
 Param(
 	[Parameter(mandatory = $true)][string] $ProjectDirectory,
@@ -121,7 +121,7 @@ $parameters = @{
 	repository = @{
 		application = @{
 			path = 'Source/Pe'
-			url  = [uri]'https://sk_0520@bitbucket.org/sk_0520/pe.git'
+			url  = [uri]'https://github.com/sk-0520/Pe.git'
 		}
 	}
 }

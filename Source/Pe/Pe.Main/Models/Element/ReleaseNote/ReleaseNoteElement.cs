@@ -42,7 +42,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         {
             using(var userAgent = UserAgentManager.CreateAppHttpUserAgent()) {
                 return await userAgent.GetStringAsync(NewVersionItem.NoteUri);
-                //return await userAgent.GetStringAsync(new Uri("https://bitbucket.org/sk_0520/pe/downloads/update-release.html"));
             }
         }
 
