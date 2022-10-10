@@ -1,4 +1,5 @@
-﻿Param(
+﻿# 破棄予定
+Param(
 	[Parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetDownloader,
 	[Parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetRepository,
 	[Parameter(mandatory = $true)][ValidateSet('zip', '7z', 'tar')][string] $MainArchive,
