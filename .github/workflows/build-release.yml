@@ -143,8 +143,8 @@ jobs:
         run: |
           $dot = Get-Content Pe\gen-version-dot.txt
           $hyphen = Get-Content Pe\gen-version-hyphen.txt
-          Write-Output "::set-output name=dot::$dot"
-          Write-Output "::set-output name=hyphen::$hyphen"
+          Write-Output "dot=$dot" >> env.GITHUB_OUTPUT
+          Write-Output "hyphen=$hyphen" >> env.GITHUB_OUTPUT
 
       - name: <Delete> TEST Tag
         if: github.ref == 'refs/heads/ci-test'
