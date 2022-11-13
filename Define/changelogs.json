@@ -59,7 +59,10 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#827: GHA: set-output は非推奨",
+						"comments": [
+							"依存系は未対応"
+						]
 					},
 					{
 						"revision": "",
