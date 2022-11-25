@@ -95,6 +95,13 @@
 					},
 					{
 						"revision": "",
+						"subject": "#787: CI上のnpmはinstallではなくciすべき",
+						"comments": [
+							"コマンド変更より CI 上での諸々処理変更が一番しんどかった"
+						]
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
