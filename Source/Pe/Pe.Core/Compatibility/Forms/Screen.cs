@@ -34,9 +34,16 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         }
 
         /// <inheritdoc cref="WinForms.Screen.PrimaryScreen"/>
-        public static Screen PrimaryScreen
+        public static Screen? PrimaryScreen
         {
-            get { return ConvertScreen(WinForms.Screen.PrimaryScreen); }
+            get
+            {
+                if(WinForms.Screen.PrimaryScreen is null) {
+                    return null;
+                }
+
+                return ConvertScreen(WinForms.Screen.PrimaryScreen);
+            }
         }
 
         #endregion
