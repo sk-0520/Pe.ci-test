@@ -66,6 +66,10 @@
 					},
 					{
 						"revision": "",
+						"subject": "CefSharp.Wpf.NETCore 105.3.390 -> 107.1.90"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
