@@ -29,10 +29,17 @@ foreach ($platform in $Platforms) {
 	if (![string]::IsNullOrEmpty($Logger)) {
 		$mainLoggerArg = "--logger:$Logger"
 	}
+	$mainProjectDirItems = Get-ChildItem -Path $sourceMainDirectoryPath -Filter "*.Test" -Directory
 	foreach ($mainConfiguration in $MainConfigurations) {
-		dotnet test $mainSolutionPath --verbosity normal --no-build --no-restore --configuration $mainConfiguration --runtime win-$platform /p:Platform=$platform /p:DefineConstants="" --test-adapter-path:. $mainLoggerArg
-		if (-not $?) {
-			exit 1
+		foreach ($projectDirItem in $mainProjectDirItems) {
+			$testDirPath = Join-Path $projectDirItem.FullName "bin" | Join-Path -ChildPath $platform | Join-Path -ChildPath $mainConfiguration
+			$testFileName = $projectDirItem.BaseName + '.dll'
+			$testFilePath = Join-Path $testDirPath (Get-ChildItem -LiteralPath $testDirPath -Recurse -Name -File -Include $testFileName)
+
+			dotnet test $testFilePath --test-adapter-path:. $mainLoggerArg
+			if (-not $?) {
+				exit 1
+			}
 		}
 	}
 
@@ -40,9 +47,9 @@ foreach ($platform in $Platforms) {
 	if (![string]::IsNullOrEmpty($Logger)) {
 		$bootLoggerArg = "/Logger:$Logger"
 	}
-	$projectDirItems = Get-ChildItem -Path $sourceBootDirectoryPath -Filter "*.Test" -Directory
+	$bootProjectDirItems = Get-ChildItem -Path $sourceBootDirectoryPath -Filter "*.Test" -Directory
 	foreach ($bootConfiguration in $BootConfigurations) {
-		foreach($projectDirItem in $projectDirItems) {
+		foreach ($projectDirItem in $bootProjectDirItems) {
 			$testDirPath = Join-Path $projectDirItem.FullName "bin" | Join-Path -ChildPath $bootConfiguration | Join-Path -ChildPath $platform
 			$testFileName = $projectDirItem.BaseName + '.dll'
 			$testFilePath = Join-Path $testDirPath $testFileName
