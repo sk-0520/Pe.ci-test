@@ -1,48 +1,13 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.178+",
+		"date": "2022/11/25",
+		"version": "0.99.179",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "GitHub 移行後の初アップデートリリースなのでこわい"
 					}
 				]
 			},
@@ -50,27 +15,19 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "3e36e9083ad8878f18b0187acc423831af238e5b",
 						"subject": "#818: リリース時にPe.Serverに対してバージョンアップ通知が行えていない"
 					},
 					{
-						"revision": "",
+						"revision": "463da86efff464c54bb1688f1373f3e1a3591781",
 						"subject": "#819: アップデート時のリリースノートが成果物に含まれていない"
 					},
 					{
-						"revision": "",
+						"revision": "405cee2317be454604e6d0d43d17b305ce627bfa",
 						"subject": "#827: GHA: set-output は非推奨",
 						"comments": [
 							"依存系は未対応"
 						]
-					},
-					{
-						"revision": "",
-						"subject": "CefSharp.Wpf.NETCore 105.3.390 -> 107.1.90"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -78,11 +35,11 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "c8f592400c9fb3487a478edf15fb120277baf83f",
 						"subject": "#821: リリース版CIのキャッシュは行わないようにする"
 					},
 					{
-						"revision": "",
+						"revision": "08fca26ae5e73c797b525259d4f0c26a11beb00a",
 						"subject": "#822: インストーラの調整が必要",
 						"comments": [
 							"ドキュメント周り整理",
@@ -90,28 +47,29 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "fd83be738a1ae188b9ed594e09e863c0a70d1b91",
 						"subject": "#823: リポジトリに対するライセンスファイル追加"
 					},
 					{
-						"revision": "",
+						"revision": "d083047ba38913dd35748f276b9f57b145c07348",
 						"subject": "#824: 各種ドキュメント・ソースの Bitbucket を github へ置き換える"
 					},
 					{
-						"revision": "",
+						"revision": "3166bccc55f60f2941a777e0ea3f1430905bd950",
 						"subject": "#787: CI上のnpmはinstallではなくciすべき",
 						"comments": [
 							"コマンド変更より CI 上での諸々処理変更が一番しんどかった"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "7fe392dec6ebbf6fd156a0871baf5ec0df61b387",
 						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 5.0.4 -> 5.1.0"
 					},
 					{
-						"revision": "",
-						"subject": ""
+						"revision": "5aed2c4f8085cdd5df050831bc8bd38405fd01fb",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf.NETCore 105.3.390 -> 107.1.90"
 					}
 				]
 			}
