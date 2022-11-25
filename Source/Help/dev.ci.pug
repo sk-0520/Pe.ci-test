@@ -5,17 +5,28 @@ block BLOCK_LAYOUT_VAR
 
 block BLOCK_LAYOUT_CONTENT
 	p リリース処理等は CI 環境にて実施する。
-	p CI 環境の各種処理の試験は ci-test ブランチにて実施すること(Bitbucket Pe リポジトリでは ci-test ブランチの読み書きを禁止している)。
-	p
-		| 現状
-		a(href="https://bitbucket.org") Bitbucket
-		| と
-		a(href="https://ci.appveyor.com") AppVeyor
-		| による処理のみを想定している。
-	p 独立環境で CI 及びリリース環境を整えるには以下の手順が必要になる。
+	p CI/CD の一括処理試験は ci-test ブランチにて実施すること(Pe リポジトリでは ci-test ブランチの読み書きを禁止している)。
+
+	section
+		h2 GitHub/GitHub Actions
+		section
+			h3 GitHub
+			p 特に設定する必要なし
+		section
+			h3 GitHub Actions
+			p 特に設定する必要なし
+	section
+		h2 GitHub での CI 試験
+		p ブランチ ci-test で処理。
+		p リリースタグ系が面倒なことになるので新たなリポジトリを作った方が安全。
+		p 実際に Pe.Server との通信が最後に行われるが API キーが必須必須となる。 実際に試すには新たにサーバー建てて実施する必要あるため最後だけ失敗させるかコメントアウトさせておくと面倒ごとが少なくてよい。
 
 	section
 		h2 Bitbucket/AppVeyor
+
+		aside.warning
+			p Bitbucket/AppVeyor を使用した CI/CD は今後保守されず、ドキュメント・設定ファイルも破棄予定。
+
 		section
 			h3 Bitbucket
 			ol

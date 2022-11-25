@@ -109,14 +109,7 @@ foreach($pluginProjectDirectory in $pluginProjectDirectories) {
 
 switch ($TargetRepository) {
 	'github' {
-		$tagJson = @{
-			tag     = $version
-			message = $version
-			object  = $revision
-			type    = 'commit'
-		}
-		$tagApiFile = Join-Path $outputDirectory "$TargetRepository-tag.json"
-		OutputJson $tagJson $tagApiFile
+		# Github Actions で生成する
 	}
 	'bitbucket' {
 		$tagJson = @{

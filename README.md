@@ -1,18 +1,19 @@
 # Pe
 
-Pe は Windows 上で動作するデスクトップユーティリティです。
+[![Build Release](https://github.com/sk-0520/Pe/actions/workflows/build-release.yml/badge.svg)](https://github.com/sk-0520/Pe/actions/workflows/build-release.yml)
 
-正となるドキュメントは最新の <Pe>/doc/help.html とし、 Wiki は補足だったりの役割です。
+Pe は Windows 10 以上で動作するデスクトップユーティリティです。
 
+各種ドキュメントは最新版の `<Pe>/doc/help.html` が正となります。
 
 # ライセンス
 
 * WTFPL 2
-* 特に断りのない限り提供ソースは WTFPL 2 扱い
-* sk_0520/pe で配布されている本ソフトウェアのライセンスはソース提供者に断りなく、変更可能とする
-  * 一応まぁ、将来変えるかもしれないので保険
-  * WTFPL 以外で提供されたものはこの限りではない
 
+# ダウンロード
+
+* 自動で取得するには[こちら](https://github.com/sk-0520/Pe.Installer/releases/latest/download/Pe.Installer.exe) ※別プロジェクトのインストーラ
+* 手動で取得するには[リリース](https://github.com/sk-0520/Pe/releases)を参照。
 
 ## 注意
 
@@ -25,8 +26,7 @@ Pe は Windows 上で動作するデスクトップユーティリティです�
 * `dotnet --version`: [6.0.100](https://dotnet.microsoft.com/download/dotnet/6.0)
 * `node -v: 15.14.0`
 * `npm  -v: 7.7.6`
-* nodesit:
-    * `nodist 15.14.0`
-    * `nodist npm match`
+* nvm:
+    * `nvm use 15.14.0`
 
 

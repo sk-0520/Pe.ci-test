@@ -15,15 +15,18 @@ env:
   PE_RELEASE_NOTE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@NOTENAME@
   PE_UPDATE_API_ENDPOINT: https://peserver.gq/api/administrator/pe/version
   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+  PLATFORMS: x86,x64
 
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: <Add> msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
@@ -37,15 +40,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 15.14.0
-          cache: npm
-
-      - name: <Cache> Nuget
-        uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
 
       - name: <Show> Tools
         run: |
@@ -59,7 +53,7 @@ jobs:
         run: .\Build\generate-data-files.ps1
 
       - name: <Install> NPM
-        run: npm install
+        run: npm ci
 
       - name: <Build> BuildTools
         shell: pwsh
@@ -81,19 +75,19 @@ jobs:
           if($Env:GITHUB_REF -eq 'refs/heads/development') {
             $BuildType = 'BETA'
           }
-          .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $BuildType -Platforms x86,x64
+          .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $BuildType -Platforms ${{ env.PLATFORMS }}
 
       - name: <Test> Application
         shell: pwsh
-        run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms x86,x64
+        run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ env.PLATFORMS }}
 
       - name: <Archive> Application
         shell: pwsh
-        run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms x86,x64
+        run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ env.PLATFORMS }}
 
       - name: <Make> update info
         shell: pwsh
-        run: .\Build\create-updateinfo.ps1 -TargetRepository github -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ env.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ env.PE_RELEASE_NOTE_BASE_URL }} -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms x86,x64
+        run: .\Build\create-updateinfo.ps1 -TargetRepository github -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ env.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ env.PE_RELEASE_NOTE_BASE_URL }} -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ env.PLATFORMS }}
 
       - name: <Make> release note
         shell: pwsh
@@ -125,7 +119,7 @@ jobs:
 
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/ci-test'
 
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
       - name: <Download> Application
@@ -149,10 +143,11 @@ jobs:
         run: |
           $dot = Get-Content Pe\gen-version-dot.txt
           $hyphen = Get-Content Pe\gen-version-hyphen.txt
-          Write-Output "::set-output name=dot::$dot"
-          Write-Output "::set-output name=hyphen::$hyphen"
+          "dot=$dot" >> $env:GITHUB_OUTPUT
+          "hyphen=$hyphen" >> $env:GITHUB_OUTPUT
 
       - name: <Delete> TEST Tag
+        if: github.ref == 'refs/heads/ci-test'
         continue-on-error: true
         uses: dev-drprasad/delete-tag-and-release@v0.2.0
         with:
@@ -207,5 +202,5 @@ jobs:
       - name: <Update> Version API
         if: github.ref == 'refs/heads/master'
         run: |
-          curl -H "X-API-KEY: ${{ secrets.PE_SERVER_API_KEY }}" -H "X-SECRET-KEY: ${{ secrets.PE_SERVER_API_SECRET }}" -X POST ${{ env.PE_UPDATE_API_ENDPOINT }} --data '{ "version": "${{ steps.version.outputs.dot }}" }'
+          curl -H "X-API-KEY: ${{ secrets.PE_SERVER_API_KEY }}" -H "X-SECRET-KEY: ${{ secrets.PE_SERVER_API_SECRET }}" -X POST ${{ env.PE_UPDATE_API_ENDPOINT }} --data '{ \"version\": \"${{ steps.version.outputs.dot }}\" }'
 

@@ -18,6 +18,7 @@ env:
   MINIMUM_VERSION: 0.91.0
   PE_RELEASE_ARCHIVE_BASE_URL: https://example.com
   PE_RELEASE_NOTE_BASE_URL: https://example.com
+  NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
 
 jobs:
   matrix-build:
@@ -26,7 +27,7 @@ jobs:
       matrix:
         PLATFORM: ["x86", "x64"]
 
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
       - name: <Checkout> Repository
@@ -66,7 +67,7 @@ jobs:
         run: .\Build\generate-data-files.ps1
 
       - name: <Install> NPM
-        run: npm install
+        run: npm ci
 
       - name: <Build> BuildTools
         shell: pwsh

@@ -20,7 +20,7 @@
 	"license": "WTFPL",
 	"repository": {
 		"type": "git",
-		"url": "git@bitbucket.org:sk_0520/pe.git"
+		"url": "git@github.com:sk-0520/Pe.git"
 	},
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^5.13.0",
