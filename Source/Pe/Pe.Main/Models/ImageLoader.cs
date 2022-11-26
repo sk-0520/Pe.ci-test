@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #region IImageLoader
 
         /// <inheritdoc cref="IImageLoader.GetPrimaryDpiScale"/>
-        public Point GetPrimaryDpiScale() => GetDpiScale(Screen.PrimaryScreen);
+        public Point GetPrimaryDpiScale() => GetDpiScale(Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null"));
 
         /// <inheritdoc cref="IImageLoader.GetDpiScale(IScreen)"/>
         public Point GetDpiScale(IScreen screen)

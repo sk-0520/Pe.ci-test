@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
 
         /// <inheritdoc cref="WinForms.Control.Tag"/>
         [BindableAttribute(true)]
-        public Object Tag
+        public object? Tag
         {
             get { return Dialog.Tag; }
             set { Dialog.Tag = value; }
