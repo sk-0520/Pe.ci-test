@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         /// <summary>
         /// モジュールのDLファイルのハッシュ形式。
-        /// <para>https://docs.microsoft.com/ja-jp/dotnet/api/system.security.cryptography.hashalgorithm.create?view=netframework-4.8#System_Security_Cryptography_HashAlgorithm_Create_System_String_</para>
+        /// <seealso cref="https://docs.microsoft.com/ja-jp/dotnet/api/system.security.cryptography.hashalgorithm.create?view=netframework-4.8#System_Security_Cryptography_HashAlgorithm_Create_System_String_"/>
         /// </summary>
         string ArchiveHashKind { get; }
         /// <summary>

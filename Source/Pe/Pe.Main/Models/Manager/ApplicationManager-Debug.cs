@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // LauncherGroups.Sequence を調整すること
             var i = LauncherToolbarElements.First().LauncherItems.FirstOrDefault();
             if(i != null) {
-                i.OpenCustomizeView(Screen.PrimaryScreen);
+                i.OpenCustomizeView(Screen.PrimaryScreen!);
             }
         }
 
@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var i = LauncherToolbarElements.First().LauncherItems.FirstOrDefault();
             if(i != null) {
-                i.OpenExtendsExecuteView(Screen.PrimaryScreen);
+                i.OpenExtendsExecuteView(Screen.PrimaryScreen!);
             }
         }
 
@@ -111,7 +111,7 @@ echo end
                 IsEnabledStandardInputOutput = true,
             };
             var env = new List<LauncherEnvironmentVariableData>();
-            var result = launcherExecutor.Execute(LauncherItemKind.File, data, data, env, LauncherRedoData.GetDisable(), Screen.PrimaryScreen);
+            var result = launcherExecutor.Execute(LauncherItemKind.File, data, data, env, LauncherRedoData.GetDisable(), Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null"));
         }
 
         private KeyboradHooker? dbgKeyboradHooker { get; set; }
