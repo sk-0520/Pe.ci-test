@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
@@ -64,9 +65,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 Logger.LogWarning("ファイルサイズが異なる: ファイル {0}, 定義 {1}", targetFile.Length, updateItem.ArchiveSize);
                 return false;
             }
-
+            
             Logger.LogInformation("ハッシュ: {0}, {1}", updateItem.ArchiveHashKind, updateItem.ArchiveHashValue);
-            using(var hashAlgorithm = HashAlgorithm.Create(updateItem.ArchiveHashKind)) {
+            using(var hashAlgorithm = HashUtility.Create(updateItem.ArchiveHashKind)) {
                 if(hashAlgorithm == null) {
                     Logger.LogError("ハッシュ不明: {0}", updateItem.ArchiveHashKind);
                     return false;
