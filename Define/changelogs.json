@@ -90,7 +90,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.116 -> 1.0.117"
 					},
 					{
 						"revision": "",
