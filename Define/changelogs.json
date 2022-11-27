@@ -95,6 +95,10 @@
 					},
 					{
 						"revision": "",
+						"subject": "Microsoft.NET.Test.Sdk 17.3.1 -> 17.4.0"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
