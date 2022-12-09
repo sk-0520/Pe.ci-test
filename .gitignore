@@ -44,4 +44,4 @@ node_modules/
 /Source/Pe/Pe.Main/doc/help/
 /Source/Help/archives
 desktop.ini
-
+/.parcel-cache
