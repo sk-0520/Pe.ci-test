@@ -1,12 +1,14 @@
 ﻿#include <windows.h>
 
-
 #include "tcharacter.h"
 #include "tstring.h"
 #include "path.h"
 #include "logging.h"
 
-static TCHAR DIRECTORY_SEPARATORS[] = { DIRECTORY_SEPARATOR_CHARACTER, ALT_DIRECTORY_SEPARATOR_CHARACTER, };
+static const TCHAR DIRECTORY_SEPARATORS[] = {
+    DIRECTORY_SEPARATOR_CHARACTER,
+    ALT_DIRECTORY_SEPARATOR_CHARACTER,
+};
 
 static PATH_INFO create_invalid_path_info(void)
 {

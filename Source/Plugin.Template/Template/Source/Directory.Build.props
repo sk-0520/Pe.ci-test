@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Version>0.00.000</Version>
 
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <Platforms>x64;x86</Platforms>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />

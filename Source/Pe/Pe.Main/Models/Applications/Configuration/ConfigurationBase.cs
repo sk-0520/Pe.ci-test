@@ -217,21 +217,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         }
 
         protected static MinMax<T> ConvertMinMax<T>(IConfigurationSection section, string key)
-            where T : IComparable<T>
+            where T : notnull, IComparable<T>
         {
             var size = section.GetSection(key);
-            return new MinMax<T>(size.GetValue<T>("minimum"), size.GetValue<T>("maximum"));
+            if(size is null) {
+                throw new KeyNotFoundException(key);
+            }
+            return MinMax.Create(size.GetValue<T>("minimum")!, size.GetValue<T>("maximum")!);
         }
         protected static MinMaxDefault<T> ConvertMinMaxDefault<T>(IConfigurationSection section, string key)
-            where T : IComparable<T>
+            where T : notnull, IComparable<T>
         {
             var size = section.GetSection(key);
-            return new MinMaxDefault<T>(size.GetValue<T>("minimum"), size.GetValue<T>("maximum"), size.GetValue<T>("default"));
+            if(size is null) {
+                throw new KeyNotFoundException(key);
+            }
+            return MinMaxDefault.Create(size.GetValue<T>("minimum")!, size.GetValue<T>("maximum")!, size.GetValue<T>("default")!);
         }
 
         protected static ClassAndText ConvertClassAndText(IConfigurationSection section, string key)
         {
-            return new ClassAndText(section.GetValue<string>("class"), section.GetValue<string>("text"));
+            return new ClassAndText(section.GetValue<string>("class")!, section.GetValue<string>("text")!);
         }
 
         #endregion

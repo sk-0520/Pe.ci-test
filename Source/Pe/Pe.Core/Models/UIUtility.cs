@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <inheritdoc cref="IDpiScaleOutputor.GetDpiScale"/>
         public Point GetDpiScale() => new Point(1, 1);
         /// <inheritdoc cref="IDpiScaleOutputor.GetOwnerScreen"/>
-        public IScreen GetOwnerScreen() => Screen.PrimaryScreen;
+        public IScreen GetOwnerScreen() => Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null");
 
         #endregion
     }
