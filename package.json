@@ -10,7 +10,7 @@
 		"help-watch": "parcel watch --no-autoinstall --dist-dir Output/help/ --public-url . Source/Help/index.pug",
 		"help-build:clean": "rimraf Output/help/*",
 		"help-build:output": "parcel build --no-autoinstall --no-source-maps --dist-dir Output/help/ --no-content-hash --public-url . Source/Help/index.pug",
-		"help-build:module": "echo abc",
+		"help-build:module": "ts-node Build/scripts/tune-module-entry.ts",
 		"help-build": "npm-run-all --sequential help-build:clean archive help-build:output help-build:module",
 		"help-app-copy": "cpx Output/help/** Source/Pe/Pe.Main/doc/help",
 		"help-ci": "npm-run-all --sequential help-build help-app-copy",
