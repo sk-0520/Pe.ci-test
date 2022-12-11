@@ -30,6 +30,7 @@
 		"@typescript-eslint/parser": "^5.13.0",
 		"cpx": "^1.5.0",
 		"eslint": "^8.10.0",
+		"node-html-parser": "^6.1.4",
 		"normalize.css": "^8.0.1",
 		"npm-build-zip": "^1.0.3",
 		"npm-check-updates": "^12.5.2",
