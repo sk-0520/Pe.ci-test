@@ -53,5 +53,3 @@ void RC_HEAP_FUNC(release_string, const TCHAR* s, const MEMORY_RESOURCE* memory_
     RC_HEAP_CALL(release_memory, (void*)s, memory_resource);
 }
 
-
-

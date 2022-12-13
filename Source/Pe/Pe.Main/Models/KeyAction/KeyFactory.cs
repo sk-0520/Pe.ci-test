@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return new KeyActionLauncherToolbarJob(data, item.Mappings);
         }
 
-        private KeyActionNoteJob CreateNoteJon(KeyItem item)
+        private KeyActionNoteJob CreateNoteJob(KeyItem item)
         {
             var noteContentConverter = new NoteContentConverter();
             var pressedOptionConverter = new PressedOptionConverter();
@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                     KeyActionKind.Command => CreateCommandJob(item),
                     KeyActionKind.LauncherItem => CreateLauncherItemJob(item),
                     KeyActionKind.LauncherToolbar => CreateLauncherToolbarJob(item),
-                    KeyActionKind.Note => CreateNoteJon(item),
+                    KeyActionKind.Note => CreateNoteJob(item),
                     _ => throw new NotImplementedException(),
                 };
                 return job;

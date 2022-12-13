@@ -1,7 +1,5 @@
-﻿#pragma once
-#include "linked_list.h"
+﻿#include "linked_list.h"
 #include "debug.h"
-
 
 typedef struct tag_LINK_NODE
 {

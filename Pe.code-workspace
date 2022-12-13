@@ -1,26 +1,6 @@
 {
     "folders": [
         {
-            "name": "BUILD",
-            "path": "./Build"
-        },
-        {
-            "name": "UPDATE-SCRIPT",
-            "path": "./Source/Pe/Pe.Main/etc/script/update"
-        },
-        {
-            "name": "RESOURCE",
-            "path": "./Resource"
-        },
-        {
-            "name": "HELP",
-            "path": "./Source/Help"
-        },
-        {
-            "name": "Template/Plugin",
-            "path": "./Source/Plugin.Template"
-        },
-        {
             "name": "ROOT",
             "path": "."
         }
@@ -34,6 +14,10 @@
             "dist/": true,
             "Output": true,
             "*.lnk": true,
+            "Source/Benchmark": true,
+            "Source/BuildTools": true,
+            "Source/Plugin.Template": true,
+            "Source/Pe": true,
         },
         "files.watcherExclude": {
             "**/.git/objects/**": true,
@@ -45,6 +29,10 @@
             "**/bin/**": true,
             "**/obj/**": true,
             "*.lnk": true,
+            "Source/Benchmark": true,
+            "Source/BuildTools": true,
+            "Source/Plugin.Template": true,
+            "Source/Pe": true,
         },
         "markdownlint.config": {
             "MD024": false,

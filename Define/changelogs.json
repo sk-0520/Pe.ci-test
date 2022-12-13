@@ -1,5 +1,78 @@
 [
 	{
+		"date": "2022/12/13",
+		"version": "0.99.180",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"subject": ".NET 7!!",
+						"comments": [
+							"動くかは知らん!"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "75517fc062cb03c1c38ddb79d6d0d7e229b814b6",
+						"subject": "#828: .NET 7 へ移行"
+					},
+					{
+						"revision": "b873f9ed2a709638e79acfbbb3ac857cb704f9f3",
+						"class": "nuget",
+						"subject": "Microsoft.Extensions.* 系を更新",
+						"comments": [
+							"Microsoft.Extensions.Logging.Abstractions 6.0.2 -> 7.0.0",
+							"Microsoft.Extensions.Logging 6.0.2 -> 7.0.0",
+							"System.Management 6.0.0 -> 7.0.0",
+							"Microsoft.Extensions.Configuration.Binder 6.0.0 -> 7.0.0",
+							"Microsoft.Extensions.Configuration.Json 6.0.0 -> 7.0.0",
+							"System.DirectoryServices.AccountManagement 6.0.0 -> 7.0.0",
+							"System.Text.Encoding.CodePages 6.0.0 -> 7.0.0"
+						]
+					},
+					{
+						"revision": "0e7198360983d8a6964a6de058981b775c50d896",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.116 -> 1.0.117"
+					},
+					{
+						"revision": "feaa54536d904f66ebd179e7f6087cbca8f88de5",
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 17.3.1 -> 17.4.0"
+					},
+					{
+						"revision": "3e2e1b2607df826a68c3456e6dd22e164e5d9ce1",
+						"subject": "#826: Code Scanning を使ってみる"
+					},
+					{
+						"revision": "290c5f040cc5c2b11d25af1451104b6ca8a370f0",
+						"subject": "darenm/Setup-VSTest@v1 -> darenm/Setup-VSTest@v1.2"
+					},
+					{
+						"revision": "95a140c38d18d1fc50858a742b8e032aafaed385",
+						"subject": "CI処理をまとめた"
+					},
+					{
+						"revision": "f0cfa896f9090e4c31963f71bd5f5174e3495a51",
+						"subject": "#825: ヘルプファイル系の再作成",
+						"comments": [
+							"併せて #730 もがんあげ"
+						]
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2022/11/25",
 		"version": "0.99.179",
 		"contents": [

@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         /// </summary>
         public IScreen DockScreen
         {
-            get => this._dockScreen ?? Screen.PrimaryScreen; //TODO: [NOTE]決定的に間違ってる気がする
+            get => this._dockScreen ?? Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen"); //TODO: [NOTE]決定的に間違ってる気がする
             private set => SetProperty(ref this._dockScreen, value);
         }
         public NoteStartupPosition StartupPosition { get; private set; }
@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             ThrowIfDisposed();
 
-            this._dockScreen = this._dockScreen ?? Screen.PrimaryScreen;
+            this._dockScreen = this._dockScreen ?? Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null");
             if(StartupPosition != NoteStartupPosition.Setting) {
                 this._dockScreen = Screen.FromDevicePoint(cursorLocation);
             }
@@ -303,7 +303,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
 
             Logger.LogWarning("該当ディスプレイ発見できず: {0}", screenDeviceName);
-            return Screen.PrimaryScreen;
+            return Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null");
         }
 
         private void LoadNote()

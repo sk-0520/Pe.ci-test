@@ -34,12 +34,12 @@ jobs:
           msbuild-architecture: x64
 
       - name: <Add> VSTest
-        uses: darenm/Setup-VSTest@v1
+        uses: darenm/Setup-VSTest@v1.2
 
       - name: <Add> Node/NPM
         uses: actions/setup-node@v3
         with:
-          node-version: 15.14.0
+          node-version: 18.4.0
 
       - name: <Show> Tools
         run: |
