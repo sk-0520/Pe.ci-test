@@ -19,12 +19,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public class IconLoader
     {
-        private const int sizeofGRPICONDIR_idCount = 4;
-        private const int offsetGRPICONDIRENTRY_nID = 12;
-        private const int offsetGRPICONDIRENTRY_dwBytesInRes = 8;
-        private static readonly int sizeofICONDIR = Marshal.SizeOf<ICONDIR>();
-        private static readonly int sizeofICONDIRENTRY = Marshal.SizeOf<ICONDIRENTRY>();
-        private static readonly int sizeofGRPICONDIRENTRY = Marshal.SizeOf<GRPICONDIRENTRY>();
+        private const int SIZEOF_GRPICONDIR_idCount = 4;
+        private const int OFFSET_GRPICONDIRENTRY_nID = 12;
+        private const int OFFSET_GRPICONDIRENTRY_dwBytesInRes = 8;
+        private static readonly int SIZEOF_ICONDIR = Marshal.SizeOf<ICONDIR>();
+        private static readonly int SIZEOF_ICONDIRENTRY = Marshal.SizeOf<ICONDIRENTRY>();
+        private static readonly int SIZEOF_GRPICONDIRENTRY = Marshal.SizeOf<GRPICONDIRENTRY>();
 
         public IconLoader(ILogger logger)
         {
@@ -44,6 +44,25 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
+        private BitmapSource GetThumbnailImageCore(string iconPath, in IconSize iconSize)
+        {
+            NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out var iShellItem);
+
+            using var shellItem = ComWrapper.Create(iShellItem);
+            var size = iconSize.ToSize();
+            var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
+
+            IntPtr hResultBitmap;
+            using(var imageFactory = shellItem.Cast<IShellItemImageFactory>()) {
+                imageFactory.Raw.GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
+            }
+
+            using(var hBitmap = new BitmapHandleWrapper(hResultBitmap)) {
+                var result = hBitmap.MakeBitmapSource();
+                return result;
+            }
+        }
+
         /// <summary>
         /// ファイルのサムネイルを取得。
         /// </summary>
@@ -53,18 +72,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public BitmapSource? GetThumbnailImage(string iconPath, in IconSize iconSize)
         {
             try {
-                NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out var iShellItem);
-                using var shellItem = ComWrapper.Create(iShellItem);
-                var size = iconSize.ToSize();
-                var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
-                IntPtr hResultBitmap;
-                using(var imageFactory = shellItem.Cast<IShellItemImageFactory>()) {
-                    imageFactory.Raw.GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
-                }
-                using(var hBitmap = new BitmapHandleWrapper(hResultBitmap)) {
-                    var result = hBitmap.MakeBitmapSource();
-                    return result;
-                }
+                return GetThumbnailImageCore(iconPath, iconSize);
             } catch(COMException ex) {
                 Logger.LogWarning(ex, ex.Message);
                 return null;
@@ -73,7 +81,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return null;
             }
         }
-
 
         /// <summary>
         /// 実行モジュールのリソースを取得。
@@ -135,11 +142,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     return true;
                 }
 
-                var iconCount = BitConverter.ToUInt16(binaryGroupIconData, sizeofGRPICONDIR_idCount);
+                var iconCount = BitConverter.ToUInt16(binaryGroupIconData, SIZEOF_GRPICONDIR_idCount);
 
-                var totalSize = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
+                var totalSize = SIZEOF_ICONDIR + SIZEOF_ICONDIRENTRY * iconCount;
                 for(var i = 0; i < iconCount; i++) {
-                    var readOffset = sizeofICONDIR + (sizeofGRPICONDIRENTRY * i) + offsetGRPICONDIRENTRY_dwBytesInRes;
+                    var readOffset = SIZEOF_ICONDIR + (SIZEOF_GRPICONDIRENTRY * i) + OFFSET_GRPICONDIRENTRY_dwBytesInRes;
                     if(binaryGroupIconData.Length < 0 && readOffset + sizeof(Int32) < binaryGroupIconData.Length) {
                         break;
                     }
@@ -156,21 +163,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
                 using(var stream = new MemoryReleaseStream(totalSize))
                 using(var writer = new BinaryWriter(stream)) {
-                    writer.Write(binaryGroupIconData, 0, sizeofICONDIR);
+                    writer.Write(binaryGroupIconData, 0, SIZEOF_ICONDIR);
 
-                    var picOffset = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
+                    var picOffset = SIZEOF_ICONDIR + SIZEOF_ICONDIRENTRY * iconCount;
                     foreach(var i in Enumerable.Range(0, iconCount)) {
-                        writer.Seek(sizeofICONDIR + sizeofICONDIRENTRY * i, SeekOrigin.Begin);
-                        var offsetWrite = sizeofICONDIR + sizeofGRPICONDIRENTRY * i;
-                        if(binaryGroupIconData.Length <= offsetWrite + offsetGRPICONDIRENTRY_nID) {
+                        writer.Seek(SIZEOF_ICONDIR + SIZEOF_ICONDIRENTRY * i, SeekOrigin.Begin);
+                        var offsetWrite = SIZEOF_ICONDIR + SIZEOF_GRPICONDIRENTRY * i;
+                        if(binaryGroupIconData.Length <= offsetWrite + OFFSET_GRPICONDIRENTRY_nID) {
                             continue;
                         }
-                        writer.Write(binaryGroupIconData, offsetWrite, offsetGRPICONDIRENTRY_nID);
+                        writer.Write(binaryGroupIconData, offsetWrite, OFFSET_GRPICONDIRENTRY_nID);
                         writer.Write(picOffset);
 
                         writer.Seek(picOffset, SeekOrigin.Begin);
 
-                        ushort id = BitConverter.ToUInt16(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i + offsetGRPICONDIRENTRY_nID);
+                        ushort id = BitConverter.ToUInt16(binaryGroupIconData, SIZEOF_ICONDIR + SIZEOF_GRPICONDIRENTRY * i + OFFSET_GRPICONDIRENTRY_nID);
                         var pic = GetResourceBinaryData(hMod, new IntPtr(id), RT.RT_ICON);
                         if(pic != null) {
                             writer.Write(pic, 0, pic.Length);
@@ -190,7 +197,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return binaryList;
         }
-
 
         /// <summary>
         /// 16px, 32pxアイコン取得。
