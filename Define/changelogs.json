@@ -58,7 +58,10 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#835: ヘルプファイルのリンクが腐ってる",
+						"comments": [
+							"parcel がつらい。 でも webpack に移るんもつらい。 かといって eleventy は ts ダメっぽいから全部つらい"
+						]
 					},
 					{
 						"revision": "",
