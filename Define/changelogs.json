@@ -51,7 +51,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#830: CI で Nuget のキャッシュできてない",
+						"comments": [
+							"nuget にロックファイルがあると初めて知った冬の日"
+						]
 					},
 					{
 						"revision": "",
@@ -154,10 +157,6 @@
 						"comments": [
 							"併せて #730 もがんあげ"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
