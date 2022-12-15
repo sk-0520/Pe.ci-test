@@ -1,8 +1,8 @@
 {
 	"library": [
 		{
-			"name": ".NET 6",
-			"uri": "https://dotnet.microsoft.com/download/dotnet/6.0",
+			"name": ".NET 7",
+			"uri": "https://dotnet.microsoft.com/download/dotnet/7.0",
 			"license": {
 				"name": "MIT License",
 				"uri": "https://github.com/microsoft/dotnet/blob/master/LICENSE"
@@ -80,24 +80,6 @@
 				"uri": "https://github.com/adoconnection/SevenZipExtractor/blob/master/LICENSE"
 			},
 			"comment": "7z"
-		},
-		{
-			"name": "jQuery",
-			"uri": "https://jquery.com/",
-			"license": {
-				"name": "MIT",
-				"uri": "https://jquery.org/license/"
-			},
-			"comment": ""
-		},
-		{
-			"name": "Marked",
-			"uri": "https://github.com/markedjs/marked",
-			"license": {
-				"name": "MIT",
-				"uri": "https://github.com/markedjs/marked/blob/master/LICENSE.md"
-			},
-			"comment": ""
 		}
 	],
 

@@ -74,7 +74,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-
     public abstract class DragAndDropBase: IDragAndDrop
     {
         /// <summary>

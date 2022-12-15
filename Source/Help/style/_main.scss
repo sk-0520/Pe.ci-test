@@ -43,13 +43,17 @@ section {
 #menu {
 	left: 0;
 	width: $menuWidth;
+	padding: 0.5em;
+	margin: 0 1ex 0 0;
 
 	ul {
 		list-style: outside;
-		padding-left: 1em;
-		padding-right: 1ex;
+		padding: 0;
+		margin: 0;
 
 		li {
+			padding-left: 1ch;
+
 			line-height: 1.5em;
 			margin-bottom: 2px;
 			background: #fff;

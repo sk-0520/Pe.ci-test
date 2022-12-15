@@ -12,6 +12,7 @@
     <Copyright>Copyright © &lt;YYYY&gt;-&lt;YYYY&gt; &lt;YOU&gt; &lt;URL&gt;</Copyright>
     <Configurations>Debug;Release</Configurations>
     <PathMap>$(MSBuildThisFileDirectory)=.</PathMap>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
