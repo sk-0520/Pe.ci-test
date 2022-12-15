@@ -1,48 +1,13 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.180+",
+		"date": "2022/12/15",
+		"version": "0.99.181",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "特に意味はないけど依存ライブラリの都合上 更新だけしときたい"
 					}
 				]
 			},
@@ -50,30 +15,22 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "856d2bff21d75be7833e94afd453573e9755cf46",
 						"subject": "#830: CI で Nuget のキャッシュできてない",
 						"comments": [
 							"nuget にロックファイルがあると初めて知った冬の日"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "3201627e86c7dc0d0a2bf7baf3e066252386d044",
 						"subject": "#835: ヘルプファイルのリンクが腐ってる",
 						"comments": [
 							"parcel がつらい。 でも webpack に移るんもつらい。 かといって eleventy は ts ダメっぽいから全部つらい"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "0c567e21ed20c65adcf61594c55da76b050835be",
 						"subject": "#834: CI で JSON のなんか知らん警告を解決する"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -81,36 +38,35 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "6ddb88e1faf57f7bcd53bd361265a24e10e3c4ea",
 						"subject": "update npm"
 					},
 					{
-						"revision": "",
+						"revision": "9861a118f161f7c903bf2c1918abfa82c73af134",
 						"subject": "#789: bitbucketにソーシャルログインできるしフォーラムを畳む"
 					},
 					{
-						"revision": "",
+						"revision": "99749dcedc605e8d65a36b4fe9beacd2c1e24131",
 						"subject": "#833: Fix code scanning alert - Unsafe expansion of self-closing HTML tag"
 					},
 					{
-						"revision": "",
+						"revision": "3a3e0b0cde8fe689856956fc16512ce746a990f7",
+						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 107.1.90 -> 107.1.120"
 					},
 					{
-						"revision": "",
+						"revision": "d4c33175244e4a6a6657071fb2a64f0f4580634b",
+						"class": "nuget",
 						"subject": "AvalonEdit 6.1.3.50 -> 6.2.0.78"
 					},
 					{
-						"revision": "",
+						"revision": "c955b67de0a747036132a2e411219b4d3c010336",
+						"class": "nuget",
 						"subject": "MSTest.Test* 更新",
 						"comments": [
 							"MSTest.TestAdapter 2.2.10 -> 3.0.0",
 							"MSTest.TestFramework 2.2.10 -> 3.0.0"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
