@@ -102,6 +102,14 @@
 					},
 					{
 						"revision": "",
+						"subject": "MSTest.Test* 更新",
+						"comments": [
+							"MSTest.TestAdapter 2.2.10 -> 3.0.0",
+							"MSTest.TestFramework 2.2.10 -> 3.0.0"
+						]
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
