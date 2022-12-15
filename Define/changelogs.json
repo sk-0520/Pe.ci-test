@@ -70,6 +70,10 @@
 					{
 						"revision": "",
 						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
 					}
 				]
 			},
@@ -86,7 +90,7 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#833: Fix code scanning alert - Unsafe expansion of self-closing HTML tag"
 					},
 					{
 						"revision": "",
