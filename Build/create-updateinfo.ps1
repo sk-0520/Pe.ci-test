@@ -50,7 +50,7 @@ function New-UpdateItem([string] $archive, [string] $archiveFilePath, [uri] $not
 		version            = $version
 		revision           = $revision
 		platform           = $platform
-		minimum_version    = $minimumVersion
+		minimum_version    = ConvertVersion $minimumVersion '.'
 		note_uri           = $noteUri
 		archive_uri        = (ReplaceValues $ArchiveBaseUrl).Replace("@ARCHIVENAME@", (Split-Path $archiveFilePath -Leaf))
 		archive_size       = (Get-Item -Path $archiveFilePath).Length
