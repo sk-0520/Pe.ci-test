@@ -1,5 +1,5 @@
 ﻿Param(
-	[Parameter(mandatory = $true)][ValidateSet("github","bitbucket")][string] $TargetRepository,
+	[Parameter(mandatory = $true)][ValidateSet('github')][string] $TargetRepository,
 	[Parameter(mandatory = $true)][version] $MinimumVersion,
 	[Parameter(mandatory = $true)][string] $ArchiveBaseUrl,
 	[Parameter(mandatory = $true)][string] $NoteBaseUrl,
@@ -104,21 +104,5 @@ foreach($pluginProjectDirectory in $pluginProjectDirectories) {
 		}
 		$outputUpdateFile = Join-Path $outputDirectory ('update-' + $pluginProjectDirectory.Name + '.json')
 		OutputJson $pluginFiles $outputUpdateFile
-	}
-}
-
-switch ($TargetRepository) {
-	'github' {
-		# Github Actions で生成する
-	}
-	'bitbucket' {
-		$tagJson = @{
-			name   = $version
-			target = @{
-				hash = $revision
-			}
-		}
-		$tagApiFile = Join-Path $outputDirectory "$TargetRepository-tag.json"
-		OutputJson $tagJson $tagApiFile
 	}
 }
