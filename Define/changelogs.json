@@ -51,7 +51,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#838: Fix code scanning alert - Arbitrary file write during zip extraction (\"Zip Slip\")",
+						"comments": [
+							"これあかんかったら次リリースが死ぬっていう結構な対応"
+						]
 					},
 					{
 						"revision": "",
