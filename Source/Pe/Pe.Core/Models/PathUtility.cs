@@ -295,11 +295,39 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public static string[] Split(string path)
         {
+            var separators = new[] { '/', '\\' };
+
             return path
-                .Split('/', '\\', StringSplitOptions.RemoveEmptyEntries)
+                .Split(separators, StringSplitOptions.RemoveEmptyEntries)
                 .Where(i => 0 < i.Length)
                 .ToArray()
             ;
+        }
+
+        public static string SafeCombine(string baseDirectoryPath, string treePath)
+        {
+            var treePaths = Split(treePath);
+            var trees = new Stack<string>(treePaths.Length);
+
+            foreach(var node in treePaths) {
+                if(node == "..") {
+                    if(0 < trees.Count) {
+                        trees.Pop();
+                    }
+                    continue;
+                } else if(node == ".") {
+                    continue;
+                }
+
+                trees.Push(node);
+            }
+
+            if(trees.Count == 0) {
+                return baseDirectoryPath;
+            }
+
+            var tree = trees.Reverse().JoinString(Path.DirectorySeparatorChar.ToString());
+            return Path.Combine(baseDirectoryPath, tree);
         }
     }
 }

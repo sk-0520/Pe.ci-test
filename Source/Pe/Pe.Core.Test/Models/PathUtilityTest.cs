@@ -1,4 +1,5 @@
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContentTypeTextNet.Pe.Core.Test.Models
@@ -158,6 +159,24 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         {
             var actual = PathUtility.Split(input);
             CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        [DataRow(@"", @"", @"")]
+        [DataRow(@"a", @"a", @"")]
+        [DataRow(@"A", @"", @"A")]
+        [DataRow(@"C:\dir", @"C:\", @"dir")]
+        [DataRow(@"C:\dir\sub", @"C:\dir", @"sub")]
+        [DataRow(@"C:\dir\sub", @"C:\dir\", @"\sub")]
+        [DataRow(@"C:\dir\sub\sub2", @"C:\dir\", @"sub/./sub2")]
+        [DataRow(@"C:\dir\sub2", @"C:\dir\", @"sub/../sub2")]
+        [DataRow(@"C:\dir\sub\sub2", @"C:\dir\", @"sub/./sub2")]
+        [DataRow(@"C:\dir\next", @"C:\dir\", @"sub/../../../../next")]
+        [DataRow(@"sub2\sub3", @"", @"sub/../../../../sub2/next/../sub3")]
+        public void SafeCombineTest(string expected, string directory, string nodes)
+        {
+            var actual = PathUtility.SafeCombine(directory, nodes);
+            Assert.AreEqual(expected, actual);
         }
     }
 }
