@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 using SevenZipExtractor;
 
@@ -36,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var extractedItemCount = 0;
                 userNotifyProgress.Start();
                 foreach(var entry in zipArchive.Entries.Where(e => e.Name.Length > 0)) {
-                    var expandPath = Path.Combine(extractDirectory.FullName, entry.FullName);
+                    var expandPath = PathUtility.SafeCombine(extractDirectory.FullName, entry.FullName);
                     var dirPath = Path.GetDirectoryName(expandPath) ?? string.Empty;
                     if(!createdDirs.Contains(dirPath) && !Directory.Exists(dirPath)) {
                         Logger.LogTrace("作成: {0}", dirPath);
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var totalExtractItemCount = archive.Entries.Count;
                 var extractedItemCount = 0;
                 archive.Extract(e => {
-                    var expandPath = Path.Combine(extractDirectory.FullName, e.FileName);
+                    var expandPath = PathUtility.SafeCombine(extractDirectory.FullName, e.FileName);
 
                     Logger.LogTrace("展開: {0}", expandPath);
                     extractedItemCount += 1;
