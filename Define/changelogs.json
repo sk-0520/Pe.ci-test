@@ -83,7 +83,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 17.4.0 -> 17.4.1"
 					},
 					{
 						"revision": "",
