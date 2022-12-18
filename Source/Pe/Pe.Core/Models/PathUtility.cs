@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Windows.Media;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -285,6 +286,20 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var b3 = b2.TrimEnd('\\');
 
             return IsEqualsFileName(a3, b3);
+        }
+
+        /// <summary>
+        /// パスを区切り文字で分割。
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string[] Split(string path)
+        {
+            return path
+                .Split('/', '\\', StringSplitOptions.RemoveEmptyEntries)
+                .Where(i => 0 < i.Length)
+                .ToArray()
+            ;
         }
     }
 }

@@ -145,5 +145,19 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             var actual = PathUtility.IsEquals(a, b);
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        [DataRow(new[] { "a" }, "a")]
+        [DataRow(new[] { "a", "b" }, "a/b")]
+        [DataRow(new[] { "a", "b", "c" }, "a/b/c")]
+        [DataRow(new[] { "a", "b", "c" }, "/a/b/c")]
+        [DataRow(new[] { "a", "b", "c" }, "a/b/c/")]
+        [DataRow(new[] { "a", "b", "c" }, "/a/b/c/")]
+        [DataRow(new[] { "a", "b", "c" }, "\\a\\b\\c\\")]
+        public void SplitTest(string[] expected, string input)
+        {
+            var actual = PathUtility.Split(input);
+            CollectionAssert.AreEqual(expected, actual);
+        }
     }
 }
