@@ -281,7 +281,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                     items.Remove(removeItem);
                 }
             },
-            o => o.CanRemove
+            o => o is not null && o.CanRemove
         ));
 
         #endregion
