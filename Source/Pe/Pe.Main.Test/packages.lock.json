@@ -4,12 +4,12 @@
     "net7.0-windows7.0": {
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
-        "requested": "[17.4.0, )",
-        "resolved": "17.4.0",
-        "contentHash": "VtNZQ83ntG2aEUjy1gq6B4HNdn96se6FmdY/03At8WiqDReGrApm6OB2fNiSHz9D6IIEtWtNZ2FSH0RJDVXl/w==",
+        "requested": "[17.4.1, )",
+        "resolved": "17.4.1",
+        "contentHash": "kJ5/v2ad+VEg1fL8UH18nD71Eu+Fq6dM4RKBVqlV2MLSEK/AW4LUkqlk7m7G+BrxEDJVwPjxHam17nldxV80Ow==",
         "dependencies": {
-          "Microsoft.CodeCoverage": "17.4.0",
-          "Microsoft.TestPlatform.TestHost": "17.4.0"
+          "Microsoft.CodeCoverage": "17.4.1",
+          "Microsoft.TestPlatform.TestHost": "17.4.1"
         }
       },
       "MSTest.TestAdapter": {
@@ -169,8 +169,8 @@
       },
       "Microsoft.CodeCoverage": {
         "type": "Transitive",
-        "resolved": "17.4.0",
-        "contentHash": "2oZbSVTC2nAvQ2DnbXLlXS+c25ZyZdWeNd+znWwAxwGaPh9dwQ5NBsYyqQB7sKmJKIUdkKGmN3rzFzjVC81Dtg=="
+        "resolved": "17.4.1",
+        "contentHash": "T21KxaiFawbrrjm0uXjxAStXaBm5P9H6Nnf8BUtBTvIpd8q57lrChVBCY2dnazmSu9/kuX4z5+kAOT78Dod7vA=="
       },
       "Microsoft.Extensions.Configuration": {
         "type": "Transitive",
@@ -299,8 +299,8 @@
       },
       "Microsoft.TestPlatform.ObjectModel": {
         "type": "Transitive",
-        "resolved": "17.4.0",
-        "contentHash": "oWe7A0wrZhxagTOcaxJ9r0NXTbgkiBQQuCpCXxnP06NsGV/qOoaY2oaangAJbOUrwEx0eka1do400NwNCjfytw==",
+        "resolved": "17.4.1",
+        "contentHash": "v2CwoejusooZa/DZYt7UXo+CJOvwAmqg6ZyFJeIBu+DCRDqpEtf7WYhZ/AWii0EKzANPPLU9+m148aipYQkTuA==",
         "dependencies": {
           "NuGet.Frameworks": "5.11.0",
           "System.Reflection.Metadata": "1.6.0"
@@ -308,10 +308,10 @@
       },
       "Microsoft.TestPlatform.TestHost": {
         "type": "Transitive",
-        "resolved": "17.4.0",
-        "contentHash": "sUx48fu9wgQF1JxzXeSVtzb7KoKpJrdtIzsFamxET3ZYOKXj+Ej13HWZ0U2nuMVZtZVHBmE+KS3Vv5cIdTlycQ==",
+        "resolved": "17.4.1",
+        "contentHash": "K7QXM4P4qrDKdPs/VSEKXR08QEru7daAK8vlIbhwENM3peXJwb9QgrAbtbYyyfVnX+F1m+1hntTH6aRX+h/f8g==",
         "dependencies": {
-          "Microsoft.TestPlatform.ObjectModel": "17.4.0",
+          "Microsoft.TestPlatform.ObjectModel": "17.4.1",
           "Newtonsoft.Json": "13.0.1"
         }
       },
@@ -839,8 +839,8 @@
           "ClrHeapAllocationAnalyzer": "[3.0.0, )",
           "Dapper": "[2.0.123, )",
           "Microsoft.Extensions.Logging.Abstractions": "[7.0.0, )",
-          "Pe.Bridge": "[0.99.180, )",
-          "Pe.PInvoke": "[0.99.180, )",
+          "Pe.Bridge": "[0.99.182, )",
+          "Pe.PInvoke": "[0.99.182, )",
           "Prism.Wpf": "[8.1.97, )",
           "System.Data.SQLite.Core": "[1.0.117, )"
         }
@@ -856,8 +856,8 @@
           "Microsoft.Extensions.Configuration.Json": "[7.0.0, )",
           "Microsoft.Extensions.Logging": "[7.0.0, )",
           "NLog.Extensions.Logging": "[5.1.0, )",
-          "Pe.Core": "[0.99.180, )",
-          "Pe.Plugins.DefaultTheme": "[0.99.180, )",
+          "Pe.Core": "[0.99.182, )",
+          "Pe.Plugins.DefaultTheme": "[0.99.182, )",
           "Prism.Wpf": "[8.1.97, )",
           "SevenZipExtractor": "[1.0.17, )",
           "System.DirectoryServices.AccountManagement": "[7.0.0, )",
@@ -876,8 +876,8 @@
       "pe.plugins.defaulttheme": {
         "type": "Project",
         "dependencies": {
-          "Pe.Bridge": "[0.99.180, )",
-          "Pe.Core": "[0.99.180, )"
+          "Pe.Bridge": "[0.99.182, )",
+          "Pe.Core": "[0.99.182, )"
         }
       }
     }

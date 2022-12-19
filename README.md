@@ -24,8 +24,8 @@ Pe は Windows 10 以上で動作するデスクトップユーティリティ�
 ## 開発
 
 * `dotnet --version`: [7.0.100](https://dotnet.microsoft.com/download/dotnet/7.0)
-* `node -v: 18.4.0`
+* `node -v: 18.12.1`
 * nvm:
-  * `nvm use 18.4.0`
+  * `nvm use 18.12.1`
 
 

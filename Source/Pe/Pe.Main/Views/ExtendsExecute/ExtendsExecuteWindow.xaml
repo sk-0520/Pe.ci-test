@@ -27,6 +27,7 @@
   Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
   BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+  FocusManager.FocusedElement="{Binding ElementName=inputOption}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:datacontext="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute" d:DataContext="{d:DesignInstance Type=datacontext:ExtendsExecuteViewModel}"

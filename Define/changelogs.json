@@ -1,5 +1,54 @@
 [
 	{
+		"date": "2022/12/19",
+		"version": "0.99.183",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "7612e4536e78dc77d8e2be955a0296c42e1ed02d",
+						"subject": "#839: 指定して実行の初期フォーカスをオプションに割り当てる"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "e0d0c97d465e6bdd7524810733a1a8a47a303820",
+						"subject": "#838: Fix code scanning alert - Arbitrary file write during zip extraction (\"Zip Slip\")",
+						"comments": [
+							"これあかんかったら次リリースが死ぬっていう結構な対応"
+						]
+					},
+					{
+						"revision": "dfb616f08c95d1b49fcba8cb5e192e551961807b",
+						"subject": "#840: 指定して実行のオプションとか開くと閉じたときに死ぬ"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "daf1ba57753765746b91c2d86e32231e237dbfec",
+						"subject": "#831: AppVeyor 処理設定を破棄する"
+					},
+					{
+						"revision": "4bc96e418ee4fa4a96c593a75ead8985c603d0af",
+						"subject": "Node.js 18.4.0 -> 18.12.1"
+					},
+					{
+						"revision": "342cf49292de99f060af80aa4cb5db6aa2531c46",
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 17.4.0 -> 17.4.1"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2022/12/16",
 		"version": "0.99.181, 0.99.182",
 		"contents": [

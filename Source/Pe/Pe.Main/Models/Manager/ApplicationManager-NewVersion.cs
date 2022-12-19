@@ -196,6 +196,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 archiveExtractor.Extract(downloadFile, environmentParameters.TemporaryApplicationExtractDirectory, ApplicationUpdateInfo.NewVersionItem.ArchiveKind, new UserNotifyProgress(ApplicationUpdateInfo.ExtractProgress, ApplicationUpdateInfo.CurrentLogProgress));
 
                 // #766ここの例外はきちんと対応した際にはなくなる
+                // TODO: エラー状態なのでなくせない
                 var newAppPath = Path.Join(environmentParameters.TemporaryApplicationExtractDirectory.FullName, EnvironmentParameters.RootApplicationName);
                 Logger.LogInformation("アプリケーション試走: {0}", newAppPath);
                 using var process = new Process();
