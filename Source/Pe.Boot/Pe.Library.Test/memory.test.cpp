@@ -35,6 +35,12 @@ namespace PeLibraryTest
             release_memory(p2, DEFAULT_MEMORY);
         }
 
+        TEST_METHOD(new_memory_test)
+        {
+            auto p1 = (unsigned char*)new_memory(SIZE_MAX / sizeof(size_t), sizeof(size_t), DEFAULT_MEMORY);
+            Assert::IsNull(p1);
+        }
+
         TEST_METHOD(library__extend_capacity_if_not_enough_bytes_x2_test)
         {
             MEMORY_RESOURCE memory_resource_data = new_memory_resource(MEMORY_AUTO_INITIAL_SIZE, MEMORY_EXTENDABLE_MAXIMUM_SIZE);
