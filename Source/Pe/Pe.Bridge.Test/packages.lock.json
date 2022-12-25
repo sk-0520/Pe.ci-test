@@ -14,15 +14,15 @@
       },
       "MSTest.TestAdapter": {
         "type": "Direct",
-        "requested": "[3.0.0, )",
-        "resolved": "3.0.0",
-        "contentHash": "hJwxnOXLHitQbLzju7BfbRGeybjuVpkTd0qq8pKT7xLFPmc86Eqx0s9TYY6iAYh0+y4/73r3t/365N8RLGucbw=="
+        "requested": "[3.0.1, )",
+        "resolved": "3.0.1",
+        "contentHash": "QcGOttirgLRLyWqWyn/kZElUQrDu5aOXLxiVrchithODwUk4hpXubvGKf6I7uW9LurhBYuiHvnMU2Fu4qY9Rjg=="
       },
       "MSTest.TestFramework": {
         "type": "Direct",
-        "requested": "[3.0.0, )",
-        "resolved": "3.0.0",
-        "contentHash": "/19FTytX0JOH6/ub3D2wF7WHQefCTOCzHVEoWd8LVQeU0d+rnubZkBIwZTwv/uqCuy6D+DxCab+2UsmhbHoWFw=="
+        "requested": "[3.0.1, )",
+        "resolved": "3.0.1",
+        "contentHash": "S8ErX2PC/+pRMEb9tcRAPMYAi7EhwTGKoU1QAZWiFOeDw4/e8pUdQ3cLM4/s8LboAKNpJysmhq578Jxvuly4RA=="
       },
       "ClrHeapAllocationAnalyzer": {
         "type": "Transitive",
