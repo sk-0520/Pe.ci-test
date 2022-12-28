@@ -1,69 +1,13 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.183+",
+		"date": "2022/12/28",
+		"version": "0.99.184",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "依存ライブラリ系の更新"
 					}
 				]
 			},
@@ -71,12 +15,12 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "80a6c6a51e4d8ffa1c6eb5067c6a953e52f7b0fc",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 107.1.120 -> 108.4.130"
 					},
 					{
-						"revision": "",
+						"revision": "19cea839522f9d689babdcf297c82dba42cb2ea9",
 						"class": "nuget",
 						"subject": "MSTest.Test* 更新(2)",
 						"comments": [
@@ -85,16 +29,12 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "8a65f822341bf578e10868bfc4258b82365a3eb2",
 						"subject": "NLog.Extensions.Logging 5.1.0 -> 5.2.0"
 					},
 					{
-						"revision": "",
+						"revision": "d1d23736b488b64149d6b03b1e8ff56037926064",
 						"subject": "update npm"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
