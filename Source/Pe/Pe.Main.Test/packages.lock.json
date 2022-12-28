@@ -14,25 +14,25 @@
       },
       "MSTest.TestAdapter": {
         "type": "Direct",
-        "requested": "[3.0.0, )",
-        "resolved": "3.0.0",
-        "contentHash": "hJwxnOXLHitQbLzju7BfbRGeybjuVpkTd0qq8pKT7xLFPmc86Eqx0s9TYY6iAYh0+y4/73r3t/365N8RLGucbw=="
+        "requested": "[3.0.2, )",
+        "resolved": "3.0.2",
+        "contentHash": "K1hhtevCzbogylmAnCluV/M1/Ajr5EKfxWq3nv+iYxt+gHLN4gSqT6B3tPnNqUbE4aWT1aUHagcRMnARt45NzQ=="
       },
       "MSTest.TestFramework": {
         "type": "Direct",
-        "requested": "[3.0.0, )",
-        "resolved": "3.0.0",
-        "contentHash": "/19FTytX0JOH6/ub3D2wF7WHQefCTOCzHVEoWd8LVQeU0d+rnubZkBIwZTwv/uqCuy6D+DxCab+2UsmhbHoWFw=="
+        "requested": "[3.0.2, )",
+        "resolved": "3.0.2",
+        "contentHash": "cuCE5PXK0mX0FIfY3yzDNKFqCf2FTxZhdH/Bxg4662MAWZg4TnG3rYsFzNpPECrvn8Ry6lG8TaT2Ltg1NZkC6Q=="
       },
       "NLog.Extensions.Logging": {
         "type": "Direct",
-        "requested": "[5.1.0, )",
-        "resolved": "5.1.0",
-        "contentHash": "cQCKF2/iYjZUkn0d2o6VD1xkTUhIFHPYmZEm29KlTthLEzMht5aY80SwWlHZCKy0w19kaSq1jgLJSGrKsapUfg==",
+        "requested": "[5.2.0, )",
+        "resolved": "5.2.0",
+        "contentHash": "wzVFG5p8Nwbs1Ws29T8YJg+UbJfsh61h6U4xArnDSrtVvOoccwKtoFPZWwbym3ZTiTFmHIf7Ugu1j/WnT7z3vg==",
         "dependencies": {
           "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
           "Microsoft.Extensions.Logging": "6.0.0",
-          "NLog": "5.0.5"
+          "NLog": "5.1.0"
         }
       },
       "AvalonEdit": {
@@ -42,39 +42,39 @@
       },
       "CefSharp.Common.NETCore": {
         "type": "Transitive",
-        "resolved": "107.1.120",
-        "contentHash": "DuTwv81waRuSJEKbqrDSa081z++3Zj6tXLbB2Y2YD1Fjc8LIdSU3KTSrGdamVrkyeM2eIdztREQmmHt5UH2F/g==",
+        "resolved": "108.4.130",
+        "contentHash": "fOvbk8up8Vk1/eZsyy7l3QTzuipbOlLkjQuJbwwPLb+SGZSL+2mQWdmHtr7vHN4rGGZpLO2pQ6jT/RcwWuTw5w==",
         "dependencies": {
-          "chromiumembeddedframework.runtime": "[107.1.12]"
+          "chromiumembeddedframework.runtime": "[108.4.13]"
         }
       },
       "CefSharp.Wpf.NETCore": {
         "type": "Transitive",
-        "resolved": "107.1.120",
-        "contentHash": "Wi3UMuNY3gna1ikmyvE4BtYEML2qJvCAwi++UjegKnaNF4kXBpCadLezFx0cnLuuw1ueG23kaAJ7670LJcJi6w==",
+        "resolved": "108.4.130",
+        "contentHash": "z3wK0rVsSRJq6TkKu5qVMDIo4EOVhrx9ImIRGpFws+CzWZ+pVuATtpp1vkEmysil+MowoXjkEU85Fb6I8ryUBw==",
         "dependencies": {
-          "CefSharp.Common.NETCore": "[107.1.120]"
+          "CefSharp.Common.NETCore": "[108.4.130]"
         }
       },
       "chromiumembeddedframework.runtime": {
         "type": "Transitive",
-        "resolved": "107.1.12",
-        "contentHash": "1DzyP9VjlPaEV+h5OdLxIyhzxDX5d48f2OrtnImjZoO8tOe1KXSgXfOwsjf8axmn63j+54IID3HsDiFb6A1UbQ=="
+        "resolved": "108.4.13",
+        "contentHash": "D8jEztf+sDADzgmyeAk5+R39fprsCJZWm1XTz6CYGYFNnXsvB7SX+sKoJ0T23EDJv1N1nsI7ebNeH8W0UCfLIQ=="
       },
       "chromiumembeddedframework.runtime.win-arm64": {
         "type": "Transitive",
-        "resolved": "107.1.12",
-        "contentHash": "rCTj1dkV+l85yt8jiZmOfzuB9iJbt+Gm1NbZIraKLFYbegO4g87rJLuLD40Q8BNZr+Bn1zBHll17pMd/Dq9LKg=="
+        "resolved": "108.4.13",
+        "contentHash": "t2QL5yMaIZCCYSYyuiyzM8RFJQUk3ICQrdjZuGaF0k/PM/rlZo5SQxTm+1vcb697I/pHfdZvfkDKAuNGjC7PCA=="
       },
       "chromiumembeddedframework.runtime.win-x64": {
         "type": "Transitive",
-        "resolved": "107.1.12",
-        "contentHash": "dipsNB+/rnt0sKHpWY+TkDAj9RMB9G5iSvNtDXE8A7qcweefk+sB+ZsTaGOSNvrytCtzRtcHzKkdSc5WraU/xQ=="
+        "resolved": "108.4.13",
+        "contentHash": "/exKsG1y/sL78UtqqCLCvGBXnC7wgVf2Kdnt0mMym/DbvRgY4/dCmYk8CoXwzLVJZZgGwPj0mGvumDsyZWqUWQ=="
       },
       "chromiumembeddedframework.runtime.win-x86": {
         "type": "Transitive",
-        "resolved": "107.1.12",
-        "contentHash": "NdICSmF1hBW9SgQ1lzwSYA9swYcZ3vtyA81yFGzzurjiTrhynN4MF/LeYDqenjGuY3i1CwEoJ7Y70zU52xZj+Q=="
+        "resolved": "108.4.13",
+        "contentHash": "1vBd4wCdxhgfsbQJNjCmGUdxJg6Ki4vK9DAQXJhfrvcael9pc1zfcG0Qr7t9DD72W4hUbHIXqQDUsW43TZ2NfA=="
       },
       "ClrHeapAllocationAnalyzer": {
         "type": "Transitive",
@@ -332,8 +332,8 @@
       },
       "NLog": {
         "type": "Transitive",
-        "resolved": "5.0.5",
-        "contentHash": "NOTWSyUEljmjMq7OqZ1X9iu4bJ+rW/o6pt79Jq8j2Q7s8DyoMMCJwe0HoCKcNjhYRJ++b+E8erH6E6WwaCTshQ=="
+        "resolved": "5.1.0",
+        "contentHash": "oW7ekrkRG9okpDMUcEglunWj8Qf2RY8qkgl+/chJoavzg3dbT13y32t19R54FKkmq80fKzw4ZekZkCrRGanKgQ=="
       },
       "NuGet.Frameworks": {
         "type": "Transitive",
@@ -839,8 +839,8 @@
           "ClrHeapAllocationAnalyzer": "[3.0.0, )",
           "Dapper": "[2.0.123, )",
           "Microsoft.Extensions.Logging.Abstractions": "[7.0.0, )",
-          "Pe.Bridge": "[0.99.182, )",
-          "Pe.PInvoke": "[0.99.182, )",
+          "Pe.Bridge": "[0.99.183, )",
+          "Pe.PInvoke": "[0.99.183, )",
           "Prism.Wpf": "[8.1.97, )",
           "System.Data.SQLite.Core": "[1.0.117, )"
         }
@@ -849,22 +849,22 @@
         "type": "Project",
         "dependencies": {
           "AvalonEdit": "[6.2.0.78, )",
-          "CefSharp.Wpf.NETCore": "[107.1.120, )",
+          "CefSharp.Wpf.NETCore": "[108.4.130, )",
           "ClrHeapAllocationAnalyzer": "[3.0.0, )",
           "Hardcodet.NotifyIcon.Wpf": "[1.1.0, )",
           "Microsoft.Extensions.Configuration.Binder": "[7.0.1, )",
           "Microsoft.Extensions.Configuration.Json": "[7.0.0, )",
           "Microsoft.Extensions.Logging": "[7.0.0, )",
-          "NLog.Extensions.Logging": "[5.1.0, )",
-          "Pe.Core": "[0.99.182, )",
-          "Pe.Plugins.DefaultTheme": "[0.99.182, )",
+          "NLog.Extensions.Logging": "[5.2.0, )",
+          "Pe.Core": "[0.99.183, )",
+          "Pe.Plugins.DefaultTheme": "[0.99.183, )",
           "Prism.Wpf": "[8.1.97, )",
           "SevenZipExtractor": "[1.0.17, )",
           "System.DirectoryServices.AccountManagement": "[7.0.0, )",
           "System.Text.Encoding.CodePages": "[7.0.0, )",
-          "chromiumembeddedframework.runtime.win-arm64": "[107.1.12, )",
-          "chromiumembeddedframework.runtime.win-x64": "[107.1.12, )",
-          "chromiumembeddedframework.runtime.win-x86": "[107.1.12, )"
+          "chromiumembeddedframework.runtime.win-arm64": "[108.4.13, )",
+          "chromiumembeddedframework.runtime.win-x64": "[108.4.13, )",
+          "chromiumembeddedframework.runtime.win-x86": "[108.4.13, )"
         }
       },
       "pe.pinvoke": {
@@ -876,8 +876,8 @@
       "pe.plugins.defaulttheme": {
         "type": "Project",
         "dependencies": {
-          "Pe.Bridge": "[0.99.182, )",
-          "Pe.Core": "[0.99.182, )"
+          "Pe.Bridge": "[0.99.183, )",
+          "Pe.Core": "[0.99.183, )"
         }
       }
     }

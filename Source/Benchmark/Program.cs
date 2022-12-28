@@ -18,7 +18,7 @@ namespace Benchmark
     }
 
     // -Bench.cs を作成して細かいのは対応する
-    [SimpleJob(RuntimeMoniker.Net60)]
+    [SimpleJob(RuntimeMoniker.Net70)]
     [RPlotExporter]
     [MemoryDiagnoser]
     [MinColumn, MaxColumn, RankColumn]
