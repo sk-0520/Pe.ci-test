@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -14,11 +14,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\Pe\Pe.Core\Models\NameConverter.cs" Link="NameConverter.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="-Bench.cs.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.3" />
   </ItemGroup>
   
 
