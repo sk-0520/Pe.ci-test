@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
+using System.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
@@ -92,6 +94,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             ThrowIfDisposed();
 
             return DatabaseAccessor.Query<T>(statement, parameter, this, buffered);
+        }
+
+        public Task<IEnumerable<T>> QueryAsync<T>(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.QueryAsync<T>(statement, parameter, buffered, cancellationToken);
         }
 
         public IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)

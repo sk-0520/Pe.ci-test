@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
@@ -62,6 +64,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         public IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true)
         {
             return DatabaseAccessor.Query<T>(statement, parameter, buffered);
+        }
+
+        public Task<IEnumerable<T>> QueryAsync<T>(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+        {
+            return DatabaseAccessor.QueryAsync<T>(statement, parameter, buffered, cancellationToken);
         }
 
         public IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)

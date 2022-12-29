@@ -4,7 +4,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Dapper;
 using Microsoft.Extensions.Logging;
 
@@ -27,6 +31,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
         /// <returns>問い合わせ結果。</returns>
         IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true);
+
+        /// <inheritdoc cref="Query{T}(string, object?, bool)"/>
+        Task<IEnumerable<T>> QueryAsync<T>(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 動的型で問い合わせ。
@@ -141,6 +148,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         /// <inheritdoc cref="IDatabaseReader.Query{T}(string, object?, bool)"/>
         IEnumerable<T> Query<T>(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered);
+
+        /// <inheritdoc cref="IDatabaseReader.QueryAsync{T}(string, object?, bool, CancellationToken)"/>
+        Task<IEnumerable<T>> QueryAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken);
+
         /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
         IEnumerable<dynamic> Query(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered);
         /// <inheritdoc cref="IDatabaseReader.QueryFirst{T}(string, object?)"/>
@@ -411,6 +422,36 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             ThrowIfDisposed();
 
             return Query<T>(statement, parameter, null, buffered);
+        }
+
+        /// <inheritdoc cref="IDatabaseAccessor.QueryAsync{T}(IDatabaseTransaction?, string, object?, CancellationToken)"/>
+        public virtual Task<IEnumerable<T>> QueryAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var startTime = DateTime.UtcNow;
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                flags: buffered ? CommandFlags.Buffered: CommandFlags.NoCache,
+                cancellationToken: cancellationToken
+            );
+            return BaseConnection.QueryAsync<T>(command).ContinueWith(t => {
+                LoggingQueryResults(t.Result, buffered, startTime, DateTime.UtcNow);
+                return t.Result;
+            }, cancellationToken);
+        }
+
+        /// <inheritdoc cref="IDatabaseReader.QueryAsync{T}(string, object?, bool, CancellationToken)"/>
+        public Task<IEnumerable<T>> QueryAsync<T>(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return QueryAsync<T>(null, statement, parameter, buffered, cancellationToken);
         }
 
         public virtual IEnumerable<dynamic> Query(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered)
