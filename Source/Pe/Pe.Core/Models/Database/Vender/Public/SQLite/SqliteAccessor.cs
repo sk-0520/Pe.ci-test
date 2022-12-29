@@ -76,6 +76,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
             return DatabaseAccessor.Query<dynamic>(statement, parameter, buffered);
         }
 
+        public Task<IEnumerable<dynamic>> QueryAsync(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+        {
+            return DatabaseAccessor.QueryAsync(statement, parameter, buffered, cancellationToken);
+        }
+
         public T QueryFirst<T>(string statement, object? parameter = null)
         {
             return DatabaseAccessor.QueryFirst<T>(statement, parameter);

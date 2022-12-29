@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region property
 
-        private IDisposable Locker { get; [Unuse(UnuseKinds.Dispose)]set; }
+        private IDisposable Locker { get; [Unuse(UnuseKinds.Dispose)] set; }
         public IDatabaseTransaction Transaction { get; [Unuse(UnuseKinds.Dispose)] set; }
 
         IDbTransaction IDatabaseTransaction.Transaction => Transaction.Transaction;
@@ -68,6 +68,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             ThrowIfDisposed();
 
             return Transaction.Query(statement, parameter, buffered);
+        }
+
+        public Task<IEnumerable<dynamic>> QueryAsync(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return Transaction.QueryAsync(statement, parameter, buffered, cancellationToken);
         }
 
         public T QueryFirst<T>(string statement, object? parameter = null)

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -30,7 +32,17 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
                 throw new NotImplementedException();
             }
 
+            public Task<IEnumerable<T>> QueryAsync<T>(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+            {
+                throw new NotImplementedException();
+            }
+
             public IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
+            {
+                throw new NotImplementedException();
+            }
+
+            public Task<IEnumerable<dynamic>> QueryAsync(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
             {
                 throw new NotImplementedException();
             }

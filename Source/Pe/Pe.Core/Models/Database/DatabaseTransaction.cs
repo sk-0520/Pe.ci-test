@@ -110,6 +110,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return DatabaseAccessor.Query(statement, parameter, this, buffered);
         }
 
+        public Task<IEnumerable<dynamic>> QueryAsync(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.QueryAsync(statement, parameter, buffered, cancellationToken);
+        }
+
         public T QueryFirst<T>(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
