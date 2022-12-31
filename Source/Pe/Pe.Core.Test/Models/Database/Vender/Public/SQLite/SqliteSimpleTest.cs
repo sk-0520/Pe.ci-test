@@ -114,6 +114,15 @@ values
         }
 
         [TestMethod]
+        public async Task QueryFirstAsyncTest()
+        {
+            var actual = await DatabaseAccessor.QueryFirstAsync<string>("select ColVal from TestTable1 where ColKey = 2");
+            Assert.AreEqual("B", actual);
+
+            await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => DatabaseAccessor.QueryFirstAsync<string>("select ColVal from TestTable1 where ColKey = -1"));
+        }
+
+        [TestMethod]
         public void QueryFirstOrDefaultTest()
         {
             var actual = DatabaseAccessor.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = 2");

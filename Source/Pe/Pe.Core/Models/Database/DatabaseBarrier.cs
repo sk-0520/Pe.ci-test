@@ -84,6 +84,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return Transaction.QueryFirst<T>(statement, parameter);
         }
 
+        public Task<T> QueryFirstAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return Transaction.QueryFirstAsync<T>(statement, parameter, cancellationToken);
+        }
+
         [return: MaybeNull]
         public T QueryFirstOrDefault<T>(string statement, object? parameter = null)
         {

@@ -67,16 +67,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns>一番最初に見つかったデータ。</returns>
         T QueryFirst<T>(string statement, object? parameter = null);
 
-        ///// <summary>
-        ///// 最初のデータを取得。
-        ///// </summary>
-        ///// <typeparam name="T">問い合わせ型。</typeparam>
-        ///// <param name="statement">データベース問い合わせ文。</param>
-        ///// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        ///// <param name="cancellationToken"></param>
-        ///// <exception cref="InvalidOperationException">空っぽ。</exception>
-        ///// <returns>一番最初に見つかったデータ。</returns>
-        //Task<T> QueryFirstAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// 非同期で最初のデータを取得。
+        /// </summary>
+        /// <typeparam name="T">問い合わせ型。</typeparam>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        /// <param name="cancellationToken"></param>
+        /// <exception cref="InvalidOperationException">空っぽ。</exception>
+        /// <returns>一番最初に見つかったデータ。</returns>
+        Task<T> QueryFirstAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 最初のデータを取得。

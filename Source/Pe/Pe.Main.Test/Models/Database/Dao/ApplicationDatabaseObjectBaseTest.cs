@@ -52,6 +52,11 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
                 throw new NotImplementedException();
             }
 
+            public Task<T> QueryFirstAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+            {
+                throw new NotImplementedException();
+            }
+
             public T QueryFirstOrDefault<T>(string statement, object? parameter = null)
             {
                 throw new NotImplementedException();

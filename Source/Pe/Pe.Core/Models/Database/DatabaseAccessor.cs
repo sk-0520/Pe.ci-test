@@ -53,8 +53,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <inheritdoc cref="IDatabaseReader.QueryFirst{T}(string, object?)"/>
         T QueryFirst<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
 
-        ///// <inheritdoc cref="IDatabaseReader.QueryFirstAsync{T}(string, object?, CancellationToken)"/>
-        //Task<T> QueryFirstAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken);
+        /// <inheritdoc cref="IDatabaseReader.QueryFirstAsync{T}(string, object?, CancellationToken)"/>
+        Task<T> QueryFirstAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
 
         /// <inheritdoc cref="IDatabaseReader.QueryFirstOrDefault{T}(string, object?)"/>
         [return: MaybeNull]
@@ -369,6 +369,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return result;
         }
 
+        /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
+        public virtual IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
+        {
+            ThrowIfDisposed();
+
+            return Query(null, statement, parameter, buffered);
+        }
+
         /// <inheritdoc cref="IDatabaseAccessor.QueryAsync{T}(IDatabaseTransaction?, string, object?, bool, CancellationToken)"/>
         public virtual Task<IEnumerable<dynamic>> QueryAsync(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken)
         {
@@ -391,14 +399,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }, cancellationToken);
         }
 
-        /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
-        public virtual IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
-        {
-            ThrowIfDisposed();
-
-            return Query(null, statement, parameter, buffered);
-        }
-
         /// <inheritdoc cref="IDatabaseReader.QueryAsync(string, object?, bool, CancellationToken)"/>
         public virtual Task<IEnumerable<dynamic>> QueryAsync(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
         {
@@ -407,6 +407,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return QueryAsync(null, statement, parameter, buffered, cancellationToken);
         }
 
+        /// <inheritdoc cref="IDatabaseAccessor.QueryFirst{T}(IDatabaseTransaction?, string, object?)"/>
         public virtual T QueryFirst<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
             ThrowIfDisposed();
@@ -421,26 +422,41 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return result;
         }
 
-        //public virtual T QueryFirst<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
-        //{
-        //    ThrowIfDisposed();
-
-        //    var formattedStatement = Implementation.PreFormatStatement(statement);
-        //    LoggingStatement(formattedStatement, parameter);
-
-        //    var startTime = DateTime.UtcNow;
-        //    var result = BaseConnection.QueryFirst<T>(formattedStatement, parameter, transaction?.Transaction);
-        //    LoggingQueryResult(result, startTime, DateTime.UtcNow);
-
-        //    return result;
-        //}
-
+        /// <inheritdoc cref="IDatabaseReader.QueryFirst{T}(string, object?)"/>
         public virtual T QueryFirst<T>(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
             return QueryFirst<T>(null, statement, parameter);
         }
+
+        public virtual Task<T> QueryFirstAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var startTime = DateTime.UtcNow;
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                cancellationToken: cancellationToken
+            );
+            return BaseConnection.QueryFirstAsync<T>(command).ContinueWith(t => {
+                LoggingQueryResult(t.Result, startTime, DateTime.UtcNow);
+                return t.Result;
+            }, cancellationToken);
+        }
+
+        public virtual Task<T> QueryFirstAsync<T>(string statement, object? parameter, CancellationToken cancellationToken)
+        {
+            ThrowIfDisposed();
+
+            return QueryFirstAsync<T>(null, statement, parameter, cancellationToken);
+        }
+
 
         [return: MaybeNull]
         public virtual T QueryFirstOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter)

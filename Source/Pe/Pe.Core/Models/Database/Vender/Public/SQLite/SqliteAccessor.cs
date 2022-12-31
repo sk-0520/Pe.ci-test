@@ -86,6 +86,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
             return DatabaseAccessor.QueryFirst<T>(statement, parameter);
         }
 
+        public Task<T> QueryFirstAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            return DatabaseAccessor.QueryFirstAsync<T>(statement, parameter, cancellationToken);
+        }
+
         [return: MaybeNull]
         public T QueryFirstOrDefault<T>(string statement, object? parameter = null)
         {

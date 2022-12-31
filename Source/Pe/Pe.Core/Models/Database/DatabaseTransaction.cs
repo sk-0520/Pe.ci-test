@@ -96,18 +96,18 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return DatabaseAccessor.Query<T>(this, statement, parameter, buffered);
         }
 
-        public Task<IEnumerable<T>> QueryAsync<T>(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
-        {
-            ThrowIfDisposed();
-
-            return DatabaseAccessor.QueryAsync<T>(statement, parameter, buffered, cancellationToken);
-        }
-
         public IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
         {
             ThrowIfDisposed();
 
             return DatabaseAccessor.Query(this, statement, parameter, buffered);
+        }
+
+        public Task<IEnumerable<T>> QueryAsync<T>(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.QueryAsync<T>(statement, parameter, buffered, cancellationToken);
         }
 
         public Task<IEnumerable<dynamic>> QueryAsync(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
@@ -122,6 +122,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             ThrowIfDisposed();
 
             return DatabaseAccessor.QueryFirst<T>(this, statement, parameter);
+        }
+
+        public Task<T> QueryFirstAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.QueryFirstAsync<T>(this, statement, parameter, cancellationToken);
         }
 
         [return: MaybeNull]
