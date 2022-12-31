@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -59,12 +60,48 @@ values
         public void QueryTest()
         {
             var expectedAsc = new[] { "A", "B", "C", "D", };
-            var actualAsc = DatabaseAccessor.Query<string>("select ColVal from TestTable1 order by ColKey").ToList();
-            CollectionAssert.AreEqual(expectedAsc, actualAsc);
+            var actualAsc = DatabaseAccessor.Query<string>("select ColVal from TestTable1 order by ColKey");
+            CollectionAssert.AreEqual(expectedAsc, actualAsc.ToList());
 
             var expectedDesc = new[] { "D", "C", "B", "A", };
-            var actualDesc = DatabaseAccessor.Query<string>("select ColVal from TestTable1 order by ColKey desc").ToList();
-            CollectionAssert.AreEqual(expectedDesc, actualDesc);
+            var actualDesc = DatabaseAccessor.Query<string>("select ColVal from TestTable1 order by ColKey desc");
+            CollectionAssert.AreEqual(expectedDesc, actualDesc.ToList());
+        }
+
+        [TestMethod]
+        public void Query_Dynamic_Test()
+        {
+            var expectedAsc = new[] { "A", "B", "C", "D", };
+            var actualAsc = DatabaseAccessor.Query("select * from TestTable1 order by ColKey");
+            CollectionAssert.AreEqual(expectedAsc, actualAsc.Select(i => i.ColVal).ToList());
+
+            var expectedDesc = new[] { "D", "C", "B", "A", };
+            var actualDesc = DatabaseAccessor.Query("select * from TestTable1 order by ColKey desc");
+            CollectionAssert.AreEqual(expectedDesc, actualDesc.Select(i => i.ColVal).ToList());
+        }
+
+        [TestMethod]
+        public async Task QueryAsyncTest()
+        {
+            var expectedAsc = new[] { "A", "B", "C", "D", };
+            var actualAsc = await DatabaseAccessor.QueryAsync<string>("select ColVal from TestTable1 order by ColKey");
+            CollectionAssert.AreEqual(expectedAsc, actualAsc.ToList());
+
+            var expectedDesc = new[] { "D", "C", "B", "A", };
+            var actualDesc = await DatabaseAccessor.QueryAsync<string>("select ColVal from TestTable1 order by ColKey desc");
+            CollectionAssert.AreEqual(expectedDesc, actualDesc.ToList());
+        }
+
+        [TestMethod]
+        public async Task QueryAsync_Dynamic_Test()
+        {
+            var expectedAsc = new[] { "A", "B", "C", "D", };
+            var actualAsc = await DatabaseAccessor.QueryAsync("select * from TestTable1 order by ColKey");
+            CollectionAssert.AreEqual(expectedAsc, actualAsc.Select(i => i.ColVal).ToList());
+
+            var expectedDesc = new[] { "D", "C", "B", "A", };
+            var actualDesc = await DatabaseAccessor.QueryAsync("select * from TestTable1 order by ColKey desc");
+            CollectionAssert.AreEqual(expectedDesc, actualDesc.Select(i => i.ColVal).ToList());
         }
 
         [TestMethod]

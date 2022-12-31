@@ -27,7 +27,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns>問い合わせ結果。</returns>
         IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true);
 
-        /// <inheritdoc cref="Query{T}(string, object?, bool)"/>
+        /// <summary>
+        /// 非同期で指定の型で問い合わせ。
+        /// </summary>
+        /// <typeparam name="T">問い合わせ型</typeparam>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>問い合わせ結果。</returns>
         Task<IEnumerable<T>> QueryAsync<T>(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -39,7 +47,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns>問い合わせ結果。</returns>
         IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true);
 
-        /// <inheritdoc cref="QueryAsync(string, object?, bool, CancellationToken)"/>
+        /// <summary>
+        /// 非同期で動的型で問い合わせ。
+        /// </summary>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>問い合わせ結果。</returns>
         Task<IEnumerable<dynamic>> QueryAsync(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default);
 
         /// <summary>
