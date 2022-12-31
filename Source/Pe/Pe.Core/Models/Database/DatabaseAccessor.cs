@@ -325,7 +325,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         /// <inheritdoc cref="IDatabaseAccessor.QueryAsync{T}(IDatabaseTransaction?, string, object?, bool, CancellationToken)"/>
-        public virtual Task<IEnumerable<T>> QueryAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken)
+        public virtual async Task<IEnumerable<T>> QueryAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -340,10 +340,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                 flags: buffered ? CommandFlags.Buffered : CommandFlags.NoCache,
                 cancellationToken: cancellationToken
             );
-            return BaseConnection.QueryAsync<T>(command).ContinueWith(t => {
-                LoggingQueryResults(t.Result, buffered, startTime, DateTime.UtcNow);
-                return t.Result;
-            }, cancellationToken);
+
+            var result = await BaseConnection.QueryAsync<T>(command);
+            LoggingQueryResults(result, buffered, startTime, DateTime.UtcNow);
+            return result;
         }
 
         /// <inheritdoc cref="IDatabaseReader.QueryAsync{T}(string, object?, bool, CancellationToken)"/>
@@ -378,7 +378,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         /// <inheritdoc cref="IDatabaseAccessor.QueryAsync{T}(IDatabaseTransaction?, string, object?, bool, CancellationToken)"/>
-        public virtual Task<IEnumerable<dynamic>> QueryAsync(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken)
+        public virtual async Task<IEnumerable<dynamic>> QueryAsync(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -393,10 +393,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                 flags: buffered ? CommandFlags.Buffered : CommandFlags.NoCache,
                 cancellationToken: cancellationToken
             );
-            return BaseConnection.QueryAsync(command).ContinueWith(t => {
-                LoggingQueryResults(t.Result, buffered, startTime, DateTime.UtcNow);
-                return t.Result;
-            }, cancellationToken);
+
+            var result = await BaseConnection.QueryAsync(command);
+            LoggingQueryResults(result, buffered, startTime, DateTime.UtcNow);
+            return result;
         }
 
         /// <inheritdoc cref="IDatabaseReader.QueryAsync(string, object?, bool, CancellationToken)"/>
