@@ -16,6 +16,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
     /// <summary>
     /// DBアクセス処理。
+    /// <para>使用者側はトランザクション処理を原則使用しない。</para>
     /// </summary>
     public interface IDatabaseAccessor: IDatabaseContext
     {
@@ -42,28 +43,32 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         IDisposable PauseConnection();
 
         /// <inheritdoc cref="IDatabaseReader.Query{T}(string, object?, bool)"/>
-        IEnumerable<T> Query<T>(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered);
+        IEnumerable<T> Query<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered);
 
         /// <inheritdoc cref="IDatabaseReader.QueryAsync{T}(string, object?, bool, CancellationToken)"/>
         Task<IEnumerable<T>> QueryAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken);
 
         /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
-        IEnumerable<dynamic> Query(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered);
+        IEnumerable<dynamic> Query(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered);
         /// <inheritdoc cref="IDatabaseReader.QueryFirst{T}(string, object?)"/>
-        T QueryFirst<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
+        T QueryFirst<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
+
+        ///// <inheritdoc cref="IDatabaseReader.QueryFirstAsync{T}(string, object?, CancellationToken)"/>
+        //Task<T> QueryFirstAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken);
+
         /// <inheritdoc cref="IDatabaseReader.QueryFirstOrDefault{T}(string, object?)"/>
         [return: MaybeNull]
-        T QueryFirstOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
+        T QueryFirstOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
         /// <inheritdoc cref="IDatabaseReader.QuerySingle{T}(string, object?)"/>
-        T QuerySingle<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
+        T QuerySingle<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
         /// <inheritdoc cref="IDatabaseReader.QuerySingleOrDefault{T}(string, object?)"/>
         [return: MaybeNull]
-        T QuerySingleOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
+        T QuerySingleOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
         /// <inheritdoc cref="IDatabaseReader.GetDataTable(string, object?)"/>
-        DataTable GetDataTable(string statement, object? parameter, IDatabaseTransaction? transaction);
+        DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter);
 
         /// <inheritdoc cref="IDatabaseWriter.Execute(string, object?)"/>
-        int Execute(string statement, object? parameter, IDatabaseTransaction? transaction);
+        int Execute(IDatabaseTransaction? transaction, string statement, object? parameter);
 
         /// <inheritdoc cref="BeginTransaction(IsolationLevel)"/>
         IDatabaseTransaction BeginTransaction();
@@ -296,8 +301,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return ActionDisposerHelper.CreateEmpty();
         }
 
-        /// <inheritdoc cref="IDatabaseAccessor.Query{T}(string, object?, IDatabaseTransaction?, bool)"/>
-        public virtual IEnumerable<T> Query<T>(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered)
+        /// <inheritdoc cref="IDatabaseAccessor.Query{T}(IDatabaseTransaction?, string, object?, bool)"/>
+        public virtual IEnumerable<T> Query<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered)
         {
             ThrowIfDisposed();
 
@@ -316,10 +321,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return Query<T>(statement, parameter, null, buffered);
+            return Query<T>(null, statement, parameter, buffered);
         }
 
-        /// <inheritdoc cref="IDatabaseAccessor.QueryAsync{T}(IDatabaseTransaction?, string, object?, CancellationToken)"/>
+        /// <inheritdoc cref="IDatabaseAccessor.QueryAsync{T}(IDatabaseTransaction?, string, object?, bool, CancellationToken)"/>
         public virtual Task<IEnumerable<T>> QueryAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
@@ -332,7 +337,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                 statement,
                 parameters: parameter,
                 transaction: transaction?.Transaction,
-                flags: buffered ? CommandFlags.Buffered: CommandFlags.NoCache,
+                flags: buffered ? CommandFlags.Buffered : CommandFlags.NoCache,
                 cancellationToken: cancellationToken
             );
             return BaseConnection.QueryAsync<T>(command).ContinueWith(t => {
@@ -349,8 +354,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return QueryAsync<T>(null, statement, parameter, buffered, cancellationToken);
         }
 
-        /// <inheritdoc cref="IDatabaseAccessor.Query(IDatabaseTransaction?, string, object?, CancellationToken)"/>
-        public virtual IEnumerable<dynamic> Query(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered)
+        /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
+        public virtual IEnumerable<dynamic> Query(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered)
         {
             ThrowIfDisposed();
 
@@ -364,7 +369,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return result;
         }
 
-        /// <inheritdoc cref="IDatabaseAccessor.QueryAsync(string, object?, bool, CancellationToken)"/>
+        /// <inheritdoc cref="IDatabaseAccessor.QueryAsync{T}(IDatabaseTransaction?, string, object?, bool, CancellationToken)"/>
         public virtual Task<IEnumerable<dynamic>> QueryAsync(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
@@ -386,6 +391,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }, cancellationToken);
         }
 
+        /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
+        public virtual IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
+        {
+            ThrowIfDisposed();
+
+            return Query(null, statement, parameter, buffered);
+        }
+
         /// <inheritdoc cref="IDatabaseReader.QueryAsync(string, object?, bool, CancellationToken)"/>
         public virtual Task<IEnumerable<dynamic>> QueryAsync(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
         {
@@ -394,15 +407,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return QueryAsync(null, statement, parameter, buffered, cancellationToken);
         }
 
-        /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
-        public virtual IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
-        {
-            ThrowIfDisposed();
-
-            return Query(statement, parameter, null, buffered);
-        }
-
-        public virtual T QueryFirst<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
+        public virtual T QueryFirst<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
             ThrowIfDisposed();
 
@@ -416,15 +421,29 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return result;
         }
 
+        //public virtual T QueryFirst<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
+        //{
+        //    ThrowIfDisposed();
+
+        //    var formattedStatement = Implementation.PreFormatStatement(statement);
+        //    LoggingStatement(formattedStatement, parameter);
+
+        //    var startTime = DateTime.UtcNow;
+        //    var result = BaseConnection.QueryFirst<T>(formattedStatement, parameter, transaction?.Transaction);
+        //    LoggingQueryResult(result, startTime, DateTime.UtcNow);
+
+        //    return result;
+        //}
+
         public virtual T QueryFirst<T>(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
-            return QueryFirst<T>(statement, parameter, null);
+            return QueryFirst<T>(null, statement, parameter);
         }
 
         [return: MaybeNull]
-        public virtual T QueryFirstOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
+        public virtual T QueryFirstOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
             ThrowIfDisposed();
 
@@ -443,10 +462,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return QueryFirstOrDefault<T>(statement, parameter, null);
+            return QueryFirstOrDefault<T>(null, statement, parameter);
         }
 
-        public virtual T QuerySingle<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
+        public virtual T QuerySingle<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
             ThrowIfDisposed();
 
@@ -464,11 +483,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return QuerySingle<T>(statement, parameter, null);
+            return QuerySingle<T>(null, statement, parameter);
         }
 
         [return: MaybeNull]
-        public virtual T QuerySingleOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
+        public virtual T QuerySingleOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
             ThrowIfDisposed();
 
@@ -486,10 +505,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return QuerySingleOrDefault<T>(statement, parameter, null);
+            return QuerySingleOrDefault<T>(null, statement, parameter);
         }
 
-        public virtual int Execute(string statement, object? parameter, IDatabaseTransaction? transaction)
+        public virtual int Execute(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
             ThrowIfDisposed();
 
@@ -507,10 +526,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return Execute(statement, parameter, null);
+            return Execute(null, statement, parameter);
         }
 
-        public virtual DataTable GetDataTable(string statement, object? parameter, IDatabaseTransaction? transaction)
+        public virtual DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
             ThrowIfDisposed();
 
@@ -530,7 +549,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return GetDataTable(statement, parameter, null);
+            return GetDataTable(null, statement, parameter);
         }
 
         /// <summary>

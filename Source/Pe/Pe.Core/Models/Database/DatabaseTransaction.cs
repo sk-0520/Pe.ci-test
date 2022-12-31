@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return DatabaseAccessor.Query<T>(statement, parameter, this, buffered);
+            return DatabaseAccessor.Query<T>(this, statement, parameter, buffered);
         }
 
         public Task<IEnumerable<T>> QueryAsync<T>(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return DatabaseAccessor.Query(statement, parameter, this, buffered);
+            return DatabaseAccessor.Query(this, statement, parameter, buffered);
         }
 
         public Task<IEnumerable<dynamic>> QueryAsync(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return DatabaseAccessor.QueryFirst<T>(statement, parameter, this);
+            return DatabaseAccessor.QueryFirst<T>(this, statement, parameter);
         }
 
         [return: MaybeNull]
@@ -129,14 +129,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return DatabaseAccessor.QueryFirstOrDefault<T>(statement, parameter, this);
+            return DatabaseAccessor.QueryFirstOrDefault<T>(this, statement, parameter);
         }
 
         public T QuerySingle<T>(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
-            return DatabaseAccessor.QuerySingle<T>(statement, parameter, this);
+            return DatabaseAccessor.QuerySingle<T>(this, statement, parameter);
         }
 
         [return: MaybeNull]
@@ -144,21 +144,21 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return DatabaseAccessor.QuerySingleOrDefault<T>(statement, parameter, this);
+            return DatabaseAccessor.QuerySingleOrDefault<T>(this, statement, parameter);
         }
 
         public virtual int Execute(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
-            return DatabaseAccessor.Execute(statement, parameter, this);
+            return DatabaseAccessor.Execute(this, statement, parameter);
         }
 
         public DataTable GetDataTable(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
-            return DatabaseAccessor.GetDataTable(statement, parameter, this);
+            return DatabaseAccessor.GetDataTable(this, statement, parameter);
         }
 
         #endregion

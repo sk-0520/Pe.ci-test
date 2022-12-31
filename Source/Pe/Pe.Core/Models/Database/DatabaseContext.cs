@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <summary>
         /// 指定の型で問い合わせ。
         /// </summary>
-        /// <typeparam name="T">問い合わせ型</typeparam>
+        /// <typeparam name="T">問い合わせ型。</typeparam>
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <summary>
         /// 非同期で指定の型で問い合わせ。
         /// </summary>
-        /// <typeparam name="T">問い合わせ型</typeparam>
+        /// <typeparam name="T">問い合わせ型。</typeparam>
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
@@ -60,12 +60,24 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <summary>
         /// 最初のデータを取得。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
+        /// <typeparam name="T">問い合わせ型。</typeparam>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <exception cref="InvalidOperationException">空っぽ。</exception>
         /// <returns>一番最初に見つかったデータ。</returns>
         T QueryFirst<T>(string statement, object? parameter = null);
+
+        ///// <summary>
+        ///// 最初のデータを取得。
+        ///// </summary>
+        ///// <typeparam name="T">問い合わせ型。</typeparam>
+        ///// <param name="statement">データベース問い合わせ文。</param>
+        ///// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        ///// <param name="cancellationToken"></param>
+        ///// <exception cref="InvalidOperationException">空っぽ。</exception>
+        ///// <returns>一番最初に見つかったデータ。</returns>
+        //Task<T> QueryFirstAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// 最初のデータを取得。
         /// </summary>
