@@ -430,7 +430,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return QueryFirst<T>(null, statement, parameter);
         }
 
-        public virtual Task<T> QueryFirstAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
+        public virtual async Task<T> QueryFirstAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -444,10 +444,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                 transaction: transaction?.Transaction,
                 cancellationToken: cancellationToken
             );
-            return BaseConnection.QueryFirstAsync<T>(command).ContinueWith(t => {
-                LoggingQueryResult(t.Result, startTime, DateTime.UtcNow);
-                return t.Result;
-            }, cancellationToken);
+
+            var result = await BaseConnection.QueryFirstAsync<T>(command);
+            LoggingQueryResult(result, startTime, DateTime.UtcNow);
+            return result;
         }
 
         public virtual Task<T> QueryFirstAsync<T>(string statement, object? parameter, CancellationToken cancellationToken)
