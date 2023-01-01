@@ -175,6 +175,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return DatabaseAccessor.QuerySingleOrDefaultAsync<T>(this, statement, parameter, cancellationToken);
         }
 
+        public IDataReader GetDataReader(string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.GetDataReader(this, statement, parameter);
+        }
+
         public DataTable GetDataTable(string statement, object? parameter = null)
         {
             ThrowIfDisposed();

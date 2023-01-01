@@ -73,6 +73,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <inheritdoc cref="IDatabaseReader.QuerySingleOrDefaultAsync{T}(string, object?, CancellationToken)"/>
         Task<T?> QuerySingleOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
 
+        IDataReader GetDataReader(IDatabaseTransaction? transaction, string statement, object? parameter = null);
+
         /// <inheritdoc cref="IDatabaseReader.GetDataTable(string, object?)"/>
         DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter);
 
@@ -569,7 +571,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return QuerySingleAsync<T>(null, statement, parameter);
         }
 
-
         [return: MaybeNull]
         public virtual T QuerySingleOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
@@ -618,6 +619,24 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             ThrowIfDisposed();
 
             return QuerySingleOrDefaultAsync<T>(null, statement, parameter, cancellationToken);
+        }
+
+        public IDataReader GetDataReader(IDatabaseTransaction? transaction, string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var result = BaseConnection.ExecuteReader(formattedStatement, parameter, transaction?.Transaction);
+            return result;
+        }
+
+        public IDataReader GetDataReader(string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            return GetDataReader(null, statement, parameter);
         }
 
         public virtual DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter)

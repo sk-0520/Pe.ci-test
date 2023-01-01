@@ -26,6 +26,11 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
                 throw new NotImplementedException();
             }
 
+            public IDataReader GetDataReader(string statement, object? parameter = null)
+            {
+                throw new NotImplementedException();
+            }
+
             public DataTable GetDataTable(string statement, object? parameter = null)
             {
                 throw new NotImplementedException();

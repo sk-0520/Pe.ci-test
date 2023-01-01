@@ -51,6 +51,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
             //throw new NotImplementedException();
         }
 
+        public IDataReader GetDataReader(string statement, object? parameter = null)
+        {
+            return DatabaseAccessor.GetDataReader(statement, parameter);
+        }
+
         public DataTable GetDataTable(string statement, object? parameter = null)
         {
             return DatabaseAccessor.GetDataTable(statement, parameter);

@@ -139,6 +139,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns>一意なデータ。一意じゃなかったら <c>default(T)</c></returns>
         Task<T?> QuerySingleOrDefaultAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default);
 
+        IDataReader GetDataReader(string statement, object? parameter = null);
+
         /// <summary>
         /// <see cref="DataTable"/> でデータ取得。
         /// </summary>
