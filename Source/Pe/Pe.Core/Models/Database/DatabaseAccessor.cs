@@ -65,9 +65,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         /// <inheritdoc cref="IDatabaseReader.QuerySingle{T}(string, object?)"/>
         T QuerySingle<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
+
         /// <inheritdoc cref="IDatabaseReader.QuerySingleOrDefault{T}(string, object?)"/>
         [return: MaybeNull]
         T QuerySingleOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
+
+        /// <inheritdoc cref="IDatabaseReader.QuerySingleOrDefaultAsync{T}(string, object?, CancellationToken)"/>
+        Task<T?> QuerySingleOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
+
         /// <inheritdoc cref="IDatabaseReader.GetDataTable(string, object?)"/>
         DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter);
 
@@ -493,7 +498,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             LoggingStatement(formattedStatement, parameter);
 
             var startTime = DateTime.UtcNow;
-            return BaseConnection.QueryFirstOrDefaultAsync<T?>(formattedStatement, parameter, transaction?.Transaction).ContinueWith(t => {
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                cancellationToken: cancellationToken
+            );
+
+            return BaseConnection.QueryFirstOrDefaultAsync<T?>(command).ContinueWith(t => {
                 LoggingQueryResult(t.Result, startTime, DateTime.UtcNow);
                 return t.Result;
             }, TaskContinuationOptions.OnlyOnRanToCompletion);
@@ -535,7 +547,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             LoggingStatement(formattedStatement, parameter);
 
             var startTime = DateTime.UtcNow;
-            var result = await BaseConnection.QuerySingleAsync<T>(formattedStatement, parameter, transaction?.Transaction);
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                cancellationToken: cancellationToken
+            );
+
+            var result = await BaseConnection.QuerySingleAsync<T>(command);
             LoggingQueryResult(result, startTime, DateTime.UtcNow);
             return result;
         }
@@ -562,12 +581,40 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             return result;
         }
+
         [return: MaybeNull]
         public virtual T QuerySingleOrDefault<T>(string statement, object? parameter)
         {
             ThrowIfDisposed();
 
             return QuerySingleOrDefault<T>(null, statement, parameter);
+        }
+
+        public virtual async Task<T?> QuerySingleOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var startTime = DateTime.UtcNow;
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                cancellationToken: cancellationToken
+            );
+            var result = await BaseConnection.QuerySingleOrDefaultAsync<T>(command);
+            LoggingQueryResult(result, startTime, DateTime.UtcNow);
+
+            return result;
+        }
+
+        public virtual Task<T?> QuerySingleOrDefaultAsync<T>(string statement, object? parameter, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return QuerySingleOrDefaultAsync<T>(null, statement, parameter, cancellationToken);
         }
 
         public virtual int Execute(IDatabaseTransaction? transaction, string statement, object? parameter)

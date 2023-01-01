@@ -178,6 +178,26 @@ values
             }
         }
 
+        [TestMethod]
+        public void QuerySingleOrDefaultTest()
+        {
+            var actual = DatabaseAccessor.QuerySingleOrDefault<string>("select ColVal from TestTable1 where ColKey = 2");
+            Assert.AreEqual("B", actual);
+
+            var actualNull = DatabaseAccessor.QuerySingleOrDefault<string>("select ColVal from TestTable1 where ColKey = -1");
+            Assert.IsNull(actualNull);
+        }
+
+        [TestMethod]
+        public async Task QuerySingleOrDefaultAsyncTest()
+        {
+            var actual = await DatabaseAccessor.QuerySingleOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = 2");
+            Assert.AreEqual("B", actual);
+
+            var actualNull = await DatabaseAccessor.QuerySingleOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = -1");
+            Assert.IsNull(actualNull);
+        }
+
         #endregion
     }
 }

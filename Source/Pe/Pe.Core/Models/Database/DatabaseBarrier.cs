@@ -129,6 +129,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return Transaction.QuerySingleOrDefault<T>(statement, parameter);
         }
 
+        public Task<T?> QuerySingleOrDefaultAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return Transaction.QuerySingleOrDefaultAsync<T>(statement, parameter, cancellationToken);
+        }
+
         public void Commit()
         {
             ThrowIfDisposed();

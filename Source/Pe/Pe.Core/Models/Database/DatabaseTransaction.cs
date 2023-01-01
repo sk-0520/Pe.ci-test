@@ -168,6 +168,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return DatabaseAccessor.QuerySingleOrDefault<T>(this, statement, parameter);
         }
 
+        public Task<T?> QuerySingleOrDefaultAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.QuerySingleOrDefaultAsync<T>(this, statement, parameter, cancellationToken);
+        }
+
         public virtual int Execute(string statement, object? parameter = null)
         {
             ThrowIfDisposed();

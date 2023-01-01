@@ -82,6 +82,11 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
                 throw new NotImplementedException();
             }
 
+            public Task<T?> QuerySingleOrDefaultAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+            {
+                throw new NotImplementedException();
+            }
+
         }
 
         class Dsl: IDatabaseStatementLoader
