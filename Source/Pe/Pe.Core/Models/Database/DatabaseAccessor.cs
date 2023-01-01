@@ -617,6 +617,29 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return QuerySingleOrDefaultAsync<T>(null, statement, parameter, cancellationToken);
         }
 
+        public virtual DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+
+            LoggingStatement(formattedStatement, parameter);
+
+            var dataTable = new DataTable();
+            var startTime = DateTime.UtcNow;
+            dataTable.Load(BaseConnection.ExecuteReader(statement, parameter, transaction?.Transaction));
+            LoggingDataTable(dataTable, startTime, DateTime.UtcNow);
+
+            return dataTable;
+        }
+
+        public virtual DataTable GetDataTable(string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            return GetDataTable(null, statement, parameter);
+        }
+
         public virtual int Execute(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
             ThrowIfDisposed();
@@ -636,29 +659,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             ThrowIfDisposed();
 
             return Execute(null, statement, parameter);
-        }
-
-        public virtual DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter)
-        {
-            ThrowIfDisposed();
-
-            var formattedStatement = Implementation.PreFormatStatement(statement);
-
-            LoggingStatement(formattedStatement, parameter);
-
-            var dataTable = new DataTable();
-            var startTime = DateTime.UtcNow;
-            dataTable.Load(BaseConnection.ExecuteReader(statement, parameter, transaction?.Transaction));
-            LoggingDataTable(dataTable, startTime, DateTime.UtcNow);
-
-            return dataTable;
-        }
-
-        public DataTable GetDataTable(string statement, object? parameter = null)
-        {
-            ThrowIfDisposed();
-
-            return GetDataTable(null, statement, parameter);
         }
 
         /// <summary>

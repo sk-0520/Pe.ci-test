@@ -198,6 +198,17 @@ values
             Assert.IsNull(actualNull);
         }
 
+        public void GetDataTableTest()
+        {
+            using var actual = DatabaseAccessor.GetDataTable("select * from TestTable1 order by ColKey");
+
+            Assert.AreEqual(1, actual.Rows[0]["ColKey"]);
+            Assert.AreEqual("A", actual.Rows[0]["ColVal"]);
+
+            Assert.AreEqual(4, actual.Rows[3]["ColKey"]);
+            Assert.AreEqual("D", actual.Rows[3]["ColVal"]);
+        }
+
         #endregion
     }
 }

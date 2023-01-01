@@ -142,9 +142,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <summary>
         /// <see cref="DataTable"/> でデータ取得。
         /// </summary>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        /// <returns><see cref="DataTable"/></returns>
         DataTable GetDataTable(string statement, object? parameter = null);
 
         #endregion
