@@ -8,8 +8,11 @@
 				"logs": [
 					{
 						"revision": "",
-						"class": "",
-						"subject": ""
+						"class": "compatibility",
+						"subject": "次の次で Windows 7, 8, 8.1 をサポート対象外とします",
+						"comments": [
+							"#841: Windows 7/8/8.1 対応を終了"
+						]
 					},
 					{
 						"revision": "",
