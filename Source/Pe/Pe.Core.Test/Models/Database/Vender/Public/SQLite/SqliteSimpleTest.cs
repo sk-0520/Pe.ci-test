@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -133,6 +134,16 @@ values
             Assert.AreEqual("B", actual);
 
             var actualDefault = DatabaseAccessor.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = -1");
+            Assert.AreEqual(default(string), actualDefault);
+        }
+
+        [TestMethod]
+        public async Task QueryFirstOrDefaultAsyncTest()
+        {
+            var actual = await DatabaseAccessor.QueryFirstOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = 2");
+            Assert.AreEqual("B", actual);
+
+            var actualDefault = await DatabaseAccessor.QueryFirstOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = -1");
             Assert.AreEqual(default(string), actualDefault);
         }
 

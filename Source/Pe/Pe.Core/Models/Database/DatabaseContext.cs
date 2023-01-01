@@ -81,12 +81,22 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <summary>
         /// 最初のデータを取得。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
-        /// <returns>一番最初に見つかったデータ。見つかんなかったら default(T)</returns>
+        /// <typeparam name="T">問い合わせ型。</typeparam>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        /// <returns>一番最初に見つかったデータ。見つかんなかったら <c>default(T)</c></returns>
         [return: MaybeNull]
         T QueryFirstOrDefault<T>(string statement, object? parameter = null);
+
+        /// <summary>
+        /// 非同期で最初のデータを取得。
+        /// </summary>
+        /// <typeparam name="T">問い合わせ型。</typeparam>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        /// <returns>一番最初に見つかったデータ。見つかんなかったら <c>default(T)</c></returns>
+        Task<T?> QueryFirstOrDefaultAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// 単一データ取得。
         /// </summary>
