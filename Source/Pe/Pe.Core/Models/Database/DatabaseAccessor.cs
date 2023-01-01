@@ -649,7 +649,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var dataTable = new DataTable();
             var startTime = DateTime.UtcNow;
-            dataTable.Load(BaseConnection.ExecuteReader(statement, parameter, transaction?.Transaction));
+            using var reader = GetDataReader(transaction, statement, parameter);
+            dataTable.Load(reader);
             LoggingDataTable(dataTable, startTime, DateTime.UtcNow);
 
             return dataTable;
