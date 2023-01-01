@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -59,12 +61,48 @@ values
         public void QueryTest()
         {
             var expectedAsc = new[] { "A", "B", "C", "D", };
-            var actualAsc = DatabaseAccessor.Query<string>("select ColVal from TestTable1 order by ColKey").ToList();
-            CollectionAssert.AreEqual(expectedAsc, actualAsc);
+            var actualAsc = DatabaseAccessor.Query<string>("select ColVal from TestTable1 order by ColKey");
+            CollectionAssert.AreEqual(expectedAsc, actualAsc.ToList());
 
             var expectedDesc = new[] { "D", "C", "B", "A", };
-            var actualDesc = DatabaseAccessor.Query<string>("select ColVal from TestTable1 order by ColKey desc").ToList();
-            CollectionAssert.AreEqual(expectedDesc, actualDesc);
+            var actualDesc = DatabaseAccessor.Query<string>("select ColVal from TestTable1 order by ColKey desc");
+            CollectionAssert.AreEqual(expectedDesc, actualDesc.ToList());
+        }
+
+        [TestMethod]
+        public void Query_Dynamic_Test()
+        {
+            var expectedAsc = new[] { "A", "B", "C", "D", };
+            var actualAsc = DatabaseAccessor.Query("select * from TestTable1 order by ColKey");
+            CollectionAssert.AreEqual(expectedAsc, actualAsc.Select(i => i.ColVal).ToList());
+
+            var expectedDesc = new[] { "D", "C", "B", "A", };
+            var actualDesc = DatabaseAccessor.Query("select * from TestTable1 order by ColKey desc");
+            CollectionAssert.AreEqual(expectedDesc, actualDesc.Select(i => i.ColVal).ToList());
+        }
+
+        [TestMethod]
+        public async Task QueryAsyncTest()
+        {
+            var expectedAsc = new[] { "A", "B", "C", "D", };
+            var actualAsc = await DatabaseAccessor.QueryAsync<string>("select ColVal from TestTable1 order by ColKey");
+            CollectionAssert.AreEqual(expectedAsc, actualAsc.ToList());
+
+            var expectedDesc = new[] { "D", "C", "B", "A", };
+            var actualDesc = await DatabaseAccessor.QueryAsync<string>("select ColVal from TestTable1 order by ColKey desc");
+            CollectionAssert.AreEqual(expectedDesc, actualDesc.ToList());
+        }
+
+        [TestMethod]
+        public async Task QueryAsync_Dynamic_Test()
+        {
+            var expectedAsc = new[] { "A", "B", "C", "D", };
+            var actualAsc = await DatabaseAccessor.QueryAsync("select * from TestTable1 order by ColKey");
+            CollectionAssert.AreEqual(expectedAsc, actualAsc.Select(i => i.ColVal).ToList());
+
+            var expectedDesc = new[] { "D", "C", "B", "A", };
+            var actualDesc = await DatabaseAccessor.QueryAsync("select * from TestTable1 order by ColKey desc");
+            CollectionAssert.AreEqual(expectedDesc, actualDesc.Select(i => i.ColVal).ToList());
         }
 
         [TestMethod]
@@ -74,6 +112,19 @@ values
             Assert.AreEqual("B", actual);
 
             Assert.ThrowsException<InvalidOperationException>(() => DatabaseAccessor.QueryFirst<string>("select ColVal from TestTable1 where ColKey = -1"));
+        }
+
+        [TestMethod]
+        public async Task QueryFirstAsyncTest()
+        {
+            var actual = await DatabaseAccessor.QueryFirstAsync<string>("select ColVal from TestTable1 where ColKey = 2");
+            Assert.AreEqual("B", actual);
+
+            try {
+                await DatabaseAccessor.QueryFirstAsync<string>("select ColVal from TestTable1 where ColKey = -1");
+                Assert.Fail();
+            } catch(InvalidOperationException) {
+            }
         }
 
         [TestMethod]
@@ -87,6 +138,16 @@ values
         }
 
         [TestMethod]
+        public async Task QueryFirstOrDefaultAsyncTest()
+        {
+            var actual = await DatabaseAccessor.QueryFirstOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = 2");
+            Assert.AreEqual("B", actual);
+
+            var actualDefault = await DatabaseAccessor.QueryFirstOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = -1");
+            Assert.AreEqual(default(string), actualDefault);
+        }
+
+        [TestMethod]
         public void QuerySingleTest()
         {
             var actual = DatabaseAccessor.QuerySingle<string>("select ColVal from TestTable1 where ColKey = 2");
@@ -94,6 +155,58 @@ values
 
             Assert.ThrowsException<InvalidOperationException>(() => DatabaseAccessor.QuerySingle<string>("select ColVal from TestTable1 where ColKey = -1"));
             Assert.ThrowsException<InvalidOperationException>(() => DatabaseAccessor.QuerySingle<string>("select ColVal from TestTable1 where ColKey in (1, 2)"));
+        }
+
+        [TestMethod]
+        public async Task QuerySingleAsyncTest()
+        {
+            var actual = await DatabaseAccessor.QuerySingleAsync<string>("select ColVal from TestTable1 where ColKey = 2");
+            Assert.AreEqual("B", actual);
+
+            try {
+                await DatabaseAccessor.QuerySingleAsync<string>("select ColVal from TestTable1 where ColKey = -1");
+                Assert.Fail();
+            } catch(InvalidOperationException) {
+                Assert.IsTrue(true);
+            }
+
+            try {
+                await DatabaseAccessor.QuerySingleAsync<string>("select ColVal from TestTable1 where ColKey in (1, 2)");
+                Assert.Fail();
+            } catch(InvalidOperationException) {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void QuerySingleOrDefaultTest()
+        {
+            var actual = DatabaseAccessor.QuerySingleOrDefault<string>("select ColVal from TestTable1 where ColKey = 2");
+            Assert.AreEqual("B", actual);
+
+            var actualNull = DatabaseAccessor.QuerySingleOrDefault<string>("select ColVal from TestTable1 where ColKey = -1");
+            Assert.IsNull(actualNull);
+        }
+
+        [TestMethod]
+        public async Task QuerySingleOrDefaultAsyncTest()
+        {
+            var actual = await DatabaseAccessor.QuerySingleOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = 2");
+            Assert.AreEqual("B", actual);
+
+            var actualNull = await DatabaseAccessor.QuerySingleOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = -1");
+            Assert.IsNull(actualNull);
+        }
+
+        public void GetDataTableTest()
+        {
+            using var actual = DatabaseAccessor.GetDataTable("select * from TestTable1 order by ColKey");
+
+            Assert.AreEqual(1, actual.Rows[0]["ColKey"]);
+            Assert.AreEqual("A", actual.Rows[0]["ColVal"]);
+
+            Assert.AreEqual(4, actual.Rows[3]["ColKey"]);
+            Assert.AreEqual("D", actual.Rows[3]["ColVal"]);
         }
 
         #endregion

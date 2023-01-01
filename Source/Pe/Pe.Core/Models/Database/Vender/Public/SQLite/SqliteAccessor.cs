@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
@@ -49,9 +51,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
             //throw new NotImplementedException();
         }
 
-        public int Execute(string statement, object? parameter = null)
+        public IDataReader GetDataReader(string statement, object? parameter = null)
         {
-            throw new NotSupportedException();
+            return DatabaseAccessor.GetDataReader(statement, parameter);
         }
 
         public DataTable GetDataTable(string statement, object? parameter = null)
@@ -64,14 +66,29 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
             return DatabaseAccessor.Query<T>(statement, parameter, buffered);
         }
 
+        public Task<IEnumerable<T>> QueryAsync<T>(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+        {
+            return DatabaseAccessor.QueryAsync<T>(statement, parameter, buffered, cancellationToken);
+        }
+
         public IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
         {
             return DatabaseAccessor.Query<dynamic>(statement, parameter, buffered);
         }
 
+        public Task<IEnumerable<dynamic>> QueryAsync(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+        {
+            return DatabaseAccessor.QueryAsync(statement, parameter, buffered, cancellationToken);
+        }
+
         public T QueryFirst<T>(string statement, object? parameter = null)
         {
             return DatabaseAccessor.QueryFirst<T>(statement, parameter);
+        }
+
+        public Task<T> QueryFirstAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            return DatabaseAccessor.QueryFirstAsync<T>(statement, parameter, cancellationToken);
         }
 
         [return: MaybeNull]
@@ -80,15 +97,40 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
             return DatabaseAccessor.QueryFirstOrDefault<T>(statement, parameter);
         }
 
+        public Task<T?> QueryFirstOrDefaultAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            return DatabaseAccessor.QueryFirstOrDefaultAsync<T>(statement, parameter, cancellationToken);
+        }
+
         public T QuerySingle<T>(string statement, object? parameter = null)
         {
             return DatabaseAccessor.QuerySingle<T>(statement, parameter);
         }
 
+        public Task<T> QuerySingleAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            return DatabaseAccessor.QuerySingleAsync<T>(statement, parameter, cancellationToken);
+        }
+
         [return: MaybeNull]
         public T QuerySingleOrDefault<T>(string statement, object? parameter = null)
         {
-            return DatabaseAccessor.QuerySingleOrDefault<T>(statement, parameter, this);
+            return DatabaseAccessor.QuerySingleOrDefault<T>(this, statement, parameter);
+        }
+
+        public Task<T?> QuerySingleOrDefaultAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            return DatabaseAccessor.QuerySingleOrDefaultAsync<T>(this, statement, parameter, cancellationToken);
+        }
+
+        public int Execute(string statement, object? parameter = null)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException();
         }
 
         #endregion
