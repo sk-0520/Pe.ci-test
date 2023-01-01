@@ -42,6 +42,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return Transaction.Execute(statement, parameter);
         }
 
+        public Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return Transaction.ExecuteAsync(statement, parameter, cancellationToken);
+        }
+
         public DataTable GetDataTable(string statement, object? parameter = null)
         {
             ThrowIfDisposed();

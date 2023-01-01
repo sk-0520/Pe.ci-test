@@ -79,6 +79,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <inheritdoc cref="IDatabaseWriter.Execute(string, object?)"/>
         int Execute(IDatabaseTransaction? transaction, string statement, object? parameter);
 
+        /// <inheritdoc cref="IDatabaseWriter.ExecuteAsync(string, object?, CancellationToken)"/>
+        Task<int> ExecuteAsync(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
+
         /// <inheritdoc cref="BeginTransaction(IsolationLevel)"/>
         IDatabaseTransaction BeginTransaction();
         /// <summary>
@@ -654,11 +657,38 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return result;
         }
 
-        public int Execute(string statement, object? parameter = null)
+        public virtual int Execute(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
             return Execute(null, statement, parameter);
+        }
+
+        public virtual async Task<int> ExecuteAsync(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var startTime = DateTime.UtcNow;
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                cancellationToken: cancellationToken
+            );
+            var result = await BaseConnection.ExecuteAsync(command);
+            LoggingExecuteResult(result, startTime, DateTime.UtcNow);
+
+            return result;
+        }
+
+        public virtual Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return ExecuteAsync(null, statement, parameter, cancellationToken);
         }
 
         /// <summary>

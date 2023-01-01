@@ -51,11 +51,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
             //throw new NotImplementedException();
         }
 
-        public int Execute(string statement, object? parameter = null)
-        {
-            throw new NotSupportedException();
-        }
-
         public DataTable GetDataTable(string statement, object? parameter = null)
         {
             return DatabaseAccessor.GetDataTable(statement, parameter);
@@ -123,6 +118,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
             return DatabaseAccessor.QuerySingleOrDefaultAsync<T>(this, statement, parameter, cancellationToken);
         }
 
+        public int Execute(string statement, object? parameter = null)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException();
+        }
 
         #endregion
     }

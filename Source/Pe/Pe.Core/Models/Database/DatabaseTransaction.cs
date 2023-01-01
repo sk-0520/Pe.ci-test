@@ -175,6 +175,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return DatabaseAccessor.QuerySingleOrDefaultAsync<T>(this, statement, parameter, cancellationToken);
         }
 
+        public DataTable GetDataTable(string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.GetDataTable(this, statement, parameter);
+        }
+
         public virtual int Execute(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
@@ -182,11 +189,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return DatabaseAccessor.Execute(this, statement, parameter);
         }
 
-        public DataTable GetDataTable(string statement, object? parameter = null)
+        public Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
-            return DatabaseAccessor.GetDataTable(this, statement, parameter);
+            return DatabaseAccessor.ExecuteAsync(this, statement, parameter, cancellationToken);
         }
 
         #endregion

@@ -21,6 +21,10 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
             {
                 throw new NotImplementedException();
             }
+            public Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+            {
+                throw new NotImplementedException();
+            }
 
             public DataTable GetDataTable(string statement, object? parameter = null)
             {
