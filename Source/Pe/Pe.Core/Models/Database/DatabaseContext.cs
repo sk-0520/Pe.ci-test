@@ -100,12 +100,24 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <summary>
         /// 単一データ取得。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
+        /// <typeparam name="T">問い合わせ型。</typeparam>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <exception cref="InvalidOperationException">空っぽか複数あり。</exception>
-        /// <returns></returns>
+        /// <returns>一意なデータ。</returns>
         T QuerySingle<T>(string statement, object? parameter = null);
+
+        /// <summary>
+        /// 非同期で単一データ取得。
+        /// </summary>
+        /// <typeparam name="T">問い合わせ型。</typeparam>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        /// <param name="cancellationToken"></param>
+        /// <exception cref="InvalidOperationException">空っぽか複数あり。</exception>
+        /// <returns>一意なデータ。</returns>
+        Task<T> QuerySingleAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// 単一データ取得。
         /// </summary>

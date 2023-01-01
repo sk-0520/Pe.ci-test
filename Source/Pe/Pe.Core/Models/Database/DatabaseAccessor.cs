@@ -527,6 +527,27 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return QuerySingle<T>(null, statement, parameter);
         }
 
+        public virtual async Task<T> QuerySingleAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var startTime = DateTime.UtcNow;
+            var result = await BaseConnection.QuerySingleAsync<T>(formattedStatement, parameter, transaction?.Transaction);
+            LoggingQueryResult(result, startTime, DateTime.UtcNow);
+            return result;
+        }
+
+        public virtual Task<T> QuerySingleAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return QuerySingleAsync<T>(null, statement, parameter);
+        }
+
+
         [return: MaybeNull]
         public virtual T QuerySingleOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
         {

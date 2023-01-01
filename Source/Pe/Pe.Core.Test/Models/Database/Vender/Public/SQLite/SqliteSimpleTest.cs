@@ -123,7 +123,7 @@ values
             try {
                 await DatabaseAccessor.QueryFirstAsync<string>("select ColVal from TestTable1 where ColKey = -1");
                 Assert.Fail();
-            } catch (InvalidOperationException) {
+            } catch(InvalidOperationException) {
             }
         }
 
@@ -155,6 +155,27 @@ values
 
             Assert.ThrowsException<InvalidOperationException>(() => DatabaseAccessor.QuerySingle<string>("select ColVal from TestTable1 where ColKey = -1"));
             Assert.ThrowsException<InvalidOperationException>(() => DatabaseAccessor.QuerySingle<string>("select ColVal from TestTable1 where ColKey in (1, 2)"));
+        }
+
+        [TestMethod]
+        public async Task QuerySingleAsyncTest()
+        {
+            var actual = await DatabaseAccessor.QuerySingleAsync<string>("select ColVal from TestTable1 where ColKey = 2");
+            Assert.AreEqual("B", actual);
+
+            try {
+                await DatabaseAccessor.QuerySingleAsync<string>("select ColVal from TestTable1 where ColKey = -1");
+                Assert.Fail();
+            } catch(InvalidOperationException) {
+                Assert.IsTrue(true);
+            }
+
+            try {
+                await DatabaseAccessor.QuerySingleAsync<string>("select ColVal from TestTable1 where ColKey in (1, 2)");
+                Assert.Fail();
+            } catch(InvalidOperationException) {
+                Assert.IsTrue(true);
+            }
         }
 
         #endregion
