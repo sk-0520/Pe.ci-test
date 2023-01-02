@@ -58,6 +58,35 @@ values
         }
 
         [TestMethod]
+        public void GetDataReaderTest()
+        {
+            using var reader = DatabaseAccessor.GetDataReader("select * from TestTable1 order by ColKey");
+
+            int rowNumber = 0;
+            while(reader.Read()) {
+                Assert.AreEqual("ColKey", reader.GetName(0));
+                Assert.AreEqual("ColVal", reader.GetName(1));
+
+                Assert.AreEqual(rowNumber + 1, reader.GetInt32(0));
+                Assert.AreEqual(new string((char)('A' + rowNumber), 1), reader.GetString(1));
+
+                rowNumber += 1;
+            }
+        }
+
+        [TestMethod]
+        public void GetDataTableTest()
+        {
+            using var actual = DatabaseAccessor.GetDataTable("select * from TestTable1 order by ColKey");
+
+            Assert.AreEqual(1L, actual.Rows[0]["ColKey"]);
+            Assert.AreEqual("A", actual.Rows[0]["ColVal"]);
+
+            Assert.AreEqual(4L, actual.Rows[3]["ColKey"]);
+            Assert.AreEqual("D", actual.Rows[3]["ColVal"]);
+        }
+
+        [TestMethod]
         public void QueryTest()
         {
             var expectedAsc = new[] { "A", "B", "C", "D", };
@@ -196,17 +225,6 @@ values
 
             var actualNull = await DatabaseAccessor.QuerySingleOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = -1");
             Assert.IsNull(actualNull);
-        }
-
-        public void GetDataTableTest()
-        {
-            using var actual = DatabaseAccessor.GetDataTable("select * from TestTable1 order by ColKey");
-
-            Assert.AreEqual(1, actual.Rows[0]["ColKey"]);
-            Assert.AreEqual("A", actual.Rows[0]["ColVal"]);
-
-            Assert.AreEqual(4, actual.Rows[3]["ColKey"]);
-            Assert.AreEqual("D", actual.Rows[3]["ColVal"]);
         }
 
         #endregion

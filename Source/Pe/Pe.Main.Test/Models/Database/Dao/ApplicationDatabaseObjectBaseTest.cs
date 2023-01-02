@@ -17,15 +17,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
 
         class Dc: IDatabaseContext
         {
-            public int Execute(string statement, object? parameter = null)
-            {
-                throw new NotImplementedException();
-            }
-            public Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
-            {
-                throw new NotImplementedException();
-            }
-
             public IDataReader GetDataReader(string statement, object? parameter = null)
             {
                 throw new NotImplementedException();
@@ -96,6 +87,14 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
                 throw new NotImplementedException();
             }
 
+            public int Execute(string statement, object? parameter = null)
+            {
+                throw new NotImplementedException();
+            }
+            public Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         class Dsl: IDatabaseStatementLoader

@@ -42,6 +42,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns>切断状態終了のトリガー。 GC 任せにせず明示的に <see cref="IDisposable.Dispose()"/> すること。</returns>
         IDisposable PauseConnection();
 
+        IDataReader GetDataReader(IDatabaseTransaction? transaction, string statement, object? parameter = null);
+
+        /// <inheritdoc cref="IDatabaseReader.GetDataTable(string, object?)"/>
+        DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter);
+
         /// <inheritdoc cref="IDatabaseReader.Query{T}(string, object?, bool)"/>
         IEnumerable<T> Query<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered);
 
@@ -72,11 +77,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         /// <inheritdoc cref="IDatabaseReader.QuerySingleOrDefaultAsync{T}(string, object?, CancellationToken)"/>
         Task<T?> QuerySingleOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
-
-        IDataReader GetDataReader(IDatabaseTransaction? transaction, string statement, object? parameter = null);
-
-        /// <inheritdoc cref="IDatabaseReader.GetDataTable(string, object?)"/>
-        DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter);
 
         /// <inheritdoc cref="IDatabaseWriter.Execute(string, object?)"/>
         int Execute(IDatabaseTransaction? transaction, string statement, object? parameter);
@@ -313,6 +313,49 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }
 
             return ActionDisposerHelper.CreateEmpty();
+        }
+
+        public IDataReader GetDataReader(IDatabaseTransaction? transaction, string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var result = BaseConnection.ExecuteReader(formattedStatement, parameter, transaction?.Transaction);
+            return result;
+        }
+
+        public IDataReader GetDataReader(string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            return GetDataReader(null, statement, parameter);
+        }
+
+        public virtual DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+
+            LoggingStatement(formattedStatement, parameter);
+
+            var dataTable = new DataTable();
+            var startTime = DateTime.UtcNow;
+            using(var reader = GetDataReader(transaction, statement, parameter)) {
+                dataTable.Load(reader);
+            }
+            LoggingDataTable(dataTable, startTime, DateTime.UtcNow);
+
+            return dataTable;
+        }
+
+        public virtual DataTable GetDataTable(string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            return GetDataTable(null, statement, parameter);
         }
 
         /// <inheritdoc cref="IDatabaseAccessor.Query{T}(IDatabaseTransaction?, string, object?, bool)"/>
@@ -619,48 +662,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             ThrowIfDisposed();
 
             return QuerySingleOrDefaultAsync<T>(null, statement, parameter, cancellationToken);
-        }
-
-        public IDataReader GetDataReader(IDatabaseTransaction? transaction, string statement, object? parameter = null)
-        {
-            ThrowIfDisposed();
-
-            var formattedStatement = Implementation.PreFormatStatement(statement);
-            LoggingStatement(formattedStatement, parameter);
-
-            var result = BaseConnection.ExecuteReader(formattedStatement, parameter, transaction?.Transaction);
-            return result;
-        }
-
-        public IDataReader GetDataReader(string statement, object? parameter = null)
-        {
-            ThrowIfDisposed();
-
-            return GetDataReader(null, statement, parameter);
-        }
-
-        public virtual DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter)
-        {
-            ThrowIfDisposed();
-
-            var formattedStatement = Implementation.PreFormatStatement(statement);
-
-            LoggingStatement(formattedStatement, parameter);
-
-            var dataTable = new DataTable();
-            var startTime = DateTime.UtcNow;
-            using var reader = GetDataReader(transaction, statement, parameter);
-            dataTable.Load(reader);
-            LoggingDataTable(dataTable, startTime, DateTime.UtcNow);
-
-            return dataTable;
-        }
-
-        public virtual DataTable GetDataTable(string statement, object? parameter = null)
-        {
-            ThrowIfDisposed();
-
-            return GetDataTable(null, statement, parameter);
         }
 
         public virtual int Execute(IDatabaseTransaction? transaction, string statement, object? parameter)

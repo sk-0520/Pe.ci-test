@@ -17,6 +17,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         #region function
 
+        IDataReader GetDataReader(string statement, object? parameter = null);
+
+        /// <summary>
+        /// <see cref="DataTable"/> でデータ取得。
+        /// </summary>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        /// <returns><see cref="DataTable"/></returns>
+        DataTable GetDataTable(string statement, object? parameter = null);
+
         /// <summary>
         /// 指定の型で問い合わせ。
         /// </summary>
@@ -138,16 +148,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="cancellationToken"></param>
         /// <returns>一意なデータ。一意じゃなかったら <c>default(T)</c></returns>
         Task<T?> QuerySingleOrDefaultAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default);
-
-        IDataReader GetDataReader(string statement, object? parameter = null);
-
-        /// <summary>
-        /// <see cref="DataTable"/> でデータ取得。
-        /// </summary>
-        /// <param name="statement">データベース問い合わせ文。</param>
-        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <returns><see cref="DataTable"/></returns>
-        DataTable GetDataTable(string statement, object? parameter = null);
 
         #endregion
     }
