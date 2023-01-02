@@ -75,6 +75,23 @@ values
         }
 
         [TestMethod]
+        public async Task GetDataReaderTestAsync()
+        {
+            using var reader = await DatabaseAccessor.GetDataReaderAsync("select * from TestTable1 order by ColKey");
+
+            int rowNumber = 0;
+            while(reader.Read()) {
+                Assert.AreEqual("ColKey", reader.GetName(0));
+                Assert.AreEqual("ColVal", reader.GetName(1));
+
+                Assert.AreEqual(rowNumber + 1, reader.GetInt32(0));
+                Assert.AreEqual(new string((char)('A' + rowNumber), 1), reader.GetString(1));
+
+                rowNumber += 1;
+            }
+        }
+
+        [TestMethod]
         public void GetDataTableTest()
         {
             using var actual = DatabaseAccessor.GetDataTable("select * from TestTable1 order by ColKey");

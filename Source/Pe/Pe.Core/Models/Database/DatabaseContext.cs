@@ -17,7 +17,21 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         #region function
 
+        /// <summary>
+        /// <inheritdoc cref="IDbCommand.ExecuteReader"/>
+        /// </summary>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        /// <returns></returns>
         IDataReader GetDataReader(string statement, object? parameter = null);
+
+        /// <summary>
+        /// 非同期で<inheritdoc cref="IDbCommand.ExecuteReader"/>
+        /// </summary>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
+        /// <returns></returns>
+        Task<IDataReader> GetDataReaderAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <see cref="DataTable"/> でデータ取得。

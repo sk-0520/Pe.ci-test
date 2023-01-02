@@ -96,6 +96,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return DatabaseAccessor.GetDataReader(this, statement, parameter);
         }
 
+        public Task<IDataReader> GetDataReaderAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.GetDataReaderAsync(this, statement, parameter, cancellationToken);
+        }
+
         public DataTable GetDataTable(string statement, object? parameter = null)
         {
             ThrowIfDisposed();

@@ -56,6 +56,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return Transaction.GetDataReader(statement, parameter);
         }
 
+        public Task<IDataReader> GetDataReaderAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            return Transaction.GetDataReaderAsync(statement, parameter, cancellationToken);
+        }
+
         public DataTable GetDataTable(string statement, object? parameter = null)
         {
             ThrowIfDisposed();

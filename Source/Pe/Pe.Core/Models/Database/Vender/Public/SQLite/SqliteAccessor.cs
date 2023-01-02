@@ -56,6 +56,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
             return DatabaseAccessor.GetDataReader(statement, parameter);
         }
 
+        public Task<IDataReader> GetDataReaderAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            return DatabaseAccessor.GetDataReaderAsync(this, statement, parameter, cancellationToken);
+        }
+
         public DataTable GetDataTable(string statement, object? parameter = null)
         {
             return DatabaseAccessor.GetDataTable(statement, parameter);

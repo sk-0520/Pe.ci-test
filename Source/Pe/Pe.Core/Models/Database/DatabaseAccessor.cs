@@ -42,7 +42,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns>切断状態終了のトリガー。 GC 任せにせず明示的に <see cref="IDisposable.Dispose()"/> すること。</returns>
         IDisposable PauseConnection();
 
-        IDataReader GetDataReader(IDatabaseTransaction? transaction, string statement, object? parameter = null);
+        /// <inheritdoc cref="IDatabaseReader.GetDataReader(string, object?)"/>
+        IDataReader GetDataReader(IDatabaseTransaction? transaction, string statement, object? parameter);
+
+        /// <inheritdoc cref="IDatabaseReader.GetDataReaderAsync(string, object?, CancellationToken)"/>
+        Task<IDataReader> GetDataReaderAsync(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
 
         /// <inheritdoc cref="IDatabaseReader.GetDataTable(string, object?)"/>
         DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter);
@@ -331,6 +335,29 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             ThrowIfDisposed();
 
             return GetDataReader(null, statement, parameter);
+        }
+
+        public Task<IDataReader> GetDataReaderAsync(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                cancellationToken: cancellationToken
+            );
+
+            var result = BaseConnection.ExecuteReaderAsync(command);
+            return result;
+        }
+
+        public Task<IDataReader> GetDataReaderAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            return GetDataReaderAsync(null, statement, parameter, cancellationToken);
         }
 
         public virtual DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter)

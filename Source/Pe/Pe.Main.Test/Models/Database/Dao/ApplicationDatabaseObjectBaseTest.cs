@@ -22,6 +22,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
                 throw new NotImplementedException();
             }
 
+            public Task<IDataReader> GetDataReaderAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+            {
+                throw new NotImplementedException();
+            }
+
+
             public DataTable GetDataTable(string statement, object? parameter = null)
             {
                 throw new NotImplementedException();
