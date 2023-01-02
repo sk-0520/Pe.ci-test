@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 // DBMS の依存は極力考えない処理。
 
@@ -48,8 +50,23 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             EnforceOrderBy(statement);
 
-            return reader.Query<dynamic>(statement, parameter, buffered);
+            return reader.Query(statement, parameter, buffered);
         }
+
+        public static Task<IEnumerable<T>> SelectOrderedAsync<T>(this IDatabaseReader reader, string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+        {
+            EnforceOrderBy(statement);
+
+            return reader.QueryAsync<T>(statement, parameter, buffered, cancellationToken);
+        }
+
+        public static Task<IEnumerable<dynamic>> SelectOrderedAsync(this IDatabaseReader reader, string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+        {
+            EnforceOrderBy(statement);
+
+            return reader.QueryAsync(statement, parameter, buffered, cancellationToken);
+        }
+
 
         [Conditional("DEBUG")]
         private static void EnforceSingleCount(string statement)
@@ -71,6 +88,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             EnforceSingleCount(statement);
 
             return reader.QueryFirst<long>(statement, parameter);
+        }
+
+        public static Task<long> SelectSingleCountAsync(this IDatabaseReader reader, string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            EnforceSingleCount(statement);
+
+            return reader.QueryFirstAsync<long>(statement, parameter, cancellationToken);
         }
 
         #endregion

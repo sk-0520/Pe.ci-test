@@ -638,7 +638,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return QuerySingleAsync<T>(null, statement, parameter);
+            return QuerySingleAsync<T>(null, statement, parameter, cancellationToken);
         }
 
         [return: MaybeNull]

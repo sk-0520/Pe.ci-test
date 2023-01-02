@@ -203,7 +203,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return DatabaseAccessor.Execute(this, statement, parameter);
         }
 
-        public Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        public virtual Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
@@ -248,6 +248,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         public override void Commit() => throw new NotSupportedException();
 
         public override int Execute(string statement, object? parameter = null) => throw new NotSupportedException();
+
+        public override Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default) => throw new NotSupportedException();
 
         #endregion
 

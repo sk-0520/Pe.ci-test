@@ -108,6 +108,9 @@ dotnet_diagnostic.IDE0008.severity = none
 # IDE0058: 式の値が使用されていません
 dotnet_diagnostic.IDE0058.severity = none
 
+dotnet_diagnostic.CA2016.severity = error
+dotnet_diagnostic.CA2250.severity = warning
+
 # code-analysis ----------------------------------------------------------------
 # CA1822: メンバーを static に設定します
 dotnet_diagnostic.CA1822.severity = silent

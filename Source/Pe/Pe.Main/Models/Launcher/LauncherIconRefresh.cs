@@ -175,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
 
                 Logger.LogInformation("ランチャーアイテムのアイコンを更新終了");
-            });
+            }, cancellationToken);
         }
 
         #endregion

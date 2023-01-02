@@ -89,12 +89,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             using var agent = UserAgentManager.CreateUserAgent();
             try {
-                var response = await agent.GetAsync(uri, CancellationToken.None);
+                var response = await agent.GetAsync(uri, token);
                 if(!response.IsSuccessStatusCode) {
                     Logger.LogWarning("GetAsync: {0}, {1}", response.StatusCode, uri);
                     return null;
                 }
-                var content = await response.Content.ReadAsStringAsync();
+                var content = await response.Content.ReadAsStringAsync(token);
 
                 //TODO: Serializer.cs に統合したい
                 var updateData = System.Text.Json.JsonSerializer.Deserialize<NewVersionData>(content);

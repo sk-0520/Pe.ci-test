@@ -221,7 +221,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                         return null;
                     } else {
                         Logger.LogWarning(ex, "アイコン取得待機失敗: {0}/{1}回 失敗, 再試行待機 {2}, {3}", count.CurrentCount, count.MaxCount, RetryWaitTime, LauncherItemId);
-                        await Task.Delay(RetryWaitTime).ConfigureAwait(false);
+                        await Task.Delay(RetryWaitTime, cancellationToken).ConfigureAwait(false);
                     }
                 }
             }
