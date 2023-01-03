@@ -29,8 +29,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="reader"></param>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <returns></returns>
         public static IEnumerable<T> SelectOrdered<T>(this IDatabaseReader reader, string statement, object? parameter = null, bool buffered = true)
         {
@@ -43,8 +43,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 検索処理時に順序指定を強制する。
         /// </summary>
         /// <param name="reader"></param>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <returns></returns>
         public static IEnumerable<dynamic> SelectOrdered(this IDatabaseReader reader, string statement, object? parameter = null, bool buffered = true)
         {
@@ -80,8 +80,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 単一の件数取得を強制。
         /// </summary>
         /// <param name="reader"></param>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <returns></returns>
         public static long SelectSingleCount(this IDatabaseReader reader, string statement, object? parameter = null)
         {
@@ -119,8 +119,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 更新処理を強制。
         /// </summary>
         /// <param name="writer"></param>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <returns>更新件数。</returns>
         public static int Update(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
@@ -134,8 +134,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 単一更新を強制。
         /// </summary>
         /// <param name="writer"></param>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <exception cref="DatabaseContextException">未更新。</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static void UpdateByKey(this IDatabaseWriter writer, string statement, object parameter)
@@ -152,8 +152,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 単一更新か未更新を強制。
         /// </summary>
         /// <param name="writer"></param>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <exception cref="DatabaseContextException">複数更新。</exception>
         /// <returns>真: 単一更新、偽: 未更新。</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
@@ -181,8 +181,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 挿入を強制。
         /// </summary>
         /// <param name="writer"></param>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <returns>挿入件数。</returns>
         public static int Insert(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
@@ -195,8 +195,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 単一挿入。
         /// </summary>
         /// <param name="writer"></param>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <exception cref="DatabaseContextException">未挿入か複数挿入。</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static void InsertSingle(this IDatabaseWriter writer, string statement, object? parameter = null)
@@ -221,8 +221,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 削除を強制。
         /// </summary>
         /// <param name="writer"></param>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <returns>削除件数。</returns>
         public static int Delete(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
@@ -235,8 +235,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 単一削除。
         /// </summary>
         /// <param name="writer"></param>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <exception cref="DatabaseContextException">未削除。</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static void DeleteByKey(this IDatabaseWriter writer, string statement, object parameter)
@@ -253,8 +253,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 単一更新か未削除を強制。
         /// </summary>
         /// <param name="writer"></param>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
+        /// <param name="statement">データベース問い合わせ文。</param>
+        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <returns></returns>
         /// <exception cref="DatabaseContextException">複数削除。</exception>
         /// <returns>真: 単一削除、偽: 未削除。</returns>
