@@ -157,7 +157,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 BUF actual;
                 auto [arg2, arg3, arg4, arg5, arg6, arg7] = test.inputs;
-                write_primitive_integer(&BUF::write_s, &actual, DEFAULT_MEMORY, arg2, arg3, arg4, arg5, arg6, arg7);
+                write_primitive_integer(&BUF::write_s, &actual, DEFAULT_MEMORY_ARENA, arg2, arg3, arg4, arg5, arg6, arg7);
                 Assert::AreEqual(test.expected, actual.values);
             }
         }
@@ -204,7 +204,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 BUF actual;
                 auto [arg2, arg3, arg4, arg5, arg6, arg7] = test.inputs;
-                write_primitive_uinteger(&BUF::write_s, &actual, DEFAULT_MEMORY, arg2, arg3, arg4, arg5, arg6, arg7);
+                write_primitive_uinteger(&BUF::write_s, &actual, DEFAULT_MEMORY_ARENA, arg2, arg3, arg4, arg5, arg6, arg7);
                 Assert::AreEqual(test.expected, actual.values);
             }
         }
@@ -231,7 +231,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 BUF actual;
                 auto [arg2, arg3, arg4, arg5, arg6, arg7] = test.inputs;
-                write_primitive_hex(&BUF::write_s, &actual, DEFAULT_MEMORY, arg2, arg3, arg4, arg5, arg6, arg7);
+                write_primitive_hex(&BUF::write_s, &actual, DEFAULT_MEMORY_ARENA, arg2, arg3, arg4, arg5, arg6, arg7);
                 Assert::AreEqual(test.expected, actual.values);
             }
         }
@@ -258,7 +258,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 BUF actual;
                 auto [arg2, arg3, arg4, arg5, arg6, arg7] = test.inputs;
-                write_primitive_uhex(&BUF::write_s, &actual, DEFAULT_MEMORY, arg2, arg3, arg4, arg5, arg6, arg7);
+                write_primitive_uhex(&BUF::write_s, &actual, DEFAULT_MEMORY_ARENA, arg2, arg3, arg4, arg5, arg6, arg7);
                 Assert::AreEqual(test.expected, actual.values);
             }
         }
@@ -274,7 +274,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 BUF actual;
                 auto [arg2, arg3, arg4] = test.inputs;
-                write_primitive_character(&BUF::write_s, &actual, DEFAULT_MEMORY, arg2, arg3, arg4);
+                write_primitive_character(&BUF::write_s, &actual, DEFAULT_MEMORY_ARENA, arg2, arg3, arg4);
                 Assert::AreEqual(test.expected, actual.values);
             }
         }
@@ -334,13 +334,13 @@ namespace PeLibraryTest
             TCHAR* expected1 = _T("abc");
             TEXT format1 = wrap("abc");
             BUF actual1;
-            write_format(&BUF::write_s, &BUF::write_c, &actual1, DEFAULT_MEMORY, &format1);
+            write_format(&BUF::write_s, &BUF::write_c, &actual1, DEFAULT_MEMORY_ARENA, &format1);
             Assert::AreEqual(expected1, actual1.values);
 
             TCHAR* expected2 = _T("%a%b%c%");
             TEXT format2 = wrap("%%a%%b%%c%%");
             BUF actual2;
-            write_format(&BUF::write_s, &BUF::write_c, &actual2, DEFAULT_MEMORY, &format2);
+            write_format(&BUF::write_s, &BUF::write_c, &actual2, DEFAULT_MEMORY_ARENA, &format2);
             Assert::AreEqual(expected2, actual2.values);
         }
 
@@ -349,7 +349,7 @@ namespace PeLibraryTest
             TCHAR* expected1 = _T("123 [ 456] -123 +456");
             TEXT format1 = wrap("%d [% 4d] %d %+d");
             BUF actual1;
-            write_format(&BUF::write_s, &BUF::write_c, &actual1, DEFAULT_MEMORY, &format1, 123, 456, -123, 456);
+            write_format(&BUF::write_s, &BUF::write_c, &actual1, DEFAULT_MEMORY_ARENA, &format1, 123, 456, -123, 456);
             Assert::AreEqual(expected1, actual1.values);
         }
 
@@ -358,7 +358,7 @@ namespace PeLibraryTest
             TCHAR* expected1 = _T("1 a A");
             TEXT format1 = wrap("%c %c %c");
             BUF actual1;
-            write_format(&BUF::write_s, &BUF::write_c, &actual1, DEFAULT_MEMORY, &format1, _T('1'), _T('a'), _T('A'));
+            write_format(&BUF::write_s, &BUF::write_c, &actual1, DEFAULT_MEMORY_ARENA, &format1, _T('1'), _T('a'), _T('A'));
             Assert::AreEqual(expected1, actual1.values);
         }
 
@@ -367,7 +367,7 @@ namespace PeLibraryTest
             TCHAR* expected1 = _T("true false TRUE FALSE");
             TEXT format1 = wrap("%b %b %B %B");
             BUF actual1;
-            write_format(&BUF::write_s, &BUF::write_c, &actual1, DEFAULT_MEMORY, &format1, true, false, true, false);
+            write_format(&BUF::write_s, &BUF::write_c, &actual1, DEFAULT_MEMORY_ARENA, &format1, true, false, true, false);
             Assert::AreEqual(expected1, actual1.values);
         }
 
@@ -376,7 +376,7 @@ namespace PeLibraryTest
             TCHAR* expected1 = _T("[🎍]");
             TEXT format1 = wrap("[%s]");
             BUF actual1;
-            write_format(&BUF::write_s, &BUF::write_c, &actual1, DEFAULT_MEMORY, &format1, _T("🎍"));
+            write_format(&BUF::write_s, &BUF::write_c, &actual1, DEFAULT_MEMORY_ARENA, &format1, _T("🎍"));
             Assert::AreEqual(expected1, actual1.values);
         }
 
@@ -387,7 +387,7 @@ namespace PeLibraryTest
             TEXT format1 = wrap("[%t]");
             BUF actual1;
             TEXT input = wrap("🚬");
-            write_format(&BUF::write_s, &BUF::write_c, &actual1, DEFAULT_MEMORY, &format1, &input);
+            write_format(&BUF::write_s, &BUF::write_c, &actual1, DEFAULT_MEMORY_ARENA, &format1, &input);
             Assert::AreEqual(expected1, actual1.values);
         }
 

@@ -35,9 +35,9 @@ TCHAR* copy_string(TCHAR* result, const TCHAR* value);
 /// </summary>
 /// <param name="source"></param>
 /// <returns>複製された文字列。解放が必要。</returns>
-TCHAR* RC_HEAP_FUNC(clone_string, const TCHAR* source, const MEMORY_RESOURCE * memory_resource);
+TCHAR* RC_HEAP_FUNC(clone_string, const TCHAR* source, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define clone_string(source, memory_resource) RC_HEAP_WRAP(clone_string, source, memory_resource)
+#   define clone_string(source, memory_arena_resource) RC_HEAP_WRAP(clone_string, source, memory_arena_resource)
 #endif
 
 /// <summary>
@@ -46,9 +46,9 @@ TCHAR* RC_HEAP_FUNC(clone_string, const TCHAR* source, const MEMORY_RESOURCE * m
 /// <param name="source"></param>
 /// <param name="length"></param>
 /// <returns>複製された文字列。解放が必要。</returns>
-TCHAR* RC_HEAP_FUNC(clone_string_with_length, const TCHAR * source, size_t length, const MEMORY_RESOURCE* memory_resource);
+TCHAR* RC_HEAP_FUNC(clone_string_with_length, const TCHAR* source, size_t length, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define clone_string_with_length(source, length, memory_resource) RC_HEAP_WRAP(clone_string_with_length, (source), (length), memory_resource)
+#   define clone_string_with_length(source, length, memory_arena_resource) RC_HEAP_WRAP(clone_string_with_length, (source), (length), memory_arena_resource)
 #endif
 
 /// <summary>
@@ -56,9 +56,9 @@ TCHAR* RC_HEAP_FUNC(clone_string_with_length, const TCHAR * source, size_t lengt
 /// </summary>
 /// <param name="length">文字列の長さ。</param>
 /// <returns>先頭 0 の番兵を考慮した領域(length + 1)。<see cref="release_string"/>による解放が必要。</returns>
-TCHAR* RC_HEAP_FUNC(allocate_string, size_t length, const MEMORY_RESOURCE * memory_resource);
+TCHAR* RC_HEAP_FUNC(allocate_string, size_t length, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define allocate_string(length, memory_resource) RC_HEAP_WRAP(allocate_string, (length), memory_resource)
+#   define allocate_string(length, memory_arena_resource) RC_HEAP_WRAP(allocate_string, (length), memory_arena_resource)
 #endif
 
 /// <summary>
@@ -66,8 +66,8 @@ TCHAR* RC_HEAP_FUNC(allocate_string, size_t length, const MEMORY_RESOURCE * memo
 /// ドメインとしての関数で<see cref="release_memory"/>のラッパー。
 /// </summary>
 /// <param name="s"></param>
-void RC_HEAP_FUNC(release_string, const TCHAR* s, const MEMORY_RESOURCE * memory_resource);
+void RC_HEAP_FUNC(release_string, const TCHAR* s, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define release_string(s, memory_resource) RC_HEAP_WRAP(release_string, (s), memory_resource)
+#   define release_string(s, memory_arena_resource) RC_HEAP_WRAP(release_string, (s), memory_arena_resource)
 #endif
 

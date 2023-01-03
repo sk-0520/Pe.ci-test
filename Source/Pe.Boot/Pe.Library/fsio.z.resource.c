@@ -7,13 +7,13 @@ FILE_RESOURCE create_invalid_file_resource()
         .path = create_invalid_text(),
         .handle = NULL,
         .library = {
-            .memory_resource = NULL,
+            .memory_arena_resource = NULL,
         }
     };
     return result;
 }
 
-FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE access_mode, FILE_SHARE_MODE shared_mode, FILE_OPEN_MODE open_mode, DWORD attributes, const MEMORY_RESOURCE* memory_resource)
+FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE access_mode, FILE_SHARE_MODE shared_mode, FILE_OPEN_MODE open_mode, DWORD attributes, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     if (!path) {
         return create_invalid_file_resource();
@@ -28,10 +28,10 @@ FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE
     }
 
     FILE_RESOURCE result = {
-        .path = clone_text(path, memory_resource),
+        .path = clone_text(path, memory_arena_resource),
         .handle = handle,
         .library = {
-            .memory_resource = memory_resource,
+            .memory_arena_resource = memory_arena_resource,
         }
     };
 
@@ -42,19 +42,19 @@ FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE
     return result;
 }
 
-FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
+FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
-    return RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_NEW, 0, memory_resource);
+    return RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_NEW, 0, memory_arena_resource);
 }
 
-FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
+FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
-    return RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0, memory_resource);
+    return RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0, memory_arena_resource);
 }
 
-FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
+FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
-    return RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN_OR_CREATE, 0, memory_resource);
+    return RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN_OR_CREATE, 0, memory_arena_resource);
 }
 
 bool RC_FILE_FUNC(release_file_resource, FILE_RESOURCE* file_resource)

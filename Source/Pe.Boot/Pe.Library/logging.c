@@ -11,15 +11,15 @@
 #define LOG_FORMAT_CAPACITY (256)
 #define OUTPUT_LINE_CAPACITY (1024)
 
-static const MEMORY_RESOURCE* library__log_memory_resource;
+static const MEMORY_ARENA_RESOURCE* library__log_memory_arena_resource;
 static FILE_WRITER library__default_log_file_writer;
 static LOG_LEVEL library__default_log_level;
 static LOGGER library__log_loggers[LOGGER_LENGTH];
 
-void initialize_logger(const MEMORY_RESOURCE* memory_resource)
+void initialize_logger(const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
-    assert(memory_resource);
-    library__log_memory_resource = memory_resource;
+    assert(memory_arena_resource);
+    library__log_memory_arena_resource = memory_arena_resource;
 }
 
 void set_default_log_file(FILE_WRITER* file_writer)
@@ -95,7 +95,7 @@ static void logging_default(const LOG_ITEM* log_item)
             _T("ERROR"),
         };
 
-        STRING_BUILDER sb = new_string_builder(OUTPUT_LINE_CAPACITY, library__log_memory_resource);
+        STRING_BUILDER sb = new_string_builder(OUTPUT_LINE_CAPACITY, library__log_memory_arena_resource);
         TEXT format = wrap_text(
             _T("%tT%t")
             _T(" | ")
@@ -137,32 +137,32 @@ static void logging(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller
 
     TEXT caller_file_text = wrap_text(caller_file);
 
-    STRING_BUILDER sb = new_string_builder(LOG_FORMAT_CAPACITY, library__log_memory_resource);
+    STRING_BUILDER sb = new_string_builder(LOG_FORMAT_CAPACITY, library__log_memory_arena_resource);
 
     TEXT date_format = wrap_text(_T("%04d-%02d-%02d"));
     append_builder_format(&sb, &date_format, timestamp.year, timestamp.month, timestamp.day);
     TEXT ref_date_text = reference_text_string_builder(&sb);
-    new_stack_or_heap_array(date_buffer, date_array, TCHAR, ref_date_text.length + 1, 16, library__log_memory_resource);
+    new_stack_or_heap_array(date_buffer, date_array, TCHAR, ref_date_text.length + 1, 16, library__log_memory_arena_resource);
     copy_memory(date_buffer, ref_date_text.value, ref_date_text.length * sizeof(TCHAR));
     date_buffer[ref_date_text.length] = 0;
-    TEXT date_text = wrap_text_with_length(date_buffer, ref_date_text.length, false, library__log_memory_resource);
+    TEXT date_text = wrap_text_with_length(date_buffer, ref_date_text.length, false, library__log_memory_arena_resource);
     clear_builder(&sb);
 
     TEXT time_format = wrap_text(_T("%02d:%02d:%02d.%03d"));
     append_builder_format(&sb, &time_format, timestamp.hour, timestamp.minute, timestamp.second, timestamp.milli_sec);
     TEXT ref_time_text = reference_text_string_builder(&sb);
-    new_stack_or_heap_array(time_buffer, time_array, TCHAR, ref_time_text.length + 1, 16, library__log_memory_resource);
+    new_stack_or_heap_array(time_buffer, time_array, TCHAR, ref_time_text.length + 1, 16, library__log_memory_arena_resource);
     copy_memory(time_buffer, ref_time_text.value, ref_time_text.length * sizeof(TCHAR));
     time_buffer[ref_time_text.length] = 0;
-    TEXT time_text = wrap_text_with_length(time_buffer, ref_time_text.length, false, library__log_memory_resource);
+    TEXT time_text = wrap_text_with_length(time_buffer, ref_time_text.length, false, library__log_memory_arena_resource);
     clear_builder(&sb);
 
     TEXT caller_format = wrap_text(_T("%t:%zd"));
     append_builder_format(&sb, &caller_format, &caller_file_text, caller_line);
     TEXT ref_caller_text = reference_text_string_builder(&sb);
-    new_stack_or_heap_array(caller_buffer, caller_array, TCHAR, ref_caller_text.length + 1, 1024, library__log_memory_resource);
+    new_stack_or_heap_array(caller_buffer, caller_array, TCHAR, ref_caller_text.length + 1, 1024, library__log_memory_arena_resource);
     copy_memory(caller_buffer, ref_caller_text.value, ref_caller_text.length * sizeof(TCHAR));
-    TEXT caller_text = wrap_text_with_length(caller_buffer, ref_caller_text.length, false, library__log_memory_resource);
+    TEXT caller_text = wrap_text_with_length(caller_buffer, ref_caller_text.length, false, library__log_memory_arena_resource);
     //clear_builder(&sb);
 
     release_string_builder(&sb);
@@ -221,7 +221,7 @@ void library__format_log(LOG_LEVEL log_level, const TCHAR* caller_file, size_t c
     va_start(ap, format);
 
     TEXT text_format = wrap_text(format);
-    STRING_BUILDER sb = new_string_builder(MESSAGE_CAPACITY, library__log_memory_resource);
+    STRING_BUILDER sb = new_string_builder(MESSAGE_CAPACITY, library__log_memory_arena_resource);
     append_builder_vformat(&sb, &text_format, ap);
     TEXT message = build_text_string_builder(&sb);
 

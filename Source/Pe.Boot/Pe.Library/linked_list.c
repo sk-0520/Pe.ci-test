@@ -53,11 +53,11 @@ int compare_linked_list_value_null(const void* a, const void* b, void* data)
     return 0;
 }
 
-void release_linked_list_value_null(void* value, void* data, const MEMORY_RESOURCE* memory_resource)
+void release_linked_list_value_null(void* value, void* data, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
 }
 
-LINKED_LIST RC_HEAP_FUNC(new_linked_list, byte_t item_size, void* data, func_compare_linked_list_value compare_linked_list_value, func_release_linked_list_value release_linked_list_value, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* linked_list_memory_resource)
+LINKED_LIST RC_HEAP_FUNC(new_linked_list, byte_t item_size, void* data, func_compare_linked_list_value compare_linked_list_value, func_release_linked_list_value release_linked_list_value, const MEMORY_ARENA_RESOURCE* value_memory_resource, const MEMORY_ARENA_RESOURCE* linked_list_memory_resource)
 {
     LINKED_LIST result = {
         .length = 0,

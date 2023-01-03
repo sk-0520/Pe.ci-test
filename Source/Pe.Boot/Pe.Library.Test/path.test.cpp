@@ -61,7 +61,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT arg1 = std::get<0>(test.inputs);
 
-                TEXT actual = get_parent_directory_path(&arg1, DEFAULT_MEMORY);
+                TEXT actual = get_parent_directory_path(&arg1, DEFAULT_MEMORY_ARENA);
                 Assert::AreEqual(test.expected.value, actual.value);
 
                 release_text(&actual);
@@ -86,7 +86,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT arg1 = std::get<0>(test.inputs);
 
-                OBJECT_LIST actual = split_path(&arg1, DEFAULT_MEMORY);
+                OBJECT_LIST actual = split_path(&arg1, DEFAULT_MEMORY_ARENA);
 
                 Assert::AreEqual(test.expected.size(), actual.length);
 
@@ -112,7 +112,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT arg1 = std::get<0>(test.inputs);
 
-                TEXT actual = canonicalize_path(&arg1, DEFAULT_MEMORY);
+                TEXT actual = canonicalize_path(&arg1, DEFAULT_MEMORY_ARENA);
 
                 Assert::IsTrue(is_equals_text(&test.expected, &actual, true), test.expected.value);
 
@@ -135,7 +135,7 @@ namespace PeLibraryTest
                 TEXT arg1 = std::get<0>(test.inputs);
                 TEXT arg2 = std::get<1>(test.inputs);
 
-                TEXT actual = combine_path(&arg1, &arg2, DEFAULT_MEMORY);
+                TEXT actual = combine_path(&arg1, &arg2, DEFAULT_MEMORY_ARENA);
                 Assert::AreEqual(test.expected.value, actual.value);
 
                 release_text(&actual);
@@ -155,7 +155,7 @@ namespace PeLibraryTest
             };
             TEXT expected = wrap("C:\\dir1\\dir2+");
 
-            TEXT actual = join_path(&input1, input2, SIZEOF_ARRAY(input2), DEFAULT_MEMORY);
+            TEXT actual = join_path(&input1, input2, SIZEOF_ARRAY(input2), DEFAULT_MEMORY_ARENA);
             Assert::AreEqual(expected.value, actual.value);
 
             release_text(&actual);
@@ -191,7 +191,7 @@ namespace PeLibraryTest
             {
                 TEXT input = wrap("C:\\dir\\sub\\file.ext");
                 PATH_INFO stack = get_path_info_stack(&input);
-                keep = clone_path_info(&stack, DEFAULT_MEMORY);
+                keep = clone_path_info(&stack, DEFAULT_MEMORY_ARENA);
                 Assert::IsFalse(release_path_info(&stack));
             }
 

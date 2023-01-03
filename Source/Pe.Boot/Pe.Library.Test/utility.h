@@ -17,9 +17,9 @@ namespace fs = std::filesystem;
 namespace mstest = Microsoft::VisualStudio::CppUnitTestFramework;
 
 #ifdef RES_CHECK
-#   define text(s) rc_heap__new_text(RELATIVE_FILET, __LINE__, _T(s), DEFAULT_MEMORY)
+#   define text(s) rc_heap__new_text(RELATIVE_FILET, __LINE__, _T(s), DEFAULT_MEMORY_ARENA)
 #else
-#   define text(s) new_text(_T(s), DEFAULT_MEMORY)
+#   define text(s) new_text(_T(s), DEFAULT_MEMORY_ARENA)
 #endif
 
 #ifdef _UNICODE
@@ -213,7 +213,7 @@ public:
         logger.function = logging;
         logger.data = this,
         attach_logger(&logger);
-        initialize_logger(DEFAULT_MEMORY);
+        initialize_logger(DEFAULT_MEMORY_ARENA);
         logger_put_info(_T("TEST START"));
 
         // https://stackoverflow.com/a/25151971

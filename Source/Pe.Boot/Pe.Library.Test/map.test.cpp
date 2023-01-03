@@ -13,13 +13,13 @@ namespace PeLibraryTest
     public:
         TEST_METHOD(new_release_test)
         {
-            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
             release_map(&map);
         }
 
         TEST_METHOD(add_map_test)
         {
-            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
 
             TEXT input_key_1 = wrap("key-1");
             int input_value_1 = 10;
@@ -41,7 +41,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(get_map_test)
         {
-            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
 
             TEXT input_key_0 = wrap("key-0");
             MAP_RESULT_VALUE actual_0 = get_map(&map, &input_key_0);
@@ -81,7 +81,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(set_map_test)
         {
-            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
 
             TEXT input_key = wrap("key-1");
 
@@ -104,7 +104,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(remove_map_test)
         {
-            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
 
             TEXT key = wrap("key");
             int value = 10;
@@ -123,12 +123,12 @@ namespace PeLibraryTest
 
         TEST_METHOD(extend_test)
         {
-            MAP map = new_map(sizeof(int), 2, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            MAP map = new_map(sizeof(int), 2, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
             //size_t length = 64;
             size_t length = 8;
             TEXT format = wrap("key-%d");
             for (size_t i = 0; i < length; i++) {
-                TEXT key = format_text(DEFAULT_MEMORY, &format, i);
+                TEXT key = format_text(DEFAULT_MEMORY_ARENA, &format, i);
                 add_map(&map, &key, &i);
                 release_text(&key);
             }
@@ -140,7 +140,7 @@ namespace PeLibraryTest
         static bool foreach_map_test(const KEY_VALUE_PAIR* pair, size_t index, size_t length, void* arg)
         {
             //TEXT format = wrap("key-%d");
-            //TEXT key = format_text(DEFAULT_MEMORY, &format, index);
+            //TEXT key = format_text(DEFAULT_MEMORY_ARENA, &format, index);
             //int* inputs = (int*)arg;
 
             //Assert::IsTrue(is_equals_text(&pair->key, &key, false));
@@ -153,13 +153,13 @@ namespace PeLibraryTest
 
         TEST_METHOD(foreach_map_test)
         {
-            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            MAP map = new_map(sizeof(int), MAP_DEFAULT_CAPACITY, MAP_DEFAULT_LOAD_FACTOR, release_linked_list_value_null, calc_map_hash_default, equals_map_key_default, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
             int inputs[] = {
                 1, 2, 3, 4, 5
             };
             for (int input : inputs) {
                 TEXT format = wrap("key-%d");
-                TEXT key = format_text(DEFAULT_MEMORY, &format, input);
+                TEXT key = format_text(DEFAULT_MEMORY_ARENA, &format, input);
                 add_map(&map, &key, &input);
                 release_text(&key);
             }

@@ -55,24 +55,24 @@ namespace PeLibraryTest
         {
             TCHAR input[] = _T("abc");
             TCHAR expected[] = _T("abc");
-            TCHAR* actual = clone_string(input, DEFAULT_MEMORY);
+            TCHAR* actual = clone_string(input, DEFAULT_MEMORY_ARENA);
 
             Assert::AreEqual(expected, actual);
             Assert::IsFalse(input == actual);
 
-            release_string(actual, DEFAULT_MEMORY);
+            release_string(actual, DEFAULT_MEMORY_ARENA);
         }
 
         TEST_METHOD(clone_string_with_length_test)
         {
             TCHAR input[] = _T("abc");
             TCHAR expected[] = _T("ab");
-            TCHAR* actual = clone_string_with_length(input, 2, DEFAULT_MEMORY);
+            TCHAR* actual = clone_string_with_length(input, 2, DEFAULT_MEMORY_ARENA);
 
             Assert::AreEqual(expected, actual);
             Assert::IsFalse(input == actual);
 
-            release_string(actual, DEFAULT_MEMORY);
+            release_string(actual, DEFAULT_MEMORY_ARENA);
         }
 
     };

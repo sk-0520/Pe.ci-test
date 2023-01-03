@@ -142,7 +142,7 @@ WRITE_RESULT write_primitive_boolean(func_string_writer writer, void* receiver, 
 /// <param name="width">表示幅。</param>
 /// <param name="separator">区切り文字。NUL文字の場合区切りなしとする。</param>
 /// <returns>成功状態。</returns>
-WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator);
+WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, const MEMORY_ARENA_RESOURCE* memory_arena_resource, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator);
 
 /// <summary>
 /// <c>size_t</c>の数値を書き込み。
@@ -156,7 +156,7 @@ WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, 
 /// <param name="width">表示幅。</param>
 /// <param name="separator">区切り文字。NUL文字の場合区切りなしとする。</param>
 /// <returns>成功状態。</returns>
-WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator);
+WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver, const MEMORY_ARENA_RESOURCE* memory_arena_resource, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator);
 
 /// <summary>
 /// <c>ssize_t</c>の16進数を書き込み。
@@ -170,7 +170,7 @@ WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver,
 /// <param name="alternate_form">0x(X)を付与するか。</param>
 /// <param name="width">表示幅。</param>
 /// <returns>成功状態。</returns>
-WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width);
+WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, const MEMORY_ARENA_RESOURCE* memory_arena_resource, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width);
 /// <summary>
 /// <c>size_t</c>の16進数を書き込み。
 /// </summary>
@@ -183,7 +183,7 @@ WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, cons
 /// <param name="alternate_form">0x(X)を付与するか。</param>
 /// <param name="width">表示幅。</param>
 /// <returns>成功状態。</returns>
-WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width);
+WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, const MEMORY_ARENA_RESOURCE* memory_arena_resource, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width);
 
 /// <summary>
 /// 文字を書き込み。
@@ -194,7 +194,7 @@ WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, con
 /// <param name="write_align">埋め処理時の揃え方向。</param>
 /// <param name="width">表示幅。</param>
 /// <returns>成功状態。</returns>
-WRITE_RESULT write_primitive_character(func_string_writer writer, void* receiver, const MEMORY_RESOURCE* memory_resource, TCHAR character, WRITE_ALIGN write_align, size_t width);
+WRITE_RESULT write_primitive_character(func_string_writer writer, void* receiver, const MEMORY_ARENA_RESOURCE* memory_arena_resource, TCHAR character, WRITE_ALIGN write_align, size_t width);
 
 /// <summary>
 /// ポインタの表示。
@@ -257,7 +257,7 @@ size_t get_write_format_flags(WRITE_FORMAT_FLAGS* result, const TEXT* format);
 /// <param name="format">書式。</param>
 /// <param name="ap">パラメータ。</param>
 /// <returns>成功状態。</returns>
-bool write_vformat(func_string_writer string_writer, func_character_writer character_writer, void* receiver, const MEMORY_RESOURCE* memory_resource, const TEXT* format, va_list ap);
+bool write_vformat(func_string_writer string_writer, func_character_writer character_writer, void* receiver, const MEMORY_ARENA_RESOURCE* memory_arena_resource, const TEXT* format, va_list ap);
 
 /// <summary>
 /// 書式化。
@@ -266,5 +266,5 @@ bool write_vformat(func_string_writer string_writer, func_character_writer chara
 /// <param name="receiver">書き込み対象データ受信処理。</param>
 /// <param name="format">書式。</param>
 /// <returns>成功状態。</returns>
-bool write_format(func_string_writer string_writer, func_character_writer character_writer, void* receiver, const MEMORY_RESOURCE* memory_resource, const TEXT* format, ...);
+bool write_format(func_string_writer string_writer, func_character_writer character_writer, void* receiver, const MEMORY_ARENA_RESOURCE* memory_arena_resource, const TEXT* format, ...);
 

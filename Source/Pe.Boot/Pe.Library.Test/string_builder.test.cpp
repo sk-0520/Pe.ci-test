@@ -22,7 +22,7 @@ namespace PeLibraryTest
 
             for (auto test : tests) {
                 auto [arg1] = test.inputs;
-                auto actual = new_string_builder(arg1, DEFAULT_MEMORY);
+                auto actual = new_string_builder(arg1, DEFAULT_MEMORY_ARENA);
                 //Assert::AreEqual(test.expected, actual.library.capacity);
 
                 Assert::IsTrue(release_string_builder(&actual));
@@ -37,14 +37,14 @@ namespace PeLibraryTest
             STRING_BUILDER input2 = { 0 };
             Assert::IsFalse(release_string_builder(&input2));
 
-            STRING_BUILDER input3 = new_string_builder(1, DEFAULT_MEMORY);
+            STRING_BUILDER input3 = new_string_builder(1, DEFAULT_MEMORY_ARENA);
             Assert::IsTrue(release_string_builder(&input3));
         }
 
         TEST_METHOD(append_string_builder_test)
         {
             auto expected = _T("ABCDEFGtrue-1false1");
-            auto sb = new_string_builder(3, DEFAULT_MEMORY);
+            auto sb = new_string_builder(3, DEFAULT_MEMORY_ARENA);
 
             append_builder_string(&sb, _T("ABC"), false);
 
@@ -73,7 +73,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(append_builder_format_test)
         {
-            auto sb = new_string_builder(3, DEFAULT_MEMORY);
+            auto sb = new_string_builder(3, DEFAULT_MEMORY_ARENA);
 
             auto expected = _T("1 -1 +100 -100 -200 A abc def");
             TEXT format = wrap("%d %d %+d %d %+d %c %s %t");

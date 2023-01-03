@@ -13,7 +13,7 @@ namespace PeLibraryTest
     public:
         TEST_METHOD(life_test)
         {
-            PRIMITIVE_LIST_UINT32 list = new_primitive_list(PRIMITIVE_LIST_TYPE_UINT32, 2, DEFAULT_MEMORY);
+            PRIMITIVE_LIST_UINT32 list = new_primitive_list(PRIMITIVE_LIST_TYPE_UINT32, 2, DEFAULT_MEMORY_ARENA);
             Assert::AreEqual((size_t)0, list.length);
             Assert::AreEqual((size_t)2 * sizeof(uint32_t), list.library.capacity_bytes);
 
@@ -49,7 +49,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(type_error_test)
         {
-            PRIMITIVE_LIST_UINT32 list = new_primitive_list(PRIMITIVE_LIST_TYPE_UINT32, 2, DEFAULT_MEMORY);
+            PRIMITIVE_LIST_UINT32 list = new_primitive_list(PRIMITIVE_LIST_TYPE_UINT32, 2, DEFAULT_MEMORY_ARENA);
 
             Assert::IsFalse(push_list_uint8(&list, 1));
             Assert::IsFalse(push_list_uint16(&list, 1));
@@ -67,7 +67,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(add_range_test)
         {
-            PRIMITIVE_LIST_INT32 list = new_primitive_list(PRIMITIVE_LIST_TYPE_INT32, 1, DEFAULT_MEMORY);
+            PRIMITIVE_LIST_INT32 list = new_primitive_list(PRIMITIVE_LIST_TYPE_INT32, 1, DEFAULT_MEMORY_ARENA);
             int32_t values[] = {
                 1, 2, 3, 4, 5,
             };

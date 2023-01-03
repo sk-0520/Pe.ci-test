@@ -24,7 +24,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
 
-                auto actual = to_lower_text(&arg1, DEFAULT_MEMORY);
+                auto actual = to_lower_text(&arg1, DEFAULT_MEMORY_ARENA);
                 Assert::IsTrue(is_equals_text(&test.expected, &actual, false), test.expected.value);
                 release_text(&actual);
             }
@@ -42,7 +42,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
 
-                auto actual = to_upper_text(&arg1, DEFAULT_MEMORY);
+                auto actual = to_upper_text(&arg1, DEFAULT_MEMORY_ARENA);
                 Assert::IsTrue(is_equals_text(&test.expected, &actual, false), test.expected.value);
                 release_text(&actual);
             }
@@ -57,13 +57,13 @@ namespace PeLibraryTest
                 MULTI_BYTE_CHARACTER_TYPE_SJIS,
             };
             for (auto test : tests) {
-                auto res = convert_to_multibyte_character(&input, test, DEFAULT_MEMORY);
+                auto res = convert_to_multibyte_character(&input, test, DEFAULT_MEMORY_ARENA);
                 Assert::IsTrue(is_enabled_multibyte_character_result(&res));
-                auto text = make_text_from_multibyte(res.buffer, res.length, test, DEFAULT_MEMORY);
+                auto text = make_text_from_multibyte(res.buffer, res.length, test, DEFAULT_MEMORY_ARENA);
                 Assert::AreEqual(text.value, input.value);
-                Assert::IsTrue(release_multibyte_character_result(&res, DEFAULT_MEMORY));
+                Assert::IsTrue(release_multibyte_character_result(&res, DEFAULT_MEMORY_ARENA));
                 Assert::IsTrue(release_text(&text));
-                Assert::IsFalse(release_multibyte_character_result(&res, DEFAULT_MEMORY));
+                Assert::IsFalse(release_multibyte_character_result(&res, DEFAULT_MEMORY_ARENA));
             }
         }
 #endif

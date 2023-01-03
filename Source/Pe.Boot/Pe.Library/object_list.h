@@ -53,7 +53,7 @@ typedef int (*func_compare_object_list_value)(const void* a, const void* b, void
 /// <summary>
 /// 格納値解放処理。
 /// </summary>
-typedef void (*func_release_object_list_value)(void* value, void* data, const MEMORY_RESOURCE* memory_resource);
+typedef void (*func_release_object_list_value)(void* value, void* data, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 
 typedef struct tag_OBJECT_LIST
 {
@@ -74,7 +74,7 @@ typedef struct tag_OBJECT_LIST
         /// <summary>
         /// メモリリソース。
         /// </summary>
-        const MEMORY_RESOURCE* memory_resource;
+        const MEMORY_ARENA_RESOURCE* memory_arena_resource;
         /// <summary>
         /// 格納アイテムのサイズ。
         /// </summary>
@@ -99,11 +99,11 @@ int compare_object_list_value_null(const void* a, const void* b, void* data);
 /// リストの値解放不要処理。
 /// </summary>
 /// <param name="value"></param>
-void release_object_list_value_null(void* value, void* data, const MEMORY_RESOURCE* memory_resource);
+void release_object_list_value_null(void* value, void* data, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 
 int compare_object_list_value_text(const void* a, const void* b, void* data);
 
-void release_object_list_value_text(void* target, void* data, const MEMORY_RESOURCE* memory_resource);
+void release_object_list_value_text(void* target, void* data, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 
 /// <summary>
 /// オブジェクトリストの生成。
@@ -114,9 +114,9 @@ void release_object_list_value_text(void* target, void* data, const MEMORY_RESOU
 /// <param name="compare_object_list_value">比較処理。</param>
 /// <param name="release_object_list_value">実データの解放処理。オブジェクトリストの解放や、アイテム変更時に使用される。</param>
 /// <returns>生成したオブジェクトリスト。</returns>
-OBJECT_LIST RC_HEAP_FUNC(new_object_list, byte_t item_size, size_t capacity_count, void* data, func_compare_object_list_value compare_object_list_value, func_release_object_list_value release_object_list_value, const MEMORY_RESOURCE* memory_resource);
+OBJECT_LIST RC_HEAP_FUNC(new_object_list, byte_t item_size, size_t capacity_count, void* data, func_compare_object_list_value compare_object_list_value, func_release_object_list_value release_object_list_value, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define new_object_list(item_size, capacity_count, data, compare_object_list_value, release_object_list_value, memory_resource) RC_HEAP_WRAP(new_object_list, (item_size), (capacity_count), (data), (compare_object_list_value), (release_object_list_value), memory_resource)
+#   define new_object_list(item_size, capacity_count, data, compare_object_list_value, release_object_list_value, memory_arena_resource) RC_HEAP_WRAP(new_object_list, (item_size), (capacity_count), (data), (compare_object_list_value), (release_object_list_value), memory_arena_resource)
 #endif
 
 /// <summary>

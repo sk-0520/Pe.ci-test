@@ -42,15 +42,15 @@ EXIT_CODE boot_with_option(HINSTANCE hInstance, const COMMAND_LINE_OPTION* comma
         logger_put_info(_T("待機終了"));
     }
 
-    TEXT_LIST args = new_memory(command_line_option->count, sizeof(TEXT), DEFAULT_MEMORY);
+    TEXT_LIST args = new_memory(command_line_option->count, sizeof(TEXT), DEFAULT_MEMORY_ARENA);
     size_t arg_count = filter_enable_command_line_items(args, command_line_option);
 
-    TEXT argument = to_command_line_argument(args, arg_count, DEFAULT_MEMORY);
+    TEXT argument = to_command_line_argument(args, arg_count, DEFAULT_MEMORY_ARENA);
     logger_put_info(argument.value);
 
     EXIT_CODE result = boot_core(hInstance, &argument);
     release_text(&argument);
-    release_memory(args, DEFAULT_MEMORY);
+    release_memory(args, DEFAULT_MEMORY_ARENA);
 
     return result;
 }

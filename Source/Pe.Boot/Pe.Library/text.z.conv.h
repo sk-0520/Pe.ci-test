@@ -6,11 +6,11 @@
 /// </summary>
 /// <param name=""></param>
 /// <param name="text"></param>
-/// <param name="memory_resource"></param>
+/// <param name="memory_arena_resource"></param>
 /// <returns>解放が必要。</returns>
-TEXT RC_HEAP_FUNC(to_lower_text, const TEXT* text, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(to_lower_text, const TEXT* text, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define to_lower_text(text, memory_resource) RC_HEAP_WRAP(to_lower_text, text, memory_resource)
+#   define to_lower_text(text, memory_arena_resource) RC_HEAP_WRAP(to_lower_text, text, memory_arena_resource)
 #endif
 
 /// <summary>
@@ -18,11 +18,11 @@ TEXT RC_HEAP_FUNC(to_lower_text, const TEXT* text, const MEMORY_RESOURCE* memory
 /// </summary>
 /// <param name=""></param>
 /// <param name="text"></param>
-/// <param name="memory_resource"></param>
+/// <param name="memory_arena_resource"></param>
 /// <returns>解放が必要。</returns>
-TEXT RC_HEAP_FUNC(to_upper_text, const TEXT* text, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(to_upper_text, const TEXT* text, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define to_upper_text(text, memory_resource) RC_HEAP_WRAP(to_upper_text, text, memory_resource)
+#   define to_upper_text(text, memory_arena_resource) RC_HEAP_WRAP(to_upper_text, text, memory_arena_resource)
 #endif
 
 #ifdef _UNICODE
@@ -49,14 +49,14 @@ bool is_enabled_multibyte_character_result(const MULTIBYTE_CHARACTER_RESULT* mbc
 /// <param name="input"></param>
 /// <param name="convert_type"></param>
 /// <returns>変換データ。解放が必要。</returns>
-MULTIBYTE_CHARACTER_RESULT RC_HEAP_FUNC(convert_to_multibyte_character, const TEXT* input, MULTIBYTE_CHARACTER_TYPE mbc_type, const MEMORY_RESOURCE* memory_resource);
+MULTIBYTE_CHARACTER_RESULT RC_HEAP_FUNC(convert_to_multibyte_character, const TEXT* input, MULTIBYTE_CHARACTER_TYPE mbc_type, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define convert_to_multibyte_character(input, convert_type, memory_resource) RC_HEAP_WRAP(convert_to_multibyte_character, (input), (convert_type), memory_resource)
+#   define convert_to_multibyte_character(input, convert_type, memory_arena_resource) RC_HEAP_WRAP(convert_to_multibyte_character, (input), (convert_type), memory_arena_resource)
 #endif
 
-bool RC_HEAP_FUNC(release_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* mbcr, const MEMORY_RESOURCE* memory_resource);
+bool RC_HEAP_FUNC(release_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT* mbcr, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define release_multibyte_character_result(mbcr, memory_resource) RC_HEAP_WRAP(release_multibyte_character_result, (mbcr), memory_resource)
+#   define release_multibyte_character_result(mbcr, memory_arena_resource) RC_HEAP_WRAP(release_multibyte_character_result, (mbcr), memory_arena_resource)
 #endif
 
 /// <summary>
@@ -66,9 +66,9 @@ bool RC_HEAP_FUNC(release_multibyte_character_result, MULTIBYTE_CHARACTER_RESULT
 /// <param name="length"></param>
 /// <param name="mbc_type"></param>
 /// <returns>解放が必要。</returns>
-TEXT RC_HEAP_FUNC(make_text_from_multibyte, const uint8_t* input, size_t length, MULTIBYTE_CHARACTER_TYPE mbc_type, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(make_text_from_multibyte, const uint8_t* input, size_t length, MULTIBYTE_CHARACTER_TYPE mbc_type, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define make_text_from_multibyte(input, length, mbc_type, memory_resource) RC_HEAP_WRAP(make_text_from_multibyte, (input), (length), (mbc_type), memory_resource)
+#   define make_text_from_multibyte(input, length, mbc_type, memory_arena_resource) RC_HEAP_WRAP(make_text_from_multibyte, (input), (length), (mbc_type), memory_arena_resource)
 #endif
 
 #endif

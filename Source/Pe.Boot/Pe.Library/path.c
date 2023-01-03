@@ -48,7 +48,7 @@ bool has_root_path(const TEXT* text)
     return false;
 }
 
-TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
+TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     bool hittingSeparator = false;
     for (size_t i = 0; i < path->length; i++) {
@@ -68,17 +68,17 @@ TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESO
 
             // ドライブの場合、セパレータを付与
             if (length == 2 && has_root_path(path)) {
-                return new_text_with_length(path->value, length + 1, memory_resource);
+                return new_text_with_length(path->value, length + 1, memory_arena_resource);
             }
 
-            return new_text_with_length(path->value, length, memory_resource);
+            return new_text_with_length(path->value, length, memory_arena_resource);
         }
     }
 
-    return new_empty_text(memory_resource);
+    return new_empty_text(memory_arena_resource);
 }
 
-static TEXT split_path_core(const TEXT* source, size_t* next_index, const MEMORY_RESOURCE* memory_resource)
+static TEXT split_path_core(const TEXT* source, size_t* next_index, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     size_t skip_index = 0;
     for (size_t i = 0; i < source->length; i++) {
@@ -102,25 +102,25 @@ static TEXT split_path_core(const TEXT* source, size_t* next_index, const MEMORY
     return create_invalid_text();
 }
 
-OBJECT_LIST RC_HEAP_FUNC(split_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
+OBJECT_LIST RC_HEAP_FUNC(split_path, const TEXT* path, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     if (!path || !path->length) {
-        return RC_HEAP_CALL(new_object_list, sizeof(TEXT), 0, NULL, compare_object_list_value_text, release_object_list_value_text, memory_resource);
+        return RC_HEAP_CALL(new_object_list, sizeof(TEXT), 0, NULL, compare_object_list_value_text, release_object_list_value_text, memory_arena_resource);
     }
 
-    OBJECT_LIST list = RC_HEAP_CALL(split_text, path, split_path_core, memory_resource);
+    OBJECT_LIST list = RC_HEAP_CALL(split_text, path, split_path_core, memory_arena_resource);
 
     return list;
 }
 
-TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource)
+TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
-    OBJECT_LIST list = RC_HEAP_CALL(split_path, path, memory_resource);
+    OBJECT_LIST list = RC_HEAP_CALL(split_path, path, memory_arena_resource);
 
     const TEXT currentName = wrap_text(_T("."));
     const TEXT parentName = wrap_text(_T(".."));
 
-    const TEXT** items = (TEXT**)RC_HEAP_CALL(new_memory, list.length, sizeof(TEXT*), memory_resource);
+    const TEXT** items = (TEXT**)RC_HEAP_CALL(new_memory, list.length, sizeof(TEXT*), memory_arena_resource);
     size_t item_length = 0;
     size_t capacity = list.length;
     for (size_t i = 0; i < list.length; i++) {
@@ -139,7 +139,7 @@ TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* me
         }
     }
 
-    STRING_BUILDER string_builder = RC_HEAP_CALL(new_string_builder, capacity, memory_resource);
+    STRING_BUILDER string_builder = RC_HEAP_CALL(new_string_builder, capacity, memory_arena_resource);
     for (size_t i = 0; i < item_length; i++) {
         if (i) {
             append_builder_character_word(&string_builder, DIRECTORY_SEPARATOR_CHARACTER);
@@ -147,7 +147,7 @@ TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* me
         append_builder_text_word(&string_builder, items[i]);
     }
 
-    RC_HEAP_CALL(release_memory, (TEXT**)items, memory_resource);
+    RC_HEAP_CALL(release_memory, (TEXT**)items, memory_arena_resource);
     RC_HEAP_CALL(release_object_list, &list, true);
 
     TEXT result = RC_HEAP_CALL(build_text_string_builder, &string_builder);
@@ -157,11 +157,11 @@ TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* me
     return result;
 }
 
-TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path, const MEMORY_RESOURCE* memory_resource)
+TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     // 相対パスが絶対パスっぽければ相対パス自身を返す
     if (relative_path->length && is_directory_separator(relative_path->value[0])) {
-        return RC_HEAP_CALL(trim_text, relative_path, TRIM_TARGETS_TAIL, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS), memory_resource);
+        return RC_HEAP_CALL(trim_text, relative_path, TRIM_TARGETS_TAIL, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS), memory_arena_resource);
     }
 
     TEXT trimmed_base_path = trim_text_stack(base_path, TRIM_TARGETS_TAIL, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
@@ -169,14 +169,14 @@ TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path
 
     if (!trimmed_base_path.length || !trimmed_relative_path.length) {
         if (trimmed_base_path.length) {
-            return clone_text(&trimmed_base_path, memory_resource);
+            return clone_text(&trimmed_base_path, memory_arena_resource);
         }
 
-        return clone_text(&trimmed_relative_path, memory_resource);
+        return clone_text(&trimmed_relative_path, memory_arena_resource);
     }
 
     size_t total_length = trimmed_base_path.length + sizeof(TCHAR/* \ */) + trimmed_relative_path.length;
-    TCHAR* buffer = RC_HEAP_CALL(allocate_string, total_length, memory_resource);
+    TCHAR* buffer = RC_HEAP_CALL(allocate_string, total_length, memory_arena_resource);
 
     copy_memory(buffer, trimmed_base_path.value, trimmed_base_path.length * sizeof(TCHAR));
     if (trimmed_relative_path.length) {
@@ -184,10 +184,10 @@ TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path
         buffer[trimmed_base_path.length] = DIRECTORY_SEPARATOR_CHARACTER;
     }
 
-    return wrap_text_with_length(buffer, total_length, true, memory_resource);
+    return wrap_text_with_length(buffer, total_length, true, memory_arena_resource);
 }
 
-TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_t count, const MEMORY_RESOURCE* memory_resource)
+TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_t count, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     size_t total_path_length = (size_t)base_path->length + 1 + count; // ディレクトリ区切り
 
@@ -196,7 +196,7 @@ TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_
         total_path_length += path->length;
     }
 
-    STRING_BUILDER string_builder = RC_HEAP_CALL(new_string_builder, total_path_length, memory_resource);
+    STRING_BUILDER string_builder = RC_HEAP_CALL(new_string_builder, total_path_length, memory_arena_resource);
     TEXT trimmed_base_path = trim_text_stack(base_path, TRIM_TARGETS_TAIL, DIRECTORY_SEPARATORS, SIZEOF_ARRAY(DIRECTORY_SEPARATORS));
     append_builder_text_word(&string_builder, &trimmed_base_path);
 
@@ -211,20 +211,20 @@ TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_
     TEXT joined_path = RC_HEAP_CALL(build_text_string_builder, &string_builder);
     RC_HEAP_CALL(release_string_builder, &string_builder);
 
-    TEXT result = RC_HEAP_CALL(canonicalize_path, &joined_path, memory_resource);
+    TEXT result = RC_HEAP_CALL(canonicalize_path, &joined_path, memory_arena_resource);
     RC_HEAP_CALL(release_text, &joined_path);
 
     return result;
 }
 
-TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_RESOURCE* memory_resource)
+TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     size_t length = MAX_PATH;
     size_t path_length = 0;
     TCHAR* path = NULL;
 
     while (!path) {
-        path = RC_HEAP_CALL(allocate_string, length, memory_resource);
+        path = RC_HEAP_CALL(allocate_string, length, memory_arena_resource);
         if (!path) {
             return create_invalid_text();
         }
@@ -234,7 +234,7 @@ TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_RESOURCE* m
             path_length = 0;
             break;
         } else if (module_path_length >= length - 1) {
-            RC_HEAP_CALL(release_string, path, memory_resource);
+            RC_HEAP_CALL(release_string, path, memory_arena_resource);
             path = NULL;
             length *= 2;
         } else {
@@ -244,10 +244,10 @@ TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_RESOURCE* m
     }
 
     TEXT result = path_length
-        ? RC_HEAP_CALL(new_text_with_length, path, path_length, memory_resource)
+        ? RC_HEAP_CALL(new_text_with_length, path, path_length, memory_arena_resource)
         : create_invalid_text()
         ;
-    RC_HEAP_CALL(release_string, path, memory_resource);
+    RC_HEAP_CALL(release_string, path, memory_arena_resource);
 
     return result;
 }
@@ -294,7 +294,7 @@ PATH_INFO get_path_info_stack(const TEXT* path)
     };
 }
 
-PATH_INFO RC_HEAP_FUNC(clone_path_info, const PATH_INFO* path_info, const MEMORY_RESOURCE* memory_resource)
+PATH_INFO RC_HEAP_FUNC(clone_path_info, const PATH_INFO* path_info, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     if (!path_info) {
         return create_invalid_path_info();
@@ -302,10 +302,10 @@ PATH_INFO RC_HEAP_FUNC(clone_path_info, const PATH_INFO* path_info, const MEMORY
 
     return (PATH_INFO)
     {
-        .parent_path = RC_HEAP_CALL(clone_text, &path_info->parent_path, memory_resource),
-            .name = RC_HEAP_CALL(clone_text, &path_info->name, memory_resource),
-            .name_without_extension = RC_HEAP_CALL(clone_text, &path_info->name_without_extension, memory_resource),
-            .extension = RC_HEAP_CALL(clone_text, &path_info->extension, memory_resource),
+        .parent_path = RC_HEAP_CALL(clone_text, &path_info->parent_path, memory_arena_resource),
+            .name = RC_HEAP_CALL(clone_text, &path_info->name, memory_arena_resource),
+            .name_without_extension = RC_HEAP_CALL(clone_text, &path_info->name_without_extension, memory_arena_resource),
+            .extension = RC_HEAP_CALL(clone_text, &path_info->extension, memory_arena_resource),
             .library = {
             .need_release = true,
         }

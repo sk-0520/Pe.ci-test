@@ -23,7 +23,7 @@ static void logging(const LOG_ITEM* log_item, void* data)
         _T("WARNING"),
         _T("ERROR"),
     };
-    STRING_BUILDER sb = new_string_builder(256, DEFAULT_MEMORY);
+    STRING_BUILDER sb = new_string_builder(256, DEFAULT_MEMORY_ARENA);
     TEXT format = wrap_text(
         _T("[LOG:%s]")
         _T(" ")
@@ -54,7 +54,7 @@ static void setup_logging_file(const COMMAND_LINE_OPTION* command_line_option)
     if (is_inputted_command_line_item(log_file_item)) {
         TEXT default_log_path = log_file_item->value;
 
-        FILE_WRITER log_file_writer = new_file_writer(&default_log_path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM, DEFAULT_MEMORY);
+        FILE_WRITER log_file_writer = new_file_writer(&default_log_path, FILE_ENCODING_UTF8, FILE_OPEN_MODE_OPEN_OR_CREATE, FILE_WRITER_OPTIONS_BOM, DEFAULT_MEMORY_ARENA);
         seek_end_file_resource(&log_file_writer.resource);
         set_default_log_file(&log_file_writer);
     } else {
@@ -102,7 +102,7 @@ static void setup_logging_level(const COMMAND_LINE_OPTION* command_line_option)
 
 static void start_logging(const COMMAND_LINE_OPTION* command_line_option)
 {
-    initialize_logger(DEFAULT_MEMORY);
+    initialize_logger(DEFAULT_MEMORY_ARENA);
     setup_logging_file(command_line_option);
     setup_logging_level(command_line_option);
 
@@ -133,7 +133,7 @@ static int application_main(HINSTANCE hInstance)
 #endif
 
     TEXT command_line = wrap_text(GetCommandLine());
-    COMMAND_LINE_OPTION command_line_option = parse_command_line(&command_line, true, DEFAULT_MEMORY);
+    COMMAND_LINE_OPTION command_line_option = parse_command_line(&command_line, true, DEFAULT_MEMORY_ARENA);
 
     start_logging(&command_line_option);
 
