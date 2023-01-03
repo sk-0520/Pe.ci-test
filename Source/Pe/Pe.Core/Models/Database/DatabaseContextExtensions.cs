@@ -39,13 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return reader.Query<T>(statement, parameter, buffered);
         }
 
-        /// <summary>
-        /// 検索処理時に順序指定を強制する。
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <param name="statement">データベース問い合わせ文。</param>
-        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <returns></returns>
+        /// <inheritdoc cref="SelectOrdered{T}(IDatabaseReader, string, object?, bool)"/>
         public static IEnumerable<dynamic> SelectOrdered(this IDatabaseReader reader, string statement, object? parameter = null, bool buffered = true)
         {
             EnforceOrderBy(statement);
@@ -53,6 +47,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return reader.Query(statement, parameter, buffered);
         }
 
+        /// <inheritdoc cref="SelectOrdered{T}(IDatabaseReader, string, object?, bool)"/>
         public static Task<IEnumerable<T>> SelectOrderedAsync<T>(this IDatabaseReader reader, string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
         {
             EnforceOrderBy(statement);
@@ -60,6 +55,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return reader.QueryAsync<T>(statement, parameter, buffered, cancellationToken);
         }
 
+        /// <inheritdoc cref="SelectOrdered{T}(IDatabaseReader, string, object?, bool)"/>
         public static Task<IEnumerable<dynamic>> SelectOrderedAsync(this IDatabaseReader reader, string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
         {
             EnforceOrderBy(statement);
@@ -90,6 +86,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return reader.QueryFirst<long>(statement, parameter);
         }
 
+        /// <inheritdoc cref="SelectSingleCount(IDatabaseReader, string, object?)"/>
         public static Task<long> SelectSingleCountAsync(this IDatabaseReader reader, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             EnforceSingleCount(statement);
@@ -129,6 +126,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return writer.Execute(statement, parameter);
         }
 
+        /// <inheritdoc cref="Update(IDatabaseWriter, string, object?)"/>
+        public static Task<int> UpdateAsync(this IDatabaseWriter writer, string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            EnforceUpdate(statement);
+
+            return writer.ExecuteAsync(statement, parameter, cancellationToken);
+        }
 
         /// <summary>
         /// 単一更新を強制。
@@ -148,6 +152,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }
         }
 
+        /// <inheritdoc cref="UpdateByKey(IDatabaseWriter, string, object)"/>
+        public static async Task UpdateByKeyAsync(this IDatabaseWriter writer, string statement, object parameter, CancellationToken cancellationToken = default)
+        {
+            EnforceUpdate(statement);
+
+            var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
+            if(result != 1) {
+                throw new DatabaseContextException($"update -> {result}");
+            }
+        }
+
         /// <summary>
         /// 単一更新か未更新を強制。
         /// </summary>
@@ -162,6 +177,19 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             EnforceUpdate(statement);
 
             var result = writer.Execute(statement, parameter);
+            if(1 < result) {
+                throw new DatabaseContextException($"update -> {result}");
+            }
+
+            return result == 1;
+        }
+
+        /// <inheritdoc cref="UpdateByKeyOrNothing(IDatabaseWriter, string, object)"/>
+        public static async Task<bool> UpdateByKeyOrNothingAsync(this IDatabaseWriter writer, string statement, object parameter, CancellationToken cancellationToken = default)
+        {
+            EnforceUpdate(statement);
+
+            var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(1 < result) {
                 throw new DatabaseContextException($"update -> {result}");
             }
@@ -191,6 +219,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return writer.Execute(statement, parameter);
         }
 
+        /// <inheritdoc cref="Insert(IDatabaseWriter, string, object?)"/>
+        public static Task<int> InsertAsync(this IDatabaseWriter writer, string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            EnforceInsert(statement);
+
+            return writer.ExecuteAsync(statement, parameter, cancellationToken);
+        }
+
         /// <summary>
         /// 単一挿入。
         /// </summary>
@@ -204,6 +240,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             EnforceInsert(statement);
 
             var result = writer.Execute(statement, parameter);
+            if(result != 1) {
+                throw new DatabaseContextException($"insert -> {result}");
+            }
+        }
+
+        /// <inheritdoc cref="InsertSingle(IDatabaseWriter, string, object?)"/>
+        public static async Task InsertSingleAsync(this IDatabaseWriter writer, string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            EnforceInsert(statement);
+
+            var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(result != 1) {
                 throw new DatabaseContextException($"insert -> {result}");
             }
@@ -231,6 +278,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return writer.Execute(statement, parameter);
         }
 
+        /// <inheritdoc cref="Delete(IDatabaseWriter, string, object?)"/>
+        public static Task<int> DeleteAsync(this IDatabaseWriter writer, string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            EnforceDelete(statement);
+
+            return writer.ExecuteAsync(statement, parameter, cancellationToken);
+        }
+
         /// <summary>
         /// 単一削除。
         /// </summary>
@@ -244,6 +299,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             EnforceDelete(statement);
 
             var result = writer.Execute(statement, parameter);
+            if(result != 1) {
+                throw new DatabaseContextException($"delete -> {result}");
+            }
+        }
+        /// <inheritdoc cref="DeleteByKey(IDatabaseWriter, string, object)"/>
+        public static async Task DeleteByKeyAsync(this IDatabaseWriter writer, string statement, object parameter, CancellationToken cancellationToken = default)
+        {
+            EnforceDelete(statement);
+
+            var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(result != 1) {
                 throw new DatabaseContextException($"delete -> {result}");
             }
@@ -264,6 +329,19 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             EnforceDelete(statement);
 
             var result = writer.Execute(statement, parameter);
+            if(1 < result) {
+                throw new DatabaseContextException($"delete -> {result}");
+            }
+
+            return result == 1;
+        }
+
+        /// <inheritdoc cref="DeleteByKeyOrNothing(IDatabaseWriter, string, object)"/>
+        public static async Task<bool> DeleteByKeyOrNothingAsync(this IDatabaseWriter writer, string statement, object parameter, CancellationToken cancellationToken = default)
+        {
+            EnforceDelete(statement);
+
+            var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(1 < result) {
                 throw new DatabaseContextException($"delete -> {result}");
             }
