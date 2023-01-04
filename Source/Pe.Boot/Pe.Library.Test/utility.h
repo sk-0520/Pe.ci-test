@@ -17,7 +17,7 @@ namespace fs = std::filesystem;
 namespace mstest = Microsoft::VisualStudio::CppUnitTestFramework;
 
 #ifdef RES_CHECK
-#   define text(s) rc_heap__new_text(RELATIVE_FILET, __LINE__, _T(s), DEFAULT_MEMORY_ARENA)
+#   define text(s) library_rc_heap_new_text(RELATIVE_FILET, __LINE__, _T(s), DEFAULT_MEMORY_ARENA)
 #else
 #   define text(s) new_text(_T(s), DEFAULT_MEMORY_ARENA)
 #endif
@@ -205,7 +205,7 @@ public:
         test_namespace_name = namespace_name;
 
 #ifdef RES_CHECK
-        rc__initialize(output, RES_CHECK_INIT_PATH_LENGTH, RES_CHECK_INIT_BUFFER_LENGTH, RES_CHECK_INIT_HEAP_COUNT, RES_CHECK_INIT_FILE_COUNT);
+        library_rc_initialize(output, RES_CHECK_INIT_PATH_LENGTH, RES_CHECK_INIT_BUFFER_LENGTH, RES_CHECK_INIT_HEAP_COUNT, RES_CHECK_INIT_FILE_COUNT);
 #endif
 
 
@@ -244,9 +244,9 @@ public:
         logger_put_info(_T("TEST END"));
 
 #ifdef RES_CHECK
-        rc__print(true);
-        auto  exists_resource_leak = rc__exists_resource_leak();
-        rc__uninitialize();
+        library_rc_print(true);
+        auto  exists_resource_leak = library_rc_exists_resource_leak();
+        library_rc_uninitialize();
 
         //#ifdef DEBUG
         Microsoft::VisualStudio::CppUnitTestFramework::Assert::IsFalse(exists_resource_leak);

@@ -88,7 +88,7 @@ static void extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t need
     byte_t current_bytes = get_type_bytes(list->library.type, list->length);
     byte_t default_capacity_bytes = get_type_bytes(list->library.type, PRIMITIVE_LIST_DEFAULT_CAPACITY);
 
-    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&list->items, current_bytes, list->library.capacity_bytes, need_bytes, default_capacity_bytes, list->library.memory_arena_resource);
+    byte_t extend_total_byte = library_extend_capacity_if_not_enough_bytes_x2(&list->items, current_bytes, list->library.capacity_bytes, need_bytes, default_capacity_bytes, list->library.memory_arena_resource);
     if (extend_total_byte) {
         list->library.capacity_bytes = extend_total_byte;
     }

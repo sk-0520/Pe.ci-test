@@ -41,7 +41,7 @@ namespace PeLibraryTest
             Assert::IsNull(p1);
         }
 
-        TEST_METHOD(library__extend_capacity_if_not_enough_bytes_x2_test)
+        TEST_METHOD(library_extend_capacity_if_not_enough_bytes_x2_test)
         {
             MEMORY_ARENA_RESOURCE memory_resource_data = new_memory_arena_resource(MEMORY_ARENA_AUTO_INITIAL_SIZE, MEMORY_ARENA_EXTENDABLE_MAXIMUM_SIZE);
             MEMORY_ARENA_RESOURCE* memory_arena_resource = &memory_resource_data;
@@ -51,25 +51,25 @@ namespace PeLibraryTest
 
             void* old_p1 = p1;
 
-            Assert::AreEqual((byte_t)0, library__extend_capacity_if_not_enough_bytes_x2(&p1, 0, 8, 7, default_cap, memory_arena_resource));
+            Assert::AreEqual((byte_t)0, library_extend_capacity_if_not_enough_bytes_x2(&p1, 0, 8, 7, default_cap, memory_arena_resource));
             Assert::AreEqual(old_p1, p1);
-            Assert::AreEqual((byte_t)0, library__extend_capacity_if_not_enough_bytes_x2(&p1, 0, 8, 8, default_cap, memory_arena_resource));
+            Assert::AreEqual((byte_t)0, library_extend_capacity_if_not_enough_bytes_x2(&p1, 0, 8, 8, default_cap, memory_arena_resource));
             Assert::AreEqual(old_p1, p1);
 
-            byte_t extends1 = library__extend_capacity_if_not_enough_bytes_x2(&p1, 0, 8, 9, default_cap, memory_arena_resource);
+            byte_t extends1 = library_extend_capacity_if_not_enough_bytes_x2(&p1, 0, 8, 9, default_cap, memory_arena_resource);
             Assert::AreEqual((byte_t)16, extends1);
             Assert::AreNotEqual(old_p1, p1);
 
             void* old_p2 = p1;
 
-            Assert::AreEqual((byte_t)0, library__extend_capacity_if_not_enough_bytes_x2(&p1, 14, 16, 1, default_cap, memory_arena_resource));
-            Assert::AreEqual((byte_t)0, library__extend_capacity_if_not_enough_bytes_x2(&p1, 15, 16, 1, default_cap, memory_arena_resource));
+            Assert::AreEqual((byte_t)0, library_extend_capacity_if_not_enough_bytes_x2(&p1, 14, 16, 1, default_cap, memory_arena_resource));
+            Assert::AreEqual((byte_t)0, library_extend_capacity_if_not_enough_bytes_x2(&p1, 15, 16, 1, default_cap, memory_arena_resource));
 
-            byte_t extends2 = library__extend_capacity_if_not_enough_bytes_x2(&p1, 15, 16, 2, default_cap, memory_arena_resource);
+            byte_t extends2 = library_extend_capacity_if_not_enough_bytes_x2(&p1, 15, 16, 2, default_cap, memory_arena_resource);
             Assert::AreEqual((byte_t)32, extends2);
             Assert::AreNotEqual(old_p2, p1);
 
-            byte_t extends3 = library__extend_capacity_if_not_enough_bytes_x2(&p1, 0, 8, 4097, default_cap, memory_arena_resource);
+            byte_t extends3 = library_extend_capacity_if_not_enough_bytes_x2(&p1, 0, 8, 4097, default_cap, memory_arena_resource);
             Assert::AreEqual((byte_t)8192, extends3);
 
 

@@ -182,6 +182,6 @@ int compare_memory(const void* a, const void* b, byte_t bytes);
 /// <param name="default_capacity_bytes">予約領域の標準値。</param>
 /// <param name="calc_extend_capacity">予約領域拡張方法。</param>
 /// <returns>拡張後の総バイト数。未実施の場合は0を返す。</returns>
-byte_t library__extend_capacity_if_not_enough_bytes(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, func_calc_extend_capacity calc_extend_capacity, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
+byte_t library_extend_capacity_if_not_enough_bytes(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, func_calc_extend_capacity calc_extend_capacity, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 
-byte_t library__extend_capacity_if_not_enough_bytes_x2(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
+byte_t library_extend_capacity_if_not_enough_bytes_x2(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, const MEMORY_ARENA_RESOURCE* memory_arena_resource);

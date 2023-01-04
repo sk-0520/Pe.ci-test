@@ -4,7 +4,7 @@
 #include "debug.h"
 #include "memory.h"
 
-static MEMORY_ARENA_RESOURCE library__default_memory_resource = {
+static MEMORY_ARENA_RESOURCE library_default_memory_resource = {
     .handle = NULL,
     .maximum_size = 0,
 };
@@ -28,10 +28,10 @@ static bool is_default_memory_resource(const MEMORY_ARENA_RESOURCE* memory_arena
 {
     assert(memory_arena_resource);
 
-    if (memory_arena_resource == &library__default_memory_resource) {
+    if (memory_arena_resource == &library_default_memory_resource) {
         return true;
     }
-    if (memory_arena_resource->handle == library__default_memory_resource.handle) {
+    if (memory_arena_resource->handle == library_default_memory_resource.handle) {
         return true;
     }
 
@@ -40,11 +40,11 @@ static bool is_default_memory_resource(const MEMORY_ARENA_RESOURCE* memory_arena
 
 MEMORY_ARENA_RESOURCE* get_default_memory_arena_resource()
 {
-    if (!library__default_memory_resource.handle) {
-        library__default_memory_resource.handle = GetProcessHeap();
+    if (!library_default_memory_resource.handle) {
+        library_default_memory_resource.handle = GetProcessHeap();
     }
 
-    return &library__default_memory_resource;
+    return &library_default_memory_resource;
 }
 
 MEMORY_ARENA_RESOURCE new_memory_arena_resource(byte_t initial_size, byte_t maximum_size)
@@ -112,7 +112,7 @@ void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill, const MEMO
 
 #ifdef RES_CHECK
     if (is_default_memory_resource(memory_arena_resource)) {
-        rc__heap_check(heap, true, RES_CHECK_CALL_ARGS);
+        library_rc_heap_check(heap, true, RES_CHECK_CALL_ARGS);
     }
 #endif
 
@@ -144,7 +144,7 @@ bool RC_HEAP_FUNC(release_memory, void* p, const MEMORY_ARENA_RESOURCE* memory_a
     if (is_default_memory_resource(memory_arena_resource)) {
 #pragma warning(push)
 #pragma warning(disable:6001)
-        rc__heap_check(p, false, RES_CHECK_CALL_ARGS);
+        library_rc_heap_check(p, false, RES_CHECK_CALL_ARGS);
 #pragma warning(pop)
     }
 #endif
@@ -172,7 +172,7 @@ int compare_memory(const void* a, const void* b, byte_t bytes)
     return memcmp(a, b, bytes);
 }
 
-byte_t library__extend_capacity_if_not_enough_bytes(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, func_calc_extend_capacity calc_extend_capacity, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
+byte_t library_extend_capacity_if_not_enough_bytes(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, func_calc_extend_capacity calc_extend_capacity, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     assert(memory_arena_resource);
 
@@ -205,9 +205,9 @@ static byte_t extend_x2(byte_t input_bytes)
     return input_bytes * 2;
 }
 
-byte_t library__extend_capacity_if_not_enough_bytes_x2(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
+byte_t library_extend_capacity_if_not_enough_bytes_x2(void** target, byte_t current_bytes, byte_t current_capacity_bytes, byte_t need_bytes, byte_t default_capacity_bytes, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     assert(memory_arena_resource);
 
-    return library__extend_capacity_if_not_enough_bytes(target, current_bytes, current_capacity_bytes, need_bytes, default_capacity_bytes, extend_x2, memory_arena_resource);
+    return library_extend_capacity_if_not_enough_bytes(target, current_bytes, current_capacity_bytes, need_bytes, default_capacity_bytes, extend_x2, memory_arena_resource);
 }

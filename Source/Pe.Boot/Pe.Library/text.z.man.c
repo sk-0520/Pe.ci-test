@@ -109,7 +109,7 @@ bool is_whitespace_text(const TEXT* text)
 
     for (size_t i = 0; i < text->length; i++) {
         TCHAR c = text->value[i];
-        bool existsWhiteSpace = contains_characters(c, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters));
+        bool existsWhiteSpace = contains_characters(c, library_whitespace_characters, SIZEOF_ARRAY(library_whitespace_characters));
         if (!existsWhiteSpace) {
             return false;
         }
@@ -186,7 +186,7 @@ TEXT RC_HEAP_FUNC(trim_text, const TEXT* text, TRIM_TARGETS targets, const TCHAR
 
 TEXT RC_HEAP_FUNC(trim_whitespace_text, const TEXT* text, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
-    return trim_text(text, TRIM_TARGETS_BOTH, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters), memory_arena_resource);
+    return trim_text(text, TRIM_TARGETS_BOTH, library_whitespace_characters, SIZEOF_ARRAY(library_whitespace_characters), memory_arena_resource);
 }
 
 TEXT trim_text_stack(const TEXT* text, TRIM_TARGETS targets, const TCHAR* characters, size_t count)
@@ -201,7 +201,7 @@ TEXT trim_text_stack(const TEXT* text, TRIM_TARGETS targets, const TCHAR* charac
 
 TEXT trim_whitespace_text_stack(const TEXT* text)
 {
-    return trim_text_stack(text, TRIM_TARGETS_BOTH, library__whitespace_characters, SIZEOF_ARRAY(library__whitespace_characters));
+    return trim_text_stack(text, TRIM_TARGETS_BOTH, library_whitespace_characters, SIZEOF_ARRAY(library_whitespace_characters));
 }
 
 OBJECT_LIST RC_HEAP_FUNC(split_text, const TEXT* text, func_split_text function, const MEMORY_ARENA_RESOURCE* memory_arena_resource)

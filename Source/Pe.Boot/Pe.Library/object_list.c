@@ -78,7 +78,7 @@ static void extend_capacity_if_not_enough_object_list(OBJECT_LIST* object_list, 
     byte_t current_bytes = object_list->length * object_list->library.item_size;
     byte_t default_capacity_bytes = OBJECT_LIST_DEFAULT_CAPACITY_COUNT * object_list->library.item_size;
 
-    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&object_list->items, current_bytes, object_list->library.capacity * object_list->library.item_size, need_bytes, default_capacity_bytes, object_list->library.memory_arena_resource);
+    byte_t extend_total_byte = library_extend_capacity_if_not_enough_bytes_x2(&object_list->items, current_bytes, object_list->library.capacity * object_list->library.item_size, need_bytes, default_capacity_bytes, object_list->library.memory_arena_resource);
     if (extend_total_byte) {
         object_list->library.capacity = extend_total_byte / object_list->library.item_size;
     }

@@ -4,8 +4,8 @@
 #include "debug.h"
 
 
-static const uint8_t library__unicode_utf8_bom[] = { 0xef, 0xbb, 0xbf };
-static const uint8_t library__unicode_utf16le_bom[] = { 0xff, 0xef };
+static const uint8_t library_unicode_utf8_bom[] = { 0xef, 0xbb, 0xbf };
+static const uint8_t library_unicode_utf16le_bom[] = { 0xff, 0xef };
 
 static void write_bom_if_unicode(const FILE_RESOURCE* file_resource, FILE_ENCODING encoding)
 {
@@ -21,13 +21,13 @@ static void write_bom_if_unicode(const FILE_RESOURCE* file_resource, FILE_ENCODI
     switch (encoding) {
 #ifdef _UNICODE
         case FILE_ENCODING_UTF8:
-            bom.length = sizeof(library__unicode_utf8_bom);
-            bom.value = library__unicode_utf8_bom;
+            bom.length = sizeof(library_unicode_utf8_bom);
+            bom.value = library_unicode_utf8_bom;
             break;
 
         case FILE_ENCODING_UTF16LE:
-            bom.length = sizeof(library__unicode_utf16le_bom);
-            bom.value = library__unicode_utf16le_bom;
+            bom.length = sizeof(library_unicode_utf16le_bom);
+            bom.value = library_unicode_utf16le_bom;
             break;
 
 #endif
@@ -78,13 +78,13 @@ static size_t get_bom_info(FILE_READER* file_reader, uint8_t* buffer, size_t len
 
 #ifdef _UNICODE
         case FILE_ENCODING_UTF8:
-            bom = library__unicode_utf8_bom;
-            bom_length = sizeof(library__unicode_utf8_bom);
+            bom = library_unicode_utf8_bom;
+            bom_length = sizeof(library_unicode_utf8_bom);
             break;
 
         case FILE_ENCODING_UTF16LE:
-            bom = library__unicode_utf16le_bom;
-            bom_length = sizeof(library__unicode_utf16le_bom);
+            bom = library_unicode_utf16le_bom;
+            bom_length = sizeof(library_unicode_utf16le_bom);
             break;
 #endif
         default:

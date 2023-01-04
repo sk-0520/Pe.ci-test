@@ -36,7 +36,7 @@ FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE
     };
 
 #ifdef RES_CHECK
-    rc__file_check(result.handle, result.path.value, true, RES_CHECK_CALL_ARGS);
+    library_rc_file_check(result.handle, result.path.value, true, RES_CHECK_CALL_ARGS);
 #endif
 
     return result;
@@ -68,7 +68,7 @@ bool RC_FILE_FUNC(release_file_resource, FILE_RESOURCE* file_resource)
     }
 
 #ifdef RES_CHECK
-    rc__file_check(file_resource->handle, NULL, false, RES_CHECK_CALL_ARGS);
+    library_rc_file_check(file_resource->handle, NULL, false, RES_CHECK_CALL_ARGS);
 #endif
 
     release_text(&file_resource->path);

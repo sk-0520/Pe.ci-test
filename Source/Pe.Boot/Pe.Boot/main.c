@@ -129,7 +129,7 @@ static void end_logging(void)
 static int application_main(HINSTANCE hInstance)
 {
 #ifdef RES_CHECK
-    rc__initialize(output, RES_CHECK_INIT_PATH_LENGTH, RES_CHECK_INIT_BUFFER_LENGTH, RES_CHECK_INIT_HEAP_COUNT, RES_CHECK_INIT_FILE_COUNT);
+    library_rc_initialize(output, RES_CHECK_INIT_PATH_LENGTH, RES_CHECK_INIT_BUFFER_LENGTH, RES_CHECK_INIT_HEAP_COUNT, RES_CHECK_INIT_FILE_COUNT);
 #endif
 
     TEXT command_line = wrap_text(GetCommandLine());
@@ -148,8 +148,8 @@ static int application_main(HINSTANCE hInstance)
     end_logging();
 
 #ifdef RES_CHECK
-    rc__print(true);
-    rc__uninitialize();
+    library_rc_print(true);
+    library_rc_uninitialize();
 #endif
 
     return return_code;

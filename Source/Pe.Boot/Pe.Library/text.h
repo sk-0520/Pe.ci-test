@@ -7,7 +7,7 @@
 #include "tstring.h"
 
 
-static const TCHAR library__whitespace_characters[] = { _T(' '), _T('\t') };
+static const TCHAR library_whitespace_characters[] = { _T(' '), _T('\t') };
 
 /// <summary>
 /// 不変文字列ラッパー。

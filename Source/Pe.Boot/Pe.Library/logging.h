@@ -129,23 +129,23 @@ bool detach_logger(ssize_t log_id);
 /// </summary>
 /// <param name="log_level">ログレベル。</param>
 /// <param name="format">書式。</param>
-void library__format_log(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller_line, const TCHAR* format, ...);
+void library_format_log(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller_line, const TCHAR* format, ...);
 /// <summary>
 /// 書式なしログ出力。
 /// <para>アプリケーション側では明示的に使用しない。<c>logger_put_*</c>を使用すること。</para>
 /// </summary>
 /// <param name="log_level">ログレベル。</param>
 /// <param name="message">メッセージ。</param>
-void library__put_log(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller_line, const TCHAR* message);
+void library_put_log(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller_line, const TCHAR* message);
 
-#define logger_format_level(level, format, ...) library__format_log((level), RELATIVE_FILET, __LINE__, format, __VA_ARGS__)
+#define logger_format_level(level, format, ...) library_format_log((level), RELATIVE_FILET, __LINE__, format, __VA_ARGS__)
 #define logger_format_trace(format, ...) logger_format_level(LOG_LEVEL_TRACE, format, __VA_ARGS__)
 #define logger_format_debug(format, ...) logger_format_level(LOG_LEVEL_DEBUG, format, __VA_ARGS__)
 #define logger_format_info(format, ...) logger_format_level(LOG_LEVEL_INFO, format, __VA_ARGS__)
 #define logger_format_warn(format, ...) logger_format_level(LOG_LEVEL_WARNING, format, __VA_ARGS__)
 #define logger_format_error(format, ...) logger_format_level(LOG_LEVEL_ERROR, format, __VA_ARGS__)
 
-#define logger_put_level(level, message) library__put_log((level), RELATIVE_FILET, __LINE__, message)
+#define logger_put_level(level, message) library_put_log((level), RELATIVE_FILET, __LINE__, message)
 #define logger_put_trace(message) logger_put_level(LOG_LEVEL_TRACE, message)
 #define logger_put_debug(message) logger_put_level(LOG_LEVEL_DEBUG, message)
 #define logger_put_info(message) logger_put_level(LOG_LEVEL_INFO, message)
