@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <param name="s">入力文字列。</param>
         /// <param name="result">変更成功。</param>
         /// <returns></returns>
-        public static  bool TryParse(string s, out <#= item.Name #> result)
+        public static bool TryParse(string s, out <#= item.Name #> result)
         {
             if(<#= item.Type.FullName #>.TryParse(s, out var val)) {
                 result = new <#= item.Name #>(val);
