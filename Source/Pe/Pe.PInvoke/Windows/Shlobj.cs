@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SHCNE
     {
         SHCNE_ALLEVENTS = 0x7FFFFFFF,
@@ -16,6 +17,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         SHCNE_UPDATEDIR = 0x1000,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SHCNF
     {
         /// <summary>
@@ -28,6 +30,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         SHCNF_DWORD = 0x0003,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SHOP: uint
     {
         /// <summary>

@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:—ñ‹“’l‚Ì‘O‚ÉŒ^–¼‚ð•t‚¯‚È‚¢‚Å‚­‚¾‚³‚¢", Justification = "WindowsAPI")]
     public enum TVS
     {
         TVS_NOHSCROLL = 0x8000,

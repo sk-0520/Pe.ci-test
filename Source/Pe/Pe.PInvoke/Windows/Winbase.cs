@@ -4,6 +4,7 @@ using System.Security;
 
 namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum FILE_ATTRIBUTE
     {
         FILE_ATTRIBUTE_NORMAL = 0x00000080,
@@ -24,6 +25,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     /// リソースの種類。
     /// </summary>
     /// <seealso href="https://docs.microsoft.com/ja-jp/windows/win32/menurc/resource-types"/>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum RT
     {
         /// <summary>
@@ -115,6 +117,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [FlagsAttribute]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum ES: uint
     {
         ES_AWAYMODE_REQUIRED = 0x00000040,
@@ -153,6 +156,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     {
         [DllImport("kernel32.dll", SetLastError = true)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:識別子は、不適切なサフィックスを含むことはできません", Justification = "WindowsAPI")]
         public static extern IntPtr LoadLibraryEx(string lpFileName, IntPtr hReservedNull, LOAD_LIBRARY dwFlags);
 
         [DllImport("kernel32.dll", SetLastError = true)]

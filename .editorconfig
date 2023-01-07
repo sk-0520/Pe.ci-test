@@ -45,6 +45,8 @@ dotnet_diagnostic.CA1018.severity = warning
 dotnet_diagnostic.CA1068.severity = warning
 dotnet_diagnostic.CA1419.severity = warning
 dotnet_diagnostic.CA1710.severity = warning
+dotnet_diagnostic.CA1711.severity = warning
+dotnet_diagnostic.CA1712.severity = warning
 
 [*.csproj]
 end_of_line = crlf

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum ABM: int
     {
         /// <summary>
@@ -22,6 +23,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         ABM_SETSTATE = 10,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum ABN: int
     {
         ABN_STATECHANGE = 0,
@@ -30,6 +32,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         ABN_WINDOWARRANGE = 3,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum ABE: int
     {
         ABE_LEFT = 0,
@@ -89,6 +92,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     /// http://pinvoke.net/default.aspx/Enums/FileInfoFlags.html
     /// </summary>
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SHGFI: uint
     {
         SHGFI_ICON = 0x000000100,     // get icon
@@ -112,6 +116,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
                                               // the upper 8 bits of the iIcon
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SHIL
     {
         SHIL_LARGE = 0,   // normally 32x32

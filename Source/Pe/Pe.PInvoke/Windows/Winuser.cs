@@ -6,6 +6,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
     public delegate IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam);
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum WM: uint
     {
         WM_DESTROY = 0x0002,
@@ -68,6 +69,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
     [Flags]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum WS: uint
     {
         WS_OVERLAPPED = 0,
@@ -97,6 +99,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
     [Flags]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum WS_EX: uint
     {
         WS_EX_DLGMODALFRAME = 0x0001,
@@ -127,6 +130,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         WS_EX_NOACTIVATE = 0x08000000,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum CS
     {
         CS_DROPSHADOW = 0x20000,
@@ -140,6 +144,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     /// <summary>
     /// http://chokuto.ifdef.jp/urawaza/message/WM_SYSCOMMAND.html
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SC
     {
         /// <summary>
@@ -218,6 +223,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SB
     {
         SB_LINEUP = 0,
@@ -251,6 +257,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum MA: int
     {
         MA_ACTIVATE = 1,
@@ -260,6 +267,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum MOD: uint
     {
         None = 0,
@@ -270,6 +278,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         MOD_NOREPEAT = 0x4000
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum HT
     {
         HTERROR = (-2),
@@ -305,6 +314,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
     [Flags]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SWP: int
     {
         SWP_ASYNCWINDOWPOS = 0x4000,
@@ -324,6 +334,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         SWP_SHOWWINDOW = 0x0040,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum HWND
     {
         HWND_TOP = 0,
@@ -339,6 +350,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     ///
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SW: uint
     {
         /// <summary>
@@ -406,6 +418,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     ///
     /// </summary>
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SMTO: uint
     {
         SMTO_NORMAL = 0x0,
@@ -415,6 +428,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SM
     {
         SM_CXSCREEN = 0,
@@ -516,6 +530,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     /// <summary>
     /// SPI_ System-wide parameter - Used in SystemParametersInfo function
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SPI: uint
     {
         /// <summary>
@@ -1720,6 +1735,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
     [Flags]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SPIF
     {
         None = 0x00,
@@ -1732,6 +1748,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum AW
     {
         AW_HOR_POSITIVE = 0x00000001,
@@ -1746,6 +1763,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum DI
     {
         /// <summary>
@@ -1770,6 +1788,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         DI_NORMAL = 3,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum GW: uint
     {
         GW_HWNDFIRST = 0,
@@ -1782,6 +1801,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum KEYEVENTF: uint
     {
         KEYEVENTF_KEYDOWN = 0x0000,
@@ -1789,6 +1809,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         KEYEVENTF_KEYUP = 0x0002,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum GWL
     {
         GWL_WNDPROC = -4,
@@ -1801,6 +1822,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:列挙値を重複させることはできない")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum VK: int
     {
         VK_LBUTTON = 0x01,
@@ -1907,6 +1929,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         VK_OME_CLEAR = 0xFE,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum MK
     {
         /// <summary>
@@ -1940,12 +1963,14 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum XBUTTON
     {
         XBUTTON1 = 0x0001,
         XBUTTON2 = 0x0002
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum WH
     {
         WH_CALLWNDPROC = 4,
@@ -1982,6 +2007,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public SWP flags;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum IDC: int
     {
         IDC_ARROW = 32512,
@@ -2002,6 +2028,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         IDC_HELP = 32651,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum WMSZ
     {
         WMSZ_LEFT = 1,
@@ -2014,6 +2041,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         WMSZ_BOTTOMRIGHT = 8,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum MONITOR: uint
     {
         MONITOR_DEFAULTTONULL = 0x00000000,
@@ -2022,6 +2050,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum CWP: uint
     {
         CWP_ALL = 0x0000,
@@ -2030,6 +2059,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         CWP_SKIPTRANSPARENT = 0x0004
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum GA: uint
     {
         /// <summary>
@@ -2046,6 +2076,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         GA_ROOTOWNER = 3
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum OBJID: uint
     {
         OBJID_HSCROLL = 0xFFFFFFFA,
@@ -2078,7 +2109,9 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
         public int[] rgstate;
     }
+
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SIF
     {
         /// <summary>
@@ -2130,6 +2163,8 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public UInt32 uCount;
         public UInt32 dwTimeout;
     }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum FLASHW: uint
     {
         /// <summary>
@@ -2175,6 +2210,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum LLKHF: uint
     {
         LLKHF_EXTENDED = 0x01,
@@ -2204,6 +2240,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum MOUSEEVENTF: uint
     {
         MOUSEEVENTF_ABSOLUTE = 0x8000,
@@ -2263,6 +2300,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         [FieldOffset(0)] public HARDWAREINPUT hi;
     };
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum HC
     {
         HC_ACTION = 0,
@@ -2273,6 +2311,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     /// https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-mouse_event
     /// http://tokovalue.jp/function/MapVirtualKey.htm
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum MAPVK: uint
     {
         /// <summary>
@@ -2350,6 +2389,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:識別子は、不適切なサフィックスを含むことはできません", Justification = "WindowsAPI")]
         public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
@@ -2408,6 +2448,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:識別子は、不適切なサフィックスを含むことはできません", Justification = "WindowsAPI")]
         public static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyHeight, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, DI diFlags);
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
@@ -2593,6 +2634,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public static extern IntPtr WindowFromPoint(POINT p);
 
         [DllImport("user32.dll")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:識別子は、不適切なサフィックスを含むことはできません", Justification = "WindowsAPI")]
         public static extern IntPtr ChildWindowFromPointEx(IntPtr hWndParent, POINT pt, CWP uFlags);
 
         [DllImport("user32.dll")]
@@ -2648,6 +2690,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
 
         [DllImport("user32.dll")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:識別子は、不適切なサフィックスを含むことはできません", Justification = "WindowsAPI")]
         public static extern int ScrollWindowEx(IntPtr hWnd, int dx, int dy, [In] ref RECT prcScroll, [In] ref RECT prcClip, IntPtr hrgnUpdate, ref RECT prcUpdate, SW_scroll flags);
 
 
@@ -2665,11 +2708,14 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         // TODO: GetDpiForMonitor, windows7が死滅するか動的にとるか後で考える
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:識別子は、不適切なサフィックスを含むことはできません", Justification = "WindowsAPI")]
         public static extern bool FlashWindowEx(ref FLASHWINFO pwfi);
 
         [DllImport("user32.dll", SetLastError = true)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:識別子は、不適切なサフィックスを含むことはできません", Justification = "WindowsAPI")]
         public static extern IntPtr SetWindowsHookEx(WH hookType, HookProc lpfn, IntPtr hMod, uint dwThreadId);
         [DllImport("user32.dll", SetLastError = true)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:識別子は、不適切なサフィックスを含むことはできません", Justification = "WindowsAPI")]
         public static extern bool UnhookWindowsHookEx(IntPtr hhk);
         // <summary>
         ///     Passes the hook information to the next hook procedure in the current hook chain. A hook procedure can call this
@@ -2710,10 +2756,12 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         ///     </para>
         /// </remarks>
         [DllImport("user32.dll")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:識別子は、不適切なサフィックスを含むことはできません", Justification = "WindowsAPI")]
         public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 
         // overload for use with LowLevelKeyboardProc
         [DllImport("user32.dll")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:識別子は、不適切なサフィックスを含むことはできません", Justification = "WindowsAPI")]
         public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, WM wParam, [In] KBDLLHOOKSTRUCT lParam);
 
         // overload for use with LowLevelMouseProc
@@ -2729,6 +2777,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public static extern uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs, int cbSize);
 
         [DllImport("user32.dll")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:識別子は、不適切なサフィックスを含むことはできません", Justification = "WindowsAPI")]
         public static extern uint MapVirtualKeyEx(uint uCode, uint uMapType, IntPtr dwhkl);
         [DllImport("user32.dll")]
         public static extern uint MapVirtualKey(uint uCode, MAPVK uMapType);
@@ -2739,7 +2788,4 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         [DllImport("user32.dll")]
         public static extern IntPtr GetShellWindow();
     }
-
-
-
 }
