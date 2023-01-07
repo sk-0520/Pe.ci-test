@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        private Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync(IconScale iconScale)
+        private Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync(IconScale iconScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             var counter = new Counter(RetryMaxCount);
             foreach(var count in counter) {
                 try {
-                    var existisResult = await LoadExistsImageAsync(iconScale).ConfigureAwait(false);
+                    var existisResult = await LoadExistsImageAsync(iconScale, cancellationToken).ConfigureAwait(false);
                     if(existisResult.Success) {
                         return existisResult.SuccessValue;
                     }
