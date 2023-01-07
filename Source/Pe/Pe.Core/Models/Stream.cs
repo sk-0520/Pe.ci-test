@@ -11,6 +11,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <see cref="Stream"/>をラップするストリーム。
     /// <para>解放処理は継承先で対応すること。</para>
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:識別子は、正しいサフィックスを含んでいなければなりません")]
     public abstract class WrapStreamBase: Stream
     {
         protected WrapStreamBase(Stream stream)
