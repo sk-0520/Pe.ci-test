@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -106,20 +107,45 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         public int IndexOf(TViewModel viewModel) => EditableViewModels.IndexOf(viewModel);
 
+        public bool TryGetModel(TViewModel viewModel, [MaybeNullWhen(false)] out TModel result)
+        {
+            var index = IndexOf(viewModel);
+
+            if(index == -1) {
+                result = default;
+                return false;
+            }
+
+            result = Collection[index];
+            return true;
+        }
+
         /// <summary>
         /// 対になる<typeparamref name="TModel"/>を取得。
         /// </summary>
         /// <param name="viewModel">対になっている<typeparamref name="TViewModel"/>。</param>
         /// <returns>見つからない場合は <typeparamref name="TModel"/> の初期値。</returns>
-        public TModel? GetModel(TViewModel viewModel)
+        [return: MaybeNull]
+        public TModel GetModel(TViewModel viewModel)
         {
-            var index = IndexOf(viewModel);
-
-            if(index == -1) {
-                return default;
+            if(TryGetModel(viewModel, out var result)) {
+                return result;
             }
 
-            return Collection[index];
+            return default;
+        }
+
+        public bool TryGetViewModel(TModel model, [MaybeNullWhen(false)] out TViewModel result)
+        {
+            var index = IndexOf(model);
+
+            if(index == -1) {
+                result = default;
+                return false;
+            }
+
+            result = EditableViewModels[index];
+            return true;
         }
 
 
@@ -128,15 +154,14 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// </summary>
         /// <param name="model">対になっている<typeparamref name="TModel"/>。</param>
         /// <returns>見つからない場合は <typeparamref name="TViewModel"/> の初期値。</returns>
-        public TViewModel? GetViewModel(TModel model)
+        [return: MaybeNull]
+        public TViewModel GetViewModel(TModel model)
         {
-            var index = IndexOf(model);
-
-            if(index == -1) {
-                return default;
+            if(TryGetViewModel(model, out var result)) {
+                return result;
             }
 
-            return EditableViewModels[index];
+            return default;
         }
 
         #endregion
@@ -236,11 +261,14 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                if(disposing && ManagingResource) {
+                if(disposing) {
                     var oldItems = EditableViewModels.ToArray();
                     EditableViewModels.Clear();
-                    foreach(var oldItem in oldItems) {
-                        oldItem.Dispose();
+
+                    if(ManagingResource) {
+                        foreach(var oldItem in oldItems) {
+                            oldItem.Dispose();
+                        }
                     }
                 }
             }
