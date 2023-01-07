@@ -163,6 +163,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public extern static HRESULT SHGetImageList(int iImageList, ref Guid riid, out IImageList ppv);
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:識別子は、不適切なサフィックスを含むことはできません", Justification = "WindowsAPI")]
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         public static extern uint ExtractIconEx(string szFileName, int nIconIndex, IntPtr[] phiconLarge, IntPtr[] phiconSmall, uint nIc);
 
