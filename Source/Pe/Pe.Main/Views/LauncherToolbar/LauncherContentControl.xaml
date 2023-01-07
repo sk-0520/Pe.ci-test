@@ -21,7 +21,11 @@
     <ContentControl Grid.Column="0" IsTabStop="False" Content="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="{Binding IconMargin, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <ContentControl.Resources>
         <DataTemplate DataType="{x:Type app_main_viewmodels_iv:IconViewerViewModel}">
-          <app_main_views:ImageViewerControl LauncherItemIconMode="Toolbar" IconBox="{Binding IconBox, RelativeSource={RelativeSource AncestorType=UserControl}}" IconViewer="{Binding Content, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
+          <app_main_views:ImageViewerControl
+            LauncherItemIconMode="Toolbar"
+            IconBox="{Binding IconBox, Mode=OneTime, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            IconViewer="{Binding Content, RelativeSource={RelativeSource AncestorType=ContentControl}}"
+          />
         </DataTemplate>
       </ContentControl.Resources>
     </ContentControl>
@@ -31,8 +35,8 @@
           <Style.Triggers>
             <DataTrigger Binding="{Binding IsIconOnly, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False">
               <Setter Property="Visibility" Value="Visible" />
-              <Setter Property="Width" Value="{Binding TextWidth, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-              <Setter Property="Text" Value="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" />
+              <Setter Property="Width" Value="{Binding TextWidth, Mode=OneTime, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+              <Setter Property="Text" Value="{Binding Title, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl}}" />
             </DataTrigger>
           </Style.Triggers>
           <Setter Property="Visibility" Value="Collapsed" />
