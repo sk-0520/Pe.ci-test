@@ -236,7 +236,7 @@
                 <app_main_views:ImageViewerControl IconBox="Big" LauncherItemIconMode="Tooltip" IconViewer="{Binding TooltipIcon}" Margin="{StaticResource BasePadding}" />
                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
               </StackPanel>
-              <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
+              <TextBlock TextWrapping="Wrap" Text="{Binding Comment, Mode=OneTime}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
               <StackPanel Visibility="{Binding HasExecuteKeyGestures, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Separator />
                 <ItemsControl ItemsSource="{Binding ExecuteKeyGestures}">
@@ -307,7 +307,7 @@
                 <app_main_views:ImageViewerControl IconBox="Big" LauncherItemIconMode="Tooltip" IconViewer="{Binding TooltipIcon}" Margin="{StaticResource BasePadding}" />
                 <TextBlock Text="{Binding Name, Mode=OneWay}" VerticalAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
               </StackPanel>
-              <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
+              <TextBlock TextWrapping="Wrap" Text="{Binding Comment, Mode=OneTime}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
             </StackPanel>
           </ToolTip>
         </Button.ToolTip>
