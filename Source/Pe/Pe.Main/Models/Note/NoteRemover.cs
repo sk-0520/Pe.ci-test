@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Note
 {
+    [Obsolete]
     public class NoteRemover: EntityRemoverBase
     {
         public NoteRemover(NoteId noteId, ILoggerFactory loggerFactory) : base(loggerFactory)
