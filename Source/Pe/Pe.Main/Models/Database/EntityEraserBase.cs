@@ -5,8 +5,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database
 {
-    // 既存の EntityRemoverBase はもうだめだ！
-    // トランザクション管理できないから死ぬしかない！
     /// <summary>
     /// 特定の削除処理を一括して行う。
     /// <para>ランチャーアイテム削除時とかもうしんどいのよ。</para>
@@ -43,16 +41,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         #region function
 
-        protected abstract void ExecuteMain(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
-        protected abstract void ExecuteFile(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
-        protected abstract void ExecuteTemporary(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
+        protected abstract void ExecuteMainImpl(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
+        protected abstract void ExecuteLargeImpl(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
+        protected abstract void ExecuteTemporaryImpl(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
 
 
         public void Execute()
         {
-            ExecuteMain(MainContexts.Context, StatementLoader, MainContexts.Implementation);
-            ExecuteFile(LargeContexts.Context, StatementLoader, LargeContexts.Implementation);
-            ExecuteTemporary(TemporaryContexts.Context, StatementLoader, TemporaryContexts.Implementation);
+            ExecuteMainImpl(MainContexts.Context, StatementLoader, MainContexts.Implementation);
+            ExecuteLargeImpl(LargeContexts.Context, StatementLoader, LargeContexts.Implementation);
+            ExecuteTemporaryImpl(TemporaryContexts.Context, StatementLoader, TemporaryContexts.Implementation);
         }
 
         #endregion

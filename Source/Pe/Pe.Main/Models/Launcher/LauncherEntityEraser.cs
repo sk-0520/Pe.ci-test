@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region EntityEraserBase
 
-        protected override void ExecuteMain(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
+        protected override void ExecuteMainImpl(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
         {
             var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(context, statementLoader, implementation, LoggerFactory);
             launcherEnvVarsEntityDao.DeleteEnvVarItemsByLauncherItemId(LauncherItemId);
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             launcherItemsEntityDao.DeleteLauncherItem(LauncherItemId);
         }
 
-        protected override void ExecuteFile(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
+        protected override void ExecuteLargeImpl(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
         {
             var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(context, statementLoader, implementation, LoggerFactory);
             launcherItemIconsEntityDao.DeleteAllSizeImageBinary(LauncherItemId);
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             launcherItemIconStatusEntityDao.DeleteAllSizeLauncherItemIconState(LauncherItemId);
         }
 
-        protected override void ExecuteTemporary(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
+        protected override void ExecuteTemporaryImpl(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
         { }
 
         #endregion
