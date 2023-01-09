@@ -16,10 +16,10 @@
   <ContentControl x:Name="parent" IsTabStop="False" Content="{Binding IconViewer.Icon, RelativeSource={RelativeSource AncestorType=UserControl}}">
     <ContentControl.Resources>
       <DataTemplate DataType="{x:Type app_main_viewmodels_iconviewer:ImageViewModel}">
-        <Image UseLayoutRounding="True" Source="{Binding ImageSource}" />
+        <Image UseLayoutRounding="True" Source="{Binding ImageSource, Mode=OneTime}" />
       </DataTemplate>
       <DataTemplate DataType="{x:Type app_main_viewmodels_iconviewer:IconObjectViewModel}">
-        <ContentControl IsTabStop="False" Content="{Binding Icon}" />
+        <ContentControl IsTabStop="False" Content="{Binding Icon, Mode=OneTime}" />
       </DataTemplate>
     </ContentControl.Resources>
   </ContentControl>

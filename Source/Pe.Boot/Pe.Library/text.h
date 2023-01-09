@@ -7,7 +7,7 @@
 #include "tstring.h"
 
 
-static const TCHAR library__whitespace_characters[] = { _T(' '), _T('\t') };
+static const TCHAR library_whitespace_characters[] = { _T(' '), _T('\t') };
 
 /// <summary>
 /// 不変文字列ラッパー。
@@ -33,7 +33,7 @@ typedef struct tag_TEXT
         /// <para>アプリケーション内では使用しない。</para>
         /// <para><c>need_release</c>が有効な場合に使用されるため、静的・解放不要の場合は設定しない。</para>
         /// </summary>
-        const MEMORY_RESOURCE* memory_resource;
+        const MEMORY_ARENA_RESOURCE* memory_arena_resource;
         /// <summary>
         /// 解放が必要か。
         /// <para>アプリケーション内では使用しない。</para>
@@ -106,9 +106,9 @@ bool check_text_length(size_t length);
 /// <param name="source">対象文字列。</param>
 /// <param name="length">対象文字列の長さ。</param>
 /// <returns>不変文字列。解放が必要。</returns>
-TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define new_text_with_length(source, length, memory_resource) RC_HEAP_WRAP(new_text_with_length, (source), (length), memory_resource)
+#   define new_text_with_length(source, length, memory_arena_resource) RC_HEAP_WRAP(new_text_with_length, (source), (length), memory_arena_resource)
 #endif
 
 /// <summary>
@@ -116,14 +116,14 @@ TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length, cons
 /// </summary>
 /// <param name="source">対象文字列。</param>
 /// <returns>テキスト。解放が必要。</returns>
-TEXT RC_HEAP_FUNC(new_text, const TCHAR* source, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(new_text, const TCHAR* source, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define new_text(source, memory_resource) RC_HEAP_WRAP(new_text, (source), memory_resource)
+#   define new_text(source, memory_arena_resource) RC_HEAP_WRAP(new_text, (source), memory_arena_resource)
 #endif
 
-TEXT RC_HEAP_FUNC(new_empty_text, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(new_empty_text, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define new_empty_text(memory_resource) RC_HEAP_WRAP(new_empty_text, memory_resource)
+#   define new_empty_text(memory_arena_resource) RC_HEAP_WRAP(new_empty_text, memory_arena_resource)
 #endif
 
 /// <summary>
@@ -132,9 +132,9 @@ TEXT RC_HEAP_FUNC(new_empty_text, const MEMORY_RESOURCE* memory_resource);
 /// <param name="source">対象文字列。</param>
 /// <param name="length">対象文字列の長さ。</param>
 /// <param name="need_release">解放が必要か。真の場合、<c>wrapText</c>と異なり呼び出し側で確保した領域を信頼して持ち運ぶ。</param>
-/// <param name="memory_resource"><param name="need_release" />が真の場合に必要。</param>
+/// <param name="memory_arena_resource"><param name="need_release" />が真の場合に必要。</param>
 /// <returns>番兵使用不可のテキスト。</returns>
-TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release, const MEMORY_RESOURCE* memory_resource);
+TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 
 /// <summary>
 /// 文字列からテキストにラップ。
@@ -150,9 +150,9 @@ TEXT wrap_text(const TCHAR* source);
 /// </summary>
 /// <param name="source">入力テキスト。</param>
 /// <returns>複製されたテキスト。解放が必要。</returns>
-TEXT RC_HEAP_FUNC(clone_text, const TEXT* source, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(clone_text, const TEXT* source, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define clone_text(source, memory_resource) RC_HEAP_WRAP(clone_text, (source), memory_resource)
+#   define clone_text(source, memory_arena_resource) RC_HEAP_WRAP(clone_text, (source), memory_arena_resource)
 #endif
 
 /// <summary>
@@ -188,20 +188,20 @@ bool RC_HEAP_FUNC(release_text, TEXT* text);
 /// </summary>
 /// <param name="format"></param>
 /// <returns>生成テキスト。解放が必要。</returns>
-TEXT RC_HEAP_FUNC(format_text, const MEMORY_RESOURCE* memory_resource, const TEXT* format, ...);
+TEXT RC_HEAP_FUNC(format_text, const MEMORY_ARENA_RESOURCE* memory_arena_resource, const TEXT* format, ...);
 #ifdef RES_CHECK
-#   define format_text(memory_resource, format, ...) RC_HEAP_WRAP(format_text, memory_resource, (format), __VA_ARGS__)
+#   define format_text(memory_arena_resource, format, ...) RC_HEAP_WRAP(format_text, memory_arena_resource, (format), __VA_ARGS__)
 #endif
 
 /// <summary>
 /// テキストから文字列を生成。
 /// </summary>
 /// <param name="text">対象文字列。</param>
-/// <param name="memory_resource"></param>
+/// <param name="memory_arena_resource"></param>
 /// <returns>文字列。<see cref="release_string"/>による解放が必要。</returns>
-TCHAR* RC_HEAP_FUNC(text_to_string, const TEXT* text, const MEMORY_RESOURCE* memory_resource);
+TCHAR* RC_HEAP_FUNC(text_to_string, const TEXT* text, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define text_to_string(text, memory_resource) RC_HEAP_WRAP(text_to_string, text, memory_resource)
+#   define text_to_string(text, memory_arena_resource) RC_HEAP_WRAP(text_to_string, text, memory_arena_resource)
 #endif
 
 /// <summary>

@@ -50,18 +50,18 @@ static byte_t get_type_bytes(PRIMITIVE_LIST_TYPE list_type, size_t length)
     return get_type_byte(list_type) * length;
 }
 
-PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity, const MEMORY_RESOURCE* memory_resource)
+PRIMITIVE_LIST RC_HEAP_FUNC(new_primitive_list, PRIMITIVE_LIST_TYPE list_type, size_t capacity, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
-    assert(memory_resource);
+    assert(memory_arena_resource);
 
     size_t capacity_bytes = get_type_bytes(list_type, capacity);
-    void* items = RC_HEAP_CALL(allocate_raw_memory, capacity_bytes, false, memory_resource);
+    void* items = RC_HEAP_CALL(allocate_raw_memory, capacity_bytes, false, memory_arena_resource);
 
     PRIMITIVE_LIST result = {
         .items = items,
         .length = 0,
         .library = {
-            .memory_resource = memory_resource,
+            .memory_arena_resource = memory_arena_resource,
             .capacity_bytes = capacity_bytes,
             .type = list_type,
         },
@@ -79,7 +79,7 @@ bool RC_HEAP_FUNC(release_primitive_list, PRIMITIVE_LIST* list)
         return false;
     }
 
-    return RC_HEAP_CALL(release_memory, list->items, list->library.memory_resource);
+    return RC_HEAP_CALL(release_memory, list->items, list->library.memory_arena_resource);
 }
 
 static void extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t need_length)
@@ -88,7 +88,7 @@ static void extend_capacity_if_not_enough_list(PRIMITIVE_LIST* list, size_t need
     byte_t current_bytes = get_type_bytes(list->library.type, list->length);
     byte_t default_capacity_bytes = get_type_bytes(list->library.type, PRIMITIVE_LIST_DEFAULT_CAPACITY);
 
-    byte_t extend_total_byte = library__extend_capacity_if_not_enough_bytes_x2(&list->items, current_bytes, list->library.capacity_bytes, need_bytes, default_capacity_bytes, list->library.memory_resource);
+    byte_t extend_total_byte = library_extend_capacity_if_not_enough_bytes_x2(&list->items, current_bytes, list->library.capacity_bytes, need_bytes, default_capacity_bytes, list->library.memory_arena_resource);
     if (extend_total_byte) {
         list->library.capacity_bytes = extend_total_byte;
     }

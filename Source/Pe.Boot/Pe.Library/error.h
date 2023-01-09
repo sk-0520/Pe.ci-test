@@ -32,9 +32,9 @@ ERROR_CODE get_last_error_code(void);
 /// <para>Windows API が主軸になっている。</para>
 /// </summary>
 /// <param name="error_code">エラーコード</param>
-/// <param name="memory_resource"></param>
+/// <param name="memory_arena_resource"></param>
 /// <returns>エラーメッセージ。解放が必要。失敗時は無効テキスト。</returns>
-TEXT RC_HEAP_FUNC(get_error_message, ERROR_CODE error_code, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(get_error_message, ERROR_CODE error_code, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define get_error_message(error_code, memory_resource) RC_HEAP_WRAP(get_error_message, error_code, memory_resource)
+#   define get_error_message(error_code, memory_arena_resource) RC_HEAP_WRAP(get_error_message, error_code, memory_arena_resource)
 #endif

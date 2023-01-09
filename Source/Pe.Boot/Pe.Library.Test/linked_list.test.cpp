@@ -14,7 +14,7 @@ namespace PeLibraryTest
     public:
         TEST_METHOD(new_release_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
             Assert::AreEqual((size_t)0, linked_list.length);
             Assert::IsNull(linked_list.library.head);
             Assert::IsNull(linked_list.library.tail);
@@ -24,7 +24,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(add_linked_list_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
 
             int input_1 = 1;
             int acutal_1 = *(int*)add_linked_list(&linked_list, &input_1);
@@ -41,7 +41,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(get_linked_list_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
 
             int inputs[] = {
                 1, 2, 3, 4, 5
@@ -66,7 +66,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(insert_linked_list_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
 
             int inputs[] = {
                 10, 20, 30, 40, 50,
@@ -130,7 +130,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(remove_linked_list_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
 
             int inputs[] = {
                 10, 20, 30, 40, 50,
@@ -171,7 +171,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(set_linked_list_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
 
             int inputs[] = {
                 10, 20, 30, 40, 50,
@@ -215,7 +215,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(search_linked_list_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
 
             int inputs[] = {
                 10, 20, 30, 40, 50,
@@ -245,7 +245,7 @@ namespace PeLibraryTest
 
         TEST_METHOD(to_object_from_linked_list_test)
         {
-            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY, DEFAULT_MEMORY);
+            LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
 
             int inputs[] = {
                 10, 20, 30, 40, 50,

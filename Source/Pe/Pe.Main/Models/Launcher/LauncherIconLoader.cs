@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        private Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync(IconScale iconScale)
+        private Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync(IconScale iconScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             var counter = new Counter(RetryMaxCount);
             foreach(var count in counter) {
                 try {
-                    var existisResult = await LoadExistsImageAsync(iconScale).ConfigureAwait(false);
+                    var existisResult = await LoadExistsImageAsync(iconScale, cancellationToken).ConfigureAwait(false);
                     if(existisResult.Success) {
                         return existisResult.SuccessValue;
                     }
@@ -221,7 +221,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                         return null;
                     } else {
                         Logger.LogWarning(ex, "アイコン取得待機失敗: {0}/{1}回 失敗, 再試行待機 {2}, {3}", count.CurrentCount, count.MaxCount, RetryWaitTime, LauncherItemId);
-                        await Task.Delay(RetryWaitTime).ConfigureAwait(false);
+                        await Task.Delay(RetryWaitTime, cancellationToken).ConfigureAwait(false);
                     }
                 }
             }

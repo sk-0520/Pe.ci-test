@@ -14,7 +14,7 @@ namespace PeLibraryTest
     public:
         TEST_METHOD(life_int_test)
         {
-            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, NULL, compare_object_list_value_null, release_object_list_value_null, DEFAULT_MEMORY);
+            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, NULL, compare_object_list_value_null, release_object_list_value_null, DEFAULT_MEMORY_ARENA);
 
             int input_1 = 100;
             int* result_1 = (int*)push_object_list(&list, &input_1);
@@ -78,7 +78,7 @@ namespace PeLibraryTest
                 4,
             };
 
-            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, NULL, compare_object_list_value_null, release_object_list_value_null, DEFAULT_MEMORY);
+            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, NULL, compare_object_list_value_null, release_object_list_value_null, DEFAULT_MEMORY_ARENA);
 
             add_range_object_list(&list, inputs, sizeof(inputs) / sizeof(inputs[0]));
 
@@ -99,7 +99,7 @@ namespace PeLibraryTest
                 4,
             };
 
-            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, NULL, compare_object_list_value_null, release_object_list_value_null, DEFAULT_MEMORY);
+            OBJECT_LIST list = new_object_list(sizeof(int), OBJECT_LIST_DEFAULT_CAPACITY_COUNT, NULL, compare_object_list_value_null, release_object_list_value_null, DEFAULT_MEMORY_ARENA);
 
             add_range_object_list(&list, inputs, sizeof(inputs) / sizeof(inputs[0]));
 

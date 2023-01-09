@@ -19,7 +19,7 @@ typedef int (*func_compare_linked_list_value)(const void* a, const void* b, void
 /// <summary>
 /// 連結リストの格納値解放処理。
 /// </summary>
-typedef void (*func_release_linked_list_value)(void* value, void* data, const MEMORY_RESOURCE* memory_resource);
+typedef void (*func_release_linked_list_value)(void* value, void* data, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 
 /// <summary>
 /// 値連続処理。
@@ -54,8 +54,8 @@ typedef struct tag_LINKED_LIST
     void* data;
     struct
     {
-        const MEMORY_RESOURCE* value_memory_resource;
-        const MEMORY_RESOURCE* linked_list_memory_resource;
+        const MEMORY_ARENA_RESOURCE* value_memory_resource;
+        const MEMORY_ARENA_RESOURCE* linked_list_memory_resource;
         /// <summary>
         /// 先頭ノード。
         /// <para>未格納時は<see cref="NULL" /></para>
@@ -107,7 +107,7 @@ int compare_linked_list_value_null(const void* a, const void* b, void* data);
 /// 連結リストの値解放不要処理。
 /// </summary>
 /// <param name="value"></param>
-void release_linked_list_value_null(void* value, void* data, const MEMORY_RESOURCE* memory_resource);
+void release_linked_list_value_null(void* value, void* data, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 
 /// <summary>
 /// 連結リストの生成。
@@ -118,7 +118,7 @@ void release_linked_list_value_null(void* value, void* data, const MEMORY_RESOUR
 /// <param name="value_memory_resource"></param>
 /// <param name="linked_list_memory_resource"></param>
 /// <returns>解放が必要。</returns>
-LINKED_LIST RC_HEAP_FUNC(new_linked_list, byte_t item_size, void* data, func_compare_linked_list_value compare_linked_list_value, func_release_linked_list_value release_linked_list_value, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* linked_list_memory_resource);
+LINKED_LIST RC_HEAP_FUNC(new_linked_list, byte_t item_size, void* data, func_compare_linked_list_value compare_linked_list_value, func_release_linked_list_value release_linked_list_value, const MEMORY_ARENA_RESOURCE* value_memory_resource, const MEMORY_ARENA_RESOURCE* linked_list_memory_resource);
 #ifdef RES_CHECK
 #   define new_linked_list(item_size, data, compare_linked_list_value, release_linked_list_value, value_memory_resource, linked_list_memory_resource) RC_HEAP_WRAP(new_linked_list, (item_size), (data), (compare_linked_list_value), (release_linked_list_value), value_memory_resource, linked_list_memory_resource)
 #endif

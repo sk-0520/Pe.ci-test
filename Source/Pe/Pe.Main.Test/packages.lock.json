@@ -839,8 +839,8 @@
           "ClrHeapAllocationAnalyzer": "[3.0.0, )",
           "Dapper": "[2.0.123, )",
           "Microsoft.Extensions.Logging.Abstractions": "[7.0.0, )",
-          "Pe.Bridge": "[0.99.183, )",
-          "Pe.PInvoke": "[0.99.183, )",
+          "Pe.Bridge": "[0.99.184, )",
+          "Pe.PInvoke": "[0.99.184, )",
           "Prism.Wpf": "[8.1.97, )",
           "System.Data.SQLite.Core": "[1.0.117, )"
         }
@@ -856,8 +856,8 @@
           "Microsoft.Extensions.Configuration.Json": "[7.0.0, )",
           "Microsoft.Extensions.Logging": "[7.0.0, )",
           "NLog.Extensions.Logging": "[5.2.0, )",
-          "Pe.Core": "[0.99.183, )",
-          "Pe.Plugins.DefaultTheme": "[0.99.183, )",
+          "Pe.Core": "[0.99.184, )",
+          "Pe.Plugins.DefaultTheme": "[0.99.184, )",
           "Prism.Wpf": "[8.1.97, )",
           "SevenZipExtractor": "[1.0.17, )",
           "System.DirectoryServices.AccountManagement": "[7.0.0, )",
@@ -876,8 +876,8 @@
       "pe.plugins.defaulttheme": {
         "type": "Project",
         "dependencies": {
-          "Pe.Bridge": "[0.99.183, )",
-          "Pe.Core": "[0.99.183, )"
+          "Pe.Bridge": "[0.99.184, )",
+          "Pe.Core": "[0.99.184, )"
         }
       }
     }

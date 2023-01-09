@@ -5,6 +5,7 @@ using System.Text;
 namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SIIGBF
     {
         SIIGBF_RESIZETOFIT = 0x00,
@@ -15,6 +16,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         SIIGBF_INCACHEONLY = 0x10,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SIGDN: uint
     {
         SIGDN_DESKTOPABSOLUTEEDITING = 0x8004c000,

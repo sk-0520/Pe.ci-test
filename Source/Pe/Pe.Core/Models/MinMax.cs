@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     /// <summary>
-    /// ヘルパ。
+    /// <see cref="MinMax{T}"/> ヘルパ。
     /// </summary>
     public static class MinMax
     {
@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     /// <summary>
-    /// ヘルパ。
+    /// <see cref="MinMaxDefault{T}"/>/> ヘルパ。
     /// </summary>
     public static class MinMaxDefault
     {

@@ -471,7 +471,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 propertyChangedHooker.AddHook(property.Name);
             }
         }
-        public static void AddProperties<Type>(this PropertyChangedHooker propertyChangedHooker) => AddProperties(propertyChangedHooker, typeof(Type));
+        public static void AddProperties<T>(this PropertyChangedHooker propertyChangedHooker) => AddProperties(propertyChangedHooker, typeof(T));
 
 
         #endregion

@@ -13,7 +13,7 @@ ERROR_CODE get_last_error_code()
     };
 }
 
-TEXT  RC_HEAP_FUNC(get_error_message, ERROR_CODE error_code, const MEMORY_RESOURCE* memory_resource)
+TEXT  RC_HEAP_FUNC(get_error_message, ERROR_CODE error_code, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     LPVOID message = NULL;
     size_t message_length = FormatMessage(
@@ -29,7 +29,7 @@ TEXT  RC_HEAP_FUNC(get_error_message, ERROR_CODE error_code, const MEMORY_RESOUR
         return create_invalid_text();
     }
 
-    TEXT result = RC_HEAP_CALL(new_text_with_length, message, message_length, memory_resource);
+    TEXT result = RC_HEAP_CALL(new_text_with_length, message, message_length, memory_arena_resource);
 
     LocalFree(message);
 

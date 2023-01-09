@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum FOS
     {
         FOS_ALLNONSTORAGEITEMS = 0x80,
@@ -30,17 +31,20 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum FDAP
     {
         FDAP_BOTTOM = 0,
         FDAP_TOP = 1
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum ERROR
     {
         ERROR_CANCELLED = 0x4C7,
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum SIATTRIBFLAGS
     {
         SIATTRIBFLAGS_AND = 1,

@@ -13,11 +13,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 初期化。
         /// </summary>
         /// <param name="display">表示文字列。</param>
-        /// <param name="wildcard">ワイルドカード一覧。</param>
-        public DialogFilterItem(string display, string defaultExtension, IEnumerable<string> wildcard)
+        /// <param name="wildcards">ワイルドカード一覧。</param>
+        public DialogFilterItem(string display, string defaultExtension, IEnumerable<string> wildcards)
         {
             Display = display;
-            Wildcards = new List<string>(wildcard);
+            Wildcards = new List<string>(wildcards);
             DefaultExtension = defaultExtension;
         }
 

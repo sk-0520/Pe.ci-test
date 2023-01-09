@@ -28,7 +28,7 @@ typedef bool (*func_equals_map_key)(const TEXT* a, const TEXT* b);
 /// <summary>
 /// マップの値解放処理。
 /// </summary>
-typedef void (*func_release_map_value)(const TEXT* key, void* value, const MEMORY_RESOURCE* memory_resource);
+typedef void (*func_release_map_value)(const TEXT* key, void* value, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 
 /// <summary>
 /// キーと値のペア。
@@ -90,10 +90,10 @@ typedef struct tag_MAP
         /// </summary>
         LINKED_LIST*/*KEY_VALUE_PAIR*/ items;
         /// <summary>
-        /// <see cref="MAP" />で使用する<see cref="MEMORY_RESOURCE" />
+        /// <see cref="MAP" />で使用する<see cref="MEMORY_ARENA_RESOURCE" />
         /// </summary>
-        const MEMORY_RESOURCE* map_memory_resource;
-        const MEMORY_RESOURCE* value_memory_resource;
+        const MEMORY_ARENA_RESOURCE* map_memory_resource;
+        const MEMORY_ARENA_RESOURCE* value_memory_resource;
         func_release_linked_list_value release_map_value;
         func_calc_map_hash calc_map_hash;
         func_equals_map_key equals_map_key;
@@ -139,7 +139,7 @@ bool equals_map_key_default(const TEXT* a, const TEXT* b);
 /// <param name="value_memory_resource"></param>
 /// <param name="map_memory_resource"></param>
 /// <returns>解放が必要。</returns>
-MAP RC_HEAP_FUNC(new_map, byte_t item_size, size_t capacity, real_t load_factor, func_release_linked_list_value release_linked_list_value, func_calc_map_hash calc_map_hash, func_equals_map_key equals_map_key, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource);
+MAP RC_HEAP_FUNC(new_map, byte_t item_size, size_t capacity, real_t load_factor, func_release_linked_list_value release_linked_list_value, func_calc_map_hash calc_map_hash, func_equals_map_key equals_map_key, const MEMORY_ARENA_RESOURCE* value_memory_resource, const MEMORY_ARENA_RESOURCE* map_memory_resource);
 #ifdef RES_CHECK
 #   define new_map(item_size, capacity, load_factor, release_linked_list_value, calc_map_hash, equals_map_key, value_memory_resource, map_memory_resource) RC_HEAP_WRAP(new_map, item_size, capacity, load_factor, release_linked_list_value, calc_map_hash, equals_map_key, value_memory_resource, map_memory_resource)
 #endif

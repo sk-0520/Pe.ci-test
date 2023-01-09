@@ -68,20 +68,20 @@ static LINK_NODE* search_map_from_key(const LINKED_LIST* linked_list, const TEXT
     return (LINK_NODE*)search_linked_list(linked_list, needle, (void*)map, search_map_from_key_core);
 }
 
-static void release_link_item_value(void* value, void* data, const MEMORY_RESOURCE* memory_resource)
+static void release_link_item_value(void* value, void* data, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     KEY_VALUE_PAIR* pair = (KEY_VALUE_PAIR*)value;
     // 再構築時はdataが空のため値自体の解放はスキップさせる(NULL設定は再構築処理側)
     if (data) {
         func_release_map_value release_value = (func_release_map_value)data;
-        release_value(&pair->key, pair->value, memory_resource);
+        release_value(&pair->key, pair->value, memory_arena_resource);
     }
 
-    release_memory(pair->value, pair->key.library.memory_resource); // まぁ、うん
+    release_memory(pair->value, pair->key.library.memory_arena_resource); // まぁ、うん
     release_text(&pair->key);
 }
 
-static LINKED_LIST* RC_HEAP_FUNC(new_items, size_t capacity, func_release_linked_list_value release_map_value, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource)
+static LINKED_LIST* RC_HEAP_FUNC(new_items, size_t capacity, func_release_linked_list_value release_map_value, const MEMORY_ARENA_RESOURCE* value_memory_resource, const MEMORY_ARENA_RESOURCE* map_memory_resource)
 {
     LINKED_LIST* item_lists = RC_HEAP_CALL(new_memory, capacity, sizeof(LINKED_LIST), map_memory_resource);
     for (size_t i = 0; i < capacity; i++) {
@@ -92,7 +92,7 @@ static LINKED_LIST* RC_HEAP_FUNC(new_items, size_t capacity, func_release_linked
     return item_lists;
 }
 
-MAP RC_HEAP_FUNC(new_map, byte_t item_size, size_t capacity, real_t load_factor, func_release_linked_list_value release_map_value, func_calc_map_hash calc_map_hash, func_equals_map_key equals_map_key, const MEMORY_RESOURCE* value_memory_resource, const MEMORY_RESOURCE* map_memory_resource)
+MAP RC_HEAP_FUNC(new_map, byte_t item_size, size_t capacity, real_t load_factor, func_release_linked_list_value release_map_value, func_calc_map_hash calc_map_hash, func_equals_map_key equals_map_key, const MEMORY_ARENA_RESOURCE* value_memory_resource, const MEMORY_ARENA_RESOURCE* map_memory_resource)
 {
     size_t adjusted_capacity = power_of_2(capacity ? capacity : MAP_DEFAULT_CAPACITY);
 

@@ -13,6 +13,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum DWM_BB
     {
         DWM_BB_ENABLE = 1,
@@ -59,6 +60,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         //}
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum DWMWA
     {
         DWMWA_NCRENDERING_ENABLED = 1,
@@ -79,6 +81,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         DWMWA_LAST
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "WindowsAPI")]
     public enum DWMNCRP
     {
         DWMNCRP_USEWINDOWSTYLE,

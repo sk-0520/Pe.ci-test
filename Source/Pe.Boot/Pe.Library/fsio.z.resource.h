@@ -21,7 +21,7 @@ typedef struct tag_FILE_RESOURCE
     HANDLE handle;
     struct
     {
-        const MEMORY_RESOURCE* memory_resource;
+        const MEMORY_ARENA_RESOURCE* memory_arena_resource;
     } library;
 } FILE_RESOURCE;
 
@@ -102,11 +102,11 @@ FILE_RESOURCE create_invalid_file_resource(void);
 /// <param name="shared_mode">共有方法。</param>
 /// <param name="open_mode">開き方。</param>
 /// <param name="attributes">ここだけWindowsAPIでファイル属性。</param>
-/// <param name="memory_resource"></param>
+/// <param name="memory_arena_resource"></param>
 /// <returns></returns>
-FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE access_mode, FILE_SHARE_MODE shared_mode, FILE_OPEN_MODE open_mode, DWORD attributes, const MEMORY_RESOURCE* memory_resource);
+FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE access_mode, FILE_SHARE_MODE shared_mode, FILE_OPEN_MODE open_mode, DWORD attributes, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #if RES_CHECK
-#   define new_file_resource(path, access_mode, shared_mode, open_mode, attributes, memory_resource) RC_FILE_WRAP(new_file_resource, (path), (access_mode), (shared_mode), (open_mode), (attributes), memory_resource)
+#   define new_file_resource(path, access_mode, shared_mode, open_mode, attributes, memory_arena_resource) RC_FILE_WRAP(new_file_resource, (path), (access_mode), (shared_mode), (open_mode), (attributes), memory_arena_resource)
 #endif
 
 /// <summary>
@@ -115,9 +115,9 @@ FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE
 /// </summary>
 /// <param name="path">作成するファイルパス。テキストは複製されるため呼び出し側で任意破棄可能。</param>
 /// <returns>作成したファイルリソース。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
-FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
+FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #if RES_CHECK
-#   define create_file_resource(path, memory_resource) RC_FILE_WRAP(create_file_resource, path, memory_resource)
+#   define create_file_resource(path, memory_arena_resource) RC_FILE_WRAP(create_file_resource, path, memory_arena_resource)
 #endif
 
 /// <summary>
@@ -126,9 +126,9 @@ FILE_RESOURCE RC_FILE_FUNC(create_file_resource, const TEXT* path, const MEMORY_
 /// </summary>
 /// <param name="path">開くファイルパス。テキストは複製されるため呼び出し側で任意破棄可能。</param>
 /// <returns>開いたファイルリソース。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
-FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
+FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #if RES_CHECK
-#   define open_file_resource(path, memory_resource) RC_FILE_WRAP(open_file_resource, path, memory_resource)
+#   define open_file_resource(path, memory_arena_resource) RC_FILE_WRAP(open_file_resource, path, memory_arena_resource)
 #endif
 
 /// <summary>
@@ -136,9 +136,9 @@ FILE_RESOURCE RC_FILE_FUNC(open_file_resource, const TEXT* path, const MEMORY_RE
 /// </summary>
 /// <param name="path">ファイルパス。テキストは複製されるため呼び出し側で任意破棄可能。</param>
 /// <returns>ファイルリソース。成功状態は<c>is_enabled_file</c>で確認する。解放が必要。</returns>
-FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
+FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #if RES_CHECK
-#   define open_or_create_file_resource(path, memory_resource) RC_FILE_WRAP(open_or_create_file_resource, path, memory_resource)
+#   define open_or_create_file_resource(path, memory_arena_resource) RC_FILE_WRAP(open_or_create_file_resource, path, memory_arena_resource)
 #endif
 
 /// <summary>

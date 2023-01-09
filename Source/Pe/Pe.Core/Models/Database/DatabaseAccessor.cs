@@ -4,116 +4,19 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Dapper;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
     /// <summary>
-    /// データ読み込みを担当。
-    /// <para>データが変更されるかはDBMS依存となる。シーケンスやファンクション呼び出し・トリガーなどの実装は<see cref="IDatabaseReader"/>からは判定不可。</para>
-    /// </summary>
-    public interface IDatabaseReader
-    {
-        #region function
-
-        /// <summary>
-        /// 指定の型で問い合わせ。
-        /// </summary>
-        /// <typeparam name="T">問い合わせ型</typeparam>
-        /// <param name="statement">データベース問い合わせ文。</param>
-        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
-        /// <returns>問い合わせ結果。</returns>
-        IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true);
-
-        /// <summary>
-        /// 動的型で問い合わせ。
-        /// </summary>
-        /// <param name="statement">データベース問い合わせ文。</param>
-        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
-        /// <returns>問い合わせ結果。</returns>
-        IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true);
-
-        /// <summary>
-        /// 最初のデータを取得。
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
-        /// <exception cref="InvalidOperationException">空っぽ。</exception>
-        /// <returns>一番最初に見つかったデータ。</returns>
-        T QueryFirst<T>(string statement, object? parameter = null);
-        /// <summary>
-        /// 最初のデータを取得。
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
-        /// <returns>一番最初に見つかったデータ。見つかんなかったら default(T)</returns>
-        [return: MaybeNull]
-        T QueryFirstOrDefault<T>(string statement, object? parameter = null);
-        /// <summary>
-        /// 単一データ取得。
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
-        /// <exception cref="InvalidOperationException">空っぽか複数あり。</exception>
-        /// <returns></returns>
-        T QuerySingle<T>(string statement, object? parameter = null);
-        /// <summary>
-        /// 単一データ取得。
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
-        /// <exception cref="InvalidOperationException">複数あり。</exception>
-        /// <returns></returns>
-        [return: MaybeNull]
-        T QuerySingleOrDefault<T>(string statement, object? parameter = null);
-
-        /// <summary>
-        /// <see cref="DataTable"/> でデータ取得。
-        /// </summary>
-        /// <param name="statement"></param>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
-        DataTable GetDataTable(string statement, object? parameter = null);
-
-        #endregion
-    }
-
-    /// <summary>
-    /// データ書き込みを担当。
-    /// <para>それが実際に書き込んでいるのかはDBMS依存。</para>
-    /// </summary>
-    public interface IDatabaseWriter
-    {
-        #region function
-
-        /// <summary>
-        /// insert, update, delete, select(sequence) 的なデータ変動するやつを実行。
-        /// </summary>
-        /// <param name="statement">データベース問い合わせ文。</param>
-        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <returns>影響行数。自動採番値の取得はDBMS依存となる。</returns>
-        int Execute(string statement, object? parameter = null);
-
-        #endregion
-    }
-
-    /// <summary>
-    /// データベースとの会話用インターフェイス。
-    /// <para><see cref="IDatabaseReader"/>, <see cref="IDatabaseWriter"/>による明確な分離状態で処理するのは現実的でないため本IFで統合して扱う。</para>
-    /// </summary>
-    public interface IDatabaseContext: IDatabaseReader, IDatabaseWriter
-    { }
-
-    /// <summary>
     /// DBアクセス処理。
+    /// <para>使用者側はトランザクション処理を原則使用しない。</para>
     /// </summary>
     public interface IDatabaseAccessor: IDatabaseContext
     {
@@ -139,25 +42,51 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns>切断状態終了のトリガー。 GC 任せにせず明示的に <see cref="IDisposable.Dispose()"/> すること。</returns>
         IDisposable PauseConnection();
 
+        /// <inheritdoc cref="IDatabaseReader.GetDataReader(string, object?)"/>
+        IDataReader GetDataReader(IDatabaseTransaction? transaction, string statement, object? parameter);
+
+        /// <inheritdoc cref="IDatabaseReader.GetDataReaderAsync(string, object?, CancellationToken)"/>
+        Task<IDataReader> GetDataReaderAsync(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
+
+        /// <inheritdoc cref="IDatabaseReader.GetDataTable(string, object?)"/>
+        DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter);
+
         /// <inheritdoc cref="IDatabaseReader.Query{T}(string, object?, bool)"/>
-        IEnumerable<T> Query<T>(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered);
+        IEnumerable<T> Query<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered);
+
+        /// <inheritdoc cref="IDatabaseReader.QueryAsync{T}(string, object?, bool, CancellationToken)"/>
+        Task<IEnumerable<T>> QueryAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken);
+
         /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
-        IEnumerable<dynamic> Query(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered);
+        IEnumerable<dynamic> Query(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered);
         /// <inheritdoc cref="IDatabaseReader.QueryFirst{T}(string, object?)"/>
-        T QueryFirst<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
+        T QueryFirst<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
+
+        /// <inheritdoc cref="IDatabaseReader.QueryFirstAsync{T}(string, object?, CancellationToken)"/>
+        Task<T> QueryFirstAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
+
         /// <inheritdoc cref="IDatabaseReader.QueryFirstOrDefault{T}(string, object?)"/>
         [return: MaybeNull]
-        T QueryFirstOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
+        T QueryFirstOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
+
+        /// <inheritdoc cref="IDatabaseReader.QueryFirstOrDefaultAsync{T}(string, object?, CancellationToken)"/>
+        Task<T?> QueryFirstOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
+
         /// <inheritdoc cref="IDatabaseReader.QuerySingle{T}(string, object?)"/>
-        T QuerySingle<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
+        T QuerySingle<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
+
         /// <inheritdoc cref="IDatabaseReader.QuerySingleOrDefault{T}(string, object?)"/>
         [return: MaybeNull]
-        T QuerySingleOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
-        /// <inheritdoc cref="IDatabaseReader.GetDataTable(string, object?)"/>
-        DataTable GetDataTable(string statement, object? parameter, IDatabaseTransaction? transaction);
+        T QuerySingleOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
+
+        /// <inheritdoc cref="IDatabaseReader.QuerySingleOrDefaultAsync{T}(string, object?, CancellationToken)"/>
+        Task<T?> QuerySingleOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
 
         /// <inheritdoc cref="IDatabaseWriter.Execute(string, object?)"/>
-        int Execute(string statement, object? parameter, IDatabaseTransaction? transaction);
+        int Execute(IDatabaseTransaction? transaction, string statement, object? parameter);
+
+        /// <inheritdoc cref="IDatabaseWriter.ExecuteAsync(string, object?, CancellationToken)"/>
+        Task<int> ExecuteAsync(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
 
         /// <inheritdoc cref="BeginTransaction(IsolationLevel)"/>
         IDatabaseTransaction BeginTransaction();
@@ -390,8 +319,74 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return ActionDisposerHelper.CreateEmpty();
         }
 
-        /// <inheritdoc cref="IDatabaseAccessor.Query{T}(string, object?, IDatabaseTransaction?, bool)"/>
-        public virtual IEnumerable<T> Query<T>(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered)
+        public IDataReader GetDataReader(IDatabaseTransaction? transaction, string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var result = BaseConnection.ExecuteReader(formattedStatement, parameter, transaction?.Transaction);
+            return result;
+        }
+
+        public IDataReader GetDataReader(string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            return GetDataReader(null, statement, parameter);
+        }
+
+        public Task<IDataReader> GetDataReaderAsync(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                cancellationToken: cancellationToken
+            );
+
+            var result = BaseConnection.ExecuteReaderAsync(command);
+            return result;
+        }
+
+        public Task<IDataReader> GetDataReaderAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            return GetDataReaderAsync(null, statement, parameter, cancellationToken);
+        }
+
+        public virtual DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+
+            LoggingStatement(formattedStatement, parameter);
+
+            var dataTable = new DataTable();
+            var startTime = DateTime.UtcNow;
+            using(var reader = GetDataReader(transaction, statement, parameter)) {
+                dataTable.Load(reader);
+            }
+            LoggingDataTable(dataTable, startTime, DateTime.UtcNow);
+
+            return dataTable;
+        }
+
+        public virtual DataTable GetDataTable(string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            return GetDataTable(null, statement, parameter);
+        }
+
+        /// <inheritdoc cref="IDatabaseAccessor.Query{T}(IDatabaseTransaction?, string, object?, bool)"/>
+        public virtual IEnumerable<T> Query<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered)
         {
             ThrowIfDisposed();
 
@@ -406,14 +401,45 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         /// <inheritdoc cref="IDatabaseReader.Query{T}(string, object?, bool)"/>
-        public IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true)
+        public virtual IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true)
         {
             ThrowIfDisposed();
 
-            return Query<T>(statement, parameter, null, buffered);
+            return Query<T>(null, statement, parameter, buffered);
         }
 
-        public virtual IEnumerable<dynamic> Query(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered)
+        /// <inheritdoc cref="IDatabaseAccessor.QueryAsync{T}(IDatabaseTransaction?, string, object?, bool, CancellationToken)"/>
+        public virtual async Task<IEnumerable<T>> QueryAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var startTime = DateTime.UtcNow;
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                flags: buffered ? CommandFlags.Buffered : CommandFlags.NoCache,
+                cancellationToken: cancellationToken
+            );
+
+            var result = await BaseConnection.QueryAsync<T>(command);
+            LoggingQueryResults(result, buffered, startTime, DateTime.UtcNow);
+            return result;
+        }
+
+        /// <inheritdoc cref="IDatabaseReader.QueryAsync{T}(string, object?, bool, CancellationToken)"/>
+        public Task<IEnumerable<T>> QueryAsync<T>(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return QueryAsync<T>(null, statement, parameter, buffered, cancellationToken);
+        }
+
+        /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
+        public virtual IEnumerable<dynamic> Query(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered)
         {
             ThrowIfDisposed();
 
@@ -428,14 +454,45 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
-        public IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
+        public virtual IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
         {
             ThrowIfDisposed();
 
-            return Query(statement, parameter, null, buffered);
+            return Query(null, statement, parameter, buffered);
         }
 
-        public virtual T QueryFirst<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
+        /// <inheritdoc cref="IDatabaseAccessor.QueryAsync{T}(IDatabaseTransaction?, string, object?, bool, CancellationToken)"/>
+        public virtual async Task<IEnumerable<dynamic>> QueryAsync(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var startTime = DateTime.UtcNow;
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                flags: buffered ? CommandFlags.Buffered : CommandFlags.NoCache,
+                cancellationToken: cancellationToken
+            );
+
+            var result = await BaseConnection.QueryAsync(command);
+            LoggingQueryResults(result, buffered, startTime, DateTime.UtcNow);
+            return result;
+        }
+
+        /// <inheritdoc cref="IDatabaseReader.QueryAsync(string, object?, bool, CancellationToken)"/>
+        public virtual Task<IEnumerable<dynamic>> QueryAsync(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return QueryAsync(null, statement, parameter, buffered, cancellationToken);
+        }
+
+        /// <inheritdoc cref="IDatabaseAccessor.QueryFirst{T}(IDatabaseTransaction?, string, object?)"/>
+        public virtual T QueryFirst<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
             ThrowIfDisposed();
 
@@ -449,15 +506,44 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return result;
         }
 
+        /// <inheritdoc cref="IDatabaseReader.QueryFirst{T}(string, object?)"/>
         public virtual T QueryFirst<T>(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
-            return QueryFirst<T>(statement, parameter, null);
+            return QueryFirst<T>(null, statement, parameter);
         }
 
+        public virtual async Task<T> QueryFirstAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var startTime = DateTime.UtcNow;
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                cancellationToken: cancellationToken
+            );
+
+            var result = await BaseConnection.QueryFirstAsync<T>(command);
+            LoggingQueryResult(result, startTime, DateTime.UtcNow);
+            return result;
+        }
+
+        public virtual Task<T> QueryFirstAsync<T>(string statement, object? parameter, CancellationToken cancellationToken)
+        {
+            ThrowIfDisposed();
+
+            return QueryFirstAsync<T>(null, statement, parameter, cancellationToken);
+        }
+
+
         [return: MaybeNull]
-        public virtual T QueryFirstOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
+        public virtual T QueryFirstOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
             ThrowIfDisposed();
 
@@ -476,10 +562,38 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return QueryFirstOrDefault<T>(statement, parameter, null);
+            return QueryFirstOrDefault<T>(null, statement, parameter);
         }
 
-        public virtual T QuerySingle<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
+        public Task<T?> QueryFirstOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var startTime = DateTime.UtcNow;
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                cancellationToken: cancellationToken
+            );
+
+            return BaseConnection.QueryFirstOrDefaultAsync<T?>(command).ContinueWith(t => {
+                LoggingQueryResult(t.Result, startTime, DateTime.UtcNow);
+                return t.Result;
+            }, TaskContinuationOptions.OnlyOnRanToCompletion);
+        }
+
+        public Task<T?> QueryFirstOrDefaultAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return QueryFirstOrDefaultAsync<T>(null, statement, parameter, cancellationToken);
+        }
+
+        public virtual T QuerySingle<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
             ThrowIfDisposed();
 
@@ -497,11 +611,38 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return QuerySingle<T>(statement, parameter, null);
+            return QuerySingle<T>(null, statement, parameter);
+        }
+
+        public virtual async Task<T> QuerySingleAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var startTime = DateTime.UtcNow;
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                cancellationToken: cancellationToken
+            );
+
+            var result = await BaseConnection.QuerySingleAsync<T>(command);
+            LoggingQueryResult(result, startTime, DateTime.UtcNow);
+            return result;
+        }
+
+        public virtual Task<T> QuerySingleAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return QuerySingleAsync<T>(null, statement, parameter, cancellationToken);
         }
 
         [return: MaybeNull]
-        public virtual T QuerySingleOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
+        public virtual T QuerySingleOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
             ThrowIfDisposed();
 
@@ -514,15 +655,43 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             return result;
         }
+
         [return: MaybeNull]
         public virtual T QuerySingleOrDefault<T>(string statement, object? parameter)
         {
             ThrowIfDisposed();
 
-            return QuerySingleOrDefault<T>(statement, parameter, null);
+            return QuerySingleOrDefault<T>(null, statement, parameter);
         }
 
-        public virtual int Execute(string statement, object? parameter, IDatabaseTransaction? transaction)
+        public virtual async Task<T?> QuerySingleOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var startTime = DateTime.UtcNow;
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                cancellationToken: cancellationToken
+            );
+            var result = await BaseConnection.QuerySingleOrDefaultAsync<T>(command);
+            LoggingQueryResult(result, startTime, DateTime.UtcNow);
+
+            return result;
+        }
+
+        public virtual Task<T?> QuerySingleOrDefaultAsync<T>(string statement, object? parameter, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return QuerySingleOrDefaultAsync<T>(null, statement, parameter, cancellationToken);
+        }
+
+        public virtual int Execute(IDatabaseTransaction? transaction, string statement, object? parameter)
         {
             ThrowIfDisposed();
 
@@ -536,34 +705,38 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return result;
         }
 
-        public int Execute(string statement, object? parameter = null)
+        public virtual int Execute(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
-            return Execute(statement, parameter, null);
+            return Execute(null, statement, parameter);
         }
 
-        public virtual DataTable GetDataTable(string statement, object? parameter, IDatabaseTransaction? transaction)
+        public virtual async Task<int> ExecuteAsync(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
             var formattedStatement = Implementation.PreFormatStatement(statement);
-
             LoggingStatement(formattedStatement, parameter);
 
-            var dataTable = new DataTable();
             var startTime = DateTime.UtcNow;
-            dataTable.Load(BaseConnection.ExecuteReader(statement, parameter, transaction?.Transaction));
-            LoggingDataTable(dataTable, startTime, DateTime.UtcNow);
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                cancellationToken: cancellationToken
+            );
+            var result = await BaseConnection.ExecuteAsync(command);
+            LoggingExecuteResult(result, startTime, DateTime.UtcNow);
 
-            return dataTable;
+            return result;
         }
 
-        public DataTable GetDataTable(string statement, object? parameter = null)
+        public virtual Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
-            return GetDataTable(statement, parameter, null);
+            return ExecuteAsync(null, statement, parameter, cancellationToken);
         }
 
         /// <summary>

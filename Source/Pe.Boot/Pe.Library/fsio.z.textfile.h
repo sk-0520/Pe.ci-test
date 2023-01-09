@@ -54,9 +54,9 @@ typedef struct tag_FILE_WRITER
 /// </summary>
 /// <param name="path"></param>
 /// <returns>解放が必要。</returns>
-FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding, const MEMORY_RESOURCE* memory_resource);
+FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #if RES_CHECK
-#   define new_file_reader(path, encoding, memory_resource) RC_FILE_WRAP(new_file_reader, (path), (encoding), memory_resource)
+#   define new_file_reader(path, encoding, memory_arena_resource) RC_FILE_WRAP(new_file_reader, (path), (encoding), memory_arena_resource)
 #endif
 
 
@@ -91,9 +91,9 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader);
 /// <param name="open_mode"></param>
 /// <param name="options"></param>
 /// <returns>解放が必要。</returns>
-FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options, const MEMORY_RESOURCE* memory_resource);
+FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #if RES_CHECK
-#   define new_file_writer(path, encoding, open_mode, options, memory_resource) RC_FILE_WRAP(new_file_writer, (path), (encoding), (open_mode), (options), memory_resource)
+#   define new_file_writer(path, encoding, open_mode, options, memory_arena_resource) RC_FILE_WRAP(new_file_writer, (path), (encoding), (open_mode), (options), memory_arena_resource)
 #endif
 
 /// <summary>

@@ -31,7 +31,7 @@ static const struct RES_CHECK_FORAMT
     const TCHAR* stock_count;
     const TCHAR* stock_list;
     const TCHAR* stock_leak;
-} res_check__formats[] = {
+} library_res_check_formats[] = {
     {
         .alloc_msg = _T("[HEAP:+] %p (%s) %s:") FMT_D_ZU,
         .alloc_err = _T("[HEAP:STOCK:ERROR] %p (%s) %s") FMT_D_ZU,
@@ -60,29 +60,29 @@ typedef struct tag_RES_CHECK_ITEM
     const struct RES_CHECK_FORAMT* formats;
 } RES_CHECK_ITEM;
 
-static func_rc__output rc__output;
-static size_t rc__path_length;
-static size_t  rc__buffer_length;
+static library_func_rc_output library_rc_output;
+static size_t library_rc_path_length;
+static size_t  library_rc_buffer_length;
 
-static RES_CHECK_HEAP_STOCK_ITEM* rc_heap__stock_items;
-static size_t rc_heap__stock_items_length;
-static size_t rc_heap__stock_item_count;
+static RES_CHECK_HEAP_STOCK_ITEM* library_rc_heap_stock_items;
+static size_t library_rc_heap_stock_items_length;
+static size_t library_rc_heap_stock_item_count;
 
-static RES_CHECK_FILE_STOCK_ITEM* rc_file__stock_items;
-static size_t rc_file__stock_items_length;
-static size_t rc_file__stock_item_count;
+static RES_CHECK_FILE_STOCK_ITEM* library_rc_file_stock_items;
+static size_t library_rc_file_stock_items_length;
+static size_t library_rc_file_stock_item_count;
 
-static HANDLE rc__heap = NULL;
+static HANDLE library_rc_heap = NULL;
 
 #pragma warning(push)
 #pragma warning(disable:6386)
 #define output_core(format, ...) do { \
-    if(rc__output) { \
-        TCHAR* rc__buffer = HeapAlloc(rc__heap, 0, rc__buffer_length * sizeof(TCHAR)); \
-        assert(rc__buffer); \
-        wsprintf(rc__buffer, /*rc__buffer_length - 1, */format, __VA_ARGS__); \
-        rc__output(rc__buffer); \
-        HeapFree(rc__heap, 0, rc__buffer); \
+    if(library_rc_output) { \
+        TCHAR* library_rc_buffer = HeapAlloc(library_rc_heap, 0, library_rc_buffer_length * sizeof(TCHAR)); \
+        assert(library_rc_buffer); \
+        wsprintf(library_rc_buffer, /*library_rc_buffer_length - 1, */format, __VA_ARGS__); \
+        library_rc_output(library_rc_buffer); \
+        HeapFree(library_rc_heap, 0, library_rc_buffer); \
     } \
 } while (0)
 #pragma warning(push)
@@ -101,10 +101,10 @@ static RES_CHECK_ITEM rc_get_item(RES_CHECK_TYPE type)
         case RES_CHECK_TYPE_HEAP:
         {
             RES_CHECK_ITEM result = {
-                .stock_items = rc_heap__stock_items,
-                .stock_items_length = rc_heap__stock_items_length,
-                .stock_item_count = &rc_heap__stock_item_count,
-                .formats = res_check__formats + type,
+                .stock_items = library_rc_heap_stock_items,
+                .stock_items_length = library_rc_heap_stock_items_length,
+                .stock_item_count = &library_rc_heap_stock_item_count,
+                .formats = library_res_check_formats + type,
             };
             return result;
         }
@@ -112,10 +112,10 @@ static RES_CHECK_ITEM rc_get_item(RES_CHECK_TYPE type)
         case RES_CHECK_TYPE_FILE:
         {
             RES_CHECK_ITEM result = {
-                .stock_items = rc_file__stock_items,
-                .stock_items_length = rc_file__stock_items_length,
-                .stock_item_count = &rc_file__stock_item_count,
-                .formats = res_check__formats + type,
+                .stock_items = library_rc_file_stock_items,
+                .stock_items_length = library_rc_file_stock_items_length,
+                .stock_item_count = &library_rc_file_stock_item_count,
+                .formats = library_res_check_formats + type,
             };
             return result;
         }
@@ -151,7 +151,7 @@ static void rc_check_core(void* p, const void* data, bool allocate, RES_CHECK_TY
                     .p = p,
                     .line = RES_CHECK_ARG_LINE,
                 };
-                item.file = (TCHAR*)HeapAlloc(rc__heap, HEAP_ZERO_MEMORY, rc__path_length * sizeof(TCHAR));
+                item.file = (TCHAR*)HeapAlloc(library_rc_heap, HEAP_ZERO_MEMORY, library_rc_path_length * sizeof(TCHAR));
 #pragma warning(push)
 #pragma warning(disable:6387)
                 lstrcpy(item.file, RES_CHECK_ARG_FLIE); // tstring.h を取り込みたくないのでAPIを直接呼び出し
@@ -187,19 +187,19 @@ static void rc_check_core(void* p, const void* data, bool allocate, RES_CHECK_TY
     }
 }
 
-void rc__heap_check(void* p, bool allocate, RES_CHECK_FUNC_ARGS)
+void library_rc_heap_check(void* p, bool allocate, RES_CHECK_FUNC_ARGS)
 {
     assert(p);
     rc_check_core(p, NULL, allocate, RES_CHECK_TYPE_HEAP, RES_CHECK_CALL_ARGS);
 }
 
-void rc__file_check(void* p, const TCHAR* path, bool allocate, RES_CHECK_FUNC_ARGS)
+void library_rc_file_check(void* p, const TCHAR* path, bool allocate, RES_CHECK_FUNC_ARGS)
 {
     assert(p);
     rc_check_core(p, path, allocate, RES_CHECK_TYPE_FILE, RES_CHECK_CALL_ARGS);
 }
 
-static void rc__print_core(bool leak, RES_CHECK_TYPE type)
+static void library_rc_print_core(bool leak, RES_CHECK_TYPE type)
 {
     RES_CHECK_ITEM rc_item = rc_get_item(type);
 
@@ -209,49 +209,49 @@ static void rc__print_core(bool leak, RES_CHECK_TYPE type)
         RES_CHECK_STOCK_ITEM* item = rc_item.stock_items + i;
         if (item->p) {
             const TCHAR* format = leak
-                ? res_check__formats->stock_list
-                : res_check__formats->stock_leak
+                ? library_res_check_formats->stock_list
+                : library_res_check_formats->stock_leak
                 ;
             output_core(format, item->p, item->file, item->line);
         }
     }
 }
 
-void rc__print(bool leak)
+void library_rc_print(bool leak)
 {
-    for (size_t i = 0; i < SIZEOF_ARRAY(res_check__formats); i++) {
-        rc__print_core(leak, i);
+    for (size_t i = 0; i < SIZEOF_ARRAY(library_res_check_formats); i++) {
+        library_rc_print_core(leak, i);
     }
 }
 
-bool rc__exists_resource_leak()
+bool library_rc_exists_resource_leak()
 {
-    return rc_heap__stock_item_count || rc_file__stock_item_count;
+    return library_rc_heap_stock_item_count || library_rc_file_stock_item_count;
 }
 
-void rc__initialize(func_rc__output output, size_t path_length, size_t buffer_length, size_t heap_count, size_t file_count)
+void library_rc_initialize(library_func_rc_output output, size_t path_length, size_t buffer_length, size_t heap_count, size_t file_count)
 {
-    rc__heap = HeapCreate(0, 0, 0);
-    assert(rc__heap);
+    library_rc_heap = HeapCreate(0, 0, 0);
+    assert(library_rc_heap);
 
-    rc__output = output;
-    rc__path_length = path_length;
-    rc__buffer_length = buffer_length;
+    library_rc_output = output;
+    library_rc_path_length = path_length;
+    library_rc_buffer_length = buffer_length;
 
-    rc_heap__stock_items = HeapAlloc(rc__heap, HEAP_ZERO_MEMORY, heap_count * sizeof(RES_CHECK_HEAP_STOCK_ITEM));
-    rc_heap__stock_items_length = heap_count;
-    rc_heap__stock_item_count = 0;
+    library_rc_heap_stock_items = HeapAlloc(library_rc_heap, HEAP_ZERO_MEMORY, heap_count * sizeof(RES_CHECK_HEAP_STOCK_ITEM));
+    library_rc_heap_stock_items_length = heap_count;
+    library_rc_heap_stock_item_count = 0;
 
-    rc_file__stock_items = HeapAlloc(rc__heap, HEAP_ZERO_MEMORY, file_count * sizeof(RES_CHECK_FILE_STOCK_ITEM));
-    rc_file__stock_items_length = file_count;
-    rc_file__stock_item_count = 0;
+    library_rc_file_stock_items = HeapAlloc(library_rc_heap, HEAP_ZERO_MEMORY, file_count * sizeof(RES_CHECK_FILE_STOCK_ITEM));
+    library_rc_file_stock_items_length = file_count;
+    library_rc_file_stock_item_count = 0;
 }
 
-void rc__uninitialize(void)
+void library_rc_uninitialize(void)
 {
-    HeapFree(rc__heap, 0, rc_heap__stock_items);
-    HeapFree(rc__heap, 0, rc_file__stock_items);
-    HeapDestroy(rc__heap);
+    HeapFree(library_rc_heap, 0, library_rc_heap_stock_items);
+    HeapFree(library_rc_heap, 0, library_rc_file_stock_items);
+    HeapDestroy(library_rc_heap);
 }
 
 

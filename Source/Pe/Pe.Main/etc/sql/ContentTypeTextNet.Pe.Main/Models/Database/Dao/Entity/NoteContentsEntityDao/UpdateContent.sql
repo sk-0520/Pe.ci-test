@@ -1,7 +1,8 @@
-﻿update
+update
 	NoteContents
 set
 	Content = @Content,
+	ContentKind = @ContentKind,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,
 	UpdatedAccount        = @UpdatedAccount,

@@ -4,8 +4,8 @@
 #include "debug.h"
 
 
-static const uint8_t library__unicode_utf8_bom[] = { 0xef, 0xbb, 0xbf };
-static const uint8_t library__unicode_utf16le_bom[] = { 0xff, 0xef };
+static const uint8_t library_unicode_utf8_bom[] = { 0xef, 0xbb, 0xbf };
+static const uint8_t library_unicode_utf16le_bom[] = { 0xff, 0xef };
 
 static void write_bom_if_unicode(const FILE_RESOURCE* file_resource, FILE_ENCODING encoding)
 {
@@ -21,13 +21,13 @@ static void write_bom_if_unicode(const FILE_RESOURCE* file_resource, FILE_ENCODI
     switch (encoding) {
 #ifdef _UNICODE
         case FILE_ENCODING_UTF8:
-            bom.length = sizeof(library__unicode_utf8_bom);
-            bom.value = library__unicode_utf8_bom;
+            bom.length = sizeof(library_unicode_utf8_bom);
+            bom.value = library_unicode_utf8_bom;
             break;
 
         case FILE_ENCODING_UTF16LE:
-            bom.length = sizeof(library__unicode_utf16le_bom);
-            bom.value = library__unicode_utf16le_bom;
+            bom.length = sizeof(library_unicode_utf16le_bom);
+            bom.value = library_unicode_utf16le_bom;
             break;
 
 #endif
@@ -40,11 +40,11 @@ static void write_bom_if_unicode(const FILE_RESOURCE* file_resource, FILE_ENCODI
     }
 }
 
-FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding, const MEMORY_RESOURCE* memory_resource)
+FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     FILE_READER result = {
         .has_bom = false,
-        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0, memory_resource),
+        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0, memory_arena_resource),
         .library = {
             .encoding = encoding,
         },
@@ -78,13 +78,13 @@ static size_t get_bom_info(FILE_READER* file_reader, uint8_t* buffer, size_t len
 
 #ifdef _UNICODE
         case FILE_ENCODING_UTF8:
-            bom = library__unicode_utf8_bom;
-            bom_length = sizeof(library__unicode_utf8_bom);
+            bom = library_unicode_utf8_bom;
+            bom_length = sizeof(library_unicode_utf8_bom);
             break;
 
         case FILE_ENCODING_UTF16LE:
-            bom = library__unicode_utf16le_bom;
-            bom_length = sizeof(library__unicode_utf16le_bom);
+            bom = library_unicode_utf16le_bom;
+            bom_length = sizeof(library_unicode_utf16le_bom);
             break;
 #endif
         default:
@@ -107,16 +107,16 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
         return create_invalid_text();
     }
     if (!file_size.plain) {
-        return new_empty_text(file_reader->resource.library.memory_resource);
+        return new_empty_text(file_reader->resource.library.memory_arena_resource);
     }
 
     //TODO: x86は32bit値が限界
     size_t file_length = (size_t)file_size.plain;
 
-    const MEMORY_RESOURCE* memory_resource = file_reader->resource.library.memory_resource;
+    const MEMORY_ARENA_RESOURCE* memory_arena_resource = file_reader->resource.library.memory_arena_resource;
 
     size_t total_read_length = 0;
-    uint8_t* buffer = RC_HEAP_CALL(allocate_raw_memory, file_length, false, memory_resource);
+    uint8_t* buffer = RC_HEAP_CALL(allocate_raw_memory, file_length, false, memory_arena_resource);
     uint8_t read_buffer[FILE_READER_BUFFER_SIZE];
 
     seek_begin_file_resource(&file_reader->resource);
@@ -124,7 +124,7 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
     do {
         ssize_t read_length = read_file_resource(&file_reader->resource, read_buffer, sizeof(read_buffer));
         if (read_length < 0) {
-            RC_HEAP_CALL(release_memory, buffer, memory_resource);
+            RC_HEAP_CALL(release_memory, buffer, memory_arena_resource);
             return create_invalid_text();
         }
         if (read_length) {
@@ -146,12 +146,12 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
     switch (file_reader->library.encoding) {
         case FILE_ENCODING_NATIVE:
         case FILE_ENCODING_UTF16LE:
-            return wrap_text_with_length((TCHAR*)conv_buffer, conv_buffer_length / sizeof(TCHAR), true, memory_resource);
+            return wrap_text_with_length((TCHAR*)conv_buffer, conv_buffer_length / sizeof(TCHAR), true, memory_arena_resource);
 
         case FILE_ENCODING_UTF8:
         {
-            TEXT text = RC_HEAP_CALL(make_text_from_multibyte, conv_buffer, conv_buffer_length, MULTI_BYTE_CHARACTER_TYPE_UTF8, memory_resource);
-            release_memory(buffer, memory_resource);
+            TEXT text = RC_HEAP_CALL(make_text_from_multibyte, conv_buffer, conv_buffer_length, MULTI_BYTE_CHARACTER_TYPE_UTF8, memory_arena_resource);
+            release_memory(buffer, memory_arena_resource);
             return text;
         }
 
@@ -162,13 +162,13 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
     return create_invalid_text();
 }
 
-FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options, const MEMORY_RESOURCE* memory_resource)
+FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     FILE_WRITER result = {
-        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, open_mode, 0, memory_resource),
+        .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ | FILE_ACCESS_MODE_WRITE, FILE_SHARE_MODE_READ, open_mode, 0, memory_arena_resource),
         .library = {
             .encoding = encoding,
-            .string_builder = RC_HEAP_CALL(new_string_builder, FILE_WRITER_BUFFER_SIZE, memory_resource),
+            .string_builder = RC_HEAP_CALL(new_string_builder, FILE_WRITER_BUFFER_SIZE, memory_arena_resource),
             .buffer_size = FILE_WRITER_BUFFER_SIZE,
         }
     };
@@ -258,9 +258,9 @@ void flush_file_writer(FILE_WRITER* file_writer, bool force)
 
         case FILE_ENCODING_UTF8:
         {
-            MULTIBYTE_CHARACTER_RESULT mbcr = convert_to_multibyte_character(&text, MULTI_BYTE_CHARACTER_TYPE_UTF8, file_writer->resource.library.memory_resource);
+            MULTIBYTE_CHARACTER_RESULT mbcr = convert_to_multibyte_character(&text, MULTI_BYTE_CHARACTER_TYPE_UTF8, file_writer->resource.library.memory_arena_resource);
             write_file_resource(&file_writer->resource, mbcr.buffer, mbcr.length);
-            release_multibyte_character_result(&mbcr, file_writer->resource.library.memory_resource);
+            release_multibyte_character_result(&mbcr, file_writer->resource.library.memory_arena_resource);
         }
         break;
 

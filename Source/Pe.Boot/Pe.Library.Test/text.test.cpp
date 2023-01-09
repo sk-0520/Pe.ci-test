@@ -15,7 +15,7 @@ namespace PeLibraryTest
         TEST_METHOD(new_test)
         {
             TCHAR input[] = _T("あいう");
-            TEXT c = new_text(input, DEFAULT_MEMORY);
+            TEXT c = new_text(input, DEFAULT_MEMORY_ARENA);
             TEXT w = wrap_text(input);
 
             Assert::IsTrue(c.library.need_release);
@@ -35,8 +35,8 @@ namespace PeLibraryTest
             Assert::AreEqual(_T("えお"), w.value);
             Assert::AreNotEqual(get_string_length(input), (size_t)c.length);
 
-            TEXT dc = clone_text(&c, DEFAULT_MEMORY);
-            TEXT dw = clone_text(&w, DEFAULT_MEMORY);
+            TEXT dc = clone_text(&c, DEFAULT_MEMORY_ARENA);
+            TEXT dw = clone_text(&w, DEFAULT_MEMORY_ARENA);
 
             Assert::IsTrue(dc.library.need_release);
             Assert::IsTrue(dw.library.need_release);
@@ -62,7 +62,7 @@ namespace PeLibraryTest
             TCHAR* input2 = _T("abc");
             TEXT input3 = wrap("ABC");
 
-            TEXT actual = format_text(DEFAULT_MEMORY, &format, input1, input2, &input3);
+            TEXT actual = format_text(DEFAULT_MEMORY_ARENA, &format, input1, input2, &input3);
 
             Assert::AreEqual(expected, actual.value);
 
@@ -79,7 +79,7 @@ namespace PeLibraryTest
 
             for (auto test : tests) {
                 auto [arg1] = test.inputs;
-                TCHAR* actual = text_to_string(&arg1, DEFAULT_MEMORY);
+                TCHAR* actual = text_to_string(&arg1, DEFAULT_MEMORY_ARENA);
 
                 if (is_enabled_text(&arg1)) {
                     Assert::AreEqual(arg1.value, actual);
@@ -87,7 +87,7 @@ namespace PeLibraryTest
                     Assert::AreEqual(_T(""), actual);
                 }
 
-                release_string(actual, DEFAULT_MEMORY);
+                release_string(actual, DEFAULT_MEMORY_ARENA);
             }
         }
             

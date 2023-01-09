@@ -8,13 +8,13 @@ TEXT get_main_module_path(const TEXT* root_directory_path)
         wrap_text(_T("Pe.Main.exe")),
     };
 
-    return join_path(root_directory_path, join_paths, SIZEOF_ARRAY(join_paths), DEFAULT_MEMORY);
+    return join_path(root_directory_path, join_paths, SIZEOF_ARRAY(join_paths), DEFAULT_MEMORY_ARENA);
 }
 
 void initialize_app_path_items(APP_PATH_ITEMS* result, HMODULE hInstance)
 {
-    result->application = get_module_path(hInstance, DEFAULT_MEMORY);
-    result->root_directory = get_parent_directory_path(&result->application, DEFAULT_MEMORY);
+    result->application = get_module_path(hInstance, DEFAULT_MEMORY_ARENA);
+    result->root_directory = get_parent_directory_path(&result->application, DEFAULT_MEMORY_ARENA);
     result->main_module = get_main_module_path(&result->root_directory);
 }
 

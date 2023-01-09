@@ -40,31 +40,31 @@ bool has_root_path(const TEXT* text);
 /// </summary>
 /// <param name="path">対象パス。</param>
 /// <returns>親ディレクトリパス。解放が必要。</returns>
-TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(get_parent_directory_path, const TEXT* path, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define get_parent_directory_path(path, memory_resource) RC_HEAP_WRAP(get_parent_directory_path, (path), memory_resource)
+#   define get_parent_directory_path(path, memory_arena_resource) RC_HEAP_WRAP(get_parent_directory_path, (path), memory_arena_resource)
 #endif
 
 /// <summary>
 /// パスをディレクトリ区切りで分割。
 /// </summary>
 /// <param name="path"></param>
-/// <param name="memory_resource"></param>
+/// <param name="memory_arena_resource"></param>
 /// <returns>分割後ディレクトリ・ファイル名のリスト。解放が必要。</returns>
-OBJECT_LIST RC_HEAP_FUNC(split_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
+OBJECT_LIST RC_HEAP_FUNC(split_path, const TEXT* path, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define split_path(path, memory_resource) RC_HEAP_WRAP(split_path, (path), memory_resource)
+#   define split_path(path, memory_arena_resource) RC_HEAP_WRAP(split_path, (path), memory_arena_resource)
 #endif
 
 /// <summary>
 /// パスの正規化。
 /// </summary>
 /// <param name="path"></param>
-/// <param name="memory_resource"></param>
+/// <param name="memory_arena_resource"></param>
 /// <returns>正規化されたパス。</returns>
-TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define canonicalize_path(path, memory_resource) RC_HEAP_WRAP(canonicalize_path, (path), memory_resource)
+#   define canonicalize_path(path, memory_arena_resource) RC_HEAP_WRAP(canonicalize_path, (path), memory_arena_resource)
 #endif
 
 /// <summary>
@@ -73,9 +73,9 @@ TEXT RC_HEAP_FUNC(canonicalize_path, const TEXT* path, const MEMORY_RESOURCE* me
 /// <param name="base_path">ベースのパス。</param>
 /// <param name="relative_path">結合するパス。</param>
 /// <returns>結合パス。解放が必要。</returns>
-TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define combine_path(base_path, relative_path, memory_resource) RC_HEAP_WRAP(combine_path, (base_path), (relative_path), memory_resource)
+#   define combine_path(base_path, relative_path, memory_arena_resource) RC_HEAP_WRAP(combine_path, (base_path), (relative_path), memory_arena_resource)
 #endif
 
 /// <summary>
@@ -85,9 +85,9 @@ TEXT RC_HEAP_FUNC(combine_path, const TEXT* base_path, const TEXT* relative_path
 /// <param name="paths">結合するパス。</param>
 /// <param name="count">結合するパスの個数。</param>
 /// <returns>結合パス。解放が必要。</returns>
-TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_t count, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_t count, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define join_path(base_path, paths, count, memory_resource) RC_HEAP_WRAP(join_path, (base_path), (paths), (count), memory_resource)
+#   define join_path(base_path, paths, count, memory_arena_resource) RC_HEAP_WRAP(join_path, (base_path), (paths), (count), memory_arena_resource)
 #endif
 
 /// <summary>
@@ -95,9 +95,9 @@ TEXT RC_HEAP_FUNC(join_path, const TEXT* base_path, const TEXT_LIST paths, size_
 /// </summary>
 /// <param name="hInstance">実行モジュールインスタンスハンドル。</param>
 /// <returns>実行中モジュールパス。解放が必要。</returns>
-TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_RESOURCE* memory_resource);
+TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define get_module_path(hInstance, memory_resource) RC_HEAP_WRAP(get_module_path, (hInstance), memory_resource)
+#   define get_module_path(hInstance, memory_arena_resource) RC_HEAP_WRAP(get_module_path, (hInstance), memory_arena_resource)
 #endif
 
 /// <summary>
@@ -107,9 +107,9 @@ TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_RESOURCE* m
 /// <returns>解放は不要。持ちまわす場合は<c>clone_path_info</c>で複製すること。</returns>
 PATH_INFO get_path_info_stack(const TEXT* path);
 
-PATH_INFO RC_HEAP_FUNC(clone_path_info, const PATH_INFO* path_info, const MEMORY_RESOURCE* memory_resource);
+PATH_INFO RC_HEAP_FUNC(clone_path_info, const PATH_INFO* path_info, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define clone_path_info(path_info, memory_resource) RC_HEAP_WRAP(clone_path_info, path_info, memory_resource)
+#   define clone_path_info(path_info, memory_arena_resource) RC_HEAP_WRAP(clone_path_info, path_info, memory_arena_resource)
 #endif
 
 /// <summary>

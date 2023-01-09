@@ -22,7 +22,7 @@ typedef struct tag_STRING_BUILDER
     {
         /// <summary>
         /// 内部文字列。
-        /// <para>各種確保処理は<c>PRIMITIVE_LIST_TCHAR.library.memory_resource</c>が使用される。</para>
+        /// <para>各種確保処理は<c>PRIMITIVE_LIST_TCHAR.library.memory_arena_resource</c>が使用される。</para>
         /// </summary>
         PRIMITIVE_LIST_TCHAR list;
     } library;
@@ -34,9 +34,9 @@ typedef struct tag_STRING_BUILDER
 /// <param name=""></param>
 /// <param name="capacity">初期予約領域。特に指定しない場合は<c>STRING_BUILDER_DEFAULT_CAPACITY</c>を使用する。</param>
 /// <returns>生成した<c>STRING_BUILDER</c>。解放が必要。</returns>
-STRING_BUILDER RC_HEAP_FUNC(new_string_builder, size_t capacity, const MEMORY_RESOURCE* memory_resource);
+STRING_BUILDER RC_HEAP_FUNC(new_string_builder, size_t capacity, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
-#   define new_string_builder(capacity, memory_resource) RC_HEAP_WRAP(new_string_builder, (capacity), memory_resource)
+#   define new_string_builder(capacity, memory_arena_resource) RC_HEAP_WRAP(new_string_builder, (capacity), memory_arena_resource)
 #endif
 
 /// <summary>

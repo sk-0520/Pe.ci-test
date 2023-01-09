@@ -7154,6 +7154,16 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
                 }
             }
         }
+
+        public static bool operator ==(HRESULT left, HRESULT right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(HRESULT left, HRESULT right)
+        {
+            return !(left == right);
+        }
     }
 #pragma warning restore IDE0011 // 波かっこを追加します
 #pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。

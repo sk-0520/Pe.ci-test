@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 {
+    [AttributeUsage(AttributeTargets.Class)]
     public sealed class DatabaseSetupVersionAttribute: Attribute
     {
         public DatabaseSetupVersionAttribute(Version version)

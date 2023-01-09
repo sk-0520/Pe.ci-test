@@ -17,8 +17,8 @@ namespace PeLibraryTest
 
             TEST_GET_PATH(path1, _T("file"));
 
-            FILE_RESOURCE actual1 = create_file_resource(&path1, DEFAULT_MEMORY);
-            FILE_RESOURCE actual2 = create_file_resource(&path1, DEFAULT_MEMORY);
+            FILE_RESOURCE actual1 = create_file_resource(&path1, DEFAULT_MEMORY_ARENA);
+            FILE_RESOURCE actual2 = create_file_resource(&path1, DEFAULT_MEMORY_ARENA);
 
             Assert::IsTrue(is_enabled_file_resource(&actual1));
             Assert::IsFalse(is_enabled_file_resource(&actual2));
@@ -36,8 +36,8 @@ namespace PeLibraryTest
 
             TEST.create_empty_file(test_path1);
 
-            FILE_RESOURCE actual1 = open_file_resource(&path1, DEFAULT_MEMORY);
-            FILE_RESOURCE actual2 = open_file_resource(&path2, DEFAULT_MEMORY);
+            FILE_RESOURCE actual1 = open_file_resource(&path1, DEFAULT_MEMORY_ARENA);
+            FILE_RESOURCE actual2 = open_file_resource(&path2, DEFAULT_MEMORY_ARENA);
 
             Assert::IsTrue(is_enabled_file_resource(&actual1));
             Assert::IsFalse(is_enabled_file_resource(&actual2));
@@ -55,8 +55,8 @@ namespace PeLibraryTest
 
             TEST.create_empty_file(test_path1);
 
-            FILE_RESOURCE actual1 = open_or_create_file_resource(&path1, DEFAULT_MEMORY);
-            FILE_RESOURCE actual2 = open_or_create_file_resource(&path2, DEFAULT_MEMORY);
+            FILE_RESOURCE actual1 = open_or_create_file_resource(&path1, DEFAULT_MEMORY_ARENA);
+            FILE_RESOURCE actual2 = open_or_create_file_resource(&path2, DEFAULT_MEMORY_ARENA);
 
             Assert::IsTrue(is_enabled_file_resource(&actual1));
             Assert::IsTrue(is_enabled_file_resource(&actual2));
@@ -73,7 +73,7 @@ namespace PeLibraryTest
 
             TEST_GET_PATH(path, _T("file"));
 
-            auto fr1 = create_file_resource(&path, DEFAULT_MEMORY);
+            auto fr1 = create_file_resource(&path, DEFAULT_MEMORY_ARENA);
             uint8_t write_values[] = {
                 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
             };
@@ -82,7 +82,7 @@ namespace PeLibraryTest
             release_file_resource(&fr1);
             Assert::IsFalse(is_enabled_file_resource(&fr1));
 
-            auto fr2 = open_file_resource(&path, DEFAULT_MEMORY);
+            auto fr2 = open_file_resource(&path, DEFAULT_MEMORY_ARENA);
             Assert::IsTrue(is_enabled_file_resource(&fr2));
 
             uint8_t actual_values[sizeof(write_values)];

@@ -1,5 +1,37 @@
 [
 	{
+		"date": "2023/01/09",
+		"version": "0.99.185",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"class": "compatibility",
+						"subject": "次の次で Windows 7, 8, 8.1 をサポート対象外とします",
+						"comments": [
+							"#841: Windows 7/8/8.1 対応を終了"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "8e0031b73a41c285797ab09a67d3897c214c6d74",
+						"subject": "C17適用"
+					},
+					{
+						"revision": "8be028c23e51f48cc59c925723cb6b595113ab1f",
+						"subject": "#718: ランチャーアイテムの削除処理を一元化"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2022/12/28",
 		"version": "0.99.184",
 		"contents": [

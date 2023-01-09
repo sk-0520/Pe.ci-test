@@ -33,7 +33,7 @@ CONSOLE_KIND get_console_kind(const COMMAND_LINE_OPTION* command_line_option)
 
 EXIT_CODE console_execute(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_option)
 {
-    CONSOLE_RESOURCE console_resource = begin_console(DEFAULT_MEMORY);
+    CONSOLE_RESOURCE console_resource = begin_console(DEFAULT_MEMORY_ARENA);
 
     EXIT_CODE exit_code = EXIT_CODE_UNKNOWN_EXECUTE_MODE;
     CONSOLE_KIND console_kind = get_console_kind(command_line_option);

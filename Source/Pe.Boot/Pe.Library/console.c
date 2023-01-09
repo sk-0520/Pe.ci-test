@@ -1,7 +1,7 @@
 ﻿#include "console.h"
 #include "logging.h"
 
-CONSOLE_RESOURCE begin_console(const MEMORY_RESOURCE* memory_resource)
+CONSOLE_RESOURCE begin_console(const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     bool attached = false;
     //HANDLE sdt_output_handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -24,9 +24,9 @@ CONSOLE_RESOURCE begin_console(const MEMORY_RESOURCE* memory_resource)
             .error = GetStdHandle(STD_ERROR_HANDLE),
         },
         .stdio = {
-            .input = open_file_resource(&stdio_input_test, memory_resource),
-            .output = open_file_resource(&stdio_output_test, memory_resource),
-            .error = open_file_resource(&stdio_error_test, memory_resource),
+            .input = open_file_resource(&stdio_input_test, memory_arena_resource),
+            .output = open_file_resource(&stdio_output_test, memory_arena_resource),
+            .error = open_file_resource(&stdio_error_test, memory_arena_resource),
         },
         .library = {
             .attached = attached,

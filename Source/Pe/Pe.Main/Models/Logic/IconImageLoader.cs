@@ -125,6 +125,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             if(string.IsNullOrEmpty(path)) {
                 return Task.FromResult(default(BitmapSource));
             }
+
             return Task.Run(() => {
                 var isFile = File.Exists(path);
                 var isDir = !isFile && Directory.Exists(path);
