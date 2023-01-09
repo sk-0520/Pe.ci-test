@@ -101,14 +101,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.UpdateByKey(statement, dto);
         }
 
-        public void DeleteRedoItemByLauncherItemId(LauncherItemId launcherItemId)
+        public bool DeleteRedoItemByLauncherItemId(LauncherItemId launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
 
-            Context.DeleteByKey(statement, parameter);
+            return Context.DeleteByKeyOrNothing(statement, parameter);
         }
 
         #endregion

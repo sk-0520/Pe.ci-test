@@ -798,8 +798,8 @@
           "ClrHeapAllocationAnalyzer": "[3.0.0, )",
           "Dapper": "[2.0.123, )",
           "Microsoft.Extensions.Logging.Abstractions": "[7.0.0, )",
-          "Pe.Bridge": "[0.99.183, )",
-          "Pe.PInvoke": "[0.99.183, )",
+          "Pe.Bridge": "[0.99.184, )",
+          "Pe.PInvoke": "[0.99.184, )",
           "Prism.Wpf": "[8.1.97, )",
           "System.Data.SQLite.Core": "[1.0.117, )"
         }
@@ -813,8 +813,8 @@
       "pe.plugins.defaulttheme": {
         "type": "Project",
         "dependencies": {
-          "Pe.Bridge": "[0.99.183, )",
-          "Pe.Core": "[0.99.183, )"
+          "Pe.Bridge": "[0.99.184, )",
+          "Pe.Core": "[0.99.184, )"
         }
       }
     }

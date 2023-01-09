@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
+    [Obsolete]
     public struct EntityRemoverResultItem
     {
         public EntityRemoverResultItem(string entityName, int count)
@@ -25,6 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    [Obsolete]
     public class EntityRemoverResult
     {
         public EntityRemoverResult(Pack target)
@@ -41,6 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    [Obsolete]
     public abstract class EntityRemoverBase
     {
         protected EntityRemoverBase(ILoggerFactory loggerFactory)
@@ -106,6 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    [Obsolete]
     public sealed class EntityDeleteDaoGroup
     {
         #region property
@@ -149,6 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    [Obsolete]
     public sealed class EntitiesRemover
     {
         public EntitiesRemover(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader)

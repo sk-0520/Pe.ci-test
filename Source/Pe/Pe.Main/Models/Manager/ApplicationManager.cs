@@ -1994,20 +1994,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return false;
             }
 
-            var entitiesRemover = ApplicationDiContainer.Build<EntitiesRemover>();
-            entitiesRemover.Items.Add(new NoteRemover(noteId, LoggerFactory));
-
-            try {
-                var reuslt = entitiesRemover.Execute();
-                if(reuslt.Sum(i => i.Items.Count) == 0) {
-                    Logger.LogWarning("ノート削除に失敗: 対象データ不明: {0}", noteId);
-                    return false;
+            var appBarrierPack = ApplicationDiContainer.Build<IDatabaseBarrierPack>();
+            var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
+            using(var appContext = appBarrierPack.WaitWrite()) {
+                var noteEntityEraser = new NoteEntityEraser(noteId, appContext, statementLoader, LoggerFactory);
+                try {
+                    noteEntityEraser.Execute();
+                    NoteElements.Remove(targetElement);
+                    targetElement.Dispose();
+                    appBarrierPack.Save();
+                    return true;
+                } catch(Exception ex) {
+                    Logger.LogError(ex, "ノート削除に失敗: {0} {1}", ex.Message, noteId);
                 }
-                NoteElements.Remove(targetElement);
-                targetElement.Dispose();
-                return true;
-            } catch(Exception ex) {
-                Logger.LogError(ex, "ノート削除に失敗: {0} {1}", ex.Message, noteId);
             }
 
             return false;
