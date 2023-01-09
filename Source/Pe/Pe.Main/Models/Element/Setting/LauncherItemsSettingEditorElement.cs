@@ -62,6 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ThrowIfDisposed();
 
             var item = AllLauncherItems.First(i => i.LauncherItemId == launcherItemId);
+            var launcherItemKind = item.Kind;
             AllLauncherItems.Remove(item);
             item.Dispose();
 
@@ -69,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             using(var mainDatabaseContext = MainDatabaseBarrier.WaitWrite())
             using(var largeDatabaseContext = LargeDatabaseBarrier.WaitWrite())
             using(var temporaryDatabaseContext = TemporaryDatabaseBarrier.WaitWrite()) {
-                var launcherEntityEraser = new LauncherEntityEraser(launcherItemId, mainDatabaseContext, largeDatabaseContext, temporaryDatabaseContext, DatabaseStatementLoader, LoggerFactory);
+                var launcherEntityEraser = new LauncherEntityEraser(launcherItemId, launcherItemKind, mainDatabaseContext, largeDatabaseContext, temporaryDatabaseContext, DatabaseStatementLoader, LoggerFactory);
                 launcherEntityEraser.Execute();
 
                 temporaryDatabaseContext.Commit();

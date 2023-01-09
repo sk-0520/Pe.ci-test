@@ -15,21 +15,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
     internal class LauncherEntityEraser: EntityEraserBase
     {
-        public LauncherEntityEraser(LauncherItemId launcherItemId, IDatabaseContextsPack contextsPack, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public LauncherEntityEraser(LauncherItemId launcherItemId, LauncherItemKind launcherItemKind, IDatabaseContextsPack contextsPack, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(contextsPack, statementLoader, loggerFactory)
         {
             LauncherItemId = launcherItemId;
+            LauncherItemKind = launcherItemKind;
         }
 
-        public LauncherEntityEraser(LauncherItemId launcherItemId, IDatabaseContexts mainContexts, IDatabaseContexts fileContexts, IDatabaseContexts temporaryContexts, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public LauncherEntityEraser(LauncherItemId launcherItemId, LauncherItemKind launcherItemKind, IDatabaseContexts mainContexts, IDatabaseContexts fileContexts, IDatabaseContexts temporaryContexts, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(mainContexts, fileContexts, temporaryContexts, statementLoader, loggerFactory)
         {
             LauncherItemId = launcherItemId;
+            LauncherItemKind = launcherItemKind;
         }
 
         #region property
 
         private LauncherItemId LauncherItemId { get; }
+        private LauncherItemKind LauncherItemKind { get; }
 
         #endregion
 
@@ -40,8 +43,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(context, statementLoader, implementation, LoggerFactory);
             launcherEnvVarsEntityDao.DeleteEnvVarItemsByLauncherItemId(LauncherItemId);
 
-            var launcherFilesEntityDao = new LauncherFilesEntityDao(context, statementLoader, implementation, LoggerFactory);
-            launcherFilesEntityDao.DeleteFileByLauncherItemId(LauncherItemId);
+            switch(LauncherItemKind) {
+                case LauncherItemKind.File: {
+                        var launcherFilesEntityDao = new LauncherFilesEntityDao(context, statementLoader, implementation, LoggerFactory);
+                        launcherFilesEntityDao.DeleteFileByLauncherItemId(LauncherItemId);
+                    }
+                    break;
+
+                case LauncherItemKind.Addon:
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
 
             var launcherGroupItemsEntityDao = new LauncherGroupItemsEntityDao(context, statementLoader, implementation, LoggerFactory);
             launcherGroupItemsEntityDao.DeleteGroupItemsByLauncherItemId(LauncherItemId);
