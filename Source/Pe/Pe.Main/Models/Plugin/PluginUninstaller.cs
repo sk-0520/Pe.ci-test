@@ -1,8 +1,11 @@
 using System.Linq;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
@@ -36,6 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         private IDatabaseContexts MainContexts => DatabaseContextsPack.Main;
         private IDatabaseContexts FileContexts => DatabaseContextsPack.Large;
+        private IDatabaseContexts TemporaryContexts => DatabaseContextsPack.Temporary;
 
         #endregion
 
@@ -85,37 +89,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             pluginLauncherItemSettingsEntityDao.DeletePluginLauncherItemSettingsByPluginId(pluginIdentifiers.PluginId);
 
             foreach(var deleteTargetLauncherItemId in deleteTargetLauncherItemIds) {
-                // ファイルDB側破棄
-                var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(FileContexts.Context, StatementLoader, FileContexts.Implementation, LoggerFactory);
-                launcherItemIconsEntityDao.DeleteAllSizeImageBinary(deleteTargetLauncherItemId);
-
-                var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(FileContexts.Context, StatementLoader, FileContexts.Implementation, LoggerFactory);
-                launcherItemIconStatusEntityDao.DeleteAllSizeLauncherItemIconState(deleteTargetLauncherItemId);
-
-                // 通常DB側破棄
-                var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(MainContexts.Context, StatementLoader, MainContexts.Implementation, LoggerFactory);
-                launcherEnvVarsEntityDao.DeleteEnvVarItemsByLauncherItemId(deleteTargetLauncherItemId);
-
-                var launcherFilesEntityDao = new LauncherFilesEntityDao(MainContexts.Context, StatementLoader, MainContexts.Implementation, LoggerFactory);
-                launcherFilesEntityDao.DeleteFileByLauncherItemId(deleteTargetLauncherItemId);
-
-                var launcherGroupItemsEntityDao = new LauncherGroupItemsEntityDao(MainContexts.Context, StatementLoader, MainContexts.Implementation, LoggerFactory);
-                launcherGroupItemsEntityDao.DeleteGroupItemsByLauncherItemId(deleteTargetLauncherItemId);
-
-                var launcherItemHistoriesEntityDao = new LauncherItemHistoriesEntityDao(MainContexts.Context, StatementLoader, MainContexts.Implementation, LoggerFactory);
-                launcherItemHistoriesEntityDao.DeleteHistoriesByLauncherItemId(deleteTargetLauncherItemId);
-
-                var launcherTagsEntityDao = new LauncherTagsEntityDao(MainContexts.Context, StatementLoader, MainContexts.Implementation, LoggerFactory);
-                launcherTagsEntityDao.DeleteTagByLauncherItemId(deleteTargetLauncherItemId);
-
-                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(MainContexts.Context, StatementLoader, MainContexts.Implementation, LoggerFactory);
-                launcherRedoItemsEntityDao.DeleteRedoItemByLauncherItemId(deleteTargetLauncherItemId);
-
-                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(MainContexts.Context, StatementLoader, MainContexts.Implementation, LoggerFactory);
-                launcherRedoSuccessExitCodesEntityDao.DeleteSuccessExitCodes(deleteTargetLauncherItemId);
-
-                var launcherItemsEntityDao = new LauncherItemsEntityDao(MainContexts.Context, StatementLoader, MainContexts.Implementation, LoggerFactory);
-                launcherItemsEntityDao.DeleteLauncherItem(deleteTargetLauncherItemId);
+                var launcherEntityEraser = new LauncherEntityEraser(deleteTargetLauncherItemId, LauncherItemKind.Addon, MainContexts, FileContexts, TemporaryContexts, StatementLoader, LoggerFactory);
+                launcherEntityEraser.Execute();
             }
 
             var pluginSettingsEntityDao = new PluginSettingsEntityDao(MainContexts.Context, StatementLoader, MainContexts.Implementation, LoggerFactory);
