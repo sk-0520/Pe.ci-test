@@ -66,40 +66,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             item.Dispose();
 
             // DBから物理削除
-            using(var context = LargeDatabaseBarrier.WaitWrite()) {
-                var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                launcherItemIconsEntityDao.DeleteAllSizeImageBinary(launcherItemId);
+            using(var mainDatabaseContext = MainDatabaseBarrier.WaitWrite())
+            using(var largeDatabaseContext = LargeDatabaseBarrier.WaitWrite())
+            using(var temporaryDatabaseContext = TemporaryDatabaseBarrier.WaitWrite()) {
+                var launcherEntityEraser = new LauncherEntityEraser(launcherItemId, mainDatabaseContext, largeDatabaseContext, temporaryDatabaseContext, DatabaseStatementLoader, LoggerFactory);
+                launcherEntityEraser.Execute();
 
-                //TODO: LauncherItemIconStatusEntityDao による状態破棄 実装漏れ
-
-                context.Commit();
-            }
-            using(var context = MainDatabaseBarrier.WaitWrite()) {
-                var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                launcherEnvVarsEntityDao.DeleteEnvVarItemsByLauncherItemId(launcherItemId);
-
-                var launcherFilesEntityDao = new LauncherFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                launcherFilesEntityDao.DeleteFileByLauncherItemId(launcherItemId);
-
-                var launcherGroupItemsEntityDao = new LauncherGroupItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                launcherGroupItemsEntityDao.DeleteGroupItemsByLauncherItemId(launcherItemId);
-
-                var launcherItemHistoriesEntityDao = new LauncherItemHistoriesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                launcherItemHistoriesEntityDao.DeleteHistoriesByLauncherItemId(launcherItemId);
-
-                var launcherTagsEntityDao = new LauncherTagsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                launcherTagsEntityDao.DeleteTagByLauncherItemId(launcherItemId);
-
-                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                launcherRedoItemsEntityDao.DeleteRedoItemByLauncherItemId(launcherItemId);
-
-                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                launcherRedoSuccessExitCodesEntityDao.DeleteSuccessExitCodes(launcherItemId);
-
-                var launcherItemsEntityDao = new LauncherItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                launcherItemsEntityDao.DeleteLauncherItem(launcherItemId);
-
-                context.Commit();
+                temporaryDatabaseContext.Commit();
+                largeDatabaseContext.Commit();
+                mainDatabaseContext.Commit();
             }
 
             SettingNotifyManager.SendLauncherItemRemove(launcherItemId);
