@@ -24,6 +24,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
             LazyChanger = new LazyAction(GetType().Name, TimeSpan.FromMilliseconds(400), loggerFactory);
             Refresh();
+
+            WeakEvent = new WeakEvent<PlatformThemeLoader, EventArgs>();
         }
 
         #region property
@@ -32,6 +34,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         private PlatformConfiguration PlatformConfiguration { get; }
 
         private LazyAction LazyChanger { get; }
+
+        WeakEvent<PlatformThemeLoader, EventArgs> WeakEvent { get; }
 
         #endregion
 
