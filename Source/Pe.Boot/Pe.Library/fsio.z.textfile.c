@@ -47,7 +47,7 @@ FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encodi
         .resource = RC_FILE_CALL(new_file_resource, path, FILE_ACCESS_MODE_READ, FILE_SHARE_MODE_READ, FILE_OPEN_MODE_OPEN, 0, memory_arena_resource),
         .library = {
             .encoding = encoding,
-        },
+    },
     };
 
     return result;
@@ -149,11 +149,11 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
             return wrap_text_with_length((TCHAR*)conv_buffer, conv_buffer_length / sizeof(TCHAR), true, memory_arena_resource);
 
         case FILE_ENCODING_UTF8:
-        {
-            TEXT text = RC_HEAP_CALL(make_text_from_multibyte, conv_buffer, conv_buffer_length, MULTI_BYTE_CHARACTER_TYPE_UTF8, memory_arena_resource);
-            release_memory(buffer, memory_arena_resource);
-            return text;
-        }
+            {
+                TEXT text = RC_HEAP_CALL(make_text_from_multibyte, conv_buffer, conv_buffer_length, MULTI_BYTE_CHARACTER_TYPE_UTF8, memory_arena_resource);
+                release_memory(buffer, memory_arena_resource);
+                return text;
+            }
 
         default:
             assert(false);
@@ -170,7 +170,7 @@ FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encodi
             .encoding = encoding,
             .string_builder = RC_HEAP_CALL(new_string_builder, FILE_WRITER_BUFFER_SIZE, memory_arena_resource),
             .buffer_size = FILE_WRITER_BUFFER_SIZE,
-        }
+    }
     };
 
     if (!is_enabled_file_resource(&result.resource)) {
@@ -246,23 +246,27 @@ void flush_file_writer(FILE_WRITER* file_writer, bool force)
         }
     }
 
+    if (!is_enabled_file_writer(file_writer)) {
+        return;
+    }
+
     TEXT text = build_text_string_builder(&file_writer->library.string_builder);
 #ifdef _UNICODE
     switch (file_writer->library.encoding) {
         case FILE_ENCODING_NATIVE:
         case FILE_ENCODING_UTF16LE:
-        {
-            write_file_resource(&file_writer->resource, text.value, text.length * sizeof(TCHAR));
-        }
-        break;
+            {
+                write_file_resource(&file_writer->resource, text.value, text.length * sizeof(TCHAR));
+            }
+            break;
 
         case FILE_ENCODING_UTF8:
-        {
-            MULTIBYTE_CHARACTER_RESULT mbcr = convert_to_multibyte_character(&text, MULTI_BYTE_CHARACTER_TYPE_UTF8, file_writer->resource.library.memory_arena_resource);
-            write_file_resource(&file_writer->resource, mbcr.buffer, mbcr.length);
-            release_multibyte_character_result(&mbcr, file_writer->resource.library.memory_arena_resource);
-        }
-        break;
+            {
+                MULTIBYTE_CHARACTER_RESULT mbcr = convert_to_multibyte_character(&text, MULTI_BYTE_CHARACTER_TYPE_UTF8, file_writer->resource.library.memory_arena_resource);
+                write_file_resource(&file_writer->resource, mbcr.buffer, mbcr.length);
+                release_multibyte_character_result(&mbcr, file_writer->resource.library.memory_arena_resource);
+            }
+            break;
 
         default:
             assert(false);
