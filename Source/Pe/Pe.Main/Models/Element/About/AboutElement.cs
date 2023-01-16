@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
             var data = new[] {
                 new AboutComponentData() {
                     Name = BuildStatus.Name,
-                    Uri = ApplicationConfiguration.General.ProjectWebSiteUri.ToString(),
+                    Uri = ApplicationConfiguration.General.AuthorWebSiteUri.ToString(),
                     License = new AboutLicenseData() {
                         Name = ApplicationConfiguration.General.LicenseName,
                         Uri = ApplicationConfiguration.General.LicenseUri.ToString(),
