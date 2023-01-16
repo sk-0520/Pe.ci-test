@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -78,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         {
             var attribute = GetAttribute(KeyActionDisableOption.Forever);
             return Convert(attribute, map, (a, s) => {
-                return System.Convert.ToBoolean(s);
+                return System.Convert.ToBoolean(s, CultureInfo.InvariantCulture);
             });
         }
 
@@ -86,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         {
             var attribute = GetAttribute(KeyActionDisableOption.Forever);
             return TryConvert(attribute, map, (a, s) => {
-                return System.Convert.ToBoolean(s);
+                return System.Convert.ToBoolean(s, CultureInfo.InvariantCulture);
             }, out result);
         }
 
@@ -107,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         {
             var attribute = GetAttribute(KeyActionPressOption.ThroughSystem);
             return Convert(attribute, map, (a, s) => {
-                return System.Convert.ToBoolean(s);
+                return System.Convert.ToBoolean(s, CultureInfo.InvariantCulture);
             });
         }
 
@@ -115,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         {
             var attribute = GetAttribute(KeyActionPressOption.ThroughSystem);
             return TryConvert(attribute, map, (a, s) => {
-                return System.Convert.ToBoolean(s);
+                return System.Convert.ToBoolean(s, CultureInfo.InvariantCulture);
             }, out result);
         }
 

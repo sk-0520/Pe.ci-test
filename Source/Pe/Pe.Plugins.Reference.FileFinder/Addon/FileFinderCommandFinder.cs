@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Printing;
@@ -84,9 +85,9 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
         private string GetDriveName(DriveInfo drive)
         {
             if(drive.DriveType == DriveType.CDRom || drive.DriveType == DriveType.Removable) {
-                return string.Format("{0} ({1})", drive.Name, drive.DriveType);
+                return string.Format(CultureInfo.InvariantCulture, "{0} ({1})", drive.Name, drive.DriveType);
             } else {
-                return string.Format("{0} {1} ({2})", drive.VolumeLabel, drive.Name, drive.DriveType);
+                return string.Format(CultureInfo.InvariantCulture, "{0} {1} ({2})", drive.VolumeLabel, drive.Name, drive.DriveType);
             }
         }
 

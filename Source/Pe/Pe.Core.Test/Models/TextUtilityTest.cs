@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -85,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         public void ReadLinesTest(int expected, string s)
         {
             var actual = TextUtility.ReadLines(s).Count();
-            Assert.AreEqual(expected, actual, TextUtility.ReadLines(s).Count().ToString());
+            Assert.AreEqual(expected, actual, TextUtility.ReadLines(s).Count().ToString(CultureInfo.InvariantCulture));
         }
 
 #if false

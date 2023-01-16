@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -93,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
         {
             var cisf = new CronItemSettingFactory();
             for(var i = 0; i < 7; i++) {
-                var item = cisf.Parse("* * * * " + i.ToString());
+                var item = cisf.Parse("* * * * " + i.ToString(CultureInfo.InvariantCulture));
 
                 foreach(var weekDay in Enum.GetValues<DayOfWeek>()) {
                     var day = (int)weekDay;
@@ -179,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
         {
             var cisf = new CronItemSettingFactory();
             var item = cisf.Parse(cronPattern);
-            var actual = item.IsEnabled(DateTime.Parse(inputIso8601));
+            var actual = item.IsEnabled(DateTime.Parse(inputIso8601, CultureInfo.InvariantCulture));
             Assert.AreEqual(expected, actual);
         }
 
@@ -326,7 +327,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
         [DataRow(1, "2020-06-28T20:42:59.999")]
         public void GetNextJobWaitTimeTest(double expected, string iso8601)
         {
-            var input = DateTime.Parse(iso8601);
+            var input = DateTime.Parse(iso8601, CultureInfo.InvariantCulture);
             var cs = new CronScheduler(new IdFactory(Test.LoggerFactory),Test.LoggerFactory);
             var actual = cs.GetNextJobWaitTime(input);
             Assert.AreEqual(expected, actual.TotalMilliseconds);

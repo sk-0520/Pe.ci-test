@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Views.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if(value == null) {
-                return System.Convert.ToDouble(parameter);
+                return System.Convert.ToDouble(parameter, CultureInfo.InvariantCulture);
             }
 
             return value;

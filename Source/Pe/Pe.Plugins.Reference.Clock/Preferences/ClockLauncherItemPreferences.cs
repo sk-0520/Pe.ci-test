@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -55,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
             Debug.Assert(Setting != null);
 
             try {
-                DateTime.Now.ToString(Setting.Format);
+                DateTime.Now.ToString(Setting.Format, CultureInfo.InvariantCulture);
             } catch {
                 preferencesCheckContext.HasError = true;
             }

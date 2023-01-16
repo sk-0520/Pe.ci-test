@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -44,17 +45,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                 return;
             }
 
-            WindowsThemeKind = Convert.ToBoolean(reg.GetValue("SystemUsesLightTheme"))
+            WindowsThemeKind = Convert.ToBoolean(reg.GetValue("SystemUsesLightTheme"), CultureInfo.InvariantCulture)
                 ? PlatformThemeKind.Light
                 : PlatformThemeKind.Dark
             ;
-            ApplicationThemeKind = Convert.ToBoolean(reg.GetValue("AppsUseLightTheme"))
+            ApplicationThemeKind = Convert.ToBoolean(reg.GetValue("AppsUseLightTheme"), CultureInfo.InvariantCulture)
                 ? PlatformThemeKind.Light
                 : PlatformThemeKind.Dark
             ;
 
-            ColorPrevalence = Convert.ToBoolean(reg.GetValue("ColorPrevalence"));
-            EnableTransparency = Convert.ToBoolean(reg.GetValue("EnableTransparency"));
+            ColorPrevalence = Convert.ToBoolean(reg.GetValue("ColorPrevalence"), CultureInfo.InvariantCulture);
+            EnableTransparency = Convert.ToBoolean(reg.GetValue("EnableTransparency"), CultureInfo.InvariantCulture);
 
         }
 

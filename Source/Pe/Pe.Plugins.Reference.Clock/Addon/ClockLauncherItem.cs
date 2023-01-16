@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -93,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public override bool CustomDisplayText => true;
 
-        public override string DisplayText => TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.Local).ToString(Setting.Format);
+        public override string DisplayText => TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.Local).ToString(Setting.Format, CultureInfo.InvariantCulture);
 
         public override bool CustomLauncherIcon => throw new NotImplementedException();
 

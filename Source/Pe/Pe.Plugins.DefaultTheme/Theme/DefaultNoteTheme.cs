@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
@@ -231,7 +232,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
             var newContentXml = XDocument.Load(srcContentReader);
             var penElement = newContentXml.XPathSelectElement("//*/" + xamlNamespace + ":Pen", xmlNamespaceManager);
-            penElement!.SetAttributeValue(Pen.BrushProperty.Name, baseColor.Foreground.ToString());
+            penElement!.SetAttributeValue(Pen.BrushProperty.Name, baseColor.Foreground.ToString(CultureInfo.InvariantCulture));
 
             using var newContentStream = new IO.MemoryStream();
             using(var keepStream = new KeepStream(newContentStream)) {

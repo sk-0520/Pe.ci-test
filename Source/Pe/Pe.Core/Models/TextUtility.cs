@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>集合の中に同じものがなければ<paramref name="target"/>, 存在すれば<paramref name="target"/>(n)。</returns>
         public static string ToUniqueDefault(string target, IReadOnlyCollection<string> seq, StringComparison comparisonType)
         {
-            return ToUnique(target, seq, comparisonType, (string source, int index) => string.Format("{0}({1})", source, index));
+            return ToUnique(target, seq, comparisonType, (string source, int index) => string.Format(CultureInfo.InvariantCulture, "{0}({1})", source, index));
         }
 
 #if false

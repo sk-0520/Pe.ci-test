@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -88,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             Debug.Assert(new[] { "7z", "zip" }.Contains(archiveKind)); // enum 作っておかないからこうなる
 
-            var dirName = Path.GetFileNameWithoutExtension(archiveFile.Name) + DateTime.Now.ToString("_yyyy-MM-dd'T'HHmmss");
+            var dirName = Path.GetFileNameWithoutExtension(archiveFile.Name) + DateTime.Now.ToString("_yyyy-MM-dd'T'HHmmss", CultureInfo.InvariantCulture);
             var baseDir = isManual
                 ? EnvironmentParameters.TemporaryPluginManualExtractDirectory
                 : EnvironmentParameters.TemporaryPluginAutomaticExtractDirectory

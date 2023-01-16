@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -103,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                 var rand = new Random();
                 var randomValues = new byte[16];
                 rand.NextBytes(randomValues);
-                return string.Format(format, BitConverter.ToString(randomValues));
+                return string.Format(CultureInfo.InvariantCulture, format, BitConverter.ToString(randomValues));
             }
 
             var assembly = Assembly.GetExecutingAssembly();

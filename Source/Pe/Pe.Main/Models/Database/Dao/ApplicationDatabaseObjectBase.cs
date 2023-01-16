@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Text;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -24,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao
 
         protected string FromColor(Color color)
         {
-            return color.ToString();
+            return color.ToString(CultureInfo.InvariantCulture);
         }
 
         protected Color ToColor(string raw)

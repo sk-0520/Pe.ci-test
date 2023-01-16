@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -82,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 TextUtility.ReplaceFromDictionary(
                     ApplicationConfiguration.General.UpdateCheckUri.OriginalString,
                     new Dictionary<string, string>() {
-                        ["CACHE-CLEAR"] = DateTime.UtcNow.ToBinary().ToString()
+                        ["CACHE-CLEAR"] = DateTime.UtcNow.ToBinary().ToString(CultureInfo.InvariantCulture),
                     }
                 )
             );
@@ -139,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             var versionConverter = new VersionConverter();
 
             var map = new Dictionary<string, string>() {
-                ["TIMESTAMP-NUMBER"] = DateTime.UtcNow.ToBinary().ToString(),
+                ["TIMESTAMP-NUMBER"] = DateTime.UtcNow.ToBinary().ToString(CultureInfo.InvariantCulture),
                 ["APP-VERSION"] = versionConverter.ConvertNormalVersion(BuildStatus.Version),
                 ["APP-REVISION"] = BuildStatus.Revision,
                 ["PLUGIN-ID"] = pluginId.ToString(),

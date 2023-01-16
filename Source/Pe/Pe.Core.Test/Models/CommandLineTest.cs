@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -176,17 +177,17 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         {
             var cts = new Cts();
             var data = new[] {
-                new MappingItem("/sbyte", sbyte.MaxValue.ToString(), () => cts.SByte == sbyte.MaxValue),
-                new MappingItem("/byte", byte.MaxValue.ToString(), () => cts.Byte == byte.MaxValue),
-                new MappingItem("/int16", Int16.MaxValue.ToString(), () => cts.Int16 == Int16.MaxValue),
-                new MappingItem("/uint16", UInt16.MaxValue.ToString(), () => cts.UInt16 == UInt16.MaxValue),
-                new MappingItem("/int32", Int32.MaxValue.ToString(), () => cts.Int32 == Int32.MaxValue),
-                new MappingItem("/uint32", UInt32.MaxValue.ToString(), () => cts.UInt32 == UInt32.MaxValue),
-                new MappingItem("/int64", Int64.MaxValue.ToString(), () => cts.Int64 == Int64.MaxValue),
-                new MappingItem("/uint64", UInt64.MaxValue.ToString(), () => cts.UInt64 == UInt64.MaxValue),
-                new MappingItem("/single", Single.MaxValue.ToString("r"), () => cts.Single == Single.MaxValue),
-                new MappingItem("/double", Double.MaxValue.ToString("r"), () => cts.Double == Double.MaxValue),
-                new MappingItem("/decimal", Decimal.MaxValue.ToString(), () => cts.Decimal == Decimal.MaxValue),
+                new MappingItem("/sbyte", sbyte.MaxValue.ToString(CultureInfo.InvariantCulture), () => cts.SByte == sbyte.MaxValue),
+                new MappingItem("/byte", byte.MaxValue.ToString(CultureInfo.InvariantCulture), () => cts.Byte == byte.MaxValue),
+                new MappingItem("/int16", Int16.MaxValue.ToString(CultureInfo.InvariantCulture), () => cts.Int16 == Int16.MaxValue),
+                new MappingItem("/uint16", UInt16.MaxValue.ToString(CultureInfo.InvariantCulture), () => cts.UInt16 == UInt16.MaxValue),
+                new MappingItem("/int32", Int32.MaxValue.ToString(CultureInfo.InvariantCulture), () => cts.Int32 == Int32.MaxValue),
+                new MappingItem("/uint32", UInt32.MaxValue.ToString(CultureInfo.InvariantCulture), () => cts.UInt32 == UInt32.MaxValue),
+                new MappingItem("/int64", Int64.MaxValue.ToString(CultureInfo.InvariantCulture), () => cts.Int64 == Int64.MaxValue),
+                new MappingItem("/uint64", UInt64.MaxValue.ToString(CultureInfo.InvariantCulture), () => cts.UInt64 == UInt64.MaxValue),
+                new MappingItem("/single", Single.MaxValue.ToString("r", CultureInfo.InvariantCulture), () => cts.Single == Single.MaxValue),
+                new MappingItem("/double", Double.MaxValue.ToString("r",CultureInfo.InvariantCulture), () => cts.Double == Double.MaxValue),
+                new MappingItem("/decimal", Decimal.MaxValue.ToString(CultureInfo.InvariantCulture), () => cts.Decimal == Decimal.MaxValue),
                 new MappingItem("/boolean", true.ToString(), () => cts.Boolean),
                 new MappingItem("/char", Char.MaxValue.ToString(), () => cts.Char == Char.MaxValue),
                 new MappingItem("/boolean-switch", string.Empty, () => cts.BooleanSwitch),

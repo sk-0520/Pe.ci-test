@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -1574,8 +1575,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var psCommands = powerShellArguments.CreateParameters(true, new[] {
                 KeyValuePair.Create("-File", environmentParameters.EtcRebootScriptFile.FullName),
                 KeyValuePair.Create("-LogPath", environmentParameters.TemporaryRebootLogFile.FullName),
-                KeyValuePair.Create("-ProcessId", Process.GetCurrentProcess().Id.ToString()),
-                KeyValuePair.Create("-WaitSeconds", TimeSpan.FromSeconds(10).TotalMilliseconds.ToString()),
+                KeyValuePair.Create("-ProcessId", Process.GetCurrentProcess().Id.ToString(CultureInfo.InvariantCulture)),
+                KeyValuePair.Create("-WaitSeconds", TimeSpan.FromSeconds(10).TotalMilliseconds.ToString(CultureInfo.InvariantCulture)),
                 KeyValuePair.Create("-ExecuteCommand", environmentParameters.RootApplication.FullName)
             });
             psCommands.AddRange(powerShellArguments.ConvertOptions());
@@ -1678,7 +1679,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             BackupSettings(
                 environmentParameters.UserSettingDirectory,
                 environmentParameters.UserBackupDirectory,
-                DateTime.Now.ToString("yyyy-MM-ddTHH-mm-ss") + "_ver." + versionConverter.ConvertDisplayVersion(BuildStatus.Version, "-"),
+                DateTime.Now.ToString("yyyy-MM-ddTHH-mm-ss", CultureInfo.InvariantCulture) + "_ver." + versionConverter.ConvertDisplayVersion(BuildStatus.Version, "-"),
                 environmentParameters.ApplicationConfiguration.Backup.SettingCount,
                 userBackupDirectoryPath
             );
@@ -1742,11 +1743,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
             var versionConverter = new VersionConverter();
-            var timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd'T'HHmmss_fff'Z'");
+            var timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd'T'HHmmss_fff'Z'", CultureInfo.InvariantCulture);
             var fileName = versionConverter.ConvertFileName(timestamp, BuildStatus.Version, BuildStatus.Revision, "dmp");
             var filePath = Path.Combine(environmentParameters.TemporaryCrashReportDirectory.FullName, fileName);
 
-            static Dictionary<string, string?> CreateInfoMap(IEnumerable<PlatformInformationItem> items) => items.ToDictionary(k => k.Key, v => Convert.ToString(v.Value));
+            static Dictionary<string, string?> CreateInfoMap(IEnumerable<PlatformInformationItem> items) => items.ToDictionary(k => k.Key, v => Convert.ToString(v.Value, CultureInfo.InvariantCulture));
             void ExceptionWrapper(Action action)
             {
                 try {

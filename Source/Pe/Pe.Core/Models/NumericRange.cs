@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -133,11 +134,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             foreach(var value in values) {
                 var match = reg.Match(value);
                 if(match.Success) {
-                    var head = int.Parse(match.Groups["HEAD"].Value);
+                    var head = int.Parse(match.Groups["HEAD"].Value, CultureInfo.InvariantCulture);
                     var range = match.Groups["RANGE"];
                     if(range.Success) {
                         if(range.Value == RangeSeparator) {
-                            var tail = int.Parse(match.Groups["TAIL"].Value);
+                            var tail = int.Parse(match.Groups["TAIL"].Value, CultureInfo.InvariantCulture);
                             if(head < tail) {
                                 for(var i = head; i <= tail; i++) {
                                     workValues.Add(i);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -167,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var result = new List<ObjectDumpItem>(array.Length);
             var arrayType = array.GetType();
             for(var i = 0; i < array.Length; i++) {
-                var key = "[" + i.ToString() + "]";
+                var key = "[" + i.ToString(CultureInfo.InvariantCulture) + "]";
                 var current = array.GetValue(i);
 
                 var item = DumpEnumerableItem(key, current, arrayType, nest, ignoreAutoMember);
@@ -186,7 +187,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             int i = 0;
             while(enumerator.MoveNext()) {
                 try {
-                    var key = "[" + i.ToString() + "]";
+                    var key = "[" + i.ToString(CultureInfo.InvariantCulture) + "]";
                     var current = enumerator.Current;
 
                     var item = DumpEnumerableItem(key, current, arrayType, nest, ignoreAutoMember);

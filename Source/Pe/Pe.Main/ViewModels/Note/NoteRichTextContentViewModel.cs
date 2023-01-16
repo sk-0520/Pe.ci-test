@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -410,7 +411,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             if(fontSizeProperty != DependencyProperty.UnsetValue) {
                 // 複数サイズの場合は直近のを表示しとくしかないなぁ(自家製 NumericUpDown が値無しを表示できるほど柔軟じゃない)
-                SelectionFontHeight = Convert.ToDecimal(fontSizeProperty);
+                SelectionFontHeight = Convert.ToDecimal(fontSizeProperty, CultureInfo.InvariantCulture);
             }
 
             // 表示位置補正
