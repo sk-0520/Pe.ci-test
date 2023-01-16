@@ -12,7 +12,7 @@
   xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
-  Height="500"
+  Height="530"
   Width="800"
   ResizeMode="NoResize"
   WindowStartupLocation="CenterScreen"
@@ -85,10 +85,16 @@
                 <AccessText Text="{Binding Resources.String_About_OpenForumUri_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
             </Button>
-            <Button Command="{Binding OpenProjectUriCommand}">
+            <Button Command="{Binding OpenRepositoryUriCommand}">
               <StackPanel Style="{StaticResource ImageLabel-Small}">
                 <Control Template="{StaticResource App-Image-Web}" />
-                <AccessText Text="{Binding Resources.String_About_OpenProjectUri_A, Source={x:Static app_main:CultureService.Instance}}" />
+                <AccessText Text="{Binding Resources.String_About_OpenRepositoryUri_A, Source={x:Static app_main:CultureService.Instance}}" />
+              </StackPanel>
+            </Button>
+            <Button Command="{Binding OpenWebsiteUriCommand}">
+              <StackPanel Style="{StaticResource ImageLabel-Small}">
+                <Control Template="{StaticResource App-Image-Web}" />
+                <AccessText Text="{Binding Resources.String_About_OpenWebsiteUri_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
             </Button>
 

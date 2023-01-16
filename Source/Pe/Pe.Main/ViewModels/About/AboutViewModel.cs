@@ -102,9 +102,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
                 Model.OpenForumUri();
             }
         ));
-        public ICommand OpenProjectUriCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand OpenRepositoryUriCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.OpenProjectUri();
+                Model.OpenRepositoryUri();
+            }
+        ));
+        public ICommand OpenWebsiteUriCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.OpenWebsiteUri();
             }
         ));
         public ICommand CopyShortInformationCommand => GetOrCreateCommand(() => new DelegateCommand(

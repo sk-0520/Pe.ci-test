@@ -92,9 +92,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
         {
             OpenUri(ApplicationConfiguration.General.ProjectForumUri);
         }
-        public void OpenProjectUri()
+        public void OpenRepositoryUri()
         {
             OpenUri(ApplicationConfiguration.General.ProjectRepositoryUri);
+        }
+        public void OpenWebsiteUri()
+        {
+            OpenUri(ApplicationConfiguration.General.ProjectWebSiteUri);
         }
 
         public void CopyShortInformation()
