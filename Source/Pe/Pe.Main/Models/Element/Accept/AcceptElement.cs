@@ -39,7 +39,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Accept
                 ["COPYRIGHT"] = BuildStatus.Copyright,
                 ["PROJECT-URI"] = ApplicationConfiguration.General.ProjectRepositoryUri.ToString(),
                 ["FORUM-URI"] = ApplicationConfiguration.General.ProjectForumUri.ToString(),
-                ["WEBSITE-URI"] = ApplicationConfiguration.General.AuthorWebSiteUri.ToString(),
+                ["WEBSITE-URI"] = ApplicationConfiguration.General.ProjectWebSiteUri.ToString(),
+                ["AUTHOR-URI"] = ApplicationConfiguration.General.AuthorWebSiteUri.ToString(),
             }.ToDictionary(i => i.Key, i => SecurityElement.Escape(i.Value)!)
             ;
             var rawXml = TextUtility.ReplaceFromDictionary(Properties.Resources.File_Accept_AcceptDocument, map);
