@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             var ext = dotExt.Substring(1);
             return extensions
-                .Select(s => s.ToLower())
+                .Select(s => s.ToLowerInvariant())
                 .Any(s => s == ext)
             ;
         }

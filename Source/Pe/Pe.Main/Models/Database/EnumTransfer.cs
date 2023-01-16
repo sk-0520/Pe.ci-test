@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
             var memberValue = value
                 .Replace("-", "")
-                .ToLower()
+                .ToLowerInvariant()
             ;
 
             if(Enum.TryParse<TEnum>(memberValue, true, out var result)) {
