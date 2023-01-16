@@ -32,6 +32,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public Uri ProjectForumUri { get; } = default!;
         [Configuration("project_website_uri")]
         public Uri ProjectWebSiteUri { get; } = default!;
+        [Configuration("author_website_uri")]
+        public Uri AuthorWebSiteUri { get; } = default!;
         [Configuration("version_check_uri")]
         public Uri UpdateCheckUri { get; } = default!;
         [Configuration]

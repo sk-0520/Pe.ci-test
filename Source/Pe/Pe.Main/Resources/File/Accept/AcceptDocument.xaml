@@ -92,6 +92,15 @@
           </Hyperlink>
         </Paragraph>
       </ListItem>
+      <ListItem>
+        <Paragraph>
+          <TextBlock>おれんち</TextBlock>
+          <LineBreak />
+          <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="${AUTHOR-URI}">
+            <Run>${AUTHOR-URI}</Run>
+          </Hyperlink>
+        </Paragraph>
+      </ListItem>
     </List>
   </Section>
 
