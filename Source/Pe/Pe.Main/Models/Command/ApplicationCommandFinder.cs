@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -107,11 +108,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             // テスト側でもろもろ担保
             var descriptionAttributes = applicationCommand.GetType().GetField(applicationCommand.ToString())!.GetCustomAttributes<CommandDescriptionAttribute>().ToList();
             if(descriptionAttributes.Count == 1) {
-                var singleValue = Properties.Resources.ResourceManager.GetString(descriptionAttributes[0].ResourceName)!;
+                var singleValue = Properties.Resources.ResourceManager.GetString(descriptionAttributes[0].ResourceName, CultureInfo.InvariantCulture)!;
                 return (singleValue, singleValue);
             } else {
-                var a = Properties.Resources.ResourceManager.GetString(descriptionAttributes[0].ResourceName)!;
-                var b = Properties.Resources.ResourceManager.GetString(descriptionAttributes[1].ResourceName)!;
+                var a = Properties.Resources.ResourceManager.GetString(descriptionAttributes[0].ResourceName, CultureInfo.InvariantCulture)!;
+                var b = Properties.Resources.ResourceManager.GetString(descriptionAttributes[1].ResourceName, CultureInfo.InvariantCulture)!;
                 if(descriptionAttributes[1].IsExtend) {
                     return (a, b);
                 } else {

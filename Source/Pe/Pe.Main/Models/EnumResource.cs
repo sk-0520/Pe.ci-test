@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -167,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 _ => throw new NotImplementedException()
             };
 
-            var result = Properties.Resources.ResourceManager.GetString(NameHeader + Separator + resourceName);
+            var result = Properties.Resources.ResourceManager.GetString(NameHeader + Separator + resourceName, CultureInfo.InvariantCulture);
             if(result != null) {
                 return result;
             }
