@@ -67,9 +67,22 @@ typedef struct tag_TEXT
 /// <param name="s">入力文字列リテラル。自動的に<c>_T(s)</c>される。</param>
 #define static_text(s) static_text_core(_T(s))
 
+/// <summary>
+/// 改行(<see cref="TEXT" />) CR。
+/// </summary>
 extern const TEXT NEWLINE_CR_TEXT;
+/// <summary>
+/// 改行(<see cref="TEXT" />) LF。
+/// </summary>
 extern const TEXT NEWLINE_LF_TEXT;
+/// <summary>
+/// 改行(<see cref="TEXT" />) CRLF。
+/// </summary>
 extern const TEXT NEWLINE_CRLF_TEXT;
+/// <summary>
+/// 改行(<see cref="TEXT" />)。
+/// <para>原則これを使用すればよろし。</para>
+/// </summary>
 extern const TEXT NEWLINE_TEXT;
 
 /// <summary>

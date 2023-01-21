@@ -17,15 +17,39 @@ typedef uint32_t text_t;
 
 #define TEXT_MAX (UINT32_MAX)
 
+/// <summary>
+/// 改行文字列(A) CR。
+/// </summary>
 #define NEWLINE_CR "\r"
+/// <summary>
+/// 改行文字列(A) LF。
+/// </summary>
 #define NEWLINE_LF "\n"
+/// <summary>
+/// 改行文字列(A) CRLF。
+/// </summary>
 #define NEWLINE_CRLF "\r\n"
 
+/// <summary>
+/// 改行文字列(T) CR。
+/// </summary>
 #define NEWLINE_CRT _T(NEWLINE_CR)
+/// <summary>
+/// 改行文字列(T) LF。
+/// </summary>
 #define NEWLINE_LFT _T(NEWLINE_LF)
+/// <summary>
+/// 改行文字列(T) CRLF。
+/// </summary>
 #define NEWLINE_CRLFT _T(NEWLINE_CRLF)
 
+/// <summary>
+/// 改行文字列(A)。
+/// </summary>
 #define NEWLINE NEWLINE_CRLF
+/// <summary>
+/// 改行文字列(T)。
+/// </summary>
 #define NEWLINET _T(NEWLINE)
 
 #define TO_STRING_CORE(x) #x
