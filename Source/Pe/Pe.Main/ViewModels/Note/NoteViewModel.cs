@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -51,6 +52,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private bool _showLinkChangeConfim;
         private bool _isPopupRemoveNote;
+
+        private bool _windowMoving = false;
 
         #endregion
 
@@ -334,6 +337,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             get => this._isPopupRemoveNote;
             set => SetProperty(ref this._isPopupRemoveNote, value);
         }
+
+        public bool WindowMoving
+        {
+            get => this._windowMoving;
+            private set => SetProperty(ref this._windowMoving, value);
+        }
+
+        public double WindowMovingOpacity => NoteConfiguration.MovingOpacity;
 
         public IReadOnlyList<NoteHiddenMode> HiddenModeItems { get; } = Enum.GetValues<NoteHiddenMode>().OrderBy(i => i).ToList();
 
@@ -1026,6 +1037,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     }
                     break;
 
+                case (int)WM.WM_MOVING:
+                    Logger.LogDebug("WM_MOVING");
+                    if(!WindowMoving) {
+                        WindowMoving = true;
+                    }
+                    break;
+
+                case (int)WM.WM_EXITSIZEMOVE:
+                    Logger.LogDebug("WM_EXITSIZEMOVE");
+                    WindowMoving = false;
+                    break;
+
                 case (int)WM.WM_SYSCOMMAND: {
                         var sc = WindowsUtility.ConvertSCFromWParam(wParam);
                         switch(sc) {
@@ -1053,7 +1076,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                             case SC.SC_MOVE:
                                 handled = IsLocked;
                                 break;
-                                
+
                             default:
                                 break;
                         }

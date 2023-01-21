@@ -59,6 +59,7 @@
       <app_core_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
       <app_core_views_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
       <app_core_views_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
+      <app_core_views_converter:LogicalMultiAndConverter x:Key="LogicalMultiAndConverter" />
       <app_main_views_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
 
       <WindowChrome x:Key="NormalWindowChrome"
@@ -644,8 +645,23 @@
 
     <!--#region 編集-->
     <!--  -->
-    <Popup x:Name="popup" Placement="Left" PlacementTarget="{Binding ElementName=root}" IsOpen="{Binding IsActive, ElementName=root, Mode=OneWay}" >
-      <Border Style="{StaticResource PopupMenuBorder}">
+    <Popup x:Name="popup" Placement="Left" AllowsTransparency="True" PlacementTarget="{Binding ElementName=root}" IsOpen="{Binding IsActive, ElementName=root, Mode=OneWay}" >
+      <Border x:Name="popupItem">
+        <Border.Style>
+          <Style TargetType="Border" BasedOn="{StaticResource PopupMenuBorder}">
+            <Style.Triggers>
+              <DataTrigger Value="True">
+                <DataTrigger.Binding>
+                  <MultiBinding Converter="{StaticResource LogicalMultiAndConverter}">
+                    <Binding Path="WindowMoving" />
+                    <Binding Path="IsActive" RelativeSource="{RelativeSource AncestorType=Window}" />
+                  </MultiBinding>
+                </DataTrigger.Binding>
+                <Setter Property="Opacity" Value="{Binding WindowMovingOpacity, Mode=OneTime}" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Border.Style>
         <Grid>
           <!--#region 通常編集-->
           <StackPanel x:Name="editGroup">

@@ -227,7 +227,5 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
         {
             SystemCommands.CloseWindow(this);
         }
-
-
     }
 }
