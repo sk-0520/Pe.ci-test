@@ -204,8 +204,8 @@ jobs:
           file_glob: false
           tag: ${{ steps.version.outputs.dot }}
 
-      - name: <Update> Version API
-        if: github.ref == 'refs/heads/master'
-        run: |
-          curl -H "X-API-KEY: ${{ secrets.PE_SERVER_API_KEY }}" -H "X-SECRET-KEY: ${{ secrets.PE_SERVER_API_SECRET }}" -X POST ${{ env.PE_UPDATE_API_ENDPOINT }} --data '{ \"version\": \"${{ steps.version.outputs.dot }}\" }'
+      # - name: <Update> Version API
+      #   if: github.ref == 'refs/heads/master'
+      #   run: |
+      #     curl -H "X-API-KEY: ${{ secrets.PE_SERVER_API_KEY }}" -H "X-SECRET-KEY: ${{ secrets.PE_SERVER_API_SECRET }}" -X POST ${{ env.PE_UPDATE_API_ENDPOINT }} --data '{ \"version\": \"${{ steps.version.outputs.dot }}\" }'
 
