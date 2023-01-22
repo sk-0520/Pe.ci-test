@@ -8,7 +8,6 @@
     <Nullable>enable</Nullable>
     <Configurations>Debug;Release</Configurations>
     <PathMap>$(MSBuildThisFileDirectory)=.</PathMap>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
