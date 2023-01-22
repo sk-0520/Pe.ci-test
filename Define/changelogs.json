@@ -75,7 +75,11 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#853: CI のキャッシュに乗せるために歪んでる",
+						"comments": [
+							"RestorePackagesWithLockFile は忘れる",
+							"packages.lock.json も破棄"
+						]
 					},
 					{
 						"revision": "",
