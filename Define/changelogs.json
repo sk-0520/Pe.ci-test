@@ -103,12 +103,18 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf.NETCore 108.4.130 -> 109.1.110"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
 			}
 		]
 	},
+
 	{
 		"date": "2023/01/09",
 		"version": "0.99.185",
