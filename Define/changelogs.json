@@ -1,7 +1,7 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.185+",
+		"date": "2023/01/23",
+		"version": "0.99.186",
 		"contents": [
 			{
 				"type": "note",
@@ -13,18 +13,6 @@
 						"comments": [
 							"#841: Windows 7/8/8.1 対応を終了"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -32,20 +20,8 @@
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "e203677d787b90d779aff85c183349bff69fdafd",
 						"subject": "#852: ノートのウィンドウ操作中はステータス部分を目立たなくする"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -53,20 +29,8 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "614e53046458546e7c7555e14ca57cfb74d99160",
 						"subject": "#846: Pe.Server に対するドキュメントの追加"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -74,7 +38,7 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "6c6fd36f56992c64bd2fea0b91b88fb51ca2161c",
 						"subject": "#853: CI のキャッシュに乗せるために歪んでる",
 						"comments": [
 							"RestorePackagesWithLockFile は忘れる",
@@ -82,44 +46,39 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "6530ab94b9e7f10de045c91352d0cdef8c696327",
 						"subject": "#854: リリース版に PDB は不要",
 						"comments": [
 							"残った子たちは消すのも面倒なので残しておく(アップデートスクリプトに突っ込むのもしんどい)"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "6ee7fc534870a7e3a3e69152b644919ec71821de",
 						"subject": "#855: リリース時の PeServer 通知処理はなくすべきでは"
 					},
 					{
-						"revision": "",
+						"revision": "9625d676857879ee279a37f737ff2bf99c9cfd36",
 						"subject": "update npm"
 					},
 					{
-						"revision": "",
+						"revision": "e5b5ef6489630376216a1fd510e6036b78176c3e",
 						"class": "nuget",
 						"subject": "Microsoft.Extensions.Configuration.Binder 7.0.1 -> 7.0.2"
 					},
 					{
-						"revision": "",
+						"revision": "d533946e57ad4ea717ec49fb79ca95bab733d0f2",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 108.4.130 -> 109.1.110"
 					},
 					{
-						"revision": "",
+						"revision": "54015a3eae18629ab434977c08d74a24f65b838a",
 						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 5.2.0 -> 5.2.1"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
 		]
 	},
-
 	{
 		"date": "2023/01/09",
 		"version": "0.99.185",
