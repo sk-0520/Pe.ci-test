@@ -108,6 +108,11 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 5.2.0 -> 5.2.1"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
