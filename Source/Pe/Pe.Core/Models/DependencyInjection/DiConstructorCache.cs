@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -46,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         private IEnumerable<ParameterExpression> CreateParameterExpressions()
         {
             return ParameterInfos
-                .Select((p, i) => Expression.Parameter(typeof(object), "wrapperArg_" + i.ToString()))
+                .Select((p, i) => Expression.Parameter(typeof(object), "wrapperArg_" + i.ToString(CultureInfo.InvariantCulture)))
             ;
         }
 
@@ -71,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                     ),
                     typeof(object)
                 ),
-                "constructorNewParams_" + ParameterInfos.Count.ToString(),
+                "constructorNewParams_" + ParameterInfos.Count.ToString(CultureInfo.InvariantCulture),
                 parameterExpressions
             );
             var creator = constructorNewParams.Compile();

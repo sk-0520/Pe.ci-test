@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if(value is T left) {
-                var right = (T)System.Convert.ChangeType(parameter, typeof(T));
+                var right = (T)System.Convert.ChangeType(parameter, typeof(T), CultureInfo.InvariantCulture);
                 switch(Compare) {
                     case Compare.Equal:
                         return left.CompareTo(right) == 0;

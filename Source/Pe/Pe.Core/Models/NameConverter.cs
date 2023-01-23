@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     if(i != 0 && lastUpperIndex != i - 1) {
                         builder.Append(separator);
                     }
-                    builder.Append(char.ToLower(c));
+                    builder.Append(char.ToLowerInvariant(c));
                     lastUpperIndex = i;
                 } else {
                     builder.Append(c);
@@ -92,9 +92,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 var c = source[i];
                 if(char.IsUpper(c)) {
                     if(i == 0) {
-                        builder.Append(char.ToLower(c));
+                        builder.Append(char.ToLowerInvariant(c));
                     } else if(lastUpperIndex == i - 1) {
-                        builder.Append(char.ToLower(c));
+                        builder.Append(char.ToLowerInvariant(c));
                     } else {
                         builder.Append(c);
                     }
@@ -126,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         continue;
                     }
                     if('a' <= next && next <= 'z') {
-                        builder.Append(char.ToUpper(next));
+                        builder.Append(char.ToUpperInvariant(next));
                         i += 1;
                         isUpper = false;
                         continue;
@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 }
 
                 if(isUpper) {
-                    builder.Append(char.ToUpper(c));
+                    builder.Append(char.ToUpperInvariant(c));
                     isUpper = false;
                 } else {
                     builder.Append(c);

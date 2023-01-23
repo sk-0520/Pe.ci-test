@@ -13,6 +13,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         #region property
 
+        [Configuration]
+        public double MovingOpacity { get; }
+
         [Configuration(rootConvertMethodName: nameof(ConvertSize))]
         public Size LayoutAbsoluteSize { get; }
         [Configuration(rootConvertMethodName: nameof(ConvertSize))]

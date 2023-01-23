@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -47,8 +48,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var psCommands = powerShellArguments.CreateParameters(true, new[] {
                KeyValuePair.Create( "-File", scriptSourceFIle.FullName),
                KeyValuePair.Create( "-LogPath", EnvironmentParameters.TemporaryUpdateLogFile.FullName),
-               KeyValuePair.Create( "-ProcessId", Process.GetCurrentProcess().Id.ToString()),
-               KeyValuePair.Create( "-WaitSeconds", TimeSpan.FromSeconds(5).TotalMilliseconds.ToString()),
+               KeyValuePair.Create( "-ProcessId", Process.GetCurrentProcess().Id.ToString(CultureInfo.InvariantCulture)),
+               KeyValuePair.Create( "-WaitSeconds", TimeSpan.FromSeconds(5).TotalMilliseconds.ToString(CultureInfo.InvariantCulture)),
                KeyValuePair.Create( "-SourceDirectory", sourceDirectory.FullName),
                KeyValuePair.Create( "-DestinationDirectory", destinationDirectory.FullName),
                KeyValuePair.Create( "-CurrentVersion", BuildStatus.Version.ToString()),

@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                     .Split(';')
                     .Where(i => ".X".Length <= i.Length)
                     .Where(i => i[0] == '.')
-                    .Select(i => i.Trim().ToLower())
+                    .Select(i => i.Trim().ToLowerInvariant())
                     .OrderBy(i => i == ".exe" ? 0 : 1)
                     .ThenBy(i => i)
                     .Select(i => addWildcard ? "*" + i : i)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -51,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 // ディレクトリ指定であればタイムスタンプ付きでファイル生成(プレーンログ)
                 var filePath = expandedOutputPath;
                 if(Directory.Exists(expandedOutputPath)) {
-                    var fileName = PathUtility.AddExtension(DateTime.Now.ToString("yyyy-MM-dd_HHmmss"), "log");
+                    var fileName = PathUtility.AddExtension(DateTime.Now.ToString("yyyy-MM-dd_HHmmss", CultureInfo.InvariantCulture), "log");
                     filePath = Path.Combine(expandedOutputPath, fileName);
                 }
 

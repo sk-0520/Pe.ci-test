@@ -83,7 +83,12 @@ jobs:
 
       - name: <Archive> Application
         shell: pwsh
-        run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ env.PLATFORMS }}
+        run: |
+          $diet = $false
+          if($Env:GITHUB_REF -ne 'refs/heads/development') {
+            $diet = $true
+          }
+          .\Build\compress.ps1 -Diet:$diet -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ env.PLATFORMS }}
 
       - name: <Make> update info
         shell: pwsh
@@ -199,8 +204,8 @@ jobs:
           file_glob: false
           tag: ${{ steps.version.outputs.dot }}
 
-      - name: <Update> Version API
-        if: github.ref == 'refs/heads/master'
-        run: |
-          curl -H "X-API-KEY: ${{ secrets.PE_SERVER_API_KEY }}" -H "X-SECRET-KEY: ${{ secrets.PE_SERVER_API_SECRET }}" -X POST ${{ env.PE_UPDATE_API_ENDPOINT }} --data '{ \"version\": \"${{ steps.version.outputs.dot }}\" }'
+      # - name: <Update> Version API
+      #   if: github.ref == 'refs/heads/master'
+      #   run: |
+      #     curl -H "X-API-KEY: ${{ secrets.PE_SERVER_API_KEY }}" -H "X-SECRET-KEY: ${{ secrets.PE_SERVER_API_SECRET }}" -X POST ${{ env.PE_UPDATE_API_ENDPOINT }} --data '{ \"version\": \"${{ steps.version.outputs.dot }}\" }'
 

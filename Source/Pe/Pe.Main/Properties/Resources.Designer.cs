@@ -221,11 +221,11 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   プロジェクト に類似しているローカライズされた文字列を検索します。
+        ///   リポジトリ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_About_OpenProjectUri_A {
+        public static string String_About_OpenRepositoryUri_A {
             get {
-                return ResourceManager.GetString("String_About_OpenProjectUri_A", resourceCulture);
+                return ResourceManager.GetString("String_About_OpenRepositoryUri_A", resourceCulture);
             }
         }
         
@@ -244,6 +244,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_About_OpenUserDirectory_A {
             get {
                 return ResourceManager.GetString("String_About_OpenUserDirectory_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Webサイト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_OpenWebsiteUri_A {
+            get {
+                return ResourceManager.GetString("String_About_OpenWebsiteUri_A", resourceCulture);
             }
         }
         

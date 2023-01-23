@@ -1335,8 +1335,8 @@
   <data name="String_About_OpenMachineDirectory_A" xml:space="preserve">
     <value>端末データ</value>
   </data>
-  <data name="String_About_OpenProjectUri_A" xml:space="preserve">
-    <value>プロジェクト</value>
+  <data name="String_About_OpenRepositoryUri_A" xml:space="preserve">
+    <value>リポジトリ</value>
   </data>
   <data name="String_About_OpenTemporaryDirectory_A" xml:space="preserve">
     <value>一時データ</value>
@@ -2287,5 +2287,8 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   </data>
   <data name="String_ApplicationCommand_Description_Exception" xml:space="preserve">
     <value>例外送出</value>
+  </data>
+  <data name="String_About_OpenWebsiteUri_A" xml:space="preserve">
+    <value>Webサイト</value>
   </data>
 </root>

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 
 namespace ContentTypeTextNet.Pe.Core.Models
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("{0}|{1}", Display, string.Join(";", Wildcards));
+            return string.Format(CultureInfo.InvariantCulture, "{0}|{1}", Display, string.Join(";", Wildcards));
         }
 
         #endregion

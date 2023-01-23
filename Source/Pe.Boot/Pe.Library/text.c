@@ -95,7 +95,7 @@ TEXT wrap_text_with_length(const TCHAR* source, size_t length, bool need_release
     if (!check_text_length(length)) {
         return create_invalid_text();
     }
-    if (need_release && !is_enabled_memory_resource(memory_arena_resource)) {
+    if (need_release && !is_enabled_memory_arena_resource(memory_arena_resource)) {
         return create_invalid_text();
     }
 

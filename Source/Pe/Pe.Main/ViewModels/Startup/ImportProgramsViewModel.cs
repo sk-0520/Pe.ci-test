@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -60,8 +61,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         public ICommand ImportCommand => GetOrCreateCommand(() => new DelegateCommand(
             async () => {
                 UserTracker.Track(nameof(ImportCommand), new TrackProperties() {
-                    ["TotalCount"] = Model.ProgramItems.Count.ToString(),
-                    ["ImportCount"] = Model.ProgramItems.Count(i => i.IsImport).ToString(),
+                    ["TotalCount"] = Model.ProgramItems.Count.ToString(CultureInfo.InvariantCulture),
+                    ["ImportCount"] = Model.ProgramItems.Count(i => i.IsImport).ToString(CultureInfo.InvariantCulture),
                 });
                 try {
                     NowImporting = true;

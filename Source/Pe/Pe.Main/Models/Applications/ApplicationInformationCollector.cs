@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -105,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             sb.AppendLine(Header);
             foreach(var info in infos) {
                 sb.Append(Indent);
-                sb.AppendFormat(SubjectFormat, info.name);
+                sb.AppendFormat(CultureInfo.InvariantCulture, SubjectFormat, info.name);
                 sb.AppendLine();
 
                 var items = info.func();

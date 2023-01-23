@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -81,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             var ext = dotExt.Substring(1);
             return extensions
-                .Select(s => s.ToLower())
+                .Select(s => s.ToLowerInvariant())
                 .Any(s => s == ext)
             ;
         }
@@ -120,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         [Obsolete]
         public static string GetTimestampFileName(DateTime dateTime)
         {
-            return dateTime.ToString(formatTimestampFileName);
+            return dateTime.ToString(formatTimestampFileName, CultureInfo.InvariantCulture);
         }
 
         /// <summary>

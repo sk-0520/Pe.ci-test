@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -72,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             var rawRanges = values
-                .Select(s => (T)Convert.ChangeType(s.Trim(), typeof(T))!)
+                .Select(s => (T)Convert.ChangeType(s.Trim(), typeof(T), CultureInfo.InvariantCulture)!)
                 .ToArray()
             ;
 
@@ -158,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             var rawValues = values
-                .Select(s => (T)Convert.ChangeType(s.Trim(), typeof(T))!)
+                .Select(s => (T)Convert.ChangeType(s.Trim(), typeof(T), CultureInfo.InvariantCulture)!)
                 .ToArray()
             ;
 

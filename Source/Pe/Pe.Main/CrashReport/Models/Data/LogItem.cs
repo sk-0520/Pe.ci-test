@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
@@ -92,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
                 TimeStamp = logEventInfo.TimeStamp.ToUniversalTime(),
             };
             foreach(var parameter in logEventInfo.Parameters ?? Array.Empty<object>()) {
-                item.Parameters.Add(System.Convert.ToString(parameter));
+                item.Parameters.Add(System.Convert.ToString(parameter, CultureInfo.InvariantCulture));
             }
 
             return item;

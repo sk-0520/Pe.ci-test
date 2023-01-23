@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -209,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         private BitmapSource? LoadNormalIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
         {
             Debug.Assert(iconSize.Width == (int)IconBox.Small || iconSize.Width == (int)IconBox.Normal);
-            Debug.Assert(0 <= iconIndex, iconIndex.ToString());
+            Debug.Assert(0 <= iconIndex, iconIndex.ToString(CultureInfo.InvariantCulture));
 
             // 16, 32 px
             if(hasIcon) {
@@ -271,7 +272,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         private BitmapSource? LoadLargeIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
         {
-            Debug.Assert(0 <= iconIndex, iconIndex.ToString());
+            Debug.Assert(0 <= iconIndex, iconIndex.ToString(CultureInfo.InvariantCulture));
 
             if(hasIcon) {
                 try {

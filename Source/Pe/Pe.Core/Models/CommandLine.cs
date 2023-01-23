@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -573,13 +574,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         object? ConvertValue(Type type, string rawValue)
         {
             if(type == typeof(float)) {
-                return float.Parse(rawValue);
+                return float.Parse(rawValue, CultureInfo.InvariantCulture);
             }
             if(type == typeof(double)) {
-                return double.Parse(rawValue);
+                return double.Parse(rawValue, CultureInfo.InvariantCulture);
             }
 
-            return Convert.ChangeType(rawValue, type);
+            return Convert.ChangeType(rawValue, type, CultureInfo.InvariantCulture);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]

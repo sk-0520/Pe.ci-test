@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Management;
 using System.Runtime.InteropServices;
@@ -34,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             if(!string.IsNullOrWhiteSpace(deviceName)) {
                 //var id = new string(deviceName.Trim().SkipWhile(c => !char.IsNumber(c)).ToArray());
                 var id = DeviceToId(deviceName);
-                query = string.Format("SELECT * FROM Win32_DesktopMonitor where DeviceID like \"DesktopMonitor{0}\"", id);
+                query = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM Win32_DesktopMonitor where DeviceID like \"DesktopMonitor{0}\"", id);
             }
             //var q = new ObjectQuery(query);
             //ManagementPath path = new ManagementPath("//./root/cimv2");
@@ -69,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             foreach(var screem in GetScreens(screen.DeviceName, loggerFactory)) {
                 if(!string.IsNullOrWhiteSpace(screem.Name)) {
                     var id = DeviceToId(screen.DeviceName);
-                    return string.Format("{0}. {1}", id, screem.Name);
+                    return string.Format(CultureInfo.InvariantCulture, "{0}. {1}", id, screem.Name);
                 }
             }
 

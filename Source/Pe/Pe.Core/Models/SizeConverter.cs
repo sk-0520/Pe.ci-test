@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -38,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 size = size / KbSize;
             }
 
-            return string.Format(sizeFormat, size, units[order]);
+            return string.Format(CultureInfo.InvariantCulture, sizeFormat, size, units[order]);
         }
 
         /// <inheritdoc cref="ConvertHumanReadableByte(long, string, IReadOnlyList{string})"/>

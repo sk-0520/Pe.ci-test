@@ -96,7 +96,7 @@ bool release_memory_arena_resource(MEMORY_ARENA_RESOURCE* memory_arena_resource)
 /// </summary>
 /// <param name="memory_arena_resource"></param>
 /// <returns></returns>
-bool is_enabled_memory_resource(const MEMORY_ARENA_RESOURCE* memory_arena_resource);
+bool is_enabled_memory_arena_resource(const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 
 /// <summary>
 /// 指定したサイズ以上のヒープ領域を確保。

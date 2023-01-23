@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -46,12 +47,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public void AppendFormat(string format, object? arg)
         {
-            Buffer.AppendFormat(format, arg);
+            Buffer.AppendFormat(CultureInfo.InvariantCulture, format, arg);
             IsAppend = true;
         }
         public void AppendFormat(string format, object? arg1, params object[]? args)
         {
-            Buffer.AppendFormat(format, arg1, args);
+            Buffer.AppendFormat(CultureInfo.InvariantCulture, format, arg1, args);
             IsAppend = true;
         }
 

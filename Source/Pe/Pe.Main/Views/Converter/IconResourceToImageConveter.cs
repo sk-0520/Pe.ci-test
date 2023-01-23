@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
                 BitmapCacheOption.OnDemand
             );
             // メッチャクチャやなぁ
-            var iconScale = new IconScale((IconBox)System.Convert.ToInt32(parameter), imageLoader.GetPrimaryDpiScale());
+            var iconScale = new IconScale((IconBox)System.Convert.ToInt32(parameter, CultureInfo.InvariantCulture), imageLoader.GetPrimaryDpiScale());
             var result = imageLoader.GetImageFromFrames(decoder.Frames, iconScale);
 
             //var result = decoder.Frames.FirstOrDefault(f => f.Width == size);
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
             );
             var visual = (Visual)values[1];
 
-            var iconScale = new IconScale((IconBox)System.Convert.ToInt32(parameter), UIUtility.GetDpiScale(visual));
+            var iconScale = new IconScale((IconBox)System.Convert.ToInt32(parameter, CultureInfo.InvariantCulture), UIUtility.GetDpiScale(visual));
             var result = imageLoader.GetImageFromFrames(decoder.Frames, iconScale);
 
             return result;

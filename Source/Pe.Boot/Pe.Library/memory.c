@@ -4,12 +4,12 @@
 #include "debug.h"
 #include "memory.h"
 
-static MEMORY_ARENA_RESOURCE library_default_memory_resource = {
+static MEMORY_ARENA_RESOURCE library_default_memory_arena_resource = {
     .handle = NULL,
     .maximum_size = 0,
 };
 
-static MEMORY_ARENA_RESOURCE create_invalid_memory_resource()
+static MEMORY_ARENA_RESOURCE create_invalid_memory_arena_resource()
 {
     MEMORY_ARENA_RESOURCE result = {
         .handle = NULL,
@@ -24,14 +24,14 @@ static MEMORY_ARENA_RESOURCE create_invalid_memory_resource()
 /// </summary>
 /// <param name="memory_arena_resource"></param>
 /// <returns></returns>
-static bool is_default_memory_resource(const MEMORY_ARENA_RESOURCE* memory_arena_resource)
+static bool is_default_memory_arena_resource(const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     assert(memory_arena_resource);
 
-    if (memory_arena_resource == &library_default_memory_resource) {
+    if (memory_arena_resource == &library_default_memory_arena_resource) {
         return true;
     }
-    if (memory_arena_resource->handle == library_default_memory_resource.handle) {
+    if (memory_arena_resource->handle == library_default_memory_arena_resource.handle) {
         return true;
     }
 
@@ -40,17 +40,17 @@ static bool is_default_memory_resource(const MEMORY_ARENA_RESOURCE* memory_arena
 
 MEMORY_ARENA_RESOURCE* get_default_memory_arena_resource()
 {
-    if (!library_default_memory_resource.handle) {
-        library_default_memory_resource.handle = GetProcessHeap();
+    if (!library_default_memory_arena_resource.handle) {
+        library_default_memory_arena_resource.handle = GetProcessHeap();
     }
 
-    return &library_default_memory_resource;
+    return &library_default_memory_arena_resource;
 }
 
 MEMORY_ARENA_RESOURCE new_memory_arena_resource(byte_t initial_size, byte_t maximum_size)
 {
     if (initial_size > maximum_size) {
-        return create_invalid_memory_resource();
+        return create_invalid_memory_arena_resource();
     }
 
     if (maximum_size) {
@@ -60,7 +60,7 @@ MEMORY_ARENA_RESOURCE new_memory_arena_resource(byte_t initial_size, byte_t maxi
         size_t max_size_limit = 512 * 1024;
 #endif
         if (max_size_limit < maximum_size) {
-            return create_invalid_memory_resource();
+            return create_invalid_memory_arena_resource();
         }
     }
 
@@ -76,7 +76,7 @@ MEMORY_ARENA_RESOURCE new_memory_arena_resource(byte_t initial_size, byte_t maxi
 
 bool release_memory_arena_resource(MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
-    if (!is_enabled_memory_resource(memory_arena_resource)) {
+    if (!is_enabled_memory_arena_resource(memory_arena_resource)) {
         return false;
     }
 
@@ -90,7 +90,7 @@ bool release_memory_arena_resource(MEMORY_ARENA_RESOURCE* memory_arena_resource)
     return true;
 }
 
-bool is_enabled_memory_resource(const MEMORY_ARENA_RESOURCE* memory_arena_resource)
+bool is_enabled_memory_arena_resource(const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     if (!memory_arena_resource) {
         return false;
@@ -101,7 +101,7 @@ bool is_enabled_memory_resource(const MEMORY_ARENA_RESOURCE* memory_arena_resour
 
 void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
-    if (!is_enabled_memory_resource(memory_arena_resource)) {
+    if (!is_enabled_memory_arena_resource(memory_arena_resource)) {
         return NULL;
     }
 
@@ -111,7 +111,7 @@ void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill, const MEMO
     }
 
 #ifdef RES_CHECK
-    if (is_default_memory_resource(memory_arena_resource)) {
+    if (is_default_memory_arena_resource(memory_arena_resource)) {
         library_rc_heap_check(heap, true, RES_CHECK_CALL_ARGS);
     }
 #endif
@@ -141,7 +141,7 @@ bool RC_HEAP_FUNC(release_memory, void* p, const MEMORY_ARENA_RESOURCE* memory_a
     }
 
 #ifdef RES_CHECK
-    if (is_default_memory_resource(memory_arena_resource)) {
+    if (is_default_memory_arena_resource(memory_arena_resource)) {
 #pragma warning(push)
 #pragma warning(disable:6001)
         library_rc_heap_check(p, false, RES_CHECK_CALL_ARGS);

@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -11,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         public static Stream OpenSyntaxStreamByName(string syntaxResourceName)
         {
-            var resourceValue = Properties.Resources.ResourceManager.GetString(syntaxResourceName);
+            var resourceValue = Properties.Resources.ResourceManager.GetString(syntaxResourceName, CultureInfo.InvariantCulture);
             if(resourceValue == null) {
                 throw new InvalidProgramException($"{nameof(syntaxResourceName)}: {syntaxResourceName}");
             }

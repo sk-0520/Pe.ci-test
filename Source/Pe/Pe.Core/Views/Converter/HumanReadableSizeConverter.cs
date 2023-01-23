@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var size = System.Convert.ToInt64(value);
+            var size = System.Convert.ToInt64(value, CultureInfo.InvariantCulture);
 
             var sizeConverter = new SizeConverter();
 

@@ -1,6 +1,11 @@
 # Pe
 
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/sk-0520/Pe?color=orange&label=version)
 [![Build Release](https://github.com/sk-0520/Pe/actions/workflows/build-release.yml/badge.svg)](https://github.com/sk-0520/Pe/actions/workflows/build-release.yml)
+[![Build Works](https://github.com/sk-0520/Pe/actions/workflows/build-works.yml/badge.svg)](https://github.com/sk-0520/Pe/actions/workflows/build-works.yml)
+![license](https://img.shields.io/github/license/sk-0520/Pe?style=flat)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sk-0520/Pe)
+
 
 Pe は Windows 10 以上で動作するデスクトップユーティリティです。
 

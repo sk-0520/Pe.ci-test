@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
@@ -63,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         private string GetFormattedTimestamp(string format, DateTime dateTime)
         {
-            return dateTime.ToString(format);
+            return dateTime.ToString(format, CultureInfo.InvariantCulture);
         }
 
         #endregion
