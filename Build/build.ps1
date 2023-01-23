@@ -178,7 +178,7 @@ try {
 		if (-not $?) {
 			exit 1
 		}
-		dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --output Output/Release/$platform/Pe/bin --self-contained true
+		dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win10-$platform --output Output/Release/$platform/Pe/bin --self-contained true
 		if (-not $?) {
 			exit 1
 		}
@@ -187,7 +187,7 @@ try {
 		$pluginProjectFiles = $projectFiles | Where-Object -Property "Name" -like "Pe.Plugins.Reference.*.csproj"
 		foreach($pluginProjectFile in $pluginProjectFiles) {
 			$name = $pluginProjectFile.BaseName
-			dotnet publish $pluginProjectFile /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --output Output/Release/$platform/Plugins/$name --self-contained false
+			dotnet publish $pluginProjectFile /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win10-$platform --output Output/Release/$platform/Plugins/$name --self-contained false
 			if (-not $?) {
 				exit 1
 			}
@@ -196,7 +196,7 @@ try {
 		# テストプロジェクトのビルド(Pe.Main側, Pe.Boot は msbuild 実行時に同時ビルド)
 		foreach($testDirectory in $testDirectories) {
 			$testProjectFilePath = (Join-Path $testDirectory.FullName $testDirectory.Name) + ".csproj"
-			dotnet build $testProjectFilePath /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --no-self-contained
+			dotnet build $testProjectFilePath /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win10-$platform --no-self-contained
 			if (-not $?) {
 				exit 1
 			}
