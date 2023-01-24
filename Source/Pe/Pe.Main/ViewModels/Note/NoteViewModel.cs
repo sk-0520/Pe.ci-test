@@ -971,13 +971,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             var viewAreaChangeTargets = ViewAreaChangeTarget.Location;
 
-            var nowScreen = DpiScaleOutputor.GetOwnerScreen();
-            if(Model.DockScreen.DeviceName != nowScreen.DeviceName) {
-                Logger.LogDebug("所属スクリーン変更: {0} -> {1}", Model.DockScreen.DeviceName, nowScreen.DeviceName);
-                Model.ChangeDockScreen(nowScreen);
-                viewAreaChangeTargets |= ViewAreaChangeTarget.Screen;
-            }
-
             var rect = Model.LayoutKind switch {
                 NoteLayoutKind.Absolute => CurrentWindowToAbsoluteLayout(),
                 NoteLayoutKind.Relative => CurrentWindowToRelativeLayout(),
@@ -1046,9 +1039,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
                 case (int)WM.WM_EXITSIZEMOVE:
                     Logger.LogDebug("WM_EXITSIZEMOVE");
+                    if(WindowMoving) {
+                        var screen = DpiScaleOutputor.GetOwnerScreen();
+                        Model.SaveDisplayDelaySave(screen);
+                    }
                     WindowMoving = false;
-                    var screen = DpiScaleOutputor.GetOwnerScreen();
-                    Model.SaveDisplayDelaySave(screen);
                     break;
 
                 case (int)WM.WM_SYSCOMMAND: {

@@ -434,16 +434,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             MainDatabaseLazyWriter.Stock(c => {
-                if(viewAreaChangeTargets.HasFlag(ViewAreaChangeTarget.Screen)) {
-                    var screensEntityDao = new ScreensEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
-                    if(!screensEntityDao.SelectExistsScreen(DockScreen.DeviceName)) {
-                        screensEntityDao.InsertScreen(DockScreen, DatabaseCommonStatus.CreateCurrentAccount());
-                    }
-
-                    var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
-                    notesEntityDao.UpdateScreen(NoteId, DockScreen.DeviceName, DatabaseCommonStatus.CreateCurrentAccount());
-                }
-
                 var noteLayoutsEntityDao = new NoteLayoutsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 var layout = new NoteLayoutData() {
                     NoteId = NoteId,
