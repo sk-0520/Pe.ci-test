@@ -985,7 +985,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             };
             // 最小化中はウィンドウサイズに対して何もしない
             if(!IsCompact) {
-                viewAreaChangeTargets |= ViewAreaChangeTarget.Suze;
+                viewAreaChangeTargets |= ViewAreaChangeTarget.Size;
             }
 
             Model.ChangeViewAreaDelaySave(viewAreaChangeTargets, rect.Location, rect.Size);
@@ -1047,6 +1047,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 case (int)WM.WM_EXITSIZEMOVE:
                     Logger.LogDebug("WM_EXITSIZEMOVE");
                     WindowMoving = false;
+                    var screen = DpiScaleOutputor.GetOwnerScreen();
+                    Model.SaveDisplayDelaySave(screen);
                     break;
 
                 case (int)WM.WM_SYSCOMMAND: {
