@@ -434,16 +434,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             MainDatabaseLazyWriter.Stock(c => {
-                if(viewAreaChangeTargets.HasFlag(ViewAreaChangeTarget.Screen)) {
-                    var screensEntityDao = new ScreensEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
-                    if(!screensEntityDao.SelectExistsScreen(DockScreen.DeviceName)) {
-                        screensEntityDao.InsertScreen(DockScreen, DatabaseCommonStatus.CreateCurrentAccount());
-                    }
-
-                    var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
-                    notesEntityDao.UpdateScreen(NoteId, DockScreen.DeviceName, DatabaseCommonStatus.CreateCurrentAccount());
-                }
-
                 var noteLayoutsEntityDao = new NoteLayoutsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 var layout = new NoteLayoutData() {
                     NoteId = NoteId,
@@ -453,10 +443,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                     Width = size.Width,
                     Height = size.Height,
                 };
-                noteLayoutsEntityDao.UpdatePickupLayout(layout, viewAreaChangeTargets.HasFlag(ViewAreaChangeTarget.Location), viewAreaChangeTargets.HasFlag(ViewAreaChangeTarget.Suze), DatabaseCommonStatus.CreateCurrentAccount());
+                noteLayoutsEntityDao.UpdatePickupLayout(layout, viewAreaChangeTargets.HasFlag(ViewAreaChangeTarget.Location), viewAreaChangeTargets.HasFlag(ViewAreaChangeTarget.Size), DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
-
         }
+
+        /// <summary>
+        /// スクリーン位置が異なる場合に遅延変更。
+        /// </summary>
+        /// <param name="screen"></param>
+        public void SaveDisplayDelaySave(IScreen screen)
+        {
+            ThrowIfDisposed();
+
+            MainDatabaseLazyWriter.Stock(c => {
+                var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
+                var currentNote = notesEntityDao.SelectNote(NoteId);
+                if(currentNote is null) {
+                    return;
+                }
+
+                var screensEntityDao = new ScreensEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
+                if(!screensEntityDao.SelectExistsScreen(screen.DeviceName)) {
+                    screensEntityDao.InsertScreen(screen, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+
+                if(screen.DeviceName != currentNote.ScreenName) {
+                    notesEntityDao.UpdateScreen(NoteId, screen.DeviceName, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+
+            }, UniqueKeyPool.Get());
+        }
+
         public void ChangeForegroundColorDelaySave(Color color)
         {
             ThrowIfDisposed();
