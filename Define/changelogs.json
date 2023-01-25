@@ -33,7 +33,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#859: プロキシ設定の有効無効を本体コマンドに組み込む"
 					},
 					{
 						"revision": "",

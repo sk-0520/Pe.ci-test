@@ -457,6 +457,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   プロキシ使用状態切り替え に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_Proxy {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_Proxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   再起動 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ApplicationCommand_Description_Reboot {
@@ -4875,6 +4884,33 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_PluginWebInstall_PluginIdOrInfoUrlInformation {
             get {
                 return ResourceManager.GetString("String_PluginWebInstall_PluginIdOrInfoUrlInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   無効 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Proxy_Toggle_Content_IsDisabled {
+            get {
+                return ResourceManager.GetString("String_Proxy_Toggle_Content_IsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   有効 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Proxy_Toggle_Content_IsEnabled {
+            get {
+                return ResourceManager.GetString("String_Proxy_Toggle_Content_IsEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プロキシ使用状態 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Proxy_Toggle_Header {
+            get {
+                return ResourceManager.GetString("String_Proxy_Toggle_Header", resourceCulture);
             }
         }
         

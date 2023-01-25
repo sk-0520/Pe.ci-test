@@ -73,6 +73,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_CopyInformation), false)]
         [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_CopyInformation_Extend), true)]
         CopyInformation,
+        [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Proxy))]
+        Proxy,
         [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Help))]
         Help,
         [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Exception))]
