@@ -50,4 +50,24 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
+    public class WeakEvent2<TEventSource, TEventArgs>
+        where TEventSource : class
+        where TEventArgs : EventArgs
+    {
+        public WeakEvent2()
+        {
+        }
+
+        #region property
+
+        // 辞書の中に弱い参照ぶちこんどきゃいいんじゃないかなぁ。
+
+        #endregion
+
+        #region function
+
+        #endregion
+    }
+
 }
