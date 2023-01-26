@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <summary>
         /// OSのテーマ情報が変更された。
         /// </summary>
-        event EventHandler? Changed;
+        event EventHandler<EventArgs>? Changed;
 
         #endregion
 
