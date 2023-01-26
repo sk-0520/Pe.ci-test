@@ -120,6 +120,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
                     if(handler.Listener.TryGetTarget(out var listener)) {
                         if(eventHandler.Target == listener && handler.MethodInfo == eventHandler.Method) {
+                            Logger.LogDebug("remove {MethodInfo} ", handler.MethodInfo);
                             Handlers.RemoveAt(i);
                             return true;
                         }
@@ -137,6 +138,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     var handler = Handlers[i];
 
                     if(!handler.Listener.TryGetTarget(out _)) {
+                        Logger.LogDebug("remove {i} ", i);
                         Handlers.RemoveAt(i);
                     }
                 }
