@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             LazyChanger = new LazyAction(GetType().Name, TimeSpan.FromMilliseconds(400), loggerFactory);
             Refresh();
 
-            WeakEvent = new WeakEvent<PlatformThemeLoader, EventArgs>();
+            ChangedWeakEvent = new WeakEvent<object, EventArgs>(nameof(Changed), loggerFactory);
         }
 
         #region property
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         private LazyAction LazyChanger { get; }
 
-        WeakEvent<PlatformThemeLoader, EventArgs> WeakEvent { get; }
+        WeakEvent<object, EventArgs> ChangedWeakEvent { get; }
 
         #endregion
 
@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         private void OnThemeChanged()
         {
             Logger.LogTrace("テーマ変更");
-            Changed?.Invoke(this, EventArgs.Empty);
+            ChangedWeakEvent.Raise(this, EventArgs.Empty);
         }
 
         public void WndProc_WM_DWMCOLORIZATIONCOLORCHANGED(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -139,7 +139,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #region IPlatformThemeLoader
 
-        public event EventHandler? Changed;
+        public event EventHandler<EventArgs>? Changed
+        {
+            add => ChangedWeakEvent.Add(value);
+            remove => ChangedWeakEvent.Remove(value);
+        }
         /// <summary>
         /// Windowsモードの色。
         /// <para>タスクバーとかの色っぽい。</para>

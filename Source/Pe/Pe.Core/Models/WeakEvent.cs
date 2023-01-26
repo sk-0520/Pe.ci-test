@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -53,6 +54,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Logger = loggerFactory.CreateLogger(eventName + ": " + GetType());
         }
 
+        public WeakEvent(string eventName)
+            : this(eventName, NullLoggerFactory.Instance)
+        {
+        }
+
         #region property
 
         ILogger Logger { get; }
@@ -84,17 +90,30 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Refresh();
         }
 
-        public void Add(EventHandler<TEventArgs> eventHandler)
+        public bool Add(EventHandler<TEventArgs>? eventHandler)
         {
-            var weakHandler = new WeakHandler(eventHandler);
+            try {
+                if(eventHandler is null) {
+                    return false;
+                }
 
-            lock(this._locker) {
-                Handlers.Add(weakHandler);
+                var weakHandler = new WeakHandler(eventHandler);
+
+                lock(this._locker) {
+                    Handlers.Add(weakHandler);
+                }
+                return true;
+            } finally {
+                Refresh();
             }
         }
 
-        public bool Remove(EventHandler<TEventArgs> eventHandler)
+        public bool Remove(EventHandler<TEventArgs>? eventHandler)
         {
+            if(eventHandler is null) {
+                return false;
+            }
+
             lock(this._locker) {
                 for(var i = 0; i < Handlers.Count; i++) {
                     var handler = Handlers[i];
