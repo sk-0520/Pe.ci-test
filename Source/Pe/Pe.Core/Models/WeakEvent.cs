@@ -13,6 +13,12 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// 弱いイベントのなんか受け側のそれっぽいの。
+    /// <para>テストできてないし動いてねーんじゃねーか疑惑ありつつも一応使ってみる。</para>
+    /// </summary>
+    /// <typeparam name="TEventListener"><c>object</c> でいいよ。</typeparam>
+    /// <typeparam name="TEventArgs"></typeparam>
     public class WeakEvent<TEventListener, TEventArgs>
         where TEventListener : class
         where TEventArgs : EventArgs
@@ -69,6 +75,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
+        /// <summary>
+        /// 実行。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
         public void Raise(object sender, TEventArgs eventArgs)
         {
             IReadOnlyList<WeakHandler> weakHandlers;
@@ -90,6 +101,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Refresh();
         }
 
+        /// <summary>
+        /// <c>event.add</c> で使用する想定。
+        /// </summary>
+        /// <param name="eventHandler"></param>
+        /// <returns></returns>
         public bool Add(EventHandler<TEventArgs>? eventHandler)
         {
             try {
@@ -108,6 +124,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+        /// <summary>
+        /// <c>event.remove</c> で使用する想定。
+        /// </summary>
+        /// <param name="eventHandler"></param>
+        /// <returns></returns>
         public bool Remove(EventHandler<TEventArgs>? eventHandler)
         {
             if(eventHandler is null) {

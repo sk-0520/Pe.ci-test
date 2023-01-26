@@ -43,6 +43,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             LoggerFactory = loggerFactory;
             Logger = loggerFactory.CreateLogger(GetType());
             ErrorsContainer = new ErrorsContainer<string>(OnErrorsChanged);
+            WeakDisposing = new WeakEvent<object, EventArgs>(nameof(Disposing), LoggerFactory);
 
             if(cacheProperty) {
                 PropertyCacher = new ConcurrentDictionary<object, PropertyCacher>();
@@ -64,6 +65,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         }
 
         #region property
+
+        private WeakEvent<object, EventArgs> WeakDisposing { get; }
 
         /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
@@ -399,9 +402,11 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
         /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
         /// </summary>
-        [field: NonSerialized]
-        public event EventHandler? Disposing;
-
+        public event EventHandler<EventArgs>? Disposing
+        {
+            add => WeakDisposing.Add(value);
+            remove => WeakDisposing.Remove(value);
+        }
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>されたか。
         /// </summary>
@@ -419,9 +424,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
                 return;
             }
 
-            if(Disposing != null) {
-                Disposing(this, EventArgs.Empty);
-            }
+            WeakDisposing.Raise(this, EventArgs.Empty);
 
             if(PropertyCacher is not null) {
                 PropertyCacher.Clear();
