@@ -28,6 +28,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 if(filePaths.Length == 1) {
                     e.Effects = DragDropEffects.Copy;
                     e.Handled = true;
+                } else {
+                    e.Effects = DragDropEffects.None;
+                    e.Handled = true;
                 }
             } else {
                 e.Effects = DragDropEffects.None;

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -371,7 +372,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             return dd.CanDragStart(sender, e);
         }
 
-
         private void ViewDragOrverOrEnter(UIElement sender, DragEventArgs e)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
@@ -393,16 +393,29 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         #endregion
 
         #region ItemDragAndDrop
+
         private IResultSuccessValue<DragParameter> ItemGetDragParameter(UIElement sender, MouseEventArgs e) => ResultSuccessValue.Failure<DragParameter>();
 
         private bool ItemCanDragStart(UIElement sender, MouseEventArgs e) => false;
 
         private void ItemDragOrverOrEnter(UIElement sender, DragEventArgs e)
         {
+            var appButton = UIUtility.GetClosest<ToggleButton>(sender);
+            var overAppButton = appButton?.Name == nameof(LauncherToolbarWindow.appButton.Name);
+
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
-                e.Effects = DragDropEffects.Move;
+                if(overAppButton) {
+                    ViewDragOrverOrEnter(sender, e);
+                    return;
+                } else {
+                    e.Effects = DragDropEffects.Move;
+                }
             } else if(e.Data.IsTextPresent()) {
-                e.Effects = DragDropEffects.Move;
+                if(overAppButton) {
+                    e.Effects = DragDropEffects.None;
+                } else {
+                    e.Effects = DragDropEffects.Move;
+                }
             }
 
             e.Handled = true;
@@ -412,14 +425,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         {
             LauncherItemId launcherItemId = LauncherItemId.Empty;
             var frameworkElement = (FrameworkElement)sender;
-            var launcherContentControl = (LauncherContentControl)frameworkElement.DataContext;
-            if(launcherContentControl != null) {
+
+            if(frameworkElement.DataContext is LauncherContentControl launcherContentControl) {
                 var launcherItem = (ILauncherItemId)launcherContentControl.DataContext;
                 launcherItemId = launcherItem.LauncherItemId;
-            }
 
-            if(LauncherItemId.Empty == launcherItemId) {
-                Logger.LogError("ランチャーアイテムID取得できず, {0}, {1}", sender, e);
+                if(LauncherItemId.Empty == launcherItemId) {
+                    Logger.LogError("ランチャーアイテムID取得できず, {0}, {1}", sender, e);
+                    return;
+                }
+            } else {
+                var appButton = UIUtility.GetClosest<ToggleButton>(frameworkElement);
+                if(appButton is null) {
+                    return;
+                }
+                if(appButton.Name != nameof(LauncherToolbarWindow.appButton.Name)) {
+                    return;
+                }
+                ViewDrop(sender, e);
                 return;
             }
 
