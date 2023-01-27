@@ -89,7 +89,10 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#861: 課題対応ブランチでは CodeQL を実行しないようにする",
+						"comments": [
+							"next ブランチか PR で動かすようにした"
+						]
 					},
 					{
 						"revision": "",

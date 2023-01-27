@@ -125,6 +125,7 @@ jobs:
             Output\update-Pe.Plugins.Reference.*.json
 
   analyze:
+    if: github.ref == 'refs/heads/next'
     name: CodeQL
     runs-on: windows-2022
     permissions:
