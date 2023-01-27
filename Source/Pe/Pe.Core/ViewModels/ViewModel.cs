@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             LoggerFactory = loggerFactory;
             Logger = loggerFactory.CreateLogger(GetType());
             ErrorsContainer = new ErrorsContainer<string>(OnErrorsChanged);
-            WeakDisposing = new WeakEvent<object, EventArgs>(nameof(Disposing), LoggerFactory);
+            WeakDisposing = new WeakEvent<EventArgs>(nameof(Disposing));
 
             if(cacheProperty) {
                 PropertyCacher = new ConcurrentDictionary<object, PropertyCacher>();
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #region property
 
-        private WeakEvent<object, EventArgs> WeakDisposing { get; }
+        private WeakEvent<EventArgs> WeakDisposing { get; }
 
         /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }

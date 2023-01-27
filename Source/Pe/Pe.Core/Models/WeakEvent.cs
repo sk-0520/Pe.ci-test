@@ -1,32 +1,34 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Diagnostics.Tracing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
     /// 弱いイベントのなんか受け側のそれっぽいの。
-    /// <para>テストできてないし動いてねーんじゃねーか疑惑ありつつも一応使ってみる。</para>
+    /// <para><see cref="WeakEvent{TEventArgs}"/> 使ってればよろし。</para>
+    /// <para>TODO: 静的リスナー未対応。</para>
     /// </summary>
-    /// <typeparam name="TEventListener"><c>object</c> でいいよ。</typeparam>
-    /// <typeparam name="TEventArgs"></typeparam>
+    /// <typeparam name="TEventListener">リスナークラス。</typeparam>
+    /// <typeparam name="TEventArgs">イベント。</typeparam>
     public class WeakEvent<TEventListener, TEventArgs>
         where TEventListener : class
         where TEventArgs : EventArgs
     {
         #region define
 
+        /// <summary>
+        /// イベントハンドラを弱く保持。
+        /// </summary>
         private readonly record struct WeakHandler
         {
+            /// <summary>
+            /// 生成。
+            /// </summary>
+            /// <param name="handler"></param>
+            /// <exception cref="ArgumentException"></exception>
             public WeakHandler(EventHandler<TEventArgs> handler)
             {
                 var target = handler.Target;
@@ -41,7 +43,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             #region property
 
+            /// <summary>
+            /// 弱参照リスナー。
+            /// </summary>
             public WeakReference<TEventListener> Listener { get; }
+            /// <summary>
+            /// 呼び出しメソッド。
+            /// </summary>
             public MethodInfo MethodInfo { get; }
 
             #endregion
@@ -51,24 +59,34 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region variable
 
+        /// <summary>
+        /// <see cref="Handlers"/> の処理ロックオブジェクト。
+        /// </summary>
         private readonly object _locker = new();
 
         #endregion
 
-        public WeakEvent(string eventName, ILoggerFactory loggerFactory)
-        {
-            Logger = loggerFactory.CreateLogger(eventName + ": " + GetType());
-        }
-
+        /// <summary>
+        /// 生成。
+        /// </summary>
+        /// <param name="eventName">イベント名。なくていいなぁ。</param>
         public WeakEvent(string eventName)
-            : this(eventName, NullLoggerFactory.Instance)
         {
+            EventName = eventName;
         }
 
         #region property
 
-        ILogger Logger { get; }
+        /// <summary>
+        /// イベント名。
+        /// <para>いらん気がするのですよね。</para>
+        /// </summary>
+        public string EventName { get; }
 
+        /// <summary>
+        /// イベントハンドラ保管箱。
+        /// <para>操作する際は <see cref="_locker"/> の <c>lock</c> を行うこと。</para>
+        /// </summary>
         private IList<WeakHandler> Handlers { get; } = new List<WeakHandler>();
 
         #endregion
@@ -76,23 +94,23 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region function
 
         /// <summary>
-        /// 実行。
+        /// イベント呼び出し。
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="eventArgs"></param>
         public void Raise(object sender, TEventArgs eventArgs)
         {
             IReadOnlyList<WeakHandler> weakHandlers;
-
             lock(this._locker) {
-                weakHandlers = Handlers.ToList();
+                if(Handlers.Count == 0) {
+                    return;
+                }
+
+                weakHandlers = Handlers.ToArray();
             }
 
-            var parameters = new object[] { sender, eventArgs };
-
-            for(var i = weakHandlers.Count - 1; 0 <= i; i--) {
-                var handler = weakHandlers[i];
-
+            var parameters = new object[2] { sender, eventArgs };
+            foreach(var handler in weakHandlers) {
                 if(handler.Listener.TryGetTarget(out var listener)) {
                     handler.MethodInfo.Invoke(listener, parameters);
                 }
@@ -128,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <c>event.remove</c> で使用する想定。
         /// </summary>
         /// <param name="eventHandler"></param>
-        /// <returns></returns>
+        /// <returns>削除成功状態: 真 成功</returns>
         public bool Remove(EventHandler<TEventArgs>? eventHandler)
         {
             if(eventHandler is null) {
@@ -141,7 +159,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
                     if(handler.Listener.TryGetTarget(out var listener)) {
                         if(eventHandler.Target == listener && handler.MethodInfo == eventHandler.Method) {
-                            Logger.LogDebug("remove {MethodInfo} ", handler.MethodInfo);
                             Handlers.RemoveAt(i);
                             return true;
                         }
@@ -152,6 +169,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return false;
         }
 
+        /// <summary>
+        /// すでに参照されていないやつの整理。
+        /// </summary>
         private void Refresh()
         {
             lock(this._locker) {
@@ -159,7 +179,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     var handler = Handlers[i];
 
                     if(!handler.Listener.TryGetTarget(out _)) {
-                        Logger.LogDebug("remove {i} ", i);
                         Handlers.RemoveAt(i);
                     }
                 }
@@ -169,4 +188,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    /// <summary>
+    /// <see cref="WeakEvent{TEventListener, TEventArgs}"/> の リスナーが <see cref="Object"/> 版。
+    /// <para>基本的にこっち使ってればいい。</para>
+    /// </summary>
+    /// <typeparam name="TEventArgs"></typeparam>
+    public class WeakEvent<TEventArgs>: WeakEvent<object, TEventArgs>
+        where TEventArgs : EventArgs
+    {
+        public WeakEvent(string eventName)
+            : base(eventName)
+        { }
+    }
 }

@@ -24,8 +24,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
             LazyChanger = new LazyAction(GetType().Name, TimeSpan.FromMilliseconds(400), loggerFactory);
             Refresh();
-
-            ChangedWeakEvent = new WeakEvent<object, EventArgs>(nameof(Changed), loggerFactory);
         }
 
         #region property
@@ -35,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         private LazyAction LazyChanger { get; }
 
-        WeakEvent<object, EventArgs> ChangedWeakEvent { get; }
+        WeakEvent<EventArgs> ChangedWeakEvent { get; } = new WeakEvent<EventArgs>(nameof(Changed));
 
         #endregion
 

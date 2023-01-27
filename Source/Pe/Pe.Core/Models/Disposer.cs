@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        private WeakEvent<object, EventArgs> WeakDisposing { get; } = new WeakEvent<object, EventArgs>(nameof(Disposing));
+        private WeakEvent<EventArgs> WeakDisposing { get; } = new WeakEvent<EventArgs>(nameof(Disposing));
 
         #endregion
 

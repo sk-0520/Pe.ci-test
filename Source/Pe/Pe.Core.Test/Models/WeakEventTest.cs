@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace ContentTypeTextNet.Pe.Core.Test.Models
 {
@@ -23,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
 
         #region property
 
-        private WeakEvent<object, EventArgs> WeakEvent { get; } = new WeakEvent<object, EventArgs>(nameof(Weak));
+        private WeakEvent<EventArgs> WeakEvent { get; } = new WeakEvent<EventArgs>(nameof(Weak));
 
         #endregion
 
@@ -46,13 +47,16 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
     {
         #region property
 
+        public int StrongCount { get; set; } = 0;
         public int WeakCount { get; set; } = 0;
 
         #endregion
+
         #region function
 
         public void Strong(object? sender, EventArgs e)
         {
+            StrongCount += 1;
             Assert.IsTrue(true);
         }
 
@@ -62,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
                 WeakCount += 1;
                 Assert.IsTrue(true);
             } else {
-                //Assert.IsTrue(false);
+                Assert.Fail();
             }
         }
 
@@ -92,6 +96,23 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             source.Strong += Source_Strong;
             source.RaiseStrong();
             Assert.AreEqual(1, StrongTestCount);
+
+            static void Scope(EventSource source)
+            {
+                var listener = new EventListener();
+                source.Strong += listener.Strong;
+                source.RaiseStrong();
+                listener = null;
+            }
+            Scope(source);
+            Assert.AreEqual(2, StrongTestCount);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            source.RaiseStrong();
+            Assert.AreEqual(3, StrongTestCount);
         }
 
         [TestMethod]
@@ -102,20 +123,19 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             source.RaiseWeak();
             Assert.AreEqual(0, WeakTestCount);
 
-            // 消えないイベント追加
             source.Weak += Source_Weak;
             source.RaiseWeak();
             Assert.AreEqual(1, WeakTestCount);
 
-            // 💩とめてる💩
-            // カッコ内のみ有効なイベント
+            static void Scope(EventSource source)
             {
                 var listener = new EventListener();
                 source.Weak += listener.Weak;
                 source.RaiseWeak();
-                Assert.AreEqual(2, WeakTestCount);
                 listener = null;
             }
+            Scope(source);
+            Assert.AreEqual(2, WeakTestCount);
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
