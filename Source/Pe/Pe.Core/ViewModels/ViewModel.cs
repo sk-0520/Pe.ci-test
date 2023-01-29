@@ -545,38 +545,4 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #endregion
     }
-
-    public class SimpleDataViewModel<TData>: ViewModelBase
-    {
-        #region variable
-
-        private TData _data;
-
-        #endregion
-
-        public SimpleDataViewModel(TData data, ILoggerFactory loggerFactory)
-            : base(loggerFactory)
-        {
-            this._data = data;
-        }
-
-        #region function
-
-        public TData Data
-        {
-            get => this._data;
-            set => SetProperty(ref this._data, value);
-        }
-
-        #endregion
-    }
-
-    public static class SimpleDataViewModel
-    {
-        #region function
-
-        public static SimpleDataViewModel<TData> Create<TData>(TData data, ILoggerFactory loggerFactory) => new SimpleDataViewModel<TData>(data, loggerFactory);
-
-        #endregion
-    }
 }
