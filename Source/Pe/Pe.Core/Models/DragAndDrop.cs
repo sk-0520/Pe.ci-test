@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public class DragParameter
     {
-        public DragParameter(UIElement element, DragDropEffects effects, DataObject data)
+        public DragParameter(UIElement element, DragDropEffects effects, IDataObject data)
         {
             Element = element;
             Effects = effects;
@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// ドラッグデータ。
         /// </summary>
-        public DataObject Data { get; }
+        public IDataObject Data { get; }
 
         #endregion
     }
