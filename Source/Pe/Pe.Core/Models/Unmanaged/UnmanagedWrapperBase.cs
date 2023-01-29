@@ -1,5 +1,4 @@
 using System;
-using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 {

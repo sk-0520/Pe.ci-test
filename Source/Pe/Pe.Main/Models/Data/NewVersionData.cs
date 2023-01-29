@@ -2,7 +2,6 @@ using System;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models.Data;
 
 /*
 こんな構造

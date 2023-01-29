@@ -1,7 +1,6 @@
 using System;
 using System.Runtime.Serialization;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {

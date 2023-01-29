@@ -6,7 +6,6 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Core.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
