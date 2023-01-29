@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         private ConcurrentDictionary<string, PropertyChangedEventArgs> PropertyChangedEventArgsCache { get; } = new ConcurrentDictionary<string, PropertyChangedEventArgs>();
 
         /// <summary>
-        /// このVMは検証対象か。
+        /// このVMは検証非対象か。
         /// </summary>
         protected virtual bool SkipValidation { get; } = false;
 

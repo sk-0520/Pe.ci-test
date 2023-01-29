@@ -189,7 +189,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     /// <summary>
-    /// <see cref="WeakEvent{TEventListener, TEventArgs}"/> の リスナーが <see cref="Object"/> 版。
+    /// <see cref="WeakEvent{TEventListener, TEventArgs}"/> の リスナーが <see cref="object"/> 版。
     /// <para>基本的にこっち使ってればいい。</para>
     /// </summary>
     /// <typeparam name="TEventArgs"></typeparam>
