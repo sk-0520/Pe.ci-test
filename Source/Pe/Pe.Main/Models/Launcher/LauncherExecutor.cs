@@ -245,7 +245,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(streamWatch) {
                 process.EnableRaisingEvents = true;
                 stdioElement = OrderManager.CreateStandardInputOutputElement(customParameter.Caption, process, screen);
-                //DispatcherWrapper.Begin(element => {
+                //DispatcherWrapper.BeginAsync(element => {
                 //    element.StartView();
                 //    element!.PreparateReceiver();
                 //}, stdioElement, DispatcherPriority.Send);
@@ -260,7 +260,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(streamWatch) {
                 Debug.Assert(stdioElement != null);
                 // 受信前に他の処理を終わらせるため少し待つ
-                DispatcherWrapper.Begin(element => {
+                DispatcherWrapper.BeginAsync(element => {
                     element.StartView();
                     element.PreparateReceiver();
                     if(element.PreparatedReceive) {

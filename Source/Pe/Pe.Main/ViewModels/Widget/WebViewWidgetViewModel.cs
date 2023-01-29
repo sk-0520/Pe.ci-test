@@ -218,7 +218,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         private void WebView_LoadingStateChanged(object? sender, LoadingStateChangedEventArgs e)
         {
             if(!e.IsLoading) {
-                DispatcherWrapper.Begin(() => {
+                DispatcherWrapper.BeginAsync(() => {
                     InjectWidget();
                 });
             }
@@ -226,14 +226,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
         private void Callbacks_MoveStarted(object? sender, EventArgs e)
         {
-            DispatcherWrapper.Begin(() => {
+            DispatcherWrapper.BeginAsync(() => {
                 WebView.ReleaseMouseCapture();
                 NativeMethods.SendMessage(HandleUtility.GetWindowHandle(WidgetWindow), PInvoke.Windows.WM.WM_NCLBUTTONDOWN, new IntPtr((int)HT.HTCAPTION), IntPtr.Zero);
             }, System.Windows.Threading.DispatcherPriority.Normal);
         }
         private void Callbacks_ResizeStarted(object? sender, WebViewWidgetResizeEventArgs e)
         {
-            DispatcherWrapper.Begin(() => {
+            DispatcherWrapper.BeginAsync(() => {
                 if(WidgetWindow.ResizeMode == ResizeMode.NoResize) {
                     Logger.LogWarning("{0} はリサイズが許可されていない, {1}", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId);
                     return;

@@ -285,7 +285,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     content = t.Exception?.Message ?? "";
                 }
 
-                DispatcherWrapper.Begin(() => {
+                DispatcherWrapper.BeginAsync(() => {
                     var noteContentConverter = new NoteContentConverter(LoggerFactory);
                     using var stream = noteContentConverter.ToRtfStream(content);
 
@@ -335,7 +335,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private void ChangedText()
         {
             if(CanVisible && EnabledUpdate) {
-                DispatcherWrapper.Begin(vm => {
+                DispatcherWrapper.BeginAsync(vm => {
                     if(vm.IsDisposed) {
                         return;
                     }

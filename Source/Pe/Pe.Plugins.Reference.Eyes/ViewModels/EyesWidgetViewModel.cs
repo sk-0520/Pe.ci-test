@@ -206,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.ViewModels
             MouseX = e.Location.X;
             MouseY = e.Location.Y;
 
-            DispatcherWrapper.Begin(() => {
+            DispatcherWrapper.BeginAsync(() => {
                 var deviceCursorLocation = new Point(MouseX, MouseY);
 
                 var cx = EyeWidth / 2;

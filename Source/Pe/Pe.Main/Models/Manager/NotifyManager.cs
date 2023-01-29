@@ -486,7 +486,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             Logger.LogDebug("[{0}] {1}: {2}, {3}", notifyMessage.Header, notifyMessage.Kind, notifyMessage.Content.Message, element.NotifyLogId);
 
-            DispatcherWrapper.Begin(() => {
+            DispatcherWrapper.BeginAsync(() => {
                 NotifyLogs.Add(element);
                 if(element.Kind == NotifyLogKind.Topmost) {
                     TopmostNotifyLogsImpl.Add(element);
@@ -508,7 +508,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             Logger.LogDebug("[{0}] 変更: {1}, {2}", element.Header, contentMessage, element.NotifyLogId);
 
-            DispatcherWrapper.Begin(() => {
+            DispatcherWrapper.BeginAsync(() => {
                 element.ChangeContent(new NotifyLogContent(contentMessage, DateTime.UtcNow));
                 OnNotifyEventChanged(NotifyEventKind.Change, element);
             });
@@ -522,7 +522,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             lock(this._notifyLogsLocker) {
                 if(0 < NotifyLogs.Count && NotifyLogs.Remove(notifyLogId)) {
-                    DispatcherWrapper.Begin(() => {
+                    DispatcherWrapper.BeginAsync(() => {
                         if(element.Kind == NotifyLogKind.Topmost) {
                             TopmostNotifyLogsImpl.Remove(element);
                         } else {

@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         public ICommand ClearOutputCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 try {
-                    DispatcherWrapper.Begin(() => {
+                    DispatcherWrapper.BeginAsync(() => {
                         Terminal!.Clear();
                     });
                 } catch(Exception ex) {
@@ -238,7 +238,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 return;
             }
 
-            DispatcherWrapper.Begin(() => {
+            DispatcherWrapper.BeginAsync(() => {
                 var prevLine = TextDocument.Lines.Last<DocumentLine>();
                 var prevEndOffset = prevLine.EndOffset;
 

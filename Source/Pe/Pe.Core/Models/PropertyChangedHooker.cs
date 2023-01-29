@@ -347,7 +347,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return false;
             }
 
-            DispatcherWrapper.Begin(arg => {
+            DispatcherWrapper.BeginAsync(arg => {
                 if(arg.@this.IsDisposed) {
                     return;
                 }
@@ -367,7 +367,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return false;
             }
 
-            DispatcherWrapper.Begin(arg => {
+            DispatcherWrapper.BeginAsync(arg => {
                 if(arg.@this.IsDisposed) {
                     return;
                 }
@@ -379,7 +379,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             if(raiseCommands.Count != 0) {
                 // 個別にやる方法はわからん
-                DispatcherWrapper.Begin(() => {
+                DispatcherWrapper.BeginAsync(() => {
                     CommandManager.InvalidateRequerySuggested();
                 });
             }
@@ -394,7 +394,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return false;
             }
 
-            DispatcherWrapper.Begin(arg => {
+            DispatcherWrapper.BeginAsync(arg => {
                 if(arg.@this.IsDisposed) {
                     return;
                 }

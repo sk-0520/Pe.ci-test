@@ -943,7 +943,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             ThrowIfDisposed();
 
-            DispatcherWrapper.Begin(vm => {
+            DispatcherWrapper.BeginAsync(vm => {
                 if(vm.IsDisposed) {
                     return;
                 }
@@ -1052,7 +1052,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                             case SC.SC_MINIMIZE:
                                 /*
                                 if(!IsCompact) {
-                                    DispatcherWrapper.Begin(() => {
+                                    DispatcherWrapper.BeginAsync(() => {
                                         Model.ToggleCompactDelaySave();
                                     });
                                 }

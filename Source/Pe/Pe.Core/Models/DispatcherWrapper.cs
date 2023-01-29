@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public void VerifyAccess() => Dispatcher.VerifyAccess();
 
-        public Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
+        public Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken = default)
         {
             if(CheckAccess()) {
                 action();
@@ -131,15 +131,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return Dispatcher.InvokeAsync(action, dispatcherPriority, cancellationToken).Task;
         }
-        public Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority)
+
+        public Task InvokeAsync(Action action, CancellationToken cancellationToken = default)
         {
-            return InvokeAsync(action, dispatcherPriority, CancellationToken.None);
+            return InvokeAsync(action, DispatcherPriority.Send, cancellationToken);
         }
-        public Task InvokeAsync(Action action)
-        {
-            return InvokeAsync(action, DispatcherPriority.Send, CancellationToken.None);
-        }
-        public Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
+        public Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken = default)
         {
             if(CheckAccess()) {
                 return Task.FromResult(func());
@@ -147,13 +144,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return Dispatcher.InvokeAsync(func, dispatcherPriority, cancellationToken).Task;
         }
-        public Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority)
+        public Task<TResult> InvokeAsync<TResult>(Func<TResult> func, CancellationToken cancellationToken = default)
         {
-            return InvokeAsync(func, dispatcherPriority, CancellationToken.None);
-        }
-        public Task<TResult> InvokeAsync<TResult>(Func<TResult> func)
-        {
-            return InvokeAsync(func, DispatcherPriority.Send, CancellationToken.None);
+            return InvokeAsync(func, DispatcherPriority.Send, cancellationToken);
         }
 
         public TResult Get<TArgument, TResult>(Func<TArgument, TResult> func, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
@@ -205,21 +198,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
-        public Task Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
+        public Task BeginAsync<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken = default)
         {
             if(CheckAccess()) {
                 action(argument);
                 return Task.CompletedTask;
             } else {
-                return Dispatcher.BeginInvoke(dispatcherPriority, action, argument).Task;
+                return Dispatcher.BeginInvoke(dispatcherPriority, action, argument, cancellationToken).Task;
             }
         }
-        public Task Begin<TArgument>(Action<TArgument> action, TArgument argument)
+        public Task BeginAsync<TArgument>(Action<TArgument> action, TArgument argument, CancellationToken cancellationToken = default)
         {
-            return Begin(action, argument, DispatcherPriority.Send);
+            return BeginAsync(action, argument, DispatcherPriority.Send, cancellationToken);
         }
 
-        public Task Begin(Action action, DispatcherPriority dispatcherPriority)
+        public Task BeginAsync(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken = default)
         {
             if(CheckAccess()) {
                 action();
@@ -228,11 +221,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return Dispatcher.BeginInvoke(dispatcherPriority, action).Task;
             }
         }
-        public Task Begin(Action action)
+        public Task BeginAsync(Action action, CancellationToken cancellationToken = default)
         {
-            return Begin(action, DispatcherPriority.Send);
+            return BeginAsync(action, DispatcherPriority.Send, cancellationToken);
         }
-
 
         #endregion
     }
