@@ -7,40 +7,49 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// <summary>
     /// 生のCOMを管理。
     /// </summary>
-    public class ComWrapper<T>: UnmanagedWrapperBase<T>
+    public class Com<T>: DisposerBase
         where T : class
     {
-        public ComWrapper(T comObject)
-            : base(comObject)
+        public Com(T comInstance)
         {
-            Debug.Assert(Raw != null);
+            Debug.Assert(comInstance != null);
 
-            if(!Marshal.IsComObject(Raw)) {
-                throw new ArgumentException(nameof(comObject));
+            if(!Marshal.IsComObject(comInstance)) {
+                throw new ArgumentException("Marshal.IsComObject", nameof(comInstance));
             }
+
+            Instance = comInstance;
         }
+
+        #region property
+
+        private object RawInstance => Instance;
+
+        public T Instance { get; }
+
+        #endregion
 
         #region function
 
-        public ComWrapper<TCastType> Cast<TCastType>()
+        public Com<TCastType> Cast<TCastType>()
             where TCastType : class
         {
-            var castValue = (TCastType)BaseRawObject;
+            var castValue = (TCastType)RawInstance;
             if(castValue == null) {
                 throw new InvalidCastException($"{typeof(T).Name} -> {typeof(TCastType).Name}");
             }
 
-            return new ComWrapper<TCastType>(castValue);
+            return new Com<TCastType>(castValue);
         }
 
         #endregion
 
-        #region UnmanagedModelBase
+        #region DisposerBase
 
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                Marshal.ReleaseComObject(Raw);
+                Marshal.ReleaseComObject(Instance);
             }
 
             base.Dispose(disposing);
@@ -51,10 +60,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 
     public static class ComWrapper
     {
-        public static ComWrapper<T> Create<T>(T comObject)
+        public static Com<T> Create<T>(T comObject)
             where T : class
         {
-            return new ComWrapper<T>(comObject);
+            return new Com<T>(comObject);
         }
     }
 }

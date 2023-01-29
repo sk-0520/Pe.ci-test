@@ -1,19 +1,20 @@
 using System;
 using System.Runtime.InteropServices;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 {
     /// <summary>
     /// <see cref="Marshal.AllocHGlobal(int)"/>のラッパー。
     /// </summary>
-    public class GlobalAllocWrapper: UnmanagedWrapperBase<IntPtr>
+    public class GlobalAlloc: SafeHandle
     {
         /// <summary>
         /// メモリ確保。
         /// </summary>
         /// <param name="cb">確保するサイズ。</param>
-        public GlobalAllocWrapper(int cb)
-            : base(Marshal.AllocHGlobal(cb))
+        public GlobalAlloc(int cb)
+            : base(Marshal.AllocHGlobal(cb), true)
         {
             Size = cb;
         }
@@ -29,31 +30,30 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 
         #region function
 
-        public static GlobalAllocWrapper Create<T>()
+        public static GlobalAlloc Create<T>()
         {
-            return new GlobalAllocWrapper(Marshal.SizeOf<T>());
+            return new GlobalAlloc(Marshal.SizeOf<T>());
         }
 
-        public static GlobalAllocWrapper Create<T>(T structure)
+        public static GlobalAlloc Create<T>(T structure)
             where T : struct
         {
-            var result = new GlobalAllocWrapper(Marshal.SizeOf(structure));
-            Marshal.StructureToPtr(structure, result.Raw, false);
+            var result = new GlobalAlloc(Marshal.SizeOf(structure));
+            Marshal.StructureToPtr(structure, result.handle, false);
 
             return result;
         }
 
         #endregion
 
-        #region UnmanagedModelBase
+        #region SafeHandle
 
-        protected override void Dispose(bool disposing)
+        public override bool IsInvalid => this.handle == IntPtr.Zero;
+
+        protected override bool ReleaseHandle()
         {
-            if(!IsDisposed) {
-                Marshal.FreeHGlobal(Raw);
-            }
-
-            base.Dispose(disposing);
+            Marshal.FreeHGlobal(this.handle);
+            return true;
         }
 
         #endregion
