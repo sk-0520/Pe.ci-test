@@ -96,9 +96,13 @@ jobs:
         shell: pwsh
         run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType BETA -Platforms ${{ matrix.PLATFORM }}
 
+      - name: <Test> Add Logger
+        shell: cmd
+        run: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install GitHubActionsTestLogger & cd ..\..\..\ )
+
       - name: <Test> Application
         shell: pwsh
-        run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ matrix.PLATFORM }}
+        run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ matrix.PLATFORM }} -Logger GitHubActions
 
       - name: <Archive> Application
         shell: pwsh
