@@ -1,7 +1,6 @@
 using System;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
 {

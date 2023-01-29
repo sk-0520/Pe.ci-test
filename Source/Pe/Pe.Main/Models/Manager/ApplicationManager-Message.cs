@@ -247,7 +247,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 case KeyActionCommandJob commandJob: {
                         Logger.LogInformation("キーからの起動: コマンドランチャー");
                         PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Command_Show);
-                        ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                        ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(() => {
                             ShowCommandView();
                         }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
                     }
@@ -281,7 +281,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 case KeyActionLauncherToolbarJob launcherToolbarJob: {
                         PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Toolbar_Hidden);
 
-                        ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                        ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(() => {
                             var windowItems = WindowManager.GetWindowItems(WindowKind.LauncherToolbar);
                             foreach(var windowItem in windowItems) {
                                 var viewModel = (ViewModels.LauncherToolbar.LauncherToolbarViewModel)windowItem.ViewModel;
@@ -300,7 +300,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                                 var screen = Screen.FromDevicePoint(deviceCursorPos);
                                 var noteElement = CreateNote(screen, NoteStartupPosition.CursorPosition);
 
-                                ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                                ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(() => {
                                     noteElement.StartView();
                                 }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
                                 break;
@@ -308,7 +308,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                             case KeyActionContentNote.ZOrderTop:
                                 PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Note_Z_Top);
 
-                                ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                                ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(() => {
                                     MoveZOrderAllNotes(true);
                                 }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
                                 break;
@@ -316,7 +316,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                             case KeyActionContentNote.ZOrderBottom:
                                 PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Note_Z_Bottom);
 
-                                ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                                ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(() => {
                                     MoveZOrderAllNotes(false);
                                 }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
                                 break;

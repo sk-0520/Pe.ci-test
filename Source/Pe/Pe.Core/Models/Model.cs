@@ -7,57 +7,6 @@ using Prism.Mvvm;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public interface IRawModel
-    {
-        #region property
-
-        object BaseRawObject { get; }
-
-        #endregion
-    }
-
-    public interface IRawModel<out T>: IRawModel
-    {
-        #region property
-
-        T Raw { get; }
-
-        #endregion
-    }
-
-    public class RawModel: DisposerBase, IRawModel
-    {
-        public RawModel(object? rawObject)
-        {
-            if(rawObject == null) {
-                throw new ArgumentNullException(nameof(rawObject));
-            }
-
-            BaseRawObject = rawObject;
-        }
-
-        #region IRawModel
-
-        public object BaseRawObject { get; }
-
-        #endregion
-    }
-
-    public class RawModel<T>: RawModel, IRawModel<T>
-    {
-        public RawModel(T rawObject)
-            : base(rawObject)
-        {
-            Raw = rawObject;
-        }
-
-        #region IRawModel
-
-        public T Raw { get; }
-
-        #endregion
-    }
-
     public abstract class NotifyPropertyBase: BindableBase, IDisposer
     {
         protected NotifyPropertyBase()

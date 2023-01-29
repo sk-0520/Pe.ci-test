@@ -29,17 +29,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         void VerifyAccess();
 
         /// <inheritdoc cref="Dispatcher.InvokeAsync(Action, DispatcherPriority, CancellationToken)"/>
-        Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
+        Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken = default);
         /// <inheritdoc cref="InvokeAsync(Action, DispatcherPriority, CancellationToken)"/>
-        Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority);
-        /// <inheritdoc cref="InvokeAsync(Action, DispatcherPriority, CancellationToken)"/>
-        Task InvokeAsync(Action action);
+        Task InvokeAsync(Action action, CancellationToken cancellationToken = default);
         /// <inheritdoc cref="Dispatcher.InvokeAsync{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
-        Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
+        Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken = default);
         /// <inheritdoc cref="InvokeAsync{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
-        Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority);
-        /// <inheritdoc cref="InvokeAsync{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
-        Task<TResult> InvokeAsync<TResult>(Func<TResult> func);
+        Task<TResult> InvokeAsync<TResult>(Func<TResult> func, CancellationToken cancellationToken = default);
 
         /// <inheritdoc cref="Get{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
         TResult Get<TArgument, TResult>(Func<TArgument, TResult> func, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
@@ -70,13 +66,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <param name="action">実施する処理。</param>
         /// <param name="dispatcherPriority"></param>
         /// <param name="argument">パラメータ。</param>
-        Task Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority);
-        /// <inheritdoc cref="Begin{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
-        Task Begin<TArgument>(Action<TArgument> action, TArgument argument);
-        /// <inheritdoc cref="Begin{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
-        Task Begin(Action action, DispatcherPriority dispatcherPriority);
-        /// <inheritdoc cref="Begin{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
-        Task Begin(Action action);
+        Task BeginAsync<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken = default);
+        /// <inheritdoc cref="BeginAsync{TArgument}(Action{TArgument}, TArgument, DispatcherPriority, CancellationToken)"/>
+        Task BeginAsync<TArgument>(Action<TArgument> action, TArgument argument, CancellationToken cancellationToken = default);
+        /// <inheritdoc cref="BeginAsync{TArgument}(Action{TArgument}, TArgument, DispatcherPriority, CancellationToken)"/>
+        Task BeginAsync(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken = default);
+        /// <inheritdoc cref="BeginAsync{TArgument}(Action{TArgument}, TArgument, DispatcherPriority, CancellationToken)"/>
+        Task BeginAsync(Action action, CancellationToken cancellationToken = default);
 
         #endregion
     }

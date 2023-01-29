@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             IntPtr hResultBitmap;
             using(var imageFactory = shellItem.Cast<IShellItemImageFactory>()) {
-                imageFactory.Raw.GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
+                imageFactory.Instance.GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
             }
 
             using(var hBitmap = new BitmapHandleWrapper(hResultBitmap)) {
@@ -307,12 +307,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
                 if(getImageListResult == HRESULT.S_OK) {
                     Debug.Assert(resultImageList != null);
-                    using(var imageList = new ComWrapper<IImageList>(resultImageList)) {
+                    using(var imageList = new Com<IImageList>(resultImageList)) {
                         int n = 0;
-                        imageList.Raw.GetImageCount(ref n);
+                        imageList.Instance.GetImageCount(ref n);
 
                         var hResultIcon = IntPtr.Zero;
-                        var hResult = imageList.Raw.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
+                        var hResult = imageList.Instance.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
                         if(hResultIcon != IntPtr.Zero) {
                             using(var hIcon = new IconHandleWrapper(hResultIcon)) {
                                 return hIcon.MakeBitmapSource();

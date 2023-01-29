@@ -40,23 +40,23 @@ namespace ContentTypeTextNet.Pe.Core.Views
     {
         protected private FileSystemDialogBase(FileOpenDialogImpl openDialogImpl)
         {
-            FileDialogImpl = new ComWrapper<object>(openDialogImpl);
+            FileDialogImpl = new Com<object>(openDialogImpl);
             FileDialog = FileDialogImpl.Cast<IFileDialog>();//(IFileDialog)openDialogImpl;
             FileDialogCustomize = FileDialogImpl.Cast<IFileDialogCustomize>();
         }
 
         protected private FileSystemDialogBase(FileSaveDialogImpl saveDialogImpl)
         {
-            FileDialogImpl = new ComWrapper<object>(saveDialogImpl);
+            FileDialogImpl = new Com<object>(saveDialogImpl);
             FileDialog = FileDialogImpl.Cast<IFileDialog>();
             FileDialogCustomize = FileDialogImpl.Cast<IFileDialogCustomize>();
         }
 
         #region property
 
-        private ComWrapper<object> FileDialogImpl { get; }
-        private ComWrapper<IFileDialog> FileDialog { get; }
-        private ComWrapper<IFileDialogCustomize> FileDialogCustomize { get; }
+        private Com<object> FileDialogImpl { get; }
+        private Com<IFileDialog> FileDialog { get; }
+        private Com<IFileDialogCustomize> FileDialogCustomize { get; }
 
         /// <summary>
         /// フォルダ選択を行うか。
@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             return options;
         }
 
-        protected ComWrapper<IShellItem>? CreateFileItem(string path)
+        protected Com<IShellItem>? CreateFileItem(string path)
         {
             IShellItem item;
             IntPtr idl;
@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 return path;
             }
 
-            FileDialog.Raw.GetFileTypeIndex(out var filterIndex);
+            FileDialog.Instance.GetFileTypeIndex(out var filterIndex);
             var filter = Filters[(int)filterIndex - 1];
             if(string.IsNullOrWhiteSpace(filter.DefaultExtension)) {
                 return path;
@@ -184,16 +184,16 @@ namespace ContentTypeTextNet.Pe.Core.Views
             var cleaner = new DisposableStocker();
 
             var options = GetFos();
-            FileDialog.Raw.SetOptions(options);
+            FileDialog.Instance.SetOptions(options);
 
             if(!string.IsNullOrEmpty(Title)) {
-                FileDialog.Raw.SetTitle(Title);
+                FileDialog.Instance.SetTitle(Title);
             }
 
             if(!string.IsNullOrEmpty(InitialDirectory)) {
                 var item = CreateFileItem(InitialDirectory);
                 if(item != null) {
-                    FileDialog.Raw.SetDefaultFolder(item.Raw);
+                    FileDialog.Instance.SetDefaultFolder(item.Instance);
                     cleaner.Add(item);
                 }
             }
@@ -203,16 +203,16 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 if(parentDirPath != null) {
                     var item = CreateFileItem(parentDirPath);
                     if(item != null) {
-                        FileDialog.Raw.SetFolder(item.Raw);
+                        FileDialog.Instance.SetFolder(item.Instance);
                         cleaner.Add(item);
 
                         var fileName = Path.GetFileName(FileName);
-                        FileDialog.Raw.SetFileName(fileName);
+                        FileDialog.Instance.SetFileName(fileName);
                     } else {
-                        FileDialog.Raw.SetFileName(FileName);
+                        FileDialog.Instance.SetFileName(FileName);
                     }
                 } else {
-                    FileDialog.Raw.SetFileName(FileName);
+                    FileDialog.Instance.SetFileName(FileName);
                 }
             }
 
@@ -221,12 +221,12 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 .ToArray()
             ;
             if(filters.Any()) {
-                FileDialog.Raw.SetFileTypes((uint)filters.Length, filters);
+                FileDialog.Instance.SetFileTypes((uint)filters.Length, filters);
             }
 
             Customize.Build(FileDialogCustomize);
 
-            var reuslt = FileDialog.Raw.Show(hWnd);
+            var reuslt = FileDialog.Instance.Show(hWnd);
             if(reuslt == (uint)ERROR.ERROR_CANCELLED) {
                 return false;
             }
@@ -235,7 +235,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             }
 
             IShellItem resultItem;
-            FileDialog.Raw.GetResult(out resultItem);
+            FileDialog.Instance.GetResult(out resultItem);
             cleaner.Add(ComWrapper.Create(resultItem));
             resultItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out var pszPath);
             if(pszPath != IntPtr.Zero) {

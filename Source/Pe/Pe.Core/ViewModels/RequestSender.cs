@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             return Task.Run(() => {
                 using(waitEvent) {
-                    dispatcherWrapper.Begin(() => OnRaised(requestParameter, CustomCallback));
+                    dispatcherWrapper.BeginAsync(() => OnRaised(requestParameter, CustomCallback));
                     waitEvent.Wait(token);
                 }
                 return result ?? new RequestSilentResponse();

@@ -180,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 
         private void PlatformTheme_Changed(object? sender, EventArgs e)
         {
-            DispatcherWrapper.Begin(vm => {
+            DispatcherWrapper.BeginAsync(vm => {
                 if(vm.IsDisposed) {
                     return;
                 }

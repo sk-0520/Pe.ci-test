@@ -449,10 +449,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 var argument = string.Join(' ', filePaths.Select(i => CommandLine.Escape(i)));
-                DispatcherWrapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
+                DispatcherWrapper.BeginAsync(() => ExecuteExtendDropData(launcherItemId, argument));
             } else if(e.Data.IsTextPresent()) {
                 var argument = TextUtility.JoinLines(e.Data.GetText());
-                DispatcherWrapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
+                DispatcherWrapper.BeginAsync(() => ExecuteExtendDropData(launcherItemId, argument));
             }
 
             e.Handled = true;
@@ -654,7 +654,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
         {
-            DispatcherWrapper.Begin(vm => {
+            DispatcherWrapper.BeginAsync(vm => {
                 if(vm.IsDisposed) {
                     return;
                 }

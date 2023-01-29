@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             var commandExecuteParameter = new CommandExecuteParameter(screen, false);
             var launcherItemAddonViewSupporter = LauncherItemAddonViewSupporterCollection.Create(plugin.PluginInformations, LauncherItemId);
             var launcherItemExtensionExecuteParameter = LauncherItemAddonContextFactory.CreateExtensionExecuteParameter(plugin.PluginInformations, LauncherItemId, launcherItemAddonViewSupporter);
-            DispatcherWrapper.Begin(() => {
+            DispatcherWrapper.BeginAsync(() => {
                 using var databaseContextsPack = PersistentHelper.WaitWritePack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreatePluginAccount(plugin.PluginInformations));
                 using(var context = LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformations, LauncherItemId, databaseContextsPack, false)) {
                     addon.Execute(customArgument, commandExecuteParameter, launcherItemExtensionExecuteParameter, context);
@@ -284,7 +284,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         {
             ThrowIfDisposed();
 
-            DispatcherWrapper.Begin(() => {
+            DispatcherWrapper.BeginAsync(() => {
                 var element = OrderManager.CreateLauncherExtendsExecuteElement(LauncherItemId, screen);
                 element.StartView();
             });

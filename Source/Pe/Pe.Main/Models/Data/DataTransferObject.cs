@@ -1,14 +1,14 @@
 using System;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
     #region Dto
-    public interface IReadOnlyDto: IReadOnlyTransfer
+
+    public interface IReadOnlyDto
     { }
 
-    public abstract class DtoBase: TransferBase, IReadOnlyDto
+    public abstract class DtoBase: IReadOnlyDto
     { }
 
     #endregion

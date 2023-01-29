@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         private ConcurrentDictionary<string, PropertyChangedEventArgs> PropertyChangedEventArgsCache { get; } = new ConcurrentDictionary<string, PropertyChangedEventArgs>();
 
         /// <summary>
-        /// このVMは検証対象か。
+        /// このVMは検証非対象か。
         /// </summary>
         protected virtual bool SkipValidation { get; } = false;
 
@@ -542,40 +542,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             base.Dispose(disposing);
             Model = default(TModel)!;
         }
-
-        #endregion
-    }
-
-    public class SimpleDataViewModel<TData>: ViewModelBase
-    {
-        #region variable
-
-        private TData _data;
-
-        #endregion
-
-        public SimpleDataViewModel(TData data, ILoggerFactory loggerFactory)
-            : base(loggerFactory)
-        {
-            this._data = data;
-        }
-
-        #region function
-
-        public TData Data
-        {
-            get => this._data;
-            set => SetProperty(ref this._data, value);
-        }
-
-        #endregion
-    }
-
-    public static class SimpleDataViewModel
-    {
-        #region function
-
-        public static SimpleDataViewModel<TData> Create<TData>(TData data, ILoggerFactory loggerFactory) => new SimpleDataViewModel<TData>(data, loggerFactory);
 
         #endregion
     }
