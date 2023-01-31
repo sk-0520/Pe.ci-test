@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <para>多分こいつしか使わない。</para>
         /// </summary>
         /// <example>
-        /// using(Initializer.BeginAsync(obj)) {
+        /// using(Initializer.Begin(obj)) {
         ///     obj.Property = xxx;
         /// }
         /// </example>
