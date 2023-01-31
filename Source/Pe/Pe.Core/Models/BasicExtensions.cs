@@ -97,6 +97,42 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <inheritdoc cref="string.Join"/>
         public static string JoinString<T>(this IEnumerable<T> source, string? separator) => string.Join(separator, source);
+
+        public static IOrderedEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> source, Order order, Func<TSource, TKey> keySelector)
+        {
+            return order switch {
+                Order.Ascending => source.OrderBy(keySelector),
+                Order.Descending => source.OrderByDescending(keySelector),
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        public static IOrderedEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> source, Order order, Func<TSource, TKey> keySelector, IComparer<TKey>? comparer)
+        {
+            return order switch {
+                Order.Ascending => source.OrderBy(keySelector, comparer),
+                Order.Descending => source.OrderByDescending(keySelector, comparer),
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Order order, Func<TSource, TKey> keySelector)
+        {
+            return order switch {
+                Order.Ascending => source.ThenBy(keySelector),
+                Order.Descending => source.ThenByDescending(keySelector),
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Order order, Func<TSource, TKey> keySelector, IComparer<TKey>? comparer)
+        {
+            return order switch {
+                Order.Ascending => source.ThenBy(keySelector, comparer),
+                Order.Descending => source.ThenByDescending(keySelector, comparer),
+                _ => throw new NotImplementedException(),
+            };
+        }
     }
 
     /// <summary>
@@ -135,42 +171,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 }
             }
         }
-
-        public static IOrderedEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> source, Order order, Func<TSource, TKey> keySelector)
-        {
-            return order switch {
-                Order.Ascending => source.OrderBy(keySelector),
-                Order.Descending => source.OrderByDescending(keySelector),
-                _ => throw new NotImplementedException(),
-            };
-        }
-
-        public static IOrderedEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> source, Order order, Func<TSource, TKey> keySelector, IComparer<TKey>? comparer)
-        {
-            return order switch {
-                Order.Ascending => source.OrderBy(keySelector, comparer),
-                Order.Descending => source.OrderByDescending(keySelector, comparer),
-                _ => throw new NotImplementedException(),
-            };
-        }
-
-        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Order order, Func<TSource, TKey> keySelector)
-        {
-            return order switch {
-                Order.Ascending => source.ThenBy(keySelector),
-                Order.Descending => source.ThenByDescending(keySelector),
-                _ => throw new NotImplementedException(),
-            };
-        }
-
-        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Order order, Func<TSource, TKey> keySelector, IComparer<TKey>? comparer)
-        {
-            return order switch {
-                Order.Ascending => source.ThenBy(keySelector, comparer),
-                Order.Descending => source.ThenByDescending(keySelector, comparer),
-                _ => throw new NotImplementedException(),
-            };
-        }
-
     }
 }
