@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        private ISupportInitialize? Target { get; [Unuse(UnuseKinds.Dispose)] set; }
+        private ISupportInitialize? Target { get; [Unused(UnusedKinds.Dispose)] set; }
 
         #endregion
 

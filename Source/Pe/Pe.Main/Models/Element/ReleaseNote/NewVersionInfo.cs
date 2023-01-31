@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         public string CurrentLog
         {
             get => this._currentLog;
-            [Unuse(UnuseKinds.TwoWayBinding)]
+            [Unused(UnusedKinds.TwoWayBinding)]
             set => SetProperty(ref this._currentLog, value);
         }
 

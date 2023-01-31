@@ -215,7 +215,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 thickness.Bottom = 0;
                 return thickness;
             }
-            [Unuse(UnuseKinds.TwoWayBinding)]
+            [Unused(UnusedKinds.TwoWayBinding)]
             set { }
         }
         [ThemeProperty]
