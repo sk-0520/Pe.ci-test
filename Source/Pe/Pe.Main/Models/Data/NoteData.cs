@@ -4,7 +4,6 @@ using System.Text;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using ContentTypeTextNet.Pe.Core.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
@@ -80,10 +79,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     [Flags]
     public enum ViewAreaChangeTarget
     {
+        /// <summary>
+        /// なし。
+        /// </summary>
         None = 0,
+        /// <summary>
+        /// 位置変更。
+        /// </summary>
         Location = 0b0000_0001,
-        Suze = 0b0000_0010,
-        Screen = 0b0000_0100,
+        /// <summary>
+        /// サイズ変更。
+        /// </summary>
+        Size = 0b0000_0010,
     }
 
     /// <summary>

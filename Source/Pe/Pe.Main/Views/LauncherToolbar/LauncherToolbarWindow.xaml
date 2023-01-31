@@ -408,7 +408,7 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <ToggleButton x:Name="appButton" AllowDrop="False" IsChecked="{Binding IsOpendAppMenu}" ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemToggleButtonControlTemplate, ElementName=root}" IsEnabled="{Binding IsOpen, ElementName=appPopup, Converter={StaticResource LogicalNotConverter}}">
+    <ToggleButton x:Name="appButton" AllowDrop="True" IsChecked="{Binding IsOpendAppMenu}" ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemToggleButtonControlTemplate, ElementName=root}" IsEnabled="{Binding IsOpen, ElementName=appPopup, Converter={StaticResource LogicalNotConverter}}">
       <ToggleButton.Style>
         <Style TargetType="ToggleButton">
           <Style.Triggers>

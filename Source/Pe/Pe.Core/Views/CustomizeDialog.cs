@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         /// <summary>
         /// <see cref="BuildImpl"/>で使用する生処理。
         /// </summary>
-        protected ComWrapper<IFileDialogCustomize>? FileDialogCustomize { get; private set; }
+        protected Com<IFileDialogCustomize>? FileDialogCustomize { get; private set; }
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         /// </summary>
         /// <param name="controlId"></param>
         /// <param name="fileDialogCustomize"></param>
-        internal void Build(int controlId, ComWrapper<IFileDialogCustomize> fileDialogCustomize)
+        internal void Build(int controlId, Com<IFileDialogCustomize> fileDialogCustomize)
         {
             ControlId = controlId;
             FileDialogCustomize = fileDialogCustomize;
@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         public void Close()
         {
-            FileDialogCustomize!.Raw.EndVisualGroup();
+            FileDialogCustomize!.Instance.EndVisualGroup();
         }
 
         public void AddControl(CustomizeDialogControlBase control) => Controls.Add(control);
@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         protected override void BuildImpl()
         {
-            FileDialogCustomize!.Raw.StartVisualGroup(ControlId, Header);
+            FileDialogCustomize!.Instance.StartVisualGroup(ControlId, Header);
         }
 
         #endregion
@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         protected override void BuildImpl()
         {
-            FileDialogCustomize!.Raw.SetControlLabel(ControlId, Label);
+            FileDialogCustomize!.Instance.SetControlLabel(ControlId, Label);
         }
 
         #endregion
@@ -217,16 +217,16 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         protected override void BuildImpl()
         {
-            FileDialogCustomize!.Raw.AddComboBox(ControlId);
+            FileDialogCustomize!.Instance.AddComboBox(ControlId);
             foreach(var item in Items.Counting()) {
-                FileDialogCustomize!.Raw.AddControlItem(ControlId, item.Number, item.Value.DisplayText);
+                FileDialogCustomize!.Instance.AddControlItem(ControlId, item.Number, item.Value.DisplayText);
             }
-            FileDialogCustomize!.Raw.SetSelectedControlItem(ControlId, SelectedIndex);
+            FileDialogCustomize!.Instance.SetSelectedControlItem(ControlId, SelectedIndex);
         }
 
         protected override void ChangeStatusImple()
         {
-            FileDialogCustomize!.Raw.GetSelectedControlItem(ControlId, out var index);
+            FileDialogCustomize!.Instance.GetSelectedControlItem(ControlId, out var index);
             SelectedIndex = index;
         }
 
@@ -318,10 +318,10 @@ namespace ContentTypeTextNet.Pe.Core.Views
             return control;
         }
 
-        internal void Build(ComWrapper<IFileDialogCustomize> FileDialogCustomize)
+        internal void Build(Com<IFileDialogCustomize> FileDialogCustomize)
         {
             if(IsBuilded) {
-                FileDialogCustomize.Raw.ClearClientData();
+                FileDialogCustomize.Instance.ClearClientData();
             }
 
             var lastControlId = 1;

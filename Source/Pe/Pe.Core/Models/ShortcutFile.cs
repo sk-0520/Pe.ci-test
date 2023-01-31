@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region variable
 
-        private ComWrapper<IPersistFile>? _persistFile;
+        private Com<IPersistFile>? _persistFile;
 
         #endregion
 
@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public ShortcutFile(string path)
             : this()
         {
-            PersistFile.Raw.Load(path, 0);
+            PersistFile.Instance.Load(path, 0);
         }
 
         #region property
@@ -73,9 +73,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         public int DescriptionLength { get; set; } = 1024 * 4;
 
-        protected ComWrapper<IShellLink> ShellLink { get; }
+        protected Com<IShellLink> ShellLink { get; }
 
-        protected ComWrapper<IPersistFile> PersistFile => this._persistFile ??= ShellLink.Cast<IPersistFile>();
+        protected Com<IPersistFile> PersistFile => this._persistFile ??= ShellLink.Cast<IPersistFile>();
 
         /// <summary>
         /// ショートカット先パス。
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
                 var resultBuffer = CreateStringBuffer(PathLength);
 
-                ShellLink.Raw.GetPath(resultBuffer, resultBuffer.MaxCapacity, out _, SLGP_FLAGS.SLGP_UNCPRIORITY);
+                ShellLink.Instance.GetPath(resultBuffer, resultBuffer.MaxCapacity, out _, SLGP_FLAGS.SLGP_UNCPRIORITY);
 
                 return resultBuffer.ToString();
             }
@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             {
                 ThrowIfDisposed();
 
-                ShellLink.Raw.SetPath(value);
+                ShellLink.Instance.SetPath(value);
             }
         }
 
@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
                 var resultBuffer = CreateStringBuffer(ArgumentLength);
 
-                ShellLink.Raw.GetArguments(resultBuffer, resultBuffer.Capacity);
+                ShellLink.Instance.GetArguments(resultBuffer, resultBuffer.Capacity);
 
                 return resultBuffer.ToString();
             }
@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             {
                 ThrowIfDisposed();
 
-                ShellLink.Raw.SetArguments(value);
+                ShellLink.Instance.SetArguments(value);
             }
         }
 
@@ -134,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
                 var resultBuffer = CreateStringBuffer(DescriptionLength);
 
-                ShellLink.Raw.GetDescription(resultBuffer, resultBuffer.Capacity);
+                ShellLink.Instance.GetDescription(resultBuffer, resultBuffer.Capacity);
 
                 return resultBuffer.ToString();
             }
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             {
                 ThrowIfDisposed();
 
-                ShellLink.Raw.SetDescription(value);
+                ShellLink.Instance.SetDescription(value);
             }
         }
 
@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
                 var resultBuffer = CreateStringBuffer(PathLength);
 
-                ShellLink.Raw.GetWorkingDirectory(resultBuffer, resultBuffer.MaxCapacity);
+                ShellLink.Instance.GetWorkingDirectory(resultBuffer, resultBuffer.MaxCapacity);
 
                 return resultBuffer.ToString();
             }
@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             {
                 ThrowIfDisposed();
 
-                ShellLink.Raw.SetWorkingDirectory(value);
+                ShellLink.Instance.SetWorkingDirectory(value);
             }
         }
 
@@ -189,14 +189,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
             {
                 ThrowIfDisposed();
 
-                ShellLink.Raw.GetShowCmd(out var rawShowCommand);
+                ShellLink.Instance.GetShowCmd(out var rawShowCommand);
                 return (SW)rawShowCommand;
             }
             set
             {
                 ThrowIfDisposed();
 
-                ShellLink.Raw.SetShowCmd((int)value);
+                ShellLink.Instance.SetShowCmd((int)value);
             }
         }
 
@@ -209,9 +209,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return new StringBuilder(max, max);
         }
 
-        private static ComWrapper<IShellLink> CreateShellLink()
+        private static Com<IShellLink> CreateShellLink()
         {
-            return new ComWrapper<IShellLink>((IShellLink)new ShellLinkObject());
+            return new Com<IShellLink>((IShellLink)new ShellLinkObject());
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             ThrowIfDisposed();
 
             var resultBuffer = CreateStringBuffer(PathLength);
-            ShellLink.Raw.GetIconLocation(resultBuffer, resultBuffer.Capacity, out var iconIndex);
+            ShellLink.Instance.GetIconLocation(resultBuffer, resultBuffer.Capacity, out var iconIndex);
 
             return new IconPathData(resultBuffer.ToString(), iconIndex);
         }
@@ -236,7 +236,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             ThrowIfDisposed();
 
-            ShellLink.Raw.SetIconLocation(iconPath.Path, iconPath.Index);
+            ShellLink.Instance.SetIconLocation(iconPath.Path, iconPath.Index);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             ThrowIfDisposed();
 
-            PersistFile.Raw.Save(path, true);
+            PersistFile.Instance.Save(path, true);
         }
 
         #endregion

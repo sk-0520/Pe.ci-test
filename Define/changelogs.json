@@ -1,5 +1,76 @@
 [
 	{
+		"date": "2023/01/31",
+		"version": "0.99.187",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"class": "compatibility",
+						"subject": "本バージョンで Windows 7, 8, 8.1 をサポート対象外とします",
+						"comments": [
+							"win7 って 2009 年生まれなのでもういいでしょ"
+						]
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "d30a3a8b9c22b65ef3fd123212d798891cbe6e91",
+						"subject": "#859: プロキシ設定の有効無効を本体コマンドに組み込む"
+					},
+					{
+						"revision": "85950d405765148159a4abbbcdf2d6af38e615fc",
+						"subject": "#763: 表示領域が満員時のランチャーツールバーへのD&Dがメインアイコンの時は登録可能にする"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "34041a801d5191c03865f627a2cbc72db08a1edf",
+						"subject": "#858: ノートの所属ディスプレイはユーザーによる移動・サイズで変更する"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "fc8ff5362e99f3113d6c2c19ea56bf12e3e702a5",
+						"subject": "#841: Windows 7/8/8.1 対応を終了",
+						"comments": [
+							"Windows RID(dotnet --runtime)のみの変更"
+						]
+					},
+					{
+						"revision": "625177bae9699f3580ab40771289bbf7c83eb77d",
+						"subject": "#849: 弱参照イベントを組み込む",
+						"comments": [
+							"ぱっと見えた範囲のみ実装対応。インフラとしての実装なので今後対応していく",
+							"追加対応: 01f946c432b1dc5eaa3ac7e0a9695b50bf64f8dc"
+						]
+					},
+					{
+						"revision": "2ea2fb3d39bb9e72d9df7f0ca66911d64e6b7b89",
+						"subject": "#861: 課題対応ブランチでは CodeQL を実行しないようにする",
+						"comments": [
+							"next ブランチか PR で動かすようにした"
+						]
+					},
+					{
+						"revision": "0849103dadef0692908e3044024cba6aaacceb79",
+						"subject": "#850: 謎データ構造を破棄する"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/01/23",
 		"version": "0.99.186",
 		"contents": [

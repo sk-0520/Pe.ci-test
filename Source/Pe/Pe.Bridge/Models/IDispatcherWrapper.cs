@@ -70,13 +70,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <param name="action">実施する処理。</param>
         /// <param name="dispatcherPriority"></param>
         /// <param name="argument">パラメータ。</param>
-        Task Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority);
-        /// <inheritdoc cref="Begin{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
-        Task Begin<TArgument>(Action<TArgument> action, TArgument argument);
-        /// <inheritdoc cref="Begin{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
-        Task Begin(Action action, DispatcherPriority dispatcherPriority);
-        /// <inheritdoc cref="Begin{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
-        Task Begin(Action action);
+        Task BeginAsync<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority);
+        /// <inheritdoc cref="BeginAsync{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
+        Task BeginAsync<TArgument>(Action<TArgument> action, TArgument argument);
+        /// <inheritdoc cref="BeginAsync{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
+        Task BeginAsync(Action action, DispatcherPriority dispatcherPriority);
+        /// <inheritdoc cref="BeginAsync{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
+        Task BeginAsync(Action action);
 
         #endregion
     }

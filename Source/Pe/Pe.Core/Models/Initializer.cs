@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -9,14 +10,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public class Initializer: DisposerBase
     {
-        public Initializer(ISupportInitialize target)
+        private Initializer(ISupportInitialize target)
         {
             Target = target;
         }
 
         #region property
 
-        private ISupportInitialize? Target { get; [Unuse(UnuseKinds.Dispose)] set; }
+        private ISupportInitialize? Target { get; [Unused(UnusedKinds.Dispose)] set; }
 
         #endregion
 
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </example>
         /// <param name="target"></param>
         /// <returns></returns>
-        public static Initializer Begin(ISupportInitialize target)
+        public static IDisposable Begin(ISupportInitialize target)
         {
             var result = new Initializer(target);
             target.BeginInit();

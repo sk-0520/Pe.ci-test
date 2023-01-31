@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         private TimeSpan PauseRetryTime { get; }
         private ILogger Logger { get; }
 
-        private Timer LazyTimer { get; [Unuse(UnuseKinds.Dispose)] set; }
+        private Timer LazyTimer { get; [Unused(UnusedKinds.Dispose)] set; }
 
         private IList<LazyStockItem> StockItems { get; } = new List<LazyStockItem>();
         private IDictionary<object, LazyStockItem> UniqueItems { get; } = new Dictionary<object, LazyStockItem>();

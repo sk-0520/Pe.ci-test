@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
@@ -8,15 +9,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// <summary>
     /// Windows 万歳な GDI 系オブジェクトを扱う。
     /// </summary>
-    public abstract class GdiObjectBase: UnmanagedHandleWrapper, IMakeBitmapSource
+    public abstract class Gdi: SafeHandle, IMakeBitmapSource
     {
-        protected GdiObjectBase(IntPtr hHandle)
-            : base(hHandle)
+        protected Gdi(IntPtr hHandle)
+            : base(hHandle, true)
         { }
 
         #region property
 
-        public IntPtr ResourceHandle => Raw;
+        public IntPtr ResourceHandle => this.handle;
 
         public virtual bool CanMakeImageSource => false;
 
@@ -45,17 +46,19 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 
         #endregion
 
-        #region UnmanagedHandleModelBase
+        #region SafeHandle
 
-        protected override void ReleaseHandle()
+        public override bool IsInvalid => this.handle == IntPtr.Zero;
+
+        protected override bool ReleaseHandle()
         {
-            NativeMethods.DeleteObject(Raw);
+            return NativeMethods.DeleteObject(this.handle);
         }
 
         #endregion
     }
 
-    public class IconHandleWrapper: GdiObjectBase
+    public class IconHandleWrapper: Gdi
     {
         public IconHandleWrapper(IntPtr hIcon)
             : base(hIcon)
@@ -63,11 +66,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 
         #region UnmanagedHandle
 
-        protected override void ReleaseHandle()
+        protected override bool ReleaseHandle()
         {
-            NativeMethods.DestroyIcon(Raw);
+            return NativeMethods.DestroyIcon(this.handle);
             /* なんだったかなぁこれ
-            NativeMethods.SendMessage(Raw, WM.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+            NativeMethods.SendMessage(Instance, WM.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
             */
         }
 
@@ -80,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
         protected override BitmapSource MakeBitmapSourceCore()
         {
             var result = Imaging.CreateBitmapSourceFromHIcon(
-                Raw,
+                this.handle,
                 System.Windows.Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions()
             );
@@ -94,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// <summary>
     /// ビットマップハンドルを管理。
     /// </summary>
-    public class BitmapHandleWrapper: GdiObjectBase
+    public class BitmapHandleWrapper: Gdi
     {
         public BitmapHandleWrapper(IntPtr hBitmap)
             : base(hBitmap)
@@ -107,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
         protected override BitmapSource MakeBitmapSourceCore()
         {
             var result = Imaging.CreateBitmapSourceFromHBitmap(
-                Raw,
+                this.handle,
                 IntPtr.Zero,
                 System.Windows.Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions()

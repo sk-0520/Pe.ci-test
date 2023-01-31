@@ -13,6 +13,87 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public class DispatcherWrapper: IDispatcherWrapper
     {
+        #region define
+
+        private class WaitParameterBase<TResult>: IDisposable
+        {
+            public WaitParameterBase(CancellationToken cancellationToken)
+            {
+                Event = new ManualResetEventSlim();
+                CancellationToken = cancellationToken;
+            }
+
+            #region property
+
+            public ManualResetEventSlim Event { get; }
+            public CancellationToken CancellationToken { get; }
+
+            [MaybeNull]
+            public TResult Result { get; set; } = default!;
+
+            #endregion
+
+            #region IDisposable
+
+            private bool _disposedValue;
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if(!this._disposedValue) {
+                    if(disposing) {
+                        Event.Dispose();
+                    }
+
+                    // TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、ファイナライザーをオーバーライドします
+                    // TODO: 大きなフィールドを null に設定します
+                    this._disposedValue = true;
+                }
+            }
+
+            public void Dispose()
+            {
+                // このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
+                Dispose(disposing: true);
+                GC.SuppressFinalize(this);
+            }
+
+            #endregion
+        }
+
+        private class WaitParameter<TResult>: WaitParameterBase<TResult>
+        {
+            public WaitParameter(Func<TResult> function, CancellationToken cancellationToken)
+                : base(cancellationToken)
+            {
+                Function = function;
+            }
+
+            #region property
+
+            public Func<TResult> Function { get; }
+
+            #endregion
+        }
+
+        private class WaitParameter<TArgument, TResult>: WaitParameterBase<TResult>
+        {
+            public WaitParameter(Func<TArgument, TResult> function, TArgument argument, CancellationToken cancellationToken)
+                : base(cancellationToken)
+            {
+                Function = function;
+                Argument = argument;
+            }
+
+            #region property
+
+            public Func<TArgument, TResult> Function { get; }
+            public TArgument Argument { get; }
+
+            #endregion
+        }
+
+        #endregion
+
         /// <summary>
         /// <paramref name="dispatcher"/>をラップする。
         /// </summary>
@@ -80,14 +161,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(CheckAccess()) {
                 return func(argument);
             } else {
-                using var waitBag = new Toybag<TArgument, TResult>(func, new ManualResetEventSlim(), argument, cancellationToken);
-                Dispatcher.BeginInvoke(dispatcherPriority, new Action<Toybag<TArgument, TResult>>(bag => {
-                    bag.CancellationToken.ThrowIfCancellationRequested();
-                    bag.Result = bag.Method(bag.Parameter);
-                    bag.Event.Set();
-                }), waitBag);
-                if(waitBag.Event.Wait(WaitTime, cancellationToken)) {
-                    return waitBag.Result!;
+                using var waitParameter = new WaitParameter<TArgument, TResult>(func, argument, cancellationToken);
+                Dispatcher.BeginInvoke(dispatcherPriority, new Action<WaitParameter<TArgument, TResult>>(static waitParameter => {
+                    waitParameter.CancellationToken.ThrowIfCancellationRequested();
+                    waitParameter.Result = waitParameter.Function(waitParameter.Argument);
+                    waitParameter.Event.Set();
+                }), waitParameter);
+                if(waitParameter.Event.Wait(WaitTime, cancellationToken)) {
+                    return waitParameter.Result!;
                 }
                 throw new TimeoutException(WaitTime.ToString());
             }
@@ -102,14 +183,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(CheckAccess()) {
                 return func();
             } else {
-                using var waitBag = new Toybag<T>(func, new ManualResetEventSlim(), cancellationToken);
-                Dispatcher.BeginInvoke(dispatcherPriority, new Action<Toybag<T>>(bag => {
-                    bag.CancellationToken.ThrowIfCancellationRequested();
-                    bag.Result = bag.Method();
-                    bag.Event.Set();
-                }), waitBag);
-                if(waitBag.Event.Wait(WaitTime, cancellationToken)) {
-                    return waitBag.Result!;
+                using var waitParameter = new WaitParameter<T>(func, cancellationToken);
+                Dispatcher.BeginInvoke(dispatcherPriority, new Action<WaitParameter<T>>(static waitParameter => {
+                    waitParameter.CancellationToken.ThrowIfCancellationRequested();
+                    waitParameter.Result = waitParameter.Function();
+                    waitParameter.Event.Set();
+                }), waitParameter);
+                if(waitParameter.Event.Wait(WaitTime, cancellationToken)) {
+                    return waitParameter.Result!;
                 }
                 throw new TimeoutException(WaitTime.ToString());
             }
@@ -124,7 +205,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
-        public Task Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
+        public Task BeginAsync<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
         {
             if(CheckAccess()) {
                 action(argument);
@@ -133,12 +214,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return Dispatcher.BeginInvoke(dispatcherPriority, action, argument).Task;
             }
         }
-        public Task Begin<TArgument>(Action<TArgument> action, TArgument argument)
+        public Task BeginAsync<TArgument>(Action<TArgument> action, TArgument argument)
         {
-            return Begin(action, argument, DispatcherPriority.Send);
+            return BeginAsync(action, argument, DispatcherPriority.Send);
         }
 
-        public Task Begin(Action action, DispatcherPriority dispatcherPriority)
+        public Task BeginAsync(Action action, DispatcherPriority dispatcherPriority)
         {
             if(CheckAccess()) {
                 action();
@@ -147,9 +228,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return Dispatcher.BeginInvoke(dispatcherPriority, action).Task;
             }
         }
-        public Task Begin(Action action)
+        public Task BeginAsync(Action action)
         {
-            return Begin(action, DispatcherPriority.Send);
+            return BeginAsync(action, DispatcherPriority.Send);
         }
 
 

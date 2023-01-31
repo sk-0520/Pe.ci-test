@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         private void ApplyTheme()
         {
-            DispatcherWrapper.Begin(() => {
+            DispatcherWrapper.BeginAsync(() => {
                 var color = PlatformTheme.GetTaskbarColor();
                 HourForeground = new SolidColorBrush(MediaConverter.GetAutoColor(color));
                 MinutesForeground = new SolidColorBrush(MediaConverter.GetAutoColor(color));

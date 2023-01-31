@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
-    public class VersionConverter
+    public sealed class VersionConverter
     {
         #region function
 
@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public string ConvertFileName(string head, Version version, string tail, string extension)
         {
             if(string.IsNullOrWhiteSpace(head)) {
-                throw new ArgumentException(nameof(head));
+                throw new ArgumentException(nameof(string.IsNullOrWhiteSpace), nameof(head));
             }
             var values = new List<string>() {
                 head,

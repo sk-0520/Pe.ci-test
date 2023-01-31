@@ -2291,4 +2291,16 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_About_OpenWebsiteUri_A" xml:space="preserve">
     <value>Webサイト</value>
   </data>
+  <data name="String_ApplicationCommand_Description_Proxy" xml:space="preserve">
+    <value>プロキシ使用状態切り替え</value>
+  </data>
+  <data name="String_Proxy_Toggle_Content_IsDisabled" xml:space="preserve">
+    <value>無効</value>
+  </data>
+  <data name="String_Proxy_Toggle_Content_IsEnabled" xml:space="preserve">
+    <value>有効</value>
+  </data>
+  <data name="String_Proxy_Toggle_Header" xml:space="preserve">
+    <value>プロキシ使用状態</value>
+  </data>
 </root>

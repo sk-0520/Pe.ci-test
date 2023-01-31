@@ -178,8 +178,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 throw new PluginBrokenException(pluginDirectory.FullName);
             }
             Debug.Assert(loadStateData2.Plugin != null);
-            Debug.Assert(loadStateData2.WeekLoadContext != null);
-            if(loadStateData2.WeekLoadContext.TryGetTarget(out var pluginLoadContext)) {
+            Debug.Assert(loadStateData2.WeakLoadContext != null);
+            if(loadStateData2.WeakLoadContext.TryGetTarget(out var pluginLoadContext)) {
                 try {
                     pluginLoadContext.Unload();
                 } catch(InvalidOperationException ex) {

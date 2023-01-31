@@ -6,7 +6,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     /// ソース上で使用していない理由の種別。
     /// </summary>
     [Flags]
-    public enum UnuseKinds
+    public enum UnusedKinds
     {
         /// <summary>
         /// 知らん。
@@ -29,9 +29,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     /// <para>諸々の都合により書かざるを得ないが使用していないものに対する説明書き。</para>
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.All, Inherited = true, AllowMultiple = false)]
-    public class UnuseAttribute: Attribute
+    public sealed class UnusedAttribute: Attribute
     {
-        public UnuseAttribute(UnuseKinds unuseKinds)
+        public UnusedAttribute(UnusedKinds unuseKinds)
         {
             Kinds = unuseKinds;
         }
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <summary>
         /// ソース上で使用していない理由。
         /// </summary>
-        public UnuseKinds Kinds { get; }
+        public UnusedKinds Kinds { get; }
 
         #endregion
     }

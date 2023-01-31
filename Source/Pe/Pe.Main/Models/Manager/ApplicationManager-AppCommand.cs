@@ -3,6 +3,8 @@ using System.Diagnostics;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Command;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -46,6 +48,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         : infoCollector.GetShortInformation()
                     ;
                     ClipboardManager.CopyText(s, ClipboardNotify.User);
+                }),
+                factory.CreateParameter(ApplicationCommand.Proxy, p => {
+                    ToggleProxyIsEnabled();
+                    var isEnabledProxy = GetProxyIsEnabled();
+                    var log = new NotifyMessage(
+                        NotifyLogKind.Normal,
+                        Properties.Resources.String_Proxy_Toggle_Header,
+                        new NotifyLogContent(isEnabledProxy ? Properties.Resources.String_Proxy_Toggle_Content_IsEnabled: Properties.Resources.String_Proxy_Toggle_Content_IsDisabled)
+                    );
+                    NotifyManager.AppendLog(log);
                 }),
                 factory.CreateParameter(ApplicationCommand.Help, p => {
                     ShowHelp();

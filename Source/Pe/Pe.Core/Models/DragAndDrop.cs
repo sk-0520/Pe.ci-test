@@ -6,17 +6,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    /// <summary>
-    /// ドロップ可能処理。
-    /// </summary>
-    public interface IDropable
-    {
-        /// <summary>
-        /// ドラッグ中アイテムが上に存在しているか。
-        /// </summary>
-        bool IsDragOver { get; set; }
-    }
-
     public interface IDragAndDrop
     {
         #region property
@@ -29,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         /// <summary>
         ///<see cref="UIElement.PreviewMouseMove"/> 的な Preview のイベントを使用する。
-        ///<para>基本的には false で <see cref="UIElement.MouseMove"/> を使用する。 なんにせよ<see cref="UIElement.PreviewMouseDown"/> は強制される。</para>
+        ///<para>基本的には偽で <see cref="UIElement.MouseMove"/> を使用する。 なんにせよ<see cref="UIElement.PreviewMouseDown"/> は強制される。</para>
         /// </summary>
         bool UsePreviewEvent { get; }
 
@@ -49,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public class DragParameter
     {
-        public DragParameter(UIElement element, DragDropEffects effects, DataObject data)
+        public DragParameter(UIElement element, DragDropEffects effects, IDataObject data)
         {
             Element = element;
             Effects = effects;
@@ -69,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// ドラッグデータ。
         /// </summary>
-        public DataObject Data { get; }
+        public IDataObject Data { get; }
 
         #endregion
     }

@@ -583,7 +583,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var windowItem = WindowManager.GetWindowItems(WindowKind.Release);
             if(windowItem.Any()) {
                 // 再表示
-                ApplicationDiContainer.Build<IDispatcherWrapper>().Begin(() => {
+                ApplicationDiContainer.Build<IDispatcherWrapper>().BeginAsync(() => {
                     var window = windowItem.FirstOrDefault();
                     if(window != null) {
                         window.Window.Activate();
@@ -594,7 +594,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return;
             }
 
-            ApplicationDiContainer.Build<IDispatcherWrapper>().Begin(() => {
+            ApplicationDiContainer.Build<IDispatcherWrapper>().BeginAsync(() => {
                 ShowNewVersionReleaseNoteCore(updateItem, isCheckOnly);
             }, DispatcherPriority.ApplicationIdle);
         }
@@ -736,7 +736,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ;
             var disabledPluginLoadStateItems = pluginLoadStateItems
                 .Except(enabledPluginLoadStateItems)
-                .Where(i => i.WeekLoadContext != null)
+                .Where(i => i.WeakLoadContext != null)
                 .ToList()
             ;
             if(0 < disabledPluginLoadStateItems.Count) {
@@ -750,7 +750,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     var unloadedItems = new List<PluginLoadStateData>();
                     foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
-                        if(disabledPluginLoadStateItem.WeekLoadContext!.TryGetTarget(out _)) {
+                        if(disabledPluginLoadStateItem.WeakLoadContext!.TryGetTarget(out _)) {
                             Logger.LogInformation("[{0}/{1}] アンロード待ち: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
                         } else {
                             Logger.LogInformation("[{0}/{1}] アンロード完了: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
@@ -767,7 +767,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 if(0 < disabledPluginLoadStateItems.Count) {
                     GarbageCollection(true);
                     foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
-                        if(disabledPluginLoadStateItem.WeekLoadContext!.TryGetTarget(out _)) {
+                        if(disabledPluginLoadStateItem.WeakLoadContext!.TryGetTarget(out _)) {
                             Logger.LogWarning("[LAST] アンロード待機超過: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
                         } else {
                             Logger.LogInformation("[LAST] アンロード完了: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
@@ -819,7 +819,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     initializedPlugins.Add(plugin);
                 } catch(Exception ex) {
                     Logger.LogError(ex, "プラグイン初期化失敗: {0}, {1}, {2}", ex.Message, pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
-                    if(pluginLoadStateItem.WeekLoadContext!.TryGetTarget(out var loadContext)) {
+                    if(pluginLoadStateItem.WeakLoadContext!.TryGetTarget(out var loadContext)) {
                         Logger.LogWarning("プラグイン初期化失敗のため解放だけ指示: {0}, {1}", pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
                         loadContext.Unload();
                     } else {
@@ -1228,7 +1228,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     .ToList()
                 ;
                 var dispatcherWrapper = ApplicationDiContainer.Get<IDispatcherWrapper>();
-                dispatcherWrapper.Begin(() => {
+                dispatcherWrapper.BeginAsync(() => {
                     foreach(var noteElement in noteElements) {
                         noteElement.SetTopmost(true);
                     }
@@ -1287,7 +1287,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return;
             }
 #endif
-            ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+            ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(() => {
                 // ノート生成で最後のノートがアクティブになる対応。設定でも発生するけど起動時に何とかしていって思い
                 if(currentActiveWindowHandle != IntPtr.Zero && currentActiveWindowHandle != MessageWindowHandleSource?.Handle) {
                     WindowsUtility.ShowActive(currentActiveWindowHandle);
@@ -1713,7 +1713,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var viewModel = notifyIcon.DataContext;
             Logger.LogDebug("通知領域再設定開始");
             notifyIcon.DataContext = null;
-            ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+            ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(() => {
                 notifyIcon.DataContext = viewModel;
                 Logger.LogDebug("通知領域再設定終了");
             }, DispatcherPriority.SystemIdle);
@@ -1725,7 +1725,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             void DelayExecuteElements()
             {
                 LazyScreenElementReset.DelayAction(() => {
-                    ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(ResetScreenViewElements, DispatcherPriority.SystemIdle);
+                    ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(ResetScreenViewElements, DispatcherPriority.SystemIdle);
                     ResetWaiting = false;
                 });
             }
@@ -2137,7 +2137,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     CronScheduler.Dispose();
 
-                    //MessageWindowDispatcherWapper?.Begin(() => {
+                    //MessageWindowDispatcherWapper?.BeginAsync(() => {
                     //    MessageWindowHandleSource?.Dispose();
                     //    Dispatcher.CurrentDispatcher.InvokeShutdown();
                     //});
@@ -2166,7 +2166,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
         {
-            ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+            ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(() => {
                 SetDynamicPlatformTheme();
             }, DispatcherPriority.ApplicationIdle);
         }

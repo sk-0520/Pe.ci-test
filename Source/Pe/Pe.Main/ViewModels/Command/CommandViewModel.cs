@@ -215,7 +215,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 thickness.Bottom = 0;
                 return thickness;
             }
-            [Unuse(UnuseKinds.TwoWayBinding)]
+            [Unused(UnusedKinds.TwoWayBinding)]
             set { }
         }
         [ThemeProperty]
@@ -472,7 +472,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         private void PlatformTheme_Changed(object? sender, EventArgs e)
         {
-            DispatcherWrapper.Begin(vm => {
+            DispatcherWrapper.BeginAsync(vm => {
                 if(vm.IsDisposed) {
                     return;
                 }

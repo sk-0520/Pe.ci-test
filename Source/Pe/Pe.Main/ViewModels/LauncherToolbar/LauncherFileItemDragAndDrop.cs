@@ -28,6 +28,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 if(filePaths.Length == 1) {
                     e.Effects = DragDropEffects.Copy;
                     e.Handled = true;
+                } else {
+                    e.Effects = DragDropEffects.None;
+                    e.Handled = true;
                 }
             } else {
                 e.Effects = DragDropEffects.None;
@@ -40,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if(filePaths.Length == 1) {
-                    DispatcherWrapper.Begin(() => action(filePaths[0]));
+                    DispatcherWrapper.BeginAsync(() => action(filePaths[0]));
                     e.Handled = true;
                 }
             }

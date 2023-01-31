@@ -3,7 +3,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Core.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Unmanaged;
 using Drawing = System.Drawing;
 
@@ -13,11 +12,12 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     /// <see cref="System.Drawing.Icon"/>の簡易ラッパー。
     /// <para><see cref="System.IDisposable"/>は実装されていないため使用側で<see cref="System.Drawing.Icon"/>の面倒を見ること。</para>
     /// </summary>
-    public class IconWrapper: RawModel<Drawing.Icon>, IMakeBitmapSource
+    public class IconWrapper: IMakeBitmapSource
     {
         public IconWrapper(Stream stream, IconSize iconSize)
-            : base(new Drawing.Icon(stream, DrawingUtility.Convert(iconSize.ToSize())))
-        { }
+        {
+            Icon = new Drawing.Icon(stream, DrawingUtility.Convert(iconSize.ToSize()));
+        }
 
         public IconWrapper(StreamResourceInfo streamInfo, IconSize iconSize)
             : this(streamInfo.Stream, iconSize)
@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
 
         #region property
 
-        public Drawing.Icon Icon => Raw;
+        public Drawing.Icon Icon { get; }
 
         #endregion
 

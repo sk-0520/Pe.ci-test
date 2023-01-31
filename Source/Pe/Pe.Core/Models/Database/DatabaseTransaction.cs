@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region property
 
-        IDatabaseAccessor DatabaseAccessor { get; [Unuse(UnuseKinds.Dispose)] set; }
+        IDatabaseAccessor DatabaseAccessor { get; [Unused(UnusedKinds.Dispose)] set; }
         public bool Committed { get; private set; }
 
         #endregion
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <see cref="IDatabaseContext"/>としての自身を返す。
         /// </summary>
         public IDatabaseContext Context => this;
-        public IDbTransaction Transaction { get; [Unuse(UnuseKinds.Dispose)] private set; }
+        public IDbTransaction Transaction { get; [Unused(UnusedKinds.Dispose)] private set; }
         public IDatabaseImplementation Implementation { get; }
 
         public virtual void Commit()

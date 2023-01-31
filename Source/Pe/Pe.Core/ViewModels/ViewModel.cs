@@ -43,6 +43,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             LoggerFactory = loggerFactory;
             Logger = loggerFactory.CreateLogger(GetType());
             ErrorsContainer = new ErrorsContainer<string>(OnErrorsChanged);
+            WeakDisposing = new WeakEvent<EventArgs>(nameof(Disposing));
 
             if(cacheProperty) {
                 PropertyCacher = new ConcurrentDictionary<object, PropertyCacher>();
@@ -64,6 +65,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         }
 
         #region property
+
+        private WeakEvent<EventArgs> WeakDisposing { get; }
 
         /// <inheritdoc cref="ILoggerFactory"/>
         protected ILoggerFactory LoggerFactory { get; }
@@ -90,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         private ConcurrentDictionary<string, PropertyChangedEventArgs> PropertyChangedEventArgsCache { get; } = new ConcurrentDictionary<string, PropertyChangedEventArgs>();
 
         /// <summary>
-        /// このVMは検証対象か。
+        /// このVMは検証非対象か。
         /// </summary>
         protected virtual bool SkipValidation { get; } = false;
 
@@ -399,9 +402,11 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
         /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
         /// </summary>
-        [field: NonSerialized]
-        public event EventHandler? Disposing;
-
+        public event EventHandler<EventArgs>? Disposing
+        {
+            add => WeakDisposing.Add(value);
+            remove => WeakDisposing.Remove(value);
+        }
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>されたか。
         /// </summary>
@@ -419,9 +424,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
                 return;
             }
 
-            if(Disposing != null) {
-                Disposing(this, EventArgs.Empty);
-            }
+            WeakDisposing.Raise(this, EventArgs.Empty);
 
             if(PropertyCacher is not null) {
                 PropertyCacher.Clear();
@@ -539,40 +542,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             base.Dispose(disposing);
             Model = default(TModel)!;
         }
-
-        #endregion
-    }
-
-    public class SimpleDataViewModel<TData>: ViewModelBase
-    {
-        #region variable
-
-        private TData _data;
-
-        #endregion
-
-        public SimpleDataViewModel(TData data, ILoggerFactory loggerFactory)
-            : base(loggerFactory)
-        {
-            this._data = data;
-        }
-
-        #region function
-
-        public TData Data
-        {
-            get => this._data;
-            set => SetProperty(ref this._data, value);
-        }
-
-        #endregion
-    }
-
-    public static class SimpleDataViewModel
-    {
-        #region function
-
-        public static SimpleDataViewModel<TData> Create<TData>(TData data, ILoggerFactory loggerFactory) => new SimpleDataViewModel<TData>(data, loggerFactory);
 
         #endregion
     }

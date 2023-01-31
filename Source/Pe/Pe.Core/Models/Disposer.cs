@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
         /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
         /// </summary>
-        event EventHandler Disposing;
+        event EventHandler<EventArgs>? Disposing;
 
         #endregion
     }
@@ -48,14 +48,23 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Dispose(false);
         }
 
+        #region property
+
+        private WeakEvent<EventArgs> WeakDisposing { get; } = new WeakEvent<EventArgs>(nameof(Disposing));
+
+        #endregion
+
         #region IDisposable
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
         /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
         /// </summary>
-        [field: NonSerialized]
-        public event EventHandler? Disposing;
+        public event EventHandler<EventArgs>? Disposing
+        {
+            add => WeakDisposing.Add(value);
+            remove => WeakDisposing.Remove(value);
+        }
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>されたか。
@@ -78,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         protected void OnDisposing()
         {
-            Disposing?.Invoke(this, EventArgs.Empty);
+            WeakDisposing.Raise(this, EventArgs.Empty);
         }
 
 

@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
                 if(AutoSend) {
                     AutoSendWaitTimer = new DispatcherTimer();
                     AutoSendWaitTimer.Interval = TimeSpan.FromMilliseconds(16);
-                    DispatcherWrapper.Begin(() => {
+                    DispatcherWrapper.BeginAsync(() => {
                         AutoSendStartTime = DateTime.UtcNow;
                         AutoSendEndTime = AutoSendStartTime + AutoSendWaitTime;
                         if(AutoSend) {
