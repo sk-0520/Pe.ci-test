@@ -30,7 +30,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#866: 参考実装プラグインのバージョン制限を行う",
+						"comments": [
+							"System.Version の比較が手遅れ感すごい"
+						]
 					},
 					{
 						"revision": "",
