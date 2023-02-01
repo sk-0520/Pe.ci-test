@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
@@ -230,9 +231,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             }
 
             var pluginVersion = (Version)pluginInformations.PluginVersions.PluginVersion.Clone();
+            var versionConverter = new VersionConverter();
 
             if(!PluginUtility.IsUnlimitedVersion(pluginInformations.PluginVersions.MinimumSupportVersion)) {
-                var ok = pluginInformations.PluginVersions.MinimumSupportVersion <= applicationVersion;
+                var minVersion = versionConverter.TrimUndefinedElement(pluginInformations.PluginVersions.MinimumSupportVersion);
+                var ok = minVersion <= applicationVersion;
                 if(!ok) {
                     Logger.LogWarning("プラグインサポート最低バージョン({0}): {1}, {2}", pluginInformations.PluginVersions.MinimumSupportVersion, pluginName, pluginId);
                     loadContext.Unload();
@@ -241,7 +244,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             }
 
             if(!PluginUtility.IsUnlimitedVersion(pluginInformations.PluginVersions.MaximumSupportVersion)) {
-                var ok = applicationVersion <= pluginInformations.PluginVersions.MaximumSupportVersion;
+                var maxVersion = versionConverter.TrimUndefinedElement(pluginInformations.PluginVersions.MaximumSupportVersion);
+                var ok = applicationVersion <= maxVersion;
                 if(!ok) {
                     Logger.LogWarning("プラグインサポート最高バージョン({0}): {1}, {2}", pluginInformations.PluginVersions.MaximumSupportVersion, pluginName, pluginId);
                     loadContext.Unload();

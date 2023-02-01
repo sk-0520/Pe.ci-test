@@ -186,7 +186,14 @@ try {
 		# プラグイン参考実装
 		$pluginProjectFiles = $projectFiles | Where-Object -Property "Name" -like "Pe.Plugins.Reference.*.csproj"
 		foreach($pluginProjectFile in $pluginProjectFiles) {
+			# サポートバージョンを固定
+			$assemblyInfoFilePath = Join-Path -Path $pluginProjectFile.Directory -ChildPath 'AssemblyInfo.cs'
+			(Get-Content -LiteralPath $assemblyInfoFilePath) `
+				| ForEach-Object { $_ -replace '"0.0.0"', "`"$version`"" } `
+				| Set-Content -LiteralPath $assemblyInfoFilePath
+
 			$name = $pluginProjectFile.BaseName
+
 			dotnet publish $pluginProjectFile /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win10-$platform --output Output/Release/$platform/Plugins/$name --self-contained false
 			if (-not $?) {
 				exit 1
