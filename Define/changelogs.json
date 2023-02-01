@@ -14,7 +14,7 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "fcfd9f9d4cccfba2677b0e9d905f6bd51705f3b9",
 						"subject": "#865: 0.99.187 は死んでる",
 						"comments": [
 							"インフラの構造変更によりプラグインが死にます",
