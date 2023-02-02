@@ -2,6 +2,7 @@
 	[switch] $ProductMode,
 	[switch] $IgnoreChanged,
 	[string] $BuildType,
+	[switch] $Rebuild,
 	[Parameter(mandatory = $true)][string[]] $Platforms
 )
 $ErrorActionPreference = 'Stop'
@@ -169,12 +170,17 @@ try {
 
 	$testDirectories = Get-ChildItem -Path $sourceDirectoryPath -Directory -Filter "*.Test" -Recurse
 
+	$rebuildArg = '';
+	if($Rebuild) {
+		$rebuildArg = '/t:Rebuild'
+	}
+
 	foreach ($platform in $Platforms) {
-		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=Release /p:Platform=$platform /p:DefineConstants=$define /t:Rebuild
+		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=Release /p:Platform=$platform /p:DefineConstants=$define $rebuildArg
 		if (-not $?) {
 			exit 1
 		}
-		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=CI_TEST /p:Platform=$platform /p:DefineConstants=$define /t:Rebuild
+		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=CI_TEST /p:Platform=$platform /p:DefineConstants=$define $rebuildArg
 		if (-not $?) {
 			exit 1
 		}
