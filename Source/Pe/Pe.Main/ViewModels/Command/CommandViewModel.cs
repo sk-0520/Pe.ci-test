@@ -103,7 +103,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         private PropertyChangedHooker PropertyChangedHooker { get; }
 
         private IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
-        private TextBox? InputCommand { get; set; }
 
         public double WindowWidth
         {
