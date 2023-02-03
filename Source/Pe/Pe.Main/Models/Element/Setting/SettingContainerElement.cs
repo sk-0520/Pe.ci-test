@@ -22,7 +22,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public class SettingContainerElement: ContextElementBase
+    public class SettingContainerElement: ServiceLocatorElementBase
     {
         #region variable
 

@@ -55,9 +55,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
     /// <see cref="ElementBase"/>と同じだけど結構な長寿で DI コンテナを持ち運ぶ気持ち最上位なモデル。
     /// <para>わっけ分からんくなりそうなので極力使用しないこと！</para>
     /// </summary>
-    public abstract class ContextElementBase: ElementBase
+    public abstract class ServiceLocatorElementBase: ElementBase
     {
-        protected ContextElementBase(IDiContainer diContainer, ILoggerFactory loggerFactory)
+        protected ServiceLocatorElementBase(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             ServiceLocator = diContainer;
