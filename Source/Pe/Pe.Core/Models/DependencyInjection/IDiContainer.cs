@@ -2,6 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 #if ENABLED_PRISM7
 using Prism.Ioc;
@@ -89,11 +91,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 #endif
         ;
 
-        TResult? Call<TResult, TObject>(TObject obj, string methodName)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        ;
+        object? CallMethod(string name, object instance, MethodInfo methodInfo, IReadOnlyList<object> manualParameters);
 
         #endregion
 
@@ -115,7 +113,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 #endif
 
         #endregion
-
     }
 
     /// <summary>

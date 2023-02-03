@@ -3,9 +3,12 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Linq;
 #if ENABLED_PRISM7
 using Prism.Ioc;
 #endif
@@ -56,6 +59,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         protected DiNamedContainer<ConcurrentDictionary<Type, DiConstructorCache>> Constructors { get; } = new DiNamedContainer<ConcurrentDictionary<Type, DiConstructorCache>>();
         protected DiNamedContainer<ConcurrentDictionary<Type, object>> ObjectPool { get; } = new DiNamedContainer<ConcurrentDictionary<Type, object>>();
         protected IList<DiInjectionMember> InjectionMembers { get; } = new List<DiInjectionMember>();
+
+        private static IReadOnlyDictionary<ParameterInfo, InjectAttribute> EmptyInjections = new Dictionary<ParameterInfo, InjectAttribute>();
 
         #endregion
 
@@ -553,20 +558,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return (TObject)New(typeof(TObject), name, Array.Empty<object>());
         }
 
-        public TResult? Call<TResult, TObject>(TObject obj, string methodName)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
+        [return: MaybeNull]
+        public object? CallMethod(string name, object instance, MethodInfo methodInfo, IReadOnlyList<object> manualParameters)
         {
-            var type = obj.GetType();
-            var method = type.GetMethod(methodName, BindingFlags.Public);
-            if(method is null) {
-                throw new DiException(methodName);
-            }
+            var parameters = methodInfo.GetParameters();
+            var arguments = CreateParameters(name, parameters, EmptyInjections, manualParameters);
 
-            var result = method.Invoke(obj, null);
+            var result = methodInfo.Invoke(instance, arguments);
 
-            return (TResult?)result;
+            return result;
         }
 
         public void Inject<TObject>(TObject target)

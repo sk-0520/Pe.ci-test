@@ -40,7 +40,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return obj;
         }
 
-
         #endregion
     }
 
