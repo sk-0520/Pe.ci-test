@@ -871,18 +871,24 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
 
             var acutalEmptyName1 = dic.CallMethod(string.Empty, callClass, methodStr, Array.Empty<object>());
             Assert.AreEqual("a:a", acutalEmptyName1);
+            var acutalEmptyName1_Call = dic.Call<string>(callClass, methodStr.Name);
+            Assert.AreEqual("a:a", acutalEmptyName1_Call);
 
             var acutalDefinedName1 = dic.CallMethod("named", callClass, methodStr, Array.Empty<object>());
             Assert.AreEqual("b:b", acutalDefinedName1);
 
             var acutalEmptyName2 = dic.CallMethod(string.Empty, callClass, methodStr, new[] { "A" });
             Assert.AreEqual("A:a", acutalEmptyName2);
+            var acutalEmptyName2_Call = dic.Call<string>(callClass, methodStr.Name, "A");
+            Assert.AreEqual("A:a", acutalEmptyName2_Call);
 
             var acutalDefinedName2 = dic.CallMethod("named", callClass, methodStr, new[] { "B" });
             Assert.AreEqual("B:b", acutalDefinedName2);
 
             var acutalEmptyName3 = dic.CallMethod(string.Empty, callClass, methodStr, new[] { "A", "A'" });
             Assert.AreEqual("A:A'", acutalEmptyName3);
+            var acutalEmptyName3_Call = dic.Call<string>(callClass, methodStr.Name, "A", "A");
+            Assert.AreEqual("A:A", acutalEmptyName3_Call);
 
             var acutalDefinedName3 = dic.CallMethod("named", callClass, methodStr, new[] { "B", "B'" });
             Assert.AreEqual("B:B'", acutalDefinedName3);

@@ -91,6 +91,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 #endif
         ;
 
+        /// <summary>
+        /// 指定メソッドを実行する。
+        /// <para>基本的に <see cref="IDiContainerExtensions.Call{TResult}(IDiContainer, object, string, object, object[])"/> を使用すればよろし。</para>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="instance">対象インスタンス。</param>
+        /// <param name="methodInfo">メソッド。</param>
+        /// <param name="manualParameters"></param>
+        /// <returns></returns>
         object? CallMethod(string name, object instance, MethodInfo methodInfo, IReadOnlyList<object> manualParameters);
 
         #endregion
