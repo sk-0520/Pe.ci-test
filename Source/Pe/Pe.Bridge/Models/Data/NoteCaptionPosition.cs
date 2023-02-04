@@ -13,5 +13,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// 下。
         /// </summary>
         Bottom,
+        /// <summary>
+        /// 左。
+        /// </summary>
+        Left,
+        /// <summary>
+        /// 右。
+        /// </summary>
+        Right
     }
 }

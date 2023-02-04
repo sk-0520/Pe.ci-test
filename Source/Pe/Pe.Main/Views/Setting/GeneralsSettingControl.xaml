@@ -541,10 +541,23 @@
                   </Grid.ColumnDefinitions>
 
                   <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_CaptionPosition_A, Source={x:Static app_main:CultureService.Instance}}" />
-                  <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:NoteCaptionPosition.Top}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding CaptionPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:NoteCaptionPosition.Top}}" />
-                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:NoteCaptionPosition.Bottom}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding CaptionPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:NoteCaptionPosition.Bottom}}"  />
-                  </StackPanel>
+                  <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <RadioButton Grid.Row="0" Grid.Column="1" Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:NoteCaptionPosition.Top}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding CaptionPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:NoteCaptionPosition.Top}}" />
+                    <RadioButton Grid.Row="1" Grid.Column="0" Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:NoteCaptionPosition.Left}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding CaptionPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:NoteCaptionPosition.Left}}" />
+                    <RadioButton Grid.Row="1" Grid.Column="2" Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:NoteCaptionPosition.Right}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding CaptionPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:NoteCaptionPosition.Right}}" />
+                    <RadioButton Grid.Row="2" Grid.Column="1" Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:NoteCaptionPosition.Bottom}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding CaptionPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:NoteCaptionPosition.Bottom}}"  />
+                  </Grid>
                 </Grid>
 
                 <Grid>
