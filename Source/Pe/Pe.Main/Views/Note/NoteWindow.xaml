@@ -167,6 +167,12 @@
                 <DataTrigger Binding="{Binding CaptionPosition}" Value="Bottom">
                   <Setter Property="DockPanel.Dock" Value="Bottom" />
                 </DataTrigger>
+                <DataTrigger Binding="{Binding CaptionPosition}" Value="Left">
+                  <Setter Property="DockPanel.Dock" Value="Left" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding CaptionPosition}" Value="Right">
+                  <Setter Property="DockPanel.Dock" Value="Right" />
+                </DataTrigger>
               </Style.Triggers>
               <Setter Property="DockPanel.Dock" Value="Top" />
             </Style>
