@@ -611,7 +611,6 @@
     </Border>
 
     <Border
-      HorizontalAlignment="Right"
       Background="Transparent"
     >
       <Border.Style>
@@ -621,9 +620,15 @@
               <Setter Property="WindowChrome.ResizeGripDirection" Value="TopRight" />
               <Setter Property="VerticalAlignment" Value="Top" />
             </DataTrigger>
+            <DataTrigger Binding="{Binding CaptionPosition}" Value="Right">
+              <Setter Property="WindowChrome.ResizeGripDirection" Value="BottomLeft" />
+              <Setter Property="VerticalAlignment" Value="Bottom" />
+              <Setter Property="HorizontalAlignment" Value="Left" />
+            </DataTrigger>
           </Style.Triggers>
           <Setter Property="WindowChrome.ResizeGripDirection" Value="BottomRight" />
           <Setter Property="VerticalAlignment" Value="Bottom" />
+          <Setter Property="HorizontalAlignment" Value="Right" />
         </Style>
       </Border.Style>
       <ContentControl Focusable="False" Content="{Binding ResizeGripImage}">
