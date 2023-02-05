@@ -47,6 +47,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <returns></returns>
         public string ToFileString(Version version) => ConvertDisplayVersion(version, "-");
 
+        /// <summary>
+        /// <see cref="Version.Revision"/> が -1 の場合、 0 に補正。
+        /// </summary>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        public Version TrimUndefinedElement(Version version)
+        {
+            var build = version.Build == -1 ? 0 : version.Build;
+            var revision = version.Revision == -1 ? 0 : version.Revision;
+
+            if(version.Build == build && version.Revision == revision) {
+                return version;
+            }
+
+            return new Version(version.Major, version.Minor, build, revision);
+        }
+
         #endregion
     }
 }

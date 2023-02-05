@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 {
-    public class StartupElement: ContextElementBase
+    public class StartupElement: ServiceLocatorElementBase
     {
         public StartupElement(IWindowManager windowManager, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)

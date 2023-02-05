@@ -1,5 +1,46 @@
 [
 	{
+		"date": "2023/02/05",
+		"version": "0.99.189",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "d6e2f809c05aa56eed1a558bfb6d4600f7b0d8bf",
+						"subject": "#866: 参考実装プラグインのバージョン制限を行う",
+						"comments": [
+							"System.Version の比較が手遅れ感すごい"
+						]
+					},
+					{
+						"revision": "5ac680c17fa50617c53753cb8ae7fa7648adc7a6",
+						"subject": "#757: コマンドランチャー表示時にIMEを制御する",
+						"comments": [
+							"アクティブ時っぽい動きだけど一応これで"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "8d93fa2a3bb811d0bced79ca7d1092b1df4a0ddb",
+						"subject": "#867: obj をキャッシュしとけば CI ちょっとは早くなるのじゃないじゃろうか",
+						"comments": [
+							"気分だけ速くなった。正直なんも変わらん"
+						]
+					},
+					{
+						"revision": "d9cb7be24535db36b496f234f60e340403b18cb9",
+						"subject": "update npm"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/02/01",
 		"version": "0.99.188",
 		"contents": [

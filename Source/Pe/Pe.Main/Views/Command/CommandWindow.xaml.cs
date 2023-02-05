@@ -183,6 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
 
             if(IsVisible) {
                 WindowsUtility.ShowActiveForeground(HandleUtility.GetWindowHandle(this));
+                InputMethod.SetPreferredImeState(this.inputCommand, InputMethodState.Off);
                 this.inputCommand.Focus();
             }
         }

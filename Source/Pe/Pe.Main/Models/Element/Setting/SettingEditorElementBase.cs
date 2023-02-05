@@ -85,7 +85,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
 
-
         #region ElementBase
 
         protected override void InitializeImpl()

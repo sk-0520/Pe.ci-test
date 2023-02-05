@@ -75,7 +75,7 @@ jobs:
           if($Env:GITHUB_REF -eq 'refs/heads/development') {
             $BuildType = 'BETA'
           }
-          .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $BuildType -Platforms ${{ env.PLATFORMS }}
+          .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $BuildType -Rebuild -Platforms ${{ env.PLATFORMS }}
 
       - name: <Test> Application
         shell: pwsh
