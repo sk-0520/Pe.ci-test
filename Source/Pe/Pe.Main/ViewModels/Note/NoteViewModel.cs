@@ -211,17 +211,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
+        private double NormalWindowWidth { get; set; }
         public double WindowWidth
         {
             get => this._windowWidth;
             set
             {
                 if(SetProperty(ref this._windowWidth, value)) {
+                    if(!IsCompact) {
+                        NormalWindowWidth = this._windowWidth;
+                    }
                     DelayNotifyWindowAreaChanged();
                 }
             }
         }
-        double NormalWindowHeight { get; set; }
+        private double NormalWindowHeight { get; set; }
         public double WindowHeight
         {
             get => this._windowHeight;
