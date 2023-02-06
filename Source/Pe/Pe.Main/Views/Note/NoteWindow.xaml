@@ -214,6 +214,14 @@
                       </Setter.Value>
                     </Setter>
                   </DataTrigger>
+                  <DataTrigger Binding="{Binding CaptionPosition}" Value="Right">
+                    <Setter Property="LayoutTransform">
+                      <Setter.Value>
+                        <RotateTransform Angle="-90" />
+                      </Setter.Value>
+                    </Setter>
+                  </DataTrigger>
+
                 </Style.Triggers>
                 <Setter Property="IsReadOnly" Value="True" />
                 <Setter Property="UndoLimit" Value="0" />
