@@ -210,8 +210,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 }
             }
         }
-
+        /// <summary>
+        /// ウィンドウの非最小化時の横幅。
+        /// </summary>
         private double NormalWindowWidth { get; set; }
+        /// <summary>
+        /// ウィンドウの横幅。
+        /// <para>最小化時も含む。</para>
+        /// </summary>
         public double WindowWidth
         {
             get => this._windowWidth;
@@ -225,7 +231,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 }
             }
         }
+        /// <summary>
+        /// ウィンドウの非最小化時の横幅。
+        /// </summary>
         private double NormalWindowHeight { get; set; }
+        /// <summary>
+        /// ウィンドウの縦幅。
+        /// <para>最小化時も含む。</para>
+        /// </summary>
         public double WindowHeight
         {
             get => this._windowHeight;
@@ -656,20 +669,30 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             // 変更済み情報
             // レイアウト変更(高さ)通知を抑制
             if(!IsCompact) {
-                this._windowHeight = NormalWindowHeight;
+                if(CaptionPosition.IsVertical()) {
+                    this._windowHeight = NormalWindowHeight;
 
-                if(CaptionPosition == NoteCaptionPosition.Bottom) {
-                    WindowTop -= NormalWindowHeight - CaptionSize - (BorderThickness.Top + BorderThickness.Bottom);
+                    if(CaptionPosition == NoteCaptionPosition.Bottom) {
+                        WindowTop -= NormalWindowHeight - CaptionSize - (BorderThickness.Top + BorderThickness.Bottom);
+                    }
                 }
             } else {
-                this._windowHeight = 0;
+                if(CaptionPosition.IsVertical()) {
+                    this._windowHeight = 0;
 
-                if(CaptionPosition == NoteCaptionPosition.Bottom) {
-                    WindowTop += NormalWindowHeight - CaptionSize - (BorderThickness.Top + BorderThickness.Bottom);
+                    if(CaptionPosition == NoteCaptionPosition.Bottom) {
+                        WindowTop += NormalWindowHeight - CaptionSize - (BorderThickness.Top + BorderThickness.Bottom);
+                    }
                 }
             }
 
-            RaisePropertyChanged(nameof(WindowHeight));
+            var propertyNames = new[] {
+                nameof(WindowHeight),
+                nameof(WindowWidth),
+            };
+            foreach(var propertyName in propertyNames) {
+                RaisePropertyChanged(propertyName);
+            }
         }
 
         private void HideCompact()
