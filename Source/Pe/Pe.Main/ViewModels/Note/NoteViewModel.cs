@@ -662,7 +662,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             // 未変更情報
             if(!IsCompact) {
-                NormalWindowHeight = WindowHeight;
+                if(CaptionPosition.IsVertical()) {
+                    NormalWindowHeight = WindowHeight;
+                } else {
+                    WindowWidth = WindowHeight;
+                }
             }
             Model.ToggleCompactDelaySave();
 
@@ -675,6 +679,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     if(CaptionPosition == NoteCaptionPosition.Bottom) {
                         WindowTop -= NormalWindowHeight - CaptionSize - (BorderThickness.Top + BorderThickness.Bottom);
                     }
+                } else {
+                    Debug.Assert(CaptionPosition.IsHorizontal());
+                    this._windowWidth = NormalWindowWidth;
+
+                    if(CaptionPosition == NoteCaptionPosition.Right) {
+                        WindowLeft -= NormalWindowWidth - CaptionSize - (BorderThickness.Left + BorderThickness.Right);
+                    }
                 }
             } else {
                 if(CaptionPosition.IsVertical()) {
@@ -682,6 +693,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
                     if(CaptionPosition == NoteCaptionPosition.Bottom) {
                         WindowTop += NormalWindowHeight - CaptionSize - (BorderThickness.Top + BorderThickness.Bottom);
+                    }
+                } else {
+                    this._windowWidth = 0;
+
+                    if(CaptionPosition == NoteCaptionPosition.Right) {
+                        WindowLeft += NormalWindowWidth - CaptionSize - (BorderThickness.Left + BorderThickness.Right);
                     }
                 }
             }
