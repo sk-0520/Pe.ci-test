@@ -417,6 +417,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaptionButtonKind.Close, CaptionPosition, false, GetColorPair());
         [ThemeProperty]
         public double MinHeight => CaptionSize + BorderThickness.Top + BorderThickness.Bottom;
+        [ThemeProperty]
+        public double MinWidth => CaptionSize + BorderThickness.Left + BorderThickness.Right;
 
         [ThemeProperty]
         public System.Windows.Media.Effects.Effect BlindEffect => NoteTheme.GetBlindEffect(GetColorPair());
@@ -665,7 +667,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 if(CaptionPosition.IsVertical()) {
                     NormalWindowHeight = WindowHeight;
                 } else {
-                    WindowWidth = WindowHeight;
+                    NormalWindowWidth = WindowHeight;
                 }
             }
             Model.ToggleCompactDelaySave();
@@ -871,7 +873,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             return new Rect(
                 WindowLeft - logicalScreenLocation.X,
                 WindowTop - logicalScreenLocation.Y,
-                WindowWidth,
+                NormalWindowWidth,
                 NormalWindowHeight
             );
         }
@@ -889,9 +891,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             );
 
             return new Rect(
-                ((WindowLeft - logicalBounds.X) + (WindowWidth / 2) - center.X) / (area.Width / 2),
+                ((WindowLeft - logicalBounds.X) + (NormalWindowWidth / 2) - center.X) / (area.Width / 2),
                 -((WindowTop - logicalBounds.Y) + (NormalWindowHeight / 2) - center.Y) / (area.Height / 2),
-                WindowWidth / area.Width,
+                NormalWindowWidth / area.Width,
                 NormalWindowHeight / area.Height
             );
         }
@@ -905,13 +907,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             };
             WindowLeft = rect.X;
             WindowTop = rect.Y;
-            WindowWidth = rect.Width;
+            NormalWindowWidth = rect.Width;
             NormalWindowHeight = rect.Height;
 
             if(IsCompact) {
-                WindowHeight = 0;
+                if(CaptionPosition.IsVertical()) {
+                    WindowHeight = 0;
+                } else {
+                    WindowWidth = 0;
+                }
             } else {
-                WindowHeight = NormalWindowHeight;
+                if(CaptionPosition.IsVertical()) {
+                    WindowHeight = NormalWindowHeight;
+                } else {
+                    WindowWidth = NormalWindowWidth;
+                }
             }
 
         }
