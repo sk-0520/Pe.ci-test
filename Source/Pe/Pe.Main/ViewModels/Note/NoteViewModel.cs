@@ -364,7 +364,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #region theme
 
         [ThemeProperty]
-        public double CaptionHeight => NoteTheme.GetCaptionHeight();
+        public double CaptionSize => NoteTheme.GetCaptionHeight();
         [ThemeProperty]
         public Brush BorderBrush => NoteTheme.GetBorderBrush(CaptionPosition, GetColorPair());
         [ThemeProperty]
@@ -399,7 +399,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         [ThemeProperty]
         public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaptionButtonKind.Close, CaptionPosition, false, GetColorPair());
         [ThemeProperty]
-        public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
+        public double MinHeight => CaptionSize + BorderThickness.Top + BorderThickness.Bottom;
 
         [ThemeProperty]
         public System.Windows.Media.Effects.Effect BlindEffect => NoteTheme.GetBlindEffect(GetColorPair());
@@ -655,13 +655,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 this._windowHeight = NormalWindowHeight;
 
                 if(CaptionPosition == NoteCaptionPosition.Bottom) {
-                    WindowTop -= NormalWindowHeight - CaptionHeight - (BorderThickness.Top + BorderThickness.Bottom);
+                    WindowTop -= NormalWindowHeight - CaptionSize - (BorderThickness.Top + BorderThickness.Bottom);
                 }
             } else {
                 this._windowHeight = 0;
 
                 if(CaptionPosition == NoteCaptionPosition.Bottom) {
-                    WindowTop += NormalWindowHeight - CaptionHeight - (BorderThickness.Top + BorderThickness.Bottom);
+                    WindowTop += NormalWindowHeight - CaptionSize - (BorderThickness.Top + BorderThickness.Bottom);
                 }
             }
 

@@ -137,11 +137,26 @@
     <!--#region 内容-->
     <Border BorderBrush="{Binding BorderBrush}" BorderThickness="{Binding BorderThickness}">
       <DockPanel LastChildFill="True">
-        <Grid Background="{Binding CaptionBackground}" Height="{Binding CaptionHeight}" >
-          <Grid.Resources>
+        <DockPanel LastChildFill="True" Background="{Binding CaptionBackground}" >
+          <DockPanel.Resources>
             <Style x:Key="CaptionButton" TargetType="ButtonBase">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding CaptionPosition}" Value="Left">
+                  <Setter Property="DockPanel.Dock" Value="Bottom" />
+                  <Setter Property="Width" Value="Auto" />
+                  <Setter Property="Height" Value="{Binding CaptionSize}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding CaptionPosition}" Value="Right">
+                  <Setter Property="DockPanel.Dock" Value="Top" />
+                  <Setter Property="Width" Value="Auto" />
+                  <Setter Property="Height" Value="{Binding CaptionSize}" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="DockPanel.Dock" Value="Right" />
               <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
               <Setter Property="Visibility" Value="{Binding IsLocked, Converter={StaticResource FalseToVisibilityConverter}}" />
+              <Setter Property="Width" Value="{Binding CaptionSize}" />
+              <Setter Property="Height" Value="Auto" />
               <Setter Property="Template">
                 <Setter.Value>
                   <ControlTemplate TargetType="Button">
@@ -160,32 +175,56 @@
                 </Setter.Value>
               </Setter>
             </Style>
-          </Grid.Resources>
-          <Grid.Style>
-            <Style TargetType="Grid">
+          </DockPanel.Resources>
+          <DockPanel.Style>
+            <Style TargetType="DockPanel">
               <Style.Triggers>
                 <DataTrigger Binding="{Binding CaptionPosition}" Value="Bottom">
                   <Setter Property="DockPanel.Dock" Value="Bottom" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding CaptionPosition}" Value="Left">
                   <Setter Property="DockPanel.Dock" Value="Left" />
+                  <Setter Property="Height" Value="Auto" />
+                  <Setter Property="Width" Value="{Binding CaptionSize}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding CaptionPosition}" Value="Right">
                   <Setter Property="DockPanel.Dock" Value="Right" />
+                  <Setter Property="Height" Value="Auto" />
+                  <!--<Setter Property="Width" Value="{Binding CaptionSize}" />-->
                 </DataTrigger>
               </Style.Triggers>
               <Setter Property="DockPanel.Dock" Value="Top" />
+              <Setter Property="Height" Value="{Binding CaptionSize}" />
             </Style>
-          </Grid.Style>
+          </DockPanel.Style>
 
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-          </Grid.ColumnDefinitions>
+          <Button ToolTip="{Binding Resources.String_Note_Caption_Close, Source={x:Static app_main:CultureService.Instance}}" Style="{StaticResource CaptionButton}" Content="{Binding CaptionCloseImage}" Command="{x:Static SystemCommands.CloseWindowCommand}" CommandParameter="{Binding ElementName=root}" />
+          <Button ToolTip="{Binding Resources.String_Note_Caption_ToggleTopmost, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ToggleTopmostCommand}">
+            <Button.Style>
+              <Style TargetType="Button" BasedOn="{StaticResource CaptionButton}">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding IsTopmost}" Value="True">
+                    <Setter Property="Content" Value="{Binding CaptionTopmostEnabledImage}" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="Content" Value="{Binding CaptionTopmostDisabledImage}" />
+              </Style>
+            </Button.Style>
+          </Button>
+          <Button ToolTip="{Binding Resources.String_Note_Caption_ToggleCompact, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ToggleCompactCommand}">
+            <Button.Style>
+              <Style TargetType="Button" BasedOn="{StaticResource CaptionButton}">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding IsCompact}" Value="True">
+                    <Setter Property="Content" Value="{Binding CaptionCompactEnabledImage}" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="Content" Value="{Binding CaptionCompactDisabledImage}" />
+              </Style>
+            </Button.Style>
+          </Button>
 
-          <TextBox x:Name="inputTitle" Grid.Column="0" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Foreground="{Binding CaptionForeground}" >
+          <TextBox x:Name="inputTitle" UseLayoutRounding="True"  BorderBrush="lime" BorderThickness="0.5" Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="{Binding CaptionForeground}" >
             <behaviors:Interaction.Triggers>
               <behaviors:EventTrigger EventName="LostFocus">
                 <behaviors:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" CommandParameter="{Binding ElementName=inputTitle}" />
@@ -206,7 +245,7 @@
                   <DataTrigger Binding="{Binding IsLocked}" Value="True">
                     <Setter Property="Cursor" Value="Arrow" />
                   </DataTrigger>
-                  
+
                   <DataTrigger Binding="{Binding CaptionPosition}" Value="Left">
                     <Setter Property="LayoutTransform">
                       <Setter.Value>
@@ -221,7 +260,6 @@
                       </Setter.Value>
                     </Setter>
                   </DataTrigger>
-
                 </Style.Triggers>
                 <Setter Property="IsReadOnly" Value="True" />
                 <Setter Property="UndoLimit" Value="0" />
@@ -238,32 +276,7 @@
             </TextBox.InputBindings>
           </TextBox>
 
-          <Button Grid.Column="1" ToolTip="{Binding Resources.String_Note_Caption_ToggleCompact, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ToggleCompactCommand}">
-            <Button.Style>
-              <Style TargetType="Button" BasedOn="{StaticResource CaptionButton}">
-                <Style.Triggers>
-                  <DataTrigger Binding="{Binding IsCompact}" Value="True">
-                    <Setter Property="Content" Value="{Binding CaptionCompactEnabledImage}" />
-                  </DataTrigger>
-                </Style.Triggers>
-                <Setter Property="Content" Value="{Binding CaptionCompactDisabledImage}" />
-              </Style>
-            </Button.Style>
-          </Button>
-          <Button Grid.Column="2" ToolTip="{Binding Resources.String_Note_Caption_ToggleTopmost, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ToggleTopmostCommand}">
-            <Button.Style>
-              <Style TargetType="Button" BasedOn="{StaticResource CaptionButton}">
-                <Style.Triggers>
-                  <DataTrigger Binding="{Binding IsTopmost}" Value="True">
-                    <Setter Property="Content" Value="{Binding CaptionTopmostEnabledImage}" />
-                  </DataTrigger>
-                </Style.Triggers>
-                <Setter Property="Content" Value="{Binding CaptionTopmostDisabledImage}" />
-              </Style>
-            </Button.Style>
-          </Button>
-          <Button Grid.Column="3" ToolTip="{Binding Resources.String_Note_Caption_Close, Source={x:Static app_main:CultureService.Instance}}" Style="{StaticResource CaptionButton}" Content="{Binding CaptionCloseImage}" Command="{x:Static SystemCommands.CloseWindowCommand}" CommandParameter="{Binding ElementName=root}" />
-        </Grid>
+        </DockPanel>
 
         <Grid>
           <Grid Background="{Binding ContentBackground}">
