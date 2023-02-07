@@ -667,7 +667,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 if(CaptionPosition.IsVertical()) {
                     NormalWindowHeight = WindowHeight;
                 } else {
-                    NormalWindowWidth = WindowHeight;
+                    NormalWindowWidth = WindowWidth;
                 }
             }
             Model.ToggleCompactDelaySave();
