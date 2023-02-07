@@ -912,18 +912,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             if(IsCompact) {
                 if(CaptionPosition.IsVertical()) {
+                    WindowWidth = NormalWindowWidth;
                     WindowHeight = 0;
                 } else {
                     WindowWidth = 0;
+                    WindowHeight = NormalWindowHeight;
                 }
             } else {
-                if(CaptionPosition.IsVertical()) {
-                    WindowHeight = NormalWindowHeight;
-                } else {
-                    WindowWidth = NormalWindowWidth;
-                }
+                WindowHeight = NormalWindowHeight;
+                WindowWidth = NormalWindowWidth;
             }
-
         }
 
         private void ApplyCaption()
