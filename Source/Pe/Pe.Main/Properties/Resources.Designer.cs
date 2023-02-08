@@ -1472,6 +1472,42 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   左 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Left {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左(_L) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Left_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Left_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Right {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右(_R) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Right_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Right_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   上 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Top {

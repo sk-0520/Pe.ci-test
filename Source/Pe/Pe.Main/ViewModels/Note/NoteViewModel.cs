@@ -210,18 +210,35 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 }
             }
         }
-
+        /// <summary>
+        /// ウィンドウの非最小化時の横幅。
+        /// </summary>
+        private double NormalWindowWidth { get; set; }
+        /// <summary>
+        /// ウィンドウの横幅。
+        /// <para>最小化時も含む。</para>
+        /// </summary>
         public double WindowWidth
         {
             get => this._windowWidth;
             set
             {
                 if(SetProperty(ref this._windowWidth, value)) {
+                    if(!IsCompact) {
+                        NormalWindowWidth = this._windowWidth;
+                    }
                     DelayNotifyWindowAreaChanged();
                 }
             }
         }
-        double NormalWindowHeight { get; set; }
+        /// <summary>
+        /// ウィンドウの非最小化時の横幅。
+        /// </summary>
+        private double NormalWindowHeight { get; set; }
+        /// <summary>
+        /// ウィンドウの縦幅。
+        /// <para>最小化時も含む。</para>
+        /// </summary>
         public double WindowHeight
         {
             get => this._windowHeight;
@@ -364,7 +381,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #region theme
 
         [ThemeProperty]
-        public double CaptionHeight => NoteTheme.GetCaptionHeight();
+        public double CaptionSize => NoteTheme.GetCaptionHeight();
         [ThemeProperty]
         public Brush BorderBrush => NoteTheme.GetBorderBrush(CaptionPosition, GetColorPair());
         [ThemeProperty]
@@ -399,7 +416,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         [ThemeProperty]
         public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaptionButtonKind.Close, CaptionPosition, false, GetColorPair());
         [ThemeProperty]
-        public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
+        public double MinHeight => CaptionSize + BorderThickness.Top + BorderThickness.Bottom;
+        [ThemeProperty]
+        public double MinWidth => CaptionSize + BorderThickness.Left + BorderThickness.Right;
 
         [ThemeProperty]
         public System.Windows.Media.Effects.Effect BlindEffect => NoteTheme.GetBlindEffect(GetColorPair());
@@ -645,27 +664,54 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             // 未変更情報
             if(!IsCompact) {
-                NormalWindowHeight = WindowHeight;
+                if(CaptionPosition.IsVertical()) {
+                    NormalWindowHeight = WindowHeight;
+                } else {
+                    NormalWindowWidth = WindowWidth;
+                }
             }
             Model.ToggleCompactDelaySave();
 
             // 変更済み情報
             // レイアウト変更(高さ)通知を抑制
             if(!IsCompact) {
-                this._windowHeight = NormalWindowHeight;
+                if(CaptionPosition.IsVertical()) {
+                    this._windowHeight = NormalWindowHeight;
 
-                if(CaptionPosition == NoteCaptionPosition.Bottom) {
-                    WindowTop -= NormalWindowHeight - CaptionHeight - (BorderThickness.Top + BorderThickness.Bottom);
+                    if(CaptionPosition == NoteCaptionPosition.Bottom) {
+                        WindowTop -= NormalWindowHeight - CaptionSize - (BorderThickness.Top + BorderThickness.Bottom);
+                    }
+                } else {
+                    Debug.Assert(CaptionPosition.IsHorizontal());
+                    this._windowWidth = NormalWindowWidth;
+
+                    if(CaptionPosition == NoteCaptionPosition.Right) {
+                        WindowLeft -= NormalWindowWidth - CaptionSize - (BorderThickness.Left + BorderThickness.Right);
+                    }
                 }
             } else {
-                this._windowHeight = 0;
+                if(CaptionPosition.IsVertical()) {
+                    this._windowHeight = 0;
 
-                if(CaptionPosition == NoteCaptionPosition.Bottom) {
-                    WindowTop += NormalWindowHeight - CaptionHeight - (BorderThickness.Top + BorderThickness.Bottom);
+                    if(CaptionPosition == NoteCaptionPosition.Bottom) {
+                        WindowTop += NormalWindowHeight - CaptionSize - (BorderThickness.Top + BorderThickness.Bottom);
+                    }
+                } else {
+                    this._windowWidth = 0;
+
+                    if(CaptionPosition == NoteCaptionPosition.Right) {
+                        WindowLeft += NormalWindowWidth - CaptionSize - (BorderThickness.Left + BorderThickness.Right);
+                    }
                 }
             }
 
-            RaisePropertyChanged(nameof(WindowHeight));
+            var propertyNames = new[] {
+                nameof(WindowHeight),
+                nameof(WindowWidth),
+            };
+            foreach(var propertyName in propertyNames) {
+                RaisePropertyChanged(propertyName);
+            }
         }
 
         private void HideCompact()
@@ -827,7 +873,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             return new Rect(
                 WindowLeft - logicalScreenLocation.X,
                 WindowTop - logicalScreenLocation.Y,
-                WindowWidth,
+                NormalWindowWidth,
                 NormalWindowHeight
             );
         }
@@ -845,9 +891,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             );
 
             return new Rect(
-                ((WindowLeft - logicalBounds.X) + (WindowWidth / 2) - center.X) / (area.Width / 2),
+                ((WindowLeft - logicalBounds.X) + (NormalWindowWidth / 2) - center.X) / (area.Width / 2),
                 -((WindowTop - logicalBounds.Y) + (NormalWindowHeight / 2) - center.Y) / (area.Height / 2),
-                WindowWidth / area.Width,
+                NormalWindowWidth / area.Width,
                 NormalWindowHeight / area.Height
             );
         }
@@ -861,15 +907,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             };
             WindowLeft = rect.X;
             WindowTop = rect.Y;
-            WindowWidth = rect.Width;
+            NormalWindowWidth = rect.Width;
             NormalWindowHeight = rect.Height;
 
             if(IsCompact) {
-                WindowHeight = 0;
+                if(CaptionPosition.IsVertical()) {
+                    WindowWidth = NormalWindowWidth;
+                    WindowHeight = 0;
+                } else {
+                    WindowWidth = 0;
+                    WindowHeight = NormalWindowHeight;
+                }
             } else {
                 WindowHeight = NormalWindowHeight;
+                WindowWidth = NormalWindowWidth;
             }
-
         }
 
         private void ApplyCaption()

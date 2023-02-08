@@ -2303,4 +2303,16 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_Proxy_Toggle_Header" xml:space="preserve">
     <value>プロキシ使用状態</value>
   </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Left" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Left_A" xml:space="preserve">
+    <value>左(_L)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Right" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Right_A" xml:space="preserve">
+    <value>右(_R)</value>
+  </data>
 </root>
