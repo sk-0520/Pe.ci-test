@@ -1152,11 +1152,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private void DragEnterAndOverFile(UIElement sender, DragEventArgs e)
         {
-            e.Effects = DragDropEffects.None;
-            e.Handled = true;
-
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 e.Effects = DragDropEffects.Copy;
+                e.Handled = true;
             }
         }
 
@@ -1165,11 +1163,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private void DropFile(UIElement sender, DragEventArgs e)
         {
-            e.Effects = DragDropEffects.None;
-            e.Handled = true;
-
-            if(e.Effects != DragDropEffects.Copy) {
+            if(e.Effects.HasFlag(DragDropEffects.Copy) && e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                e.Handled = true;
             }
         }
 
