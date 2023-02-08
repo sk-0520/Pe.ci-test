@@ -76,6 +76,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         RichText,
     }
 
+    /// <summary>
+    /// ノート添付ファイル種別。
+    /// </summary>
+    public enum NoteFileKind
+    {
+        /// <summary>
+        /// 実ファイルへの参照。
+        /// </summary>
+        Reference,
+    }
+
     [Flags]
     public enum ViewAreaChangeTarget
     {
