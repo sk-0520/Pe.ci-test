@@ -279,18 +279,19 @@
 
         </DockPanel>
 
+        <!-- 最小化時に謎領域が空く主犯 -->
         <Grid>
           <Grid.Style>
             <Style TargetType="Grid">
               <Style.Triggers>
                 <DataTrigger Binding="{Binding IsCompact}" Value="True">
-                  <Setter Property="Background" Value="Orange"/>
+                  <Setter Property="Background" Value="{Binding CaptionBackground}"/>
                   <!--<Setter Property="Visibility" Value="Collapsed"/>-->
                 </DataTrigger>
               </Style.Triggers>
             </Style>
           </Grid.Style>
-          <Grid><!--{Binding ContentBackground}-->
+          <Grid Background="{Binding ContentBackground}">
             <Grid.Resources>
               <sys:Double x:Key="Normal-Size">4</sys:Double>
               <sys:Double x:Key="Active-Size">12</sys:Double>
@@ -601,11 +602,9 @@
               <Style TargetType="Grid">
                 <Style.Triggers>
                   <DataTrigger Binding="{Binding IsCompact}" Value="True">
-                    <Setter Property="Background" Value="Red"/>
-                    <!--<Setter Property="Visibility" Value="Collapsed"/>-->
+                    <Setter Property="Visibility" Value="Collapsed"/>
                   </DataTrigger>
                 </Style.Triggers>
-                <Setter Property="Background" Value="Lime"/>
               </Style>
             </Grid.Style>
 
