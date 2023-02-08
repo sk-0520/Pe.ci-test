@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Debug.Assert(Model.FontElement != null);
             Font = new NoteFontViewModel(Model.FontElement, DispatcherWrapper, LoggerFactory);
 
-            DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+            DragAndDrop = new DelegateDragAndDrop(true, LoggerFactory) {
                 CanDragStart = CanDragStartFile,
                 GetDragParameter = GetDragParameterFile,
                 DragEnterAction = DragEnterAndOverFile,
