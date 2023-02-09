@@ -807,18 +807,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 var isFile = File.Exists(path);
                 var idDir = !isFile && Directory.Exists(path);
 
-                if(!isFile || !idDir) {
+                if(!isFile && !idDir) {
                     return false;
                 }
 
-                using(var context = MainDatabaseBarrier.WaitWrite()) {
-                    var noteFilesEntityDao = new NoteFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                using(var mainContext = MainDatabaseBarrier.WaitWrite()) {
+                    var noteFilesEntityDao = new NoteFilesEntityDao(mainContext, DatabaseStatementLoader, mainContext.Implementation, LoggerFactory);
 
                     // 現存データ有無確認
+                    var existsFilePath = noteFilesEntityDao.SelectNoteFileExistsFilePath(NoteId, path);
 
                     var todo = false;
                     if(todo) {
-                        using(var fileContext = LargeDatabaseBarrier.WaitWrite()) {
+                        using(var largeContext = LargeDatabaseBarrier.WaitWrite()) {
                             // 既存データ破棄
                             //TODO: 取り込み処理
                         }

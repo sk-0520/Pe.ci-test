@@ -55,6 +55,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
         }
 
+        public NoteFileId? SelectNoteFileExistsFilePath(NoteId noteId, string path)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                NoteId = noteId,
+                FilePath = path,
+            };
+
+            return Context.QueryFirstOrDefault<NoteFileId?>(statement, parameter);
+        }
+
         public IEnumerable<NoteFileData> SelectNoteFiles(NoteId noteId)
         {
             var statement = LoadStatement();
