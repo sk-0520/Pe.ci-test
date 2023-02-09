@@ -22,6 +22,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         { }
 
         #region function
+
+
+
         #endregion
     }
 }

@@ -246,4 +246,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
     }
+
+    public class NoteFileData
+    {
+        #region property
+
+        public NoteId NoteId { get; set; }
+        public NoteFileId NoteFileId { get; set; }
+
+        public NoteFileKind NoteFileKind { get; set; }
+        public string NoteFilePath { get; set; } = string.Empty;
+
+        public int Sequence { get; set; }
+
+        #endregion
+    }
 }
