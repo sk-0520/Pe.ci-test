@@ -816,6 +816,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
                     // 現存データ有無確認
                     var existsFilePath = noteFilesEntityDao.SelectNoteFileExistsFilePath(NoteId, path);
+                    if(existsFilePath is not null) {
+                        // インデックス側 更新
+                        if(kind == NoteFileKind.Reference) {
+                            // リンクの場合なにもやることはない
+                            return true;
+                        }
+                    } else {
+                        // インデックス側 追加
+                    }
 
                     var todo = false;
                     if(todo) {
