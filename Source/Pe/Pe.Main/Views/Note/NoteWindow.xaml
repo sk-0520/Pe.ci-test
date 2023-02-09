@@ -55,12 +55,13 @@
       />
       <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <app_core_views_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
-      <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
-      <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
+      <app_core_views_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
       <app_core_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
       <app_core_views_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
       <app_core_views_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
       <app_core_views_converter:LogicalMultiAndConverter x:Key="LogicalMultiAndConverter" />
+      <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
+      <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
       <app_main_views_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
 
       <WindowChrome x:Key="NormalWindowChrome"
@@ -1129,6 +1130,30 @@
                   </StackPanel>
                 </Button>
               </StackPanel>
+            </GroupBox>
+            <!--#endregion-->
+
+            <!--#region ファイル -->
+            <GroupBox MaxHeight="120" Header="{Binding Resources.String_Note_Files_Header, Source={x:Static app_main:CultureService.Instance}}">
+              <GroupBox.Style>
+                <Style TargetType="GroupBox" BasedOn="{StaticResource HeaderGroupBox}">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding Files, Converter={StaticResource IsNotEmptyCollectionConverter}}" Value="True">
+                      <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                  <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+              </GroupBox.Style>
+              <ItemsControl ItemsSource="{Binding Files}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <StackPanel>
+                      <TextBlock Text="{Binding FilePath}" />
+                    </StackPanel>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
             </GroupBox>
             <!--#endregion-->
 

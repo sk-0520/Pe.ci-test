@@ -13,11 +13,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 {
     public class NoteFileElement: ElementBase
     {
-        public NoteFileElement(NoteId nodeId, NoteFileId noteFileId, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public NoteFileElement(NoteFileData data, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            NoteId = nodeId;
-            NoteFileId = noteFileId;
+            NoteId = data.NoteId;
+            NoteFileId = data.NoteFileId;
+            NoteFileKind = data.NoteFileKind;
+            NoteFilePath = data.NoteFilePath;
+            Sequence = data.Sequence;
 
             MainDatabaseBarrier = mainDatabaseBarrier;
             LargeDatabaseBarrier = largeDatabaseBarrier;
@@ -43,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         protected override void InitializeImpl()
         {
-            using var context = MainDatabaseBarrier.WaitRead();
+            //nop
         }
 
         #endregion

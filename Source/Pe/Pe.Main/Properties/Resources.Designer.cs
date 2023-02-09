@@ -4554,6 +4554,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   添付ファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Files_Header {
+            get {
+                return ResourceManager.GetString("String_Note_Files_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   背景 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Format_Background_A {

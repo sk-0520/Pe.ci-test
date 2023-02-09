@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media;
@@ -100,6 +104,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         private UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+
+        /// <summary>
+        /// 添付ファイル。
+        /// </summary>
+        public ObservableCollection<NoteFileElement> Files { get; } = new();
 
         private bool ViewCreated { get; set; }
 
@@ -316,6 +325,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 NativeMethods.GetCursorPos(out var podPoint);
                 var deviceCursorLocation = PodStructUtility.Convert(podPoint);
                 noteData = CreateNoteData(deviceCursorLocation);
+            } else {
+                IEnumerable<NoteFileData> files;
+                using(var context = MainDatabaseBarrier.WaitRead()) {
+                    var noteFilesEntityDao = new NoteFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                    files = noteFilesEntityDao.SelectNoteFiles(NoteId);
+                }
+                var fileElements = files.Select(a => new NoteFileElement(a, MainDatabaseBarrier, LargeDatabaseBarrier, MainDatabaseLazyWriter, DatabaseStatementLoader, LoggerFactory));
+                Files.SetRange(fileElements);
             }
 
             DockScreen = GetDockScreen(noteData.ScreenName);
@@ -782,6 +799,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             if(StartupPosition != NoteStartupPosition.Setting) {
                 StartupPosition = NoteStartupPosition.Setting;
             }
+        }
+
+        public Task<bool> AddFileAsync(string path, NoteFileKind kind)
+        {
+            return Task.Run(() => {
+                var isFile = File.Exists(path);
+                var idDir = !isFile && Directory.Exists(path);
+
+                if(!isFile || !idDir) {
+                    return false;
+                }
+
+                using(var context = MainDatabaseBarrier.WaitWrite()) {
+                    var noteFilesEntityDao = new NoteFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+
+                    // 現存データ有無確認
+
+                    var todo = false;
+                    if(todo) {
+                        using(var fileContext = LargeDatabaseBarrier.WaitWrite()) {
+                            // 既存データ破棄
+                            //TODO: 取り込み処理
+                        }
+                    }
+                }
+
+                return false;
+            });
         }
 
         #endregion

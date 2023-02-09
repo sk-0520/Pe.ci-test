@@ -2315,4 +2315,7 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Right_A" xml:space="preserve">
     <value>右(_R)</value>
   </data>
+  <data name="String_Note_Files_Header" xml:space="preserve">
+    <value>添付ファイル</value>
+  </data>
 </root>

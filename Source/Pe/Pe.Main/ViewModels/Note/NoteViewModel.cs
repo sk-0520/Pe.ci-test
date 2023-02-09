@@ -27,6 +27,7 @@ using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.Font;
+using ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Views.Note;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
@@ -82,6 +83,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 DropAction = DropFile,
             };
 
+            Files = new ActionModelViewModelObservableCollectionManager<NoteFileElement, NoteFileViewModel>(Model.Files) {
+                ToViewModel = m => new NoteFileViewModel(m, UserTracker, DispatcherWrapper, LoggerFactory)
+            };
+
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
             PropertyChangedHooker.AddHook(nameof(Model.IsTopmost), nameof(IsTopmost));
@@ -126,6 +131,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private ApplicationConfiguration ApplicationConfiguration { get; }
 
         public NoteId NoteId => Model.NoteId;
+
+        public ModelViewModelObservableCollectionManagerBase<NoteFileElement, NoteFileViewModel> Files { get; }
+
         public bool IsLink
         {
             get
@@ -1171,8 +1179,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 if(filePaths.Length == 1) {
                     e.Handled = true;
                     Logger.LogDebug("A");
-                    DispatcherWrapper.Dispatcher.BeginInvoke(() => {
-                        Logger.LogDebug("C");
+                    DispatcherWrapper.Dispatcher.BeginInvoke(async () => {
+                        var result = await Model.AddFileAsync(filePaths[0], NoteFileKind.Reference);
+                        Logger.LogDebug("C: {result}", result);
                     }, DispatcherPriority.ApplicationIdle);
                     Logger.LogDebug("B");
                 }
