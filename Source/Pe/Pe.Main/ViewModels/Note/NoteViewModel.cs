@@ -21,6 +21,7 @@ using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
+using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Note;
@@ -84,9 +85,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 DropAction = DropFile,
             };
 
-            Files = new ActionModelViewModelObservableCollectionManager<NoteFileElement, NoteFileViewModel>(Model.Files) {
+            FileCollection = new ActionModelViewModelObservableCollectionManager<NoteFileElement, NoteFileViewModel>(Model.Files) {
                 ToViewModel = m => new NoteFileViewModel(m, UserTracker, DispatcherWrapper, LoggerFactory)
             };
+            FileItems = FileCollection.GetDefaultView();
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
@@ -133,7 +135,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public NoteId NoteId => Model.NoteId;
 
-        public ModelViewModelObservableCollectionManagerBase<NoteFileElement, NoteFileViewModel> Files { get; }
+        public ModelViewModelObservableCollectionManagerBase<NoteFileElement, NoteFileViewModel> FileCollection { get; }
+        public ICollectionView FileItems { get; }
+
 
         public bool IsLink
         {

@@ -16,5 +16,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public NoteFileViewModel(NoteFileElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         { }
+
+        #region property
+
+        public string FilePath => Model.NoteFilePath;
+
+        #endregion
     }
 }

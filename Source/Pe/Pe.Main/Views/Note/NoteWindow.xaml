@@ -1138,14 +1138,14 @@
               <GroupBox.Style>
                 <Style TargetType="GroupBox" BasedOn="{StaticResource HeaderGroupBox}">
                   <Style.Triggers>
-                    <DataTrigger Binding="{Binding Files, Converter={StaticResource IsNotEmptyCollectionConverter}}" Value="True">
-                      <Setter Property="Visibility" Value="Visible" />
+                    <DataTrigger Binding="{Binding FileItems.Count}" Value="0">
+                      <Setter Property="Visibility" Value="Collapsed" />
                     </DataTrigger>
                   </Style.Triggers>
-                  <Setter Property="Visibility" Value="Collapsed" />
+                  <Setter Property="Visibility" Value="Visible" />
                 </Style>
               </GroupBox.Style>
-              <ItemsControl ItemsSource="{Binding Files}">
+              <ItemsControl ItemsSource="{Binding FileItems}">
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
                     <StackPanel>
