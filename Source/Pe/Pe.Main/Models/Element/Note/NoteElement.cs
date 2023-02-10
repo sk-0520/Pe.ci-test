@@ -334,12 +334,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                     var noteFilesEntityDao = new NoteFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                     files = noteFilesEntityDao.SelectNoteFiles(NoteId);
                 }
-                var fileElements = files.Select(a => {
-                    var element = new NoteFileElement(a, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-                    element.Initialize();
-                    return element;
-                });
-                Files.SetRange(fileElements);
+                var fileElements = files.Select(a => new NoteFileElement(a, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory));
+                foreach(var fileElement in fileElements) {
+                    fileElement.Initialize();
+                    Files.Add(fileElement);
+                }
             }
 
             DockScreen = GetDockScreen(noteData.ScreenName);
@@ -808,6 +807,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
+        /// <summary>
+        /// 添付ファイルを追加。
+        /// </summary>
+        /// <param name="path">対象ファイルパス。</param>
+        /// <param name="kind"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Task<bool> AddFileAsync(string path, NoteFileKind kind, CancellationToken cancellationToken)
         {
             return Task.Run(() => {

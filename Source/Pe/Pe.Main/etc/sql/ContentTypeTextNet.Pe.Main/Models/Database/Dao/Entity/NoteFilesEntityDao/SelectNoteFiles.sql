@@ -18,3 +18,6 @@ from
 	NoteFiles
 where
 	NoteFiles.NoteId = @NoteId
+order by
+	NoteFiles.Sequence,
+	NoteFiles.FilePath

@@ -1134,7 +1134,7 @@
             <!--#endregion-->
 
             <!--#region ファイル -->
-            <GroupBox MaxHeight="120" Header="{Binding Resources.String_Note_Files_Header, Source={x:Static app_main:CultureService.Instance}}">
+            <GroupBox  Header="{Binding Resources.String_Note_Files_Header, Source={x:Static app_main:CultureService.Instance}}">
               <GroupBox.Style>
                 <Style TargetType="GroupBox" BasedOn="{StaticResource HeaderGroupBox}">
                   <Style.Triggers>
@@ -1145,7 +1145,23 @@
                   <Setter Property="Visibility" Value="Visible" />
                 </Style>
               </GroupBox.Style>
-              <ItemsControl ItemsSource="{Binding FileItems}">
+              <ItemsControl Focusable="False" ItemsSource="{Binding FileItems}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <VirtualizingStackPanel
+                      VirtualizingStackPanel.IsVirtualizing="True"
+                      VirtualizingStackPanel.VirtualizationMode="Recycling"
+                      Orientation="Vertical"
+                    />
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.Template>
+                  <ControlTemplate>
+                    <ScrollViewer MaxHeight="80" Padding="{TemplateBinding Control.Padding}" Focusable="False">
+                      <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                    </ScrollViewer>
+                  </ControlTemplate>
+                </ItemsControl.Template>
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
                     <StackPanel>
