@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -1180,7 +1181,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     e.Handled = true;
                     Logger.LogDebug("A");
                     DispatcherWrapper.Dispatcher.BeginInvoke(async () => {
-                        var result = await Model.AddFileAsync(filePaths[0], NoteFileKind.Reference);
+                        var result = await Model.AddFileAsync(filePaths[0], NoteFileKind.Reference, CancellationToken.None);
                         Logger.LogDebug("C: {result}", result);
                     }, DispatcherPriority.ApplicationIdle);
                     Logger.LogDebug("B");

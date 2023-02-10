@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 {
     public class NoteFileElement: ElementBase
     {
-        public NoteFileElement(NoteFileData data, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public NoteFileElement(NoteFileData data, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = data.NoteId;

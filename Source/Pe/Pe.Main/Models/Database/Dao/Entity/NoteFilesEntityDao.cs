@@ -55,6 +55,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
         }
 
+        private NoteFilesEntityDto ConvertFromData(NoteFileData data, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var noteFileKindEnumTransfer = new EnumTransfer<NoteFileKind>();
+
+            var dto = new NoteFilesEntityDto {
+                NoteId = data.NoteId,
+                NoteFileId = data.NoteFileId,
+                FileKind = noteFileKindEnumTransfer.ToString(data.NoteFileKind),
+                FilePath = data.NoteFilePath,
+                Sequence = data.Sequence,
+            };
+            databaseCommonStatus.WriteCommonTo(dto);
+
+            return dto;
+        }
+
+
         public NoteFileId? SelectNoteFileExistsFilePath(NoteId noteId, string path)
         {
             var statement = LoadStatement();
@@ -76,6 +93,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Query<NoteFilesEntityDto>(statement, parameter)
                 .Select(a => ConvertFromDto(a))
             ;
+        }
+
+        public int SelectNextSequenceNoteFiles(NoteId noteId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                NoteId = noteId
+            };
+
+            return Context.QueryFirstOrDefault<int>(statement, parameter);
+        }
+
+        public void InsertNoteFiles(NoteFileData data, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(data, databaseCommonStatus);
+
+            Context.InsertSingle(statement, dto);
         }
 
         #endregion

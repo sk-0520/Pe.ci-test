@@ -1,8 +1,8 @@
 select
 	NoteFiles.NoteId,
+	NoteFiles.NoteFileId,
 	NoteFiles.FileKind,
 	NoteFiles.FilePath,
-	NoteFiles.NoteFileId,
 	NoteFiles.Sequence,
 	
 	NoteFiles.CreatedTimestamp,

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        public NoteElement(NoteId noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, NoteConfiguration noteConfiguration, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteElement(NoteId noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, NoteConfiguration noteConfiguration, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -73,6 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             NoteConfiguration = noteConfiguration;
             DispatcherWrapper = dispatcherWrapper;
             NoteTheme = noteTheme;
+            IdFactory = idFactory;
 
             MainDatabaseLazyWriter = mainDatabaseLazyWriter;
         }
@@ -82,7 +84,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         public NoteId NoteId { get; }
 
         private NoteConfiguration NoteConfiguration { get; }
-        private Timer? HideWaitTimer { get; set; }
+        private System.Timers.Timer? HideWaitTimer { get; set; }
+        private IIdFactory IdFactory { get; }
 
         /// <summary>
         /// DB から取得して設定したりそれでも保存しなかったりするまさに変数。
@@ -331,7 +334,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                     var noteFilesEntityDao = new NoteFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                     files = noteFilesEntityDao.SelectNoteFiles(NoteId);
                 }
-                var fileElements = files.Select(a => new NoteFileElement(a, MainDatabaseBarrier, LargeDatabaseBarrier, MainDatabaseLazyWriter, DatabaseStatementLoader, LoggerFactory));
+                var fileElements = files.Select(a => {
+                    var element = new NoteFileElement(a, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+                    element.Initialize();
+                    return element;
+                });
                 Files.SetRange(fileElements);
             }
 
@@ -749,7 +756,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 waitTime = appNoteHiddenSettingEntityDao.SelectHiddenWaitTime(HiddenMode);
             }
 
-            HideWaitTimer = new Timer() {
+            HideWaitTimer = new System.Timers.Timer() {
                 Interval = (int)waitTime.TotalMilliseconds,
                 AutoReset = false,
             };
@@ -801,7 +808,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        public Task<bool> AddFileAsync(string path, NoteFileKind kind)
+        public Task<bool> AddFileAsync(string path, NoteFileKind kind, CancellationToken cancellationToken)
         {
             return Task.Run(() => {
                 var isFile = File.Exists(path);
@@ -811,19 +818,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                     return false;
                 }
 
+                cancellationToken.ThrowIfCancellationRequested();
+
+                NoteFileData? noteFileData = null;
+
                 using(var mainContext = MainDatabaseBarrier.WaitWrite()) {
                     var noteFilesEntityDao = new NoteFilesEntityDao(mainContext, DatabaseStatementLoader, mainContext.Implementation, LoggerFactory);
 
                     // 現存データ有無確認
-                    var existsFilePath = noteFilesEntityDao.SelectNoteFileExistsFilePath(NoteId, path);
-                    if(existsFilePath is not null) {
+                    var noteFileId = noteFilesEntityDao.SelectNoteFileExistsFilePath(NoteId, path);
+                    if(noteFileId is not null) {
                         // インデックス側 更新
                         if(kind == NoteFileKind.Reference) {
                             // リンクの場合なにもやることはない
                             return true;
                         }
+                        throw new NotImplementedException();
                     } else {
                         // インデックス側 追加
+                        var sequence = noteFilesEntityDao.SelectNextSequenceNoteFiles(NoteId);
+                        noteFileId = IdFactory.CreateNoteFileId();
+
+                        noteFileData = new NoteFileData() {
+                            NoteId = NoteId,
+                            NoteFileId = noteFileId.Value,
+                            NoteFileKind = kind,
+                            NoteFilePath = path,
+                            Sequence = sequence,
+                        };
+                        noteFilesEntityDao.InsertNoteFiles(noteFileData, DatabaseCommonStatus.CreateCurrentAccount());
                     }
 
                     var todo = false;
@@ -831,12 +854,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                         using(var largeContext = LargeDatabaseBarrier.WaitWrite()) {
                             // 既存データ破棄
                             //TODO: 取り込み処理
+                            largeContext.Commit();
                         }
                     }
+
+                    mainContext.Commit();
                 }
 
-                return false;
-            });
+                if(noteFileData is not null) {
+                    var noteFileElement = new NoteFileElement(noteFileData, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+                    noteFileElement.Initialize();
+                    Files.Add(noteFileElement);
+                }
+
+                return true;
+            }, cancellationToken);
         }
 
         #endregion

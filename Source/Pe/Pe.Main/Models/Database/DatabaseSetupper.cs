@@ -120,6 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                 typeof(Setupper_V_00_99_160),
                 typeof(Setupper_V_00_99_169),
                 typeof(Setupper_V_00_99_174),
+                typeof(Setupper_V_00_99_190),
             };
 
             foreach(var setupperType in setupperTypes) {
