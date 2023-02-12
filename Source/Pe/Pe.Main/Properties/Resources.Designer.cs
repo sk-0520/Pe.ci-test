@@ -4554,6 +4554,33 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   開く(_O) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_File_Open_A {
+            get {
+                return ResourceManager.GetString("String_Note_File_Open_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プロパティ(_R) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_File_Property_A {
+            get {
+                return ResourceManager.GetString("String_Note_File_Property_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   削除(_D) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_File_Unlink_A {
+            get {
+                return ResourceManager.GetString("String_Note_File_Unlink_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   添付ファイル に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Files_Header {

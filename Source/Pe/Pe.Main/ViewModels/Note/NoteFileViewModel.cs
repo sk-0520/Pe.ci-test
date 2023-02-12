@@ -60,6 +60,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         ));
 
+        public ICommand ShowPropertyCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Logger.LogInformation("プロパティ: {NoteFilePath}, {NoteFileId}", FilePath, NoteFileId);
+                try {
+                    var systemExecutor = new SystemExecutor();
+                    systemExecutor.ShowProperty(FilePath);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
+            }
+        ));
+
         #endregion
     }
 }

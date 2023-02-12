@@ -1164,24 +1164,19 @@
                 </ItemsControl.Template>
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
-                    <Grid>
-                      <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                      </Grid.ColumnDefinitions>
-                      
-                      <TextBlock Grid.Column="0">
-                        <Hyperlink Command="{Binding OpenFileCommand}">
-                          <app_main_views:EllipsisTextBlock  Text="{Binding FilePath, Mode=OneTime}" />
-                        </Hyperlink>
-                      </TextBlock>
-
-                      <TextBlock Grid.Column="1">
-                        <Hyperlink Command="{Binding DataContext.UnlinkFileCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">
-                          <Run>unlink</Run>
-                        </Hyperlink>
-                      </TextBlock>
-                    </Grid>
+                    <TextBlock ToolTip="{Binding FilePath, Mode=OneTime}">
+                      <Hyperlink Command="{Binding OpenFileCommand}">
+                        <Hyperlink.ContextMenu>
+                          <ContextMenu>
+                            <MenuItem Header="{Binding Resources.String_Note_File_Open_A, Source={x:Static app_main:CultureService.Instance}, Mode=OneWay}" Command="{Binding OpenFileCommand}" />
+                            <MenuItem Header="{Binding Resources.String_Note_File_Property_A, Source={x:Static app_main:CultureService.Instance}, Mode=OneWay}" Command="{Binding ShowPropertyCommand}" />
+                            <Separator />
+                            <MenuItem Header="{Binding Resources.String_Note_File_Unlink_A, Source={x:Static app_main:CultureService.Instance}, Mode=OneWay}" Command="{Binding DataContext.UnlinkFileCommand, Source={x:Reference root}}" CommandParameter="{Binding}" />
+                          </ContextMenu>
+                        </Hyperlink.ContextMenu>
+                        <app_main_views:EllipsisTextBlock Text="{Binding FilePath, Mode=OneTime}" />
+                      </Hyperlink>
+                    </TextBlock>
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>

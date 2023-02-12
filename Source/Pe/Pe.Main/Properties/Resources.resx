@@ -2318,4 +2318,13 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_Note_Files_Header" xml:space="preserve">
     <value>添付ファイル</value>
   </data>
+  <data name="String_Note_File_Open_A" xml:space="preserve">
+    <value>開く(_O)</value>
+  </data>
+  <data name="String_Note_File_Property_A" xml:space="preserve">
+    <value>プロパティ(_R)</value>
+  </data>
+  <data name="String_Note_File_Unlink_A" xml:space="preserve">
+    <value>削除(_D)</value>
+  </data>
 </root>
