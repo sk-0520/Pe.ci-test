@@ -1158,17 +1158,30 @@
                 <ItemsControl.Template>
                   <ControlTemplate>
                     <ScrollViewer MaxHeight="80" Padding="{TemplateBinding Control.Padding}" Focusable="False">
-                      <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                      <ItemsPresenter Grid.IsSharedSizeScope="True" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
                     </ScrollViewer>
                   </ControlTemplate>
                 </ItemsControl.Template>
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
-                    <TextBlock>
-                      <Hyperlink Command="{Binding OpenFileCommand}">
-                        <app_main_views:EllipsisTextBlock  Text="{Binding FilePath, Mode=OneTime}" />
-                      </Hyperlink>
-                    </TextBlock>
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                      </Grid.ColumnDefinitions>
+                      
+                      <TextBlock Grid.Column="0">
+                        <Hyperlink Command="{Binding OpenFileCommand}">
+                          <app_main_views:EllipsisTextBlock  Text="{Binding FilePath, Mode=OneTime}" />
+                        </Hyperlink>
+                      </TextBlock>
+
+                      <TextBlock Grid.Column="1">
+                        <Hyperlink Command="{Binding DataContext.UnlinkFileCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}">
+                          <Run>unlink</Run>
+                        </Hyperlink>
+                      </TextBlock>
+                    </Grid>
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>

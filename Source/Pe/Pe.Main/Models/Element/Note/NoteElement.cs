@@ -877,6 +877,41 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, cancellationToken);
         }
 
+        /// <summary>
+        /// ノートに添付したファイルの削除。
+        /// <para>物理削除はされない。</para>
+        /// </summary>
+        /// <param name="noteFileId">ノートファイルID。</param>
+        /// <returns>削除成功状態。</returns>
+        public bool UnlinkFile(NoteFileId noteFileId)
+        {
+            var file = Files.FirstOrDefault(a => a.NoteFileId == noteFileId);
+            if(file is null) {
+                Logger.LogWarning("削除失敗: {noteFileId}", noteFileId);
+                return false;
+            }
+
+            using(var mainContext = MainDatabaseBarrier.WaitWrite()) {
+                var noteFilesEntityDao = new NoteFilesEntityDao(mainContext, DatabaseStatementLoader, mainContext.Implementation, LoggerFactory);
+                // 削除処理
+                noteFilesEntityDao.DeleteNoteFilesById(NoteId, noteFileId);
+                //TODO: SQLおもいつかない
+                //// シーケンス整理
+                //noteFilesEntityDao.UpdateRefreshSequenceNoteFiles(NoteId, DatabaseCommonStatus.CreateCurrentAccount());
+
+                var todo = false;
+                if(todo) {
+                    // 添付削除
+                    using(var largeContext = LargeDatabaseBarrier.WaitWrite()) {
+                    }
+                }
+
+                mainContext.Commit();
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region ElementBase

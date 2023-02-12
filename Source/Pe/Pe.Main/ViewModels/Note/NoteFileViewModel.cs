@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
@@ -25,6 +26,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         }
 
         #region property
+
+        public NoteFileId NoteFileId => Model.NoteFileId;
 
         public string FilePath => Model.NoteFilePath;
 

@@ -672,6 +672,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         ));
 
+        public ICommand UnlinkFileCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+            o => {
+                Model.UnlinkFile(o.NoteFileId);
+            }
+        ));
+
         #endregion
 
         #region function

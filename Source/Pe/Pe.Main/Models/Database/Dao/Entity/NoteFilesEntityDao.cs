@@ -30,6 +30,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
+            public static string NoteId { get; } = "NoteId";
+            public static string NoteFileId { get; } = "NoteFileId";
 
             #endregion
         }
@@ -71,7 +73,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-
         public NoteFileId? SelectNoteFileExistsFilePath(NoteId noteId, string path)
         {
             var statement = LoadStatement();
@@ -111,6 +112,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var dto = ConvertFromData(data, databaseCommonStatus);
 
             Context.InsertSingle(statement, dto);
+        }
+
+        /// <summary>
+        /// シーケンスを再採番。
+        /// <para>あかんっぽいから使ってない。</para>
+        /// </summary>
+        /// <param name="noteId"></param>
+        /// <param name="databaseCommonStatus"></param>
+        /// <returns></returns>
+        public int UpdateRefreshSequenceNoteFiles(NoteId noteId, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = LoadStatement();
+            var parameter = databaseCommonStatus.CreateCommonDtoMapping();
+            parameter[Column.NoteId] = noteId;
+
+            return Context.Update(statement, parameter);
+        }
+
+        public void DeleteNoteFilesById(NoteId noteId, NoteFileId noteFileId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                NoteId = noteId,
+                NoteFileId = noteFileId
+            };
+
+            Context.DeleteByKey(statement, parameter);
         }
 
         #endregion
