@@ -110,7 +110,7 @@
     </app_core_views:RequestTrigger>
   </behaviors:Interaction.Triggers>
   <behaviors:Interaction.Behaviors>
-    <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />
+    <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding FileDragAndDrop}" />
   </behaviors:Interaction.Behaviors>
   <Window.Style>
     <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
@@ -1145,7 +1145,7 @@
                   <Setter Property="Visibility" Value="Visible" />
                 </Style>
               </GroupBox.Style>
-              <ItemsControl Focusable="False" ItemsSource="{Binding FileItems}">
+              <ItemsControl ItemsSource="{Binding FileItems}">
                 <ItemsControl.ItemsPanel>
                   <ItemsPanelTemplate>
                     <VirtualizingStackPanel

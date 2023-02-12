@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -30,6 +31,7 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.Font;
 using ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog;
+using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
 using ContentTypeTextNet.Pe.Main.Views.Note;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
@@ -76,13 +78,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Debug.Assert(Model.FontElement != null);
             Font = new NoteFontViewModel(Model.FontElement, DispatcherWrapper, LoggerFactory);
 
-            DragAndDrop = new DelegateDragAndDrop(true, LoggerFactory) {
-                CanDragStart = CanDragStartFile,
-                GetDragParameter = GetDragParameterFile,
-                DragEnterAction = DragEnterAndOverFile,
-                DragOverAction = DragEnterAndOverFile,
-                DragLeaveAction = DragLeaveFile,
-                DropAction = DropFile,
+            FileDragAndDrop = new DelegateDragAndDrop(true, LoggerFactory) {
+                CanDragStart = FileCanDragStart,
+                GetDragParameter = FileGetDragParameter,
+                DragEnterAction = FileDragEnterAndOver,
+                DragOverAction = FileDragEnterAndOver,
+                DragLeaveAction = FileDragLeave,
+                DropAction = FileDrop,
             };
 
             FileCollection = new ActionModelViewModelObservableCollectionManager<NoteFileElement, NoteFileViewModel>(Model.Files) {
@@ -107,6 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PropertyChangedHooker.AddHook(nameof(Model.IsVisibleBlind), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.HiddenCompact), () => HideCompact());
         }
+
 
         #region property
 
@@ -359,7 +362,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
-        public IDragAndDrop DragAndDrop { get; }
+        public IDragAndDrop FileDragAndDrop { get; }
 
         private bool PrepareToRemove { get; set; }
         public bool IsPopupRemoveNote
@@ -1154,16 +1157,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region DragAndDrop
 
-        private bool CanDragStartFile(UIElement sender, MouseEventArgs e)
+        private bool FileCanDragStart(UIElement sender, MouseEventArgs e)
         {
             return false;
         }
-        private IResultSuccessValue<DragParameter> GetDragParameterFile(UIElement sender, MouseEventArgs e)
+        private IResultSuccessValue<DragParameter> FileGetDragParameter(UIElement sender, MouseEventArgs e)
         {
             throw new NotSupportedException();
         }
 
-        private void DragEnterAndOverFile(UIElement sender, DragEventArgs e)
+        private void FileDragEnterAndOver(UIElement sender, DragEventArgs e)
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -1174,10 +1177,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
-        private void DragLeaveFile(UIElement sender, DragEventArgs e)
+        private void FileDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void DropFile(UIElement sender, DragEventArgs e)
+        private void FileDrop(UIElement sender, DragEventArgs e)
         {
             if(e.Effects.HasFlag(DragDropEffects.Copy) && e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);

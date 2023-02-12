@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
@@ -25,6 +27,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #region property
 
         public string FilePath => Model.NoteFilePath;
+
+        public string FileName
+        {
+            get
+            {
+                var dirName = Path.GetDirectoryName(FilePath);
+                var fileName = Path.GetFileName(FilePath);
+                return FilePath;
+            }
+        }
 
         public IconViewerViewModel IconViewer { get; set; }
 
