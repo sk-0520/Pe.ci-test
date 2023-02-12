@@ -909,7 +909,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 mainContext.Commit();
             }
 
-            return false;
+            Files.Remove(file);
+            file.Dispose();
+
+            return true;
         }
 
         #endregion
