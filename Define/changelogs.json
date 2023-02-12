@@ -1,73 +1,22 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.189+",
+		"date": "2023/02/12",
+		"version": "0.99.190",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "819feed3c15392319741657e0c19c5763a30fb45",
 						"subject": "#751: ノートのタイトルバー位置で横配置を可能にする"
 					},
 					{
-						"revision": "",
+						"revision": "1bdc8916e2bb0dc2f524a16876e27610371fd33b",
 						"subject": "#366: ノートにファイルを添付する",
 						"comments": [
 							"ノートに対してファイルをD&Dすることでファイルへのリンクをノートに添付します",
 							"ファイルリンクを削除するにはコンテキストメニュー(右クリック)から操作してください"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -75,21 +24,9 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "d367e82f8eb2d73778e21dfcfe261971af7d8cd9",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 109.1.110 -> 110.0.250"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
