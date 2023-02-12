@@ -65,20 +65,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #region function
 
-        public bool OpenFile()
-        {
-            Logger.LogInformation("ファイルを開く: {NoteFilePath}, {NoteFileId}", NoteFilePath, NoteFileId);
-            try {
-                var systemExecutor = new SystemExecutor();
-                systemExecutor.ExecuteFile(NoteFilePath);
-                return true;
-            } catch(Exception ex) {
-                Logger.LogError(ex, ex.Message);
-            }
-
-            return false;
-        }
-
         #endregion
 
         #region ElementBase

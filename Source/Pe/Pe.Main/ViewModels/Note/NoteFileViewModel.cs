@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
 using Microsoft.Extensions.Logging;
@@ -49,7 +50,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public ICommand OpenFileCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.OpenFile();
+                Logger.LogInformation("ファイルを開く: {NoteFilePath}, {NoteFileId}", FilePath, NoteFileId);
+                try {
+                    var systemExecutor = new SystemExecutor();
+                    systemExecutor.ExecuteFile(FilePath);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
             }
         ));
 
