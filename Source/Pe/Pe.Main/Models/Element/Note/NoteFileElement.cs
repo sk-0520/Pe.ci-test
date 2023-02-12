@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
@@ -54,7 +55,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         public string NoteFilePath { get; private set; } = string.Empty;
         public int Sequence { get; private set; }
 
+        /// <summary>
+        /// ファイルアイコン表示用。
+        /// <para>一応持ってるけど使わない方針。</para>
+        /// </summary>
         public IconImageLoader IconImageLoader { get; }
+
+        #endregion
+
+        #region function
+
+        public bool OpenFile()
+        {
+            Logger.LogInformation("ファイルを開く: {NoteFilePath}, {NoteFileId}", NoteFilePath, NoteFileId);
+            try {
+                var systemExecutor = new SystemExecutor();
+                systemExecutor.ExecuteFile(NoteFilePath);
+                return true;
+            } catch (Exception ex) {
+                Logger.LogError(ex, ex.Message);
+            }
+
+            return false;
+        }
 
         #endregion
 

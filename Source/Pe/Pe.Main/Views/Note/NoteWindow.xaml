@@ -1164,10 +1164,11 @@
                 </ItemsControl.Template>
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
-                    <StackPanel>
-                      <app_main_views:ImageViewerControl IconViewer="{Binding IconViewer}" />
-                      <app_main_views:EllipsisTextBlock Text="{Binding FilePath, Mode=OneTime}" />
-                    </StackPanel>
+                    <TextBlock>
+                      <Hyperlink Command="{Binding OpenFileCommand}">
+                        <app_main_views:EllipsisTextBlock  Text="{Binding FilePath, Mode=OneTime}" />
+                      </Hyperlink>
+                    </TextBlock>
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
