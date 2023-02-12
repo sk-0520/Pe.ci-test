@@ -7,6 +7,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
+using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
@@ -15,11 +16,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
     {
         public NoteFileViewModel(NoteFileElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
-        { }
+        {
+            IconViewer = new IconViewerViewModel(Model.IconImageLoader, DispatcherWrapper, LoggerFactory);
+        }
 
         #region property
 
         public string FilePath => Model.NoteFilePath;
+
+        public IconViewerViewModel IconViewer { get; set; }
 
         #endregion
     }

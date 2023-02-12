@@ -334,7 +334,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                     var noteFilesEntityDao = new NoteFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                     files = noteFilesEntityDao.SelectNoteFiles(NoteId);
                 }
-                var fileElements = files.Select(a => new NoteFileElement(a, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory));
+                var fileElements = files.Select(a => new NoteFileElement(a, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory));
                 foreach(var fileElement in fileElements) {
                     fileElement.Initialize();
                     Files.Add(fileElement);
@@ -868,7 +868,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 }
 
                 if(noteFileData is not null) {
-                    var noteFileElement = new NoteFileElement(noteFileData, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+                    var noteFileElement = new NoteFileElement(noteFileData, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory);
                     noteFileElement.Initialize();
                     Files.Add(noteFileElement);
                 }
@@ -893,6 +893,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 if(disposing) {
                     FontElement?.Dispose();
                     ContentElement?.Dispose();
+                    var files = Files.ToArray();
+                    foreach(var file in files) {
+                        file.Dispose();
+                    }
                     StopHidden(false);
                 }
             }

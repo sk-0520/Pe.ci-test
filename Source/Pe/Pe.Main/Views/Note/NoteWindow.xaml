@@ -1165,6 +1165,7 @@
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
                     <StackPanel>
+                      <app_main_views:ImageViewerControl IconViewer="{Binding IconViewer}" />
                       <app_main_views:EllipsisTextBlock Text="{Binding FilePath, Mode=OneTime}" />
                     </StackPanel>
                   </DataTemplate>

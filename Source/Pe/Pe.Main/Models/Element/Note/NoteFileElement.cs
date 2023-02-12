@@ -1,19 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 {
     public class NoteFileElement: ElementBase
     {
-        public NoteFileElement(NoteFileData data, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public NoteFileElement(NoteFileData data, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = data.NoteId;
@@ -25,6 +29,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             MainDatabaseBarrier = mainDatabaseBarrier;
             LargeDatabaseBarrier = largeDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
+            DispatcherWrapper = dispatcherWrapper;
+
+            IconImageLoader = new IconImageLoader(
+                new Data.IconData() {
+                    Path = NoteFilePath
+                },
+                DispatcherWrapper,
+                LoggerFactory
+            );
         }
 
         #region property
@@ -35,10 +48,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         private IMainDatabaseBarrier MainDatabaseBarrier { get; }
         private ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
         private IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        private IDispatcherWrapper DispatcherWrapper { get; }
 
         public NoteFileKind NoteFileKind { get; private set; }
         public string NoteFilePath { get; private set; } = string.Empty;
         public int Sequence { get; private set; }
+
+        public IconImageLoader IconImageLoader { get; }
 
         #endregion
 
