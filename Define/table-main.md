@@ -770,6 +770,7 @@ ___
 | PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
 |:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
 | o  | o  | Notes.NoteId | ノートID                 | NoteId                | text         | System.Guid     |              |                      |
+| o  | o  |              | ノートファイルID         | NoteFileId            | text         | System.Guid     |              |                      |
 |    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
 |    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
 |    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
@@ -781,7 +782,6 @@ ___
 |    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり              |
 |    | o  |              | ファイル種別             | FileKind              | text         | System.String   |              | リンク, 埋め込み     |
 |    | o  |              | ファイルパス             | FilePath              | text         | System.String   |              |                      |
-|    | o  |              | 埋め込みファイルID       | NoteFileId            | text         | System.Guid     |              | 埋め込みの場合に使用 |
 |    | o  |              | 並び順                   | Sequence              | integer      | System.Int64    |              |                      |
 
 ### index

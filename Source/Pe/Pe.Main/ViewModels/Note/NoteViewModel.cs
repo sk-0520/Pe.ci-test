@@ -5,8 +5,10 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -20,6 +22,7 @@ using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
+using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Note;
@@ -27,6 +30,8 @@ using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.Font;
+using ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog;
+using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
 using ContentTypeTextNet.Pe.Main.Views.Note;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
@@ -73,14 +78,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Debug.Assert(Model.FontElement != null);
             Font = new NoteFontViewModel(Model.FontElement, DispatcherWrapper, LoggerFactory);
 
-            DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
-                CanDragStart = CanDragStartFile,
-                GetDragParameter = GetDragParameterFile,
-                DragEnterAction = DragEnterAndOverFile,
-                DragOverAction = DragEnterAndOverFile,
-                DragLeaveAction = DragLeaveFile,
-                DropAction = DropFile,
+            FileDragAndDrop = new DelegateDragAndDrop(true, LoggerFactory) {
+                CanDragStart = FileCanDragStart,
+                GetDragParameter = FileGetDragParameter,
+                DragEnterAction = FileDragEnterAndOver,
+                DragOverAction = FileDragEnterAndOver,
+                DragLeaveAction = FileDragLeave,
+                DropAction = FileDrop,
             };
+
+            FileCollection = new ActionModelViewModelObservableCollectionManager<NoteFileElement, NoteFileViewModel>(Model.Files) {
+                ToViewModel = m => new NoteFileViewModel(m, UserTracker, DispatcherWrapper, LoggerFactory)
+            };
+            FileItems = FileCollection.GetDefaultView();
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
@@ -99,6 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PropertyChangedHooker.AddHook(nameof(Model.IsVisibleBlind), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.HiddenCompact), () => HideCompact());
         }
+
 
         #region property
 
@@ -126,6 +137,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private ApplicationConfiguration ApplicationConfiguration { get; }
 
         public NoteId NoteId => Model.NoteId;
+
+        public ModelViewModelObservableCollectionManagerBase<NoteFileElement, NoteFileViewModel> FileCollection { get; }
+        public ICollectionView FileItems { get; }
+
+
         public bool IsLink
         {
             get
@@ -346,7 +362,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
-        public IDragAndDrop DragAndDrop { get; }
+        public IDragAndDrop FileDragAndDrop { get; }
 
         private bool PrepareToRemove { get; set; }
         public bool IsPopupRemoveNote
@@ -653,6 +669,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     Logger.LogError(ex, ex.Message);
                 }
                 ShowLinkChangeConfim = false;
+            }
+        ));
+
+        public ICommand UnlinkFileCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+            o => {
+                Model.UnlinkFile(o.NoteFileId);
             }
         ));
 
@@ -1141,35 +1163,42 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region DragAndDrop
 
-        private bool CanDragStartFile(UIElement sender, MouseEventArgs e)
+        private bool FileCanDragStart(UIElement sender, MouseEventArgs e)
         {
             return false;
         }
-        private IResultSuccessValue<DragParameter> GetDragParameterFile(UIElement sender, MouseEventArgs e)
+        private IResultSuccessValue<DragParameter> FileGetDragParameter(UIElement sender, MouseEventArgs e)
         {
             throw new NotSupportedException();
         }
 
-        private void DragEnterAndOverFile(UIElement sender, DragEventArgs e)
+        private void FileDragEnterAndOver(UIElement sender, DragEventArgs e)
         {
-            e.Effects = DragDropEffects.None;
-            e.Handled = true;
-
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
-                e.Effects = DragDropEffects.Copy;
+                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if(filePaths.Length == 1) {
+                    e.Effects = DragDropEffects.Copy;
+                    e.Handled = true;
+                }
             }
         }
 
-        private void DragLeaveFile(UIElement sender, DragEventArgs e)
+        private void FileDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void DropFile(UIElement sender, DragEventArgs e)
+        private void FileDrop(UIElement sender, DragEventArgs e)
         {
-            e.Effects = DragDropEffects.None;
-            e.Handled = true;
-
-            if(e.Effects != DragDropEffects.Copy) {
+            if(e.Effects.HasFlag(DragDropEffects.Copy) && e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if(filePaths.Length == 1) {
+                    e.Handled = true;
+                    Logger.LogDebug("A");
+                    DispatcherWrapper.Dispatcher.BeginInvoke(async () => {
+                        var result = await Model.AddFileAsync(filePaths[0], NoteFileKind.Reference, CancellationToken.None);
+                        Logger.LogDebug("C: {result}", result);
+                    }, DispatcherPriority.ApplicationIdle);
+                    Logger.LogDebug("B");
+                }
             }
         }
 

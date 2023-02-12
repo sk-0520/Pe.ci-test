@@ -55,12 +55,13 @@
       />
       <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <app_core_views_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
-      <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
-      <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
+      <app_core_views_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
       <app_core_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
       <app_core_views_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
       <app_core_views_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
       <app_core_views_converter:LogicalMultiAndConverter x:Key="LogicalMultiAndConverter" />
+      <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
+      <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
       <app_main_views_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
 
       <WindowChrome x:Key="NormalWindowChrome"
@@ -109,7 +110,7 @@
     </app_core_views:RequestTrigger>
   </behaviors:Interaction.Triggers>
   <behaviors:Interaction.Behaviors>
-    <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />
+    <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding FileDragAndDrop}" />
   </behaviors:Interaction.Behaviors>
   <Window.Style>
     <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
@@ -1129,6 +1130,73 @@
                   </StackPanel>
                 </Button>
               </StackPanel>
+            </GroupBox>
+            <!--#endregion-->
+
+            <!--#region ファイル -->
+            <GroupBox  Header="{Binding Resources.String_Note_Files_Header, Source={x:Static app_main:CultureService.Instance}}">
+              <GroupBox.Style>
+                <Style TargetType="GroupBox" BasedOn="{StaticResource HeaderGroupBox}">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding FileItems.Count}" Value="0">
+                      <Setter Property="Visibility" Value="Collapsed" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                  <Setter Property="Visibility" Value="Visible" />
+                </Style>
+              </GroupBox.Style>
+              <ItemsControl ItemsSource="{Binding FileItems}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <VirtualizingStackPanel
+                      VirtualizingStackPanel.IsVirtualizing="True"
+                      VirtualizingStackPanel.VirtualizationMode="Recycling"
+                      Orientation="Vertical"
+                    />
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.Template>
+                  <ControlTemplate>
+                    <ScrollViewer MaxHeight="80" Padding="{TemplateBinding Control.Padding}" Focusable="False">
+                      <ItemsPresenter Grid.IsSharedSizeScope="True" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                    </ScrollViewer>
+                  </ControlTemplate>
+                </ItemsControl.Template>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock ToolTip="{Binding FilePath, Mode=OneTime}">
+                      <Hyperlink Command="{Binding OpenFileCommand}">
+                        <Hyperlink.ContextMenu>
+                          <ContextMenu>
+                            <MenuItem Header="{Binding Resources.String_Note_File_Open_A, Source={x:Static app_main:CultureService.Instance}, Mode=OneWay}" Command="{Binding OpenFileCommand}">
+                              <MenuItem.Icon>
+                                <app_main_views:ImageViewerControl IconViewer="{Binding IconViewer}" />
+                              </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{Binding Resources.String_Note_File_Property_A, Source={x:Static app_main:CultureService.Instance}, Mode=OneWay}" Command="{Binding ShowPropertyCommand}">
+                              <MenuItem.Icon>
+                                <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Property}" />
+                              </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="{Binding Resources.String_Note_File_Unlink_Confirm_A, Source={x:Static app_main:CultureService.Instance}, Mode=OneWay}">
+                              <MenuItem.Icon>
+                                <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Warning}" />
+                              </MenuItem.Icon>
+                              <MenuItem Header="{Binding Resources.String_Note_File_Unlink_Execute_A, Source={x:Static app_main:CultureService.Instance}, Mode=OneWay}" Command="{Binding DataContext.UnlinkFileCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
+                                <MenuItem.Icon>
+                                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+                                </MenuItem.Icon>
+                              </MenuItem>
+                            </MenuItem>
+                          </ContextMenu>
+                        </Hyperlink.ContextMenu>
+                        <app_main_views:EllipsisTextBlock Text="{Binding FilePath, Mode=OneTime}" />
+                      </Hyperlink>
+                    </TextBlock>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
             </GroupBox>
             <!--#endregion-->
 
