@@ -4574,9 +4574,18 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   削除(_D) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_File_Unlink_A {
+        public static string String_Note_File_Unlink_Confirm_A {
             get {
-                return ResourceManager.GetString("String_Note_File_Unlink_A", resourceCulture);
+                return ResourceManager.GetString("String_Note_File_Unlink_Confirm_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   削除実行(_D) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_File_Unlink_Execute_A {
+            get {
+                return ResourceManager.GetString("String_Note_File_Unlink_Execute_A", resourceCulture);
             }
         }
         

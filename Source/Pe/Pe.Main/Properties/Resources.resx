@@ -2324,7 +2324,10 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_Note_File_Property_A" xml:space="preserve">
     <value>プロパティ(_R)</value>
   </data>
-  <data name="String_Note_File_Unlink_A" xml:space="preserve">
+  <data name="String_Note_File_Unlink_Confirm_A" xml:space="preserve">
     <value>削除(_D)</value>
+  </data>
+  <data name="String_Note_File_Unlink_Execute_A" xml:space="preserve">
+    <value>削除実行(_D)</value>
   </data>
 </root>
