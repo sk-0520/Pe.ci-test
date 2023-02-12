@@ -1,8 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media;
@@ -55,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        public NoteElement(NoteId noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, NoteConfiguration noteConfiguration, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteElement(NoteId noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, NoteConfiguration noteConfiguration, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -69,6 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             NoteConfiguration = noteConfiguration;
             DispatcherWrapper = dispatcherWrapper;
             NoteTheme = noteTheme;
+            IdFactory = idFactory;
 
             MainDatabaseLazyWriter = mainDatabaseLazyWriter;
         }
@@ -78,7 +84,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         public NoteId NoteId { get; }
 
         private NoteConfiguration NoteConfiguration { get; }
-        private Timer? HideWaitTimer { get; set; }
+        private System.Timers.Timer? HideWaitTimer { get; set; }
+        private IIdFactory IdFactory { get; }
 
         /// <summary>
         /// DB から取得して設定したりそれでも保存しなかったりするまさに変数。
@@ -100,6 +107,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         private UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+
+        /// <summary>
+        /// 添付ファイル。
+        /// </summary>
+        public ObservableCollection<NoteFileElement> Files { get; } = new();
 
         private bool ViewCreated { get; set; }
 
@@ -316,6 +328,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 NativeMethods.GetCursorPos(out var podPoint);
                 var deviceCursorLocation = PodStructUtility.Convert(podPoint);
                 noteData = CreateNoteData(deviceCursorLocation);
+            } else {
+                IEnumerable<NoteFileData> files;
+                using(var context = MainDatabaseBarrier.WaitRead()) {
+                    var noteFilesEntityDao = new NoteFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                    files = noteFilesEntityDao.SelectNoteFiles(NoteId);
+                }
+                var fileElements = files.Select(a => new NoteFileElement(a, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory));
+                foreach(var fileElement in fileElements) {
+                    fileElement.Initialize();
+                    Files.Add(fileElement);
+                }
             }
 
             DockScreen = GetDockScreen(noteData.ScreenName);
@@ -732,7 +755,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 waitTime = appNoteHiddenSettingEntityDao.SelectHiddenWaitTime(HiddenMode);
             }
 
-            HideWaitTimer = new Timer() {
+            HideWaitTimer = new System.Timers.Timer() {
                 Interval = (int)waitTime.TotalMilliseconds,
                 AutoReset = false,
             };
@@ -784,6 +807,114 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
+        /// <summary>
+        /// 添付ファイルを追加。
+        /// </summary>
+        /// <param name="path">対象ファイルパス。</param>
+        /// <param name="kind"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public Task<bool> AddFileAsync(string path, NoteFileKind kind, CancellationToken cancellationToken)
+        {
+            return Task.Run(() => {
+                var isFile = File.Exists(path);
+                var idDir = !isFile && Directory.Exists(path);
+
+                if(!isFile && !idDir) {
+                    return false;
+                }
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                NoteFileData? noteFileData = null;
+
+                using(var mainContext = MainDatabaseBarrier.WaitWrite()) {
+                    var noteFilesEntityDao = new NoteFilesEntityDao(mainContext, DatabaseStatementLoader, mainContext.Implementation, LoggerFactory);
+
+                    // 現存データ有無確認
+                    var noteFileId = noteFilesEntityDao.SelectNoteFileExistsFilePath(NoteId, path);
+                    if(noteFileId is not null) {
+                        // インデックス側 更新
+                        if(kind == NoteFileKind.Reference) {
+                            // リンクの場合なにもやることはない
+                            return true;
+                        }
+                        throw new NotImplementedException();
+                    } else {
+                        // インデックス側 追加
+                        var sequence = noteFilesEntityDao.SelectNextSequenceNoteFiles(NoteId);
+                        noteFileId = IdFactory.CreateNoteFileId();
+
+                        noteFileData = new NoteFileData() {
+                            NoteId = NoteId,
+                            NoteFileId = noteFileId.Value,
+                            NoteFileKind = kind,
+                            NoteFilePath = path,
+                            Sequence = sequence,
+                        };
+                        noteFilesEntityDao.InsertNoteFiles(noteFileData, DatabaseCommonStatus.CreateCurrentAccount());
+                    }
+
+                    var todo = false;
+                    if(todo) {
+                        using(var largeContext = LargeDatabaseBarrier.WaitWrite()) {
+                            // 既存データ破棄
+                            //TODO: 取り込み処理
+                            largeContext.Commit();
+                        }
+                    }
+
+                    mainContext.Commit();
+                }
+
+                if(noteFileData is not null) {
+                    var noteFileElement = new NoteFileElement(noteFileData, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory);
+                    noteFileElement.Initialize();
+                    Files.Add(noteFileElement);
+                }
+
+                return true;
+            }, cancellationToken);
+        }
+
+        /// <summary>
+        /// ノートに添付したファイルの削除。
+        /// <para>物理削除はされない。</para>
+        /// </summary>
+        /// <param name="noteFileId">ノートファイルID。</param>
+        /// <returns>削除成功状態。</returns>
+        public bool UnlinkFile(NoteFileId noteFileId)
+        {
+            var file = Files.FirstOrDefault(a => a.NoteFileId == noteFileId);
+            if(file is null) {
+                Logger.LogWarning("削除失敗: {noteFileId}", noteFileId);
+                return false;
+            }
+
+            using(var mainContext = MainDatabaseBarrier.WaitWrite()) {
+                var noteFilesEntityDao = new NoteFilesEntityDao(mainContext, DatabaseStatementLoader, mainContext.Implementation, LoggerFactory);
+                // 削除処理
+                noteFilesEntityDao.DeleteNoteFilesById(NoteId, noteFileId);
+                //TODO: SQLおもいつかない
+                //// シーケンス整理
+                //noteFilesEntityDao.UpdateRefreshSequenceNoteFiles(NoteId, DatabaseCommonStatus.CreateCurrentAccount());
+
+                var todo = false;
+                if(todo) {
+                    // 添付削除
+                    using(var largeContext = LargeDatabaseBarrier.WaitWrite()) {
+                    }
+                }
+
+                mainContext.Commit();
+            }
+
+            Files.Remove(file);
+            file.Dispose();
+
+            return true;
+        }
+
         #endregion
 
         #region ElementBase
@@ -800,6 +931,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 if(disposing) {
                     FontElement?.Dispose();
                     ContentElement?.Dispose();
+                    var files = Files.ToArray();
+                    foreach(var file in files) {
+                        file.Dispose();
+                    }
                     StopHidden(false);
                 }
             }

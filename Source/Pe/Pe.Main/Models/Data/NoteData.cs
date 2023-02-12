@@ -76,6 +76,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         RichText,
     }
 
+    /// <summary>
+    /// ノート添付ファイル種別。
+    /// </summary>
+    public enum NoteFileKind
+    {
+        /// <summary>
+        /// 実ファイルへの参照。
+        /// </summary>
+        Reference,
+    }
+
     [Flags]
     public enum ViewAreaChangeTarget
     {
@@ -232,6 +243,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public long Width { get; set; }
         [PixelKind(Px.Device)]
         public long Height { get; set; }
+
+        #endregion
+    }
+
+    public class NoteFileData
+    {
+        #region property
+
+        public NoteId NoteId { get; set; }
+        public NoteFileId NoteFileId { get; set; }
+
+        public NoteFileKind NoteFileKind { get; set; }
+        public string NoteFilePath { get; set; } = string.Empty;
+
+        public int Sequence { get; set; }
 
         #endregion
     }

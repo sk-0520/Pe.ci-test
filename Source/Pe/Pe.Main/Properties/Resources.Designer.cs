@@ -1472,6 +1472,42 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   左 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Left {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左(_L) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Left_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Left_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Right {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右(_R) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Right_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Right_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   上 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Top {
@@ -4514,6 +4550,51 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Note_Caption_ToggleTopmost {
             get {
                 return ResourceManager.GetString("String_Note_Caption_ToggleTopmost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   開く(_O) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_File_Open_A {
+            get {
+                return ResourceManager.GetString("String_Note_File_Open_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プロパティ(_R) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_File_Property_A {
+            get {
+                return ResourceManager.GetString("String_Note_File_Property_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   削除(_D) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_File_Unlink_Confirm_A {
+            get {
+                return ResourceManager.GetString("String_Note_File_Unlink_Confirm_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   削除実行(_D) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_File_Unlink_Execute_A {
+            get {
+                return ResourceManager.GetString("String_Note_File_Unlink_Execute_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   添付ファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Files_Header {
+            get {
+                return ResourceManager.GetString("String_Note_Files_Header", resourceCulture);
             }
         }
         

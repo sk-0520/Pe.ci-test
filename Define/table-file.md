@@ -59,7 +59,7 @@ ___
 
 | PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
 |:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
-| o  | o  |    | ノート埋め込みファイルID | NoteFileId            | text         | System.Guid     |              |          |
+| o  | o  |    | ノートファイルID         | NoteFileId            | text         | System.Guid     |              |          |
 | o  | o  |    | 連結順序                 | Sequence              | integer      | System.Int64    |              |          |
 |    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
 |    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
