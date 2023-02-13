@@ -75,7 +75,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "Node.js 18.12.1 -> 18.14.0",
+						"comments": [
+							"ついでに NPM 周りも更新"
+						]
 					},
 					{
 						"revision": "",
@@ -1056,7 +1059,6 @@
 						"comments": [
 							"CefSharp.Wpf 86.0.241 -> CefSharp.Wpf.NETCore 100.0.230"
 						]
-
 					},
 					{
 						"revision": "",
