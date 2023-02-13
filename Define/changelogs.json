@@ -1,5 +1,43 @@
 [
 	{
+		"date": "2023/02/13",
+		"version": "0.99.191",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"subject": "こういう次に何が起きるかわからん系のバグは早めリリースなのです"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "0ea029e933d561c78b298f600bcd6e4542681c83",
+						"subject": "#871: ノートの最小化時におけるタイトルバー位置変更は無効でないと変になる",
+						"comments": [
+							"無効化した"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "d15eec4293e1b548f0ea5402c06228f3ace904da",
+						"subject": "Node.js 18.12.1 -> 18.14.0",
+						"comments": [
+							"ついでに NPM 周りも更新"
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/02/12",
 		"version": "0.99.190",
 		"contents": [
@@ -962,7 +1000,6 @@
 						"comments": [
 							"CefSharp.Wpf 86.0.241 -> CefSharp.Wpf.NETCore 100.0.230"
 						]
-
 					},
 					{
 						"revision": "",

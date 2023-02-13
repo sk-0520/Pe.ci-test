@@ -39,7 +39,7 @@ jobs:
       - name: <Add> Node/NPM
         uses: actions/setup-node@v3
         with:
-          node-version: 18.12.1
+          node-version: 18.14.0
 
       - name: <Show> Tools
         run: |

@@ -303,7 +303,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public NoteCaptionPosition CaptionPosition
         {
             get => Model.CaptionPosition;
-            set => Model.ChangeCaptionPositionDelaySave(value);
+            set
+            {
+                if(IsCompact) {
+                    Logger.LogWarning("最小化時には変更不可");
+                    return;
+                }
+
+                Model.ChangeCaptionPositionDelaySave(value);
+            }
         }
 
         public NoteContentKind ContentKind

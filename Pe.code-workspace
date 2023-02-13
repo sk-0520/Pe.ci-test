@@ -17,7 +17,7 @@
             "Source/Benchmark": true,
             "Source/BuildTools": true,
             "Source/Plugin.Template": true,
-            "Source/Pe": true,
+            "Source/Pe": false,
         },
         "files.watcherExclude": {
             "**/.git/objects/**": true,
@@ -32,7 +32,7 @@
             "Source/Benchmark": true,
             "Source/BuildTools": true,
             "Source/Plugin.Template": true,
-            "Source/Pe": true,
+            "Source/Pe": false,
         },
         "markdownlint.config": {
             "MD024": false,
