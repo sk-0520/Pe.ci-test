@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Standard.Models;
 
 namespace ContentTypeTextNet.Pe.Core.ViewModels
 {

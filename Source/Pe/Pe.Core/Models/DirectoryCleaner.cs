@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Standard.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {

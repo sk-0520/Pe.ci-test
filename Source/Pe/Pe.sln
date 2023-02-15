@@ -46,6 +46,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Reference.FileFi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Reference.Html", "Pe.Plugins.Reference.Html\Pe.Plugins.Reference.Html.csproj", "{5874965B-F278-4112-9533-B5F40811825F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pe.Standard", "Pe.Standard\Pe.Standard.csproj", "{EF043BDE-4205-42A8-BEA1-E26B4FED0457}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pe.Standard.Test", "Pe.Standard.Test\Pe.Standard.Test.csproj", "{18425900-CBF3-46FE-905A-838140538B12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -166,6 +170,22 @@ Global
 		{5874965B-F278-4112-9533-B5F40811825F}.Release|x64.Build.0 = Release|x64
 		{5874965B-F278-4112-9533-B5F40811825F}.Release|x86.ActiveCfg = Release|x86
 		{5874965B-F278-4112-9533-B5F40811825F}.Release|x86.Build.0 = Release|x86
+		{EF043BDE-4205-42A8-BEA1-E26B4FED0457}.Debug|x64.ActiveCfg = Debug|x64
+		{EF043BDE-4205-42A8-BEA1-E26B4FED0457}.Debug|x64.Build.0 = Debug|x64
+		{EF043BDE-4205-42A8-BEA1-E26B4FED0457}.Debug|x86.ActiveCfg = Debug|x86
+		{EF043BDE-4205-42A8-BEA1-E26B4FED0457}.Debug|x86.Build.0 = Debug|x86
+		{EF043BDE-4205-42A8-BEA1-E26B4FED0457}.Release|x64.ActiveCfg = Release|x64
+		{EF043BDE-4205-42A8-BEA1-E26B4FED0457}.Release|x64.Build.0 = Release|x64
+		{EF043BDE-4205-42A8-BEA1-E26B4FED0457}.Release|x86.ActiveCfg = Release|x86
+		{EF043BDE-4205-42A8-BEA1-E26B4FED0457}.Release|x86.Build.0 = Release|x86
+		{18425900-CBF3-46FE-905A-838140538B12}.Debug|x64.ActiveCfg = Debug|x64
+		{18425900-CBF3-46FE-905A-838140538B12}.Debug|x64.Build.0 = Debug|x64
+		{18425900-CBF3-46FE-905A-838140538B12}.Debug|x86.ActiveCfg = Debug|x86
+		{18425900-CBF3-46FE-905A-838140538B12}.Debug|x86.Build.0 = Debug|x86
+		{18425900-CBF3-46FE-905A-838140538B12}.Release|x64.ActiveCfg = Release|x64
+		{18425900-CBF3-46FE-905A-838140538B12}.Release|x64.Build.0 = Release|x64
+		{18425900-CBF3-46FE-905A-838140538B12}.Release|x86.ActiveCfg = Release|x86
+		{18425900-CBF3-46FE-905A-838140538B12}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -185,10 +205,12 @@ Global
 		{19C7E31F-EFEE-4CD6-9297-A3BF47762C49} = {8253ACFA-E9A5-4F53-9D74-370093EAB2A4}
 		{1DF129D6-E2BC-4671-9012-646B8CE7C023} = {8253ACFA-E9A5-4F53-9D74-370093EAB2A4}
 		{5874965B-F278-4112-9533-B5F40811825F} = {8253ACFA-E9A5-4F53-9D74-370093EAB2A4}
+		{EF043BDE-4205-42A8-BEA1-E26B4FED0457} = {136A9EA3-D95D-4C23-A5EA-DD12A1E09F7B}
+		{18425900-CBF3-46FE-905A-838140538B12} = {136A9EA3-D95D-4C23-A5EA-DD12A1E09F7B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_PrefixTranslations = False
-		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
 		RESX_NeutralResourcesLanguage = ja-JP
+		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
+		RESX_PrefixTranslations = False
 	EndGlobalSection
 EndGlobal

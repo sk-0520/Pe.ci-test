@@ -1,7 +1,10 @@
-using ContentTypeTextNet.Pe.Core.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ContentTypeTextNet.Pe.Standard.Models;
 
-namespace ContentTypeTextNet.Pe.Core.Test.Models
+namespace ContentTypeTextNet.Pe.Standard.Test.Models
 {
     [TestClass]
     public class CounterTest
