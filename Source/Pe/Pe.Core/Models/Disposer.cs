@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Pe.Standard.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {

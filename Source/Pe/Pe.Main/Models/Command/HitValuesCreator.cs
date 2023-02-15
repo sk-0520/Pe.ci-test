@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Standard.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 

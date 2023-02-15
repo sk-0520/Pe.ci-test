@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Models
 {
     /// <summary>
     /// シーケンスの列挙中インデックス・データを保持する。
@@ -172,4 +173,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
     }
+
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using ContentTypeTextNet.Pe.Standard.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ContentTypeTextNet.Pe.Standard.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
