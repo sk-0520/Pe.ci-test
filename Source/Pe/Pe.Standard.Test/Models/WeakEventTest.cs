@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Standard.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static System.Formats.Asn1.AsnWriter;
 
-namespace ContentTypeTextNet.Pe.Core.Test.Models
+namespace ContentTypeTextNet.Pe.Standard.Test.Models
 {
     file class EventSource
     {
@@ -157,4 +156,5 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             WeakTestCount += 1;
         }
     }
+
 }

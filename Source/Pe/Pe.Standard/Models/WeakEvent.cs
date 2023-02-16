@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Models
 {
     /// <summary>
     /// 弱いイベントのなんか受け側のそれっぽいの。
@@ -200,4 +200,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
             : base(eventName)
         { }
     }
+
 }
