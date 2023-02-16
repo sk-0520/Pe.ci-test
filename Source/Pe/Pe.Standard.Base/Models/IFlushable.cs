@@ -1,7 +1,8 @@
 using System;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
+using System.Collections.Generic;
+using System.Text;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// 保留中の処理を実施。
