@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace ContentTypeTextNet.Pe.Standard.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// <see cref="IDisposable.Dispose"/>が行われたかどうかを確認できるようにする。

@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>ContentTypeTextNet.Pe.Standard.Test</RootNamespace>
+    <AssemblyName>Pe.Standard.Base.Test</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.Standard.Base.Test</RootNamespace>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
@@ -12,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pe.Standard\Pe.Standard.csproj" />
+    <ProjectReference Include="..\Pe.Standard.Base\Pe.Standard.Base.csproj" />
   </ItemGroup>
 
 </Project>

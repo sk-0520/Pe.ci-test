@@ -4,7 +4,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Standard.Models;
+using ContentTypeTextNet.Pe.Standard.Base.Models;
 using Drawing = System.Drawing;
 
 namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms

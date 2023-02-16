@@ -16,8 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pe.Bridge\Pe.Bridge.csproj" />
-    <ProjectReference Include="..\Pe.Standard\Pe.Standard.csproj" />
     <ProjectReference Include="..\Pe.PInvoke\Pe.PInvoke.csproj" />
+    <ProjectReference Include="..\Pe.Standard.Base\Pe.Standard.Base.csproj" />
   </ItemGroup>
 
   <ItemGroup>

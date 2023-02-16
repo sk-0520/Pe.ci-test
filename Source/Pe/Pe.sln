@@ -46,9 +46,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Reference.FileFi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Reference.Html", "Pe.Plugins.Reference.Html\Pe.Plugins.Reference.Html.csproj", "{5874965B-F278-4112-9533-B5F40811825F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard", "Pe.Standard\Pe.Standard.csproj", "{EF043BDE-4205-42A8-BEA1-E26B4FED0457}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Base", "Pe.Standard.Base\Pe.Standard.Base.csproj", "{EF043BDE-4205-42A8-BEA1-E26B4FED0457}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Test", "Pe.Standard.Test\Pe.Standard.Test.csproj", "{18425900-CBF3-46FE-905A-838140538B12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Base.Test", "Pe.Standard.Base.Test\Pe.Standard.Base.Test.csproj", "{18425900-CBF3-46FE-905A-838140538B12}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "library", "library", "{7D2653BF-3D84-44F4-8158-21179F8EE206}"
 EndProject
@@ -215,8 +215,8 @@ Global
 		{2B0DB64A-C511-4FD6-96D2-BA3E47F46C60} = {136A9EA3-D95D-4C23-A5EA-DD12A1E09F7B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_PrefixTranslations = False
-		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
 		RESX_NeutralResourcesLanguage = ja-JP
+		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
+		RESX_PrefixTranslations = False
 	EndGlobalSection
 EndGlobal

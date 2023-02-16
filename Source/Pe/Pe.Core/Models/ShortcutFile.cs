@@ -1,7 +1,7 @@
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Unmanaged;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
-using ContentTypeTextNet.Pe.Standard.Models;
+using ContentTypeTextNet.Pe.Standard.Base.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {

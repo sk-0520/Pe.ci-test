@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>ContentTypeTextNet.Pe.Standard</RootNamespace>
+    <AssemblyName>Pe.Standard.Base</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.Standard.Base</RootNamespace>
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 

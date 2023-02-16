@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Standard.Models;
+using ContentTypeTextNet.Pe.Standard.Base.Models;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
