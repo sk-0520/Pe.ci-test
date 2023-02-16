@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Standard.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection

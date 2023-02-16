@@ -1,4 +1,5 @@
 using System;
+using ContentTypeTextNet.Pe.Standard.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {

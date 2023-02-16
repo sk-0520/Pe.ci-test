@@ -2,6 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Standard.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Views
 {

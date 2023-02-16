@@ -5,6 +5,7 @@ using System.Text;
 using System.Timers;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Standard.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform

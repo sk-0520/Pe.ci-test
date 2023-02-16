@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Note;
+using ContentTypeTextNet.Pe.Standard.Models;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 

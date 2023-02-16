@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using ContentTypeTextNet.Pe.Standard.Models;
 #if ENABLED_PRISM7
 using Prism.Ioc;
 #endif

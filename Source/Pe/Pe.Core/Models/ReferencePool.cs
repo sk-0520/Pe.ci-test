@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
 using System.Timers;
+using ContentTypeTextNet.Pe.Standard.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models

@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using ContentTypeTextNet.Pe.Standard.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models
