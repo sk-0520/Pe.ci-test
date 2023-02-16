@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// ファイルのローテートを行う。
@@ -147,4 +147,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
 }
