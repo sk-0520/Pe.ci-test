@@ -1,6 +1,5 @@
 using System;
 using System.Timers;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Models
