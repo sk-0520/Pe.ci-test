@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// 命名変換処理。
