@@ -1,11 +1,13 @@
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Threading;
+using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
+using System.Threading;
+using System.Linq;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// ファイル関連の共通処理。
@@ -111,4 +113,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return plainName ?? Path.GetFileName(path) ?? string.Empty;
         }
     }
+
 }
