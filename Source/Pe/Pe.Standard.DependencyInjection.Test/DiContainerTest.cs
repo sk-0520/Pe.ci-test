@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Standard.DependencyInjection;
+using System.Text;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
+namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 {
     [TestClass]
     public class DiContainerTest
@@ -902,4 +902,5 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             //Assert.AreEqual("b:B", acutalDefinedName4);
         }
     }
+
 }
