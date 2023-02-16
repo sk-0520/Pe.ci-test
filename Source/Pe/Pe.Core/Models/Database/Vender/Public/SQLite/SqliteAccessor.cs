@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Standard.Base.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database
 {

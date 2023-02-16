@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Standard.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 

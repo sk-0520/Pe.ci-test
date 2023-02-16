@@ -34,6 +34,7 @@ using ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog;
 using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
 using ContentTypeTextNet.Pe.Main.Views.Note;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Standard.Base.Models;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 

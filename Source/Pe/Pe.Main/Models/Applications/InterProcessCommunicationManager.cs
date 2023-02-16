@@ -12,9 +12,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Standard.Base.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
-using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Standard.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
@@ -23,6 +24,7 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Standard.Database;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Standard.Base.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Note

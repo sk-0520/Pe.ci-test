@@ -72,7 +72,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#872: .NET Standard に分離できるものは分離する",
+						"comments": [
+							"意外といろいろ移せた"
+						]
 					},
 					{
 						"revision": "",

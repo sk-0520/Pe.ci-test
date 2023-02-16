@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Standard.Base.Models;
 using WinForms = System.Windows.Forms;
 
 namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms

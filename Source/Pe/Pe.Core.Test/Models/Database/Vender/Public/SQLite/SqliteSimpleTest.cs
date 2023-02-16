@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
+using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContentTypeTextNet.Pe.Core.Test.Models.Database.Vender.Public.SQLite

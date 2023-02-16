@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using ContentTypeTextNet.Pe.Standard.Base.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 {
