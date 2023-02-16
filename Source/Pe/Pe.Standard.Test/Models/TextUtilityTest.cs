@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using ContentTypeTextNet.Pe.Core.Models;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Standard.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ContentTypeTextNet.Pe.Core.Test.Models
+namespace ContentTypeTextNet.Pe.Standard.Test.Models
 {
     [TestClass]
     public class TextUtilityTest
@@ -183,4 +185,5 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.AreEqual(expected, actual);
         }
     }
+
 }

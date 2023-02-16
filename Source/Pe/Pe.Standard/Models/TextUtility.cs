@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Models
 {
     /// <summary>
     /// 文字列適当操作処理。
@@ -218,7 +218,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="target">対象文字列。</param>
         /// <param name="characters">削除対象文字。</param>
         /// <returns>削除後文字列。</returns>
-        public static string RemoveCharacters(string target, IReadOnlySet<char> characters)
+        public static string RemoveCharacters(string target, IReadOnlyCollection<char> characters)
         {
             if(characters.Count == 0) {
                 return target;
@@ -269,4 +269,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
 }
