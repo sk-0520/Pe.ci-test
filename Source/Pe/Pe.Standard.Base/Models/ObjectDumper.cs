@@ -6,9 +6,8 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     public struct ObjectDumpItem
     {
@@ -263,7 +262,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 var memberValue = GetMemberValue(target, member);
                 var children = EmptyChildren;
                 if(memberValue != null && !IgnoreNestedMembers.Contains(memberValue.GetType())) {
-                    if((memberValue is IEnumerable)) {
+                    if(memberValue is IEnumerable) {
                         children = DumpCore(memberValue, GetNextNest(nest), ignoreAutoMember);
                     }
                 }

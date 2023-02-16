@@ -54,6 +54,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "library", "library", "{7D26
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "platform", "platform", "{2B0DB64A-C511-4FD6-96D2-BA3E47F46C60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pe.Standard.Database", "Pe.Standard.Database\Pe.Standard.Database.csproj", "{48679959-1A87-4678-9F16-E25ABA9367C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -190,6 +192,14 @@ Global
 		{18425900-CBF3-46FE-905A-838140538B12}.Release|x64.Build.0 = Release|x64
 		{18425900-CBF3-46FE-905A-838140538B12}.Release|x86.ActiveCfg = Release|x86
 		{18425900-CBF3-46FE-905A-838140538B12}.Release|x86.Build.0 = Release|x86
+		{48679959-1A87-4678-9F16-E25ABA9367C3}.Debug|x64.ActiveCfg = Debug|x64
+		{48679959-1A87-4678-9F16-E25ABA9367C3}.Debug|x64.Build.0 = Debug|x64
+		{48679959-1A87-4678-9F16-E25ABA9367C3}.Debug|x86.ActiveCfg = Debug|x86
+		{48679959-1A87-4678-9F16-E25ABA9367C3}.Debug|x86.Build.0 = Debug|x86
+		{48679959-1A87-4678-9F16-E25ABA9367C3}.Release|x64.ActiveCfg = Release|x64
+		{48679959-1A87-4678-9F16-E25ABA9367C3}.Release|x64.Build.0 = Release|x64
+		{48679959-1A87-4678-9F16-E25ABA9367C3}.Release|x86.ActiveCfg = Release|x86
+		{48679959-1A87-4678-9F16-E25ABA9367C3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -213,10 +223,11 @@ Global
 		{18425900-CBF3-46FE-905A-838140538B12} = {7D2653BF-3D84-44F4-8158-21179F8EE206}
 		{7D2653BF-3D84-44F4-8158-21179F8EE206} = {136A9EA3-D95D-4C23-A5EA-DD12A1E09F7B}
 		{2B0DB64A-C511-4FD6-96D2-BA3E47F46C60} = {136A9EA3-D95D-4C23-A5EA-DD12A1E09F7B}
+		{48679959-1A87-4678-9F16-E25ABA9367C3} = {7D2653BF-3D84-44F4-8158-21179F8EE206}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_NeutralResourcesLanguage = ja-JP
-		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
 		RESX_PrefixTranslations = False
+		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
+		RESX_NeutralResourcesLanguage = ja-JP
 	EndGlobalSection
 EndGlobal

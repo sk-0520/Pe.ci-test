@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.Pe.Core.Models.Database
+namespace ContentTypeTextNet.Pe.Standard.Database
 {
     [Serializable]
     public class DatabaseContextException: Exception

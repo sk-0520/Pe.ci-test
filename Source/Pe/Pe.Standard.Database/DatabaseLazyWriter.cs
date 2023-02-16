@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Standard.Base;
 using ContentTypeTextNet.Pe.Standard.Base.Models;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Core.Models.Database
+namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// データベースへの遅延書き込み。
@@ -69,7 +68,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             #region property
 
             public Action<IDatabaseTransaction> Action { get; }
-            [DateTimeKind(DateTimeKind.Utc)]
             public DateTime StockTimestamp { get; }
 
             #endregion

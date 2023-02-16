@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao;
+using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
@@ -117,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
 
         class Di: IDatabaseImplementation
         {
-            public string NewLine { get; init; } = Environment.NewLine;
+            public string NewLine { get; set; } = Environment.NewLine;
 
             public bool SupportedTransactionDDL => throw new NotSupportedException();
 

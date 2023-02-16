@@ -4,11 +4,10 @@ using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using System.Threading;
-using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Standard.Base.Models;
 using ContentTypeTextNet.Pe.Standard.Base;
 
-namespace ContentTypeTextNet.Pe.Core.Models.Database
+namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// データベース実装におけるトランザクション処理。

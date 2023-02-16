@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.Pe.Core.Models.Database
+namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// データ読み込みを担当。

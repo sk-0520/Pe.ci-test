@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace ContentTypeTextNet.Pe.Core.Models.Database
+namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// データベース関連処理生成器。

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Standard.Base.Models;
 
-namespace ContentTypeTextNet.Pe.Core.Models.Database
+namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// DBMS依存DBブロックコメントとコメント文中で特殊処理する起点・終点。
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <summary>
         /// 行終端文字列を取得または初期設定。
         /// </summary>
-        string NewLine { get; init; }
+        string NewLine { get; set; }
 
         #endregion
 
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region IDatabaseImplementation
 
         /// <inheritdoc cref="IDatabaseImplementation.NewLine"/>
-        public string NewLine { get; init; } = Environment.NewLine;
+        public string NewLine { get; set; } = Environment.NewLine;
 
         /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionDDL"/>
         public virtual bool SupportedTransactionDDL { get; } = false;

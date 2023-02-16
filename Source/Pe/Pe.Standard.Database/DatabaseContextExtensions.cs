@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 // DBMS の依存は極力考えない処理。
 
-namespace ContentTypeTextNet.Pe.Core.Models.Database
+namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// 読み込み処理の安全のしおり。

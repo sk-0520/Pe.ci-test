@@ -1,4 +1,4 @@
-namespace ContentTypeTextNet.Pe.Core.Models.Database
+namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// データベース会話・データベース実装処理のペア。

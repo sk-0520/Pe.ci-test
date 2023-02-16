@@ -50,6 +50,7 @@
     <ProjectReference Include="..\Pe.Core\Pe.Core.csproj" />
     <ProjectReference Include="..\Pe.Plugins.DefaultTheme\Pe.Plugins.DefaultTheme.csproj" />
     <ProjectReference Include="..\Pe.Standard.Base\Pe.Standard.Base.csproj" />
+    <ProjectReference Include="..\Pe.Standard.Database\Pe.Standard.Database.csproj" />
   </ItemGroup>
 
   <ItemGroup>

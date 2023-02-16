@@ -3,6 +3,7 @@
 
 using System;
 using System.Data;
+using ContentTypeTextNet.Pe.Standard.Database;
 using Dapper;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite

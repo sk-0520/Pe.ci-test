@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Core.Models.Database
+namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// データベースに対する問い合わせ文を取得する。

@@ -6,14 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Standard.Base.Models;
 using Dapper;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Core.Models.Database
+namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// DBアクセス処理。
@@ -107,20 +104,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         IDatabaseTransaction BeginReadOnlyTransaction(IsolationLevel isolationLevel);
 
-        /// <inheritdoc cref="Batch(Func{IDatabaseContext, bool}, IsolationLevel)"/>
-        [Obsolete]
-        IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor);
-        /// <summary>
-        /// バッチ処理の実行。
-        /// <para>処理成功時に自動的にコミットされる。</para>
-        /// </summary>
-        /// <param name="executor">処理内容。</param>
-        /// <param name="isolationLevel"></param>
-        /// <returns>処理実行結果。</returns>
-        /// これもうなくしたいなぁ。
-        [Obsolete]
-        IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor, IsolationLevel isolationLevel);
-
         #endregion
     }
 
@@ -189,25 +172,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return con;
         }
 
-        [Obsolete]
-        protected virtual IResultFailureValue<Exception> BatchImpl(Func<IDatabaseTransaction> transactionCreator, Func<IDatabaseContext, bool> function)
-        {
-            ThrowIfDisposed();
-
-            var transaction = transactionCreator();
-            try {
-                var commit = function(transaction);
-                if(commit) {
-                    transaction.Commit();
-                } else {
-                    transaction.Rollback();
-                }
-                return ResultFailureValue.Success<Exception>();
-            } catch(Exception ex) {
-                transaction.Rollback();
-                return ResultFailureValue.Failure(ex);
-            }
-        }
 
         /// <summary>
         /// 問い合わせ文をログ出力。
@@ -227,12 +191,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
-        /// <param name="startTime"></param>
-        /// <param name="endTime"></param>
-        protected virtual void LoggingQueryResult<T>([MaybeNull] T result, [DateTimeKind(DateTimeKind.Utc)] DateTime startTime, [DateTimeKind(DateTimeKind.Utc)] DateTime endTime)
+        /// <param name="startUtcTime"></param>
+        /// <param name="endUtcTime"></param>
+        protected virtual void LoggingQueryResult<T>([MaybeNull] T result, DateTime startUtcTime, DateTime endUtcTime)
         {
             if(Logger.IsEnabled(LogLevel.Trace)) {
-                Logger.LogTrace("{0} -> {1}, {2}", typeof(T), result, endTime - startTime);
+                Logger.LogTrace("{0} -> {1}, {2}", typeof(T), result, endUtcTime - startUtcTime);
             }
         }
 
@@ -242,15 +206,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
         /// <param name="bufferd">偽の場合、<paramref name="result"/>に全数は存在しない。</param>
-        /// <param name="startTime"></param>
-        /// <param name="endTime"></param>
-        protected virtual void LoggingQueryResults<T>(IEnumerable<T> result, bool bufferd, [DateTimeKind(DateTimeKind.Utc)] DateTime startTime, [DateTimeKind(DateTimeKind.Utc)] DateTime endTime)
+        /// <param name="startUtcTime"></param>
+        /// <param name="endUtcTime"></param>
+        protected virtual void LoggingQueryResults<T>(IEnumerable<T> result, bool bufferd, DateTime startUtcTime, DateTime endUtcTime)
         {
             if(Logger.IsEnabled(LogLevel.Trace)) {
                 if(bufferd) {
-                    Logger.LogTrace("{0}<{1}> -> {2}, {3}", nameof(IEnumerable), typeof(T), result.Count(), endTime - startTime);
+                    Logger.LogTrace("{0}<{1}> -> {2}, {3}", nameof(IEnumerable), typeof(T), result.Count(), endUtcTime - startUtcTime);
                 } else {
-                    Logger.LogTrace("{0}<{1}> -> no buffered, {2}", nameof(IEnumerable), typeof(T), endTime - startTime);
+                    Logger.LogTrace("{0}<{1}> -> no buffered, {2}", nameof(IEnumerable), typeof(T), endUtcTime - startUtcTime);
                 }
             }
         }
@@ -260,14 +224,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <para><see cref="IDatabaseWriter.Execute(string, object?)"/>で使用される。</para>
         /// </summary>
         /// <param name="result"></param>
-        /// <param name="startTime"></param>
-        /// <param name="endTime"></param>
+        /// <param name="startUtcTime"></param>
+        /// <param name="endUtcTime"></param>
         [SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
         [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
-        protected virtual void LoggingExecuteResult(int result, [DateTimeKind(DateTimeKind.Utc)] DateTime startTime, [DateTimeKind(DateTimeKind.Utc)] DateTime endTime)
+        protected virtual void LoggingExecuteResult(int result, DateTime startUtcTime, DateTime endUtcTime)
         {
             if(Logger.IsEnabled(LogLevel.Trace)) {
-                Logger.LogTrace("result: {0}, {1}", result, endTime - startTime);
+                Logger.LogTrace("result: {0}, {1}", result, endUtcTime - startUtcTime);
             }
         }
 
@@ -276,15 +240,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <para><see cref="IDatabaseReader.GetDataTable(string, object?)"/>で使用される。</para>
         /// </summary>
         /// <param name="table"></param>
-        /// <param name="startTime"></param>
-        /// <param name="endTime"></param>
+        /// <param name="startUtcTime"></param>
+        /// <param name="endUtcTime"></param>
         [SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
         [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         [SuppressMessage("Performance", "HAA0503:Explicit new anonymous object allocation")]
-        protected virtual void LoggingDataTable(DataTable table, [DateTimeKind(DateTimeKind.Utc)] DateTime startTime, [DateTimeKind(DateTimeKind.Utc)] DateTime endTime)
+        protected virtual void LoggingDataTable(DataTable table, DateTime startUtcTime, DateTime endUtcTime)
         {
             if(Logger.IsEnabled(LogLevel.Trace)) {
-                Logger.LogTrace("table: {0} -> {1} * {2} = {3}, {4}", table.TableName, table.Columns.Count, table.Rows.Count, table.Columns.Count * table.Rows.Count, endTime - startTime);
+                Logger.LogTrace("table: {0} -> {1} * {2} = {3}, {4}", table.TableName, table.Columns.Count, table.Rows.Count, table.Columns.Count * table.Rows.Count, endUtcTime - startUtcTime);
             }
         }
 
@@ -774,23 +738,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             ThrowIfDisposed();
 
             return new ReadOnlyDatabaseTransaction(this, isolationLevel);
-        }
-
-
-        [Obsolete]
-        public IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor)
-        {
-            ThrowIfDisposed();
-
-            return BatchImpl(() => new DatabaseTransaction(this), executor);
-        }
-
-        [Obsolete]
-        public IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor, IsolationLevel isolationLevel)
-        {
-            ThrowIfDisposed();
-
-            return BatchImpl(() => new DatabaseTransaction(this, isolationLevel), executor);
         }
 
         #endregion
