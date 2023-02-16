@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using System.Threading;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// 時間単位でのオクテット使用量を算出。
@@ -102,6 +104,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         #endregion
-
     }
 }
