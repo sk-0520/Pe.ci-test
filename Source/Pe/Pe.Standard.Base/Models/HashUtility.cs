@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.DirectoryServices;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     public static class HashUtility
     {
