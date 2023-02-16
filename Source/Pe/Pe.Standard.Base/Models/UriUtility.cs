@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     public static class UriUtility
     {
@@ -83,4 +83,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
 }
