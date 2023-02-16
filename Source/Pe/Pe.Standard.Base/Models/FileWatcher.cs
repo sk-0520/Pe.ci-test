@@ -4,7 +4,7 @@ using System.IO;
 using ContentTypeTextNet.Pe.Standard.Base.Models;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     public class FileChangedEventArgs: EventArgs
     {
