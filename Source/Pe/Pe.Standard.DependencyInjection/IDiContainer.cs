@@ -9,7 +9,7 @@ using System.Reflection;
 using Prism.Ioc;
 #endif
 
-namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
+namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 {
     public interface IDiScopeContainerFactory
     {

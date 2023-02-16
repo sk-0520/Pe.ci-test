@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
+namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 {
     /// <summary>
     /// 注入マーク。

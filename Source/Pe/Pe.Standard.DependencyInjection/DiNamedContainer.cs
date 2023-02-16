@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
+namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 {
     /// <summary>
     /// 名前あり・なしでの分岐を管理するコンテナ。

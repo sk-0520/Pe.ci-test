@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
+namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 {
     /// <summary>
     /// 限定的なDIコンテナ。

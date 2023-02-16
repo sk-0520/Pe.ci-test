@@ -1,7 +1,7 @@
 using System;
 using ContentTypeTextNet.Pe.Standard.Base.Models;
 
-namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
+namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 {
     /// <summary>
     /// マッピング生成処理。

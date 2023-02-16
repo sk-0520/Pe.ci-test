@@ -16,7 +16,7 @@ using Prism.Ioc;
 
 // 勉強がてら作ってみる。
 
-namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
+namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 {
     /// <summary>
     /// DI コンテナ。

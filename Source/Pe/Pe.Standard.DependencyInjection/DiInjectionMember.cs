@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
+namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 {
     /// <summary>
     /// 対象オブジェクトのプロパティに値を設定。

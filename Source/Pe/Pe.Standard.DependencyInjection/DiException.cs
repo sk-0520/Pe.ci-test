@@ -1,6 +1,6 @@
 using System;
 
-namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
+namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 {
     /// <summary>
     /// DI処理でわっけ分からんことになったら投げられる例外。

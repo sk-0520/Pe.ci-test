@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
+namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 {
     /// <summary>
     /// パラメータに型判別できない(<c>default(T)</c>とか)を無理やり認識させるしゃあなし対応。
@@ -31,7 +31,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         public KeyValuePair<Type, object?> GetPair()
         {
             if(Type.IsValueType) {
-                return KeyValuePair.Create(Type, Activator.CreateInstance(Type));
+                var instance = Activator.CreateInstance(Type);
+#pragma warning disable CS8619 // 値における参照型の Null 許容性が、対象の型と一致しません。
+                return KeyValuePair.Create(Type, instance);
+#pragma warning restore CS8619 // 値における参照型の Null 許容性が、対象の型と一致しません。
             }
 
             return new KeyValuePair<Type, object?>(Type, null);
