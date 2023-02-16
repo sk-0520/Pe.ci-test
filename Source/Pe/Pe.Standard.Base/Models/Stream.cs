@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// <see cref="Stream"/>をラップするストリーム。

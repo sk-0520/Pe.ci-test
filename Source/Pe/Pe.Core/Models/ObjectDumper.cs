@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
+using ContentTypeTextNet.Pe.Standard.Base.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {

@@ -1,9 +1,13 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ContentTypeTextNet.Pe.Core.Models;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Standard.Base.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ContentTypeTextNet.Pe.Core.Test.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Test.Models
 {
     [TestClass]
     public class KeepStreamTest
@@ -86,4 +90,5 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
 
         #endregion
     }
+
 }
