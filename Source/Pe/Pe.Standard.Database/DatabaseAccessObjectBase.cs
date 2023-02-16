@@ -60,12 +60,12 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <summary>
         /// 行終端文字列を取得または初期設定。
         /// </summary>
-        public string NewLine { get; set; } = Environment.NewLine;
+        public string NewLine { get; set; /* TODO: 本来init */ } = Environment.NewLine;
         /// <summary>
         /// ファイル読み込み時に使用するキーの結合文字列。
         /// <para>ファイル名に使用出来てメソッド名に使用できない(できなさそう)なのが良い。</para>
         /// </summary>
-        protected string JoinSeparator { get; set; } = "!";
+        protected string JoinSeparator { get; set; /* TODO: 本来init */ } = "!";
 
         /// <summary>
         /// 処理対象文の取得用正規表現。

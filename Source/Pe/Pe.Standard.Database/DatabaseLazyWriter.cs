@@ -62,13 +62,13 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             public LazyStockItem(Action<IDatabaseTransaction> action)
             {
                 Action = action;
-                StockTimestamp = DateTime.UtcNow;
+                StockUtcTimestamp = DateTime.UtcNow;
             }
 
             #region property
 
             public Action<IDatabaseTransaction> Action { get; }
-            public DateTime StockTimestamp { get; }
+            public DateTime StockUtcTimestamp { get; }
 
             #endregion
         }
@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
                 // 既に登録されている処理が存在する場合は破棄しておく
                 if(uniqueKey != null) {
                     if(UniqueItems.TryGetValue(uniqueKey, out var stockedItem)) {
-                        Logger.LogTrace("待機処理破棄: {0} {1}", stockedItem.StockTimestamp, uniqueKey.GetHashCode());
+                        Logger.LogTrace("待機処理破棄: {0} {1}", stockedItem.StockUtcTimestamp, uniqueKey.GetHashCode());
                         StockItems.Remove(stockedItem);
                         UniqueItems.Remove(uniqueKey);
                     }

@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <summary>
         /// 行終端文字列を取得または初期設定。
         /// </summary>
-        string NewLine { get; set; }
+        string NewLine { get; set; /* TODO: 本来init */ }
 
         #endregion
 
