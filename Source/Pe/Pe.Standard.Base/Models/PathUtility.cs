@@ -5,11 +5,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows.Media;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// <see cref="PathUtility.ToSafeName(string, ToSafeNameDelegate)"/>で使用する想定。
