@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// 行毎処理の行データ。
@@ -47,11 +44,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 行結合時に使用される改行符。
         /// </summary>
-        public string NewLine { get; init; } = Environment.NewLine;
+        public string NewLine { get; set; } = Environment.NewLine;
         /// <summary>
         /// 行結合時の内部予約サイズ。
         /// </summary>
-        public int Capacity { get; init; } = 1024;
+        public int Capacity { get; set; } = 1024;
 
         #endregion
 
@@ -91,4 +88,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return builder.ToString();
         }
     }
+
 }

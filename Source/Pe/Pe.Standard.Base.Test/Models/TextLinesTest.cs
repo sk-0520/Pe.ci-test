@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Standard.Base.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ContentTypeTextNet.Pe.Core.Test.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Test.Models
 {
     [TestClass]
     public class TextLinesTest
@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
 
         #region function
 
-        TextLines CreateTextLines() =>  new TextLines() {
+        TextLines CreateTextLines() => new TextLines() {
             NewLine = NewLine,
         };
 
@@ -50,10 +50,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         public void AggregateNull_Test(string expected, string input)
         {
             var tl = CreateTextLines();
-            var actual = tl.Aggregate(input, i => (i.Number % 2) == 0 ? i.Line: null);
+            var actual = tl.Aggregate(input, i => (i.Number % 2) == 0 ? i.Line : null);
             Assert.AreEqual(expected, actual);
         }
 
         #endregion
     }
+
 }
