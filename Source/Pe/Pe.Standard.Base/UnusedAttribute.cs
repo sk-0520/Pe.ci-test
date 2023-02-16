@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace ContentTypeTextNet.Pe.Bridge.Models
+namespace ContentTypeTextNet.Pe.Standard.Base
 {
     /// <summary>
     /// ソース上で使用していない理由の種別。
@@ -45,4 +47,5 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         #endregion
     }
+
 }
