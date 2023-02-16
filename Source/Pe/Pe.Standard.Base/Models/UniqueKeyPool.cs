@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// 呼び出し側で一意なオブジェクトを生成するヘルパー。
@@ -39,4 +40,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
 }
