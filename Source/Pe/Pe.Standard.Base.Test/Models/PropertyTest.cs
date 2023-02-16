@@ -1,8 +1,12 @@
 using System;
-using ContentTypeTextNet.Pe.Core.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Standard.Base.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ContentTypeTextNet.Pe.Core.Test.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Test.Models
 {
     public class Get { int Property { get; } = 1; }
     public class GetSet { int Property { get; set; } }
@@ -98,4 +102,5 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
 
         #endregion
     }
+
 }

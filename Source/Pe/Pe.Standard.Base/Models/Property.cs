@@ -1,5 +1,5 @@
 #if DEBUG || BETA
-#define CHECK_PROPERTY_NAME
+#   define CHECK_PROPERTY_NAME
 #endif
 
 using System;
@@ -9,8 +9,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// 汎用プロパティ取得処理。
@@ -364,4 +365,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
 }
