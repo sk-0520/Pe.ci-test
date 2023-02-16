@@ -1894,7 +1894,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
             var endTimestamp = DateTime.UtcNow;
             var now = GC.GetTotalMemory(false);
-            var sizeConverter = ApplicationDiContainer.Build<Core.Models.SizeConverter>();
+            var sizeConverter = ApplicationDiContainer.Build<Standard.Base.Models.SizeConverter>();
             Logger.LogInformation(
                 "GC(FULL:{0}): {1}({2}) -> {3}({4}), 差分: {5}({6}), 所要時間: {7}",
                 full,

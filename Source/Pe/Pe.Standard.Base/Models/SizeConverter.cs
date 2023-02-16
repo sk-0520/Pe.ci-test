@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// (バイト: IEC_80000-13)サイズ変換処理。
@@ -62,4 +64,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
 }
