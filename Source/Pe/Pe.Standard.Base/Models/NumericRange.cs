@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// 連続した数値的なものを扱う。
@@ -202,4 +202,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
 }
