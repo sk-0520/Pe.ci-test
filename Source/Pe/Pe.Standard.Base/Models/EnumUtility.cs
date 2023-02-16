@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Standard.Base.Models
 {
     /// <summary>
     /// <c>enum</c>のしょうもない処理ユーティリティ。
