@@ -50,7 +50,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Base", "Pe.Stan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Base.Test", "Pe.Standard.Base.Test\Pe.Standard.Base.Test.csproj", "{18425900-CBF3-46FE-905A-838140538B12}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "library", "library", "{7D2653BF-3D84-44F4-8158-21179F8EE206}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "standard", "standard", "{7D2653BF-3D84-44F4-8158-21179F8EE206}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "platform", "platform", "{2B0DB64A-C511-4FD6-96D2-BA3E47F46C60}"
 EndProject
@@ -58,7 +58,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Database", "Pe.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.DependencyInjection", "Pe.Standard.DependencyInjection\Pe.Standard.DependencyInjection.csproj", "{29ED4EF5-E878-45A7-8273-7A5ACCB5A200}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pe.Standard.DependencyInjection.Test", "Pe.Standard.DependencyInjection.Test\Pe.Standard.DependencyInjection.Test.csproj", "{13665FFC-B8BB-4E27-B5EF-6B1B0035C497}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.DependencyInjection.Test", "Pe.Standard.DependencyInjection.Test\Pe.Standard.DependencyInjection.Test.csproj", "{13665FFC-B8BB-4E27-B5EF-6B1B0035C497}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -248,8 +248,8 @@ Global
 		{13665FFC-B8BB-4E27-B5EF-6B1B0035C497} = {7D2653BF-3D84-44F4-8158-21179F8EE206}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_PrefixTranslations = False
-		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
 		RESX_NeutralResourcesLanguage = ja-JP
+		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
+		RESX_PrefixTranslations = False
 	EndGlobalSection
 EndGlobal
