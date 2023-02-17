@@ -7,10 +7,10 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Configuration;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {

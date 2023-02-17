@@ -4,7 +4,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
+using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
+using ContentTypeTextNet.Pe.Standard.Base;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;

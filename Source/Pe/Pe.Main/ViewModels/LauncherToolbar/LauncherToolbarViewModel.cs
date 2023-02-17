@@ -12,7 +12,6 @@ using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
@@ -30,6 +29,7 @@ using ContentTypeTextNet.Pe.Main.Views.Extend;
 using ContentTypeTextNet.Pe.Main.Views.LauncherToolbar;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {

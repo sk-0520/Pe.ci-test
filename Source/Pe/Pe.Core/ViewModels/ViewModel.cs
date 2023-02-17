@@ -13,7 +13,7 @@ using System.Runtime.Serialization;
 using System.Windows.Input;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
+using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
 using Prism.Mvvm;
 

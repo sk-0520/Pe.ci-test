@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Xml;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 #if ENABLED_NETCoreJSON
 using System.Text.Encodings.Web;

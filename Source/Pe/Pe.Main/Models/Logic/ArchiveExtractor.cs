@@ -4,7 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
+using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
 using SevenZipExtractor;
 

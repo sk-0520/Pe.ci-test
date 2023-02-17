@@ -10,7 +10,6 @@ using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -24,6 +23,7 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 {

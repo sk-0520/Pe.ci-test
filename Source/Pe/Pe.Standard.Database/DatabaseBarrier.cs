@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
 
 namespace ContentTypeTextNet.Pe.Standard.Database
 {

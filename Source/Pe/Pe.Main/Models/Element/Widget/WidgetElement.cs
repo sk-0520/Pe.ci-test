@@ -18,7 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.WebView;
 using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
 using ContentTypeTextNet.Pe.Main.Views.Converter;
 using ContentTypeTextNet.Pe.Main.Views.Widget;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
+using ContentTypeTextNet.Pe.Standard.Base;
 using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 

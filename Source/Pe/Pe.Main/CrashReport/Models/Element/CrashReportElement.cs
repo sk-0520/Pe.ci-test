@@ -8,12 +8,12 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 {

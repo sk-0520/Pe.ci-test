@@ -23,7 +23,6 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Standard.DependencyInjection;
 using ContentTypeTextNet.Pe.Core.ViewModels;
-using ContentTypeTextNet.Pe.Standard.Base.Models;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -65,6 +64,7 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -1895,7 +1895,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
             var endTimestamp = DateTime.UtcNow;
             var now = GC.GetTotalMemory(false);
-            var sizeConverter = ApplicationDiContainer.Build<Standard.Base.Models.SizeConverter>();
+            var sizeConverter = ApplicationDiContainer.Build<Standard.Base.SizeConverter>();
             Logger.LogInformation(
                 "GC(FULL:{0}): {1}({2}) -> {3}({4}), 差分: {5}({6}), 所要時間: {7}",
                 full,
