@@ -198,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 return;
             }
             TuneWindow(window);
-            WindowItem = new WindowItem(WindowKind.Widget, this, callerViewModel, window) {
+            WindowItem = new WindowItem(Manager.WindowKind.Widget, this, callerViewModel, window) {
                 CloseToDispose = callerViewModel is TemporaryWidgetViewModel, // ダミーのやつは殺して、通知領域のやつは生かしておく
             };
             WindowManager.Register(WindowItem);

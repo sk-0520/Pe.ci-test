@@ -412,7 +412,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 Logger.LogWarning("現在編集中: {0}", LauncherItemId);
                 //OrderManager.FlashCustomizeLauncherItem(LauncherItemId);
                 //WindowManager.Flash()
-                var items = WindowManager.GetWindowItems(WindowKind.LauncherCustomize);
+                var items = WindowManager.GetWindowItems(Manager.WindowKind.LauncherCustomize);
                 var item = items.FirstOrDefault(i => ((ILauncherItemId)i.ViewModel).LauncherItemId == LauncherItemId);
                 if(item != null) {
                     WindowManager.Flash(item);

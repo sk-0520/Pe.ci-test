@@ -14,9 +14,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     public class LauncherItemAddonContextFactory: PluginContextFactoryBase
     {
-        public LauncherItemAddonContextFactory(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemAddonContextFactory(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IViewManager viewManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(databaseBarrierPack, databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager, loggerFactory)
         {
+            ViewManager = viewManager;
             PlatformTheme = platformTheme;
             ImageLoader = imageLoader;
             MediaConverter = mediaConverter;
@@ -26,6 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region property
 
+        private IViewManager ViewManager { get; }
         private IPlatformTheme PlatformTheme { get; }
         private IImageLoader ImageLoader { get; }
         private IMediaConverter MediaConverter { get; }
@@ -118,6 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 new SkeletonImplements(),
                 pluginInformations,
                 UserAgentManager,
+                ViewManager,
                 PlatformTheme,
                 ImageLoader,
                 MediaConverter,

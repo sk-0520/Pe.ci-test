@@ -98,6 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             NotifyManagerImpl.LauncherGroupItemRegistered += NotifyManagerImpl_LauncherGroupItemRegistered;
 
+            // DIコンテナ登録(マネージャ系)
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
             ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
             ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManagerImpl);

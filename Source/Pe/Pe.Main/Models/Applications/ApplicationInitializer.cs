@@ -254,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
                     acceptModel.Initialize();
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
-                    windowManager.Register(new WindowItem(WindowKind.Accept, acceptModel, view));
+                    windowManager.Register(new WindowItem(Manager.WindowKind.Accept, acceptModel, view));
                     view.ShowDialog();
 
                     return new AcceptResult(
@@ -382,6 +382,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 statementAccessor = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(environmentParameters.SqlStatementAccessorFile, true, true), loggerFactory);
             }
 
+            // DIコンテナ登録(なんかいろいろ)
             container
                 .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
                 .Register<IDiContainer, ApplicationDiContainer>(container)
@@ -412,6 +413,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
                 .Register<IDispatcherWrapper, IDispatcherWrapper>(DiLifecycle.Transient, () => new ApplicationDispatcherWrapper(environmentParameters.ApplicationConfiguration.General.DispatcherWait))
                 .Register(cultureService)
+                .Register<IViewManager, ViewManager>(DiLifecycle.Transient)
                 .Register<IImageLoader, ImageLoader>(DiLifecycle.Transient)
                 .Register<IMediaConverter, MediaConverter>(DiLifecycle.Transient)
                 .Register<IPolicy, Policy>(DiLifecycle.Transient)

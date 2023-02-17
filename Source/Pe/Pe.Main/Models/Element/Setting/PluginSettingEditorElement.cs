@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginSettingEditorElement: ElementBase, IPluginId
     {
-        internal PluginSettingEditorElement(PluginStateData pluginState, IPlugin? plugin, PreferencesContextFactory preferencesContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal PluginSettingEditorElement(PluginStateData pluginState, IPlugin? plugin, PreferencesContextFactory preferencesContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IHttpUserAgentFactory userAgentFactory, IViewManager viewManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             PluginState = pluginState;
@@ -29,6 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             MainDatabaseBarrier = mainDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
             UserAgentFactory = userAgentFactory;
+
+            ViewManager = viewManager;
             PlatformTheme = platformTheme;
             ImageLoader = imageLoader;
             MediaConverter = mediaConverter;
@@ -66,6 +68,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         private IMainDatabaseBarrier MainDatabaseBarrier { get; }
         private IDatabaseStatementLoader DatabaseStatementLoader { get; }
         private IHttpUserAgentFactory UserAgentFactory { get; }
+
+        private IViewManager ViewManager { get; }
         private IPlatformTheme PlatformTheme { get; }
         private IImageLoader ImageLoader { get; }
         private IMediaConverter MediaConverter { get; }
@@ -107,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             using(var reader = PreferencesContextFactory.BarrierRead()) {
                 using var context = PreferencesContextFactory.CreateLoadContext(Plugin.PluginInformations, reader);
                 var skeleton = new SkeletonImplements();
-                var parameter = new PreferencesParameter(skeleton, Plugin.PluginInformations, UserAgentFactory, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
+                var parameter = new PreferencesParameter(skeleton, Plugin.PluginInformations, UserAgentFactory, ViewManager, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
                 result = Preferences.BeginPreferences(context, parameter);
             }
             StartedPreferences = true;

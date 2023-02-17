@@ -11,6 +11,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     {
         #region property
 
+        /// <inheritdoc cref="IViewManager"/>
+        IViewManager ViewManager { get; }
         /// <inheritdoc cref="IPlatformTheme"/>
         IPlatformTheme PlatformTheme { get; }
         /// <inheritdoc cref="IImageLoader"/>

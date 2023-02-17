@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         private DefaultTheme? _defaultTheme;
 
         #endregion
-        public ThemeContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ThemeContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IViewManager viewManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -37,6 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             EnvironmentParameters = environmentParameters;
             UserAgentManager = userAgentManager;
 
+            ViewManager = viewManager;
             PlatformTheme = platformTheme;
             ImageLoader = imageLoader;
             MediaConverter = mediaConverter;
@@ -56,6 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         private EnvironmentParameters EnvironmentParameters { get; }
         private IUserAgentManager UserAgentManager { get; }
 
+        private IViewManager ViewManager { get; }
         private IPlatformTheme PlatformTheme { get; }
         private IImageLoader ImageLoader { get; }
         private IMediaConverter MediaConverter { get; }
@@ -80,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
         #region function
 
-        private ThemeParameter CreateParameter(IPlugin addon) => new ThemeParameter(addon.PluginInformations, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
+        private ThemeParameter CreateParameter(IPlugin addon) => new ThemeParameter(addon.PluginInformations, ViewManager, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
 
         public void Add(ITheme theme)
         {

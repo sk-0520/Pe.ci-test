@@ -20,6 +20,11 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
     /// </summary>
     public class DiContainer: DisposerBase, IDiRegisterContainer
     {
+        #region define
+
+        private const BindingFlags ConstructorBindingFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
+
+        #endregion
         /// <summary>
         /// プールしているオブジェクトはコンテナに任せる。
         /// </summary>
@@ -334,7 +339,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             }
 
             // 属性付きで引数が多いものを優先
-            var constructorItems = objectType.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
+            var constructorItems = objectType.GetConstructors(ConstructorBindingFlags)
                 .Select(c => (
                     constructor: c,
                     parameters: c.GetParameters(),
@@ -373,7 +378,12 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
                 return raw;
             }
 
-            throw new DiException($"{type}: create error {name}");
+            // 失敗したのでコンストラクタ全部出して死ぬ
+            var exceptionConstructorLines = GetMappingType(type, name).GetConstructors(ConstructorBindingFlags)
+                .Select(a => a.ToString())
+                .JoinString(Environment.NewLine)
+            ;
+            throw new DiException($"{type}: create error{Environment.NewLine}{exceptionConstructorLines}");
         }
 
         private bool TryGetInstance(Type interfaceType, string name, IReadOnlyList<object> manualParameters, [MaybeNullWhen(false)] out object value)
