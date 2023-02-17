@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Base", "..\Pe\P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Database", "..\Pe\Pe.Standard.Database\Pe.Standard.Database.csproj", "{103D0407-B9F8-4437-89D2-D034198147AC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.DependencyInjection", "..\Pe\Pe.Standard.DependencyInjection\Pe.Standard.DependencyInjection.csproj", "{957D6AA0-9E8B-4A70-9F71-C18F9D05FA4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -103,6 +105,14 @@ Global
 		{103D0407-B9F8-4437-89D2-D034198147AC}.Release|x64.Build.0 = Release|x64
 		{103D0407-B9F8-4437-89D2-D034198147AC}.Release|x86.ActiveCfg = Release|x86
 		{103D0407-B9F8-4437-89D2-D034198147AC}.Release|x86.Build.0 = Release|x86
+		{957D6AA0-9E8B-4A70-9F71-C18F9D05FA4D}.Debug|x64.ActiveCfg = Debug|x64
+		{957D6AA0-9E8B-4A70-9F71-C18F9D05FA4D}.Debug|x64.Build.0 = Debug|x64
+		{957D6AA0-9E8B-4A70-9F71-C18F9D05FA4D}.Debug|x86.ActiveCfg = Debug|x86
+		{957D6AA0-9E8B-4A70-9F71-C18F9D05FA4D}.Debug|x86.Build.0 = Debug|x86
+		{957D6AA0-9E8B-4A70-9F71-C18F9D05FA4D}.Release|x64.ActiveCfg = Release|x64
+		{957D6AA0-9E8B-4A70-9F71-C18F9D05FA4D}.Release|x64.Build.0 = Release|x64
+		{957D6AA0-9E8B-4A70-9F71-C18F9D05FA4D}.Release|x86.ActiveCfg = Release|x86
+		{957D6AA0-9E8B-4A70-9F71-C18F9D05FA4D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +125,7 @@ Global
 		{1A57E80C-D0B3-430E-BA9D-6693831C0F41} = {C44D8F5B-8F4C-44B1-AD50-E1635FDAA67B}
 		{4BD2CB3D-E6C6-4835-A209-6B1F856FC231} = {C44D8F5B-8F4C-44B1-AD50-E1635FDAA67B}
 		{103D0407-B9F8-4437-89D2-D034198147AC} = {C44D8F5B-8F4C-44B1-AD50-E1635FDAA67B}
+		{957D6AA0-9E8B-4A70-9F71-C18F9D05FA4D} = {C44D8F5B-8F4C-44B1-AD50-E1635FDAA67B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F52DE156-059A-48B8-9DF3-E3834C34FEA9}
