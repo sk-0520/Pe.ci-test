@@ -38,12 +38,12 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 case "MD5":
                     return MD5.Create();
 
-                case "System.Security.Cryptography.SHA1":
-                case "System.Security.Cryptography.SHA256":
-                case "System.Security.Cryptography.SHA384":
-                case "System.Security.Cryptography.SHA512":
-                case "System.Security.Cryptography.MD5":
-                case "System.Security.Cryptography.HashAlgorithm":
+                case "SYSTEM.SECURITY.CRYPTOGRAPHY.SHA1":
+                case "SYSTEM.SECURITY.CRYPTOGRAPHY.SHA256":
+                case "SYSTEM.SECURITY.CRYPTOGRAPHY.SHA384":
+                case "SYSTEM.SECURITY.CRYPTOGRAPHY.SHA512":
+                case "SYSTEM.SECURITY.CRYPTOGRAPHY.MD5":
+                case "SYSTEM.SECURITY.CRYPTOGRAPHY.HASHALGORITHM":
                     throw new NotSupportedException(algorithmName);
 
                 default:
