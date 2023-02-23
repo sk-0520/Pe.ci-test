@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
             var statement = LoadStatement();
-            var binaryImageItems = imageBinary.GroupSplit(80 * 1024).ToArray();
+            var binaryImageItems = imageBinary.Chunk(80 * 1024).ToArray();
             var dto = new LauncherItemIconsDto() {
                 LauncherItemId = launcherItemId,
                 IconBox = iconBoxTransfer.ToString(iconScale.Box),

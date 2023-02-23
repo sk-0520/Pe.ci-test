@@ -56,22 +56,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     public static class IEnumerableExtensions
     {
         /// <summary>
-        /// <paramref name="splitCount"/>数で分割する。
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="source"></param>
-        /// <param name="splitCount"></param>
-        /// <returns></returns>
-        public static IEnumerable<IEnumerable<T>> GroupSplit<T>(this IEnumerable<T> source, int splitCount)
-        {
-            return source
-                .Counting()
-                .GroupBy(i => i.Number / splitCount)
-                .Select(g => g.Select(i => i.Value))
-            ;
-        }
-
-        /// <summary>
         /// 0基点のインデックスと値ペア列挙。
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
