@@ -17,14 +17,25 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 {
     /// <summary>
     /// DI コンテナ。
+    /// <para>コンストラクタ・メンバインジェクションに対応。</para>
+    /// TODO: 関数注入なかったっけか・・・？
     /// </summary>
     public class DiContainer: DisposerBase, IDiRegisterContainer
     {
         #region define
 
+        /// <summary>
+        /// コンストラクタ取得フラグ。
+        /// </summary>
         private const BindingFlags ConstructorBindingFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
 
+        /// <summary>
+        /// メンバ取得フラグ。
+        /// </summary>
+        private const BindingFlags MemberBindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty;
+
         #endregion
+
         /// <summary>
         /// プールしているオブジェクトはコンテナに任せる。
         /// </summary>
@@ -448,7 +459,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 #endif
         {
             var targetType = GetMappingType(typeof(TObject), name);
-            var memberItems = targetType.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty)
+            var memberItems = targetType.GetMembers(MemberBindingFlags)
                 .Select(m => new { MemberInfo = m, Inject = m.GetCustomAttribute<InjectAttribute>() })
                 .ToList()
             ;
@@ -726,7 +737,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         /// <inheritdoc cref="IDiRegisterContainer.RegisterMember(Type, string, Type, string)"/>
         public IDiRegisterContainer RegisterMember(Type baseType, string memberName, Type objectType, string name)
         {
-            var memberInfo = baseType.GetMember(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty);
+            var memberInfo = baseType.GetMember(memberName, MemberBindingFlags);
             if(memberInfo == null || memberInfo.Length != 1) {
                 throw new NullReferenceException(memberName);
             }

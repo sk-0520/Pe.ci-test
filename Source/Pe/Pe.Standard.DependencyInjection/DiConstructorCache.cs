@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         private IEnumerable<ParameterExpression> CreateParameterExpressions()
         {
             return ParameterInfos
-                .Select((p, i) => Expression.Parameter(typeof(object), "wrapperArg_" + i.ToString(CultureInfo.InvariantCulture)))
+                .Select((p, i) => Expression.Parameter(typeof(object), p.Name))
             ;
         }
 
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
                     ),
                     typeof(object)
                 ),
-                "constructorNewParams_" + ParameterInfos.Count.ToString(CultureInfo.InvariantCulture),
+                ConstructorInfo.ReflectedType.FullName + "_" + ParameterInfos.Count.ToString(CultureInfo.InvariantCulture),
                 parameterExpressions
             );
             var creator = constructorNewParams.Compile();
