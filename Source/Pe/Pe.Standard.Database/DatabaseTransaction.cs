@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using System.Threading;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Diagnostics;
 
 namespace ContentTypeTextNet.Pe.Standard.Database
 {
@@ -18,8 +19,9 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         /// <summary>
         /// CRL上のトランザクション実体。
+        /// <para>トランザクションを開始しない場合 <c>null</c> となり、扱いは <see cref="IDatabaseTransaction"/> 実装側依存となる。</para>
         /// </summary>
-        IDbTransaction Transaction { get; }
+        IDbTransaction? Transaction { get; }
 
         #endregion
 
@@ -40,27 +42,48 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
     /// <summary>
     /// トランザクション中の処理をサポート。
-    /// <para>基本的にはユーザーコードでお目にかからない。往々にして<see cref="IDatabaseContext"/>がすべて上位から良しなに対応する。</para>
+    /// <para>基本的にはユーザーコードで登場せず <see cref="IDatabaseContext"/>がすべて上位から良しなに対応する。</para>
     /// </summary>
     public class DatabaseTransaction: DisposerBase, IDatabaseTransaction
     {
-        public DatabaseTransaction(IDatabaseAccessor databaseAccessor)
+        /// <summary>
+        /// 生成。
+        /// </summary>
+        /// <param name="beginTransaction">トランザクションを開始するか。</param>
+        /// <param name="databaseAccessor">アクセサ。</param>
+        public DatabaseTransaction(bool beginTransaction, IDatabaseAccessor databaseAccessor)
         {
             DatabaseAccessor = databaseAccessor;
             Implementation = DatabaseAccessor.DatabaseFactory.CreateImplementation();
-            Transaction = DatabaseAccessor.BaseConnection.BeginTransaction();
+
+            if(beginTransaction) {
+                Transaction = DatabaseAccessor.BaseConnection.BeginTransaction();
+            } else {
+                Transaction = null;
+            }
         }
 
-        public DatabaseTransaction(IDatabaseAccessor databaseAccessor, IsolationLevel isolationLevel)
+        /// <summary>
+        /// 生成。
+        /// </summary>
+        /// <param name="beginTransaction">トランザクションを開始するか。</param>
+        /// <param name="databaseAccessor">アクセサ。</param>
+        /// <param name="isolationLevel"><see cref="IsolationLevel"/></param>
+        public DatabaseTransaction(bool beginTransaction, IDatabaseAccessor databaseAccessor, IsolationLevel isolationLevel)
         {
             DatabaseAccessor = databaseAccessor;
             Implementation = DatabaseAccessor.DatabaseFactory.CreateImplementation();
-            Transaction = DatabaseAccessor.BaseConnection.BeginTransaction(isolationLevel);
+
+            if(beginTransaction) {
+                Transaction = DatabaseAccessor.BaseConnection.BeginTransaction(isolationLevel);
+            } else {
+                Transaction = null;
+            }
         }
 
         #region property
 
-        IDatabaseAccessor DatabaseAccessor { get; [Unused(UnusedKinds.Dispose)] set; }
+        private IDatabaseAccessor DatabaseAccessor { get; [Unused(UnusedKinds.Dispose)] set; }
         public bool Committed { get; private set; }
 
         #endregion
@@ -71,11 +94,13 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <see cref="IDatabaseContext"/>としての自身を返す。
         /// </summary>
         public IDatabaseContext Context => this;
-        public IDbTransaction Transaction { get; [Unused(UnusedKinds.Dispose)] private set; }
+        public IDbTransaction? Transaction { get; [Unused(UnusedKinds.Dispose)] private set; }
         public IDatabaseImplementation Implementation { get; }
 
         public virtual void Commit()
         {
+            Debug.Assert(Transaction is not null);
+
             ThrowIfDisposed();
 
             Committed = true;
@@ -86,7 +111,9 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         {
             ThrowIfDisposed();
 
-            Transaction.Rollback();
+            if(Transaction is not null) {
+                Transaction.Rollback();
+            }
         }
 
         public IDataReader GetDataReader(string statement, object? parameter = null)
@@ -221,8 +248,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
                     if(!Committed) {
                         Rollback();
                     }
-                    Transaction.Dispose();
-                    Transaction = null!;
+                    if(Transaction is not null) {
+                        Transaction.Dispose();
+                    }
+                    Transaction = null;
                     DatabaseAccessor = null!;
                 }
             }
@@ -233,14 +262,14 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         #endregion
     }
 
-    public class ReadOnlyDatabaseTransaction: DatabaseTransaction
+    public sealed class ReadOnlyDatabaseTransaction: DatabaseTransaction
     {
-        public ReadOnlyDatabaseTransaction(IDatabaseAccessor databaseAccessor)
-            : base(databaseAccessor)
+        public ReadOnlyDatabaseTransaction(bool beginTransaction, IDatabaseAccessor databaseAccessor)
+            : base(beginTransaction, databaseAccessor)
         { }
 
-        public ReadOnlyDatabaseTransaction(IDatabaseAccessor databaseAccessor, IsolationLevel isolationLevel)
-            : base(databaseAccessor, isolationLevel)
+        public ReadOnlyDatabaseTransaction(bool beginTransaction, IDatabaseAccessor databaseAccessor, IsolationLevel isolationLevel)
+            : base(beginTransaction, databaseAccessor, isolationLevel)
         { }
 
         #region DatabaseTransaction

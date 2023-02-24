@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         private IDisposable Locker { get; [Unused(UnusedKinds.Dispose)] set; }
         public IDatabaseTransaction Transaction { get; [Unused(UnusedKinds.Dispose)] set; }
 
-        IDbTransaction IDatabaseTransaction.Transaction => Transaction.Transaction;
+        IDbTransaction? IDatabaseTransaction.Transaction => Transaction.Transaction;
 
         public IDatabaseImplementation Implementation { get; }
 

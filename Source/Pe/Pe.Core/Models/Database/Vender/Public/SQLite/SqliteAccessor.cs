@@ -10,138 +10,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 {
-    internal sealed class SqliteReadOnlyTransaction: IDatabaseTransaction
-    {
-        public SqliteReadOnlyTransaction(IDatabaseAccessor databaseAccessor)
-        {
-            DatabaseAccessor = databaseAccessor;
-            Implementation = DatabaseAccessor.DatabaseFactory.CreateImplementation();
-        }
-
-        public SqliteReadOnlyTransaction(IDatabaseAccessor databaseAccessor, IsolationLevel isolationLevel)
-        {
-            DatabaseAccessor = databaseAccessor;
-            Implementation = DatabaseAccessor.DatabaseFactory.CreateImplementation();
-        }
-
-        #region property
-
-        IDatabaseAccessor DatabaseAccessor { get; }
-
-        #endregion
-
-        #region IDatabaseTransaction
-
-        public IDatabaseContext Context => this;
-        public IDbTransaction Transaction => throw new NotSupportedException();
-
-        public IDatabaseImplementation Implementation { get; }
-
-        public void Commit()
-        {
-            throw new NotSupportedException();
-        }
-
-        public void Rollback()
-        {
-            //throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            //throw new NotImplementedException();
-        }
-
-        public IDataReader GetDataReader(string statement, object? parameter = null)
-        {
-            return DatabaseAccessor.GetDataReader(statement, parameter);
-        }
-
-        public Task<IDataReader> GetDataReaderAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
-        {
-            return DatabaseAccessor.GetDataReaderAsync(this, statement, parameter, cancellationToken);
-        }
-
-        public DataTable GetDataTable(string statement, object? parameter = null)
-        {
-            return DatabaseAccessor.GetDataTable(statement, parameter);
-        }
-
-        public IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true)
-        {
-            return DatabaseAccessor.Query<T>(statement, parameter, buffered);
-        }
-
-        public Task<IEnumerable<T>> QueryAsync<T>(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
-        {
-            return DatabaseAccessor.QueryAsync<T>(statement, parameter, buffered, cancellationToken);
-        }
-
-        public IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
-        {
-            return DatabaseAccessor.Query<dynamic>(statement, parameter, buffered);
-        }
-
-        public Task<IEnumerable<dynamic>> QueryAsync(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
-        {
-            return DatabaseAccessor.QueryAsync(statement, parameter, buffered, cancellationToken);
-        }
-
-        public T QueryFirst<T>(string statement, object? parameter = null)
-        {
-            return DatabaseAccessor.QueryFirst<T>(statement, parameter);
-        }
-
-        public Task<T> QueryFirstAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
-        {
-            return DatabaseAccessor.QueryFirstAsync<T>(statement, parameter, cancellationToken);
-        }
-
-        [return: MaybeNull]
-        public T QueryFirstOrDefault<T>(string statement, object? parameter = null)
-        {
-            return DatabaseAccessor.QueryFirstOrDefault<T>(statement, parameter);
-        }
-
-        public Task<T?> QueryFirstOrDefaultAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
-        {
-            return DatabaseAccessor.QueryFirstOrDefaultAsync<T>(statement, parameter, cancellationToken);
-        }
-
-        public T QuerySingle<T>(string statement, object? parameter = null)
-        {
-            return DatabaseAccessor.QuerySingle<T>(statement, parameter);
-        }
-
-        public Task<T> QuerySingleAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
-        {
-            return DatabaseAccessor.QuerySingleAsync<T>(statement, parameter, cancellationToken);
-        }
-
-        [return: MaybeNull]
-        public T QuerySingleOrDefault<T>(string statement, object? parameter = null)
-        {
-            return DatabaseAccessor.QuerySingleOrDefault<T>(this, statement, parameter);
-        }
-
-        public Task<T?> QuerySingleOrDefaultAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
-        {
-            return DatabaseAccessor.QuerySingleOrDefaultAsync<T>(this, statement, parameter, cancellationToken);
-        }
-
-        public int Execute(string statement, object? parameter = null)
-        {
-            throw new NotSupportedException();
-        }
-
-        public Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
-        {
-            throw new NotSupportedException();
-        }
-
-        #endregion
-    }
-
     public class SqliteAccessor: DatabaseAccessor<SQLiteConnection>
     {
         public SqliteAccessor(IDatabaseFactory databaseFactory, ILogger logger)
@@ -173,13 +41,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         {
             ThrowIfDisposed();
 
-            return new SqliteReadOnlyTransaction(this);
+            return new ReadOnlyDatabaseTransaction(false, this);
         }
         public override IDatabaseTransaction BeginReadOnlyTransaction(IsolationLevel isolationLevel)
         {
             ThrowIfDisposed();
 
-            return new SqliteReadOnlyTransaction(this, isolationLevel);
+            return new ReadOnlyDatabaseTransaction(false, this, isolationLevel);
         }
 
         #endregion

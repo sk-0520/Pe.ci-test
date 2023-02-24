@@ -712,7 +712,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         {
             ThrowIfDisposed();
 
-            return new DatabaseTransaction(this);
+            return new DatabaseTransaction(true, this);
         }
 
         /// <summary>
@@ -724,20 +724,20 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         {
             ThrowIfDisposed();
 
-            return new DatabaseTransaction(this, isolationLevel);
+            return new DatabaseTransaction(true, this, isolationLevel);
         }
 
         public virtual IDatabaseTransaction BeginReadOnlyTransaction()
         {
             ThrowIfDisposed();
 
-            return new ReadOnlyDatabaseTransaction(this);
+            return new ReadOnlyDatabaseTransaction(true, this);
         }
         public virtual IDatabaseTransaction BeginReadOnlyTransaction(IsolationLevel isolationLevel)
         {
             ThrowIfDisposed();
 
-            return new ReadOnlyDatabaseTransaction(this, isolationLevel);
+            return new ReadOnlyDatabaseTransaction(true, this, isolationLevel);
         }
 
         #endregion
