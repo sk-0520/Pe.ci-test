@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #region function
 
-        public IResultSuccessValue<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e) => ResultSuccessValue.Failure<DragParameter>();
+        public IResultSuccess<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e) => Result.CreateFailure<DragParameter>();
 
         public bool CanDragStart(UIElement sender, MouseEventArgs e) => false;
 

@@ -384,7 +384,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
-        private IResultSuccessValue<DragParameter> LauncherItemGetDragParameter(UIElement sender, MouseEventArgs e)
+        private IResultSuccess<DragParameter> LauncherItemGetDragParameter(UIElement sender, MouseEventArgs e)
         {
             var dd = new LauncherItemInLauncherGroupDragAndDrop(DispatcherWrapper, LoggerFactory);
             var parameter = dd.GetDragParameter(false, sender, e, d => {
@@ -460,7 +460,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
-        private IResultSuccessValue<DragParameter> GroupsGetDragParameter(UIElement sender, MouseEventArgs e)
+        private IResultSuccess<DragParameter> GroupsGetDragParameter(UIElement sender, MouseEventArgs e)
         {
             if(e.Source is ListBox listbox) {
                 var scollbar = UIUtility.GetVisualClosest<ScrollBar>((DependencyObject)e.OriginalSource);
@@ -468,11 +468,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     var item = (LauncherGroupSettingEditorViewModel)listbox.SelectedItem;
                     SelectedGroup = item;
                     var data = new DataObject(typeof(LauncherGroupSettingEditorViewModel), item);
-                    return ResultSuccessValue.Success(new DragParameter(sender, DragDropEffects.Move, data));
+                    return Result.CreateSuccess(new DragParameter(sender, DragDropEffects.Move, data));
                 }
             }
 
-            return ResultSuccessValue.Failure<DragParameter>();
+            return Result.CreateFailure<DragParameter>();
         }
 
         #endregion
@@ -495,7 +495,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private void LauncherItemsDrop(UIElement sender, DragEventArgs e)
         { }
 
-        private IResultSuccessValue<DragParameter> LauncherItemsGetDragParameter(UIElement sender, MouseEventArgs e)
+        private IResultSuccess<DragParameter> LauncherItemsGetDragParameter(UIElement sender, MouseEventArgs e)
         {
             var dd = new LauncherItemInLauncherGroupDragAndDrop(DispatcherWrapper, LoggerFactory);
             var parameter = dd.GetDragParameter(true, sender, e, d => {

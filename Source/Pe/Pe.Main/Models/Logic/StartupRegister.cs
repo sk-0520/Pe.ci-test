@@ -137,10 +137,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
         }
 
-        public IResultSuccessValue<StartupParameter> GetStartupParameter()
+        public IResultSuccess<StartupParameter> GetStartupParameter()
         {
             if(!Exists()) {
-                return ResultSuccessValue.Failure<StartupParameter>();
+                return Result.CreateFailure<StartupParameter>();
             }
 
             try {
@@ -171,12 +171,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         startupParameter.Argument = string.Join(" ", commandLine.Unknowns);
                     }
                 }
-                return ResultSuccessValue.Success(startupParameter);
+                return Result.CreateSuccess(startupParameter);
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
             }
 
-            return ResultSuccessValue.Failure<StartupParameter>();
+            return Result.CreateFailure<StartupParameter>();
         }
 
         internal string GetStartupFilePath() => StartupFilePath;

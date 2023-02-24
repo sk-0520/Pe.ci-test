@@ -48,11 +48,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        private Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync(IconScale iconScale, CancellationToken cancellationToken)
+        private Task<ResultSuccess<BitmapSource>> LoadExistsImageAsync(IconScale iconScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
-            return Task.Run(() => {
+            return Task.Run((Func<ResultSuccess<BitmapSource>>)(() => {
                 IReadOnlyList<byte[]>? imageBinary;
                 using(var context = LargeDatabaseBarrier.WaitRead()) {
                     var dao = new LauncherItemIconsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
@@ -60,16 +60,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 }
 
                 if(imageBinary != null && imageBinary.Count == 0) {
-                    return ResultSuccessValue.Failure<BitmapSource>();
+                    return (ResultSuccess<BitmapSource>)Core.Models.Result.CreateFailure<BitmapSource>();
                 }
                 var image = ToImage(imageBinary);
 
                 if(image == null) {
-                    return ResultSuccessValue.Failure<BitmapSource>();
+                    return (ResultSuccess<BitmapSource>)Core.Models.Result.CreateFailure<BitmapSource>();
                 }
 
-                return ResultSuccessValue.Success(image);
-            });
+                return (ResultSuccess<BitmapSource>)Core.Models.Result.CreateSuccess<BitmapSource>(image);
+            }));
         }
 
         protected virtual LauncherIconData GetIconData()

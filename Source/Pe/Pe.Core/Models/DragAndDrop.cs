@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <returns></returns>
-        protected abstract IResultSuccessValue<DragParameter> GetDragParameterImpl(UIElement sender, MouseEventArgs e);
+        protected abstract IResultSuccess<DragParameter> GetDragParameterImpl(UIElement sender, MouseEventArgs e);
 
         private void MouseDownCore(UIElement sender, MouseEventArgs e)
         {
@@ -210,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     public delegate bool CanDragStartDelegate(UIElement sender, MouseEventArgs e);
-    public delegate IResultSuccessValue<DragParameter> GetDragParameterDelegate(UIElement sender, MouseEventArgs e);
+    public delegate IResultSuccess<DragParameter> GetDragParameterDelegate(UIElement sender, MouseEventArgs e);
     public delegate void DragAndDropDelegate(UIElement sender, DragEventArgs e);
 
     public class DelegateDragAndDrop: DragAndDropBase
@@ -251,13 +251,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return false;
         }
 
-        protected override IResultSuccessValue<DragParameter> GetDragParameterImpl(UIElement sender, MouseEventArgs e)
+        protected override IResultSuccess<DragParameter> GetDragParameterImpl(UIElement sender, MouseEventArgs e)
         {
             if(GetDragParameter != null) {
                 return GetDragParameter(sender, e);
             }
 
-            return ResultSuccessValue.Failure<DragParameter>();
+            return Result.CreateFailure<DragParameter>();
         }
 
         public override void DragEnter(UIElement sender, DragEventArgs e)

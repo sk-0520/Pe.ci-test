@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region DragAndDrop
 
-        private IResultSuccessValue<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e)
+        private IResultSuccess<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
             return dd.GetDragParameter(sender, e);

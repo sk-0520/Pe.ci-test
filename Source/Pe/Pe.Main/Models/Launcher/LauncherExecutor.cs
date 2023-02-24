@@ -17,7 +17,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
-    public interface ILauncherExecuteResult: IResultFailureValue<Exception>
+    public interface ILauncherExecuteResult: IResultFailure<Exception>
     {
         #region property
 

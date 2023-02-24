@@ -1176,7 +1176,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             return false;
         }
-        private IResultSuccessValue<DragParameter> FileGetDragParameter(UIElement sender, MouseEventArgs e)
+        private IResultSuccess<DragParameter> FileGetDragParameter(UIElement sender, MouseEventArgs e)
         {
             throw new NotSupportedException();
         }
