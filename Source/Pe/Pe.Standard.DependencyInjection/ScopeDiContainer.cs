@@ -26,18 +26,10 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
     internal class ConcurrentHashSet<T>: ConcurrentDictionary<T, byte>
         where T : notnull
     {
-        #region property
-
-        #endregion
-
-        #region property
+        #region function
 
         public bool Contains(T key) => ContainsKey(key);
         public bool Add(T key) => TryAdd(key, 1);
-
-        #endregion
-
-        #region function
 
         public IReadOnlyList<T> GetValues() => Keys.ToList();
 
