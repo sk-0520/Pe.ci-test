@@ -14,15 +14,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\Pe\Pe.Core\Models\NameConverter.cs" Link="NameConverter.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="-Bench.cs.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pe\Pe.Standard.Base\Pe.Standard.Base.csproj" />
+    <ProjectReference Include="..\Pe\Pe.Standard.Database\Pe.Standard.Database.csproj" />
+    <ProjectReference Include="..\Pe\Pe.Standard.DependencyInjection\Pe.Standard.DependencyInjection.csproj" />
   </ItemGroup>
   
 
