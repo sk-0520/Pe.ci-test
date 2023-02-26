@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
     [TestClass]
-    public class UrufuwaExtensionsTest
+    public class YurufuwaExtensionsTest
     {
         [TestMethod]
         public void CountingTest()
