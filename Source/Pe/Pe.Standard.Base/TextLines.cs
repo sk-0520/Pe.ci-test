@@ -37,20 +37,37 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     public class TextLines
     {
         public TextLines()
+            : this(Environment.NewLine)
         { }
+
+        public TextLines(string newLine)
+            : this(newLine, 1024)
+        { }
+
+        public TextLines(string newLine, int capacity)
+        {
+            if(capacity <= 0) {
+                throw new ArgumentException("<= 0", nameof(capacity));
+            }
+
+            NewLine = newLine;
+            Capacity = capacity;
+        }
 
         #region property
 
         /// <summary>
         /// 行結合時に使用される改行符。
         /// </summary>
-        public string NewLine { get; set; } = Environment.NewLine;
+        public string NewLine { get; }
         /// <summary>
         /// 行結合時の内部予約サイズ。
         /// </summary>
-        public int Capacity { get; set; } = 1024;
+        public int Capacity { get; }
 
         #endregion
+
+        #region function
 
         /// <inheritdoc cref="Aggregate(TextReader, Func{TextLineInput, string?})"/>
         public string Aggregate(string text, Func<TextLineInput, string?> func)
@@ -87,6 +104,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
             return builder.ToString();
         }
-    }
 
+        #endregion
+    }
 }

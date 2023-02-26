@@ -12,15 +12,20 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
     {
         #region property
 
-        string NewLine = "\r\n";
+        private static string NewLine = "\r\n";
 
         #endregion
 
         #region function
 
-        TextLines CreateTextLines() => new TextLines() {
-            NewLine = NewLine,
-        };
+        static TextLines CreateTextLines() => new TextLines(NewLine);
+
+        [TestMethod]
+        public void Constructor_Throw_Test()
+        {
+            Assert.ThrowsException<ArgumentException>(() => new TextLines("", 0));
+            Assert.ThrowsException<ArgumentException>(() => new TextLines("", -1));
+        }
 
         [TestMethod]
         [DataRow("", "")]
