@@ -48,9 +48,37 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return File.Exists(path) || Directory.Exists(path);
         }
 
+        /// <summary>
+        /// <inheritdoc cref="File.Exists(string)"/>
+        /// <para>非同期版。</para>
+        /// </summary>
+        /// <param name="path"><inheritdoc cref="File.Exists(string)"/></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public static Task<bool> ExistsAsync(string? path, CancellationToken cancellationToken = default)
         {
             return Task.Run(() => Exists(path), cancellationToken);
+        }
+
+        /// <summary>
+        /// <inheritdoc cref="Directory.Exists(string)"/>
+        /// <para>非同期版。</para>
+        /// </summary>
+        /// <param name="path"><inheritdoc cref="Directory.Exists(string)"/></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public static Task<bool> ExistsFileAsync(string path, CancellationToken cancellationToken = default)
+        {
+            return Task.Run(() => {
+                return File.Exists(path);
+            }, cancellationToken);
+        }
+
+        public static Task<bool> ExistsDirectoryAsync(string path, CancellationToken cancellationToken = default)
+        {
+            return Task.Run(() => {
+                return Directory.Exists(path);
+            }, cancellationToken);
         }
 
         /// <summary>
