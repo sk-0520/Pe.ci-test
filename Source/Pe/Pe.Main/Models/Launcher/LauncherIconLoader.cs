@@ -60,15 +60,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 }
 
                 if(imageBinary != null && imageBinary.Count == 0) {
-                    return (ResultSuccess<BitmapSource>)Core.Models.Result.CreateFailure<BitmapSource>();
+                    return Result.CreateFailure<BitmapSource>();
                 }
                 var image = ToImage(imageBinary);
 
                 if(image == null) {
-                    return (ResultSuccess<BitmapSource>)Core.Models.Result.CreateFailure<BitmapSource>();
+                    return Result.CreateFailure<BitmapSource>();
                 }
 
-                return (ResultSuccess<BitmapSource>)Core.Models.Result.CreateSuccess<BitmapSource>(image);
+                return Result.CreateSuccess<BitmapSource>(image);
             }));
         }
 
