@@ -79,14 +79,17 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "Microsoft.NET.Test.Sdk 17.4.1 -> 17.5.0"
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "Microsoft.Extensions.Configuration.Binder 7.0.2 -> 7.0.3"
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 5.2.1 -> 5.2.2"
 					},
 					{
