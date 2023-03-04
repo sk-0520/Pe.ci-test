@@ -334,10 +334,10 @@
     x:Key="SettingEditor"
     TargetType="sharpdevelop_avalonedit:TextEditor"
     xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
-    xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+    xmlns:app_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core.Views"
   >
     <Style.Resources>
-      <app_core_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
+      <app_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
     </Style.Resources>
     <!--<Style.Triggers>
       <Trigger Property="Validation.HasError" Value="true">

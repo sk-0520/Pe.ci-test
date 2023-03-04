@@ -9,7 +9,7 @@
   xmlns:cef_sharp_wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
   xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
 
-  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
 
@@ -36,9 +36,9 @@
     <Binding Path="Resources.String_Feedback_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
   <behaviors:Interaction.Triggers>
-    <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
+    <app_views:RequestTrigger SourceObject="{Binding CloseRequest}">
       <prism:InvokeCommandAction Command="{Binding CloseCommand, ElementName=root}" />
-    </app_core_views:RequestTrigger>
+    </app_views:RequestTrigger>
   </behaviors:Interaction.Triggers>
   <Grid>
     <Grid.RowDefinitions>

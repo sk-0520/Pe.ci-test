@@ -6,8 +6,8 @@
   xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:prism="http://prismlibrary.com/"
 
-  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
-  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core.Views"
+  xmlns:app_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
@@ -17,19 +17,19 @@
   d:DesignHeight="450"
 >
   <behaviors:Interaction.Triggers>
-    <app_core_views:RequestTrigger SourceObject="{Binding Editor.SelectPluginFileRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
+    <app_views:RequestTrigger SourceObject="{Binding Editor.SelectPluginFileRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <prism:InvokeCommandAction Command="{Binding SelectPluginFileCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-    </app_core_views:RequestTrigger>
-    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ShowMessageRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
+    </app_views:RequestTrigger>
+    <app_views:RequestTrigger SourceObject="{Binding Editor.ShowMessageRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <prism:InvokeCommandAction Command="{Binding ShowMessageCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-    </app_core_views:RequestTrigger>
-    <app_core_views:RequestTrigger SourceObject="{Binding Editor.WebInstallRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
+    </app_views:RequestTrigger>
+    <app_views:RequestTrigger SourceObject="{Binding Editor.WebInstallRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <prism:InvokeCommandAction Command="{Binding WebInstallCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-    </app_core_views:RequestTrigger>
+    </app_views:RequestTrigger>
   </behaviors:Interaction.Triggers>
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <app_core_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
+    <app_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
   </UserControl.Resources>
   <Grid>

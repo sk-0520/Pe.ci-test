@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>Pe.Plugins.Reference.Html</AssemblyName>
     <RootNamespace>ContentTypeTextNet.Pe.Plugins.Reference.Html</RootNamespace>
     <UseWPF>true</UseWPF>
   </PropertyGroup>

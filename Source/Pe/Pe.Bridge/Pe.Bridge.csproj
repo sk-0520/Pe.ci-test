@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>Pe.Bridge</AssemblyName>
     <RootNamespace>ContentTypeTextNet.Pe.Bridge</RootNamespace>
     <UseWPF>true</UseWPF>
   </PropertyGroup>

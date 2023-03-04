@@ -8,8 +8,8 @@
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_bridge_models_data="clr-namespace:ContentTypeTextNet.Pe.Bridge.Models.Data;assembly=Pe.Bridge"
-  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
-  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
+  xmlns:app_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core.Views"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
@@ -25,7 +25,7 @@
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    <app_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
     <app_main_views_converter:SettingCultureConverter x:Key="SettingCultureConverter" />
 
@@ -104,9 +104,9 @@
           <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppGeneralSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}" Style="{StaticResource HeaderGroupBox}">
               <behaviors:Interaction.Triggers>
-                <app_core_views:RequestTrigger SourceObject="{Binding UserBackupDirectorySelecteRequest}">
+                <app_views:RequestTrigger SourceObject="{Binding UserBackupDirectorySelecteRequest}">
                   <prism:InvokeCommandAction Command="{Binding FileSelectCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                </app_core_views:RequestTrigger>
+                </app_views:RequestTrigger>
               </behaviors:Interaction.Triggers>
               <StackPanel>
                 <Grid>
@@ -183,7 +183,7 @@
                     </Grid.ColumnDefinitions>
                     <CheckBox Grid.Column="0" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_General_Starup_Register_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsRegisterStartup}" />
                     <CheckBox x:Name="startWaitTime" Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}"  Content="{Binding Resources.String_Setting_Generals_General_Starup_WaitTime_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding DelayStartup}" />
-                    <app_core_views:NumericUpDown
+                    <app_views:NumericUpDown
                       Grid.Column="2"
                       HorizontalAlignment="Left"
                       Width="{Binding ActualWidth, ElementName=startWaitTime}"
@@ -364,7 +364,7 @@
                   </Grid.ColumnDefinitions>
 
                   <Label x:Name="commandViewWidth" Style="{StaticResource HeaderLabel}" Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Command_Width_A, Source={x:Static app_main:CultureService.Instance}}"></Label>
-                  <app_core_views:NumericUpDown
+                  <app_views:NumericUpDown
                     Grid.Column="1"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
@@ -383,7 +383,7 @@
                   </Grid.ColumnDefinitions>
 
                   <Label x:Name="commandWaitTime" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Wait_A, Source={x:Static app_main:CultureService.Instance}}" />
-                  <app_core_views:NumericUpDown
+                  <app_views:NumericUpDown
                     Grid.Column="1"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
@@ -490,9 +490,9 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Color_Foreground_A, Source={x:Static app_main:CultureService.Instance}}" />
-                    <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="0" SelectedColor="{Binding ForegroundColor}" />
+                    <app_views:ColorCanvas Grid.Row="1" Grid.Column="0" SelectedColor="{Binding ForegroundColor}" />
                     <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Color_Background_A, Source={x:Static app_main:CultureService.Instance}}" />
-                    <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="1" SelectedColor="{Binding BackgroundColor}" />
+                    <app_views:ColorCanvas Grid.Row="1" Grid.Column="1" SelectedColor="{Binding BackgroundColor}" />
                   </Grid>
                 </Grid>
 
@@ -512,7 +512,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Label x:Name="blindTime" Grid.Column="0" Content="{Binding Source={x:Static app_main_models_data:NoteHiddenMode.Blind}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
-                    <app_core_views:NumericUpDown
+                    <app_views:NumericUpDown
                       Grid.Column="1"
                       VerticalContentAlignment="Center"
                       Width="{Binding ActualWidth, ElementName=nodeHiddenMode}"
@@ -522,7 +522,7 @@
                     />
 
                     <Label x:Name="compactTime" Grid.Column="2" Margin="{StaticResource LeftMargin}" Content="{Binding Source={x:Static app_main_models_data:NoteHiddenMode.Compact}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" />
-                    <app_core_views:NumericUpDown
+                    <app_views:NumericUpDown
                       Grid.Column="3"
                       VerticalContentAlignment="Center"
                       Width="{Binding ActualWidth, ElementName=nodeHiddenMode}"
@@ -614,9 +614,9 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_OutputColor_Foreground_A, Source={x:Static app_main:CultureService.Instance}}" />
-                    <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="0" SelectedColor="{Binding OutputForegroundColor}" />
+                    <app_views:ColorCanvas Grid.Row="1" Grid.Column="0" SelectedColor="{Binding OutputForegroundColor}" />
                     <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_OutputColor_Background_A, Source={x:Static app_main:CultureService.Instance}}" />
-                    <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="1" SelectedColor="{Binding OutputBackgroundColor}" />
+                    <app_views:ColorCanvas Grid.Row="1" Grid.Column="1" SelectedColor="{Binding OutputBackgroundColor}" />
                   </Grid>
                 </Grid>
 
@@ -639,9 +639,9 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_ErrorColor_Foreground_A, Source={x:Static app_main:CultureService.Instance}}" />
-                    <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="0" SelectedColor="{Binding ErrorForegroundColor}" />
+                    <app_views:ColorCanvas Grid.Row="1" Grid.Column="0" SelectedColor="{Binding ErrorForegroundColor}" />
                     <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_ErrorColor_Background_A, Source={x:Static app_main:CultureService.Instance}}"></Label>
-                    <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="1" SelectedColor="{Binding ErrorBackgroundColor}" />
+                    <app_views:ColorCanvas Grid.Row="1" Grid.Column="1" SelectedColor="{Binding ErrorBackgroundColor}" />
 
                   </Grid>
                 </Grid>

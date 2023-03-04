@@ -6,8 +6,8 @@
   xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:prism="http://prismlibrary.com/"
   
-  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
-  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
+  xmlns:app_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core.Views"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
 
@@ -23,13 +23,13 @@
   mc:Ignorable="d"
 >
   <behaviors:Interaction.Triggers>
-    <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
+    <app_views:RequestTrigger SourceObject="{Binding CloseRequest}">
       <prism:InvokeCommandAction Command="{Binding CloseCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
-    </app_core_views:RequestTrigger>
+    </app_views:RequestTrigger>
   </behaviors:Interaction.Triggers>
   <Window.Resources>
-    <app_core_views_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
-    <app_core_views_converter:StringIsNullOrEmptyConverter x:Key="StringIsNullOrEmptyConverter" />
+    <app_views_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+    <app_views_converter:StringIsNullOrEmptyConverter x:Key="StringIsNullOrEmptyConverter" />
     
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
   </Window.Resources>

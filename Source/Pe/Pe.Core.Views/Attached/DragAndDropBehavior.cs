@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
 
         #endregion
 
-        private void AssociatedObject_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void AssociatedObject_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
             }
         }
 
-        private void AssociatedObject_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void AssociatedObject_MouseMove(object sender, MouseEventArgs e)
         {
             var dragAndDrop = DragAndDrop;
             if(dragAndDrop != null && !dragAndDrop.UsePreviewEvent) {

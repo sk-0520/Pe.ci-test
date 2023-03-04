@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>Pe.Bridge.Test</AssemblyName>
-    <RootNamespace>ContentTypeTextNet.Pe.Bridge.Test</RootNamespace>
+    <AssemblyName>Pe.Core.Views.Test</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.Core.Views.Test</RootNamespace>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
@@ -10,11 +10,10 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
     <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
-
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pe.Bridge\Pe.Bridge.csproj" />
+    <ProjectReference Include="..\Pe.Core.Views\Pe.Core.Views.csproj" />
   </ItemGroup>
 
 </Project>

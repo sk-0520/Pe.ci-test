@@ -261,7 +261,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 return;
             }
 
-            var scrollLineCount = (Math.Abs(e.Delta) / ScrollNotch) * SystemParameters.WheelScrollLines;
+            var scrollLineCount = Math.Abs(e.Delta) / ScrollNotch * SystemParameters.WheelScrollLines;
             if(e.Delta > 0) { // ↑
                 if(Value == Maximum) {
                     // 一番上なので親側をスクロールさせる

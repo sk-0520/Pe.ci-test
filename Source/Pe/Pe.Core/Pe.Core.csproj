@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>Pe.Core</AssemblyName>
     <RootNamespace>ContentTypeTextNet.Pe.Core</RootNamespace>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>

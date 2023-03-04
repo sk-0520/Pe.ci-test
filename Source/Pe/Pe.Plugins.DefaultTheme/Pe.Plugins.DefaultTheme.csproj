@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>Pe.Plugins.DefaultTheme</AssemblyName>
     <RootNamespace>ContentTypeTextNet.Pe.Plugins.DefaultTheme</RootNamespace>
     <UseWPF>true</UseWPF>
-    <AssemblyName>Pe.Plugins.DefaultTheme</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

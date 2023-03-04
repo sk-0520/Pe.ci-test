@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>Pe.Main.Test</AssemblyName>
     <RootNamespace>ContentTypeTextNet.Pe.Main.Test</RootNamespace>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>

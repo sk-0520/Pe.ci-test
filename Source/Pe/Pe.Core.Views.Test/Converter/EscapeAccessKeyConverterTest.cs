@@ -1,7 +1,7 @@
 using ContentTypeTextNet.Pe.Core.Views.Converter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ContentTypeTextNet.Pe.Core.Test.Views.Converter
+namespace ContentTypeTextNet.Pe.Core.Views.Test.Converter
 {
     [TestClass]
     public class EscapeAccessKeyConverterTest

@@ -9,8 +9,8 @@
 
   xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
 
-  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
-  xmlns:app_core_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core"
+  xmlns:app_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
+  xmlns:app_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core.Views"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
 
@@ -40,9 +40,9 @@
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
   </Window.Visibility>
   <behaviors:Interaction.Triggers>
-    <app_core_views:RequestTrigger SourceObject="{Binding FileSelectRequest}">
+    <app_views:RequestTrigger SourceObject="{Binding FileSelectRequest}">
       <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
-    </app_core_views:RequestTrigger>
+    </app_views:RequestTrigger>
   </behaviors:Interaction.Triggers>
   <DockPanel>
     <ToolBar DockPanel.Dock="Top" Style="{StaticResource Horizontal-Toolbar}">
@@ -166,14 +166,14 @@
                 </ItemsPanelTemplate>
               </ComboBox.ItemsPanel>
               <ComboBox.ItemTemplateSelector>
-                <app_core_views_selector:ComboBoxItemTemplateSelector>
-                  <app_core_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
+                <app_views_selector:ComboBoxItemTemplateSelector>
+                  <app_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
                     <DataTemplate>
                       <TextBlock Text="{Binding Value, Mode=OneTime}"/>
                     </DataTemplate>
-                  </app_core_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
+                  </app_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
 
-                  <app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
+                  <app_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
                     <DataTemplate>
                       <Grid>
                         <Grid.ColumnDefinitions>
@@ -191,8 +191,8 @@
 
                       </Grid>
                     </DataTemplate>
-                  </app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
-                </app_core_views_selector:ComboBoxItemTemplateSelector>
+                  </app_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
+                </app_views_selector:ComboBoxItemTemplateSelector>
               </ComboBox.ItemTemplateSelector>
             </ComboBox>
             <Button
