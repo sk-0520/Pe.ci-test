@@ -87,6 +87,10 @@
 					},
 					{
 						"revision": "",
+						"subject": "NLog.Extensions.Logging 5.2.1 -> 5.2.2"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
