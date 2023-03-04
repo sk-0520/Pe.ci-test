@@ -1,69 +1,13 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.191+",
+		"date": "2023/03/04",
+		"version": "0.99.192",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "ライブラリ周りの更新のみ"
 					}
 				]
 			},
@@ -71,29 +15,29 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "1152885fe58c189836b50525de1c9cc7525776ca",
 						"subject": "#872: .NET Standard に分離できるものは分離する",
 						"comments": [
 							"意外といろいろ移せた"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "27a51f823d6b72a5e40760e996b58cdb03d4e077",
 						"class": "nuget",
 						"subject": "Microsoft.NET.Test.Sdk 17.4.1 -> 17.5.0"
 					},
 					{
-						"revision": "",
+						"revision": "38b6d65fe3d748cf7a997fb07e56002b5b9dd40f",
 						"class": "nuget",
 						"subject": "Microsoft.Extensions.Configuration.Binder 7.0.2 -> 7.0.3"
 					},
 					{
-						"revision": "",
+						"revision": "41bf5132a8d4b3fecd09564e2fc92d723bd470cf",
 						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 5.2.1 -> 5.2.2"
 					},
 					{
-						"revision": "",
+						"revision": "f182065621e82ba2a12acdf1b2d696fde6522e61",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 110.0.250 -> 110.0.300"
 					}
