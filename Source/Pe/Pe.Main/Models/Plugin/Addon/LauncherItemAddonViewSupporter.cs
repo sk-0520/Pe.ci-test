@@ -178,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 Element = OrderManager.CreateLauncherItemExtensionElement(PluginInformations, LauncherItemId);
             }
             //NOTE: 引数がどんどこ増えるようなら IOrderManager に移す
-            var windowItem = new WindowItem(WindowKind.LauncherItemExtension, Element, new LauncherItemExtensionViewModel(Element, UserTracker, DispatcherWrapper, LoggerFactory), window);
+            var windowItem = new WindowItem(Manager.WindowKind.LauncherItemExtension, Element, new LauncherItemExtensionViewModel(Element, UserTracker, DispatcherWrapper, LoggerFactory), window);
             if(WindowManager.Register(windowItem)) {
                 var info = new LauncherItemAddonViewInformation(windowItem, userClosing, closedWindow);
                 Element.Add(info);

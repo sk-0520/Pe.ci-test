@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>Pe.PInvoke</AssemblyName>
     <RootNamespace>ContentTypeTextNet.Pe.PInvoke</RootNamespace>
     <UseWPF>true</UseWPF>
   </PropertyGroup>

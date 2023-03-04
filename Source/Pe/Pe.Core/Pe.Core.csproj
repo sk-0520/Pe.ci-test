@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>Pe.Core</AssemblyName>
     <RootNamespace>ContentTypeTextNet.Pe.Core</RootNamespace>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
@@ -17,30 +18,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Pe.Bridge\Pe.Bridge.csproj" />
     <ProjectReference Include="..\Pe.PInvoke\Pe.PInvoke.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Models\DependencyInjection\DiConstructorCacheImpl.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DiConstructorCacheImpl.cs</LastGenOutput>
-    </None>
-    <None Update="Models\DiContainerCreate.txt">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DiContainerCreate.tt</DependentUpon>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Models\DependencyInjection\DiConstructorCacheImpl.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DiConstructorCacheImpl.tt</DependentUpon>
-    </Compile>
+    <ProjectReference Include="..\Pe.Standard.Base\Pe.Standard.Base.csproj" />
+    <ProjectReference Include="..\Pe.Standard.Database\Pe.Standard.Database.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,9 +9,9 @@
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_bridge_models_data="clr-namespace:ContentTypeTextNet.Pe.Bridge.Models.Data;assembly=Pe.Bridge"
-  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
-  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
-  xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
+  xmlns:app_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
+  xmlns:app_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core.Views"
+  xmlns:app_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core.Views"
 
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
   xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
@@ -43,23 +43,23 @@
   <Window.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Pe.Core;component/Views/ColorPickerDictionary.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Pe.Core.Views;component/ColorPickerDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
 
       <sys:Double x:Key="DisableOpacity">0.4</sys:Double>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-      <app_core_views_converter:BooleanToVisibilityConverter
+      <app_views_converter:BooleanToVisibilityConverter
         x:Key="FalseToVisibilityConverter"
         True="Collapsed"
         False="Visible"
       />
-      <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-      <app_core_views_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
-      <app_core_views_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
-      <app_core_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
-      <app_core_views_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
-      <app_core_views_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
-      <app_core_views_converter:LogicalMultiAndConverter x:Key="LogicalMultiAndConverter" />
+      <app_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+      <app_views_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+      <app_views_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
+      <app_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
+      <app_views_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
+      <app_views_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
+      <app_views_converter:LogicalMultiAndConverter x:Key="LogicalMultiAndConverter" />
       <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
       <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
       <app_main_views_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
@@ -91,26 +91,26 @@
       <behaviors:InvokeCommandAction Command="{Binding ViewActivatedCommand}" CommandParameter="{Binding ElementName=root}"/>
     </behaviors:EventTrigger>
 
-    <app_core_views:RequestTrigger SourceObject="{Binding TitleEditStartRequest}">
+    <app_views:RequestTrigger SourceObject="{Binding TitleEditStartRequest}">
       <prism:InvokeCommandAction Command="{Binding TitleEditStartCommand ,ElementName=root}" />
-    </app_core_views:RequestTrigger>
+    </app_views:RequestTrigger>
     <!--
-    <app_core_views:RequestTrigger SourceObject="{Binding SelectLinkFileRequest}">
+    <app_views:RequestTrigger SourceObject="{Binding SelectLinkFileRequest}">
       <prism:InvokeCommandAction Command="{Binding SelectLinkFileCommand ,ElementName=root}" />
-    </app_core_views:RequestTrigger>
+    </app_views:RequestTrigger>
     -->
-    <!--<app_core_view:RequestTrigger SourceObject="{Binding UnlinkRequest}">
+    <!--<app_view:RequestTrigger SourceObject="{Binding UnlinkRequest}">
       <prism:InvokeCommandAction Command="{Binding UnlinkCommand ,ElementName=root}" />
-    </app_core_view:RequestTrigger>-->
-    <app_core_views:RequestTrigger SourceObject="{Binding LinkChangeRequest}">
+    </app_view:RequestTrigger>-->
+    <app_views:RequestTrigger SourceObject="{Binding LinkChangeRequest}">
       <prism:InvokeCommandAction Command="{Binding LinkChangeCommand ,ElementName=root}" />
-    </app_core_views:RequestTrigger>
-    <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
+    </app_views:RequestTrigger>
+    <app_views:RequestTrigger SourceObject="{Binding CloseRequest}">
       <prism:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
-    </app_core_views:RequestTrigger>
+    </app_views:RequestTrigger>
   </behaviors:Interaction.Triggers>
   <behaviors:Interaction.Behaviors>
-    <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding FileDragAndDrop}" />
+    <app_views_attached:DragAndDropBehavior DragAndDrop="{Binding FileDragAndDrop}" />
   </behaviors:Interaction.Behaviors>
   <Window.Style>
     <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
@@ -779,11 +779,11 @@
 
                   <Label Grid.Row="0" Grid.Column="0" Target="{Binding ElementName=selectForegroundColor}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Foreground_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <!--<xctk:ColorPicker Grid.Row="0" Grid.Column="1" SelectedColor="{Binding ForegroundColor}" />-->
-                  <app_core_views:ColorCanvas x:Name="selectForegroundColor" Grid.Row="0" Grid.Column="1" Style="{StaticResource ColorPicker}" SelectedColor="{Binding ForegroundColor, Mode=TwoWay}" />
+                  <app_views:ColorCanvas x:Name="selectForegroundColor" Grid.Row="0" Grid.Column="1" Style="{StaticResource ColorPicker}" SelectedColor="{Binding ForegroundColor, Mode=TwoWay}" />
 
                   <Label Grid.Row="1" Grid.Column="0" Target="{Binding ElementName=selectBackgroundColor}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Background_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <!--<xctk:ColorPicker Grid.Row="1" Grid.Column="1" SelectedColor="{Binding BackgroundColor}" />-->
-                  <app_core_views:ColorCanvas x:Name="selectBackgroundColor" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorPicker}" SelectedColor="{Binding BackgroundColor, Mode=TwoWay}" />
+                  <app_views:ColorCanvas x:Name="selectBackgroundColor" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorPicker}" SelectedColor="{Binding BackgroundColor, Mode=TwoWay}" />
                 </Grid>
 
                 <ContentControl Margin="{StaticResource TopMargin}" IsTabStop="False">
@@ -827,15 +827,15 @@
                     <DataTemplate DataType="{x:Type app_main_viewmodels_note:NoteRichTextContentViewModel}">
                       <Grid>
                         <Grid.Resources>
-                          <Style x:Key="NoteColorPicker" TargetType="app_core_views:ColorCanvas">
+                          <Style x:Key="NoteColorPicker" TargetType="app_views:ColorCanvas">
                             <Setter Property="Template">
                               <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type app_core_views:ColorCanvas}">
+                                <ControlTemplate TargetType="{x:Type app_views:ColorCanvas}">
                                   <Grid>
                                     <ToggleButton x:Name="commandPopup" Width="8" />
                                     <Popup IsOpen="{Binding IsChecked, ElementName=commandPopup}" Style="{StaticResource PopupMenu}">
                                       <Border Style="{StaticResource PopupMenuBorder}">
-                                        <app_core_views:ColorCanvas
+                                        <app_views:ColorCanvas
                                           Width="200"
                                           SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                           HasAlpha="{Binding HasAlpha, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
@@ -901,7 +901,7 @@
                               </DataTemplate>
                             </ComboBox.ItemTemplate>
                           </ComboBox>
-                          <app_core_views:NumericUpDown
+                          <app_views:NumericUpDown
                             Grid.Column="1"
                             VerticalContentAlignment="Center"
                             Height="{Binding Height, ElementName=listFont}"
@@ -967,7 +967,7 @@
                               <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-ForegroundColor}" />
                             </Grid>
                           </Button>
-                          <app_core_views:ColorCanvas HasAlpha="False" SelectedColor="{Binding SelectionForegroundColor}" Style="{StaticResource NoteColorPicker}" />
+                          <app_views:ColorCanvas HasAlpha="False" SelectedColor="{Binding SelectionForegroundColor}" Style="{StaticResource NoteColorPicker}" />
 
                           <Button Command="{Binding ApplySeletectionBackgroundColorCommand}">
                             <Grid>
@@ -982,7 +982,7 @@
                               <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-BackgroundColor}" />
                             </Grid>
                           </Button>
-                          <app_core_views:ColorCanvas HasAlpha="True"  SelectedColor="{Binding SelectionBackgroundColor}" Style="{StaticResource NoteColorPicker}" />
+                          <app_views:ColorCanvas HasAlpha="True"  SelectedColor="{Binding SelectionBackgroundColor}" Style="{StaticResource NoteColorPicker}" />
 
                           <Separator />
 

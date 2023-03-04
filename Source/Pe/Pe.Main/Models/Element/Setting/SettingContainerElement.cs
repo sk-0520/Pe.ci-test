@@ -6,7 +6,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
-using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Standard.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database;
@@ -19,6 +19,8 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Standard.Database;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
@@ -40,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>(AllLauncherGroups);
             LauncherToobarsSettingEditor = ServiceLocator.Build<LauncherToobarsSettingEditorElement>(AllLauncherGroups);
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
-            PluginsSettingEditor = new PluginsSettingEditorElement(PluginContainer, ServiceLocator.Build<NewVersionChecker>(), ServiceLocator.Build<NewVersionDownloader>(), ServiceLocator.Build<PluginConstructorContext>(), pauseReceiveLog, ServiceLocator.Build<PreferencesContextFactory>(), ServiceLocator.Build<IWindowManager>(), ServiceLocator.Build<IUserTracker>(), ServiceLocator.Build<ISettingNotifyManager>(), ServiceLocator.Build<IClipboardManager>(), ServiceLocator.Build<IMainDatabaseBarrier>(), ServiceLocator.Build<ILargeDatabaseBarrier>(), ServiceLocator.Build<ITemporaryDatabaseBarrier>(), ServiceLocator.Build<IDatabaseStatementLoader>(), ServiceLocator.Build<IIdFactory>(), ServiceLocator.Build<EnvironmentParameters>(), ServiceLocator.Build<IUserAgentManager>(), ServiceLocator.Build<IPlatformTheme>(), ServiceLocator.Build<IImageLoader>(), ServiceLocator.Build<IMediaConverter>(), ServiceLocator.Build<IPolicy>(), ServiceLocator.Build<IDispatcherWrapper>(), ServiceLocator.Build<ILoggerFactory>());
+            PluginsSettingEditor = new PluginsSettingEditorElement(PluginContainer, ServiceLocator.Build<NewVersionChecker>(), ServiceLocator.Build<NewVersionDownloader>(), ServiceLocator.Build<PluginConstructorContext>(), pauseReceiveLog, ServiceLocator.Build<PreferencesContextFactory>(), ServiceLocator.Build<IWindowManager>(), ServiceLocator.Build<IUserTracker>(), ServiceLocator.Build<ISettingNotifyManager>(), ServiceLocator.Build<IClipboardManager>(), ServiceLocator.Build<IMainDatabaseBarrier>(), ServiceLocator.Build<ILargeDatabaseBarrier>(), ServiceLocator.Build<ITemporaryDatabaseBarrier>(), ServiceLocator.Build<IDatabaseStatementLoader>(), ServiceLocator.Build<IIdFactory>(), ServiceLocator.Build<EnvironmentParameters>(), ServiceLocator.Build<IUserAgentManager>(), ServiceLocator.Build<IViewManager>(), ServiceLocator.Build<IPlatformTheme>(), ServiceLocator.Build<IImageLoader>(), ServiceLocator.Build<IMediaConverter>(), ServiceLocator.Build<IPolicy>(), ServiceLocator.Build<IDispatcherWrapper>(), ServiceLocator.Build<ILoggerFactory>());
 
             Editors = new SettingEditorElementBase[] {
                 GeneralsSettingEditor,

@@ -8,10 +8,10 @@
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_bridge_model_data="clr-namespace:ContentTypeTextNet.Pe.Bridge.Models.Data;assembly=Pe.Bridge"
-  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
-  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
-  xmlns:app_core_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core"
-  xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
+  xmlns:app_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
+  xmlns:app_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core.Views"
+  xmlns:app_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core.Views"
+  xmlns:app_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core.Views"
   xmlns:app_main_views_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
@@ -35,22 +35,22 @@
 >
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <app_core_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
-    <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    <app_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
+    <app_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
     <Style x:Key="History" TargetType="ComboBox" BasedOn="{StaticResource Vertical-ComboBox}">
       <Setter Property="IsEditable" Value="True" />
       <Setter Property="ItemTemplateSelector">
         <Setter.Value>
-          <app_core_views_selector:ComboBoxItemTemplateSelector>
-            <app_core_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
+          <app_views_selector:ComboBoxItemTemplateSelector>
+            <app_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
               <DataTemplate>
                 <TextBlock Text="{Binding Value, Mode=OneTime}"/>
               </DataTemplate>
-            </app_core_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
+            </app_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
 
-            <app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
+            <app_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
               <DataTemplate>
                 <Grid Width="{Binding RelativeSource={RelativeSource AncestorType=ComboBox}, Path=ActualWidth}">
                   <Grid.ColumnDefinitions>
@@ -66,8 +66,8 @@
                   </Button>
                 </Grid>
               </DataTemplate>
-            </app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
-          </app_core_views_selector:ComboBoxItemTemplateSelector>
+            </app_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
+          </app_views_selector:ComboBoxItemTemplateSelector>
         </Setter.Value>
       </Setter>
     </Style>
@@ -79,15 +79,15 @@
     <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
   </Window.Visibility>
   <behaviors:Interaction.Triggers>
-    <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
+    <app_views:RequestTrigger SourceObject="{Binding CloseRequest}">
       <prism:InvokeCommandAction Command="{Binding CloseCommand, ElementName=root}" />
-    </app_core_views:RequestTrigger>
-    <app_core_views:RequestTrigger SourceObject="{Binding FileSelectRequest}">
+    </app_views:RequestTrigger>
+    <app_views:RequestTrigger SourceObject="{Binding FileSelectRequest}">
       <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
-    </app_core_views:RequestTrigger>
+    </app_views:RequestTrigger>
   </behaviors:Interaction.Triggers>
   <behaviors:Interaction.Behaviors>
-    <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding OptionDragAndDrop}" />
+    <app_views_attached:DragAndDropBehavior DragAndDrop="{Binding OptionDragAndDrop}" />
   </behaviors:Interaction.Behaviors>
 
   <Grid>
@@ -144,7 +144,7 @@
 
         <Grid>
           <behaviors:Interaction.Behaviors>
-            <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding WorkDirectoryDragAndDrop}" />
+            <app_views_attached:DragAndDropBehavior DragAndDrop="{Binding WorkDirectoryDragAndDrop}" />
           </behaviors:Interaction.Behaviors>
 
           <Grid.ColumnDefinitions>

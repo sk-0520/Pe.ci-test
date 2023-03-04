@@ -1,6 +1,7 @@
 using System;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Standard.DependencyInjection;
+using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
@@ -73,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region function
 
         IResult ChangeBoolean(StatusProperty statusProperty, bool newValue);
-        IResultSuccessValue<IDisposable> ChangeLimitedBoolean(StatusProperty statusProperty, bool newValue);
+        IResultSuccess<IDisposable> ChangeLimitedBoolean(StatusProperty statusProperty, bool newValue);
 
         #endregion
 
@@ -145,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return new Result(true);
         }
 
-        public IResultSuccessValue<IDisposable> ChangeLimitedBoolean(StatusProperty statusProperty, bool newValue)
+        public IResultSuccess<IDisposable> ChangeLimitedBoolean(StatusProperty statusProperty, bool newValue)
         {
             var oldValue = statusProperty switch {
                 StatusProperty.CanCallNotifyAreaMenu => CanCallNotifyAreaMenu,
@@ -153,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             };
 
             if(oldValue == newValue) {
-                return ResultSuccessValue.Failure<IDisposable>();
+                return Result.CreateFailure<IDisposable>();
             }
 
             switch(statusProperty) {
@@ -167,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             OnStatusChanged(StatusChangedMode.TemporaryChanged, statusProperty, oldValue, newValue);
 
-            return ResultSuccessValue.Success((IDisposable)new ActionDisposer(d => {
+            return Result.CreateSuccess((IDisposable)new ActionDisposer(d => {
                 switch(statusProperty) {
                     case StatusProperty.CanCallNotifyAreaMenu:
                         CanCallNotifyAreaMenu = oldValue;

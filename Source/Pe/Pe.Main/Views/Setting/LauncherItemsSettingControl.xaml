@@ -7,9 +7,9 @@
   xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:prism="http://prismlibrary.com/"
 
-  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
-  xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
-  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
+  xmlns:app_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core.Views"
+  xmlns:app_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core.Views"
   xmlns:app_main_views_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
@@ -20,19 +20,19 @@
   d:DesignHeight="450"
 >
   <behaviors:Interaction.Triggers>
-    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ScrollSelectedItemRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
+    <app_views:RequestTrigger SourceObject="{Binding Editor.ScrollSelectedItemRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <prism:InvokeCommandAction Command="{Binding ScrollSelectedItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-    </app_core_views:RequestTrigger>
-    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ScrollToTopCustomizeRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
+    </app_views:RequestTrigger>
+    <app_views:RequestTrigger SourceObject="{Binding Editor.ScrollToTopCustomizeRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <prism:InvokeCommandAction Command="{Binding ScrollToTopCustomizeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-    </app_core_views:RequestTrigger>
-    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ExpandShortcutFileRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
+    </app_views:RequestTrigger>
+    <app_views:RequestTrigger SourceObject="{Binding Editor.ExpandShortcutFileRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <prism:InvokeCommandAction Command="{Binding OpenCommonMessageDialogCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-    </app_core_views:RequestTrigger>
+    </app_views:RequestTrigger>
   </behaviors:Interaction.Triggers>
   <UserControl.Resources>
-    <app_core_views_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
-    <app_core_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
+    <app_views_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
+    <app_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
@@ -125,7 +125,7 @@
 
       <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherItems}" SelectedItem="{Binding Editor.SelectedItem, RelativeSource={RelativeSource AncestorType=UserControl}, Delay=50}" ItemsSource="{Binding Editor.AllLauncherItemItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <behaviors:Interaction.Behaviors>
-          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.DragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+          <app_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.DragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         </behaviors:Interaction.Behaviors>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>

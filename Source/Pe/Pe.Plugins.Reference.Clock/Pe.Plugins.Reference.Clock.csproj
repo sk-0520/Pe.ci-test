@@ -1,6 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>Pe.Plugins.Reference.Clock</AssemblyName>
     <RootNamespace>ContentTypeTextNet.Pe.Plugins.Reference.Clock</RootNamespace>
     <UseWPF>true</UseWPF>
   </PropertyGroup>

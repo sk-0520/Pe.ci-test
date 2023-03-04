@@ -7,8 +7,8 @@
   xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:prism="http://prismlibrary.com/"
 
-  xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
-  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core.Views"
+  xmlns:app_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
@@ -20,7 +20,7 @@
   <UserControl.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Pe.Core;component/Views/ColorPickerDictionary.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Pe.Core.Views;component/ColorPickerDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
     </ResourceDictionary>
@@ -75,7 +75,7 @@
 
       <ListBox Grid.Row="1" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherGroups}" ItemsSource="{Binding Editor.GroupItems, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding Editor.SelectedGroup, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <behaviors:Interaction.Behaviors>
-          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.GroupsDragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+          <app_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.GroupsDragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         </behaviors:Interaction.Behaviors>
         <!--<ListBox.ItemTemplate>
           <DataTemplate>
@@ -156,7 +156,7 @@
                     </ComboBox.ItemTemplate>
                   </ComboBox>
 
-                  <app_core_views:ColorCanvas Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource ColorPicker}" SelectedColor="{Binding Editor.SelectedGroup.ImageColor, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}" />
+                  <app_views:ColorCanvas Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource ColorPicker}" SelectedColor="{Binding Editor.SelectedGroup.ImageColor, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}" />
                 </Grid>
               </Grid>
             </StackPanel>
@@ -192,7 +192,7 @@
 
       <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherItems}" SelectedItem="{Binding Editor.SelectedGroup.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding Editor.SelectedGroup.LauncherItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <behaviors:Interaction.Behaviors>
-          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.LauncherItemDragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+          <app_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.LauncherItemDragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         </behaviors:Interaction.Behaviors>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
@@ -239,7 +239,7 @@
 
       <ListBox x:Name="allItems" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherItems}" SelectedItem="{Binding Editor.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding Editor.AllLauncherItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <behaviors:Interaction.Behaviors>
-          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.LauncherItemsDragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+          <app_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.LauncherItemsDragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         </behaviors:Interaction.Behaviors>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>

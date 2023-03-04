@@ -12,8 +12,8 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     {
         #region define
 
-        public const int classNameLength = 260;
-        public const int textLength = 260;
+        public const int WindowClassNameLength = 260;
+        public const int WindowTextLength = 260;
 
         #endregion
 
@@ -261,7 +261,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
             return new IntPtr((int)hWnd);
         }
 
-        public static string GetWindowClassName(IntPtr hWnd, int windowClassNameLength = classNameLength)
+        public static string GetWindowClassName(IntPtr hWnd, int windowClassNameLength = WindowClassNameLength)
         {
             var buffer = new StringBuilder(windowClassNameLength);
             NativeMethods.GetClassName(hWnd, buffer, buffer.Capacity);
@@ -269,7 +269,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
             return windowClassName;
         }
 
-        public static string GetWindowText(IntPtr hWnd, int windowTextLength = textLength)
+        public static string GetWindowText(IntPtr hWnd, int windowTextLength = WindowTextLength)
         {
             var buffer = new StringBuilder(NativeMethods.GetWindowTextLength(hWnd) + 1);
             NativeMethods.GetWindowText(hWnd, buffer, buffer.Capacity);

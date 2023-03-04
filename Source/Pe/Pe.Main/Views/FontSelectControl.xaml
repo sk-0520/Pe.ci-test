@@ -6,8 +6,8 @@
 
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
-  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
-  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
+  xmlns:app_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core.Views"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -16,7 +16,7 @@
   d:DesignHeight="450"
 >
   <UserControl.Resources>
-    <app_core_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
+    <app_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
     <app_main_views_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
     <app_main_views_converter:FontFamilyIsMonospaceConverter x:Key="FontFamilyIsMonospaceConverter" />
   </UserControl.Resources>
@@ -72,7 +72,7 @@
       </ToggleButton>
       <ContentControl DockPanel.Dock="Left" Content="{Binding CustomContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
       <!--<xctk:DoubleUpDown Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}" Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{Binding Size, RelativeSource={RelativeSource AncestorType=UserControl}}" />-->
-      <app_core_views:NumericUpDown Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}"  Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{Binding Size, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+      <app_views:NumericUpDown Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}"  Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{Binding Size, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl}}" />
     </DockPanel>
   </StackPanel>
 </UserControl>

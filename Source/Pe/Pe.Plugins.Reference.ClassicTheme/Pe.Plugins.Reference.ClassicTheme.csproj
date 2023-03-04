@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>Pe.Plugins.Reference.ClassicTheme</AssemblyName>
     <RootNamespace>ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme</RootNamespace>
     <UseWPF>true</UseWPF>
   </PropertyGroup>

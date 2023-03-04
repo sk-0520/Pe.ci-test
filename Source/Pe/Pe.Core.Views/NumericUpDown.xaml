@@ -1,0 +1,73 @@
+<UserControl
+  x:Name="root"
+  x:Class="ContentTypeTextNet.Pe.Core.Views.NumericUpDown"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:app_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter"
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  d:DesignHeight="30"
+  d:DesignWidth="100"
+>
+  <UserControl.Resources>
+    <app_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
+    <Style TargetType="RepeatButton" BasedOn="{StaticResource {x:Type RepeatButton}}">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+          <Setter Property="IsEnabled" Value="False" />
+        </DataTrigger>
+      </Style.Triggers>
+      <Setter Property="Height" Value="{Binding ActualHeight, ElementName=PART_NUMERIC, Converter={StaticResource DoubleToParameterPercentConverter}, ConverterParameter=0.5}" />
+      <Setter Property="IsTabStop" Value="False" />
+      <Setter Property="Focusable" Value="False" />
+    </Style>
+  </UserControl.Resources>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
+
+    <TextBox
+      x:Name="PART_NUMERIC"
+      Grid.Row="0"
+      Grid.RowSpan="2"
+      Grid.Column="0"
+      InputMethod.IsInputMethodEnabled="False"
+      CommandManager.PreviewExecuted="PART_NUMERIC_PreviewExecuted"
+      PreviewKeyDown="PART_NUMERIC_PreviewKeyDown"
+      PreviewTextInput="PART_NUMERIC_PreviewTextInput"
+      Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"
+      TextAlignment="{Binding TextAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
+      MouseWheel="PART_NUMERIC_MouseWheel"
+      />
+
+    <RepeatButton x:Name="PART_UP_BUTTON" Grid.Row="0" Grid.Column="1" Focusable="False" IsTabStop="False" Click="PART_UP_BUTTON_Click" >
+      <!-- https://materialdesignicons.com/icon/triangle -->
+      <Viewbox>
+        <Canvas Width="24" Height="24">
+          <Path Data="M1,21H23L12,2" Fill="{Binding Foreground, ElementName=PART_UP_BUTTON}" />
+        </Canvas>
+      </Viewbox>
+    </RepeatButton>
+    <RepeatButton x:Name="PART_DOWN_BUTTON" Grid.Row="1" Grid.Column="1" Focusable="False" IsTabStop="False" Click="PART_DOWN_BUTTON_Click"  >
+      <!-- https://materialdesignicons.com/icon/triangle -->
+      <Viewbox RenderTransformOrigin="0.5,0.5">
+        <Viewbox.RenderTransform>
+          <ScaleTransform ScaleY="-1" />
+        </Viewbox.RenderTransform>
+        <Canvas Width="24" Height="24">
+          <Path Data="M1,21H23L12,2" Fill="{Binding Foreground, ElementName=PART_DOWN_BUTTON}" />
+        </Canvas>
+      </Viewbox>
+    </RepeatButton>
+  </Grid>
+</UserControl>

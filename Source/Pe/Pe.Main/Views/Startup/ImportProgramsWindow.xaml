@@ -7,7 +7,7 @@
   xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:prism="http://prismlibrary.com/"
 
-  xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
@@ -34,9 +34,9 @@
   </Window.Title>
 
   <behaviors:Interaction.Triggers>
-    <app_core_view:RequestTrigger SourceObject="{Binding CloseRequest, Mode=OneWay}">
+    <app_view:RequestTrigger SourceObject="{Binding CloseRequest, Mode=OneWay}">
       <behaviors:InvokeCommandAction Command="{Binding CloseCommand, ElementName=root}" />
-    </app_core_view:RequestTrigger>
+    </app_view:RequestTrigger>
     <behaviors:EventTrigger EventName="Loaded" >
       <behaviors:InvokeCommandAction Command="{Binding ViewLoadedCommand}" />
     </behaviors:EventTrigger>

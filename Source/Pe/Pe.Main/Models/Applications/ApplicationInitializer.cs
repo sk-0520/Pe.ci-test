@@ -14,7 +14,7 @@ using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
-using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Standard.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database;
@@ -26,7 +26,9 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Main.Models.WebView;
+using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
@@ -252,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
                     acceptModel.Initialize();
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
-                    windowManager.Register(new WindowItem(WindowKind.Accept, acceptModel, view));
+                    windowManager.Register(new WindowItem(Manager.WindowKind.Accept, acceptModel, view));
                     view.ShowDialog();
 
                     return new AcceptResult(
@@ -380,6 +382,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 statementAccessor = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(environmentParameters.SqlStatementAccessorFile, true, true), loggerFactory);
             }
 
+            // DIコンテナ登録(なんかいろいろ)
             container
                 .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
                 .Register<IDiContainer, ApplicationDiContainer>(container)
@@ -410,6 +413,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
                 .Register<IDispatcherWrapper, IDispatcherWrapper>(DiLifecycle.Transient, () => new ApplicationDispatcherWrapper(environmentParameters.ApplicationConfiguration.General.DispatcherWait))
                 .Register(cultureService)
+                .Register<IViewManager, ViewManager>(DiLifecycle.Transient)
                 .Register<IImageLoader, ImageLoader>(DiLifecycle.Transient)
                 .Register<IMediaConverter, MediaConverter>(DiLifecycle.Transient)
                 .Register<IPolicy, Policy>(DiLifecycle.Transient)

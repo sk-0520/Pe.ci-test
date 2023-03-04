@@ -34,6 +34,7 @@ using ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog;
 using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
 using ContentTypeTextNet.Pe.Main.Views.Note;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -1175,7 +1176,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             return false;
         }
-        private IResultSuccessValue<DragParameter> FileGetDragParameter(UIElement sender, MouseEventArgs e)
+        private IResultSuccess<DragParameter> FileGetDragParameter(UIElement sender, MouseEventArgs e)
         {
             throw new NotSupportedException();
         }

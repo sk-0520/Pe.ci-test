@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
@@ -89,19 +90,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return optionsWithoutProgramName.Select(s => ToRemainingValue(s));
         }
 
-        internal IResultSuccessValue<string> GetPowerShellFromCommandName(EnvironmentExecuteFile environmentExecuteFile)
+        internal IResultSuccess<string> GetPowerShellFromCommandName(EnvironmentExecuteFile environmentExecuteFile)
         {
             var executeFiles = environmentExecuteFile.GetPathExecuteFiles();
             var pwsh = environmentExecuteFile.Get("pwsh", executeFiles);
             var powershell = environmentExecuteFile.Get("powershell", executeFiles);
 
             if(pwsh == null && powershell == null) {
-                return ResultSuccessValue.Failure<string>();
+                return Result.CreateFailure<string>();
             }
 
 
             var s = pwsh?.File.FullName ?? powershell!.File.FullName;
-            return ResultSuccessValue.Success(s);
+            return Result.CreateSuccess(s);
         }
 
         #endregion

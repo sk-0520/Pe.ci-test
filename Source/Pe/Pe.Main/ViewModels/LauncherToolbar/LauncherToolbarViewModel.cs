@@ -29,6 +29,7 @@ using ContentTypeTextNet.Pe.Main.Views.Extend;
 using ContentTypeTextNet.Pe.Main.Views.LauncherToolbar;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -360,7 +361,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #region ViewDragAndDrop
 
-        private IResultSuccessValue<DragParameter> ViewGetDragParameter(UIElement sender, MouseEventArgs e)
+        private IResultSuccess<DragParameter> ViewGetDragParameter(UIElement sender, MouseEventArgs e)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
             return dd.GetDragParameter(sender, e);
@@ -394,7 +395,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #region ItemDragAndDrop
 
-        private IResultSuccessValue<DragParameter> ItemGetDragParameter(UIElement sender, MouseEventArgs e) => ResultSuccessValue.Failure<DragParameter>();
+        private IResultSuccess<DragParameter> ItemGetDragParameter(UIElement sender, MouseEventArgs e) => Result.CreateFailure<DragParameter>();
 
         private bool ItemCanDragStart(UIElement sender, MouseEventArgs e) => false;
 

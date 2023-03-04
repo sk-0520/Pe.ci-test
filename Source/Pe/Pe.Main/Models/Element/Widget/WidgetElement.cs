@@ -18,6 +18,8 @@ using ContentTypeTextNet.Pe.Main.Models.WebView;
 using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
 using ContentTypeTextNet.Pe.Main.Views.Converter;
 using ContentTypeTextNet.Pe.Main.Views.Widget;
+using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
@@ -196,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 return;
             }
             TuneWindow(window);
-            WindowItem = new WindowItem(WindowKind.Widget, this, callerViewModel, window) {
+            WindowItem = new WindowItem(Manager.WindowKind.Widget, this, callerViewModel, window) {
                 CloseToDispose = callerViewModel is TemporaryWidgetViewModel, // ダミーのやつは殺して、通知領域のやつは生かしておく
             };
             WindowManager.Register(WindowItem);

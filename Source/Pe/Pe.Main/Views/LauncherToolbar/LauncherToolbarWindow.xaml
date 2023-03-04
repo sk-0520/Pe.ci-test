@@ -9,9 +9,9 @@
 
   xmlns:app_bridge_models_data="clr-namespace:ContentTypeTextNet.Pe.Bridge.Models.Data;assembly=Pe.Bridge"
 
-  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
-  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
-  xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
+  xmlns:app_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
+  xmlns:app_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core.Views"
+  xmlns:app_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core.Views"
 
   xmlns:app_main_views_lt="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherToolbar"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
@@ -40,11 +40,11 @@
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <app_core_views_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
-    <app_core_views_converter:IconBoxToWidthConverter x:Key="IconScaleToWidthConverter" />
-    <app_core_views_converter:IconBoxToHeightConverter x:Key="IconScaleToHeightConverter" />
-    <app_core_views_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
-    <app_core_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
+    <app_views_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+    <app_views_converter:IconBoxToWidthConverter x:Key="IconScaleToWidthConverter" />
+    <app_views_converter:IconBoxToHeightConverter x:Key="IconScaleToHeightConverter" />
+    <app_views_converter:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
+    <app_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
 
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
 
@@ -137,7 +137,7 @@
     <DataTemplate x:Key="LauncherItemContentTemplate">
       <Border Background="Transparent" Padding="{Binding DataContext.ButtonPadding, ElementName=root, Mode=OneTime}">
         <behaviors:Interaction.Behaviors>
-          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding DataContext.ItemDragAndDrop, ElementName=root}" />
+          <app_views_attached:DragAndDropBehavior DragAndDrop="{Binding DataContext.ItemDragAndDrop, ElementName=root}" />
         </behaviors:Interaction.Behaviors>
         <ContentPresenter Content="{TemplateBinding Content}" />
       </Border>
@@ -331,12 +331,12 @@
     <Binding Path="SelectedLauncherGroup.Name" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
   <behaviors:Interaction.Triggers>
-    <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
+    <app_views:RequestTrigger SourceObject="{Binding CloseRequest}">
       <behaviors:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
-    </app_core_views:RequestTrigger>
-    <app_core_views:RequestTrigger SourceObject="{Binding ExpandShortcutFileRequest}">
+    </app_views:RequestTrigger>
+    <app_views:RequestTrigger SourceObject="{Binding ExpandShortcutFileRequest}">
       <prism:InvokeCommandAction Command="{Binding OpenCommonMessageDialogCommand, ElementName=root}" />
-    </app_core_views:RequestTrigger>
+    </app_views:RequestTrigger>
     <behaviors:EventTrigger EventName="MouseDoubleClick">
       <behaviors:InvokeCommandAction Command="{Binding AutoHideToHideCommand}" />
     </behaviors:EventTrigger>
@@ -345,7 +345,7 @@
     </behaviors:EventTrigger>
   </behaviors:Interaction.Triggers>
   <behaviors:Interaction.Behaviors>
-    <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding ViewDragAndDrop}" />
+    <app_views_attached:DragAndDropBehavior DragAndDrop="{Binding ViewDragAndDrop}" />
   </behaviors:Interaction.Behaviors>
 
   <Window.Style>

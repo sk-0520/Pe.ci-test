@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Pe.Core.Views</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.Core.Views</RootNamespace>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pe.Core\Pe.Core.csproj" />
+    <ProjectReference Include="..\Pe.PInvoke\Pe.PInvoke.csproj" />
+  </ItemGroup>
+
+</Project>

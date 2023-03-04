@@ -8,8 +8,8 @@
   xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:prism="http://prismlibrary.com/"
 
-  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
-  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core.Views"
+  xmlns:app_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
   xmlns:app_main_viewmodels_iconviewer="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.IconViewer"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
@@ -38,9 +38,9 @@
   <Window.Resources>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <app_core_views_converter:IconBoxToWidthConverter x:Key="IconBoxToWidthConverter" />
-    <app_core_views_converter:IconBoxToHeightConverter x:Key="IconBoxToHeightConverter" />
-    <app_core_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
+    <app_views_converter:IconBoxToWidthConverter x:Key="IconBoxToWidthConverter" />
+    <app_views_converter:IconBoxToHeightConverter x:Key="IconBoxToHeightConverter" />
+    <app_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
 
@@ -101,12 +101,12 @@
   </Window.Title>
 
   <behaviors:Interaction.Triggers>
-    <app_core_views:RequestTrigger SourceObject="{Binding ScrollSelectedItemRequest}">
+    <app_views:RequestTrigger SourceObject="{Binding ScrollSelectedItemRequest}">
       <prism:InvokeCommandAction Command="{Binding ScrollSelectedItemCommand, ElementName=root}" />
-    </app_core_views:RequestTrigger>
-    <app_core_views:RequestTrigger SourceObject="{Binding FocusEndRequest}">
+    </app_views:RequestTrigger>
+    <app_views:RequestTrigger SourceObject="{Binding FocusEndRequest}">
       <prism:InvokeCommandAction Command="{Binding FocusEndCommand, ElementName=root}" />
-    </app_core_views:RequestTrigger>
+    </app_views:RequestTrigger>
     <behaviors:EventTrigger EventName="Activated">
       <behaviors:InvokeCommandAction Command="{Binding ViewActivatedCommand}" CommandParameter="{Binding ElementName=root}"/>
     </behaviors:EventTrigger>

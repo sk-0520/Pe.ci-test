@@ -12,11 +12,12 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
-    public interface ILauncherExecuteResult: IResultFailureValue<Exception>
+    public interface ILauncherExecuteResult: IResultFailure<Exception>
     {
         #region property
 

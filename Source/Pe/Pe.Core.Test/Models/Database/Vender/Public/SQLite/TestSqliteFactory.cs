@@ -2,6 +2,7 @@ using System.Data;
 using System.Data.SQLite;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
+using ContentTypeTextNet.Pe.Standard.Database;
 
 namespace ContentTypeTextNet.Pe.Core.Test.Models.Database.Vender.Public.SQLite
 {

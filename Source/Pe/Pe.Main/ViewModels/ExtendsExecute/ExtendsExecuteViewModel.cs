@@ -23,6 +23,7 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 {
@@ -369,9 +370,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             }
         }
 
-        private IResultSuccessValue<DragParameter> OptionGetDragParameter(UIElement sender, MouseEventArgs e)
+        private IResultSuccess<DragParameter> OptionGetDragParameter(UIElement sender, MouseEventArgs e)
         {
-            return ResultSuccessValue.Failure<DragParameter>();
+            return Result.CreateFailure<DragParameter>();
         }
 
         #endregion
@@ -420,9 +421,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             }
         }
 
-        private IResultSuccessValue<DragParameter> WorkDirectoryGetDragParameter(UIElement sender, MouseEventArgs e)
+        private IResultSuccess<DragParameter> WorkDirectoryGetDragParameter(UIElement sender, MouseEventArgs e)
         {
-            return ResultSuccessValue.Failure<DragParameter>();
+            return Result.CreateFailure<DragParameter>();
         }
 
         #endregion

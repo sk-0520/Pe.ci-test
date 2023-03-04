@@ -1,6 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>Pe.Plugins.Reference.FileFinder</AssemblyName>
     <RootNamespace>ContentTypeTextNet.Pe.Plugins.Reference.FileFinder</RootNamespace>
     <UseWPF>true</UseWPF>
   </PropertyGroup>

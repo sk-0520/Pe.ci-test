@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>0.99.191</Version>
+    <Version>0.99.192</Version>
 
     <TargetFramework>net7.0-windows</TargetFramework>
     <Platforms>x64;x86</Platforms>
@@ -12,7 +12,8 @@
     <Product>Pe</Product>
     <Copyright>Copyright © 2014-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
     <Configurations>Debug;Release</Configurations>
-    <PathMap>$(MSBuildThisFileDirectory)=.</PathMap>
+    <ImplicitUsings>disable</ImplicitUsings>
+      <PathMap>$(MSBuildThisFileDirectory)=.</PathMap>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">

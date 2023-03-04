@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Standard.Database;
+using ContentTypeTextNet.Pe.Standard.DependencyInjection;
 
 namespace Benchmark
 {
@@ -16,8 +18,16 @@ namespace Benchmark
         {
         }
 
+        [GlobalCleanup]
+        public void Cleanup()
+        {
+        }
 
         [Benchmark]
+        [Arguments(1 * 1024)]
+        [Arguments(10 * 1024)]
+        [Arguments(100 * 1024)]
+        [Arguments(1000 * 1024)]
         public string Method()
         {
             return "";

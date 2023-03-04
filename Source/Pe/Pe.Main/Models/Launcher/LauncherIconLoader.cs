@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Standard.Base;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
@@ -18,6 +19,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Standard.Database;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
@@ -46,11 +48,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        private Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync(IconScale iconScale, CancellationToken cancellationToken)
+        private Task<ResultSuccess<BitmapSource>> LoadExistsImageAsync(IconScale iconScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
-            return Task.Run(() => {
+            return Task.Run((Func<ResultSuccess<BitmapSource>>)(() => {
                 IReadOnlyList<byte[]>? imageBinary;
                 using(var context = LargeDatabaseBarrier.WaitRead()) {
                     var dao = new LauncherItemIconsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
@@ -58,16 +60,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 }
 
                 if(imageBinary != null && imageBinary.Count == 0) {
-                    return ResultSuccessValue.Failure<BitmapSource>();
+                    return Result.CreateFailure<BitmapSource>();
                 }
                 var image = ToImage(imageBinary);
 
                 if(image == null) {
-                    return ResultSuccessValue.Failure<BitmapSource>();
+                    return Result.CreateFailure<BitmapSource>();
                 }
 
-                return ResultSuccessValue.Success(image);
-            });
+                return Result.CreateSuccess<BitmapSource>(image);
+            }));
         }
 
         protected virtual LauncherIconData GetIconData()

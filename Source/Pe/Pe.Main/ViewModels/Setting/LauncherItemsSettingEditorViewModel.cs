@@ -15,6 +15,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
@@ -149,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region DragAndDrop
 
-        private IResultSuccessValue<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e)
+        private IResultSuccess<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
             return dd.GetDragParameter(sender, e);
