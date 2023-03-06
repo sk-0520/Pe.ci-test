@@ -7,7 +7,7 @@
   xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:prism="http://prismlibrary.com/"
 
-  xmlns:app_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core.Views"
+  xmlns:app_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
   xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
