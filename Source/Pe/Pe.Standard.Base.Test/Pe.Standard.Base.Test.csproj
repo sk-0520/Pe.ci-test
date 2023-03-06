@@ -4,6 +4,7 @@
     <AssemblyName>Pe.Standard.Base.Test</AssemblyName>
     <RootNamespace>ContentTypeTextNet.Pe.Standard.Base.Test</RootNamespace>
     <IsTestProject>true</IsTestProject>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
