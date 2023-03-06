@@ -36,7 +36,7 @@ foreach ($platform in $Platforms) {
 			$testFileName = $projectDirItem.BaseName + '.dll'
 			$testFilePath = Join-Path $testDirPath (Get-ChildItem -LiteralPath $testDirPath -Recurse -Name -File -Include $testFileName)
 
-			dotnet test $testFilePath --test-adapter-path:. $mainLoggerArg
+			dotnet test $testFilePath $mainLoggerArg
 			if (-not $?) {
 				exit 1
 			}
