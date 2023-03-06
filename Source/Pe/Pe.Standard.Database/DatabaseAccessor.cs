@@ -49,6 +49,9 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="IDatabaseReader.GetDataTable(string, object?)"/>
         DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter);
 
+        TResult GetScalar<TResult>(IDatabaseTransaction? transaction, string statement, object? parameter = null);
+        Task<TResult> GetScalarAsync<TResult>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default);
+
         /// <inheritdoc cref="IDatabaseReader.Query{T}(string, object?, bool)"/>
         IEnumerable<T> Query<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered);
 
@@ -183,6 +186,13 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         {
             if(Logger.IsEnabled(LogLevel.Trace)) {
                 Logger.LogTrace("{0}{1}{2}", statement, Environment.NewLine, ObjectDumper.GetDumpString(parameter));
+            }
+        }
+
+        protected virtual void LoggingExecuteScalarResult<TResult>(TResult result, DateTime startUtcTime, DateTime endUtcTime)
+        {
+            if(Logger.IsEnabled(LogLevel.Trace)) {
+                Logger.LogTrace("result: {0}, {1}", result, endUtcTime - startUtcTime);
             }
         }
 
@@ -348,6 +358,79 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             ThrowIfDisposed();
 
             return GetDataTable(null, statement, parameter);
+        }
+
+        public async virtual Task<DataTable> GetDataTableAsync(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+
+            LoggingStatement(formattedStatement, parameter);
+
+            var dataTable = new DataTable();
+            var startTime = DateTime.UtcNow;
+            using(var reader = await GetDataReaderAsync(transaction, statement, parameter, cancellationToken)) {
+                dataTable.Load(reader);
+            }
+            LoggingDataTable(dataTable, startTime, DateTime.UtcNow);
+
+            return dataTable;
+        }
+
+        public virtual Task<DataTable> GetDataTableAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return GetDataTableAsync(null, statement, parameter, cancellationToken);
+        }
+
+        public virtual TResult GetScalar<TResult>(IDatabaseTransaction? transaction, string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var startTime = DateTime.UtcNow;
+            var result = BaseConnection.ExecuteScalar<TResult>(formattedStatement, parameter, transaction?.Transaction);
+            LoggingExecuteScalarResult(result, startTime, DateTime.UtcNow);
+
+            return result;
+        }
+
+        public virtual TResult GetScalar<TResult>(string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            return GetScalar<TResult>(null, statement, parameter);
+        }
+
+        public virtual async Task<TResult> GetScalarAsync<TResult>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            var formattedStatement = Implementation.PreFormatStatement(statement);
+            LoggingStatement(formattedStatement, parameter);
+
+            var startTime = DateTime.UtcNow;
+            var command = new CommandDefinition(
+                statement,
+                parameters: parameter,
+                transaction: transaction?.Transaction,
+                cancellationToken: cancellationToken
+            );
+            var result = await BaseConnection.ExecuteScalarAsync<TResult>(command);
+            LoggingExecuteScalarResult(result, startTime, DateTime.UtcNow);
+
+            return result;
+        }
+
+        public virtual Task<TResult> GetScalarAsync<TResult>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return GetScalarAsync<TResult>(null, statement, parameter, cancellationToken);
         }
 
         /// <inheritdoc cref="IDatabaseAccessor.Query{T}(IDatabaseTransaction?, string, object?, bool)"/>

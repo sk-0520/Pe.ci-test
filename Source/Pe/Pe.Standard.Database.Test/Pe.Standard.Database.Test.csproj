@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Pe.Standard.Database.Test</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.Standard.Database.Test</RootNamespace>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteAccessor.cs" Link="TestImpl\Vender\Public\SQLite\SqliteAccessor.cs" />
+    <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteFactory.cs" Link="TestImpl\Vender\Public\SQLite\SqliteFactory.cs" />
+    <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteImplementation.cs" Link="TestImpl\Vender\Public\SQLite\SqliteImplementation.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pe.Standard.Database\Pe.Standard.Database.csproj" />
+  </ItemGroup>
+
+</Project>

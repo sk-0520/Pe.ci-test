@@ -68,6 +68,25 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             return Transaction.GetDataTable(statement, parameter);
         }
 
+        public Task<DataTable> GetDataTableAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            return Transaction.GetDataTableAsync(statement, parameter, cancellationToken);
+        }
+
+        public TResult GetScalar<TResult>(string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            return Transaction.GetScalar<TResult>(statement, parameter);
+        }
+
+        public Task<TResult> GetScalarAsync<TResult>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return Transaction.GetScalarAsync<TResult>(statement, parameter, cancellationToken);
+        }
+
         public IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true)
         {
             ThrowIfDisposed();

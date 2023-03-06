@@ -137,6 +137,27 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             return DatabaseAccessor.GetDataTable(this, statement, parameter);
         }
 
+        public Task<DataTable> GetDataTableAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.GetDataTableAsync(statement, parameter, cancellationToken);
+        }
+
+        public virtual TResult GetScalar<TResult>(string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.GetScalar<TResult>(this, statement, parameter);
+        }
+
+        public virtual Task<TResult> GetScalarAsync<TResult>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.GetScalarAsync<TResult>(this, statement, parameter, cancellationToken);
+        }
+
         public IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true)
         {
             ThrowIfDisposed();

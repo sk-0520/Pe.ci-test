@@ -4,6 +4,7 @@ using System.Data;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao;
 using ContentTypeTextNet.Pe.Standard.Database;
@@ -29,6 +30,21 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
             }
 
             public DataTable GetDataTable(string statement, object? parameter = null)
+            {
+                throw new NotImplementedException();
+            }
+
+            public Task<DataTable> GetDataTableAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+            {
+                throw new NotImplementedException();
+            }
+
+            public TResult GetScalar<TResult>(string statement, object? parameter = null)
+            {
+                throw new NotImplementedException();
+            }
+
+            public Task<TResult> GetScalarAsync<TResult>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
             {
                 throw new NotImplementedException();
             }
