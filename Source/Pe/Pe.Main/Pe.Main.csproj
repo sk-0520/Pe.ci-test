@@ -52,7 +52,6 @@
     <ProjectReference Include="..\Pe.Standard.Base\Pe.Standard.Base.csproj" />
     <ProjectReference Include="..\Pe.Standard.Database\Pe.Standard.Database.csproj" />
     <ProjectReference Include="..\Pe.Standard.DependencyInjection\Pe.Standard.DependencyInjection.csproj" />
-    <ProjectReference Include="..\Pe.Core.Views\Pe.Core.Views.csproj" />
   </ItemGroup>
 
   <ItemGroup>
