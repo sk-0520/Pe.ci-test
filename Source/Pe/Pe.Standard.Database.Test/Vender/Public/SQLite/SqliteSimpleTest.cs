@@ -126,6 +126,9 @@ values
 
             var actual2 = DatabaseAccessor.GetScalar<string>("select ColVal from TestTable1 where ColKey <> 1 order by ColKey");
             Assert.AreEqual("B", actual2);
+
+            var actual3 = DatabaseAccessor.GetScalar<string>("select ColVal from TestTable1 where ColKey = -1");
+            Assert.IsNull(actual3);
         }
 
         [TestMethod]
@@ -136,6 +139,9 @@ values
 
             var actual2 = await DatabaseAccessor.GetScalarAsync<string>("select ColVal from TestTable1 where ColKey <> 1 order by ColKey");
             Assert.AreEqual("B", actual2);
+
+            var actual3 = await DatabaseAccessor.GetScalarAsync<string>("select ColVal from TestTable1 where ColKey = -1");
+            Assert.IsNull(actual3);
         }
 
         [TestMethod]

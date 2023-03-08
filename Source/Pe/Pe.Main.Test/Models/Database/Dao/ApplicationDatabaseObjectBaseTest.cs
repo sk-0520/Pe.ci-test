@@ -39,12 +39,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
                 throw new NotImplementedException();
             }
 
-            public TResult GetScalar<TResult>(string statement, object? parameter = null)
+            public TResult? GetScalar<TResult>(string statement, object? parameter = null)
             {
                 throw new NotImplementedException();
             }
 
-            public Task<TResult> GetScalarAsync<TResult>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+            public Task<TResult?> GetScalarAsync<TResult>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
             {
                 throw new NotImplementedException();
             }

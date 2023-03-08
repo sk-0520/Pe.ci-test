@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <summary>
         /// 行終端文字列を取得または初期設定。
         /// </summary>
-        string NewLine { get; set; /* TODO: 本来init */ }
+        string NewLine { get; }
 
         #endregion
 
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         #region IDatabaseImplementation
 
         /// <inheritdoc cref="IDatabaseImplementation.NewLine"/>
-        public string NewLine { get; set; } = Environment.NewLine;
+        public string NewLine { get; } = Environment.NewLine;
 
         /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionDDL"/>
         public virtual bool SupportedTransactionDDL { get; } = false;

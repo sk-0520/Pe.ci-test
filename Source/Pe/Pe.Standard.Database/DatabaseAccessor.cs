@@ -426,11 +426,11 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             return result;
         }
 
-        public virtual Task<TResult> GetScalarAsync<TResult>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        public virtual Task<TResult?> GetScalarAsync<TResult>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
-            return GetScalarAsync<TResult>(null, statement, parameter, cancellationToken);
+            return GetScalarAsync<TResult?>(null, statement, parameter, cancellationToken);
         }
 
         /// <inheritdoc cref="IDatabaseAccessor.Query{T}(IDatabaseTransaction?, string, object?, bool)"/>
