@@ -28,6 +28,7 @@
   Topmost="True"
 
   Width="{Binding WindowWidth, Mode=TwoWay, Delay=1000}"
+  Height="{Binding WindowHeight, Mode=OneWayToSource}"
 
   IsVisibleChanged="root_IsVisibleChanged"
 

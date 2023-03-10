@@ -2331,6 +2331,14 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         /// </summary>
         MAPVK_VSC_TO_VK_EX = 3,
     }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:列挙値の前に型名を付けないでください", Justification = "<保留中>")]
+    public enum MF: uint
+    {
+        MF_BYCOMMAND = 0x00000000,
+        MF_BYPOSITION = 0x00000400,
+    }
+
     partial class NativeMethods
     {
         /// <summary>
@@ -2787,5 +2795,25 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetShellWindow();
+
+        /// <summary>
+        /// コピーおよび変更のために、アプリケーションがウィンドウ メニュー (システム メニューまたはコントロール メニューとも呼ばれます) にアクセスできるようにします。
+        /// <seealso href="https://learn.microsoft.com/ja-jp/windows/win32/api/winuser/nf-winuser-getsystemmenu" />
+        /// </summary>
+        /// <param name="hWnd">ウィンドウ メニューのコピーを所有するウィンドウへのハンドル。</param>
+        /// <param name="bRevert">実行するアクション。 このパラメーターが FALSE の場合、 GetSystemMenu は現在使用中のウィンドウ メニューのコピーへのハンドルを返します。 コピーは最初はウィンドウ メニューと同じですが、変更できます。 このパラメーターが TRUE の場合、 GetSystemMenu はウィンドウ メニューを既定の状態にリセットします。 前のウィンドウ メニューがある場合は破棄されます。</param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hMenu">変更するメニューへのハンドル。</param>
+        /// <param name="uPosition">uFlags パラメーターによって決定される、削除するメニュー項目。</param>
+        /// <param name="uFlags">uPosition パラメーターの解釈方法を示します。 このパラメーターは、次のいずれかの値である必要があります。</param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern bool RemoveMenu(IntPtr hMenu, uint uPosition, MF uFlags);
     }
 }

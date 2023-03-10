@@ -6,6 +6,8 @@ using ContentTypeTextNet.Pe.Standard.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 
 namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
 {
@@ -83,6 +85,15 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
             base.OnSourceInitialized(e);
 
             UIUtility.SetToolWindowStyle(this, false, false);
+
+            var hWnd = HandleUtility.GetWindowHandle(this);
+            var hSysMenu = NativeMethods.GetSystemMenu(hWnd, false);
+            if(hSysMenu != IntPtr.Zero) {
+                NativeMethods.RemoveMenu(hSysMenu, (int)SC.SC_SIZE, MF.MF_BYCOMMAND);
+                NativeMethods.RemoveMenu(hSysMenu, (int)SC.SC_MOVE, MF.MF_BYCOMMAND);
+            } else {
+                Logger!.LogWarning("hSysMenu is IntPtr.Zero");
+            }
         }
 
         #endregion
