@@ -28,6 +28,8 @@ interface LayoutRowData {
 
 interface IndexRowData {
 	isUnique: boolean,
+	/** インデックス名 */
+	name: string,
 	columns: Array<string>;
 }
 
@@ -138,6 +140,7 @@ enum IndexBlockName {
 	IndexRowColumnRoot = 'index-row-column-root',
 	ColumnName = 'c',
 	UniqueKey = 'uk',
+	IndexName = 'name',
 	Columns = 'columns',
 	Column = 'column',
 	DeleteColumn = 'delete-col',
@@ -446,11 +449,13 @@ class Entity {
 		return clonedTemplate;
 	}
 
-	private createIndexRowNode(isUnique: boolean, columns: ReadonlyArray<string>): Node {
+	private createIndexRowNode(isUnique: boolean, indexName: string, columns: ReadonlyArray<string>): Node {
 		var indexRowTemplate = document.getElementById('template-index-row') as HTMLTemplateElement;
 		var clonedTemplate = document.importNode(indexRowTemplate.content, true);
 
 		getElementByName<HTMLInputElement>(clonedTemplate, IndexBlockName.UniqueKey).checked = isUnique;
+
+		getElementByName<HTMLInputElement>(clonedTemplate, IndexBlockName.IndexName).value = indexName;
 
 		var columnsElement = getElementByName(clonedTemplate, IndexBlockName.Columns);
 		for (var column of columns) {
@@ -483,13 +488,14 @@ class Entity {
 
 		for (var indexRow of indexRows) {
 			var isUnique = isCheckMark(indexRow[0]);
-			var columns = indexRow[1].split(',').map(s => s.trim());
-			var rowElement = this.createIndexRowNode(isUnique, columns);
+			var indexName = indexRow[1].trim();
+			var columns = indexRow[2].split(',').map(s => s.trim());
+			var rowElement = this.createIndexRowNode(isUnique, indexName, columns);
 			rowsElement.appendChild(rowElement)
 		}
 
 		getElementByName<HTMLButtonElement>(clonedTemplate, IndexBlockName.IndexRowAdd).addEventListener('click', ev => {
-			var rowElement = this.createIndexRowNode(false, [this.getColumnNames(true)[0]]);
+			var rowElement = this.createIndexRowNode(false, '', [this.getColumnNames(true)[0]]);
 			rowsElement.appendChild(rowElement);
 
 			var columnElement = getElementByName<HTMLSelectElement>(rowsElement.lastElementChild!, IndexBlockName.Column);
@@ -1009,6 +1015,7 @@ class EntityRelationManager {
 	private getIndexRowData(rowElement: HTMLTableRowElement):IndexRowData {
 		var row = {
 			isUnique: getElementByName<HTMLInputElement>(rowElement, IndexBlockName.UniqueKey).checked,
+			name: getElementByName<HTMLInputElement>(rowElement, IndexBlockName.IndexName).value,
 			columns: [ ...getElementsByName<HTMLInputElement>(rowElement, IndexBlockName.ColumnName)]
 				.map(i => i.value)
 			,
