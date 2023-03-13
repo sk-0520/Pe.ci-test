@@ -106,7 +106,7 @@ const LayoutMarkdownHeaders = function() {
 	;
 }();
 
-const IndexMarkdownHeaders = ['UK', 'カラム(CSV)'];
+const IndexMarkdownHeaders = ['UK', '名前', 'カラム(CSV)'];
 
 enum TableBlockName {
 	TableName = 'table-name',
