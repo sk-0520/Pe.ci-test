@@ -1026,18 +1026,19 @@ class EntityRelationManager {
 
 	private toIndexMarkdown(row:IndexRowData): ReadonlyArray<string> {
 		var result = [toCheckMark(row.isUnique)];
+		result.push(row.name);
 		result.push(row.columns.join(', '));
 		return result;
 	}
 
-	private toIndexDatabase(tableName: string, counter: number, row:IndexRowData): string {
-		var sql = `--// index: idx_${tableName}_${counter}\r\n`;
+	private toIndexDatabase(tableName: string, row:IndexRowData): string {
+		var sql = `--// index: idx_${tableName}_${row.name}\r\n`;
 		sql += "create";
 		if(row.isUnique) {
 			sql += " unique";
 		}
 		sql += " index";
-		sql += ` [idx_${tableName}_${counter}]`;
+		sql += ` [idx_${tableName}_${row.name}]`;
 		sql += " on";
 		sql += ` [${tableName}](\r\n`;
 		sql += row.columns.map(i => `\t[${i}]`).join(",\r\n") + "\r\n";
@@ -1060,14 +1061,13 @@ class EntityRelationManager {
 			} as ExportData;
 		}
 
-		var indexCounter = 1;
 		for(var rowElement of rowElements) {
 			var rowData = this.getIndexRowData(rowElement);
 
 			var markdownRow = this.toIndexMarkdown(rowData);
 			markdownColumns.push(markdownRow);
 
-			var databaseIndex = this.toIndexDatabase(tableName, indexCounter++, rowData);
+			var databaseIndex = this.toIndexDatabase(tableName, rowData);
 			databaseStatements.push(databaseIndex);
 		}
 		var exportData = {
