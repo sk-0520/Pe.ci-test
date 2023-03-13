@@ -76,6 +76,9 @@ jobs:
       - name: <Install> NPM
         run: npm ci
 
+      - name: <Test> Script
+        run: npm test
+
       - name: <Build> BuildTools
         shell: pwsh
         run: .\Build\make-buildtools.ps1
