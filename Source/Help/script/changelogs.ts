@@ -1,4 +1,5 @@
 //declare function makeChangelogLink(): void;
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="./changelog-link.ts" />
 
 /*--------BUILD-EMBEDDED-JSON--------*/

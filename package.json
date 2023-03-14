@@ -5,6 +5,7 @@
 	"//main": "Source/Help/index.pug",
 	"scripts": {
 		"lint": "eslint Source/Help/script",
+		"lint-fix": "eslint Source/Help/script --fix",
 		"test:help": "jest",
 		"test": "npm-run-all test:*",
 		"archive:plugin-template": "npm-build-zip --source=Source/Plugin.Template --destination=Source/Help/archives --name=../../plugin-template",
