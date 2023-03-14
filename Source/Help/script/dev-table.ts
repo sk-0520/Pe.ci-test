@@ -28,6 +28,8 @@ interface LayoutRowData {
 
 interface IndexRowData {
 	isUnique: boolean,
+	/** インデックス名 */
+	name: string,
 	columns: Array<string>;
 }
 
@@ -88,8 +90,8 @@ enum LayoutColumn {
 	Comment = 8,
 }
 
-const LayoutMarkdownHeaders = function() {
-	var map = new Map<LayoutColumn, string>([
+const LayoutMarkdownHeaders = function () {
+	const map = new Map<LayoutColumn, string>([
 		[LayoutColumn.PrimaryKey, 'PK'],
 		[LayoutColumn.NotNull, 'NN'],
 		[LayoutColumn.ForeignKey, 'FK'],
@@ -100,13 +102,13 @@ const LayoutMarkdownHeaders = function() {
 		[LayoutColumn.CheckConstraint, 'チェック制約'],
 		[LayoutColumn.Comment, 'コメント'],
 	]);
-	return [ ...map.keys() ]
+	return [...map.keys()]
 		.sort()
 		.map(i => map.get(i)!)
-	;
+		;
 }();
 
-const IndexMarkdownHeaders = ['UK', 'カラム(CSV)'];
+const IndexMarkdownHeaders = ['UK', '名前', 'カラム(CSV)'];
 
 enum TableBlockName {
 	TableName = 'table-name',
@@ -138,6 +140,7 @@ enum IndexBlockName {
 	IndexRowColumnRoot = 'index-row-column-root',
 	ColumnName = 'c',
 	UniqueKey = 'uk',
+	IndexName = 'name',
 	Columns = 'columns',
 	Column = 'column',
 	DeleteColumn = 'delete-col',
@@ -153,8 +156,8 @@ function getElementsByName<THTMLElement extends HTMLElement>(node: ParentNode, n
 }
 
 function getClosest(element: HTMLElement, func: (target: HTMLElement) => boolean): HTMLElement | null {
-	while(element.parentElement) {
-		if(func(element.parentElement)) {
+	while (element.parentElement) {
+		if (func(element.parentElement)) {
 			return element.parentElement;
 		}
 
@@ -167,20 +170,21 @@ function isCheckMark(value: string) {
 	return value === 'o';
 }
 function toCheckMark(value: boolean) {
-	return value ? 'o': '';
+	return value ? 'o' : '';
 }
 
 function countSingleChar(s: string): number {
-	if(!s || !s.length) {
+	if (!s || !s.length) {
 		return 0;
 	}
-	var chars = s.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]|[^\uD800-\uDFFF]/g) || [];
-	var length = 0;
-	for(var c of chars) {
-		if(c.length == 1) {
-			if(!c.match(/[^\x01-\x7E]/) || !c.match(/[^\uFF65-\uFF9F]/)) {
+	const chars = s.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]|[^\uD800-\uDFFF]/g) || [];
+	let length = 0;
+	for (const c of chars) {
+		if (c.length == 1) {
+			// eslint-disable-next-line no-control-regex
+			if (!c.match(/[^\x01-\x7E]/) || !c.match(/[^\uFF65-\uFF9F]/)) {
 				length += 1;
-			}  else {
+			} else {
 				length += 2;
 			}
 
@@ -202,18 +206,18 @@ class Entity {
 	}
 
 	private getIndex(lines: ReadonlyArray<string>) {
-		var regLayout = /^###\s*layout\s*/;
-		var regIndex = /^###\s*index\s*/;
+		const regLayout = /^###\s*layout\s*/;
+		const regIndex = /^###\s*index\s*/;
 
 		enum State {
 			Table,
 			Layout,
 			Index,
-		};
+		}
 
-		var state = State.Table;
+		let state = State.Table;
 
-		var lineIndex = {
+		const lineIndex = {
 			table: -1,
 			layout: {
 				head: -1,
@@ -225,8 +229,8 @@ class Entity {
 			}
 		};
 
-		for (var i = 0; i < lines.length; i++) {
-			var line = lines[i];
+		for (let i = 0; i < lines.length; i++) {
+			const line = lines[i];
 
 			switch (state) {
 				case State.Table:
@@ -268,7 +272,7 @@ class Entity {
 	}
 
 	private trimDefine(rawDefine: EntityDefine): EntityDefine {
-		var result = {
+		const result = {
 			table: rawDefine.table.substr(this.tableNamePrefix.length),
 			layout: this.trimMarkdownTable(rawDefine.layout),
 			index: this.trimMarkdownTable(rawDefine.index),
@@ -278,7 +282,7 @@ class Entity {
 	}
 
 	private convertRowLines(markdownTableLines: ReadonlyArray<string>): ReadonlyArray<ReadonlyArray<string>> {
-		var rows = markdownTableLines
+		const rows = markdownTableLines
 			.map(i => i.replace(/(^\|)|(|$)/, ''))
 			.map(i => i.split('|').map(s => s.trim()))
 			;
@@ -290,27 +294,27 @@ class Entity {
 	}
 
 	private buildTable(parentElement: HTMLDivElement, tableName: string) {
-		var tableTemplate = document.getElementById('template-table') as HTMLTemplateElement;
-		var clonedTemplate = document.importNode(tableTemplate.content, true);
+		const tableTemplate = document.getElementById('template-table') as HTMLTemplateElement;
+		const clonedTemplate = document.importNode(tableTemplate.content, true);
 
-		var tableNameElement = getElementByName<HTMLInputElement>(clonedTemplate, TableBlockName.TableName);
+		const tableNameElement = getElementByName<HTMLInputElement>(clonedTemplate, TableBlockName.TableName);
 		tableNameElement.value = tableName;
 
 		parentElement.appendChild(clonedTemplate);
 	}
 
 	private createLayoutRowNode(columns: ReadonlyArray<string>) {
-		var layoutRowTemplate = document.getElementById('template-layout-row') as HTMLTemplateElement;
-		var clonedTemplate = document.importNode(layoutRowTemplate.content, true);
+		const layoutRowTemplate = document.getElementById('template-layout-row') as HTMLTemplateElement;
+		const clonedTemplate = document.importNode(layoutRowTemplate.content, true);
 
-		var primaryElement = getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.PrimaryKey);
-		var notNullElement = getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.NotNull)
+		const primaryElement = getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.PrimaryKey);
+		const notNullElement = getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.NotNull)
 		primaryElement.checked = isCheckMark(columns[LayoutColumn.PrimaryKey]);
 		notNullElement.checked = isCheckMark(columns[LayoutColumn.NotNull]);
-		primaryElement.addEventListener('change', ev => {
+		primaryElement.addEventListener('change', _ => {
 			notNullElement.disabled = primaryElement.checked;
-			if(primaryElement.checked) {
-				notNullElement.checked =true;
+			if (primaryElement.checked) {
+				notNullElement.checked = true;
 			}
 		});
 		primaryElement.dispatchEvent(new Event('change'));
@@ -320,30 +324,30 @@ class Entity {
 		getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.LogicalColumnName).value = columns[LayoutColumn.LogicalColumnName];
 		getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.PhysicalColumnName).value = columns[LayoutColumn.PhysicalColumnName];
 
-		var logicalDataElement = getElementByName<HTMLSelectElement>(clonedTemplate, LayoutBlockName.LogicalType);
-		var physicalDataElement = getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.PhysicalType); // 一方通行イベントで使うのでキャプチャしとく。メモリは無限
-		var clrDataElement = getElementByName<HTMLSelectElement>(clonedTemplate, LayoutBlockName.ClrType);
+		const logicalDataElement = getElementByName<HTMLSelectElement>(clonedTemplate, LayoutBlockName.LogicalType);
+		const physicalDataElement = getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.PhysicalType); // 一方通行イベントで使うのでキャプチャしとく。メモリは無限
+		const clrDataElement = getElementByName<HTMLSelectElement>(clonedTemplate, LayoutBlockName.ClrType);
 		logicalDataElement.value = columns[LayoutColumn.LogicalType];
 		clrDataElement.value = columns[LayoutColumn.ClrType];
-		logicalDataElement.addEventListener('change', ev => {
+		logicalDataElement.addEventListener('change', _ => {
 
-			var physicalValue = DatabaseTypeMap.get(logicalDataElement.value);
+			const physicalValue = DatabaseTypeMap.get(logicalDataElement.value);
 			physicalDataElement.value = physicalValue || 'なんかデータ変';
 
 			// CLR に対して Pe で出来る範囲で型を限定
-			var optionElements = clrDataElement.querySelectorAll('option');
-			var selectedElement: HTMLOptionElement | null = null;
-			var defaultElement: HTMLOptionElement | null = null;
-			for (var optionElement of optionElements) {
-				var clrValues = ClrMap.get(logicalDataElement.value);
-				if(!clrValues) {
+			const optionElements = clrDataElement.querySelectorAll('option');
+			let selectedElement: HTMLOptionElement | null = null;
+			let defaultElement: HTMLOptionElement | null = null;
+			for (const optionElement of optionElements) {
+				const clrValues = ClrMap.get(logicalDataElement.value);
+				if (!clrValues) {
 					logicalDataElement.parentElement?.parentElement?.parentElement?.classList.add('error-parent');
 					logicalDataElement.parentElement?.parentElement?.classList.add('error-row');
 					throw "clrValues が取得できない, たぶん 論理型 が不明: " + logicalDataElement.value + ":" + physicalValue;
 				}
 				optionElement.disabled = !clrValues.some(i => i === optionElement.value);
 				if (!optionElement.disabled && !defaultElement) {
-					if(clrValues[0] === optionElement.value) {
+					if (clrValues[0] === optionElement.value) {
 						defaultElement = optionElement;
 					}
 				}
@@ -362,8 +366,8 @@ class Entity {
 		getElementByName<HTMLInputElement>(clonedTemplate, LayoutBlockName.Comment).value = columns[LayoutColumn.Comment];
 
 		getElementByName<HTMLButtonElement>(clonedTemplate, LayoutBlockName.Delete).addEventListener('click', ev => {
-			var element = ev.srcElement as HTMLElement;
-			while(element.getAttribute('name') !== LayoutBlockName.LayoutRowRoot) {
+			let element = ev.srcElement as HTMLElement;
+			while (element.getAttribute('name') !== LayoutBlockName.LayoutRowRoot) {
 				element = element.parentElement as HTMLElement;
 			}
 			element.remove();
@@ -373,9 +377,9 @@ class Entity {
 	}
 
 	private createEmptyLayout(): ReadonlyArray<string> {
-		var defaultDatabaseType = 'integer';
+		const defaultDatabaseType = 'integer';
 
-		var map = new Map<LayoutColumn, string>([
+		const map = new Map<LayoutColumn, string>([
 			[LayoutColumn.PrimaryKey, ''],
 			[LayoutColumn.NotNull, ''],
 			[LayoutColumn.ForeignKey, ''],
@@ -387,37 +391,37 @@ class Entity {
 			[LayoutColumn.Comment, ''],
 		]);
 
-		return [ ...map.keys() ]
+		return [...map.keys()]
 			.sort()
 			.map(i => map.get(i)!)
-		;
+			;
 	}
 
 	private buildLayout(parentElement: HTMLDivElement, layoutRows: ReadonlyArray<ReadonlyArray<string>>) {
-		var layoutTemplate = document.getElementById('template-layout') as HTMLTemplateElement;
-		var clonedTemplate = document.importNode(layoutTemplate.content, true);
+		const layoutTemplate = document.getElementById('template-layout') as HTMLTemplateElement;
+		const clonedTemplate = document.importNode(layoutTemplate.content, true);
 
-		var rowsElement = clonedTemplate.querySelector('tbody') as HTMLElement;
+		const rowsElement = clonedTemplate.querySelector('tbody') as HTMLElement;
 
-		for (var layoutRow of layoutRows) {
-			var rowElement = this.createLayoutRowNode(layoutRow);
+		for (const layoutRow of layoutRows) {
+			const rowElement = this.createLayoutRowNode(layoutRow);
 			rowsElement.appendChild(rowElement)
 		}
 
 		getElementByName<HTMLButtonElement>(clonedTemplate, LayoutBlockName.LayoutRowAdd).addEventListener('click', ev => {
-			var element = ev.srcElement as HTMLElement;
-			while(element.tagName !== 'TABLE') {
+			let element = ev.srcElement as HTMLElement;
+			while (element.tagName !== 'TABLE') {
 				element = element.parentElement as HTMLElement;
 			}
 
-			var emptyLayout = this.createEmptyLayout();
-			var rowElement = this.createLayoutRowNode(emptyLayout);
+			const emptyLayout = this.createEmptyLayout();
+			const rowElement = this.createLayoutRowNode(emptyLayout);
 
 			rowsElement.appendChild(rowElement);
-			var newRowElement = rowsElement.lastElementChild as HTMLElement;
-			var tableElement = getElementByName<HTMLSelectElement>(newRowElement, LayoutBlockName.ForeignKeyTable);
-			var targetEntities = this.filterMyself(this.entities);
-			var targetTableNames = this.getTableNamesFromEntities(targetEntities);
+			const newRowElement = rowsElement.lastElementChild as HTMLElement;
+			const tableElement = getElementByName<HTMLSelectElement>(newRowElement, LayoutBlockName.ForeignKeyTable);
+			const targetEntities = this.filterMyself(this.entities);
+			const targetTableNames = this.getTableNamesFromEntities(targetEntities);
 			this.buildForeignKeyTable(tableElement, targetTableNames);
 			tableElement.addEventListener('change', ev => this.changedTableElement(ev, targetEntities));
 		});
@@ -427,48 +431,50 @@ class Entity {
 	}
 
 	private createIndexRowColumnNode(column: string) {
-		var indexRowColumnTemplate = document.getElementById('template-index-row-column') as HTMLTemplateElement;
-		var clonedTemplate = document.importNode(indexRowColumnTemplate.content, true);
+		const indexRowColumnTemplate = document.getElementById('template-index-row-column') as HTMLTemplateElement;
+		const clonedTemplate = document.importNode(indexRowColumnTemplate.content, true);
 
 		const columnElement = getElementByName<HTMLInputElement>(clonedTemplate, IndexBlockName.ColumnName);
 		columnElement.value = column;
 
 		const columnOptionElement = getElementByName<HTMLOptionElement>(clonedTemplate, IndexBlockName.Column);
-		columnOptionElement.addEventListener('change', ev => {
+		columnOptionElement.addEventListener('change', _ => {
 			columnElement.value = columnOptionElement.value;
 		});
 
 		getElementByName<HTMLButtonElement>(clonedTemplate, IndexBlockName.DeleteColumn).addEventListener('click', ev => {
-			var parent = getClosest(ev.srcElement as HTMLElement, e => e.getAttribute('name') === IndexBlockName.IndexRowColumnRoot);
+			const parent = getClosest(ev.srcElement as HTMLElement, e => e.getAttribute('name') === IndexBlockName.IndexRowColumnRoot);
 			parent!.remove();
 		});
 
 		return clonedTemplate;
 	}
 
-	private createIndexRowNode(isUnique: boolean, columns: ReadonlyArray<string>): Node {
-		var indexRowTemplate = document.getElementById('template-index-row') as HTMLTemplateElement;
-		var clonedTemplate = document.importNode(indexRowTemplate.content, true);
+	private createIndexRowNode(isUnique: boolean, indexName: string, columns: ReadonlyArray<string>): Node {
+		const indexRowTemplate = document.getElementById('template-index-row') as HTMLTemplateElement;
+		const clonedTemplate = document.importNode(indexRowTemplate.content, true);
 
 		getElementByName<HTMLInputElement>(clonedTemplate, IndexBlockName.UniqueKey).checked = isUnique;
 
-		var columnsElement = getElementByName(clonedTemplate, IndexBlockName.Columns);
-		for (var column of columns) {
-			var columnElement = this.createIndexRowColumnNode(column);
+		getElementByName<HTMLInputElement>(clonedTemplate, IndexBlockName.IndexName).value = indexName;
+
+		const columnsElement = getElementByName(clonedTemplate, IndexBlockName.Columns);
+		for (const column of columns) {
+			const columnElement = this.createIndexRowColumnNode(column);
 			columnsElement.appendChild(columnElement);
 		}
 
-		getElementByName<HTMLButtonElement>(clonedTemplate, IndexBlockName.ColumnAdd).addEventListener('click', ev => {
-			var columnElement = this.createIndexRowColumnNode(this.getColumnNames(true)[0]);
+		getElementByName<HTMLButtonElement>(clonedTemplate, IndexBlockName.ColumnAdd).addEventListener('click', _ => {
+			const columnElement = this.createIndexRowColumnNode(this.getColumnNames(true)[0]);
 			columnsElement.appendChild(columnElement);
 
-			var columnNames = this.getColumnNames(true);
-			var targetElement = getElementByName<HTMLSelectElement>(columnsElement.lastElementChild!, IndexBlockName.Column)
+			const columnNames = this.getColumnNames(true);
+			const targetElement = getElementByName<HTMLSelectElement>(columnsElement.lastElementChild!, IndexBlockName.Column)
 			this.setIndexColumnNames(targetElement, columnNames);
 		});
 
 		getElementByName<HTMLButtonElement>(clonedTemplate, IndexBlockName.DeleteIndex).addEventListener('click', ev => {
-			var parent = getClosest(ev.srcElement as HTMLElement, e => e.getAttribute('name') === IndexBlockName.IndexRowRoot);
+			const parent = getClosest(ev.srcElement as HTMLElement, e => e.getAttribute('name') === IndexBlockName.IndexRowRoot);
 			parent!.remove();
 		});
 
@@ -476,24 +482,25 @@ class Entity {
 	}
 
 	private buildIndex(parentElement: HTMLDivElement, indexRows: ReadonlyArray<ReadonlyArray<string>>) {
-		var indexTemplate = document.getElementById('template-index') as HTMLTemplateElement;
-		var clonedTemplate = document.importNode(indexTemplate.content, true);
+		const indexTemplate = document.getElementById('template-index') as HTMLTemplateElement;
+		const clonedTemplate = document.importNode(indexTemplate.content, true);
 
-		var rowsElement = clonedTemplate.querySelector('tbody') as HTMLElement;
+		const rowsElement = clonedTemplate.querySelector('tbody') as HTMLElement;
 
-		for (var indexRow of indexRows) {
-			var isUnique = isCheckMark(indexRow[0]);
-			var columns = indexRow[1].split(',').map(s => s.trim());
-			var rowElement = this.createIndexRowNode(isUnique, columns);
+		for (const indexRow of indexRows) {
+			const isUnique = isCheckMark(indexRow[0]);
+			const indexName = indexRow[1].trim();
+			const columns = indexRow[2].split(',').map(s => s.trim());
+			const rowElement = this.createIndexRowNode(isUnique, indexName, columns);
 			rowsElement.appendChild(rowElement)
 		}
 
-		getElementByName<HTMLButtonElement>(clonedTemplate, IndexBlockName.IndexRowAdd).addEventListener('click', ev => {
-			var rowElement = this.createIndexRowNode(false, [this.getColumnNames(true)[0]]);
+		getElementByName<HTMLButtonElement>(clonedTemplate, IndexBlockName.IndexRowAdd).addEventListener('click', _ => {
+			const rowElement = this.createIndexRowNode(false, '', [this.getColumnNames(true)[0]]);
 			rowsElement.appendChild(rowElement);
 
-			var columnElement = getElementByName<HTMLSelectElement>(rowsElement.lastElementChild!, IndexBlockName.Column);
-			var columnNames = this.getColumnNames(true);
+			const columnElement = getElementByName<HTMLSelectElement>(rowsElement.lastElementChild!, IndexBlockName.Column);
+			const columnNames = this.getColumnNames(true);
 			this.setIndexColumnNames(columnElement, columnNames);
 		});
 
@@ -501,10 +508,10 @@ class Entity {
 	}
 
 	public build(rawDefine: string) {
-		var lines = rawDefine.split(/\r?\n/mg);
-		var index = this.getIndex(lines);
+		const lines = rawDefine.split(/\r?\n/mg);
+		const index = this.getIndex(lines);
 
-		var define = this.trimDefine({
+		const define = this.trimDefine({
 			table: lines[index.table],
 			layout: lines.slice(index.layout.head, index.layout.tail),
 			index: lines.slice(index.index.head, index.index.tail)
@@ -521,8 +528,8 @@ class Entity {
 
 	private buildForeignKeyTable(parentElement: HTMLSelectElement, tableNames: ReadonlyArray<string>) {
 		parentElement.appendChild(document.createElement('option'));
-		for(var tableName of tableNames) {
-			var optionElement = document.createElement('option') as HTMLOptionElement;
+		for (const tableName of tableNames) {
+			const optionElement = document.createElement('option') as HTMLOptionElement;
 			optionElement.value = tableName;
 			optionElement.textContent = tableName;
 
@@ -531,21 +538,21 @@ class Entity {
 	}
 
 	public getColumnNames(ignoreCommonColumn: boolean): ReadonlyArray<string> {
-		var isIgnoreColumn = (s:string) => {
-			if(CommonCreatedColumns.some(i => i === s)) {
+		const isIgnoreColumn = (s: string) => {
+			if (CommonCreatedColumns.some(i => i === s)) {
 				return true;
 			}
-			if(CommonUpdatedColumns.some(i => i === s)) {
+			if (CommonUpdatedColumns.some(i => i === s)) {
 				return true;
 			}
 
 			return false;
 		}
-		var columnElements = getElementsByName<HTMLInputElement>(this.blockElements.layout, LayoutBlockName.PhysicalColumnName);
-		var result = new Array<string>();
-		for(var columnElement of columnElements) {
-			if(ignoreCommonColumn && isIgnoreColumn(columnElement.value)) {
-					continue;
+		const columnElements = getElementsByName<HTMLInputElement>(this.blockElements.layout, LayoutBlockName.PhysicalColumnName);
+		const result = new Array<string>();
+		for (const columnElement of columnElements) {
+			if (ignoreCommonColumn && isIgnoreColumn(columnElement.value)) {
+				continue;
 			}
 			result.push(columnElement.value);
 		}
@@ -555,9 +562,9 @@ class Entity {
 	private buildForeignKeyColumns(parentElement: HTMLSelectElement, targetEntity: Entity) {
 		parentElement.textContent = '';
 
-		var columnNames = targetEntity.getColumnNames(true);
-		for(var columnName of columnNames) {
-			var optionElement = document.createElement('option');
+		const columnNames = targetEntity.getColumnNames(true);
+		for (const columnName of columnNames) {
+			const optionElement = document.createElement('option');
 			optionElement.value = columnName;
 			optionElement.textContent = columnName;
 			parentElement.appendChild(optionElement);
@@ -565,9 +572,9 @@ class Entity {
 	}
 
 	private filterMyself(entities: ReadonlyArray<Entity>): ReadonlyArray<Entity> {
-		var targetEntities = entities
+		const targetEntities = entities
 			.filter(i => i !== this)
-		;
+			;
 
 		return targetEntities;
 	}
@@ -576,17 +583,17 @@ class Entity {
 		return entities
 			.map(i => i.getTableName())
 			.sort()
-		;
+			;
 	}
 
 	private changedTableElement(ev: Event, targetEntities: ReadonlyArray<Entity>) {
-		var currentTableElement = (ev.srcElement as HTMLSelectElement);
-		var currentColumnElement =  getElementByName<HTMLSelectElement>(currentTableElement.parentElement!, LayoutBlockName.ForeignKeyColumn);
-		var targetEntity = targetEntities
+		const currentTableElement = (ev.srcElement as HTMLSelectElement);
+		const currentColumnElement = getElementByName<HTMLSelectElement>(currentTableElement.parentElement!, LayoutBlockName.ForeignKeyColumn);
+		const targetEntity = targetEntities
 			.find(i => i.getTableName() == currentTableElement.value)
-		;
+			;
 
-		if(targetEntity) {
+		if (targetEntity) {
 			currentColumnElement.disabled = false;
 			this.buildForeignKeyColumns(currentColumnElement, targetEntity);
 		} else {
@@ -595,23 +602,23 @@ class Entity {
 		}
 	}
 
-	private buildEntityForeignKey(entities: ReadonlyArray<Entity>){
-		var foreignKeyRootElements = getElementsByName(this.blockElements.layout, LayoutBlockName.ForeignKeyRoot);
-		for(var foreignKeyRootElement of foreignKeyRootElements) {
+	private buildEntityForeignKey(entities: ReadonlyArray<Entity>) {
+		const foreignKeyRootElements = getElementsByName(this.blockElements.layout, LayoutBlockName.ForeignKeyRoot);
+		for (const foreignKeyRootElement of foreignKeyRootElements) {
 
-			var tableElement = getElementByName<HTMLSelectElement>(foreignKeyRootElement, LayoutBlockName.ForeignKeyTable);
-			var columnElement = getElementByName<HTMLSelectElement>(foreignKeyRootElement, LayoutBlockName.ForeignKeyColumn);
+			const tableElement = getElementByName<HTMLSelectElement>(foreignKeyRootElement, LayoutBlockName.ForeignKeyTable);
+			const columnElement = getElementByName<HTMLSelectElement>(foreignKeyRootElement, LayoutBlockName.ForeignKeyColumn);
 
-			var targetEntities = this.filterMyself(entities);
-			var targetTableNames = this.getTableNamesFromEntities(targetEntities);
+			const targetEntities = this.filterMyself(entities);
+			const targetTableNames = this.getTableNamesFromEntities(targetEntities);
 
 			this.buildForeignKeyTable(tableElement, targetTableNames);
 			tableElement.addEventListener('change', ev => this.changedTableElement(ev, targetEntities));
 
-			var kfElement = getElementByName<HTMLInputElement>(foreignKeyRootElement, LayoutBlockName.ForeignKey);
-			if(kfElement.value) {
-				var v = kfElement.value.split('.');
-				var kfPair = {
+			const kfElement = getElementByName<HTMLInputElement>(foreignKeyRootElement, LayoutBlockName.ForeignKey);
+			if (kfElement.value) {
+				const v = kfElement.value.split('.');
+				const kfPair = {
 					table: v[0].trim(),
 					column: v[1].trim(),
 				};
@@ -626,21 +633,21 @@ class Entity {
 	}
 
 	private setIndexColumnNames(parentElement: HTMLSelectElement, columnNames: ReadonlyArray<string>) {
-		for(var columnName of columnNames) {
-			var optionElement = document.createElement('option');
+		for (const columnName of columnNames) {
+			const optionElement = document.createElement('option');
 			optionElement.value = columnName;
 			optionElement.textContent = columnName;
 
 			parentElement.appendChild(optionElement);
 		}
-}
+	}
 
 	private buildEntityIndex() {
-		var columnNames = this.getColumnNames(true);
-		var indexRowRootElements = getElementsByName(this.blockElements.index, IndexBlockName.IndexRowRoot);
-		for(var indexRowRootElement of indexRowRootElements) {
-			var columnsElements = getElementsByName<HTMLSelectElement>(indexRowRootElement, IndexBlockName.Column);
-			for(var columnsElement of columnsElements) {
+		const columnNames = this.getColumnNames(true);
+		const indexRowRootElements = getElementsByName(this.blockElements.index, IndexBlockName.IndexRowRoot);
+		for (const indexRowRootElement of indexRowRootElements) {
+			const columnsElements = getElementsByName<HTMLSelectElement>(indexRowRootElement, IndexBlockName.Column);
+			for (const columnsElement of columnsElements) {
 				/*
 				for(var columnName of columnNames) {
 					var optionElement = document.createElement('option');
@@ -682,9 +689,9 @@ class EntityRelationManager {
 	}
 
 	private createBlockElements(): BlockElements {
-		var blockTemplate = document.getElementById('template-block') as HTMLTemplateElement;
-		var clonedTemplate = document.importNode(blockTemplate.content, true);
-		var block = {
+		const blockTemplate = document.getElementById('template-block') as HTMLTemplateElement;
+		const clonedTemplate = document.importNode(blockTemplate.content, true);
+		const block = {
 			root: clonedTemplate.querySelector('[name="block-root"]'),
 			table: clonedTemplate.querySelector('[name="block-table"]'),
 			layout: clonedTemplate.querySelector('[name="block-layout"]'),
@@ -695,29 +702,29 @@ class EntityRelationManager {
 	}
 
 	private buildFilter(parentElement: HTMLDivElement) {
-		var filterTemplate = document.getElementById('template-filter') as HTMLTemplateElement;
-		var clonedTemplate = document.importNode(filterTemplate.content, true);
+		const filterTemplate = document.getElementById('template-filter') as HTMLTemplateElement;
+		const clonedTemplate = document.importNode(filterTemplate.content, true);
 
-		var tableFilterElement = getElementByName<HTMLInputElement>(clonedTemplate, 'table-filter');
+		const tableFilterElement = getElementByName<HTMLInputElement>(clonedTemplate, 'table-filter');
 
-		tableFilterElement.addEventListener('input', ev => {
+		tableFilterElement.addEventListener('input', _ => {
 			const elements = getElementsByName<HTMLDivElement>(this.viewElement, 'block-root');
-			var inputValue = tableFilterElement.value.trim().toLowerCase();
-			var reg = function() {
+			const inputValue = tableFilterElement.value.trim().toLowerCase();
+			const reg = function () {
 				try {
-					if(inputValue.indexOf('/') === 0) {
+					if (inputValue.indexOf('/') === 0) {
 						return new RegExp(inputValue.substr(1));
 					}
-					var headPattern = "^\\s*" + inputValue.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+					const headPattern = "^\\s*" + inputValue.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
 					return new RegExp(headPattern);
 				} catch {
 					return RegExp('');
 				}
 			}();
 
-			for(const element of elements) {
+			for (const element of elements) {
 				const tableName = getElementByName<HTMLInputElement>(element, TableBlockName.TableName).value.trim().toLowerCase();
-				if(reg.test(tableName)) {
+				if (reg.test(tableName)) {
 					element.style.display = 'block';
 				} else {
 					element.style.display = 'none';
@@ -729,28 +736,28 @@ class EntityRelationManager {
 	}
 
 	private buildCommand(parentElement: HTMLDivElement) {
-		var commandTemplate = document.getElementById('template-command') as HTMLTemplateElement;
-		var clonedTemplate = document.importNode(commandTemplate.content, true);
+		const commandTemplate = document.getElementById('template-command') as HTMLTemplateElement;
+		const clonedTemplate = document.importNode(commandTemplate.content, true);
 
-		var exportElement = clonedTemplate.querySelector('[name="command-import"]') as HTMLButtonElement;
-		exportElement.addEventListener('click', ev => {
+		const importElement = clonedTemplate.querySelector('[name="command-import"]') as HTMLButtonElement;
+		importElement.addEventListener('click', _ => {
 			this.viewElement.textContent = '';
 			this.buildCore(true);
 			this.export();
 		});
 
-		var exportElement = clonedTemplate.querySelector('[name="command-export"]') as HTMLButtonElement;
-		exportElement.addEventListener('click', ev => {
+		const exportElement = clonedTemplate.querySelector('[name="command-export"]') as HTMLButtonElement;
+		exportElement.addEventListener('click', _ => {
 			this.export();
 		});
 
-		var copyDefineElement = clonedTemplate.querySelector('[name="command-copy-define"]') as HTMLButtonElement;
-		copyDefineElement.addEventListener('click', ev => {
+		const copyDefineElement = clonedTemplate.querySelector('[name="command-copy-define"]') as HTMLButtonElement;
+		copyDefineElement.addEventListener('click', _ => {
 			this.copyDefine();
 		});
 
-		var copyDefineElement = clonedTemplate.querySelector('[name="command-copy-sql"]') as HTMLButtonElement;
-		copyDefineElement.addEventListener('click', ev => {
+		const copySqlElement = clonedTemplate.querySelector('[name="command-copy-sql"]') as HTMLButtonElement;
+		copySqlElement.addEventListener('click', _ => {
 			this.copySql();
 		});
 
@@ -758,27 +765,27 @@ class EntityRelationManager {
 	}
 
 	private buildEntityMapping(entities: ReadonlyArray<Entity>) {
-		for(var entity of entities) {
+		for (const entity of entities) {
 			entity.buildEntities(entities);
 		}
 	}
 
 	private buildCore(rebuild: boolean) {
-		if(rebuild) {
+		if (rebuild) {
 			const filterElements = document.getElementsByClassName('filter');
-			for(const filterElement of filterElements) {
+			for (const filterElement of filterElements) {
 				filterElement.textContent = '';
 			}
 		} else {
 			this.buildCommand(this.commandElement);
 		}
 
-		var defines = this.defineElement.value.split('___');
+		const defines = this.defineElement.value.split('___');
 		defines.shift();
 
-		for (var define of defines) {
-			var blockElements = this.createBlockElements();
-			var entity = new Entity(blockElements);
+		for (const define of defines) {
+			const blockElements = this.createBlockElements();
+			const entity = new Entity(blockElements);
 			entity.build(define);
 
 			this.entities.push(entity);
@@ -803,12 +810,12 @@ class EntityRelationManager {
 	}
 
 	private exportTable(tableElement: HTMLElement): string {
-		var tableNameElement = getElementByName<HTMLInputElement>(tableElement, TableBlockName.TableName);
+		const tableNameElement = getElementByName<HTMLInputElement>(tableElement, TableBlockName.TableName);
 		return tableNameElement.value;
 	}
 
 	private getLayoutRowData(rowElement: HTMLTableRowElement): LayoutRowData {
-		var data = {
+		const data = {
 			isPrimary: getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.PrimaryKey).checked,
 			isNotNull: getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.NotNull).checked,
 			foreignTable: '',
@@ -821,9 +828,9 @@ class EntityRelationManager {
 			comment: getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.Comment).value,
 		} as LayoutRowData;
 
-		var ft = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.ForeignKeyTable).value
-		var fc = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.ForeignKeyColumn).value
-		if(ft.length && fc.length) {
+		const ft = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.ForeignKeyTable).value
+		const fc = getElementByName<HTMLInputElement>(rowElement, LayoutBlockName.ForeignKeyColumn).value
+		if (ft.length && fc.length) {
 			data.foreignTable = ft;
 			data.foreignColumn = fc;
 		}
@@ -832,10 +839,10 @@ class EntityRelationManager {
 	}
 
 	private toLayoutMarkdown(row: LayoutRowData): ReadonlyArray<string> {
-		var map = new Map<LayoutColumn, string>([
+		const map = new Map<LayoutColumn, string>([
 			[LayoutColumn.PrimaryKey, toCheckMark(row.isPrimary)],
 			[LayoutColumn.NotNull, toCheckMark(row.isNotNull)],
-			[LayoutColumn.ForeignKey, row.foreignTable.length && row.foreignColumn.length ? `${row.foreignTable}.${row.foreignColumn}`: ''],
+			[LayoutColumn.ForeignKey, row.foreignTable.length && row.foreignColumn.length ? `${row.foreignTable}.${row.foreignColumn}` : ''],
 			[LayoutColumn.LogicalColumnName, row.logicalName],
 			[LayoutColumn.PhysicalColumnName, row.columnName],
 			[LayoutColumn.LogicalType, row.databaseType],
@@ -843,24 +850,24 @@ class EntityRelationManager {
 			[LayoutColumn.CheckConstraint, row.check],
 			[LayoutColumn.Comment, row.comment],
 		]);
-		return [ ...map.keys() ]
+		return [...map.keys()]
 			.sort()
 			.map(i => map.get(i)!)
-		;
+			;
 	}
 
 	private toLayoutDatabase(row: LayoutRowData): string {
-		var sql = `[${row.columnName}] ${row.databaseType}`;
-		if(row.isNotNull) {
+		let sql = `[${row.columnName}] ${row.databaseType}`;
+		if (row.isNotNull) {
 			sql += " not null";
 		}
-		if(row.check.length) {
+		if (row.check.length) {
 			sql += ` check( ${row.check} )`
 		}
 
-		if(row.logicalName.length || row.comment.length) {
+		if (row.logicalName.length || row.comment.length) {
 			sql += ` /* ${row.logicalName}`;
-			if(row.logicalName.length) {
+			if (row.logicalName.length) {
 				sql += ' ';
 			}
 			sql += row.comment;
@@ -870,13 +877,13 @@ class EntityRelationManager {
 		return sql;
 	}
 
-	private getMarkdownCellSpace(data:ReadonlyArray<ReadonlyArray<string>>): ReadonlyArray<number> {
+	private getMarkdownCellSpace(data: ReadonlyArray<ReadonlyArray<string>>): ReadonlyArray<number> {
 
-		var result = new Array<number>(data[0].length).fill(0);
+		const result = new Array<number>(data[0].length).fill(0);
 
-		for(var col = 0; col < data[0].length; col++) {
-			for(var row of data) {
-				var colLength = countSingleChar(row[col]);
+		for (let col = 0; col < data[0].length; col++) {
+			for (const row of data) {
+				const colLength = countSingleChar(row[col]);
 				result[col] = Math.max(result[col], colLength);
 			}
 		}
@@ -885,12 +892,12 @@ class EntityRelationManager {
 	}
 
 	private toMarkdownCell(value: string, length: number, position: MarkdownTablePosition) {
-		var valueLength = countSingleChar(value);
+		const valueLength = countSingleChar(value);
 
-		if(valueLength == length) {
+		if (valueLength == length) {
 			return value;
 		}
-		switch(position) {
+		switch (position) {
 			case MarkdownTablePosition.left:
 				return value + ' '.repeat(length - valueLength);
 
@@ -898,15 +905,15 @@ class EntityRelationManager {
 				return ' '.repeat(length - valueLength) + value;
 
 			case MarkdownTablePosition.center:
-			return ' '.repeat((length - valueLength) / 2) + value + ' '.repeat(((length - valueLength) / 2) + ((length - valueLength) % 2));
+				return ' '.repeat((length - valueLength) / 2) + value + ' '.repeat(((length - valueLength) / 2) + ((length - valueLength) % 2));
 		}
 	}
 
-	private toMarkdownTableCells(cells: ReadonlyArray<string>, positions: Map<number, MarkdownTablePosition>, space: ReadonlyArray<number>):ReadonlyArray<string> {
-		var result = new Array<string>(cells.length);
-		for(var i = 0; i < cells.length; i++) {
-			var position = positions.get(i) || MarkdownTablePosition.left;
-			var value = this.toMarkdownCell(cells[i], space[i], position);
+	private toMarkdownTableCells(cells: ReadonlyArray<string>, positions: Map<number, MarkdownTablePosition>, space: ReadonlyArray<number>): ReadonlyArray<string> {
+		const result = new Array<string>(cells.length);
+		for (let i = 0; i < cells.length; i++) {
+			const position = positions.get(i) || MarkdownTablePosition.left;
+			const value = this.toMarkdownCell(cells[i], space[i], position);
 			result[i] = value;
 		}
 
@@ -914,14 +921,14 @@ class EntityRelationManager {
 	}
 
 	private toMarkdown(header: ReadonlyArray<string>, positions: Map<number, MarkdownTablePosition>, contents: ReadonlyArray<ReadonlyArray<string>>) {
-		var cellSpace = this.getMarkdownCellSpace([header].concat(contents));
+		const cellSpace = this.getMarkdownCellSpace([header].concat(contents));
 
-		var lines = new Array<string>();
+		const lines = new Array<string>();
 		lines.push('| ' + this.toMarkdownTableCells(header, positions, cellSpace).join(' | ') + ' |');
-		var sep = '|'
-		for(var i = 0; i < header.length; i++) {
-			var position = positions.get(i) ||  MarkdownTablePosition.left;
-			switch(position) {
+		let sep = '|'
+		for (let i = 0; i < header.length; i++) {
+			const position = positions.get(i) || MarkdownTablePosition.left;
+			switch (position) {
 				case MarkdownTablePosition.center:
 					sep += ':' + '-'.repeat(cellSpace[i]) + ':';
 					break;
@@ -936,43 +943,43 @@ class EntityRelationManager {
 		}
 		lines.push(sep);
 
-		for(var content of contents) {
+		for (const content of contents) {
 			lines.push('| ' + this.toMarkdownTableCells(content, positions, cellSpace).join(' | ') + ' |');
 		}
 
 		return lines.join("\r\n");
 	}
 
-	private exportLayout(tableName: string, layoutElement: HTMLElement):ExportData {
-		var rowElements = getElementsByName<HTMLTableRowElement>(layoutElement, LayoutBlockName.LayoutRowRoot);
+	private exportLayout(tableName: string, layoutElement: HTMLElement): ExportData {
+		const rowElements = getElementsByName<HTMLTableRowElement>(layoutElement, LayoutBlockName.LayoutRowRoot);
 
-		var markdownColumns = new Array<ReadonlyArray<string>>();
-		var databaseColumns = new Array<string>();
+		const markdownColumns = new Array<ReadonlyArray<string>>();
+		const databaseColumns = new Array<string>();
 
-		var primaryKeys = new Array<string>();
-		var foreingKeys = new Map<string, Array<{column:string, targetColumn:string}>>();
-		for(var rowElement of rowElements) {
-			var rowData = this.getLayoutRowData(rowElement);
+		const primaryKeys = new Array<string>();
+		const foreingKeys = new Map<string, Array<{ column: string, targetColumn: string }>>();
+		for (const rowElement of rowElements) {
+			const rowData = this.getLayoutRowData(rowElement);
 
-			var layoutRow = this.toLayoutMarkdown(rowData);
+			const layoutRow = this.toLayoutMarkdown(rowData);
 			markdownColumns.push(layoutRow);
 
-			var databaseCol = this.toLayoutDatabase(rowData);
+			const databaseCol = this.toLayoutDatabase(rowData);
 			databaseColumns.push(databaseCol);
 
-			if(rowData.isPrimary) {
+			if (rowData.isPrimary) {
 				primaryKeys.push(rowData.columnName);
 			}
-			if(rowData.foreignTable.length && rowData.foreignColumn.length) {
-				if(!foreingKeys.has(rowData.foreignTable)) {
-					foreingKeys.set(rowData.foreignTable, new Array<{column:string, targetColumn:string}>());
+			if (rowData.foreignTable.length && rowData.foreignColumn.length) {
+				if (!foreingKeys.has(rowData.foreignTable)) {
+					foreingKeys.set(rowData.foreignTable, new Array<{ column: string, targetColumn: string }>());
 				}
-				var table = foreingKeys.get(rowData.foreignTable)!;
-				table.push({column: rowData.columnName, targetColumn: rowData.foreignColumn});
+				const table = foreingKeys.get(rowData.foreignTable)!;
+				table.push({ column: rowData.columnName, targetColumn: rowData.foreignColumn });
 			}
 		}
 
-		var exportData = {
+		const exportData = {
 			markdown: this.toMarkdown(
 				LayoutMarkdownHeaders,
 				new Map([
@@ -984,16 +991,16 @@ class EntityRelationManager {
 			database: '',
 		} as ExportData;
 
-		var sql = `create table [${tableName}] (\r\n`;
+		let sql = `create table [${tableName}] (\r\n`;
 		sql += "\t" + databaseColumns.join(",\r\n\t");
-		if(primaryKeys.length) {
+		if (primaryKeys.length) {
 			sql += ",\r\n";
 			sql += "\tprimary key(\r\n"
 			sql += "\t\t" + primaryKeys.map(i => `[${i}]`).join(",\r\n\t\t")
 			sql += "\r\n\t)";
-		};
-		if(foreingKeys.size) {
-			for(var [targetTableName, column] of foreingKeys) {
+		}
+		if (foreingKeys.size) {
+			for (const [targetTableName, column] of foreingKeys) {
 				sql += ",\r\n";
 				sql += `\tforeign key(${column.map(i => `[${i.column}]`).join(', ')}) references [${targetTableName}](${column.map(i => `[${i.targetColumn}]`).join(', ')})`
 			}
@@ -1006,10 +1013,11 @@ class EntityRelationManager {
 		return exportData;
 	}
 
-	private getIndexRowData(rowElement: HTMLTableRowElement):IndexRowData {
-		var row = {
+	private getIndexRowData(rowElement: HTMLTableRowElement): IndexRowData {
+		const row = {
 			isUnique: getElementByName<HTMLInputElement>(rowElement, IndexBlockName.UniqueKey).checked,
-			columns: [ ...getElementsByName<HTMLInputElement>(rowElement, IndexBlockName.ColumnName)]
+			name: getElementByName<HTMLInputElement>(rowElement, IndexBlockName.IndexName).value,
+			columns: [...getElementsByName<HTMLInputElement>(rowElement, IndexBlockName.ColumnName)]
 				.map(i => i.value)
 			,
 		} as IndexRowData;
@@ -1017,20 +1025,21 @@ class EntityRelationManager {
 		return row;
 	}
 
-	private toIndexMarkdown(row:IndexRowData): ReadonlyArray<string> {
-		var result = [toCheckMark(row.isUnique)];
+	private toIndexMarkdown(row: IndexRowData): ReadonlyArray<string> {
+		const result = [toCheckMark(row.isUnique)];
+		result.push(row.name);
 		result.push(row.columns.join(', '));
 		return result;
 	}
 
-	private toIndexDatabase(tableName: string, counter: number, row:IndexRowData): string {
-		var sql = `--// index: idx_${tableName}_${counter}\r\n`;
+	private toIndexDatabase(tableName: string, row: IndexRowData): string {
+		let sql = `--// index: idx_${tableName}_${row.name}\r\n`;
 		sql += "create";
-		if(row.isUnique) {
+		if (row.isUnique) {
 			sql += " unique";
 		}
 		sql += " index";
-		sql += ` [idx_${tableName}_${counter}]`;
+		sql += ` [idx_${tableName}_${row.name}]`;
 		sql += " on";
 		sql += ` [${tableName}](\r\n`;
 		sql += row.columns.map(i => `\t[${i}]`).join(",\r\n") + "\r\n";
@@ -1040,30 +1049,29 @@ class EntityRelationManager {
 		return sql;
 	}
 
-	private exportIndex(tableName: string, indexElement: HTMLElement):ExportData {
-		var rowElements = getElementsByName<HTMLTableRowElement>(indexElement, IndexBlockName.IndexRowRoot);
+	private exportIndex(tableName: string, indexElement: HTMLElement): ExportData {
+		const rowElements = getElementsByName<HTMLTableRowElement>(indexElement, IndexBlockName.IndexRowRoot);
 
-		var markdownColumns = new Array<ReadonlyArray<string>>();
-		var databaseStatements = new Array<string>();
+		const markdownColumns = new Array<ReadonlyArray<string>>();
+		const databaseStatements = new Array<string>();
 
-		if(!rowElements.length) {
+		if (!rowElements.length) {
 			return {
 				markdown: '',
 				database: '',
 			} as ExportData;
 		}
 
-		var indexCounter = 1;
-		for(var rowElement of rowElements) {
-			var rowData = this.getIndexRowData(rowElement);
+		for (const rowElement of rowElements) {
+			const rowData = this.getIndexRowData(rowElement);
 
-			var markdownRow = this.toIndexMarkdown(rowData);
+			const markdownRow = this.toIndexMarkdown(rowData);
 			markdownColumns.push(markdownRow);
 
-			var databaseIndex = this.toIndexDatabase(tableName, indexCounter++, rowData);
+			const databaseIndex = this.toIndexDatabase(tableName, rowData);
 			databaseStatements.push(databaseIndex);
 		}
-		var exportData = {
+		const exportData = {
 			markdown: this.toMarkdown(
 				IndexMarkdownHeaders,
 				new Map([
@@ -1078,14 +1086,14 @@ class EntityRelationManager {
 	}
 
 	private exportBlock(blockElement: HTMLElement) {
-		var tableBlockElement = getElementByName<HTMLInputElement>(blockElement, 'block-table');
-		var tableName = this.exportTable(tableBlockElement);
+		const tableBlockElement = getElementByName<HTMLInputElement>(blockElement, 'block-table');
+		const tableName = this.exportTable(tableBlockElement);
 
-		var layoutElement = getElementByName<HTMLInputElement>(blockElement, 'block-layout');
-		var layout = this.exportLayout(tableName, layoutElement);
+		const layoutElement = getElementByName<HTMLInputElement>(blockElement, 'block-layout');
+		const layout = this.exportLayout(tableName, layoutElement);
 
-		var indexElement = getElementByName<HTMLInputElement>(blockElement, 'block-index');
-		var index = this.exportIndex(tableName, indexElement);
+		const indexElement = getElementByName<HTMLInputElement>(blockElement, 'block-index');
+		const index = this.exportIndex(tableName, indexElement);
 
 		return {
 			table: tableName,
@@ -1095,16 +1103,16 @@ class EntityRelationManager {
 	}
 
 	public export() {
-		var markdowns = Array<string>();
-		var databaseTables = Array<string>();
-		var databaseIndexs = Array<string>();
+		const markdowns = Array<string>();
+		const databaseTables = Array<string>();
+		const databaseIndexs = Array<string>();
 
-		var exportItems = [...getElementsByName(this.viewElement, 'block-root')]
+		const exportItems = [...getElementsByName(this.viewElement, 'block-root')]
 			.map(i => this.exportBlock(i))
-		;
+			;
 
-		for(var exportItem of exportItems) {
-			var markdown = "\r\n___\r\n\r\n";
+		for (const exportItem of exportItems) {
+			let markdown = "\r\n___\r\n\r\n";
 			markdown += `## ${exportItem.table}\r\n`;
 			markdown += "\r\n";
 
@@ -1116,7 +1124,7 @@ class EntityRelationManager {
 
 			markdown += "### index\r\n";
 			markdown += "\r\n";
-			if(exportItem.index.markdown.length) {
+			if (exportItem.index.markdown.length) {
 				markdown += exportItem.index.markdown;
 			} else {
 				markdown += "*NONE*";
@@ -1126,7 +1134,7 @@ class EntityRelationManager {
 
 			markdowns.push(markdown);
 
-			var databaseTable = `--// table: ${exportItem.table}\r\n`;
+			let databaseTable = `--// table: ${exportItem.table}\r\n`;
 			databaseTable += exportItem.layout.database;
 
 			databaseTables.push(databaseTable);
@@ -1154,10 +1162,10 @@ class EntityRelationManager {
 
 // ぶんかつがだるい
 const baseIds = ['main', 'file'];
-for(var baseId of baseIds) {
-	var viewElement = document.getElementById(`view-${baseId}`);
-	if(viewElement) {
-		var erm = new EntityRelationManager(
+for (const baseId of baseIds) {
+	const viewElement = document.getElementById(`view-${baseId}`);
+	if (viewElement) {
+		const erm = new EntityRelationManager(
 			document.getElementById(`filter-${baseId}`) as HTMLDivElement,
 			viewElement as HTMLDivElement,
 			document.getElementById(`command-${baseId}`) as HTMLDivElement,
