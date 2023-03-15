@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         /// 表示抑制時間。
         /// <para>カーソルがツールバー上に入ってから表示するまでの待機時間(ミリ秒レベルを想定)</para>
         /// </summary>
-        TimeSpan DelayDisplayTime { get; }
+        TimeSpan DisplayDelayTime { get; }
 
         /// <summary>
         /// 自動的に隠すか。
@@ -558,7 +558,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             DelayDisplayTimer.Stop();
 
             if(!DelayDisplayTimer.IsEnabled) {
-                DelayDisplayTimer.Interval = ExtendData.DelayDisplayTime;
+                DelayDisplayTimer.Interval = ExtendData.DisplayDelayTime;
                 DelayDisplayTimer.Start();
             }
         }
@@ -921,7 +921,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         private void View_MouseEnter(object sender, MouseEventArgs e)
         {
             if(ExtendData.IsAutoHide && !ExtendData.PausingAutoHide) {
-                if(ExtendData.DelayDisplayTime <= TimeSpan.Zero) {
+                if(ExtendData.DisplayDelayTime <= TimeSpan.Zero) {
                     StopHideWait();
                 } else {
                     BeginDelayDisplay();

@@ -617,7 +617,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         }
 
         //public TimeSpan DelayDisplayTime { get; } = TimeSpan.FromSeconds(0.5);
-        public TimeSpan DelayDisplayTime { get; } = TimeSpan.FromMilliseconds(250);
+        public TimeSpan DisplayDelayTime { get; } = TimeSpan.FromMilliseconds(250);
 
 
         /// <summary>
