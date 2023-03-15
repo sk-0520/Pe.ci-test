@@ -247,8 +247,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             View.MouseEnter += View_MouseEnter;
             View.MouseLeave += View_MouseLeave;
 
-            DelayDisplayTimer = new DispatcherTimer();
-            DelayDisplayTimer.Tick += DelayDisplayTimer_Tick;
+            DisplayDisplayTimer = new DispatcherTimer();
+            DisplayDisplayTimer.Tick += DisplayDisplayTimer_Tick;
 
             AutoHideTimer = new DispatcherTimer();
             AutoHideTimer.Tick += TimerAutoHide_Tick;
@@ -260,7 +260,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
 
         private string MessageString { get { return "appbar"; } }
         private uint CallbackMessage { get; set; }
-        private DispatcherTimer DelayDisplayTimer { get; set; }
+        private DispatcherTimer DisplayDisplayTimer { get; set; }
         private DispatcherTimer AutoHideTimer { get; set; }
         private DispatcherOperation? DockingDispatcherOperation { get; set; }
         private DispatcherOperation? HiddenDispatcherOperation { get; set; }
@@ -555,17 +555,17 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
 
         private void BeginDelayDisplay()
         {
-            DelayDisplayTimer.Stop();
+            DisplayDisplayTimer.Stop();
 
-            if(!DelayDisplayTimer.IsEnabled) {
-                DelayDisplayTimer.Interval = ExtendData.DisplayDelayTime;
-                DelayDisplayTimer.Start();
+            if(!DisplayDisplayTimer.IsEnabled) {
+                DisplayDisplayTimer.Interval = ExtendData.DisplayDelayTime;
+                DisplayDisplayTimer.Start();
             }
         }
 
         private void StopDelayDisplay()
         {
-            DelayDisplayTimer.Stop();
+            DisplayDisplayTimer.Stop();
         }
 
         /// <summary>
@@ -900,7 +900,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             }
         }
 
-        private void DelayDisplayTimer_Tick(object? sender, EventArgs e)
+        private void DisplayDisplayTimer_Tick(object? sender, EventArgs e)
         {
             StopHideWait();
         }

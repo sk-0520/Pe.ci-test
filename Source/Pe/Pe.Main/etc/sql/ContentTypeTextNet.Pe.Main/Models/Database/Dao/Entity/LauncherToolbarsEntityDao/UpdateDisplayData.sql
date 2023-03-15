@@ -6,6 +6,7 @@ set
 	Direction             = @Direction,
 	IconBox               = @IconBox,
 	FontId                = @FontId,
+	DisplayTime           = @DisplayTime,
 	AutoHideTime          = @AutoHideTime,
 	TextWidth             = @TextWidth,
 	IsVisible             = @IsVisible,

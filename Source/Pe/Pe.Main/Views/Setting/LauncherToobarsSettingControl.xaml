@@ -220,6 +220,20 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
+                  <Label Grid.Column="0" Target="{Binding ElementName=displayDisplayTime}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_LauncherToolbars_DisplayDisplayTime_A, Source={x:Static app_main:CultureService.Instance}}" />
+
+                  <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <ComboBox x:Name="displayDisplayTime" SelectedValue="{Binding DisplayDelayTime}" ItemsSource="{Binding DisplayDelayTimeitems}">
+                    </ComboBox>
+                  </WrapPanel>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
                   <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_LauncherToolbars_AutoHide_A, Source={x:Static app_main:CultureService.Instance}}" />
 
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">

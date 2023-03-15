@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public string Direction { get; set; } = string.Empty;
             public string IconBox { get; set; } = string.Empty;
             public FontId FontId { get; set; }
+            public TimeSpan DisplayTime { get; set; }
             public TimeSpan AutoHideTime { get; set; }
             public long TextWidth { get; set; }
             public bool IsVisible { get; set; }
@@ -68,6 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconDirection = iconDirectionTransfer.ToEnum(dto.Direction),
                 IconBox = iconBoxTransfer.ToEnum(dto.IconBox),
                 FontId = dto.FontId,
+                DisplayTime = dto.DisplayTime,
                 AutoHideTime = dto.AutoHideTime,
                 TextWidth = ToInt(dto.TextWidth),
                 IsVisible = dto.IsVisible,
@@ -92,6 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Direction = iconDirectionTransfer.ToString(data.IconDirection),
                 IconBox = iconBoxTransfer.ToString(data.IconBox),
                 FontId = data.FontId,
+                DisplayTime = data.DisplayTime,
                 AutoHideTime = data.AutoHideTime,
                 TextWidth = data.TextWidth,
                 IsVisible = data.IsVisible,

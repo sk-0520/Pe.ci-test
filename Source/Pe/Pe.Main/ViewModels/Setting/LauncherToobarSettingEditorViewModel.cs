@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -93,6 +94,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         //    get => Model.AutoHideTimeout;
         //    set => SetModelValue(value);
         //}
+
+        public TimeSpan DisplayDelayTime
+        {
+            get => Model.DisplayDelayTime;
+            set => SetModelValue(value);
+        }
+
+        public List<TimeSpan> DisplayDelayTimeitems => new List<TimeSpan>(new[] {
+            TimeSpan.Zero,
+            TimeSpan.FromMilliseconds(250),
+            TimeSpan.FromMilliseconds(500),
+            TimeSpan.FromMilliseconds(750),
+            TimeSpan.FromMilliseconds(1000),
+        });
 
         public double AutoHideTimeSeconds
         {

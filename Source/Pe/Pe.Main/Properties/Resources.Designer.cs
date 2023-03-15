@@ -943,6 +943,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   {d}.{hh}:{mm}:{ss}.{f} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_TimeSpan_Format {
+            get {
+                return ResourceManager.GetString("String_Common_TimeSpan_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   上へ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Common_Up {
@@ -6218,6 +6227,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_LauncherToolbars_DefaultGroup_None_A {
             get {
                 return ResourceManager.GetString("String_Setting_LauncherToolbars_DefaultGroup_None_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示待機時間(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_DisplayDisplayTime_A {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_DisplayDisplayTime_A", resourceCulture);
             }
         }
         
