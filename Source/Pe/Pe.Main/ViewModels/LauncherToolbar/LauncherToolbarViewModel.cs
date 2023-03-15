@@ -529,7 +529,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         /// </summary>
         public bool IsDocking => Model.IsDocking;
 
-        public TimeSpan DisplaySuppressTime => Model.DisplaySuppressTime;
+        public TimeSpan DelayDisplayTime => Model.DelayDisplayTime;
 
         /// <summary>
         /// 自動的に隠すか。

@@ -616,7 +616,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             set => SetProperty(ref this._ToolbarPosition, value);
         }
 
-        public TimeSpan DisplaySuppressTime { get; } = TimeSpan.FromMicroseconds(500);
+        //public TimeSpan DelayDisplayTime { get; } = TimeSpan.FromSeconds(0.5);
+        public TimeSpan DelayDisplayTime { get; } = TimeSpan.FromMilliseconds(250);
 
 
         /// <summary>
