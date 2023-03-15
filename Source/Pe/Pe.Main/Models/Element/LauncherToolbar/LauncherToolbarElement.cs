@@ -615,6 +615,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             get => this._ToolbarPosition;
             set => SetProperty(ref this._ToolbarPosition, value);
         }
+
+        public TimeSpan DisplaySuppressTime { get; } = TimeSpan.FromMicroseconds(500);
+
+
         /// <summary>
         /// ドッキング中か。
         /// </summary>

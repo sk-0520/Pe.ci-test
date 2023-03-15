@@ -529,6 +529,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         /// </summary>
         public bool IsDocking => Model.IsDocking;
 
+        public TimeSpan DisplaySuppressTime => Model.DisplaySuppressTime;
+
         /// <summary>
         /// 自動的に隠すか。
         /// </summary>

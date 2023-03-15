@@ -64,6 +64,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         /// ドッキング中か。
         /// </summary>
         bool IsDocking { get; }
+
+        /// <summary>
+        /// 表示抑制時間。
+        /// </summary>
+        TimeSpan DisplaySuppressTime { get; }
+
         /// <summary>
         /// 自動的に隠すか。
         /// </summary>
@@ -134,6 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         /// ドッキング中か。
         /// </summary>
         new bool IsDocking { get; set; }
+
         /// <summary>
         /// 自動的に隠すか。
         /// </summary>
