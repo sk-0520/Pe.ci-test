@@ -79,7 +79,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Microsoft.Extensions.Configuration.Binder 7.0.3 -> 7.0.4"
 					},
 					{
 						"revision": "",
