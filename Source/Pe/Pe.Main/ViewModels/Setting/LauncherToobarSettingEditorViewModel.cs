@@ -101,13 +101,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetModelValue(value);
         }
 
-        public List<TimeSpan> DisplayDelayTimeitems => new List<TimeSpan>(new[] {
-            TimeSpan.Zero,
-            TimeSpan.FromMilliseconds(250),
-            TimeSpan.FromMilliseconds(500),
-            TimeSpan.FromMilliseconds(750),
-            TimeSpan.FromMilliseconds(1000),
-        });
+        public TimeSpan DisplayDelayTimeMinimum => TimeSpan.Zero;
+        public TimeSpan DisplayDelayTimeMaximum => TimeSpan.FromSeconds(1);
 
         public double AutoHideTimeSeconds
         {
