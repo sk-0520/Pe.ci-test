@@ -325,6 +325,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             IsIconOnly = displayData.IsIconOnly;
             IsTopmost = displayData.IsTopmost;
             IsAutoHide = displayData.IsAutoHide;
+            DisplayDelayTime = displayData.DisplayDelayTime;
             AutoHideTime = displayData.AutoHideTime;
             ToolbarPosition = displayData.ToolbarPosition;
             IsVisible = displayData.IsVisible;
@@ -615,6 +616,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             get => this._ToolbarPosition;
             set => SetProperty(ref this._ToolbarPosition, value);
         }
+
         /// <summary>
         /// ドッキング中か。
         /// </summary>
@@ -648,6 +650,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             get => this._isHiding;
             set => SetProperty(ref this._isHiding, value);
         }
+
+        public TimeSpan DisplayDelayTime { get; private set; }
 
         /// <summary>
         /// 自動的に隠れるまでの時間。

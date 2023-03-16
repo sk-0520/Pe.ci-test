@@ -6222,6 +6222,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   表示待機時間(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_DisplayDisplayTime_A {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_DisplayDisplayTime_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ツールバー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_LauncherToolbars_Header {

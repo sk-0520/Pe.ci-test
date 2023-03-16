@@ -217,6 +217,7 @@ ___
 |    | o  |              | 方向                     | Direction             | text         | System.String   |              | アイコンの並びの基点 |
 |    | o  |              | アイコンサイズ           | IconBox               | text         | System.String   |              |                      |
 |    | o  | Fonts.FontId | フォント                 | FontId                | text         | System.Guid     |              |                      |
+|    | o  |              | 表示するまでの抑制時間   | DisplayDelayTime      | text         | System.TimeSpan |              |                                              |
 |    | o  |              | 自動的に隠す時間         | AutoHideTime          | text         | System.TimeSpan |              |                      |
 |    | o  |              | 文字幅                   | TextWidth             | integer      | System.Int64    |              |                      |
 |    | o  |              | 表示                     | IsVisible             | boolean      | System.Boolean  |              |                      |
@@ -655,6 +656,7 @@ ___
 |    | o  |              | 方向                     | Direction             | text         | System.String   |              | アイコンの並びの基点                         |
 |    | o  |              | アイコンサイズ           | IconBox               | text         | System.String   |              |                                              |
 |    | o  | Fonts.FontId | フォント                 | FontId                | text         | System.Guid     |              |                                              |
+|    | o  |              | 表示するまでの抑制時間   | DisplayDelayTime      | text         | System.TimeSpan |              |                                              |
 |    | o  |              | 自動的に隠す時間         | AutoHideTime          | text         | System.TimeSpan |              |                                              |
 |    | o  |              | 文字幅                   | TextWidth             | integer      | System.Int64    |              |                                              |
 |    | o  |              | 表示                     | IsVisible             | boolean      | System.Boolean  |              |                                              |

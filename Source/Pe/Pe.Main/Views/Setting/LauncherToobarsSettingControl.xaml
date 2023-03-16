@@ -28,6 +28,7 @@
     <app_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <app_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
+    <app_main_views_converter:TimeSpanToMillisecondsConverter x:Key="TimeSpanToMillisecondsConverter" />
   </UserControl.Resources>
 
   <behaviors:Interaction.Triggers>
@@ -212,6 +213,26 @@
 
                   <Label x:Name="textWidth" Style="{StaticResource HeaderLabel}" Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_TextWidth_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <app_views:NumericUpDown Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=textWidth}" Minimum="{Binding MinimumTextWidth}" Maximum="{Binding MaximumTextWidth}" Value="{Binding TextWidth}" />
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Target="{Binding ElementName=displayDisplayTime}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_LauncherToolbars_DisplayDisplayTime_A, Source={x:Static app_main:CultureService.Instance}}" />
+
+                  <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Slider
+                      x:Name="displayDisplayTime"
+                      Width="200"
+                      Minimum="{Binding DisplayDelayTimeMinimum, Converter={StaticResource TimeSpanToMillisecondsConverter}}"
+                      Maximum="{Binding DisplayDelayTimeMaximum, Converter={StaticResource TimeSpanToMillisecondsConverter}}"
+                      Value="{Binding DisplayDelayTime, Converter={StaticResource TimeSpanToMillisecondsConverter}}"
+                    />
+                    <TextBlock Margin="{StaticResource LeftMargin}" Text="{Binding DisplayDelayTime}" />
+                  </WrapPanel>
                 </Grid>
 
                 <Grid>
