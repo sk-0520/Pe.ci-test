@@ -64,6 +64,13 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         /// ドッキング中か。
         /// </summary>
         bool IsDocking { get; }
+
+        /// <summary>
+        /// 表示抑制時間。
+        /// <para>カーソルがツールバー上に入ってから表示するまでの待機時間(ミリ秒レベルを想定)</para>
+        /// </summary>
+        TimeSpan DisplayDelayTime { get; }
+
         /// <summary>
         /// 自動的に隠すか。
         /// </summary>
@@ -134,6 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         /// ドッキング中か。
         /// </summary>
         new bool IsDocking { get; set; }
+
         /// <summary>
         /// 自動的に隠すか。
         /// </summary>
@@ -239,6 +247,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             View.MouseEnter += View_MouseEnter;
             View.MouseLeave += View_MouseLeave;
 
+            DisplayDisplayTimer = new DispatcherTimer();
+            DisplayDisplayTimer.Tick += DisplayDisplayTimer_Tick;
+
             AutoHideTimer = new DispatcherTimer();
             AutoHideTimer.Tick += TimerAutoHide_Tick;
         }
@@ -249,6 +260,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
 
         private string MessageString { get { return "appbar"; } }
         private uint CallbackMessage { get; set; }
+        private DispatcherTimer DisplayDisplayTimer { get; set; }
         private DispatcherTimer AutoHideTimer { get; set; }
         private DispatcherOperation? DockingDispatcherOperation { get; set; }
         private DispatcherOperation? HiddenDispatcherOperation { get; set; }
@@ -539,6 +551,21 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             }
 
             DockingFromParameter(toolbarPosition, autoHide);
+        }
+
+        private void BeginDelayDisplay()
+        {
+            DisplayDisplayTimer.Stop();
+
+            if(!DisplayDisplayTimer.IsEnabled) {
+                DisplayDisplayTimer.Interval = ExtendData.DisplayDelayTime;
+                DisplayDisplayTimer.Start();
+            }
+        }
+
+        private void StopDelayDisplay()
+        {
+            DisplayDisplayTimer.Stop();
         }
 
         /// <summary>
@@ -873,6 +900,11 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             }
         }
 
+        private void DisplayDisplayTimer_Tick(object? sender, EventArgs e)
+        {
+            StopHideWait();
+        }
+
         private void TimerAutoHide_Tick(object? sender, EventArgs e)
         {
             if(!IsEnabledWindowHandle) {
@@ -889,7 +921,11 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         private void View_MouseEnter(object sender, MouseEventArgs e)
         {
             if(ExtendData.IsAutoHide && !ExtendData.PausingAutoHide) {
-                StopHideWait();
+                if(ExtendData.DisplayDelayTime <= TimeSpan.Zero) {
+                    StopHideWait();
+                } else {
+                    BeginDelayDisplay();
+                }
             }
         }
 
@@ -898,6 +934,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             if(ExtendData.IsAutoHide && !ExtendData.PausingAutoHide) {
                 StartHideWait();
             }
+            StopDelayDisplay();
         }
     }
 }

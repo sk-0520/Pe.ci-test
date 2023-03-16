@@ -137,6 +137,27 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             return DatabaseAccessor.GetDataTable(this, statement, parameter);
         }
 
+        public Task<DataTable> GetDataTableAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.GetDataTableAsync(statement, parameter, cancellationToken);
+        }
+
+        public virtual TResult? GetScalar<TResult>(string statement, object? parameter = null)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.GetScalar<TResult?>(this, statement, parameter);
+        }
+
+        public virtual Task<TResult?> GetScalarAsync<TResult>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            return DatabaseAccessor.GetScalarAsync<TResult?>(this, statement, parameter, cancellationToken);
+        }
+
         public IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true)
         {
             ThrowIfDisposed();
@@ -262,12 +283,17 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         #endregion
     }
 
+    /// <summary>
+    /// 読み込み専用トランザクション。
+    /// </summary>
     public sealed class ReadOnlyDatabaseTransaction: DatabaseTransaction
     {
+        /// <inheritdoc cref="DatabaseTransaction.DatabaseTransaction(bool, IDatabaseAccessor)" />
         public ReadOnlyDatabaseTransaction(bool beginTransaction, IDatabaseAccessor databaseAccessor)
             : base(beginTransaction, databaseAccessor)
         { }
 
+        /// <inheritdoc cref="DatabaseTransaction.DatabaseTransaction(bool, IDatabaseAccessor, IsolationLevel)" />
         public ReadOnlyDatabaseTransaction(bool beginTransaction, IDatabaseAccessor databaseAccessor, IsolationLevel isolationLevel)
             : base(beginTransaction, databaseAccessor, isolationLevel)
         { }
@@ -281,6 +307,5 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         public override Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default) => throw new NotSupportedException();
 
         #endregion
-
     }
 }

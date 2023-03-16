@@ -482,7 +482,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
         }
 
-        private static string TuneName(string? name)
+        private static string ToInjectionName(string? name)
         {
             if(name == null) {
                 return string.Empty;
@@ -504,7 +504,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         /// <inheritdoc cref="IDiContainer.Get(Type, string)"/>
         public object Get(Type interfaceType, string name)
         {
-            return GetCore(interfaceType, TuneName(name));
+            return GetCore(interfaceType, ToInjectionName(name));
         }
 
         /// <inheritdoc cref="IDiContainer.Get{TInterface}()"/>
@@ -516,7 +516,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         /// <inheritdoc cref="IDiContainer.Get{TInterface}(string)"/>
         public TInterface Get<TInterface>(string name)
         {
-            return (TInterface)Get(typeof(TInterface), TuneName(name));
+            return (TInterface)Get(typeof(TInterface), ToInjectionName(name));
         }
 
         /// <inheritdoc cref="IDiContainer.New(Type, IReadOnlyList{object})"/>
@@ -527,7 +527,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         /// <inheritdoc cref="IDiContainer.New(Type, string, IReadOnlyList{object})"/>
         public object New(Type type, string name, IReadOnlyList<object> manualParameters)
         {
-            return NewCore(type, TuneName(name), manualParameters, true);
+            return NewCore(type, ToInjectionName(name), manualParameters, true);
         }
 
         /// <inheritdoc cref="IDiContainer.New(Type)"/>
@@ -670,9 +670,9 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             var interfaceType = typeof(TInterface);
             var objectType = typeof(TObject);
             if(interfaceType == objectType) {
-                Register(typeof(TInterface), typeof(TObject), TuneName(name), lifecycle, () => NewCore(typeof(TObject), string.Empty, Array.Empty<object>(), false));
+                Register(typeof(TInterface), typeof(TObject), ToInjectionName(name), lifecycle, () => NewCore(typeof(TObject), string.Empty, Array.Empty<object>(), false));
             } else {
-                Register(typeof(TInterface), typeof(TObject), TuneName(name), lifecycle, () => NewCore(typeof(TObject), string.Empty, Array.Empty<object>(), true));
+                Register(typeof(TInterface), typeof(TObject), ToInjectionName(name), lifecycle, () => NewCore(typeof(TObject), string.Empty, Array.Empty<object>(), true));
             }
 
             return this;
@@ -742,7 +742,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
                 throw new NullReferenceException(memberName);
             }
 
-            var member = new DiInjectionMember(baseType, memberInfo[0], objectType, TuneName(name));
+            var member = new DiInjectionMember(baseType, memberInfo[0], objectType, ToInjectionName(name));
             if(CanAdd(InjectionMembers, member)) {
                 throw new ArgumentException($"{baseType}.{memberInfo}");
             }

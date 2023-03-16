@@ -5,6 +5,7 @@ select
 	LauncherToolbars.Direction,
 	LauncherToolbars.IconBox,
 	LauncherToolbars.FontId,
+	LauncherToolbars.DisplayDelayTime,
 	LauncherToolbars.AutoHideTime,
 	LauncherToolbars.TextWidth,
 	LauncherToolbars.IsVisible,

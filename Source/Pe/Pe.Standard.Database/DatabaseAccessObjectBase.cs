@@ -28,6 +28,13 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         #endregion
 
+        /// <summary>
+        /// 生成。
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="statementLoader"></param>
+        /// <param name="implementation"></param>
+        /// <param name="loggerFactory"></param>
         protected DatabaseAccessObjectBase(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;

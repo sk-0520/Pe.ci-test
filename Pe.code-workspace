@@ -39,9 +39,10 @@
             "MD036": false
         },
         "cSpell.words": [
+            "endregion",
             "msbuild",
             "pwsh",
-            "endregion"
+            "THTML"
         ]
     }
 }

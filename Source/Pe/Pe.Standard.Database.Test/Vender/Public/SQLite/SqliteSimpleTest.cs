@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
-using ContentTypeTextNet.Pe.Standard.Database;
+using ContentTypeTextNet.Pe.Standard.Database.Test.TestImpl.Vender.Public.SQLite;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ContentTypeTextNet.Pe.Core.Test.Models.Database.Vender.Public.SQLite
+namespace ContentTypeTextNet.Pe.Standard.Database.Test.Vender.Public.SQLite
 {
     [TestClass]
     public class SqliteSimpleTest
@@ -18,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Database.Vender.Public.SQLite
         public SqliteSimpleTest()
         {
             var factory = new TestSqliteFactory();
-            DatabaseAccessor = new SqliteAccessor(factory, Test.LoggerFactory);
+            DatabaseAccessor = new SqliteAccessor(factory, NullLoggerFactory.Instance);
         }
         #region property
 
@@ -31,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Database.Vender.Public.SQLite
         [TestInitialize]
         public void TestInitialize()
         {
-            var logger = Test.LoggerFactory.CreateLogger(nameof(SqliteSimpleTest));
+            var logger = NullLoggerFactory.Instance.CreateLogger(nameof(SqliteSimpleTest));
 
             var sqls = new[] {
 @"
@@ -102,6 +103,45 @@ values
 
             Assert.AreEqual(4L, actual.Rows[3]["ColKey"]);
             Assert.AreEqual("D", actual.Rows[3]["ColVal"]);
+        }
+
+        [TestMethod]
+        public async Task GetDataTableAsyncTest()
+        {
+            using var actual = await DatabaseAccessor.GetDataTableAsync("select * from TestTable1 order by ColKey");
+
+            Assert.AreEqual(1L, actual.Rows[0]["ColKey"]);
+            Assert.AreEqual("A", actual.Rows[0]["ColVal"]);
+
+            Assert.AreEqual(4L, actual.Rows[3]["ColKey"]);
+            Assert.AreEqual("D", actual.Rows[3]["ColVal"]);
+        }
+
+
+        [TestMethod]
+        public void ExecuteScalarTest()
+        {
+            var actual1 = DatabaseAccessor.GetScalar<string>("select ColVal from TestTable1 order by ColKey");
+            Assert.AreEqual("A", actual1);
+
+            var actual2 = DatabaseAccessor.GetScalar<string>("select ColVal from TestTable1 where ColKey <> 1 order by ColKey");
+            Assert.AreEqual("B", actual2);
+
+            var actual3 = DatabaseAccessor.GetScalar<string>("select ColVal from TestTable1 where ColKey = -1");
+            Assert.IsNull(actual3);
+        }
+
+        [TestMethod]
+        public async Task GetScalarAsyncTest()
+        {
+            var actual1 = await DatabaseAccessor.GetScalarAsync<string>("select ColVal from TestTable1 order by ColKey");
+            Assert.AreEqual("A", actual1);
+
+            var actual2 = await DatabaseAccessor.GetScalarAsync<string>("select ColVal from TestTable1 where ColKey <> 1 order by ColKey");
+            Assert.AreEqual("B", actual2);
+
+            var actual3 = await DatabaseAccessor.GetScalarAsync<string>("select ColVal from TestTable1 where ColKey = -1");
+            Assert.IsNull(actual3);
         }
 
         [TestMethod]
@@ -181,7 +221,7 @@ values
             Assert.AreEqual("B", actual);
 
             var actualDefault = DatabaseAccessor.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = -1");
-            Assert.AreEqual(default(string), actualDefault);
+            Assert.AreEqual(default, actualDefault);
         }
 
         [TestMethod]
@@ -191,7 +231,7 @@ values
             Assert.AreEqual("B", actual);
 
             var actualDefault = await DatabaseAccessor.QueryFirstOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = -1");
-            Assert.AreEqual(default(string), actualDefault);
+            Assert.AreEqual(default, actualDefault);
         }
 
         [TestMethod]

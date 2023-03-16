@@ -8,6 +8,7 @@ insert into
 		[Direction],
 		[IconBox],
 		[FontId],
+		[DisplayDelayTime],
 		[AutoHideTime],
 		[TextWidth],
 		[IsVisible],
@@ -33,6 +34,7 @@ insert into
 /* Direction                */ AppLauncherToolbarSetting.Direction,
 /* IconBox                  */ AppLauncherToolbarSetting.IconBox,
 /* FontId                   */ @FontId,
+/* DisplayDelayTime         */ AppLauncherToolbarSetting.DisplayDelayTime,
 /* AutoHideTime             */ AppLauncherToolbarSetting.AutoHideTime,
 /* TextWidth                */ AppLauncherToolbarSetting.TextWidth,
 /* IsVisible                */ AppLauncherToolbarSetting.IsVisible,
@@ -51,3 +53,10 @@ insert into
 /* UpdatedCount             */ 0
 	from
 		AppLauncherToolbarSetting
+	where
+		AppLauncherToolbarSetting.Generation = (
+			select
+				MAX(AppLauncherToolbarSetting.Generation)
+			from
+				AppLauncherToolbarSetting
+		)

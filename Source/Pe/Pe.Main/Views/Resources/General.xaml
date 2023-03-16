@@ -334,7 +334,7 @@
     x:Key="SettingEditor"
     TargetType="sharpdevelop_avalonedit:TextEditor"
     xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
-    xmlns:app_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core.Views"
+    xmlns:app_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   >
     <Style.Resources>
       <app_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />

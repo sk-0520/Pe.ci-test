@@ -1,23 +1,28 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.Font;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -28,6 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
     {
         #region variable
 
+        private double _windowHeight;
         private bool _isOpend;
         private CommandItemViewModel? _currentSelectedItem;
         private CommandItemViewModel? _selectedItem;
@@ -109,6 +115,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         {
             get => Model.Width;
             set => Model.ChangeViewWidthDelaySave(value);
+        }
+
+        public double WindowHeight
+        {
+            get => this._windowHeight;
+            set => SetProperty(ref this._windowHeight, value);
         }
 
         public bool IsOpend
@@ -406,6 +418,30 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             }
         }
 
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch(msg) {
+                case (int)WM.WM_SIZING: {
+                        var deviceWindowHeight = UIUtility.ToDevicePixel(WindowHeight, DpiScaleOutputor.GetDpiScale().Y);
+                        var podRect = WindowsUtility.ConvertRECTFromLParam(lParam);
+
+                        // 高さは変えない
+                        if(podRect.Height != deviceWindowHeight) {
+                            podRect.Height = (int)deviceWindowHeight;
+
+                            Marshal.StructureToPtr(podRect, lParam, true);
+                            handled = true;
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            return IntPtr.Zero;
+        }
+
         #endregion
 
         #region IViewLifecycleReceiver
@@ -413,6 +449,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public void ReceiveViewInitialized(Window window)
         {
             DpiScaleOutputor = (IDpiScaleOutputor)window;
+
+            var hWnd = HandleUtility.GetWindowHandle(window);
+            var hWndSource = HwndSource.FromHwnd(hWnd);
+            hWndSource.AddHook(WndProc);
         }
 
         public void ReceiveViewLoaded(Window window)

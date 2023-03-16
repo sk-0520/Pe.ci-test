@@ -27,13 +27,25 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         #endregion
     }
 
+    /// <summary>
+    /// <see cref="IDatabaseStatementLoader"/> の最小実装。
+    /// <para><see cref="IDatabaseStatementLoader.LoadStatement(string)"/>だけ対応すればよろし。</para>
+    /// </summary>
     public abstract class DatabaseStatementLoaderBase: IDatabaseStatementLoader
     {
+        /// <summary>
+        /// 生成。
+        /// </summary>
+        /// <param name="logger"></param>
         protected DatabaseStatementLoaderBase(ILogger logger)
         {
             Logger = logger;
         }
 
+        /// <summary>
+        /// 生成。
+        /// </summary>
+        /// <param name="loggerFactory"></param>
         protected DatabaseStatementLoaderBase(ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
@@ -52,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         public abstract string LoadStatement(string key);
 
-        public virtual string LoadStatementByCurrent(Type callerType, [CallerMemberName] string callerMemberName = "")
+        public string LoadStatementByCurrent(Type callerType, [CallerMemberName] string callerMemberName = "")
         {
             var key = callerType.FullName + "." + callerMemberName;
             return LoadStatement(key);

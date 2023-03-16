@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', ev => {
+window.addEventListener('DOMContentLoaded', _ => {
 	initializePluginTemplate();
 });
 
@@ -21,16 +21,16 @@ const InputIds = [
 ];
 
 function initializePluginTemplate() {
-	document.getElementById('generator')!.addEventListener('submit', ev => {
+	document.getElementById('generator')!.addEventListener('submit', _ => {
 		output();
 	});
 
 	for (const id of InputIds) {
 		const element = document.getElementById(id) as HTMLInputElement;
-		element.addEventListener('input', ev => output());
+		element.addEventListener('input', _ => output());
 	}
 
-	document.getElementById('set-auto-plugin-id')!.addEventListener('click', ev => {
+	document.getElementById('set-auto-plugin-id')!.addEventListener('click', _ => {
 		setAutoGeneratePluginId();
 	})
 }
@@ -40,10 +40,10 @@ function setAutoGeneratePluginId() {
 	do {
 		// https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid/8809472#8809472
 		guid = (function generateUUID() { // Public Domain/MIT
-			var d = new Date().getTime();//Timestamp
-			var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now() * 1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+			let d = new Date().getTime();//Timestamp
+			let d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now() * 1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
 			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-				var r = Math.random() * 16;//random number between 0 and 16
+				let r = Math.random() * 16;//random number between 0 and 16
 				if (d > 0) {//Use timestamp until depleted
 					r = (d + r) % 16 | 0;
 					d = Math.floor(d / 16);
@@ -60,7 +60,7 @@ function setAutoGeneratePluginId() {
 }
 
 function convertInnerTextFromGuid(guid: string): string {
-	return guid.trim().replace(/[\{\-\}\s]/g, '').toLowerCase()
+	return guid.trim().replace(/[{\-}\s]/g, '').toLowerCase()
 }
 
 function isGuid(guid: string): boolean {
@@ -95,7 +95,7 @@ function output() {
 		const element = document.getElementById(id) as HTMLInputElement;
 		const value = (element.value ?? '').trim();
 
-		function setError(message: string) {
+		const setError = (message: string) => {
 			hasError = true;
 			element.setCustomValidity(message);
 		}

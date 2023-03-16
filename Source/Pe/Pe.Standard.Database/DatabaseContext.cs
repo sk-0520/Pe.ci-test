@@ -41,6 +41,15 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <returns><see cref="DataTable"/></returns>
         DataTable GetDataTable(string statement, object? parameter = null);
 
+        /// <inheritdoc cref="GetDataTable(string, object?)"/>
+        Task<DataTable> GetDataTableAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default);
+
+        /// <inheritdoc cref="IDbCommand.ExecuteScalar"/>
+        TResult? GetScalar<TResult>(string statement, object? parameter = null);
+
+        /// <inheritdoc cref="GetScalar{TResult}(string, object?)"/>
+        Task<TResult?> GetScalarAsync<TResult>(string statement, object? parameter = null, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// 指定の型で問い合わせ。
         /// </summary>
