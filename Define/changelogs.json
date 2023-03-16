@@ -1,48 +1,14 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.192+",
+		"date": "2023/03/16",
+		"version": "0.99.194",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "034d997842774a8549e4ed6fef75920692e47dc0",
 						"subject": "#845: 自動的に隠したランチャーツルバーの展開に対して待機時間を設定する"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -50,23 +16,15 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "7b4e238a2372384e11aa114b5ed0be2beac173d1",
 						"subject": "#816: コマンド入力で上下にサイズ変更可能"
 					},
 					{
-						"revision": "",
+						"revision": "7bc4ce03a4fd2296873611df22ec23f680e67c50",
 						"subject": "#765: インデックス命名規則が虫食いを考慮できていない",
 						"comments": [
 							"やりたいことはいろいろあるがまずは虫食い対策"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -74,22 +32,18 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "69256fee86d77482feffdd75ace5334018cb883f",
 						"subject": "update npm"
 					},
 					{
-						"revision": "",
+						"revision": "e022dbc8333838774906a00c8878d2e1ba8aef35",
 						"class": "nuget",
 						"subject": "Microsoft.Extensions.Configuration.Binder 7.0.3 -> 7.0.4"
 					},
 					{
-						"revision": "",
+						"revision": "573695373740f3192b3f79d96dac563fa69972e6",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 110.0.300 -> 111.2.20"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
