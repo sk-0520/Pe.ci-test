@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 ToolbarPosition = ToolbarPosition,
                 IconDirection = IconDirection,
                 IconBox = IconBox,
-                DisplayTime = DisplayDelayTime,
+                DisplayDelayTime = DisplayDelayTime,
                 AutoHideTime = AutoHideTime,
                 TextWidth = TextWidth,
                 IsVisible = IsVisible,
@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ToolbarPosition = data.ToolbarPosition;
             IconDirection = data.IconDirection;
             IconBox = data.IconBox;
-            DisplayDelayTime = data.DisplayTime;
+            DisplayDelayTime = data.DisplayDelayTime;
             AutoHideTime = data.AutoHideTime;
             TextWidth = data.TextWidth;
             IsVisible = data.IsVisible;

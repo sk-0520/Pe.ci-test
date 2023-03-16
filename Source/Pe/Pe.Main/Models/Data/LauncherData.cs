@@ -377,7 +377,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public LauncherToolbarIconDirection IconDirection { get; set; }
         public IconBox IconBox { get; set; }
         public FontId FontId { get; set; }
-        public TimeSpan DisplayTime { get; set; }
+        public TimeSpan DisplayDelayTime { get; set; }
         public TimeSpan AutoHideTime { get; set; }
         public int TextWidth { get; set; }
         public bool IsVisible { get; set; }
