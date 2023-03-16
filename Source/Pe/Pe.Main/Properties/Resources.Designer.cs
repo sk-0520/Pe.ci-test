@@ -943,15 +943,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   {d}.{hh}:{mm}:{ss}.{f} に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Common_TimeSpan_Format {
-            get {
-                return ResourceManager.GetString("String_Common_TimeSpan_Format", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   上へ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Common_Up {
