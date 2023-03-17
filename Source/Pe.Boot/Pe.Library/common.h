@@ -6,6 +6,7 @@
 
 /// <summary>
 /// バイト長。
+/// <para><c>size_t</c>と同じだけどバイト数として扱う方針。</para>
 /// </summary>
 typedef size_t byte_t;
 

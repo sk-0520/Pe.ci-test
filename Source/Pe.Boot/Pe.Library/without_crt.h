@@ -1,6 +1,10 @@
 ﻿#pragma once
 #include <stdint.h>
 
+/*
+* 💩＜ようこそ！
+*/
+
 extern int _fltused;
 
 void* __cdecl memset(void* dest, int c, size_t bytes);

@@ -103,7 +103,7 @@ typedef struct tag_TIMESTAMP
     /// <summary>
     /// ミリ秒。
     /// </summary>
-    uint16_t milli_sec;
+    uint16_t millisecond;
     /// <summary>
     /// 曜日。
     /// </summary>

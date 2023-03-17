@@ -149,7 +149,7 @@ static void logging(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller
     clear_builder(&sb);
 
     TEXT time_format = wrap_text(_T("%02d:%02d:%02d.%03d"));
-    append_builder_format(&sb, &time_format, timestamp.hour, timestamp.minute, timestamp.second, timestamp.milli_sec);
+    append_builder_format(&sb, &time_format, timestamp.hour, timestamp.minute, timestamp.second, timestamp.millisecond);
     TEXT ref_time_text = reference_text_string_builder(&sb);
     new_stack_or_heap_array(time_buffer, time_array, TCHAR, ref_time_text.length + 1, 16, library_log_memory_arena_resource);
     copy_memory(time_buffer, ref_time_text.value, ref_time_text.length * sizeof(TCHAR));

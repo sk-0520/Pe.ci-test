@@ -1,6 +1,10 @@
 ﻿#include "linked_list.h"
 #include "debug.h"
 
+/// <summary>
+/// ノード。
+/// <para>実体は公開しない。</para>
+/// </summary>
 typedef struct tag_LINK_NODE
 {
     /// <summary>

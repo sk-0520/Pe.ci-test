@@ -14,7 +14,7 @@ static PATH_INFO create_invalid_path_info(void)
 {
     return (PATH_INFO)
     {
-        .parent_path = create_invalid_text(),
+        .parent = create_invalid_text(),
             .name = create_invalid_text(),
             .name_without_extension = create_invalid_text(),
             .extension = create_invalid_text(),
@@ -284,7 +284,7 @@ PATH_INFO get_path_info_stack(const TEXT* path)
 
     return (PATH_INFO)
     {
-        .parent_path = parent_path,
+        .parent = parent_path,
             .name = name,
             .name_without_extension = name_without_extension,
             .extension = extension,
@@ -302,7 +302,7 @@ PATH_INFO RC_HEAP_FUNC(clone_path_info, const PATH_INFO* path_info, const MEMORY
 
     return (PATH_INFO)
     {
-        .parent_path = RC_HEAP_CALL(clone_text, &path_info->parent_path, memory_arena_resource),
+        .parent = RC_HEAP_CALL(clone_text, &path_info->parent, memory_arena_resource),
             .name = RC_HEAP_CALL(clone_text, &path_info->name, memory_arena_resource),
             .name_without_extension = RC_HEAP_CALL(clone_text, &path_info->name_without_extension, memory_arena_resource),
             .extension = RC_HEAP_CALL(clone_text, &path_info->extension, memory_arena_resource),
@@ -321,7 +321,7 @@ bool RC_HEAP_FUNC(release_path_info, PATH_INFO* path_info)
         return false;
     }
 
-    RC_HEAP_CALL(release_text, &path_info->parent_path);
+    RC_HEAP_CALL(release_text, &path_info->parent);
     RC_HEAP_CALL(release_text, &path_info->name);
     RC_HEAP_CALL(release_text, &path_info->name_without_extension);
     RC_HEAP_CALL(release_text, &path_info->extension);

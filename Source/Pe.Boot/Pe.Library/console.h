@@ -51,8 +51,9 @@ typedef struct tag_CONSOLE_RESOURCE
 /// <summary>
 /// コンソール処理を開始。
 /// </summary>
-/// <returns></returns>
+/// <returns>コンソールリソース。<c>end_console</c>で解放が必要。</returns>
 CONSOLE_RESOURCE begin_console(const MEMORY_ARENA_RESOURCE* memory_arena_resource);
+
 /// <summary>
 /// コンソール処理を終了。
 /// </summary>
@@ -68,4 +69,7 @@ void end_console(CONSOLE_RESOURCE* console_resource);
 /// <returns></returns>
 size_t output_console_text(const CONSOLE_RESOURCE* console_resource, const TEXT* text, bool newline);
 
+/// <summary>
+/// なんだこれ、なんだ。
+/// </summary>
 size_t write_console_text(const CONSOLE_RESOURCE* console_resource, const TEXT* text, bool newline);

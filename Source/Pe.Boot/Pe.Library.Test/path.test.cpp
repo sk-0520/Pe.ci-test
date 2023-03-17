@@ -177,7 +177,7 @@ namespace PeLibraryTest
             for (auto test : tests) {
                 TEXT& arg1 = std::get<0>(test.inputs);
                 PATH_INFO actual = get_path_info_stack(&arg1);
-                Assert::IsTrue(is_equals_text(&test.expected.parent_path, &actual.parent_path, false));
+                Assert::IsTrue(is_equals_text(&test.expected.parent, &actual.parent, false));
                 Assert::IsTrue(is_equals_text(&test.expected.name, &actual.name, false));
                 Assert::IsTrue(is_equals_text(&test.expected.name_without_extension, &actual.name_without_extension, false));
                 Assert::IsTrue(is_equals_text(&test.expected.extension, &actual.extension, false));
@@ -195,7 +195,7 @@ namespace PeLibraryTest
                 Assert::IsFalse(release_path_info(&stack));
             }
 
-            Assert::IsTrue(is_equals_text(&expected.parent_path, &keep.parent_path, false));
+            Assert::IsTrue(is_equals_text(&expected.parent, &keep.parent, false));
             Assert::IsTrue(is_equals_text(&expected.name, &keep.name, false));
             Assert::IsTrue(is_equals_text(&expected.name_without_extension, &keep.name_without_extension, false));
             Assert::IsTrue(is_equals_text(&expected.extension, &keep.extension, false));

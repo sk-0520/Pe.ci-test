@@ -4,6 +4,10 @@
 #include "res_check.h"
 #include "text.h"
 
+/// <summary>
+/// エラーコード。
+/// <para>Windowsエラーコードを想定。</para>
+/// </summary>
 typedef struct tag_ERROR_CODE
 {
     DWORD code;

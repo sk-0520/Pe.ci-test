@@ -122,7 +122,7 @@ void* RC_HEAP_FUNC(allocate_raw_memory, byte_t bytes, bool zero_fill, const MEMO
 void* RC_HEAP_FUNC(new_memory, size_t count, byte_t type_size, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     byte_t allocate_size = count * type_size;
-    if (allocate_size / type_size != count) {
+    if ((allocate_size / type_size) != count) {
         return NULL;
     }
 

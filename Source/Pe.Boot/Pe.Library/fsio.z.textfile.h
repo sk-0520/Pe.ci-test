@@ -53,7 +53,7 @@ typedef struct tag_FILE_WRITER
 /// ファイル読み取り処理の生成。
 /// </summary>
 /// <param name="path"></param>
-/// <returns>解放が必要。</returns>
+/// <returns><c>release_file_reader</c>による解放が必要。</returns>
 FILE_READER RC_FILE_FUNC(new_file_reader, const TEXT* path, FILE_ENCODING encoding, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #if RES_CHECK
 #   define new_file_reader(path, encoding, memory_arena_resource) RC_FILE_WRAP(new_file_reader, (path), (encoding), memory_arena_resource)
@@ -76,7 +76,7 @@ bool is_enabled_file_reader(const FILE_READER* file_reader);
 /// テキストファイルの一括取得。
 /// </summary>
 /// <param name="file_reader"></param>
-/// <returns>解放が必要。</returns>
+/// <returns><c>release_file_reader</c>による解放が必要。</returns>
 TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader);
 #if RES_CHECK
 #   define read_content_file_reader(file_reader) RC_FILE_WRAP(read_content_file_reader, (file_reader))
@@ -90,7 +90,7 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader);
 /// <param name="encoding"></param>
 /// <param name="open_mode"></param>
 /// <param name="options"></param>
-/// <returns>解放が必要。</returns>
+/// <returns><c>release_file_writer</c>による解放が必要。</returns>
 FILE_WRITER RC_FILE_FUNC(new_file_writer, const TEXT* path, FILE_ENCODING encoding, FILE_OPEN_MODE open_mode, FILE_WRITER_OPTIONS options, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #if RES_CHECK
 #   define new_file_writer(path, encoding, open_mode, options, memory_arena_resource) RC_FILE_WRAP(new_file_writer, (path), (encoding), (open_mode), (options), memory_arena_resource)
