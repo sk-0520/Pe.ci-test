@@ -22,7 +22,7 @@ $sourceBootDirectoryPath = Join-Path "$rootDirectory" "Source/Pe.Boot"
 
 $outputDirectoryPath = Join-Path "$rootDirectory" "Output/Release"
 
-$mainSolutionPath = Join-Path $sourceMainDirectoryPath "Pe.sln"
+#$mainSolutionPath = Join-Path $sourceMainDirectoryPath "Pe.sln"
 
 foreach ($platform in $Platforms) {
 	$mainLoggerArg = ''
