@@ -1,7 +1,7 @@
 Param(
 	[Parameter(mandatory = $true)][string[]] $MainConfigurations,
 	[Parameter(mandatory = $true)][string[]] $BootConfigurations,
-	[Parameter(mandatory = $false)][string] $Logger,
+	[Parameter(mandatory = $false)][string] $MainLogger,
 	[Parameter(mandatory = $true)][string[]] $Platforms
 )
 $ErrorActionPreference = 'Stop'
@@ -22,14 +22,15 @@ $sourceBootDirectoryPath = Join-Path "$rootDirectory" "Source/Pe.Boot"
 
 $outputDirectoryPath = Join-Path "$rootDirectory" "Output/Release"
 
-$mainSolutionPath = Join-Path $sourceMainDirectoryPath "Pe.sln"
+#$mainSolutionPath = Join-Path $sourceMainDirectoryPath "Pe.sln"
 
 foreach ($platform in $Platforms) {
 	$mainLoggerArg = ''
-	if (![string]::IsNullOrEmpty($Logger)) {
-		$mainLoggerArg = "--logger:$Logger"
+	if (![string]::IsNullOrEmpty($MainLogger)) {
+		$mainLoggerArg = "--logger:$MainLogger"
 	}
 	$mainProjectDirItems = Get-ChildItem -Path $sourceMainDirectoryPath -Filter "*.Test" -Directory
+
 	foreach ($mainConfiguration in $MainConfigurations) {
 		foreach ($projectDirItem in $mainProjectDirItems) {
 			$testDirPath = Join-Path $projectDirItem.FullName "bin" | Join-Path -ChildPath $platform | Join-Path -ChildPath $mainConfiguration
@@ -43,10 +44,6 @@ foreach ($platform in $Platforms) {
 		}
 	}
 
-	$bootLoggerArg = ''
-	if (![string]::IsNullOrEmpty($Logger)) {
-		$bootLoggerArg = "/Logger:$Logger"
-	}
 	$bootProjectDirItems = Get-ChildItem -Path $sourceBootDirectoryPath -Filter "*.Test" -Directory
 	foreach ($bootConfiguration in $BootConfigurations) {
 		foreach ($projectDirItem in $bootProjectDirItems) {
@@ -54,7 +51,7 @@ foreach ($platform in $Platforms) {
 			$testFileName = $projectDirItem.BaseName + '.dll'
 			$testFilePath = Join-Path $testDirPath $testFileName
 
-			VSTest.Console $testFilePath /InIsolation /Platform:$platform $bootLoggerArg
+			VSTest.Console $testFilePath /InIsolation /Platform:$platform
 			if (-not $?) {
 				exit 1
 			}

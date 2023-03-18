@@ -4,6 +4,7 @@
     <AssemblyName>Pe.Bridge.Test</AssemblyName>
     <RootNamespace>ContentTypeTextNet.Pe.Bridge.Test</RootNamespace>
     <IsTestProject>true</IsTestProject>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
