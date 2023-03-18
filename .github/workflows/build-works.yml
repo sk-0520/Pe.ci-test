@@ -102,7 +102,7 @@ jobs:
 
       - name: <Test> Application
         shell: pwsh
-        run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ matrix.PLATFORM }} -Logger GitHubActions
+        run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ matrix.PLATFORM }} -MainLogger GitHubActions
 
       - name: <Archive> Application
         shell: pwsh
