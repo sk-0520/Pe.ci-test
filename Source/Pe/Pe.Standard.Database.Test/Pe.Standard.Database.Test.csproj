@@ -11,6 +11,10 @@
     <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteFactory.cs" Link="TestImpl\Vender\Public\SQLite\SqliteFactory.cs" />
     <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteImplementation.cs" Link="TestImpl\Vender\Public\SQLite\SqliteImplementation.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Test\**\*.cs" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
