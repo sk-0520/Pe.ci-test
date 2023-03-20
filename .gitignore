@@ -33,6 +33,9 @@ Thumbs.db
 .vs/
 *.tss
 *.lnk
+*.zip
+*.7z
+*.tar
 node_modules/
 /Source/Documents/dist
 /Source/Documents/build
