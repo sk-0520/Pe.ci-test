@@ -54,7 +54,7 @@ static void systemtime_to_timestamp(TIMESTAMP* result, const SYSTEMTIME* system_
     result->hour = (uint8_t)system_time->wHour;
     result->minute = (uint8_t)system_time->wMinute;
     result->second = (uint8_t)system_time->wSecond;
-    result->milli_sec = system_time->wMilliseconds;
+    result->millisecond = system_time->wMilliseconds;
     result->day_of_week = system_time->wDayOfWeek;
     result->library.is_utc = is_utc;
 }

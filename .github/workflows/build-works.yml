@@ -96,9 +96,13 @@ jobs:
         shell: pwsh
         run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType BETA -Platforms ${{ matrix.PLATFORM }}
 
+      - name: <Test> Add Logger
+        shell: cmd
+        run: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install GitHubActionsTestLogger & cd ..\..\..\ )
+
       - name: <Test> Application
         shell: pwsh
-        run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ matrix.PLATFORM }}
+        run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ matrix.PLATFORM }} -MainLogger GitHubActions
 
       - name: <Archive> Application
         shell: pwsh
@@ -172,8 +176,8 @@ jobs:
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
 
-    # ℹ️ Command-line programs to run using the OS shell.
-    # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+    # ?? Command-line programs to run using the OS shell.
+    # ?? See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
 
     #   If the Autobuild fails above, remove it and uncomment the following three lines.
     #   modify them (or add more) to build your code if your project, please refer to the EXAMPLE below for guidance.

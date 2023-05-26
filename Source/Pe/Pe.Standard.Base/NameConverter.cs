@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
@@ -10,6 +11,21 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// </summary>
     public class NameConverter
     {
+        public NameConverter(CultureInfo cultureInfo)
+        {
+            CultureInfo = cultureInfo;
+        }
+
+        public NameConverter()
+            : this(CultureInfo.InvariantCulture)
+        { }
+
+        #region property
+
+        public CultureInfo CultureInfo { get; private set; }
+
+        #endregion
+
         #region function
 
         private string PascalToSeparatorCase(string source, char separator)
@@ -25,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                     if(i != 0 && lastUpperIndex != i - 1) {
                         builder.Append(separator);
                     }
-                    builder.Append(char.ToLowerInvariant(c));
+                    builder.Append(char.ToLower(c, CultureInfo));
                     lastUpperIndex = i;
                 } else {
                     builder.Append(c);
@@ -93,9 +109,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 var c = source[i];
                 if(char.IsUpper(c)) {
                     if(i == 0) {
-                        builder.Append(char.ToLowerInvariant(c));
+                        builder.Append(char.ToLower(c, CultureInfo));
                     } else if(lastUpperIndex == i - 1) {
-                        builder.Append(char.ToLowerInvariant(c));
+                        builder.Append(char.ToLower(c, CultureInfo));
                     } else {
                         builder.Append(c);
                     }
@@ -126,8 +142,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                     if(next == separator) {
                         continue;
                     }
+
                     if('a' <= next && next <= 'z') {
-                        builder.Append(char.ToUpperInvariant(next));
+                        builder.Append(char.ToUpper(next, CultureInfo));
                         i += 1;
                         isUpper = false;
                         continue;
@@ -141,11 +158,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 }
 
                 if(isUpper) {
-                    builder.Append(char.ToUpperInvariant(c));
+                    builder.Append(char.ToUpper(c, CultureInfo));
                     isUpper = false;
                 } else {
                     builder.Append(c);
-
                 }
             }
 

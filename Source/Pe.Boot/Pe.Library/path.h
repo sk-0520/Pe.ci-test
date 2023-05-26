@@ -8,12 +8,28 @@
 /// ディレクトリの代替区切り文字
 #define ALT_DIRECTORY_SEPARATOR_CHARACTER _T('/')
 
+/// <summary>
+/// パスデータ。
+/// </summary>
 typedef struct tag_PATH_INFO
 {
-    TEXT parent_path;
+    /// <summary>
+    /// 親パス。
+    /// </summary>
+    TEXT parent;
+    /// <summary>
+    /// 名前。
+    /// </summary>
     TEXT name;
+    /// <summary>
+    /// 拡張子を省いた名前。
+    /// </summary>
     TEXT name_without_extension;
+    /// <summary>
+    /// 拡張子(.なし)。
+    /// </summary>
     TEXT extension;
+
     struct
     {
         bool need_release;

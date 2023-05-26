@@ -4,6 +4,7 @@
     <AssemblyName>Pe.Main.Test</AssemblyName>
     <RootNamespace>ContentTypeTextNet.Pe.Main.Test</RootNamespace>
     <IsTestProject>true</IsTestProject>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,10 +18,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="5.2.2" />
+    <Compile Include="..\Test\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.0.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.3" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.2.5" />
   </ItemGroup>
 
   <ItemGroup>

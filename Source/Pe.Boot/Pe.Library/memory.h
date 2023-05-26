@@ -34,8 +34,14 @@ typedef struct tag_MEMORY_ARENA_RESOURCE
 
 /// <summary>
 /// 可能であればスタックに確保、無理ならヒープに配置。
-/// <para><c>release_array_or_memory</c>で解放(必須)。</para>
+/// <para><c>release_stack_or_heap_array</c>で解放(必須)。</para>
 /// </summary>
+/// <param name="var_name">変数名。</param>
+/// <param name="cpp_name">プリプロセッサ変数名(<c>release_stack_or_heap_array</c>で使用)。</param>
+/// <param name="type">型。</param>
+/// <param name="count">確保数。</param>
+/// <param name="stack_count">スタックに確保する数。<c>count</c>以下の場合に使用される(内部的にスタックのみ使用)。</param>
+/// <param name="memory_arena_resource">メモリアリーナ。</param>
 #define new_stack_or_heap_array(var_name, cpp_name, type, count, stack_count, memory_arena_resource) \
 struct { \
     type* elements; \
@@ -57,11 +63,19 @@ do { \
 } while(0); \
 type* var_name = cpp_name.elements; \
 
-#define is_stack_array(array_or_memory_item) (array_or_memory_item.elements == array_or_memory_item.library.buffer)
+/// <summary>
+/// <c>new_stack_or_heap_array</c> で作成したデータはスタック上に確保されたか。
+/// </summary>
+/// <param name="stack_or_heap_array">プリプロセッサ変数名(<c>new_stack_or_heap_array</c>の<c>cpp_name</c>)。</param>
+#define is_stack_array(stack_or_heap_array) (stack_or_heap_array.elements == stack_or_heap_array.library.buffer)
 
-#define release_stack_or_heap_array(array_or_memory_item) \
-if(!is_stack_array(array_or_memory_item)) { \
-    release_memory(array_or_memory_item.elements, array_or_memory_item.library.mr); \
+/// <summary>
+/// <c>new_stack_or_heap_array</c> で作成したデータの破棄
+/// </summary>
+/// <param name="stack_or_heap_array">プリプロセッサ変数名(<c>new_stack_or_heap_array</c>の<c>cpp_name</c>)。</param>
+#define release_stack_or_heap_array(stack_or_heap_array) \
+if(!is_stack_array(stack_or_heap_array)) { \
+    release_memory(stack_or_heap_array.elements, stack_or_heap_array.library.mr); \
 }
 
 /// <summary>
@@ -79,9 +93,9 @@ MEMORY_ARENA_RESOURCE* get_default_memory_arena_resource();
 /// <summary>
 /// メモリアリーナリソースの生成。
 /// </summary>
-/// <param name="initial_size">初期サイズ。</param>
-/// <param name="maximum_size">最大サイズ。</param>
-/// <returns>生成されたメモリ管理データ。解放が必要</returns>
+/// <param name="initial_size">初期サイズ。自動設定には<c>MEMORY_ARENA_AUTO_INITIAL_SIZE</c>を使用する。</param>
+/// <param name="maximum_size">最大サイズ。自動設定には<c>MEMORY_ARENA_EXTENDABLE_MAXIMUM_SIZE</c>を使用する。</param>
+/// <returns>生成されたメモリ管理データ。<c>release_memory_arena_resource</c>で解放が必要</returns>
 MEMORY_ARENA_RESOURCE new_memory_arena_resource(byte_t initial_size, byte_t maximum_size);
 
 /// <summary>
@@ -131,8 +145,6 @@ bool RC_HEAP_FUNC(release_memory, void* p, const MEMORY_ARENA_RESOURCE* memory_a
 #if RES_CHECK
 #   define release_memory(p, memory_arena_resource) RC_HEAP_WRAP(release_memory, p, memory_arena_resource)
 #endif
-
-
 
 /// <summary>
 /// <see cref="memset" />する。

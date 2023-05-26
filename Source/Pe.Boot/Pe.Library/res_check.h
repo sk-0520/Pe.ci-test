@@ -6,6 +6,10 @@
 
 #include "common.h"
 
+/*
+* リソース確認要処理。
+* HEAP,FILE をリソースとして処理する。
+*/
 
 #ifdef RES_CHECK
 
