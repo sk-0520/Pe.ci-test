@@ -87,7 +87,13 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "MSTest.* 更新",
+						"comments": [
+							"MSTest.TestAdapter 3.0.2 -> 3.0.3",
+							"MSTest.TestFramework 3.0.2 -> 3.0.3",
+							"Microsoft.NET.Test.Sdk 17.5.0 -> 17.6.0"
+						]
 					},
 					{
 						"revision": "",
