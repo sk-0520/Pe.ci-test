@@ -1,48 +1,14 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.194+",
+		"date": "2023/05/26",
+		"version": "0.99.195",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
 						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "主に依存ライブラリ更新"
 					}
 				]
 			},
@@ -50,20 +16,8 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "64ed0f9463c5d159b9b54d3dd7a680ca5078c4db",
 						"subject": "#876: プラグインのアップデート処理は実装済みなのでヘルプが古い"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -71,14 +25,14 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "54d0a8e990a0bd9be34660143211cbaaf9d58c41",
 						"subject": "#863: CI のテストログをいい感じに取りたい",
 						"comments": [
 							"結局のところログインしてないと見れないっていうね"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "a447c527ddc4cb89d196d3f584e439fe6419263c",
 						"subject": "#877: CodeQLで抑制しているC#処理はスケジュール処理する",
 						"comments": [
 							"わからんけどこの課題はいったん終わらす",
@@ -86,7 +40,7 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "75b280ca5fef58de893fb0ecf69f2d1c7c9bad14",
 						"class": "nuget",
 						"subject": "MSTest.* 更新",
 						"comments": [
@@ -96,22 +50,22 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "d5eed64011804bd3bb2c2184c8552d1a007bf6f2",
 						"class": "nuget",
 						"subject": "System.Management 7.0.0 -> 7.0.1"
 					},
 					{
-						"revision": "",
+						"revision": "5bd36e3d3a40dd60a31766575781fd6f542b32b2",
 						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 5.2.2 -> 5.2.5"
 					},
 					{
-						"revision": "",
+						"revision": "636d405e744385230e1d08c36d9495681ecb6480",
 						"class": "nuget",
 						"subject": "AvalonEdit 6.2.0.78 -> 6.3.0.90"
 					},
 					{
-						"revision": "",
+						"revision": "91f5a5106caf16160c050acaf71a005e59a0feaf",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 111.2.20 -> 113.1.40"
 					},
