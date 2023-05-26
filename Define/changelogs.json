@@ -107,7 +107,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "AvalonEdit 6.2.0.78 -> 6.3.0.90"
 					},
 					{
 						"revision": "",
