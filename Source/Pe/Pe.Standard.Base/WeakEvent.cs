@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using Microsoft.CodeAnalysis.CodeStyle;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
