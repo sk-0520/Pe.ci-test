@@ -97,6 +97,15 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
+						"subject": "System.Management 7.0.0 -> 7.0.1"
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
