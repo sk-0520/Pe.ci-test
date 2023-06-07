@@ -1,5 +1,7 @@
 ﻿Param(
+	[switch] $IgnoreEmpty
 )
+
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $PSDefaultParameterValues['Out-File:Encoding'] = 'utf8'
@@ -117,6 +119,9 @@ $contents = $root.CreateChild('div');
 $contents.attributes['id'] = 'content'
 foreach ($content in $currentVersion.contents) {
 	if (!($content.PSObject.Properties.Match('logs').Count)) {
+		if(!$IgnoreEmpty) {
+			throw "!!empty logs!!"
+		}
 		continue;
 	}
 
@@ -126,6 +131,10 @@ foreach ($content in $currentVersion.contents) {
 	$sectionHeader.attributes['class'] = $content.type
 	$logs = $section.CreateChild('ul')
 	foreach ($log in $content.logs) {
+		if(!$IgnoreEmpty -And [string]::IsNullOrWhitespace($log.subject)) {
+			throw "!!empty log!!"
+		}
+
 		$logItem = $logs.CreateChild('li')
 		if ($log.PSObject.Properties.Match('class').Count) {
 			$logItem.attributes['class'] = $log.class

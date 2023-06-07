@@ -114,7 +114,7 @@ jobs:
 
       - name: <Make> release note
         shell: pwsh
-        run: .\Build\create-release-note.ps1
+        run: .\Build\create-release-note.ps1 -IgnoreEmpty
 
       - name: <Artifact> Application
         uses: actions/upload-artifact@v3

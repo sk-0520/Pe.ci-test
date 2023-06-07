@@ -51,7 +51,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#783: リリースノートに空項目があればビルド処理で落とす"
 					},
 					{
 						"revision": "",
@@ -76,7 +76,7 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#783: リリースノートに空項目があればビルド処理で落とす"
 					},
 					{
 						"revision": "",
