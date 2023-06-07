@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public bool CanDragStart(UIElement sender, MouseEventArgs e) => false;
 
-        public void DragOrverOrEnter(UIElement sender, DragEventArgs e)
+        public void DragOverOrEnter(UIElement sender, DragEventArgs e)
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 // ファイル登録準備

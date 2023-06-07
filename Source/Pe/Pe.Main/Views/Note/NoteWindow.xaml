@@ -628,10 +628,10 @@
                       <Setter Property="Effect" Value="{Binding BlindEffect}" />
                     </DataTrigger>
 
-                    <DataTrigger Binding="{Binding ShowContentKindChangeConfim}" Value="True">
+                    <DataTrigger Binding="{Binding ShowContentKindChangeConfirm}" Value="True">
                       <Setter Property="IsEnabled" Value="False" />
                     </DataTrigger>
-                    <DataTrigger Binding="{Binding ShowLinkChangeConfim}" Value="True">
+                    <DataTrigger Binding="{Binding ShowLinkChangeConfirm}" Value="True">
                       <Setter Property="IsEnabled" Value="False" />
                     </DataTrigger>
                   </Style.Triggers>
@@ -729,10 +729,10 @@
             <StackPanel.Style>
               <Style TargetType="StackPanel">
                 <Style.Triggers>
-                  <DataTrigger Binding="{Binding ShowContentKindChangeConfim}" Value="True">
+                  <DataTrigger Binding="{Binding ShowContentKindChangeConfirm}" Value="True">
                     <Setter Property="IsEnabled" Value="False" />
                   </DataTrigger>
-                  <DataTrigger Binding="{Binding ShowLinkChangeConfim}" Value="True">
+                  <DataTrigger Binding="{Binding ShowLinkChangeConfirm}" Value="True">
                     <Setter Property="IsEnabled" Value="False" />
                   </DataTrigger>
                 </Style.Triggers>
@@ -912,34 +912,34 @@
 
                           <Separator Grid.Column="2" />
 
-                          <RepeatButton Grid.Column="3" Command="{Binding ToggleSeletectionIncreaseFontSizeCommand}">
+                          <RepeatButton Grid.Column="3" Command="{Binding ToggleSelectionIncreaseFontSizeCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-IncreaseSize}" />
                           </RepeatButton>
-                          <RepeatButton Grid.Column="4" Command="{Binding ToggleSeletectionDecreaseFontSizeCommand}">
+                          <RepeatButton Grid.Column="4" Command="{Binding ToggleSelectionDecreaseFontSizeCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-DecreaseSize}" />
                           </RepeatButton>
 
                           <Separator Grid.Column="5" />
 
-                          <Button Grid.Column="6" Command="{Binding ToggleSeletectionSubscriptCommand}">
+                          <Button Grid.Column="6" Command="{Binding ToggleSelectionSubscriptCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Subscript}" />
                           </Button>
-                          <Button Grid.Column="7" Command="{Binding ToggleSeletectionSuperscriptCommand}">
+                          <Button Grid.Column="7" Command="{Binding ToggleSelectionSuperscriptCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Superscript}" />
                           </Button>
                         </Grid>
 
                         <StackPanel x:Name="baseSize" Grid.Row="1" Orientation="Horizontal">
-                          <Button Command="{Binding ToggleSeletectionBoldCommand}">
+                          <Button Command="{Binding ToggleSelectionBoldCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Bold}" />
                           </Button>
-                          <Button Command="{Binding ToggleSeletectionItalicCommand}">
+                          <Button Command="{Binding ToggleSelectionItalicCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Italic}" />
                           </Button>
-                          <Button Command="{Binding ToggleSeletectionUnderlineCommand}">
+                          <Button Command="{Binding ToggleSelectionUnderlineCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Underline}" />
                           </Button>
-                          <Button Command="{Binding ToggleSeletectionStrikeThroughCommand}">
+                          <Button Command="{Binding ToggleSelectionStrikeThroughCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-StrikeThrough}" />
                           </Button>
 
@@ -954,7 +954,7 @@
 
                           <Separator />
 
-                          <Button Command="{Binding ApplySeletectionForegroundColorCommand}">
+                          <Button Command="{Binding ApplySelectionForegroundColorCommand}">
                             <Grid>
                               <Border>
                                 <Border.Background>
@@ -969,7 +969,7 @@
                           </Button>
                           <app_views:ColorCanvas HasAlpha="False" SelectedColor="{Binding SelectionForegroundColor}" Style="{StaticResource NoteColorPicker}" />
 
-                          <Button Command="{Binding ApplySeletectionBackgroundColorCommand}">
+                          <Button Command="{Binding ApplySelectionBackgroundColorCommand}">
                             <Grid>
                               <Border>
                                 <Border.Background>
@@ -1250,7 +1250,7 @@
           <!--#endregion -->
 
           <!--#region コンテンツ種別変更があんまりよくないっていう問い合わせ-->
-          <Border d:IsHidden="True" Background="#88cccccc" Visibility="{Binding ShowContentKindChangeConfim, Converter={StaticResource BooleanToVisibilityConverter}}" Width="{Binding ActualWidth, ElementName=editGroup}">
+          <Border d:IsHidden="True" Background="#88cccccc" Visibility="{Binding ShowContentKindChangeConfirm, Converter={StaticResource BooleanToVisibilityConverter}}" Width="{Binding ActualWidth, ElementName=editGroup}">
             <Grid>
               <Grid.Resources>
                 <Style x:Key="CancelBackground" TargetType="Button">
@@ -1289,7 +1289,7 @@
           <!--#endregion -->
 
           <!--#region リンク状態表示 -->
-          <Border d:IsHidden="True"  Background="#88cccccc" Visibility="{Binding ShowLinkChangeConfim, Converter={StaticResource BooleanToVisibilityConverter}}" Width="{Binding ActualWidth, ElementName=editGroup}">
+          <Border d:IsHidden="True"  Background="#88cccccc" Visibility="{Binding ShowLinkChangeConfirm, Converter={StaticResource BooleanToVisibilityConverter}}" Width="{Binding ActualWidth, ElementName=editGroup}">
             <Grid>
               <Grid.Resources>
                 <Style x:Key="CancelBackground" TargetType="Button">

@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             foreach(var target in targets) {
                 if(!target.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
                     using(var readerPack = PluginContextFactory.BarrierRead()) {
-                        using var loadContext = PluginContextFactory.CreateLoadContex(target.PluginInformations, readerPack);
+                        using var loadContext = PluginContextFactory.CreateLoadContext(target.PluginInformation, readerPack);
                         target.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
                     }
                 }
@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public IReadOnlyList<PluginId> GetLauncherItemAddonIds()
         {
             return LauncherItemSupportAddons
-                .Select(i => i.PluginInformations.PluginIdentifiers.PluginId)
+                .Select(i => i.PluginInformation.PluginIdentifiers.PluginId)
                 .ToList()
             ;
         }
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public LauncherItemAddonProxy GetLauncherItemAddon(LauncherItemId launcherItemId, PluginId pluginId)
         {
             return LauncherItemAddonProxies.GetOrAdd(launcherItemId, (launcherItemId, pluginId) => {
-                var addon = LauncherItemSupportAddons.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
+                var addon = LauncherItemSupportAddons.FirstOrDefault(i => i.PluginInformation.PluginIdentifiers.PluginId == pluginId);
                 if(addon == null) {
                     throw new PluginNotFoundException($"{nameof(pluginId)}: {pluginId}");
                 }

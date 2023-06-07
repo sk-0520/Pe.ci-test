@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class PluginSettingRawValue
     {
-        public PluginSettingRawValue(PluginPersistentFormat format, string value)
+        public PluginSettingRawValue(PluginPersistenceFormat format, string value)
         {
             Format = format;
             Value = value;
@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region property
 
-        public PluginPersistentFormat Format { get; }
+        public PluginPersistenceFormat Format { get; }
         public string Value { get; }
 
         #endregion

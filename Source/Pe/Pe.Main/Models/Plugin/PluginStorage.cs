@@ -175,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
-    public enum PluginPersistentMode
+    public enum PluginPersistenceMode
     {
         /// <summary>
         /// 上流に影響される読み書き。
@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         LazyWriter,
     }
 
-    public abstract class PluginPersistentStorageBase: IPluginId
+    public abstract class PluginPersistenceStorageBase: IPluginId
     {
         #region define
 
@@ -228,7 +228,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="databaseStatementLoader"></param>
         /// <param name="isReadOnly">読み込み専用か。</param>
         /// <param name="loggerFactory"></param>
-        protected PluginPersistentStorageBase(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseContexts databaseContexts, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+        protected PluginPersistenceStorageBase(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseContexts databaseContexts, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -238,7 +238,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             DatabaseImplementation = databaseContexts.Implementation;
             IsReadOnly = isReadOnly;
             DatabaseStatementLoader = databaseStatementLoader;
-            Mode = PluginPersistentMode.Context;
+            Mode = PluginPersistenceMode.Context;
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="databaseStatementLoader"></param>
         /// <param name="isReadOnly">読み込み専用か。</param>
         /// <param name="loggerFactory"></param>
-        protected PluginPersistentStorageBase(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+        protected PluginPersistenceStorageBase(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -260,7 +260,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             DatabaseBarrier = databaseBarrier;
             IsReadOnly = isReadOnly;
             DatabaseStatementLoader = databaseStatementLoader;
-            Mode = PluginPersistentMode.Barrier;
+            Mode = PluginPersistenceMode.Barrier;
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="databaseLazyWriter"></param>
         /// <param name="databaseStatementLoader"></param>
         /// <param name="loggerFactory"></param>
-        protected PluginPersistentStorageBase(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        protected PluginPersistenceStorageBase(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -283,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             DatabaseLazyWriter = databaseLazyWriter;
             DatabaseStatementLoader = databaseStatementLoader;
             IsReadOnly = false;
-            Mode = PluginPersistentMode.LazyWriter;
+            Mode = PluginPersistenceMode.LazyWriter;
         }
 
         #region property
@@ -297,7 +297,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public string PluginName => PluginIdentifiers.PluginName;
         protected IPluginVersions PluginVersions { get; }
 
-        protected PluginPersistentMode Mode { get; }
+        protected PluginPersistenceMode Mode { get; }
         protected IDatabaseImplementation? DatabaseImplementation { get; }
         protected IDatabaseContext? DatabaseContext { get; }
         protected IDatabaseBarrier? DatabaseBarrier { get; }
@@ -321,18 +321,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected bool ExistsImpl<TParameter>(TParameter parameter, Func<TParameter, DatabaseParameter, bool> func)
         {
             switch(Mode) {
-                case PluginPersistentMode.Context: {
+                case PluginPersistenceMode.Context: {
                         Debug.Assert(DatabaseContext != null);
                         Debug.Assert(DatabaseImplementation != null);
 
                         return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(DatabaseContext, DatabaseImplementation), LoggerFactory));
                     }
 
-                case PluginPersistentMode.Barrier:
-                case PluginPersistentMode.LazyWriter: {
+                case PluginPersistenceMode.Barrier:
+                case PluginPersistenceMode.LazyWriter: {
                         Debug.Assert(DatabaseBarrier != null);
 
-                        if(Mode == PluginPersistentMode.LazyWriter) {
+                        if(Mode == PluginPersistenceMode.LazyWriter) {
                             Debug.Assert(DatabaseLazyWriter != null);
                             DatabaseLazyWriter.Flush();
                         }
@@ -349,7 +349,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         protected bool TryGetImpl<TValue, TParameter>(TParameter parameter, Func<TParameter, DatabaseParameter, PluginSettingRawValue?> func, [MaybeNullWhen(returnValue: false)] out TValue value)
         {
-            if(Mode == PluginPersistentMode.LazyWriter) {
+            if(Mode == PluginPersistenceMode.LazyWriter) {
                 // 遅延書き込み待機を終了
                 Debug.Assert(DatabaseLazyWriter != null);
                 DatabaseLazyWriter.Flush();
@@ -357,7 +357,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             PluginSettingRawValue? data;
             switch(Mode) {
-                case PluginPersistentMode.Context: {
+                case PluginPersistenceMode.Context: {
                         Debug.Assert(DatabaseContext != null);
                         Debug.Assert(DatabaseImplementation != null);
 
@@ -365,11 +365,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     }
                     break;
 
-                case PluginPersistentMode.Barrier:
-                case PluginPersistentMode.LazyWriter: {
+                case PluginPersistenceMode.Barrier:
+                case PluginPersistenceMode.LazyWriter: {
                         Debug.Assert(DatabaseBarrier != null);
 
-                        if(Mode == PluginPersistentMode.LazyWriter) {
+                        if(Mode == PluginPersistenceMode.LazyWriter) {
                             Debug.Assert(DatabaseLazyWriter != null);
                             DatabaseLazyWriter.Flush();
                         }
@@ -390,11 +390,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             }
 
             switch(data.Format) {
-                case PluginPersistentFormat.SimpleXml:
-                case PluginPersistentFormat.DataXml: {
+                case PluginPersistenceFormat.SimpleXml:
+                case PluginPersistenceFormat.DataXml: {
                         SerializerBase serializer = data.Format switch {
-                            PluginPersistentFormat.SimpleXml => new XmlSerializer(),
-                            PluginPersistentFormat.DataXml => new XmlDataContractSerializer(),
+                            PluginPersistenceFormat.SimpleXml => new XmlSerializer(),
+                            PluginPersistenceFormat.DataXml => new XmlDataContractSerializer(),
                             _ => throw new NotImplementedException(),
                         };
                         try {
@@ -410,7 +410,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                         }
                     }
 
-                case PluginPersistentFormat.Json: {
+                case PluginPersistenceFormat.Json: {
                         try {
                             value = JsonSerializer.Deserialize<TValue>(data.Value)!;
                             return true;
@@ -421,7 +421,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                         }
                     }
 
-                case PluginPersistentFormat.Text: {
+                case PluginPersistenceFormat.Text: {
                         if(typeof(TValue) != typeof(string)) {
                             Logger.LogWarning("文字列であるべきデータ: {0} -> {1}", nameof(value), typeof(TValue));
                             value = default;
@@ -437,7 +437,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             }
         }
 
-        protected bool SetImpl<TValue, TParameter>(TValue value, PluginPersistentFormat format, TParameter parameter, Action<TParameter, DatabaseParameter, PluginSettingRawValue> action)
+        protected bool SetImpl<TValue, TParameter>(TValue value, PluginPersistenceFormat format, TParameter parameter, Action<TParameter, DatabaseParameter, PluginSettingRawValue> action)
         {
             if(IsReadOnly) {
                 throw new InvalidOperationException(nameof(IsReadOnly));
@@ -451,11 +451,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             string textValue;
 
             switch(format) {
-                case PluginPersistentFormat.SimpleXml:
-                case PluginPersistentFormat.DataXml: {
+                case PluginPersistenceFormat.SimpleXml:
+                case PluginPersistenceFormat.DataXml: {
                         SerializerBase serializer = format switch {
-                            PluginPersistentFormat.SimpleXml => new XmlSerializer(),
-                            PluginPersistentFormat.DataXml => new XmlDataContractSerializer(),
+                            PluginPersistenceFormat.SimpleXml => new XmlSerializer(),
+                            PluginPersistenceFormat.DataXml => new XmlDataContractSerializer(),
                             _ => throw new NotImplementedException(),
                         };
                         try {
@@ -470,7 +470,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     }
                     break;
 
-                case PluginPersistentFormat.Json: {
+                case PluginPersistenceFormat.Json: {
                         try {
                             textValue = JsonSerializer.Serialize(value);
                         } catch(Exception ex) {
@@ -480,7 +480,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     }
                     break;
 
-                case PluginPersistentFormat.Text: {
+                case PluginPersistenceFormat.Text: {
                         if(typeof(TValue) != typeof(string)) {
                             Logger.LogWarning($"文字列であるべきデータ: {nameof(value)} -> {typeof(TValue)}");
                             textValue = value.ToString()! ?? string.Empty;
@@ -497,7 +497,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             var data = new PluginSettingRawValue(format, textValue);
 
             switch(Mode) {
-                case PluginPersistentMode.Context: {
+                case PluginPersistenceMode.Context: {
                         Debug.Assert(DatabaseContext != null);
                         Debug.Assert(DatabaseImplementation != null);
 
@@ -505,7 +505,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     }
                     break;
 
-                case PluginPersistentMode.Barrier: {
+                case PluginPersistenceMode.Barrier: {
                         Debug.Assert(DatabaseBarrier != null);
 
                         using(var context = DatabaseBarrier.WaitWrite()) {
@@ -515,7 +515,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     }
                     break;
 
-                case PluginPersistentMode.LazyWriter: {
+                case PluginPersistenceMode.LazyWriter: {
                         Debug.Assert(DatabaseLazyWriter != null);
 
                         DatabaseLazyWriter.Stock(c => {
@@ -537,21 +537,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 throw new InvalidOperationException(nameof(IsReadOnly));
             }
 
-            if(Mode == PluginPersistentMode.LazyWriter) {
+            if(Mode == PluginPersistenceMode.LazyWriter) {
                 // 遅延書き込み待機を終了
                 Debug.Assert(DatabaseLazyWriter != null);
                 DatabaseLazyWriter.Flush();
             }
 
             switch(Mode) {
-                case PluginPersistentMode.Context: {
+                case PluginPersistenceMode.Context: {
                         Debug.Assert(DatabaseContext != null);
                         Debug.Assert(DatabaseImplementation != null);
 
                         return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(DatabaseContext, DatabaseImplementation), LoggerFactory));
                     }
 
-                case PluginPersistentMode.Barrier: {
+                case PluginPersistenceMode.Barrier: {
                         Debug.Assert(DatabaseBarrier != null);
 
                         using(var context = DatabaseBarrier.WaitWrite()) {
@@ -561,7 +561,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                         }
                     }
 
-                case PluginPersistentMode.LazyWriter: {
+                case PluginPersistenceMode.LazyWriter: {
                         Debug.Assert(DatabaseLazyWriter != null);
 
                         DatabaseLazyWriter.Stock(c => {
@@ -586,21 +586,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
-    /// <inheritdoc cref="IPluginPersistentStorage"/>
-    public sealed class PluginPersistentStorage: PluginPersistentStorageBase, IPluginPersistentStorage
+    /// <inheritdoc cref="IPluginPersistenceStorage"/>
+    public sealed class PluginPersistenceStorage: PluginPersistenceStorageBase, IPluginPersistenceStorage
     {
-        /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseContexts, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseContexts databaseContexts, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+        /// <inheritdoc cref="PluginPersistenceStorageBase.PluginPersistenceStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseContexts, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
+        public PluginPersistenceStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseContexts databaseContexts, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
             : base(pluginIdentifiers, pluginVersions, databaseContexts, databaseStatementLoader, isReadOnly, loggerFactory)
         { }
 
-        /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+        /// <inheritdoc cref="PluginPersistenceStorageBase.PluginPersistenceStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
+        public PluginPersistenceStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
             : base(pluginIdentifiers, pluginVersions, databaseBarrier, databaseStatementLoader, isReadOnly, loggerFactory)
         { }
 
-        /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseLazyWriter, IDatabaseStatementLoader, ILoggerFactory)"/>
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        /// <inheritdoc cref="PluginPersistenceStorageBase.PluginPersistenceStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseLazyWriter, IDatabaseStatementLoader, ILoggerFactory)"/>
+        public PluginPersistenceStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(pluginIdentifiers, pluginVersions, databaseBarrier, databaseLazyWriter, databaseStatementLoader, loggerFactory)
         { }
 
@@ -613,18 +613,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #endregion
 
-        #region IPluginPersistentStorage
+        #region IPluginPersistenceStorage
 
-        /// <inheritdoc cref="IPluginPersistentStorage.Exists(string)"/>
+        /// <inheritdoc cref="IPluginPersistenceStorage.Exists(string)"/>
         public bool Exists(string key)
         {
             return ExistsImpl(key, (p, d) => {
                 var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
-                return pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, NormalizeKey(key));
+                return pluginSettingsEntityDao.SelectExistsPluginSetting(PluginId, NormalizeKey(key));
             });
         }
 
-        /// <inheritdoc cref="IPluginPersistentStorage.TryGet{TValue}(string, out TValue)"/>
+        /// <inheritdoc cref="IPluginPersistenceStorage.TryGet{TValue}(string, out TValue)"/>
         public bool TryGet<TValue>(string key, [MaybeNullWhen(returnValue: false)] out TValue value)
         {
             return TryGetImpl(key, (p, d) => {
@@ -633,23 +633,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             }, out value);
         }
 
-        /// <inheritdoc cref="IPluginPersistentStorage.Set{TValue}(string, TValue, PluginPersistentFormat)"/>
-        public bool Set<TValue>(string key, TValue value, PluginPersistentFormat format)
+        /// <inheritdoc cref="IPluginPersistenceStorage.Set{TValue}(string, TValue, PluginPersistenceFormat)"/>
+        public bool Set<TValue>(string key, TValue value, PluginPersistenceFormat format)
         {
             return SetImpl(value, format, key, (p, d, v) => {
                 var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
                 var normalizedKey = NormalizeKey(p);
-                if(pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, normalizedKey)) {
+                if(pluginSettingsEntityDao.SelectExistsPluginSetting(PluginId, normalizedKey)) {
                     pluginSettingsEntityDao.UpdatePluginSetting(PluginId, normalizedKey, v, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
                 } else {
                     pluginSettingsEntityDao.InsertPluginSetting(PluginId, normalizedKey, v, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
                 }
             });
         }
-        /// <inheritdoc cref="IPluginPersistentStorage.Set{TValue}(string, TValue)"/>
-        public bool Set<TValue>(string key, TValue value) => Set(key, value, PluginPersistentFormat.Json);
+        /// <inheritdoc cref="IPluginPersistenceStorage.Set{TValue}(string, TValue)"/>
+        public bool Set<TValue>(string key, TValue value) => Set(key, value, PluginPersistenceFormat.Json);
 
-        /// <inheritdoc cref="IPluginPersistentStorage.Delete(string)"/>
+        /// <inheritdoc cref="IPluginPersistenceStorage.Delete(string)"/>
         public bool Delete(string key)
         {
             return DeleteImpl(key, (p, d) => {
@@ -686,27 +686,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
-    /// <inheritdoc cref="IPluginPersistents"/>
-    public class PluginPersistents: IPluginPersistents
+    /// <inheritdoc cref="IPluginPersistence"/>
+    public class PluginPersistence: IPluginPersistence
     {
-        public PluginPersistents(PluginPersistentStorage normal, PluginPersistentStorage large, PluginPersistentStorage temporary)
+        public PluginPersistence(PluginPersistenceStorage normal, PluginPersistenceStorage large, PluginPersistenceStorage temporary)
         {
             Normal = normal;
             Large = large;
             Temporary = temporary;
         }
 
-        #region IPluginPersistent
+        #region IPluginPersistence
 
-        /// <inheritdoc cref="IPluginPersistents.Normal"/>
-        public PluginPersistentStorage Normal { get; }
-        IPluginPersistentStorage IPluginPersistents.Normal => Normal;
-        /// <inheritdoc cref="IPluginPersistents.Large"/>
-        public PluginPersistentStorage Large { get; }
-        IPluginPersistentStorage IPluginPersistents.Large => Large;
-        /// <inheritdoc cref="IPluginPersistents.Temporary"/>
-        public PluginPersistentStorage Temporary { get; }
-        IPluginPersistentStorage IPluginPersistents.Temporary => Temporary;
+        /// <inheritdoc cref="IPluginPersistence.Normal"/>
+        public PluginPersistenceStorage Normal { get; }
+        IPluginPersistenceStorage IPluginPersistence.Normal => Normal;
+        /// <inheritdoc cref="IPluginPersistence.Large"/>
+        public PluginPersistenceStorage Large { get; }
+        IPluginPersistenceStorage IPluginPersistence.Large => Large;
+        /// <inheritdoc cref="IPluginPersistence.Temporary"/>
+        public PluginPersistenceStorage Temporary { get; }
+        IPluginPersistenceStorage IPluginPersistence.Temporary => Temporary;
 
         #endregion
     }
@@ -714,10 +714,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginStorage"/>
     public class PluginStorage: IPluginStorage
     {
-        public PluginStorage(PluginFiles file, PluginPersistents persistent)
+        public PluginStorage(PluginFiles file, PluginPersistence persistence)
         {
             File = file;
-            Persistent = persistent;
+            Persistence = persistence;
         }
 
         #region IPluginStorage
@@ -725,9 +725,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <inheritdoc cref="IPluginStorage.File"/>
         public PluginFiles File { get; }
         IPluginFiles IPluginStorage.File => File;
-        /// <inheritdoc cref="IPluginStorage.Persistent"/>
-        public PluginPersistents Persistent { get; }
-        IPluginPersistents IPluginStorage.Persistent => Persistent;
+        /// <inheritdoc cref="IPluginStorage.Persistence"/>
+        public PluginPersistence Persistence { get; }
+        IPluginPersistence IPluginStorage.Persistence => Persistence;
 
         #endregion
     }

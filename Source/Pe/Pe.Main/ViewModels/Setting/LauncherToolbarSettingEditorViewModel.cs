@@ -15,7 +15,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class LauncherToobarSettingEditorViewModel: SettingItemViewModelBase<LauncherToobarSettingEditorElement>
+    public class LauncherToolbarSettingEditorViewModel: SettingItemViewModelBase<LauncherToolbarSettingEditorElement>
     {
         #region variable
 
@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public LauncherToobarSettingEditorViewModel(LauncherToobarSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> allLauncherGroups, Func<bool> isSelectedGetter, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherToolbarSettingEditorViewModel(LauncherToolbarSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> allLauncherGroups, Func<bool> isSelectedGetter, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             AllLauncherGroups = allLauncherGroups;

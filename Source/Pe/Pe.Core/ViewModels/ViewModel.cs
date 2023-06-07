@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             WeakDisposing = new WeakEvent<EventArgs>(nameof(Disposing));
 
             if(cacheProperty) {
-                PropertyCacher = new ConcurrentDictionary<object, PropertyCacher>();
+                CachedProperty = new ConcurrentDictionary<object, CachedProperty>();
             }
         }
 
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// <summary>
         /// プロパティアクセス処理キャッシュ。
         /// </summary>
-        private ConcurrentDictionary<object, PropertyCacher>? PropertyCacher { get; }
+        private ConcurrentDictionary<object, CachedProperty>? CachedProperty { get; }
 
         /// <summary>
         /// プロパティ変更時のイベントキャッシュ。
@@ -119,26 +119,26 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             ThrowIfDisposed();
 
             PropertyInfo? propertyInfo = null;
-            PropertyCacher? propertyCacher = null;
+            CachedProperty? cachedProperty = null;
             object? nowValue;
 
-            if(PropertyCacher is null) {
+            if(CachedProperty is null) {
                 var type = obj.GetType();
                 propertyInfo = type.GetProperty(targetMemberName);
                 Debug.Assert(propertyInfo != null);
 
                 nowValue = propertyInfo.GetValue(obj);
             } else {
-                propertyCacher = PropertyCacher.GetOrAdd(obj, o => new PropertyCacher(o));
+                cachedProperty = CachedProperty.GetOrAdd(obj, o => new CachedProperty(o));
 
-                nowValue = propertyCacher.Get(targetMemberName);
+                nowValue = cachedProperty.Get(targetMemberName);
             }
 
             if(!Equals(nowValue, value)) {
-                if(PropertyCacher is null) {
+                if(CachedProperty is null) {
                     propertyInfo!.SetValue(obj, value);
                 } else {
-                    propertyCacher!.Set(targetMemberName, value);
+                    cachedProperty!.Set(targetMemberName, value);
                 }
 
                 var e = PropertyChangedEventArgsCache.GetOrAdd(notifyPropertyName, s => new PropertyChangedEventArgs(s));
@@ -283,12 +283,12 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
         }
 
-        private bool HasChildrenErros()
+        private bool HasChildrenErrors()
         {
             ThrowIfDisposed();
 
             var v = GetValidationItems();
-            var result = v.childViewModels.Any(i => i.HasErrors || i.HasChildrenErros());
+            var result = v.childViewModels.Any(i => i.HasErrors || i.HasChildrenErrors());
             return result;
         }
 
@@ -310,20 +310,20 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         {
             ThrowIfDisposed();
 
-            if(HasErrors || HasChildrenErros()) {
+            if(HasErrors || HasChildrenErrors()) {
                 return false;
             }
 
             ValidateAllProperty();
 
-            if(HasErrors || HasChildrenErros()) {
+            if(HasErrors || HasChildrenErrors()) {
                 return false;
             }
 
             ClearAllErrors();
             ValidateAllDomain();
 
-            return !HasErrors && !HasChildrenErros();
+            return !HasErrors && !HasChildrenErrors();
         }
 
         protected void ClearError([CallerMemberName] string propertyName = "")
@@ -427,8 +427,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             WeakDisposing.Raise(this, EventArgs.Empty);
 
-            if(PropertyCacher is not null) {
-                PropertyCacher.Clear();
+            if(CachedProperty is not null) {
+                CachedProperty.Clear();
             }
 
             ErrorsContainer.ClearErrors();

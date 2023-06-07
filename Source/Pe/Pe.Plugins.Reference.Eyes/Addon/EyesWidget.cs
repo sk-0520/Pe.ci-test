@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
 {
     internal class EyesWidget: IWidget
     {
-        public EyesWidget(IAddonParameter parameter, IPluginInformations pluginInformations)
+        public EyesWidget(IAddonParameter parameter, IPluginInformation pluginInformations)
         {
             LoggerFactory = parameter.LoggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
         private IAddonExecutor AddonExecutor { get; }
         private IDispatcherWrapper DispatcherWrapper { get; }
         private ISkeletonImplements SkeletonImplements { get; }
-        private IPluginInformations PluginInformations { get; }
+        private IPluginInformation PluginInformations { get; }
 
         private EyesWidgetWindow? WidgetView { get; set; }
         private EyesWidgetViewModel? ViewModel { get; set; }

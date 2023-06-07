@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
         {
             Debug.Assert(Setting == null);
 
-            if(!preferencesLoadContext.Storage.Persistent.Normal.TryGet<ClockLauncherItemSetting>(LauncherItemId, string.Empty, out var value)) {
+            if(!preferencesLoadContext.Storage.Persistence.Normal.TryGet<ClockLauncherItemSetting>(LauncherItemId, string.Empty, out var value)) {
                 value = new ClockLauncherItemSetting();
             }
 
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
         public override void SavePreferences(ILauncherItemPreferencesSaveContext preferencesSaveContext)
         {
             Debug.Assert(Setting != null);
-            preferencesSaveContext.Storage.Persistent.Normal.Set(LauncherItemId, string.Empty, Setting);
+            preferencesSaveContext.Storage.Persistence.Normal.Set(LauncherItemId, string.Empty, Setting);
         }
 
         public override void EndPreferences(ILauncherItemPreferencesEndContext preferencesEndContext)

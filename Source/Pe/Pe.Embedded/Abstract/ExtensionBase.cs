@@ -31,8 +31,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region IPlugin
 
-        /// <inheritdoc cref="IPluginInformations"/>
-        public IPluginInformations PluginInformations => Plugin.PluginInformations;
+        /// <inheritdoc cref="IPluginInformation"/>
+        public IPluginInformation PluginInformation => Plugin.PluginInformation;
 
         /// <inheritdoc cref="IPlugin.IsInitialized"/>
         public bool IsInitialized => Plugin.IsInitialized;

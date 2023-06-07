@@ -10,21 +10,22 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class LauncherToobarsSettingEditorViewModel: SettingEditorViewModelBase<LauncherToobarsSettingEditorElement>
+    public class LauncherToolbarsSettingEditorViewModel: SettingEditorViewModelBase<LauncherToolbarsSettingEditorElement>
     {
         #region variable
 
-        private LauncherToobarSettingEditorViewModel? _selectedToolbar;
+        private LauncherToolbarSettingEditorViewModel? _selectedToolbar;
 
         #endregion
-        public LauncherToobarsSettingEditorViewModel(LauncherToobarsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> allLauncherGroupCollection, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+
+        public LauncherToolbarsSettingEditorViewModel(LauncherToolbarsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> allLauncherGroupCollection, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             AllLauncherGroupCollection = allLauncherGroupCollection;
             AllLauncherGroupItems = AllLauncherGroupCollection.CreateView();
             GeneralTheme = generalTheme;
-            ToolbarCollection = new ActionModelViewModelObservableCollectionManager<LauncherToobarSettingEditorElement, LauncherToobarSettingEditorViewModel>(Model.Toolbars) {
-                ToViewModel = m => new LauncherToobarSettingEditorViewModel(m, AllLauncherGroupCollection, () => IsSelected, GeneralTheme, DispatcherWrapper, LoggerFactory),
+            ToolbarCollection = new ActionModelViewModelObservableCollectionManager<LauncherToolbarSettingEditorElement, LauncherToolbarSettingEditorViewModel>(Model.Toolbars) {
+                ToViewModel = m => new LauncherToolbarSettingEditorViewModel(m, AllLauncherGroupCollection, () => IsSelected, GeneralTheme, DispatcherWrapper, LoggerFactory),
             };
             ToolbarItems = ToolbarCollection.GetDefaultView();
         }
@@ -36,10 +37,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> AllLauncherGroupCollection { get; }
         public ICollectionView AllLauncherGroupItems { get; }
 
-        private ModelViewModelObservableCollectionManagerBase<LauncherToobarSettingEditorElement, LauncherToobarSettingEditorViewModel> ToolbarCollection { get; }
+        private ModelViewModelObservableCollectionManagerBase<LauncherToolbarSettingEditorElement, LauncherToolbarSettingEditorViewModel> ToolbarCollection { get; }
         public ICollectionView ToolbarItems { get; }
 
-        public LauncherToobarSettingEditorViewModel? SelectedToolbar
+        public LauncherToolbarSettingEditorViewModel? SelectedToolbar
         {
             get => this._selectedToolbar;
             set => SetProperty(ref this._selectedToolbar, value);

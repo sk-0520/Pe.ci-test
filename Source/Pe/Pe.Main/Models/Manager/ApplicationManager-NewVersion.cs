@@ -222,8 +222,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
 
                 var scriptFactory = ApplicationDiContainer.Build<ApplicationUpdateScriptFactory>();
-                var exeutePathParameter = scriptFactory.CreateUpdateExecutePathParameter(environmentParameters.EtcUpdateScriptFile, environmentParameters.TemporaryDirectory, environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.RootDirectory);
-                ApplicationUpdateInfo.Path = exeutePathParameter;
+                var executePathParameter = scriptFactory.CreateUpdateExecutePathParameter(environmentParameters.EtcUpdateScriptFile, environmentParameters.TemporaryDirectory, environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.RootDirectory);
+                ApplicationUpdateInfo.Path = executePathParameter;
                 ApplicationUpdateInfo.State = NewVersionState.Ready;
 
                 // アップデートアーカイブのローテート

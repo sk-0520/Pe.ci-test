@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             this._isTopmost = model.IsTopmost;
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.PreparatedReceive), AttachReceiver);
+            PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.PreparedReceive), AttachReceiver);
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), nameof(ProcessExited));
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), ClearOutputCommand);
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), SendInputCommand);
@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         public FontViewModel Font { get; }
 
-        public ObservableCollection<StandardInputOutputHistoryViewModel> InputedHistories { get; } = new ObservableCollection<StandardInputOutputHistoryViewModel>();
+        public ObservableCollection<StandardInputOutputHistoryViewModel> InputtedHistories { get; } = new ObservableCollection<StandardInputOutputHistoryViewModel>();
 
         public string Title
         {
@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         public Brush StandardOutputBackground => new SolidColorBrush(Model.OutputBackgroundColor);
         public Brush StandardOutputForeground => new SolidColorBrush(Model.OutputForegroundColor);
-        public Brush StandardErrorForegound => new SolidColorBrush(Model.ErrorForegroundColor);
+        public Brush StandardErrorForeground => new SolidColorBrush(Model.ErrorForegroundColor);
         private StandardOutputColorizingTransformer? StandardOutputColorizingTransformer { get; set; }
 
         #endregion
@@ -184,11 +184,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 Logger.LogDebug("add: " + rawValue);
                 // 入力履歴
                 var element = new StandardInputOutputHistoryViewModel(rawValue, DateTime.UtcNow, LoggerFactory);
-                var item = InputedHistories.FirstOrDefault(i => i.Value == rawValue);
+                var item = InputtedHistories.FirstOrDefault(i => i.Value == rawValue);
                 if(item != null) {
-                    InputedHistories.Remove(item);
+                    InputtedHistories.Remove(item);
                 }
-                InputedHistories.Insert(0, element);
+                InputtedHistories.Insert(0, element);
             },
             () => !ProcessExited
         ));
@@ -205,11 +205,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         private void AttachReceiver()
         {
-            if(Model.PreparatedReceive && Model.OutputStreamReceiver != null) {
+            if(Model.PreparedReceive && Model.OutputStreamReceiver != null) {
                 Model.OutputStreamReceiver.StreamReceived -= OutputStreamReceiver_StreamReceived;
                 Model.OutputStreamReceiver.StreamReceived += OutputStreamReceiver_StreamReceived;
             }
-            if(Model.PreparatedReceive && Model.ErrorStreamReceiver != null) {
+            if(Model.PreparedReceive && Model.ErrorStreamReceiver != null) {
                 Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
                 Model.ErrorStreamReceiver.StreamReceived += ErrorStreamReceiver_StreamReceived;
             }
@@ -251,7 +251,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                     var lastLine = TextDocument.Lines.Last<DocumentLine>();
                     var lastEndOffset = lastLine.EndOffset;
                     if(StandardOutputColorizingTransformer == null) {
-                        StandardOutputColorizingTransformer = new StandardOutputColorizingTransformer(StandardErrorForegound);
+                        StandardOutputColorizingTransformer = new StandardOutputColorizingTransformer(StandardErrorForeground);
                         Terminal.TextArea.TextView.LineTransformers.Add(StandardOutputColorizingTransformer);
                     }
                     StandardOutputColorizingTransformer.Add(prevEndOffset, lastEndOffset);

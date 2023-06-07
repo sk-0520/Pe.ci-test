@@ -52,11 +52,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private bool _titleEditMode;
         private string? _editingTile;
 
-        private bool _showContentKindChangeConfim;
+        private bool _showContentKindChangeConfirm;
         private NoteContentKind _changingContentKind;
         private NoteContentViewModelBase? _content;
 
-        private bool _showLinkChangeConfim;
+        private bool _showLinkChangeConfirm;
         private bool _isPopupRemoveNote;
 
         private bool _windowMoving = false;
@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private IClipboardManager ClipboardManager { get; }
         private PropertyChangedHooker PropertyChangedHooker { get; }
 
-        private IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
+        private IDpiScaleOutpour DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutpour();
         private FrameworkElement? CaptionElement { get; set; }
         private IDisposable? WindowHandleSource { get; set; }
 
@@ -335,7 +335,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 if(!Model.CanChangeContentKind(value)) {
                     // 単純変換が出来ない場合はあれやこれや頑張る
                     ChangingContentKind = value;
-                    ShowContentKindChangeConfim = true;
+                    ShowContentKindChangeConfirm = true;
                 } else {
                     // 変換するがユーザー選択は不要
                     Model.ConvertContentKind(value);
@@ -459,13 +459,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set => SetProperty(ref this._changingContentKind, value);
         }
 
-        public bool ShowContentKindChangeConfim
+        public bool ShowContentKindChangeConfirm
         {
-            get => this._showContentKindChangeConfim;
+            get => this._showContentKindChangeConfirm;
             set
             {
-                SetProperty(ref this._showContentKindChangeConfim, value);
-                if(ShowContentKindChangeConfim) {
+                SetProperty(ref this._showContentKindChangeConfirm, value);
+                if(ShowContentKindChangeConfirm) {
                     RaisePropertyChanged(nameof(ChangingContentKindMessage));
                 }
             }
@@ -486,10 +486,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public bool ShowLinkChangeConfim
+        public bool ShowLinkChangeConfirm
         {
-            get => this._showLinkChangeConfim;
-            private set => SetProperty(ref this._showLinkChangeConfim, value);
+            get => this._showLinkChangeConfirm;
+            private set => SetProperty(ref this._showLinkChangeConfirm, value);
         }
 
         #endregion
@@ -556,13 +556,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 Flush();
 
                 Model.ConvertContentKind(ChangingContentKind);
-                ShowContentKindChangeConfim = false;
+                ShowContentKindChangeConfirm = false;
             }
         ));
 
         public ICommand ContentKindChangeCancelCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                ShowContentKindChangeConfim = false;
+                ShowContentKindChangeConfirm = false;
             }
         ));
 
@@ -585,13 +585,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public ICommand LinkChangeCancelCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                ShowLinkChangeConfim = false;
+                ShowLinkChangeConfirm = false;
             }
         ));
 
         public ICommand LinkChangeCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                ShowLinkChangeConfim = true;
+                ShowLinkChangeConfirm = true;
             }
         ));
         public ICommand UnlinkCommand => GetOrCreateCommand(() => new DelegateCommand(
@@ -611,7 +611,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 }
                 RaisePropertyChanged(nameof(IsLink));
                 RaisePropertyChanged(nameof(LinkPath));
-                ShowLinkChangeConfim = false;
+                ShowLinkChangeConfirm = false;
             },
             () => IsLink
         ).ObservesProperty(() => IsLink));
@@ -621,7 +621,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 Model.Unlink(true);
                 RaisePropertyChanged(nameof(IsLink));
                 RaisePropertyChanged(nameof(LinkPath));
-                ShowLinkChangeConfim = false;
+                ShowLinkChangeConfirm = false;
             },
             () => IsLink
         ).ObservesProperty(() => IsLink));
@@ -641,7 +641,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                         RaisePropertyChanged(nameof(LinkPath));
                     }
                 });
-                ShowLinkChangeConfim = false;
+                ShowLinkChangeConfirm = false;
             },
             () => !IsLink
         ).ObservesProperty(() => IsLink));
@@ -659,7 +659,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                         RaisePropertyChanged(nameof(LinkPath));
                     }
                 });
-                ShowLinkChangeConfim = false;
+                ShowLinkChangeConfirm = false;
             },
             () => !IsLink
         ).ObservesProperty(() => IsLink));
@@ -677,7 +677,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
                 }
-                ShowLinkChangeConfim = false;
+                ShowLinkChangeConfirm = false;
             }
         ));
 
@@ -1069,7 +1069,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private ColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
 
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             switch(msg) {
                 case (int)WM.WM_NCHITTEST: {
@@ -1232,7 +1232,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             CaptionElement = ((NoteWindow)window).inputTitle;
 
-            DpiScaleOutputor = (IDpiScaleOutputor)window;
+            DpiScaleOutputor = (IDpiScaleOutpour)window;
 
             var layoutValue = GetOrCreateLayout(Model.StartupPosition);
             if(layoutValue.isCreated) {
@@ -1344,11 +1344,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private void Window_Deactivated(object? sender, EventArgs e)
         {
-            if(ShowContentKindChangeConfim) {
-                ShowContentKindChangeConfim = false;
+            if(ShowContentKindChangeConfirm) {
+                ShowContentKindChangeConfirm = false;
             }
-            if(ShowLinkChangeConfim) {
-                ShowLinkChangeConfim = false;
+            if(ShowLinkChangeConfirm) {
+                ShowLinkChangeConfirm = false;
             }
         }
     }

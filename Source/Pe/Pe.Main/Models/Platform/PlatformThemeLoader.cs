@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             ChangedWeakEvent.Raise(this, EventArgs.Empty);
         }
 
-        public void WndProc_WM_DWMCOLORIZATIONCOLORCHANGED(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        public void WndProc_WM_DWMCOLORIZATIONCOLORCHANGED(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             Logger.LogTrace("WM_DWMCOLORIZATIONCOLORCHANGED");
             var rawColor = (uint)wParam.ToInt64();
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             handled = true;
         }
 
-        public void WndProc_WM_SETTINGCHANGE(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        public void WndProc_WM_SETTINGCHANGE(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             var lParamMessage = Marshal.PtrToStringAuto(lParam);
             if(lParamMessage == "ImmersiveColorSet") {

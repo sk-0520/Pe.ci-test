@@ -85,10 +85,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         public void ExecuteTest_Simple(string[] args, char shortKey, string longKey, string expected)
         {
             var commandLine = new CommandLine(args, false);
-            var commanadKey = commandLine.Add(shortKey, longKey, true);
+            var commandKey = commandLine.Add(shortKey, longKey, true);
 
             Assert.IsTrue(commandLine.Parse());
-            var value = commandLine.Values[commanadKey];
+            var value = commandLine.Values[commandKey];
             Assert.IsTrue(value.First == expected);
         }
 
@@ -100,10 +100,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         public void ExecuteTest_Switch(string[] args, char shortKey, string longKey, bool expected)
         {
             var commandLine = new CommandLine(args, false);
-            var commanadKey = commandLine.Add(shortKey, longKey, false);
+            var commandKey = commandLine.Add(shortKey, longKey, false);
 
             Assert.IsTrue(commandLine.Parse());
-            var has = commandLine.Switches.Contains(commanadKey);
+            var has = commandLine.Switches.Contains(commandKey);
             Assert.IsTrue(has == expected);
         }
 

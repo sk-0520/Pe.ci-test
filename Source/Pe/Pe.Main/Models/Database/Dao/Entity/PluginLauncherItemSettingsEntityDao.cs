@@ -48,10 +48,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         private PluginSettingRawValue ConvertFromDto(PluginLauncherItemSettingDto dto)
         {
-            var pluginPersistentFormatTransfer = new EnumTransfer<PluginPersistentFormat>();
+            var pluginPersistenceFormatTransfer = new EnumTransfer<PluginPersistenceFormat>();
 
             var data = new PluginSettingRawValue(
-                pluginPersistentFormatTransfer.ToEnum(dto.DataType),
+                pluginPersistenceFormatTransfer.ToEnum(dto.DataType),
                 dto.DataValue
             );
             return data;
@@ -59,13 +59,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         private PluginLauncherItemSettingDto ConvertFromData(PluginId pluginId, LauncherItemId launcherItemId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var pluginPersistentFormatTransfer = new EnumTransfer<PluginPersistentFormat>();
+            var pluginPersistenceFormatTransfer = new EnumTransfer<PluginPersistenceFormat>();
 
             var dto = new PluginLauncherItemSettingDto() {
                 PluginId = pluginId,
                 LauncherItemId = launcherItemId,
                 PluginSettingKey = key,
-                DataType = pluginPersistentFormatTransfer.ToString(data.Format),
+                DataType = pluginPersistenceFormatTransfer.ToString(data.Format),
                 DataValue = data.Value,
             };
             databaseCommonStatus.WriteCommonTo(dto);
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-        public bool SelecteExistsPluginLauncherItemSetting(PluginId pluginId, LauncherItemId launcherItemId, string key)
+        public bool SelectExistsPluginLauncherItemSetting(PluginId pluginId, LauncherItemId launcherItemId, string key)
         {
             var statement = LoadStatement();
             var parameter = new PluginLauncherItemSettingDto() {

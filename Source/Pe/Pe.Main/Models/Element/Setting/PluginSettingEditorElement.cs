@@ -47,12 +47,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var appPluginIds = new[] {
                 DefaultTheme.Informations.PluginIdentifiers.PluginId
             };
-            CanUninstall = !appPluginIds.Any(i => i == Plugin?.PluginInformations.PluginIdentifiers.PluginId);
+            CanUninstall = !appPluginIds.Any(i => i == Plugin?.PluginInformation.PluginIdentifiers.PluginId);
 
             if(CanUninstall) {
                 using(var context = MainDatabaseBarrier.WaitRead()) {
                     var pluginsEntityDao = new PluginsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                    var data = pluginsEntityDao.SelectePlguinStateDataByPLuginId(PluginId);
+                    var data = pluginsEntityDao.SelectPluginStateDataByPluginId(PluginId);
                     if(data != null) {
                         MarkedUninstall = data.State == Data.PluginState.Uninstall;
                     }
@@ -109,9 +109,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             UserControl result;
             using(var reader = PreferencesContextFactory.BarrierRead()) {
-                using var context = PreferencesContextFactory.CreateLoadContext(Plugin.PluginInformations, reader);
+                using var context = PreferencesContextFactory.CreatePreferencesLoadContext(Plugin.PluginInformation, reader);
                 var skeleton = new SkeletonImplements();
-                var parameter = new PreferencesParameter(skeleton, Plugin.PluginInformations, UserAgentFactory, ViewManager, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
+                var parameter = new PreferencesParameter(skeleton, Plugin.PluginInformation, UserAgentFactory, ViewManager, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
                 result = Preferences.BeginPreferences(context, parameter);
             }
             StartedPreferences = true;
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             bool hasError;
             using(var reader = PreferencesContextFactory.BarrierRead()) {
-                using var context = PreferencesContextFactory.CreateCheckContext(Plugin.PluginInformations, reader);
+                using var context = PreferencesContextFactory.CreateCheckContext(Plugin.PluginInformation, reader);
                 Preferences.CheckPreferences(context);
                 hasError = context.HasError;
             }
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(StartedPreferences);
             Debug.Assert(Plugin != null);
 
-            using var context = PreferencesContextFactory.CreateSaveContext(Plugin.PluginInformations, databaseContextsPack);
+            using var context = PreferencesContextFactory.CreateSaveContext(Plugin.PluginInformation, databaseContextsPack);
             Preferences.SavePreferences(context);
         }
 
@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             // NOTE: 多分ここじゃなくて別んところで呼び出すべき
 
             using(var reader = PreferencesContextFactory.BarrierRead()) {
-                using var context = PreferencesContextFactory.CreateEndContext(Plugin.PluginInformations, reader);
+                using var context = PreferencesContextFactory.CreateEndContext(Plugin.PluginInformation, reader);
                 Preferences.EndPreferences(context);
             }
         }
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
             if(Plugin != null) {
-                PluginVersion = Plugin.PluginInformations.PluginVersions.PluginVersion;
+                PluginVersion = Plugin.PluginInformation.PluginVersions.PluginVersion;
             } else {
                 var pluginVersion = MainDatabaseBarrier.ReadData(c => {
                     var pluginsEntityDao = new PluginsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);

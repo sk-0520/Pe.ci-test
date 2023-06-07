@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
     /// <summary>
     /// NotifyLogWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class NotifyLogWindow: Window, IDpiScaleOutputor
+    public partial class NotifyLogWindow: Window, IDpiScaleOutpour
     {
         public NotifyLogWindow()
         {

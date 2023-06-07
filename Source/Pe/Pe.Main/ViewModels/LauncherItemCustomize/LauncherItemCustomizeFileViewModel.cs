@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public ICommand LauncherFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
-                var exeExts = environmentExecuteFile.GetSystemExecuteExtensions(true);
+                var exeExtensions = environmentExecuteFile.GetSystemExecuteExtensions(true);
 
                 var dialogRequester = new DialogRequester(LoggerFactory);
                 dialogRequester.SelectFile(
@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     dialogRequester.ExpandPath(Path),
                     true,
                     new[] {
-                        new DialogFilterItem("exe", exeExts.First(), exeExts),
+                        new DialogFilterItem("exe", exeExtensions.First(), exeExtensions),
                         dialogRequester.CreateAllFilter(),
                     },
                     r => {

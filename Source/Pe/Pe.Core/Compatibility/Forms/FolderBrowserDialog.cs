@@ -81,16 +81,16 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         /// <inheritdoc cref="WinForms.CommonDialog.ShowDialog"/>
         public bool? ShowDialog()
         {
-            var compatibleresult = Dialog.ShowDialog();
-            return compatibleresult == WinForms.DialogResult.OK;
+            var compatibleResult = Dialog.ShowDialog();
+            return compatibleResult == WinForms.DialogResult.OK;
         }
 
         /// <inheritdoc cref="WinForms.CommonDialog.ShowDialog(WinForms.IWin32Window)"/>
         public bool? ShowDialog(Window owner)
         {
             var form = new CompatibleFormWindow(owner);
-            var compatibleresult = Dialog.ShowDialog(form);
-            return compatibleresult == WinForms.DialogResult.OK;
+            var compatibleResult = Dialog.ShowDialog(form);
+            return compatibleResult == WinForms.DialogResult.OK;
         }
 
         #endregion

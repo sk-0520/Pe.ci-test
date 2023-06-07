@@ -56,9 +56,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         /// <returns>*.ext の配列(<paramref name="addWildcard"/>が真の場合。偽なら * はつかない)</returns>
         public IReadOnlyList<string> GetSystemExecuteExtensions(bool addWildcard)
         {
-            var dotExeExts = Environment.GetEnvironmentVariable("PATHEXT");
-            if(!string.IsNullOrEmpty(dotExeExts)) {
-                var result = dotExeExts
+            var dotExeExtensions = Environment.GetEnvironmentVariable("PATHEXT");
+            if(!string.IsNullOrEmpty(dotExeExtensions)) {
+                var result = dotExeExtensions
                     .Split(';')
                     .Where(i => ".X".Length <= i.Length)
                     .Where(i => i[0] == '.')
@@ -88,12 +88,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                 return new List<EnvironmentPathExecuteItem>();
             }
 
-            var rawExts = GetSystemExecuteExtensions(false)
+            var rawExtensions = GetSystemExecuteExtensions(false)
                 .Select(i => i.Substring(1))
                 .Select(i => $"({Regex.Escape(i)})")
             ;
 
-            var extRegex = new Regex(@".*\." + string.Join("|", rawExts) + "$");
+            var extRegex = new Regex(@".*\." + string.Join("|", rawExtensions) + "$");
             var dirPaths = path
                 .Split(';')
                 .Where(i => !string.IsNullOrWhiteSpace(i))

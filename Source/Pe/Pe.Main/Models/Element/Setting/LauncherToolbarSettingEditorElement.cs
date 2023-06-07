@@ -15,9 +15,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public class LauncherToobarSettingEditorElement: ElementBase, ILauncherToolbarId
+    public class LauncherToolbarSettingEditorElement: ElementBase, ILauncherToolbarId
     {
-        public LauncherToobarSettingEditorElement(LauncherToolbarId launcherToolbarId, ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory) : base(loggerFactory)
+        public LauncherToolbarSettingEditorElement(LauncherToolbarId launcherToolbarId, ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory) : base(loggerFactory)
         {
             LauncherToolbarId = launcherToolbarId;
             AllLauncherGroups = allLauncherGroups;
@@ -52,13 +52,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #endregion
 
         #region function
-
-        public void Save(IDatabaseContextsPack commadPack)
+        
+        public void Save(IDatabaseContextsPack commandPack)
         {
             Debug.Assert(Font != null);
 
-            var fontsEntityDao = new FontsEntityDao(commadPack.Main.Context, DatabaseStatementLoader, commadPack.Main.Implementation, LoggerFactory);
-            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commadPack.CommonStatus);
+            var fontsEntityDao = new FontsEntityDao(commandPack.Main.Context, DatabaseStatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commandPack.CommonStatus);
 
             var defaultLauncherGroupId = LauncherGroupId;
             if(defaultLauncherGroupId != LauncherGroupId.Empty) {
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 }
             }
 
-            var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commadPack.Main.Context, DatabaseStatementLoader, commadPack.Main.Implementation, LoggerFactory);
+            var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commandPack.Main.Context, DatabaseStatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new LauncherToolbarsDisplayData() {
                 LauncherToolbarId = LauncherToolbarId,
                 FontId = Font.FontId,
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 IsAutoHide = IsAutoHide,
                 IsIconOnly = IsIconOnly,
             };
-            launcherToolbarsEntityDao.UpdateDisplayData(data, commadPack.CommonStatus);
+            launcherToolbarsEntityDao.UpdateDisplayData(data, commandPack.CommonStatus);
         }
 
         #endregion

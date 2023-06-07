@@ -254,8 +254,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 CanCopyParentDirectory = !PathUtility.IsRootName(Detail.FullPath);
 
                 if(ExistsWorkingDirectory && parentDirectoryPath is not null) {
-                    var expantedParentDirectoryPath = Environment.ExpandEnvironmentVariables(parentDirectoryPath);
-                    CanOpenWorkingDirectory = !PathUtility.IsEquals(workingDirectoryPath, expantedParentDirectoryPath);
+                    var expandedParentDirectoryPath = Environment.ExpandEnvironmentVariables(parentDirectoryPath);
+                    CanOpenWorkingDirectory = !PathUtility.IsEquals(workingDirectoryPath, expandedParentDirectoryPath);
                 }
             });
         }

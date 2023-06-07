@@ -311,11 +311,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             logger.LogInformation("初回セットアップ");
 
             // 初回セットアップに来ている場合既に存在するデータファイルは狂っている可能性があるので破棄する
-            var deleteTartgetFiles = new[] {
+            var deleteTargetFiles = new[] {
                 environmentParameters.MainFile,
                 environmentParameters.LargeFile,
             };
-            foreach(var file in deleteTartgetFiles) {
+            foreach(var file in deleteTargetFiles) {
                 logger.LogDebug("delete: {0}", file.FullName);
                 file.Refresh();
                 try {
@@ -524,10 +524,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 appLogLimit = AppLogLimit;
             }
 
-            var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, environmentParameters.ApplicationConfiguration.General.LogConfigFileName);
+            var loggingConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, environmentParameters.ApplicationConfiguration.General.LogConfigFileName);
             Logging = new ApplicationLogging(
                 appLogLimit,
-                logginConfigFilePath,
+                loggingConfigFilePath,
                 commandLine.GetValue(CommandLineKeyLog, string.Empty),
                 commandLine.GetValue(CommandLineKeyWithLog, string.Empty),
                 commandLine.ExistsSwitch(CommandLineSwitchForceLog),
@@ -600,7 +600,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
             environmentParameters.SetFileSystemInitialized();
 
-            if(RunModeUtility.IsBuildPersistent(RunMode)) {
+            if(RunModeUtility.IsBuildPersistence(RunMode)) {
                 if(IsFirstStartup) {
                     FirstSetup(environmentParameters, loggerFactory, logger);
                 }
@@ -611,12 +611,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             if(RunModeUtility.IsBuildWebView(RunMode)) {
-                var webViewinItializer = new WebViewItializer(loggerFactory);
-                webViewinItializer.Initialize(environmentParameters, cultureService);
+                var webViewInitializer = new WebViewInitializer(loggerFactory);
+                webViewInitializer.Initialize(environmentParameters, cultureService);
             }
 
             ApplicationDatabaseFactoryPack? factory = null;
-            if(RunModeUtility.IsBuildPersistent(RunMode)) {
+            if(RunModeUtility.IsBuildPersistence(RunMode)) {
                 (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
                 if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {
                     logger.LogWarning("再初期化処理実施");
@@ -637,7 +637,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             DiContainer = SetupContainer(environmentParameters, factory, cultureService, loggerFactory);
-            if(RunModeUtility.IsBuildPersistent(RunMode)) {
+            if(RunModeUtility.IsBuildPersistence(RunMode)) {
                 var databaseSetupper = DiContainer.Build<DatabaseSetupper>();
                 var lastVersion = databaseSetupper.GetLastVersion(DiContainer.Build<IDatabaseAccessorPack>().Main)!;
                 databaseSetupper.Tune(DiContainer.Build<IDatabaseAccessorPack>(), lastVersion);
@@ -650,7 +650,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             ClipboardManager = SetupClipboardManager(DiContainer);
             UserAgentManager = SetupUserAgentManager(DiContainer);
 
-            if(RunModeUtility.IsBuildPersistent(RunMode)) {
+            if(RunModeUtility.IsBuildPersistence(RunMode)) {
                 var cultureServiceChanger = DiContainer.Build<CultureServiceChanger>(CultureService.Instance, WindowManager);
                 cultureServiceChanger.ChangeCulture();
             }

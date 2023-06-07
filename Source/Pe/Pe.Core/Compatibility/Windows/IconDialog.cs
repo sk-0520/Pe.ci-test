@@ -45,11 +45,11 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Windows
         }
 
         /// <inheritdoc cref="CommonDialog.RunDialog(IntPtr)"/>
-        protected override bool RunDialog(IntPtr hwndOwner)
+        protected override bool RunDialog(IntPtr hWndOwner)
         {
             var iconIndex = IconIndex;
             var sb = new StringBuilder(IconPath, (int)MAX.MAX_PATH);
-            var result = NativeMethods.SHChangeIconDialog(hwndOwner, sb, sb.Capacity, ref iconIndex);
+            var result = NativeMethods.SHChangeIconDialog(hWndOwner, sb, sb.Capacity, ref iconIndex);
             if(result) {
                 IconIndex = iconIndex;
                 IconPath = sb.ToString();

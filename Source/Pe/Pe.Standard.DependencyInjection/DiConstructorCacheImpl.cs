@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation", Justification = "<保留中>")]
         private Func<object[], object> CreateCore(object[] parameters)
         {
-            switch(ParameterInfos.Count) {
+            switch(ParameterInfoItems.Count) {
                 case 1: {
                     var creator = CreateFunction<DiConstructorCacheP1>();
                     return p => creator(p[0]);
@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
                 }
 
                 default:
-                    Debug.WriteLine("パラメータ数ガン上げ: 30 < {0}", ParameterInfos.Count);
+                    Debug.WriteLine("パラメータ数ガン上げ: 30 < {0}", ParameterInfoItems.Count);
                     return ConstructorInfo.Invoke;
             }
         }

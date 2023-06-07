@@ -245,7 +245,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
             ShowActive(hWnd);
         }
 
-        public static void MoveZoderBttom(IntPtr hWnd)
+        public static void MoveZoderBottom(IntPtr hWnd)
         {
             NativeMethods.SetWindowPos(
                 hWnd,

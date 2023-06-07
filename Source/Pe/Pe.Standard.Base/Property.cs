@@ -158,9 +158,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// <summary>
     /// 汎用プロパティアクセス処理。
     /// </summary>
-    public class PropertyAccesser: IPropertyGetter, IPropertySetter
+    public class PropertyAccessor: IPropertyGetter, IPropertySetter
     {
-        public PropertyAccesser(ParameterExpression ownerExpression, PropertyInfo propertyInfo)
+        public PropertyAccessor(ParameterExpression ownerExpression, PropertyInfo propertyInfo)
         {
             PropertyInfo = propertyInfo;
             if(PropertyInfo.CanWrite) {
@@ -170,7 +170,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             }
             Getter = PropertyExpressionFactory.CreateGetter(ownerExpression, propertyInfo.Name);
         }
-        public PropertyAccesser(object owner, string propertyName)
+        public PropertyAccessor(object owner, string propertyName)
         {
             var ownerExpression = PropertyExpressionFactory.CreateOwner(owner);
             var propertyInfo = ownerExpression.Type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
@@ -222,9 +222,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// </summary>
     /// <typeparam name="TOwner"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    public class PropertyAccesser<TOwner, TValue>: PropertyAccesser, IPropertyGetter<TOwner, TValue>, IPropertySetter<TOwner, TValue>
+    public class PropertyAccessor<TOwner, TValue>: PropertyAccessor, IPropertyGetter<TOwner, TValue>, IPropertySetter<TOwner, TValue>
     {
-        public PropertyAccesser([DisallowNull] TOwner owner, string propertyName)
+        public PropertyAccessor([DisallowNull] TOwner owner, string propertyName)
             : base(owner, propertyName)
         {
             var ownerProperty = PropertyExpressionFactory.CreateOwner(owner);
@@ -268,7 +268,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// <summary>
     /// プロパティアクセス処理生成。
     /// </summary>
-    public static class PropertyAccesserFactory
+    public static class PropertyAccessorFactory
     {
         #region function
 
@@ -278,7 +278,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="owner"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        public static PropertyAccesser Create(object owner, string propertyName) => new PropertyAccesser(owner, propertyName);
+        public static PropertyAccessor Create(object owner, string propertyName) => new PropertyAccessor(owner, propertyName);
         /// <summary>
         /// ジェネリック版を生成。
         /// </summary>
@@ -287,7 +287,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="owner"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        public static PropertyAccesser<TOwner, TValue> Create<TOwner, TValue>([DisallowNull] TOwner owner, string propertyName) => new PropertyAccesser<TOwner, TValue>(owner, propertyName);
+        public static PropertyAccessor<TOwner, TValue> Create<TOwner, TValue>([DisallowNull] TOwner owner, string propertyName) => new PropertyAccessor<TOwner, TValue>(owner, propertyName);
 
         #endregion
     }
@@ -295,13 +295,13 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// <summary>
     /// プロパティアクセス処理キャッシュ。
     /// </summary>
-    public class PropertyCacher
+    public class CachedProperty
     {
         /// <summary>
         /// 指定オブジェクトに対してプロパティアクセス処理のキャッシュを構築。
         /// </summary>
         /// <param name="owner">プロパティアクセスを行うオブジェクト。</param>
-        public PropertyCacher(object owner)
+        public CachedProperty(object owner)
         {
             Owner = owner;
             OwnerExpression = PropertyExpressionFactory.CreateOwner(Owner);
@@ -322,15 +322,15 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         private IReadOnlyDictionary<string, PropertyInfo> Properties { get; }
 
-        private ConcurrentDictionary<string, PropertyAccesser> AccesserCache { get; } = new ConcurrentDictionary<string, PropertyAccesser>(); // CPUの数とかこの層で取得するのしんどいのでコンストラクタでキャパ指定せず。
+        private ConcurrentDictionary<string, PropertyAccessor> AccesserCache { get; } = new ConcurrentDictionary<string, PropertyAccessor>(); // CPUの数とかこの層で取得するのしんどいのでコンストラクタでキャパ指定せず。
 
         #endregion
 
         #region function
 
-        private PropertyAccesser GetAccessor(string propertyName) => AccesserCache.GetOrAdd(propertyName, s => {
+        private PropertyAccessor GetAccessor(string propertyName) => AccesserCache.GetOrAdd(propertyName, s => {
             var propertyInfo = Properties[s];
-            return new PropertyAccesser(OwnerExpression, propertyInfo);
+            return new PropertyAccessor(OwnerExpression, propertyInfo);
         });
 
         public object? Get(string propertyName)
@@ -365,5 +365,4 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         #endregion
     }
-
 }

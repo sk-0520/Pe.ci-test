@@ -82,25 +82,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             });
         }
 
-        private IntPtr MessageWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private IntPtr MessageWindowProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
 #if DEBUG
-            Logger.LogTrace("[MSG WND] hwnd = {0}, msg = {1}({2}), wParam = {3}, lParam = {4}", hwnd, msg, (WM)msg, wParam, lParam);
+            Logger.LogTrace("[MSG WND] hWnd = {0}, msg = {1}({2}), wParam = {3}, lParam = {4}", hWnd, msg, (WM)msg, wParam, lParam);
 #endif
 
             switch(msg) {
                 case (int)WM.WM_DEVICECHANGE: {
-                        var deviceChangedData = new DeviceChangedData(hwnd, msg, wParam, lParam);
+                        var deviceChangedData = new DeviceChangedData(hWnd, msg, wParam, lParam);
                         CatchDeviceChanged(deviceChangedData);
                     }
                     break;
 
                 case (int)WM.WM_SETTINGCHANGE:
-                    PlatformThemeLoader.WndProc_WM_SETTINGCHANGE(hwnd, msg, wParam, lParam, ref handled);
+                    PlatformThemeLoader.WndProc_WM_SETTINGCHANGE(hWnd, msg, wParam, lParam, ref handled);
                     break;
 
                 case (int)WM.WM_DWMCOLORIZATIONCOLORCHANGED:
-                    PlatformThemeLoader.WndProc_WM_DWMCOLORIZATIONCOLORCHANGED(hwnd, msg, wParam, lParam, ref handled);
+                    PlatformThemeLoader.WndProc_WM_DWMCOLORIZATIONCOLORCHANGED(hWnd, msg, wParam, lParam, ref handled);
                     break;
             }
 
@@ -125,8 +125,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             KeyActionAssistant.SelfJobInputId = KeyActionChecker.SelfJobInputId;
 
-            KeyboradHooker.KeyDown += KeyboradHooker_KeyDown;
-            KeyboradHooker.KeyUp += KeyboradHooker_KeyUp;
+            KeyboradHooker.KeyDown += KeyboardHooker_KeyDown;
+            KeyboradHooker.KeyUp += KeyboardHooker_KeyUp;
 
             MouseHooker.MouseMove += MouseHooker_MouseMove;
             MouseHooker.MouseDown += MouseHooker_MouseDown;
@@ -146,8 +146,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void DisposeHook()
         {
-            KeyboradHooker.KeyDown -= KeyboradHooker_KeyDown;
-            KeyboradHooker.KeyUp -= KeyboradHooker_KeyUp;
+            KeyboradHooker.KeyDown -= KeyboardHooker_KeyDown;
+            KeyboradHooker.KeyUp -= KeyboardHooker_KeyUp;
 
             MouseHooker.MouseMove -= MouseHooker_MouseMove;
             MouseHooker.MouseDown -= MouseHooker_MouseDown;
@@ -630,7 +630,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #endregion
 
-        private void KeyboradHooker_KeyDown(object? sender, KeyboardHookEventArgs e)
+        private void KeyboardHooker_KeyDown(object? sender, KeyboardHookEventArgs e)
         {
             var jobs = KeyActionChecker.Find(e.IsDown, e.Key, e.modifierKeyStatus, e.kbdll);
             if(0 < jobs.Count) {
@@ -655,7 +655,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        private void KeyboradHooker_KeyUp(object? sender, KeyboardHookEventArgs e)
+        private void KeyboardHooker_KeyUp(object? sender, KeyboardHookEventArgs e)
         {
             var jobs = KeyActionChecker.Find(e.IsDown, e.Key, new ModifierKeyStatus(), e.kbdll);
             ExecuteKeyUpJobsAsync(jobs, e.Key, e.modifierKeyStatus).ConfigureAwait(false);

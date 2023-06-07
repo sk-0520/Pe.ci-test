@@ -130,8 +130,8 @@ namespace ContentTypeTextNet.Pe.Core.Views
         {
             var options = default(FOS);
             var type = GetType();
-            var propertInfos = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            var fosAttributes = propertInfos
+            var propertyInfoItems = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            var fosAttributes = propertyInfoItems
                 .Select(i => new { Property = i, Attribute = i.GetCustomAttribute<FileSystemFosAttribute>() })
                 .Where(i => i.Attribute != null)
             ;
@@ -227,11 +227,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
             Customize.Build(FileDialogCustomize);
 
-            var reuslt = FileDialog.Instance.Show(hWnd);
-            if(reuslt == (uint)ERROR.ERROR_CANCELLED) {
+            var result = FileDialog.Instance.Show(hWnd);
+            if(result == (uint)ERROR.ERROR_CANCELLED) {
                 return false;
             }
-            if(reuslt != 0) {
+            if(result != 0) {
                 return null;
             }
 

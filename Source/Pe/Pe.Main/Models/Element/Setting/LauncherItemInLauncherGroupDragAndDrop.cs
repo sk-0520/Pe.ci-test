@@ -22,10 +22,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public IResultSuccess<DragParameter> GetDragParameter(bool fromAllItems, UIElement sender, MouseEventArgs e, Action<LauncherItemSettingEditorViewModel> selectedItemChanger)
         {
-            if(e.Source is ListBox listbox) {
-                var scollbar = UIUtility.GetVisualClosest<ScrollBar>((DependencyObject)e.OriginalSource);
-                if(scollbar == null && listbox.SelectedItem != null) {
-                    var item = (LauncherItemSettingEditorViewModel)listbox.SelectedItem;
+            if(e.Source is ListBox listBox) {
+                var scrollBar = UIUtility.GetVisualClosest<ScrollBar>((DependencyObject)e.OriginalSource);
+                if(scrollBar == null && listBox.SelectedItem != null) {
+                    var item = (LauncherItemSettingEditorViewModel)listBox.SelectedItem;
                     selectedItemChanger(item);
                     var data = new DataObject(typeof(LauncherItemDragData), new LauncherItemDragData(item, fromAllItems));
                     return Result.CreateSuccess(new DragParameter(sender, fromAllItems ? DragDropEffects.Copy : DragDropEffects.Move, data));

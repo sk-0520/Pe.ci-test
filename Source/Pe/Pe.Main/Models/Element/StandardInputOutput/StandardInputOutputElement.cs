@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         #region variable
 
         private bool _isVisible;
-        private bool _preparatedReceive;
+        private bool _preparedReceive;
         private bool _processExited;
 
         #endregion
@@ -61,10 +61,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             private set => SetProperty(ref this._isVisible, value);
         }
 
-        public bool PreparatedReceive
+        public bool PreparedReceive
         {
-            get => this._preparatedReceive;
-            private set => SetProperty(ref this._preparatedReceive, value);
+            get => this._preparedReceive;
+            private set => SetProperty(ref this._preparedReceive, value);
         }
 
         public bool ProcessExited
@@ -98,12 +98,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             ErrorStreamReceiver = new StreamReceiver(Process.StandardError, LoggerFactory);
             //ProcessStandardOutputReceiver = new ProcessStandardOutputReceiver(Process, LoggerFactory);
 
-            PreparatedReceive = true;
+            PreparedReceive = true;
         }
 
         public void RunReceiver()
         {
-            Debug.Assert(PreparatedReceive);
+            Debug.Assert(PreparedReceive);
             ThrowIfDisposed();
 
             OutputStreamReceiver!.StartReceive();

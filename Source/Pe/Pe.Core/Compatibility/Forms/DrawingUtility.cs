@@ -67,16 +67,16 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
             return result;
         }
 
-        public static BitmapSource ImageSourceFromBinaryIcon(byte[] binayIcon, Size iconSize)
+        public static BitmapSource ImageSourceFromBinaryIcon(byte[] binaryIcon, Size iconSize)
         {
-            using(var ms = new MemoryReleaseStream(binayIcon)) {
+            using(var ms = new MemoryReleaseStream(binaryIcon)) {
                 return ImageSourceFromBinaryStreamIcon(ms, iconSize);
             }
         }
 
-        public static BitmapSource ImageSourceFromBinaryIcon(ArrayPoolObject<byte> binayIcon, Size iconSize)
+        public static BitmapSource ImageSourceFromBinaryIcon(ArrayPoolObject<byte> binaryIcon, Size iconSize)
         {
-            using(var ms = new MemoryReleaseStream(binayIcon.Items, 0, binayIcon.Length)) {
+            using(var ms = new MemoryReleaseStream(binaryIcon.Items, 0, binaryIcon.Length)) {
                 return ImageSourceFromBinaryStreamIcon(ms, iconSize);
             }
         }

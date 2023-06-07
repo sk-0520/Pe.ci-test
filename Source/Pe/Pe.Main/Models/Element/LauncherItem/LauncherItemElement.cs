@@ -190,7 +190,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         private LauncherAddonExecuteResult ExecuteAddon(string? customArgument, IScreen screen)
         {
-            if(LauncherItemAddonViewSupporterCollection.ExistsInformations(LauncherItemId)) {
+            if(LauncherItemAddonViewSupporterCollection.ExistsInformation(LauncherItemId)) {
                 Logger.LogInformation("ランチャーアイテムはすでに起動している: {0}", LauncherItemId);
                 LauncherItemAddonViewSupporterCollection.Foreground(LauncherItemId);
                 return new LauncherAddonExecuteResult() {
@@ -208,11 +208,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             var addon = LauncherItemAddonFinder.Find(LauncherItemId, pluginId);
             var plugin = LauncherItemAddonFinder.GetPlugin(pluginId);
             var commandExecuteParameter = new CommandExecuteParameter(screen, false);
-            var launcherItemAddonViewSupporter = LauncherItemAddonViewSupporterCollection.Create(plugin.PluginInformations, LauncherItemId);
-            var launcherItemExtensionExecuteParameter = LauncherItemAddonContextFactory.CreateExtensionExecuteParameter(plugin.PluginInformations, LauncherItemId, launcherItemAddonViewSupporter);
+            var launcherItemAddonViewSupporter = LauncherItemAddonViewSupporterCollection.Create(plugin.PluginInformation, LauncherItemId);
+            var launcherItemExtensionExecuteParameter = LauncherItemAddonContextFactory.CreateExtensionExecuteParameter(plugin.PluginInformation, LauncherItemId, launcherItemAddonViewSupporter);
             DispatcherWrapper.BeginAsync(() => {
-                using var databaseContextsPack = PersistentHelper.WaitWritePack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreatePluginAccount(plugin.PluginInformations));
-                using(var context = LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformations, LauncherItemId, databaseContextsPack, false)) {
+                using var databaseContextsPack = PersistenceHelper.WaitWritePack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreatePluginAccount(plugin.PluginInformation));
+                using(var context = LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformation, LauncherItemId, databaseContextsPack, false)) {
                     addon.Execute(customArgument, commandExecuteParameter, launcherItemExtensionExecuteParameter, context);
                 }
             });

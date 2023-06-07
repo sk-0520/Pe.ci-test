@@ -70,13 +70,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public IDatabaseContextsPack BarrierRead() => DatabaseBarrierPack.WaitRead();
         public IDatabaseContextsPack BarrierWrite() => DatabaseBarrierPack.WaitWrite();
 
-        protected virtual PluginFiles CreatePluginFile(IPluginInformations pluginInformations)
+        protected virtual PluginFiles CreatePluginFile(IPluginInformation pluginInformation)
         {
 
             var pluginFile = new PluginFiles(
-                new PluginFileStorage(GetUserDirectory(pluginInformations.PluginIdentifiers)),
-                new PluginFileStorage(GetMachineDirectory(pluginInformations.PluginIdentifiers)),
-                new PluginFileStorage(GetTemporaryDirectory(pluginInformations.PluginIdentifiers))
+                new PluginFileStorage(GetUserDirectory(pluginInformation.PluginIdentifiers)),
+                new PluginFileStorage(GetMachineDirectory(pluginInformation.PluginIdentifiers)),
+                new PluginFileStorage(GetTemporaryDirectory(pluginInformation.PluginIdentifiers))
             );
 
             return pluginFile;
@@ -85,71 +85,71 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <summary>
         /// 上流依存DBアクセス処理の生成。
         /// </summary>
-        /// <param name="pluginInformations"></param>
+        /// <param name="pluginInformation"></param>
         /// <param name="databaseContextsPack"></param>
         /// <param name="isReadOnly"></param>
         /// <returns></returns>
-        protected virtual PluginPersistents CrteatePluginPersistentContext(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
+        protected virtual PluginPersistence CreatePluginPersistenceContext(IPluginInformation pluginInformation, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
         {
-            var pluginPersistent = new PluginPersistents(
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseContextsPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseContextsPack.Large, DatabaseStatementLoader, isReadOnly, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseContextsPack.Temporary, DatabaseStatementLoader, isReadOnly, LoggerFactory)
+            var pluginPersistence = new PluginPersistence(
+                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseContextsPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseContextsPack.Large, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseContextsPack.Temporary, DatabaseStatementLoader, isReadOnly, LoggerFactory)
             );
 
-            return pluginPersistent;
+            return pluginPersistence;
         }
 
         /// <summary>
         /// 逐次実行DBアクセス処理の生成。
         /// </summary>
-        /// <param name="pluginInformations"></param>
+        /// <param name="pluginInformation"></param>
         /// <param name="databaseBarrierPack"></param>
         /// <param name="isReadOnly"></param>
         /// <returns></returns>
-        protected virtual PluginPersistents CrteatePluginPersistentBarrier(IPluginInformations pluginInformations, IDatabaseBarrierPack databaseBarrierPack, bool isReadOnly)
+        protected virtual PluginPersistence CreatePluginPersistenceBarrier(IPluginInformation pluginInformation, IDatabaseBarrierPack databaseBarrierPack, bool isReadOnly)
         {
-            var pluginPersistent = new PluginPersistents(
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Large, DatabaseStatementLoader, isReadOnly, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Temporary, DatabaseStatementLoader, isReadOnly, LoggerFactory)
+            var pluginPersistence = new PluginPersistence(
+                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseBarrierPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseBarrierPack.Large, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseBarrierPack.Temporary, DatabaseStatementLoader, isReadOnly, LoggerFactory)
             );
 
-            return pluginPersistent;
+            return pluginPersistence;
         }
 
         /// <summary>
         /// 遅延実行DBアクセス処理の生成。
         /// </summary>
-        /// <param name="pluginInformations"></param>
+        /// <param name="pluginInformation"></param>
         /// <param name="databaseBarrierPack"></param>
         /// <param name="databaseLazyWriterPack"></param>
         /// <returns></returns>
-        protected virtual PluginPersistents CrteatePluginPersistentLazyWriter(IPluginInformations pluginInformations, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
+        protected virtual PluginPersistence CreatePluginPersistenceLazyWriter(IPluginInformation pluginInformation, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
         {
-            var pluginPersistent = new PluginPersistents(
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Main, databaseLazyWriterPack.Main, DatabaseStatementLoader, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Large, databaseLazyWriterPack.Large, DatabaseStatementLoader, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Temporary, databaseLazyWriterPack.Temporary, DatabaseStatementLoader, LoggerFactory)
+            var pluginPersistence = new PluginPersistence(
+                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseBarrierPack.Main, databaseLazyWriterPack.Main, DatabaseStatementLoader, LoggerFactory),
+                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseBarrierPack.Large, databaseLazyWriterPack.Large, DatabaseStatementLoader, LoggerFactory),
+                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseBarrierPack.Temporary, databaseLazyWriterPack.Temporary, DatabaseStatementLoader, LoggerFactory)
             );
 
-            return pluginPersistent;
+            return pluginPersistence;
         }
 
-        protected virtual PluginStorage CreatePluginStorage(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
+        protected virtual PluginStorage CreatePluginStorage(IPluginInformation pluginInformation, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
         {
             var pluginStorage = new PluginStorage(
-                CreatePluginFile(pluginInformations),
-                CrteatePluginPersistentContext(pluginInformations, databaseContextsPack, isReadOnly)
+                CreatePluginFile(pluginInformation),
+                CreatePluginPersistenceContext(pluginInformation, databaseContextsPack, isReadOnly)
             );
 
             return pluginStorage;
         }
 
-        public PluginContext CreateContext(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
+        public PluginContext CreateContext(IPluginInformation pluginInformation, IDatabaseContextsPack databaseContextsPack, bool isReadOnly)
         {
-            var pluginStorage = CreatePluginStorage(pluginInformations, databaseContextsPack, isReadOnly);
-            return new PluginContext(pluginInformations.PluginIdentifiers, pluginStorage);
+            var pluginStorage = CreatePluginStorage(pluginInformation, databaseContextsPack, isReadOnly);
+            return new PluginContext(pluginInformation.PluginIdentifiers, pluginStorage);
         }
 
         static internal NullPluginContext CreateNullContext(ILoggerFactory loggerFactory)

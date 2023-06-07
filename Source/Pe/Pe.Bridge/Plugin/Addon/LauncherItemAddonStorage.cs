@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// <para>Pe の管理下で処理する。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface ILauncherItemAddonPersistentStorage
+    public interface ILauncherItemAddonPersistenceStorage
     {
         #region property
 
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// 指定データを保存する。
-        /// <para><see cref="PluginPersistentFormat.Text"/>を使用する以外は原則使用せず<see cref="Set{TValue}(string, TValue)"/>を用いること。</para>
+        /// <para><see cref="PluginPersistenceFormat.Text"/>を使用する以外は原則使用せず<see cref="Set{TValue}(string, TValue)"/>を用いること。</para>
         /// </summary>
         /// <typeparam name="TValue">保存データ。</typeparam>
         /// <param name="launcherItemId">ランチャーアイテムID。</param>
@@ -107,11 +107,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="value">値。</param>
         /// <param name="format">変換種別。</param>
         /// <returns>保存成功・失敗。</returns>
-        bool Set<TValue>(LauncherItemId launcherItemId, string key, TValue value, PluginPersistentFormat format);
+        bool Set<TValue>(LauncherItemId launcherItemId, string key, TValue value, PluginPersistenceFormat format);
         /// <summary>
         /// 現行バージョンにおける最適な型を使用して指定データを保存する。
         /// </summary>
-        /// <typeparam name="TValue"><inheritdoc cref="SetValue{TValue}(string, TValue, PluginPersistentFormat)"/></typeparam>
+        /// <typeparam name="TValue"><inheritdoc cref="SetValue{TValue}(string, TValue, PluginPersistenceFormat)"/></typeparam>
         /// <param name="launcherItemId">ランチャーアイテムID。</param>
         /// <param name="key">キー。</param>
         /// <param name="value">値。</param>
@@ -159,22 +159,22 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// ランチャーアイテムアドオン永続データ操作処理グループ。
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface ILauncherItemAddonPersistents
+    public interface ILauncherItemAddonPersistence
     {
         #region property
 
         /// <summary>
         /// 通常データ。
         /// </summary>
-        ILauncherItemAddonPersistentStorage Normal { get; }
+        ILauncherItemAddonPersistenceStorage Normal { get; }
         /// <summary>
         /// 大きめのデータ。
         /// </summary>
-        ILauncherItemAddonPersistentStorage Large { get; }
+        ILauncherItemAddonPersistenceStorage Large { get; }
         /// <summary>
         /// お好きに。
         /// </summary>
-        ILauncherItemAddonPersistentStorage Temporary { get; }
+        ILauncherItemAddonPersistenceStorage Temporary { get; }
 
         #endregion
     }
@@ -194,7 +194,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <summary>
         /// 永続データ処理。
         /// </summary>
-        ILauncherItemAddonPersistents Persistent { get; }
+        ILauncherItemAddonPersistence Persistence { get; }
 
         #endregion
     }

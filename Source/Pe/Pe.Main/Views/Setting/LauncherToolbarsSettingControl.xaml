@@ -1,6 +1,6 @@
 <UserControl
   x:Name="root"
-  x:Class="ContentTypeTextNet.Pe.Main.Views.Setting.LauncherToobarsSettingControl"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.Setting.LauncherToolbarsSettingControl"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
@@ -84,7 +84,7 @@
           </ContentControl.Resources>
 
           <ContentControl.ContentTemplate>
-            <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherToobarSettingEditorViewModel}">
+            <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherToolbarSettingEditorViewModel}">
               <StackPanel x:Name="item" Grid.IsSharedSizeScope="True">
 
                 <Grid>

@@ -16,16 +16,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #region function
 
 
-        public WidgetAddonCreateContext CreateCreateContex(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack)
+        public WidgetAddonCreateContext CreateCreateContext(IPluginInformation pluginInformation, IDatabaseContextsPack databaseContextsPack)
         {
-            var pluginStorage = CreatePluginStorage(pluginInformations, databaseContextsPack, true);
-            return new WidgetAddonCreateContext(pluginInformations.PluginIdentifiers, pluginStorage);
+            var pluginStorage = CreatePluginStorage(pluginInformation, databaseContextsPack, true);
+            return new WidgetAddonCreateContext(pluginInformation.PluginIdentifiers, pluginStorage);
         }
 
-        public WidgetAddonClosedContext CreateClosedContext(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack)
+        public WidgetAddonClosedContext CreateClosedContext(IPluginInformation pluginInformation, IDatabaseContextsPack databaseContextsPack)
         {
-            var pluginStorage = CreatePluginStorage(pluginInformations, databaseContextsPack, false);
-            return new WidgetAddonClosedContext(pluginInformations.PluginIdentifiers, pluginStorage);
+            var pluginStorage = CreatePluginStorage(pluginInformation, databaseContextsPack, false);
+            return new WidgetAddonClosedContext(pluginInformation.PluginIdentifiers, pluginStorage);
         }
 
         #endregion

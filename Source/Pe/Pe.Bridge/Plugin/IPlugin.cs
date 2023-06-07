@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// プラグイン情報。
         /// <para>このプロパティ以下は<see cref="IsInitialized"/>の状態にかかわらず読み込み可能であること。</para>
         /// </summary>
-        IPluginInformations PluginInformations { get; }
+        IPluginInformation PluginInformation { get; }
 
         /// <summary>
         /// 初期化処理が行われたか。

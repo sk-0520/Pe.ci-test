@@ -233,8 +233,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             public void Commit()
             {
-                foreach(var tran in Items.Select(i => i.Context).OfType<IDatabaseTransaction>()) {
-                    tran.Commit();
+                foreach(var transaction in Items.Select(i => i.Context).OfType<IDatabaseTransaction>()) {
+                    transaction.Commit();
                 }
             }
 
@@ -287,14 +287,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         DatabaseContexts WaitReadCore(IDatabaseBarrier barrier)
         {
-            var tran = barrier.WaitRead();
-            return new DatabaseContexts(tran, tran.Implementation);
+            var transaction = barrier.WaitRead();
+            return new DatabaseContexts(transaction, transaction.Implementation);
         }
 
         DatabaseContexts WaitWriteCore(IDatabaseBarrier barrier)
         {
-            var tran = barrier.WaitWrite();
-            return new DatabaseContexts(tran, tran.Implementation);
+            var transaction = barrier.WaitWrite();
+            return new DatabaseContexts(transaction, transaction.Implementation);
         }
 
         #endregion

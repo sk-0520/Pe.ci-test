@@ -38,8 +38,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
-        /// <inheritdoc cref="IPluginInformations"/>
-        IPluginInformations? Informations { get; set; }
+        /// <inheritdoc cref="IPluginInformation"/>
+        IPluginInformation? Informations { get; set; }
 
         /// <summary>
         /// アドオン機能を所持しているか。
@@ -94,10 +94,10 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         protected abstract void UninitializeImpl(IPluginUninitializeContext pluginUninitializeContext);
 
         /// <summary>
-        /// アセンブリ設定から <see cref="IPluginInformations"/> を生成。
+        /// アセンブリ設定から <see cref="IPluginInformation"/> を生成。
         /// </summary>
         /// <returns></returns>
-        protected virtual IPluginInformations CreateInformations()
+        protected virtual IPluginInformation CreateInformations()
         {
             static string CreateRandomText(string format, int count)
             {
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             var pluginVersions = new PluginVersions(assemblyName.Version!, supportVersionsAttr.MinimumVersion, supportVersionsAttr.MaximumVersion, supportVersionsAttr.CheckUrls);
             var pluginAuthors = new PluginAuthors(new Author(pluginAuthorsAttr.Name), pluginAuthorsAttr.License);
 
-            return new PluginInformations(pluginIdentifiers, pluginVersions, pluginAuthors);
+            return new PluginInformation(pluginIdentifiers, pluginVersions, pluginAuthors);
         }
 
         [Conditional("DEBUG")]
@@ -201,8 +201,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region IPlugin
 
-        /// <inheritdoc cref="IPlugin.PluginInformations"/>
-        public IPluginInformations PluginInformations => Informations ??= CreateInformations();
+        /// <inheritdoc cref="IPlugin.PluginInformation"/>
+        public IPluginInformation PluginInformation => Informations ??= CreateInformations();
 
         /// <inheritdoc cref="IPlugin.IsInitialized"/>
         public bool IsInitialized { get; private set; }

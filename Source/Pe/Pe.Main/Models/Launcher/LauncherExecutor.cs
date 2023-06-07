@@ -192,15 +192,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             // 環境変数
             if(customParameter.IsEnabledCustomEnvironmentVariable) {
                 startInfo.UseShellExecute = false;
-                var envs = startInfo.EnvironmentVariables;
+                var envVars = startInfo.EnvironmentVariables;
                 // 追加・更新
                 foreach(var item in environmentVariableItems.Where(i => !i.IsRemove)) {
-                    envs[item.Name] = item.Value;
+                    envVars[item.Name] = item.Value;
                 }
                 // 削除
                 foreach(var item in environmentVariableItems.Where(i => i.IsRemove)) {
-                    if(envs.ContainsKey(item.Name)) {
-                        envs.Remove(item.Name);
+                    if(envVars.ContainsKey(item.Name)) {
+                        envVars.Remove(item.Name);
                     }
                 }
             }
@@ -242,10 +242,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 );
             }
 
-            StandardInputOutputElement? stdioElement = null;
+            StandardInputOutputElement? stdIoElement = null;
             if(streamWatch) {
                 process.EnableRaisingEvents = true;
-                stdioElement = OrderManager.CreateStandardInputOutputElement(customParameter.Caption, process, screen);
+                stdIoElement = OrderManager.CreateStandardInputOutputElement(customParameter.Caption, process, screen);
                 //DispatcherWrapper.BeginAsync(element => {
                 //    element.StartView();
                 //    element!.PreparateReceiver();
@@ -259,17 +259,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
 
             if(streamWatch) {
-                Debug.Assert(stdioElement != null);
+                Debug.Assert(stdIoElement != null);
                 // 受信前に他の処理を終わらせるため少し待つ
                 DispatcherWrapper.BeginAsync(element => {
                     element.StartView();
                     element.PreparateReceiver();
-                    if(element.PreparatedReceive) {
+                    if(element.PreparedReceive) {
                         element.RunReceiver();
                     } else {
                         Logger.LogError("受信準備完了せず");
                     }
-                }, stdioElement, DispatcherPriority.Send);
+                }, stdIoElement, DispatcherPriority.Send);
             }
 
             return result;

@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.Running));
             foreach(var functionUnit in functionUnits) {
                 var addon = GetAddon(functionUnit);
-                var context = BackgroundAddonContextFactory.CreateRunStartupContext(addon.PluginInformations);
+                var context = BackgroundAddonContextFactory.CreateRunStartupContext(addon.PluginInformation);
                 functionUnit.RunStartup(context);
             }
         }
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.Running));
             foreach(var functionUnit in functionUnits) {
                 var addon = GetAddon(functionUnit);
-                var context = BackgroundAddonContextFactory.CreateRunPauseContext(addon.PluginInformations, backgroundAddonRunPauseContext.IsPausing);
+                var context = BackgroundAddonContextFactory.CreateRunPauseContext(addon.PluginInformation, backgroundAddonRunPauseContext.IsPausing);
                 functionUnit.RunPause(context);
             }
         }
@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.Running));
                 foreach(var functionUnit in functionUnits) {
                     var addon = GetAddon(functionUnit);
-                    var context = BackgroundAddonContextFactory.CreateRunExecuteContext(addon.PluginInformations, backgroundAddonRunExecuteContext.RunExecuteKind, backgroundAddonRunExecuteContext.Parameter, backgroundAddonRunExecuteContext.Timestamp);
+                    var context = BackgroundAddonContextFactory.CreateRunExecuteContext(addon.PluginInformation, backgroundAddonRunExecuteContext.RunExecuteKind, backgroundAddonRunExecuteContext.Parameter, backgroundAddonRunExecuteContext.Timestamp);
                     functionUnit.RunExecute(context);
                 }
             });
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.Running));
             foreach(var functionUnit in functionUnits) {
                 var addon = GetAddon(functionUnit);
-                var context = BackgroundAddonContextFactory.CreateRunShutdownContext(addon.PluginInformations);
+                var context = BackgroundAddonContextFactory.CreateRunShutdownContext(addon.PluginInformation);
                 functionUnit.RunShutdown(context);
             }
         }
@@ -112,7 +112,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.KeyboardHook));
                 foreach(var functionUnit in functionUnits) {
                     var addon = GetAddon(functionUnit);
-                    var context = BackgroundAddonContextFactory.CreateKeyboardContext(addon.PluginInformations, backgroundAddonKeyboardContext.KeyboardHookEventArgs);
+                    var context = BackgroundAddonContextFactory.CreateKeyboardContext(addon.PluginInformation, backgroundAddonKeyboardContext.KeyboardHookEventArgs);
                     functionUnit.HookKeyDown(context);
                 }
             });
@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.KeyboardHook));
                 foreach(var functionUnit in functionUnits) {
                     var addon = GetAddon(functionUnit);
-                    var context = BackgroundAddonContextFactory.CreateKeyboardContext(addon.PluginInformations, backgroundAddonKeyboardContext.KeyboardHookEventArgs);
+                    var context = BackgroundAddonContextFactory.CreateKeyboardContext(addon.PluginInformation, backgroundAddonKeyboardContext.KeyboardHookEventArgs);
                     functionUnit.HookKeyUp(context);
                 }
             });
@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.MouseHook));
                 foreach(var functionUnit in functionUnits) {
                     var addon = GetAddon(functionUnit);
-                    var context = BackgroundAddonContextFactory.CreateMouseMoveContex(addon.PluginInformations, backgroundAddonMouseMoveContext.MouseHookEventArgs);
+                    var context = BackgroundAddonContextFactory.CreateMouseMoveContext(addon.PluginInformation, backgroundAddonMouseMoveContext.MouseHookEventArgs);
                     functionUnit.HookMouseMove(context);
                 }
             });
@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.MouseHook));
                 foreach(var functionUnit in functionUnits) {
                     var addon = GetAddon(functionUnit);
-                    var context = BackgroundAddonContextFactory.CreateMouseButtonContex(addon.PluginInformations, backgroundAddonMouseButtonContext.MouseHookEventArgs);
+                    var context = BackgroundAddonContextFactory.CreateMouseButtonContext(addon.PluginInformation, backgroundAddonMouseButtonContext.MouseHookEventArgs);
                     functionUnit.HookMouseDown(context);
                 }
             });
@@ -186,7 +186,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.MouseHook));
                 foreach(var functionUnit in functionUnits) {
                     var addon = GetAddon(functionUnit);
-                    var context = BackgroundAddonContextFactory.CreateMouseButtonContex(addon.PluginInformations, backgroundAddonMouseButtonContext.MouseHookEventArgs);
+                    var context = BackgroundAddonContextFactory.CreateMouseButtonContext(addon.PluginInformation, backgroundAddonMouseButtonContext.MouseHookEventArgs);
                     functionUnit.HookMouseUp(context);
                 }
             });

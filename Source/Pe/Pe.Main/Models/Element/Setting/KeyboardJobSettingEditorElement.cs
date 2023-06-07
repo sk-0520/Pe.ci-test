@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             keyMappingsEntityDao.DeleteByKeyActionId(KeyActionId);
             keyOptionsEntityDao.DeleteByKeyActionId(KeyActionId);
-            keyActionsEntityDao.DeleteKeyAciton(KeyActionId);
+            keyActionsEntityDao.DeleteKeyAction(KeyActionId);
         }
 
         protected override void Dispose(bool disposing)

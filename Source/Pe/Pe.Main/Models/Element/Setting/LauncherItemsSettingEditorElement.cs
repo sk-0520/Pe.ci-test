@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var addonIds = pluginContainer.Addon.GetLauncherItemAddonIds();
             var addonPlugins = pluginContainer.Plugins.OfType<IAddon>().ToList();
             foreach(var addonId in addonIds) {
-                var addon = addonPlugins.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == addonId);
+                var addon = addonPlugins.FirstOrDefault(i => i.PluginInformation.PluginIdentifiers.PluginId == addonId);
                 if(addon != null) {
                     addons.Add(addon);
                 } else {

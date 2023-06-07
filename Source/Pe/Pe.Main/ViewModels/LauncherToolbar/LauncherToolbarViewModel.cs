@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
     {
         #region variable
 
-        private LauncherDetailViewModelBase? _contextMenuOpendItem;
+        private LauncherDetailViewModelBase? _contextMenuOpenedItem;
         private bool _showWaiting;
 
         #endregion
@@ -64,16 +64,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
             ViewDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = ViewCanDragStart,
-                DragEnterAction = ViewDragOrverOrEnter,
-                DragOverAction = ViewDragOrverOrEnter,
+                DragEnterAction = ViewDragOverOrEnter,
+                DragOverAction = ViewDragOverOrEnter,
                 DragLeaveAction = ViewDragLeave,
                 DropAction = ViewDrop,
                 GetDragParameter = ViewGetDragParameter,
             };
             ItemDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = ItemCanDragStart,
-                DragEnterAction = ItemDragOrverOrEnter,
-                DragOverAction = ItemDragOrverOrEnter,
+                DragEnterAction = ItemDragOverOrEnter,
+                DragOverAction = ItemDragOverOrEnter,
                 DragLeaveAction = ItemDragLeave,
                 DropAction = ItemDrop,
                 GetDragParameter = ItemGetDragParameter,
@@ -86,10 +86,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.ToolbarPosition), nameof(IsVerticalLayout));
             PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.ToolbarPosition), ChangeToolbarPositionCommand);
             PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.IsAutoHide), nameof(IsAutoHide));
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendAppMenu), nameof(IsOpendAppMenu));
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendFileItemMenu), nameof(IsOpendFileItemMenu));
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendStoreAppItemMenu), nameof(IsOpendStoreAppItemMenu));
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendAddonItemMenu), nameof(IsOpendAddonItemMenu));
+            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpenedAppMenu), nameof(IsOpenedAppMenu));
+            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpenedFileItemMenu), nameof(IsOpenedFileItemMenu));
+            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpenedStoreAppItemMenu), nameof(IsOpenedStoreAppItemMenu));
+            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpenedAddonItemMenu), nameof(IsOpenedAddonItemMenu));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsTopmost), nameof(IsTopmost));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.SelectedLauncherGroup), nameof(SelectedLauncherGroup));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.ExistsFullScreenWindow), nameof(ExistsFullScreenWindow));
@@ -150,33 +150,33 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public LauncherToolbarIconDirection IconDirection => Model.IconDirection;
 
-        public bool IsOpendAppMenu
+        public bool IsOpenedAppMenu
         {
-            get => Model.IsOpendAppMenu;
+            get => Model.IsOpenedAppMenu;
             set => SetModelValue(value);
         }
 
-        public bool IsOpendFileItemMenu
+        public bool IsOpenedFileItemMenu
         {
-            get => Model.IsOpendFileItemMenu;
+            get => Model.IsOpenedFileItemMenu;
             set => SetModelValue(value);
         }
-        public bool IsOpendStoreAppItemMenu
+        public bool IsOpenedStoreAppItemMenu
         {
-            get => Model.IsOpendStoreAppItemMenu;
+            get => Model.IsOpenedStoreAppItemMenu;
             set => SetModelValue(value);
         }
-        public bool IsOpendAddonItemMenu
+        public bool IsOpenedAddonItemMenu
         {
-            get => Model.IsOpendAddonItemMenu;
+            get => Model.IsOpenedAddonItemMenu;
             set => SetModelValue(value);
         }
 
 
-        public LauncherDetailViewModelBase? ContextMenuOpendItem
+        public LauncherDetailViewModelBase? ContextMenuOpenedItem
         {
-            get => this._contextMenuOpendItem;
-            set => SetProperty(ref this._contextMenuOpendItem, value);
+            get => this._contextMenuOpenedItem;
+            set => SetProperty(ref this._contextMenuOpenedItem, value);
         }
 
         public bool ShowWaiting
@@ -374,10 +374,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             return dd.CanDragStart(sender, e);
         }
 
-        private void ViewDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        private void ViewDragOverOrEnter(UIElement sender, DragEventArgs e)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
-            dd.DragOrverOrEnter(sender, e);
+            dd.DragOverOrEnter(sender, e);
         }
 
         private void ViewDrop(UIElement sender, DragEventArgs e)
@@ -400,14 +400,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         private bool ItemCanDragStart(UIElement sender, MouseEventArgs e) => false;
 
-        private void ItemDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        private void ItemDragOverOrEnter(UIElement sender, DragEventArgs e)
         {
             var appButton = UIUtility.GetClosest<ToggleButton>(sender);
             var overAppButton = appButton?.Name == nameof(LauncherToolbarWindow.appButton.Name);
 
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 if(overAppButton) {
-                    ViewDragOrverOrEnter(sender, e);
+                    ViewDragOverOrEnter(sender, e);
                     return;
                 } else {
                     e.Effects = DragDropEffects.Move;
@@ -663,8 +663,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 return;
             }
 
-            foreach(var propertName in vm.ThemeProperties.GetPropertyNames()) {
-                vm.RaisePropertyChanged(propertName);
+            foreach(var propertyName in vm.ThemeProperties.GetPropertyNames()) {
+                vm.RaisePropertyChanged(propertyName);
             }
         }, this, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
     }

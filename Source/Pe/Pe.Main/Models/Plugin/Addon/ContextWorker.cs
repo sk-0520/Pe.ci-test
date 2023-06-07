@@ -45,15 +45,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
     public class LauncherItemAddonContextWorker: ContextWorkerBase<LauncherItemAddonContextFactory>, ILauncherItemAddonContextWorker
     {
-        public LauncherItemAddonContextWorker(LauncherItemAddonContextFactory launcherItemAddonContextFactory, IPluginInformations pluginInformations, LauncherItemId launcherItemId, ILoggerFactory loggerFactory)
+        public LauncherItemAddonContextWorker(LauncherItemAddonContextFactory launcherItemAddonContextFactory, IPluginInformation pluginInformation, LauncherItemId launcherItemId, ILoggerFactory loggerFactory)
             : base(launcherItemAddonContextFactory, loggerFactory)
         {
-            PluginInformations = pluginInformations;
+            PluginInformation = pluginInformation;
             LauncherItemId = launcherItemId;
         }
 
         #region property
-        public IPluginInformations PluginInformations { get; }
+        public IPluginInformation PluginInformation { get; }
         public LauncherItemId LauncherItemId { get; }
 
         #endregion
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public void RunLauncherItemAddon(Action<ILauncherItemAddonContext> callback)
         {
             using var databaseContextsPack = PluginContextFactory.BarrierWrite();
-            using var context = PluginContextFactory.CreateContext(PluginInformations, LauncherItemId, databaseContextsPack, false);
+            using var context = PluginContextFactory.CreateContext(PluginInformation, LauncherItemId, databaseContextsPack, false);
             callback(context);
         }
 

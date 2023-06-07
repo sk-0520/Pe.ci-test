@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Preferences
         public override UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext, IPreferencesParameter preferencesParameter)
         {
             FileFinderSetting? setting;
-            if(!preferencesLoadContext.Storage.Persistent.Normal.TryGet<FileFinderSetting>(FileFinderConstants.MainSettengKey, out setting)) {
+            if(!preferencesLoadContext.Storage.Persistence.Normal.TryGet<FileFinderSetting>(FileFinderConstants.MainSettengKey, out setting)) {
                 setting = new FileFinderSetting();
             }
 
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Preferences
                 MaximumPathItem = SettingViewModel.MaximumPathItem,
                 PathEnabledInputCharCount = SettingViewModel.PathEnabledInputCharCount,
             };
-            preferencesSaveContext.Storage.Persistent.Normal.Set(FileFinderConstants.MainSettengKey, setting);
+            preferencesSaveContext.Storage.Persistence.Normal.Set(FileFinderConstants.MainSettengKey, setting);
         }
 
         public override void EndPreferences(IPreferencesEndContext preferencesEndContext)

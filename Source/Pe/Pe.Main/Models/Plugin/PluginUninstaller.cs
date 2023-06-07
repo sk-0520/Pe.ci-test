@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             moduleDirectory.Delete(true);
         }
 
-        private void UninstallPersistent(IPluginIdentifiers pluginIdentifiers)
+        private void UninstallPersistence(IPluginIdentifiers pluginIdentifiers)
         {
             // デカいデータ破棄
             var pluginValuesEntityDao = new PluginValuesEntityDao(FileContexts.Context, StatementLoader, FileContexts.Implementation, LoggerFactory);
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             Logger.LogInformation("プラグインアンインストール: {0}", pluginIdentifiers);
 
-            UninstallPersistent(pluginIdentifiers);
+            UninstallPersistence(pluginIdentifiers);
             UninstallFiles(pluginIdentifiers);
         }
 

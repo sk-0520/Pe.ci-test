@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
         private IDispatcherWrapper DispatcherWrapper { get; }
         private IWidget Widget { get; }
         private IPlugin Plugin { get; }
-        private IPluginInformations PluginInformations => Plugin.PluginInformations;
+        private IPluginInformation PluginInformation => Plugin.PluginInformation;
         //PluginContextFactory PluginContextFactory { get; }
         private WidgetAddonContextFactory WidgetAddonContextFactory { get; }
         private IMainDatabaseBarrier MainDatabaseBarrier { get; }
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
         public string GetMenuHeader()
         {
             using(var reader = WidgetAddonContextFactory.BarrierRead()) {
-                var context = WidgetAddonContextFactory.CreateContext(PluginInformations, reader, true);
+                var context = WidgetAddonContextFactory.CreateContext(PluginInformation, reader, true);
                 return Widget.GetMenuHeader(context);
             }
         }
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
         public DependencyObject? GetMenuIcon()
         {
             using(var reader = WidgetAddonContextFactory.BarrierRead()) {
-                var context = WidgetAddonContextFactory.CreateContext(PluginInformations, reader, true);
+                var context = WidgetAddonContextFactory.CreateContext(PluginInformation, reader, true);
                 return Widget.GetMenuIcon(context);
             }
         }
@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
             // タイトルバーは強制的に変更
             var titleConvert = new TitleConverter();
-            window.Title = (string)titleConvert.Convert($"{PluginInformations.PluginIdentifiers.PluginName}({PluginInformations.PluginIdentifiers.PluginId})", typeof(string), null!, CultureService.Culture);
+            window.Title = (string)titleConvert.Convert($"{PluginInformation.PluginIdentifiers.PluginName}({PluginInformation.PluginIdentifiers.PluginId})", typeof(string), null!, CultureService.Culture);
 
             // 最前面強制不可・バインディング解除
             window.Topmost = false;
@@ -185,7 +185,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
             Window window;
             using(var reader = WidgetAddonContextFactory.BarrierRead()) {
-                using var context = WidgetAddonContextFactory.CreateCreateContex(PluginInformations, reader);
+                using var context = WidgetAddonContextFactory.CreateCreateContext(PluginInformation, reader);
                 window = Widget.ViewType switch {
                     WidgetViewType.Window => CreateWindowWidget(context),
                     WidgetViewType.WebView => CreateWebViewWidget(context),
@@ -227,9 +227,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             using(var context = MainDatabaseBarrier.WaitWrite()) {
                 var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(PluginId)) {
-                    pluginWidgetSettingsEntityDao.UpdatePluginWidgetTopmost(PluginId, newIsTopmost, DatabaseCommonStatus.CreatePluginAccount(PluginInformations.PluginIdentifiers, PluginInformations.PluginVersions));
+                    pluginWidgetSettingsEntityDao.UpdatePluginWidgetTopmost(PluginId, newIsTopmost, DatabaseCommonStatus.CreatePluginAccount(PluginInformation.PluginIdentifiers, PluginInformation.PluginVersions));
                 } else {
-                    pluginWidgetSettingsEntityDao.InsertPluginWidgetTopmost(PluginId, newIsTopmost, DatabaseCommonStatus.CreatePluginAccount(PluginInformations.PluginIdentifiers, PluginInformations.PluginVersions));
+                    pluginWidgetSettingsEntityDao.InsertPluginWidgetTopmost(PluginId, newIsTopmost, DatabaseCommonStatus.CreatePluginAccount(PluginInformation.PluginIdentifiers, PluginInformation.PluginVersions));
                 }
                 context.Commit();
             }
@@ -266,9 +266,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             using(var context = MainDatabaseBarrier.WaitWrite()) {
                 var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(PluginId)) {
-                    pluginWidgetSettingsEntityDao.UpdatePluginWidgetSetting(PluginId, data, DatabaseCommonStatus.CreatePluginAccount(PluginInformations.PluginIdentifiers, PluginInformations.PluginVersions));
+                    pluginWidgetSettingsEntityDao.UpdatePluginWidgetSetting(PluginId, data, DatabaseCommonStatus.CreatePluginAccount(PluginInformation.PluginIdentifiers, PluginInformation.PluginVersions));
                 } else {
-                    pluginWidgetSettingsEntityDao.InsertPluginWidgetSetting(PluginId, data, DatabaseCommonStatus.CreatePluginAccount(PluginInformations.PluginIdentifiers, PluginInformations.PluginVersions));
+                    pluginWidgetSettingsEntityDao.InsertPluginWidgetSetting(PluginId, data, DatabaseCommonStatus.CreatePluginAccount(PluginInformation.PluginIdentifiers, PluginInformation.PluginVersions));
                 }
                 context.Commit();
             }
@@ -316,7 +316,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             }
 
             using(var writer = WidgetAddonContextFactory.BarrierWrite()) {
-                using var context = WidgetAddonContextFactory.CreateClosedContext(PluginInformations, writer);
+                using var context = WidgetAddonContextFactory.CreateClosedContext(PluginInformation, writer);
                 Widget.ClosedWidget(context);
                 WidgetAddonContextFactory.Save();
             }
@@ -332,7 +332,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
         #region IPluginId
 
-        public PluginId PluginId => PluginInformations.PluginIdentifiers.PluginId;
+        public PluginId PluginId => PluginInformation.PluginIdentifiers.PluginId;
 
         #endregion
 
@@ -344,7 +344,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             WindowItem.Window.ContentRendered += Window_ContentRendered;
 
             using(var reader = WidgetAddonContextFactory.BarrierRead()) {
-                var context = WidgetAddonContextFactory.CreateContext(PluginInformations, reader, true);
+                var context = WidgetAddonContextFactory.CreateContext(PluginInformation, reader, true);
                 Widget.OpeningWidget(context);
             }
         }
@@ -357,7 +357,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
             // 書き込みは一応OKにしておく
             using(var writer = WidgetAddonContextFactory.BarrierWrite()) {
-                var context = WidgetAddonContextFactory.CreateContext(PluginInformations, writer, false);
+                var context = WidgetAddonContextFactory.CreateContext(PluginInformation, writer, false);
                 Widget.OpenedWidget(context);
                 WidgetAddonContextFactory.Save();
             }

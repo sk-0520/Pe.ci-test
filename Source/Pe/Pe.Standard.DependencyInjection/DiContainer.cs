@@ -218,13 +218,13 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             return result;
         }
 
-        private object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
+        private object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfoItems, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
         {
             var manualParameterItems = BuildManualParameters(manualParameters);
 
-            var arguments = new object[parameterInfos.Count];
-            for(var i = 0; i < parameterInfos.Count; i++) {
-                var parameterInfo = parameterInfos[i];
+            var arguments = new object[parameterInfoItems.Count];
+            for(var i = 0; i < parameterInfoItems.Count; i++) {
+                var parameterInfo = parameterInfoItems[i];
                 // 入力パラメータを優先して設定
                 if(manualParameterItems.Count != 0) {
                     //var item = manualParameterItems.FirstOrDefault(p => p.Key == parameterInfo.ParameterType || parameterInfo.ParameterType.IsAssignableFrom(p.Key));
@@ -298,7 +298,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
         private bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IReadOnlyList<object> manualParameters, [NotNullWhen(true)] out object? createdObject)
         {
-            var parameters = constructorCache.ParameterInfos;
+            var parameters = constructorCache.ParameterInfoItems;
             var parameterInjections = constructorCache.ParameterInjections;
 
             if(parameters.Count == 0) {

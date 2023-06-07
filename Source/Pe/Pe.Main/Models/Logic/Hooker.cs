@@ -130,16 +130,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #region variable
 
         public readonly ModifierKeyState shift;
-        public readonly ModifierKeyState contrl;
+        public readonly ModifierKeyState control;
         public readonly ModifierKeyState alt;
         public readonly ModifierKeyState super;
 
         #endregion
 
-        public ModifierKeyStatus(ModifierKeyState shift, ModifierKeyState contrl, ModifierKeyState alt, ModifierKeyState super)
+        public ModifierKeyStatus(ModifierKeyState shift, ModifierKeyState control, ModifierKeyState alt, ModifierKeyState super)
         {
             this.shift = shift;
-            this.contrl = contrl;
+            this.control = control;
             this.alt = alt;
             this.super = super;
         }
@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public readonly override string ToString()
         {
-            return $"shift = {this.shift}, alt = {this.alt}, ctrl = {this.contrl}, win = {this.super}";
+            return $"shift = {this.shift}, alt = {this.alt}, ctrl = {this.control}, win = {this.super}";
         }
 
         #endregion
@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    public class KeyboradHooker: HookerBase
+    public class KeyboardHooker: HookerBase
     {
         #region event
 
@@ -218,7 +218,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #endregion
 
-        public KeyboradHooker(ILoggerFactory loggerFactory)
+        public KeyboardHooker(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }
 

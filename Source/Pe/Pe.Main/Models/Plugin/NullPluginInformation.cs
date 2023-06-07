@@ -4,7 +4,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    internal class NullPluginInformation: PluginInformations
+    internal class NullPluginInformation: PluginInformation
     {
         public NullPluginInformation()
             : base(

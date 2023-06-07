@@ -229,7 +229,7 @@
         </ToolBar.Resources>
 
         <DockPanel HorizontalAlignment="Stretch">
-          <Button DockPanel.Dock="Left" ToolTip="{Binding Resources.String_Setting_LauncherGroups_AddItem, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddSelectedLauncheritemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button DockPanel.Dock="Left" ToolTip="{Binding Resources.String_Setting_LauncherGroups_AddItem, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddSelectedLauncherItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
           </Button>
           <TextBox Text="{Binding Editor.NameFilterQuery, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged, Delay=250}" />

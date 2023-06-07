@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public string GetLongInformation()
         {
-            var infos = new (string name, Func<IList<PlatformInformationItem>> func)[] {
+            var infoItems = new (string name, Func<IList<PlatformInformationItem>> func)[] {
                 ("Application", GetApplication),
                 ("EnvironmentParameter", GetEnvironmentParameter),
                 ("CPU", GetCPU),
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var sb = new StringBuilder(80 * 1024);
             sb.AppendLine(Header);
-            foreach(var info in infos) {
+            foreach(var info in infoItems) {
                 sb.Append(Indent);
                 sb.AppendFormat(CultureInfo.InvariantCulture, SubjectFormat, info.name);
                 sb.AppendLine();

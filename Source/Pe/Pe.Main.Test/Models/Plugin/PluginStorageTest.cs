@@ -18,13 +18,13 @@ using ContentTypeTextNet.Pe.Standard.Base;
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
 {
     [TestClass]
-    public class PluginPersistentStorageTest
+    public class PluginPersistenceStorageTest
     {
         #region define
 
         const string pluginDataDirName = "__test-plugin__";
 
-        readonly PluginInformations Informations = new PluginInformations(
+        readonly PluginInformation Information = new PluginInformation(
             new PluginIdentifiers(new PluginId(new Guid("00000000-1111-2222-3333-444444444444")), "test-plugin"),
             new PluginVersions(new Version(1, 2, 3), new Version(), new Version(), Array.Empty<string>()),
             new PluginAuthors(new Author("testman"), PluginLicense.Unknown)
@@ -45,31 +45,18 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
 
         #region function
 
-        //var pluginStorage = new PluginStorage(
-        //    new PluginFile(
-        //        new PluginFileStorage(new DirectoryInfo(Path.Combine(".", pluginDataDirName, "user", this.Informations.PluginIdentifiers.PluginId.ToString("D")))),
-        //        new PluginFileStorage(new DirectoryInfo(Path.Combine(".", pluginDataDirName, "machine", this.Informations.PluginIdentifiers.PluginId.ToString("D")))),
-        //        new PluginFileStorage(new DirectoryInfo(Path.Combine(".", pluginDataDirName, "temp", this.Informations.PluginIdentifiers.PluginId.ToString("D"))))
-        //    ),
-        //    new PluginPersistent(
-        //        new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, writableCommandsPack.Main, Test.DiContainer.Build<IDatabaseStatementLoader>(), false, Test.DiContainer.Build<ILoggerFactory>()),
-        //        new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, writableCommandsPack.File, Test.DiContainer.Build<IDatabaseStatementLoader>(), false, Test.DiContainer.Build<ILoggerFactory>()),
-        //        new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, writableCommandsPack.Temporary, Test.DiContainer.Build<IDatabaseStatementLoader>(), false, Test.DiContainer.Build<ILoggerFactory>())
-        //    )
-        //);
-
         [TestInitialize]
         public void Initialize()
         {
             using var context = Test.DiContainer.Build<IMainDatabaseBarrier>().WaitWrite();
             var pluginsEntityDao = Test.DiContainer.Build<PluginsEntityDao>(context, context.Implementation);
-            if(pluginsEntityDao.SelecteExistsPlugin(this.Informations.PluginIdentifiers.PluginId)) {
+            if(pluginsEntityDao.SelectExistsPlugin(this.Information.PluginIdentifiers.PluginId)) {
                 return;
             }
             pluginsEntityDao.InsertPluginStateData(
                 new Main.Models.Data.PluginStateData() {
-                    PluginId = this.Informations.PluginIdentifiers.PluginId,
-                    PluginName = this.Informations.PluginIdentifiers.PluginName,
+                    PluginId = this.Information.PluginIdentifiers.PluginId,
+                    PluginName = this.Information.PluginIdentifiers.PluginName,
                     State = Main.Models.Data.PluginState.Enable,
                 },
                 DatabaseCommonStatus.CreateCurrentAccount()
@@ -80,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
         [TestMethod]
         public void FileTest()
         {
-            var dir = new DirectoryInfo(Path.Combine(".", pluginDataDirName, "user", this.Informations.PluginIdentifiers.PluginId.ToString()));
+            var dir = new DirectoryInfo(Path.Combine(".", pluginDataDirName, "user", this.Information.PluginIdentifiers.PluginId.ToString()));
             dir.Refresh();
             if(dir.Exists) {
                 var directoryCleaner = Test.DiContainer.Build<DirectoryCleaner>(dir, 10, TimeSpan.FromMilliseconds(300));
@@ -131,36 +118,36 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
 
         void DeletePluginSetting()
         {
-            using var commadner = Test.DiContainer.Build<IMainDatabaseBarrier>().WaitWrite();
-            commadner.Execute("delete from PluginSettings where PluginId = @PluginId", new { PluginId = this.Informations.PluginIdentifiers.PluginId });
-            commadner.Commit();
+            using var commander = Test.DiContainer.Build<IMainDatabaseBarrier>().WaitWrite();
+            commander.Execute("delete from PluginSettings where PluginId = @PluginId", new { PluginId = this.Information.PluginIdentifiers.PluginId });
+            commander.Commit();
         }
 
         [TestMethod]
-        public void PersistentNormalTest()
+        public void PersistenceNormalTest()
         {
             DeletePluginSetting();
 
             using var writableCommandsPack = Test.DiContainer.Build<IDatabaseBarrierPack>().WaitWrite();
 
-            var persistentNormal = new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, writableCommandsPack.Main, Test.DiContainer.Build<IDatabaseStatementLoader>(), false, Test.DiContainer.Build<ILoggerFactory>());
+            var persistenceNormal = new PluginPersistenceStorage(this.Information.PluginIdentifiers, this.Information.PluginVersions, writableCommandsPack.Main, Test.DiContainer.Build<IDatabaseStatementLoader>(), false, Test.DiContainer.Build<ILoggerFactory>());
 
-            Assert.IsFalse(persistentNormal.Exists(""));
-            Assert.IsFalse(persistentNormal.TryGet<string>("", out _));
-            Assert.IsTrue(persistentNormal.Set("", "test", PluginPersistentFormat.Text));
-            Assert.IsTrue(persistentNormal.Exists(""));
-            Assert.IsTrue(persistentNormal.Exists(" "));
+            Assert.IsFalse(persistenceNormal.Exists(""));
+            Assert.IsFalse(persistenceNormal.TryGet<string>("", out _));
+            Assert.IsTrue(persistenceNormal.Set("", "test", PluginPersistenceFormat.Text));
+            Assert.IsTrue(persistenceNormal.Exists(""));
+            Assert.IsTrue(persistenceNormal.Exists(" "));
 
-            Assert.IsFalse(persistentNormal.TryGet<string>("x", out _));
-            if(persistentNormal.TryGet<string>("", out var test1)) {
+            Assert.IsFalse(persistenceNormal.TryGet<string>("x", out _));
+            if(persistenceNormal.TryGet<string>("", out var test1)) {
                 Assert.AreEqual("test", test1);
             } else {
                 Assert.Fail();
             }
 
-            Assert.IsFalse(persistentNormal.Delete("x"));
-            Assert.IsTrue(persistentNormal.Delete(""));
-            Assert.IsFalse(persistentNormal.Exists(""));
+            Assert.IsFalse(persistenceNormal.Delete("x"));
+            Assert.IsTrue(persistenceNormal.Delete(""));
+            Assert.IsFalse(persistenceNormal.Exists(""));
 
 
             var data = new Data() {
@@ -176,8 +163,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
                 }
             };
 
-            Assert.IsTrue(persistentNormal.Set("data", data));
-            if(persistentNormal.TryGet<Data>("   data   ", out var test2)) {
+            Assert.IsTrue(persistenceNormal.Set("data", data));
+            if(persistenceNormal.TryGet<Data>("   data   ", out var test2)) {
                 Assert.IsFalse(object.ReferenceEquals(data, test2));
 
                 Assert.AreEqual(data.Int, test2.Int);
@@ -193,64 +180,64 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
         }
 
         [TestMethod]
-        public void PersistentReadOnlyTest()
+        public void PersistenceReadOnlyTest()
         {
             DeletePluginSetting();
 
             using(var writableCommandsPack = Test.DiContainer.Build<IDatabaseBarrierPack>().WaitWrite()) {
-                var persistentNormal = new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, writableCommandsPack.Main, Test.DiContainer.Build<IDatabaseStatementLoader>(), false, Test.DiContainer.Build<ILoggerFactory>());
-                Assert.IsTrue(persistentNormal.Set("", "test", PluginPersistentFormat.Text));
+                var persistenceNormal = new PluginPersistenceStorage(this.Information.PluginIdentifiers, this.Information.PluginVersions, writableCommandsPack.Main, Test.DiContainer.Build<IDatabaseStatementLoader>(), false, Test.DiContainer.Build<ILoggerFactory>());
+                Assert.IsTrue(persistenceNormal.Set("", "test", PluginPersistenceFormat.Text));
                 Test.DiContainer.Build<IDatabaseBarrierPack>().Save();
             }
 
             using(var readonlyCommandsPack = Test.DiContainer.Build<IDatabaseBarrierPack>().WaitRead()) {
-                var persistentNormal = new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, readonlyCommandsPack.Main, Test.DiContainer.Build<IDatabaseStatementLoader>(), true, Test.DiContainer.Build<ILoggerFactory>());
-                if(persistentNormal.TryGet<string>("", out var test1)) {
+                var persistenceNormal = new PluginPersistenceStorage(this.Information.PluginIdentifiers, this.Information.PluginVersions, readonlyCommandsPack.Main, Test.DiContainer.Build<IDatabaseStatementLoader>(), true, Test.DiContainer.Build<ILoggerFactory>());
+                if(persistenceNormal.TryGet<string>("", out var test1)) {
                     Assert.AreEqual("test", test1);
                 } else {
                     Assert.Fail();
                 }
-                Assert.ThrowsException<InvalidOperationException>(() => persistentNormal.Set("", "test!", PluginPersistentFormat.Text));
-                Assert.ThrowsException<InvalidOperationException>(() => persistentNormal.Delete(""));
+                Assert.ThrowsException<InvalidOperationException>(() => persistenceNormal.Set("", "test!", PluginPersistenceFormat.Text));
+                Assert.ThrowsException<InvalidOperationException>(() => persistenceNormal.Delete(""));
             }
 
             // 書き込み可能トランザクションでも IsReadOnly が優先される
             using(var writableCommandsPack = Test.DiContainer.Build<IDatabaseBarrierPack>().WaitWrite()) {
-                var persistentNormal = new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, writableCommandsPack.Main, Test.DiContainer.Build<IDatabaseStatementLoader>(), true, Test.DiContainer.Build<ILoggerFactory>());
-                if(persistentNormal.TryGet<string>("", out var test1)) {
+                var persistenceNormal = new PluginPersistenceStorage(this.Information.PluginIdentifiers, this.Information.PluginVersions, writableCommandsPack.Main, Test.DiContainer.Build<IDatabaseStatementLoader>(), true, Test.DiContainer.Build<ILoggerFactory>());
+                if(persistenceNormal.TryGet<string>("", out var test1)) {
                     Assert.AreEqual("test", test1);
                 } else {
                     Assert.Fail();
                 }
-                Assert.ThrowsException<InvalidOperationException>(() => persistentNormal.Set("", "test!", PluginPersistentFormat.Text));
-                Assert.ThrowsException<InvalidOperationException>(() => persistentNormal.Delete(""));
+                Assert.ThrowsException<InvalidOperationException>(() => persistenceNormal.Set("", "test!", PluginPersistenceFormat.Text));
+                Assert.ThrowsException<InvalidOperationException>(() => persistenceNormal.Delete(""));
             }
 
         }
 
         [TestMethod]
-        public void PersistentBarrierTest()
+        public void PersistenceBarrierTest()
         {
             DeletePluginSetting();
 
-            var persistentNormal = new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, Test.DiContainer.Build<IMainDatabaseBarrier>(), Test.DiContainer.Build<IDatabaseStatementLoader>(), false, Test.DiContainer.Build<ILoggerFactory>());
+            var persistenceNormal = new PluginPersistenceStorage(this.Information.PluginIdentifiers, this.Information.PluginVersions, Test.DiContainer.Build<IMainDatabaseBarrier>(), Test.DiContainer.Build<IDatabaseStatementLoader>(), false, Test.DiContainer.Build<ILoggerFactory>());
 
-            Assert.IsFalse(persistentNormal.Exists(""));
-            Assert.IsFalse(persistentNormal.TryGet<string>("", out _));
-            Assert.IsTrue(persistentNormal.Set("", "test", PluginPersistentFormat.Text));
-            Assert.IsTrue(persistentNormal.Exists(""));
-            Assert.IsTrue(persistentNormal.Exists(" "));
+            Assert.IsFalse(persistenceNormal.Exists(""));
+            Assert.IsFalse(persistenceNormal.TryGet<string>("", out _));
+            Assert.IsTrue(persistenceNormal.Set("", "test", PluginPersistenceFormat.Text));
+            Assert.IsTrue(persistenceNormal.Exists(""));
+            Assert.IsTrue(persistenceNormal.Exists(" "));
 
-            Assert.IsFalse(persistentNormal.TryGet<string>("x", out _));
-            if(persistentNormal.TryGet<string>("", out var test1)) {
+            Assert.IsFalse(persistenceNormal.TryGet<string>("x", out _));
+            if(persistenceNormal.TryGet<string>("", out var test1)) {
                 Assert.AreEqual("test", test1);
             } else {
                 Assert.Fail();
             }
 
-            Assert.IsFalse(persistentNormal.Delete("x"));
-            Assert.IsTrue(persistentNormal.Delete(""));
-            Assert.IsFalse(persistentNormal.Exists(""));
+            Assert.IsFalse(persistenceNormal.Delete("x"));
+            Assert.IsTrue(persistenceNormal.Delete(""));
+            Assert.IsFalse(persistenceNormal.Exists(""));
 
 
             var data = new Data() {
@@ -266,8 +253,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
                 }
             };
 
-            Assert.IsTrue(persistentNormal.Set("data", data));
-            if(persistentNormal.TryGet<Data>("   data   ", out var test2)) {
+            Assert.IsTrue(persistenceNormal.Set("data", data));
+            if(persistenceNormal.TryGet<Data>("   data   ", out var test2)) {
                 Assert.IsFalse(object.ReferenceEquals(data, test2));
 
                 Assert.AreEqual(data.Int, test2.Int);
@@ -284,28 +271,28 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
 
 
         [TestMethod]
-        public void PersistentLazyTest()
+        public void PersistenceLazyTest()
         {
             DeletePluginSetting();
 
-            var persistentNormal = new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, Test.DiContainer.Build<IMainDatabaseBarrier>(), Test.DiContainer.Build<IMainDatabaseLazyWriter>(), Test.DiContainer.Build<IDatabaseStatementLoader>(), Test.DiContainer.Build<ILoggerFactory>());
+            var persistenceNormal = new PluginPersistenceStorage(this.Information.PluginIdentifiers, this.Information.PluginVersions, Test.DiContainer.Build<IMainDatabaseBarrier>(), Test.DiContainer.Build<IMainDatabaseLazyWriter>(), Test.DiContainer.Build<IDatabaseStatementLoader>(), Test.DiContainer.Build<ILoggerFactory>());
 
-            Assert.IsFalse(persistentNormal.Exists(""));
-            Assert.IsFalse(persistentNormal.TryGet<string>("", out _));
-            Assert.IsTrue(persistentNormal.Set("", "test", PluginPersistentFormat.Text));
-            Assert.IsTrue(persistentNormal.Exists(""));
-            Assert.IsTrue(persistentNormal.Exists(" "));
+            Assert.IsFalse(persistenceNormal.Exists(""));
+            Assert.IsFalse(persistenceNormal.TryGet<string>("", out _));
+            Assert.IsTrue(persistenceNormal.Set("", "test", PluginPersistenceFormat.Text));
+            Assert.IsTrue(persistenceNormal.Exists(""));
+            Assert.IsTrue(persistenceNormal.Exists(" "));
 
-            Assert.IsFalse(persistentNormal.TryGet<string>("x", out _));
-            if(persistentNormal.TryGet<string>("", out var test1)) {
+            Assert.IsFalse(persistenceNormal.TryGet<string>("x", out _));
+            if(persistenceNormal.TryGet<string>("", out var test1)) {
                 Assert.AreEqual("test", test1);
             } else {
                 Assert.Fail();
             }
 
-            Assert.IsFalse(persistentNormal.Delete("x"));
-            Assert.IsFalse(persistentNormal.Delete("")); // 遅延処理時は成功状態不明
-            Assert.IsFalse(persistentNormal.Exists("")); // 遅延処理フラッシュにより存在しないことを検知
+            Assert.IsFalse(persistenceNormal.Delete("x"));
+            Assert.IsFalse(persistenceNormal.Delete("")); // 遅延処理時は成功状態不明
+            Assert.IsFalse(persistenceNormal.Exists("")); // 遅延処理フラッシュにより存在しないことを検知
 
 
             var data = new Data() {
@@ -321,8 +308,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
                 }
             };
 
-            Assert.IsTrue(persistentNormal.Set("data", data));
-            if(persistentNormal.TryGet<Data>("   data   ", out var test2)) {
+            Assert.IsTrue(persistenceNormal.Set("data", data));
+            if(persistenceNormal.TryGet<Data>("   data   ", out var test2)) {
                 Assert.IsFalse(object.ReferenceEquals(data, test2));
 
                 Assert.AreEqual(data.Int, test2.Int);

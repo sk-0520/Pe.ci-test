@@ -18,9 +18,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         private IAddon Addon { get; }
 
-        public string AddonName => Addon.PluginInformations.PluginIdentifiers.PluginName;
+        public string AddonName => Addon.PluginInformation.PluginIdentifiers.PluginName;
 
-        public PluginId PluginId => Addon.PluginInformations.PluginIdentifiers.PluginId;
+        public PluginId PluginId => Addon.PluginInformation.PluginIdentifiers.PluginId;
 
         #endregion
 

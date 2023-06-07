@@ -7,9 +7,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginParameter"/>
     public abstract class PluginParameterBase: IPluginParameter
     {
-        protected PluginParameterBase(IPluginInformations pluginInformations, IViewManager viewManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected PluginParameterBase(IPluginInformation pluginInformation, IViewManager viewManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
-            PluginInformations = pluginInformations;
+            PluginInformation = pluginInformation;
             ViewManager = viewManager;
             PlatformTheme = platformTheme;
             MediaConverter = mediaConverter;
@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region property
 
-        protected IPluginInformations PluginInformations { get; }
+        protected IPluginInformation PluginInformation { get; }
 
         #endregion
 

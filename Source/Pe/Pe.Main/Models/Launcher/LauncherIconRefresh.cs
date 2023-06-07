@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return RefreshTime < (dateTime - launcherIconStatus.LastUpdatedTimestamp);
         }
 
-        private IReadOnlyList<LauncherIconStatus> GetUpdateTartget(LauncherItemId launcherItemIs)
+        private IReadOnlyList<LauncherIconStatus> GetUpdateTarget(LauncherItemId launcherItemIs)
         {
             using var context = LargeDatabaseBarrier.WaitRead();
             var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 foreach(var launcherItemId in allLauncherItemIds) {
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    var targets = GetUpdateTartget(launcherItemId);
+                    var targets = GetUpdateTarget(launcherItemId);
 
                     if(targets.Count != 0) {
                         foreach(var target in targets) {

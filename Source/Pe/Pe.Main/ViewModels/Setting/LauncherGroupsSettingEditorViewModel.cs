@@ -58,8 +58,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             var launcherItemDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = LauncherItemCanDragStart,
-                DragEnterAction = LauncherItemDragOrverOrEnter,
-                DragOverAction = LauncherItemDragOrverOrEnter,
+                DragEnterAction = LauncherItemDragOverOrEnter,
+                DragOverAction = LauncherItemDragOverOrEnter,
                 DragLeaveAction = LauncherItemDragLeave,
                 DropAction = LauncherItemDrop,
                 GetDragParameter = LauncherItemGetDragParameter,
@@ -69,8 +69,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             var groupsDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = GroupsCanDragStart,
-                DragEnterAction = GroupsDragOrverOrEnter,
-                DragOverAction = GroupsDragOrverOrEnter,
+                DragEnterAction = GroupsDragOverOrEnter,
+                DragOverAction = GroupsDragOverOrEnter,
                 DragLeaveAction = GroupsDragLeave,
                 DropAction = GroupsDrop,
                 GetDragParameter = GroupsGetDragParameter,
@@ -80,8 +80,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             var launcherItemsDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = LauncherItemsCanDragStart,
-                DragEnterAction = LauncherItemsDragOrverOrEnter,
-                DragOverAction = LauncherItemsDragOrverOrEnter,
+                DragEnterAction = LauncherItemsDragOverOrEnter,
+                DragOverAction = LauncherItemsDragOverOrEnter,
                 DragLeaveAction = LauncherItemsDragLeave,
                 DropAction = LauncherItemsDrop,
                 GetDragParameter = LauncherItemsGetDragParameter,
@@ -250,7 +250,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             .ObservesProperty(() => SelectedGroup!.SelectedLauncherItem)
         );
 
-        public ICommand AddSelectedLauncheritemCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand AddSelectedLauncherItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 SelectedGroup!.InsertNewLauncherItem(SelectedGroup.LauncherItems.Count, SelectedLauncherItem!);
                 SelectedGroup.SelectedLauncherItem = SelectedGroup.LauncherItems[SelectedGroup.LauncherItems.Count - 1];
@@ -293,7 +293,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             return true;
         }
 
-        private void LauncherItemDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        private void LauncherItemDragOverOrEnter(UIElement sender, DragEventArgs e)
         {
             var canDrag = false;
             if(e.Data.TryGet<LauncherItemDragData>(out var dragData)) {
@@ -402,15 +402,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             return true;
         }
 
-        private void GroupsDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        private void GroupsDragOverOrEnter(UIElement sender, DragEventArgs e)
         {
             var canDrag = false;
-            if(e.Data.TryGet<LauncherGroupSettingEditorViewModel>(out var drafItem)) {
+            if(e.Data.TryGet<LauncherGroupSettingEditorViewModel>(out var dragItem)) {
                 if(e.OriginalSource is DependencyObject dependencyObject) {
                     var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
                     if(listBoxItem != null) {
                         var currentItem = (LauncherGroupSettingEditorViewModel)listBoxItem.DataContext;
-                        if(currentItem != drafItem) {
+                        if(currentItem != dragItem) {
                             canDrag = true;
                         }
                     }
@@ -463,10 +463,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         private IResultSuccess<DragParameter> GroupsGetDragParameter(UIElement sender, MouseEventArgs e)
         {
-            if(e.Source is ListBox listbox) {
-                var scollbar = UIUtility.GetVisualClosest<ScrollBar>((DependencyObject)e.OriginalSource);
-                if(scollbar == null && listbox.SelectedItem != null) {
-                    var item = (LauncherGroupSettingEditorViewModel)listbox.SelectedItem;
+            if(e.Source is ListBox listBox) {
+                var scrollBar = UIUtility.GetVisualClosest<ScrollBar>((DependencyObject)e.OriginalSource);
+                if(scrollBar == null && listBox.SelectedItem != null) {
+                    var item = (LauncherGroupSettingEditorViewModel)listBox.SelectedItem;
                     SelectedGroup = item;
                     var data = new DataObject(typeof(LauncherGroupSettingEditorViewModel), item);
                     return Result.CreateSuccess(new DragParameter(sender, DragDropEffects.Move, data));
@@ -484,7 +484,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             return true;
         }
 
-        private void LauncherItemsDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        private void LauncherItemsDragOverOrEnter(UIElement sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.None;
             e.Handled = true;

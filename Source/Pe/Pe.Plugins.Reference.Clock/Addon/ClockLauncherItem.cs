@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         #endregion
 
-        public ClockLauncherItem(ILauncherItemExtensionCreateParameter parameter, IPluginInformations pluginInformations, PluginBase plugin)
+        public ClockLauncherItem(ILauncherItemExtensionCreateParameter parameter, IPluginInformation pluginInformations, PluginBase plugin)
             : base(parameter, pluginInformations)
         {
             Plugin = plugin;
@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
         private void ReloadSetting()
         {
             ContextWorker.RunLauncherItemAddon(c => {
-                if(!c.Storage.Persistent.Normal.TryGet<ClockLauncherItemSetting>(LauncherItemId, string.Empty, out this._setting)) {
+                if(!c.Storage.Persistence.Normal.TryGet<ClockLauncherItemSetting>(LauncherItemId, string.Empty, out this._setting)) {
                     this._setting = new ClockLauncherItemSetting();
                 }
             });

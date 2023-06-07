@@ -245,36 +245,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool UpdateCaptionPosition(NoteId noteId, NoteCaptionPosition captionPosition, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var noteCaptionPositionTansfer = new EnumTransfer<NoteCaptionPosition>();
+            var noteCaptionPositionTransfer = new EnumTransfer<NoteCaptionPosition>();
 
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
-            param[Column.CaptionPosition] = noteCaptionPositionTansfer.ToString(captionPosition);
+            param[Column.CaptionPosition] = noteCaptionPositionTransfer.ToString(captionPosition);
 
             return Context.UpdateByKeyOrNothing(statement, param);
         }
 
         public bool UpdateContentKind(NoteId noteId, NoteContentKind contentKind, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var noteContentKindTansfer = new EnumTransfer<NoteContentKind>();
+            var noteContentKindTransfer = new EnumTransfer<NoteContentKind>();
 
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
-            param[Column.ContentKind] = noteContentKindTansfer.ToString(contentKind);
+            param[Column.ContentKind] = noteContentKindTransfer.ToString(contentKind);
 
             return Context.UpdateByKeyOrNothing(statement, param);
         }
 
         public bool UpdateLayoutKind(NoteId noteId, NoteLayoutKind layoutKind, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var noteLayoutKindTansfer = new EnumTransfer<NoteLayoutKind>();
+            var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 
             var statement = LoadStatement();
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
-            param[Column.LayoutKind] = noteLayoutKindTansfer.ToString(layoutKind);
+            param[Column.LayoutKind] = noteLayoutKindTransfer.ToString(layoutKind);
 
             return Context.UpdateByKeyOrNothing(statement, param);
         }

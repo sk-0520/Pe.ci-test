@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
                 ProgramVersion = pluginVersions.PluginVersion,
             };
         }
-        public static DatabaseCommonStatus CreatePluginAccount(IPluginInformations pluginInformations) => CreatePluginAccount(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions);
+        public static DatabaseCommonStatus CreatePluginAccount(IPluginInformation pluginInformation) => CreatePluginAccount(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions);
 
         void WriteCreateCore(IWritableCreateDto dto, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp)
         {

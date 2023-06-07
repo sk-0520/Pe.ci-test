@@ -11,12 +11,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// <inheritdoc cref="IAddonExecutor" />
     internal class AddonExecutor: IAddonExecutor
     {
-        public AddonExecutor(IPluginInformations pluginInformations, ILoggerFactory loggerFactory)
+        public AddonExecutor(IPluginInformation pluginInformation, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
-            PluginInformations = pluginInformations;
+            PluginInformation = pluginInformation;
 
             Logger.LogTrace("ほぼほぼ未完成処理");
         }
@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         private ILoggerFactory LoggerFactory { get; }
         /// <inheritdoc cref="ILogger"/>
         private ILogger Logger { get; }
-        private IPluginInformations PluginInformations { get; }
+        private IPluginInformation PluginInformation { get; }
 
         #endregion
 

@@ -15,9 +15,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public class LauncherToobarsSettingEditorElement: SettingEditorElementBase
+    public class LauncherToolbarsSettingEditorElement: SettingEditorElementBase
     {
-        public LauncherToobarsSettingEditorElement(ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherToolbarsSettingEditorElement(ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, databaseStatementLoader, idFactory, imageLoader, mediaConverter, policy, dispatcherWrapper, loggerFactory)
         {
             AllLauncherGroups = allLauncherGroups;
@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
 
         public ObservableCollection<LauncherGroupSettingEditorElement> AllLauncherGroups { get; }
-        public ObservableCollection<LauncherToobarSettingEditorElement> Toolbars { get; } = new ObservableCollection<LauncherToobarSettingEditorElement>();
+        public ObservableCollection<LauncherToolbarSettingEditorElement> Toolbars { get; } = new ObservableCollection<LauncherToolbarSettingEditorElement>();
 
         #endregion
 
@@ -44,9 +44,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 launcherToolbarIds = ids.ToList();
             }
 
-            var toolbars = new List<LauncherToobarSettingEditorElement>();
+            var toolbars = new List<LauncherToolbarSettingEditorElement>();
             foreach(var launcherToolbarId in launcherToolbarIds) {
-                var element = new LauncherToobarSettingEditorElement(launcherToolbarId, AllLauncherGroups, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+                var element = new LauncherToolbarSettingEditorElement(launcherToolbarId, AllLauncherGroups, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
                 toolbars.Add(element);
             }
 

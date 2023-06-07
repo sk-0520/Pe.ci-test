@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
-        public bool ExistsInformations(LauncherItemId launcherItemId)
+        public bool ExistsInformation(LauncherItemId launcherItemId)
         {
             var target = LauncherItemAddonViewSupporters.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
             if(target == null) {
@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 return false;
             }
 
-            return target.Element.GetInformations().Any();
+            return target.Element.GetInformationItems().Any();
         }
 
         /// <summary>
@@ -70,18 +70,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             // TODO: ウィンドウ位置移動
         }
 
-        public ILauncherItemAddonViewSupporter Create(IPluginInformations pluginInformations, LauncherItemId launcherItemId)
+        public ILauncherItemAddonViewSupporter Create(IPluginInformation pluginInformation, LauncherItemId launcherItemId)
         {
             var createdViewSupporter = LauncherItemAddonViewSupporters.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
             if(createdViewSupporter != null) {
                 return createdViewSupporter;
             }
 
-            if(ExistsInformations(launcherItemId)) {
+            if(ExistsInformation(launcherItemId)) {
                 throw new InvalidOperationException($"{nameof(launcherItemId)}: {launcherItemId}");
             }
 
-            var result = new LauncherItemAddonViewSupporter(pluginInformations, launcherItemId, OrderManager, WindowManager, UserTracker, DispatcherWrapper, LoggerFactory);
+            var result = new LauncherItemAddonViewSupporter(pluginInformation, launcherItemId, OrderManager, WindowManager, UserTracker, DispatcherWrapper, LoggerFactory);
             LauncherItemAddonViewSupporters.Add(result);
             return result;
         }
@@ -117,11 +117,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
     internal class LauncherItemAddonViewSupporter: ILauncherItemAddonViewSupporter, ILauncherItemId
     {
-        public LauncherItemAddonViewSupporter(IPluginInformations pluginInformations, LauncherItemId launcherItemId, IOrderManager orderManager, IWindowManager windowManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemAddonViewSupporter(IPluginInformation pluginInformation, LauncherItemId launcherItemId, IOrderManager orderManager, IWindowManager windowManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
-            PluginInformations = pluginInformations;
+            PluginInformation = pluginInformation;
             LauncherItemId = launcherItemId;
             OrderManager = orderManager;
             WindowManager = windowManager;
@@ -135,8 +135,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         private ILogger Logger { get; }
         /// <inheritdoc cref="ILoggerFactory"/>
         private ILoggerFactory LoggerFactory { get; }
-        /// <inheritdoc cref="IPluginInformations"/>
-        private IPluginInformations PluginInformations { get; }
+        /// <inheritdoc cref="IPluginInformation"/>
+        private IPluginInformation PluginInformation { get; }
         /// <inheritdoc cref="IWindowManager"/>
         private IWindowManager WindowManager { get; }
         /// <inheritdoc cref="IOrderManager"/>
@@ -175,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             }
 
             if(Element == null) {
-                Element = OrderManager.CreateLauncherItemExtensionElement(PluginInformations, LauncherItemId);
+                Element = OrderManager.CreateLauncherItemExtensionElement(PluginInformation, LauncherItemId);
             }
             //NOTE: 引数がどんどこ増えるようなら IOrderManager に移す
             var windowItem = new WindowItem(Manager.WindowKind.LauncherItemExtension, Element, new LauncherItemExtensionViewModel(Element, UserTracker, DispatcherWrapper, LoggerFactory), window);

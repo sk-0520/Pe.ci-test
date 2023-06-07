@@ -200,7 +200,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <summary>
     /// プラグイン情報。
     /// </summary>
-    public interface IPluginInformations
+    public interface IPluginInformation
     {
         /// <summary>
         /// プラグインID。
@@ -216,10 +216,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         IPluginAuthors PluginAuthors { get; }
     }
 
-    /// <inheritdoc cref="IPluginInformations"/>
-    public class PluginInformations: IPluginInformations
+    /// <inheritdoc cref="IPluginInformation"/>
+    public class PluginInformation: IPluginInformation
     {
-        public PluginInformations(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IPluginAuthors pluginAuthors)
+        public PluginInformation(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IPluginAuthors pluginAuthors)
         {
             PluginIdentifiers = pluginIdentifiers;
             PluginVersions = pluginVersions;
@@ -228,13 +228,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         #region IPluginInformations
 
-        /// <inheritdoc cref="IPluginInformations.PluginIdentifiers"/>
+        /// <inheritdoc cref="IPluginInformation.PluginIdentifiers"/>
         public IPluginIdentifiers PluginIdentifiers { get; }
 
-        /// <inheritdoc cref="IPluginInformations.PluginVersions"/>
+        /// <inheritdoc cref="IPluginInformation.PluginVersions"/>
         public IPluginVersions PluginVersions { get; }
 
-        /// <inheritdoc cref="IPluginInformations.PluginAuthors"/>
+        /// <inheritdoc cref="IPluginInformation.PluginAuthors"/>
         public IPluginAuthors PluginAuthors { get; }
 
         #endregion

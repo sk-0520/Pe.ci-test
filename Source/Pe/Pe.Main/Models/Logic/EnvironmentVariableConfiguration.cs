@@ -89,14 +89,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             yield break;
         }
 
-        public void SetValidateCommon(TextDocument textDocument, Func<TextDocument, IEnumerable<string>> func, Action<IEnumerable<string>> addErros, ICollection<string> collection)
+        public void SetValidateCommon(TextDocument textDocument, Func<TextDocument, IEnumerable<string>> func, Action<IEnumerable<string>> addErrors, ICollection<string> collection)
         {
             collection.Clear();
 
-            var erros = func(textDocument!).ToList();
-            if(erros.Any()) {
-                addErros(erros);
-                foreach(var err in erros) {
+            var errors = func(textDocument!).ToList();
+            if(errors.Any()) {
+                addErrors(errors);
+                foreach(var err in errors) {
                     collection.Add(err);
                 }
             }

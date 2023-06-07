@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         StandardInputOutputElement CreateStandardInputOutputElement(string caption, Process process, IScreen screen);
 
-        LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, LauncherItemId launcherItemId);
+        LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformation pluginInformation, LauncherItemId launcherItemId);
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeContainerElement element);
@@ -236,9 +236,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
-            public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, LauncherItemId launcherItemId)
+            public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformation pluginInformation, LauncherItemId launcherItemId)
             {
-                var element = DiContainer.Build<LauncherItemExtensionElement>(pluginInformations, launcherItemId);
+                var element = DiContainer.Build<LauncherItemExtensionElement>(pluginInformation, launcherItemId);
                 element.Initialize();
                 return element;
             }

@@ -6,7 +6,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <summary>
     /// 永続データのデータフォーマット。
     /// </summary>
-    public enum PluginPersistentFormat
+    public enum PluginPersistenceFormat
     {
         /// <summary>
         /// ただの文字列。
@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <para>Pe の管理下で処理する。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPluginPersistentStorage
+    public interface IPluginPersistenceStorage
     {
         #region property
 
@@ -115,18 +115,18 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         /// <summary>
         /// 指定データを保存する。
-        /// <para><see cref="PluginPersistentFormat.Text"/>を使用する以外は原則使用せず<see cref="Set{TValue}(string, TValue)"/>を用いること。</para>
+        /// <para><see cref="PluginPersistenceFormat.Text"/>を使用する以外は原則使用せず<see cref="Set{TValue}(string, TValue)"/>を用いること。</para>
         /// </summary>
         /// <typeparam name="TValue">保存データ。</typeparam>
         /// <param name="key">キー。</param>
         /// <param name="value">値。</param>
         /// <param name="format">変換種別。</param>
         /// <returns>保存成功・失敗。</returns>
-        bool Set<TValue>(string key, TValue value, PluginPersistentFormat format);
+        bool Set<TValue>(string key, TValue value, PluginPersistenceFormat format);
         /// <summary>
         /// 現行バージョンにおける最適な型を使用して指定データを保存する。
         /// </summary>
-        /// <typeparam name="TValue"><inheritdoc cref="SetValue{TValue}(string, TValue, PluginPersistentFormat)"/></typeparam>
+        /// <typeparam name="TValue"><inheritdoc cref="SetValue{TValue}(string, TValue, PluginPersistenceFormat)"/></typeparam>
         /// <param name="key">キー。</param>
         /// <param name="value">値。</param>
         /// <returns>保存成功・失敗。</returns>
@@ -172,22 +172,22 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// 永続データ操作処理グループ。
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPluginPersistents
+    public interface IPluginPersistence
     {
         #region property
 
         /// <summary>
         /// 通常データ。
         /// </summary>
-        IPluginPersistentStorage Normal { get; }
+        IPluginPersistenceStorage Normal { get; }
         /// <summary>
         /// 大きめのデータ。
         /// </summary>
-        IPluginPersistentStorage Large { get; }
+        IPluginPersistenceStorage Large { get; }
         /// <summary>
         /// お好きに。
         /// </summary>
-        IPluginPersistentStorage Temporary { get; }
+        IPluginPersistenceStorage Temporary { get; }
 
         #endregion
     }
@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// <summary>
         /// 永続データ処理。
         /// </summary>
-        IPluginPersistents Persistent { get; }
+        IPluginPersistence Persistence { get; }
 
         #endregion
     }

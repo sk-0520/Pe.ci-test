@@ -364,9 +364,9 @@
             <Grid Grid.Column="1">
               <app_main_views_launcher_item_customize:EnvironmentValieableEditor
                 MergeTextDocument="{Binding MergeTextDocument}"
-                MergeErrorItemsSource="{Binding MergeErros}"
+                MergeErrorItemsSource="{Binding MergeErrors}"
                 RemoveTextDocument="{Binding RemoveTextDocument}"
-                RemoveErrorItemsSource="{Binding RemoveErros}"
+                RemoveErrorItemsSource="{Binding RemoveErrors}"
               />
             </Grid>
           </Grid>

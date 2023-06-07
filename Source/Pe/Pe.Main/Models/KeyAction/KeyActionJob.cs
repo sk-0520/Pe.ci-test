@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             if(!TestModifierKey(mapping.Shift, modifierKeyStatus.shift)) {
                 return false;
             }
-            if(!TestModifierKey(mapping.Control, modifierKeyStatus.contrl)) {
+            if(!TestModifierKey(mapping.Control, modifierKeyStatus.control)) {
                 return false;
             }
             if(!TestModifierKey(mapping.Alt, modifierKeyStatus.alt)) {

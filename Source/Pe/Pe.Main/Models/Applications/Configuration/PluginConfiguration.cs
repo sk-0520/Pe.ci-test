@@ -16,8 +16,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         /// <para>先に一致したものを優先する。</para>
         /// </summary>
         [Configuration]
-        public IReadOnlyList<string> Extentions { get; } = default!;
-
+        public IReadOnlyList<string> Extensions { get; } = default!;
+        
         /// <summary>
         /// プラグインとしてそもそも無視するファイル名(拡張子抜き)。
         /// </summary>

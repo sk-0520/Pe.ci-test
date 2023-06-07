@@ -237,7 +237,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             var extractedDirectory = await ExtractArchiveAsync(archiveFile, archiveKind, isManual).ConfigureAwait(false);
 
-            var pluginFile = await GetPluginFileAsync(extractedDirectory, pluginName, EnvironmentParameters.ApplicationConfiguration.Plugin.Extentions).ConfigureAwait(false);
+            var pluginFile = await GetPluginFileAsync(extractedDirectory, pluginName, EnvironmentParameters.ApplicationConfiguration.Plugin.Extensions).ConfigureAwait(false);
             if(pluginFile == null) {
                 // プラグインが見つかんない
                 extractedDirectory.Delete(true);
@@ -259,11 +259,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     throw new PluginInstallException($"{loadStateData.PluginVersion}  <= {installTargetPlugin.PluginVersion}");
                 }
             } else {
-                var installedPlugin = PluginContainer.Plugins.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == loadStateData.PluginId);
+                var installedPlugin = PluginContainer.Plugins.FirstOrDefault(i => i.PluginInformation.PluginIdentifiers.PluginId == loadStateData.PluginId);
                 if(installedPlugin != null) {
-                    if(loadStateData.PluginVersion <= installedPlugin.PluginInformations.PluginVersions.PluginVersion) {
+                    if(loadStateData.PluginVersion <= installedPlugin.PluginInformation.PluginVersions.PluginVersion) {
                         // すでに同一・新規バージョンがインストールされている
-                        throw new PluginInstallException($"{loadStateData.PluginVersion}  <= {installedPlugin.PluginInformations.PluginVersions.PluginVersion}");
+                        throw new PluginInstallException($"{loadStateData.PluginVersion}  <= {installedPlugin.PluginInformation.PluginVersions.PluginVersion}");
                     }
                     isUpdate = true;
                 }

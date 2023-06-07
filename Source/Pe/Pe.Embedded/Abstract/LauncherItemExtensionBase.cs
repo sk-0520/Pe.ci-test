@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
     internal abstract class LauncherItemExtensionBase: ILauncherItemExtension, ILauncherItemId
     {
-        protected LauncherItemExtensionBase(ILauncherItemExtensionCreateParameter parameter, IPluginInformations pluginInformations)
+        protected LauncherItemExtensionBase(ILauncherItemExtensionCreateParameter parameter, IPluginInformation pluginInformations)
         {
             LoggerFactory = parameter.LoggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -52,8 +52,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         protected IHttpUserAgentFactory HttpUserAgentFactory { get; }
         /// <inheritdoc cref="ILauncherItemAddonContextWorker"/>
         protected ILauncherItemAddonContextWorker ContextWorker { get; }
-        /// <inheritdoc cref="IPluginInformations"/>
-        protected IPluginInformations PluginInformations { get; }
+        /// <inheritdoc cref="IPluginInformation"/>
+        protected IPluginInformation PluginInformations { get; }
 
         protected ISet<object> CallerObjects { get; } = new HashSet<object>();
 

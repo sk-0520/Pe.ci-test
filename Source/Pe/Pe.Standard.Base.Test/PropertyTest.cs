@@ -20,8 +20,8 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         {
             var gi = new Get();
             var go = PropertyExpressionFactory.CreateOwner(gi);
-            var pgetter = PropertyExpressionFactory.CreateGetter<Get, int>(go, "Property");
-            var gi1 = pgetter(gi);
+            var propertyGetter = PropertyExpressionFactory.CreateGetter<Get, int>(go, "Property");
+            var gi1 = propertyGetter(gi);
             Assert.AreEqual(1, gi1);
         }
 
@@ -30,10 +30,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         {
             var gsi = new GetSet();
             var gso = PropertyExpressionFactory.CreateOwner(gsi);
-            var pgetter = PropertyExpressionFactory.CreateGetter<GetSet, int>(gso, "Property");
-            var psetter = PropertyExpressionFactory.CreateSetter<GetSet, int>(gso, "Property");
-            psetter(gsi, 10);
-            var gi1 = pgetter(gsi);
+            var propertyGetter = PropertyExpressionFactory.CreateGetter<GetSet, int>(gso, "Property");
+            var propertySetter = PropertyExpressionFactory.CreateSetter<GetSet, int>(gso, "Property");
+            propertySetter(gsi, 10);
+            var gi1 = propertyGetter(gsi);
             Assert.AreEqual(10, gi1);
         }
 
@@ -42,10 +42,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         {
             var gsi = new GetSet();
             var gso = PropertyExpressionFactory.CreateOwner(gsi);
-            var pgetter = PropertyExpressionFactory.CreateGetter<GetSet, object>(gso, "Property");
-            var psetter = PropertyExpressionFactory.CreateSetter<GetSet, object>(gso, "Property");
-            psetter(gsi, 10);
-            var gi1 = pgetter(gsi);
+            var propertyGetter = PropertyExpressionFactory.CreateGetter<GetSet, object>(gso, "Property");
+            var propertySetter = PropertyExpressionFactory.CreateSetter<GetSet, object>(gso, "Property");
+            propertySetter(gsi, 10);
+            var gi1 = propertyGetter(gsi);
             Assert.AreEqual(10, gi1);
         }
 
@@ -54,10 +54,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         {
             var gsi = new GetSet();
             var gso = PropertyExpressionFactory.CreateOwner(gsi);
-            var pgetter = PropertyExpressionFactory.CreateGetter(gso, "Property");
-            var psetter = PropertyExpressionFactory.CreateSetter(gso, "Property");
-            psetter.DynamicInvoke(gsi, 10);
-            var gi1 = pgetter.DynamicInvoke(gsi);
+            var propertyGetter = PropertyExpressionFactory.CreateGetter(gso, "Property");
+            var propertySetter = PropertyExpressionFactory.CreateSetter(gso, "Property");
+            propertySetter.DynamicInvoke(gsi, 10);
+            var gi1 = propertyGetter.DynamicInvoke(gsi);
             Assert.AreEqual(10, gi1);
         }
 
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
     }
 
     [TestClass]
-    public class PropertyAccesser
+    public class PropertyAccessor
     {
         #region function
 
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         public void GetterTest()
         {
             var gi = new Get();
-            var gp = new PropertyAccesser<Get, int>(gi, "Property");
+            var gp = new PropertyAccessor<Get, int>(gi, "Property");
             var gi1 = gp.Get(gi);
             Assert.AreEqual(1, gi1);
         }
@@ -83,14 +83,14 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         {
             {
                 var gi = new Get();
-                var gp = new PropertyAccesser<Get, int>(gi, "Property");
+                var gp = new PropertyAccessor<Get, int>(gi, "Property");
                 Assert.IsFalse(gp.PropertyInfo.CanWrite);
                 Assert.ThrowsException<NotSupportedException>(() => gp.Set(gi, 100));
             }
 
             {
                 var gsi = new GetSet();
-                var gsp = new PropertyAccesser<GetSet, int>(gsi, "Property");
+                var gsp = new PropertyAccessor<GetSet, int>(gsi, "Property");
                 Assert.IsTrue(gsp.PropertyInfo.CanWrite);
                 gsp.Set(gsi, 100);
                 var gsi1 = gsp.Get(gsi);
@@ -101,5 +101,4 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
 
         #endregion
     }
-
 }

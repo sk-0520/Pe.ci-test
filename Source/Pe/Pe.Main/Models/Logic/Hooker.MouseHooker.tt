@@ -81,13 +81,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
                 case (int)WM.<#= buttonEvent.Message #>: {
                         var msll = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT))!;
-                        var xbutton = WindowsUtility.HIWORD(msll.mouseData);
-                        if(xbutton == (int)XBUTTON.XBUTTON1) {
+                        var xButton = WindowsUtility.HIWORD(msll.mouseData);
+                        if(xButton == (int)XBUTTON.XBUTTON1) {
                             target = <#= buttonEvent.Event #>;
                             if(target != null) {
                                 e = new MouseHookEventArgs(1, MouseButtonState.<#= buttonEvent.ButtonState #>, msll);
                             }
-                        } else if (xbutton == (int)XBUTTON.XBUTTON2) {
+                        } else if (xButton == (int)XBUTTON.XBUTTON2) {
                             target = <#= buttonEvent.Event #>;
                             if(target != null) {
                                 e = new MouseHookEventArgs(2, MouseButtonState.<#= buttonEvent.ButtonState #>, msll);

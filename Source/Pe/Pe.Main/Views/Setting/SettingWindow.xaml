@@ -80,8 +80,8 @@
       <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" IsSelected="{Binding Tag.IsSelected, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding LauncherGroupsSettingEditor}">
         <app_main_views_setting:LauncherGroupsSettingControl Editor="{Binding LauncherGroupsSettingEditor}" />
       </TabItem>
-      <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" IsSelected="{Binding Tag.IsSelected, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding LauncherToobarsSettingEditor}">
-        <app_main_views_setting:LauncherToobarsSettingControl Editor="{Binding LauncherToobarsSettingEditor}" />
+      <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" IsSelected="{Binding Tag.IsSelected, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding LauncherToolbarsSettingEditor}">
+        <app_main_views_setting:LauncherToolbarsSettingControl Editor="{Binding LauncherToolbarsSettingEditor}" />
       </TabItem>
       <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" IsSelected="{Binding Tag.IsSelected, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding KeyboardSettingEditor}">
         <app_main_views_setting:KeyboardSettingControl Editor="{Binding KeyboardSettingEditor}" />
