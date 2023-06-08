@@ -18,7 +18,7 @@
 #define HEX_U_INDEX (1)
 
 static const TCHAR decimals[] = _T("0123456789");
-static const TCHAR* hexs[] = { _T("0123456789abcdef"), _T("0123456789ABCDEF"), };
+static const TCHAR* hexes[] = { _T("0123456789abcdef"), _T("0123456789ABCDEF"), };
 
 typedef enum tag_FORMAT_KIND
 {
@@ -280,7 +280,7 @@ WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, cons
     size_t buffer_length = 0;
     do {
         int n = work_value % 16;
-        buffer[buffer_length++] = hexs[is_upper ? HEX_U_INDEX : HEX_L_INDEX][n];
+        buffer[buffer_length++] = hexes[is_upper ? HEX_U_INDEX : HEX_L_INDEX][n];
         work_value /= 16;
     } while (work_value != 0);
 
@@ -319,7 +319,7 @@ WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, con
     size_t buffer_length = 0;
     do {
         int n = work_value % 16;
-        buffer[buffer_length++] = hexs[is_upper ? HEX_U_INDEX : HEX_L_INDEX][n];
+        buffer[buffer_length++] = hexes[is_upper ? HEX_U_INDEX : HEX_L_INDEX][n];
         work_value /= 16;
     } while (work_value != 0);
 
@@ -391,7 +391,7 @@ WRITE_RESULT write_primitive_pointer(func_string_writer writer, void* receiver, 
     size_t buffer_length = 0;
     do {
         int n = work_value % 16;
-        buffer[buffer_length++] = hexs[HEX_L_INDEX][n];
+        buffer[buffer_length++] = hexes[HEX_L_INDEX][n];
         work_value /= 16;
     } while (work_value != 0);
 
