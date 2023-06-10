@@ -203,5 +203,60 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
                 Assert.IsTrue(item.Test(), $"{item.Key}, {item.Value}");
             }
         }
+
+        class Class
+        {
+            [CommandLine(longKey: "int32")]
+            public int A { get; set; }
+
+            [CommandLine(longKey: "array")]
+            public string[] B { get; set; } = Array.Empty<string>();
+
+            [CommandLine(longKey: "ienumerable")]
+            public string[] C { get; set; } = Array.Empty<string>();
+
+            [CommandLine(longKey: "list")]
+            public List<string> D { get; set; } = new List<string>();
+
+            [CommandLine(longKey: "rolist1")]
+            public IReadOnlyList<string> E { get; set; } = new List<string>();
+
+            [CommandLine(longKey: "rolist2")]
+            public IReadOnlyList<string> F { get; set; } = Array.Empty<string>();
+
+            [CommandLine(longKey: "empty")]
+            public string Empty { get; set; } = string.Empty;
+        }
+
+        [TestMethod]
+        public void MappingTest_class()
+        {
+            var actual = new Class();
+            var commandLineConverter = new CommandLineConverter<Class>(
+                new CommandLine(new[] {
+                    "--int32", "1",
+                    "--array", "a",
+                    "--array", "b",
+                    "--ienumerable", "aa",
+                    "--ienumerable", "bb",
+                    "--list", "aaa",
+                    "--list", "bbb",
+                    "--rolist1", "aaaa",
+                    "--rolist1", "bbbb",
+                    "--rolist2", "aaaaa",
+                    "--rolist2", "bbbbb",
+                },
+                false),
+                actual
+            );
+            var result = commandLineConverter.Mapping();
+            Assert.IsTrue(result);
+            Assert.AreEqual(actual.A, 1);
+            CollectionAssert.AreEqual(actual.B, new[] { "a", "b" });
+            CollectionAssert.AreEqual(actual.C, new[] { "aa", "bb" });
+            CollectionAssert.AreEqual(actual.D, new[] { "aaa", "bbb" });
+            CollectionAssert.AreEqual(actual.E.ToList(), new[] { "aaaa", "bbbb" });
+            CollectionAssert.AreEqual(actual.F.ToList(), new[] { "aaaaa", "bbbbb" });
+        }
     }
 }

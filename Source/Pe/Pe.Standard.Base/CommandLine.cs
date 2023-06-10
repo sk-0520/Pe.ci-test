@@ -572,16 +572,28 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return map;
         }
 
-        object? ConvertValue(Type type, string rawValue)
+        object? ConvertValue(Type type, ICommandLineValue value)
         {
             if(type == typeof(float)) {
-                return float.Parse(rawValue, CultureInfo.InvariantCulture);
+                return float.Parse(value.First, CultureInfo.InvariantCulture);
             }
             if(type == typeof(double)) {
-                return double.Parse(rawValue, CultureInfo.InvariantCulture);
+                return double.Parse(value.First, CultureInfo.InvariantCulture);
             }
 
-            return Convert.ChangeType(rawValue, type, CultureInfo.InvariantCulture);
+            if(1 < value.Items.Count) {
+                if(type.IsArray) {
+                    return value.Items.ToArray();
+                }
+                if(typeof(IList<object>).IsAssignableFrom(type)) {
+                    return value.Items.ToList();
+                }
+                if(typeof(IEnumerable<object>).IsAssignableFrom(type)) {
+                    return value.Items;
+                }
+            }
+
+            return Convert.ChangeType(value.First, type, CultureInfo.InvariantCulture);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
@@ -635,7 +647,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                         if(pair.Value.HasValue) {
                             // 値取得
                             if(CommandLine.Values.TryGetValue(pair.Value, out var value)) {
-                                var convertedValue = ConvertValue(pair.Key.PropertyType, value.First);
+                                var convertedValue = ConvertValue(pair.Key.PropertyType, value);
                                 pair.Key.SetValue(Data, convertedValue);
                             }
                         } else {
