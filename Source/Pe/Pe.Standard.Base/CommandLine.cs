@@ -445,6 +445,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         #endregion
     }
 
+    /// <summary>
+    /// マッピング用設定。
+    /// </summary>
     public static class CommandLineExtensions
     {
         #region function
@@ -667,6 +670,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             }
         }
 
+        /// <summary>
+        /// <see cref="Data"/>へマッピング。
+        /// </summary>
+        /// <returns>成功か。</returns>
         public virtual bool Mapping()
         {
             return MappingCore();
