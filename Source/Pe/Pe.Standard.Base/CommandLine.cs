@@ -588,10 +588,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 if(type.IsArray) {
                     return value.Items.ToArray();
                 }
-                if(typeof(IList<object>).IsAssignableFrom(type)) {
+                if(typeof(System.Collections.IList).IsAssignableFrom(type)) {
                     return value.Items.ToList();
                 }
-                if(typeof(IEnumerable<object>).IsAssignableFrom(type)) {
+                if(typeof(System.Collections.IEnumerable).IsAssignableFrom(type)) {
                     return value.Items;
                 }
             }
