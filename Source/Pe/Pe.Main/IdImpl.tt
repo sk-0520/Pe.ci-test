@@ -3,7 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ output extension=".cs" #>
+<#@ output encoding="utf-8" extension=".cs" #>
 <#
     var items = IdDefine.GetItems();
 #>

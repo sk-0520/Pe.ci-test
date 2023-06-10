@@ -3,7 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ output extension=".cs" #>
+<#@ output encoding="utf-8" extension=".cs" #>
 <#
 const int parameterCount = 30;
 #>
@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation", Justification = "<保留中>")]
         private Func<object[], object> CreateCore(object[] parameters)
         {
-            switch(ParameterInfos.Count) {
+            switch(ParameterInfoItems.Count) {
 <#
                 for(var i = 0; i < parameterCount; i++) {
 #>
@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 #>
 
                 default:
-                    Debug.WriteLine("パラメータ数ガン上げ: <#= parameterCount #> < {0}", ParameterInfos.Count);
+                    Debug.WriteLine("パラメータ数ガン上げ: <#= parameterCount #> < {0}", ParameterInfoItems.Count);
                     return ConstructorInfo.Invoke;
             }
         }
