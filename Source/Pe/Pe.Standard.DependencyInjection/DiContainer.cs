@@ -460,24 +460,25 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         {
             var targetType = GetMappingType(typeof(TObject), name);
             var memberItems = targetType.GetMembers(MemberBindingFlags)
-                .Select(m => new { MemberInfo = m, Inject = m.GetCustomAttribute<InjectAttribute>() })
+                .Select(m => (memberInfo: m, inject: m.GetCustomAttribute<InjectAttribute>()))
+                .Where(a => a.inject is not null)
                 .ToList()
             ;
-            foreach(var memberItem in memberItems.Where(i => i.Inject != null)) {
-                SetMemberValue(ref target, memberItem.MemberInfo, GetMemberType(memberItem.MemberInfo), memberItem.Inject!.Name);
+            foreach(var memberItem in memberItems) {
+                SetMemberValue(ref target, memberItem.memberInfo, GetMemberType(memberItem.memberInfo), memberItem.inject.Name);
             }
 
             // 強制付け替え処理の実施
             var dirtyPairs = memberItems
                 .Join(
                     InjectionMembers.Where(d => d.BaseType.IsAssignableFrom(targetType)),
-                    m => m.MemberInfo.Name,
+                    m => m.memberInfo.Name,
                     d => d.MemberInfo.Name,
-                    (m, d) => new { Item = m, Dirty = d }
+                    (m, d) => (item: m, dirty: d )
                 )
             ;
             foreach(var pair in dirtyPairs) {
-                SetMemberValue(ref target, pair.Item.MemberInfo, pair.Dirty.ObjectType, pair.Item.Inject?.Name ?? string.Empty);
+                SetMemberValue(ref target, pair.item.memberInfo, pair.dirty.ObjectType, pair.item.inject?.Name ?? string.Empty);
             }
 
         }
