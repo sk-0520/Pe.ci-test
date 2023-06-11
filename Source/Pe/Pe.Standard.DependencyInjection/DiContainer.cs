@@ -461,10 +461,9 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             var targetType = GetMappingType(typeof(TObject), name);
             var memberItems = targetType.GetMembers(MemberBindingFlags)
                 .Select(m => (memberInfo: m, inject: m.GetCustomAttribute<InjectAttribute>()))
-                .Where(a => a.inject is not null)
                 .ToList()
             ;
-            foreach(var memberItem in memberItems) {
+            foreach(var memberItem in memberItems.Where(a => a.inject is not null)) {
                 SetMemberValue(ref target, memberItem.memberInfo, GetMemberType(memberItem.memberInfo), memberItem.inject.Name);
             }
 
