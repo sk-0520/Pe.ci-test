@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         #region function
 
         public static bool SafeFlush<T>(this T? flushable)
-            where T : class, IDisposedChackable, IFlushable
+            where T : class, IDisposed, IFlushable
         {
             if(flushable == null) {
                 return false;
