@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main
                             var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
                             notifyIcon.DataContext = viewModel;
 
-                            ApplicationManager.StartupEnd();
+                            ApplicationManager.CompleteStartup();
                         }), System.Windows.Threading.DispatcherPriority.SystemIdle);
                     }
                     break;

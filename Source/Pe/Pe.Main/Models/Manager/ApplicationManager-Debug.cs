@@ -225,7 +225,7 @@ echo end
             var pwsh = eef.Get("pwsh", pef);
         }
 
-        public void DebugStartupEnd()
+        public void DebugCompleteStartup()
         {
             //DebugSetting();
         }

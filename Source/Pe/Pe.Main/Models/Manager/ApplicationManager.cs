@@ -1678,7 +1678,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
             }
             var versionConverter = new VersionConverter();
-            ;
             BackupSettings(
                 environmentParameters.UserSettingDirectory,
                 environmentParameters.UserBackupDirectory,
@@ -1856,7 +1855,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             systemExecutor.ExecuteFile(commandPath, arg);
         }
 
-        internal void StartupEnd()
+        internal void CompleteStartup()
         {
 #if DEBUG
             if(!IsDevDebug) {
@@ -1869,7 +1868,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #endif
             CheckNewVersionsAsync(true).ConfigureAwait(false);
 #if DEBUG
-            DebugStartupEnd();
+            DebugCompleteStartup();
 #endif
         }
 
