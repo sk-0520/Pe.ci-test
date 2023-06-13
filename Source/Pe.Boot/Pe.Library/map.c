@@ -71,7 +71,7 @@ static LINK_NODE* search_map_from_key(const LINKED_LIST* linked_list, const TEXT
 static void release_link_item_value(void* value, void* data, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     KEY_VALUE_PAIR* pair = (KEY_VALUE_PAIR*)value;
-    // 再構築時はdataが空のため値自体の解放はスキップさせる(NULL設定は再構築処理側)
+    // 再構築時は data が空のため値自体の解放はスキップさせる(NULL設定は再構築処理側)
     if (data) {
         func_release_map_value release_value = (func_release_map_value)data;
         release_value(&pair->key, pair->value, memory_arena_resource);

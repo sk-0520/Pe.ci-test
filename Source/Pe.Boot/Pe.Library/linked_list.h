@@ -94,6 +94,12 @@ typedef struct tag_LINK_RESULT_VALUE
     LINK_NODE* node;
 } LINK_RESULT_VALUE;
 
+/// <summary>
+/// 連結リストのノードから値を取得。
+/// <para><c>LINK_NODE</c>自体が公開されていないので取得する場合はこれを使うこと。</para>
+/// </summary>
+/// <param name="node"></param>
+/// <returns></returns>
 const void* get_link_node_value(const LINK_NODE* node);
 
 /// <summary>
