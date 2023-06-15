@@ -126,7 +126,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "CefSharp.Wpf.NETCore 113.1.40 -> 114.2.100"
 					}
 				]
 			}
