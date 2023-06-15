@@ -7,7 +7,6 @@
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
 						"class": "compatibility",
 						"subject": "次バージョンからコマンドラインオプションの '-' を用いた長いオプションは破棄します",
 						"comments": [
@@ -15,39 +14,6 @@
 							"ちょっとこれつらいのです",
 							"とはいえ対応するにしてもC側処理めんどいなぁ"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -55,20 +21,12 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "a211cee872d9c7f979c411ace215a5099ddadd85",
 						"subject": "#783: リリースノートに空項目があればビルド処理で落とす"
 					},
 					{
-						"revision": "",
+						"revision": "a279fa481d99e2469468fe42e119c8fe67afbdf9",
 						"subject": "#879: 更新履歴の年月日が所々ミスってる"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -76,37 +34,37 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "d5960f9199a4957ed075d7a571f5dd8e5c4e8173",
 						"subject": "update npm"
 					},
 					{
-						"revision": "",
+						"revision": "a211cee872d9c7f979c411ace215a5099ddadd85",
 						"subject": "#783: リリースノートに空項目があればビルド処理で落とす",
 						"comments": [
 							"俯瞰用にプルダウンも追加"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "08a393afaf4d02b497d1956be246c2882802a216",
 						"subject": "develop ブランチを開発主軸ブランチにした"
 					},
 					{
-						"revision": "",
+						"revision": "91243748f38562ebf85c9251c1dd69d63eecd36a",
 						"class": "nuget",
 						"subject": "Dapper 2.0.123 -> 2.0.138"
 					},
 					{
-						"revision": "",
+						"revision": "05734b58262c48878c2388734a0d70670fef0eb4",
 						"class": "nuget",
 						"subject": "System.Data.SQLite.Core 1.0.117 -> 1.0.118"
 					},
 					{
-						"revision": "",
+						"revision": "9c1d13b5b639f6050c5b632eccc4dff29a38852c",
 						"class": "nuget",
 						"subject": "System.Management 7.0.1 -> 7.0.2"
 					},
 					{
-						"revision": "",
+						"revision": "4673d5869aac28dbf7e3bcfcab58fba4bf7d8738",
 						"class": "nuget",
 						"subject": "ログ周り更新(NLog, Microsoft.Extensions.Logging)",
 						"comments": [
@@ -115,7 +73,7 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "cf08770c43f44a8c62d9067527e70fe119b74c25",
 						"class": "nuget",
 						"subject": "MSTest.* 更新",
 						"comments": [
@@ -125,7 +83,7 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "3fb644c7d704cca60b6e0518990ab5928a8d8f65",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 113.1.40 -> 114.2.100"
 					}
@@ -141,7 +99,6 @@
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
 						"subject": "主に依存ライブラリ更新"
 					}
 				]
@@ -202,10 +159,6 @@
 						"revision": "91f5a5106caf16160c050acaf71a005e59a0feaf",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 111.2.20 -> 113.1.40"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
@@ -506,7 +459,6 @@
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
 						"class": "compatibility",
 						"subject": "次で Windows 7, 8, 8.1 をサポート対象外とします",
 						"comments": [
@@ -586,7 +538,6 @@
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
 						"class": "compatibility",
 						"subject": "次の次で Windows 7, 8, 8.1 をサポート対象外とします",
 						"comments": [
