@@ -92,6 +92,27 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
+						"subject": "Dapper 2.0.123 -> 2.0.138"
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
