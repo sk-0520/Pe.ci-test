@@ -306,7 +306,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
         public void Refresh(IPluginContext pluginContext)
         {
             FileFinderSetting? setting;
-            if(!pluginContext.Storage.Persistent.Normal.TryGet<FileFinderSetting>(FileFinderConstants.MainSettengKey, out setting)) {
+            if(!pluginContext.Storage.Persistence.Normal.TryGet<FileFinderSetting>(FileFinderConstants.MainSettengKey, out setting)) {
                 setting = new FileFinderSetting();
             }
 

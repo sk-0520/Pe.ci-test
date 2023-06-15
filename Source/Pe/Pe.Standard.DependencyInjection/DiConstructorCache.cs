@@ -17,14 +17,14 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         ///
         /// </summary>
         /// <param name="constructorInfo">コンストラクタ情報。</param>
-        /// <param name="parameterInfos">コンストラクタのパラメータ。</param>
-        public DiConstructorCache(ConstructorInfo constructorInfo, IReadOnlyList<ParameterInfo> parameterInfos)
+        /// <param name="parameterInfoItems">コンストラクタのパラメータ。</param>
+        public DiConstructorCache(ConstructorInfo constructorInfo, IReadOnlyList<ParameterInfo> parameterInfoItems)
         {
             ConstructorInfo = constructorInfo;
-            ParameterInfos = parameterInfos;
+            ParameterInfoItems = parameterInfoItems;
 
             var map = new Dictionary<ParameterInfo, InjectAttribute>();
-            foreach(var parameterInfo in ParameterInfos) {
+            foreach(var parameterInfo in ParameterInfoItems) {
                 var attr = parameterInfo.GetCustomAttribute<InjectAttribute>();
                 if(attr != null) {
                     map.Add(parameterInfo, attr);
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         #region property
 
         public ConstructorInfo ConstructorInfo { get; }
-        public IReadOnlyList<ParameterInfo> ParameterInfos { get; }
+        public IReadOnlyList<ParameterInfo> ParameterInfoItems { get; }
         public IReadOnlyDictionary<ParameterInfo, InjectAttribute> ParameterInjections { get; }
         private Func<object[], object>? Creator { get; set; }
 
@@ -46,14 +46,14 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
         private IEnumerable<ParameterExpression> CreateParameterExpressions()
         {
-            return ParameterInfos
+            return ParameterInfoItems
                 .Select((p, i) => Expression.Parameter(typeof(object), p.Name))
             ;
         }
 
         private IEnumerable<UnaryExpression> CreateConvertExpressions(IEnumerable<ParameterExpression> parameterExpressions)
         {
-            return ParameterInfos
+            return ParameterInfoItems
                 .Zip(parameterExpressions, (pi, pe) => Expression.Convert(pe, pi.ParameterType))
             ;
         }
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
                     ),
                     typeof(object)
                 ),
-                ConstructorInfo.ReflectedType.FullName + "_" + ParameterInfos.Count.ToString(CultureInfo.InvariantCulture),
+                ConstructorInfo.ReflectedType.FullName + "_" + ParameterInfoItems.Count.ToString(CultureInfo.InvariantCulture),
                 parameterExpressions
             );
             var creator = constructorNewParams.Compile();
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         public object Create(object[] parameters)
         {
             if(Creator == null) {
-                if(ParameterInfos.Count == 0) {
+                if(ParameterInfoItems.Count == 0) {
                     var newExp = Expression.New(ConstructorInfo);
                     var lambda = Expression.Lambda<Func<object>>(newExp);
                     var creator = lambda.Compile();

@@ -25,7 +25,7 @@ size_t get_string_length(const TCHAR* s);
 /// <param name="target">結合対象文字列。</param>
 /// <param name="value">追加する文字列。</param>
 /// <returns>結合された文字列。</returns>
-TCHAR* concat_string(TCHAR* target, const TCHAR* value);
+TCHAR* concatenate_string(TCHAR* target, const TCHAR* value);
 /// <summary>
 /// 文字列をコピー。
 /// </summary>

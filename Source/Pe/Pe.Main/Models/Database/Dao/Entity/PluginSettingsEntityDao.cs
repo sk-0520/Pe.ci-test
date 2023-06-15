@@ -46,10 +46,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         private PluginSettingRawValue ConvertFromDto(PluginSettingDto dto)
         {
-            var pluginPersistentFormatTransfer = new EnumTransfer<PluginPersistentFormat>();
+            var pluginPersistenceFormatTransfer = new EnumTransfer<PluginPersistenceFormat>();
 
             var data = new PluginSettingRawValue(
-                pluginPersistentFormatTransfer.ToEnum(dto.DataType),
+                pluginPersistenceFormatTransfer.ToEnum(dto.DataType),
                 dto.DataValue
             );
             return data;
@@ -57,12 +57,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         private PluginSettingDto ConvertFromData(PluginId pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var pluginPersistentFormatTransfer = new EnumTransfer<PluginPersistentFormat>();
+            var pluginPersistenceFormatTransfer = new EnumTransfer<PluginPersistenceFormat>();
 
             var dto = new PluginSettingDto() {
                 PluginId = pluginId,
                 PluginSettingKey = key,
-                DataType = pluginPersistentFormatTransfer.ToString(data.Format),
+                DataType = pluginPersistenceFormatTransfer.ToString(data.Format),
                 DataValue = data.Value,
             };
             databaseCommonStatus.WriteCommonTo(dto);
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-        public bool SelecteExistsPluginSetting(PluginId pluginId, string key)
+        public bool SelectExistsPluginSetting(PluginId pluginId, string key)
         {
             var statement = LoadStatement();
             var parameter = new PluginSettingDto() {

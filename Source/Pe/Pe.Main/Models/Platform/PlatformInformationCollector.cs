@@ -101,11 +101,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         public virtual IList<PlatformInformationItem> GetEnvironmentVariables()
         {
-            var envs = Environment.GetEnvironmentVariables();
+            var envVars = Environment.GetEnvironmentVariables();
 
-            var result = new List<PlatformInformationItem>(envs.Count);
+            var result = new List<PlatformInformationItem>(envVars.Count);
 
-            foreach(var entry in envs.OfType<DictionaryEntry>()) {
+            foreach(var entry in envVars.OfType<DictionaryEntry>()) {
                 result.Add(new PlatformInformationItem((string)entry.Key, entry.Value));
             }
 

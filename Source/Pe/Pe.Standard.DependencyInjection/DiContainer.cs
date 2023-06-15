@@ -218,13 +218,13 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             return result;
         }
 
-        private object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
+        private object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfoItems, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
         {
             var manualParameterItems = BuildManualParameters(manualParameters);
 
-            var arguments = new object[parameterInfos.Count];
-            for(var i = 0; i < parameterInfos.Count; i++) {
-                var parameterInfo = parameterInfos[i];
+            var arguments = new object[parameterInfoItems.Count];
+            for(var i = 0; i < parameterInfoItems.Count; i++) {
+                var parameterInfo = parameterInfoItems[i];
                 // 入力パラメータを優先して設定
                 if(manualParameterItems.Count != 0) {
                     //var item = manualParameterItems.FirstOrDefault(p => p.Key == parameterInfo.ParameterType || parameterInfo.ParameterType.IsAssignableFrom(p.Key));
@@ -298,7 +298,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
         private bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IReadOnlyList<object> manualParameters, [NotNullWhen(true)] out object? createdObject)
         {
-            var parameters = constructorCache.ParameterInfos;
+            var parameters = constructorCache.ParameterInfoItems;
             var parameterInjections = constructorCache.ParameterInjections;
 
             if(parameters.Count == 0) {
@@ -460,24 +460,24 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         {
             var targetType = GetMappingType(typeof(TObject), name);
             var memberItems = targetType.GetMembers(MemberBindingFlags)
-                .Select(m => new { MemberInfo = m, Inject = m.GetCustomAttribute<InjectAttribute>() })
+                .Select(m => (memberInfo: m, inject: m.GetCustomAttribute<InjectAttribute>()))
                 .ToList()
             ;
-            foreach(var memberItem in memberItems.Where(i => i.Inject != null)) {
-                SetMemberValue(ref target, memberItem.MemberInfo, GetMemberType(memberItem.MemberInfo), memberItem.Inject!.Name);
+            foreach(var memberItem in memberItems.Where(a => a.inject is not null)) {
+                SetMemberValue(ref target, memberItem.memberInfo, GetMemberType(memberItem.memberInfo), memberItem.inject.Name);
             }
 
             // 強制付け替え処理の実施
             var dirtyPairs = memberItems
                 .Join(
                     InjectionMembers.Where(d => d.BaseType.IsAssignableFrom(targetType)),
-                    m => m.MemberInfo.Name,
+                    m => m.memberInfo.Name,
                     d => d.MemberInfo.Name,
-                    (m, d) => new { Item = m, Dirty = d }
+                    (m, d) => (item: m, dirty: d )
                 )
             ;
             foreach(var pair in dirtyPairs) {
-                SetMemberValue(ref target, pair.Item.MemberInfo, pair.Dirty.ObjectType, pair.Item.Inject?.Name ?? string.Empty);
+                SetMemberValue(ref target, pair.item.memberInfo, pair.dirty.ObjectType, pair.item.inject?.Name ?? string.Empty);
             }
 
         }

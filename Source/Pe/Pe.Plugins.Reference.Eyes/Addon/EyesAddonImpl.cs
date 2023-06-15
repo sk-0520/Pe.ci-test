@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
 
         public override IWidget BuildWidget(IAddonParameter parameter)
         {
-            EyesWidget = new EyesWidget(parameter, PluginInformations);
+            EyesWidget = new EyesWidget(parameter, PluginInformation);
             if(EyesBackground != null) {
                 EyesWidget.Attach(EyesBackground);
             }
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
 
         public override IBackground BuildBackground(IAddonParameter parameter)
         {
-            EyesBackground ??= new EyesBackground(parameter, PluginInformations);
+            EyesBackground ??= new EyesBackground(parameter, PluginInformation);
             if(EyesWidget != null) {
                 EyesWidget.Attach(EyesBackground);
             }

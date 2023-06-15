@@ -19,46 +19,46 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
-        public BackgroundAddonRunStartupContext CreateRunStartupContext(IPluginInformations pluginInformations)
+        public BackgroundAddonRunStartupContext CreateRunStartupContext(IPluginInformation pluginInformation)
         {
-            var context = new BackgroundAddonRunStartupContext(pluginInformations.PluginIdentifiers);
+            var context = new BackgroundAddonRunStartupContext(pluginInformation.PluginIdentifiers);
             return context;
         }
 
-        public BackgroundAddonRunPauseContext CreateRunPauseContext(IPluginInformations pluginInformations, bool isPausing)
+        public BackgroundAddonRunPauseContext CreateRunPauseContext(IPluginInformation pluginInformation, bool isPausing)
         {
-            var context = new BackgroundAddonRunPauseContext(pluginInformations.PluginIdentifiers, isPausing);
+            var context = new BackgroundAddonRunPauseContext(pluginInformation.PluginIdentifiers, isPausing);
             return context;
         }
 
-        public BackgroundAddonRunExecuteContext CreateRunExecuteContext(IPluginInformations pluginInformations, RunExecuteKind runExecuteKind, object? parameter, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp)
+        public BackgroundAddonRunExecuteContext CreateRunExecuteContext(IPluginInformation pluginInformation, RunExecuteKind runExecuteKind, object? parameter, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp)
         {
-            var context = new BackgroundAddonRunExecuteContext(pluginInformations.PluginIdentifiers, runExecuteKind, parameter, timestamp);
+            var context = new BackgroundAddonRunExecuteContext(pluginInformation.PluginIdentifiers, runExecuteKind, parameter, timestamp);
             return context;
         }
 
-        public BackgroundAddonRunShutdownContext CreateRunShutdownContext(IPluginInformations pluginInformations)
+        public BackgroundAddonRunShutdownContext CreateRunShutdownContext(IPluginInformation pluginInformation)
         {
-            var context = new BackgroundAddonRunShutdownContext(pluginInformations.PluginIdentifiers);
+            var context = new BackgroundAddonRunShutdownContext(pluginInformation.PluginIdentifiers);
             return context;
         }
 
-        public BackgroundAddonKeyboardContext CreateKeyboardContext(IPluginInformations pluginInformations, KeyboardHookEventArgs keyboardHookEventArgs)
+        public BackgroundAddonKeyboardContext CreateKeyboardContext(IPluginInformation pluginInformation, KeyboardHookEventArgs keyboardHookEventArgs)
         {
-            var context = new BackgroundAddonKeyboardContext(pluginInformations.PluginIdentifiers, keyboardHookEventArgs);
+            var context = new BackgroundAddonKeyboardContext(pluginInformation.PluginIdentifiers, keyboardHookEventArgs);
             return context;
         }
 
 
-        public BackgroundAddonMouseMoveContext CreateMouseMoveContex(IPluginInformations pluginInformations, MouseHookEventArgs mouseHookEventArgs)
+        public BackgroundAddonMouseMoveContext CreateMouseMoveContext(IPluginInformation pluginInformation, MouseHookEventArgs mouseHookEventArgs)
         {
-            var context = new BackgroundAddonMouseMoveContext(pluginInformations.PluginIdentifiers, mouseHookEventArgs);
+            var context = new BackgroundAddonMouseMoveContext(pluginInformation.PluginIdentifiers, mouseHookEventArgs);
             return context;
         }
 
-        public BackgroundAddonMouseButtonContext CreateMouseButtonContex(IPluginInformations pluginInformations, MouseHookEventArgs mouseHookEventArgs)
+        public BackgroundAddonMouseButtonContext CreateMouseButtonContext(IPluginInformation pluginInformation, MouseHookEventArgs mouseHookEventArgs)
         {
-            var context = new BackgroundAddonMouseButtonContext(pluginInformations.PluginIdentifiers, mouseHookEventArgs);
+            var context = new BackgroundAddonMouseButtonContext(pluginInformation.PluginIdentifiers, mouseHookEventArgs);
             return context;
         }
 

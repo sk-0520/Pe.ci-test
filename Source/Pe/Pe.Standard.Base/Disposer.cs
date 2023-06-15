@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// <summary>
     /// <see cref="IDisposable.Dispose"/>が行われたかどうかを確認できるようにする。
     /// </summary>
-    public interface IDisposedChackable
+    public interface IDisposed
     {
         #region property
 
@@ -24,9 +24,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     }
 
     /// <summary>
-    /// <see cref="IDisposable"/> と <see cref="IDisposedChackable"/> を組み合わせたIF。
+    /// <see cref="IDisposable"/> と <see cref="IDisposed"/> を組み合わせたIF。
     /// </summary>
-    public interface IDisposer: IDisposedChackable, IDisposable
+    public interface IDisposer: IDisposed, IDisposable
     {
         #region event
 
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// </summary>
         /// <param name="_callerMemberName"></param>
         /// <exception cref="ObjectDisposedException">破棄済み。</exception>
-        /// <seealso cref="IDisposedChackable"/>
+        /// <seealso cref="IDisposed"/>
         protected void ThrowIfDisposed([CallerMemberName] string _callerMemberName = "")
         {
             if(IsDisposed) {

@@ -8,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
     /// <inheritdoc cref="IThemeParameter"/>
     internal class ThemeParameter: PluginParameterBase, IThemeParameter
     {
-        public ThemeParameter(IPluginInformations pluginInformations, IViewManager viewManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ThemeParameter(IPluginInformation pluginInformations, IViewManager viewManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(pluginInformations, viewManager, platformTheme, imageLoader, mediaConverter, policy, dispatcherWrapper, loggerFactory)
         { }
 

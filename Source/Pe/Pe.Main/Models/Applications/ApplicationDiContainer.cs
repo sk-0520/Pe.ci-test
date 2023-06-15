@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
                 // 引数の削除
                 var targetHasKeys = item
-                    .Where(i => i.Value.ParameterInfos.Any(i => i.ParameterType == type))
+                    .Where(i => i.Value.ParameterInfoItems.Any(i => i.ParameterType == type))
                     .Select(i => i.Key)
                     .ToList()
                 ;

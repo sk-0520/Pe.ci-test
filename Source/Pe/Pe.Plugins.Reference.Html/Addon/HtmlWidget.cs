@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html.Addon
         }
 
         #endregion
-        public HtmlWidget(IAddonParameter parameter, IPluginInformations pluginInformations)
+        public HtmlWidget(IAddonParameter parameter, IPluginInformation pluginInformations)
         {
             LoggerFactory = parameter.LoggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html.Addon
         private IAddonExecutor AddonExecutor { get; }
         private IDispatcherWrapper DispatcherWrapper { get; }
         private ISkeletonImplements SkeletonImplements { get; }
-        private IPluginInformations PluginInformations { get; }
+        private IPluginInformation PluginInformations { get; }
 
         private IWebViewGrass? WebViewGrass { get; set; }
 

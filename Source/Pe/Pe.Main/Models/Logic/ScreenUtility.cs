@@ -68,10 +68,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <returns></returns>
         public static string GetName(IScreen screen, ILoggerFactory loggerFactory)
         {
-            foreach(var screem in GetScreens(screen.DeviceName, loggerFactory)) {
-                if(!string.IsNullOrWhiteSpace(screem.Name)) {
+            foreach(var screenItem in GetScreens(screen.DeviceName, loggerFactory)) {
+                if(!string.IsNullOrWhiteSpace(screenItem.Name)) {
                     var id = DeviceToId(screen.DeviceName);
-                    return string.Format(CultureInfo.InvariantCulture, "{0}. {1}", id, screem.Name);
+                    return string.Format(CultureInfo.InvariantCulture, "{0}. {1}", id, screenItem.Name);
                 }
             }
 

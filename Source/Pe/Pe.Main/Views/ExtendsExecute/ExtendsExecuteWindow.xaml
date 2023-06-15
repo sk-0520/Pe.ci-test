@@ -206,9 +206,9 @@
             <CheckBox Style="{StaticResource Vertical-CheckBox}" Content="{Binding Resources.String_ExtendsExecute_EnvironmentVariables_Edit_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsEnabledCustomEnvironmentVariable}" />
             <app_main_views_launcher_item_customize:EnvironmentValieableEditor
               MergeTextDocument="{Binding MergeTextDocument}"
-              MergeErrorItemsSource="{Binding MergeErros}"
+              MergeErrorItemsSource="{Binding MergeErrors}"
               RemoveTextDocument="{Binding RemoveTextDocument}"
-              RemoveErrorItemsSource="{Binding RemoveErros}"
+              RemoveErrorItemsSource="{Binding RemoveErrors}"
             />
           </StackPanel>
         </Grid>

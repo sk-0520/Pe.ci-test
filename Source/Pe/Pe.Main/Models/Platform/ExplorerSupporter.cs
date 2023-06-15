@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             };
             Timer.Elapsed += Timer_Elapsed;
 
-            SettedHorizontalScrollbarExplorerHandles = new FixedQueue<IntPtr>(cacheSize);
+            IgnoreHorizontalScrollbarExplorerHandles = new FixedQueue<IntPtr>(cacheSize);
         }
 
         #region property
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             }
         };
 
-        private IFixedQueue<IntPtr> SettedHorizontalScrollbarExplorerHandles { get; }
+        private IFixedQueue<IntPtr> IgnoreHorizontalScrollbarExplorerHandles { get; }
 
         #endregion
 
@@ -197,7 +197,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             var hExplorers = GetExplorerWindowHandles();
             foreach(var hExplorer in hExplorers) {
                 if(isEnable) {
-                    if(SettedHorizontalScrollbarExplorerHandles.Contains(hExplorer)) {
+                    if(IgnoreHorizontalScrollbarExplorerHandles.Contains(hExplorer)) {
                         continue;
                     }
                 }
@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                     SetHorizontalScrollbarForTreeView(hTreeView, isEnable);
 
                     if(isEnable) {
-                        SettedHorizontalScrollbarExplorerHandles.Enqueue(hExplorer);
+                        IgnoreHorizontalScrollbarExplorerHandles.Enqueue(hExplorer);
                     }
                 }
             }

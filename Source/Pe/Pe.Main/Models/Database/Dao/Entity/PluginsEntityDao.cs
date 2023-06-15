@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public IEnumerable<PluginStateData> SelectePlguinStateData()
+        public IEnumerable<PluginStateData> SelectPluginStateData()
         {
             var statement = LoadStatement();
             return Context
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public PluginStateData? SelectePlguinStateDataByPLuginId(PluginId pluginId)
+        public PluginStateData? SelectPluginStateDataByPluginId(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QueryFirstOrDefault<Version>(statement, parameter);
         }
 
-        public bool SelecteExistsPlugin(PluginId pluginId)
+        public bool SelectExistsPlugin(PluginId pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -150,14 +150,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.UpdateByKeyOrNothing(statement, dto);
         }
 
-        public bool UpdatePluginRunningState(PluginId pluginId, Version pluginVersion, Version applicationVersio, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdatePluginRunningState(PluginId pluginId, Version pluginVersion, Version applicationVersion, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.PluginId] = pluginId;
             parameter[Column.LastUseTimestamp] = DateTime.UtcNow; // DAO層でまぁいっかぁ
             parameter[Column.LastUsePluginVersion] = pluginVersion;
-            parameter[Column.LastUseAppVersion] = applicationVersio;
+            parameter[Column.LastUseAppVersion] = applicationVersion;
 
             return Context.UpdateByKeyOrNothing(statement, parameter);
         }

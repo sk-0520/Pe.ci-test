@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.UpdateByKey(statement, parameter);
         }
 
-        public void DeleteKeyAciton(KeyActionId keyActionId)
+        public void DeleteKeyAction(KeyActionId keyActionId)
         {
             var statement = LoadStatement();
             var parameter = new { KeyActionId = keyActionId };

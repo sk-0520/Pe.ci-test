@@ -142,8 +142,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                if(UseDispose && Data is IDisposable diposer) {
-                    diposer.Dispose();
+                if(UseDispose && Data is IDisposable disposer) {
+                    disposer.Dispose();
                 }
             }
             base.Dispose(disposing);

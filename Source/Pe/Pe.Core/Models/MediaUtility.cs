@@ -173,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="element"></param>
         /// <param name="useActual"></param>
         /// <returns></returns>
-        public static BitmapSource MakeBitmapSourceDefualtDpi(FrameworkElement element, bool useActual)
+        public static BitmapSource MakeBitmapSourceDefaultDpi(FrameworkElement element, bool useActual)
         {
             return MakeBitmapSource(element, new Point(96, 96), useActual);
         }

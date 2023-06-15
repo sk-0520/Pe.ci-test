@@ -21,9 +21,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="regex"><paramref name="parentDirectory"/>直下の対象ファイル。</param>
         /// <param name="leaveCount">列挙されたファイルの残す数。</param>
         /// <param name="order">ソート。</param>
-        /// <param name="exceptionCacther">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
+        /// <param name="exceptionCatcher">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
         /// <returns>削除した数。ディレクトリが存在しない場合は -1 を返す。</returns>
-        private int ExecuteCore(DirectoryInfo parentDirectory, Regex regex, int leaveCount, Order order, Func<Exception, bool> exceptionCacther)
+        private int ExecuteCore(DirectoryInfo parentDirectory, Regex regex, int leaveCount, Order order, Func<Exception, bool> exceptionCatcher)
         {
             parentDirectory.Refresh();
             if(!parentDirectory.Exists) {
@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                     File.Delete(targetFiles[i].FullName);
                     removedCount += 1;
                 } catch(Exception ex) {
-                    if(!exceptionCacther(ex)) {
+                    if(!exceptionCatcher(ex)) {
                         return removedCount;
                     }
                 }
@@ -60,11 +60,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="parentDirectory">親ディレクトリ。</param>
         /// <param name="regex"><paramref name="parentDirectory"/>直下の対象ファイル。</param>
         /// <param name="leaveCount">列挙されたファイルの残す数。</param>
-        /// <param name="exceptionCacther">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
+        /// <param name="exceptionCatcher">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
         /// <returns>削除した数。ディレクトリが存在しない場合は -1 を返す。</returns>
-        public int ExecuteRegex(DirectoryInfo parentDirectory, Regex regex, int leaveCount, Func<Exception, bool> exceptionCacther)
+        public int ExecuteRegex(DirectoryInfo parentDirectory, Regex regex, int leaveCount, Func<Exception, bool> exceptionCatcher)
         {
-            return ExecuteCore(parentDirectory, regex, leaveCount, Order.Descending, exceptionCacther);
+            return ExecuteCore(parentDirectory, regex, leaveCount, Order.Descending, exceptionCatcher);
         }
         /// <summary>
         /// 正規表現に該当したファイルのローテート処理。
@@ -73,11 +73,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="regex"><paramref name="parentDirectory"/>直下の対象ファイル。</param>
         /// <param name="leaveCount">列挙されたファイルの残す数。</param>
         /// <param name="order">ソート。</param>
-        /// <param name="exceptionCacther">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
+        /// <param name="exceptionCatcher">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
         /// <returns>削除した数。ディレクトリが存在しない場合は -1 を返す。</returns>
-        public int ExecuteRegex(DirectoryInfo parentDirectory, Regex regex, int leaveCount, Order order, Func<Exception, bool> exceptionCacther)
+        public int ExecuteRegex(DirectoryInfo parentDirectory, Regex regex, int leaveCount, Order order, Func<Exception, bool> exceptionCatcher)
         {
-            return ExecuteCore(parentDirectory, regex, leaveCount, order, exceptionCacther);
+            return ExecuteCore(parentDirectory, regex, leaveCount, order, exceptionCatcher);
         }
 
         /// <summary>
@@ -87,11 +87,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="parentDirectory">親ディレクトリ。</param>
         /// <param name="wildCard"><paramref name="parentDirectory"/>直下の対象ファイル。</param>
         /// <param name="leaveCount">列挙されたファイルの残す数。</param>
-        /// <param name="exceptionCacther">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
+        /// <param name="exceptionCatcher">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
         /// <returns>削除した数。ディレクトリが存在しない場合は -1 を返す。</returns>
-        public int ExecuteWildcard(DirectoryInfo parentDirectory, string wildCard, int leaveCount, Func<Exception, bool> exceptionCacther)
+        public int ExecuteWildcard(DirectoryInfo parentDirectory, string wildCard, int leaveCount, Func<Exception, bool> exceptionCatcher)
         {
-            return ExecuteWildcard(parentDirectory, wildCard, leaveCount, Order.Descending, exceptionCacther);
+            return ExecuteWildcard(parentDirectory, wildCard, leaveCount, Order.Descending, exceptionCatcher);
         }
         /// <summary>
         /// ワイルドカードに該当したファイルのローテート処理。
@@ -100,14 +100,14 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="wildCard"><paramref name="parentDirectory"/>直下の対象ファイル。</param>
         /// <param name="leaveCount">列挙されたファイルの残す数。</param>
         /// <param name="order">ソート。</param>
-        /// <param name="exceptionCacther">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
+        /// <param name="exceptionCatcher">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
         /// <returns>削除した数。ディレクトリが存在しない場合は -1 を返す。</returns>
-        public int ExecuteWildcard(DirectoryInfo parentDirectory, string wildCard, int leaveCount, Order order, Func<Exception, bool> exceptionCacther)
+        public int ExecuteWildcard(DirectoryInfo parentDirectory, string wildCard, int leaveCount, Order order, Func<Exception, bool> exceptionCatcher)
         {
             var wildcardPattern = "^" + Regex.Escape(wildCard).Replace("\\?", ".").Replace("\\*", ".*") + "$";
             var wildcardRegex = new Regex(wildcardPattern, RegexOptions.IgnoreCase);
 
-            return ExecuteCore(parentDirectory, wildcardRegex, leaveCount, order, exceptionCacther);
+            return ExecuteCore(parentDirectory, wildcardRegex, leaveCount, order, exceptionCatcher);
         }
 
         /// <summary>
@@ -117,11 +117,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="parentDirectory">親ディレクトリ。</param>
         /// <param name="extensions"><paramref name="parentDirectory"/>直下の拡張子。</param>
         /// <param name="leaveCount">列挙されたファイルの残す数。</param>
-        /// <param name="exceptionCacther">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
+        /// <param name="exceptionCatcher">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
         /// <returns>削除した数。ディレクトリが存在しない場合は -1 を返す。</returns>
-        public int ExecuteExtensions(DirectoryInfo parentDirectory, IEnumerable<string> extensions, int leaveCount, Func<Exception, bool> exceptionCacther)
+        public int ExecuteExtensions(DirectoryInfo parentDirectory, IEnumerable<string> extensions, int leaveCount, Func<Exception, bool> exceptionCatcher)
         {
-            return ExecuteExtensions(parentDirectory, extensions, leaveCount, Order.Descending, exceptionCacther);
+            return ExecuteExtensions(parentDirectory, extensions, leaveCount, Order.Descending, exceptionCatcher);
         }
         /// <summary>
         /// 拡張子に該当したファイルのローテート処理。
@@ -130,9 +130,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="extensions"><paramref name="parentDirectory"/>直下の拡張子。</param>
         /// <param name="leaveCount">列挙されたファイルの残す数。</param>
         /// <param name="order">ソート。</param>
-        /// <param name="exceptionCacther">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
+        /// <param name="exceptionCatcher">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
         /// <returns>削除した数。ディレクトリが存在しない場合は -1 を返す。</returns>
-        public int ExecuteExtensions(DirectoryInfo parentDirectory, IEnumerable<string> extensions, int leaveCount, Order order, Func<Exception, bool> exceptionCacther)
+        public int ExecuteExtensions(DirectoryInfo parentDirectory, IEnumerable<string> extensions, int leaveCount, Order order, Func<Exception, bool> exceptionCatcher)
         {
             var extensionPatterns = extensions
                 .Select(i => Regex.Escape(i))
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             var extensionPattern = "(" + extensionPatterns + ")";
             var extensionRegex = new Regex(extensionPattern, RegexOptions.IgnoreCase);
 
-            return ExecuteCore(parentDirectory, extensionRegex, leaveCount, order, exceptionCacther);
+            return ExecuteCore(parentDirectory, extensionRegex, leaveCount, order, exceptionCatcher);
         }
 
         #endregion

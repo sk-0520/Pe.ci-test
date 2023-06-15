@@ -6,13 +6,13 @@ using ContentTypeTextNet.Pe.Standard.Database;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database
 {
-    internal static class PersistentHelper
+    internal static class PersistenceHelper
     {
         #region define
 
-        public class PersistentContextsPack: ApplicationDatabaseContextsPack
+        public class PersistenceContextsPack: ApplicationDatabaseContextsPack
         {
-            public PersistentContextsPack(IDatabaseTransaction mainTransaction, IDatabaseTransaction fileTransaction, IDatabaseTransaction temporaryTransaction, IDatabaseCommonStatus commonStatus)
+            public PersistenceContextsPack(IDatabaseTransaction mainTransaction, IDatabaseTransaction fileTransaction, IDatabaseTransaction temporaryTransaction, IDatabaseCommonStatus commonStatus)
                 : base(
                     new DatabaseContexts(mainTransaction, mainTransaction.Implementation),
                     new DatabaseContexts(fileTransaction, mainTransaction.Implementation),
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         #region function
 
-        private static PersistentContextsPack WaitPack(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus, bool isReadOnly)
+        private static PersistenceContextsPack WaitPack(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus, bool isReadOnly)
         {
             static IDatabaseTransaction Do(IDatabaseBarrier databaseBarrier, bool isReadOnly)
             {
@@ -87,17 +87,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             var file = Do(largeDatabaseBarrier, isReadOnly);
             var temp = Do(temporaryDatabaseBarrier, isReadOnly);
 
-            var result = new PersistentContextsPack(main, file, temp, databaseCommonStatus);
+            var result = new PersistenceContextsPack(main, file, temp, databaseCommonStatus);
 
             return result;
         }
 
-        public static PersistentContextsPack WaitWritePack(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
+        public static PersistenceContextsPack WaitWritePack(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
         {
             return WaitPack(mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, databaseCommonStatus, false);
         }
 
-        public static PersistentContextsPack WaitReadPack(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
+        public static PersistenceContextsPack WaitReadPack(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
         {
             return WaitPack(mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, databaseCommonStatus, true);
         }

@@ -77,13 +77,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         {
             get
             {
-                var updtings = new[] {
+                var items = new[] {
                     NewVersionState.Checking,
                     NewVersionState.Downloading,
                     NewVersionState.Checksumming,
                     NewVersionState.Extracting,
                 };
-                return updtings.Any(i => i == State);
+                return items.Any(i => i == State);
             }
         }
 

@@ -182,7 +182,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IList<PluginStateData> pluginStates;
             using(var context = MainDatabaseBarrier.WaitRead()) {
                 var pluginsEntityDao = new PluginsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                pluginStates = pluginsEntityDao.SelectePlguinStateData().ToList();
+                pluginStates = pluginsEntityDao.SelectPluginStateData().ToList();
             }
 
             IList<PluginInstallData> installDataItems;
@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             foreach(var pluginState in pluginStates) {
-                var plugin = PluginContainer.Plugins.FirstOrDefault(i => pluginState.PluginId == i.PluginInformations.PluginIdentifiers.PluginId);
+                var plugin = PluginContainer.Plugins.FirstOrDefault(i => pluginState.PluginId == i.PluginInformation.PluginIdentifiers.PluginId);
                 var element = new PluginSettingEditorElement(pluginState, plugin, PreferencesContextFactory, MainDatabaseBarrier, DatabaseStatementLoader, UserAgentFactory, ViewManager, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
                 element.Initialize();
                 PluginItemsImpl.Add(element);

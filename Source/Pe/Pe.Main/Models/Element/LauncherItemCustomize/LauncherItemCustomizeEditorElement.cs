@@ -155,18 +155,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             LauncherItemExtension = LauncherItemAddonFinder.Find(LauncherItemId, pluginId);
             LauncherItemSupportedPreferences = LauncherItemExtension.SupportedPreferences;
             if(!LauncherItemSupportedPreferences) {
-                Logger.LogInformation("{0} はアドオン設定をサポートしていない", LauncherItemPlugin.PluginInformations.PluginIdentifiers);
+                Logger.LogInformation("{0} はアドオン設定をサポートしていない", LauncherItemPlugin.PluginInformation.PluginIdentifiers);
                 return;
             }
 
-            using(var context = LauncherItemAddonContextFactory.CreateContext(LauncherItemPlugin.PluginInformations, LauncherItemId, databaseContextsPack, true)) {
+            using(var context = LauncherItemAddonContextFactory.CreateContext(LauncherItemPlugin.PluginInformation, LauncherItemId, databaseContextsPack, true)) {
                 LauncherItemPreferences = LauncherItemExtension.CreatePreferences(context);
             }
         }
 
         protected void LoadAddon()
         {
-            using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
+            using var pack = PersistenceHelper.WaitReadPack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
             LoadAddonCore(pack);
         }
 
@@ -176,8 +176,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPreferences != null);
 
-            using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
-            using(var context = LauncherItemAddonContextFactory.CreatePreferencesLoadContext(LauncherItemPlugin.PluginInformations, LauncherItemId, pack)) {
+            using var pack = PersistenceHelper.WaitReadPack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesLoadContext(LauncherItemPlugin.PluginInformation, LauncherItemId, pack)) {
                 return LauncherItemPreferences.BeginPreferences(context);
             }
         }
@@ -188,8 +188,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPreferences != null);
 
-            using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
-            using(var context = LauncherItemAddonContextFactory.CreatePreferencesCheckContext(LauncherItemPlugin.PluginInformations, LauncherItemId, pack)) {
+            using var pack = PersistenceHelper.WaitReadPack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesCheckContext(LauncherItemPlugin.PluginInformation, LauncherItemId, pack)) {
                 LauncherItemPreferences.CheckPreferences(context);
                 return context.HasError;
             }
@@ -201,7 +201,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPreferences != null);
 
-            using(var context = LauncherItemAddonContextFactory.CreatePreferencesSaveContext(LauncherItemPlugin.PluginInformations, LauncherItemId, databaseContextsPack)) {
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesSaveContext(LauncherItemPlugin.PluginInformation, LauncherItemId, databaseContextsPack)) {
                 LauncherItemPreferences.SavePreferences(context);
                 IsSaved = true;
             }
@@ -213,7 +213,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPreferences != null);
 
-            using(var context = LauncherItemAddonContextFactory.CreatePreferencesEndContext(LauncherItemPlugin.PluginInformations, LauncherItemId)) {
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesEndContext(LauncherItemPlugin.PluginInformation, LauncherItemId)) {
                 context.IsSaved = IsSaved;
                 LauncherItemPreferences.EndPreferences(context);
             }
@@ -231,14 +231,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
 
             //TODO: なんかこう、ヘッダ名のために仰々しいなぁ XAML でプラグインID薄くしたいし。。。
-            return LauncherItemPlugin.PluginInformations.PluginIdentifiers.ToString()!;
+            return LauncherItemPlugin.PluginInformation.PluginIdentifiers.ToString()!;
         }
 
         private void LoadLauncherItem()
         {
             ThrowIfDisposed();
 
-            using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
+            using var pack = PersistenceHelper.WaitReadPack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
 
             var launcherItemsDao = new LauncherItemsEntityDao(pack.Main.Context, DatabaseStatementLoader, pack.Main.Implementation, LoggerFactory);
             var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
@@ -410,7 +410,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
             bool needToIconClear;
 
-            using(var pack = PersistentHelper.WaitWritePack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount())) {
+            using(var pack = PersistenceHelper.WaitWritePack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount())) {
                 needToIconClear = SaveItem(pack);
                 pack.Commit();
             }

@@ -13,11 +13,11 @@ using Prism.Commands;
 namespace ContentTypeTextNet.Pe.Main.Views.Setting
 {
     /// <summary>
-    /// LauncherToobarsSettingControl.xaml の相互作用ロジック
+    /// LauncherToolbarsSettingControl.xaml の相互作用ロジック
     /// </summary>
-    public partial class LauncherToobarsSettingControl: UserControl
+    public partial class LauncherToolbarsSettingControl: UserControl
     {
-        public LauncherToobarsSettingControl()
+        public LauncherToolbarsSettingControl()
         {
             InitializeComponent();
         }
@@ -34,23 +34,23 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         public static readonly DependencyProperty EditorProperty = DependencyProperty.Register(
             nameof(Editor),
-            typeof(LauncherToobarsSettingEditorViewModel),
-            typeof(LauncherToobarsSettingControl),
+            typeof(LauncherToolbarsSettingEditorViewModel),
+            typeof(LauncherToolbarsSettingControl),
             new FrameworkPropertyMetadata(
-                default(LauncherToobarsSettingEditorViewModel),
+                default(LauncherToolbarsSettingEditorViewModel),
                 new PropertyChangedCallback(OnEditorChanged)
             )
         );
 
-        public LauncherToobarsSettingEditorViewModel Editor
+        public LauncherToolbarsSettingEditorViewModel Editor
         {
-            get { return (LauncherToobarsSettingEditorViewModel)GetValue(EditorProperty); }
+            get { return (LauncherToolbarsSettingEditorViewModel)GetValue(EditorProperty); }
             set { SetValue(EditorProperty, value); }
         }
 
         private static void OnEditorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if(d is LauncherToobarsSettingControl control) {
+            if(d is LauncherToolbarsSettingControl control) {
             }
         }
 

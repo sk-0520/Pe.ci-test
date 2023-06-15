@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 {
     internal class ClockWidget: IWidget
     {
-        public ClockWidget(IAddonParameter parameter, IPluginInformations pluginInformations)
+        public ClockWidget(IAddonParameter parameter, IPluginInformation pluginInformations)
         {
             LoggerFactory = parameter.LoggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
         private IAddonExecutor AddonExecutor { get; }
         private IDispatcherWrapper DispatcherWrapper { get; }
         private ISkeletonImplements SkeletonImplements { get; }
-        private IPluginInformations PluginInformations { get; }
+        private IPluginInformation PluginInformations { get; }
         private ClockWidgetWindow? WidgetView { get; set; }
         private ClockWidgetViewModel? ViewModel { get; set; }
 
@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
             }
 
             ClockWidgetSetting? clockWidgetSetting;
-            if(!widgetAddonCreateContext.Storage.Persistent.Normal.TryGet<ClockWidgetSetting>(ClockConstants.WidgetSettengKey, out clockWidgetSetting)) {
+            if(!widgetAddonCreateContext.Storage.Persistence.Normal.TryGet<ClockWidgetSetting>(ClockConstants.WidgetSettengKey, out clockWidgetSetting)) {
                 clockWidgetSetting = new ClockWidgetSetting();
             }
             ViewModel = new ClockWidgetViewModel(clockWidgetSetting, SkeletonImplements, DispatcherWrapper, LoggerFactory);

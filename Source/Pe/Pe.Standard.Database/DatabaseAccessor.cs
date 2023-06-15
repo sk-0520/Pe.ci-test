@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <summary>
         /// データベース接続が開いているか。
         /// </summary>
-        public bool IsOpend { get; private set; }
+        public bool IsOpened { get; private set; }
 
         /// <summary>
         /// データベース接続が一時的に閉じているか。
@@ -164,14 +164,14 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             if(ConnectionPausing) {
                 throw new InvalidOperationException(nameof(ConnectionPausing));
             }
-            if(IsOpend) {
-                throw new InvalidOperationException(nameof(IsOpend));
+            if(IsOpened) {
+                throw new InvalidOperationException(nameof(IsOpened));
             }
             ThrowIfDisposed();
 
             var con = DatabaseFactory.CreateConnection();
             con.Open();
-            IsOpend = true;
+            IsOpened = true;
             return con;
         }
 
@@ -215,13 +215,13 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
-        /// <param name="bufferd">偽の場合、<paramref name="result"/>に全数は存在しない。</param>
+        /// <param name="buffered">偽の場合、<paramref name="result"/>に全数は存在しない。</param>
         /// <param name="startUtcTime"></param>
         /// <param name="endUtcTime"></param>
-        protected virtual void LoggingQueryResults<T>(IEnumerable<T> result, bool bufferd, DateTime startUtcTime, DateTime endUtcTime)
+        protected virtual void LoggingQueryResults<T>(IEnumerable<T> result, bool buffered, DateTime startUtcTime, DateTime endUtcTime)
         {
             if(Logger.IsEnabled(LogLevel.Trace)) {
-                if(bufferd) {
+                if(buffered) {
                     Logger.LogTrace("{0}<{1}> -> {2}, {3}", nameof(IEnumerable), typeof(T), result.Count(), endUtcTime - startUtcTime);
                 } else {
                     Logger.LogTrace("{0}<{1}> -> no buffered, {2}", nameof(IEnumerable), typeof(T), endUtcTime - startUtcTime);
@@ -277,13 +277,13 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         {
             ThrowIfDisposed();
 
-            if(!IsOpend) {
+            if(!IsOpened) {
                 return ActionDisposerHelper.CreateEmpty();
             }
 
             if(!ConnectionPausing) {
                 BaseConnection.Close();
-                IsOpend = false;
+                IsOpened = false;
                 ConnectionPausing = true;
                 return new ActionDisposer(d => {
                     ConnectionPausing = false;
@@ -835,7 +835,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
                         BaseConnection.Dispose();
                     }
                 }
-                IsOpend = false;
+                IsOpened = false;
                 ConnectionPausing = false;
             }
 

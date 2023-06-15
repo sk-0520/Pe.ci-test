@@ -11,9 +11,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
     {
         #region define
 
-        private const string webbrowserEmulationPath = @"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION";
-        private const string webbrowserRenderingPath = @"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_DOCUMENT_COMPATIBLE_MODE";
-        private const int webbrowserDefaultVersion = 7000;
+        private const string webBrowserEmulationPath = @"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION";
+        private const string webBrowserRenderingPath = @"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_DOCUMENT_COMPATIBLE_MODE";
+        private const int webBrowserDefaultVersion = 7000;
         private const string internetExplorerPath = @"Software\Microsoft\Internet Explorer";
         private const string internetExplorer10Key = "svcVersion";
         private const string internetExplorer9Key = "Version";
@@ -35,13 +35,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         /// <param name="programName">対象とするプログラムのファイル名</param>
         public static void SetUsingBrowserVersion(int version, string programName)
         {
-            if(version == webbrowserDefaultVersion) {
+            if(version == webBrowserDefaultVersion) {
                 ResetUsingBrowserVersion(programName);
             } else {
-                using(var key = Registry.CurrentUser.CreateSubKey(webbrowserEmulationPath)) {
+                using(var key = Registry.CurrentUser.CreateSubKey(webBrowserEmulationPath)) {
                     key.SetValue(programName, version, RegistryValueKind.DWord);
                 }
-                using(var key = Registry.CurrentUser.CreateSubKey(webbrowserRenderingPath)) {
+                using(var key = Registry.CurrentUser.CreateSubKey(webBrowserRenderingPath)) {
                     key.SetValue(programName, version, RegistryValueKind.DWord);
                 }
             }
@@ -100,12 +100,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         /// <param name="programName">対象とするプログラムのファイル名</param>
         public static void ResetUsingBrowserVersion(string programName)
         {
-            using(var key = Registry.CurrentUser.OpenSubKey(webbrowserEmulationPath, true)) {
+            using(var key = Registry.CurrentUser.OpenSubKey(webBrowserEmulationPath, true)) {
                 if(key != null) {
                     key.DeleteValue(programName, false);
                 }
             }
-            using(var key = Registry.CurrentUser.OpenSubKey(webbrowserRenderingPath, true)) {
+            using(var key = Registry.CurrentUser.OpenSubKey(webBrowserRenderingPath, true)) {
                 if(key != null) {
                     key.DeleteValue(programName, false);
                 }

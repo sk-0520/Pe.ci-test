@@ -20,28 +20,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region function
 
-        public PluginInitializeContext CreateInitializeContext(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack)
+        public PluginInitializeContext CreateInitializeContext(IPluginInformation pluginInformation, IDatabaseContextsPack databaseContextsPack)
         {
-            var pluginStorage = CreatePluginStorage(pluginInformations, databaseContextsPack, true);
-            return new PluginInitializeContext(pluginInformations.PluginIdentifiers, pluginStorage);
+            var pluginStorage = CreatePluginStorage(pluginInformation, databaseContextsPack, true);
+            return new PluginInitializeContext(pluginInformation.PluginIdentifiers, pluginStorage);
         }
 
-        public PluginUninitializeContext CreateUninitializeContext(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack)
+        public PluginUninitializeContext CreateUninitializeContext(IPluginInformation pluginInformation, IDatabaseContextsPack databaseContextsPack)
         {
-            var pluginStorage = CreatePluginStorage(pluginInformations, databaseContextsPack, false);
-            return new PluginUninitializeContext(pluginInformations.PluginIdentifiers, pluginStorage);
+            var pluginStorage = CreatePluginStorage(pluginInformation, databaseContextsPack, false);
+            return new PluginUninitializeContext(pluginInformation.PluginIdentifiers, pluginStorage);
         }
 
-        public PluginLoadContext CreateLoadContex(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack)
+        public PluginLoadContext CreateLoadContext(IPluginInformation pluginInformation, IDatabaseContextsPack databaseContextsPack)
         {
-            var pluginStorage = CreatePluginStorage(pluginInformations, databaseContextsPack, true);
-            return new PluginLoadContext(pluginInformations.PluginIdentifiers, pluginStorage);
+            var pluginStorage = CreatePluginStorage(pluginInformation, databaseContextsPack, true);
+            return new PluginLoadContext(pluginInformation.PluginIdentifiers, pluginStorage);
         }
 
-        public PluginUnloadContext CreateUnloadContext(IPluginInformations pluginInformations, IDatabaseContextsPack databaseContextsPack)
+        public PluginUnloadContext CreateUnloadContext(IPluginInformation pluginInformation, IDatabaseContextsPack databaseContextsPack)
         {
-            var pluginStorage = CreatePluginStorage(pluginInformations, databaseContextsPack, false);
-            return new PluginUnloadContext(pluginInformations.PluginIdentifiers, pluginStorage);
+            var pluginStorage = CreatePluginStorage(pluginInformation, databaseContextsPack, false);
+            return new PluginUnloadContext(pluginInformation.PluginIdentifiers, pluginStorage);
         }
 
         #endregion

@@ -164,7 +164,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 DateTime iconUpdatedTimestamp = DateTime.UtcNow;
                 using(var context = LargeDatabaseBarrier.WaitWrite()) {
                     var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                    var existIconState = launcherItemIconStatusEntityDao.SelecteExistsLauncherItemIconState(LauncherItemId, iconScale);
+                    var existIconState = launcherItemIconStatusEntityDao.SelectExistsLauncherItemIconState(LauncherItemId, iconScale);
                     if(existIconState) {
                         launcherItemIconStatusEntityDao.UpdateLastUpdatedIconTimestamp(LauncherItemId, iconScale, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
                     } else {
@@ -210,9 +210,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             var counter = new Counter(RetryMaxCount);
             foreach(var count in counter) {
                 try {
-                    var existisResult = await LoadExistsImageAsync(iconScale, cancellationToken).ConfigureAwait(false);
-                    if(existisResult.Success) {
-                        return existisResult.SuccessValue;
+                    var existsResult = await LoadExistsImageAsync(iconScale, cancellationToken).ConfigureAwait(false);
+                    if(existsResult.Success) {
+                        return existsResult.SuccessValue;
                     }
 
                     var image = await MakeImageAsync(iconScale, cancellationToken).ConfigureAwait(false);

@@ -91,16 +91,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
             OptionDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = OptionCanDragStart,
-                DragEnterAction = OptionDragOrverOrEnter,
-                DragOverAction = OptionDragOrverOrEnter,
+                DragEnterAction = OptionDragOverOrEnter,
+                DragOverAction = OptionDragOverOrEnter,
                 DragLeaveAction = OptionDragLeave,
                 DropAction = OptionDrop,
                 GetDragParameter = OptionGetDragParameter,
             };
             WorkDirectoryDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = WorkDirectoryCanDragStart,
-                DragEnterAction = WorkDirectoryDragOrverOrEnter,
-                DragOverAction = WorkDirectoryDragOrverOrEnter,
+                DragEnterAction = WorkDirectoryDragOversOrEnter,
+                DragOverAction = WorkDirectoryDragOversOrEnter,
                 DragLeaveAction = WorkDirectoryDragLeave,
                 DropAction = WorkDirectoryDrop,
                 GetDragParameter = WorkDirectoryGetDragParameter,
@@ -112,7 +112,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         public RequestSender CloseRequest { get; } = new RequestSender();
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 
-        private IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
+        private IDpiScaleOutpour DpiScaleOutpour { get; set; } = new EmptyDpiScaleOutpour();
 
         public IDragAndDrop OptionDragAndDrop { get; }
         public IDragAndDrop WorkDirectoryDragAndDrop { get; }
@@ -183,8 +183,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             set => SetProperty(ref this._removeTextDocument, value);
         }
 
-        public ObservableCollection<string> MergeErros { get; } = new ObservableCollection<string>();
-        public ObservableCollection<string> RemoveErros { get; } = new ObservableCollection<string>();
+        public ObservableCollection<string> MergeErrors { get; } = new ObservableCollection<string>();
+        public ObservableCollection<string> RemoveErrors { get; } = new ObservableCollection<string>();
 
 
         public RedoMode RedoMode
@@ -228,7 +228,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         public ICommand OptionFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
-                var exeExts = environmentExecuteFile.GetSystemExecuteExtensions(true);
+                var exeExtensions = environmentExecuteFile.GetSystemExecuteExtensions(true);
 
                 var dialogRequester = new DialogRequester(LoggerFactory);
                 dialogRequester.SelectFile(
@@ -329,7 +329,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                 }
             }
 
-            var screen = DpiScaleOutputor.GetOwnerScreen();
+            var screen = DpiScaleOutpour.GetOwnerScreen();
 
             Model.Execute(launcherFileData, envItems, redo, screen);
         }
@@ -344,7 +344,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             return dd.CanDragStart(sender, e);
         }
 
-        private void OptionDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        private void OptionDragOverOrEnter(UIElement sender, DragEventArgs e)
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 e.Effects = DragDropEffects.Copy;
@@ -385,7 +385,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             return dd.CanDragStart(sender, e);
         }
 
-        private void WorkDirectoryDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        private void WorkDirectoryDragOversOrEnter(UIElement sender, DragEventArgs e)
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 e.Effects = DragDropEffects.Copy;
@@ -443,8 +443,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
             var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
 
-            envConf.SetValidateCommon(MergeTextDocument!, envConf.ValidateMergeDocument, seq => AddErrors(seq, nameof(MergeTextDocument)), MergeErros);
-            envConf.SetValidateCommon(RemoveTextDocument!, envConf.ValidateRemoveDocument, seq => AddErrors(seq, nameof(RemoveTextDocument)), RemoveErros);
+            envConf.SetValidateCommon(MergeTextDocument!, envConf.ValidateMergeDocument, seq => AddErrors(seq, nameof(MergeTextDocument)), MergeErrors);
+            envConf.SetValidateCommon(RemoveTextDocument!, envConf.ValidateRemoveDocument, seq => AddErrors(seq, nameof(RemoveTextDocument)), RemoveErrors);
         }
 
         #endregion
@@ -456,7 +456,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         public void ReceiveViewLoaded(Window window)
         {
-            DpiScaleOutputor = (IDpiScaleOutputor)window;
+            DpiScaleOutpour = (IDpiScaleOutpour)window;
 
             WindowsUtility.ShowActiveForeground(HandleUtility.GetWindowHandle(window));
         }

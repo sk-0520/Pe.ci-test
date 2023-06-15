@@ -33,9 +33,8 @@ CONSOLE_RESOURCE begin_console(const MEMORY_ARENA_RESOURCE* memory_arena_resourc
         }
     };
 
-    DWORD modemode;
-    GetConsoleMode(console_resource.handle.output, &modemode);
-
+    DWORD consoleMode;
+    GetConsoleMode(console_resource.handle.output, &consoleMode);
 
     return console_resource;
 }

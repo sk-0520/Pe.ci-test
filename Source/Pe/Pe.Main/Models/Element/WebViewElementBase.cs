@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
             });
         }
 
-        public string ToJavascriptString(string text)
+        public string ToJavaScriptString(string text)
         {
             var s = text
                 .Replace("\\", @"\\")

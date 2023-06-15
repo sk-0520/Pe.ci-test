@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                         var scale = ImageLoader.GetPrimaryDpiScale();
                         return Model.Plugin.GetIcon(ImageLoader, new IconScale(IconBox.Small, scale));
                     } catch(Exception ex) {
-                        Logger.LogError(ex, "[{0}] {1}, {2}", Model.Plugin.PluginInformations.PluginIdentifiers.PluginName, ex.Message, Model.Plugin.PluginInformations.PluginIdentifiers.PluginId);
+                        Logger.LogError(ex, "[{0}] {1}, {2}", Model.Plugin.PluginInformation.PluginIdentifiers.PluginName, ex.Message, Model.Plugin.PluginInformation.PluginIdentifiers.PluginId);
                         return null!;
                     }
                 });
@@ -79,8 +79,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     return Properties.Resources.String_Setting_Plugins_Item_NotLoaded_SupportVersions;
                 }
 
-                var unlimitedMinVersion = PluginUtility.IsUnlimitedVersion(Model.Plugin.PluginInformations.PluginVersions.MinimumSupportVersion);
-                var unlimitedMaxVersion = PluginUtility.IsUnlimitedVersion(Model.Plugin.PluginInformations.PluginVersions.MaximumSupportVersion);
+                var unlimitedMinVersion = PluginUtility.IsUnlimitedVersion(Model.Plugin.PluginInformation.PluginVersions.MinimumSupportVersion);
+                var unlimitedMaxVersion = PluginUtility.IsUnlimitedVersion(Model.Plugin.PluginInformation.PluginVersions.MaximumSupportVersion);
 
                 if(unlimitedMinVersion && unlimitedMaxVersion) {
                     return Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited;
@@ -91,8 +91,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 return TextUtility.ReplaceFromDictionary(
                     Properties.Resources.String_Setting_Plugins_Item_SupportVersions_Format,
                     new Dictionary<string, string>() {
-                        ["MIN"] = unlimitedMinVersion ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : versionConverter.ConvertNormalVersion(Model.Plugin.PluginInformations.PluginVersions.MinimumSupportVersion),
-                        ["MAX"] = unlimitedMaxVersion ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : versionConverter.ConvertNormalVersion(Model.Plugin.PluginInformations.PluginVersions.MaximumSupportVersion)
+                        ["MIN"] = unlimitedMinVersion ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : versionConverter.ConvertNormalVersion(Model.Plugin.PluginInformation.PluginVersions.MinimumSupportVersion),
+                        ["MAX"] = unlimitedMaxVersion ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : versionConverter.ConvertNormalVersion(Model.Plugin.PluginInformation.PluginVersions.MaximumSupportVersion)
                     }
                 );
             }

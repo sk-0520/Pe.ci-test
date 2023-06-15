@@ -144,7 +144,7 @@
     </DataTemplate>
 
     <!--#region ファイル -->
-    <ContextMenu x:Key="FileContextMenu" IsOpen="{Binding DataContext.IsOpendFileItemMenu, Source={x:Reference root}}">
+    <ContextMenu x:Key="FileContextMenu" IsOpen="{Binding DataContext.IsOpenedFileItemMenu, Source={x:Reference root}}">
       <ContextMenu.Resources>
         <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, Source={x:Reference root}}" />
         <!-- グループメニューアイテムのスタイルを上書きする普通のメニュー -->
@@ -269,7 +269,7 @@
     <!--#endregion -->
 
     <!--#region ランチャーアドオン -->
-    <ContextMenu x:Key="AddonContextMenu" IsOpen="{Binding DataContext.IsOpendAddonItemMenu, Source={x:Reference root}}">
+    <ContextMenu x:Key="AddonContextMenu" IsOpen="{Binding DataContext.IsOpenedAddonItemMenu, Source={x:Reference root}}">
       <ContextMenu.Resources>
         <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, Source={x:Reference root}}" />
         <!-- グループメニューアイテムのスタイルを上書きする普通のメニュー -->
@@ -408,7 +408,7 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <ToggleButton x:Name="appButton" AllowDrop="True" IsChecked="{Binding IsOpendAppMenu}" ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemToggleButtonControlTemplate, ElementName=root}" IsEnabled="{Binding IsOpen, ElementName=appPopup, Converter={StaticResource LogicalNotConverter}}">
+    <ToggleButton x:Name="appButton" AllowDrop="True" IsChecked="{Binding IsOpenedAppMenu}" ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemToggleButtonControlTemplate, ElementName=root}" IsEnabled="{Binding IsOpen, ElementName=appPopup, Converter={StaticResource LogicalNotConverter}}">
       <ToggleButton.Style>
         <Style TargetType="ToggleButton">
           <Style.Triggers>

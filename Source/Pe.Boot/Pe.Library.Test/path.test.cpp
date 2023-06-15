@@ -20,6 +20,7 @@ namespace PeLibraryTest
                 DATA(true, _T('/')),
                 DATA(false, _T('￥')),
                 DATA(false, _T('¥')),
+                DATA(false, _T('\0')),
             };
             for (auto test : tests) {
                 bool actual = test.run(is_directory_separator);

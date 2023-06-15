@@ -7,7 +7,7 @@ size_t get_string_length(const TCHAR* s)
     return lstrlen(s);
 }
 
-TCHAR* concat_string(TCHAR* target, const TCHAR* value)
+TCHAR* concatenate_string(TCHAR* target, const TCHAR* value)
 {
     return lstrcat(target, value);
 }

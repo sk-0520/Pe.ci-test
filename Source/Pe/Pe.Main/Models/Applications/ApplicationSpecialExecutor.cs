@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region function
 
-        private IDisposable GetConsolelifetimeIfConsoleMode(Mode mode)
+        private IDisposable GetConsoleLifetimeIfConsoleMode(Mode mode)
         {
             switch(mode) {
                 case Mode.DryRun:
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             Debug.Assert(mode != Mode.None);
 
-            using var consoleLifetime = GetConsolelifetimeIfConsoleMode(mode);
+            using var consoleLifetime = GetConsoleLifetimeIfConsoleMode(mode);
 
             switch(mode) {
                 case Mode.DryRun:

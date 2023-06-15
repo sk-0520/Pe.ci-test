@@ -255,16 +255,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return Items.Where(i => i.WindowKind == kind);
         }
 
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             switch(msg) {
                 case (int)WM.WM_SYSCOMMAND: {
                         if(WindowsUtility.ConvertSCFromWParam(wParam) == SC.SC_CLOSE) {
                             var e = new CancelEventArgs(false);
 
-                            var item = Items.First(i => HandleUtility.GetWindowHandle(i.Window) == hwnd);
+                            var item = Items.First(i => HandleUtility.GetWindowHandle(i.Window) == hWnd);
 
-                            Logger.LogDebug("ウィンドウ破棄前(ユーザー操作): {0}, {1:x16}", item.Window, hwnd.ToInt64());
+                            Logger.LogDebug("ウィンドウ破棄前(ユーザー操作): {0}, {1:x16}", item.Window, hWnd.ToInt64());
                             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
                                 viewLifecycleReceiver.ReceiveViewUserClosing(item.Window, e);
                             }

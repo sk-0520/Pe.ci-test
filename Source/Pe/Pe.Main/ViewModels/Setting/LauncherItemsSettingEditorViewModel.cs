@@ -41,8 +41,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = CanDragStart,
-                DragEnterAction = DragOrverOrEnter,
-                DragOverAction = DragOrverOrEnter,
+                DragEnterAction = DragOverOrEnter,
+                DragOverAction = DragOverOrEnter,
                 DragLeaveAction = DragLeave,
                 DropAction = Drop,
                 GetDragParameter = GetDragParameter,
@@ -162,10 +162,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             return dd.CanDragStart(sender, e);
         }
 
-        private void DragOrverOrEnter(UIElement sender, DragEventArgs e)
+        private void DragOverOrEnter(UIElement sender, DragEventArgs e)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
-            dd.DragOrverOrEnter(sender, e);
+            dd.DragOverOrEnter(sender, e);
         }
 
         private void Drop(UIElement sender, DragEventArgs e)

@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             GeneralsSettingEditor = ServiceLocator.Build<GeneralsSettingEditorElement>(PluginContainer.Theme.Plugins.ToList());
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorElement(AllLauncherItems, PluginContainer, ServiceLocator.Build<LauncherItemAddonContextFactory>(), ServiceLocator.Build<ISettingNotifyManager>(), ServiceLocator.Build<IClipboardManager>(), ServiceLocator.Build<IMainDatabaseBarrier>(), ServiceLocator.Build<ILargeDatabaseBarrier>(), ServiceLocator.Build<ITemporaryDatabaseBarrier>(), ServiceLocator.Build<IDatabaseStatementLoader>(), ServiceLocator.Build<IIdFactory>(), ServiceLocator.Build<IImageLoader>(), ServiceLocator.Build<IMediaConverter>(), ServiceLocator.Build<IPolicy>(), ServiceLocator.Build<IDispatcherWrapper>(), ServiceLocator.Build<ILoggerFactory>());
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>(AllLauncherGroups);
-            LauncherToobarsSettingEditor = ServiceLocator.Build<LauncherToobarsSettingEditorElement>(AllLauncherGroups);
+            LauncherToolbarsSettingEditor = ServiceLocator.Build<LauncherToolbarsSettingEditorElement>(AllLauncherGroups);
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
             PluginsSettingEditor = new PluginsSettingEditorElement(PluginContainer, ServiceLocator.Build<NewVersionChecker>(), ServiceLocator.Build<NewVersionDownloader>(), ServiceLocator.Build<PluginConstructorContext>(), pauseReceiveLog, ServiceLocator.Build<PreferencesContextFactory>(), ServiceLocator.Build<IWindowManager>(), ServiceLocator.Build<IUserTracker>(), ServiceLocator.Build<ISettingNotifyManager>(), ServiceLocator.Build<IClipboardManager>(), ServiceLocator.Build<IMainDatabaseBarrier>(), ServiceLocator.Build<ILargeDatabaseBarrier>(), ServiceLocator.Build<ITemporaryDatabaseBarrier>(), ServiceLocator.Build<IDatabaseStatementLoader>(), ServiceLocator.Build<IIdFactory>(), ServiceLocator.Build<EnvironmentParameters>(), ServiceLocator.Build<IUserAgentManager>(), ServiceLocator.Build<IViewManager>(), ServiceLocator.Build<IPlatformTheme>(), ServiceLocator.Build<IImageLoader>(), ServiceLocator.Build<IMediaConverter>(), ServiceLocator.Build<IPolicy>(), ServiceLocator.Build<IDispatcherWrapper>(), ServiceLocator.Build<ILoggerFactory>());
 
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 GeneralsSettingEditor,
                 LauncherItemsSettingEditor,
                 LauncherGroupsSettingEditor,
-                LauncherToobarsSettingEditor,
+                LauncherToolbarsSettingEditor,
                 KeyboardSettingEditor,
                 PluginsSettingEditor
             };
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public GeneralsSettingEditorElement GeneralsSettingEditor { get; }
         public LauncherItemsSettingEditorElement LauncherItemsSettingEditor { get; }
         public LauncherGroupsSettingEditorElement LauncherGroupsSettingEditor { get; }
-        public LauncherToobarsSettingEditorElement LauncherToobarsSettingEditor { get; }
+        public LauncherToolbarsSettingEditorElement LauncherToolbarsSettingEditor { get; }
         public KeyboardSettingEditorElement KeyboardSettingEditor { get; }
         public PluginsSettingEditorElement PluginsSettingEditor { get; }
         public IReadOnlyList<SettingEditorElementBase> Editors { get; }
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public void Save()
         {
-            var pack = PersistentHelper.WaitWritePack(
+            var pack = PersistenceHelper.WaitWritePack(
                 ServiceLocator.Get<IMainDatabaseBarrier>(),
                 ServiceLocator.Get<ILargeDatabaseBarrier>(),
                 ServiceLocator.Get<ITemporaryDatabaseBarrier>(),

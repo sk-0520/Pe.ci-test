@@ -13,19 +13,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
     public class LauncherItemExtensionElement: ElementBase, ILauncherItemId
     {
 
-        public LauncherItemExtensionElement(IPluginInformations pluginInformations, LauncherItemId launcherItemId, ILoggerFactory loggerFactory)
+        public LauncherItemExtensionElement(IPluginInformation pluginInformation, LauncherItemId launcherItemId, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            PluginInformations = pluginInformations;
+            PluginInformation = pluginInformation;
             LauncherItemId = launcherItemId;
         }
 
         #region property
 
-        private IPluginInformations PluginInformations { get; }
-        private ISet<LauncherItemAddonViewInformation> Informations { get; } = new HashSet<LauncherItemAddonViewInformation>();
+        private IPluginInformation PluginInformation { get; }
+        private ISet<LauncherItemAddonViewInformation> InformationItems { get; } = new HashSet<LauncherItemAddonViewInformation>();
 
-        public bool HasView => Informations.Any(i => i.WindowItem.Window.IsVisible);
+        public bool HasView => InformationItems.Any(i => i.WindowItem.Window.IsVisible);
 
         #endregion
 
@@ -33,21 +33,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public void CloseView()
         {
-            foreach(var information in Informations.ToArray()) {
+            foreach(var information in InformationItems.ToArray()) {
                 information.WindowItem.Window.Close();
             }
         }
 
         public void Add(LauncherItemAddonViewInformation launcherItemAddonViewInformation)
         {
-            Informations.Add(launcherItemAddonViewInformation);
+            InformationItems.Add(launcherItemAddonViewInformation);
         }
 
-        public IEnumerable<LauncherItemAddonViewInformation> GetInformations() => Informations;
+        public IEnumerable<LauncherItemAddonViewInformation> GetInformationItems() => InformationItems;
 
         public bool ReceiveViewUserClosing(Window window)
         {
-            var information = Informations.FirstOrDefault(i => i.WindowItem.Window == window);
+            var information = InformationItems.FirstOrDefault(i => i.WindowItem.Window == window);
             if(information == null) {
                 Logger.LogWarning("対象ウィンドウは未登録: {0}", HandleUtility.GetWindowHandle(window));
                 return true;
@@ -58,14 +58,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public void ReceiveViewClosed(Window window, bool isUserOperation)
         {
-            var information = Informations.FirstOrDefault(i => i.WindowItem.Window == window);
+            var information = InformationItems.FirstOrDefault(i => i.WindowItem.Window == window);
             if(information == null) {
                 Logger.LogWarning("対象ウィンドウは未登録: {0}", HandleUtility.GetWindowHandle(window));
                 return;
             }
 
             information.ClosedWindow();
-            Informations.Remove(information);
+            InformationItems.Remove(information);
         }
 
         #endregion
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         protected override void InitializeImpl()
         {
-            Logger.LogTrace("ランチャーアイテムアドオン初期化: {0}", PluginInformations.PluginIdentifiers);
+            Logger.LogTrace("ランチャーアイテムアドオン初期化: {0}", PluginInformation.PluginIdentifiers);
         }
 
         #endregion

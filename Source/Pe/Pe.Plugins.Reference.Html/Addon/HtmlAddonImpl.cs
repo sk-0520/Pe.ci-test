@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html.Addon
 
         public override IWidget BuildWidget(IAddonParameter parameter)
         {
-            return new HtmlWidget(parameter, PluginInformations);
+            return new HtmlWidget(parameter, PluginInformation);
         }
 
         #endregion

@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             fullscreenWatcher.ExcludeToolWindow = fullscreen.ExcludeToolWindow;
             ApplicationDiContainer.Register<IFullscreenWatcher, FullscreenWatcher>(fullscreenWatcher);
 
-            KeyboradHooker = new KeyboradHooker(LoggerFactory);
+            KeyboradHooker = new KeyboardHooker(LoggerFactory);
             MouseHooker = new MouseHooker(LoggerFactory);
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
@@ -198,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private HwndSource? MessageWindowHandleSource { get; set; }
         //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
 
-        private KeyboradHooker KeyboradHooker { get; }
+        private KeyboardHooker KeyboradHooker { get; }
         private MouseHooker MouseHooker { get; }
         private KeyActionChecker KeyActionChecker { get; }
         private KeyActionAssistant KeyActionAssistant { get; }
@@ -280,7 +280,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var workingDatabasePack = ApplicationDiContainer.Build<IDatabaseAccessorPack>();
             var settingDatabasePack = container.Build<IDatabaseAccessorPack>();
-            PersistentHelper.Copy(workingDatabasePack.Temporary, settingDatabasePack.Temporary);
+            PersistenceHelper.Copy(workingDatabasePack.Temporary, settingDatabasePack.Temporary);
 
             var settingElement = new SettingContainerElement(container, Logging.PauseReceiveLog, container.Build<ILoggerFactory>());
             settingElement.Initialize();
@@ -327,7 +327,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var cultureServiceChanger = ApplicationDiContainer.Build<CultureServiceChanger>(CultureService.Instance);
                 cultureServiceChanger.ChangeCulture();
 
-                PersistentHelper.Copy(settingDatabasePack.Temporary, workingDatabasePack.Temporary);
+                PersistenceHelper.Copy(settingDatabasePack.Temporary, workingDatabasePack.Temporary);
 
                 Logger.LogInformation("設定適用のため各要素生成");
 
@@ -628,7 +628,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // プラグイン情報取得
             var pluginStateItems = ApplicationDiContainer.Build<IMainDatabaseBarrier>().ReadData(c => {
                 var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(c, c.Implementation);
-                return pluginsEntityDao.SelectePlguinStateData().ToList();
+                return pluginsEntityDao.SelectPluginStateData().ToList();
             });
 
             // アンインストール対象を消しちゃう
@@ -636,7 +636,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var uninstalledPlugins = new List<PluginStateData>();
             foreach(var uninstallPlugin in uninstallPlugins) {
                 // なんかが失敗したときに後続を続けたいので毎度ロールバックする
-                using var pack = PersistentHelper.WaitWritePack(
+                using var pack = PersistenceHelper.WaitWritePack(
                     ApplicationDiContainer.Build<IMainDatabaseBarrier>(),
                     ApplicationDiContainer.Build<ILargeDatabaseBarrier>(),
                     ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>(),
@@ -655,12 +655,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var enabledPlugins = pluginStateItems.Except(uninstalledPlugins).ToArray();
 
             // プラグインディレクトリからプラグインDLL列挙
-            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.IgnoreBaseFileNames, environmentParameters.ApplicationConfiguration.Plugin.Extentions);
+            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.IgnoreBaseFileNames, environmentParameters.ApplicationConfiguration.Plugin.Extensions);
 
             FileInfo? testPluginFile = null;
             if(TestPluginDirectory != null) {
                 var pluginName = string.IsNullOrWhiteSpace(TestPluginName) ? TestPluginDirectory.Name : TestPluginName;
-                testPluginFile = PluginContainer.GetPluginFile(TestPluginDirectory, pluginName, environmentParameters.ApplicationConfiguration.Plugin.Extentions);
+                testPluginFile = PluginContainer.GetPluginFile(TestPluginDirectory, pluginName, environmentParameters.ApplicationConfiguration.Plugin.Extensions);
             }
 
             // プラグインを読み込み、プラグイン情報と突合して使用可能・不可を検証
@@ -715,7 +715,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         }
                     }
 
-                    if(pluginsEntityDao.SelecteExistsPlugin(pluginLoadStateItem.PluginId)) {
+                    if(pluginsEntityDao.SelectExistsPlugin(pluginLoadStateItem.PluginId)) {
                         pluginsEntityDao.UpdatePluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
                     } else {
                         pluginsEntityDao.InsertPluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
@@ -724,7 +724,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     // 読み込みOKの際に更新URLの再設定
                     if(pluginLoadStateItem.Plugin != null) {
                         pluginVersionChecksEntityDao.DeletePluginVersionChecks(pluginLoadStateItem.PluginId);
-                        foreach(var countUrl in pluginLoadStateItem.Plugin.PluginInformations.PluginVersions.CheckUrls.Counting()) {
+                        foreach(var countUrl in pluginLoadStateItem.Plugin.PluginInformation.PluginVersions.CheckUrls.Counting()) {
                             pluginVersionChecksEntityDao.InsertPluginVersionCheckUrl(pluginLoadStateItem.PluginId, countUrl.Number * PluginUtility.CheckVersionStep, countUrl.Value, DatabaseCommonStatus.CreateCurrentAccount());
                         }
                     }
@@ -802,7 +802,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // Pe専用プラグイン
             foreach(var plugin in applicationPlugins) {
                 using(var readerPack = databaseBarrierPack.WaitRead()) {
-                    using var context = pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack);
+                    using var context = pluginContextFactory.CreateInitializeContext(plugin.PluginInformation, readerPack);
                     plugin.Initialize(context);
                 }
                 initializedPlugins.Add(plugin);
@@ -816,7 +816,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var plugin = pluginLoadStateItem.Plugin;
                 try {
                     using(var readerPack = databaseBarrierPack.WaitRead()) {
-                        using var context = pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack);
+                        using var context = pluginContextFactory.CreateInitializeContext(plugin.PluginInformation, readerPack);
                         plugin.Initialize(context);
                     }
                     initializedPlugins.Add(plugin);
@@ -832,7 +832,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             foreach(var plugin in initializedPlugins) {
-                Logger.LogInformation("初期化完了プラグイン: {0}, {1}, {2}", plugin.PluginInformations.PluginIdentifiers.PluginName, plugin.PluginInformations.PluginVersions.PluginVersion, plugin.PluginInformations.PluginIdentifiers.PluginId);
+                Logger.LogInformation("初期化完了プラグイン: {0}, {1}, {2}", plugin.PluginInformation.PluginIdentifiers.PluginName, plugin.PluginInformation.PluginVersions.PluginVersion, plugin.PluginInformation.PluginIdentifiers.PluginId);
                 PluginContainer.AddPlugin(plugin);
             }
 
@@ -842,8 +842,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
                     foreach(var initializedPlugin in initializedPlugins) {
                         pluginsEntityDao.UpdatePluginRunningState(
-                            initializedPlugin.PluginInformations.PluginIdentifiers.PluginId,
-                            initializedPlugin.PluginInformations.PluginVersions.PluginVersion,
+                            initializedPlugin.PluginInformation.PluginIdentifiers.PluginId,
+                            initializedPlugin.PluginInformation.PluginVersions.PluginVersion,
                             BuildStatus.Version,
                             DatabaseCommonStatus.CreateCurrentAccount()
                         );
@@ -863,20 +863,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             using(var writer = pluginContextFactory.BarrierWrite()) {
                 foreach(var item in addonPlugins.Concat(themePlugins)) {
-                    using var context = pluginContextFactory.CreateUnloadContext(item.Plugin.PluginInformations, writer);
+                    using var context = pluginContextFactory.CreateUnloadContext(item.Plugin.PluginInformation, writer);
                     try {
                         item.Plugin.Unload(item.Kind, context);
                     } catch(Exception ex) {
-                        Logger.LogError(ex, "{0}({1}) {2}", item.Plugin.PluginInformations.PluginIdentifiers.PluginName, item.Plugin.PluginInformations.PluginIdentifiers.PluginId, ex.Message);
+                        Logger.LogError(ex, "{0}({1}) {2}", item.Plugin.PluginInformation.PluginIdentifiers.PluginName, item.Plugin.PluginInformation.PluginIdentifiers.PluginId, ex.Message);
                     }
                 }
 
                 foreach(var plugin in plugins) {
-                    using var context = pluginContextFactory.CreateUninitializeContext(plugin.PluginInformations, writer);
+                    using var context = pluginContextFactory.CreateUninitializeContext(plugin.PluginInformation, writer);
                     try {
                         plugin.Uninitialize(context);
                     } catch(Exception ex) {
-                        Logger.LogError(ex, "{0}({1}) {2}", plugin.PluginInformations.PluginIdentifiers.PluginName, plugin.PluginInformations.PluginIdentifiers.PluginId, ex.Message);
+                        Logger.LogError(ex, "{0}({1}) {2}", plugin.PluginInformation.PluginIdentifiers.PluginName, plugin.PluginInformation.PluginIdentifiers.PluginId, ex.Message);
                     }
                 }
 
@@ -1248,7 +1248,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 ;
                 foreach(var noteItem in noteItems) {
                     var hWnd = HandleUtility.GetWindowHandle(noteItem.Window);
-                    WindowsUtility.MoveZoderBttom(hWnd);
+                    WindowsUtility.MoveZoderBottom(hWnd);
                 }
             }
         }
@@ -1470,7 +1470,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
-            var pluginMap = PluginContainer.Plugins.ToDictionary(i => i.PluginInformations.PluginIdentifiers.PluginId, i => i);
+            var pluginMap = PluginContainer.Plugins.ToDictionary(i => i.PluginInformation.PluginIdentifiers.PluginId, i => i);
             var directoryMover = ApplicationDiContainer.Build<DirectoryMover>();
             foreach(var installDataItem in installDataItems) {
                 if(installDataItem.PluginInstallMode == PluginInstallMode.New) {
@@ -1657,9 +1657,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 settingBackupper.BackupUserSetting(sourceDirectory, targetDirectory, backupFileWithoutExtensionName, enabledCount);
 
                 // ユーザー設定側バックアップ
-                var expandeduserBackupDirectoryPath = Environment.ExpandEnvironmentVariables(userBackupDirectoryPath ?? string.Empty);
-                if(!string.IsNullOrWhiteSpace(expandeduserBackupDirectoryPath)) {
-                    var dir = new DirectoryInfo(expandeduserBackupDirectoryPath);
+                var expandedUserBackupDirectoryPath = Environment.ExpandEnvironmentVariables(userBackupDirectoryPath ?? string.Empty);
+                if(!string.IsNullOrWhiteSpace(expandedUserBackupDirectoryPath)) {
+                    var dir = new DirectoryInfo(expandedUserBackupDirectoryPath);
                     settingBackupper.BackupUserSettingToCustomDirectory(sourceDirectory, dir);
                 }
             } catch(Exception ex) {
@@ -1678,7 +1678,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
             }
             var versionConverter = new VersionConverter();
-            ;
             BackupSettings(
                 environmentParameters.UserSettingDirectory,
                 environmentParameters.UserBackupDirectory,
@@ -1779,14 +1778,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             string TrimFunc(string s) => s.Substring(3);
 
             var info = new ApplicationInformationCollector(environmentParameters);
-            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetApplication))] = CreateInfoMap(info.GetApplication()));
-            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetEnvironmentParameter))] = CreateInfoMap(info.GetEnvironmentParameter()));
-            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetCPU))] = CreateInfoMap(info.GetCPU()));
-            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetOS))] = CreateInfoMap(info.GetOS()));
-            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetRuntimeInformation))] = CreateInfoMap(info.GetRuntimeInformation()));
-            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetEnvironment))] = CreateInfoMap(info.GetEnvironment()));
-            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetEnvironmentVariables))] = CreateInfoMap(info.GetEnvironmentVariables()));
-            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetScreen))] = CreateInfoMap(info.GetScreen()));
+            ExceptionWrapper(() => rawData.InformationMap[TrimFunc(nameof(info.GetApplication))] = CreateInfoMap(info.GetApplication()));
+            ExceptionWrapper(() => rawData.InformationMap[TrimFunc(nameof(info.GetEnvironmentParameter))] = CreateInfoMap(info.GetEnvironmentParameter()));
+            ExceptionWrapper(() => rawData.InformationMap[TrimFunc(nameof(info.GetCPU))] = CreateInfoMap(info.GetCPU()));
+            ExceptionWrapper(() => rawData.InformationMap[TrimFunc(nameof(info.GetOS))] = CreateInfoMap(info.GetOS()));
+            ExceptionWrapper(() => rawData.InformationMap[TrimFunc(nameof(info.GetRuntimeInformation))] = CreateInfoMap(info.GetRuntimeInformation()));
+            ExceptionWrapper(() => rawData.InformationMap[TrimFunc(nameof(info.GetEnvironment))] = CreateInfoMap(info.GetEnvironment()));
+            ExceptionWrapper(() => rawData.InformationMap[TrimFunc(nameof(info.GetEnvironmentVariables))] = CreateInfoMap(info.GetEnvironmentVariables()));
+            ExceptionWrapper(() => rawData.InformationMap[TrimFunc(nameof(info.GetScreen))] = CreateInfoMap(info.GetScreen()));
 
             // この子はもうこの時点のログで確定
             rawData.LogItems = Logging.GetLogItems().Select(i => LogItem.Create(i)).ToList();
@@ -1856,7 +1855,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             systemExecutor.ExecuteFile(commandPath, arg);
         }
 
-        internal void StartupEnd()
+        internal void CompleteStartup()
         {
 #if DEBUG
             if(!IsDevDebug) {
@@ -1869,7 +1868,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #endif
             CheckNewVersionsAsync(true).ConfigureAwait(false);
 #if DEBUG
-            DebugStartupEnd();
+            DebugCompleteStartup();
 #endif
         }
 
@@ -2034,10 +2033,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return element;
         }
 
-        /// <inheritdoc cref="IOrderManager.CreateLauncherItemExtensionElement(IPluginInformations, LauncherItemId)"/>
-        public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, LauncherItemId launcherItemId)
+        /// <inheritdoc cref="IOrderManager.CreateLauncherItemExtensionElement(IPluginInformation, LauncherItemId)"/>
+        public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformation pluginInformation, LauncherItemId launcherItemId)
         {
-            var element = OrderManager.CreateLauncherItemExtensionElement(pluginInformations, launcherItemId);
+            var element = OrderManager.CreateLauncherItemExtensionElement(pluginInformation, launcherItemId);
             LauncherItemExtensions.Add(element);
             return element;
         }

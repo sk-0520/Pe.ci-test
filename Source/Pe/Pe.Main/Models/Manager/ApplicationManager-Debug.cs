@@ -113,19 +113,19 @@ echo end
             var env = new List<LauncherEnvironmentVariableData>();
             var result = launcherExecutor.Execute(LauncherItemKind.File, data, data, env, LauncherRedoData.GetDisable(), Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null"));
         }
-
-        private KeyboradHooker? dbgKeyboradHooker { get; set; }
+        
+        private KeyboardHooker? dbgKeyboardHooker { get; set; }
         private MouseHooker? dbgMouseHooker { get; set; }
         private void DebugHook()
         {
-            dbgKeyboradHooker = new KeyboradHooker(LoggerFactory);
-            dbgKeyboradHooker.KeyDown += (sender, e) => {
+            dbgKeyboardHooker = new KeyboardHooker(LoggerFactory);
+            dbgKeyboardHooker.KeyDown += (sender, e) => {
                 Logger.LogTrace("UP: key = {0}, mods = {1}, {2}", e.Key, e.modifierKeyStatus, e.kbdll);
             };
-            dbgKeyboradHooker.KeyUp += (sender, e) => {
+            dbgKeyboardHooker.KeyUp += (sender, e) => {
                 Logger.LogTrace("DW: key = {0}, mods = {1}, {2}", e.Key, e.modifierKeyStatus, e.kbdll);
             };
-            dbgKeyboradHooker.Register();
+            dbgKeyboardHooker.Register();
 
             dbgMouseHooker = new MouseHooker(LoggerFactory);
             //dbgMouseHooker.Register();
@@ -171,8 +171,8 @@ echo end
                 }
             ));
 
-            dbgKeyboradHooker = new KeyboradHooker(LoggerFactory);
-            dbgKeyboradHooker.KeyDown += (sender, e) => {
+            dbgKeyboardHooker = new KeyboardHooker(LoggerFactory);
+            dbgKeyboardHooker.KeyDown += (sender, e) => {
                 var jobs = dbgKeyActionChecker.Find(true, e.Key, e.modifierKeyStatus, e.kbdll);
                 if(jobs.Any()) {
                     e.Handled = true;
@@ -186,7 +186,7 @@ echo end
                     });
                 }
             };
-            dbgKeyboradHooker.KeyUp += (sender, e) => {
+            dbgKeyboardHooker.KeyUp += (sender, e) => {
                 var jobs = dbgKeyActionChecker.Find(true, e.Key, new ModifierKeyStatus(), e.kbdll);
                 Task.Run(() => {
                     dbgKeyActionAssistant.CleanupReplaceJob(e.Key, e.modifierKeyStatus);
@@ -196,7 +196,7 @@ echo end
                     }
                 });
             };
-            dbgKeyboradHooker.Register();
+            dbgKeyboardHooker.Register();
         }
 
         private void DebugSetting()
@@ -225,7 +225,7 @@ echo end
             var pwsh = eef.Get("pwsh", pef);
         }
 
-        public void DebugStartupEnd()
+        public void DebugCompleteStartup()
         {
             //DebugSetting();
         }

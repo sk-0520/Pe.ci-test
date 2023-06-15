@@ -39,8 +39,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         protected override AddonParameter CreateParameter(IPlugin plugin)
         {
-            var worker = LauncherItemAddonContextFactory.CreateWorker(plugin.PluginInformations, LauncherItemId);
-            return new LauncherItemExtensionCreateParameter(LauncherItemId, worker, new SkeletonImplements(), plugin.PluginInformations, UserAgentFactory, ViewManager, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
+            var worker = LauncherItemAddonContextFactory.CreateWorker(plugin.PluginInformation, LauncherItemId);
+            return new LauncherItemExtensionCreateParameter(LauncherItemId, worker, new SkeletonImplements(), plugin.PluginInformation, UserAgentFactory, ViewManager, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
         }
 
         protected override ILauncherItemExtension BuildFunctionUnit(IAddon loadedAddon)

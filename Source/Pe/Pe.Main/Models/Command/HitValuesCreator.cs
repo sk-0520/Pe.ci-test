@@ -106,11 +106,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                 // 完全一致
                 return GetScore(ScoreKind.Perfect, NoBonus);
             }
-            var scrore = GetScore(ScoreKind.Initial, NoBonus);
+            var score = GetScore(ScoreKind.Initial, NoBonus);
             var first = hitValues.First();
             if(first.IsHit) {
                 if(source.StartsWith(first.Value)) {
-                    scrore += GetScore(ScoreKind.Good, 10);
+                    score += GetScore(ScoreKind.Good, 10);
                 }
             }
 
@@ -118,14 +118,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             foreach(var item in nextItems) {
                 var hitValue = item.Value;
                 if(hitValue.IsHit) {
-                    scrore += GetScore(ScoreKind.Good, (nextItems.Count - item.Number) * 0.5);
+                    score += GetScore(ScoreKind.Good, (nextItems.Count - item.Number) * 0.5);
                 } else {
-                    scrore += GetScore(ScoreKind.Bad, item.Number / 10.0);
+                    score += GetScore(ScoreKind.Bad, item.Number / 10.0);
                 }
             }
 
 
-            return scrore;
+            return score;
         }
 
 

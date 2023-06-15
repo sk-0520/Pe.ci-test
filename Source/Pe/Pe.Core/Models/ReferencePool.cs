@@ -19,12 +19,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 生成。
         /// </summary>
         /// <param name="value">参照値。</param>
-        /// <param name="timelimit">生存時間。</param>
+        /// <param name="timeout">生存時間。</param>
         /// <param name="isManage"><see cref="IDisposable.Dispose"/> 管理対象か。</param>
-        public ReferenceItem(TValue value, TimeSpan timelimit, bool isManage)
+        public ReferenceItem(TValue value, TimeSpan timeout, bool isManage)
         {
             Value = value;
-            Timelimit = timelimit;
+            Timeout = timeout;
             IsManage = isManage;
             LifeTime = Stopwatch.StartNew();
         }
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 死ぬまでの猶予。
         /// </summary>
-        private TimeSpan Timelimit { get; }
+        private TimeSpan Timeout { get; }
         /// <summary>
         /// <typeparamref name="TValue"/>が<see cref="IDisposable"/>なら<see cref="IDisposable.Dispose"/>の面倒を見てあげるか。
         /// </summary>
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 生存中か。
         /// </summary>
-        public bool Alive => LifeTime.Elapsed < Timelimit;
+        public bool Alive => LifeTime.Elapsed < Timeout;
 
         #endregion
 
@@ -78,10 +78,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         where TKey : notnull
         where TValue : class
     {
-        public ReferencePool(TimeSpan garbageTime, TimeSpan defaultTimelimit, bool defaultManage, ILoggerFactory loggerFactory)
+        public ReferencePool(TimeSpan garbageTime, TimeSpan defaultTimeout, bool defaultManage, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
-            DefaultTimelimit = defaultTimelimit;
+            DefaultTimeout = defaultTimeout;
             DefaultManage = defaultManage;
             Timer = new Timer() {
                 Interval = garbageTime.TotalMilliseconds,
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// キャッシュ時間。
         /// </summary>
-        public TimeSpan DefaultTimelimit { get; }
+        public TimeSpan DefaultTimeout { get; }
         public bool DefaultManage { get; }
 
         private Timer Timer { get; }
@@ -112,21 +112,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region function
 
 
-        private TValue GetCore(TKey key, TimeSpan timelimit, bool isManage, Func<TKey, TValue> creator)
+        private TValue GetCore(TKey key, TimeSpan timeout, bool isManage, Func<TKey, TValue> creator)
         {
-            static ReferenceItem<TValue> GetOrAdd(ConcurrentDictionary<TKey, ReferenceItem<TValue>> map, TKey key, TimeSpan timelimit, bool isManage, Func<TKey, TValue> creator, ILogger logger)
+            static ReferenceItem<TValue> GetOrAdd(ConcurrentDictionary<TKey, ReferenceItem<TValue>> map, TKey key, TimeSpan timeout, bool isManage, Func<TKey, TValue> creator, ILogger logger)
             {
                 return map.GetOrAdd(key, (key, args) => {
 #if DEBUG
                     logger.LogTrace("参照アイテム生成: {0}", key);
 #endif
                     var value = args.creator(key);
-                    var item = new ReferenceItem<TValue>(value, args.timelimit, args.isManage);
+                    var item = new ReferenceItem<TValue>(value, args.timeout, args.isManage);
                     return item;
-                }, (timelimit, isManage, creator));
+                }, (timeout, isManage, creator));
             }
 
-            var result = GetOrAdd(Store, key, timelimit, isManage, creator, Logger);
+            var result = GetOrAdd(Store, key, timeout, isManage, creator, Logger);
             lock(result) {
                 if(result.Alive) {
 #if DEBUG
@@ -141,24 +141,24 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 IncinerateCore(key, livingDead);
             }
 
-            return GetOrAdd(Store, key, timelimit, isManage, creator, Logger).Value;
+            return GetOrAdd(Store, key, timeout, isManage, creator, Logger).Value;
         }
 
         public TValue Get(TKey key, Func<TKey, TValue> creator)
         {
-            return GetCore(key, DefaultTimelimit, DefaultManage, creator);
+            return GetCore(key, DefaultTimeout, DefaultManage, creator);
         }
-        public TValue Get(TKey key, TimeSpan timelimit, Func<TKey, TValue> creator)
+        public TValue Get(TKey key, TimeSpan timeout, Func<TKey, TValue> creator)
         {
-            return GetCore(key, timelimit, DefaultManage, creator);
+            return GetCore(key, timeout, DefaultManage, creator);
         }
         public TValue Get(TKey key, bool isManage, Func<TKey, TValue> creator)
         {
-            return GetCore(key, DefaultTimelimit, isManage, creator);
+            return GetCore(key, DefaultTimeout, isManage, creator);
         }
-        public TValue Get(TKey key, TimeSpan timelimit, bool isManage, Func<TKey, TValue> creator)
+        public TValue Get(TKey key, TimeSpan timeout, bool isManage, Func<TKey, TValue> creator)
         {
-            return GetCore(key, timelimit, isManage, creator);
+            return GetCore(key, timeout, isManage, creator);
         }
 
         /// <summary>

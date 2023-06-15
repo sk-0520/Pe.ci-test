@@ -34,8 +34,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region command
 
-        public ObservableCollection<string> MergeErros { get; } = new ObservableCollection<string>();
-        public ObservableCollection<string> RemoveErros { get; } = new ObservableCollection<string>();
+        public ObservableCollection<string> MergeErrors { get; } = new ObservableCollection<string>();
+        public ObservableCollection<string> RemoveErrors { get; } = new ObservableCollection<string>();
 
         #endregion
 
@@ -94,8 +94,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
             var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
 
-            envConf.SetValidateCommon(MergeTextDocument!, envConf.ValidateMergeDocument, seq => AddErrors(seq, nameof(MergeTextDocument)), MergeErros);
-            envConf.SetValidateCommon(RemoveTextDocument!, envConf.ValidateRemoveDocument, seq => AddErrors(seq, nameof(RemoveTextDocument)), RemoveErros);
+            envConf.SetValidateCommon(MergeTextDocument!, envConf.ValidateMergeDocument, seq => AddErrors(seq, nameof(MergeTextDocument)), MergeErrors);
+            envConf.SetValidateCommon(RemoveTextDocument!, envConf.ValidateRemoveDocument, seq => AddErrors(seq, nameof(RemoveTextDocument)), RemoveErrors);
         }
 
         #endregion

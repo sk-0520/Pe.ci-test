@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// </summary>
         /// <param name="runMode"></param>
         /// <returns></returns>
-        public static bool IsBuildPersistent(RunMode runMode)
+        public static bool IsBuildPersistence(RunMode runMode)
         {
             return runMode == RunMode.Normal;
         }

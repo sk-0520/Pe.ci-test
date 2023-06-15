@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             foreach(var functionUnit in FunctionUnits) {
                 var addon = GetAddon(functionUnit);
                 using(var reader = PluginContextFactory.BarrierRead()) {
-                    var context = PluginContextFactory.CreateContext(addon.PluginInformations, reader, true);
+                    var context = PluginContextFactory.CreateContext(addon.PluginInformation, reader, true);
                     functionUnit.Refresh(context);
                 }
             }

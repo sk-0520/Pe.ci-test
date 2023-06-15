@@ -17,9 +17,23 @@ window.addEventListener('load', () => {
 		'note': 'メモ'
 	};
 
-	const root = document.getElementById('changelogs')!;
+	const listElement = document.getElementById('list') as HTMLSelectElement;
+	listElement.addEventListener("change", _ => {
+		const listOptionElement = document.getElementById(listElement.value);
+		if(listOptionElement) {
+			listOptionElement.scrollIntoView();
+		}
+	});
+
+	const changelogElement = document.getElementById('changelogs')!;
 	for (const changelog of changelogs) {
 		const versionSection = document.createElement('section');
+		versionSection.id = changelog.version;
+
+		const listOptionElement = document.createElement("option");
+		listOptionElement.value = changelog.version
+		listOptionElement.text = `${changelog['date']}, ${changelog['version']}`;
+		listElement.appendChild(listOptionElement)
 
 		const versionHeader = document.createElement('h2');
 		versionHeader.textContent = `${changelog['date']}, ${changelog['version']}`;
@@ -78,7 +92,7 @@ window.addEventListener('load', () => {
 			versionSection.appendChild(contentSection);
 		}
 
-		root.appendChild(versionSection);
+		changelogElement.appendChild(versionSection);
 	}
 
 	makeChangelogLink();

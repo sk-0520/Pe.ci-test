@@ -37,10 +37,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         private LauncherToolbarIconDirection _iconDirection;
         private LauncherGroupElement? _selectedLauncherGroup;
 
-        private bool _isOpendAppMenu;
-        private bool _isOpendFileItemMenu;
-        private bool _isOpendStoreAppItemMenu;
-        private bool _isOpendAddonItemMenu;
+        private bool _isOpenedAppMenu;
+        private bool _isOpenedFileItemMenu;
+        private bool _isOpenedStoreAppItemMenu;
+        private bool _isOpenedAddonItemMenu;
 
         private bool _isHiding;
 
@@ -141,40 +141,40 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             set => SetProperty(ref this._selectedLauncherGroup, value);
         }
 
-        public bool IsOpendAppMenu
+        public bool IsOpenedAppMenu
         {
-            get => this._isOpendAppMenu;
+            get => this._isOpenedAppMenu;
             set
             {
-                SetProperty(ref this._isOpendAppMenu, value);
-                PausingAutoHide = IsOpendAppMenu;
+                SetProperty(ref this._isOpenedAppMenu, value);
+                PausingAutoHide = IsOpenedAppMenu;
             }
         }
-        public bool IsOpendFileItemMenu
+        public bool IsOpenedFileItemMenu
         {
-            get => this._isOpendFileItemMenu;
+            get => this._isOpenedFileItemMenu;
             set
             {
-                SetProperty(ref this._isOpendFileItemMenu, value);
-                PausingAutoHide = IsOpendFileItemMenu;
+                SetProperty(ref this._isOpenedFileItemMenu, value);
+                PausingAutoHide = IsOpenedFileItemMenu;
             }
         }
-        public bool IsOpendStoreAppItemMenu
+        public bool IsOpenedStoreAppItemMenu
         {
-            get => this._isOpendStoreAppItemMenu;
+            get => this._isOpenedStoreAppItemMenu;
             set
             {
-                SetProperty(ref this._isOpendStoreAppItemMenu, value);
-                PausingAutoHide = IsOpendFileItemMenu;
+                SetProperty(ref this._isOpenedStoreAppItemMenu, value);
+                PausingAutoHide = IsOpenedFileItemMenu;
             }
         }
-        public bool IsOpendAddonItemMenu
+        public bool IsOpenedAddonItemMenu
         {
-            get => this._isOpendAddonItemMenu;
+            get => this._isOpenedAddonItemMenu;
             set
             {
-                SetProperty(ref this._isOpendAddonItemMenu, value);
-                PausingAutoHide = IsOpendAddonItemMenu;
+                SetProperty(ref this._isOpenedAddonItemMenu, value);
+                PausingAutoHide = IsOpenedAddonItemMenu;
             }
         }
 
@@ -249,8 +249,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         {
             ThrowIfDisposed();
 
-            if(IsOpendAppMenu) {
-                IsOpendAppMenu = false;
+            if(IsOpenedAppMenu) {
+                IsOpenedAppMenu = false;
             }
             SelectedLauncherGroup = launcherGroup;
             LoadLauncherItems();
@@ -372,7 +372,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
             ToolbarPosition = toolbarPosition;
             UpdateDesign();
-            IsOpendAppMenu = false;
+            IsOpenedAppMenu = false;
 
             MainDatabaseLazyWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
@@ -385,7 +385,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             ThrowIfDisposed();
 
             IsTopmost = isTopmost;
-            IsOpendAppMenu = false;
+            IsOpenedAppMenu = false;
 
             MainDatabaseLazyWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
@@ -398,7 +398,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             ThrowIfDisposed();
 
             IsAutoHide = isAutoHide;
-            IsOpendAppMenu = false;
+            IsOpenedAppMenu = false;
 
             MainDatabaseLazyWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
@@ -411,7 +411,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             ThrowIfDisposed();
 
             IsVisible = isVisible;
-            IsOpendAppMenu = false;
+            IsOpenedAppMenu = false;
 
             MainDatabaseLazyWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);

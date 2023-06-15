@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public ICommand CopyCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                var data = GetClipbordContentData();
+                var data = GetClipboardContentData();
                 ClipboardManager.CopyData(data, ClipboardNotify.None);
             }
         ));
@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         /// クリップボード用データの取得。
         /// </summary>
         /// <returns></returns>
-        protected abstract IDataObject GetClipbordContentData();
+        protected abstract IDataObject GetClipboardContentData();
 
         #endregion
 

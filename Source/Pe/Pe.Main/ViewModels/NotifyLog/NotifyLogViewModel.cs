@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         private INotifyLogTheme NotifyLogTheme { get; }
         private IPlatformTheme PlatformTheme { get; }
 
-        private IDpiScaleOutputor? DpiScaleOutputor { get; set; }
+        private IDpiScaleOutpour? DpiScaleOutpour { get; set; }
 
         private ThemeProperties ThemeProperties { get; }
         private PropertyChangedHooker PropertyChangedHooker { get; }
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
                     TopmostNotifyLogCollection.Dispose();
                     StreamNotifyLogCollection.Dispose();
                 }
-                DpiScaleOutputor = null;
+                DpiScaleOutpour = null;
                 PlatformTheme.Changed -= PlatformTheme_Changed;
             }
 
@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 
         public void ReceiveViewInitialized(Window window)
         {
-            DpiScaleOutputor = (IDpiScaleOutputor)window;
+            DpiScaleOutpour = (IDpiScaleOutpour)window;
         }
 
         public void ReceiveViewLoaded(Window window)

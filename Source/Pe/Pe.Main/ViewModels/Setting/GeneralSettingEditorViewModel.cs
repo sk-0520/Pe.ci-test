@@ -141,8 +141,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             IImageLoader ImageLoader { get; }
             IDispatcherWrapper DispatcherWrapper { get; }
 
-            public string Name => Plugin.PluginInformations.PluginIdentifiers.PluginName;
-            public PluginId Id => Plugin.PluginInformations.PluginIdentifiers.PluginId;
+            public string Name => Plugin.PluginInformation.PluginIdentifiers.PluginName;
+            public PluginId Id => Plugin.PluginInformation.PluginIdentifiers.PluginId;
 
             public DependencyObject PluginIcon
             {
@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                             var scale = ImageLoader.GetPrimaryDpiScale();
                             return Plugin.GetIcon(ImageLoader, new IconScale(IconBox.Small, scale));
                         } catch(Exception ex) {
-                            Logger.LogError(ex, "[{0}] {1}, {2}", Plugin.PluginInformations.PluginIdentifiers.PluginName, ex.Message, Plugin.PluginInformations.PluginIdentifiers.PluginId);
+                            Logger.LogError(ex, "[{0}] {1}, {2}", Plugin.PluginInformation.PluginIdentifiers.PluginName, ex.Message, Plugin.PluginInformation.PluginIdentifiers.PluginId);
                             return null!;
                         }
                     });
@@ -178,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        public RequestSender UserBackupDirectorySelecteRequest { get; } = new RequestSender();
+        public RequestSender UserBackupDirectorySelectRequest { get; } = new RequestSender();
 
         public ObservableCollection<CultureInfo> CultureInfoItems { get; }
         public CultureInfo SelectedCultureInfo
@@ -234,7 +234,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             () => {
                 var dialogRequester = new DialogRequester(LoggerFactory);
                 dialogRequester.SelectDirectory(
-                    UserBackupDirectorySelecteRequest,
+                    UserBackupDirectorySelectRequest,
                     dialogRequester.ExpandPath(UserBackupDirectoryPath),
                     r => {
                         UserBackupDirectoryPath = r.ResponseFilePaths[0];

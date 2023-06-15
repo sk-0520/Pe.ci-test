@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         #region variable
 
         private double _windowHeight;
-        private bool _isOpend;
+        private bool _isOpened;
         private CommandItemViewModel? _currentSelectedItem;
         private CommandItemViewModel? _selectedItem;
         private string _inputValue = string.Empty;
@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         private ThemeProperties ThemeProperties { get; }
         private PropertyChangedHooker PropertyChangedHooker { get; }
 
-        private IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
+        private IDpiScaleOutpour DpiScaleOutpour { get; set; } = new EmptyDpiScaleOutpour();
 
         public double WindowWidth
         {
@@ -123,10 +123,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             set => SetProperty(ref this._windowHeight, value);
         }
 
-        public bool IsOpend
+        public bool IsOpened
         {
-            get => this._isOpend;
-            set => SetProperty(ref this._isOpend, value);
+            get => this._isOpened;
+            set => SetProperty(ref this._isOpened, value);
         }
 
         public IconBox IconBox => Model.IconBox;
@@ -139,11 +139,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             get => this._inputValue;
             set
             {
-                ChangeInutValueAsync(value).ConfigureAwait(false);
+                ChangeInputValueAsync(value).ConfigureAwait(false);
             }
         }
 
-        private async Task ChangeInutValueAsync(string value)
+        private async Task ChangeInputValueAsync(string value)
         {
 #if DEBUG
             DispatcherWrapper.VerifyAccess();
@@ -292,7 +292,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public ICommand ExecuteCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 Logger.LogInformation("コマンドアイテムの起動: {0}", SelectedItem!.Header);
-                SelectedItem.Execute(DpiScaleOutputor.GetOwnerScreen());
+                SelectedItem.Execute(DpiScaleOutpour.GetOwnerScreen());
 
                 // 役目は終わったのでコマンドランチャーを閉じる
                 HideView();
@@ -327,7 +327,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 Logger.LogTrace("補完！");
                 var now = SelectedItem;
 
-                await ChangeInutValueAsync(now.FullMatchValue);
+                await ChangeInputValueAsync(now.FullMatchValue);
 
                 RaisePropertyChanged(nameof(InputValue));
 
@@ -410,7 +410,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         {
             var prevItems = CommandItems;
             CommandItems = commandItems
-                .Select(i => new CommandItemViewModel(i, new IconScale(IconBox, DpiScaleOutputor.GetDpiScale()), DispatcherWrapper, LoggerFactory))
+                .Select(i => new CommandItemViewModel(i, new IconScale(IconBox, DpiScaleOutpour.GetDpiScale()), DispatcherWrapper, LoggerFactory))
                 .ToList()
             ;
             foreach(var item in prevItems) {
@@ -418,11 +418,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             }
         }
 
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             switch(msg) {
                 case (int)WM.WM_SIZING: {
-                        var deviceWindowHeight = UIUtility.ToDevicePixel(WindowHeight, DpiScaleOutputor.GetDpiScale().Y);
+                        var deviceWindowHeight = UIUtility.ToDevicePixel(WindowHeight, DpiScaleOutpour.GetDpiScale().Y);
                         var podRect = WindowsUtility.ConvertRECTFromLParam(lParam);
 
                         // 高さは変えない
@@ -448,7 +448,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         public void ReceiveViewInitialized(Window window)
         {
-            DpiScaleOutputor = (IDpiScaleOutputor)window;
+            DpiScaleOutpour = (IDpiScaleOutpour)window;
 
             var hWnd = HandleUtility.GetWindowHandle(window);
             var hWndSource = HwndSource.FromHwnd(hWnd);

@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
     {
         #region define
 
-        public static readonly PluginInformations Informations = new PluginInformations(
+        public static readonly PluginInformation Informations = new PluginInformation(
             new PluginIdentifiers(new PluginId(new Guid("4524FC23-EBB9-4C79-A26B-8F472C05095E")), "Pe.Plugins.DefaultTheme"),
             new PluginVersions(Assembly.GetExecutingAssembly()!.GetName()!.Version!, new Version(0, 0, 0), new Version(0, 0, 0), Array.Empty<string>()),
             new PluginAuthors(new Author("sk"), PluginLicense.DoWhatTheF_ckYouWantToPublicLicense2)
@@ -44,8 +44,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 
         #region ITheme
 
-        /// <inheritdoc cref="IPlugin.PluginInformations"/>
-        public IPluginInformations PluginInformations => Informations;
+        /// <inheritdoc cref="IPlugin.PluginInformation"/>
+        public IPluginInformation PluginInformation => Informations;
 
         /// <inheritdoc cref="IPlugin.IsInitialized"/>
         public bool IsInitialized { get; private set; }

@@ -38,8 +38,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             var key = sb.ToString();
 
-            if(CommandCache.TryGetValue(key, out var cahceCommand)) {
-                return (TCommand)cahceCommand;
+            if(CommandCache.TryGetValue(key, out var cacheCommand)) {
+                return (TCommand)cacheCommand;
             }
 
             var command = creator();

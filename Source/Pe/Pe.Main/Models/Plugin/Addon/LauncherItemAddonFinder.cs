@@ -39,12 +39,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public bool Exists(PluginId pluginId)
         {
-            return AddonContainer.Plugins.Any(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
+            return AddonContainer.Plugins.Any(i => i.PluginInformation.PluginIdentifiers.PluginId == pluginId);
         }
 
         public IPlugin GetPlugin(PluginId pluginId)
         {
-            return AddonContainer.Plugins.First(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
+            return AddonContainer.Plugins.First(i => i.PluginInformation.PluginIdentifiers.PluginId == pluginId);
         }
 
         public LauncherItemAddonProxy Find(LauncherItemId launcherItemId, PluginId pluginId)

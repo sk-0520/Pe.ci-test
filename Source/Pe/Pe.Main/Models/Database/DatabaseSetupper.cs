@@ -54,9 +54,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             ddl(accessor, dto);
 
             Logger.LogDebug("DML");
-            using(var tran = accessor.BeginTransaction()) {
-                dml(tran, dto);
-                tran.Commit();
+            using(var transaction = accessor.BeginTransaction()) {
+                dml(transaction, dto);
+                transaction.Commit();
             }
         }
 

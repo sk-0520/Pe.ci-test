@@ -6,10 +6,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// <inheritdoc cref="IWebViewScriptResult"/>
     internal class WebViewScriptResult: IWebViewScriptResult
     {
-        public WebViewScriptResult(JavascriptResponse javascriptResponse)
+        public WebViewScriptResult(JavascriptResponse javaScriptResponse)
         {
-            Success = javascriptResponse.Success;
-            Result = javascriptResponse.Result;
+            Success = javaScriptResponse.Success;
+            Result = javaScriptResponse.Result;
         }
 
         public WebViewScriptResult(bool success, object? result)

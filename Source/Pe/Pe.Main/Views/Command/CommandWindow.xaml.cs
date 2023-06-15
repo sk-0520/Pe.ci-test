@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
     /// <summary>
     /// CommandWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class CommandWindow: Window, IDpiScaleOutputor
+    public partial class CommandWindow: Window, IDpiScaleOutpour
     {
         public CommandWindow()
         {

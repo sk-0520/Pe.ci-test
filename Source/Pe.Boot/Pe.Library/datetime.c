@@ -20,7 +20,7 @@ DATETIME get_current_datetime()
 
 DATETIME create_datetime(bool is_utc, unsigned int year, unsigned int month, unsigned int day, unsigned int hour, unsigned int minute, unsigned int second, unsigned int milli_sec)
 {
-    SYSTEMTIME systemtime = {
+    SYSTEMTIME systemTime = {
         .wYear = (WORD)year,
         .wMonth = (WORD)month,
         .wDay = (WORD)day,
@@ -30,17 +30,17 @@ DATETIME create_datetime(bool is_utc, unsigned int year, unsigned int month, uns
         .wMilliseconds = (WORD)milli_sec,
     };
 
-    FILETIME filetime;
-    SystemTimeToFileTime(&systemtime, &filetime);
+    FILETIME fileTime;
+    SystemTimeToFileTime(&systemTime, &fileTime);
 
     if (!is_utc) {
         FILETIME utc;
-        LocalFileTimeToFileTime(&filetime, &utc);
-        filetime = utc;
+        LocalFileTimeToFileTime(&fileTime, &utc);
+        fileTime = utc;
     }
 
     DATETIME datetime = {
-        .filetime = filetime,
+        .filetime = fileTime,
     };
 
     return datetime;

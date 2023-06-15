@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
     /// <summary>
     /// データベースへの遅延書き込み。
     /// </summary>
-    public interface IDatabaseLazyWriter: IFlushable, IDisposedChackable
+    public interface IDatabaseLazyWriter: IFlushable, IDisposed
     {
         #region property
 

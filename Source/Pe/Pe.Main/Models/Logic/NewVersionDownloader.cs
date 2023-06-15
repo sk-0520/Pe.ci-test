@@ -104,12 +104,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// アーカイブのダウンロード。
         /// </summary>
         /// <param name="updateItem"></param>
-        /// <param name="donwloadFile"></param>
+        /// <param name="downloadFile"></param>
         /// <param name="userNotifyProgress"></param>
         /// <returns></returns>
-        public async Task DownloadArchiveAsync(NewVersionItemData updateItem, FileInfo donwloadFile, UserNotifyProgress userNotifyProgress)
+        public async Task DownloadArchiveAsync(NewVersionItemData updateItem, FileInfo downloadFile, UserNotifyProgress userNotifyProgress)
         {
-            Logger.LogInformation("アップデートファイルダウンロード: {0}, {1}", updateItem.ArchiveUri, donwloadFile);
+            Logger.LogInformation("アップデートファイルダウンロード: {0}, {1}", updateItem.ArchiveUri, downloadFile);
             userNotifyProgress.Start();
 
             using(var userAgent = UserAgentManager.CreateAppHttpUserAgent()) {
@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 sizePerTime.Start();
 
                 using(var networkStream = await content.Content.ReadAsStreamAsync()) {
-                    using(var localStream = donwloadFile.Create()) {
+                    using(var localStream = downloadFile.Create()) {
                         var downloadChunk = new byte[downloadChunkSize];
                         var sizeConverter = new SizeConverter();
                         var units = new[] {

@@ -103,8 +103,8 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
             ThrowIfDisposed();
 
-            Committed = true;
             Transaction.Commit();
+            Committed = true;
         }
 
         public virtual void Rollback()

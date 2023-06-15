@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             GeneralSettingEditor = new GeneralsSettingEditorViewModel(Model.GeneralsSettingEditor, applicationConfiguration, generalTheme, imageLoader, DispatcherWrapper, LoggerFactory);
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
             LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, AllLauncherItemCollection, AllLauncherGroupCollection, DispatcherWrapper, LoggerFactory);
-            LauncherToobarsSettingEditor = new LauncherToobarsSettingEditorViewModel(Model.LauncherToobarsSettingEditor, AllLauncherGroupCollection, generalTheme, DispatcherWrapper, LoggerFactory);
+            LauncherToolbarsSettingEditor = new LauncherToolbarsSettingEditorViewModel(Model.LauncherToolbarsSettingEditor, AllLauncherGroupCollection, generalTheme, DispatcherWrapper, LoggerFactory);
             KeyboardSettingEditor = new KeyboardSettingEditorViewModel(Model.KeyboardSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
             PluginsSettingEditor = new PluginsSettingEditorViewModel(Model.PluginsSettingEditor, imageLoader, DispatcherWrapper, LoggerFactory);
 
@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 GeneralSettingEditor,
                 LauncherItemsSettingEditor,
                 LauncherGroupsSettingEditor,
-                LauncherToobarsSettingEditor,
+                LauncherToolbarsSettingEditor,
                 KeyboardSettingEditor,
                 PluginsSettingEditor,
             };
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public GeneralsSettingEditorViewModel GeneralSettingEditor { get; }
         public LauncherItemsSettingEditorViewModel LauncherItemsSettingEditor { get; }
         public LauncherGroupsSettingEditorViewModel LauncherGroupsSettingEditor { get; }
-        public LauncherToobarsSettingEditorViewModel LauncherToobarsSettingEditor { get; }
+        public LauncherToolbarsSettingEditorViewModel LauncherToolbarsSettingEditor { get; }
         public KeyboardSettingEditorViewModel KeyboardSettingEditor { get; }
         public PluginsSettingEditorViewModel PluginsSettingEditor { get; }
 

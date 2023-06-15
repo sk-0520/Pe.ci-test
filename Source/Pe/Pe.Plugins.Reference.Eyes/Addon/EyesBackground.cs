@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
 
         #endregion
 
-        public EyesBackground(IAddonParameter parameter, IPluginInformations pluginInformations)
+        public EyesBackground(IAddonParameter parameter, IPluginInformation pluginInformations)
         {
             LoggerFactory = parameter.LoggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
         private IAddonExecutor AddonExecutor { get; }
         private IDispatcherWrapper DispatcherWrapper { get; }
         private ISkeletonImplements SkeletonImplements { get; }
-        private IPluginInformations PluginInformations { get; }
+        private IPluginInformation PluginInformations { get; }
 
         #endregion
 

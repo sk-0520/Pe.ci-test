@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             IconClearTimer = new Timer() {
                 Interval = applicationConfiguration.Command.IconClearWaitTime.TotalMilliseconds,
             };
-            IconClearTimer.Elapsed += IconClearTimerr_Elapsed;
+            IconClearTimer.Elapsed += IconClearTimer_Elapsed;
 
             ViewCloseTimer = new Timer() {
                 Interval = applicationConfiguration.Command.ViewCloseWaitTime.TotalMilliseconds,
@@ -270,7 +270,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         {
             if(!IsDisposed) {
                 Flush();
-                IconClearTimer.Elapsed -= IconClearTimerr_Elapsed;
+                IconClearTimer.Elapsed -= IconClearTimer_Elapsed;
                 ViewCloseTimer.Elapsed -= ViewCloseTimer_Elapsed;
 
                 IconClearTimer.Dispose();
@@ -363,7 +363,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         #endregion
 
-        private void IconClearTimerr_Elapsed(object? sender, ElapsedEventArgs e)
+        private void IconClearTimer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             ClearIcon();
             StartViewClose();

@@ -36,7 +36,7 @@ namespace PeLibraryTest
             TCHAR input[] = _T("def");
             TCHAR actual[1000] = _T("abc");
             TCHAR expected[1000] = _T("abcdef");
-            concat_string(actual, input);
+            concatenate_string(actual, input);
 
             Assert::AreEqual(expected, actual);
         }

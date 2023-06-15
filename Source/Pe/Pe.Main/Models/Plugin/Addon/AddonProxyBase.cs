@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// <see cref="AddonParameter"/> を普通に作成する。
         /// </summary>
         /// <returns></returns>
-        protected virtual AddonParameter CreateParameter(IPlugin plugin) => new AddonParameter(new SkeletonImplements(), plugin.PluginInformations, UserAgentFactory, ViewManager, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
+        protected virtual AddonParameter CreateParameter(IPlugin plugin) => new AddonParameter(new SkeletonImplements(), plugin.PluginInformation, UserAgentFactory, ViewManager, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
 
         protected abstract TFunctionUnit BuildFunctionUnit(IAddon loadedAddon);
 
@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
                     if(!Addon.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
                         using(var reader = PluginContextFactory.BarrierRead()) {
-                            using var loadContext = PluginContextFactory.CreateLoadContex(Addon.PluginInformations, reader);
+                            using var loadContext = PluginContextFactory.CreateLoadContext(Addon.PluginInformation, reader);
                             Addon.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
                         }
                     }
@@ -186,7 +186,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
                 if(!addon.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
                     using(var reader = PluginContextFactory.BarrierRead()) {
-                        using var loadContext = PluginContextFactory.CreateLoadContex(addon.PluginInformations, reader);
+                        using var loadContext = PluginContextFactory.CreateLoadContext(addon.PluginInformation, reader);
                         addon.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
                     }
                 }

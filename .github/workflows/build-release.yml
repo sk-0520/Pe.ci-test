@@ -5,7 +5,7 @@ on:
     branches:
     - master
     - ci-test
-    - development
+    - develop
 
 env:
   MAIN_ARCHIVE: 7z
@@ -72,7 +72,7 @@ jobs:
         shell: pwsh
         run: |
           $BuildType = ''
-          if($Env:GITHUB_REF -eq 'refs/heads/development') {
+          if($Env:GITHUB_REF -eq 'refs/heads/develop') {
             $BuildType = 'BETA'
           }
           .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $BuildType -Rebuild -Platforms ${{ env.PLATFORMS }}
@@ -85,7 +85,7 @@ jobs:
         shell: pwsh
         run: |
           $diet = $false
-          if($Env:GITHUB_REF -ne 'refs/heads/development') {
+          if($Env:GITHUB_REF -ne 'refs/heads/develop') {
             $diet = $true
           }
           .\Build\compress.ps1 -Diet:$diet -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ env.PLATFORMS }}

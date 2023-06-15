@@ -13,10 +13,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         public HistoryViewModel(LauncherHistoryData data, CultureInfo cultureInfo, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            var timstampConverter = new TimestampConverter(cultureInfo);
+            var timestampConverter = new TimestampConverter(cultureInfo);
 
             Value = data.Value;
-            Timestamp = timstampConverter.ToViewFullString(data.LastExecuteTimestamp);
+            Timestamp = timestampConverter.ToViewFullString(data.LastExecuteTimestamp);
             LastExecuteTimestamp = data.LastExecuteTimestamp;
             Kind = data.Kind;
             CanRemove = true;

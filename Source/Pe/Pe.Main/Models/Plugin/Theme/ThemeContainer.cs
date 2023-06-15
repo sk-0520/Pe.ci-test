@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         /// </summary>
         private ISet<ITheme> Themes { get; } = new HashSet<ITheme>();
 
-        private DefaultTheme DefaultTheme => this._defaultTheme ??= (DefaultTheme)Themes.First(i => i.PluginInformations.PluginIdentifiers.PluginId == DefaultTheme.Informations.PluginIdentifiers.PluginId);
+        private DefaultTheme DefaultTheme => this._defaultTheme ??= (DefaultTheme)Themes.First(i => i.PluginInformation.PluginIdentifiers.PluginId == DefaultTheme.Informations.PluginIdentifiers.PluginId);
 
         /// <summary>
         /// 現在使用中テーマ。
@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
         #region function
 
-        private ThemeParameter CreateParameter(IPlugin addon) => new ThemeParameter(addon.PluginInformations, ViewManager, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
+        private ThemeParameter CreateParameter(IPlugin addon) => new ThemeParameter(addon.PluginInformation, ViewManager, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
 
         public void Add(ITheme theme)
         {
@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
         public void SetCurrentTheme(PluginId themePluginId, PluginContextFactory pluginContextFactory)
         {
-            var theme = Themes.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == themePluginId);
+            var theme = Themes.FirstOrDefault(i => i.PluginInformation.PluginIdentifiers.PluginId == themePluginId);
             if(theme == null) {
                 Logger.LogWarning("指定のテーマ不明のため標準テーマを使用: {0}", themePluginId);
                 theme = DefaultTheme;
@@ -105,12 +105,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
             if(prev != null) {
                 using(var writerPack = DatabaseBarrierPack.WaitWrite()) {
-                    using var unloadContext = pluginContextFactory.CreateUnloadContext(CurrentTheme.PluginInformations, writerPack);
+                    using var unloadContext = pluginContextFactory.CreateUnloadContext(CurrentTheme.PluginInformation, writerPack);
                     prev.Unload(PluginKind.Theme, unloadContext);
                 }
             }
             using(var readerPack = DatabaseBarrierPack.WaitRead()) {
-                using var loadContext = pluginContextFactory.CreateLoadContex(CurrentTheme.PluginInformations, readerPack);
+                using var loadContext = pluginContextFactory.CreateLoadContext(CurrentTheme.PluginInformation, readerPack);
                 CurrentTheme.Load(PluginKind.Theme, loadContext);
             }
         }
@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
                     Logger.LogInformation("標準テーマ先生準備できておらず。");
                     var pluginContextFactory = new PluginContextFactory(DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
                     using(var readerPack = DatabaseBarrierPack.WaitRead()) {
-                        using var loadContext = pluginContextFactory.CreateLoadContex(DefaultTheme.PluginInformations, readerPack);
+                        using var loadContext = pluginContextFactory.CreateLoadContext(DefaultTheme.PluginInformation, readerPack);
                         DefaultTheme.Load(PluginKind.Theme, loadContext);
                     }
                 }

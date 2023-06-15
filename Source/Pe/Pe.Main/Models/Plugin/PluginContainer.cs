@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             var pluginDirs = baseDirectory.EnumerateDirectories();
             foreach(var pluginDir in pluginDirs) {
                 // ディレクトリ名に依存しない形でなんかそれっぽいのを探し出す
-                // 1ディレクトリにdll/exeが１つであることを前提にしている問題
+                // 1ディレクトリに dll/exe が１つであることを前提にしている問題
                 var baseFileNames = pluginDir.EnumerateFiles()
                     .Select(i => new { BaseName = Path.GetFileNameWithoutExtension(i.Name), Extension = 1 < i.Length ? i.Extension.Substring(1) : string.Empty })
                     .Where(i => !string.IsNullOrEmpty(i.Extension))
@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             }
 
             IPlugin plugin;
-            IPluginInformations pluginInformations;
+            IPluginInformation pluginInformation;
             try {
                 // コンストラクタ時にメモリログが参照に残るのを抑制
                 using(pauseReceiveLog()) {
@@ -211,7 +211,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                         throw new PluginInvalidAssemblyException($"{nameof(Activator)}.{nameof(Activator.CreateInstance)}失敗");
                     }
                     plugin = (IPlugin)pluginInstance ?? throw new PluginInvalidAssemblyException($"{nameof(IPlugin)}へのキャスト失敗: {pluginInstance}");
-                    pluginInformations = plugin.PluginInformations;
+                    pluginInformation = plugin.PluginInformation;
                 }
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインインターフェイスを生成できず: {0}, {1}, {2}", ex.Message, pluginAssembly.FullName, pluginFile.FullName);
@@ -219,8 +219,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 return new PluginLoadStateData(currentPlugin?.PluginId ?? PluginId.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
             }
 
-            var pluginId = pluginInformations.PluginIdentifiers.PluginId;
-            var pluginName = new string(pluginInformations.PluginIdentifiers.PluginName.ToCharArray()); // 一応複製
+            var pluginId = pluginInformation.PluginIdentifiers.PluginId;
+            var pluginName = new string(pluginInformation.PluginIdentifiers.PluginName.ToCharArray()); // 一応複製
 
             var loadedCurrentPlugin = pluginStateItems.FirstOrDefault(i => i.PluginId == pluginId);
             if(loadedCurrentPlugin != null) {
@@ -231,24 +231,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 }
             }
 
-            var pluginVersion = (Version)pluginInformations.PluginVersions.PluginVersion.Clone();
+            var pluginVersion = (Version)pluginInformation.PluginVersions.PluginVersion.Clone();
             var versionConverter = new VersionConverter();
 
-            if(!PluginUtility.IsUnlimitedVersion(pluginInformations.PluginVersions.MinimumSupportVersion)) {
-                var minVersion = versionConverter.TrimUndefinedElement(pluginInformations.PluginVersions.MinimumSupportVersion);
+            if(!PluginUtility.IsUnlimitedVersion(pluginInformation.PluginVersions.MinimumSupportVersion)) {
+                var minVersion = versionConverter.TrimUndefinedElement(pluginInformation.PluginVersions.MinimumSupportVersion);
                 var ok = minVersion <= applicationVersion;
                 if(!ok) {
-                    Logger.LogWarning("プラグインサポート最低バージョン({0}): {1}, {2}", pluginInformations.PluginVersions.MinimumSupportVersion, pluginName, pluginId);
+                    Logger.LogWarning("プラグインサポート最低バージョン({0}): {1}, {2}", pluginInformation.PluginVersions.MinimumSupportVersion, pluginName, pluginId);
                     loadContext.Unload();
                     return new PluginLoadStateData(pluginId, pluginName, pluginVersion, PluginState.IllegalVersion, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
                 }
             }
 
-            if(!PluginUtility.IsUnlimitedVersion(pluginInformations.PluginVersions.MaximumSupportVersion)) {
-                var maxVersion = versionConverter.TrimUndefinedElement(pluginInformations.PluginVersions.MaximumSupportVersion);
+            if(!PluginUtility.IsUnlimitedVersion(pluginInformation.PluginVersions.MaximumSupportVersion)) {
+                var maxVersion = versionConverter.TrimUndefinedElement(pluginInformation.PluginVersions.MaximumSupportVersion);
                 var ok = applicationVersion <= maxVersion;
                 if(!ok) {
-                    Logger.LogWarning("プラグインサポート最高バージョン({0}): {1}, {2}", pluginInformations.PluginVersions.MaximumSupportVersion, pluginName, pluginId);
+                    Logger.LogWarning("プラグインサポート最高バージョン({0}): {1}, {2}", pluginInformation.PluginVersions.MaximumSupportVersion, pluginName, pluginId);
                     loadContext.Unload();
                     return new PluginLoadStateData(pluginId, pluginName, pluginVersion, PluginState.IllegalVersion, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
                 }

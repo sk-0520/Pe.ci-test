@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
                 Build = rawData.Build,
                 Revision = rawData.Revision,
                 Exception = rawData.Exception,
-                Informations = rawData.Informations,
+                Informations = rawData.InformationMap,
                 LogItems = rawData.LogItems,
             };
         }

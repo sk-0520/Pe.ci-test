@@ -55,9 +55,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
-    internal sealed class NullPluginPersistentStorage: IPluginPersistentStorage
+    internal sealed class NullPluginPersistenceStorage: IPluginPersistenceStorage
     {
-        public NullPluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, ILoggerFactory loggerFactory)
+        public NullPluginPersistenceStorage(IPluginIdentifiers pluginIdentifiers, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
             PluginIdentifiers = pluginIdentifiers;
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #endregion
 
-        #region IPluginPersistentStorage
+        #region IPluginPersistenceStorage
 
         public bool IsReadOnly => true;
 
@@ -86,13 +86,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return true;
         }
 
-        public bool Set<TValue>(string key, TValue value, PluginPersistentFormat format)
+        public bool Set<TValue>(string key, TValue value, PluginPersistenceFormat format)
         {
             Logger.LogTrace("{0}({1}): {2} = {3}, {4} = {5}, {6} = {7}", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId, nameof(key), key, nameof(value), value, nameof(format), format);
             return true;
         }
 
-        public bool Set<TValue>(string key, TValue value) => Set(key, value, PluginPersistentFormat.Text);
+        public bool Set<TValue>(string key, TValue value) => Set(key, value, PluginPersistenceFormat.Text);
 
         public bool TryGet<TValue>(string key, [MaybeNullWhen(returnValue: false)] out TValue value)
         {
@@ -125,23 +125,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
-    internal sealed class NullPluginPersistents: IPluginPersistents
+    internal sealed class NullPluginPersistence: IPluginPersistence
     {
-        public NullPluginPersistents(IPluginIdentifiers pluginIdentifiers, ILoggerFactory loggerFactory)
+        public NullPluginPersistence(IPluginIdentifiers pluginIdentifiers, ILoggerFactory loggerFactory)
         {
-            var nullStorage = new NullPluginPersistentStorage(pluginIdentifiers, loggerFactory);
+            var nullStorage = new NullPluginPersistenceStorage(pluginIdentifiers, loggerFactory);
             Normal = nullStorage;
             Large = nullStorage;
             Temporary = nullStorage;
         }
 
-        #region IPluginPersistents
+        #region IPluginPersistence
 
-        public IPluginPersistentStorage Normal { get; }
+        public IPluginPersistenceStorage Normal { get; }
 
-        public IPluginPersistentStorage Large { get; }
+        public IPluginPersistenceStorage Large { get; }
 
-        public IPluginPersistentStorage Temporary { get; }
+        public IPluginPersistenceStorage Temporary { get; }
 
         #endregion
     }
@@ -151,14 +151,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public NullPluginStorage(IPluginIdentifiers pluginIdentifiers, ILoggerFactory loggerFactory)
         {
             File = new NullPluginFiles(pluginIdentifiers, loggerFactory);
-            Persistent = new NullPluginPersistents(pluginIdentifiers, loggerFactory);
+            Persistence = new NullPluginPersistence(pluginIdentifiers, loggerFactory);
         }
 
         #region IPluginStorage
 
         public IPluginFiles File { get; }
 
-        public IPluginPersistents Persistent { get; }
+        public IPluginPersistence Persistence { get; }
 
         #endregion
     }

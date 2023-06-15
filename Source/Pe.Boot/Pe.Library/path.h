@@ -123,6 +123,12 @@ TEXT RC_HEAP_FUNC(get_module_path, HINSTANCE hInstance, const MEMORY_ARENA_RESOU
 /// <returns>解放は不要。持ちまわす場合は<c>clone_path_info</c>で複製すること。</returns>
 PATH_INFO get_path_info_stack(const TEXT* path);
 
+/// <summary>
+/// パス情報の複製。
+/// </summary>
+/// <param name="path_info"></param>
+/// <param name="memory_arena_resource"></param>
+/// <returns>解放が必要。<c>release_path_info</c></returns>
 PATH_INFO RC_HEAP_FUNC(clone_path_info, const PATH_INFO* path_info, const MEMORY_ARENA_RESOURCE* memory_arena_resource);
 #ifdef RES_CHECK
 #   define clone_path_info(path_info, memory_arena_resource) RC_HEAP_WRAP(clone_path_info, path_info, memory_arena_resource)

@@ -106,46 +106,46 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region command
 
-        public ICommand ApplySeletectionForegroundColorCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ApplySelectionForegroundColorCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ApplySelectionForegroundColor();
             }
         ));
-        public ICommand ApplySeletectionBackgroundColorCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ApplySelectionBackgroundColorCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ApplySelectionBackgroundColor();
             }
         ));
 
-        public ICommand ToggleSeletectionUnderlineCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleSelectionUnderlineCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ToggleSelectionDecoration(TextDecorationLocation.Underline);
             }
         ));
 
-        public ICommand ToggleSeletectionStrikeThroughCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleSelectionStrikeThroughCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ToggleSelectionDecoration(TextDecorationLocation.Strikethrough);
             }
         ));
 
-        public ICommand ToggleSeletectionIncreaseFontSizeCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleSelectionIncreaseFontSizeCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => EditingCommands.IncreaseFontSize.Execute(null, RichText)
         ));
-        public ICommand ToggleSeletectionDecreaseFontSizeCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleSelectionDecreaseFontSizeCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => EditingCommands.DecreaseFontSize.Execute(null, RichText)
         ));
 
-        public ICommand ToggleSeletectionSubscriptCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleSelectionSubscriptCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => EditingCommands.ToggleSubscript.Execute(null, RichText)
         ));
-        public ICommand ToggleSeletectionSuperscriptCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleSelectionSuperscriptCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => EditingCommands.ToggleSuperscript.Execute(null, RichText)
         ));
-        public ICommand ToggleSeletectionBoldCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleSelectionBoldCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => EditingCommands.ToggleBold.Execute(null, RichText)
         ));
-        public ICommand ToggleSeletectionItalicCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleSelectionItalicCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => EditingCommands.ToggleItalic.Execute(null, RichText)
         ));
         public ICommand ToggleNumberingCommand => GetOrCreateCommand(() => new DelegateCommand(
@@ -319,7 +319,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             RichText = null;
         }
 
-        protected override IDataObject GetClipbordContentData()
+        protected override IDataObject GetClipboardContentData()
         {
             var data = new DataObject();
             if(CanVisible) {

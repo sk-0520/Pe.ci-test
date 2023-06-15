@@ -30,12 +30,12 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public override ILauncherItemExtension CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter parameter)
         {
-            return new ClockLauncherItem(parameter, PluginInformations, Plugin);
+            return new ClockLauncherItem(parameter, PluginInformation, Plugin);
         }
 
         public override IWidget BuildWidget(IAddonParameter parameter)
         {
-            return new ClockWidget(parameter, PluginInformations);
+            return new ClockWidget(parameter, PluginInformation);
         }
 
 

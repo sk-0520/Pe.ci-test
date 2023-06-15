@@ -340,7 +340,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return result;
         }
 
-        private bool ExecutePropertyies(IReadOnlyList<string> raisePropertyNames, Action<string> raiser)
+        private bool ExecuteProperties(IReadOnlyList<string> raisePropertyNames, Action<string> raiser)
         {
             ThrowIfDisposed();
 
@@ -412,22 +412,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             ThrowIfDisposed();
 
-            var property = ExecutePropertyies(hookItemCache.RaisePropertyNames, raiser);
+            var property = ExecuteProperties(hookItemCache.RaisePropertyNames, raiser);
             var command = ExecuteCommands(hookItemCache.RaiseCommands, hookItemCache.RaiseDelegateCommands);
             var callback = ExecuteCallback(hookItemCache.Callbacks);
 
             return property || command || callback;
         }
 
-        public bool Execute(string? noifyPropertyName, Action<string> raiser)
+        public bool Execute(string? notifyPropertyName, Action<string> raiser)
         {
             ThrowIfDisposed();
 
-            if(noifyPropertyName == null) {
+            if(notifyPropertyName == null) {
                 return false;
             }
 
-            if(!Hookers.TryGetValue(noifyPropertyName, out var hookItems)) {
+            if(!Hookers.TryGetValue(notifyPropertyName, out var hookItems)) {
                 return false;
             }
 
@@ -435,9 +435,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 throw new ArgumentNullException(nameof(raiser));
             }
 
-            if(!Cache.TryGetValue(noifyPropertyName, out var hookItemCache)) {
+            if(!Cache.TryGetValue(notifyPropertyName, out var hookItemCache)) {
                 hookItemCache = MakeCache(hookItems);
-                Cache.Add(noifyPropertyName, hookItemCache);
+                Cache.Add(notifyPropertyName, hookItemCache);
             }
 
             return ExecuteCache(hookItemCache, raiser);

@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             LogItems = new ConcurrentFixedQueue<LogEventInfo>(logLimit);
 
             Factory = new LoggerFactory();
-            LogManager.LoadConfiguration(loggingConfigFilePath);
+            LogManager.Setup().LoadConfigurationFromFile(loggingConfigFilePath);
 
             var po = new NLog.Extensions.Logging.NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties = true };
             var prov = new NLog.Extensions.Logging.NLogLoggerProvider(po, LogManager.LogFactory);

@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.ExtendsExecute
     /// <summary>
     /// ExtendsExecuteWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class ExtendsExecuteWindow: Window, IDpiScaleOutputor
+    public partial class ExtendsExecuteWindow: Window, IDpiScaleOutpour
     {
         public ExtendsExecuteWindow()
         {

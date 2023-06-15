@@ -104,7 +104,7 @@
           <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppGeneralSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}" Style="{StaticResource HeaderGroupBox}">
               <behaviors:Interaction.Triggers>
-                <app_views:RequestTrigger SourceObject="{Binding UserBackupDirectorySelecteRequest}">
+                <app_views:RequestTrigger SourceObject="{Binding UserBackupDirectorySelectRequest}">
                   <prism:InvokeCommandAction Command="{Binding FileSelectCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                 </app_views:RequestTrigger>
               </behaviors:Interaction.Triggers>

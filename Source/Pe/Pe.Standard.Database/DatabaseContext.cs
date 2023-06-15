@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <typeparam name="T">問い合わせ型。</typeparam>
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
+        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>の<c>buffered</c></param>
         /// <returns>問い合わせ結果。</returns>
         IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true);
 
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <typeparam name="T">問い合わせ型。</typeparam>
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
+        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>の<c>buffered</c></param>
         /// <param name="cancellationToken"></param>
         /// <returns>問い合わせ結果。</returns>
         Task<IEnumerable<T>> QueryAsync<T>(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default);
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// </summary>
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
+        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>の<c>buffered</c></param>
         /// <returns>問い合わせ結果。</returns>
         IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true);
 
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// </summary>
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</param>
+        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>の<c>buffered</c></param>
         /// <param name="cancellationToken"></param>
         /// <returns>問い合わせ結果。</returns>
         Task<IEnumerable<dynamic>> QueryAsync(string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default);

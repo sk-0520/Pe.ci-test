@@ -69,20 +69,20 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 return string.Empty;
             }
 
-            var orderdValues = values
+            var orderedValues = values
                 .OrderBy(i => i)
                 .ToList()
             ;
 
-            if(orderdValues.Count == 0) {
+            if(orderedValues.Count == 0) {
                 return string.Empty;
             }
 
             var builder = new StringBuilder(64);
-            var prevValue = orderdValues.First();
+            var prevValue = orderedValues.First();
             builder.Append(prevValue);
             var nowRange = false;
-            foreach(var value in orderdValues.Skip(1)) {
+            foreach(var value in orderedValues.Skip(1)) {
                 if(prevValue == value) {
                     continue;
                 }

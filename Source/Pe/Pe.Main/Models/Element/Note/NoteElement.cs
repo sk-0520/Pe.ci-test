@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         private NoteContentKind _contentKind;
 
         private Color _foregroundColor;
-        private Color _backegroundColor;
+        private Color _backgroundColor;
 
         private NoteContentElement? _contentElement;
 
@@ -168,8 +168,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         }
         public Color BackgroundColor
         {
-            get => this._backegroundColor;
-            private set => SetProperty(ref this._backegroundColor, value);
+            get => this._backgroundColor;
+            private set => SetProperty(ref this._backgroundColor, value);
         }
 
         /// <summary>

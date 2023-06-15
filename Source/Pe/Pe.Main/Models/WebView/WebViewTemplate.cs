@@ -76,9 +76,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
         #endregion
     }
 
-    public class JavascriptTextViewTemplate: RawTextWebViewTemplate
+    public class JavaScriptTextViewTemplate: RawTextWebViewTemplate
     {
-        public JavascriptTextViewTemplate(string text)
+        public JavaScriptTextViewTemplate(string text)
             : base(text)
         { }
 
