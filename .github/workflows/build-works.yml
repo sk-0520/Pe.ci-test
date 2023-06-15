@@ -5,12 +5,12 @@ on:
     branches-ignore:
       - master
       - ci-test
-      - development
+      - develop
   pull_request:
     branches-ignore:
       - master
       - ci-test
-      - development
+      - develop
 
 env:
   MAIN_ARCHIVE: tar

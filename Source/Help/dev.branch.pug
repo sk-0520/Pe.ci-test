@@ -8,26 +8,26 @@ block BLOCK_LAYOUT_CONTENT
 
 	dl
 		dt master
-		dd 
-			| リリース時にマージする。 
+		dd
+			| リリース時にマージする。
 			| リリース処理は本ブランチを CI からビルドする。
 
-		dt development
-		dd 
+		dt develop
+		dd
 			| 開発主軸ブランチ。
-			| 基本的にここから課題ブランチブランチを生やす。
 
 		dt: strong next
-		dd 
+		dd
 			| 次期バージョン開発ブランチ。
 			| こいつが主要ブランチ。
+			| 基本的にここから課題ブランチブランチを生やす。
 
-		dt 
+		dt
 			strong #
 			em xxx
 		dd 課題ブランチ
 
 		dt ci-test
-		dd 
+		dd
 			| CI 用のテスト処理実施ブランチ。
 			| CI テスト用リポジトリと組み合わせて一時的に使用する。
