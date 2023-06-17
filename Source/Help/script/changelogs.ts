@@ -4,6 +4,7 @@
 
 /*--------BUILD-EMBEDDED-JSON--------*/
 
+import './changelog-link'
 import changelogs from '../../../Define/changelogs.json';
 import changelogsArchives from '../../../Define/changelogs-archive.json';
 
