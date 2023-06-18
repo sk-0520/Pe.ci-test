@@ -4969,6 +4969,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   プラグイン一覧 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_PluginWebInstall_PluginsUrl {
+            get {
+                return ResourceManager.GetString("String_PluginWebInstall_PluginsUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   無効 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Proxy_Toggle_Content_IsDisabled {

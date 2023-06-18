@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
@@ -41,6 +43,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
         public bool IsDownloaded { get; set; }
 
         internal FileInfo? PluginArchiveFile { get; private set; }
+
+        public Uri ProjectPluginsUri => EnvironmentParameters.ApplicationConfiguration.General.ProjectPluginsUri;
 
         #endregion
 
@@ -117,6 +121,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
             }
 
             return GetPluginAsync(PluginIdOrInfoUrl);
+        }
+
+        internal void OpenProjectPluginsUri()
+        {
+            var systemExecutor = new SystemExecutor();
+            try {
+                systemExecutor.OpenUri(ProjectPluginsUri);
+            } catch(Exception ex) {
+                Logger.LogWarning(ex, ex.Message);
+            }
         }
 
         #endregion
