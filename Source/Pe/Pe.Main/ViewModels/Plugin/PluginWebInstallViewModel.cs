@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
@@ -57,6 +58,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Plugin
             set => SetModelValue(value);
         }
 
+        public string ProjectPluginsUrl => Model.ProjectPluginsUri.ToString();
+
         #endregion
 
         #region command
@@ -77,6 +80,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Plugin
             o => !NowInstalling
         ));
 
+        public ICommand OpenProjectPluginsUrl => GetOrCreateCommand(() => new DelegateCommand<Window>(
+            o => {
+                Model.OpenProjectPluginsUri();
+            }
+        ));
+        
         #endregion
 
         #region IViewLifecycleReceiver

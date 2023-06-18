@@ -42,6 +42,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
 
         internal FileInfo? PluginArchiveFile { get; private set; }
 
+        public Uri ProjectPluginsUri => EnvironmentParameters.ApplicationConfiguration.General.ProjectPluginsUri;
+
         #endregion
 
         #region function
@@ -117,6 +119,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
             }
 
             return GetPluginAsync(PluginIdOrInfoUrl);
+        }
+
+        internal void OpenProjectPluginsUri()
+        {
+            Logger.LogInformation("OPEN");
         }
 
         #endregion
