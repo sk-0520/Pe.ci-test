@@ -3,6 +3,7 @@
 		"project_name": "Pe-debug",
 		"mutex_name": "Pe-debug",
 		"unhandled_exception_handled": false,
+		"project_plugins_uri": "http://localhost/plugin",
 		"version_check_uri": "http://localhost/api/application/version/update"
 	},
 	"api": {
