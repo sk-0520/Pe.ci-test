@@ -55,7 +55,10 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#878: 設定のプラグイン→Web選択時にせめてリンクを表示する",
+						"comments": [
+							"WPF をさわるのが久々すぎて難しかった"
+						]
 					},
 					{
 						"revision": "",
