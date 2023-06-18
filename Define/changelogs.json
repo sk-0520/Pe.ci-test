@@ -1,48 +1,20 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.196+",
+		"date": "2023/06/18",
+		"version": "0.99.197",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"class": "compatibility",
+						"subject": "次バージョンからコマンドラインオプションの '-' を用いた長いオプションは破棄します",
+						"comments": [
+							"前回(0.99.196)に次回って言ってたけど、延期",
+							"明示的に使ってる部分はないので問題ないはず",
+							"ちょっとこれつらいのです",
+							"とはいえ対応するにしてもC側処理めんどいなぁ"
+						]
 					}
 				]
 			},
@@ -50,44 +22,15 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "109a2d9330ecc336fa133de3e785564aeb81b43f",
 						"subject": "#881: ヘルプファイルの更新履歴が死んでる"
 					},
 					{
-						"revision": "",
+						"revision": "8a6e5d4937440d8fb1dac0d0136423be27e3fd89",
 						"subject": "#878: 設定のプラグイン→Web選択時にせめてリンクを表示する",
 						"comments": [
 							"WPF をさわるのが久々すぎて難しかった"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "developer",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
