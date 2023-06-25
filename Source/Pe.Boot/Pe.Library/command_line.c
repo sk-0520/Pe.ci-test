@@ -58,7 +58,7 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
 
     TEXT mark_texts[] = {
         wrap_text(_T("--")),
-        wrap_text(_T("-")),
+        //wrap_text(_T("-")),
         wrap_text(_T("/")),
     };
 
