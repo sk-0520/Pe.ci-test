@@ -11,8 +11,6 @@ block BLOCK_LAYOUT_CONTENT
 			li
 				code --OPTION
 			li
-				code -OPTION
-			li
 				code /OPTION
 		p 値を指定する場合は以下の形式をサポートします
 		ul
@@ -30,12 +28,17 @@ block BLOCK_LAYOUT_CONTENT
 			ul
 				li: code --option value
 				li: code --option=value
-				li: code -option=value
 				li: code /option=value
 				li: code --option "space value2"
 				li: code --option="space value2"
 				li: code "--option=space value2"
 				li: code --switch
+			aside.warning
+				p
+					code /option
+					| 形式は将来的に整理予定なので
+					code --option
+					| の使用を推奨します。
 
 
 	section
