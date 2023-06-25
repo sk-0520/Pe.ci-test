@@ -84,7 +84,10 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#882: nodeのバージョンをいい感じにしておく",
+						"comments": [
+							".node-version を主とする"
+						]
 					},
 					{
 						"revision": "",
