@@ -319,8 +319,8 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             try {
                 var map = new[] {
                     new { Key = "--", IsLong = true },
-                    new { Key = "-",  IsLong = false },
-                    new { Key = "/",  IsLong = false },
+                    //new { Key = "-",  IsLong = false },
+                    new { Key = "/",  IsLong = true },
                 };
 
                 for(var i = 0; i < Arguments.Count; i++) {

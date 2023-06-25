@@ -103,7 +103,7 @@ const COMMAND_LINE_ITEM* get_command_line_item(const COMMAND_LINE_OPTION* comman
 
 /// <summary>
 /// コマンドラインアイテムは値を持つか。
-/// <para>空文字列も許容しているので文字列長も含めてチェックする場合は<see cref="is_inputed_command_line_item" />を使用すること。</para>
+/// <para>空文字列も許容しているので文字列長も含めてチェックする場合は<see cref="is_inputted_command_line_item" />を使用すること。</para>
 /// </summary>
 /// <param name="item"></param>
 /// <returns></returns>

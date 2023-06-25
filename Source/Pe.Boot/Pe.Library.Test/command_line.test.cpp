@@ -48,7 +48,7 @@ namespace PeLibraryTest
                 wrap("ghi"),
                 wrap("jkl"),
             };
-            TEXT input = wrap("abc --def -ghi /jkl");
+            TEXT input = wrap("abc --def --ghi /jkl");
             COMMAND_LINE_OPTION actual = parse_command_line(&input, true, DEFAULT_MEMORY_ARENA);
             for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
                 const COMMAND_LINE_ITEM* item = get_command_line_item(&actual, &expecteds[i]);
@@ -65,7 +65,7 @@ namespace PeLibraryTest
                 { wrap("ghi"), wrap("GHI") },
                 { wrap("jkl"), wrap("JKL") },
             };
-            TEXT input = wrap("abc --def DEF -ghi GHI /jkl JKL");
+            TEXT input = wrap("abc --def DEF --ghi GHI /jkl JKL");
             COMMAND_LINE_OPTION actual = parse_command_line(&input, true, DEFAULT_MEMORY_ARENA);
             for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
                 TEXT* expected_key = &expecteds[i][0];
@@ -85,7 +85,7 @@ namespace PeLibraryTest
                 { wrap("ghi"), wrap("GHI") },
                 { wrap("jkl"), wrap("JKL") },
             };
-            TEXT input = wrap("abc --def=DEF -ghi=GHI /jkl=JKL");
+            TEXT input = wrap("abc --def=DEF --ghi=GHI /jkl=JKL");
             COMMAND_LINE_OPTION actual = parse_command_line(&input, true, DEFAULT_MEMORY_ARENA);
             for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
                 TEXT* expected_key = &expecteds[i][0];
@@ -105,7 +105,7 @@ namespace PeLibraryTest
                 { wrap("ghi"), wrap("GHI") },
                 { wrap("jkl"), wrap("JKL") },
             };
-            TEXT input = wrap("abc --def=DEF -ghi GHI /jkl=JKL");
+            TEXT input = wrap("abc --def=DEF --ghi GHI /jkl=JKL");
             COMMAND_LINE_OPTION actual = parse_command_line(&input, true, DEFAULT_MEMORY_ARENA);
             for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
                 TEXT* expected_key = &expecteds[i][0];
@@ -128,7 +128,7 @@ namespace PeLibraryTest
                 { wrap("pqr"), create_invalid_text() },
                 { wrap("stu"), create_invalid_text() },
             };
-            TEXT input = wrap("abc --def=DEF -ghi= --jkl \"\" /mno=MNO --pqr --stu");
+            TEXT input = wrap("abc --def=DEF --ghi= --jkl \"\" /mno=MNO --pqr --stu");
             COMMAND_LINE_OPTION actual = parse_command_line(&input, true, DEFAULT_MEMORY_ARENA);
 
             const COMMAND_LINE_ITEM* item1 = get_command_line_item(&actual, expecteds[0]);
@@ -165,7 +165,7 @@ namespace PeLibraryTest
                 { wrap("2"), wrap(" 2 2") },
                 { wrap("3"), wrap(" 3 3") },
             };
-            TEXT input = wrap("abc --0=\"0 0\" -1 \"1 1 \" /2 \" 2 2\" \"-3= 3 3\"");
+            TEXT input = wrap("abc --0=\"0 0\" --1 \"1 1 \" /2 \" 2 2\" \"--3= 3 3\"");
             COMMAND_LINE_OPTION actual = parse_command_line(&input, true, DEFAULT_MEMORY_ARENA);
             for (size_t i = 0; i < SIZEOF_ARRAY(expecteds); i++) {
                 TEXT* expected_key = &expecteds[i][0];
@@ -188,7 +188,7 @@ namespace PeLibraryTest
                 { wrap("pqr"), create_invalid_text() },
                 { wrap("stu"), create_invalid_text() },
             };
-            TEXT input = wrap("abc --def=DEF -ghi= --jkl \"\" /mno=MNO --pqr --stu");
+            TEXT input = wrap("abc --def=DEF --ghi= --jkl \"\" /mno=MNO --pqr --stu");
             COMMAND_LINE_OPTION actual = parse_command_line(&input, true, DEFAULT_MEMORY_ARENA);
 
             const COMMAND_LINE_ITEM* item1 = get_command_line_item(&actual, expecteds[0]);
