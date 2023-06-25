@@ -71,8 +71,12 @@
 				"type": "developer",
 				"logs": [
 					{
+						"class": "compatibility",
 						"revision": "",
-						"subject": "#880: コマンドラインオプションの '-' を破棄する"
+						"subject": "#880: コマンドラインオプションの '-' を破棄する",
+						"comments": [
+							"--option 形式だけ使っといてください"
+						]
 					},
 					{
 						"revision": "",
