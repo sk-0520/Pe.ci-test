@@ -193,13 +193,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return result;
             }
 
-            //// #775: プラグインIDから固定URLの取得
-            //var issue775 = await GetPluginItem_Issue775Async(pluginId, pluginVersion);
-            //if(issue775 is not null) {
-            //    return issue775;
-            //}
-
-            // ここから #706
             var apiResult = await CheckPluginNewVersionByApiAsync(pluginId, pluginVersion);
 
             return apiResult;
@@ -249,34 +242,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
 
             return GetNewVersionItem(pluginVersion, updateData.Items);
-        }
-
-        [Obsolete]
-        private async Task<NewVersionItemData?> GetPluginItem_Issue775Async(PluginId pluginId, Version pluginVersion)
-        {
-            var map = new Dictionary<PluginId, string>() {
-                [PluginId.Parse("67F0FA7D-52D3-4889-B595-BE3703B224EB")] = "update-Pe.Plugins.Reference.ClassicTheme.json",
-                [PluginId.Parse("2E5C72C5-270F-4B05-AFB9-C87F3966ECC5")] = "update-Pe.Plugins.Reference.Clock.json",
-                [PluginId.Parse("799CE8BD-8F49-4E8F-9E47-4D4873084081")] = "update-Pe.Plugins.Reference.Eyes.json",
-                [PluginId.Parse("9DCF441D-9F8E-494F-89C1-814678BBC42C")] = "update-Pe.Plugins.Reference.FileFinder.json",
-                [PluginId.Parse("4FA1A634-6B32-4762-8AE8-3E1CF6DF9DB1")] = "update-Pe.Plugins.Reference.Html.json",
-            };
-
-            if(map.TryGetValue(pluginId, out var path)) {
-                var url = TextUtility.ReplaceFromDictionary(ApplicationConfiguration.Plugin.Issue775, new Dictionary<string, string> {
-                    ["PATH"] = path,
-                });
-                var uri = new Uri(url);
-                var updateData = await RequestUpdateDataAsync(uri);
-                if(updateData == null) {
-                    return null;
-                }
-
-                var result = GetNewVersionItem(pluginVersion, updateData.Items);
-                return result;
-            }
-
-            return null;
         }
 
         /// <summary>
