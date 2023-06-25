@@ -37,8 +37,8 @@ WAIT_TIME_ARG get_wait_time(const COMMAND_LINE_OPTION* command_line_option)
 {
     TEXT wait_keys[] = {
         wrap_text(OPTION_APP_BOOT_WAIT_KEY),
-        wrap_text(OPTION_APP_BOOT_WAIT_KEY_issue_737), //TODO: #737 互換用処理
     };
+
     for (size_t i = 0; i < SIZEOF_ARRAY(wait_keys); i++) {
         const TEXT* wait_key = wait_keys + i;
         const COMMAND_LINE_ITEM* item = get_command_line_item(command_line_option, wait_key);
@@ -75,7 +75,6 @@ size_t filter_enable_command_line_items(TEXT_LIST result, const COMMAND_LINE_OPT
         wrap_text(OPTION_LOG_LEVEL_KEY),
         wrap_text(OPTION_APP_MODE_KEY),
         wrap_text(OPTION_APP_BOOT_WAIT_KEY),
-        wrap_text(OPTION_APP_BOOT_WAIT_KEY_issue_737),
     };
 
     size_t ignore_length = 0;

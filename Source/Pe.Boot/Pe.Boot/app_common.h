@@ -3,8 +3,6 @@
 #define OPTION_APP_MODE_KEY _T("_mode")
 
 #define OPTION_APP_BOOT_WAIT_KEY _T("_boot-wait")
-/// #737 互換用処理
-#define OPTION_APP_BOOT_WAIT_KEY_issue_737 _T("wait")
 
 /// <summary>
 /// 終了コード。
