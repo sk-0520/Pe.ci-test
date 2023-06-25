@@ -153,7 +153,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var commandLine = new CommandLine(args, false);
                 var waitKeys = new[] {
                     commandLine.Add(longKey: "_boot-wait", hasValue: true),
-                    commandLine.Add(longKey: "wait", hasValue: true), //TODO: #737 互換用処理
                 };
                 if(commandLine.Parse()) {
                     foreach(var waitKey in waitKeys) {

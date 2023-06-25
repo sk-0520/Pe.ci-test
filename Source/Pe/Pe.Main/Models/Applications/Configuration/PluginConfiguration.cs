@@ -24,9 +24,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         [Configuration]
         public IReadOnlyList<string> IgnoreBaseFileNames { get; } = default!;
 
-        [Configuration]
-        public string Issue775 { get; } = default!;
-
         #endregion
     }
 }

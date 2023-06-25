@@ -1,5 +1,55 @@
 [
 	{
+		"date": "2023/06/25",
+		"version": "0.99.198",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"subject": "開発用諸々のみ"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"class": "compatibility",
+						"revision": "339d34c8296dcba6a5cf1a22780d07a9688bae8d",
+						"subject": "#880: コマンドラインオプションの '-' を破棄する",
+						"comments": [
+							"--option 形式だけ使っといてください"
+						]
+					},
+					{
+						"revision": "86696e5e46ca265a3b26865599f8a597a4fd73c7",
+						"subject": "#742: #737 互換処理を破棄する"
+					},
+					{
+						"revision": "a9d19078f96392364edf0e303075c79629cd8a92",
+						"subject": "#882: nodeのバージョンをいい感じにしておく",
+						"comments": [
+							".node-version を主とする"
+						]
+					},
+					{
+						"revision": "0190593b56782324525bc31ac80c925121741172",
+						"subject": "#815: 機能削除: API-#812"
+					},
+					{
+						"revision": "19c604ab0190caa5add2441e99de926cffbe1fda",
+						"subject": "#775: #735 残対応"
+					},
+					{
+						"revision": "7e138df38add97505b9b2c7686d2382ccaff96a2",
+						"subject": "Dapper 2.0.138 -> 2.0.143"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/06/18",
 		"version": "0.99.197",
 		"contents": [

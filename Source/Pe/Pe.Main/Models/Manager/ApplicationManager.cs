@@ -1090,26 +1090,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #endif
             }
 
-            Issue737();
-
             var tuner = ApplicationDiContainer.Build<DatabaseTuner>();
             tuner.Tune();
 
             return true;
-        }
-
-        private void Issue737()
-        {
-            var startupRegister = new StartupRegister(LoggerFactory);
-            if(startupRegister.Exists()) {
-                var result = startupRegister.GetStartupParameter();
-                if(result.Success) {
-                    if(result.SuccessValue.DelayStartup) {
-                        Logger.LogInformation("#737 互換処理");
-                        startupRegister.Register(result.SuccessValue);
-                    }
-                }
-            }
         }
 
         public ManagerViewModel CreateViewModel()
