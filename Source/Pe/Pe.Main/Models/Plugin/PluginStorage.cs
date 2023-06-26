@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region function
 
-        protected string TuneFileName(string name)
+        protected string AdjustFileName(string name)
         {
             if(name == null) {
                 throw new ArgumentNullException(nameof(name));
@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             Debug.Assert(directoryName != null);
 
-            var tunedFileName = TuneFileName(fileName);
+            var tunedFileName = AdjustFileName(fileName);
             var path = CombinePath(directoryName, tunedFileName);
 
             return File.Exists(path);
@@ -78,8 +78,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 throw new ArgumentException($"{nameof(sourceName)} == {nameof(destinationName)}");
             }
 
-            var tunedSourceFileName = TuneFileName(sourceName);
-            var tunedDestinationFileName = TuneFileName(destinationName);
+            var tunedSourceFileName = AdjustFileName(sourceName);
+            var tunedDestinationFileName = AdjustFileName(destinationName);
 
             var tunedSourceFilePath = CombinePath(directoryName, tunedSourceFileName);
             var tunedDestinationFilePath = CombinePath(directoryName, tunedDestinationFileName);
@@ -95,8 +95,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 throw new ArgumentException($"{nameof(sourceName)} == {nameof(destinationName)}");
             }
 
-            var tunedSourceFileName = TuneFileName(sourceName);
-            var tunedDestinationFileName = TuneFileName(destinationName);
+            var tunedSourceFileName = AdjustFileName(sourceName);
+            var tunedDestinationFileName = AdjustFileName(destinationName);
 
             var tunedSourceFilePath = CombinePath(directoryName, tunedSourceFileName);
             var tunedDestinationFilePath = CombinePath(directoryName, tunedDestinationFileName);
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             Debug.Assert(directoryName != null);
 
-            var tunedFileName = TuneFileName(name);
+            var tunedFileName = AdjustFileName(name);
             var path = CombinePath(directoryName, tunedFileName);
             File.Delete(path);
         }
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             Debug.Assert(directoryName != null);
 
-            var tunedFileName = TuneFileName(name);
+            var tunedFileName = AdjustFileName(name);
             var path = CombinePath(directoryName, tunedFileName);
             IOUtility.MakeFileParentDirectory(path);
             var stream = new FileStream(path, fileMode, FileAccess.ReadWrite, FileShare.Read);

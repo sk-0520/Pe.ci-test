@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             return null;
         }
 
-        private string TuneExtension(string path)
+        private string AdjustExtension(string path)
         {
             var dotExt = Path.GetExtension(path);
             if(!string.IsNullOrWhiteSpace(dotExt)) {
@@ -246,7 +246,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
                     if(PickFolders) {
                         FileName = path;
                     } else {
-                        FileName = TuneExtension(path);
+                        FileName = AdjustExtension(path);
                     }
 
                     Customize.ChangeStatus();

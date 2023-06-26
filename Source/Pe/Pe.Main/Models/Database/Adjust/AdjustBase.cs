@@ -4,17 +4,17 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Database.Tuner
+namespace ContentTypeTextNet.Pe.Main.Models.Database.Adjust
 {
-    public abstract class TunerBase
+    public abstract class AdjustBase
     {
-        protected TunerBase(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        protected AdjustBase(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
             StatementLoader = statementLoader;
             Logger = loggerFactory.CreateLogger(GetType());
 
             var commonStatus = DatabaseCommonStatus.CreateCurrentAccount();
-            TuneCommonDtoSource = commonStatus.CreateCommonDtoMapping();
+            AdjustCommonDtoSource = commonStatus.CreateCommonDtoMapping();
         }
 
         #region property
@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Tuner
         protected IDatabaseStatementLoader StatementLoader { get; }
         protected ILogger Logger { get; }
 
-        private IDictionary<string, object> TuneCommonDtoSource { get; }
+        private IDictionary<string, object> AdjustCommonDtoSource { get; }
 
         #endregion
 
@@ -30,14 +30,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Tuner
 
         protected IDictionary<string, object> GetCommonDto()
         {
-            return new Dictionary<string, object>(TuneCommonDtoSource);
+            return new Dictionary<string, object>(AdjustCommonDtoSource);
         }
 
-        protected abstract void TuneImpl(IDatabaseContext context);
+        protected abstract void AdjustImpl(IDatabaseContext context);
 
-        public void Tune(IDatabaseContext context)
+        public void Adjust(IDatabaseContext context)
         {
-            TuneImpl(context);
+            AdjustImpl(context);
         }
 
         #endregion

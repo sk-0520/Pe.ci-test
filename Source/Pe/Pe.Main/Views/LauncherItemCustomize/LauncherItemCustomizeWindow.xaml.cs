@@ -16,14 +16,14 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
         public LauncherItemCustomizeWindow()
         {
             InitializeComponent();
-            ScrollTuner = new ScrollTuner(this);
+            ScrollAdjuster = new ScrollAdjuster(this);
         }
 
         #region property
 
         [Inject]
         private ILogger? Logger { get; set; }
-        private ScrollTuner ScrollTuner { get; }
+        private ScrollAdjuster ScrollAdjuster { get; }
 
         private CommandStore CommandStore { get; } = new CommandStore();
 
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 
         protected override void OnClosed(EventArgs e)
         {
-            ScrollTuner.Dispose();
+            ScrollAdjuster.Dispose();
 
             base.OnClosed(e);
         }
