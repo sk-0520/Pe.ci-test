@@ -10,7 +10,7 @@
 		"test": "npm-run-all test:*",
 		"archive:plugin-template": "npm-build-zip --source=Source/Plugin.Template --destination=Source/Help/archives --name=../../plugin-template",
 		"archive": "npm-run-all --sequential archive:plugin-template",
-		"help-watch": "parcel --no-autoinstall --dist-dir Output/help/ --public-url ./ Source/Help/index.pug",
+		"help-watch": "parcel --no-autoinstall --dist-dir Output/help/ --public-url / Source/Help/index.pug",
 		"help-build:output": "parcel build --no-autoinstall --no-source-maps --dist-dir Output/help/ --no-content-hash --public-url . Source/Help/index.pug",
 		"help-build:module": "ts-node Build/scripts/tune-module-entry.ts",
 		"help-build": "npm-run-all --sequential archive help-build:output help-build:module",
