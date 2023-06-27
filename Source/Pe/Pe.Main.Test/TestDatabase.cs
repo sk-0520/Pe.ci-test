@@ -49,13 +49,15 @@ namespace ContentTypeTextNet.Pe.Main.Test
                 accessor.Execute("pragma foreign_keys = true");
             }
             var lastVersion = databaseSetupper.GetLastVersion(databaseAccessorPack.Main);
+            Assert.IsNotNull(lastVersion);
+            
             // 3桁バージョンってこうなってんのかよ
-            var vers = new[] {
-                new { Now = BuildStatus.Version.Major, Init = lastVersion!.Major},
-                new { Now = BuildStatus.Version.Minor, Init = lastVersion!.Minor},
-                new { Now = BuildStatus.Version.Build, Init = lastVersion!.Build},
+            var versionElements = new[] {
+                new { Now = BuildStatus.Version.Major, Init = lastVersion.Major},
+                new { Now = BuildStatus.Version.Minor, Init = lastVersion.Minor},
+                new { Now = BuildStatus.Version.Build, Init = lastVersion.Build},
             };
-            Assert.IsTrue(vers.All(i => i.Now == i.Init));
+            Assert.IsTrue(versionElements.All(i => i.Now == i.Init));
         }
 
 
