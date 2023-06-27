@@ -135,6 +135,9 @@
   <Window.CommandBindings>
     <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" CanExecute="CloseWindowCommand_CanExecute" Executed="CloseWindowCommand_Executed" />
   </Window.CommandBindings>
+  <Window.InputBindings>
+    <KeyBinding Gesture="Ctrl+F" Command="{Binding ContentSearchCommand}"/>
+  </Window.InputBindings>
   <Grid>
     <!--#region 内容-->
     <Border BorderBrush="{Binding BorderBrush}" BorderThickness="{Binding BorderThickness}">

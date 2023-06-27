@@ -687,6 +687,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         ));
 
+        public ICommand ContentSearchCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+            o => {
+                Logger.LogDebug("Ctrl+F");
+            }
+        ));
+
         #endregion
 
         #region function
