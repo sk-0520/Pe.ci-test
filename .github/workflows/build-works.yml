@@ -54,20 +54,15 @@ jobs:
           path: ${{ github.workspace }}/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
-            ${{ runner.os }}-nuget-
+            ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
 
       - name: <Cache> Obj
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/Source/**/obj
-          key: ${{ runner.os }}-obj-${{ matrix.PLATFORM }}
-
-      - name: <Show> Tools
-        run: |
-          dotnet --version
-          pwsh --version
-          7z -version
-          exit 0
+          key: ${{ runner.os }}-obj-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-obj-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
 
       - name: <Generate> Data
         shell: pwsh

@@ -41,13 +41,6 @@ jobs:
         with:
           node-version-file: ./.node-version
 
-      - name: <Show> Tools
-        run: |
-          dotnet --version
-          pwsh --version
-          7z -version
-          exit 0
-
       - name: <Generate> Data
         shell: pwsh
         run: .\Build\generate-data-files.ps1
