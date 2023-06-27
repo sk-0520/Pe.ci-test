@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         /// <summary>
         /// 検索中か。
         /// </summary>
-        private bool _searching = false;
+        private bool _isSearching = false;
         /// <summary>
         /// 検索文字列。
         /// </summary>
@@ -219,6 +219,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         }
 
         private NotifyLogId RestoreVisibleNotifyLogId { get; set; }
+
+        /// <summary>
+        /// 検索中か。
+        /// </summary>
+        public bool IsSearching
+        {
+            get => this._isSearching;
+            private set => SetProperty(ref this._isSearching, value);
+        }
+
+        /// <summary>
+        /// 検索文字列。
+        /// </summary>
+        public string SearchValue
+        {
+            get => this._searchValue;
+            private set => SetProperty(ref this._searchValue, value);
+        }
 
         #endregion
 
