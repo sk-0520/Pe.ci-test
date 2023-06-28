@@ -492,6 +492,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             private set => SetProperty(ref this._showLinkChangeConfirm, value);
         }
 
+        public bool IsSearching
+        {
+            get => Model.IsSearching;
+            set => SetModelValue(value);
+        }
+
+        public string SearchValue
+        {
+            get => Model.SearchValue;
+            set => SetModelValue(value);
+        }
+
         #endregion
 
         #region command
@@ -690,6 +702,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public ICommand ContentSearchCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
             o => {
                 Logger.LogDebug("Ctrl+F");
+                if(IsSearching) {
+                } else {
+                    IsSearching = true;
+                    SearchValue = string.Empty;
+                }
             }
         ));
 

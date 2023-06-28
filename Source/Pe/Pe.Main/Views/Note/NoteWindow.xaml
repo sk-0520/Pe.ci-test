@@ -647,7 +647,11 @@
                 </ContentControl.Style>
               </ContentControl>
               <Grid Grid.Row="1">
-                
+                <Grid.Style>
+                  <Style TargetType="Grid">
+                  </Style>
+                </Grid.Style>
+                <TextBox Text="{Binding SearchValue, Mode=TwoWay}" />
               </Grid>
             </Grid>
             <Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">

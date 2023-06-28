@@ -226,7 +226,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         public bool IsSearching
         {
             get => this._isSearching;
-            private set => SetProperty(ref this._isSearching, value);
+            set => SetProperty(ref this._isSearching, value);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         public string SearchValue
         {
             get => this._searchValue;
-            private set => SetProperty(ref this._searchValue, value);
+            set => SetProperty(ref this._searchValue, value);
         }
 
         #endregion
