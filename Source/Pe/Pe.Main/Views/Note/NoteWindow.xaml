@@ -616,31 +616,40 @@
             <!--<Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
             <TextBlock>busy</TextBlock>
           </Grid>-->
-            <ContentControl x:Name="content" IsTabStop="False">
-              <ContentControl.Style>
-                <Style TargetType="ContentControl">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding IsCompact}" Value="True">
-                      <Setter Property="Content" Value="💩" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding IsCompact}" Value="False">
-                      <Setter Property="Content" Value="{Binding Content}" />
-                    </DataTrigger>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <ContentControl x:Name="noteContent" Grid.Row="0" IsTabStop="False">
+                <ContentControl.Style>
+                  <Style TargetType="ContentControl">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding IsCompact}" Value="True">
+                        <Setter Property="Content" Value="💩" />
+                      </DataTrigger>
+                      <DataTrigger Binding="{Binding IsCompact}" Value="False">
+                        <Setter Property="Content" Value="{Binding Content}" />
+                      </DataTrigger>
 
-                    <DataTrigger Binding="{Binding IsVisibleBlind}" Value="True">
-                      <Setter Property="Effect" Value="{Binding BlindEffect}" />
-                    </DataTrigger>
+                      <DataTrigger Binding="{Binding IsVisibleBlind}" Value="True">
+                        <Setter Property="Effect" Value="{Binding BlindEffect}" />
+                      </DataTrigger>
 
-                    <DataTrigger Binding="{Binding ShowContentKindChangeConfirm}" Value="True">
-                      <Setter Property="IsEnabled" Value="False" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding ShowLinkChangeConfirm}" Value="True">
-                      <Setter Property="IsEnabled" Value="False" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </ContentControl.Style>
-            </ContentControl>
+                      <DataTrigger Binding="{Binding ShowContentKindChangeConfirm}" Value="True">
+                        <Setter Property="IsEnabled" Value="False" />
+                      </DataTrigger>
+                      <DataTrigger Binding="{Binding ShowLinkChangeConfirm}" Value="True">
+                        <Setter Property="IsEnabled" Value="False" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </ContentControl.Style>
+              </ContentControl>
+              <Grid Grid.Row="1">
+                
+              </Grid>
+            </Grid>
             <Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
               <TextBlock Text="{Binding Resources.String_Note_Busy, Source={x:Static app_main:CultureService.Instance}}" />
             </Grid>
