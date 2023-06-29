@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             private set => SetProperty(ref this._canVisible, value);
         }
 
-        private FrameworkElement? BaseElement { get; set; }
+        protected FrameworkElement? BaseElement { get; private set; }
 
         public bool IsLink => Model.IsLink;
 
@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
                 try {
                     Logger.LogDebug("読み込み開始");
-                    Model.IsLinkLoadError = !await LoadContentAsync(o);
+                    Model.IsLinkLoadError = !await LoadContentAsync();
                     Logger.LogDebug("読み込み終了");
                     CanVisible = true;
                 } catch(Exception ex) {
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region function
 
-        private void AttachControlCore(FrameworkElement o)
+        protected virtual void AttachControlCore(FrameworkElement o)
         {
             BaseElement = o;
             BaseElement.Unloaded += Control_Unloaded;
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         /// </summary>
         /// <param name="baseElement"></param>
         /// <returns>正常に読み込めたか</returns>
-        protected abstract Task<bool> LoadContentAsync(FrameworkElement baseElement);
+        protected abstract Task<bool> LoadContentAsync();
         /// <summary>
         /// コンテンツが不要になった際に呼び出される。
         /// <para>UI要素への解除処理も実施すること。</para>
@@ -159,13 +159,53 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Logger.LogDebug("リンク先内容変更検知");
             EnabledUpdate = false;
             UnloadContent();
-            LoadContentAsync(BaseElement).ContinueWith(t => {
+            LoadContentAsync().ContinueWith(t => {
                 if(t.IsCompletedSuccessfully) {
                     Model.IsLinkLoadError = !t.Result;
                 }
                 EnabledUpdate = true;
             }).ConfigureAwait(false);
         }
+    }
+
+    public abstract class NoteContentViewModelBase<TControlElement>: NoteContentViewModelBase
+        where TControlElement: FrameworkElement
+    {
+        #region variable
+
+        TControlElement? _controlElement;
+
+        #endregion
+
+        protected NoteContentViewModelBase(NoteContentElement model, NoteConfiguration noteConfiguration, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, noteConfiguration, clipboardManager, dispatcherWrapper, loggerFactory)
+        { }
+
+        #region property
+
+        protected TControlElement ControlElement
+        {
+            get
+            {
+                if(this._controlElement is null) {
+                    throw new InvalidOperationException();
+                }
+
+                return this._controlElement;
+            }
+        }
+
+        #endregion
+
+        #region NoteContentViewModelBase
+
+        protected override void AttachControlCore(FrameworkElement o)
+        {
+            base.AttachControlCore(o);
+            this._controlElement = (TControlElement)o;
+        }
+
+        #endregion
     }
 
     public static class NoteContentViewModelFactory

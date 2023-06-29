@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
-    public class NotePlainContentViewModel: NoteContentViewModelBase
+    public class NotePlainContentViewModel: NoteContentViewModelBase<TextBox>
     {
         #region variable
 
@@ -46,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region NoteContentViewModelBase
 
-        protected override Task<bool> LoadContentAsync(FrameworkElement baseElement)
+        protected override Task<bool> LoadContentAsync()
         {
             return Task.Run(() => {
                 try {
