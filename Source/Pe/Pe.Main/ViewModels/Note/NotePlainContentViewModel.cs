@@ -76,6 +76,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             return data;
         }
 
+        public override void SearchContent(string value, bool toNext)
+        {
+            Logger.LogDebug("text: {value}, {toNext}", value, toNext);
+        }
+
         #endregion
     }
 }

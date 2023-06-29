@@ -121,6 +121,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         /// <returns></returns>
         protected abstract IDataObject GetClipboardContentData();
 
+        public abstract void SearchContent(string value, bool toNext);
+
         #endregion
 
         #region SingleModelViewModelBase

@@ -137,6 +137,8 @@
   </Window.CommandBindings>
   <Window.InputBindings>
     <KeyBinding Gesture="Ctrl+F" Command="{Binding ContentSearchCommand}"/>
+    <KeyBinding Gesture="F3" Command="{Binding SearchNextCommand}"/>
+    <KeyBinding Gesture="Shift+F3" Command="{Binding SearchPrevCommand}"/>
   </Window.InputBindings>
   <Grid>
     <!--#region 内容-->
@@ -667,7 +669,12 @@
                   x:Name="inputSearch"
                   Grid.Column="1"
                   Text="{Binding SearchValue, Mode=TwoWay}"
-                />
+                >
+                  <TextBox.InputBindings>
+                    <KeyBinding Gesture="Enter" Command="{Binding SearchNextCommand}"/>
+                    <KeyBinding Gesture="Shift+Enter" Command="{Binding SearchPrevCommand}"/>
+                  </TextBox.InputBindings>
+                </TextBox>
               </Grid>
             </Grid>
             <Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">

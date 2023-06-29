@@ -721,6 +721,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         ));
 
+        public ICommand SearchNextCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+            o => {
+                Logger.LogDebug("Next");
+                Content?.SearchContent(SearchValue, true);
+            },
+            o => IsSearching && 0 < SearchValue.Length
+        ));
+        public ICommand SearchPrevCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+            o => {
+                Logger.LogDebug("Prev");
+                Content?.SearchContent(SearchValue, false);
+            },
+            o => IsSearching && 0 < SearchValue.Length
+        ));
+
+
 
         #endregion
 

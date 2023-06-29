@@ -352,6 +352,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
+        public override void SearchContent(string value, bool toNext)
+        {
+            Logger.LogDebug("text: {value}, {toNext}", value, toNext);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
