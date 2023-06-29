@@ -563,43 +563,18 @@
 
               <!--#region リッチテキスト -->
               <DataTemplate DataType="{x:Type app_main_viewmodels_note:NoteRichTextContentViewModel}">
-                <!--<xctk:RichTextBox x:Name="control" Text="{Binding RtfContent, UpdateSourceTrigger=PropertyChanged, Delay=2000}" >
-                <i:Interaction.Triggers>
-                  <i:EventTrigger EventName="Loaded">
-                    <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
-                  </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <xctk:RichTextBox.Style>
-                  <Style TargetType="xctk:RichTextBox" BasedOn="{StaticResource TextBoxBase}">
-                    <Style.Triggers />
-                  </Style>
-                </xctk:RichTextBox.Style>
-                <xctk:RichTextBox.TextFormatter>
-                  <xctk:RtfFormatter />
-                </xctk:RichTextBox.TextFormatter>
-                <xctk:RichTextBoxFormatBarManager.FormatBar>
-                  <xctk:RichTextBoxFormatBar />
-                </xctk:RichTextBoxFormatBarManager.FormatBar>
-              </xctk:RichTextBox>-->
-
-                <Grid  x:Name="control">
+                <RichTextBox x:Name="content">
                   <behaviors:Interaction.Triggers>
                     <behaviors:EventTrigger EventName="Loaded">
-                      <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
+                      <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=content}" />
                     </behaviors:EventTrigger>
                   </behaviors:Interaction.Triggers>
-
-                  <!-- #579 により Popup は消えたがわざわざ戻すのもあれなので Grid の中の一人っ子状態 -->
-                  <RichTextBox x:Name="content">
-                    <RichTextBox.Style>
-                      <Style TargetType="RichTextBox" BasedOn="{StaticResource ContentRichTextBox}">
-                        <Style.Triggers />
-                      </Style>
-                    </RichTextBox.Style>
-                  </RichTextBox>
-
-                </Grid>
-
+                  <RichTextBox.Style>
+                    <Style TargetType="RichTextBox" BasedOn="{StaticResource ContentRichTextBox}">
+                      <Style.Triggers />
+                    </Style>
+                  </RichTextBox.Style>
+                </RichTextBox>
               </DataTemplate>
               <!--#endregion -->
 

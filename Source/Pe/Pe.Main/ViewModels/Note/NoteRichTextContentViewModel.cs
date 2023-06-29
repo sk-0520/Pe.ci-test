@@ -258,9 +258,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         protected override Task<bool> LoadContentAsync(FrameworkElement baseElement)
         {
-            //Control = (Xceed.Wpf.Toolkit.RichTextBox)control;
             return DispatcherWrapper.InvokeAsync(() => {
-                RichText = (RichTextBox)baseElement.FindName("content");
+                RichText = (RichTextBox)baseElement;
                 if(RichText == null) {
                     return false;
                 }
