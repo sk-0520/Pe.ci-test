@@ -403,15 +403,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
 
             // 選択状態から表示可能項目の抜出
-            var fontFamliyProperty = RichText.Selection.GetPropertyValue(RichTextBox.FontFamilyProperty);
+            var fontFamilyProperty = RichText.Selection.GetPropertyValue(RichTextBox.FontFamilyProperty);
             var fontSizeProperty = RichText.Selection.GetPropertyValue(RichTextBox.FontSizeProperty);
-            Logger.LogDebug("fontFamliyProperty: {0}", fontFamliyProperty);
+            Logger.LogDebug("fontFamilyProperty: {0}", fontFamilyProperty);
             Logger.LogDebug("fontSizeProperty: {0}", fontSizeProperty);
 
-            if(fontFamliyProperty == DependencyProperty.UnsetValue) {
+            if(fontFamilyProperty == DependencyProperty.UnsetValue) {
                 SelectionFontFamily = null;
             } else {
-                SelectionFontFamily = (FontFamily)fontFamliyProperty;
+                SelectionFontFamily = (FontFamily)fontFamilyProperty;
             }
 
             if(fontSizeProperty != DependencyProperty.UnsetValue) {
