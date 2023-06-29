@@ -710,6 +710,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         ));
 
+        public ICommand CloseSearchCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+            o => {
+                IsSearching = false;
+            }
+        ));
+
+
         #endregion
 
         #region function
