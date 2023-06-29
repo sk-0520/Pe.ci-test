@@ -664,6 +664,7 @@
                   Command="{Binding CloseSearchCommand}"
                 />
                 <TextBox
+                  x:Name="inputSearch"
                   Grid.Column="1"
                   Text="{Binding SearchValue, Mode=TwoWay}"
                 />
