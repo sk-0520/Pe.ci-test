@@ -723,19 +723,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public ICommand SearchNextCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
             o => {
-                Logger.LogDebug("Next");
-                Content?.SearchContent(SearchValue, true);
-                InputSearchElement?.Focus();
+                SearchContent(SearchValue, true);
             },
-            o => IsSearching && 0 < SearchValue.Length
+            o => CanSearchContent()
         ));
         public ICommand SearchPrevCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
             o => {
-                Logger.LogDebug("Prev");
-                Content?.SearchContent(SearchValue, false);
-                InputSearchElement?.Focus();
+                SearchContent(SearchValue, false);
             },
-            o => IsSearching && 0 < SearchValue.Length
+            o => CanSearchContent()
         ));
 
 
@@ -1336,6 +1332,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 Dispose();
                 OrderManager.RemoveNoteElement(noteId);
 
+            }
+        }
+
+        private bool CanSearchContent()
+        {
+            return IsSearching && 0 < SearchValue.Length;
+        }
+
+        private void SearchContent(string searchValue, bool toNext)
+        {
+            Logger.LogDebug(toNext ? "Next": "Prev");
+
+            var focusedInputSearch = InputSearchElement?.IsFocused ?? false;
+
+            Content?.SearchContent(searchValue, toNext);
+
+            if(focusedInputSearch) {
+                InputSearchElement?.Focus();
             }
         }
 

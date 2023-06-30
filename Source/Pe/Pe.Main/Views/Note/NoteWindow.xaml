@@ -648,6 +648,8 @@
                   Text="{Binding SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 >
                   <TextBox.InputBindings>
+                    <KeyBinding Gesture="Ctrl+F" Command="{Binding CloseSearchCommand}"/>
+                    <KeyBinding Gesture="Esc" Command="{Binding CloseSearchCommand}"/>
                     <KeyBinding Gesture="Enter" Command="{Binding SearchNextCommand}"/>
                     <KeyBinding Gesture="Shift+Enter" Command="{Binding SearchPrevCommand}"/>
                   </TextBox.InputBindings>
