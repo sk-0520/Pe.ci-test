@@ -41,7 +41,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region property
 
-        //Xceed.Wpf.Toolkit.RichTextBox Control { get; set; }
         private FlowDocument Document => ControlElement?.Document ?? throw new NullReferenceException(nameof(ControlElement));
 
         private LazyAction TextChangeLazyAction { get; }

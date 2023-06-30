@@ -80,6 +80,30 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public override void SearchContent(string value, bool toNext)
         {
             Logger.LogDebug("text: {value}, {toNext}", value, toNext);
+            Logger.LogDebug("selection: {start}, {length}", ControlElement.SelectionStart, ControlElement.SelectionLength);
+
+            var selectionIndex = -1;
+
+            if(toNext) {
+                selectionIndex = ControlElement.Text.IndexOf(value, ControlElement.SelectionStart + ControlElement.SelectionLength, StringComparison.OrdinalIgnoreCase);
+            } else {
+                selectionIndex = ControlElement.Text.LastIndexOf(value, ControlElement.SelectionStart - ControlElement.SelectionLength, StringComparison.OrdinalIgnoreCase);
+            }
+
+            if(selectionIndex == -1) {
+                if(toNext) {
+                    selectionIndex = ControlElement.Text.IndexOf(value, 0, StringComparison.OrdinalIgnoreCase);
+                } else {
+                    selectionIndex = ControlElement.Text.LastIndexOf(value, ControlElement.Text.Length, StringComparison.OrdinalIgnoreCase);
+                }
+
+                if(selectionIndex == -1) {
+                    Logger.LogTrace("exit");
+                    return;
+                }
+            }
+
+            ControlElement.Select(selectionIndex, value.Length);
         }
 
         #endregion

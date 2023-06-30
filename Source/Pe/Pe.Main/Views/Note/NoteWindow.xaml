@@ -524,7 +524,7 @@
                 <Setter Property="FontStyle" Value="{Binding DataContext.Font.FontStyle, ElementName=root}" />
                 <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, ElementName=root}" />
                 <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, ElementName=root}" />
-                <Setter Property="IsInactiveSelectionHighlightEnabled" Value="{Binding IsActive, ElementName=root, Mode=OneWay}" />
+                <Setter Property="IsInactiveSelectionHighlightEnabled" Value="{Binding IsActive, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Window}}" />
                 <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
                 <Setter Property="CaretBrush" Value="{Binding DataContext.ContentForeground, RelativeSource={RelativeSource AncestorType=Window}}" />
@@ -643,7 +643,7 @@
                 <TextBox
                   x:Name="inputSearch"
                   Grid.Column="1"
-                  Text="{Binding SearchValue, Mode=TwoWay}"
+                  Text="{Binding SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 >
                   <TextBox.InputBindings>
                     <KeyBinding Gesture="Enter" Command="{Binding SearchNextCommand}"/>
