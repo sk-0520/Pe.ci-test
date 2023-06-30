@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -257,7 +258,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         protected override Task<bool> LoadContentAsync()
         {
             return DispatcherWrapper.InvokeAsync(() => {
-                
+
                 ControlElement.TextChanged -= Control_TextChanged;
                 ControlElement.SelectionChanged -= RichTextBox_SelectionChanged;
 
@@ -346,6 +347,25 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public override void SearchContent(string value, bool toNext)
         {
             Logger.LogDebug("text: {value}, {toNext}", value, toNext);
+
+            var comparisonType = StringComparison.OrdinalIgnoreCase;
+
+            TextPointer start = ControlElement.Selection.Start;
+            TextPointer end = toNext
+                ? ControlElement.Document.ContentEnd
+                : ControlElement.Document.ContentStart
+                ;
+
+            TextRange range = new TextRange(start, end);
+            var index = toNext
+                ? range.Text.IndexOf(range.Text, 1, comparisonType)
+                : range.Text.LastIndexOf(range.Text, range.Text.Length - 1, comparisonType);
+
+            if(index != -1) {
+                ControlElement.Focus();
+                ControlElement.Selection.Select(range.Start, range.End);
+            }
+
         }
 
         protected override void Dispose(bool disposing)
