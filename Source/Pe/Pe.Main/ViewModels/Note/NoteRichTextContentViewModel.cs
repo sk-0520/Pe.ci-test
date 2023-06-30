@@ -347,25 +347,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public override void SearchContent(string value, bool toNext)
         {
             Logger.LogDebug("text: {value}, {toNext}", value, toNext);
-
             var comparisonType = StringComparison.OrdinalIgnoreCase;
 
-            TextPointer start = ControlElement.Selection.Start;
-            TextPointer end = toNext
-                ? ControlElement.Document.ContentEnd
-                : ControlElement.Document.ContentStart
-                ;
+            var textRange = new TextRange(ControlElement.Document.ContentStart, ControlElement.Document.ContentEnd);
+            //richTextBox.Selection.Select(textRange.Start, textRange.Start);
 
-            TextRange range = new TextRange(start, end);
             var index = toNext
-                ? range.Text.IndexOf(range.Text, 1, comparisonType)
-                : range.Text.LastIndexOf(range.Text, range.Text.Length - 1, comparisonType);
+            ? textRange.Text.IndexOf(value, 0, comparisonType)
+                : textRange.Text.LastIndexOf(value, textRange.Text.Length - 1, comparisonType)
+                ;
+            if(index > -1) {
+                var textPointerStart = textRange.Start.GetPositionAtOffset(index);
+                var textPointerEnd = textRange.Start.GetPositionAtOffset(index + value.Length);
 
-            if(index != -1) {
+                var textRangeSelection = new TextRange(textPointerStart, textPointerEnd);
+                ControlElement.Selection.Select(textRangeSelection.Start, textRangeSelection.End);
                 ControlElement.Focus();
-                ControlElement.Selection.Select(range.Start, range.End);
             }
-
         }
 
         protected override void Dispose(bool disposing)
