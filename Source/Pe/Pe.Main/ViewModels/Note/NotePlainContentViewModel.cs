@@ -82,27 +82,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Logger.LogDebug("text: {value}, {toNext}", value, toNext);
             Logger.LogDebug("selection: {start}, {length}", ControlElement.SelectionStart, ControlElement.SelectionLength);
 
-            var selectionIndex = -1;
+            var content = ControlElement.Text;
+            var comparisonType = StringComparison.OrdinalIgnoreCase;
 
-            if(toNext) {
-                selectionIndex = ControlElement.Text.IndexOf(value, ControlElement.SelectionStart + ControlElement.SelectionLength, StringComparison.OrdinalIgnoreCase);
-            } else {
-                selectionIndex = ControlElement.Text.LastIndexOf(value, ControlElement.SelectionStart - ControlElement.SelectionLength, StringComparison.OrdinalIgnoreCase);
+            var selectionIndex = toNext
+                ? content.IndexOf(value, ControlElement.SelectionStart + ControlElement.SelectionLength, comparisonType)
+                : content.LastIndexOf(value, ControlElement.SelectionStart - ControlElement.SelectionLength, comparisonType)
+                ;
+
+            if(selectionIndex == -1) {
+                selectionIndex = toNext
+                    ? content.IndexOf(value, 0, comparisonType)
+                    : content.LastIndexOf(value, content.Length, comparisonType)
+                ;
             }
 
             if(selectionIndex == -1) {
-                if(toNext) {
-                    selectionIndex = ControlElement.Text.IndexOf(value, 0, StringComparison.OrdinalIgnoreCase);
-                } else {
-                    selectionIndex = ControlElement.Text.LastIndexOf(value, ControlElement.Text.Length, StringComparison.OrdinalIgnoreCase);
-                }
-
-                if(selectionIndex == -1) {
-                    Logger.LogTrace("exit");
-                    return;
-                }
+                Logger.LogTrace("exit");
+                return;
             }
 
+            ControlElement.Focus();
             ControlElement.Select(selectionIndex, value.Length);
         }
 

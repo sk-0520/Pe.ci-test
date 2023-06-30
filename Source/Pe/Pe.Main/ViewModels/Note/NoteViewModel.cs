@@ -725,6 +725,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             o => {
                 Logger.LogDebug("Next");
                 Content?.SearchContent(SearchValue, true);
+                InputSearchElement?.Focus();
             },
             o => IsSearching && 0 < SearchValue.Length
         ));
@@ -732,6 +733,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             o => {
                 Logger.LogDebug("Prev");
                 Content?.SearchContent(SearchValue, false);
+                InputSearchElement?.Focus();
             },
             o => IsSearching && 0 < SearchValue.Length
         ));

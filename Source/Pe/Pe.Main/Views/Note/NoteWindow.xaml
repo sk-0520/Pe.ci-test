@@ -511,23 +511,25 @@
                       </Setter.Value>
                     </Setter>
                   </Style>
-
                 </Style.Resources>
 
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="AcceptsReturn" Value="True" />
                 <Setter Property="AcceptsTab" Value="True" />
-                <Setter Property="IsReadOnly" Value="{Binding DataContext.IsLocked, ElementName=root}" />
-                <Setter Property="FontFamily" Value="{Binding DataContext.Font.FontFamily, ElementName=root}" />
-                <Setter Property="FontSize" Value="{Binding DataContext.Font.FontSize, ElementName=root}" />
-                <Setter Property="FontStyle" Value="{Binding DataContext.Font.FontStyle, ElementName=root}" />
-                <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, ElementName=root}" />
-                <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, ElementName=root}" />
+                <Setter Property="IsReadOnly" Value="{Binding DataContext.IsLocked, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="FontFamily" Value="{Binding DataContext.Font.FontFamily, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="FontSize" Value="{Binding DataContext.Font.FontSize, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="FontStyle" Value="{Binding DataContext.Font.FontStyle, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, RelativeSource={RelativeSource AncestorType=Window}}" />
                 <Setter Property="IsInactiveSelectionHighlightEnabled" Value="{Binding IsActive, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Window}}" />
                 <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
                 <Setter Property="CaretBrush" Value="{Binding DataContext.ContentForeground, RelativeSource={RelativeSource AncestorType=Window}}" />
+
+                <Setter Property="SelectionBrush" Value="{Binding DataContext.ContentForeground, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="SelectionTextBrush" Value="{Binding DataContext.ContentBackground, RelativeSource={RelativeSource AncestorType=Window}}" />
               </Style>
 
               <Style x:Key="ContentTextBox" TargetType="TextBox" BasedOn="{StaticResource TextBoxBase}">
