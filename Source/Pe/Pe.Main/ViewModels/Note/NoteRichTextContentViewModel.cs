@@ -322,7 +322,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     if(IsDisposed) {
                         return;
                     }
-                    if(ControlElement == null) {
+                    if(BaseElement is null) {
                         return;
                     }
 
@@ -338,7 +338,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             Flush();
 
-            if(ControlElement == null) {
+            if(BaseElement is null) {
                 return;
             }
 
@@ -367,7 +367,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     if(vm.IsDisposed) {
                         return;
                     }
-                    if(ControlElement == null) {
+                    if(BaseElement is null) {
                         Logger.LogDebug("RichTextBox が破棄されている");
                         return;
                     }

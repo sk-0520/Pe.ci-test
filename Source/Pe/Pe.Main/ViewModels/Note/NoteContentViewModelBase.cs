@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region function
 
-        protected virtual void AttachControlCore(FrameworkElement o)
+        protected void AttachControlCore(FrameworkElement o)
         {
             BaseElement = o;
             BaseElement.Unloaded += Control_Unloaded;
@@ -96,9 +96,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private void DetachControlCore()
         {
-            if(BaseElement != null) {
+            if(BaseElement is not null) {
                 BaseElement.Unloaded -= Control_Unloaded;
             }
+
+            BaseElement = null;
         }
 
         /// <summary>
@@ -137,6 +139,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Model.LinkContentChanged -= Model_LinkContentChanged;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            UnloadContent();
+            DetachControlCore();
+
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         private void Control_Unloaded(object sender, System.Windows.RoutedEventArgs e)
@@ -171,38 +181,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
     public abstract class NoteContentViewModelBase<TControlElement>: NoteContentViewModelBase
         where TControlElement: FrameworkElement
     {
-        #region variable
-
-        TControlElement? _controlElement;
-
-        #endregion
-
         protected NoteContentViewModelBase(NoteContentElement model, NoteConfiguration noteConfiguration, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, noteConfiguration, clipboardManager, dispatcherWrapper, loggerFactory)
         { }
 
         #region property
 
+        /// <summary>
+        /// <see cref="BaseElement"/> を特定の非 <c>null</c> コントロールで取得。
+        /// </summary>
+        /// <exception cref="InvalidOperationException"><see cref="BaseElement"/> が <c>null</c></exception>
         protected TControlElement ControlElement
         {
             get
             {
-                if(this._controlElement is null) {
+                if(BaseElement is null) {
                     throw new InvalidOperationException();
                 }
 
-                return this._controlElement;
+                return (TControlElement)BaseElement;
             }
-        }
-
-        #endregion
-
-        #region NoteContentViewModelBase
-
-        protected override void AttachControlCore(FrameworkElement o)
-        {
-            base.AttachControlCore(o);
-            this._controlElement = (TControlElement)o;
         }
 
         #endregion
