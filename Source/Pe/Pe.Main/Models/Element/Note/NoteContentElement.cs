@@ -437,7 +437,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
             var values = LoadLinkWatchParameter();
             if(!values.success) {
-                Logger.LogError("ノード内容初期化失敗: {0}", NoteId);
+                Logger.LogError("ノート内容初期化失敗: {0}", NoteId);
                 return;
             }
 

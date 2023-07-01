@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
-    public class NotePlainContentViewModel: NoteContentViewModelBase
+    public class NotePlainContentViewModel: NoteContentViewModelBase<TextBox>
     {
         #region variable
 
@@ -46,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region NoteContentViewModelBase
 
-        protected override Task<bool> LoadContentAsync(FrameworkElement baseElement)
+        protected override Task<bool> LoadContentAsync()
         {
             return Task.Run(() => {
                 try {
@@ -74,6 +75,35 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
 
             return data;
+        }
+
+        public override void SearchContent(string searchValue, bool searchNext)
+        {
+            Logger.LogDebug("text: {searchValue}, {searchNext}", searchValue, searchNext);
+            Logger.LogDebug("selection: {start}, {length}", ControlElement.SelectionStart, ControlElement.SelectionLength);
+
+            var content = ControlElement.Text;
+            var comparisonType = StringComparison.OrdinalIgnoreCase;
+
+            var selectionIndex = searchNext
+                ? content.IndexOf(searchValue, ControlElement.SelectionStart + ControlElement.SelectionLength, comparisonType)
+                : content.LastIndexOf(searchValue, ControlElement.SelectionStart - ControlElement.SelectionLength, comparisonType)
+                ;
+
+            if(selectionIndex == -1) {
+                selectionIndex = searchNext
+                    ? content.IndexOf(searchValue, 0, comparisonType)
+                    : content.LastIndexOf(searchValue, content.Length, comparisonType)
+                ;
+            }
+
+            if(selectionIndex == -1) {
+                Logger.LogTrace("exit");
+                return;
+            }
+
+            ControlElement.Focus();
+            ControlElement.Select(selectionIndex, searchValue.Length);
         }
 
         #endregion

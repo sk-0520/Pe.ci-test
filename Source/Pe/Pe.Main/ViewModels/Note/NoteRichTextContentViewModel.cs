@@ -1,26 +1,30 @@
 using System;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using CefSharp.DevTools.Network;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Note;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
-    public class NoteRichTextContentViewModel: NoteContentViewModelBase, IFlushable
+    public class NoteRichTextContentViewModel: NoteContentViewModelBase<RichTextBox>, IFlushable
     {
         #region variable
 
@@ -41,9 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region property
 
-        //Xceed.Wpf.Toolkit.RichTextBox Control { get; set; }
-        private RichTextBox? RichText { get; set; }
-        private FlowDocument Document => RichText?.Document ?? throw new NullReferenceException(nameof(RichText));
+        private FlowDocument Document => ControlElement?.Document ?? throw new NullReferenceException(nameof(ControlElement));
 
         private LazyAction TextChangeLazyAction { get; }
 
@@ -130,41 +132,41 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         ));
 
         public ICommand ToggleSelectionIncreaseFontSizeCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => EditingCommands.IncreaseFontSize.Execute(null, RichText)
+            () => EditingCommands.IncreaseFontSize.Execute(null, ControlElement)
         ));
         public ICommand ToggleSelectionDecreaseFontSizeCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => EditingCommands.DecreaseFontSize.Execute(null, RichText)
+            () => EditingCommands.DecreaseFontSize.Execute(null, ControlElement)
         ));
 
         public ICommand ToggleSelectionSubscriptCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => EditingCommands.ToggleSubscript.Execute(null, RichText)
+            () => EditingCommands.ToggleSubscript.Execute(null, ControlElement)
         ));
         public ICommand ToggleSelectionSuperscriptCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => EditingCommands.ToggleSuperscript.Execute(null, RichText)
+            () => EditingCommands.ToggleSuperscript.Execute(null, ControlElement)
         ));
         public ICommand ToggleSelectionBoldCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => EditingCommands.ToggleBold.Execute(null, RichText)
+            () => EditingCommands.ToggleBold.Execute(null, ControlElement)
         ));
         public ICommand ToggleSelectionItalicCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => EditingCommands.ToggleItalic.Execute(null, RichText)
+            () => EditingCommands.ToggleItalic.Execute(null, ControlElement)
         ));
         public ICommand ToggleNumberingCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => EditingCommands.ToggleNumbering.Execute(null, RichText)
+            () => EditingCommands.ToggleNumbering.Execute(null, ControlElement)
         ));
         public ICommand ToggleBulletsCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => EditingCommands.ToggleBullets.Execute(null, RichText)
+            () => EditingCommands.ToggleBullets.Execute(null, ControlElement)
         ));
         public ICommand AlignLeftCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => EditingCommands.AlignLeft.Execute(null, RichText)
+            () => EditingCommands.AlignLeft.Execute(null, ControlElement)
         ));
         public ICommand AlignCenterCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => EditingCommands.AlignCenter.Execute(null, RichText)
+            () => EditingCommands.AlignCenter.Execute(null, ControlElement)
         ));
         public ICommand AlignRightCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => EditingCommands.AlignRight.Execute(null, RichText)
+            () => EditingCommands.AlignRight.Execute(null, ControlElement)
         ));
         public ICommand AlignJustifyCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => EditingCommands.AlignJustify.Execute(null, RichText)
+            () => EditingCommands.AlignJustify.Execute(null, ControlElement)
         ));
 
         #endregion
@@ -173,13 +175,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private void ApplySelectionCore(Action<RichTextBox, TextSelection> action)
         {
-            if(RichText == null) {
+            if(BaseElement is null) {
                 return;
             }
-            if(RichText.Selection.IsEmpty) {
+            if(ControlElement.Selection.IsEmpty) {
                 return;
             }
-            action(RichText, RichText.Selection);
+            action(ControlElement, ControlElement.Selection);
         }
 
         private void ToggleSelectionDecoration(TextDecorationLocation location)
@@ -252,24 +254,51 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             ApplySelectionPropertyValue(Inline.BackgroundProperty, brush);
         }
 
+        private TextRange? SearchContentCore(string searchValue, bool searchNext, TextRange searchRange, StringComparison comparisonType)
+        {
+            //TODO: 前検索ができねんだわ
+
+            var start = searchNext
+                ? searchRange.Start
+                : searchRange.End
+                ;
+            var direction = searchNext
+                ? LogicalDirection.Forward
+                : LogicalDirection.Backward
+                ;
+            while(start != null) {
+                var runText = start.GetTextInRun(LogicalDirection.Forward);
+                Logger.LogDebug("runText: {runText}", runText);
+                if(0 < runText.Length) {
+                    int index = searchNext
+                        ? runText.IndexOf(searchValue, comparisonType)
+                        : runText.LastIndexOf(searchValue, comparisonType)
+                        ;
+                    if(index != -1) {
+                        var selectionStart = start.GetPositionAtOffset(index);
+                        var selectionEnd = start.GetPositionAtOffset(index + searchValue.Length);
+                        return new TextRange(selectionStart, selectionEnd);
+                    }
+                }
+                start = start.GetNextContextPosition(direction);
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region NoteContentViewModelBase
 
-        protected override Task<bool> LoadContentAsync(FrameworkElement baseElement)
+        protected override Task<bool> LoadContentAsync()
         {
-            //Control = (Xceed.Wpf.Toolkit.RichTextBox)control;
             return DispatcherWrapper.InvokeAsync(() => {
-                RichText = (RichTextBox)baseElement.FindName("content");
-                if(RichText == null) {
-                    return false;
-                }
 
-                RichText.TextChanged -= Control_TextChanged;
-                RichText.SelectionChanged -= RichTextBox_SelectionChanged;
+                ControlElement.TextChanged -= Control_TextChanged;
+                ControlElement.SelectionChanged -= RichTextBox_SelectionChanged;
 
-                RichText.TextChanged += Control_TextChanged;
-                RichText.SelectionChanged += RichTextBox_SelectionChanged;
+                ControlElement.TextChanged += Control_TextChanged;
+                ControlElement.SelectionChanged += RichTextBox_SelectionChanged;
 
                 return true;
             }).ContinueWith(t => {
@@ -293,7 +322,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     if(IsDisposed) {
                         return;
                     }
-                    if(RichText == null) {
+                    if(ControlElement == null) {
                         return;
                     }
 
@@ -309,14 +338,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             Flush();
 
-            if(RichText == null) {
+            if(ControlElement == null) {
                 return;
             }
 
-            RichText.TextChanged -= Control_TextChanged;
-            RichText.SelectionChanged -= RichTextBox_SelectionChanged;
-
-            RichText = null;
+            ControlElement.TextChanged -= Control_TextChanged;
+            ControlElement.SelectionChanged -= RichTextBox_SelectionChanged;
         }
 
         protected override IDataObject GetClipboardContentData()
@@ -340,7 +367,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     if(vm.IsDisposed) {
                         return;
                     }
-                    if(RichText == null) {
+                    if(ControlElement == null) {
                         Logger.LogDebug("RichTextBox が破棄されている");
                         return;
                     }
@@ -349,6 +376,30 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     var content = noteContentConverter.ToRtfString(vm.Document);
                     vm.Model?.ChangeRichTextContent(content);
                 }, this, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+            }
+        }
+
+        public override void SearchContent(string searchValue, bool searchNext)
+        {
+            Logger.LogDebug("text: {value}, {toNext}", searchValue, searchNext);
+
+            var comparisonType = StringComparison.OrdinalIgnoreCase;
+
+            var searchRange = searchNext
+                ? new TextRange(ControlElement.Selection.Start.GetPositionAtOffset(1), ControlElement.Document.ContentEnd)
+                : new TextRange(ControlElement.Document.ContentStart, ControlElement.Selection.Start)
+                ;
+
+            var selectionRange = SearchContentCore(searchValue, searchNext, searchRange, comparisonType);
+
+            if(selectionRange is null) {
+                searchRange = new TextRange(ControlElement.Document.ContentStart, ControlElement.Document.ContentEnd);
+                selectionRange = SearchContentCore(searchValue, searchNext, searchRange, comparisonType);
+            }
+
+            if(selectionRange is not null) {
+                ControlElement.Selection.Select(selectionRange.Start, selectionRange.End);
+                ControlElement.Focus();
             }
         }
 
@@ -380,34 +431,34 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private void RichTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             // ツールバー的なの何かできればいいなぁと
-            Debug.Assert(RichText != null);
+            Debug.Assert(ControlElement != null);
 
             NowSelectionProcess = true;
             using var _cleanup_ = new ActionDisposer(d => NowSelectionProcess = false);
 
-            if(RichText.Selection.IsEmpty) {
+            if(ControlElement.Selection.IsEmpty) {
                 // 未選択。さよなら
                 return;
             }
 
-            var inlineContainer = RichText.Selection.Start.GetAdjacentElement(LogicalDirection.Forward) as InlineUIContainer;
+            var inlineContainer = ControlElement.Selection.Start.GetAdjacentElement(LogicalDirection.Forward) as InlineUIContainer;
             if(inlineContainer != null && inlineContainer.Child is Image image) {
-                if(inlineContainer == RichText.Selection.End.GetAdjacentElement(LogicalDirection.Backward)) {
+                if(inlineContainer == ControlElement.Selection.End.GetAdjacentElement(LogicalDirection.Backward)) {
                     // TODO: 画像選択からの処理は未実装
                     return;
                 }
             }
 
             // 選択状態から表示可能項目の抜出
-            var fontFamliyProperty = RichText.Selection.GetPropertyValue(RichTextBox.FontFamilyProperty);
-            var fontSizeProperty = RichText.Selection.GetPropertyValue(RichTextBox.FontSizeProperty);
-            Logger.LogDebug("fontFamliyProperty: {0}", fontFamliyProperty);
+            var fontFamilyProperty = ControlElement.Selection.GetPropertyValue(RichTextBox.FontFamilyProperty);
+            var fontSizeProperty = ControlElement.Selection.GetPropertyValue(RichTextBox.FontSizeProperty);
+            Logger.LogDebug("fontFamilyProperty: {0}", fontFamilyProperty);
             Logger.LogDebug("fontSizeProperty: {0}", fontSizeProperty);
 
-            if(fontFamliyProperty == DependencyProperty.UnsetValue) {
+            if(fontFamilyProperty == DependencyProperty.UnsetValue) {
                 SelectionFontFamily = null;
             } else {
-                SelectionFontFamily = (FontFamily)fontFamliyProperty;
+                SelectionFontFamily = (FontFamily)fontFamilyProperty;
             }
 
             if(fontSizeProperty != DependencyProperty.UnsetValue) {
@@ -416,12 +467,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
 
             // 表示位置補正
-            var startRect = RichText.Selection.Start.GetCharacterRect(LogicalDirection.Forward);
-            var endRect = RichText.Selection.End.GetCharacterRect(LogicalDirection.Backward);
+            var startRect = ControlElement.Selection.Start.GetCharacterRect(LogicalDirection.Forward);
+            var endRect = ControlElement.Selection.End.GetCharacterRect(LogicalDirection.Backward);
             var mixX = Math.Min(endRect.X, startRect.X);
             var maxX = Math.Max(endRect.X, startRect.X);
             var rect = new Rect(
-                RichText.PointToScreen(new Point(maxX - mixX, endRect.Y + endRect.Height)),
+                ControlElement.PointToScreen(new Point(maxX - mixX, endRect.Y + endRect.Height)),
                 new Size(endRect.Width, endRect.Height)
             );
         }

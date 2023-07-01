@@ -2336,4 +2336,7 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_PluginWebInstall_PluginsUrl" xml:space="preserve">
     <value>プラグイン一覧</value>
   </data>
+  <data name="String_Note_Operation_Search_A" xml:space="preserve">
+    <value>検索(_F)</value>
+  </data>
 </root>

@@ -135,6 +135,14 @@
   <Window.CommandBindings>
     <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" CanExecute="CloseWindowCommand_CanExecute" Executed="CloseWindowCommand_Executed" />
   </Window.CommandBindings>
+  <Window.InputBindings>
+    <KeyBinding Gesture="Ctrl+F" Command="{Binding ContentSearchCommand}"/>
+    <KeyBinding Gesture="F3" Command="{Binding SearchNextCommand}"/>
+    <!--
+    TODO: RTFの前検索が未完成
+    <KeyBinding Gesture="Shift+F3" Command="{Binding SearchPrevCommand}"/>
+    -->
+  </Window.InputBindings>
   <Grid>
     <!--#region 内容-->
     <Border BorderBrush="{Binding BorderBrush}" BorderThickness="{Binding BorderThickness}">
@@ -506,23 +514,25 @@
                       </Setter.Value>
                     </Setter>
                   </Style>
-
                 </Style.Resources>
 
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="AcceptsReturn" Value="True" />
                 <Setter Property="AcceptsTab" Value="True" />
-                <Setter Property="IsReadOnly" Value="{Binding DataContext.IsLocked, ElementName=root}" />
-                <Setter Property="FontFamily" Value="{Binding DataContext.Font.FontFamily, ElementName=root}" />
-                <Setter Property="FontSize" Value="{Binding DataContext.Font.FontSize, ElementName=root}" />
-                <Setter Property="FontStyle" Value="{Binding DataContext.Font.FontStyle, ElementName=root}" />
-                <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, ElementName=root}" />
-                <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, ElementName=root}" />
-                <Setter Property="IsInactiveSelectionHighlightEnabled" Value="{Binding IsActive, ElementName=root, Mode=OneWay}" />
+                <Setter Property="IsReadOnly" Value="{Binding DataContext.IsLocked, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="FontFamily" Value="{Binding DataContext.Font.FontFamily, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="FontSize" Value="{Binding DataContext.Font.FontSize, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="FontStyle" Value="{Binding DataContext.Font.FontStyle, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="IsInactiveSelectionHighlightEnabled" Value="{Binding IsActive, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Window}}" />
                 <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
                 <Setter Property="CaretBrush" Value="{Binding DataContext.ContentForeground, RelativeSource={RelativeSource AncestorType=Window}}" />
+
+                <Setter Property="SelectionBrush" Value="{Binding DataContext.ContentForeground, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="SelectionTextBrush" Value="{Binding DataContext.ContentBackground, RelativeSource={RelativeSource AncestorType=Window}}" />
               </Style>
 
               <Style x:Key="ContentTextBox" TargetType="TextBox" BasedOn="{StaticResource TextBoxBase}">
@@ -558,43 +568,18 @@
 
               <!--#region リッチテキスト -->
               <DataTemplate DataType="{x:Type app_main_viewmodels_note:NoteRichTextContentViewModel}">
-                <!--<xctk:RichTextBox x:Name="control" Text="{Binding RtfContent, UpdateSourceTrigger=PropertyChanged, Delay=2000}" >
-                <i:Interaction.Triggers>
-                  <i:EventTrigger EventName="Loaded">
-                    <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
-                  </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <xctk:RichTextBox.Style>
-                  <Style TargetType="xctk:RichTextBox" BasedOn="{StaticResource TextBoxBase}">
-                    <Style.Triggers />
-                  </Style>
-                </xctk:RichTextBox.Style>
-                <xctk:RichTextBox.TextFormatter>
-                  <xctk:RtfFormatter />
-                </xctk:RichTextBox.TextFormatter>
-                <xctk:RichTextBoxFormatBarManager.FormatBar>
-                  <xctk:RichTextBoxFormatBar />
-                </xctk:RichTextBoxFormatBarManager.FormatBar>
-              </xctk:RichTextBox>-->
-
-                <Grid  x:Name="control">
+                <RichTextBox x:Name="content">
                   <behaviors:Interaction.Triggers>
                     <behaviors:EventTrigger EventName="Loaded">
-                      <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
+                      <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=content}" />
                     </behaviors:EventTrigger>
                   </behaviors:Interaction.Triggers>
-
-                  <!-- #579 により Popup は消えたがわざわざ戻すのもあれなので Grid の中の一人っ子状態 -->
-                  <RichTextBox x:Name="content">
-                    <RichTextBox.Style>
-                      <Style TargetType="RichTextBox" BasedOn="{StaticResource ContentRichTextBox}">
-                        <Style.Triggers />
-                      </Style>
-                    </RichTextBox.Style>
-                  </RichTextBox>
-
-                </Grid>
-
+                  <RichTextBox.Style>
+                    <Style TargetType="RichTextBox" BasedOn="{StaticResource ContentRichTextBox}">
+                      <Style.Triggers />
+                    </Style>
+                  </RichTextBox.Style>
+                </RichTextBox>
               </DataTemplate>
               <!--#endregion -->
 
@@ -613,31 +598,72 @@
             <!--<Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
             <TextBlock>busy</TextBlock>
           </Grid>-->
-            <ContentControl x:Name="content" IsTabStop="False">
-              <ContentControl.Style>
-                <Style TargetType="ContentControl">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding IsCompact}" Value="True">
-                      <Setter Property="Content" Value="💩" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding IsCompact}" Value="False">
-                      <Setter Property="Content" Value="{Binding Content}" />
-                    </DataTrigger>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
 
-                    <DataTrigger Binding="{Binding IsVisibleBlind}" Value="True">
-                      <Setter Property="Effect" Value="{Binding BlindEffect}" />
-                    </DataTrigger>
+              <ContentControl x:Name="noteContent" Grid.Row="0" IsTabStop="False">
+                <ContentControl.Style>
+                  <Style TargetType="ContentControl">
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding IsCompact}" Value="True">
+                        <Setter Property="Content" Value="💩" />
+                      </DataTrigger>
+                      <DataTrigger Binding="{Binding IsCompact}" Value="False">
+                        <Setter Property="Content" Value="{Binding Content}" />
+                      </DataTrigger>
 
-                    <DataTrigger Binding="{Binding ShowContentKindChangeConfirm}" Value="True">
-                      <Setter Property="IsEnabled" Value="False" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding ShowLinkChangeConfirm}" Value="True">
-                      <Setter Property="IsEnabled" Value="False" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </ContentControl.Style>
-            </ContentControl>
+                      <DataTrigger Binding="{Binding IsVisibleBlind}" Value="True">
+                        <Setter Property="Effect" Value="{Binding BlindEffect}" />
+                      </DataTrigger>
+
+                      <DataTrigger Binding="{Binding ShowContentKindChangeConfirm}" Value="True">
+                        <Setter Property="IsEnabled" Value="False" />
+                      </DataTrigger>
+                      <DataTrigger Binding="{Binding ShowLinkChangeConfirm}" Value="True">
+                        <Setter Property="IsEnabled" Value="False" />
+                      </DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </ContentControl.Style>
+              </ContentControl>
+              <Grid Grid.Row="1" Margin="{StaticResource BigIndependentHorizonMargin}">
+                <Grid.Style>
+                  <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="{Binding IsSearching, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                  </Style>
+                </Grid.Style>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button
+                  Grid.Column="0"
+                  Command="{Binding CloseSearchCommand}"
+                  ToolTip="{Binding Resources.String_Common_Close, Source={x:Static app_main:CultureService.Instance}}"
+                >
+                  <Control Template="{StaticResource App-Image-Close}" />
+                </Button>
+                <TextBox
+                  x:Name="inputSearch"
+                  Grid.Column="1"
+                  Text="{Binding SearchValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                >
+                  <TextBox.InputBindings>
+                    <KeyBinding Gesture="Ctrl+F" Command="{Binding CloseSearchCommand}"/>
+                    <KeyBinding Gesture="Esc" Command="{Binding CloseSearchCommand}"/>
+                    <KeyBinding Gesture="Enter" Command="{Binding SearchNextCommand}"/>
+                    <!--
+                    TODO: RTFの前検索が未完成
+                    <KeyBinding Gesture="Shift+Enter" Command="{Binding SearchPrevCommand}"/>
+                    -->
+                  </TextBox.InputBindings>
+                </TextBox>
+              </Grid>
+            </Grid>
             <Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
               <TextBlock Text="{Binding Resources.String_Note_Busy, Source={x:Static app_main:CultureService.Instance}}" />
             </Grid>
@@ -1204,25 +1230,36 @@
             <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_Note_Operation_Header, Source={x:Static app_main:CultureService.Instance}}">
               <StackPanel>
                 <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                  </Grid.RowDefinitions>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
-                  <Button Grid.Column="0" Command="{Binding Content.CopyCommand}">
+                  <Button Grid.Row="0" Grid.Column="0" Command="{Binding Content.CopyCommand}">
                     <StackPanel Style="{StaticResource ImageLabel-Small}">
                       <Control Template="{StaticResource App-Image-Clipboard-Copy}" />
                       <AccessText Text="{Binding Resources.String_Note_Operation_Copy_A, Source={x:Static app_main:CultureService.Instance}}" />
                     </StackPanel>
                   </Button>
-                  <Button Grid.Column="1" Command="{Binding SilentCloseCommand}">
+                  <Button Grid.Row="0" Grid.Column="1" Command="{Binding ContentSearchCommand}">
+                    <StackPanel Style="{StaticResource ImageLabel-Small}">
+                      <Control Template="{StaticResource App-Image-Search}" />
+                      <AccessText Text="{Binding Resources.String_Note_Operation_Search_A, Source={x:Static app_main:CultureService.Instance}}" />
+                    </StackPanel>
+                  </Button>
+                  <Button Grid.Row="0" Grid.Column="2" Command="{Binding SilentCloseCommand}">
                     <StackPanel Style="{StaticResource ImageLabel-Small}">
                       <Control Template="{StaticResource App-Image-Hidden}" />
                       <AccessText Text="{Binding Resources.String_Note_Operation_Close_A, Source={x:Static app_main:CultureService.Instance}}" />
                     </StackPanel>
                   </Button>
-                  <Grid Grid.Column="2">
+
+                  <Grid Grid.Row="1" Grid.Column="2" Margin="{StaticResource TopMargin}">
                     <ToggleButton x:Name="switchRemoveNote" IsChecked="{Binding IsPopupRemoveNote}">
                       <StackPanel Style="{StaticResource ImageLabel-Small}">
                         <Control Template="{StaticResource App-Image-Warning}" />

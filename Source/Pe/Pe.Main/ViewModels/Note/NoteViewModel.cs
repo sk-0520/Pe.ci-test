@@ -61,6 +61,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private bool _windowMoving = false;
 
+        /// <summary>
+        /// 検索中か。
+        /// </summary>
+        private bool _isSearching = false;
+        /// <summary>
+        /// 検索文字列。
+        /// </summary>
+        private string _searchValue = string.Empty;
+
         #endregion
 
         public NoteViewModel(NoteElement model, NoteConfiguration noteConfiguration, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, ApplicationConfiguration applicationConfiguration, IOrderManager orderManager, IClipboardManager clipboardManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -131,8 +140,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private IClipboardManager ClipboardManager { get; }
         private PropertyChangedHooker PropertyChangedHooker { get; }
 
-        private IDpiScaleOutpour DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutpour();
+        private IDpiScaleOutpour DpiScaleOutpour { get; set; } = new EmptyDpiScaleOutpour();
         private FrameworkElement? CaptionElement { get; set; }
+        private TextBoxBase? InputSearchElement { get; set; }
         private IDisposable? WindowHandleSource { get; set; }
 
         private ApplicationConfiguration ApplicationConfiguration { get; }
@@ -492,6 +502,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             private set => SetProperty(ref this._showLinkChangeConfirm, value);
         }
 
+        /// <summary>
+        /// 検索中か。
+        /// </summary>
+        public bool IsSearching
+        {
+            get => this._isSearching;
+            private set => SetProperty(ref this._isSearching, value);
+        }
+
+        /// <summary>
+        /// 検索文字列。
+        /// </summary>
+        public string SearchValue
+        {
+            get => this._searchValue;
+            set => SetProperty(ref this._searchValue, value);
+        }
+
         #endregion
 
         #region command
@@ -687,6 +715,43 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         ));
 
+        public ICommand ContentSearchCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+            o => {
+                Logger.LogDebug("Ctrl+F");
+                if(!IsSearching) {
+                    SearchValue = string.Empty;
+                }
+                IsSearching = true;
+
+                if(InputSearchElement is not null) {
+                    InputSearchElement.SelectAll();
+                    InputSearchElement.Focus();
+                }
+            },
+            o => !IsCompact
+        ).ObservesProperty(() => IsCompact));
+
+        public ICommand CloseSearchCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+            o => {
+                IsSearching = false;
+            }
+        ));
+
+        public ICommand SearchNextCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+            o => {
+                SearchContent(SearchValue, true);
+            },
+            o => CanSearchContent()
+        ));
+        public ICommand SearchPrevCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+            o => {
+                SearchContent(SearchValue, false);
+            },
+            o => CanSearchContent()
+        ));
+
+
+
         #endregion
 
         #region function
@@ -700,6 +765,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 } else {
                     NormalWindowWidth = WindowWidth;
                 }
+
+                IsSearching = false;
             }
             Model.ToggleCompactDelaySave();
 
@@ -799,7 +866,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 }
             }
 
-            var logicalScreenSize = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Size, DpiScaleOutputor);
+            var logicalScreenSize = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Size, DpiScaleOutpour);
             var layout = new NoteLayoutData() {
                 NoteId = NoteId,
                 LayoutKind = Model.LayoutKind,
@@ -830,7 +897,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     deviceCursorLocation.X - deviceScreenBounds.X,
                     deviceCursorLocation.Y - deviceScreenBounds.Y
                 );
-                var logicalScreenCursorLocation = UIUtility.ToLogicalPixel(deviceScreenCursorLocation, DpiScaleOutputor);
+                var logicalScreenCursorLocation = UIUtility.ToLogicalPixel(deviceScreenCursorLocation, DpiScaleOutpour);
 
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
                     layout.Width = ApplicationConfiguration.Note.LayoutAbsoluteSize.Width;
@@ -867,7 +934,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private Rect AbsoluteLayoutToWindow(NoteLayoutData layout)
         {
-            var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
+            var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutpour);
             return new Rect(
                 logicalBounds.X + layout.X,
                 logicalBounds.Y + layout.Y,
@@ -878,7 +945,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private Rect RelativeLayoutToWindow(NoteLayoutData layout)
         {
-            var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
+            var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutpour);
             var area = new Size(
                 logicalBounds.Width / 100,
                 logicalBounds.Height / 100
@@ -900,7 +967,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private Rect CurrentWindowToAbsoluteLayout()
         {
-            var logicalScreenLocation = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Location, DpiScaleOutputor);
+            var logicalScreenLocation = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Location, DpiScaleOutpour);
             return new Rect(
                 WindowLeft - logicalScreenLocation.X,
                 WindowTop - logicalScreenLocation.Y,
@@ -911,7 +978,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private Rect CurrentWindowToRelativeLayout()
         {
-            var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
+            var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutpour);
             var area = new Size(
                 logicalBounds.Width / 100,
                 logicalBounds.Height / 100
@@ -1123,7 +1190,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 case (int)WM.WM_EXITSIZEMOVE:
                     Logger.LogDebug("WM_EXITSIZEMOVE");
                     if(WindowMoving) {
-                        var screen = DpiScaleOutputor.GetOwnerScreen();
+                        var screen = DpiScaleOutpour.GetOwnerScreen();
                         Model.SaveDisplayDelaySave(screen);
                     }
                     WindowMoving = false;
@@ -1231,8 +1298,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             WindowHandleSource = hWndSource;
 
             CaptionElement = ((NoteWindow)window).inputTitle;
+            InputSearchElement = ((NoteWindow)window).inputSearch;
 
-            DpiScaleOutputor = (IDpiScaleOutpour)window;
+            DpiScaleOutpour = (IDpiScaleOutpour)window;
 
             var layoutValue = GetOrCreateLayout(Model.StartupPosition);
             if(layoutValue.isCreated) {
@@ -1282,6 +1350,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 Dispose();
                 OrderManager.RemoveNoteElement(noteId);
 
+            }
+        }
+
+        private bool CanSearchContent()
+        {
+            return IsSearching && 0 < SearchValue.Length;
+        }
+
+        private void SearchContent(string searchValue, bool toNext)
+        {
+            Logger.LogDebug(toNext ? "Next": "Prev");
+
+            var focusedInputSearch = InputSearchElement?.IsFocused ?? false;
+
+            Content?.SearchContent(searchValue, toNext);
+
+            if(focusedInputSearch) {
+                InputSearchElement?.Focus();
             }
         }
 
@@ -1349,6 +1435,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
             if(ShowLinkChangeConfirm) {
                 ShowLinkChangeConfirm = false;
+            }
+            if(IsSearching) {
+                IsSearching = false;
             }
         }
     }

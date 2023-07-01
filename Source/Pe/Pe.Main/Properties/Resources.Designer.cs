@@ -4788,6 +4788,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   検索(_F) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Operation_Search_A {
+            get {
+                return ResourceManager.GetString("String_Note_Operation_Search_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   タイトルバー位置(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Status_CaptionPosition_A {
