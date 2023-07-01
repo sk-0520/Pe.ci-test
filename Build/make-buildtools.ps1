@@ -15,7 +15,7 @@ $builToolDirPath = Join-Path $rootDirectory "Output\tools"
 
 try {
 	Push-Location $rootDirectory
-	dotnet build Source/BuildTools/SqlPack/SqlPack.csproj --verbosity minimal --configuration Debug /p:Platform=x86 --runtime win-x86 --output $builToolDirPath --no-self-contained
+	dotnet build Source/BuildTools/SqlPack/SqlPack.csproj --verbosity normal --configuration Debug /p:Platform=x86 --runtime win-x86 --output $builToolDirPath --no-self-contained
 	if (-not $?) {
 		exit 1
 	}

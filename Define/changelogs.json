@@ -1,5 +1,42 @@
 [
 	{
+		"date": "2023/07/02",
+		"version": "0.99.199",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "8bce1026f28a26337fb8a75f4fae617bf4822e01",
+						"subject": "#796: ノートの本文を簡易検索可能にする",
+						"comments": [
+							"検索: Ctrl + F",
+							"次検索: F3"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "5770a462de23f882dec91ab3abe086a398f2a43c",
+						"subject": "npm run help-watch のパスが腐っていたのを修正"
+					},
+					{
+						"revision": "4e303192c11031a78a21b4af7542ccbe07620df7",
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 17.6.2 -> 17.6.3"
+					},
+					{
+						"revision": "e4702f50e7c561ca02bbc6a1d3821644fc488960",
+						"subject": "update npm"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/06/25",
 		"version": "0.99.198",
 		"contents": [

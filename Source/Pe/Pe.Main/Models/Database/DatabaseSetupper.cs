@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         /// 最終処理。
         /// </summary>
         /// <param name="accessorPack"></param>
-        public void Tune(IDatabaseAccessorPack accessorPack, Version lastVersion)
+        public void Adjust(IDatabaseAccessorPack accessorPack, Version lastVersion)
         {
             Logger.LogInformation("マイグレーション最終処理実行");
 
@@ -185,7 +185,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             context.Execute(statement);
         }
 
-        public void Tune(IDatabaseContext context)
+        public void Adjust(IDatabaseContext context)
         {
             Vacuum(context);
             Reindex(context);

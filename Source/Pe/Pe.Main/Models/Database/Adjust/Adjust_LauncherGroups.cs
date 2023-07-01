@@ -3,12 +3,12 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Database.Tuner
+namespace ContentTypeTextNet.Pe.Main.Models.Database.Adjust
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase")]
-    public class Tuner_LauncherGroups: TunerBase
+    public class Adjust_LauncherGroups: AdjustBase
     {
-        public Tuner_LauncherGroups(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public Adjust_LauncherGroups(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(statementLoader, loggerFactory)
         {
             IdFactory = idFactory;
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Tuner
             return context.Execute(statement, param);
         }
 
-        protected override void TuneImpl(IDatabaseContext context)
+        protected override void AdjustImpl(IDatabaseContext context)
         {
             if(!ExistsRows(context)) {
                 InsertEmptyGroup(context);

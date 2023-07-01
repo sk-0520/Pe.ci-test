@@ -412,7 +412,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         /// 現在の希望するサイズから実際のサイズ要求する
         /// </summary>
         /// <param name="appBar"></param>
-        private void TuneSystemBarArea(ref APPBARDATA appBar)
+        private void AdjustSystemBarArea(ref APPBARDATA appBar)
         {
             var deviceBarSize = UIUtility.ToDevicePixel(ExtendData.DisplaySize, View);
             NativeMethods.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
@@ -457,7 +457,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
                 uEdge = AppDesktopToolbarPositionUtility.ToABE(dockType),
                 rc = PodStructUtility.Convert(CalcWantBarArea(dockType))
             };
-            TuneSystemBarArea(ref appBar);
+            AdjustSystemBarArea(ref appBar);
 
             bool autoHideResult = false;
             if(autoHide) {

@@ -640,7 +640,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             if(RunModeUtility.IsBuildPersistence(RunMode)) {
                 var databaseSetupper = DiContainer.Build<DatabaseSetupper>();
                 var lastVersion = databaseSetupper.GetLastVersion(DiContainer.Build<IDatabaseAccessorPack>().Main)!;
-                databaseSetupper.Tune(DiContainer.Build<IDatabaseAccessorPack>(), lastVersion);
+                databaseSetupper.Adjust(DiContainer.Build<IDatabaseAccessorPack>(), lastVersion);
             }
 
             WindowManager = SetupWindowManager(DiContainer);

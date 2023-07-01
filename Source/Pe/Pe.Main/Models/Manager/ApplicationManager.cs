@@ -315,7 +315,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var accessorPack = container.Get<IDatabaseAccessorPack>();
                 var databaseSetupper = container.Build<DatabaseSetupper>();
                 foreach(var accessor in accessorPack.Items) {
-                    databaseSetupper.Tune(accessor);
+                    databaseSetupper.Adjust(accessor);
                 }
 
                 settings.Main.CopyTo(environmentParameters.MainFile.FullName, true);
@@ -1090,8 +1090,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #endif
             }
 
-            var tuner = ApplicationDiContainer.Build<DatabaseTuner>();
-            tuner.Tune();
+            var tuner = ApplicationDiContainer.Build<DatabaseAdjuster>();
+            tuner.Adjust();
 
             return true;
         }

@@ -13,13 +13,13 @@ namespace ContentTypeTextNet.Pe.Main.Views
     /// マウスホイールでスクロールする際にいろんな要因で吸い取られるイベントを自然に処理する。
     /// <para>WPFが標準で用意してるやつは基本的に大丈夫そうだけどサードパーティ製のやつとか自前のやつとかに特化。</para>
     /// </summary>
-    public sealed class ScrollTuner: DisposerBase
+    public sealed class ScrollAdjuster: DisposerBase
     {
         /// <summary>
         ///
         /// </summary>
         /// <param name="view">親ウィンドウ。</param>
-        public ScrollTuner(Window view)
+        public ScrollAdjuster(Window view)
         {
             View = view;
             View.PreviewMouseWheel -= View_PreviewMouseWheel;

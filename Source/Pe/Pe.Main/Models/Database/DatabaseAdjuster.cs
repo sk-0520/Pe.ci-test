@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
-using ContentTypeTextNet.Pe.Main.Models.Database.Tuner;
+using ContentTypeTextNet.Pe.Main.Models.Database.Adjust;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database
 {
-    public class DatabaseTuner
+    public class DatabaseAdjuster
     {
-        public DatabaseTuner(IIdFactory idFactory, IDatabaseAccessorPack accessorPack, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public DatabaseAdjuster(IIdFactory idFactory, IDatabaseAccessorPack accessorPack, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
             IdFactory = idFactory;
             AccessorPack = accessorPack;
@@ -36,34 +36,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         #region function
 
-        private void TuneImpl(IDatabaseAccessor accessor, IEnumerable<TunerBase> tuners)
+        private void AdjustImpl(IDatabaseAccessor accessor, IEnumerable<AdjustBase> tuners)
         {
             using(var transaction = accessor.BeginTransaction()) {
                 foreach(var tuner in tuners) {
-                    tuner.Tune(transaction);
+                    tuner.Adjust(transaction);
                 }
                 transaction.Commit();
             }
         }
 
-        private void TuneMain()
+        private void AdjustMain()
         {
-            var tuners = new TunerBase[] {
-                new Tuner_LauncherGroups(IdFactory, StatementLoader, LoggerFactory),
+            var tuners = new AdjustBase[] {
+                new Adjust_LauncherGroups(IdFactory, StatementLoader, LoggerFactory),
             };
-            TuneImpl(AccessorPack.Main, tuners);
+            AdjustImpl(AccessorPack.Main, tuners);
         }
 
-        private void TuneFile()
+        private void AdjustFile()
         {
-            var tuners = System.Array.Empty<TunerBase>();
-            TuneImpl(AccessorPack.Large, tuners);
+            var tuners = System.Array.Empty<AdjustBase>();
+            AdjustImpl(AccessorPack.Large, tuners);
         }
 
-        public void Tune()
+        public void Adjust()
         {
-            TuneMain();
-            TuneFile();
+            AdjustMain();
+            AdjustFile();
         }
 
         #endregion
