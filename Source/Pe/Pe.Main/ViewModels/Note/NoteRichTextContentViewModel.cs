@@ -256,6 +256,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private TextRange? SearchContentCore(string searchValue, bool searchNext, TextRange searchRange, StringComparison comparisonType)
         {
+            //TODO: 前検索ができねんだわ
+
             var start = searchNext
                 ? searchRange.Start
                 : searchRange.End
