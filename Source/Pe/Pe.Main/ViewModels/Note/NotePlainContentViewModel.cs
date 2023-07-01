@@ -77,23 +77,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             return data;
         }
 
-        public override void SearchContent(string value, bool toNext)
+        public override void SearchContent(string searchValue, bool searchNext)
         {
-            Logger.LogDebug("text: {value}, {toNext}", value, toNext);
+            Logger.LogDebug("text: {searchValue}, {searchNext}", searchValue, searchNext);
             Logger.LogDebug("selection: {start}, {length}", ControlElement.SelectionStart, ControlElement.SelectionLength);
 
             var content = ControlElement.Text;
             var comparisonType = StringComparison.OrdinalIgnoreCase;
 
-            var selectionIndex = toNext
-                ? content.IndexOf(value, ControlElement.SelectionStart + ControlElement.SelectionLength, comparisonType)
-                : content.LastIndexOf(value, ControlElement.SelectionStart - ControlElement.SelectionLength, comparisonType)
+            var selectionIndex = searchNext
+                ? content.IndexOf(searchValue, ControlElement.SelectionStart + ControlElement.SelectionLength, comparisonType)
+                : content.LastIndexOf(searchValue, ControlElement.SelectionStart - ControlElement.SelectionLength, comparisonType)
                 ;
 
             if(selectionIndex == -1) {
-                selectionIndex = toNext
-                    ? content.IndexOf(value, 0, comparisonType)
-                    : content.LastIndexOf(value, content.Length, comparisonType)
+                selectionIndex = searchNext
+                    ? content.IndexOf(searchValue, 0, comparisonType)
+                    : content.LastIndexOf(searchValue, content.Length, comparisonType)
                 ;
             }
 
@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
 
             ControlElement.Focus();
-            ControlElement.Select(selectionIndex, value.Length);
+            ControlElement.Select(selectionIndex, searchValue.Length);
         }
 
         #endregion

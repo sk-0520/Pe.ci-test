@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -9,12 +10,14 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using CefSharp.DevTools.Network;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Note;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -251,6 +254,36 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             ApplySelectionPropertyValue(Inline.BackgroundProperty, brush);
         }
 
+        private TextRange? SearchContentCore(string searchValue, bool searchNext, TextRange searchRange, StringComparison comparisonType)
+        {
+            var start = searchNext
+                ? searchRange.Start
+                : searchRange.End
+                ;
+            var direction = searchNext
+                ? LogicalDirection.Forward
+                : LogicalDirection.Backward
+                ;
+            while(start != null) {
+                var runText = start.GetTextInRun(LogicalDirection.Forward);
+                Logger.LogDebug("runText: {runText}", runText);
+                if(0 < runText.Length) {
+                    int index = searchNext
+                        ? runText.IndexOf(searchValue, comparisonType)
+                        : runText.LastIndexOf(searchValue, comparisonType)
+                        ;
+                    if(index != -1) {
+                        var selectionStart = start.GetPositionAtOffset(index);
+                        var selectionEnd = start.GetPositionAtOffset(index + searchValue.Length);
+                        return new TextRange(selectionStart, selectionEnd);
+                    }
+                }
+                start = start.GetNextContextPosition(direction);
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region NoteContentViewModelBase
@@ -344,24 +377,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
-        public override void SearchContent(string value, bool toNext)
+        public override void SearchContent(string searchValue, bool searchNext)
         {
-            Logger.LogDebug("text: {value}, {toNext}", value, toNext);
+            Logger.LogDebug("text: {value}, {toNext}", searchValue, searchNext);
+
             var comparisonType = StringComparison.OrdinalIgnoreCase;
 
-            var textRange = new TextRange(ControlElement.Document.ContentStart, ControlElement.Document.ContentEnd);
-            //richTextBox.Selection.Select(textRange.Start, textRange.Start);
-
-            var index = toNext
-            ? textRange.Text.IndexOf(value, 0, comparisonType)
-                : textRange.Text.LastIndexOf(value, textRange.Text.Length - 1, comparisonType)
+            var searchRange = searchNext
+                ? new TextRange(ControlElement.Selection.Start.GetPositionAtOffset(1), ControlElement.Document.ContentEnd)
+                : new TextRange(ControlElement.Document.ContentStart, ControlElement.Selection.Start)
                 ;
-            if(index > -1) {
-                var textPointerStart = textRange.Start.GetPositionAtOffset(index);
-                var textPointerEnd = textRange.Start.GetPositionAtOffset(index + value.Length);
 
-                var textRangeSelection = new TextRange(textPointerStart, textPointerEnd);
-                ControlElement.Selection.Select(textRangeSelection.Start, textRangeSelection.End);
+            var selectionRange = SearchContentCore(searchValue, searchNext, searchRange, comparisonType);
+
+            if(selectionRange is null) {
+                searchRange = new TextRange(ControlElement.Document.ContentStart, ControlElement.Document.ContentEnd);
+                selectionRange = SearchContentCore(searchValue, searchNext, searchRange, comparisonType);
+            }
+
+            if(selectionRange is not null) {
+                ControlElement.Selection.Select(selectionRange.Start, selectionRange.End);
                 ControlElement.Focus();
             }
         }
