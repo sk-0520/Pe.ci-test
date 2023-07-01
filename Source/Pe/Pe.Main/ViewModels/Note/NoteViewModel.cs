@@ -727,8 +727,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     InputSearchElement.SelectAll();
                     InputSearchElement.Focus();
                 }
-            }
-        ));
+            },
+            o => !IsCompact
+        ).ObservesProperty(() => IsCompact));
 
         public ICommand CloseSearchCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
             o => {
@@ -764,6 +765,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 } else {
                     NormalWindowWidth = WindowWidth;
                 }
+
+                IsSearching = false;
             }
             Model.ToggleCompactDelaySave();
 
