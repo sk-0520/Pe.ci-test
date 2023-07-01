@@ -138,7 +138,10 @@
   <Window.InputBindings>
     <KeyBinding Gesture="Ctrl+F" Command="{Binding ContentSearchCommand}"/>
     <KeyBinding Gesture="F3" Command="{Binding SearchNextCommand}"/>
+    <!--
+    TODO: RTFの前検索が未完成
     <KeyBinding Gesture="Shift+F3" Command="{Binding SearchPrevCommand}"/>
+    -->
   </Window.InputBindings>
   <Grid>
     <!--#region 内容-->
@@ -651,7 +654,10 @@
                     <KeyBinding Gesture="Ctrl+F" Command="{Binding CloseSearchCommand}"/>
                     <KeyBinding Gesture="Esc" Command="{Binding CloseSearchCommand}"/>
                     <KeyBinding Gesture="Enter" Command="{Binding SearchNextCommand}"/>
+                    <!--
+                    TODO: RTFの前検索が未完成
                     <KeyBinding Gesture="Shift+Enter" Command="{Binding SearchPrevCommand}"/>
+                    -->
                   </TextBox.InputBindings>
                 </TextBox>
               </Grid>
