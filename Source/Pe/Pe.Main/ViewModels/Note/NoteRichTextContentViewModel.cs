@@ -385,10 +385,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             var comparisonType = StringComparison.OrdinalIgnoreCase;
 
-            var searchRange = searchNext
-                ? new TextRange(ControlElement.Selection.Start.GetPositionAtOffset(1), ControlElement.Document.ContentEnd)
-                : new TextRange(ControlElement.Document.ContentStart, ControlElement.Selection.Start)
-                ;
+            TextRange searchRange;
+            if(searchNext) {
+                var start = ControlElement.Selection.Start.GetPositionAtOffset(1);
+                if(start is null) {
+                    Logger.LogWarning("start is null");
+                    return;
+                }
+                searchRange = new TextRange(start, ControlElement.Document.ContentEnd);
+            } else {
+                searchRange = new TextRange(ControlElement.Document.ContentStart, ControlElement.Selection.Start);
+            }
 
             var selectionRange = SearchContentCore(searchValue, searchNext, searchRange, comparisonType);
 
