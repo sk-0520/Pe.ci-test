@@ -60,15 +60,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         private bool _isVisibleBlind;
         private bool _hiddenCompact;
 
-        /// <summary>
-        /// 検索中か。
-        /// </summary>
-        private bool _isSearching = false;
-        /// <summary>
-        /// 検索文字列。
-        /// </summary>
-        private string _searchValue = string.Empty;
-
         #endregion
 
         public NoteElement(NoteId noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, NoteConfiguration noteConfiguration, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
@@ -219,24 +210,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         }
 
         private NotifyLogId RestoreVisibleNotifyLogId { get; set; }
-
-        /// <summary>
-        /// 検索中か。
-        /// </summary>
-        public bool IsSearching
-        {
-            get => this._isSearching;
-            set => SetProperty(ref this._isSearching, value);
-        }
-
-        /// <summary>
-        /// 検索文字列。
-        /// </summary>
-        public string SearchValue
-        {
-            get => this._searchValue;
-            set => SetProperty(ref this._searchValue, value);
-        }
 
         #endregion
 

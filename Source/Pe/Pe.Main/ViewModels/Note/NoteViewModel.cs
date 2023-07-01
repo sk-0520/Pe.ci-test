@@ -61,6 +61,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private bool _windowMoving = false;
 
+        /// <summary>
+        /// 検索中か。
+        /// </summary>
+        private bool _isSearching = false;
+        /// <summary>
+        /// 検索文字列。
+        /// </summary>
+        private string _searchValue = string.Empty;
+
         #endregion
 
         public NoteViewModel(NoteElement model, NoteConfiguration noteConfiguration, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, ApplicationConfiguration applicationConfiguration, IOrderManager orderManager, IClipboardManager clipboardManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -493,16 +502,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             private set => SetProperty(ref this._showLinkChangeConfirm, value);
         }
 
+        /// <summary>
+        /// 検索中か。
+        /// </summary>
         public bool IsSearching
         {
-            get => Model.IsSearching;
-            set => SetModelValue(value);
+            get => this._isSearching;
+            private set => SetProperty(ref this._isSearching, value);
         }
 
+        /// <summary>
+        /// 検索文字列。
+        /// </summary>
         public string SearchValue
         {
-            get => Model.SearchValue;
-            set => SetModelValue(value);
+            get => this._searchValue;
+            set => SetProperty(ref this._searchValue, value);
         }
 
         #endregion
