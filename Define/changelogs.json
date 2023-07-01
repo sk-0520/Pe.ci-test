@@ -30,7 +30,11 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#796: ノートの本文を簡易検索可能にする",
+						"comments": [
+							"検索: Ctrl + F",
+							"次検索: F3"
+						]
 					},
 					{
 						"revision": "",
