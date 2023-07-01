@@ -642,9 +642,11 @@
 
                 <Button
                   Grid.Column="0"
-                  Content="×"
                   Command="{Binding CloseSearchCommand}"
-                />
+                  ToolTip="{Binding Resources.String_Common_Close, Source={x:Static app_main:CultureService.Instance}}"
+                >
+                  <Control Template="{StaticResource App-Image-Close}" />
+                </Button>
                 <TextBox
                   x:Name="inputSearch"
                   Grid.Column="1"
@@ -1228,25 +1230,36 @@
             <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_Note_Operation_Header, Source={x:Static app_main:CultureService.Instance}}">
               <StackPanel>
                 <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                  </Grid.RowDefinitions>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
-                  <Button Grid.Column="0" Command="{Binding Content.CopyCommand}">
+                  <Button Grid.Row="0" Grid.Column="0" Command="{Binding Content.CopyCommand}">
                     <StackPanel Style="{StaticResource ImageLabel-Small}">
                       <Control Template="{StaticResource App-Image-Clipboard-Copy}" />
                       <AccessText Text="{Binding Resources.String_Note_Operation_Copy_A, Source={x:Static app_main:CultureService.Instance}}" />
                     </StackPanel>
                   </Button>
-                  <Button Grid.Column="1" Command="{Binding SilentCloseCommand}">
+                  <Button Grid.Row="0" Grid.Column="1" Command="{Binding ContentSearchCommand}">
+                    <StackPanel Style="{StaticResource ImageLabel-Small}">
+                      <Control Template="{StaticResource App-Image-Search}" />
+                      <AccessText Text="{Binding Resources.String_Note_Operation_Search_A, Source={x:Static app_main:CultureService.Instance}}" />
+                    </StackPanel>
+                  </Button>
+                  <Button Grid.Row="0" Grid.Column="2" Command="{Binding SilentCloseCommand}">
                     <StackPanel Style="{StaticResource ImageLabel-Small}">
                       <Control Template="{StaticResource App-Image-Hidden}" />
                       <AccessText Text="{Binding Resources.String_Note_Operation_Close_A, Source={x:Static app_main:CultureService.Instance}}" />
                     </StackPanel>
                   </Button>
-                  <Grid Grid.Column="2">
+
+                  <Grid Grid.Row="1" Grid.Column="2" Margin="{StaticResource TopMargin}">
                     <ToggleButton x:Name="switchRemoveNote" IsChecked="{Binding IsPopupRemoveNote}">
                       <StackPanel Style="{StaticResource ImageLabel-Small}">
                         <Control Template="{StaticResource App-Image-Warning}" />
