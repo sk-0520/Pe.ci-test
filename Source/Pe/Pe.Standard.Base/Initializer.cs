@@ -60,5 +60,4 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         #endregion
     }
-
 }

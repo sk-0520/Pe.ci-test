@@ -141,5 +141,4 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return plainName ?? Path.GetFileName(path) ?? string.Empty;
         }
     }
-
 }

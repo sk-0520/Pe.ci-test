@@ -158,6 +158,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         #endregion
     }
 
+    /// <inheritdoc cref="ActionDisposer"/>
     public sealed class ActionDisposer<TArgument>: DisposerBase
     {
         public ActionDisposer(Action<bool, TArgument> action, TArgument argument)
@@ -381,5 +382,4 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         #endregion
 
     }
-
 }
