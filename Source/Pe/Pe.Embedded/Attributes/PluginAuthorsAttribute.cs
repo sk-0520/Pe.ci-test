@@ -15,9 +15,9 @@ namespace ContentTypeTextNet.Pe.Embedded.Attributes
         /// <param name="name">作者名。</param>
         /// <param name="license">ライセンス。<seealso cref="PluginLicense"/></param>
         /// <param name="website">プラグインの作者サイト。</param>
-        /// <param name="projectsite">プラグインのプロジェクトサイト。</param>
+        /// <param name="projectSite">プラグインのプロジェクトサイト。</param>
         /// <param name="email">プラグインの作者E-Mail。</param>
-        public PluginAuthorsAttribute(string name, string license, string website = "", string projectsite = "", string email = "")
+        public PluginAuthorsAttribute(string name, string license, string website = "", string projectSite = "", string email = "")
         {
             if(string.IsNullOrWhiteSpace(name)) {
                 throw new ArgumentException(nameof(name));
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Attributes
             License = license;
 
             Website = website;
-            Projectsite = projectsite;
+            ProjectSite = projectSite;
             Email = email;
         }
 
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Attributes
         /// <summary>
         /// プラグインのプロジェクトサイト。
         /// </summary>
-        public string Projectsite { get; }
+        public string ProjectSite { get; }
         /// <summary>
         /// プラグインの作者E-Mail。
         /// </summary>

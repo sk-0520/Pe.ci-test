@@ -9,6 +9,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
+    /// <summary>
+    /// テーマ基底処理。
+    /// </summary>
     internal abstract class ThemeBase: ExtensionBase, ITheme
     {
         public ThemeBase(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)

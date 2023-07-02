@@ -5,6 +5,9 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 
 namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
+    /// <summary>
+    /// 設定基底処理。
+    /// </summary>
     public class PreferencesBase: IPreferences
     {
         protected PreferencesBase(IPlugin plugin)
