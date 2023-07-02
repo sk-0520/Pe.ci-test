@@ -133,5 +133,4 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
         #endregion
     }
-
 }
