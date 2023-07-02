@@ -72,7 +72,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "とりあえず Moq 突っ込み",
+						"comments": [
+							"なんも考えてないけど、とりあえず、とりあえず"
+						]
 					},
 					{
 						"revision": "",
