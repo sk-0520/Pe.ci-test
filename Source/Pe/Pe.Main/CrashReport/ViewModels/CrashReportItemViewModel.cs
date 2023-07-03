@@ -25,7 +25,6 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
                 .Select(i => new CrashReportItemViewModel(i, LoggerFactory))
                 .ToList()
             ;
-
         }
 
         #region property

@@ -27,19 +27,6 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models
         #endregion
 
         #region function
-
-        public CrashReportElement CreateWorker()
-        {
-            //throw new NotImplementedException();
-            return null!;
-        }
-
-        public CrashReportViewModel CreateViewModel(CrashReportElement model)
-        {
-            //throw new NotImplementedException();
-            return null!;
-        }
-
         #endregion
     }
 }

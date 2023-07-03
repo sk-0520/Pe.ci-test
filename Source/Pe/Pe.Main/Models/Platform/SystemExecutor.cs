@@ -18,6 +18,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #region function
 
+        /// <summary>
+        /// rundll を実行。
+        /// </summary>
+        /// <param name="command">コマンド</param>
+        /// <returns></returns>
         public Process? RunDLL(string command)
         {
             var rundll = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "rundll32.exe");
@@ -30,11 +35,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         /// タスクトレイ通知領域履歴を開く。
         /// </summary>
         /// <param name="appNonProcess"></param>
+        /// <seealso cref="RunDLL(string)"/>
         public void OpenNotificationAreaHistory()
         {
             RunDLL("shell32.dll,Options_RunDLL 5");
         }
 
+        /// <summary>
+        /// URIを開く。
+        /// </summary>
+        /// <param name="uri"></param>
         public void OpenUri(Uri uri)
         {
             var process = new Process();
@@ -43,6 +53,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             process.Start();
         }
 
+        /// <summary>
+        /// ファイル配置されているディレクトリを開く。
+        /// <para>まぁ Explorer で開く。</para>
+        /// </summary>
+        /// <param name="filePath">ファイルパス。</param>
+        /// <returns></returns>
         public Process OpenDirectoryWithFileSelect(string filePath)
         {
             var process = new Process();
@@ -53,6 +69,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return process;
         }
 
+        /// <summary>
+        /// ファイルを実行。
+        /// </summary>
+        /// <param name="filePath">ファイルパス。</param>
+        /// <returns></returns>
         public Process ExecuteFile(string filePath)
         {
             var process = new Process();
@@ -67,6 +88,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return process;
         }
 
+        /// <summary>
+        /// ファイルを実行。
+        /// </summary>
+        /// <param name="filePath">ファイルパス。</param>
+        /// <param name="argument">引数。</param>
+        /// <returns></returns>
         public Process ExecuteFile(string filePath, string argument)
         {
             var process = new Process();
@@ -82,6 +109,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return process;
         }
 
+        /// <summary>
+        /// ファイルのプロパティを表示。
+        /// </summary>
+        /// <param name="filePath">ファイルパス。</param>
         public void ShowProperty(string filePath)
         {
             NativeMethods.SHObjectProperties(IntPtr.Zero, SHOP.SHOP_FILEPATH, filePath, string.Empty);

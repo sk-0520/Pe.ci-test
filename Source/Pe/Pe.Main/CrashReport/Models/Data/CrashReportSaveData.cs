@@ -25,8 +25,8 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         public string Build { get; set; } = string.Empty;
         [JsonPropertyName("exception")]
         public string Exception { get; set; } = string.Empty;
-        [JsonPropertyName("informations")]
-        public Dictionary<string, Dictionary<string, string?>> Informations { get; set; } = new Dictionary<string, Dictionary<string, string?>>();
+        [JsonPropertyName("information")]
+        public Dictionary<string, Dictionary<string, string?>> Information { get; set; } = new Dictionary<string, Dictionary<string, string?>>();
         [JsonPropertyName("log_items")]
         public List<LogItem> LogItems { get; set; } = new List<LogItem>();
 
