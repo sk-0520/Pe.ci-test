@@ -66,14 +66,14 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         private static string Convert(NLog.LogLevel level)
         {
             LogLevelMap ??= new Dictionary<NLog.LogLevel, string>() {
-                [NLog.LogLevel.Trace] = LogLevel.Trace.ToString().ToLowerInvariant(),
-                [NLog.LogLevel.Debug] = LogLevel.Debug.ToString().ToLowerInvariant(),
-                [NLog.LogLevel.Info] = LogLevel.Information.ToString().ToLowerInvariant(),
-                [NLog.LogLevel.Warn] = LogLevel.Warning.ToString().ToLowerInvariant(),
-                [NLog.LogLevel.Error] = LogLevel.Error.ToString().ToLowerInvariant(),
-                [NLog.LogLevel.Fatal] = LogLevel.Critical.ToString().ToLowerInvariant(),
+                [NLog.LogLevel.Trace] = EnumUtility.ToString(LogLevel.Trace),
+                [NLog.LogLevel.Debug] = EnumUtility.ToString(LogLevel.Debug),
+                [NLog.LogLevel.Info] = EnumUtility.ToString(LogLevel.Information),
+                [NLog.LogLevel.Warn] = EnumUtility.ToString(LogLevel.Warning),
+                [NLog.LogLevel.Error] = EnumUtility.ToString(LogLevel.Error),
+                [NLog.LogLevel.Fatal] = EnumUtility.ToString(LogLevel.Critical),
             };
-            return LogLevelMap.TryGetValue(level, out var result) ? result : LogLevel.None.ToString().ToLowerInvariant();
+            return LogLevelMap.TryGetValue(level, out var result) ? result : EnumUtility.ToString(LogLevel.None);
         }
 
         public static LogItem Create(NLog.LogEventInfo logEventInfo)

@@ -26,5 +26,18 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 return defaultValue;
             }
         }
+
+        /// <summary>
+        /// 内部的に <c>enum</c> を文字列化する処理。
+        /// <para>属性とか全部無視して小文字にする。</para>
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string ToString<TEnum>(TEnum value)
+            where TEnum : struct, Enum
+        {
+            return value.ToString().ToLowerInvariant();
+        }
     }
 }
