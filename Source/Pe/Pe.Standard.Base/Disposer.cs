@@ -298,7 +298,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// <see cref="ArrayPool{T}"/> のラッパー。
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public ref struct ArrayPoolValue<T>
+    public readonly ref struct ArrayPoolValue<T>
     {
         public ArrayPoolValue(int length)
             : this(length, ArrayPool<T>.Shared)
@@ -380,6 +380,5 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         }
 
         #endregion
-
     }
 }
