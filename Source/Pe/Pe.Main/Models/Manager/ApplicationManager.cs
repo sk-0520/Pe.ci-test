@@ -1759,7 +1759,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 });
             });
 
-            string TrimFunc(string s) => s.Substring(3);
+            static string TrimFunc(string s) => s.Substring(3);
 
             var info = new ApplicationInformationCollector(environmentParameters);
             ExceptionWrapper(() => rawData.InformationMap[TrimFunc(nameof(info.GetApplication))] = CreateInfoMap(info.GetApplication()));
