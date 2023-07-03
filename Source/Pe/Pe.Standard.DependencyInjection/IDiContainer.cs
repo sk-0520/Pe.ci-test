@@ -228,6 +228,5 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         bool Unregister<TInterface>(string name);
 
         #endregion
-
     }
 }

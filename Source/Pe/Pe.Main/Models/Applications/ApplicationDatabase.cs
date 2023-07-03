@@ -240,7 +240,7 @@ limit
                 Logger.LogInformation("SQL文読み込み方法 -> ファイル: {0}", BaseDirectory.FullName);
             } else {
                 if(GivePriorityToFile) {
-                    Logger.LogInformation("SQL文読み込み方法 -> 存在ファイル優先のsqlite: {0} -> {1}", BaseDirectory.FullName, StatementAccessor.BaseConnection.ConnectionString);
+                    Logger.LogInformation("SQL文読み込み方法 -> ファイル優先の sqlite: {0} -> {1}", BaseDirectory.FullName, StatementAccessor.BaseConnection.ConnectionString);
                 } else {
                     Logger.LogInformation("SQL文読み込み方法 -> sqlite: {0}", StatementAccessor.BaseConnection.ConnectionString);
                 }

@@ -6,6 +6,9 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 
 namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
+    /// <summary>
+    /// アドオン基盤。
+    /// </summary>
     internal abstract class AddonBase: ExtensionBase, IAddon
     {
         public AddonBase(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
@@ -23,7 +26,15 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region function
 
+        /// <summary>
+        /// 読み込み 基底処理。
+        /// </summary>
+        /// <param name="pluginLoadContext"></param>
         protected internal abstract void Load(IPluginLoadContext pluginLoadContext);
+        /// <summary>
+        /// 解放 基底処理。
+        /// </summary>
+        /// <param name="pluginUnloadContext"></param>
         protected internal abstract void Unload(IPluginUnloadContext pluginUnloadContext);
 
         #endregion

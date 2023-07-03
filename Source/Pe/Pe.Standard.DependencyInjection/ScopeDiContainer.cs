@@ -34,7 +34,6 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         public IReadOnlyList<T> GetValues() => Keys.ToList();
 
         #endregion
-
     }
 
     internal class ScopeDiContainer: DiContainer, IScopeDiContainer

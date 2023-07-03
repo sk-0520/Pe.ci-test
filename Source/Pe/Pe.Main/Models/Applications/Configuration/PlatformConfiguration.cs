@@ -5,6 +5,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {
+    /// <summary>
+    /// アプリケーション構成: 実行環境。
+    /// </summary>
     public class PlatformConfiguration: ConfigurationBase
     {
         #region define
@@ -61,11 +64,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         /// </summary>
         [Configuration]
         public byte ThemeAccentColorDefaultAlpha { get; }
+        /// <summary>
+        /// エクスプローラ 補正 インターバル。
+        /// </summary>
         [Configuration]
         public TimeSpan ExplorerSupporterRefreshTime { get; }
+        /// <summary>
+        /// エクスプローラ 補正 インターバル。
+        /// </summary>
         [Configuration]
         public int ExplorerSupporterCacheSize { get; }
-
+        /// <summary>
+        /// エクスプローラ 補正 キュー。
+        /// </summary>
         [Configuration]
         public TimeSpan ScreenElementsResetWaitTime { get; }
 

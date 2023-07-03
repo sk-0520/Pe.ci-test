@@ -47,8 +47,9 @@ namespace ContentTypeTextNet.Pe.Embedded.Models
         /// <param name="iconScale"></param>
         /// <returns></returns>
         public static DependencyObject GetDefaultPluginIcon(IImageLoader imageLoader, in IconScale iconScale)
-            => GetPluginImage("Plugin.ico", imageLoader, iconScale);
-
+        {
+            return GetPluginImage("Plugin.ico", imageLoader, iconScale);
+        }
 
         #endregion
     }

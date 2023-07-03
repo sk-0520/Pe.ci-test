@@ -158,5 +158,4 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             }
         }
     }
-
 }

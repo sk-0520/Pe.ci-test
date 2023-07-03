@@ -150,9 +150,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                             var genName = valueType.Name.Substring(0, genIndex);
                             switch(genName) {
                                 case "IReadOnlyList": {
-                                        var childrenRaws = childSection.GetChildren().ToList();
-                                        var array = Array.CreateInstance(genArgs[0], childrenRaws.Count);
-                                        foreach(var child in childrenRaws.Counting()) {
+                                        var rawChildren = childSection.GetChildren().ToList();
+                                        var array = Array.CreateInstance(genArgs[0], rawChildren.Count);
+                                        foreach(var child in rawChildren.Counting()) {
                                             var childValue = GetValue(methodParent, child.Value, string.Empty, genArgs[0], methodInfo);
                                             array.SetValue(childValue, child.Number);
                                         }
@@ -160,10 +160,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                                     }
 
                                 case "IReadOnlyDictionary": {
-                                        var childrenRaws = childSection.GetChildren().ToList();
+                                        var rawChildren = childSection.GetChildren().ToList();
                                         var dictionaryType = typeof(Dictionary<,>).MakeGenericType(genArgs);
                                         var dictionary = (IDictionary)Activator.CreateInstance(dictionaryType)!;
-                                        foreach(var raw in childrenRaws) {
+                                        foreach(var raw in rawChildren) {
                                             var value = GetValue(methodParent, raw, string.Empty, genArgs[1], methodInfo);
 
                                             if(genArgs[0] == typeof(string)) {

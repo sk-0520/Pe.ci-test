@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         /// <summary>
         /// 言語。
         /// </summary>
-        [CommandLine(longKey: "language", hasValue: false)]
+        [CommandLine(longKey: "language", hasValue: true)]
         public string Language { get; set; } = string.Empty;
 
         /// <summary>

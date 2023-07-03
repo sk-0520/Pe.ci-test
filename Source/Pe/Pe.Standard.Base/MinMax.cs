@@ -51,7 +51,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public T Maximum { get; set; }
 
         #endregion
-
     }
 
     /// <summary>
@@ -180,7 +179,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 return false;
             }
         }
-
     }
 
     public static class MinMaxExtensions
@@ -200,5 +198,4 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         #endregion
     }
-
 }
