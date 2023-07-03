@@ -3,6 +3,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {
+    /// <summary>
+    /// アプリケーション構成: プラグイン。
+    /// </summary>
     public class PluginConfiguration: ConfigurationBase
     {
         public PluginConfiguration(IConfigurationSection section)

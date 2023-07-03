@@ -2,6 +2,9 @@ using System;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {
+    /// <summary>
+    /// アプリケーション構成データをプロパティに対して適用。
+    /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class ConfigurationAttribute: Attribute
     {
@@ -15,14 +18,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         #region property
 
         /// <summary>
-        /// アプリケーション構成ファイルでのメンバ名。
+        /// アプリケーション構成データでのメンバ名。
         /// </summary>
         public string MemberName { get; }
         /// <summary>
         /// 変換処理に呼び出すメソッド名。
         /// <para><see cref="ConfigurationSetting"/>から呼び出せるメソッドであること。</para>
-        /// <para>通常の内部規約としてIFは<c>プロパティTに対して</c><c>T MethodName(IConfigurationSection section, string key)</c>を実行する。</para>
-        /// <para>ジェネリック内部規約としてIFは<c>プロパティTResult&lt;T...&gt;に対して</c><c>TResult&lt;T...&gt; MethodName&lt;T...&gt;(IConfigurationSection section, string key)</c>を実行する。</para>
+        /// <para>通常の内部規約としてIFは<c>プロパティT</c>に対して<c>T MethodName(IConfigurationSection section, string key)</c>を実行する。</para>
+        /// <para>ジェネリック内部規約としてIFは<c>プロパティTResult&lt;T...&gt;</c>に対して<c>TResult&lt;T...&gt; MethodName&lt;T...&gt;(IConfigurationSection section, string key)</c>を実行する。</para>
         /// </summary>
         public string RootConvertMethodName { get; }
         /// <summary>
@@ -34,5 +37,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         #endregion
     }
-
 }

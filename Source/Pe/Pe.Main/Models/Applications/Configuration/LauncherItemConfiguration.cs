@@ -4,6 +4,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {
+    /// <summary>
+    /// アプリケーション構成: ランチャーアイテム。
+    /// </summary>
     public class LauncherItemConfiguration: ConfigurationBase
     {
         public LauncherItemConfiguration(IConfigurationSection section)
@@ -12,6 +15,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         #region property
 
+        /// <summary>
+        /// アイコン更新対象と判定する前回更新からの差分時間。
+        /// </summary>
         [Configuration]
         public TimeSpan IconRefreshTime { get; }
         /// <summary>

@@ -3,6 +3,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {
+    /// <summary>
+    /// アプリケーション構成: 定期実行系。
+    /// </summary>
     public class ScheduleConfiguration: ConfigurationBase
     {
         public ScheduleConfiguration(IConfigurationSection section)
@@ -11,8 +14,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         #region function
 
+        /// <summary>
+        /// 低レベルスケジューラ時間。
+        /// </summary>
         [Configuration]
         public TimeSpan LowSchedulerTime { get; }
+        /// <summary>
+        /// アイコン更新タイミング。
+        /// <para></para>
+        /// </summary>
         [Configuration]
         public string LauncherItemIconRefresh { get; } = default!;
 

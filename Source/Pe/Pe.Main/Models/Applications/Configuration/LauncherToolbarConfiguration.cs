@@ -3,6 +3,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {
+    /// <summary>
+    /// アプリケーション構成: ランチャーツールバー。
+    /// </summary>
     public class LauncherToolbarConfiguration: ConfigurationBase
     {
         public LauncherToolbarConfiguration(IConfigurationSection section)
@@ -11,6 +14,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         #region property
 
+        /// <summary>
+        /// 自動的に隠すまでの時間(デフォルト)。
+        /// </summary>
         [Configuration]
         public TimeSpan AutoHideShowWaitTime { get; }
 

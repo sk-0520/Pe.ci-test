@@ -5,6 +5,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {
+    /// <summary>
+    /// アプリケーション構成: コマンド。
+    /// </summary>
     public class CommandConfiguration: ConfigurationBase
     {
         #region define
@@ -35,8 +38,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         #region property
 
+        /// <summary>
+        /// アイコンクリアまでの時間。
+        /// </summary>
         [Configuration]
         public TimeSpan IconClearWaitTime { get; }
+        /// <summary>
+        /// View クリアまでの時間。
+        /// </summary>
         [Configuration]
         public TimeSpan ViewCloseWaitTime { get; }
 
