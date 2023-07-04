@@ -6,3 +6,5 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Style", "IDE1006:命名スタイル", Justification = "<保留中>", Scope = "member", Target = "~M:ContentTypeTextNet.Pe.Standard.Base.Test.IOUtilityTest.ExistsAsyncTest~System.Threading.Tasks.Task")]
+[assembly: SuppressMessage("Style", "IDE1006:命名スタイル", Justification = "<保留中>", Scope = "member", Target = "~M:ContentTypeTextNet.Pe.Standard.Base.Test.IOUtilityTest.ExistsFileAsyncTest~System.Threading.Tasks.Task")]
+[assembly: SuppressMessage("Style", "IDE1006:命名スタイル", Justification = "<保留中>", Scope = "member", Target = "~M:ContentTypeTextNet.Pe.Standard.Base.Test.IOUtilityTest.ExistsDirectoryAsyncTest~System.Threading.Tasks.Task")]
