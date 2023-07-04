@@ -53,6 +53,24 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             Assert.IsFalse(IOUtility.Exists(d.FullName));
         }
 
+        [TestMethod]
+        public async Task ExistsAsyncTest()
+        {
+            var dir = TestIO.InitializeMethod(this);
+
+            var f = TestIO.CreateEmptyFile(dir, "f");
+            Assert.IsTrue(await IOUtility.ExistsAsync(f.FullName));
+
+            var d = TestIO.CreateDirectory(dir, "d");
+            Assert.IsTrue(await IOUtility.ExistsAsync(d.FullName));
+
+            f.Delete();
+            d.Delete(true);
+
+            Assert.IsFalse(await IOUtility.ExistsAsync(f.FullName));
+            Assert.IsFalse(await IOUtility.ExistsAsync(d.FullName));
+        }
+
         #endregion
     }
 }
