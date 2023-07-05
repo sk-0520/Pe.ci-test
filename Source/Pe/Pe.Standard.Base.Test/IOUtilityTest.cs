@@ -107,6 +107,52 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             Assert.IsFalse(await IOUtility.ExistsDirectoryAsync(d.FullName));
         }
 
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var dir = TestIO.InitializeMethod(this);
+
+            var f = TestIO.CreateEmptyFile(dir, "f");
+            var d = TestIO.CreateDirectory(dir, "d");
+
+            var child = TestIO.CreateEmptyFile(d, "child");
+
+            Assert.IsTrue(IOUtility.Exists(f.FullName));
+            Assert.IsTrue(IOUtility.Exists(d.FullName));
+            Assert.IsTrue(IOUtility.Exists(child.FullName));
+
+            IOUtility.Delete(f.FullName);
+            Assert.IsFalse(IOUtility.Exists(f.FullName));
+
+            IOUtility.Delete(dir.FullName);
+            Assert.IsFalse(IOUtility.Exists(d.FullName));
+            Assert.IsFalse(IOUtility.Exists(child.FullName));
+            Assert.IsFalse(IOUtility.Exists(dir.FullName));
+        }
+
+        [TestMethod]
+        public async Task DeleteAsyncTest()
+        {
+            var dir = TestIO.InitializeMethod(this);
+
+            var f = TestIO.CreateEmptyFile(dir, "f");
+            var d = TestIO.CreateDirectory(dir, "d");
+
+            var child = TestIO.CreateEmptyFile(d, "child");
+
+            Assert.IsTrue(IOUtility.Exists(f.FullName));
+            Assert.IsTrue(IOUtility.Exists(d.FullName));
+            Assert.IsTrue(IOUtility.Exists(child.FullName));
+
+            await IOUtility.DeleteAsync(f.FullName);
+            Assert.IsFalse(IOUtility.Exists(f.FullName));
+
+            await IOUtility.DeleteAsync(dir.FullName);
+            Assert.IsFalse(IOUtility.Exists(d.FullName));
+            Assert.IsFalse(IOUtility.Exists(child.FullName));
+            Assert.IsFalse(IOUtility.Exists(dir.FullName));
+        }
+
         #endregion
     }
 }
