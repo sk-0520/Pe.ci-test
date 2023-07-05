@@ -28,8 +28,9 @@ block BLOCK_LAYOUT_CONTENT
 		aside.warning
 			p ドライブ直下に作れたり作れなかったりする問題ありだけど🐛無視無視🐞
 
-		aside.bugs
-			p x86, x64 が生成されない問題あり。Visual Studio で開いたら補完されるから後回しで回避方法が分かれば直すよ。
+		aside.tips
+			p 必要に応じてセキュリティ設定を一時的にファイル読み込み可能にする必要あり。
+			code Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
 		section
 			h3 パラメータ生成

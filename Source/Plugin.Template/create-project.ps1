@@ -266,6 +266,18 @@ try {
 			directory = 'Pe\bridge'
 		},
 		@{
+			project   = 'Pe.Standard.Base'
+			directory = 'Pe\lib\standard'
+		},
+		@{
+			project   = 'Pe.Standard.Database'
+			directory = 'Pe\lib\standard'
+		},
+		@{
+			project   = 'Pe.Standard.DependencyInjection'
+			directory = 'Pe\lib\standard'
+		},
+		@{
 			project   = 'Pe.PInvoke'
 			directory = 'Pe\lib'
 		},
