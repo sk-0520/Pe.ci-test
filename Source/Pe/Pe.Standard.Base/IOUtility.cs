@@ -140,5 +140,26 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
             return plainName ?? Path.GetFileName(path) ?? string.Empty;
         }
+
+        public static TemporaryDirectory CreateTemporaryDirectory()
+        {
+            var tempDir = new DirectoryInfo(Path.GetTempPath());
+            return CreateTemporaryDirectory(tempDir);
+        }
+
+        public static TemporaryDirectory CreateTemporaryDirectory(DirectoryInfo baseDirectory)
+        {
+            if(!baseDirectory.Exists) {
+                baseDirectory.Create();
+            }
+
+            var randomCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+            var name = "aaa";
+            var path = Path.Join(baseDirectory.FullName, name);
+            var dir = Directory.CreateDirectory(path);
+
+            TemporaryDirectory
+        }
     }
 }
