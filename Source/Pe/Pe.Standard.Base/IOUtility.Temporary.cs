@@ -119,4 +119,53 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         #endregion
     }
+
+    public class TemporaryFile: DisposerBase
+    {
+        public TemporaryFile(FileStream stream)
+        {
+            Stream = stream;
+            Path = stream.Name;
+            File = new FileInfo(Path);
+            File.Refresh();
+        }
+
+        #region proeprty
+
+        /// <summary>
+        /// ファイルストリーム。
+        /// </summary>
+        private FileStream Stream { get; }
+
+        public FileInfo File { get; }
+        /// <summary>
+        /// 対象ファイルパス。
+        /// </summary>
+        public string Path { get; private set; }
+
+        #endregion
+
+        #region function
+
+        #endregion
+
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Stream.Dispose();
+                }
+                if(Path.Length != 0 && System.IO.File.Exists(Path)) {
+                    System.IO.File.Delete(Path);
+                    Path = string.Empty;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
+    }
 }

@@ -181,6 +181,19 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             Assert.IsFalse(dir.Exists);
         }
 
+        [TestMethod]
+        public void CreateTemporaryFileTest()
+        {
+            var tmp = IOUtility.CreateTemporaryFile();
+            var file = tmp.File;
+            using(tmp) {
+                file.Refresh();
+                Assert.IsTrue(file.Exists);
+            }
+            file.Refresh();
+            Assert.IsFalse(file.Exists);
+        }
+
         #endregion
     }
 }

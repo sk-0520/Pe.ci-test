@@ -164,16 +164,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             var random = new Random();
 
             foreach(var c in new Counter(options.RetryCount)) {
-                Span<char> dirName = stackalloc char[options.Prefix.Length + options.RandomNameLength];
-                for(var i = 0; i < options.Prefix.Length; i++) {
-                    dirName[i] = options.Prefix[i];
-                }
-
-                for(var i = 0; i < options.RandomNameLength; i++) {
-                    var randIndex = random.Next(randomNameCharacters.Length - 1);
-                    dirName[options.Prefix.Length + i] = randomNameCharacters[randIndex];
-                }
-
                 var path = GenerateTemporaryPath(random, baseDirectory, options.Prefix, options.RandomNameLength, randomNameCharacters);
                 if(Directory.Exists(path)) {
                     continue;
@@ -227,6 +217,56 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         {
             var tempDir = new DirectoryInfo(Path.GetTempPath());
             return CreateTemporaryDirectory(tempDir, options);
+        }
+
+        private static TemporaryFile CreateTemporaryFileCore(DirectoryInfo baseDirectory, TemporaryOptions options)
+        {
+            var randomNameCharacters = options.RandomNameCharacters.ToArray();
+            var random = new Random();
+
+            foreach(var c in new Counter(options.RetryCount)) {
+                var path = GenerateTemporaryPath(random, baseDirectory, options.Prefix, options.RandomNameLength, randomNameCharacters);
+                if(File.Exists(path)) {
+                    continue;
+                }
+
+                try {
+                    var stream = new FileStream(
+                        path,
+                        FileMode.CreateNew,
+                        FileAccess.ReadWrite,
+                        FileShare.ReadWrite
+                    );
+                    return new TemporaryFile(stream);
+                } catch(IOException) {
+                    continue;
+                }
+            }
+
+            throw new TemporaryException();
+        }
+
+        public static TemporaryFile CreateTemporaryFile(DirectoryInfo baseDirectory, TemporaryOptions? options = null)
+        {
+            options ??= new TemporaryOptions();
+
+            if(options.RetryCount < 1) {
+                throw new ArgumentException(nameof(options) + "." + nameof(options.RetryCount));
+            }
+            if(options.RandomNameCharacters.Count == 0) {
+                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameCharacters));
+            }
+            if(options.RandomNameLength < 1) {
+                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameLength));
+            }
+
+            return CreateTemporaryFileCore(baseDirectory, options);
+        }
+
+        public static TemporaryFile CreateTemporaryFile(TemporaryOptions? options = null)
+        {
+            var tempDir = new DirectoryInfo(Path.GetTempPath());
+            return CreateTemporaryFile(tempDir, options);
         }
     }
 }
