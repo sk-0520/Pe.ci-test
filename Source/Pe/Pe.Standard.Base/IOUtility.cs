@@ -141,9 +141,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return plainName ?? Path.GetFileName(path) ?? string.Empty;
         }
 
-        private static string GenerateTemporaryPath(Random random, DirectoryInfo baseDirectory, string prefix, int randomNameLength, IReadOnlyList<char> randomNameCharacters)
+        private static string GenerateTemporaryPath(Random random, DirectoryInfo baseDirectory, string prefix, string suffix, int randomNameLength, IReadOnlyList<char> randomNameCharacters)
         {
-            Span<char> dirName = stackalloc char[prefix.Length + randomNameLength];
+            Span<char> dirName = stackalloc char[prefix.Length + randomNameLength + suffix.Length];
             for(var i = 0; i < prefix.Length; i++) {
                 dirName[i] = prefix[i];
             }
@@ -153,18 +153,41 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 dirName[prefix.Length + i] = randomNameCharacters[randIndex];
             }
 
+            for(var i = 0; i < suffix.Length; i++) {
+                dirName[prefix.Length + randomNameLength + i] = suffix[i];
+            }
+
             var path = Path.Join(baseDirectory.FullName, dirName);
 
             return path;
         }
 
-        private static TemporaryDirectory CreateTemporaryDirectoryCore(DirectoryInfo baseDirectory, TemporaryOptions options)
+        private static void EnforceOptions(TemporaryOptions options)
         {
+            if(options.RetryCount < 1) {
+                throw new ArgumentException(nameof(options) + "." + nameof(options.RetryCount));
+            }
+            if(options.RandomNameCharacters.Count == 0) {
+                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameCharacters));
+            }
+            if(options.RandomNameLength < 1) {
+                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameLength));
+            }
+        }
+
+        private static TemporaryDirectory CreateTemporaryDirectoryCore(DirectoryInfo baseDirectory, TemporaryDirectoryOptions options)
+        {
+            EnforceOptions(options);
+
+            if(!baseDirectory.Exists) {
+                baseDirectory.Create();
+            }
+
             var randomNameCharacters = options.RandomNameCharacters.ToArray();
             var random = new Random();
 
             foreach(var c in new Counter(options.RetryCount)) {
-                var path = GenerateTemporaryPath(random, baseDirectory, options.Prefix, options.RandomNameLength, randomNameCharacters);
+                var path = GenerateTemporaryPath(random, baseDirectory, options.Prefix, options.Suffix, options.RandomNameLength, randomNameCharacters);
                 if(Directory.Exists(path)) {
                     continue;
                 }
@@ -191,41 +214,28 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="options"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        public static TemporaryDirectory CreateTemporaryDirectory(DirectoryInfo baseDirectory, TemporaryOptions? options = null)
+        public static TemporaryDirectory CreateTemporaryDirectory(DirectoryInfo baseDirectory, TemporaryDirectoryOptions? options = null)
         {
-            if(!baseDirectory.Exists) {
-                baseDirectory.Create();
-            }
-
-            options ??= new TemporaryOptions();
-
-            if(options.RetryCount < 1) {
-                throw new ArgumentException(nameof(options) + "." + nameof(options.RetryCount));
-            }
-            if(options.RandomNameCharacters.Count == 0) {
-                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameCharacters));
-            }
-            if(options.RandomNameLength < 1) {
-                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameLength));
-            }
-
+            options ??= new TemporaryDirectoryOptions();
             return CreateTemporaryDirectoryCore(baseDirectory, options);
         }
 
-        /// <inheritdoc cref="CreateTemporaryDirectory(DirectoryInfo, TemporaryOptions?)"/>
-        public static TemporaryDirectory CreateTemporaryDirectory(TemporaryOptions? options = null)
+        /// <inheritdoc cref="CreateTemporaryDirectory(DirectoryInfo, TemporaryDirectoryOptions?)"/>
+        public static TemporaryDirectory CreateTemporaryDirectory(TemporaryDirectoryOptions? options = null)
         {
             var tempDir = new DirectoryInfo(Path.GetTempPath());
             return CreateTemporaryDirectory(tempDir, options);
         }
 
-        private static TemporaryFile CreateTemporaryFileCore(DirectoryInfo baseDirectory, TemporaryOptions options)
+        private static TemporaryFile CreateTemporaryFileCore(DirectoryInfo baseDirectory, TemporaryFileOptions options)
         {
+            EnforceOptions(options);
+
             var randomNameCharacters = options.RandomNameCharacters.ToArray();
             var random = new Random();
 
             foreach(var c in new Counter(options.RetryCount)) {
-                var path = GenerateTemporaryPath(random, baseDirectory, options.Prefix, options.RandomNameLength, randomNameCharacters);
+                var path = GenerateTemporaryPath(random, baseDirectory, options.Prefix, options.Suffix, options.RandomNameLength, randomNameCharacters);
                 if(File.Exists(path)) {
                     continue;
                 }
@@ -246,24 +256,13 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             throw new TemporaryException();
         }
 
-        public static TemporaryFile CreateTemporaryFile(DirectoryInfo baseDirectory, TemporaryOptions? options = null)
+        public static TemporaryFile CreateTemporaryFile(DirectoryInfo baseDirectory, TemporaryFileOptions? options = null)
         {
-            options ??= new TemporaryOptions();
-
-            if(options.RetryCount < 1) {
-                throw new ArgumentException(nameof(options) + "." + nameof(options.RetryCount));
-            }
-            if(options.RandomNameCharacters.Count == 0) {
-                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameCharacters));
-            }
-            if(options.RandomNameLength < 1) {
-                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameLength));
-            }
-
+            options ??= new TemporaryFileOptions();
             return CreateTemporaryFileCore(baseDirectory, options);
         }
 
-        public static TemporaryFile CreateTemporaryFile(TemporaryOptions? options = null)
+        public static TemporaryFile CreateTemporaryFile(TemporaryFileOptions? options = null)
         {
             var tempDir = new DirectoryInfo(Path.GetTempPath());
             return CreateTemporaryFile(tempDir, options);

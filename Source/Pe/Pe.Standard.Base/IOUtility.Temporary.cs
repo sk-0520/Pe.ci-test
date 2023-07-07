@@ -30,14 +30,18 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// <summary>
     /// 一時ディレクトリ・ファイル生成オプション。
     /// </summary>
-    public class TemporaryOptions
+    public abstract class TemporaryOptions
     {
         #region property
 
         /// <summary>
-        /// プレフィックス。
+        /// 一時ファイルシステム名プレフィックス。
         /// </summary>
         public string Prefix { get; set; } = string.Empty;
+        /// <summary>
+        /// 一時ファイルシステム名サフィックス。
+        /// </summary>
+        public string Suffix { get; set; } = string.Empty;
 
         /// <summary>
         /// ランダム生成文字列の文字数。
@@ -54,10 +58,24 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// </summary>
         public int RetryCount { get; set; } = 100;
 
+        #endregion
+    }
+
+    public class TemporaryDirectoryOptions: TemporaryOptions
+    {
+        #region property
+
         /// <summary>
         /// ディレクトリ破棄処理。
         /// </summary>
         public DirectoryCleaner? Cleaner { get; set; }
+
+        #endregion
+    }
+
+    public class TemporaryFileOptions: TemporaryOptions
+    {
+        #region property
 
         #endregion
     }

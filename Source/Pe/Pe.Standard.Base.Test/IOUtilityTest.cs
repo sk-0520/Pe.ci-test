@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         [TestMethod]
         public void CreateTemporaryDirectory_Prefix_Test()
         {
-            var tmp = IOUtility.CreateTemporaryDirectory(new TemporaryOptions {
+            var tmp = IOUtility.CreateTemporaryDirectory(new TemporaryDirectoryOptions {
                 Prefix = "prefix_"
             });
             var dir = tmp.Directory;
@@ -193,6 +193,23 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             file.Refresh();
             Assert.IsFalse(file.Exists);
         }
+
+        [TestMethod]
+        public void CreateTemporaryFile_PS_Test()
+        {
+            var tmp = IOUtility.CreateTemporaryFile(new TemporaryFileOptions {
+                Prefix = "prefix_",
+                Suffix = ".tmp",
+            });
+            var file = tmp.File;
+            using(tmp) {
+                file.Refresh();
+                Assert.IsTrue(file.Exists);
+            }
+            file.Refresh();
+            Assert.IsFalse(file.Exists);
+        }
+
 
         #endregion
     }
