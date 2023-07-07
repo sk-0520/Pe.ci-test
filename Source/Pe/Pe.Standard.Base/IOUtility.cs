@@ -140,5 +140,134 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
             return plainName ?? Path.GetFileName(path) ?? string.Empty;
         }
+
+        private static string GenerateTemporaryPath(Random random, DirectoryInfo baseDirectory, string prefix, string suffix, int randomNameLength, IReadOnlyList<char> randomNameCharacters)
+        {
+            Span<char> dirName = stackalloc char[prefix.Length + randomNameLength + suffix.Length];
+            for(var i = 0; i < prefix.Length; i++) {
+                dirName[i] = prefix[i];
+            }
+
+            for(var i = 0; i < randomNameLength; i++) {
+                var randIndex = random.Next(randomNameCharacters.Count - 1);
+                dirName[prefix.Length + i] = randomNameCharacters[randIndex];
+            }
+
+            for(var i = 0; i < suffix.Length; i++) {
+                dirName[prefix.Length + randomNameLength + i] = suffix[i];
+            }
+
+            var path = Path.Join(baseDirectory.FullName, dirName);
+
+            return path;
+        }
+
+        private static void EnforceOptions(TemporaryOptions options)
+        {
+            if(options.RetryCount < 1) {
+                throw new ArgumentException(nameof(options) + "." + nameof(options.RetryCount));
+            }
+            if(options.RandomNameCharacters.Count == 0) {
+                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameCharacters));
+            }
+            if(options.RandomNameLength < 1) {
+                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameLength));
+            }
+        }
+
+        private static TemporaryDirectory CreateTemporaryDirectoryCore(DirectoryInfo baseDirectory, TemporaryDirectoryOptions options)
+        {
+            EnforceOptions(options);
+
+            if(!baseDirectory.Exists) {
+                baseDirectory.Create();
+            }
+
+            var randomNameCharacters = options.RandomNameCharacters.ToArray();
+            var random = new Random();
+
+            foreach(var c in new Counter(options.RetryCount)) {
+                var path = GenerateTemporaryPath(random, baseDirectory, options.Prefix, options.Suffix, options.RandomNameLength, randomNameCharacters);
+                if(Directory.Exists(path)) {
+                    continue;
+                }
+
+                try {
+                    //TODO: 新規作成失敗に対応できてない
+                    var dir = Directory.CreateDirectory(path);
+                    return options.Cleaner is null
+                        ? new TemporaryDirectory(dir)
+                        : new TemporaryDirectory(dir, options.Cleaner)
+                        ;
+                } catch(IOException) {
+                    continue;
+                }
+            }
+
+            throw new TemporaryException();
+        }
+
+        /// <summary>
+        /// 一時ディレクトリを生成。
+        /// </summary>
+        /// <param name="baseDirectory">親ディレクトリ。</param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static TemporaryDirectory CreateTemporaryDirectory(DirectoryInfo baseDirectory, TemporaryDirectoryOptions? options = null)
+        {
+            options ??= new TemporaryDirectoryOptions();
+            return CreateTemporaryDirectoryCore(baseDirectory, options);
+        }
+
+        /// <inheritdoc cref="CreateTemporaryDirectory(DirectoryInfo, TemporaryDirectoryOptions?)"/>
+        public static TemporaryDirectory CreateTemporaryDirectory(TemporaryDirectoryOptions? options = null)
+        {
+            var tempDir = new DirectoryInfo(Path.GetTempPath());
+            return CreateTemporaryDirectory(tempDir, options);
+        }
+
+        private static TemporaryFile CreateTemporaryFileCore(DirectoryInfo baseDirectory, TemporaryFileOptions options)
+        {
+            EnforceOptions(options);
+
+            var randomNameCharacters = options.RandomNameCharacters.ToArray();
+            var random = new Random();
+
+            foreach(var c in new Counter(options.RetryCount)) {
+                var path = GenerateTemporaryPath(random, baseDirectory, options.Prefix, options.Suffix, options.RandomNameLength, randomNameCharacters);
+                if(File.Exists(path)) {
+                    continue;
+                }
+
+                try {
+                    var stream = new FileStream(path, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
+                    return new TemporaryFile(stream);
+                } catch(IOException) {
+                    continue;
+                }
+            }
+
+            throw new TemporaryException();
+        }
+
+        /// <summary>
+        /// 一時ファイルを生成。
+        /// </summary>
+        /// <param name="baseDirectory">親ディレクトリ。</param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public static TemporaryFile CreateTemporaryFile(DirectoryInfo baseDirectory, TemporaryFileOptions? options = null)
+        {
+            options ??= new TemporaryFileOptions();
+            return CreateTemporaryFileCore(baseDirectory, options);
+        }
+
+        /// <inheritdoc cref="CreateTemporaryFile(DirectoryInfo, TemporaryFileOptions?)"/>
+        public static TemporaryFile CreateTemporaryFile(TemporaryFileOptions? options = null)
+        {
+            var tempDir = new DirectoryInfo(Path.GetTempPath());
+            return CreateTemporaryFile(tempDir, options);
+        }
     }
 }

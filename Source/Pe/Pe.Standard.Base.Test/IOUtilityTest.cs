@@ -153,6 +153,105 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             Assert.IsFalse(IOUtility.Exists(dir.FullName));
         }
 
+        [TestMethod]
+        public void CreateTemporaryDirectoryTest()
+        {
+            var tmp = IOUtility.CreateTemporaryDirectory();
+            var dir = tmp.Directory;
+            using(tmp) {
+                dir.Refresh();
+                Assert.IsTrue(dir.Exists);
+            }
+            dir.Refresh();
+            Assert.IsFalse(dir.Exists);
+        }
+
+        [TestMethod]
+        public void CreateTemporaryDirectory_Prefix_Test()
+        {
+            var tmp = IOUtility.CreateTemporaryDirectory(new TemporaryDirectoryOptions {
+                Prefix = "prefix_"
+            });
+            var dir = tmp.Directory;
+            using(tmp) {
+                dir.Refresh();
+                Assert.IsTrue(dir.Exists);
+            }
+            dir.Refresh();
+            Assert.IsFalse(dir.Exists);
+        }
+
+        [TestMethod]
+        public void CreateTemporaryFileTest()
+        {
+            var tmp = IOUtility.CreateTemporaryFile();
+            var file = tmp.File;
+            using(tmp) {
+                file.Refresh();
+                Assert.IsTrue(file.Exists);
+            }
+            file.Refresh();
+            Assert.IsFalse(file.Exists);
+        }
+
+        [TestMethod]
+        public void CreateTemporaryFile_Stream_Test()
+        {
+            var tmp = IOUtility.CreateTemporaryFile();
+            using(tmp) {
+                tmp.DoStream(s => {
+                    using var w = new StreamWriter(s, leaveOpen: true);
+                    w.Write("abc");
+                });
+
+                tmp.DoStream(s => {
+                    s.Position = 0;
+                    using var r = new StreamReader(s, leaveOpen: true);
+                    var actual = r.ReadLine();
+                    Assert.AreEqual("abc", actual);
+                });
+
+                tmp.DoStream(s => {
+                    using var w = new StreamWriter(s, leaveOpen: true);
+                    w.Write("def");
+                });
+
+                tmp.DoStream(s => {
+                    s.Position = 0;
+                    using var r = new StreamReader(s, leaveOpen: true);
+                    var actual = r.ReadLine();
+                    Assert.AreEqual("abcdef", actual);
+                });
+
+                using var r2 = new StreamReader(tmp.CreateStream());
+                Assert.AreEqual("abcdef", r2.ReadToEnd());
+
+                using var w2 = new StreamWriter(tmp.CreateStream());
+                w2.Write("ABC");
+                w2.Flush();
+
+                using var r3 = new StreamReader(tmp.CreateStream());
+                Assert.AreEqual("ABCdef", r3.ReadToEnd());
+            }
+        }
+
+        [TestMethod]
+        public void CreateTemporaryFile_PS_Test()
+        {
+            var tmp = IOUtility.CreateTemporaryFile(new TemporaryFileOptions {
+                Prefix = "prefix_",
+                Suffix = ".tmp",
+            });
+            var file = tmp.File;
+            using(tmp) {
+                file.Refresh();
+                Assert.IsTrue(file.Exists);
+            }
+            file.Refresh();
+            Assert.IsFalse(file.Exists);
+        }
+
+
         #endregion
     }
 }
