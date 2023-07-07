@@ -89,13 +89,13 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// </summary>
     public class TemporaryDirectory: DisposerBase
     {
-        public TemporaryDirectory(DirectoryInfo directory)
+        internal TemporaryDirectory(DirectoryInfo directory)
         {
             Directory = directory;
             Cleaner = null;
         }
 
-        public TemporaryDirectory(DirectoryInfo directory, DirectoryCleaner cleaner)
+        internal TemporaryDirectory(DirectoryInfo directory, DirectoryCleaner cleaner)
         {
             Directory = directory;
             Cleaner = cleaner;
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
     public class TemporaryFile: DisposerBase
     {
-        public TemporaryFile(FileStream stream)
+        internal TemporaryFile(FileStream stream)
         {
             Stream = stream;
             Path = stream.Name;
