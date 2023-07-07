@@ -216,8 +216,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <exception cref="ArgumentException"></exception>
         public static TemporaryDirectory CreateTemporaryDirectory(DirectoryInfo baseDirectory, TemporaryDirectoryOptions? options = null)
         {
-            options ??= new TemporaryDirectoryOptions();
-            return CreateTemporaryDirectoryCore(baseDirectory, options);
+            return CreateTemporaryDirectoryCore(baseDirectory, options ?? new TemporaryDirectoryOptions());
         }
 
         /// <inheritdoc cref="CreateTemporaryDirectory(DirectoryInfo, TemporaryDirectoryOptions?)"/>
@@ -259,8 +258,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <returns></returns>
         public static TemporaryFile CreateTemporaryFile(DirectoryInfo baseDirectory, TemporaryFileOptions? options = null)
         {
-            options ??= new TemporaryFileOptions();
-            return CreateTemporaryFileCore(baseDirectory, options);
+            return CreateTemporaryFileCore(baseDirectory, options ?? new TemporaryFileOptions());
         }
 
         /// <inheritdoc cref="CreateTemporaryFile(DirectoryInfo, TemporaryFileOptions?)"/>
