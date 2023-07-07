@@ -195,6 +195,47 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         }
 
         [TestMethod]
+        public void CreateTemporaryFile_Stream_Test()
+        {
+            var tmp = IOUtility.CreateTemporaryFile();
+            using(tmp) {
+                tmp.DoStream(s => {
+                    using var w = new StreamWriter(s, leaveOpen: true);
+                    w.Write("abc");
+                });
+
+                tmp.DoStream(s => {
+                    s.Position = 0;
+                    using var r = new StreamReader(s, leaveOpen: true);
+                    var actual = r.ReadLine();
+                    Assert.AreEqual("abc", actual);
+                });
+
+                tmp.DoStream(s => {
+                    using var w = new StreamWriter(s, leaveOpen: true);
+                    w.Write("def");
+                });
+
+                tmp.DoStream(s => {
+                    s.Position = 0;
+                    using var r = new StreamReader(s, leaveOpen: true);
+                    var actual = r.ReadLine();
+                    Assert.AreEqual("abcdef", actual);
+                });
+
+                using var r2 = new StreamReader(tmp.CreateStream());
+                Assert.AreEqual("abcdef", r2.ReadToEnd());
+
+                using var w2 = new StreamWriter(tmp.CreateStream());
+                w2.Write("ABC");
+                w2.Flush();
+
+                using var r3 = new StreamReader(tmp.CreateStream());
+                Assert.AreEqual("ABCdef", r3.ReadToEnd());
+            }
+        }
+
+        [TestMethod]
         public void CreateTemporaryFile_PS_Test()
         {
             var tmp = IOUtility.CreateTemporaryFile(new TemporaryFileOptions {

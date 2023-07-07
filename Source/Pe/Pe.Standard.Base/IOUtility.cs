@@ -210,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <summary>
         /// 一時ディレクトリを生成。
         /// </summary>
-        /// <param name="baseDirectory"></param>
+        /// <param name="baseDirectory">親ディレクトリ。</param>
         /// <param name="options"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
@@ -241,12 +241,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 }
 
                 try {
-                    var stream = new FileStream(
-                        path,
-                        FileMode.CreateNew,
-                        FileAccess.ReadWrite,
-                        FileShare.ReadWrite
-                    );
+                    var stream = new FileStream(path, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
                     return new TemporaryFile(stream);
                 } catch(IOException) {
                     continue;
@@ -256,12 +251,19 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             throw new TemporaryException();
         }
 
+        /// <summary>
+        /// 一時ファイルを生成。
+        /// </summary>
+        /// <param name="baseDirectory">親ディレクトリ。</param>
+        /// <param name="options"></param>
+        /// <returns></returns>
         public static TemporaryFile CreateTemporaryFile(DirectoryInfo baseDirectory, TemporaryFileOptions? options = null)
         {
             options ??= new TemporaryFileOptions();
             return CreateTemporaryFileCore(baseDirectory, options);
         }
 
+        /// <inheritdoc cref="CreateTemporaryFile(DirectoryInfo, TemporaryFileOptions?)"/>
         public static TemporaryFile CreateTemporaryFile(TemporaryFileOptions? options = null)
         {
             var tempDir = new DirectoryInfo(Path.GetTempPath());

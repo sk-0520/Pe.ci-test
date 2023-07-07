@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
@@ -155,7 +157,17 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// </summary>
         private FileStream Stream { get; }
 
+        /// <summary>
+        /// ファイル情報。
+        /// <para>ストリーム処理の解放とか諸々の管理をしたくない場合は<see cref="CreateStream"/>を用いること。</para>
+        /// </summary>
         public FileInfo File { get; }
+
+        /// <summary>
+        /// 内部で開いたストリーム一式。
+        /// </summary>
+        private Stack<Stream> Streams { get; } = new Stack<Stream>();
+
         /// <summary>
         /// 対象ファイルパス。
         /// </summary>
@@ -165,6 +177,37 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         #region function
 
+        /// <summary>
+        /// ファイル操作用 <see cref="System.IO.Stream"/> を生成。
+        /// </summary>
+        /// <returns></returns>
+        public Stream CreateStream()
+        {
+            var stream = new FileStream(Path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
+            Streams.Push(stream);
+            return new KeepStream(stream);
+        }
+
+        /// <summary>
+        /// 現在ストリームに対する処理。
+        /// </summary>
+        /// <param name="action"></param>
+        public void DoStream(Action<Stream> action)
+        {
+            action(Stream);
+        }
+
+        /// <summary>
+        /// 非同期版。
+        /// <inheritdoc cref="DoStream"/>
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public Task DoStreamAsync(Func<Stream, Task> func)
+        {
+            return func(Stream);
+        }
+
         #endregion
 
         #region DisposerBase
@@ -173,8 +216,13 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         {
             if(!IsDisposed) {
                 if(disposing) {
+                    foreach(var stream in Streams) {
+                        stream.Dispose();
+                    }
+                    Streams.Clear();
                     Stream.Dispose();
                 }
+
                 if(Path.Length != 0 && System.IO.File.Exists(Path)) {
                     System.IO.File.Delete(Path);
                     Path = string.Empty;
