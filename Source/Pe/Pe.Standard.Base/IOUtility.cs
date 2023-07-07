@@ -141,6 +141,23 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return plainName ?? Path.GetFileName(path) ?? string.Empty;
         }
 
+        private static string GenerateTemporaryPath(Random random, DirectoryInfo baseDirectory, string prefix, int randomNameLength, IReadOnlyList<char> randomNameCharacters)
+        {
+            Span<char> dirName = stackalloc char[prefix.Length + randomNameLength];
+            for(var i = 0; i < prefix.Length; i++) {
+                dirName[i] = prefix[i];
+            }
+
+            for(var i = 0; i < randomNameLength; i++) {
+                var randIndex = random.Next(randomNameCharacters.Count - 1);
+                dirName[prefix.Length + i] = randomNameCharacters[randIndex];
+            }
+
+            var path = Path.Join(baseDirectory.FullName, dirName);
+
+            return path;
+        }
+
         private static TemporaryDirectory CreateTemporaryDirectoryCore(DirectoryInfo baseDirectory, TemporaryOptions options)
         {
             var randomNameCharacters = options.RandomNameCharacters.ToArray();
@@ -157,7 +174,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                     dirName[options.Prefix.Length + i] = randomNameCharacters[randIndex];
                 }
 
-                var path = Path.Join(baseDirectory.FullName, dirName);
+                var path = GenerateTemporaryPath(random, baseDirectory, options.Prefix, options.RandomNameLength, randomNameCharacters);
                 if(Directory.Exists(path)) {
                     continue;
                 }
