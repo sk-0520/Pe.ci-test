@@ -153,6 +153,34 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             Assert.IsFalse(IOUtility.Exists(dir.FullName));
         }
 
+        [TestMethod]
+        public void CreateTemporaryDirectoryTest()
+        {
+            var tmp = IOUtility.CreateTemporaryDirectory();
+            var dir = tmp.Directory;
+            using(tmp) {
+                dir.Refresh();
+                Assert.IsTrue(dir.Exists);
+            }
+            dir.Refresh();
+            Assert.IsFalse(dir.Exists);
+        }
+
+        [TestMethod]
+        public void CreateTemporaryDirectory_Prefix_Test()
+        {
+            var tmp = IOUtility.CreateTemporaryDirectory(new TemporaryOptions {
+                Prefix = "prefix_"
+            });
+            var dir = tmp.Directory;
+            using(tmp) {
+                dir.Refresh();
+                Assert.IsTrue(dir.Exists);
+            }
+            dir.Refresh();
+            Assert.IsFalse(dir.Exists);
+        }
+
         #endregion
     }
 }

@@ -141,25 +141,75 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return plainName ?? Path.GetFileName(path) ?? string.Empty;
         }
 
-        public static TemporaryDirectory CreateTemporaryDirectory()
+        private static TemporaryDirectory CreateTemporaryDirectoryCore(DirectoryInfo baseDirectory, TemporaryOptions options)
         {
-            var tempDir = new DirectoryInfo(Path.GetTempPath());
-            return CreateTemporaryDirectory(tempDir);
+            var randomNameCharacters = options.RandomNameCharacters.ToArray();
+            var random = new Random();
+
+            foreach(var c in new Counter(options.RetryCount)) {
+                Span<char> dirName = stackalloc char[options.Prefix.Length + options.RandomNameLength];
+                for(var i = 0; i < options.Prefix.Length; i++) {
+                    dirName[i] = options.Prefix[i];
+                }
+
+                for(var i = 0; i < options.RandomNameLength; i++) {
+                    var randIndex = random.Next(randomNameCharacters.Length - 1);
+                    dirName[options.Prefix.Length + i] = randomNameCharacters[randIndex];
+                }
+
+                var path = Path.Join(baseDirectory.FullName, dirName);
+                if(Directory.Exists(path)) {
+                    continue;
+                }
+
+                try {
+                    //TODO: 新規作成失敗に対応できてない
+                    var dir = Directory.CreateDirectory(path);
+                    return options.Cleaner is null
+                        ? new TemporaryDirectory(dir)
+                        : new TemporaryDirectory(dir, options.Cleaner)
+                        ;
+                } catch(IOException) {
+                    continue;
+                }
+            }
+
+            throw new TemporaryException();
         }
 
-        public static TemporaryDirectory CreateTemporaryDirectory(DirectoryInfo baseDirectory)
+        /// <summary>
+        /// 一時ディレクトリを生成。
+        /// </summary>
+        /// <param name="baseDirectory"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static TemporaryDirectory CreateTemporaryDirectory(DirectoryInfo baseDirectory, TemporaryOptions? options = null)
         {
             if(!baseDirectory.Exists) {
                 baseDirectory.Create();
             }
 
-            var randomCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
+            options ??= new TemporaryOptions();
 
-            var name = "aaa";
-            var path = Path.Join(baseDirectory.FullName, name);
-            var dir = Directory.CreateDirectory(path);
+            if(options.RetryCount < 1) {
+                throw new ArgumentException(nameof(options) + "." + nameof(options.RetryCount));
+            }
+            if(options.RandomNameCharacters.Count == 0) {
+                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameCharacters));
+            }
+            if(options.RandomNameLength < 1) {
+                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameLength));
+            }
 
-            TemporaryDirectory
+            return CreateTemporaryDirectoryCore(baseDirectory, options);
+        }
+
+        /// <inheritdoc cref="CreateTemporaryDirectory(DirectoryInfo, TemporaryOptions?)"/>
+        public static TemporaryDirectory CreateTemporaryDirectory(TemporaryOptions? options = null)
+        {
+            var tempDir = new DirectoryInfo(Path.GetTempPath());
+            return CreateTemporaryDirectory(tempDir, options);
         }
     }
 }
