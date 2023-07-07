@@ -53,6 +53,205 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             Assert.IsFalse(IOUtility.Exists(d.FullName));
         }
 
+        [TestMethod]
+        public async Task ExistsAsyncTest()
+        {
+            var dir = TestIO.InitializeMethod(this);
+
+            var f = TestIO.CreateEmptyFile(dir, "f");
+            Assert.IsTrue(await IOUtility.ExistsAsync(f.FullName));
+
+            var d = TestIO.CreateDirectory(dir, "d");
+            Assert.IsTrue(await IOUtility.ExistsAsync(d.FullName));
+
+            f.Delete();
+            d.Delete(true);
+
+            Assert.IsFalse(await IOUtility.ExistsAsync(f.FullName));
+            Assert.IsFalse(await IOUtility.ExistsAsync(d.FullName));
+        }
+
+        [TestMethod]
+        public async Task ExistsFileAsyncTest()
+        {
+            var dir = TestIO.InitializeMethod(this);
+
+            var f = TestIO.CreateEmptyFile(dir, "f");
+            Assert.IsTrue(await IOUtility.ExistsFileAsync(f.FullName));
+
+            var d = TestIO.CreateDirectory(dir, "d");
+            Assert.IsFalse(await IOUtility.ExistsFileAsync(d.FullName));
+
+            f.Delete();
+            d.Delete(true);
+
+            Assert.IsFalse(await IOUtility.ExistsAsync(f.FullName));
+            Assert.IsFalse(await IOUtility.ExistsAsync(d.FullName));
+        }
+
+        [TestMethod]
+        public async Task ExistsDirectoryAsyncTest()
+        {
+            var dir = TestIO.InitializeMethod(this);
+
+            var f = TestIO.CreateEmptyFile(dir, "f");
+            Assert.IsFalse(await IOUtility.ExistsDirectoryAsync(f.FullName));
+
+            var d = TestIO.CreateDirectory(dir, "d");
+            Assert.IsTrue(await IOUtility.ExistsDirectoryAsync(d.FullName));
+
+            f.Delete();
+            d.Delete(true);
+
+            Assert.IsFalse(await IOUtility.ExistsDirectoryAsync(f.FullName));
+            Assert.IsFalse(await IOUtility.ExistsDirectoryAsync(d.FullName));
+        }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var dir = TestIO.InitializeMethod(this);
+
+            var f = TestIO.CreateEmptyFile(dir, "f");
+            var d = TestIO.CreateDirectory(dir, "d");
+
+            var child = TestIO.CreateEmptyFile(d, "child");
+
+            Assert.IsTrue(IOUtility.Exists(f.FullName));
+            Assert.IsTrue(IOUtility.Exists(d.FullName));
+            Assert.IsTrue(IOUtility.Exists(child.FullName));
+
+            IOUtility.Delete(f.FullName);
+            Assert.IsFalse(IOUtility.Exists(f.FullName));
+
+            IOUtility.Delete(dir.FullName);
+            Assert.IsFalse(IOUtility.Exists(d.FullName));
+            Assert.IsFalse(IOUtility.Exists(child.FullName));
+            Assert.IsFalse(IOUtility.Exists(dir.FullName));
+        }
+
+        [TestMethod]
+        public async Task DeleteAsyncTest()
+        {
+            var dir = TestIO.InitializeMethod(this);
+
+            var f = TestIO.CreateEmptyFile(dir, "f");
+            var d = TestIO.CreateDirectory(dir, "d");
+
+            var child = TestIO.CreateEmptyFile(d, "child");
+
+            Assert.IsTrue(IOUtility.Exists(f.FullName));
+            Assert.IsTrue(IOUtility.Exists(d.FullName));
+            Assert.IsTrue(IOUtility.Exists(child.FullName));
+
+            await IOUtility.DeleteAsync(f.FullName);
+            Assert.IsFalse(IOUtility.Exists(f.FullName));
+
+            await IOUtility.DeleteAsync(dir.FullName);
+            Assert.IsFalse(IOUtility.Exists(d.FullName));
+            Assert.IsFalse(IOUtility.Exists(child.FullName));
+            Assert.IsFalse(IOUtility.Exists(dir.FullName));
+        }
+
+        [TestMethod]
+        public void CreateTemporaryDirectoryTest()
+        {
+            var tmp = IOUtility.CreateTemporaryDirectory();
+            var dir = tmp.Directory;
+            using(tmp) {
+                dir.Refresh();
+                Assert.IsTrue(dir.Exists);
+            }
+            dir.Refresh();
+            Assert.IsFalse(dir.Exists);
+        }
+
+        [TestMethod]
+        public void CreateTemporaryDirectory_Prefix_Test()
+        {
+            var tmp = IOUtility.CreateTemporaryDirectory(new TemporaryDirectoryOptions {
+                Prefix = "prefix_"
+            });
+            var dir = tmp.Directory;
+            using(tmp) {
+                dir.Refresh();
+                Assert.IsTrue(dir.Exists);
+            }
+            dir.Refresh();
+            Assert.IsFalse(dir.Exists);
+        }
+
+        [TestMethod]
+        public void CreateTemporaryFileTest()
+        {
+            var tmp = IOUtility.CreateTemporaryFile();
+            var file = tmp.File;
+            using(tmp) {
+                file.Refresh();
+                Assert.IsTrue(file.Exists);
+            }
+            file.Refresh();
+            Assert.IsFalse(file.Exists);
+        }
+
+        [TestMethod]
+        public void CreateTemporaryFile_Stream_Test()
+        {
+            var tmp = IOUtility.CreateTemporaryFile();
+            using(tmp) {
+                tmp.DoStream(s => {
+                    using var w = new StreamWriter(s, leaveOpen: true);
+                    w.Write("abc");
+                });
+
+                tmp.DoStream(s => {
+                    s.Position = 0;
+                    using var r = new StreamReader(s, leaveOpen: true);
+                    var actual = r.ReadLine();
+                    Assert.AreEqual("abc", actual);
+                });
+
+                tmp.DoStream(s => {
+                    using var w = new StreamWriter(s, leaveOpen: true);
+                    w.Write("def");
+                });
+
+                tmp.DoStream(s => {
+                    s.Position = 0;
+                    using var r = new StreamReader(s, leaveOpen: true);
+                    var actual = r.ReadLine();
+                    Assert.AreEqual("abcdef", actual);
+                });
+
+                using var r2 = new StreamReader(tmp.CreateStream());
+                Assert.AreEqual("abcdef", r2.ReadToEnd());
+
+                using var w2 = new StreamWriter(tmp.CreateStream());
+                w2.Write("ABC");
+                w2.Flush();
+
+                using var r3 = new StreamReader(tmp.CreateStream());
+                Assert.AreEqual("ABCdef", r3.ReadToEnd());
+            }
+        }
+
+        [TestMethod]
+        public void CreateTemporaryFile_PS_Test()
+        {
+            var tmp = IOUtility.CreateTemporaryFile(new TemporaryFileOptions {
+                Prefix = "prefix_",
+                Suffix = ".tmp",
+            });
+            var file = tmp.File;
+            using(tmp) {
+                file.Refresh();
+                Assert.IsTrue(file.Exists);
+            }
+            file.Refresh();
+            Assert.IsFalse(file.Exists);
+        }
+
+
         #endregion
     }
 }

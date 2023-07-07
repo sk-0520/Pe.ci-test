@@ -3,6 +3,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {
+    /// <summary>
+    /// アプリケーション構成: Web アクセス系。
+    /// </summary>
     public class WebConfiguration: ConfigurationBase
     {
         public WebConfiguration(IConfigurationSection section)
@@ -11,8 +14,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         #region property
 
+        /// <summary>
+        /// 内蔵ブラウザの UA 書式。
+        /// </summary>
         [Configuration("view_useragent_format")]
         public string ViewUserAgentFormat { get; } = default!;
+        /// <summary>
+        /// HTTP直接通信時の UA 書式。
+        /// </summary>
         [Configuration("client_useragent_format")]
         public string ClientUserAgentFormat { get; } = default!;
 

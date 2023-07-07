@@ -1,5 +1,57 @@
 [
 	{
+		"date": "2023/07/07",
+		"version": "0.99.200",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"subject": "たなばた"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "3cead801e40861eea9ab5c6c445b3c93c2744420",
+						"subject": "#885: プラグインテンプレートがだめだめ"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "26ff9fab832a0e9b660f454e2f3df7188a150f3e",
+						"subject": "とりあえず Moq 突っ込み",
+						"comments": [
+							"なんも考えてないけど、とりあえず、とりあえず"
+						]
+					},
+					{
+						"revision": "cc6b2eea89188a8e37c74b789ec1ff6d77f051ec",
+						"subject": "#52: ドキュメントコメント",
+						"comments": [
+							"永久に終わらないからもうこれでいったん終了"
+						]
+					},
+					{
+						"revision": "e47adddde8c100d3c126c87300713f50e7770d34",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 5.3.0 -> 5.3.2"
+					},
+					{
+						"revision": "a0ecf57f6e6e5941e7bb84f001f96ec070b4d7ff",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf.NETCore 114.2.100 -> 114.2.114.2.120"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/07/02",
 		"version": "0.99.199",
 		"contents": [

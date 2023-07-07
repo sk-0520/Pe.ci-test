@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                     Name = TextUtility.ToUnique(Properties.Resources.String_LauncherItem_NewItem_Name, AllLauncherItems.Select(i => i.Name).ToList(), StringComparison.OrdinalIgnoreCase, (s, n) => $"{s}({n})"),
                 };
 
-                var newCode = kind.ToString().ToLowerInvariant() + "-item-code";
+                var newCode = EnumUtility.ToString(kind) + "-item-code";
                 var codes = launcherItemsDao.SelectFuzzyCodes(newCode).ToList();
                 item.Code = launcherFactory.GetUniqueCode(newCode, codes);
                 item.IsEnabledCommandLauncher = true;

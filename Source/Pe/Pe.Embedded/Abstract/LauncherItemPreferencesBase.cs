@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
+    /// <summary>
+    /// ランチャーアイテム設定基底処理。
+    /// </summary>
     internal abstract class LauncherItemPreferencesBase: ILauncherItemPreferences
     {
         protected LauncherItemPreferencesBase(PluginBase plugin, LauncherItemId launcherItemId, IAddonExecutor addonExecutor, IDispatcherWrapper dispatcherWrapper, ISkeletonImplements skeletonImplements, IImageLoader imageLoader, IHttpUserAgentFactory httpUserAgentFactory, ILoggerFactory loggerFactory)

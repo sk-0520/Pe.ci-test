@@ -23,7 +23,6 @@ namespace ContentTypeTextNet.Pe.Embedded.Attributes
             CheckUrls = checkUrls;
         }
 
-
         #region property
 
         /// <inheritdoc cref="IPluginVersions.MinimumSupportVersion"/>

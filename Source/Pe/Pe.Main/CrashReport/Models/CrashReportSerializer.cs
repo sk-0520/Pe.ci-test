@@ -11,8 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models
     internal sealed class CrashReportSerializer: SerializerBase
     {
         public CrashReportSerializer()
-        {
-        }
+        { }
 
         #region SerializerBase
 
@@ -36,8 +35,5 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models
         }
 
         #endregion
-
-
-
     }
 }

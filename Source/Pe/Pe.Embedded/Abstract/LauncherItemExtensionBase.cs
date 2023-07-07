@@ -12,9 +12,17 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
+    /// <summary>
+    /// ランチャーアイテム基底処理。
+    /// </summary>
     internal abstract class LauncherItemExtensionBase: ILauncherItemExtension, ILauncherItemId
     {
-        protected LauncherItemExtensionBase(ILauncherItemExtensionCreateParameter parameter, IPluginInformation pluginInformations)
+        /// <summary>
+        /// 生成。
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="pluginInformation"></param>
+        protected LauncherItemExtensionBase(ILauncherItemExtensionCreateParameter parameter, IPluginInformation pluginInformation)
         {
             LoggerFactory = parameter.LoggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -27,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             MediaConverter = parameter.MediaConverter;
             HttpUserAgentFactory = parameter.HttpUserAgentFactory;
             ContextWorker = parameter.ContextWorker;
-            PluginInformations = pluginInformations;
+            PluginInformation = pluginInformation;
         }
 
         #region property
@@ -53,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// <inheritdoc cref="ILauncherItemAddonContextWorker"/>
         protected ILauncherItemAddonContextWorker ContextWorker { get; }
         /// <inheritdoc cref="IPluginInformation"/>
-        protected IPluginInformation PluginInformations { get; }
+        protected IPluginInformation PluginInformation { get; }
 
         protected ISet<object> CallerObjects { get; } = new HashSet<object>();
 

@@ -89,13 +89,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
             var versionConverter = new VersionConverter();
 
             var data = new FeedbackSendData() {
-                Kind = inputData.Kind.ToString().ToLowerInvariant(),
+                Kind = EnumUtility.ToString(inputData.Kind),
                 Subject = inputData.Subject,
                 Content = inputData.Content,
 
                 Version = versionConverter.ConvertNormalVersion(BuildStatus.Version),
                 Revision = BuildStatus.Revision,
-                Build = BuildStatus.BuildType.ToString().ToLowerInvariant(),
+                Build = EnumUtility.ToString(BuildStatus.BuildType),
 
                 UserId = settingData.userId,
                 FirstExecuteVersion = versionConverter.ConvertNormalVersion(settingData.firstVersion),

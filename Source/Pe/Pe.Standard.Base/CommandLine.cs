@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public char ShortKey { get; }
         /// <summary>
         /// 長いキー。
-        /// <para><see cref="ShortKey"/>の長ーい文字列。</para>
+        /// <para><see cref="ShortKey"/>の長い文字列。</para>
         /// </summary>
         public string LongKey { get; }
         /// <summary>
@@ -120,15 +120,14 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     }
 
     /// <summary>
-    /// <para>/key value</para>
-    /// <para>/key=value</para>
-    /// <para>-key value</para>
-    /// <para>-key=value</para>
-    /// <para>--key value</para>
-    /// <para>--key=value</para>
-    /// <para>/switch</para>
-    /// <para>-switch</para>
-    /// <para>--switch</para>
+    /// <list type="bullet">
+    /// <item><c>/key value</c></item>
+    /// <item><c>/key=value</c></item>
+    /// <item><c>--key value</c></item>
+    /// <item><c>--key=value</c></item>
+    /// <item><c>/switch</c></item>
+    /// <item><c>--switch</c></item>
+    /// </list>
     /// <para>短いキーをいっぱいくっつけてどうとかはできない。</para>
     /// </summary>
     public class CommandLine
@@ -730,5 +729,4 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         #endregion
     }
-
 }

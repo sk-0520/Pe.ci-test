@@ -5,6 +5,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
+    /// <summary>
+    /// ファイル監視検知イベント。
+    /// </summary>
     public class FileChangedEventArgs: EventArgs
     {
         public FileChangedEventArgs(FileInfo file, bool isRefresh)

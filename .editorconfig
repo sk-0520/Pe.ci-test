@@ -276,6 +276,9 @@ csharp_style_prefer_utf8_string_literals = true:suggestion
 dotnet_diagnostic.CA1507.severity = warning
 dotnet_diagnostic.CA1311.severity = warning
 
+[**/*.Test/**/*.cs]
+dotnet_diagnostic.IDE1006.severity = none
+
 # VC
 [*.{c,c++,cc,cpp,cppm,cxx,h,h++,hh,hpp,hxx,inl,ipp,ixx,tlh,tli}]
 
