@@ -77,7 +77,7 @@ values
         }
 
         [TestMethod]
-        public async Task GetDataReaderTestAsync()
+        public async Task GetDataReaderAsyncTest()
         {
             using var reader = await DatabaseAccessor.GetDataReaderAsync("select * from TestTable1 order by ColKey");
 
