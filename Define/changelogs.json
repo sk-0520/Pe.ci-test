@@ -1,5 +1,37 @@
 [
 	{
+		"date": "2023/07/16",
+		"version": "0.99.201",
+		"contents": [
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "e908580bcc23de1ff16b9fbd0df37246e7e611ef",
+						"subject": "#888: プラグインテンプレートを整理する",
+						"comments": [
+							"プラグインID生成は API に移譲",
+							"各種データパスは変数に置き換え"
+						]
+					},
+					{
+						"revision": "067e4c2af94caf75e86e7c0d5cd4a06ac45e4c51",
+						"class": "nuget",
+						"subject": "MSTest.* 更新",
+						"comments": [
+							"MSTest.TestAdapter 3.0.4 -> 3.1.1",
+							"MSTest.TestFramework 3.0.4 -> 3.1.1"
+						]
+					},
+					{
+						"revision": "700d1fa94b8d153df35c20da83902012319d3920",
+						"subject": "update npm"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/07/07",
 		"version": "0.99.200",
 		"contents": [

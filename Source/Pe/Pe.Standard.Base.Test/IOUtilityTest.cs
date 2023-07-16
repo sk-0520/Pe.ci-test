@@ -251,7 +251,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             Assert.IsFalse(file.Exists);
         }
 
-
         #endregion
     }
 }

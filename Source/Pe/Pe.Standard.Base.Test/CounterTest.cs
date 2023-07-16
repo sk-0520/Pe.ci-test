@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
                     Assert.IsFalse(c.IsFirst);
                 }
 
-                Assert.IsTrue(c.CurrentCount == i);
+                Assert.AreEqual(c.CurrentCount, i);
                 Assert.IsFalse(c.IsCompleted);
 
                 if(i == max) {
@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
                     Assert.IsFalse(c.IsFirst);
                 }
 
-                Assert.IsTrue(c.CurrentCount == i);
+                Assert.AreEqual(c.CurrentCount, i);
                 Assert.IsFalse(c.IsCompleted);
 
                 if(i == max) {

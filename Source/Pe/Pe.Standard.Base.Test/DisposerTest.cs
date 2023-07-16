@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         [TestMethod]
         public void UsingTest()
         {
-            using(var dispoer = new ActionDisposer(disposing => {
+            using(var disposer = new ActionDisposer(disposing => {
                 Assert.IsTrue(disposing);
             })) {
                 Assert.IsTrue(true);
@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         [TestMethod]
         public void FinalizeTest()
         {
-            var dispoer = new ActionDisposer(disposing => {
+            var disposer = new ActionDisposer(disposing => {
                 Assert.IsFalse(disposing);
             });
         }
