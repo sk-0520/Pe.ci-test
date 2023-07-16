@@ -1,77 +1,13 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.xx.001",
+		"date": "2023/07/16",
+		"version": "0.99.201",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "e908580bcc23de1ff16b9fbd0df37246e7e611ef",
 						"subject": "#888: プラグインテンプレートを整理する",
 						"comments": [
 							"プラグインID生成は API に移譲",
@@ -79,7 +15,7 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "067e4c2af94caf75e86e7c0d5cd4a06ac45e4c51",
 						"class": "nuget",
 						"subject": "MSTest.* 更新",
 						"comments": [
@@ -88,12 +24,8 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "700d1fa94b8d153df35c20da83902012319d3920",
 						"subject": "update npm"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
