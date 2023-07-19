@@ -35,9 +35,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             var backupFilePath = Path.Combine(targetDirectory.FullName, backupFileWithoutExtensionName + ".zip");
 
-            Logger.LogDebug("バックアップ処理 開始: {0}", backupFilePath);
-            using(var stream = new BufferedStream(new FileStream(backupFilePath, FileMode.Create, FileAccess.Write))) {
-                var archive = new ZipArchive(stream, ZipArchiveMode.Create);
+            Logger.LogDebug("バックアップ処理 開始: {backupFilePath}", backupFilePath);
+            using(var stream = new FileStream(backupFilePath, FileMode.Create, FileAccess.Write)) {
+                using var archive = new ZipArchive(stream, ZipArchiveMode.Create);
                 var files = userDirectory.EnumerateFiles("*", SearchOption.AllDirectories);
                 foreach(var file in files) {
                     var entryPath = file.FullName.Substring(userDirectory.FullName.Length);
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 }
             }
             //ZipFile.CreateFromDirectory(userDirectory.FullName, backupFilePath);
-            Logger.LogDebug("バックアップ処理 終了: {0}", backupFilePath);
+            Logger.LogDebug("バックアップ処理 終了: {backupFilePath}", backupFilePath);
 
             //FileUtility.RotateFiles(targetDirectory.FullName, "*.zip", enabledCount, ex => {
             //    Logger.LogWarning(ex, ex.Message);
