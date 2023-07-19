@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database.Test.Vender.Public.SQLite
         private class SqliteDatabaseAccessObject: DatabaseAccessObjectBase
         {
             public SqliteDatabaseAccessObject()
-                : base(default!, default!, new Pe.Core.Models.Database.Vender.Public.SQLite.SqliteImplementation(), new NullLoggerFactory())
+                : base(default!, default!, new Pe.Core.Models.Database.Vender.Public.SQLite.SqliteImplementation(), NullLoggerFactory.Instance)
             { }
 
             #region function
@@ -71,8 +71,8 @@ VALUE2:CODE
             var dao = CreateDao();
             var map = new Dictionary<string, string>();
             map["KEY1"] = "VALUE1";
-            var output1 = dao.ProcessStatement2(input, map);
-            var actual1 = @"
+            var actual1 = dao.ProcessStatement2(input, map);
+            var expected1 = @"
 select
 *
 from
@@ -81,13 +81,13 @@ order by
 COL3
 
 ";
-            Assert.AreEqual(actual1, output1);
+            Assert.AreEqual(expected1, actual1);
 
             map.Clear();
             map["KEY1"] = "VALUE2";
             map["KEY2"] = "VALUE2";
-            var output2 = dao.ProcessStatement2(input, map);
-            var actual2 = @"
+            var actual2 = dao.ProcessStatement2(input, map);
+            var expected2 = @"
 select
 *
 from
@@ -97,7 +97,7 @@ order by
     COL2
 
 ";
-            Assert.AreEqual(actual2, output2);
+            Assert.AreEqual(expected2, actual2);
 
             //LOADは諸々の事情でテストなし
         }

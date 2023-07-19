@@ -825,16 +825,16 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             var callClass = new CallClass();
 
             var methodInt = callClass.GetType().GetMethod(nameof(callClass.FuncInt_0))!;
-            var acutalInt = dic.CallMethod(string.Empty, callClass, methodInt, Array.Empty<object>());
-            Assert.AreEqual(10, acutalInt);
+            var actualInt = dic.CallMethod(string.Empty, callClass, methodInt, Array.Empty<object>());
+            Assert.AreEqual(10, actualInt);
 
             var methodStr = callClass.GetType().GetMethod(nameof(callClass.FuncStr_0))!;
-            var acutalStr = dic.CallMethod(string.Empty, callClass, methodStr, Array.Empty<object>());
-            Assert.AreEqual("str", acutalStr);
+            var actualStr = dic.CallMethod(string.Empty, callClass, methodStr, Array.Empty<object>());
+            Assert.AreEqual("str", actualStr);
 
             var methodVoid = callClass.GetType().GetMethod(nameof(callClass.Action_0))!;
-            var acutalVoid = dic.CallMethod(string.Empty, callClass, methodVoid, Array.Empty<object>());
-            Assert.IsNull(acutalVoid);
+            var actualVoid = dic.CallMethod(string.Empty, callClass, methodVoid, Array.Empty<object>());
+            Assert.IsNull(actualVoid);
         }
 
         [TestMethod]
@@ -847,17 +847,17 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             var callClass = dic.New<CallClass>();
             var methodStr = callClass.GetType().GetMethod(nameof(callClass.FuncStr_1))!;
 
-            var acutalEmptyName1 = dic.CallMethod(string.Empty, callClass, methodStr, Array.Empty<object>());
-            Assert.AreEqual("a:a", acutalEmptyName1);
+            var actualEmptyName1 = dic.CallMethod(string.Empty, callClass, methodStr, Array.Empty<object>());
+            Assert.AreEqual("a:a", actualEmptyName1);
 
-            var acutalDefinedName1 = dic.CallMethod("named", callClass, methodStr, Array.Empty<object>());
-            Assert.AreEqual("b:b", acutalDefinedName1);
+            var actualDefinedName1 = dic.CallMethod("named", callClass, methodStr, Array.Empty<object>());
+            Assert.AreEqual("b:b", actualDefinedName1);
 
-            var acutalEmptyName2 = dic.CallMethod(string.Empty, callClass, methodStr, new[] { "A" });
-            Assert.AreEqual("A:A", acutalEmptyName2);
+            var actualEmptyName2 = dic.CallMethod(string.Empty, callClass, methodStr, new[] { "A" });
+            Assert.AreEqual("A:A", actualEmptyName2);
 
-            var acutalDefinedName2 = dic.CallMethod("named", callClass, methodStr, new[] { "B" });
-            Assert.AreEqual("B:B", acutalDefinedName2);
+            var actualDefinedName2 = dic.CallMethod("named", callClass, methodStr, new[] { "B" });
+            Assert.AreEqual("B:B", actualDefinedName2);
         }
 
         [TestMethod]
@@ -870,36 +870,36 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             var callClass = dic.New<CallClass>();
             var methodStr = callClass.GetType().GetMethod(nameof(callClass.FuncStr_2))!;
 
-            var acutalEmptyName1 = dic.CallMethod(string.Empty, callClass, methodStr, Array.Empty<object>());
-            Assert.AreEqual("a:a", acutalEmptyName1);
-            var acutalEmptyName1_Call = dic.Call<string>(callClass, methodStr.Name);
-            Assert.AreEqual("a:a", acutalEmptyName1_Call);
+            var actualEmptyName1 = dic.CallMethod(string.Empty, callClass, methodStr, Array.Empty<object>());
+            Assert.AreEqual("a:a", actualEmptyName1);
+            var actualEmptyName1_Call = dic.Call<string>(callClass, methodStr.Name);
+            Assert.AreEqual("a:a", actualEmptyName1_Call);
 
-            var acutalDefinedName1 = dic.CallMethod("named", callClass, methodStr, Array.Empty<object>());
-            Assert.AreEqual("b:b", acutalDefinedName1);
+            var actualDefinedName1 = dic.CallMethod("named", callClass, methodStr, Array.Empty<object>());
+            Assert.AreEqual("b:b", actualDefinedName1);
 
-            var acutalEmptyName2 = dic.CallMethod(string.Empty, callClass, methodStr, new[] { "A" });
-            Assert.AreEqual("A:a", acutalEmptyName2);
-            var acutalEmptyName2_Call = dic.Call<string>(callClass, methodStr.Name, "A");
-            Assert.AreEqual("A:a", acutalEmptyName2_Call);
+            var actualEmptyName2 = dic.CallMethod(string.Empty, callClass, methodStr, new[] { "A" });
+            Assert.AreEqual("A:a", actualEmptyName2);
+            var actualEmptyName2_Call = dic.Call<string>(callClass, methodStr.Name, "A");
+            Assert.AreEqual("A:a", actualEmptyName2_Call);
 
-            var acutalDefinedName2 = dic.CallMethod("named", callClass, methodStr, new[] { "B" });
-            Assert.AreEqual("B:b", acutalDefinedName2);
+            var actualDefinedName2 = dic.CallMethod("named", callClass, methodStr, new[] { "B" });
+            Assert.AreEqual("B:b", actualDefinedName2);
 
-            var acutalEmptyName3 = dic.CallMethod(string.Empty, callClass, methodStr, new[] { "A", "A'" });
-            Assert.AreEqual("A:A'", acutalEmptyName3);
-            var acutalEmptyName3_Call = dic.Call<string>(callClass, methodStr.Name, "A", "A");
-            Assert.AreEqual("A:A", acutalEmptyName3_Call);
+            var actualEmptyName3 = dic.CallMethod(string.Empty, callClass, methodStr, new[] { "A", "A'" });
+            Assert.AreEqual("A:A'", actualEmptyName3);
+            var actualEmptyName3_Call = dic.Call<string>(callClass, methodStr.Name, "A", "A");
+            Assert.AreEqual("A:A", actualEmptyName3_Call);
 
-            var acutalDefinedName3 = dic.CallMethod("named", callClass, methodStr, new[] { "B", "B'" });
-            Assert.AreEqual("B:B'", acutalDefinedName3);
+            var actualDefinedName3 = dic.CallMethod("named", callClass, methodStr, new[] { "B", "B'" });
+            Assert.AreEqual("B:B'", actualDefinedName3);
 
             //あかん
-            //var acutalEmptyName4 = dic.CallMethod(string.Empty, callClass, methodStr, new object[] { new DiDefaultParameter(typeof(string)), "A" });
-            //Assert.AreEqual("a:A", acutalEmptyName4);
+            //var actualEmptyName4 = dic.CallMethod(string.Empty, callClass, methodStr, new object[] { new DiDefaultParameter(typeof(string)), "A" });
+            //Assert.AreEqual("a:A", actualEmptyName4);
 
-            //var acutalDefinedName4 = dic.CallMethod("named", callClass, methodStr, new object[] { new DiDefaultParameter(typeof(string)), "B" });
-            //Assert.AreEqual("b:B", acutalDefinedName4);
+            //var actualDefinedName4 = dic.CallMethod("named", callClass, methodStr, new object[] { new DiDefaultParameter(typeof(string)), "B" });
+            //Assert.AreEqual("b:B", actualDefinedName4);
         }
     }
 
