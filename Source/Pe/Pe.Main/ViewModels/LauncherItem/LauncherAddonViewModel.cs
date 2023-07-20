@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             base.Dispose(disposing);
         }
 
-        protected override Task InitializeImplAsync()
+        protected override Task LoadImplAsync()
         {
             Detail = Model.LoadAddonDetail(this);
             if(Detail.IsEnabled) {
@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             return Task.CompletedTask;
         }
 
-        protected override Task UninitializeImplAsync()
+        protected override Task UnloadImplAsync()
         {
             if(Detail?.Extension != null) {
                 Detail.Extension.ChangeDisplay(Bridge.Plugin.Addon.LauncherItemIconMode.Toolbar, false, this);

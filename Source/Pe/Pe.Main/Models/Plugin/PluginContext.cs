@@ -98,8 +98,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
-    /// <inheritdoc cref="IPluginUninitializeContext"/>
-    public class PluginUninitializeContext: PluginIdentifiersContextBase, IPluginUninitializeContext
+    /// <inheritdoc cref="IPluginFinalizeContext"/>
+    public class PluginFinalizeContext: PluginIdentifiersContextBase, IPluginFinalizeContext
     {
         #region variable
 
@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #endregion
 
-        public PluginUninitializeContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
+        public PluginFinalizeContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
             : base(pluginIdentifiers)
         {
             this._storage = storage;
@@ -115,14 +115,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region IPluginUninitializeContext
 
-        /// <inheritdoc cref="IPluginUninitializeContext.Storage"/>
+        /// <inheritdoc cref="IPluginFinalizeContext.Storage"/>
         public PluginStorage Storage => GetValue(this._storage);
-        IPluginStorage IPluginUninitializeContext.Storage => Storage;
+        IPluginStorage IPluginFinalizeContext.Storage => Storage;
 
         #endregion
     }
 
-    /// <inheritdoc cref="IPluginUninitializeContext"/>
+    /// <inheritdoc cref="IPluginFinalizeContext"/>
     public class PluginLoadContext: PluginIdentifiersContextBase, IPluginLoadContext
     {
         #region variable

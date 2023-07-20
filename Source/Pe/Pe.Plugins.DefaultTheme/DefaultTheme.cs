@@ -68,8 +68,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
         {
             IsInitialized = true;
         }
-        /// <inheritdoc cref="IPlugin.Uninitialize(IPluginUninitializeContext)"/>
-        public void Uninitialize(IPluginUninitializeContext pluginUninitializeContext)
+        /// <inheritdoc cref="IPlugin.Finalize(IPluginFinalizeContext)"/>
+        public void Finalize(IPluginFinalizeContext pluginFinalizeContext)
         {
             IsInitialized = false;
         }

@@ -382,7 +382,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StopPlatform();
             StopScheduler();
             StopHook();
-            UninitializeSystem();
+            FinalizeSystem();
 
             KeyActionChecker.Reset();
             NotifyManagerImpl.ClearAllLogs();
@@ -872,9 +872,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
 
                 foreach(var plugin in plugins) {
-                    using var context = pluginContextFactory.CreateUninitializeContext(plugin.PluginInformation, writer);
+                    using var context = pluginContextFactory.CreateFinalizeContext(plugin.PluginInformation, writer);
                     try {
-                        plugin.Uninitialize(context);
+                        plugin.Finalize(context);
                     } catch(Exception ex) {
                         Logger.LogError(ex, "{0}({1}) {2}", plugin.PluginInformation.PluginIdentifiers.PluginName, plugin.PluginInformation.PluginIdentifiers.PluginId, ex.Message);
                     }
@@ -1527,7 +1527,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             StopScheduler();
 
-            UninitializeSystem();
+            FinalizeSystem();
 
             CloseViews(true);
             DisposeElements();
