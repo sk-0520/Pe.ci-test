@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
         [Inject]
         private ILoggerFactory? LoggerFactory { get; set; }
 
-        private PopupAttacher? PopupAttacher { get; set; }
+        private PopupAdjuster? PopupAdjuster { get; set; }
         private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             base.OnSourceInitialized(e);
 
             UIUtility.SetToolWindowStyle(this, false, false);
-            PopupAttacher = new PopupAttacher(this, this.popup);
+            PopupAdjuster = new PopupAdjuster(this, this.popup);
 
 #if DEBUG || BETA
             var devElement = new System.Windows.Controls.Border() {
@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            PopupAttacher?.Dispose();
+            PopupAdjuster?.Dispose();
         }
 
         #endregion

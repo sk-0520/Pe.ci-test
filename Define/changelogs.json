@@ -1,5 +1,20 @@
 [
 	{
+		"date": "2023/07/20",
+		"version": "0.99.202",
+		"contents": [
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "",
+						"subject": "#889: バックアップアーカイブが腐ってる"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/07/16",
 		"version": "0.99.201",
 		"contents": [

@@ -8,19 +8,60 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// <summary>
     /// <see cref="ISupportInitialize"/>の初期化から初期化終了までを<c>using</c>で実施できるようにする。
     /// </summary>
-    public class Initializer: DisposerBase
+    public class Initializer<TSupportInitialize>: DisposerBase
+        where TSupportInitialize : ISupportInitialize
     {
-        private Initializer(ISupportInitialize target)
+        #region variable
+
+        private TSupportInitialize? _target;
+
+        #endregion
+
+        public Initializer(TSupportInitialize target)
         {
-            Target = target;
+            this._target = target;
         }
 
         #region property
 
-        private ISupportInitialize? Target { get; [Unused(UnusedKinds.Dispose)] set; }
+        public TSupportInitialize Target
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                if(this._target is null) {
+                    throw new InvalidOperationException();
+                }
+
+                return this._target;
+            }
+        }
 
         #endregion
 
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(this._target != null) {
+                    this._target.EndInit();
+                    this._target = default;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// <see cref="Initializer{TSupportInitialize}"/> のラッパー。
+    /// </summary>
+    public static class Initializer
+    {
         #region function
 
         /// <summary>
@@ -34,28 +75,14 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// </example>
         /// <param name="target"></param>
         /// <returns></returns>
-        public static IDisposable Begin(ISupportInitialize target)
+        public static Initializer<TSupportInitialize> Begin<TSupportInitialize>(TSupportInitialize target)
+            where TSupportInitialize : ISupportInitialize
         {
-            var result = new Initializer(target);
-            target.BeginInit();
+            var result = new Initializer<TSupportInitialize>(target);
+
+            result.Target.BeginInit();
 
             return result;
-        }
-
-        #endregion
-
-        #region DisposerBase
-
-        protected override void Dispose(bool disposing)
-        {
-            if(!IsDisposed) {
-                if(Target != null) {
-                    Target.EndInit();
-                    Target = null;
-                }
-            }
-
-            base.Dispose(disposing);
         }
 
         #endregion

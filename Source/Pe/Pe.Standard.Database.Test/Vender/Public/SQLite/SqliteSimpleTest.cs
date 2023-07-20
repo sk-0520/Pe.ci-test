@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database.Test.Vender.Public.SQLite
         {
             var logger = NullLoggerFactory.Instance.CreateLogger(nameof(SqliteSimpleTest));
 
-            var sqls = new[] {
+            var statements = new[] {
 @"
 create table TestTable1 (
     ColKey integer,
@@ -53,8 +53,8 @@ values
                 };
 
             var c = DatabaseAccessor.BeginTransaction();
-            foreach(var sql in sqls) {
-                c.Execute(sql);
+            foreach(var statement in statements) {
+                c.Execute(statement);
             }
             c.Commit();
         }

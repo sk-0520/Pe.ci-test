@@ -64,10 +64,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return new MinMax<T>(head, tail);
         }
 
-        public static MinMax<T> Parse<T>(string value)
+        public static MinMax<T> Parse<T>(string value, IFormatProvider provider)
             where T : IComparable<T>
         {
             //BUGS: ロケールに合わせる必要あり
+            //      追記: 合わせる必要があるか？
             var values = value.Split(',');
 
             if(values.Length != 2) {
@@ -75,23 +76,35 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             }
 
             var rawRanges = values
-                .Select(s => (T)Convert.ChangeType(s.Trim(), typeof(T), CultureInfo.InvariantCulture)!)
+                .Select(s => (T)Convert.ChangeType(s.Trim(), typeof(T), provider)!)
                 .ToArray()
             ;
 
             return Create(rawRanges[0], rawRanges[1]);
         }
 
-        public static bool TryParse<T>(string value, out MinMax<T> result)
+        public static MinMax<T> Parse<T>(string value)
+            where T : IComparable<T>
+        {
+            return Parse<T>(value, CultureInfo.InvariantCulture);
+        }
+
+        public static bool TryParse<T>(string value, IFormatProvider provider, out MinMax<T> result)
             where T : IComparable<T>
         {
             try {
-                result = Parse<T>(value);
+                result = Parse<T>(value, provider);
                 return true;
             } catch {
                 result = default;
                 return false;
             }
+        }
+
+        public static bool TryParse<T>(string value, out MinMax<T> result)
+            where T : IComparable<T>
+        {
+            return TryParse(value, CultureInfo.InvariantCulture, out result);
         }
     }
 
@@ -113,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     }
 
     /// <summary>
-    /// 範囲・標準値もちアイテム。
+    /// 範囲・標準値持ちアイテム。
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable, DataContract]
@@ -151,7 +164,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return new MinMaxDefault<T>(minimum, maximum, defaultValue);
         }
 
-        public static MinMaxDefault<T> Parse<T>(string value)
+        public static MinMaxDefault<T> Parse<T>(string value, IFormatProvider provider)
             where T : IComparable<T>
         {
             var values = value.Split(',');
@@ -161,23 +174,35 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             }
 
             var rawValues = values
-                .Select(s => (T)Convert.ChangeType(s.Trim(), typeof(T), CultureInfo.InvariantCulture)!)
+                .Select(s => (T)Convert.ChangeType(s.Trim(), typeof(T), provider)!)
                 .ToArray()
             ;
 
             return Create(rawValues[0], rawValues[1], rawValues[2]);
         }
 
-        public static bool TryParse<T>(string value, out MinMaxDefault<T> result)
+        public static MinMaxDefault<T> Parse<T>(string value)
+            where T : IComparable<T>
+        {
+            return Parse<T>(value, CultureInfo.InvariantCulture);
+        }
+
+        public static bool TryParse<T>(string value, IFormatProvider provider, out MinMaxDefault<T> result)
             where T : IComparable<T>
         {
             try {
-                result = Parse<T>(value);
+                result = Parse<T>(value, provider);
                 return true;
             } catch {
                 result = default;
                 return false;
             }
+        }
+
+        public static bool TryParse<T>(string value, out MinMaxDefault<T> result)
+            where T : IComparable<T>
+        {
+            return TryParse(value, CultureInfo.InvariantCulture, out result);
         }
     }
 

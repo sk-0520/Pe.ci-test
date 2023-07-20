@@ -25,12 +25,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
         {
             InitializeComponent();
 
-            PopupAttacher = new PopupAttacher(this, this.popupItems);
+            PopupAdjuster = new PopupAdjuster(this, this.popupItems);
         }
 
         #region property
 
-        private PopupAttacher PopupAttacher { get; }
+        private PopupAdjuster PopupAdjuster { get; }
         private CommandStore CommandStore { get; } = new CommandStore();
         [Inject]
         private ILogger? Logger { get; set; }
