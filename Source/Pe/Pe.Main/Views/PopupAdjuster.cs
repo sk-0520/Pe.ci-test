@@ -9,9 +9,9 @@ namespace ContentTypeTextNet.Pe.Main.Views
     /// <summary>
     /// <see cref="Popup"/>をいい感じに自動で動かす。
     /// </summary>
-    public sealed class PopupAttacher: DisposerBase
+    public sealed class PopupAdjuster: DisposerBase
     {
-        public PopupAttacher(Window window, Popup popup)
+        public PopupAdjuster(Window window, Popup popup)
         {
             Window = window;
             Popup = popup;
