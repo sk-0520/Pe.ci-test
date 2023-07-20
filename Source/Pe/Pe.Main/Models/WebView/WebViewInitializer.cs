@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
 
         public void Initialize(EnvironmentParameters environmentParameters, CultureService cultureService)
         {
+            //NOTE: プラグイン開発等においてここで死ぬ場合はリビルドを。
             var settings = new CefSharp.Wpf.CefSettings();
 
             settings.Locale = cultureService.Culture.TwoLetterISOLanguageName;
