@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
             var ellipsis = "...";
 
             string markedText;
-            int fronLength;
+            int frontLength;
 
             var markIndex = text.LastIndexOfAny(markChars);
             if(markIndex != -1) {
@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
                 }
 
                 markedText = text.Substring(lasIndex);
-                fronLength = lasIndex - 1;
+                frontLength = lasIndex - 1;
             } else {
                 var lasIndex = text.Length / 2;
 
@@ -110,11 +110,11 @@ namespace ContentTypeTextNet.Pe.Main.Views
                 }
 
                 markedText = text.Substring(lasIndex);
-                fronLength = lasIndex - 1;
+                frontLength = lasIndex - 1;
             }
 
             while(true) {
-                var front = text.Substring(0, fronLength);
+                var front = text.Substring(0, frontLength);
 
                 var shortText = front + ellipsis + markedText;
 
@@ -125,9 +125,9 @@ namespace ContentTypeTextNet.Pe.Main.Views
                     return;
                 }
 
-                fronLength -= 1;
+                frontLength -= 1;
 
-                if(fronLength == 0) {
+                if(frontLength == 0) {
                     drawingContext.DrawText(shortFormattedText, new Point(0, 0));
                     return;
                 }
