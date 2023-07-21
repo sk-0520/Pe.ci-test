@@ -620,6 +620,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             directoryCleaner.Clear(false);
         }
 
+        /// <summary>
+        /// 全プラグインの読み込み。
+        /// <para>管理者権限実行時は読み込まない。</para>
+        /// </summary>
         private void LoadPlugins()
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
@@ -652,136 +656,143 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
 
-            var enabledPlugins = pluginStateItems.Except(uninstalledPlugins).ToArray();
-
-            // プラグインディレクトリからプラグインDLL列挙
-            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.IgnoreBaseFileNames, environmentParameters.ApplicationConfiguration.Plugin.Extensions);
-
-            FileInfo? testPluginFile = null;
-            if(TestPluginDirectory != null) {
-                var pluginName = string.IsNullOrWhiteSpace(TestPluginName) ? TestPluginDirectory.Name : TestPluginName;
-                testPluginFile = PluginContainer.GetPluginFile(TestPluginDirectory, pluginName, environmentParameters.ApplicationConfiguration.Plugin.Extensions);
-            }
-
-            // プラグインを読み込み、プラグイン情報と突合して使用可能・不可を検証
-            var pluginLoadStateItems = new List<PluginLoadStateData>();
-            var pluginConstructorContext = ApplicationDiContainer.Build<PluginConstructorContext>();
-            foreach(var pluginFile in pluginFiles) {
-                var loadStateData = PluginContainer.LoadPlugin(pluginFile, enabledPlugins, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
-                pluginLoadStateItems.Add(loadStateData);
-            }
-
-            PluginLoadStateData? testPluginLoadState = null;
-            if(testPluginFile != null) {
-                testPluginLoadState = PluginContainer.LoadPlugin(testPluginFile, enabledPlugins, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
-                pluginLoadStateItems.Add(testPluginLoadState);
-            }
-
-            // 戻ってきた突合情報を反映
+            var enabledPluginLoadStateItems = new List<PluginLoadStateData>();
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
-            using(var context = barrier.WaitWrite()) {
-                var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
-                var pluginVersionChecksEntityDao = ApplicationDiContainer.Build<PluginVersionChecksEntityDao>(context, context.Implementation);
-                foreach(var pluginLoadStateItem in pluginLoadStateItems) {
-                    // プラグインIDすら取得できなかったぶっこわれアセンブリは無視
-                    if(pluginLoadStateItem.PluginId == PluginId.Empty && pluginLoadStateItem.LoadState == PluginState.IllegalAssembly) {
-                        Logger.LogWarning("プラグイン {0} はもろもろおかしい", pluginLoadStateItem.PluginName);
-                        if(pluginLoadStateItem == testPluginLoadState) {
-#if DEBUG
-                            if(Debugger.IsAttached) {
-                                Debugger.Break();
-                            }
-#endif
-                            Logger.LogWarning("テスト用プラグインはおかしいためデータ登録処理スキップ: {0}, {1}", testPluginFile!.FullName, pluginLoadStateItem.LoadState);
-                        }
-                        continue;
-                    }
 
-                    var pluginStateData = new PluginStateData() {
-                        PluginId = pluginLoadStateItem.PluginId,
-                        PluginName = pluginLoadStateItem.PluginName,
-                        State = pluginLoadStateItem.LoadState
-                    };
+            var userRole = new UserRole();
+            if(userRole.IsRunningAdministrator()) {
+                Logger.LogWarning("管理権限実行中のためプラグイン読み込み処理を無視");
+            } else {
+                var enabledPlugins = pluginStateItems.Except(uninstalledPlugins).ToArray();
 
-                    if(pluginLoadStateItem == testPluginLoadState) {
-                        if(pluginStateData.State == PluginState.Disable) {
+                // プラグインディレクトリからプラグインDLL列挙
+                var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.IgnoreBaseFileNames, environmentParameters.ApplicationConfiguration.Plugin.Extensions);
+
+                FileInfo? testPluginFile = null;
+                if(TestPluginDirectory != null) {
+                    var pluginName = string.IsNullOrWhiteSpace(TestPluginName) ? TestPluginDirectory.Name : TestPluginName;
+                    testPluginFile = PluginContainer.GetPluginFile(TestPluginDirectory, pluginName, environmentParameters.ApplicationConfiguration.Plugin.Extensions);
+                }
+
+                // プラグインを読み込み、プラグイン情報と突合して使用可能・不可を検証
+                var pluginLoadStateItems = new List<PluginLoadStateData>();
+                var pluginConstructorContext = ApplicationDiContainer.Build<PluginConstructorContext>();
+                foreach(var pluginFile in pluginFiles) {
+                    var loadStateData = PluginContainer.LoadPlugin(pluginFile, enabledPlugins, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
+                    pluginLoadStateItems.Add(loadStateData);
+                }
+
+                PluginLoadStateData? testPluginLoadState = null;
+                if(testPluginFile != null) {
+                    testPluginLoadState = PluginContainer.LoadPlugin(testPluginFile, enabledPlugins, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
+                    pluginLoadStateItems.Add(testPluginLoadState);
+                }
+
+                // 戻ってきた突合情報を反映
+                using(var context = barrier.WaitWrite()) {
+                    var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
+                    var pluginVersionChecksEntityDao = ApplicationDiContainer.Build<PluginVersionChecksEntityDao>(context, context.Implementation);
+                    foreach(var pluginLoadStateItem in pluginLoadStateItems) {
+                        // プラグインIDすら取得できなかったぶっこわれアセンブリは無視
+                        if(pluginLoadStateItem.PluginId == PluginId.Empty && pluginLoadStateItem.LoadState == PluginState.IllegalAssembly) {
+                            Logger.LogWarning("プラグイン {0} はもろもろおかしい", pluginLoadStateItem.PluginName);
+                            if(pluginLoadStateItem == testPluginLoadState) {
 #if DEBUG
-                            if(Debugger.IsAttached) {
-                                Debugger.Break();
-                            }
+                                if(Debugger.IsAttached) {
+                                    Debugger.Break();
+                                }
 #endif
-                            Logger.LogWarning("テスト用プラグインは読み込み失敗したためデータ登録処理スキップ: {0}, {1}", testPluginFile!.FullName, pluginLoadStateItem.LoadState);
+                                Logger.LogWarning("テスト用プラグインはおかしいためデータ登録処理スキップ: {0}, {1}", testPluginFile!.FullName, pluginLoadStateItem.LoadState);
+                            }
                             continue;
                         }
-                    }
 
-                    if(pluginsEntityDao.SelectExistsPlugin(pluginLoadStateItem.PluginId)) {
-                        pluginsEntityDao.UpdatePluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
-                    } else {
-                        pluginsEntityDao.InsertPluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
-                    }
+                        var pluginStateData = new PluginStateData() {
+                            PluginId = pluginLoadStateItem.PluginId,
+                            PluginName = pluginLoadStateItem.PluginName,
+                            State = pluginLoadStateItem.LoadState
+                        };
 
-                    // 読み込みOKの際に更新URLの再設定
-                    if(pluginLoadStateItem.Plugin != null) {
-                        pluginVersionChecksEntityDao.DeletePluginVersionChecks(pluginLoadStateItem.PluginId);
-                        foreach(var countUrl in pluginLoadStateItem.Plugin.PluginInformation.PluginVersions.CheckUrls.Counting()) {
-                            pluginVersionChecksEntityDao.InsertPluginVersionCheckUrl(pluginLoadStateItem.PluginId, countUrl.Number * PluginUtility.CheckVersionStep, countUrl.Value, DatabaseCommonStatus.CreateCurrentAccount());
+                        if(pluginLoadStateItem == testPluginLoadState) {
+                            if(pluginStateData.State == PluginState.Disable) {
+#if DEBUG
+                                if(Debugger.IsAttached) {
+                                    Debugger.Break();
+                                }
+#endif
+                                Logger.LogWarning("テスト用プラグインは読み込み失敗したためデータ登録処理スキップ: {0}, {1}", testPluginFile!.FullName, pluginLoadStateItem.LoadState);
+                                continue;
+                            }
                         }
-                    }
-                }
 
-                context.Commit();
-            }
-
-            var enabledPluginLoadStateItems = pluginLoadStateItems
-                .Where(i => i.LoadState == PluginState.Enable)
-                .ToList()
-            ;
-            var disabledPluginLoadStateItems = pluginLoadStateItems
-                .Except(enabledPluginLoadStateItems)
-                .Where(i => i.WeakLoadContext != null)
-                .ToList()
-            ;
-            if(0 < disabledPluginLoadStateItems.Count) {
-                // アンロード対象の解放待ち
-                foreach(var counter in new Counter(10)) {
-                    if(counter.IsFirst || counter.IsLast || (counter.CurrentCount == counter.MaxCount / 2)) {
-                        GarbageCollection(true);
-                    } else {
-                        GarbageCollection(false);
-                    }
-
-                    var unloadedItems = new List<PluginLoadStateData>();
-                    foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
-                        if(disabledPluginLoadStateItem.WeakLoadContext!.TryGetTarget(out _)) {
-                            Logger.LogInformation("[{0}/{1}] アンロード待ち: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                        if(pluginsEntityDao.SelectExistsPlugin(pluginLoadStateItem.PluginId)) {
+                            pluginsEntityDao.UpdatePluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
                         } else {
-                            Logger.LogInformation("[{0}/{1}] アンロード完了: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
-                            unloadedItems.Add(disabledPluginLoadStateItem);
+                            pluginsEntityDao.InsertPluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
+                        }
+
+                        // 読み込みOKの際に更新URLの再設定
+                        if(pluginLoadStateItem.Plugin != null) {
+                            pluginVersionChecksEntityDao.DeletePluginVersionChecks(pluginLoadStateItem.PluginId);
+                            foreach(var countUrl in pluginLoadStateItem.Plugin.PluginInformation.PluginVersions.CheckUrls.Counting()) {
+                                pluginVersionChecksEntityDao.InsertPluginVersionCheckUrl(pluginLoadStateItem.PluginId, countUrl.Number * PluginUtility.CheckVersionStep, countUrl.Value, DatabaseCommonStatus.CreateCurrentAccount());
+                            }
                         }
                     }
-                    foreach(var removeItem in unloadedItems) {
-                        disabledPluginLoadStateItems.Remove(removeItem);
-                    }
-                    if(disabledPluginLoadStateItems.Count == 0) {
-                        break;
-                    }
+
+                    context.Commit();
                 }
+
+                enabledPluginLoadStateItems = pluginLoadStateItems
+                    .Where(i => i.LoadState == PluginState.Enable)
+                    .ToList()
+                ;
+                var disabledPluginLoadStateItems = pluginLoadStateItems
+                    .Except(enabledPluginLoadStateItems)
+                    .Where(i => i.WeakLoadContext != null)
+                    .ToList()
+                ;
                 if(0 < disabledPluginLoadStateItems.Count) {
-                    GarbageCollection(true);
-                    foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
-                        if(disabledPluginLoadStateItem.WeakLoadContext!.TryGetTarget(out _)) {
-                            Logger.LogWarning("[LAST] アンロード待機超過: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                    // アンロード対象の解放待ち
+                    foreach(var counter in new Counter(10)) {
+                        if(counter.IsFirst || counter.IsLast || (counter.CurrentCount == counter.MaxCount / 2)) {
+                            GarbageCollection(true);
                         } else {
-                            Logger.LogInformation("[LAST] アンロード完了: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                            GarbageCollection(false);
+                        }
+
+                        var unloadedItems = new List<PluginLoadStateData>();
+                        foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
+                            if(disabledPluginLoadStateItem.WeakLoadContext!.TryGetTarget(out _)) {
+                                Logger.LogInformation("[{0}/{1}] アンロード待ち: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                            } else {
+                                Logger.LogInformation("[{0}/{1}] アンロード完了: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                                unloadedItems.Add(disabledPluginLoadStateItem);
+                            }
+                        }
+                        foreach(var removeItem in unloadedItems) {
+                            disabledPluginLoadStateItems.Remove(removeItem);
+                        }
+                        if(disabledPluginLoadStateItems.Count == 0) {
+                            break;
                         }
                     }
-                }
+                    if(0 < disabledPluginLoadStateItems.Count) {
+                        GarbageCollection(true);
+                        foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
+                            if(disabledPluginLoadStateItem.WeakLoadContext!.TryGetTarget(out _)) {
+                                Logger.LogWarning("[LAST] アンロード待機超過: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                            } else {
+                                Logger.LogInformation("[LAST] アンロード完了: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                            }
+                        }
+                    }
 
-                if(disabledPluginLoadStateItems.Count == 0) {
-                    Logger.LogInformation("不要プラグイン解放完了");
-                } else {
-                    Logger.LogWarning("不要プラグイン解放不完全: {0}", disabledPluginLoadStateItems.Count);
+                    if(disabledPluginLoadStateItems.Count == 0) {
+                        Logger.LogInformation("不要プラグイン解放完了");
+                    } else {
+                        Logger.LogWarning("不要プラグイン解放不完全: {0}", disabledPluginLoadStateItems.Count);
+                    }
                 }
             }
 
