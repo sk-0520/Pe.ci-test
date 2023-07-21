@@ -446,6 +446,5 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         }
 
         #endregion
-
     }
 }
