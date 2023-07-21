@@ -657,7 +657,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var enabledPluginLoadStateItems = new List<PluginLoadStateData>();
-            var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
 
             var userRole = new UserRole();
             if(userRole.IsRunningAdministrator()) {
@@ -689,7 +688,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
 
                 // 戻ってきた突合情報を反映
-                using(var context = barrier.WaitWrite()) {
+                using(var context = ApplicationDiContainer.Build<IMainDatabaseBarrier>().WaitWrite()) {
                     var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
                     var pluginVersionChecksEntityDao = ApplicationDiContainer.Build<PluginVersionChecksEntityDao>(context, context.Implementation);
                     foreach(var pluginLoadStateItem in pluginLoadStateItems) {
@@ -849,7 +848,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             // プラグイン情報を更新
             if(0 < initializedPlugins.Count) {
-                using(var context = barrier.WaitWrite()) {
+                using(var context = ApplicationDiContainer.Build<IMainDatabaseBarrier>().WaitWrite()) {
                     var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
                     foreach(var initializedPlugin in initializedPlugins) {
                         pluginsEntityDao.UpdatePluginRunningState(
