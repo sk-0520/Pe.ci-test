@@ -1,27 +1,14 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.202+",
+		"date": "2023/07/22",
+		"version": "0.99.203",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
 						"class": "compatibility",
 						"subject": "#862 対応の影響により管理者権限で実行中はプラグインを読み込まなくなりました"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -35,60 +22,6 @@
 							"起動時に読み込むプラグインが Pe 専用のものに限定されます",
 							"管理権限でプラグインが自由に動くことを回避するための処置です"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "developer",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
