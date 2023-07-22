@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             });
         }
 
-        protected override Task InitializeImplAsync()
+        protected override Task LoadImplAsync()
         {
             return Task.Run(() => {
 

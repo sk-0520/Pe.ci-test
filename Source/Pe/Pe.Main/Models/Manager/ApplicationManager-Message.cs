@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             SystemEvents.DisplaySettingsChanging += SystemEvents_DisplaySettingsChanging;
         }
 
-        private void UninitializeSystem()
+        private void FinalizeSystem()
         {
             SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
             SystemEvents.SessionEnding -= SystemEvents_SessionEnding;

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
-
     [Serializable]
     public class TemporaryException: Exception
     {

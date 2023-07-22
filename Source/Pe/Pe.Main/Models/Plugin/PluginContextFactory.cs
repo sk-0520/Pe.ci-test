@@ -26,10 +26,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return new PluginInitializeContext(pluginInformation.PluginIdentifiers, pluginStorage);
         }
 
-        public PluginUninitializeContext CreateUninitializeContext(IPluginInformation pluginInformation, IDatabaseContextsPack databaseContextsPack)
+        public PluginFinalizeContext CreateFinalizeContext(IPluginInformation pluginInformation, IDatabaseContextsPack databaseContextsPack)
         {
             var pluginStorage = CreatePluginStorage(pluginInformation, databaseContextsPack, false);
-            return new PluginUninitializeContext(pluginInformation.PluginIdentifiers, pluginStorage);
+            return new PluginFinalizeContext(pluginInformation.PluginIdentifiers, pluginStorage);
         }
 
         public PluginLoadContext CreateLoadContext(IPluginInformation pluginInformation, IDatabaseContextsPack databaseContextsPack)

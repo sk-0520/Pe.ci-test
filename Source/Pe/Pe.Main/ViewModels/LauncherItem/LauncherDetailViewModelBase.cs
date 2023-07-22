@@ -109,15 +109,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region command
 
-        public ICommand InitializeCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand LoadCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                InitializeAsync();
+                LoadAsync();
             }
         ));
 
-        public ICommand UninitializeCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand UnloadCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                UninitializeAsync();
+                UnloadAsync();
             }
         ));
 
@@ -138,13 +138,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region function
 
-        protected abstract Task InitializeImplAsync();
-        protected abstract Task UninitializeImplAsync();
+        protected abstract Task LoadImplAsync();
+        protected abstract Task UnloadImplAsync();
 
-        private Task InitializeAsync()
+        private Task LoadAsync()
         {
             NowLoading = true;
-            return InitializeImplAsync().ContinueWith(_ => {
+            return LoadImplAsync().ContinueWith(_ => {
                 var keys = KeyGestureGuide.GetLauncherItemKeys(LauncherItemId);
                 ExecuteKeyGestures = new ObservableCollection<string>(keys);
                 HasExecuteKeyGestures = ExecuteKeyGestures.Any();
@@ -156,9 +156,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             });
         }
 
-        private Task UninitializeAsync()
+        private Task UnloadAsync()
         {
-            return UninitializeImplAsync();
+            return UnloadImplAsync();
         }
 
         protected abstract Task ExecuteMainImplAsync();

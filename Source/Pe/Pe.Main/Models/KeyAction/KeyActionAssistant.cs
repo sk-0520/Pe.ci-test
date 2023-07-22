@@ -63,7 +63,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         {
             // 修飾キーの置き換え処理であれば戻し処理用に確保しておく
             if(job.ActionData.ReplaceKey.IsModifierKey()) {
+#if DEBUG
                 Logger.LogTrace("補正対象のジョブ: {0}, {1}", job.ActionData.ReplaceKey, job.ActionData.KeyActionId);
+#endif
                 LastExecuteReplaceJob = job;
                 ReplacedModifierKeyStatus = modifierKeyStatus;
             }
@@ -83,16 +85,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         public void CleanupReplaceJob(Key key, in ModifierKeyStatus modifierKeyStatus)
         {
             if(LastExecuteReplaceJob == null) {
+#if DEBUG
                 Logger.LogTrace("補正すべきジョブなし");
+#endif
                 return;
             }
 
             if(LastExecuteReplaceJob.Mapping.Key != key) {
+#if DEBUG
                 Logger.LogTrace("補正すべきジョブの対象ではない: 入力 = {0}, 補正対象 = {1}, {2}", key, LastExecuteReplaceJob.Mapping.Key, LastExecuteReplaceJob.ActionData.KeyActionId);
+#endif
                 return;
             }
 
+#if DEBUG
             Logger.LogDebug("補正処理: 入力 = {0} -> 補正対象 = {1}, {2}", key, LastExecuteReplaceJob.ActionData.ReplaceKey, LastExecuteReplaceJob.ActionData.KeyActionId);
+#endif
 
             var inputs = new List<INPUT>();
 
@@ -101,7 +109,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
             SendInput(inputs);
 
+#if DEBUG
             Logger.LogDebug("補正処理完了: {0}", LastExecuteReplaceJob.ActionData.KeyActionId);
+#endif
             LastExecuteReplaceJob = null;
         }
 

@@ -90,8 +90,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// 解放処理内部実装。
         /// </summary>
         /// <param name="pluginUninitializeContext"></param>
-        /// <inheritdoc cref="IPlugin.Uninitialize(IPluginUninitializeContext)"/>
-        protected abstract void UninitializeImpl(IPluginUninitializeContext pluginUninitializeContext);
+        /// <inheritdoc cref="IPlugin.Finalize(IPluginFinalizeContext)"/>
+        protected abstract void FinalizeImpl(IPluginFinalizeContext pluginUninitializeContext);
 
         /// <summary>
         /// アセンブリ設定から <see cref="IPluginInformation"/> を生成。
@@ -233,10 +233,10 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             IsInitialized = true;
         }
 
-        /// <inheritdoc cref="IPlugin.Uninitialize(IPluginUninitializeContext)"/>
-        public void Uninitialize(IPluginUninitializeContext pluginUninitializeContext)
+        /// <inheritdoc cref="IPlugin.Finalize(IPluginFinalizeContext)"/>
+        public void Finalize(IPluginFinalizeContext pluginUninitializeContext)
         {
-            UninitializeImpl(pluginUninitializeContext);
+            FinalizeImpl(pluginUninitializeContext);
             // 例外で死んだ場合は再初期化を避けるため補正しない
             IsInitialized = true;
         }
@@ -446,6 +446,5 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         }
 
         #endregion
-
     }
 }

@@ -224,7 +224,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         protected override bool CanExecuteMain => true;
 
 
-        protected override Task InitializeImplAsync()
+        protected override Task LoadImplAsync()
         {
             return Task.Run(() => {
                 if(Model == null) {
@@ -260,7 +260,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             });
         }
 
-        protected override Task UninitializeImplAsync()
+        protected override Task UnloadImplAsync()
         {
             return Task.CompletedTask;
         }

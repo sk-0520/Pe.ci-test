@@ -257,10 +257,10 @@
         </Button.ToolTip>
         <behaviors:Interaction.Triggers>
           <behaviors:EventTrigger EventName="Loaded">
-            <behaviors:InvokeCommandAction Command="{Binding InitializeCommand}" />
+            <behaviors:InvokeCommandAction Command="{Binding LoadCommand}" />
           </behaviors:EventTrigger>
           <behaviors:EventTrigger EventName="Unloaded">
-            <behaviors:InvokeCommandAction Command="{Binding UninitializeCommand}" />
+            <behaviors:InvokeCommandAction Command="{Binding UnloadCommand}" />
           </behaviors:EventTrigger>
         </behaviors:Interaction.Triggers>
         <app_main_views_lt:LauncherContentControl />
@@ -313,10 +313,10 @@
         </Button.ToolTip>
         <behaviors:Interaction.Triggers>
           <behaviors:EventTrigger EventName="Loaded">
-            <behaviors:InvokeCommandAction Command="{Binding InitializeCommand}" />
+            <behaviors:InvokeCommandAction Command="{Binding LoadCommand}" />
           </behaviors:EventTrigger>
           <behaviors:EventTrigger EventName="Unloaded">
-            <behaviors:InvokeCommandAction Command="{Binding UninitializeCommand}" />
+            <behaviors:InvokeCommandAction Command="{Binding UnloadCommand}" />
           </behaviors:EventTrigger>
         </behaviors:Interaction.Triggers>
         <app_main_views_lt:LauncherContentControl />

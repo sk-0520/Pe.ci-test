@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPluginUninitializeContext
+    public interface IPluginFinalizeContext
     {
         #region property
 

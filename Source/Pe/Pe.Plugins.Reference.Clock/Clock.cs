@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock
         protected override void InitializeImpl(IPluginInitializeContext pluginInitializeContext)
         { }
 
-        protected override void UninitializeImpl(IPluginUninitializeContext pluginUninitializeContext)
+        protected override void FinalizeImpl(IPluginFinalizeContext pluginUninitializeContext)
         { }
 
 
