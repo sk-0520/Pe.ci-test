@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html
         protected override void InitializeImpl(IPluginInitializeContext pluginInitializeContext)
         { }
 
-        protected override void FinalizeImpl(IPluginFinalizeContext pluginUninitializeContext)
+        protected override void FinalizeImpl(IPluginFinalizeContext pluginFinalizeContext)
         { }
 
         #endregion

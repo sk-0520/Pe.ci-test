@@ -1,5 +1,21 @@
 [
 	{
+		"date": "2023/07/23",
+		"version": "0.99.204",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"class": "",
+						"subject": "プラグイン用の細かいあれこれ"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/07/22",
 		"version": "0.99.203",
 		"contents": [

@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// <inheritdoc cref="IPlugin.Initialize(IPluginInitializeContext)"/>
         public void Initialize(IPluginInitializeContext pluginInitializeContext) => throw new NotSupportedException();
         /// <inheritdoc cref="IPlugin.Finalize(IPluginFinalizeContext)"/>
-        public void Finalize(IPluginFinalizeContext pluginUninitializeContext) => throw new NotSupportedException();
+        public void Finalize(IPluginFinalizeContext pluginFinalizeContext) => throw new NotSupportedException();
 
         /// <inheritdoc cref="IPlugin.IsLoaded(PluginKind)"/>
         public bool IsLoaded(PluginKind pluginKind) => throw new NotSupportedException();

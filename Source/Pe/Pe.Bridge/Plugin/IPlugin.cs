@@ -55,8 +55,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// プラグイン終了。
         /// <para>可能な限りプラグイン開放可能な状態になること。</para>
         /// </summary>
-        /// <param name="pluginUninitializeContext"></param>
-        void Finalize(IPluginFinalizeContext pluginUninitializeContext);
+        /// <param name="pluginFinalizeContext"></param>
+        void Finalize(IPluginFinalizeContext pluginFinalizeContext);
 
         /// <summary>
         /// プラグイン機能を使用するための読み込み。

@@ -89,15 +89,15 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// <summary>
         /// 解放処理内部実装。
         /// </summary>
-        /// <param name="pluginUninitializeContext"></param>
+        /// <param name="pluginFinalizeContext"></param>
         /// <inheritdoc cref="IPlugin.Finalize(IPluginFinalizeContext)"/>
-        protected abstract void FinalizeImpl(IPluginFinalizeContext pluginUninitializeContext);
+        protected abstract void FinalizeImpl(IPluginFinalizeContext pluginFinalizeContext);
 
         /// <summary>
         /// アセンブリ設定から <see cref="IPluginInformation"/> を生成。
         /// </summary>
         /// <returns></returns>
-        protected virtual IPluginInformation CreateInformations()
+        protected virtual IPluginInformation CreateInformation()
         {
             static string CreateRandomText(string format, int count)
             {
@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         }
 
 
-        private TTheme BuildSupporttedAddon<TArgument, TTheme>(AddonKind addonKind, string methodName, TArgument argument, Func<TArgument, TTheme> build)
+        private TTheme BuildSupportedAddon<TArgument, TTheme>(AddonKind addonKind, string methodName, TArgument argument, Func<TArgument, TTheme> build)
         {
             if(!Addon.IsSupported(addonKind)) {
                 Logger.LogWarning("{0} はサポートされていない", addonKind);
@@ -176,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             }
         }
 
-        private TTheme BuildSupporttedTheme<TArgument, TTheme>(ThemeKind themeKind, string methodName, TArgument argument, Func<TArgument, TTheme> build)
+        private TTheme BuildSupportedTheme<TArgument, TTheme>(ThemeKind themeKind, string methodName, TArgument argument, Func<TArgument, TTheme> build)
         {
             if(!Theme.IsSupported(themeKind)) {
                 Logger.LogWarning("{0} はサポートされていない", themeKind);
@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         #region IPlugin
 
         /// <inheritdoc cref="IPlugin.PluginInformation"/>
-        public IPluginInformation PluginInformation => Informations ??= CreateInformations();
+        public IPluginInformation PluginInformation => Informations ??= CreateInformation();
 
         /// <inheritdoc cref="IPlugin.IsInitialized"/>
         public bool IsInitialized { get; private set; }
@@ -234,9 +234,9 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         }
 
         /// <inheritdoc cref="IPlugin.Finalize(IPluginFinalizeContext)"/>
-        public void Finalize(IPluginFinalizeContext pluginUninitializeContext)
+        public void Finalize(IPluginFinalizeContext pluginFinalizeContext)
         {
-            FinalizeImpl(pluginUninitializeContext);
+            FinalizeImpl(pluginFinalizeContext);
             // 例外で死んだ場合は再初期化を避けるため補正しない
             IsInitialized = true;
         }
@@ -335,25 +335,25 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// <inheritdoc cref="IAddon.CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter)"/>
         public ILauncherItemExtension CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter parameter)
         {
-            return BuildSupporttedAddon(AddonKind.LauncherItem, nameof(CreateLauncherItemExtension), parameter, p => Addon.CreateLauncherItemExtension(p));
+            return BuildSupportedAddon(AddonKind.LauncherItem, nameof(CreateLauncherItemExtension), parameter, p => Addon.CreateLauncherItemExtension(p));
         }
 
         /// <inheritdoc cref="IAddon.BuildCommandFinder(IAddonParameter)"/>
         public ICommandFinder BuildCommandFinder(IAddonParameter parameter)
         {
-            return BuildSupporttedAddon(AddonKind.CommandFinder, nameof(BuildCommandFinder), parameter, p => Addon.BuildCommandFinder(p));
+            return BuildSupportedAddon(AddonKind.CommandFinder, nameof(BuildCommandFinder), parameter, p => Addon.BuildCommandFinder(p));
         }
 
         /// <inheritdoc cref="IAddon.BuildWidget(IAddonParameter)"/>
         public IWidget BuildWidget(IAddonParameter parameter)
         {
-            return BuildSupporttedAddon(AddonKind.Widget, nameof(BuildWidget), parameter, p => Addon.BuildWidget(p));
+            return BuildSupportedAddon(AddonKind.Widget, nameof(BuildWidget), parameter, p => Addon.BuildWidget(p));
         }
 
         /// <inheritdoc cref="IAddon.BuildBackground(IAddonParameter)"/>
         public IBackground BuildBackground(IAddonParameter parameter)
         {
-            return BuildSupporttedAddon(AddonKind.Background, nameof(BuildBackground), parameter, p => Addon.BuildBackground(p));
+            return BuildSupportedAddon(AddonKind.Background, nameof(BuildBackground), parameter, p => Addon.BuildBackground(p));
         }
 
 
@@ -372,27 +372,27 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// <inheritdoc cref="ITheme.BuildGeneralTheme(IThemeParameter)"/>
         public IGeneralTheme BuildGeneralTheme(IThemeParameter parameter)
         {
-            return BuildSupporttedTheme(ThemeKind.General, nameof(BuildGeneralTheme), parameter, p => Theme.BuildGeneralTheme(p));
+            return BuildSupportedTheme(ThemeKind.General, nameof(BuildGeneralTheme), parameter, p => Theme.BuildGeneralTheme(p));
         }
         /// <inheritdoc cref="ITheme.BuildLauncherToolbarTheme(IThemeParameter)"/>
         public ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter)
         {
-            return BuildSupporttedTheme(ThemeKind.LauncherToolbar, nameof(BuildLauncherToolbarTheme), parameter, p => Theme.BuildLauncherToolbarTheme(p));
+            return BuildSupportedTheme(ThemeKind.LauncherToolbar, nameof(BuildLauncherToolbarTheme), parameter, p => Theme.BuildLauncherToolbarTheme(p));
         }
         /// <inheritdoc cref="ITheme.BuildNoteTheme(IThemeParameter)"/>
         public INoteTheme BuildNoteTheme(IThemeParameter parameter)
         {
-            return BuildSupporttedTheme(ThemeKind.Note, nameof(BuildNoteTheme), parameter, p => Theme.BuildNoteTheme(p));
+            return BuildSupportedTheme(ThemeKind.Note, nameof(BuildNoteTheme), parameter, p => Theme.BuildNoteTheme(p));
         }
         /// <inheritdoc cref="ITheme.BuildCommandTheme(IThemeParameter)"/>
         public ICommandTheme BuildCommandTheme(IThemeParameter parameter)
         {
-            return BuildSupporttedTheme(ThemeKind.Command, nameof(BuildCommandTheme), parameter, p => Theme.BuildCommandTheme(p));
+            return BuildSupportedTheme(ThemeKind.Command, nameof(BuildCommandTheme), parameter, p => Theme.BuildCommandTheme(p));
         }
         /// <inheritdoc cref="ITheme.BuildNotifyLogTheme(IThemeParameter)"/>
         public INotifyLogTheme BuildNotifyLogTheme(IThemeParameter parameter)
         {
-            return BuildSupporttedTheme(ThemeKind.Notify, nameof(BuildNotifyLogTheme), parameter, p => Theme.BuildNotifyLogTheme(p));
+            return BuildSupportedTheme(ThemeKind.Notify, nameof(BuildNotifyLogTheme), parameter, p => Theme.BuildNotifyLogTheme(p));
         }
 
         #endregion
