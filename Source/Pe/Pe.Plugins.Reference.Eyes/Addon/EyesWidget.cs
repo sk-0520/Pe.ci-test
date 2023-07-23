@@ -15,14 +15,14 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
 {
     internal class EyesWidget: IWidget
     {
-        public EyesWidget(IAddonParameter parameter, IPluginInformation pluginInformations)
+        public EyesWidget(IAddonParameter parameter, IPluginInformation pluginInformation)
         {
             LoggerFactory = parameter.LoggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             AddonExecutor = parameter.AddonExecutor;
             DispatcherWrapper = parameter.DispatcherWrapper;
             SkeletonImplements = parameter.SkeletonImplements;
-            PluginInformations = pluginInformations;
+            PluginInformation = pluginInformation;
         }
 
         #region property
@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
         private IAddonExecutor AddonExecutor { get; }
         private IDispatcherWrapper DispatcherWrapper { get; }
         private ISkeletonImplements SkeletonImplements { get; }
-        private IPluginInformation PluginInformations { get; }
+        private IPluginInformation PluginInformation { get; }
 
         private EyesWidgetWindow? WidgetView { get; set; }
         private EyesWidgetViewModel? ViewModel { get; set; }

@@ -36,8 +36,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         #endregion
 
-        public ClockLauncherItem(ILauncherItemExtensionCreateParameter parameter, IPluginInformation pluginInformations, PluginBase plugin)
-            : base(parameter, pluginInformations)
+        public ClockLauncherItem(ILauncherItemExtensionCreateParameter parameter, IPluginInformation pluginInformation, PluginBase plugin)
+            : base(parameter, pluginInformation)
         {
             Plugin = plugin;
 

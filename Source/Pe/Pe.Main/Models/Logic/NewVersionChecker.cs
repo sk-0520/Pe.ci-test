@@ -176,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <returns>新バージョンがあれば新情報。なければ<c>null</c>。</returns>
         public async Task<NewVersionItemData?> CheckPluginNewVersionAsync(PluginId pluginId, Version pluginVersion, IEnumerable<string> urls)
         {
-            Debug.Assert(pluginId != ContentTypeTextNet.Pe.Plugins.DefaultTheme.DefaultTheme.Informations.PluginIdentifiers.PluginId);
+            Debug.Assert(pluginId != ContentTypeTextNet.Pe.Plugins.DefaultTheme.DefaultTheme.Information.PluginIdentifiers.PluginId);
 
             foreach(var url in urls) {
                 var uri = BuildPluginUri(url, pluginId, pluginVersion);

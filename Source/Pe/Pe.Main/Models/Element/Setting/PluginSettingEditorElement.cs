@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             var appPluginIds = new[] {
-                DefaultTheme.Informations.PluginIdentifiers.PluginId
+                DefaultTheme.Information.PluginIdentifiers.PluginId
             };
             CanUninstall = !appPluginIds.Any(i => i == Plugin?.PluginInformation.PluginIdentifiers.PluginId);
 

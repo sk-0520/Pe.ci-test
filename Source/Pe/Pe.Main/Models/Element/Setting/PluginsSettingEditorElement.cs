@@ -198,10 +198,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             // 標準テーマがなければ追加
-            if(!pluginStates.Any(i => i.PluginId == DefaultTheme.Informations.PluginIdentifiers.PluginId)) {
+            if(!pluginStates.Any(i => i.PluginId == DefaultTheme.Information.PluginIdentifiers.PluginId)) {
                 pluginStates.Insert(0, new Data.PluginStateData() {
-                    PluginName = DefaultTheme.Informations.PluginIdentifiers.PluginName,
-                    PluginId = DefaultTheme.Informations.PluginIdentifiers.PluginId,
+                    PluginName = DefaultTheme.Information.PluginIdentifiers.PluginName,
+                    PluginId = DefaultTheme.Information.PluginIdentifiers.PluginId,
                     State = Data.PluginState.Enable,
                 });
             }

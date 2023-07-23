@@ -903,7 +903,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     return appGeneralSettingEntityDao.SelectThemePluginId();
                 } catch(Exception ex) {
                     Logger.LogWarning(ex, "テーマプラグインID取得失敗のため標準テーマを使用");
-                    return DefaultTheme.Informations.PluginIdentifiers.PluginId;
+                    return DefaultTheme.Information.PluginIdentifiers.PluginId;
                 }
             });
             ApplyCurrentTheme(themePluginId);
