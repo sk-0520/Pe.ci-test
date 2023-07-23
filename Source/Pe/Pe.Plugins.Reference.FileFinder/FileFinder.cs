@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder
         protected override void InitializeImpl(IPluginInitializeContext pluginInitializeContext)
         { }
 
-        protected override void FinalizeImpl(IPluginFinalizeContext pluginUninitializeContext)
+        protected override void FinalizeImpl(IPluginFinalizeContext pluginFinalizeContext)
         { }
 
 
