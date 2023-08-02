@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
@@ -96,6 +97,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         #endregion
 
         #region function
+
+        /// <summary>
+        /// キー一覧を取得。
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<string> GetKeys();
 
         /// <summary>
         /// 指定データは存在するか。

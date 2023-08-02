@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -68,6 +69,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             databaseCommonStatus.WriteCommonTo(dto);
 
             return dto;
+        }
+
+        public IEnumerable<string> SelectPluginSettingKeys(PluginId pluginId)
+        {
+            var statement = LoadStatement();
+
+            var parameter = new PluginSettingDto() {
+                PluginId = pluginId,
+            };
+
+            return Context.Query<string>(statement, parameter);
         }
 
         public bool SelectExistsPluginSetting(PluginId pluginId, string key)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -71,6 +72,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             databaseCommonStatus.WriteCommonTo(dto);
 
             return dto;
+        }
+
+        public IEnumerable<string> SelectPluginLauncherItemSettingKeys(PluginId pluginId, LauncherItemId launcherItemId)
+        {
+            var statement = LoadStatement();
+            var parameter = new PluginLauncherItemSettingDto() {
+                PluginId = pluginId,
+                LauncherItemId = launcherItemId,
+            };
+
+            return Context.Query<string>(statement, parameter);
         }
 
         public bool SelectExistsPluginLauncherItemSetting(PluginId pluginId, LauncherItemId launcherItemId, string key)

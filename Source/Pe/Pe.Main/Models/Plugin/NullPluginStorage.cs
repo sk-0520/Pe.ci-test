@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
@@ -73,6 +76,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #region IPluginPersistenceStorage
 
         public bool IsReadOnly => true;
+
+        public IEnumerable<string> GetKeys()
+        {
+            Logger.LogTrace("{0}({1})", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId);
+            return Array.Empty<string>();
+        }
 
         public bool Delete(string key)
         {
