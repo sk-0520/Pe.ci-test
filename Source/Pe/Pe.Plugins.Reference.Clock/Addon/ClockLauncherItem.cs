@@ -83,6 +83,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
                 if(!c.Storage.Persistence.Normal.TryGet<ClockLauncherItemSetting>(LauncherItemId, string.Empty, out this._setting)) {
                     this._setting = new ClockLauncherItemSetting();
                 }
+                return false;
             });
 
             RaisePropertyChanged(nameof(Setting));

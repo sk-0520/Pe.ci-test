@@ -23,7 +23,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     {
         #region function
 
-        void RunLauncherItemAddon(Action<ILauncherItemAddonContext> callback);
+        /// <summary>
+        /// ランチャーアイテム処理実施。
+        /// </summary>
+        /// <param name="callback">真を返せばコミットする。</param>
+        void RunLauncherItemAddon(Func<ILauncherItemAddonContext, bool> callback);
 
         #endregion
     }

@@ -71,12 +71,12 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
-						"subject": ""
+						"revision": "663bbda761ac1d8f8d37a0c178e220fc9e03db5e",
+						"subject": "プラグイン: キー一覧取得処理の追加"
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "プラグイン: ランチャーアイテム処理時にDB保存処理制御"
 					},
 					{
 						"revision": "",
