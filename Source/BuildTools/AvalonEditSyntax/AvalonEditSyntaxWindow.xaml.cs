@@ -25,6 +25,26 @@ namespace AvalonEditSyntax
     /// </summary>
     public partial class MainWindow: Window
     {
+        #region define
+
+        public class EditorValue
+        {
+            public EditorValue(string preview, string syntax)
+            {
+                Preview = preview;
+                Syntax = syntax;
+            }
+
+            #region property
+
+            public string Preview { get; }
+            public string Syntax { get; }
+
+            #endregion
+        }
+
+        #endregion
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,9 +52,9 @@ namespace AvalonEditSyntax
 
         #region property
 
-        IReadOnlyDictionary<string, string> Defines { get; } = new Dictionary<string, string>() {
+        IReadOnlyDictionary<string, EditorValue> Defines { get; } = new Dictionary<string, EditorValue>() {
             #region docs
-            ["env-merge"] =
+            ["env-merge"] = new EditorValue(
 @"KEY=VALUE
 KEY=
 =VALUE
@@ -45,7 +65,9 @@ KEY= VALUE
 KEY = VALUE
 KEY =VALUE
 ",
-            ["env-remove"] =
+            global::ContentTypeTextNet.Pe.Main.Properties.Resources.File_Highlighting_EnvironmentVariable_Merge
+            ),
+            ["env-remove"] = new EditorValue(
 @"KEY=VALUE
 KEY=
 =VALUE
@@ -56,6 +78,8 @@ KEY= VALUE
 KEY = VALUE
 KEY =VALUE
 ",
+            global::ContentTypeTextNet.Pe.Main.Properties.Resources.File_Highlighting_EnvironmentVariable_Remove
+),
 
             #endregion
         };
@@ -68,12 +92,14 @@ KEY =VALUE
         {
             var key = (string)((ListBoxItem)this.listDefines.SelectedItem).Tag;
             LoadDefine(key);
+            Apply(this.inputSyntax.Text);
         }
 
         void LoadDefine(string key)
         {
             var value = Defines[key];
-            this.inputPreview.Text = value;
+            this.inputPreview.Text = value.Preview;
+            this.inputSyntax.Text = value.Syntax;
         }
 
         void ClearError()

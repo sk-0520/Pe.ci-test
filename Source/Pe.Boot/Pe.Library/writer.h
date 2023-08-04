@@ -126,9 +126,9 @@ WRITE_RESULT write_failed(WRITE_ERROR_KIND kind);
 /// <param name="writer">書き込みデータ送信処理。</param>
 /// <param name="receiver">書き込み対象データ受信処理。</param>
 /// <param name="value">真偽値。</param>
-/// <param name="is_uppper">大文字にするか。</param>
+/// <param name="is_upper">大文字にするか。</param>
 /// <returns>成功状態。</returns>
-WRITE_RESULT write_primitive_boolean(func_string_writer writer, void* receiver, bool value, bool is_uppper);
+WRITE_RESULT write_primitive_boolean(func_string_writer writer, void* receiver, bool value, bool is_upper);
 
 /// <summary>
 /// <c>ssize_t</c>の数値を書き込み。

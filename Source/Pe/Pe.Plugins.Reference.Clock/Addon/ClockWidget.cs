@@ -18,14 +18,14 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 {
     internal class ClockWidget: IWidget
     {
-        public ClockWidget(IAddonParameter parameter, IPluginInformation pluginInformations)
+        public ClockWidget(IAddonParameter parameter, IPluginInformation pluginInformation)
         {
             LoggerFactory = parameter.LoggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             AddonExecutor = parameter.AddonExecutor;
             DispatcherWrapper = parameter.DispatcherWrapper;
             SkeletonImplements = parameter.SkeletonImplements;
-            PluginInformations = pluginInformations;
+            PluginInformation = pluginInformation;
         }
 
         #region property
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
         private IAddonExecutor AddonExecutor { get; }
         private IDispatcherWrapper DispatcherWrapper { get; }
         private ISkeletonImplements SkeletonImplements { get; }
-        private IPluginInformation PluginInformations { get; }
+        private IPluginInformation PluginInformation { get; }
         private ClockWidgetWindow? WidgetView { get; set; }
         private ClockWidgetViewModel? ViewModel { get; set; }
 

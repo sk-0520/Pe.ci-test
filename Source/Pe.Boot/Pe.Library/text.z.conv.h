@@ -4,7 +4,6 @@
 /// <summary>
 /// 小文字テキストに変換。
 /// </summary>
-/// <param name=""></param>
 /// <param name="text"></param>
 /// <param name="memory_arena_resource"></param>
 /// <returns>解放が必要。</returns>
@@ -16,7 +15,6 @@ TEXT RC_HEAP_FUNC(to_lower_text, const TEXT* text, const MEMORY_ARENA_RESOURCE* 
 /// <summary>
 /// 大文字テキストに変換。
 /// </summary>
-/// <param name=""></param>
 /// <param name="text"></param>
 /// <param name="memory_arena_resource"></param>
 /// <returns>解放が必要。</returns>

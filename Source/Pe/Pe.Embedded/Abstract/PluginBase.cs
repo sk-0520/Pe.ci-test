@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
         /// <inheritdoc cref="IPluginInformation"/>
-        IPluginInformation? Informations { get; set; }
+        IPluginInformation? Information { get; set; }
 
         /// <summary>
         /// アドオン機能を所持しているか。
@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         #region IPlugin
 
         /// <inheritdoc cref="IPlugin.PluginInformation"/>
-        public IPluginInformation PluginInformation => Informations ??= CreateInformation();
+        public IPluginInformation PluginInformation => Information ??= CreateInformation();
 
         /// <inheritdoc cref="IPlugin.IsInitialized"/>
         public bool IsInitialized { get; private set; }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -78,6 +79,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         #endregion
 
         #region function
+
+        /// <summary>
+        /// キー一覧を取得。
+        /// </summary>
+        /// <param name="launcherItemId">ランチャーアイテムID。</param>
+        /// <returns></returns>
+        IEnumerable<string> GetKeys(LauncherItemId launcherItemId);
 
         /// <summary>
         /// 指定データは存在するか。

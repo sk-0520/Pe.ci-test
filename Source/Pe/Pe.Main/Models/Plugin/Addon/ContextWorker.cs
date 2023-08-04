@@ -60,11 +60,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region ILauncherItemAddonContextWorker
 
-        public void RunLauncherItemAddon(Action<ILauncherItemAddonContext> callback)
+        public void RunLauncherItemAddon(Func<ILauncherItemAddonContext, bool> callback)
         {
             using var databaseContextsPack = PluginContextFactory.BarrierWrite();
             using var context = PluginContextFactory.CreateContext(PluginInformation, LauncherItemId, databaseContextsPack, false);
-            callback(context);
+            if(callback(context)) {
+                PluginContextFactory.Save();
+            }
         }
 
         #endregion

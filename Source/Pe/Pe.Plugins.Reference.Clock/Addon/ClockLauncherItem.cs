@@ -36,8 +36,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         #endregion
 
-        public ClockLauncherItem(ILauncherItemExtensionCreateParameter parameter, IPluginInformation pluginInformations, PluginBase plugin)
-            : base(parameter, pluginInformations)
+        public ClockLauncherItem(ILauncherItemExtensionCreateParameter parameter, IPluginInformation pluginInformation, PluginBase plugin)
+            : base(parameter, pluginInformation)
         {
             Plugin = plugin;
 
@@ -83,6 +83,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
                 if(!c.Storage.Persistence.Normal.TryGet<ClockLauncherItemSetting>(LauncherItemId, string.Empty, out this._setting)) {
                     this._setting = new ClockLauncherItemSetting();
                 }
+                return false;
             });
 
             RaisePropertyChanged(nameof(Setting));

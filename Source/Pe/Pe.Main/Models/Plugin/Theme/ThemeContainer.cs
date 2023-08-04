@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         /// </summary>
         private ISet<ITheme> Themes { get; } = new HashSet<ITheme>();
 
-        private DefaultTheme DefaultTheme => this._defaultTheme ??= (DefaultTheme)Themes.First(i => i.PluginInformation.PluginIdentifiers.PluginId == DefaultTheme.Informations.PluginIdentifiers.PluginId);
+        private DefaultTheme DefaultTheme => this._defaultTheme ??= (DefaultTheme)Themes.First(i => i.PluginInformation.PluginIdentifiers.PluginId == DefaultTheme.Information.PluginIdentifiers.PluginId);
 
         /// <summary>
         /// 現在使用中テーマ。

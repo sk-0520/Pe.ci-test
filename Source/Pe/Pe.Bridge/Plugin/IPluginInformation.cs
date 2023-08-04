@@ -226,7 +226,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
             PluginAuthors = pluginAuthors;
         }
 
-        #region IPluginInformations
+        #region IPluginInformation
 
         /// <inheritdoc cref="IPluginInformation.PluginIdentifiers"/>
         public IPluginIdentifiers PluginIdentifiers { get; }

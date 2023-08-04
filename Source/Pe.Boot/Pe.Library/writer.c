@@ -68,13 +68,13 @@ WRITE_RESULT write_failed(WRITE_ERROR_KIND kind)
 }
 
 
-WRITE_RESULT write_primitive_boolean(func_string_writer writer, void* receiver, bool value, bool is_uppper)
+WRITE_RESULT write_primitive_boolean(func_string_writer writer, void* receiver, bool value, bool is_upper)
 {
     WRITE_STRING_DATA data = {
         .receiver = receiver,
     };
     if (value) {
-        if (is_uppper) {
+        if (is_upper) {
             data.value = _T(TRUE_UPPER);
             data.length = sizeof(TRUE_UPPER) - 1;
         } else {
@@ -82,7 +82,7 @@ WRITE_RESULT write_primitive_boolean(func_string_writer writer, void* receiver, 
             data.length = sizeof(TRUE_LOWER) - 1;
         }
     } else {
-        if (is_uppper) {
+        if (is_upper) {
             data.value = _T(FALSE_UPPER);
             data.length = sizeof(FALSE_UPPER) - 1;
         } else {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -79,6 +80,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         { }
 
         #region ILauncherItemAddonPersistenceStorage
+
+        public IEnumerable<string> GetKeys(LauncherItemId launcherItemId)
+        {
+            return GetKeysImpl((d) => {
+                var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
+                return pluginLauncherItemSettingsEntityDao.SelectPluginLauncherItemSettingKeys(PluginId, launcherItemId);
+            });
+        }
 
         public bool Exists(LauncherItemId launcherItemId, string key)
         {

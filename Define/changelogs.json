@@ -1,5 +1,24 @@
 [
 	{
+		"date": "2023/08/04",
+		"version": "0.99.205",
+		"contents": [
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "663bbda761ac1d8f8d37a0c178e220fc9e03db5e",
+						"subject": "プラグイン: キー一覧取得処理の追加"
+					},
+					{
+						"revision": "aeb9ea917080b167e5708cd269ec5d2d8e35971e",
+						"subject": "プラグイン: ランチャーアイテム処理時にDB保存処理制御"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/07/23",
 		"version": "0.99.204",
 		"contents": [
@@ -32,7 +51,7 @@
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "be0919128501ff16d22fde7a32da2d6d875cf8ee",
 						"subject": "#862: 管理権限で実行している場合にプラグインは読み込まないようにする",
 						"comments": [
 							"起動時に読み込むプラグインが Pe 専用のものに限定されます",

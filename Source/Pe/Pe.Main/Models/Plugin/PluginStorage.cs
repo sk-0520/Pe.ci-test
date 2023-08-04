@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -318,6 +319,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             ;
         }
 
+        protected IEnumerable<string> GetKeysImpl(Func<DatabaseParameter, IEnumerable<string>> func)
+        {
+            switch(Mode) {
+                case PluginPersistenceMode.Context: {
+                        Debug.Assert(DatabaseContext != null);
+                        Debug.Assert(DatabaseImplementation != null);
+
+                        return func(new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(DatabaseContext, DatabaseImplementation), LoggerFactory));
+                    }
+
+                case PluginPersistenceMode.Barrier:
+                case PluginPersistenceMode.LazyWriter: {
+                        Debug.Assert(DatabaseBarrier != null);
+
+                        if(Mode == PluginPersistenceMode.LazyWriter) {
+                            Debug.Assert(DatabaseLazyWriter != null);
+                            DatabaseLazyWriter.Flush();
+                        }
+
+                        return DatabaseBarrier.ReadData(c => {
+                            return func(new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(c, c.Implementation), LoggerFactory));
+                        });
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         protected bool ExistsImpl<TParameter>(TParameter parameter, Func<TParameter, DatabaseParameter, bool> func)
         {
             switch(Mode) {
@@ -614,6 +644,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
 
         #region IPluginPersistenceStorage
+
+        /// <inheritdoc cref="IPluginPersistenceStorage.GetKeys()"/>
+        public IEnumerable<string> GetKeys()
+        {
+            return GetKeysImpl((d) => {
+                var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
+                return pluginSettingsEntityDao.SelectPluginSettingKeys(PluginId);
+            });
+        }
 
         /// <inheritdoc cref="IPluginPersistenceStorage.Exists(string)"/>
         public bool Exists(string key)
