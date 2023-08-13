@@ -1,72 +1,21 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.205+",
+		"date": "2023/08/13",
+		"version": "0.99.206",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "360911dcd4d48a241650a7f4d2ce65b8592f05a9",
 						"subject": "#893: プラグインのアセンブリ解決に使用するパスに対してディレクトリ補正は不要"
 					},
 					{
-						"revision": "",
+						"revision": "151496a93877b780cdf42a2551c965a49273ad78",
 						"subject": "#894: プラグイン自体の依存読み込み時にローダーがもう死んでる",
 						"comments": [
 							"自信ないけど多分これで大丈夫。アップデート処理とかはもうわかんない"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -74,20 +23,8 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "36eeb7a985002814f587ff7a3e3d1fcfcf88dd8f",
 						"subject": "nuget 確認不要そうなもの更新"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
