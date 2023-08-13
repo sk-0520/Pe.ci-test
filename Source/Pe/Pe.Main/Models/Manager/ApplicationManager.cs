@@ -805,7 +805,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 applicationPlugins.Add(appPlugin);
             }
 
-            var initializedPlugins = new List<IPlugin>(enabledPluginLoadStateItems.Count + applicationPlugins.Count);
+            var initializedPluginItems = new List<(IPlugin plugin, PluginAssemblyLoadContext? loadContext)>(enabledPluginLoadStateItems.Count + applicationPlugins.Count);
 
             var databaseBarrierPack = ApplicationDiContainer.Build<IDatabaseBarrierPack>();
 
@@ -815,7 +815,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     using var context = pluginContextFactory.CreateInitializeContext(plugin.PluginInformation, readerPack);
                     plugin.Initialize(context);
                 }
-                initializedPlugins.Add(plugin);
+                initializedPluginItems.Add((plugin, null));
             }
 
             // 通常プラグイン
@@ -829,7 +829,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         using var context = pluginContextFactory.CreateInitializeContext(plugin.PluginInformation, readerPack);
                         plugin.Initialize(context);
                     }
-                    initializedPlugins.Add(plugin);
+                    Debug.Assert(pluginLoadStateItem.WeakLoadContext is not null);
+                    if(pluginLoadStateItem.WeakLoadContext.TryGetTarget(out var loadContext) && loadContext is not null) {
+                        initializedPluginItems.Add((plugin, loadContext));
+                    } else {
+                        throw new PluginAssemblyException();
+                    }
                 } catch(Exception ex) {
                     Logger.LogError(ex, "プラグイン初期化失敗: {0}, {1}, {2}", ex.Message, pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
                     if(pluginLoadStateItem.WeakLoadContext!.TryGetTarget(out var loadContext)) {
@@ -841,19 +846,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
 
-            foreach(var plugin in initializedPlugins) {
-                Logger.LogInformation("初期化完了プラグイン: {0}, {1}, {2}", plugin.PluginInformation.PluginIdentifiers.PluginName, plugin.PluginInformation.PluginVersions.PluginVersion, plugin.PluginInformation.PluginIdentifiers.PluginId);
-                PluginContainer.AddPlugin(plugin);
+            foreach(var pluginItems in initializedPluginItems) {
+                Logger.LogInformation("初期化完了プラグイン: {0}, {1}, {2}", pluginItems.plugin.PluginInformation.PluginIdentifiers.PluginName, pluginItems.plugin.PluginInformation.PluginVersions.PluginVersion, pluginItems.plugin.PluginInformation.PluginIdentifiers.PluginId);
+                PluginContainer.AddPlugin(pluginItems.plugin, pluginItems.loadContext);
             }
 
             // プラグイン情報を更新
-            if(0 < initializedPlugins.Count) {
+            if(0 < initializedPluginItems.Count) {
                 using(var context = ApplicationDiContainer.Build<IMainDatabaseBarrier>().WaitWrite()) {
                     var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
-                    foreach(var initializedPlugin in initializedPlugins) {
+                    foreach(var initializedPluginItem in initializedPluginItems) {
                         pluginsEntityDao.UpdatePluginRunningState(
-                            initializedPlugin.PluginInformation.PluginIdentifiers.PluginId,
-                            initializedPlugin.PluginInformation.PluginVersions.PluginVersion,
+                            initializedPluginItem.plugin.PluginInformation.PluginIdentifiers.PluginId,
+                            initializedPluginItem.plugin.PluginInformation.PluginVersions.PluginVersion,
                             BuildStatus.Version,
                             DatabaseCommonStatus.CreateCurrentAccount()
                         );

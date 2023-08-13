@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
     {
         protected ViewModelSkeleton(ISkeletonImplements skeletonImplements, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
+            LoggerFactory = loggerFactory;
             Logger = loggerFactory.CreateLogger(GetType());
             Implements = skeletonImplements;
             DispatcherWrapper = dispatcherWrapper;
@@ -42,6 +43,7 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
         /// </summary>
         protected ISkeletonImplements Implements { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
+        protected ILoggerFactory LoggerFactory { get; }
         protected ILogger Logger { get; }
         #endregion
 

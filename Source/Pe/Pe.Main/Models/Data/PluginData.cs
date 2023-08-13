@@ -107,13 +107,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     [Serializable, DataContract]
     public class PluginLoadStateData: IPluginLoadState
     {
-        public PluginLoadStateData(PluginId pluginId, string pluginName, Version pluginVersion, PluginState loadState, WeakReference<PluginAssemblyLoadContext>? weekLoadContext, IPlugin? plugin)
+        public PluginLoadStateData(PluginId pluginId, string pluginName, Version pluginVersion, PluginState loadState, PluginAssemblyLoadContext? weekLoadContext, IPlugin? plugin)
         {
             PluginId = pluginId;
             PluginName = pluginName;
             PluginVersion = pluginVersion;
             LoadState = loadState;
-            WeakLoadContext = weekLoadContext;
+            if(weekLoadContext is not null) {
+                WeakLoadContext = new WeakReference<PluginAssemblyLoadContext>(weekLoadContext);
+            }
             Plugin = plugin;
         }
 

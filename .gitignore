@@ -36,6 +36,8 @@ Thumbs.db
 *.zip
 *.7z
 *.tar
+*.bak
+*.org
 node_modules/
 /Source/Documents/dist
 /Source/Documents/build
