@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             Logger = loggerFactory.CreateLogger(GetType());
             PluginFile = pluginFile;
-            AssemblyDependencyResolver = new AssemblyDependencyResolver(Path.GetDirectoryName(PluginFile.FullName)!);
+            AssemblyDependencyResolver = new AssemblyDependencyResolver(PluginFile.FullName);
             LibraryDirectories = libraryDirectories;
         }
 
