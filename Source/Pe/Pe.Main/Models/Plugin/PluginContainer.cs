@@ -52,6 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         private ILoggerFactory LoggerFactory { get; }
         private EnvironmentParameters EnvironmentParameters { get; }
         private HashSet<IPlugin> PluginsImpl { get; } = new HashSet<IPlugin>();
+        private IDictionary<IPlugin, PluginAssemblyLoadContext> PluginAssemblyLoadContexts { get; } = new Dictionary<IPlugin, PluginAssemblyLoadContext>();
         /// <summary>
         /// アドオン用コンテナ。
         /// </summary>
@@ -160,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインアセンブリ読み込み失敗: {0}", pluginFile.Name);
                 loadContext.Unload();
-                return new PluginLoadStateData(currentPlugin?.PluginId ?? PluginId.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? PluginId.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, loadContext, null);
             }
 
             Type? pluginInterfaceImpl = null;
@@ -186,13 +187,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインアセンブリ リフレクション失敗: {0}", pluginFile.Name);
                 loadContext.Unload();
-                return new PluginLoadStateData(currentPlugin?.PluginId ?? PluginId.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? PluginId.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, loadContext, null);
             }
 
             if(pluginInterfaceImpl == null) {
                 Logger.LogError("プラグインアセンブリからプラグインインターフェイス取得できず: {0}, {1}", pluginAssembly.FullName, pluginFile.FullName);
                 loadContext.Unload();
-                return new PluginLoadStateData(currentPlugin?.PluginId ?? PluginId.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? PluginId.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, loadContext, null);
             }
 
             Logger.LogDebug("[{0}]", pluginInterfaceImpl.FullName);
@@ -216,7 +217,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインインターフェイスを生成できず: {0}, {1}, {2}", ex.Message, pluginAssembly.FullName, pluginFile.FullName);
                 loadContext.Unload();
-                return new PluginLoadStateData(currentPlugin?.PluginId ?? PluginId.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? PluginId.Empty, currentPlugin?.PluginName ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, loadContext, null);
             }
 
             var pluginId = pluginInformation.PluginIdentifiers.PluginId;
@@ -227,7 +228,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 if(loadedCurrentPlugin.State == PluginState.Disable) {
                     Logger.LogInformation("(ID判定)プラグイン読み込み停止中: {0}({1}), {2}", loadedCurrentPlugin.PluginName, pluginName, loadedCurrentPlugin.PluginId);
                     loadContext.Unload();
-                    return new PluginLoadStateData(loadedCurrentPlugin.PluginId, pluginName, new Version(), PluginState.Disable, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                    return new PluginLoadStateData(loadedCurrentPlugin.PluginId, pluginName, new Version(), PluginState.Disable, loadContext, null);
                 }
             }
 
@@ -240,7 +241,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 if(!ok) {
                     Logger.LogWarning("プラグインサポート最低バージョン({0}): {1}, {2}", pluginInformation.PluginVersions.MinimumSupportVersion, pluginName, pluginId);
                     loadContext.Unload();
-                    return new PluginLoadStateData(pluginId, pluginName, pluginVersion, PluginState.IllegalVersion, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                    return new PluginLoadStateData(pluginId, pluginName, pluginVersion, PluginState.IllegalVersion, loadContext, null);
                 }
             }
 
@@ -250,22 +251,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 if(!ok) {
                     Logger.LogWarning("プラグインサポート最高バージョン({0}): {1}, {2}", pluginInformation.PluginVersions.MaximumSupportVersion, pluginName, pluginId);
                     loadContext.Unload();
-                    return new PluginLoadStateData(pluginId, pluginName, pluginVersion, PluginState.IllegalVersion, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+                    return new PluginLoadStateData(pluginId, pluginName, pluginVersion, PluginState.IllegalVersion, loadContext, null);
                 }
             }
 
             // 読み込み対象！
             Logger.LogInformation("プラグイン読み込み対象: {0}, {1}", pluginName, pluginId);
-            return new PluginLoadStateData(pluginId, pluginName, pluginVersion, PluginState.Enable, new WeakReference<PluginAssemblyLoadContext>(loadContext), plugin);
+            return new PluginLoadStateData(pluginId, pluginName, pluginVersion, PluginState.Enable, loadContext, plugin);
         }
 
         /// <summary>
         /// プラグインの実体をコンテナに取り込み。
         /// </summary>
         /// <param name="plugin"></param>
-        public void AddPlugin(IPlugin plugin)
+        public void AddPlugin(IPlugin plugin, PluginAssemblyLoadContext? context)
         {
             PluginsImpl.Add(plugin);
+            if(context is not null) {
+                PluginAssemblyLoadContexts.Add(plugin, context);
+            }
 
             if(plugin is ITheme theme) {
                 Theme.Add(theme);
