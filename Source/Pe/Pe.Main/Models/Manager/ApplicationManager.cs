@@ -748,7 +748,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 ;
                 var disabledPluginLoadStateItems = pluginLoadStateItems
                     .Except(enabledPluginLoadStateItems)
-                    .Where(i => i.WeakLoadContext != null)
+                    .Where(i => i.LoadContext is not null)
                     .ToList()
                 ;
                 if(0 < disabledPluginLoadStateItems.Count) {
@@ -762,7 +762,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                         var unloadedItems = new List<PluginLoadStateData>();
                         foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
-                            if(disabledPluginLoadStateItem.WeakLoadContext!.TryGetTarget(out _)) {
+                            var weakLoadContext = new WeakReference<PluginAssemblyLoadContext>(disabledPluginLoadStateItem.FreeLoadContext());
+                            if(weakLoadContext!.TryGetTarget(out _)) {
                                 Logger.LogInformation("[{0}/{1}] アンロード待ち: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
                             } else {
                                 Logger.LogInformation("[{0}/{1}] アンロード完了: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
@@ -776,16 +777,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                             break;
                         }
                     }
-                    if(0 < disabledPluginLoadStateItems.Count) {
-                        GarbageCollection(true);
-                        foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
-                            if(disabledPluginLoadStateItem.WeakLoadContext!.TryGetTarget(out _)) {
-                                Logger.LogWarning("[LAST] アンロード待機超過: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
-                            } else {
-                                Logger.LogInformation("[LAST] アンロード完了: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
-                            }
-                        }
-                    }
+                    // NOTE: disabledPluginLoadStateItem.FreeLoadContext により再実施はもう出来なくなった
+                    //if(0 < disabledPluginLoadStateItems.Count) {
+                    //    GarbageCollection(true);
+                    //    foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
+                    //        if(disabledPluginLoadStateItem.WeakLoadContext!.TryGetTarget(out _)) {
+                    //            Logger.LogWarning("[LAST] アンロード待機超過: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                    //        } else {
+                    //            Logger.LogInformation("[LAST] アンロード完了: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                    //        }
+                    //    }
+                    //}
 
                     if(disabledPluginLoadStateItems.Count == 0) {
                         Logger.LogInformation("不要プラグイン解放完了");
@@ -829,20 +831,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         using var context = pluginContextFactory.CreateInitializeContext(plugin.PluginInformation, readerPack);
                         plugin.Initialize(context);
                     }
-                    Debug.Assert(pluginLoadStateItem.WeakLoadContext is not null);
-                    if(pluginLoadStateItem.WeakLoadContext.TryGetTarget(out var loadContext) && loadContext is not null) {
-                        initializedPluginItems.Add((plugin, loadContext));
-                    } else {
-                        throw new PluginAssemblyException();
-                    }
+                    Debug.Assert(pluginLoadStateItem.LoadContext is not null);
+                    initializedPluginItems.Add((plugin, pluginLoadStateItem.LoadContext));
                 } catch(Exception ex) {
                     Logger.LogError(ex, "プラグイン初期化失敗: {0}, {1}, {2}", ex.Message, pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
-                    if(pluginLoadStateItem.WeakLoadContext!.TryGetTarget(out var loadContext)) {
-                        Logger.LogWarning("プラグイン初期化失敗のため解放だけ指示: {0}, {1}", pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
-                        loadContext.Unload();
-                    } else {
-                        Logger.LogError("プラグイン参照が切れてる恐怖: {0}, {1}", pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
-                    }
+                    pluginLoadStateItem.LoadContext?.Unload();
                 }
             }
 

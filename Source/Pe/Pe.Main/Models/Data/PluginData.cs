@@ -107,15 +107,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     [Serializable, DataContract]
     public class PluginLoadStateData: IPluginLoadState
     {
-        public PluginLoadStateData(PluginId pluginId, string pluginName, Version pluginVersion, PluginState loadState, PluginAssemblyLoadContext? weekLoadContext, IPlugin? plugin)
+        public PluginLoadStateData(PluginId pluginId, string pluginName, Version pluginVersion, PluginState loadState, PluginAssemblyLoadContext? loadContext, IPlugin? plugin)
         {
             PluginId = pluginId;
             PluginName = pluginName;
             PluginVersion = pluginVersion;
             LoadState = loadState;
-            if(weekLoadContext is not null) {
-                WeakLoadContext = new WeakReference<PluginAssemblyLoadContext>(weekLoadContext);
-            }
+            LoadContext = loadContext;
             Plugin = plugin;
         }
 
@@ -125,12 +123,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// 対象プラグインの開放状態。
         /// <para><see cref="LoadState"/> が <see cref="PluginState.Disable"/> だと null。</para>
         /// </summary>
-        public WeakReference<PluginAssemblyLoadContext>? WeakLoadContext { get; }
+        public PluginAssemblyLoadContext? LoadContext { get; private set; }
         /// <summary>
         /// 対象プラグイン。
         /// <para><see cref="LoadState"/> が <see cref="PluginState.Enable"/> のみ有効でそれ以外の場合はもうたぶん解放されてる(はず)。</para>
         /// </summary>
         public IPlugin? Plugin { get; }
+
+        #endregion
+
+        #region function
+
+        public PluginAssemblyLoadContext FreeLoadContext()
+        {
+            if(LoadContext is null) {
+                throw new InvalidOperationException();
+            }
+
+            var result = LoadContext;
+            LoadContext = null;
+            return result;
+        }
 
         #endregion
 
