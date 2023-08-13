@@ -752,6 +752,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     .ToList()
                 ;
                 if(0 < disabledPluginLoadStateItems.Count) {
+                    var disabledItems = disabledPluginLoadStateItems
+                        .Select(a => (
+                            item: a,
+                            loadContext: new WeakReference<PluginAssemblyLoadContext>(a.FreeLoadContext())
+                        ))
+                        .ToArray()
+                    ;
+
                     // アンロード対象の解放待ち
                     foreach(var counter in new Counter(10)) {
                         if(counter.IsFirst || counter.IsLast || (counter.CurrentCount == counter.MaxCount / 2)) {
@@ -761,13 +769,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         }
 
                         var unloadedItems = new List<PluginLoadStateData>();
-                        foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
-                            var weakLoadContext = new WeakReference<PluginAssemblyLoadContext>(disabledPluginLoadStateItem.FreeLoadContext());
-                            if(weakLoadContext!.TryGetTarget(out _)) {
-                                Logger.LogInformation("[{0}/{1}] アンロード待ち: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                        foreach(var disabledItem in disabledItems) {
+                            if(disabledItem.loadContext.TryGetTarget(out _)) {
+                                Logger.LogInformation("[{0}/{1}] アンロード待ち: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledItem.item.PluginName, disabledItem.item.PluginId);
                             } else {
-                                Logger.LogInformation("[{0}/{1}] アンロード完了: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
-                                unloadedItems.Add(disabledPluginLoadStateItem);
+                                Logger.LogInformation("[{0}/{1}] アンロード完了: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledItem.item.PluginName, disabledItem.item.PluginId);
+                                unloadedItems.Add(disabledItem.item);
                             }
                         }
                         foreach(var removeItem in unloadedItems) {
