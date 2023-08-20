@@ -1867,6 +1867,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #endif
             CheckNewVersionsAsync(true).ConfigureAwait(false);
 #if DEBUG
+            DebugBoot();
             DebugCompleteStartup();
 #endif
         }
