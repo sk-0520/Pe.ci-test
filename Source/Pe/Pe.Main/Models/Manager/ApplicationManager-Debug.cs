@@ -26,6 +26,7 @@ using ContentTypeTextNet.Pe.Main.ViewModels._Debug_;
 using ContentTypeTextNet.Pe.Main.Views;
 using ContentTypeTextNet.Pe.Main.Views._Debug_;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -113,7 +114,7 @@ echo end
             var env = new List<LauncherEnvironmentVariableData>();
             var result = launcherExecutor.Execute(LauncherItemKind.File, data, data, env, LauncherRedoData.GetDisable(), Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null"));
         }
-        
+
         private KeyboardHooker? dbgKeyboardHooker { get; set; }
         private MouseHooker? dbgMouseHooker { get; set; }
         private void DebugHook()
@@ -223,6 +224,37 @@ echo end
             var cmd = eef.Get("cmd", pef);
             var powershell = eef.Get("powershell", pef);
             var pwsh = eef.Get("pwsh", pef);
+        }
+
+        public void DebugBoot()
+        {
+            var debugBootMode = Environment.GetEnvironmentVariable("DEBUG_BOOT_MODE");
+            if(string.IsNullOrWhiteSpace(debugBootMode)) {
+                return;
+            }
+            Logger.LogInformation("DEBUG_BOOT_MODE: {debugBootMode}", debugBootMode);
+
+            var debugBootItem = Environment.GetEnvironmentVariable("DEBUG_BOOT_ITEM");
+            Logger.LogInformation("DEBUG_BOOT_ITEM: {debugBootItem}", debugBootItem);
+
+            if(string.IsNullOrWhiteSpace(debugBootItem)) {
+                return;
+            }
+
+            switch(debugBootMode) {
+                case "launcher": {
+                        var launcherItemId = LauncherItemId.Parse(debugBootItem);
+                        var launcherItemElement = OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
+
+                        NativeMethods.GetCursorPos(out var podDevicePoint);
+                        var screen = Screen.FromDevicePoint(new Point(podDevicePoint.X, podDevicePoint.Y));
+                        launcherItemElement.Execute(screen);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         public void DebugCompleteStartup()
