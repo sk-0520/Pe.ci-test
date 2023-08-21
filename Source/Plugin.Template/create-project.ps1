@@ -253,6 +253,7 @@ try {
 
 	Write-Verbose "プロジェクトを追加"
 	& $parameters.dotnet sln add $pluginProjectFilePath
+	& $parameters.dotnet sln add $pluginProjectFilePath.Test
 
 	Write-Verbose "Peを追加"
 	$appDir = Join-Path $parameters.source 'Pe' | Join-Path -ChildPath 'Source' | Join-Path -ChildPath 'Pe'
