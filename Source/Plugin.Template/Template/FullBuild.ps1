@@ -1,4 +1,4 @@
-Param()
+﻿Param()
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -7,10 +7,11 @@ $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $pluginName = 'TEMPLATE_PluginName'
 $pluginShortName = 'TEMPLATE_PluginShortName'
 $pluginId = 'TEMPLATE_PluginId'
+$repositoryOwner = '<RepositoryOwner>'
 
 $minimumVersion = [version]"0.0.0"
-$archiveBaseUrl = "https://excample.com/download?@ARCHIVENAME@"
-$releaseNoteUrl = "https://excample.com/release?@VERSION@"
+$archiveBaseUrl = "https://github.com/${repositoryOwner}/${pluginName}/releases/download/@VERSION@/@ARCHIVENAME@"
+$releaseNoteUrl = "https://github.com/${repositoryOwner}/${pluginName}/releases/download/@VERSION@/update-${pluginName}.json"
 $archive = 'zip'
 
 $scriptDirPath = Join-Path -Path $currentDirPath -ChildPath 'Build'
