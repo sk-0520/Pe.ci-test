@@ -1,0 +1,112 @@
+name: Build
+
+on: push
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: <Add> msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
+
+      - name: <Embedded> git revision
+        shell: pwsh
+        run: .\Build\embedded-revision.ps1 -Revision ${{ github.sha }} -ProjectFilePath .\Source\Directory.Build.props
+
+      - name: <Build> Plugin
+        shell: pwsh
+        run: .\FullBuild.ps1
+
+      - name: <Artifact> Plugin
+        uses: actions/upload-artifact@v3
+        with:
+          name: Plugin
+          path: |
+            Output\*.zip
+            Output\update-*.json
+
+  test:
+
+    runs-on: windows-latest
+
+    steps:
+
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: <Add> msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
+
+      - name: <Test> Plugin
+        shell: pwsh
+        run: .\FullTest.ps1
+
+  deploy:
+    needs:
+      - build
+      - test
+
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Download> Application
+        uses: actions/download-artifact@v3
+        with:
+          name: Plugin
+          path: Output
+
+      - name: <Add> get-net-sdk-project-versions-action
+        uses: kzrnm/get-net-sdk-project-versions-action@v1
+        id: version
+        with:
+          proj-path: Source/Directory.Build.props
+
+      # - name: <Delete> TEST Tag
+      #   #if: github.ref == 'refs/heads/ci-test'
+      #   continue-on-error: true
+      #   uses: dev-drprasad/delete-tag-and-release@v0.2.1
+      #   with:
+      #     delete_release: true
+      #     tag_name: ${{steps.version.outputs.version}}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: <Create> Release
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const releaseId = await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{steps.version.outputs.version}}",
+              sha: context.sha
+            })
+
+      - name: <Upload> Plugin
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: Output/*
+          file_glob: true
+          tag: ${{steps.version.outputs.version}}
+
+
+

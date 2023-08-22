@@ -24,9 +24,8 @@ namespace TEMPLATE_Namespace
         protected override void InitializeImpl(IPluginInitializeContext pluginInitializeContext)
         { }
 
-        protected override void UninitializeImpl(IPluginUninitializeContext pluginUninitializeContext)
+        protected override void FinalizeImpl(IPluginFinalizeContext pluginFinalizeContext)
         { }
-
 
         #endregion
 
