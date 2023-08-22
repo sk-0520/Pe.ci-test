@@ -78,10 +78,12 @@ while (!$enabledGuid) {
 		$reservedIds = $reservedPluginIds | Select-Object -ExpandProperty 'PluginId'
 		if ($reservedIds.Contains([Guid]$customPluginId)) {
 			Write-Warning ('予約済みプラグインID: ' + $customPluginId)
-		} else {
+		}
+		else {
 			$enabledGuid = $true
 		}
-	} else {
+	}
+ else {
 		Write-Warning ('プラグインIDとして不正: ' + $customPluginId)
 	}
 
@@ -139,31 +141,67 @@ Write-Host ('git: ' + (& $parameters.git --version))
 Write-Host ('dotnet: ' + (& $parameters.dotnet --version))
 
 #---------------------------------------------------
-function Update-Template {
-	param (
-		[string] $Value
-	)
+function Update-TemplateValue([string] $value) {
+	return [Regex]::Replace($value, '\bTEMPLATE_([\w\d_]+)\b', {
+			$namespace = 'TEMPLATE_Namespace'
+			if (![string]::IsNullOrEmpty($DefaultNamespace)) {
+				$namespace = $DefaultNamespace.Trim();
+			}
 
-	return [Regex]::Replace($Value, '\bTEMPLATE_([\w\d_]+)\b', {
-		$namespace = 'TEMPLATE_Namespace'
-		if(![string]::IsNullOrEmpty($DefaultNamespace)) {
-			$namespace = $DefaultNamespace.Trim();
+			$pluginShortName = $parameters.pluginName
+			if ($parameters.pluginName.Contains('.')) {
+				$pluginShortName = $parameters.pluginName.Split('.')[-1]
+			}
+
+			$map = @{
+				'Namespace'       = $namespace
+				'PluginName'      = $parameters.pluginName
+				'PluginShortName' = $pluginShortName
+				'PluginId'        = $parameters.pluginId
+			}
+
+			return $map[$args.Groups[1].Value]
+		})
+}
+
+function Update-TemplateFileContent([System.IO.FileInfo] $file) {
+	Write-Verbose $file.FullName
+	$encoding = switch ($file.Extension.ToLowerInvariant()) {
+		".bat" { 
+			'oem'
 		}
-
-		$pluginShortName = $parameters.pluginName
-		if($parameters.pluginName.Contains('.')) {
-			$pluginShortName = $parameters.pluginName.Split('.')[-1]
+		Default {
+			'UTF8'
 		}
+	}
+	
+	$newContents = Get-Content -Path $file.FullName -Encoding $encoding | ForEach-Object { Update-TemplateValue $_ }
+	Set-Content -Path $file.FullName -Value $newContents -Encoding $encoding
+}
 
-		$map = @{
-			'Namespace' = $namespace
-			'PluginName' = $parameters.pluginName
-			'PluginShortName' = $pluginShortName
-			'PluginId' = $parameters.pluginId
-		}
+function Rename-TemplateFileName([System.IO.DirectoryInfo] $parentDirectory, [string] $name) {
+	$newName = Update-TemplateValue $name
+	if ($name -ne $newName) {
+		Write-Verbose "Rename-TemplateFileName: [$($parentDirectory.FullName)] $name -> $newName"
+		$src = (Join-Path -Path $parentDirectory.FullName -ChildPath $name)
+		$dst = (Join-Path -Path $parentDirectory.FullName -ChildPath $newName)
+		Move-Item -Path $src -Destination $dst
+	}
+}
 
-		return $map[$args.Groups[1].Value]
-	})
+function Rename-Names([System.IO.DirectoryInfo] $directory) {
+	Write-Verbose "Rename-Names: $($directory.FullName)"
+	$dirs = Get-ChildItem -Path $directory.FullName -Directory
+	foreach ($dir in $dirs) {
+		Rename-Names($dir)
+		Rename-TemplateFileName $directory $dir.Name
+	}
+
+	$files = Get-ChildItem -Path $directory.FullName -File
+	foreach ($file in $files) {
+		Update-TemplateFileContent $file
+		Rename-TemplateFileName $directory $file.Name
+	}
 }
 
 #===================================================
@@ -177,47 +215,20 @@ if ((Get-ChildItem -Path $parameters.directory -Recurse -Force | Measure-Object)
 }
 
 Write-Host "プロジェクトディレクトリ生成: " + $parameters.directory
-if(!$suppressScm) {
+if (!$suppressScm) {
 	& $parameters.git init $parameters.directory
 }
 
-# テンプレート的なのを複製(1)
-$pluginProjectDirPath = Join-Path $parameters.source (Update-Template 'TEMPLATE_PluginName')
-$pluginProjectFilePath = Join-Path -Path $pluginProjectDirPath -ChildPath (Update-Template 'TEMPLATE_PluginName.csproj')
-
 Copy-Item -Path (Join-Path -Path $currentDirPath -ChildPath 'Template\*') -Destination ($parameters.directory.FullName + '\') -Force -Recurse
-Move-Item -Path (Join-Path -Path $parameters.source 'TEMPLATE_PluginName') -Destination $pluginProjectDirPath -Force
-Move-Item -Path (Join-Path -Path $pluginProjectDirPath -ChildPath 'TEMPLATE_PluginName.csproj') -Destination (Join-Path -Path $pluginProjectDirPath -ChildPath (Update-Template 'TEMPLATE_PluginName.csproj')) -Force
-Move-Item -Path (Join-Path -Path $pluginProjectDirPath -ChildPath 'TEMPLATE_PluginName.cs') -Destination (Join-Path -Path $pluginProjectDirPath -ChildPath (Update-Template 'TEMPLATE_PluginName.cs')) -Force
-$removeItems = @('obj', 'bin')
-foreach($removeItem in $removeItems) {
-	$path = Join-Path -Path $pluginProjectDirPath -ChildPath $removeItem
-	if(Test-Path -Path $path) {
-		Remove-Item -Path $path -Force -Recurse
-	}
-}
+
+Rename-Names $parameters.directory
 
 $alternativeHiddenFiles = Get-ChildItem -Path $parameters.directory -Recurse -File | Where-Object { $_.Name -like '__.*' }
-foreach($alternativeHiddenFile in $alternativeHiddenFiles) {
+foreach ($alternativeHiddenFile in $alternativeHiddenFiles) {
 	$hiddenFileExtension = [System.IO.Path]::GetExtension($alternativeHiddenFile.Name)
 	$hiddenFilePath = Join-Path -Path $alternativeHiddenFile.Directory -ChildPath $hiddenFileExtension
 	Move-Item -Path $alternativeHiddenFile.FullName -Destination $hiddenFilePath
 }
-
-# テンプレート内置き換え
-function Update-TemplateFile {
-	param (
-		[System.IO.FileInfo] $file
-	)
-	Write-Verbose $file.FullName
-	$newContents = Get-Content -Path $file.FullName -Encoding UTF8 | ForEach-Object { Update-Template $_ }
-	Set-Content -Path $file -Value $newContents -Encoding UTF8
-}
-
-foreach($file in Get-ChildItem -Path $pluginProjectDirPath -File -Recurse -Include @('*.cs','*.csproj')) {
-	Update-TemplateFile $file
-}
-Update-TemplateFile (Join-Path -Path $parameters.directory 'FullBuild.ps1')
 
 function New-Submodule {
 	param (
@@ -232,28 +243,29 @@ function New-Submodule {
 		$targetPath = Join-Path $parameters.directory $path
 		Write-Host "サブモジュール親ディレクトリ生成: " + $targetPath
 		& $parameters.git submodule add --branch $branch $uri $path
-	} finally {
+	}
+ finally {
 		Pop-Location
 	}
 }
 
 # Pe をサブモジュールとしてとってくる
-if(!$suppressScm) {
+if (!$suppressScm) {
 	New-Submodule $parameters.repository.application.path $parameters.repository.application.url $AppTargetBranch
 }
 
 try {
 	Push-Location $parameters.source
 
-	# Write-Verbose "ソリューション $PluginName を生成"
-	# & $parameters.dotnet new sln --force --name (Update-Template 'TEMPLATE_PluginShortName')
-	Write-Verbose "テンプレソリューションを $PluginName に変換"
-	$solutionFileName = Update-Template 'TEMPLATE_PluginShortName.sln'
-	Move-Item -Path 'TEMPLATE_PluginName.sln' -Destination $solutionFileName -Force
+	$pluginTargets = @(
+		Join-Path -Path $parameters.source -ChildPath $PluginName
+		Join-Path -Path $parameters.source -ChildPath "${PluginName}.Test"
+	)
 
-	Write-Verbose "プロジェクトを追加"
-	& $parameters.dotnet sln add $pluginProjectFilePath
-	& $parameters.dotnet sln add $pluginProjectFilePath.Test
+	foreach ($pluginTarget in $pluginTargets) {
+		Write-Verbose "プロジェクトを追加: $pluginTarget"
+		& $parameters.dotnet sln add $pluginTarget
+	}
 
 	Write-Verbose "Peを追加"
 	$appDir = Join-Path $parameters.source 'Pe' | Join-Path -ChildPath 'Source' | Join-Path -ChildPath 'Pe'
@@ -297,11 +309,14 @@ try {
 	)
 	foreach ($item in $items) {
 		$projectFilePath = (Join-Path $appDir $item.project) | Join-Path -ChildPath ($item.project + '.csproj')
-		& $parameters.dotnet sln add $projectFilePath --solution-folder $item.directory
+		$result = & $parameters.dotnet sln add $projectFilePath --solution-folder $item.directory
 	}
 
+	$solutionFileName = "${PluginName}.sln"
+	$solutionPathName = Join-Path $parameters.source -ChildPath $solutionFileName
+
 	# Write-Verbose "ソリューションからAnyCPUを破棄"
-	# $solutionFileName = Update-Template 'TEMPLATE_PluginShortName.sln'
+	# $solutionFileName = Update-TemplateValue 'TEMPLATE_PluginShortName.sln'
 	# $solutionContent = Get-Content -Path $solutionFileName `
 	# 	| Out-String -Stream `
 	# 	| Where-Object { !$_.Contains('Any CPU') }
@@ -309,7 +324,7 @@ try {
 
 
 	Write-Verbose "NuGet 復元"
-	if(!$suppressBuild) {
+	if (!$suppressBuild) {
 		& $parameters.dotnet restore
 	}
 
@@ -320,19 +335,20 @@ try {
 	Write-Verbose "ソリューションのショートカットをルートに作成"
 	$wsShell = New-Object -ComObject WScript.Shell
 	$shortcut = $wsShell.CreateShortcut((Join-Path $parameters.directory ($parameters.pluginName + ".lnk")))
-	$shortcut.TargetPath = Join-Path $parameters.source $solutionFileName
+	$shortcut.TargetPath = $solutionPathName
 	$shortcut.Save()
 
 	Write-Verbose "とりあえずのデバッグ全ビルド"
-	if(!$suppressBuild) {
-		& $parameters.dotnet build --configuration Debug #--runtime win-x64
+	if (!$suppressBuild) {
+		$result = & $parameters.dotnet build --configuration Debug /p:Platform=x64 -Rebuild
 	}
 
 	Write-Verbose "はいコミット"
-	if(!$suppressScm) {
+	if (!$suppressScm) {
 		& $parameters.git add --all
 		& $parameters.git commit --message "initialize $PluginName"
 	}
-} finally {
+}
+finally {
 	Pop-Location
 }
