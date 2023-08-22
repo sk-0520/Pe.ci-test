@@ -31,6 +31,7 @@ Pe リポジトリからいい感じのあれこれを取ってきてあれこ�
 .LINK
 https://github.com/sk-0520/Pe
 #>
+# Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 Param(
 	[Parameter(mandatory = $true)][string] $ProjectDirectory,
 	[Parameter(mandatory = $true)][string] $PluginName,
@@ -305,7 +306,7 @@ try {
 	)
 	foreach ($item in $items) {
 		$projectFilePath = (Join-Path $appDir $item.project) | Join-Path -ChildPath ($item.project + '.csproj')
-		$result = & $parameters.dotnet sln add $projectFilePath --solution-folder $item.directory
+		& $parameters.dotnet sln add $projectFilePath --solution-folder $item.directory
 	}
 
 	$solutionFileName = "${PluginName}.sln"
