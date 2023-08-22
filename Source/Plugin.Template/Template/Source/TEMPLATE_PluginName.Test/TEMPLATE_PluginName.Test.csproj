@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <RootNamespace>TEMPLATE_Namespace</RootNamespace>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
@@ -14,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SK0520.Plugins.TextIO\SK0520.Plugins.TextIO.csproj">
+    <ProjectReference Include="..\TEMPLATE_PluginName\TEMPLATE_PluginName.csproj">
       <Private></Private>
     </ProjectReference>
   </ItemGroup>
