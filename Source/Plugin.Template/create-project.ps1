@@ -167,20 +167,23 @@ function Update-TemplateValue([string] $value) {
 function Update-TemplateFileContent([System.IO.FileInfo] $file) {
 	Write-Verbose $file.FullName
 	$encoding = switch ($file.Extension.ToLowerInvariant()) {
-		".bat" { 
+		".bat" {
 			'oem'
 		}
 		Default {
 			'UTF8'
 		}
 	}
-	
+
 	$newContents = Get-Content -Path $file.FullName -Encoding $encoding | ForEach-Object { Update-TemplateValue $_ }
 	Set-Content -Path $file.FullName -Value $newContents -Encoding $encoding
 }
 
 function Rename-TemplateFileName([System.IO.DirectoryInfo] $parentDirectory, [string] $name) {
 	$newName = Update-TemplateValue $name
+	if ($newName.StartsWith('__.')) {
+		$newName = $newName.SubString(2)
+	}
 	if ($name -ne $newName) {
 		Write-Verbose "Rename-TemplateFileName: [$($parentDirectory.FullName)] $name -> $newName"
 		$src = (Join-Path -Path $parentDirectory.FullName -ChildPath $name)
@@ -222,13 +225,6 @@ if (!$suppressScm) {
 Copy-Item -Path (Join-Path -Path $currentDirPath -ChildPath 'Template\*') -Destination ($parameters.directory.FullName + '\') -Force -Recurse
 
 Rename-Names $parameters.directory
-
-$alternativeHiddenFiles = Get-ChildItem -Path $parameters.directory -Recurse -File | Where-Object { $_.Name -like '__.*' }
-foreach ($alternativeHiddenFile in $alternativeHiddenFiles) {
-	$hiddenFileExtension = [System.IO.Path]::GetExtension($alternativeHiddenFile.Name)
-	$hiddenFilePath = Join-Path -Path $alternativeHiddenFile.Directory -ChildPath $hiddenFileExtension
-	Move-Item -Path $alternativeHiddenFile.FullName -Destination $hiddenFilePath
-}
 
 function New-Submodule {
 	param (
