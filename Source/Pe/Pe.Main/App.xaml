@@ -11,7 +11,7 @@
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Pe.Bridge;component/Views/Resources/Image.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Pe.Bridge;Component/Views/Resources/Image.xaml" />
 
         <ResourceDictionary Source="/Views/Resources/PlatformTheme.xaml" />
         <ResourceDictionary Source="/Views/Resources/General.xaml" />
