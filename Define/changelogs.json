@@ -1,69 +1,18 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.208+",
+		"date": "2023/08/23",
+		"version": "0.99.209",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "e5a97bf277339e6720c68db02515c85db4efdcee",
 						"subject": "#897: デバッグ用にプラグイン起動処理を追加する"
 					},
 					{
-						"revision": "",
+						"revision": "32abda47dd7ffd68c6fc96b1e5846be64dc265e4",
 						"subject": "#899: View で使用しているアイコン系を Bridge に移動する"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -71,20 +20,12 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "bf4d5c04987e6216a349b67d878ca68d6b5b454a",
 						"subject": "update npm"
 					},
 					{
-						"revision": "",
+						"revision": "ede342cb481b05bd086aa5ccef64651d4bcac403",
 						"subject": "#891: プラグインテンプレートにテストとかを追加する"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
