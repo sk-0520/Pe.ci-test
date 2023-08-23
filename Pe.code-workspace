@@ -16,7 +16,7 @@
             "*.lnk": true,
             "Source/Benchmark": true,
             "Source/BuildTools": true,
-            "Source/Plugin.Template": true,
+            "Source/Plugin.Template": false,
             "Source/Pe": false,
         },
         "files.watcherExclude": {
@@ -31,7 +31,7 @@
             "*.lnk": true,
             "Source/Benchmark": true,
             "Source/BuildTools": true,
-            "Source/Plugin.Template": true,
+            "Source/Plugin.Template": false,
             "Source/Pe": false,
         },
         "markdownlint.config": {

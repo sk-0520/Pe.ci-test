@@ -49,3 +49,30 @@ block BLOCK_LAYOUT_CONTENT
 				tr
 					td バックグランド
 					td 後ろで何かする処理
+
+	section
+		h2 デバッグ用専用処理
+		p
+			| 以下環境変数を用いることでランチャーアイテムを起動完了時に自動で実行する。
+			br
+			| ※プラグイン専用処理ではない
+		table
+			thead
+				tr
+					th 名前
+					th 値
+			tbody
+				tr
+					td
+						var DEBUG_BOOT_MODE
+					td
+						ul
+							li
+								def launcher
+				tr
+					td
+						var DEBUG_BOOT_ITEM
+					td
+						def ランチャーアイテムID
+
+

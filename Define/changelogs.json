@@ -1,13 +1,50 @@
 [
 	{
+		"date": "2023/08/23",
+		"version": "0.99.209",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "e5a97bf277339e6720c68db02515c85db4efdcee",
+						"subject": "#897: デバッグ用にプラグイン起動処理を追加する"
+					},
+					{
+						"revision": "32abda47dd7ffd68c6fc96b1e5846be64dc265e4",
+						"subject": "#899: View で使用しているアイコン系を Bridge に移動する"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "bf4d5c04987e6216a349b67d878ca68d6b5b454a",
+						"subject": "update npm"
+					},
+					{
+						"revision": "ede342cb481b05bd086aa5ccef64651d4bcac403",
+						"subject": "#891: プラグインテンプレートにテストとかを追加する"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/08/13",
-		"version": "0.99.206, 0.99.207",
+		"version": "0.99.206, 0.99.207, 0.99.208",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"subject": "0.99.206 はプラグイン処理に問題があるので 0.99.207 として統合"
+						"subject": "0.99.208へ諸々統合",
+						"comments": [
+							"0.99.206 はプラグイン処理に問題があるので 0.99.207 として統合",
+							"0.99.207 はプラグイン処理に問題があるので 0.99.208 として統合",
+							"master ブランチ過労死"
+						]
 					}
 				]
 			},
@@ -26,10 +63,17 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "d6fab47c6835b4377d838ee3d030055d0634adf7",
 						"subject": "#895: 初期化諸々のタイミングでももうお亡くなりローダー",
 						"comments": [
 							"#894 が結局ダメだった"
+						]
+					},
+					{
+						"revision": "7d9a6c8d33eae0e7e25df923c27e82097ca0ccc8",
+						"subject": "#896: #895 対応が初期化実行時に死ぬ",
+						"comments": [
+							"#895 が結局ダメだった"
 						]
 					}
 				]
