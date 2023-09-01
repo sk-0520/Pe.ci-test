@@ -18,4 +18,10 @@
   <ItemGroup>
     <Resource Include="Plugin.ico" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="assembly-info.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

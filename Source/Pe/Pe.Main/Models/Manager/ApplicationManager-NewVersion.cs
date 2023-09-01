@@ -261,7 +261,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return pluginInstaller;
         }
 
-        private async Task<bool> CheckPluginNewVersionAsync(PluginId pluginId, string pluginName, Version pluginVersion)
+        private async Task<bool> CheckPluginNewVersionAsync(PluginId pluginId, Version pluginVersion)
         {
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
             var newVersionChecker = ApplicationDiContainer.Build<NewVersionChecker>();
@@ -322,7 +322,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var pluginInstaller = CreatePluginInstaller(environmentParameters);
-            var pluginInstallData = await pluginInstaller.InstallPluginArchiveAsync(pluginName, pluginArchiveFile, newVersionItem.ArchiveKind, false, installItems, PluginInstallAssemblyMode.Process, ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>());
+            var pluginInstallData = await pluginInstaller.InstallPluginArchiveAsync(pluginArchiveFile, newVersionItem.ArchiveKind, false, installItems, PluginInstallAssemblyMode.Process, ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>());
 
             Logger.LogInformation("{0}", pluginInstallData);
 
@@ -340,7 +340,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var newVersionPlugins = new Dictionary<PluginId, bool>(lastUsedPlugins.Count);
             foreach(var lastUsePlugin in lastUsedPlugins) {
                 try {
-                    var newVersion = await CheckPluginNewVersionAsync(lastUsePlugin.PluginId, lastUsePlugin.Name, lastUsePlugin.Version);
+                    var newVersion = await CheckPluginNewVersionAsync(lastUsePlugin.PluginId, lastUsePlugin.Version);
                     newVersionPlugins[lastUsePlugin.PluginId] = newVersion;
                 } catch(Exception ex) {
                     Logger.LogError(ex, $"[{lastUsePlugin.PluginId}] {ex.Message}");
