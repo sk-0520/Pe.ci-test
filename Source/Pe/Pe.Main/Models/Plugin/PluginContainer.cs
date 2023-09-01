@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     {
         #region define
 
-        private const string PluginAssemblyInfoFileName = ".info.json";
+        private const string PluginAssemblyInfoFileName = "assembly-info.json";
 
         #endregion
 
