@@ -72,6 +72,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    /// <summary>
+    /// プラグインインストール時に使用される設定ファイル。
+    /// </summary>
+    [Serializable, DataContract]
+    public class PluginAssemblyInfo
+    {
+        #region property
+
+        /// <summary>
+        /// ファイル名。
+        /// </summary>
+        public string FileName { get; init; } = string.Empty;
+
+        #endregion
+    }
+
     [Serializable, DataContract]
     public class PluginStateData: IPluginIdentifiers
     {

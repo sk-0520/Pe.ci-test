@@ -35,6 +35,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
     internal class PluginContainer: PluginContainerBase
     {
+        #region define
+
+        private const string PluginAssemblyInfoFileName = ".info.json";
+
+        #endregion
+
         public PluginContainer(AddonContainer addonContainer, ThemeContainer themeContainer, EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
         {
             Addon = addonContainer;
@@ -66,8 +72,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region function
 
+        private PluginAssemblyInfo GetPluginAssemblyInfo(string path)
+        {
+            using var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+
+            var serializer = new JsonTextSerializer();
+            var result = serializer.Load<PluginAssemblyInfo>(stream);
+
+            return result;
+        }
+
+        /// <summary>
+        /// プラグインの本体ファイルの取得。
+        /// </summary>
+        /// <param name="pluginDirectory">プラグイン格納ディレクトリ。</param>
+        /// <param name="pluginName">プラグインファイル名。通常インストールでは使用せずデバッグ実行時のみを想定。</param>
+        /// <param name="extensions"><paramref name="pluginName"/>に追加する拡張子。</param>
+        /// <returns></returns>
         public FileInfo? GetPluginFile(DirectoryInfo pluginDirectory, string pluginName, IReadOnlyList<string> extensions)
         {
+            if(string.IsNullOrWhiteSpace(pluginName)) {
+                Logger.LogInformation("アセンブリ情報ファイルからプラグインファイル取得");
+                var pluginAssemblyInfoFilePath = Path.Combine(pluginDirectory.FullName, PluginAssemblyInfoFileName);
+                var pluginAssemblyInfo = GetPluginAssemblyInfo(pluginAssemblyInfoFilePath);
+
+                var pluginFilePath = Path.Combine(pluginDirectory.FullName, pluginAssemblyInfo.FileName);
+                return new FileInfo(pluginFilePath);
+            }
+
+            Logger.LogInformation("格納ファイルからプラグインファイル取得(やけくそ), {pluginName}", pluginName);
             foreach(var extension in extensions) {
                 var pluginFileName = PathUtility.AddExtension(pluginName, extension);
                 var pluginPath = Path.Combine(pluginDirectory.FullName, pluginFileName);

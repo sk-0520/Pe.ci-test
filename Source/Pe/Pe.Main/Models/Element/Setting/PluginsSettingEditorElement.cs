@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var ext = PluginInstaller.GetArchiveExtension(archiveFile);
             var pluginFileName = PluginInstaller.GetPluginName(archiveFile);
 
-            var pluginInstallData = await PluginInstaller.InstallPluginArchiveAsync(pluginFileName, archiveFile, ext, true, InstallPluginItemsImpl.Select(i => i.Data), PluginInstallAssemblyMode.Process, TemporaryDatabaseBarrier);
+            var pluginInstallData = await PluginInstaller.InstallPluginArchiveAsync(archiveFile, ext, true, InstallPluginItemsImpl.Select(i => i.Data), PluginInstallAssemblyMode.Process, TemporaryDatabaseBarrier);
             var element = new PluginInstallItemElement(pluginInstallData, LoggerFactory);
             element.Initialize();
             MergeInstallPlugin(element);
