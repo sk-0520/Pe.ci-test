@@ -233,11 +233,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="pluginInstallAssemblyMode">直接読み込むか。偽の場合に新規プロセスを立ち上げて頑張る。</param>
         /// <param name="temporaryDatabaseBarrier"></param>
         /// <returns></returns>
-        public async Task<PluginInstallData> InstallPluginArchiveAsync(string pluginName, FileInfo archiveFile, string archiveKind, bool isManual, IEnumerable<PluginInstallData> installPluginItems, PluginInstallAssemblyMode pluginInstallAssemblyMode, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
+        public async Task<PluginInstallData> InstallPluginArchiveAsync(FileInfo archiveFile, string archiveKind, bool isManual, IEnumerable<PluginInstallData> installPluginItems, PluginInstallAssemblyMode pluginInstallAssemblyMode, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
         {
             var extractedDirectory = await ExtractArchiveAsync(archiveFile, archiveKind, isManual).ConfigureAwait(false);
 
-            var pluginFile = await GetPluginFileAsync(extractedDirectory, pluginName, EnvironmentParameters.ApplicationConfiguration.Plugin.Extensions).ConfigureAwait(false);
+            var pluginFile = await GetPluginFileAsync(extractedDirectory, string.Empty, Array.Empty<string>()).ConfigureAwait(false);
             if(pluginFile == null) {
                 // プラグインが見つかんない
                 extractedDirectory.Delete(true);

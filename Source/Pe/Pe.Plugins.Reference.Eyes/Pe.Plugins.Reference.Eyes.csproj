@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="assembly-info.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Views\EyesWidgetWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
