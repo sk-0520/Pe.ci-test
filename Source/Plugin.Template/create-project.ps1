@@ -326,6 +326,10 @@ try {
 	}
 
 	Write-Verbose "プラグイン起動設定追加"
+	$pluginPropertyDir = Join-Path -Path $parameters.source -ChildPath $PluginName | Join-Path -ChildPath 'Properties'
+	Copy-Item -Path (Join-Path -Path $pluginPropertyDir -ChildPath 'dev-launchSettings.json') -Destination (Join-Path -Path $pluginPropertyDir -ChildPath 'launchSettings.json')
+
+	Write-Verbose "アプリケーションデバッグ構成ファイル適用"
 	$appEtcDir = Join-Path -Path $appDir -ChildPath 'Pe.Main' | Join-Path -ChildPath 'etc'
 	Copy-Item -Path (Join-Path -Path $appEtcDir -ChildPath '@appsettings.debug.json') -Destination (Join-Path -Path $appEtcDir -ChildPath 'appsettings.debug.json')
 
@@ -335,13 +339,13 @@ try {
 	$shortcut.TargetPath = $solutionPathName
 	$shortcut.Save()
 
-	Write-Verbose "とりあえずのデバッグ全ビルド"
 	if (!$suppressBuild) {
-		$result = & $parameters.dotnet build --configuration Debug /p:Platform=x64 -Rebuild
+		Write-Verbose "とりあえずのデバッグ全ビルド"
+		& $parameters.dotnet build --configuration Debug /p:Platform=x64 -Rebuild
 	}
 
-	Write-Verbose "はいコミット"
 	if (!$suppressScm) {
+		Write-Verbose "はいコミット"
 		& $parameters.git add --all
 		& $parameters.git commit --message "initialize $PluginName"
 	}
