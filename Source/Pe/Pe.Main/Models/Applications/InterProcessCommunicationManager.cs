@@ -167,11 +167,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var serializer = new JsonTextSerializer();
             serializer.Save(responseObject, pipeClientStream);
+#if NOT_IPC
+            pipeClientStream.Seek(0, SeekOrigin.Begin);
+            using var reader = new StreamReader(pipeClientStream);
+            var result = reader.ReadToEnd();
+            Logger.LogInformation("result: {result}", result);
+#endif
             //using var fs = new FileStream(@"x:\a.json", FileMode.Create);
             //serializer.Save(responseObject, fs);
         }
 
-        #endregion
+#endregion
 
         #region DisposerBase
 

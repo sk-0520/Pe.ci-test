@@ -21,6 +21,8 @@ namespace ContentTypeTextNet.Pe.Main
         private RunMode RunMode { get; set; }
         private bool CachedUnhandledException { get; set; }
 
+        private bool VisibleErrorDialog => RunMode != RunMode.InterProcessCommunication;
+
         #endregion
 
         #region function
@@ -152,10 +154,14 @@ namespace ContentTypeTextNet.Pe.Main
                         e.Handled = ApplicationManager.UnhandledExceptionHandled;
                     }
                 } else {
-                    MessageBox.Show(e.Exception.ToString(), $"[{RunMode}]");
+                    if(VisibleErrorDialog) {
+                        MessageBox.Show(e.Exception.ToString(), $"[{RunMode}] {e.Exception.GetType().FullName}");
+                    }
                 }
             } else {
-                MessageBox.Show(e.Exception.ToString());
+                if(VisibleErrorDialog) {
+                    MessageBox.Show(e.Exception.ToString(), $"[{RunMode}] {e.Exception.GetType().FullName}");
+                }
             }
 
             Shutdown(1);
