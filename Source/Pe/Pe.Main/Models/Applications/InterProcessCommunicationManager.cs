@@ -87,12 +87,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region property
 
+        /// <summary>
+        /// プロセス間通信 パイプハンドル。
+        /// <para>必須。</para>
+        /// </summary>
         public static string CommandLineKeyIpcHandle { get; } = "ipc-handle";
+        /// <summary>
+        /// プロセス間通信 処理モード。
+        /// <para>必須。</para>
+        /// </summary>
         public static string CommandLineKeyIpcMode { get; } = "ipc-mode";
+        /// <summary>
+        /// プロセス間通信 対象ファイル。
+        /// <para><see cref="CommandLineKeyIpcMode"/>依存。</para>
+        /// </summary>
         public static string CommandLineKeyIpcFile { get; } = "ipc-file";
-
-        public static string CommandLineKeyIpcPluginName { get; } = "ipc-plugin-name";
-        public static string CommandLineKeyIpcPluginIsManualInstall { get; } = "ipc-plugin-is-manual-install";
 
         private ApplicationLogging Logging { get; set; }
         private ILogger Logger { get; set; }
@@ -158,11 +167,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var serializer = new JsonTextSerializer();
             serializer.Save(responseObject, pipeClientStream);
+#if NOT_IPC
+            pipeClientStream.Seek(0, SeekOrigin.Begin);
+            using var reader = new StreamReader(pipeClientStream);
+            var result = reader.ReadToEnd();
+            Logger.LogInformation("result: {result}", result);
+#endif
             //using var fs = new FileStream(@"x:\a.json", FileMode.Create);
             //serializer.Save(responseObject, fs);
         }
 
-        #endregion
+#endregion
 
         #region DisposerBase
 

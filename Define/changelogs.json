@@ -1,5 +1,52 @@
 [
 	{
+		"date": "2023/09/03",
+		"version": "0.99.211",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "e356019f398c361175b8138abfdbc1910dd1f711",
+						"subject": "#901: プロセス間通信時にログ出力をなんらかハンドリングする必要あり"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "29929a624029de9ada06997afc31e21537d7feb4",
+						"subject": "プラグインテンプレートの生成処理を修正"
+					},
+					{
+						"revision": "af66d1cf5951c0a0d91b21e4c4f650d891b28a48",
+						"subject": "#903: プロセス間通信時の呼び出された側で非GUI処理を行う場合にダイアログは表示させない"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "ab47424cc0d71ced47925abf3b3435758ea7b452",
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 17.7.0 -> 17.7.2"
+					},
+					{
+						"revision": "b83824026edb4a37c9fde72c274078e7fc51f17a",
+						"class": "nuget",
+						"subject": "Dapper 2.0.143 -> 2.0.151"
+					},
+					{
+						"revision": "2a7d1404b0732e7762872feafe624d66a72ce90b",
+						"subject": " #904: プラグインテンプレートの launchSettings.json は git 管理外とする"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/09/01",
 		"version": "0.99.210",
 		"contents": [
@@ -15,7 +62,7 @@
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "884c7b7542ae26f85f60dfc44fcff88eb1a1abb3",
 						"subject": "#902: プラグインアーカイブから対象プラグイン取得に際して複数DLLを考慮する",
 						"comments": [
 							"プラグインモジュールから頑張って探すのは無理があるのでプラグイン側で指定するように修正"

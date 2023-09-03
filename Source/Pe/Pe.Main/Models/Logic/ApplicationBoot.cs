@@ -19,11 +19,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     /// <summary>
     /// 本体アプリケーション起動処理。
+    /// <para>プロセス間通信処理しかしない。</para>
     /// </summary>
     public class ApplicationBoot
     {
-        public ApplicationBoot(ILoggerFactory loggerFactory)
+        public ApplicationBoot(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
         {
+            EnvironmentParameters = environmentParameters;
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
         }
@@ -35,8 +37,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <inheritdoc cref="ILogger"/>
         private ILogger Logger { get; }
 
+        private EnvironmentParameters EnvironmentParameters { get; }
+
         /// <summary>
         /// 本体起動コマンドパス。
+        /// <para>Pe.Main.exe と話せればいいので上位階層の Pe.exe を指定する必要なし。</para>
         /// </summary>
         public static string CommandPath { get; } = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, "exe");
 
@@ -44,21 +49,43 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        public bool TryExecuteIpc(IpcMode ipcMode, IEnumerable<string> arguments, ExecuteIpcDelegate action)
+        /// <summary>
+        /// プロセス間通信起動。
+        /// <para>現在のユーザー・端末・一時ディレクトリ情報が引き継がれ、強制ログ出力(<see cref="EnvironmentParameters.TemporaryIpcLogFile"/>)が行われる。</para>
+        /// </summary>
+        /// <param name="ipcMode">プロセス間通信内容。</param>
+        /// <param name="keyValueArguments">コマンドライン引数(キー:値)</param>
+        /// <param name="switchArguments">コマンドライン引数(スイッチ, -- は不要)</param>
+        /// <param name="action">結果データ受領。</param>
+        /// <returns></returns>
+        public bool TryExecuteIpc(IpcMode ipcMode, IEnumerable<KeyValuePair<string,string>> keyValueArguments, IEnumerable<string> switchArguments, ExecuteIpcDelegate action)
         {
             try {
                 using var pipeServerStream = new AnonymousPipeServerStream(PipeDirection.In, HandleInheritability.Inheritable);
 
-                var args = new Dictionary<string, string> {
+                var ipcArgs = new Dictionary<string, string> {
                     [ApplicationInitializer.CommandLineKeyRunMode] = RunModeUtility.ToString(RunMode.InterProcessCommunication),
+                    [EnvironmentParameters.CommandLineKeyUserDirectory] = EnvironmentParameters.UserRoamingDirectory.FullName,
+                    [EnvironmentParameters.CommandLineKeyMachineDirectory] = EnvironmentParameters.MachineDirectory.FullName,
+                    [EnvironmentParameters.CommandLineKeyTemporaryDirectory] = EnvironmentParameters.TemporaryDirectory.FullName,
+                    [ApplicationInitializer.CommandLineKeyLog] = EnvironmentParameters.TemporaryIpcLogFile.FullName,
                     [InterProcessCommunicationManager.CommandLineKeyIpcHandle] = pipeServerStream.GetClientHandleAsString(),
                     [InterProcessCommunicationManager.CommandLineKeyIpcMode] = ipcMode.ToString(),
-#if DEBUG
-                    ["log"] = @"x:\a.log",
-#endif
-                }.ToCommandLineArguments().Concat(
-                    arguments.Select(i => CommandLine.Escape(i))
-                );
+                };
+
+                var ipcSwitchArgs = new List<string>() {
+                    ApplicationInitializer.CommandLineSwitchForceLog,
+                };
+                ipcSwitchArgs.AddRange(switchArguments);
+
+                foreach(var keyValue in keyValueArguments) {
+                    ipcArgs[keyValue.Key] = keyValue.Value;
+                }
+
+                var args = ipcArgs
+                    .ToCommandLineArguments()
+                    .Concat(ipcSwitchArgs.Select(i => "--" + i))
+                ;
                 var argument = args.JoinString(" ");
 
                 using var process = new Process() {
@@ -77,6 +104,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
                 process.Start();
                 pipeServerStream.DisposeLocalCopyOfClientHandle();
+                if(!process.WaitForExit(EnvironmentParameters.ApplicationConfiguration.General.IpcWait)) {
+                    throw new TimeoutException();
+                }
                 var output = pipeServerReader.ReadToEnd();
 
                 action(commandLine, output);
@@ -93,6 +123,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
             var process = (Process?)sender;
             Logger.LogInformation("プロセス終了: {0}", process);
+            if(process is not null) {
+                process.Exited -= Process_Exited;
+            }
         }
 
         #endregion

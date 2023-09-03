@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// <inheritdoc cref="ILogger"/>
         protected ILogger Logger { get; }
         /// <inheritdoc cref="IPluginInformation"/>
-        IPluginInformation? Information { get; set; }
+        private IPluginInformation? Information { get; set; }
 
         /// <summary>
         /// アドオン機能を所持しているか。
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             static string CreateRandomText(string format, int count)
             {
                 var rand = new Random();
-                var randomValues = new byte[16];
+                var randomValues = new byte[count];
                 rand.NextBytes(randomValues);
                 return string.Format(CultureInfo.InvariantCulture, format, BitConverter.ToString(randomValues));
             }
