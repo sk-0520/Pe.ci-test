@@ -292,6 +292,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public FileInfo TemporaryRebootLogFile => CombineFile(TemporaryDirectory, "reboot.log");
         /// <summary>
+        /// プロセス間通信実行ログ
+        /// <para>TODO: ただひたすら大きくなるのでどっかのタイミング綺麗にはしたいなぁ、と思いつつ後回し。</para>
+        /// </summary>
+        public FileInfo TemporaryIpcLogFile => CombineFile(TemporaryDirectory, "ipc.log");
+        /// <summary>
         /// 生クラッシュレポート配置ディレクトリ。
         /// </summary>
         public DirectoryInfo TemporaryCrashReportDirectory => CombineDirectory(true, TemporaryDirectory, "crash");

@@ -89,6 +89,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         /// </summary>
         [Configuration]
         public TimeSpan DispatcherWait { get; }
+        /// <summary>
+        /// プロセス間通信の待機時間。
+        /// </summary>
+        [Configuration]
+        public TimeSpan IpcWait { get; }
 
         /// <summary>
         /// クラッシュレポートを送信するか。

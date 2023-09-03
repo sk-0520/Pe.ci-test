@@ -194,16 +194,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         private IPluginLoadState LoadProcessPlugin(FileInfo pluginFile, DirectoryInfo pluginDirectory)
         {
-            var applicationBoot = new ApplicationBoot(LoggerFactory);
-            var arguments = new Dictionary<string, string> {
+            var applicationBoot = new ApplicationBoot(EnvironmentParameters, LoggerFactory);
+            var keyValueArguments = new Dictionary<string, string> {
                 [InterProcessCommunicationManager.CommandLineKeyIpcFile] = pluginFile.FullName,
-                [EnvironmentParameters.CommandLineKeyUserDirectory] = EnvironmentParameters.UserRoamingDirectory.FullName,
-                [EnvironmentParameters.CommandLineKeyMachineDirectory] = EnvironmentParameters.MachineDirectory.FullName,
-                [EnvironmentParameters.CommandLineKeyTemporaryDirectory] = EnvironmentParameters.TemporaryDirectory.FullName,
-            }.ToCommandLineArguments();
+            };
 
             IpcDataPluginStatus? data = null;
-            applicationBoot.TryExecuteIpc(IpcMode.GetPluginStatus, arguments, (c, o) => {
+            applicationBoot.TryExecuteIpc(IpcMode.GetPluginStatus, keyValueArguments, Array.Empty<string>(), (c, o) => {
                 var binary = Encoding.UTF8.GetBytes(o);
                 using var stream = new MemoryReleaseStream(binary);
 
@@ -230,7 +227,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="archiveKind"></param>
         /// <param name="isManual"></param>
         /// <param name="installPluginItems"></param>
-        /// <param name="pluginInstallAssemblyMode">直接読み込むか。偽の場合に新規プロセスを立ち上げて頑張る。</param>
+        /// <param name="pluginInstallAssemblyMode">プラグインアセンブリの読み込み方法。</param>
         /// <param name="temporaryDatabaseBarrier"></param>
         /// <returns></returns>
         public async Task<PluginInstallData> InstallPluginArchiveAsync(FileInfo archiveFile, string archiveKind, bool isManual, IEnumerable<PluginInstallData> installPluginItems, PluginInstallAssemblyMode pluginInstallAssemblyMode, ITemporaryDatabaseBarrier temporaryDatabaseBarrier)
