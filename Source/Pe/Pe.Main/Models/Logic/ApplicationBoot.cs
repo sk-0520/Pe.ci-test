@@ -123,6 +123,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
             var process = (Process?)sender;
             Logger.LogInformation("プロセス終了: {0}", process);
+            if(process is not null) {
+                process.Exited -= Process_Exited;
+            }
         }
 
         #endregion
