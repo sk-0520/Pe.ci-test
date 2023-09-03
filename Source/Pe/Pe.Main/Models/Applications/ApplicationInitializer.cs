@@ -44,10 +44,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public static string CommandLineKeyRunMode { get; } = "run-mode";
         private string CommandLineKeyAppLogLimit { get; } = "app-log-limit";
-        private string CommandLineKeyLog { get; } = "log";
+        public static string CommandLineKeyLog { get; } = "log";
         private string CommandLineKeyWithLog { get; } = "with-log";
         private string CommandLineSwitchFullTraceLog { get; } = "full-trace-log";
-        private string CommandLineSwitchForceLog { get; } = "force-log";
+        public static string CommandLineSwitchForceLog { get; } = "force-log";
 
         private string CommandLineSwitchAcceptSkip { get; } = "skip-accept";
         private string CommandLineSwitchBetaVersion { get; } = "beta-version";
