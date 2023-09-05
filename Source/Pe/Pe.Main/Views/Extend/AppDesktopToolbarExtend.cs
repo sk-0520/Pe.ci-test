@@ -202,18 +202,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
     public abstract class AppDesktopToolbarEventArgs: EventArgs
     { }
 
-    [Obsolete("[#679] 独自検知した方が安全そう")]
-    public class AppDesktopToolbarFullScreenEventArgs: AppDesktopToolbarEventArgs
-    {
-        public AppDesktopToolbarFullScreenEventArgs(bool isFullScreen)
-        {
-            IsFullscreen = isFullScreen;
-        }
-
-        public bool IsFullscreen { get; private set; }
-        public bool Handled { get; set; }
-    }
-
     public class AppDesktopToolbarPositionChangedEventArgs: AppDesktopToolbarEventArgs
     { }
 
