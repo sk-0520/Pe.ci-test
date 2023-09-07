@@ -59,6 +59,5 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public void Unload(PluginKind pluginKind, IPluginUnloadContext pluginUnloadContext) => throw new NotSupportedException();
 
         #endregion
-
     }
 }

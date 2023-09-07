@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         public string Description
         {
             get { return Dialog.Description; }
-            set { Description = value; }
+            set { Dialog.Description = value; }
         }
 
         /// <inheritdoc cref="WinForms.FolderBrowserDialog.RootFolder"/>

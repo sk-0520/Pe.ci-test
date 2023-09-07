@@ -1,11 +1,9 @@
+using System;
 using System.IO;
-using System.Windows;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Standard.Base;
-using Drawing = System.Drawing;
 
 namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
 {
@@ -16,65 +14,104 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     {
         #region define
 
+        [Obsolete]
         private const double Dpi = 96;
+        [Obsolete]
         private const double Point = 72;
 
         #endregion
 
-        public static Drawing.Size Convert(Size size)
+        /// <summary>
+        /// <see cref="System.Windows.Size"/> から <see cref="System.Drawing.Size"/> に変換。
+        /// </summary>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public static System.Drawing.Size Convert(System.Windows.Size size)
         {
-            return new Drawing.Size((int)size.Width, (int)size.Height);
+            return new System.Drawing.Size((int)size.Width, (int)size.Height);
         }
-        public static Size Convert(Drawing.Size size)
+        /// <summary>
+        /// <see cref="System.Drawing.Size"/> から <see cref="System.Windows.Size"/> に変換。
+        /// </summary>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public static System.Windows.Size Convert(System.Drawing.Size size)
         {
-            return new Size(size.Width, size.Height);
-        }
-
-        public static Drawing.Point Convert(Point point)
-        {
-            return new Drawing.Point((int)point.X, (int)point.Y);
-        }
-        public static Point Convert(Drawing.Point point)
-        {
-            return new Point(point.X, point.Y);
-        }
-
-        public static Drawing.Rectangle Convert(Rect rect)
-        {
-            return new Drawing.Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height);
-        }
-        public static Rect Convert(Drawing.Rectangle rectangle)
-        {
-            return new Rect(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            return new System.Windows.Size(size.Width, size.Height);
         }
 
+        /// <summary>
+        /// <see cref="System.Windows.Point"/> から <see cref="System.Drawing.Point"/> に変換。
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public static System.Drawing.Point Convert(System.Windows.Point point)
+        {
+            return new System.Drawing.Point((int)point.X, (int)point.Y);
+        }
+        /// <summary>
+        /// <see cref="System.Drawing.Point"/> から <see cref="System.Windows.Point"/> に変換。
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public static System.Windows.Point Convert(System.Drawing.Point point)
+        {
+            return new System.Windows.Point(point.X, point.Y);
+        }
+
+        /// <summary>
+        /// <see cref="System.Windows.Rect"/> から <see cref="System.Drawing.Rectangle"/> に変換。
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <returns></returns>
+        public static System.Drawing.Rectangle Convert(System.Windows.Rect rect)
+        {
+            return new System.Drawing.Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height);
+        }
+        /// <summary>
+        /// <see cref="System.Drawing.Rectangle"/> から <see cref="System.Windows.Rect"/> に変換。
+        /// </summary>
+        /// <param name="rectangle"></param>
+        /// <returns></returns>
+        public static System.Windows.Rect Convert(System.Drawing.Rectangle rectangle)
+        {
+            return new System.Windows.Rect(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+        }
+
+        [Obsolete]
         public static double ConvertFontSizeFromDrawing(double drawingFontPoint)
         {
             return drawingFontPoint * Dpi / Point;
         }
+        [Obsolete]
         public static float ConvertFontSizeFromWpf(double wpfFontSize)
         {
             return (float)(wpfFontSize / Dpi * Point);
         }
 
-        public static BitmapSource ImageSourceFromIcon(Drawing.Icon icon)
+        /// <summary>
+        /// <see cref="System.Drawing.Icon"/> を <see cref="BitmapSource"/> に変換。
+        /// </summary>
+        /// <param name="icon"></param>
+        /// <returns></returns>
+        public static BitmapSource ImageSourceFromIcon(System.Drawing.Icon icon)
         {
             var result = Imaging.CreateBitmapSourceFromHIcon(
                 icon.Handle,
-                Int32Rect.Empty,
+                System.Windows.Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions()
             );
             return result;
         }
 
-        public static BitmapSource ImageSourceFromBinaryIcon(byte[] binaryIcon, Size iconSize)
+        public static BitmapSource ImageSourceFromBinaryIcon(byte[] binaryIcon, System.Windows.Size iconSize)
         {
             using(var ms = new MemoryReleaseStream(binaryIcon)) {
                 return ImageSourceFromBinaryStreamIcon(ms, iconSize);
             }
         }
 
-        public static BitmapSource ImageSourceFromBinaryIcon(ArrayPoolObject<byte> binaryIcon, Size iconSize)
+        public static BitmapSource ImageSourceFromBinaryIcon(ArrayPoolObject<byte> binaryIcon, System.Windows.Size iconSize)
         {
             using(var ms = new MemoryReleaseStream(binaryIcon.Items, 0, binaryIcon.Length)) {
                 return ImageSourceFromBinaryStreamIcon(ms, iconSize);
@@ -82,18 +119,18 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         }
 
 
-        public static BitmapSource ImageSourceFromBinaryStreamIcon(Stream streamIcon, Size iconSize)
+        public static BitmapSource ImageSourceFromBinaryStreamIcon(Stream streamIcon, System.Windows.Size iconSize)
         {
-            var size = new Drawing.Size((int)iconSize.Width, (int)iconSize.Height);
-            using(var icon = new Drawing.Icon(streamIcon, size)) {
+            var size = new System.Drawing.Size((int)iconSize.Width, (int)iconSize.Height);
+            using(var icon = new System.Drawing.Icon(streamIcon, size)) {
                 return ImageSourceFromIcon(icon);
             }
         }
 
 
-        public static Color Convert(Drawing.Color color)
+        public static System.Windows.Media.Color Convert(System.Drawing.Color color)
         {
-            return Color.FromArgb(color.A, color.R, color.G, color.B);
+            return System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
         }
     }
 }

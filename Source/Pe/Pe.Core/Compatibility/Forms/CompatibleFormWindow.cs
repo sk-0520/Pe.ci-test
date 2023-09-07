@@ -11,6 +11,10 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     /// </summary>
     public class CompatibleFormWindow: WinForms.IWin32Window, IWindowsHandle
     {
+        /// <summary>
+        /// ,生成。
+        /// </summary>
+        /// <param name="window"></param>
         public CompatibleFormWindow(Window window)
         {
             Handle = HandleUtility.GetWindowHandle(window);
