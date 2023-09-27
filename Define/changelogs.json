@@ -72,7 +72,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#905: Pe.Publish は Pe に統合すべき",
+						"comments": [
+							"Pe.Publish から無理やり持ってきた。きちゃない"
+						]
 					},
 					{
 						"revision": "",
