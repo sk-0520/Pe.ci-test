@@ -42,7 +42,7 @@
     <PackageReference Include="NLog.Extensions.Logging" Version="5.3.4" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
     <PackageReference Include="SevenZipExtractor" Version="1.0.17" />
-    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.0" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.1" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
   </ItemGroup>
 
