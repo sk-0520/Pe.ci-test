@@ -1,5 +1,52 @@
 [
 	{
+		"date": "2023/09/29",
+		"version": "0.99.212",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"class": "",
+						"subject": "依存ライブラリとかCI側だけ"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "1515579ef73852627366cd11eda268d8d1a38656",
+						"subject": "#905: Pe.Publish は Pe に統合すべき",
+						"comments": [
+							"Pe.Publish から無理やり持ってきた。きちゃない"
+						]
+					},
+					{
+						"revision": "ab09c3c8865f1c042a6919f21b15e777fd950fb0",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 5.3.3 -> 5.3.4"
+					},
+					{
+						"revision": "becee34347c4b4cdc7cf988b76f902a9134c1f04",
+						"class": "nuget",
+						"subject": "System.DirectoryServices.AccountManagement 7.0.0 -> 7.0.1"
+					},
+					{
+						"revision": "5f731811c06046886bf935f65cc7e8d50b39ffac",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf.NETCore 114.2.120 -> 116.0.230"
+					},
+					{
+						"revision": "b333c3086011b892a5b52c6b0777c801823937e3",
+						"subject": "update npm"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/09/03",
 		"version": "0.99.211",
 		"contents": [

@@ -228,7 +228,6 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// WebViewの端末親ディレクトリ。
         /// </summary>
         public DirectoryInfo MachineWebViewDirectory => CombineDirectory(true, MachineDirectory, "web-view");
-        public DirectoryInfo MachineWebViewUserDirectory => CombineDirectory(true, MachineWebViewDirectory, "user");
         /// <summary>
         /// 送信済みクラッシュレポート配置ディレクトリ。
         /// </summary>

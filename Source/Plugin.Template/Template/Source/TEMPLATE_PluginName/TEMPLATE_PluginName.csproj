@@ -3,6 +3,7 @@
   <PropertyGroup>
     <RootNamespace>TEMPLATE_Namespace</RootNamespace>
     <UseWPF>true</UseWPF>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
 
   <ItemGroup>

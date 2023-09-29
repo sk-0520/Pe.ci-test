@@ -31,7 +31,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
             settings.AcceptLanguageList = cultureService.Culture.Name;
 
             settings.CachePath = environmentParameters.TemporaryWebViewCacheDirectory.FullName;
-            settings.UserDataPath = environmentParameters.MachineWebViewUserDirectory.FullName;
 
             settings.UserAgent = ApplicationStringFormats.GetHttpUserAgentValue(environmentParameters.ApplicationConfiguration.Web.ViewUserAgentFormat);
 
@@ -45,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
                 }
             );
 
-            CefSharp.Cef.Initialize(settings);
+            CefSharp.Cef.Initialize(settings, performDependencyCheck: false, browserProcessHandler: null);
         }
 
         //public void AddVisualCppRuntimeRedist(EnvironmentParameters environmentParameters)

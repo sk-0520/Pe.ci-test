@@ -11,54 +11,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     internal class ApplicationDiContainer: DiContainer
     {
         #region function
-
-        /// <summary>
-        /// 指定の方に関するデータを破棄。
-        /// <para>本来なら<see cref="ScopeDiContainer"/>で何とかすべきかもしれないが<see cref="DiContainer.Constructors"/>周りのキャッシュ構成に手を加えるのがしんどかったのでここで拡張。</para>
-        /// </summary>
-        /// <param name="type"></param>
-        [Obsolete]
-        private void ClearTypeCore(Type type)
-        {
-            foreach(var item in ObjectPool.Values) {
-                item.TryRemove(type, out _);
-            }
-            foreach(var item in Factory.Values) {
-                item.TryRemove(type, out _);
-            }
-            foreach(var item in Mapping.Values) {
-                item.TryRemove(type, out _);
-
-                // マッピング先の削除
-                var targetHasKeys = item
-                    .Where(i => i.Value == type)
-                    .Select(i => i.Key)
-                    .ToList()
-                ;
-                foreach(var key in targetHasKeys) {
-                    item.TryRemove(key, out _);
-                }
-            }
-            foreach(var item in Constructors.Values) {
-                item.TryRemove(type, out _);
-
-                // 引数の削除
-                var targetHasKeys = item
-                    .Where(i => i.Value.ParameterInfoItems.Any(i => i.ParameterType == type))
-                    .Select(i => i.Key)
-                    .ToList()
-                ;
-                foreach(var key in targetHasKeys) {
-                    item.TryRemove(key, out _);
-                }
-            }
-        }
-
-        [Obsolete]
-        public void ClearType<T>() => ClearTypeCore(typeof(T));
-        [Obsolete]
-        public void ClearType(Type type) => ClearTypeCore(type);
-
         #endregion
     }
 

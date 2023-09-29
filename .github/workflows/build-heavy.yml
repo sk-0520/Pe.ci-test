@@ -1,4 +1,4 @@
-name: Heavy
+name: Build Heavy
 
 on:
   schedule:

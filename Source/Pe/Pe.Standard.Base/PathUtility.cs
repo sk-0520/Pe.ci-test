@@ -19,15 +19,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
     public static class PathUtility
     {
-        #region define
-
-        [Obsolete]
-        private const string formatTimestampFileName = "yyyy-MM-dd_HH-mm-ss";
-        [Obsolete]
-        private const string extensionTemporaryFile = "tmp";
-
-        #endregion
-
         #region property
         #endregion
 
@@ -116,70 +107,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public static bool IsProgram(string path)
         {
             return HasExtensions(path, new[] { "exe", "dll" });
-        }
-
-        [Obsolete]
-        public static string GetTimestampFileName(DateTime dateTime)
-        {
-            return dateTime.ToString(formatTimestampFileName, CultureInfo.InvariantCulture);
-        }
-
-        /// <summary>
-        /// ファイル名に使用可能なタイムスタンプを取得。
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete]
-        public static string GetCurrentTimestampFileName()
-        {
-            return GetTimestampFileName(DateTime.Now);
-        }
-
-        /// <summary>
-        /// 一時ファイル用拡張子の作成。
-        /// <para>現在時間を用いる。</para>
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete]
-        public static string GetTemporaryExtension(string role)
-        {
-            return $".{GetCurrentTimestampFileName()}.{role}.{extensionTemporaryFile}";
-        }
-
-        /// <summary>
-        /// 一時ファイル用拡張子の作成。
-        /// </summary>
-        /// <param name="name">ファイル名。</param>
-        /// <param name="role">役割。</param>
-        /// <param name="extension">拡張子。</param>
-        /// <returns></returns>
-        [Obsolete]
-        private static string CreateFileNameCore(string name, string? role, string extension)
-        {
-            return $"{name}{(role == null ? string.Empty : "-" + role)}.{extension}";
-        }
-        /// <summary>
-        /// ファイル名を生成。
-        /// </summary>
-        /// <param name="name">ファイル名。</param>
-        /// <param name="role">役割。</param>
-        /// <param name="extension">拡張子。</param>
-        /// <returns></returns>
-        [Obsolete]
-        public static string CreateFileName(string name, string role, string extension)
-        {
-            Debug.Assert(!string.IsNullOrWhiteSpace(role));
-            return CreateFileNameCore(name, role, extension);
-        }
-        /// <summary>
-        /// ファイル名を生成。
-        /// </summary>
-        /// <param name="name">ファイル名。</param>
-        /// <param name="extension">拡張子。</param>
-        /// <returns></returns>
-        [Obsolete]
-        public static string CreateFileName(string name, string extension)
-        {
-            return CreateFileNameCore(name, null, extension);
         }
 
         /// <summary>
