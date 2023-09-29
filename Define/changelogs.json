@@ -9,7 +9,7 @@
 					{
 						"revision": "",
 						"class": "",
-						"subject": ""
+						"subject": "依存ライブラリとかCI側だけ"
 					},
 					{
 						"revision": "",
@@ -84,11 +84,17 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "System.DirectoryServices.AccountManagement 7.0.0 -> 7.0.1"
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 114.2.120 -> 116.0.230"
+					},
+					{
+						"revision": "",
+						"subject": "update npm"
 					}
 				]
 			}
