@@ -21,14 +21,127 @@ env:
   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
 
 jobs:
-  matrix-build:
-    name: Build
+  help:
+    name: Help
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Add> Node/NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ./.node-version
+          cache: npm
+
+      - name: <Install> NPM
+        run: npm ci
+
+      - name: <Test> Script
+        run: npm test
+
+      - name: <Build> Help
+        run: npm run help-ci
+
+      - name: <Artifact> Help
+        uses: actions/upload-artifact@v3
+        with:
+          name: Help
+          path: Output/help
+
+  build-tools:
+    name: BuildTools
+    runs-on: windows-2022
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Add> msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
+
+      - name: <Cache> Nuget
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: ${{ runner.os }}-${{ github.job }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ github.job }}-nuget-${{ hashFiles('**/*.csproj') }}
+
+      - name: <Cache> Obj
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/Source/**/obj
+          key: ${{ runner.os }}-${{ github.job }}-obj-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ github.job }}-obj-${{ hashFiles('**/*.csproj') }}
+
+      - name: <Build> BuildTools
+        shell: pwsh
+        run: .\Build\make-buildtools.ps1
+
+      - name: <Artifact> BuildTools
+        uses: actions/upload-artifact@v3
+        with:
+          name: BuildTools
+          path: Output\tools
+
+  build-boot:
+    name: Build Boot
+    runs-on: windows-2022
 
     strategy:
       matrix:
         PLATFORM: ["x86", "x64"]
 
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Add> msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
+
+      - name: <Cache> Obj
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/Source/**/obj
+          key: ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ github.job }}-obj-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.vcxproj') }}
+
+      - name: <Rewrite> Module
+        shell: pwsh
+        run: .\Build\rewrite-module.ps1 -Module boot -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+
+      - name: <Build> Module
+        shell: pwsh
+        run: .\Build\build-module.ps1 -Module boot -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
+
+      - name: <Artifact> Module
+        uses: actions/upload-artifact@v3
+        with:
+          name: boot-${{ matrix.PLATFORM }}
+          path: Output\Release\${{ matrix.PLATFORM }}\Pe\*
+
+      - name: <Add> VSTest
+        uses: darenm/Setup-VSTest@v1.2
+
+      - name: <Test> Module
+        shell: pwsh
+        run: .\Build\test-module.ps1 -Module boot -Platform ${{ matrix.PLATFORM }} -Configuration Release
+
+  test-boot:
+    name: Test Boot
     runs-on: windows-2022
+
+    strategy:
+      matrix:
+        PLATFORM: ["x86", "x64"]
 
     steps:
       - name: <Checkout> Repository
@@ -42,93 +155,184 @@ jobs:
       - name: <Add> VSTest
         uses: darenm/Setup-VSTest@v1.2
 
-      - name: <Add> Node/NPM
-        uses: actions/setup-node@v3
+      - name: <Cache> Obj
+        uses: actions/cache@v3
         with:
-          node-version-file: ./.node-version
-          cache: npm
+          path: ${{ github.workspace }}/Source/**/obj
+          key: ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ github.job }}-obj-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.vcxproj') }}
+
+      - name: <Rewrite> Module
+        shell: pwsh
+        run: .\Build\rewrite-module.ps1 -Module boot -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+
+      - name: <Build> Module
+        shell: pwsh
+        run: .\Build\build-module.ps1 -Module boot -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Test
+
+      - name: <Test> Module
+        shell: pwsh
+        run: .\Build\test-module.ps1 -Module boot -Platform ${{ matrix.PLATFORM }} -Configuration CI_TEST
+
+  build-main:
+    name: Build Main
+    runs-on: windows-2022
+
+    strategy:
+      matrix:
+        PLATFORM: ["x86", "x64"]
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Add> msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
 
       - name: <Cache> Nuget
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          key: ${{ runner.os }}-${{ github.job }}-nuget-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
-            ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+            ${{ runner.os }}-${{ github.job }}-nuget-${{ hashFiles('**/*.csproj') }}
 
       - name: <Cache> Obj
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/Source/**/obj
-          key: ${{ runner.os }}-obj-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
+          key: ${{ runner.os }}-${{ github.job }}-obj-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
-            ${{ runner.os }}-obj-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
+            ${{ runner.os }}-${{ github.job }}-obj-${{ hashFiles('**/*.csproj') }}
 
-      - name: <Generate> Data
+      - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\generate-data-files.ps1
+        run: .\Build\rewrite-module.ps1 -Module main -ProductMode -BuildType BETA -Revision ${{ github.sha }}
 
-      - name: <Install> NPM
-        run: npm ci
-
-      - name: <Test> Script
-        run: npm test
-
-      - name: <Build> BuildTools
+      - name: <Build> Module
         shell: pwsh
-        run: .\Build\make-buildtools.ps1
+        run: .\Build\build-module.ps1 -Module main -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
 
-      - name: <Build> Document
-        run: npm run help-ci
-
-      - name: <Artifact> Document
+      - name: <Artifact> Module
         uses: actions/upload-artifact@v3
         with:
-          name: Document
-          path: Output\help
+          name: boot-${{ matrix.PLATFORM }}
+          #path: Output\Release\${{ matrix.PLATFORM }}\Pe\*
+          path: Output\*
 
-      - name: <Build> Application
-        shell: pwsh
-        run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType BETA -Platforms ${{ matrix.PLATFORM }}
 
-      - name: <Test> Add Logger
-        shell: cmd
-        run: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install GitHubActionsTestLogger & cd ..\..\..\ )
 
-      - name: <Test> Application
-        shell: pwsh
-        run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ matrix.PLATFORM }} -MainLogger GitHubActions
+  # matrix-build:
+  #   name: Build
 
-      - name: <Archive> Application
-        shell: pwsh
-        run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
+  #   strategy:
+  #     matrix:
+  #       PLATFORM: ["x86", "x64"]
 
-      - name: <Make> update info
-        shell: pwsh
-        run: .\Build\create-updateinfo.ps1 -TargetRepository github -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ env.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ env.PE_RELEASE_NOTE_BASE_URL }} -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
+  #   runs-on: windows-2022
 
-      - name: <Make> release note
-        shell: pwsh
-        run: .\Build\create-release-note.ps1 -IgnoreEmpty
+  #   steps:
+  #     - name: <Checkout> Repository
+  #       uses: actions/checkout@v3
 
-      - name: <Artifact> Application
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe-${{ matrix.PLATFORM }}
-          path: |
-            Output\Pe_*.${{ env.MAIN_ARCHIVE }}
-            Output\Pe_*.html
-            Output\Pe_*.md
-            Output\*-tag.json
-            Output\update.json
-            Output\gen-*
+  #     - name: <Add> msbuild to PATH
+  #       uses: microsoft/setup-msbuild@v1.1
+  #       with:
+  #         msbuild-architecture: x64
 
-      - name: <Artifact> Pe.Plugins.Reference
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pe.Plugins.Reference-${{ matrix.PLATFORM }}
-          path: |
-            Output\Pe.Plugins.Reference.*_${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
-            Output\Pe.Plugins.Reference.*.html
-            Output\update-Pe.Plugins.Reference.*.json
+  #     - name: <Add> VSTest
+  #       uses: darenm/Setup-VSTest@v1.2
+
+  #     - name: <Add> Node/NPM
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version-file: ./.node-version
+  #         cache: npm
+
+  #     - name: <Cache> Nuget
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: ${{ github.workspace }}/.nuget/packages
+  #         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+
+  #     - name: <Cache> Obj
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: ${{ github.workspace }}/Source/**/obj
+  #         key: ${{ runner.os }}-obj-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-obj-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
+
+  #     - name: <Generate> Data
+  #       shell: pwsh
+  #       run: .\Build\generate-data-files.ps1
+
+  #     - name: <Install> NPM
+  #       run: npm ci
+
+  #     - name: <Test> Script
+  #       run: npm test
+
+  #     - name: <Build> BuildTools
+  #       shell: pwsh
+  #       run: .\Build\make-buildtools.ps1
+
+  #     - name: <Build> Document
+  #       run: npm run help-ci
+
+  #     - name: <Artifact> Document
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: Document
+  #         path: Output\help
+
+  #     - name: <Build> Application
+  #       shell: pwsh
+  #       run: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType BETA -Platforms ${{ matrix.PLATFORM }}
+
+  #     - name: <Test> Add Logger
+  #       shell: cmd
+  #       run: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install GitHubActionsTestLogger & cd ..\..\..\ )
+
+  #     - name: <Test> Application
+  #       shell: pwsh
+  #       run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ matrix.PLATFORM }} -MainLogger GitHubActions
+
+  #     - name: <Archive> Application
+  #       shell: pwsh
+  #       run: .\Build\compress.ps1 -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
+
+  #     - name: <Make> update info
+  #       shell: pwsh
+  #       run: .\Build\create-updateinfo.ps1 -TargetRepository github -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ env.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ env.PE_RELEASE_NOTE_BASE_URL }} -ReleaseDirectory Output -MainArchive ${{ env.MAIN_ARCHIVE }} -DefaultArchive ${{ env.DEFAULT_ARCHIVE }} -Platforms ${{ matrix.PLATFORM }}
+
+  #     - name: <Make> release note
+  #       shell: pwsh
+  #       run: .\Build\create-release-note.ps1 -IgnoreEmpty
+
+  #     - name: <Artifact> Application
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: Pe-${{ matrix.PLATFORM }}
+  #         path: |
+  #           Output\Pe_*.${{ env.MAIN_ARCHIVE }}
+  #           Output\Pe_*.html
+  #           Output\Pe_*.md
+  #           Output\*-tag.json
+  #           Output\update.json
+  #           Output\gen-*
+
+  #     - name: <Artifact> Pe.Plugins.Reference
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: Pe.Plugins.Reference-${{ matrix.PLATFORM }}
+  #         path: |
+  #           Output\Pe.Plugins.Reference.*_${{ matrix.PLATFORM }}.${{ env.DEFAULT_ARCHIVE }}
+  #           Output\Pe.Plugins.Reference.*.html
+  #           Output\update-Pe.Plugins.Reference.*.json
 
