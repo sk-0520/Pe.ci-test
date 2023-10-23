@@ -35,10 +35,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 
     internal class SqliteVersionHandler: SqlMapper.TypeHandler<Version>
     {
-        public override void SetValue(IDbDataParameter parameter, Version value)
+        public override void SetValue(IDbDataParameter parameter, Version? value)
         {
             parameter.DbType = DbType.String;
-            parameter.Value = value.ToString(3);
+            parameter.Value = value?.ToString(3);
         }
 
         public override Version Parse(object value)

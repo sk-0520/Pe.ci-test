@@ -77,7 +77,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Dapper 2.0.151 -> 2.1.15"
 					},
 					{
 						"revision": "",
