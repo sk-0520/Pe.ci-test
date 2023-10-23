@@ -1,7 +1,7 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.212+",
+		"date": "2023/10/23",
+		"version": "0.99.213",
 		"contents": [
 			{
 				"type": "note",
@@ -9,61 +9,7 @@
 					{
 						"revision": "",
 						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "依存ライブラリ系のみ更新"
 					}
 				]
 			},
@@ -71,22 +17,22 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "f0cae27fd91d19106ab999214c7898ed1515248e",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 116.0.230 -> 117.2.40"
 					},
 					{
-						"revision": "",
+						"revision": "693afcb8fb5d3b900988084109c29d31a9bf4105",
 						"class": "nuget",
 						"subject": "Dapper 2.0.151 -> 2.1.15"
 					},
 					{
-						"revision": "",
+						"revision": "5f6add5b2e7d79b2a65af9ad2a1ea818ff8dae0d",
 						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 5.3.4 -> 5.3.5"
 					},
 					{
-						"revision": "",
+						"revision": "5f881f840231c36db204fa641a442143b33abb84",
 						"subject": "update npm"
 					}
 				]
