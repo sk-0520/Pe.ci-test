@@ -92,6 +92,8 @@ jobs:
   build-boot:
     name: Build Boot
     runs-on: windows-2022
+    env:
+      MODULE: boot
 
     strategy:
       matrix:
@@ -112,20 +114,20 @@ jobs:
           path: ${{ github.workspace }}/Source/**/obj
           key: ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
           restore-keys: |
-            ${{ runner.os }}-${{ github.job }}-obj-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.vcxproj') }}
+            ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\rewrite-module.ps1 -Module boot -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+        run: .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
-        run: .\Build\build-module.ps1 -Module boot -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
+        run: .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
 
       - name: <Artifact> Module
         uses: actions/upload-artifact@v3
         with:
-          name: boot-${{ matrix.PLATFORM }}
+          name: ${{ env.MODULE }}-${{ matrix.PLATFORM }}
           path: Output\Release\${{ matrix.PLATFORM }}\Pe\*
 
       - name: <Add> VSTest
@@ -133,15 +135,18 @@ jobs:
 
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -Module boot -Platform ${{ matrix.PLATFORM }} -Configuration Release
+        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release
 
   test-boot:
     name: Test Boot
     runs-on: windows-2022
+    env:
+      MODULE: boot
 
     strategy:
       matrix:
         PLATFORM: ["x86", "x64"]
+        CONFIGURATION: ["Release", "CI_TEST"]
 
     steps:
       - name: <Checkout> Repository
@@ -161,23 +166,30 @@ jobs:
           path: ${{ github.workspace }}/Source/**/obj
           key: ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
           restore-keys: |
-            ${{ runner.os }}-${{ github.job }}-obj-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.vcxproj') }}
+            ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\rewrite-module.ps1 -Module boot -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+        run: .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
-        run: .\Build\build-module.ps1 -Module boot -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Test
+        run: |
+          $isTest = $false
+          if( '${{ matrix.CONFIGURATION }}' -eq 'CI_TEST') {
+            $isTest = $true
+          }
+          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Test:$isTest
 
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -Module boot -Platform ${{ matrix.PLATFORM }} -Configuration CI_TEST
+        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration ${{ matrix.CONFIGURATION }}
 
   build-main:
     name: Build Main
     runs-on: windows-2022
+    env:
+      MODULE: main
 
     strategy:
       matrix:
@@ -210,20 +222,64 @@ jobs:
 
       - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\rewrite-module.ps1 -Module main -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+        run: .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
-        run: .\Build\build-module.ps1 -Module main -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
+        run: .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
+
+      - name: <Archive> Application
+        shell: bash
+        run: tar cfv bin.tar Output/Release/${{ matrix.PLATFORM }}/Pe/bin
 
       - name: <Artifact> Module
         uses: actions/upload-artifact@v3
         with:
-          name: boot-${{ matrix.PLATFORM }}
-          #path: Output\Release\${{ matrix.PLATFORM }}\Pe\*
-          path: Output\*
+          name: ${{ env.MODULE }}-${{ matrix.PLATFORM }}.tar
+          path: bin.tar
 
+  test-main:
+    name: Test Main
+    runs-on: windows-2022
+    env:
+      MODULE: main
 
+    strategy:
+      matrix:
+        PLATFORM: ["x86", "x64"]
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Add> msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
+
+      - name: <Cache> Obj
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/Source/**/obj
+          key: ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
+
+      - name: <Rewrite> Module
+        shell: pwsh
+        run: .\Build\rewrite-module.ps1 -Module  ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+
+      - name: <Test> Add Logger
+        shell: cmd
+        run: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install GitHubActionsTestLogger & cd ..\..\..\ )
+
+      - name: <Build> Module
+        shell: pwsh
+        run: .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Test
+
+      - name: <Test> Module
+        shell: pwsh
+        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -MainLogger GitHubActions
 
   # matrix-build:
   #   name: Build
