@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
 using ContentTypeTextNet.Pe.Standard.Database.Test.TestImpl.Vender.Public.SQLite;
@@ -283,6 +284,23 @@ values
 
             var actualNull = await DatabaseAccessor.QuerySingleOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = -1");
             Assert.IsNull(actualNull);
+        }
+
+        [TestMethod]
+        public void TransactionTest()
+        {
+            using(var transaction = DatabaseAccessor.BeginTransaction()) {
+                var actualNone = transaction.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = 0");
+                Assert.IsNull(actualNone);
+
+                transaction.Execute("insert into TestTable1(ColKey, ColVal) values (0, 'Z')");
+                var actualZ = transaction.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = 0");
+                Assert.IsNotNull(actualZ);
+                Assert.AreEqual("Z", actualZ);
+            }
+
+            var actualNone2 = DatabaseAccessor.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = 0");
+            Assert.IsNull(actualNone2);
         }
 
         #endregion

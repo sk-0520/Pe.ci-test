@@ -187,8 +187,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         public void Adjust(IDatabaseContext context)
         {
-            Vacuum(context);
             Reindex(context);
+            Vacuum(context);
             Analyze(context);
         }
 

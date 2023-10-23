@@ -49,8 +49,8 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="IDatabaseReader.GetDataTable(string, object?)"/>
         DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter);
 
-        TResult GetScalar<TResult>(IDatabaseTransaction? transaction, string statement, object? parameter = null);
-        Task<TResult> GetScalarAsync<TResult>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default);
+        TResult? GetScalar<TResult>(IDatabaseTransaction? transaction, string statement, object? parameter = null);
+        Task<TResult?> GetScalarAsync<TResult>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default);
 
         /// <inheritdoc cref="IDatabaseReader.Query{T}(string, object?, bool)"/>
         IEnumerable<T> Query<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered);
@@ -385,7 +385,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             return GetDataTableAsync(null, statement, parameter, cancellationToken);
         }
 
-        public virtual TResult GetScalar<TResult>(IDatabaseTransaction? transaction, string statement, object? parameter = null)
+        public virtual TResult? GetScalar<TResult>(IDatabaseTransaction? transaction, string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
@@ -399,14 +399,14 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             return result;
         }
 
-        public virtual TResult GetScalar<TResult>(string statement, object? parameter = null)
+        public virtual TResult? GetScalar<TResult>(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
             return GetScalar<TResult>(null, statement, parameter);
         }
 
-        public virtual async Task<TResult> GetScalarAsync<TResult>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default)
+        public virtual async Task<TResult?> GetScalarAsync<TResult>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
