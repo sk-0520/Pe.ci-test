@@ -235,7 +235,7 @@ jobs:
       - name: <Artifact> Module
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.MODULE }}-${{ matrix.PLATFORM }}.tar
+          name: ${{ env.MODULE }}-bin-${{ matrix.PLATFORM }}
           path: bin.tar
 
   test-main:
