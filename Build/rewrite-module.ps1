@@ -80,7 +80,14 @@ $repMap = @{
 ReplaceElement $repMap $projectCommonXml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
 $projectCommonXml.Save($projectCommonFilePath)
 
-
+# アイコンファイルの差し替え
+$appIconName = switch ($BuildType) {
+	'BETA' { 'App-beta.ico' }
+	'' { 'App-release.ico' }
+	Default { 'App-debug.ico' }
+}
+$appIconPath = Join-Path -Path 'Resource\Icon' -ChildPath $appIconName
+Copy-Item -Path $appIconPath -Destination 'Source\Pe\Pe.Main\Resources\Icon\App.ico' -Force
 
 if ($Module -eq 'boot') {
 	ReplaceResourceValue $projectCommonXml (Join-Path $sourceBootDirectoryPath "Pe.Boot\Resource.rc")
