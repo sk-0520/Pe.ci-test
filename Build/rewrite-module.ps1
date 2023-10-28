@@ -9,12 +9,12 @@ Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scriptFileNames = @(
 	'version.ps1'
+	'project.ps1'
 );
 foreach ($scriptFileName in $scriptFileNames) {
 	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
 	. $scriptFilePath
 }
-$rootDirPath = Split-Path -Parent $currentDirPath
 
 #/*[FUNCTIONS]-------------------------------------
 
@@ -64,8 +64,8 @@ function ReplaceResourceValue([xml] $commonXml, [string] $resourcePath) {
 
 $version = GetAppVersion
 
-$sourceMainDirectoryPath = Join-Path $rootDirPath "Source/Pe"
-$sourceBootDirectoryPath = Join-Path $rootDirPath "Source/Pe.Boot"
+$sourceMainDirectoryPath = GetSourceDirectory 'main'
+$sourceBootDirectoryPath = GetSourceDirectory 'boot'
 
 $projectCommonFilePath = Join-Path $sourceMainDirectoryPath "Directory.Build.props"
 $projectCommonXml = [XML](Get-Content $projectCommonFilePath  -Encoding UTF8)
@@ -97,8 +97,8 @@ elseif ($Module -eq 'main') {
 
 }
 elseif ($Module -eq 'plugins') {
-	$pluginProjectFiles = Get-ChildItem -Path $sourceMainDirectoryPath -Directory -Filter "Pe.Plugins.Reference.*" -Recurse `
-	| Get-ChildItem -File -Recurse -Include *.csproj
+	$pluginProjectFiles = GetProjectDirectories 'plugins' `
+	| Get-ChildItem -File -Recurse -Include '*.csproj'
 
 	foreach ($pluginProjectFile in $pluginProjectFiles) {
 		# サポートバージョンを固定

@@ -7,14 +7,19 @@ Param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$rootDirPath = Split-Path -Parent $currentDirPath
+$scriptFileNames = @(
+	'project.ps1'
+);
+foreach ($scriptFileName in $scriptFileNames) {
+	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
+	. $scriptFilePath
+}
 
-$sourceMainDirectoryPath = Join-Path $rootDirPath "Source/Pe"
-$sourceBootDirectoryPath = Join-Path $rootDirPath "Source/Pe.Boot"
 
 if ($Module -eq 'boot') {
-	$bootProjectDirItems = Get-ChildItem -Path $sourceBootDirectoryPath -Filter "*.Test" -Directory
-	foreach ($projectDirItem in $bootProjectDirItems) {
+	$projectDirItems = GetTestProjectDirectories $Module
+
+	foreach ($projectDirItem in $projectDirItems) {
 		$testDirPath = Join-Path $projectDirItem.FullName "bin" | Join-Path -ChildPath $Configuration | Join-Path -ChildPath $Platform
 		$testFileName = $projectDirItem.BaseName + '.dll'
 		$testFilePath = Join-Path $testDirPath $testFileName
@@ -31,11 +36,7 @@ elseif ($Module -eq 'main' -or  $Module -eq 'plugins') {
 		$loggerArg = "--logger:$Logger"
 	}
 
-	$projectDirItems =switch ($Module) {
-		'main' { Get-ChildItem -Path $sourceMainDirectoryPath -Filter "*.Test" -Directory -Exclude 'Pe.Plugins.Reference.*' }
-		'plugins' { Get-ChildItem -Path $sourceMainDirectoryPath -Filter "*.Test" -Directory -Include 'Pe.Plugins.Reference.*' }
-		Default { throw "unknown module: $Module" }
-	}
+	$projectDirItems = GetTestProjectDirectories $Module
 
 	foreach ($projectDirItem in $projectDirItems) {
 		$testDirPath = Join-Path $projectDirItem.FullName "bin" | Join-Path -ChildPath $Platform | Join-Path -ChildPath $Configuration
