@@ -400,19 +400,19 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: BuildTools
-          path: buildtools
+          path: artifacts/buildtools
 
       - name: <Download> Help
         uses: actions/download-artifact@v3
         with:
           name: Help
-          path: help
+          path: artifacts/help
 
       - name: <Download> Boot
         uses: actions/download-artifact@v3
         with:
           name: boot-${{ matrix.PLATFORM }}
-          path: boot
+          path: artifacts/boot
 
       - name: <Download> Main
         uses: actions/download-artifact@v3
@@ -423,19 +423,19 @@ jobs:
       - name: <Expand> Application
         shell: bash
         run: |
-          mkdir main-bin
+          mkdir artifacts/main-bin
           cd main-bin.tar
           tar xfv bin.tar
-          cd Output/Release/${{ matrix.PLATFORM }}/Pe
-          mv bin/* ${{ github.workspace }}/main-bin
-          ${{ github.workspace }}
+          cd Output/Release/${{ matrix.PLATFORM }}/Pe/bin
+          mv ./* ${{ github.workspace }}/artifacts/main-bin
           ls -R -l
 
-
-      - name: <XYZ>
-        shell: bash
-        run: ls -R -l
-
+      # 整理用成果物 TODO: 後で消す
+      - name: <Artifact> artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts-${{ matrix.PLATFORM }}
+          path: artifacts
 
   # matrix-build:
   #   name: Build
