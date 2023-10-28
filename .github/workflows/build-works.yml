@@ -282,7 +282,7 @@ jobs:
 
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -MainLogger GitHubActions
+        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
 
   build-plugins:
@@ -376,7 +376,7 @@ jobs:
 
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -MainLogger GitHubActions
+        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
 
 
@@ -456,7 +456,7 @@ jobs:
 
   #     - name: <Test> Application
   #       shell: pwsh
-  #       run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ matrix.PLATFORM }} -MainLogger GitHubActions
+  #       run: .\Build\test.ps1 -MainConfigurations Release -BootConfigurations Release,CI_TEST -Platforms ${{ matrix.PLATFORM }} -Logger GitHubActions
 
   #     - name: <Archive> Application
   #       shell: pwsh
