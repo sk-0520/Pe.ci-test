@@ -50,6 +50,7 @@ jobs:
           name: Help
           path: Output/help
 
+
   build-tools:
     name: BuildTools
     runs-on: windows-2022
@@ -88,6 +89,7 @@ jobs:
         with:
           name: BuildTools
           path: Output\tools
+
 
   build-boot:
     name: Build Boot
@@ -185,6 +187,7 @@ jobs:
         shell: pwsh
         run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration ${{ matrix.CONFIGURATION }}
 
+
   build-main:
     name: Build Main
     runs-on: windows-2022
@@ -261,9 +264,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/Source/**/obj
-          key: ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
+          key: ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
-            ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
+            ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.csproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -280,6 +283,102 @@ jobs:
       - name: <Test> Module
         shell: pwsh
         run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -MainLogger GitHubActions
+
+
+  build-plugins:
+    name: Build Plugins
+    runs-on: windows-2022
+    env:
+      MODULE: plugins
+
+    strategy:
+      matrix:
+        PLATFORM: ["x86", "x64"]
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Add> msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
+
+      - name: <Cache> Nuget
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: ${{ runner.os }}-${{ github.job }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ github.job }}-nuget-${{ hashFiles('**/*.csproj') }}
+
+      - name: <Cache> Obj
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/Source/**/obj
+          key: ${{ runner.os }}-${{ github.job }}-obj-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ github.job }}-obj-${{ hashFiles('**/*.csproj') }}
+
+      - name: <Rewrite> Module
+        shell: pwsh
+        run: .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+
+      - name: <Build> Module
+        shell: pwsh
+        run: .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
+
+      - name: <Artifact> Module
+        uses: actions/upload-artifact@v3
+        with:
+          name: plugins-${{ matrix.PLATFORM }}
+          path: |
+            Output\Release\${{ matrix.PLATFORM }}\Plugins
+
+  test-plugins:
+    name: Test Plugins
+    runs-on: windows-2022
+    env:
+      MODULE: plugins
+
+    strategy:
+      matrix:
+        PLATFORM: ["x86", "x64"]
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Add> msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
+
+      - name: <Cache> Obj
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/Source/**/obj
+          key: ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.csproj') }}
+
+      - name: <Rewrite> Module
+        shell: pwsh
+        run: .\Build\rewrite-module.ps1 -Module  ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+
+      - name: <Test> Add Logger
+        shell: cmd
+        run: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install GitHubActionsTestLogger & cd ..\..\..\ )
+
+      - name: <Build> Module
+        shell: pwsh
+        run: .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Test
+
+      - name: <Test> Module
+        shell: pwsh
+        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -MainLogger GitHubActions
+
+
 
   # matrix-build:
   #   name: Build

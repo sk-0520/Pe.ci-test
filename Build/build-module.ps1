@@ -1,5 +1,5 @@
 Param(
-	[Parameter(mandatory = $true)][ValidateSet('boot', 'main')][string] $Module,
+	[Parameter(mandatory = $true)][ValidateSet('boot', 'main', 'plugins')][string] $Module,
 	[switch] $ProductMode,
 	[string] $BuildType,
 	[Parameter(mandatory = $true)][ValidateSet('x86', 'x64')][string] $Platform,
@@ -53,6 +53,20 @@ elseif ($Module -eq 'main') {
 			throw "build error: $Module"
 		}
 
+	}
+}
+elseif ($Module -eq 'plugins') {
+	# プラグイン参考実装
+	$pluginProjectFiles = Get-ChildItem -Path $sourceMainDirectoryPath -Directory -Filter "Pe.Plugins.Reference.*" -Recurse `
+		| Get-ChildItem -File -Recurse -Include *.csproj
+
+	foreach ($pluginProjectFile in $pluginProjectFiles) {
+		$name = $pluginProjectFile.BaseName
+
+		dotnet publish $pluginProjectFile /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win10-$platform --output Output/Release/$platform/Plugins/$name --self-contained false
+		if (-not $?) {
+			throw "build error: $Module - $name"
+		}
 	}
 }
 else {

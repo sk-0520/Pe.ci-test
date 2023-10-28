@@ -1,5 +1,5 @@
 Param(
-	[Parameter(mandatory = $true)][ValidateSet('boot', 'main')][string] $Module,
+	[Parameter(mandatory = $true)][ValidateSet('boot', 'main', 'plugins')][string] $Module,
 	[switch] $ProductMode,
 	[string] $BuildType,
 	[string] $Revision
@@ -95,6 +95,18 @@ if ($Module -eq 'boot') {
 }
 elseif ($Module -eq 'main') {
 
+}
+elseif ($Module -eq 'plugins') {
+	$pluginProjectFiles = Get-ChildItem -Path $sourceMainDirectoryPath -Directory -Filter "Pe.Plugins.Reference.*" -Recurse `
+	| Get-ChildItem -File -Recurse -Include *.csproj
+
+	foreach ($pluginProjectFile in $pluginProjectFiles) {
+		# サポートバージョンを固定
+		$assemblyInfoFilePath = Join-Path -Path $pluginProjectFile.Directory -ChildPath 'AssemblyInfo.cs'
+		(Get-Content -LiteralPath $assemblyInfoFilePath) `
+		| ForEach-Object { $_ -replace '"0.0.0"', "`"$version`"" } `
+		| Set-Content -LiteralPath $assemblyInfoFilePath
+	}
 }
 else {
 	throw 'うわわわわ'
