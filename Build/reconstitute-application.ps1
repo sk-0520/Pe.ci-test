@@ -19,11 +19,12 @@ foreach ($scriptFileName in $scriptFileNames) {
 #/*[FUNCTIONS]-------------------------------------
 #*/[FUNCTIONS]-------------------------------------
 
-$inputDirectories = @{
-	buildTools = Join-Path $InputDirectory 'buildtools'
-	help       = Join-Path $InputDirectory 'help'
-	boot       = Join-Path $InputDirectory 'boot'
-	main       = Join-Path $InputDirectory 'main-bin'
+$inputItems = @{
+	buildTools = Join-Path $InputDirectory -ChildPath 'buildtools'
+	sql        = Join-Path $InputDirectory -ChildPath 'sql.sqlite3' | Join-Path -ChildPath 'sql.sqlite3'
+	help       = Join-Path $InputDirectory -ChildPath 'help'
+	boot       = Join-Path $InputDirectory -ChildPath 'boot'
+	main       = Join-Path $InputDirectory -ChildPath 'main-bin'
 }
 
 # 出力ディレクトリになんかあっても面倒なので更地にしてからあれこれする
@@ -34,18 +35,24 @@ New-Item -Path $OutputDirectory -ItemType Directory
 
 
 # boot の移行
-Copy-Item -Path (Join-Path -Path $inputDirectories.boot -ChildPath '*') -Destination $OutputDirectory
+Copy-Item -Path (Join-Path -Path $inputItems.boot -ChildPath '*') -Destination $OutputDirectory
 
 
 # main の移行
 $outputMainDir = Join-Path -Path $OutputDirectory -ChildPath 'bin'
 New-Item -Path $outputMainDir -ItemType Directory
-Copy-Item -Path (Join-Path -Path $inputDirectories.main -ChildPath '*') -Destination $outputMainDir
+Copy-Item -Path (Join-Path -Path $inputItems.main -ChildPath '*') -Destination $outputMainDir
 
 
 # main 内の各ディレクトリを上に移す
 $mainSubDirs = @('etc', 'doc', 'bat')
 foreach ($mainSubDir in $mainSubDirs) {
-	$srcDir = Join-Path -Path $inputDirectories.main -ChildPath $mainSubDir
-	Move-Item -Path $srcDir -Destination $outputMainDir
+	$srcDir = Join-Path -Path $inputItems.main -ChildPath $mainSubDir
+	Move-Item -Path $srcDir -Destination $OutputDirectory
 }
+# etc/sql の各 SQL をまとめたものに置き換え
+$sqlRootDir = Join-Path -Path $OutputDirectory -ChildPath 'etc' | Join-Path -ChildPath 'sql'
+Get-ChildItem -Path $sqlRootDir -Directory `
+| Remove-Item -Force -Recurse
+Move-Item $inputItems.sql -Destination $sqlRootDir
+
