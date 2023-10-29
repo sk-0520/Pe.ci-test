@@ -50,7 +50,6 @@ jobs:
           name: Help
           path: Output/help
 
-
   build-tools:
     name: BuildTools
     runs-on: windows-2022
@@ -89,6 +88,32 @@ jobs:
         with:
           name: BuildTools
           path: Output\tools
+
+  build-tools-sql:
+    name: "BuildTools: SQL"
+    runs-on: windows-2022
+    needs:
+      - build-tools
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Download> BuildTools
+        uses: actions/download-artifact@v3
+        with:
+          name: BuildTools
+          path: artifacts/buildtools
+
+      - name: <Pack> SQL
+        shell: pwsh
+        run: .\Build\buildtools-sql.ps1 -BuildToolsSqlPack "artifacts\buildtools\SqlPack.exe" -OutputFile sql.sqlite3
+
+      - name: <Artifact> SQL
+        uses: actions/upload-artifact@v3
+        with:
+          name: sql.sqlite3
+          path: sql.sqlite3
 
 
   build-boot:
@@ -382,6 +407,7 @@ jobs:
     needs:
       - help
       - build-tools
+      - build-tools-sql
       - build-boot
       - build-main
 
@@ -398,6 +424,12 @@ jobs:
         with:
           name: BuildTools
           path: artifacts/buildtools
+
+      - name: <Download> SQL
+        uses: actions/download-artifact@v3
+        with:
+          name: sql.sqlite3
+          path: artifacts/sql.sqlite3
 
       - name: <Download> Help
         uses: actions/download-artifact@v3
