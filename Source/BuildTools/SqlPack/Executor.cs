@@ -93,9 +93,9 @@ insert into
 
             ImportSqlFiles();
 
-            DatabaseAccessor.Execute("vacuum");
-            DatabaseAccessor.Execute("reindex");
-            DatabaseAccessor.Execute("analyze");
+            DatabaseAccessor.Execute("reindex\r\n");
+            DatabaseAccessor.Execute("vacuum\r\n");
+            DatabaseAccessor.Execute("analyze\r\n");
         }
 
         #endregion
