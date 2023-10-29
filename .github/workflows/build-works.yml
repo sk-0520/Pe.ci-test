@@ -455,9 +455,7 @@ jobs:
           mkdir artifacts/main-bin
           cd main-bin.tar
           tar xfv bin.tar
-          cd Output/Release/${{ matrix.PLATFORM }}/Pe/bin
-          mv ./* ${{ github.workspace }}/artifacts/main-bin
-          ls -R -l
+          mv Output/Release/${{ matrix.PLATFORM }}/Pe/bin/* ${{ github.workspace }}/artifacts/main-bin
 
       - name: <Reconstitution> Application
         shell: pwsh

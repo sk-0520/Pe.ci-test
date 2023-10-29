@@ -13,6 +13,9 @@ foreach ($scriptFileName in $scriptFileNames) {
 	. $scriptFilePath
 }
 
+#/*[FUNCTIONS]-------------------------------------
+#*/[FUNCTIONS]-------------------------------------
+
 if ($Service -eq 'github') {
 	if ($Module -eq 'boot') {
 		# 何もしない

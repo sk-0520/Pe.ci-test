@@ -15,6 +15,8 @@ foreach ($scriptFileName in $scriptFileNames) {
 	. $scriptFilePath
 }
 
+#/*[FUNCTIONS]-------------------------------------
+#*/[FUNCTIONS]-------------------------------------
 
 if ($Module -eq 'boot') {
 	$projectDirItems = GetTestProjectDirectories $Module
