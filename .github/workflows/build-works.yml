@@ -378,7 +378,7 @@ jobs:
 
   reconstitution:
     name: Reconstitution
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
     needs:
       - help
       - build-tools
@@ -418,14 +418,14 @@ jobs:
           path: main-bin.tar
 
       - name: <Expand> Main
-        shell: bash
+        shell: cmd
         run: |
           mkdir artifacts/main-bin
           cd main-bin.tar
           tar xfv bin.tar
-          cd Output/Release/${{ matrix.PLATFORM }}/Pe/bin
-          mv ./* ${{ github.workspace }}/artifacts/main-bin
-          ls -R -l
+          robocopy /R:3 /S /E "Output\Release\${{ matrix.PLATFORM }}\Pe\bin\" "${{ github.workspace }}\artifacts\main-bin"
+          cd "${{ github.workspace }}\artifacts\main-bin"
+          tree
 
       - name: <Reconstitution> Application
         shell: pwsh
