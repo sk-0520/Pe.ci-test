@@ -429,14 +429,13 @@ jobs:
 
       - name: <Reconstitution> Application
         shell: pwsh
-        run: .\Build\reconstitute-application.ps1 -Platform ${{ matrix.PLATFORM }} -InputDirectory artifacts  -OutputDirectory Output
+        run: .\Build\reconstitute-application.ps1 -Archive 7z -Platform ${{ matrix.PLATFORM }} -InputDirectory artifacts  -OutputDirectory Output
 
-      # # 整理用成果物 TODO: 後で消す
-      # - name: <Artifact> artifacts
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: artifacts-${{ matrix.PLATFORM }}
-      #     path: artifacts
+      - name: <Artifact> artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: application-${{ matrix.PLATFORM }}
+          path: Output
 
   # matrix-build:
   #   name: Build
