@@ -376,8 +376,8 @@ jobs:
         run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
 
-  application-adjust:
-    name: Adjust Main
+  reconstitution:
+    name: Reconstitution
     runs-on: ubuntu-latest
     needs:
       - help
@@ -417,7 +417,7 @@ jobs:
           name: main-bin-${{ matrix.PLATFORM }}
           path: main-bin.tar
 
-      - name: <Expand> Application
+      - name: <Expand> Main
         shell: bash
         run: |
           mkdir artifacts/main-bin
@@ -427,12 +427,16 @@ jobs:
           mv ./* ${{ github.workspace }}/artifacts/main-bin
           ls -R -l
 
-      # 整理用成果物 TODO: 後で消す
-      - name: <Artifact> artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: artifacts-${{ matrix.PLATFORM }}
-          path: artifacts
+      - name: <Reconstitution> Application
+        shell: pwsh
+        run: .\Build\reconstitute-application.ps1 -Platform ${{ matrix.PLATFORM }} -InputDirectory artifacts  -OutputDirectory Output
+
+      # # 整理用成果物 TODO: 後で消す
+      # - name: <Artifact> artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: artifacts-${{ matrix.PLATFORM }}
+      #     path: artifacts
 
   # matrix-build:
   #   name: Build
