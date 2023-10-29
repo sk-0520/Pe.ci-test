@@ -132,13 +132,6 @@ jobs:
           name: ${{ env.MODULE }}-${{ matrix.PLATFORM }}
           path: Output\Release\${{ matrix.PLATFORM }}\Pe\*
 
-      - name: <Add> VSTest
-        uses: darenm/Setup-VSTest@v1.2
-
-      - name: <Test> Module
-        shell: pwsh
-        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release
-
   test-boot:
     name: Test Boot
     runs-on: windows-2022
@@ -173,6 +166,10 @@ jobs:
       - name: <Rewrite> Module
         shell: pwsh
         run: .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+
+      - name: <Setup> Module
+        shell: pwsh
+        run: .\Build\setup-test-module.ps1 -Service github -Module ${{ env.MODULE }}
 
       - name: <Build> Module
         shell: pwsh
@@ -272,9 +269,9 @@ jobs:
         shell: pwsh
         run: .\Build\rewrite-module.ps1 -Module  ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
 
-      - name: <Test> Add Logger
-        shell: cmd
-        run: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install GitHubActionsTestLogger & cd ..\..\..\ )
+      - name: <Setup> Module
+        shell: pwsh
+        run: .\Build\setup-test-module.ps1 -Service github -Module ${{ env.MODULE }}
 
       - name: <Build> Module
         shell: pwsh
@@ -366,9 +363,9 @@ jobs:
         shell: pwsh
         run: .\Build\rewrite-module.ps1 -Module  ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
 
-      - name: <Test> Add Logger
-        shell: cmd
-        run: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install GitHubActionsTestLogger & cd ..\..\..\ )
+      - name: <Setup> Module
+        shell: pwsh
+        run: .\Build\setup-test-module.ps1 -Service github -Module ${{ env.MODULE }}
 
       - name: <Build> Module
         shell: pwsh

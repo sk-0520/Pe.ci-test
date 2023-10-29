@@ -15,10 +15,22 @@ foreach ($scriptFileName in $scriptFileNames) {
 
 if ($Service -eq 'github') {
 	if ($Module -eq 'boot') {
+		# 何もしない
 	}
-	elseif ($Module -eq 'main') {
-	}
-	elseif ($Module -eq 'plugins') {
+	elseif ($Module -eq 'main' -or $Module -eq 'plugins') {
+		$testProjectDirs = GetTestProjectDirectories $Module
+		foreach ($testProjectDir in $testProjectDirs) {
+			Push-Location $testProjectDir
+			try {
+				nuget install GitHubActionsTestLogger
+				if (-not $?) {
+					throw "error: $Module - $testProjectDir"
+				}
+			}
+			finally {
+				Pop-Location
+			}
+		}
 	}
 	else {
 		throw "error module: $Module"
