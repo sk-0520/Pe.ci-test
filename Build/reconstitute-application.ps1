@@ -15,6 +15,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
 	. $scriptFilePath
 }
+$rootDirectory = Split-Path -Path $currentDirPath -Parent
 
 #/*[FUNCTIONS]-------------------------------------
 #*/[FUNCTIONS]-------------------------------------
@@ -50,12 +51,15 @@ foreach ($mainSubDir in $mainSubDirs) {
 	$srcDir = Join-Path -Path $inputItems.main -ChildPath $mainSubDir
 	Move-Item -Path $srcDir -Destination $OutputDirectory
 }
+# doc/help を生成済みヘルプに置き換え(ダミーのindex.htmlがあるので上書きOK)
+$helpRootDir = Join-Path -Path $OutputDirectory -ChildPath 'doc'
+Move-Item $inputItems.help -Destination $helpRootDir -Force
 # etc/sql の各 SQL をまとめたものに置き換え
 $sqlRootDir = Join-Path -Path $OutputDirectory -ChildPath 'etc' | Join-Path -ChildPath 'sql'
 Get-ChildItem -Path $sqlRootDir -Directory `
 | Remove-Item -Force -Recurse
-Move-Item $inputItems.sql -Destination $sqlRootDir
-# doc/help を生成済みヘルプに置き換え(ダミーのindex.htmlがあるので上書きOK)
-$helpRootDir = Join-Path -Path $OutputDirectory -ChildPath 'doc'
-Move-Item $inputItems.help -Destination $helpRootDir -Force
-
+Move-Item -Path $inputItems.sql -Destination $sqlRootDir
+# bin/lib にVC++ 再頒布可能パッケージ埋め込み
+$srcLibDir = Join-Path -Path $rootDirectory -ChildPath 'Resource' | Join-Path -ChildPath 'Library'
+$dstLibDir = Join-Path -Path $outputMainDir -ChildPath 'lib'
+Move-Item -Path $srcLibDir -Destination $dstLibDir
