@@ -112,7 +112,7 @@ jobs:
       - name: <Artifact> SQL
         uses: actions/upload-artifact@v3
         with:
-          name: sql.sqlite3
+          name: sql
           path: sql.sqlite3
 
 
@@ -428,8 +428,8 @@ jobs:
       - name: <Download> SQL
         uses: actions/download-artifact@v3
         with:
-          name: sql.sqlite3
-          path: artifacts/sql.sqlite3
+          name: sql
+          path: artifacts/sql
 
       - name: <Download> Help
         uses: actions/download-artifact@v3

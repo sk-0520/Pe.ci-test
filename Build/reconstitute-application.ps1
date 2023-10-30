@@ -22,7 +22,7 @@ $rootDirectory = Split-Path -Path $currentDirPath -Parent
 
 $inputItems = @{
 	buildTools = Join-Path $InputDirectory -ChildPath 'buildtools'
-	sql        = Join-Path $InputDirectory -ChildPath 'sql.sqlite3' | Join-Path -ChildPath 'sql.sqlite3'
+	sql        = Join-Path $InputDirectory -ChildPath 'sql' | Join-Path -ChildPath 'sql.sqlite3'
 	help       = Join-Path $InputDirectory -ChildPath 'help'
 	boot       = Join-Path $InputDirectory -ChildPath 'boot'
 	main       = Join-Path $InputDirectory -ChildPath 'main-bin'

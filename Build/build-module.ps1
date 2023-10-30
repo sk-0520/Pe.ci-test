@@ -63,7 +63,7 @@ elseif ($Module -eq 'main') {
 elseif ($Module -eq 'plugins') {
 	# プラグイン参考実装
 	$pluginProjectFiles = GetApplicationProjectDirectories $Module `
-	| Get-ChildItem -File -Recurse -Include *.csproj
+	| Get-ChildItem -File -Recurse -Include '*.csproj'
 
 	foreach ($pluginProjectFile in $pluginProjectFiles) {
 		$name = $pluginProjectFile.BaseName
