@@ -55,7 +55,7 @@ $sqlRootDir = Join-Path -Path $OutputDirectory -ChildPath 'etc' | Join-Path -Chi
 Get-ChildItem -Path $sqlRootDir -Directory `
 | Remove-Item -Force -Recurse
 Move-Item $inputItems.sql -Destination $sqlRootDir
-# doc/help を生成済みヘルプに置き換え
+# doc/help を生成済みヘルプに置き換え(ダミーのindex.htmlがあるので上書きOK)
 $helpRootDir = Join-Path -Path $OutputDirectory -ChildPath 'doc'
-Move-Item $inputItems.help -Destination $helpRootDir
+Move-Item $inputItems.help -Destination $helpRootDir -Force
 
