@@ -2,6 +2,7 @@ Param(
 	[Parameter(mandatory = $true)][ValidateSet('x86', 'x64')][string] $Platform,
 	[Parameter(mandatory = $true)][ValidateSet('zip', '7z', 'tar')][string] $Archive,
 	[switch] $ProductMode,
+	[string] $BuildType,
 	[Parameter(mandatory = $true)][string] $InputDirectory,
 	[Parameter(mandatory = $true)][string] $OutputDirectory
 )
@@ -36,30 +37,39 @@ New-Item -Path $OutputDirectory -ItemType Directory
 
 
 # boot の移行
-Copy-Item -Path (Join-Path -Path $inputItems.boot -ChildPath '*') -Destination $OutputDirectory
+Copy-Item -Path (Join-Path -Path $inputItems.boot -ChildPath '*') -Destination $OutputDirectory -Recurse
 
 
 # main の移行
 $outputMainDir = Join-Path -Path $OutputDirectory -ChildPath 'bin'
 New-Item -Path $outputMainDir -ItemType Directory
-Copy-Item -Path (Join-Path -Path $inputItems.main -ChildPath '*') -Destination $outputMainDir
-
+Copy-Item -Path (Join-Path -Path $inputItems.main -ChildPath '*') -Destination $outputMainDir -Recurse
 
 # main 内の各ディレクトリを上に移す
-$mainSubDirs = @('etc', 'doc', 'bat')
-foreach ($mainSubDir in $mainSubDirs) {
-	$srcDir = Join-Path -Path $inputItems.main -ChildPath $mainSubDir
-	Move-Item -Path $srcDir -Destination $OutputDirectory
+$mainSubDirNames = @('etc', 'doc', 'bat')
+foreach ($mainSubDirName in $mainSubDirNames) {
+	$mainSubDir = Join-Path -Path $outputMainDir -ChildPath $mainSubDirName
+	Move-Item -Path $mainSubDir -Destination $OutputDirectory
 }
-# doc/help を生成済みヘルプに置き換え(ダミーのindex.htmlがあるので上書きOK)
-$helpRootDir = Join-Path -Path $OutputDirectory -ChildPath 'doc'
-Move-Item $inputItems.help -Destination $helpRootDir -Force
-# etc/sql の各 SQL をまとめたものに置き換え
-$sqlRootDir = Join-Path -Path $OutputDirectory -ChildPath 'etc' | Join-Path -ChildPath 'sql'
-Get-ChildItem -Path $sqlRootDir -Directory `
-| Remove-Item -Force -Recurse
-Move-Item -Path $inputItems.sql -Destination $sqlRootDir
+
 # bin/lib にVC++ 再頒布可能パッケージ埋め込み
 $srcLibDir = Join-Path -Path $rootDirectory -ChildPath 'Resource' | Join-Path -ChildPath 'Library'
 $dstLibDir = Join-Path -Path $outputMainDir -ChildPath 'lib'
 Move-Item -Path $srcLibDir -Destination $dstLibDir
+
+# etc/appsettings.*.json の整理
+$outputEtcDir = Join-Path -Path $OutputDirectory -ChildPath 'etc'
+if($BuildType -ne "BETA") {
+	Remove-Item -Path (Join-Path -Path $outputEtcDir -ChildPath "appsettings.beta.json")
+}
+Remove-Item -Path (Join-Path -Path $outputEtcDir -ChildPath "@appsettings.debug.json")
+
+# etc/sql の各 SQL をまとめたものに置き換え
+$outputSqlDir = Join-Path -Path $outputEtcDir -ChildPath 'sql'
+Get-ChildItem -Path $outputSqlDir -Directory `
+| Remove-Item -Force -Recurse
+Move-Item -Path $inputItems.sql -Destination $outputSqlDir
+
+# doc/help を生成済みヘルプに置き換え(ダミーのindex.htmlがあるので上書きOK)
+$helpRootDir = Join-Path -Path $OutputDirectory -ChildPath 'doc'
+Move-Item $inputItems.help -Destination $helpRootDir -Force

@@ -459,7 +459,7 @@ jobs:
 
       - name: <Reconstitution> Application
         shell: pwsh
-        run: .\Build\reconstitute-application.ps1 -Archive 7z -Platform ${{ matrix.PLATFORM }} -InputDirectory artifacts  -OutputDirectory Output
+        run: .\Build\reconstitute-application.ps1 -Archive 7z -Platform ${{ matrix.PLATFORM }} -BuildType BETA -InputDirectory artifacts  -OutputDirectory Output
 
       - name: <Artifact> artifacts
         uses: actions/upload-artifact@v3
