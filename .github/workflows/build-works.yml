@@ -51,7 +51,7 @@ jobs:
           path: Output/help
 
   build-tools:
-    name: BuildTools
+    name: Build BuildTools
     runs-on: windows-2022
 
     steps:
@@ -255,7 +255,7 @@ jobs:
 
       - name: <Archive> Application
         shell: bash
-        run: tar cfv bin.tar Output/Release/${{ matrix.PLATFORM }}/Pe/bin
+        run: ./Build/archive-compress.sh "bin.tar" "Output/Release/${{ matrix.PLATFORM }}/Pe/bin"
 
       - name: <Artifact> Module
         uses: actions/upload-artifact@v3
@@ -354,8 +354,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: plugins-${{ matrix.PLATFORM }}
-          path: |
-            Output\Release\${{ matrix.PLATFORM }}\Plugins
+          path: Output\Release\${{ matrix.PLATFORM }}\Plugins
 
   test-plugins:
     name: Test Plugins
@@ -451,21 +450,78 @@ jobs:
 
       - name: <Expand> Main
         shell: bash
-        run: |
-          mkdir artifacts/main-bin
-          cd main-bin.tar
-          tar xfv bin.tar
-          mv Output/Release/${{ matrix.PLATFORM }}/Pe/bin/* ${{ github.workspace }}/artifacts/main-bin
+        run: ./Build/archive-expand.sh "artifacts/main-bin" "main-bin.tar/bin.tar"
 
       - name: <Reconstitution> Application
         shell: pwsh
-        run: .\Build\reconstitute-application.ps1 -Archive 7z -Platform ${{ matrix.PLATFORM }} -BuildType BETA -InputDirectory artifacts  -OutputDirectory Output
+        run: ./Build/reconstitute-application.ps1 -Archive 7z -Platform ${{ matrix.PLATFORM }} -BuildType BETA -InputDirectory artifacts  -OutputDirectory Output
 
-      - name: <Artifact> artifacts
+      - name: <Archive> Application
+        shell: bash
+        run: ./Build/archive-compress.sh "application.tar" "Output"
+
+      - name: <Artifact> Application
         uses: actions/upload-artifact@v3
         with:
           name: application-${{ matrix.PLATFORM }}
-          path: Output
+          path: application.tar
+
+  information:
+    name: Information
+    runs-on: ubuntu-latest
+    needs:
+      - reconstitution
+      - build-plugins
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Download> Plugins x64
+        uses: actions/download-artifact@v3
+        with:
+          name: plugins-x64
+          path: artifacts/plugins-x64
+
+      - name: <Download> Plugins x86
+        uses: actions/download-artifact@v3
+        with:
+          name: plugins-x86
+          path: artifacts/plugins-x86
+
+      - name: <Download> Application x64
+        uses: actions/download-artifact@v3
+        with:
+          name: application-x64
+          path: artifacts/application-x64.tar
+
+      - name: <Download> Application x86
+        uses: actions/download-artifact@v3
+        with:
+          name: application-x86
+          path: artifacts/application-x86.tar
+
+      - name: <Expand> Application x64
+        shell: bash
+        run: ./Build/archive-expand.sh "artifacts/application-x64" "artifacts/application-x64.tar/application.tar"
+
+      - name: <Expand> Application x86
+        shell: bash
+        run: ./Build/archive-expand.sh "artifacts/application-x86" "artifacts/application-x86.tar/application.tar"
+
+      - name: <Flatten> Binaries
+        shell: pwsh
+        run: ./Build/flatten-binaries.ps1
+
+      - name: <Strip> Artifacts
+        shell: pwsh
+        run: |
+          $dirs = Get-ChildItem -Path 'abc'
+          foreach($dir in $dirs) {
+            Write-Output $dir.Name
+          }
+
+
 
   # matrix-build:
   #   name: Build
