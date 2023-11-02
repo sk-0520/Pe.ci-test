@@ -466,12 +466,55 @@ jobs:
           name: application-${{ matrix.PLATFORM }}
           path: application.tar
 
+  compress-plugins:
+    name: Compress Plugins
+    runs-on: ubuntu-latest
+    needs:
+      - build-plugins
+
+    strategy:
+      matrix:
+        PLATFORM: ["x86", "x64"]
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Download> Module
+        uses: actions/download-artifact@v3
+        with:
+          name: plugins-${{ matrix.PLATFORM }}
+          path: artifacts/plugins
+
+      - name: <Cleanup> Module
+        shell: pwsh
+        run: |
+          $productMode = @('master', 'ci-test', 'develop').Contains('${{ github.ref_name }}')
+          $dirs = Get-ChildItem -Path (Join-Path -Path 'artifacts' -ChildPath 'plugins')
+          foreach($dir in $dirs) {
+            .\Build\cleanup-module.ps1 -AssemblyDirectory $dir.FullName -ProductMode:$productMode
+          }
+
+      - name: <Compress> Module
+        shell: pwsh
+        run: |
+          $dirs = Get-ChildItem -Path (Join-Path -Path 'artifacts' -ChildPath 'plugins')
+          foreach($dir in $dirs) {
+            .\Build\compress-module.ps1 -TargetDirectory $dir.FullName -OutputFileName "$($dir.Name).7z"
+          }
+
+      # - name: <Artifact> Module
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: plugins-${{ matrix.PLATFORM }}
+      #     path: artifacts/plugins/*
+
   information:
     name: Information
     runs-on: ubuntu-latest
     needs:
       - reconstitution
-      - build-plugins
+      - compress-plugins
 
     steps:
       - name: <Checkout> Repository
