@@ -378,6 +378,43 @@ jobs:
           path: Pe.7z
 
 
+  test-library:
+    name: Test .NET Library
+    # needs:
+    #   - test-main
+
+    strategy:
+      matrix:
+        PLATFORM: ["x86", "x64"]
+        OS:
+          - "windows-2022"
+          - "ubuntu-latest"
+        TARGET:
+          # こいつはファイルパス周り未対応
+          # - Pe.Standard.Base.Test
+          # こいつは改行周り未対応
+          # - Pe.Standard.Database.Test
+          - Pe.Standard.DependencyInjection.Test
+
+    runs-on: ${{ matrix.OS }}
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      # - name: <Test> Add Logger ${{ matrix.TARGET }}
+      #   shell: bash
+      #   run: |
+      #     cd Source/Pe/${{ matrix.TARGET }}
+      #     nuget install GitHubActionsTestLogger
+
+      - name: <Test> Run ${{ matrix.TARGET }}
+        shell: bash
+        run: |
+          cd Source/Pe/${{ matrix.TARGET }}
+          dotnet test
+
+
   build-plugins:
     name: Build Plugins
     runs-on: windows-2022
