@@ -112,7 +112,7 @@ jobs:
       - name: <Artifact> SQL
         uses: actions/upload-artifact@v3
         with:
-          name: sql
+          name: SQL
           path: sql.sqlite3
 
 
@@ -332,7 +332,7 @@ jobs:
       - name: <Download> SQL
         uses: actions/download-artifact@v3
         with:
-          name: sql
+          name: SQL
           path: artifacts/sql
 
       - name: <Download> Help
@@ -361,27 +361,17 @@ jobs:
         shell: pwsh
         run: ./Build/reconstitute-application.ps1 -Archive 7z -Platform ${{ matrix.PLATFORM }} -BuildType BETA -InputDirectory artifacts  -OutputDirectory Output
 
-      - name: <Archive> Application
-        shell: bash
-        run: ./Build/archive-compress.sh "application.tar" "Output"
-
-      - name: <Artifact> Application
-        uses: actions/upload-artifact@v3
-        with:
-          name: application-${{ matrix.PLATFORM }}
-          path: application.tar
-
-      - name: <Cleanup> Reconstitution Application
+      - name: <Cleanup> Application
         shell: pwsh
         run: |
           $productMode = @('master', 'ci-test', 'develop').Contains('${{ github.ref_name }}')
           .\Build\cleanup-module.ps1 -AssemblyDirectory 'Output' -ProductMode:$productMode
 
-      - name: <Compress> Reconstitution Application
+      - name: <Compress> Application
         shell: pwsh
         run: .\Build\compress-module.ps1 -TargetDirectory 'Output' -OutputFileName "Pe.7z"
 
-      - name: <Artifact> Reconstitution Application
+      - name: <Artifact> Application
         uses: actions/upload-artifact@v3
         with:
           name: Pe-${{ matrix.PLATFORM }}
@@ -494,13 +484,13 @@ jobs:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
 
-      - name: <Download> Module
+      - name: <Download> Plugins
         uses: actions/download-artifact@v3
         with:
           name: plugins-${{ matrix.PLATFORM }}
           path: artifacts/plugins
 
-      - name: <Cleanup> Module
+      - name: <Cleanup> Plugins
         shell: pwsh
         run: |
           $productMode = @('master', 'ci-test', 'develop').Contains('${{ github.ref_name }}')
@@ -509,7 +499,7 @@ jobs:
             .\Build\cleanup-module.ps1 -AssemblyDirectory $dir.FullName -ProductMode:$productMode
           }
 
-      - name: <Compress> Module
+      - name: <Compress> Plugins
         shell: pwsh
         run: |
           $dirs = Get-ChildItem -Path (Join-Path -Path 'artifacts' -ChildPath 'plugins')
@@ -517,7 +507,7 @@ jobs:
             .\Build\compress-module.ps1 -TargetDirectory $dir.FullName -OutputFileName "$($dir.Name).7z"
           }
 
-      - name: <Artifact> Module
+      - name: <Artifact> Plugins
         uses: actions/upload-artifact@v3
         with:
           name: Pe.Plugins.Reference-${{ matrix.PLATFORM }}
@@ -562,7 +552,7 @@ jobs:
 
       - name: <Strip> Artifacts
         shell: pwsh
-        run:  Get-ChildItem artifacts -R | Write-Output $_.Name
+        run:  Get-ChildItem artifacts -R | Select-Object FullName
 
   # matrix-build:
   #   name: Build
