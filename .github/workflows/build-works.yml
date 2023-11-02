@@ -306,6 +306,112 @@ jobs:
         shell: pwsh
         run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
+  reconstitution-application:
+    name: Reconstitution
+    runs-on: ubuntu-latest
+    needs:
+      - help
+      - build-tools-sql
+      - build-boot
+      - build-main
+
+    strategy:
+      matrix:
+        PLATFORM: ["x86", "x64"]
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Download> BuildTools
+        uses: actions/download-artifact@v3
+        with:
+          name: BuildTools
+          path: artifacts/buildtools
+
+      - name: <Download> SQL
+        uses: actions/download-artifact@v3
+        with:
+          name: sql
+          path: artifacts/sql
+
+      - name: <Download> Help
+        uses: actions/download-artifact@v3
+        with:
+          name: Help
+          path: artifacts/help
+
+      - name: <Download> Boot
+        uses: actions/download-artifact@v3
+        with:
+          name: boot-${{ matrix.PLATFORM }}
+          path: artifacts/boot
+
+      - name: <Download> Main
+        uses: actions/download-artifact@v3
+        with:
+          name: main-bin-${{ matrix.PLATFORM }}
+          path: main-bin.tar
+
+      - name: <Expand> Main
+        shell: bash
+        run: ./Build/archive-expand.sh "artifacts/main-bin" "main-bin.tar/bin.tar"
+
+      - name: <Reconstitution> Application
+        shell: pwsh
+        run: ./Build/reconstitute-application.ps1 -Archive 7z -Platform ${{ matrix.PLATFORM }} -BuildType BETA -InputDirectory artifacts  -OutputDirectory Output
+
+      - name: <Archive> Application
+        shell: bash
+        run: ./Build/archive-compress.sh "application.tar" "Output"
+
+      - name: <Artifact> Application
+        uses: actions/upload-artifact@v3
+        with:
+          name: application-${{ matrix.PLATFORM }}
+          path: application.tar
+
+  compress-application:
+    name: Compress Application
+    runs-on: windows-2022
+    needs:
+      - reconstitution-application
+
+    strategy:
+      matrix:
+        PLATFORM: ["x86", "x64"]
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Download> Module
+        uses: actions/download-artifact@v3
+        with:
+          name: application-x86
+          path: artifacts/application.tar
+
+      - name: <Expand> Module
+        shell: bash
+        run: ./Build/archive-expand.sh "artifacts/application" "artifacts/application.tar/application.tar"
+
+      - name: <Cleanup> Module
+        shell: pwsh
+        run: |
+          $productMode = @('master', 'ci-test', 'develop').Contains('${{ github.ref_name }}')
+          .\Build\cleanup-module.ps1 -AssemblyDirectory artifacts/application -ProductMode:$productMode
+
+      - name: <Compress> Module
+        shell: pwsh
+        run: |
+          .\Build\compress-module.ps1 -TargetDirectory 'artifacts/application' -OutputFileName "application.7z"
+
+      - name: <Artifact> Module
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe-${{ matrix.PLATFORM }}
+          path: application.7z
+
 
   build-plugins:
     name: Build Plugins
@@ -399,76 +505,9 @@ jobs:
         shell: pwsh
         run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
-
-  reconstitution:
-    name: Reconstitution
-    runs-on: ubuntu-latest
-    needs:
-      - help
-      - build-tools
-      - build-tools-sql
-      - build-boot
-      - build-main
-
-    strategy:
-      matrix:
-        PLATFORM: ["x86", "x64"]
-
-    steps:
-      - name: <Checkout> Repository
-        uses: actions/checkout@v3
-
-      - name: <Download> BuildTools
-        uses: actions/download-artifact@v3
-        with:
-          name: BuildTools
-          path: artifacts/buildtools
-
-      - name: <Download> SQL
-        uses: actions/download-artifact@v3
-        with:
-          name: sql
-          path: artifacts/sql
-
-      - name: <Download> Help
-        uses: actions/download-artifact@v3
-        with:
-          name: Help
-          path: artifacts/help
-
-      - name: <Download> Boot
-        uses: actions/download-artifact@v3
-        with:
-          name: boot-${{ matrix.PLATFORM }}
-          path: artifacts/boot
-
-      - name: <Download> Main
-        uses: actions/download-artifact@v3
-        with:
-          name: main-bin-${{ matrix.PLATFORM }}
-          path: main-bin.tar
-
-      - name: <Expand> Main
-        shell: bash
-        run: ./Build/archive-expand.sh "artifacts/main-bin" "main-bin.tar/bin.tar"
-
-      - name: <Reconstitution> Application
-        shell: pwsh
-        run: ./Build/reconstitute-application.ps1 -Archive 7z -Platform ${{ matrix.PLATFORM }} -BuildType BETA -InputDirectory artifacts  -OutputDirectory Output
-
-      - name: <Archive> Application
-        shell: bash
-        run: ./Build/archive-compress.sh "application.tar" "Output"
-
-      - name: <Artifact> Application
-        uses: actions/upload-artifact@v3
-        with:
-          name: application-${{ matrix.PLATFORM }}
-          path: application.tar
-
   compress-plugins:
     name: Compress Plugins
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
     needs:
       - build-plugins
 
@@ -503,68 +542,52 @@ jobs:
             .\Build\compress-module.ps1 -TargetDirectory $dir.FullName -OutputFileName "$($dir.Name).7z"
           }
 
-      # - name: <Artifact> Module
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: plugins-${{ matrix.PLATFORM }}
-      #     path: artifacts/plugins/*
+      - name: <Artifact> Module
+        uses: actions/upload-artifact@v3
+        with:
+          name: Pe.Plugins.Reference-${{ matrix.PLATFORM }}
+          path: ./*.7z
+
 
   information:
     name: Information
     runs-on: ubuntu-latest
     needs:
-      - reconstitution
+      - compress-application
       - compress-plugins
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
 
-      - name: <Download> Plugins x64
-        uses: actions/download-artifact@v3
-        with:
-          name: plugins-x64
-          path: artifacts/plugins-x64
-
       - name: <Download> Plugins x86
         uses: actions/download-artifact@v3
         with:
-          name: plugins-x86
-          path: artifacts/plugins-x86
+          name: Pe.Plugins.Reference-x86
+          path: artifacts/Pe.Plugins.Reference-x86
 
-      - name: <Download> Application x64
+      - name: <Download> Plugins x64
         uses: actions/download-artifact@v3
         with:
-          name: application-x64
-          path: artifacts/application-x64.tar
+          name: Pe.Plugins.Reference-x64
+          path: artifacts/Pe.Plugins.Reference-x64
 
       - name: <Download> Application x86
         uses: actions/download-artifact@v3
         with:
-          name: application-x86
-          path: artifacts/application-x86.tar
+          name: Pe-x86
+          path: artifacts/Pe-x86
 
-      - name: <Expand> Application x64
-        shell: bash
-        run: ./Build/archive-expand.sh "artifacts/application-x64" "artifacts/application-x64.tar/application.tar"
+      - name: <Download> Application x64
+        uses: actions/download-artifact@v3
+        with:
+          name: Pe-x64
+          path: artifacts/Pe-x64
 
-      - name: <Expand> Application x86
-        shell: bash
-        run: ./Build/archive-expand.sh "artifacts/application-x86" "artifacts/application-x86.tar/application.tar"
-
-      - name: <Flatten> Binaries
-        shell: pwsh
-        run: ./Build/flatten-binaries.ps1
 
       - name: <Strip> Artifacts
         shell: pwsh
-        run: |
-          $dirs = Get-ChildItem -Path 'abc'
-          foreach($dir in $dirs) {
-            Write-Output $dir.Name
-          }
-
-
+        run:  Get-ChildItem artifacts -R
 
   # matrix-build:
   #   name: Build
