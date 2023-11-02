@@ -307,8 +307,8 @@ jobs:
         run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
   reconstitution-application:
-    name: Reconstitution
-    runs-on: ubuntu-latest
+    name: Reconstitution Application
+    runs-on: windows-2022
     needs:
       - help
       - build-tools-sql
@@ -371,46 +371,21 @@ jobs:
           name: application-${{ matrix.PLATFORM }}
           path: application.tar
 
-  compress-application:
-    name: Compress Application
-    runs-on: windows-2022
-    needs:
-      - reconstitution-application
-
-    strategy:
-      matrix:
-        PLATFORM: ["x86", "x64"]
-
-    steps:
-      - name: <Checkout> Repository
-        uses: actions/checkout@v3
-
-      - name: <Download> Module
-        uses: actions/download-artifact@v3
-        with:
-          name: application-x86
-          path: artifacts/application.tar
-
-      - name: <Expand> Module
-        shell: bash
-        run: ./Build/archive-expand.sh "artifacts/application" "artifacts/application.tar/application.tar"
-
-      - name: <Cleanup> Module
+      - name: <Cleanup> Reconstitution Application
         shell: pwsh
         run: |
           $productMode = @('master', 'ci-test', 'develop').Contains('${{ github.ref_name }}')
-          .\Build\cleanup-module.ps1 -AssemblyDirectory artifacts/application -ProductMode:$productMode
+          .\Build\cleanup-module.ps1 -AssemblyDirectory 'Output' -ProductMode:$productMode
 
-      - name: <Compress> Module
+      - name: <Compress> Reconstitution Application
         shell: pwsh
-        run: |
-          .\Build\compress-module.ps1 -TargetDirectory 'artifacts/application' -OutputFileName "application.7z"
+        run: .\Build\compress-module.ps1 -TargetDirectory 'Output' -OutputFileName "Pe.7z"
 
-      - name: <Artifact> Module
+      - name: <Artifact> Reconstitution Application
         uses: actions/upload-artifact@v3
         with:
           name: Pe-${{ matrix.PLATFORM }}
-          path: application.7z
+          path: Pe.7z
 
 
   build-plugins:
@@ -505,8 +480,8 @@ jobs:
         shell: pwsh
         run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
-  compress-plugins:
-    name: Compress Plugins
+  reconstitution-plugins:
+    name: Reconstitution Plugins
     runs-on: windows-2022
     needs:
       - build-plugins
@@ -553,8 +528,8 @@ jobs:
     name: Information
     runs-on: ubuntu-latest
     needs:
-      - compress-application
-      - compress-plugins
+      - reconstitution-application
+      - reconstitution-plugins
 
     steps:
       - name: <Checkout> Repository
@@ -587,7 +562,7 @@ jobs:
 
       - name: <Strip> Artifacts
         shell: pwsh
-        run:  Get-ChildItem artifacts -R
+        run:  Get-ChildItem artifacts -R | Write-Output $_.Name
 
   # matrix-build:
   #   name: Build
