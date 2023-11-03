@@ -210,6 +210,44 @@ jobs:
         run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration ${{ matrix.CONFIGURATION }}
 
 
+
+  test-library:
+    name: Test .NET Library
+    # needs:
+    #   - test-main
+
+    strategy:
+      matrix:
+        PLATFORM: ["x86", "x64"]
+        OS:
+          - "windows-2022"
+          - "ubuntu-latest"
+        TARGET:
+          # こいつはファイルパス周り未対応
+          # - Pe.Standard.Base.Test
+          # こいつは改行周り未対応
+          # - Pe.Standard.Database.Test
+          - Pe.Standard.DependencyInjection.Test
+
+    runs-on: ${{ matrix.OS }}
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      # - name: <Test> Add Logger ${{ matrix.TARGET }}
+      #   shell: bash
+      #   run: |
+      #     cd Source/Pe/${{ matrix.TARGET }}
+      #     nuget install GitHubActionsTestLogger
+
+      - name: <Test> Run ${{ matrix.TARGET }}
+        shell: bash
+        run: |
+          cd Source/Pe/${{ matrix.TARGET }}
+          dotnet test
+
+
   build-main:
     name: Build Main
     runs-on: windows-2022
@@ -369,50 +407,39 @@ jobs:
 
       - name: <Compress> Application
         shell: pwsh
-        run: .\Build\compress-module.ps1 -TargetDirectory 'Output' -OutputFileName "Pe.7z"
+        run: .\Build\compress-module.ps1 -TargetDirectory 'Output' -OutputFileName "Pe-${{ matrix.PLATFORM }}.7z"
 
       - name: <Artifact> Application
         uses: actions/upload-artifact@v3
         with:
           name: Pe-${{ matrix.PLATFORM }}
-          path: Pe.7z
+          path: Pe-${{ matrix.PLATFORM }}.7z
 
-
-  test-library:
-    name: Test .NET Library
-    # needs:
-    #   - test-main
-
-    strategy:
-      matrix:
-        PLATFORM: ["x86", "x64"]
-        OS:
-          - "windows-2022"
-          - "ubuntu-latest"
-        TARGET:
-          # こいつはファイルパス周り未対応
-          # - Pe.Standard.Base.Test
-          # こいつは改行周り未対応
-          # - Pe.Standard.Database.Test
-          - Pe.Standard.DependencyInjection.Test
-
-    runs-on: ${{ matrix.OS }}
+  information-application:
+    name: Information
+    runs-on: ubuntu-latest
+    needs:
+      - reconstitution-application
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
 
-      # - name: <Test> Add Logger ${{ matrix.TARGET }}
-      #   shell: bash
-      #   run: |
-      #     cd Source/Pe/${{ matrix.TARGET }}
-      #     nuget install GitHubActionsTestLogger
+      - name: <Download> Application x86
+        uses: actions/download-artifact@v3
+        with:
+          name: Pe-x86
+          path: artifacts/Pe
 
-      - name: <Test> Run ${{ matrix.TARGET }}
-        shell: bash
-        run: |
-          cd Source/Pe/${{ matrix.TARGET }}
-          dotnet test
+      - name: <Download> Application x64
+        uses: actions/download-artifact@v3
+        with:
+          name: Pe-x64
+          path: artifacts/Pe
+
+      - name: <🌳> 🌲
+        shell: pwsh
+        run:  Get-ChildItem artifacts -R | Select-Object FullName
 
 
   build-plugins:
@@ -541,7 +568,7 @@ jobs:
         run: |
           $dirs = Get-ChildItem -Path (Join-Path -Path 'artifacts' -ChildPath 'plugins')
           foreach($dir in $dirs) {
-            .\Build\compress-module.ps1 -TargetDirectory $dir.FullName -OutputFileName "$($dir.Name).7z"
+            .\Build\compress-module.ps1 -TargetDirectory $dir.FullName -OutputFileName "$($dir.Name)-${{ matrix.PLATFORM }}.7z"
           }
 
       - name: <Artifact> Plugins
@@ -550,46 +577,34 @@ jobs:
           name: Pe.Plugins.Reference-${{ matrix.PLATFORM }}
           path: ./*.7z
 
-
-  information:
-    name: Information
+  information-plugins:
+    name: Information Plugins
     runs-on: ubuntu-latest
     needs:
-      - reconstitution-application
       - reconstitution-plugins
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: <Download> Plugins x86
         uses: actions/download-artifact@v3
         with:
           name: Pe.Plugins.Reference-x86
-          path: artifacts/Pe.Plugins.Reference-x86
+          path: artifacts/Pe.Plugins.Reference
 
       - name: <Download> Plugins x64
         uses: actions/download-artifact@v3
         with:
           name: Pe.Plugins.Reference-x64
-          path: artifacts/Pe.Plugins.Reference-x64
+          path: artifacts/Pe.Plugins.Reference
 
-      - name: <Download> Application x86
-        uses: actions/download-artifact@v3
-        with:
-          name: Pe-x86
-          path: artifacts/Pe-x86
-
-      - name: <Download> Application x64
-        uses: actions/download-artifact@v3
-        with:
-          name: Pe-x64
-          path: artifacts/Pe-x64
-
-
-      - name: <Strip> Artifacts
+      - name: <🌳> 🌲
         shell: pwsh
         run:  Get-ChildItem artifacts -R | Select-Object FullName
+
 
   # matrix-build:
   #   name: Build
