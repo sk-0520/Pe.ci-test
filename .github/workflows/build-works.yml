@@ -13,12 +13,17 @@ on:
       - develop
 
 env:
-  MAIN_ARCHIVE: tar
+  MAIN_ARCHIVE: 7z
   DEFAULT_ARCHIVE: 7z
   MINIMUM_VERSION: 0.91.0
   PE_RELEASE_ARCHIVE_BASE_URL: https://example.com
   PE_RELEASE_NOTE_BASE_URL: https://example.com
   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+  PLATFORMS: x86,x64
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   help:
@@ -70,14 +75,6 @@ jobs:
           key: ${{ runner.os }}-${{ github.job }}-nuget-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
             ${{ runner.os }}-${{ github.job }}-nuget-${{ hashFiles('**/*.csproj') }}
-
-      - name: <Cache> Obj
-        uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}/Source/**/obj
-          key: ${{ runner.os }}-${{ github.job }}-obj-${{ hashFiles('**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ github.job }}-obj-${{ hashFiles('**/*.csproj') }}
 
       - name: <Build> BuildTools
         shell: pwsh
@@ -135,14 +132,6 @@ jobs:
         with:
           msbuild-architecture: x64
 
-      - name: <Cache> Obj
-        uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}/Source/**/obj
-          key: ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
-
       - name: <Rewrite> Module
         shell: pwsh
         run: .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
@@ -180,14 +169,6 @@ jobs:
       - name: <Add> VSTest
         uses: darenm/Setup-VSTest@v1.2
 
-      - name: <Cache> Obj
-        uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}/Source/**/obj
-          key: ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.vcxproj') }}
-
       - name: <Rewrite> Module
         shell: pwsh
         run: .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
@@ -208,7 +189,6 @@ jobs:
       - name: <Test> Module
         shell: pwsh
         run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration ${{ matrix.CONFIGURATION }}
-
 
 
   test-library:
@@ -275,14 +255,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ github.job }}-nuget-${{ hashFiles('**/*.csproj') }}
 
-      - name: <Cache> Obj
-        uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}/Source/**/obj
-          key: ${{ runner.os }}-${{ github.job }}-obj-${{ hashFiles('**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ github.job }}-obj-${{ hashFiles('**/*.csproj') }}
-
       - name: <Rewrite> Module
         shell: pwsh
         run: .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
@@ -319,14 +291,6 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
         with:
           msbuild-architecture: x64
-
-      - name: <Cache> Obj
-        uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}/Source/**/obj
-          key: ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.csproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -407,16 +371,16 @@ jobs:
 
       - name: <Compress> Application
         shell: pwsh
-        run: .\Build\compress-module.ps1 -TargetDirectory 'Output' -OutputFileName "Pe-${{ matrix.PLATFORM }}.7z"
+        run: .\Build\compress-module.ps1 -TargetDirectory 'Output' -OutputFileName "Pe_${{ matrix.PLATFORM }}.7z"
 
       - name: <Artifact> Application
         uses: actions/upload-artifact@v3
         with:
-          name: Pe-${{ matrix.PLATFORM }}
-          path: Pe-${{ matrix.PLATFORM }}.7z
+          name: Pe_${{ matrix.PLATFORM }}
+          path: Pe_${{ matrix.PLATFORM }}.7z
 
   information-application:
-    name: Information
+    name: Information Application
     runs-on: ubuntu-latest
     needs:
       - reconstitution-application
@@ -428,19 +392,30 @@ jobs:
       - name: <Download> Application x86
         uses: actions/download-artifact@v3
         with:
-          name: Pe-x86
+          name: Pe_x86
           path: artifacts/Pe
 
       - name: <Download> Application x64
         uses: actions/download-artifact@v3
         with:
-          name: Pe-x64
+          name: Pe_x64
           path: artifacts/Pe
 
       - name: <🌳> 🌲
         shell: pwsh
         run:  Get-ChildItem artifacts -R | Select-Object FullName
 
+      - name: <Generate> Update Information
+        shell: pwsh
+        run: .\Build\generate-update-information.ps1 -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ env.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ env.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'application' -Archive ${{ env.MAIN_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe') -Platforms ${{ env.PLATFORMS }}
+
+      - name: <Artifact> Update Information
+        uses: actions/upload-artifact@v3
+        with:
+          name: Information_Pe
+          path: |
+            Output/update.json
+            Output/*.html
 
   build-plugins:
     name: Build Plugins
@@ -468,14 +443,6 @@ jobs:
           key: ${{ runner.os }}-${{ github.job }}-nuget-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
             ${{ runner.os }}-${{ github.job }}-nuget-${{ hashFiles('**/*.csproj') }}
-
-      - name: <Cache> Obj
-        uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}/Source/**/obj
-          key: ${{ runner.os }}-${{ github.job }}-obj-${{ hashFiles('**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ github.job }}-obj-${{ hashFiles('**/*.csproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -509,14 +476,6 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
         with:
           msbuild-architecture: x64
-
-      - name: <Cache> Obj
-        uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}/Source/**/obj
-          key: ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ github.job }}-${{ matrix.PLATFORM }}-obj-${{ hashFiles('**/*.csproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -568,13 +527,13 @@ jobs:
         run: |
           $dirs = Get-ChildItem -Path (Join-Path -Path 'artifacts' -ChildPath 'plugins')
           foreach($dir in $dirs) {
-            .\Build\compress-module.ps1 -TargetDirectory $dir.FullName -OutputFileName "$($dir.Name)-${{ matrix.PLATFORM }}.7z"
+            .\Build\compress-module.ps1 -TargetDirectory $dir.FullName -OutputFileName "$($dir.Name)_${{ matrix.PLATFORM }}.7z"
           }
 
       - name: <Artifact> Plugins
         uses: actions/upload-artifact@v3
         with:
-          name: Pe.Plugins.Reference-${{ matrix.PLATFORM }}
+          name: Pe.Plugins.Reference_${{ matrix.PLATFORM }}
           path: ./*.7z
 
   information-plugins:
@@ -592,19 +551,30 @@ jobs:
       - name: <Download> Plugins x86
         uses: actions/download-artifact@v3
         with:
-          name: Pe.Plugins.Reference-x86
+          name: Pe.Plugins.Reference_x86
           path: artifacts/Pe.Plugins.Reference
 
       - name: <Download> Plugins x64
         uses: actions/download-artifact@v3
         with:
-          name: Pe.Plugins.Reference-x64
+          name: Pe.Plugins.Reference_x64
           path: artifacts/Pe.Plugins.Reference
 
       - name: <🌳> 🌲
         shell: pwsh
-        run:  Get-ChildItem artifacts -R | Select-Object FullName
+        run:  Get-ChildItem artifacts -R | Select-Object Name
 
+      - name: <Generate> Update Information
+        shell: pwsh
+        run: .\Build\generate-update-information.ps1 -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ env.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ env.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'plugins' -Archive ${{ env.DEFAULT_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
+
+      - name: <Artifact> Update Information
+        uses: actions/upload-artifact@v3
+        with:
+          name: Information_Pe.Plugins.Reference
+          path: |
+            Output/update-*.json
+            Output/*.html
 
   # matrix-build:
   #   name: Build
