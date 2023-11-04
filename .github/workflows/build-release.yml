@@ -30,7 +30,7 @@ jobs:
       - name: <Generate> Version
         id: version
         shell: pwsh
-        run: ./Build/generate-application-ci.ps1
+        run: ./Build/generate-version-data.ps1 -TargetRepository 'github'
 
       - name: <Echo> Version
         shell: pwsh
