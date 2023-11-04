@@ -608,17 +608,20 @@ jobs:
 
 
   ci:
-    - name: <Checkout> Repository
-      uses: actions/checkout@v3
+    runs-on: ubuntu-latest
 
-    - name: <Generate> Version
-      id: version
-      shell: pwsh
-      run: ./Build/generate-version-data.ps1 -TargetRepository 'github'
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
 
-    - name: <Echo> Version
-      shell: pwsh
-      run: Write-Output '${{ steps.version.outputs.dot }}'
+      - name: <Generate> Version
+        id: version
+        shell: pwsh
+        run: ./Build/generate-version-data.ps1 -TargetRepository 'github'
+
+      - name: <Echo> Version
+        shell: pwsh
+        run: Write-Output '${{ steps.version.outputs.dot }}'
 
 
 
