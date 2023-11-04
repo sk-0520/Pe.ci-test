@@ -93,6 +93,66 @@ jobs:
           Get-ChildItem artifacts -R -File | Select-Object FullName | Format-Table -AutoSize -Wrap
 
 
+      - name: <Delete> TEST Tag
+        if: github.ref == 'refs/heads/ci-test'
+        continue-on-error: true
+        uses: dev-drprasad/delete-tag-and-release@v0.2.1
+        with:
+          delete_release: true
+          tag_name: ${{ steps.version.outputs.dot }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: <Create> Release
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const releaseId = await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ steps.version.outputs.dot }}",
+              sha: context.sha
+            })
+
+      # - name: <Upload> Applications
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: Pe/Pe_*
+      #     file_glob: true
+      #     tag: ${{ steps.version.outputs.dot }}
+
+      # - name: <Upload> Pe.Plugins.Reference.*
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: Pe.Plugins.Reference/Pe.Plugins.Reference.*
+      #     file_glob: true
+      #     tag: ${{ steps.version.outputs.dot }}
+
+      # - name: <Upload> Update Information (Pe.Plugins.Reference)
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: Pe.Plugins.Reference/update*.json
+      #     file_glob: true
+      #     tag: ${{ steps.version.outputs.dot }}
+
+      # - name: <Upload> Update Information (Application)
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: Pe/update.json
+      #     file_glob: false
+      #     tag: ${{ steps.version.outputs.dot }}
+
+      # - name: <Update> Version API
+      #   if: github.ref == 'refs/heads/master'
+      #   run: |
+      #     curl -H "X-API-KEY: ${{ secrets.PE_SERVER_API_KEY }}" -H "X-SECRET-KEY: ${{ secrets.PE_SERVER_API_SECRET }}" -X POST ${{ env.PE_UPDATE_API_ENDPOINT }} --data '{ \"version\": \"${{ steps.version.outputs.dot }}\" }'
+
+
+
   # deploy:
   #   needs: build
 
