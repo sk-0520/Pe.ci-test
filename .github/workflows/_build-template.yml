@@ -66,8 +66,8 @@ jobs:
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+        # with:
+        #   fetch-depth: 0
 
       - name: <Add> Node/NPM
         uses: actions/setup-node@v3
@@ -241,50 +241,6 @@ jobs:
       - name: <Test> Module
         shell: pwsh
         run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration ${{ matrix.CONFIGURATION }}
-
-
-  test-library:
-    name: Test .NET Library
-    # needs:
-    #   - test-main
-
-    strategy:
-      matrix:
-        PLATFORM: ["x86", "x64"]
-        OS:
-          - windows-2022
-          - windows-2019
-          - ubuntu-22.04
-          - ubuntu-20.04
-          - macos-12
-          - macos-11
-        TARGET:
-          # こいつはファイルパス周り未対応
-          # - Pe.Standard.Base.Test
-          - Pe.Standard.Database.Test
-          - Pe.Standard.DependencyInjection.Test
-
-    runs-on: ${{ matrix.OS }}
-
-    steps:
-      - name: <Checkout> Repository
-        uses: actions/checkout@v3
-
-      - uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 7.x
-
-      # - name: <Test> Add Logger ${{ matrix.TARGET }}
-      #   shell: bash
-      #   run: |
-      #     cd Source/Pe/${{ matrix.TARGET }}
-      #     nuget install GitHubActionsTestLogger
-
-      - name: <Test> Run ${{ matrix.TARGET }}
-        shell: bash
-        run: |
-          cd Source/Pe/${{ matrix.TARGET }}
-          dotnet test
 
 
   build-main:
@@ -488,6 +444,7 @@ jobs:
             Output/update.json
             Output/*.html
 
+
   build-plugins:
     name: Build Plugins
     runs-on: windows-2022
@@ -644,3 +601,46 @@ jobs:
           path: |
             Output/update-*.json
             Output/*.html
+
+
+  test-library:
+    name: Test .NET Library
+    needs:
+      - test-main
+
+    strategy:
+      matrix:
+        PLATFORM: ["x86", "x64"]
+        OS:
+          - windows-2019
+          - ubuntu-22.04
+          - ubuntu-20.04
+          - macos-12
+          - macos-11
+        TARGET:
+          # こいつはファイルパス周り未対応
+          # - Pe.Standard.Base.Test
+          - Pe.Standard.Database.Test
+          - Pe.Standard.DependencyInjection.Test
+
+    runs-on: ${{ matrix.OS }}
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.x
+
+      # - name: <Test> Add Logger ${{ matrix.TARGET }}
+      #   shell: bash
+      #   run: |
+      #     cd Source/Pe/${{ matrix.TARGET }}
+      #     nuget install GitHubActionsTestLogger
+
+      - name: <Test> Run ${{ matrix.TARGET }}
+        shell: bash
+        run: |
+          cd Source/Pe/${{ matrix.TARGET }}
+          dotnet test
