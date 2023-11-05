@@ -9,6 +9,9 @@ on:
       DEFAULT_ARCHIVE:
         required: true
         type: string
+      IS_PRODUCT:
+        required: true
+        type: boolean
       PE_RELEASE_ARCHIVE_BASE_URL:
         required: true
         type: string
