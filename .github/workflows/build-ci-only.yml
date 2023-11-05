@@ -20,8 +20,8 @@ jobs:
   build:
     uses: ./.github/workflows/_build-template.yml
     with:
-      MAIN_ARCHIVE: tar
-      DEFAULT_ARCHIVE: 7z
+      APPLICATION_ARCHIVE: tar
+      PLUGINS_ARCHIVE: 7z
       IS_PRODUCT: false
       PE_RELEASE_ARCHIVE_BASE_URL: https://example.com
       PE_RELEASE_NOTE_BASE_URL: https://example.com

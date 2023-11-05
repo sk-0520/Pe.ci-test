@@ -3,10 +3,10 @@ name: Build Template
 on:
   workflow_call:
     inputs:
-      MAIN_ARCHIVE:
+      APPLICATION_ARCHIVE:
         required: true
         type: string
-      DEFAULT_ARCHIVE:
+      PLUGINS_ARCHIVE:
         required: true
         type: string
       IS_PRODUCT:
@@ -398,13 +398,13 @@ jobs:
 
       - name: <Compress> Application
         shell: pwsh
-        run: .\Build\compress-module.ps1 -TargetDirectory 'Output' -OutputFileBaseName "Pe_${{ matrix.PLATFORM }}" -Archive ${{ inputs.MAIN_ARCHIVE }}
+        run: .\Build\compress-module.ps1 -TargetDirectory 'Output' -OutputFileBaseName "Pe_${{ matrix.PLATFORM }}" -Archive ${{ inputs.APPLICATION_ARCHIVE }}
 
       - name: <Artifact> Application
         uses: actions/upload-artifact@v3
         with:
           name: Pe_${{ matrix.PLATFORM }}
-          path: Pe_${{ matrix.PLATFORM }}.${{ inputs.MAIN_ARCHIVE }}
+          path: Pe_${{ matrix.PLATFORM }}.${{ inputs.APPLICATION_ARCHIVE }}
 
   information-application:
     name: Information Application
@@ -434,7 +434,7 @@ jobs:
 
       - name: <Generate> Update Information
         shell: pwsh
-        run: .\Build\generate-update-information.ps1 -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'application' -Archive ${{ inputs.MAIN_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe') -Platforms ${{ env.PLATFORMS }}
+        run: .\Build\generate-update-information.ps1 -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'application' -Archive ${{ inputs.APPLICATION_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe') -Platforms ${{ env.PLATFORMS }}
 
       - name: <Artifact> Update Information
         uses: actions/upload-artifact@v3
@@ -555,14 +555,14 @@ jobs:
         run: |
           $dirs = Get-ChildItem -Path (Join-Path -Path 'artifacts' -ChildPath 'plugins')
           foreach($dir in $dirs) {
-            .\Build\compress-module.ps1 -TargetDirectory $dir.FullName -OutputFileBaseName "$($dir.Name)_${{ matrix.PLATFORM }}" -Archive ${{ inputs.DEFAULT_ARCHIVE }}
+            .\Build\compress-module.ps1 -TargetDirectory $dir.FullName -OutputFileBaseName "$($dir.Name)_${{ matrix.PLATFORM }}" -Archive ${{ inputs.PLUGINS_ARCHIVE }}
           }
 
       - name: <Artifact> Plugins
         uses: actions/upload-artifact@v3
         with:
           name: Pe.Plugins.Reference_${{ matrix.PLATFORM }}
-          path: ./*.${{ inputs.DEFAULT_ARCHIVE }}
+          path: ./*.${{ inputs.PLUGINS_ARCHIVE }}
 
   information-plugins:
     name: Information Plugins
@@ -592,7 +592,7 @@ jobs:
 
       - name: <Generate> Update Information
         shell: pwsh
-        run: .\Build\generate-update-information.ps1 -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.DEFAULT_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
+        run: .\Build\generate-update-information.ps1 -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
 
       - name: <Artifact> Update Information
         uses: actions/upload-artifact@v3

@@ -22,8 +22,8 @@ jobs:
     name: Build
     uses: ./.github/workflows/_build-template.yml
     with:
-      MAIN_ARCHIVE: 7z
-      DEFAULT_ARCHIVE: 7z
+      APPLICATION_ARCHIVE: 7z
+      PLUGINS_ARCHIVE: 7z
       IS_PRODUCT: ${{ github.ref != 'refs/heads/develop' }}
       PE_RELEASE_ARCHIVE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@ARCHIVENAME@
       PE_RELEASE_NOTE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@NOTENAME@
