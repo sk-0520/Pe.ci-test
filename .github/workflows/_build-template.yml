@@ -84,6 +84,9 @@ jobs:
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $ignoreEmpty = !$productMode
+          if( '${{ github.ref }}' -eq 'refs/heads/ci-test' ) {
+            $ignoreEmpty = $true
+          }
           .\Build\generate-release-note.ps1 -OutputDirectory history -IgnoreEmpty:$ignoreEmpty
 
       - name: <Artifact> Release Note
