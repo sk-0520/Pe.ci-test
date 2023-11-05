@@ -145,7 +145,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/info/plugins/Pe.Plugins.Reference/update*.json
+          file: artifacts/info/plugins/update-*.json
           file_glob: true
           tag: ${{ steps.version.outputs.dot }}
 
