@@ -432,13 +432,13 @@ jobs:
 
       - name: <Compress> Application
         shell: pwsh
-        run: .\Build\compress-module.ps1 -TargetDirectory 'Output' -OutputFileName "Pe_${{ matrix.PLATFORM }}.7z"
+        run: .\Build\compress-module.ps1 -TargetDirectory 'Output' -OutputFileBaseName "Pe_${{ matrix.PLATFORM }}" -Archive ${{ inputs.MAIN_ARCHIVE }}
 
       - name: <Artifact> Application
         uses: actions/upload-artifact@v3
         with:
           name: Pe_${{ matrix.PLATFORM }}
-          path: Pe_${{ matrix.PLATFORM }}.7z
+          path: Pe_${{ matrix.PLATFORM }}.${{ inputs.MAIN_ARCHIVE }}
 
   information-application:
     name: Information Application
@@ -588,14 +588,14 @@ jobs:
         run: |
           $dirs = Get-ChildItem -Path (Join-Path -Path 'artifacts' -ChildPath 'plugins')
           foreach($dir in $dirs) {
-            .\Build\compress-module.ps1 -TargetDirectory $dir.FullName -OutputFileName "$($dir.Name)_${{ matrix.PLATFORM }}.7z"
+            .\Build\compress-module.ps1 -TargetDirectory $dir.FullName -OutputFileBaseName "$($dir.Name)_${{ matrix.PLATFORM }}" -Archive ${{ inputs.DEFAULT_ARCHIVE }}
           }
 
       - name: <Artifact> Plugins
         uses: actions/upload-artifact@v3
         with:
           name: Pe.Plugins.Reference_${{ matrix.PLATFORM }}
-          path: ./*.7z
+          path: ./*.${{ inputs.DEFAULT_ARCHIVE }}
 
   information-plugins:
     name: Information Plugins

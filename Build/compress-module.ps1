@@ -1,7 +1,8 @@
 
 Param(
 	[Parameter(mandatory = $true)][string] $TargetDirectory,
-	[Parameter(mandatory = $true)][string] $OutputFileName
+	[Parameter(mandatory = $true)][string] $OutputFileBaseName,
+	[Parameter(mandatory = $true)][ValidateSet('zip', '7z', 'tar')][string] $Archive
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -12,31 +13,31 @@ $rootDirectory = Split-Path -Path $currentDirPath -Parent
 #*/[FUNCTIONS]-------------------------------------
 
 Write-Output $TargetDirectory
-Write-Output $OutputFileName
+Write-Output $OutputFileBaseName
 Write-Output $rootDirectory
 
-$archive = [System.IO.Path]::GetExtension($OutputFileName).ToLower().Substring(1)
+$outputFileName = $OutputFileBaseName + '.' + $Archive
 
 try {
 	Push-Location $TargetDirectory
 
-	switch ($archive) {
+	switch ($Archive) {
 		'7z' {
-			7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on -mmt=on "$OutputFileName" * -r -bsp1
+			7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on -mmt=on "$outputFileName" * -r -bsp1
 		}
 		'zip' {
-			7z a -tzip "$OutputFileName" * -r -bsp1
+			7z a -tzip "$outputFileName" * -r -bsp1
 		}
 		'tar' {
-			7z a -ttar "$OutputFileName" * -r -bsp1
+			7z a -ttar "$outputFileName" * -r -bsp1
 		}
-		Default { throw "error: $archive" }
+		Default { throw "error: $Archive" }
 	}
 	if (-not $?) {
-		throw "7z: $OutputFileName"
+		throw "7z: $outputFileName"
 	}
 
-	Move-Item -Path $OutputFileName -Destination $rootDirectory
+	Move-Item -Path $outputFileName -Destination $rootDirectory
 }
 finally {
 	Pop-Location
