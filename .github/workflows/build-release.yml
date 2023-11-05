@@ -7,9 +7,15 @@ on:
     - ci-test
     - develop
 
+
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
+
+
+env:
+  PE_UPDATE_API_ENDPOINT: https://peserver.gq/api/administrator/pe/version
+
 
 jobs:
   build:
@@ -17,8 +23,9 @@ jobs:
     with:
       MAIN_ARCHIVE: 7z
       DEFAULT_ARCHIVE: 7z
-      PE_RELEASE_ARCHIVE_BASE_URL: https://example.com
-      PE_RELEASE_NOTE_BASE_URL: https://example.com
+      PE_RELEASE_ARCHIVE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@ARCHIVENAME@
+      PE_RELEASE_NOTE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@NOTENAME@
+
 
   deploy:
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/ci-test'
@@ -114,6 +121,7 @@ jobs:
               ref: "refs/tags/${{ steps.version.outputs.dot }}",
               sha: context.sha
             })
+
 
       - name: <Upload> Pe.Plugins.Reference.*
         uses: svenstaro/upload-release-action@v2
