@@ -48,6 +48,7 @@ jobs:
           name: History
           path: artifacts/history
 
+
       - name: <Download> Plugins x86
         uses: actions/download-artifact@v3
         with:
@@ -114,37 +115,47 @@ jobs:
               sha: context.sha
             })
 
-      # - name: <Upload> Applications
-      #   uses: svenstaro/upload-release-action@v2
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: Pe/Pe_*
-      #     file_glob: true
-      #     tag: ${{ steps.version.outputs.dot }}
+      - name: <Upload> Pe.Plugins.Reference.*
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/Pe.Plugins.Reference/Pe.Plugins.Reference.*
+          file_glob: true
+          tag: ${{ steps.version.outputs.dot }}
 
-      # - name: <Upload> Pe.Plugins.Reference.*
-      #   uses: svenstaro/upload-release-action@v2
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: Pe.Plugins.Reference/Pe.Plugins.Reference.*
-      #     file_glob: true
-      #     tag: ${{ steps.version.outputs.dot }}
+      - name: <Upload> Applications
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/Pe/Pe_*
+          file_glob: true
+          tag: ${{ steps.version.outputs.dot }}
 
-      # - name: <Upload> Update Information (Pe.Plugins.Reference)
-      #   uses: svenstaro/upload-release-action@v2
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: Pe.Plugins.Reference/update*.json
-      #     file_glob: true
-      #     tag: ${{ steps.version.outputs.dot }}
 
-      # - name: <Upload> Update Information (Application)
-      #   uses: svenstaro/upload-release-action@v2
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: Pe/update.json
-      #     file_glob: false
-      #     tag: ${{ steps.version.outputs.dot }}
+      - name: <Upload> Html (Application/Pe.Plugins.Reference)
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: rtifacts/history/*.html
+          file_glob: true
+          tag: ${{ steps.version.outputs.dot }}
+
+
+      - name: <Upload> Update Information (Pe.Plugins.Reference)
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/info/plugins/Pe.Plugins.Reference/update*.json
+          file_glob: true
+          tag: ${{ steps.version.outputs.dot }}
+
+      - name: <Upload> Update Information (Application)
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/info/pe/update.json
+          file_glob: false
+          tag: ${{ steps.version.outputs.dot }}
 
       # - name: <Update> Version API
       #   if: github.ref == 'refs/heads/master'
