@@ -16,8 +16,8 @@ foreach ($scriptFileName in $scriptFileNames) {
 #/*[FUNCTIONS]-------------------------------------
 #*/[FUNCTIONS]-------------------------------------
 
-Write-Output $AssemblyDirectory
-Write-Output $ProductMode
+Write-Output "AssemblyDirectory = $AssemblyDirectory"
+Write-Output "ProductMode = $ProductMode"
 
 if ($ProductMode) {
 	$removeTargets = @(
