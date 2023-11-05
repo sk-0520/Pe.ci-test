@@ -81,7 +81,10 @@ jobs:
 
       - name: <Generate> Release Note
         shell: pwsh
-        run: .\Build\generate-release-note.ps1 -OutputDirectory history -IgnoreEmpty:$true
+        run: |
+          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
+          $ignoreEmpty = !$productMode
+          .\Build\generate-release-note.ps1 -OutputDirectory history -IgnoreEmpty:$ignoreEmpty
 
       - name: <Artifact> Release Note
         uses: actions/upload-artifact@v3
@@ -169,11 +172,17 @@ jobs:
 
       - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+        run: |
+          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
+          $buildType = $productMode ? '': 'BETA'
+          .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
-        run: .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
+        run: |
+          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
+          $buildType = $productMode ? '': 'BETA'
+          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Artifact> Module
         uses: actions/upload-artifact@v3
@@ -206,7 +215,10 @@ jobs:
 
       - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+        run: |
+          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
+          $buildType = $productMode ? '': 'BETA'
+          .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Setup> Module
         shell: pwsh
@@ -215,11 +227,13 @@ jobs:
       - name: <Build> Module
         shell: pwsh
         run: |
+          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
+          $buildType = $productMode ? '': 'BETA'
           $isTest = $false
           if( '${{ matrix.CONFIGURATION }}' -eq 'CI_TEST') {
             $isTest = $true
           }
-          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Test:$isTest
+          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode  -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test:$isTest
 
       - name: <Test> Module
         shell: pwsh
@@ -292,11 +306,17 @@ jobs:
 
       - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+        run: |
+          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
+          $buildType = $productMode ? '': 'BETA'
+          .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
-        run: .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
+        run: |
+          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
+          $buildType = $productMode ? '': 'BETA'
+          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Archive> Application
         shell: bash
@@ -337,7 +357,10 @@ jobs:
 
       - name: <Build> Module
         shell: pwsh
-        run: .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Test
+        run: |
+          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
+          $buildType = $productMode ? '': 'BETA'
+          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test
 
       - name: <Test> Module
         shell: pwsh
@@ -396,12 +419,15 @@ jobs:
 
       - name: <Reconstitution> Application
         shell: pwsh
-        run: ./Build/reconstitute-application.ps1 -Archive 7z -Platform ${{ matrix.PLATFORM }} -BuildType BETA -InputDirectory artifacts  -OutputDirectory Output
+        run: |
+          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
+          $buildType = $productMode ? '': 'BETA'
+          ./Build/reconstitute-application.ps1 -Archive 7z -Platform ${{ matrix.PLATFORM }} -ProductMode:$productMode -BuildType $buildType -InputDirectory artifacts  -OutputDirectory Output
 
       - name: <Cleanup> Application
         shell: pwsh
         run: |
-          $productMode = @('master', 'ci-test', 'develop').Contains('${{ github.ref_name }}')
+          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           .\Build\cleanup-module.ps1 -AssemblyDirectory 'Output' -ProductMode:$productMode
 
       - name: <Compress> Application

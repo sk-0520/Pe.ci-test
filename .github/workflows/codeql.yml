@@ -1,4 +1,4 @@
-name: Build Heavy
+name: CodeQL
 
 on:
   schedule:
