@@ -19,6 +19,7 @@ env:
 
 jobs:
   build:
+    name: Build
     uses: ./.github/workflows/_build-template.yml
     with:
       MAIN_ARCHIVE: 7z
