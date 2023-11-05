@@ -67,9 +67,7 @@ if ($Module -eq 'application') {
 		$targetName = 'Pe_'  + $platform + '.' + $Archive
 		$targetPath = Join-Path -Path $ArtifactDirectory -ChildPath $targetName
 
-		$targetPath
-
-		$noteName = (ConvertReleaseNoteFileName $version 'html')
+		$noteName = 'Pe.html'
 		$noteUri = (ReplaceValues $NoteBaseUrl).Replace("@NOTENAME@", $noteName)
 		$item = CreateUpdateItem $Archive $platform $targetPath $noteUri $MinimumVersion
 

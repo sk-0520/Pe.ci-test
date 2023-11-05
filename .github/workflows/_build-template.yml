@@ -80,7 +80,7 @@ jobs:
         shell: pwsh
         run: .\Build\generate-release-note.ps1 -OutputDirectory history -IgnoreEmpty:$true
 
-      - name: <Artifact> BuildTools
+      - name: <Artifact> Release Note
         uses: actions/upload-artifact@v3
         with:
           name: History
