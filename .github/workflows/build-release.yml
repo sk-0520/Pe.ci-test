@@ -136,7 +136,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: rtifacts/history/*.html
+          file: artifacts/history/*.html
           file_glob: true
           tag: ${{ steps.version.outputs.dot }}
 
