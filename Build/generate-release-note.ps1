@@ -213,7 +213,7 @@ function MakePlugins {
 		$logList = $logSection.CreateChild('ul')
 
 		$logItem = $logList.CreateChild('li')
-		$logItem.CreateText('<UNKNOWN>');
+		$logItem.CreateText('プラグイン版リリースノートは使い道ないので未実装');
 
 		$pluginHtmlContent = (Get-Content $pluginTemplateHtmlFile -Encoding UTF8 -Raw)
 		$pluginHtmlContent = $pluginHtmlContent.Replace('<!--NAME-->', ($pluginProjectDirectory.Name + ', ' + $currentVersion.version))
