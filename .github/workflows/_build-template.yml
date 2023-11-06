@@ -630,14 +630,9 @@ jobs:
         with:
           dotnet-version: 7.x
 
-      - name: <Test> Add Logger ${{ matrix.TARGET }}
-        shell: bash
-        run: |
-          cd Source/Pe/${{ matrix.TARGET }}
-          nuget install GitHubActionsTestLogger
-
       - name: <Test> Run ${{ matrix.TARGET }}
         shell: bash
         run: |
           cd Source/Pe/${{ matrix.TARGET }}
+          nuget install GitHubActionsTestLogger
           dotnet test --logger GitHubActions
