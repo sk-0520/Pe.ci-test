@@ -6,8 +6,8 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $rootDirPath = Split-Path -Parent $currentDirPath
-$iconDirPath = Join-Path $currentDirPath 'Icon'
-$workDirPath = Join-Path $iconDirPath '@work'
+$iconDirPath = Join-Path -Path $currentDirPath -ChildPath 'Icon'
+$workDirPath = Join-Path -Path $iconDirPath -ChildPath '@work'
 
 $exeIncspace = if ($env:INKSCAPE) { $env:INKSCAPE } else { [Environment]::ExpandEnvironmentVariables('C:\Program Files\Inkscape\bin\inkscape.exe') }
 $exeImageMagic = if ($env:IMAGEMAGIC) { $env:IMAGEMAGIC } else { [Environment]::ExpandEnvironmentVariables('C:\Applications\ImageMagick\convert.exe') }
@@ -44,7 +44,7 @@ $iconSize = @(
 
 function ConvertAppSvgToPng() {
 	# App.svg から release(そのまま), debug, beta を生成
-	$appPath = Join-Path $iconDirPath 'App.svg'
+	$appPath = Join-Path -Path $iconDirPath -ChildPath 'App.svg'
 	$appXml = [xml](Get-Content $appPath -Raw -Encoding UTF8)
 
 	$nodes = @(
@@ -60,7 +60,7 @@ function ConvertAppSvgToPng() {
 			$style = $node.Attributes['style'].Value
 			$node.Attributes['style'].Value = $style -replace "stop-color:(#[0-9a-f]{6})", "stop-color:$($appIcon.color)"
 		}
-		$savePath = Join-Path $workDirPath "$($appIcon.name).svg"
+		$savePath = Join-Path -Path $workDirPath -ChildPath "$($appIcon.name).svg"
 		$appXml.Save($savePath)
 		$savedPaths += $savePath
 	}
@@ -72,7 +72,7 @@ function ConvertAppSvgToPng() {
 function PackAppIcon {
 	foreach ($appIcon in $appIcons) {
 		$pattern = "$($appIcon.name)_*.png"
-		$outputPath = Join-Path $iconDirPath "$($appIcon.name).ico"
+		$outputPath = Join-Path -Path $iconDirPath -ChildPath "$($appIcon.name).ico"
 		PackIcon $workDirPath $pattern $outputPath
 	}
 }
@@ -122,10 +122,10 @@ function PackIcon([string] $directoryPath, [string] $pngPattern, [string] $outpu
 }
 
 function MoveAppIcon {
-	$mainDir = Join-Path $rootDirPath 'Source\Pe\Pe.Main\Resources\Icon'
+	$mainDir = Join-Path -Path $rootDirPath -ChildPath 'Source\Pe\Pe.Main\Resources\Icon'
 	foreach ($appIcon in $appIcons) {
-		$srcPath = Join-Path $currentDirPath "$($appIcon.name).ico"
-		$dstPath = Join-Path $mainDir "$($appIcon.name).ico"
+		$srcPath = Join-Path -Path $currentDirPath -ChildPath "$($appIcon.name).ico"
+		$dstPath = Join-Path -Path $mainDir -ChildPath "$($appIcon.name).ico"
 		Write-Host "[COPY] $srcPath -> $dstPath"
 		Copy-Item -Path $srcPath -Destination $dstPath
 	}

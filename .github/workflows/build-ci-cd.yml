@@ -1,0 +1,269 @@
+name: Build CI/CD
+
+on:
+  push:
+    branches:
+    - master
+    - ci-test
+    - develop
+
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+
+env:
+  PE_UPDATE_API_ENDPOINT: https://peserver.gq/api/administrator/pe/version
+
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/_build-template.yml
+    with:
+      APPLICATION_ARCHIVE: 7z
+      PLUGINS_ARCHIVE: 7z
+      IS_PRODUCT: ${{ github.ref != 'refs/heads/develop' }}
+      PE_RELEASE_ARCHIVE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@ARCHIVENAME@
+      PE_RELEASE_NOTE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@NOTENAME@
+
+
+  deploy:
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/ci-test'
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs:
+      - build
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Generate> Version
+        id: version
+        shell: pwsh
+        run: ./Build/generate-version-data.ps1 -TargetRepository 'github'
+
+      - name: <Read> Version
+        shell: pwsh
+        run: |
+          Write-Output 'dot:    ${{ steps.version.outputs.dot }}'
+          Write-Output 'hyphen: ${{ steps.version.outputs.hyphen }}'
+
+
+      - name: <Download> Release Note
+        uses: actions/download-artifact@v3
+        with:
+          name: History
+          path: artifacts/history
+
+
+      - name: <Download> Plugins x86
+        uses: actions/download-artifact@v3
+        with:
+          name: Pe.Plugins.Reference_x86
+          path: artifacts/Pe.Plugins.Reference
+
+      - name: <Download> Plugins x64
+        uses: actions/download-artifact@v3
+        with:
+          name: Pe.Plugins.Reference_x64
+          path: artifacts/Pe.Plugins.Reference
+
+
+      - name: <Download> Application x86
+        uses: actions/download-artifact@v3
+        with:
+          name: Pe_x86
+          path: artifacts/Pe
+
+      - name: <Download> Application x64
+        uses: actions/download-artifact@v3
+        with:
+          name: Pe_x64
+          path: artifacts/Pe
+
+
+      - name: <Download> Plugins Information
+        uses: actions/download-artifact@v3
+        with:
+          name: Information_Pe.Plugins.Reference
+          path: artifacts/info/plugins
+
+      - name: <Download> Application Information
+        uses: actions/download-artifact@v3
+        with:
+          name: Information_Pe
+          path: artifacts/info/pe
+
+
+      - name: <🌳> 🌲
+        shell: pwsh
+        run:  |
+          Get-ChildItem artifacts -R -File | Select-Object FullName | Format-Table -AutoSize -Wrap
+
+
+      - name: <Delete> TEST Tag
+        if: github.ref == 'refs/heads/ci-test'
+        continue-on-error: true
+        uses: dev-drprasad/delete-tag-and-release@v0.2.1
+        with:
+          delete_release: true
+          tag_name: ${{ steps.version.outputs.dot }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: <Create> Release
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const releaseId = await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ steps.version.outputs.dot }}",
+              sha: context.sha
+            })
+
+
+      - name: <Upload> Pe.Plugins.Reference.*
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/Pe.Plugins.Reference/Pe.Plugins.Reference.*.*
+          file_glob: true
+          tag: ${{ steps.version.outputs.dot }}
+
+      - name: <Upload> Applications
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/Pe/Pe_*
+          file_glob: true
+          tag: ${{ steps.version.outputs.dot }}
+
+
+      - name: <Upload> Html (Application/Pe.Plugins.Reference)
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/history/*.html
+          file_glob: true
+          tag: ${{ steps.version.outputs.dot }}
+
+
+      - name: <Upload> Update Information (Pe.Plugins.Reference)
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/info/plugins/update-*.json
+          file_glob: true
+          tag: ${{ steps.version.outputs.dot }}
+
+      - name: <Upload> Update Information (Application)
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/info/pe/update.json
+          file_glob: false
+          tag: ${{ steps.version.outputs.dot }}
+
+      # - name: <Update> Version API
+      #   if: github.ref == 'refs/heads/master'
+      #   run: |
+      #     curl -H "X-API-KEY: ${{ secrets.PE_SERVER_API_KEY }}" -H "X-SECRET-KEY: ${{ secrets.PE_SERVER_API_SECRET }}" -X POST ${{ env.PE_UPDATE_API_ENDPOINT }} --data '{ \"version\": \"${{ steps.version.outputs.dot }}\" }'
+
+
+
+  # deploy:
+  #   needs: build
+
+  #   if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/ci-test'
+
+  #   runs-on: windows-2022
+
+  #   steps:
+  #     - name: <Download> Application
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: Pe
+  #         path: Pe
+
+  #     - name: <Download> Pe.Plugins.Reference
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: Pe.Plugins.Reference
+  #         path: Pe.Plugins.Reference
+
+  #     - name: <Show> 🌳🌲🌳🌲
+  #       run: tree /f
+
+  #     - name: <Read> gen-data
+  #       id: version
+  #       shell: pwsh
+  #       run: |
+  #         $dot = Get-Content Pe\gen-version-dot.txt
+  #         $hyphen = Get-Content Pe\gen-version-hyphen.txt
+  #         "dot=$dot" >> $env:GITHUB_OUTPUT
+  #         "hyphen=$hyphen" >> $env:GITHUB_OUTPUT
+
+  #     - name: <Delete> TEST Tag
+  #       if: github.ref == 'refs/heads/ci-test'
+  #       continue-on-error: true
+  #       uses: dev-drprasad/delete-tag-and-release@v0.2.1
+  #       with:
+  #         delete_release: true
+  #         tag_name: ${{ steps.version.outputs.dot }}
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  #     - name: <Create> Release
+  #       uses: actions/github-script@v6
+  #       with:
+  #         script: |
+  #           const releaseId = await github.rest.git.createRef({
+  #             owner: context.repo.owner,
+  #             repo: context.repo.repo,
+  #             ref: "refs/tags/${{ steps.version.outputs.dot }}",
+  #             sha: context.sha
+  #           })
+
+  #     - name: <Upload> Applications
+  #       uses: svenstaro/upload-release-action@v2
+  #       with:
+  #         repo_token: ${{ secrets.GITHUB_TOKEN }}
+  #         file: Pe/Pe_*
+  #         file_glob: true
+  #         tag: ${{ steps.version.outputs.dot }}
+
+  #     - name: <Upload> Pe.Plugins.Reference.*
+  #       uses: svenstaro/upload-release-action@v2
+  #       with:
+  #         repo_token: ${{ secrets.GITHUB_TOKEN }}
+  #         file: Pe.Plugins.Reference/Pe.Plugins.Reference.*
+  #         file_glob: true
+  #         tag: ${{ steps.version.outputs.dot }}
+
+  #     - name: <Upload> Update Information (Pe.Plugins.Reference)
+  #       uses: svenstaro/upload-release-action@v2
+  #       with:
+  #         repo_token: ${{ secrets.GITHUB_TOKEN }}
+  #         file: Pe.Plugins.Reference/update*.json
+  #         file_glob: true
+  #         tag: ${{ steps.version.outputs.dot }}
+
+  #     - name: <Upload> Update Information (Application)
+  #       uses: svenstaro/upload-release-action@v2
+  #       with:
+  #         repo_token: ${{ secrets.GITHUB_TOKEN }}
+  #         file: Pe/update.json
+  #         file_glob: false
+  #         tag: ${{ steps.version.outputs.dot }}
+
+  #     # - name: <Update> Version API
+  #     #   if: github.ref == 'refs/heads/master'
+  #     #   run: |
+  #     #     curl -H "X-API-KEY: ${{ secrets.PE_SERVER_API_KEY }}" -H "X-SECRET-KEY: ${{ secrets.PE_SERVER_API_SECRET }}" -X POST ${{ env.PE_UPDATE_API_ENDPOINT }} --data '{ \"version\": \"${{ steps.version.outputs.dot }}\" }'
+
+
+

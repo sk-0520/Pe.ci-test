@@ -41,11 +41,11 @@ function ConvertFileName([string] $head, [version] $version, [string] $tail, [st
 	return $nameBuffer -join ''
 }
 
-function ConvertAppArchiveFileName([version] $version, [string] $platform, [string][ValidateSet('zip', '7z', 'tar')] $archive) {
-	return ConvertFileName 'Pe' $version $platform $archive
-}
+# function ConvertAppArchiveFileName([version] $version, [string] $platform, [string][ValidateSet('zip', '7z', 'tar')] $archive) {
+# 	return ConvertFileName 'Pe' $version $platform $archive
+# }
 
-function ConvertReleaseNoteFileName([version] $version, [string] $extension) {
-	return ConvertFileName 'Pe' $version '' $extension
-}
+# function ConvertReleaseNoteFileName([version] $version, [string] $extension) {
+# 	return ConvertFileName 'Pe' $version '' $extension
+# }
 
