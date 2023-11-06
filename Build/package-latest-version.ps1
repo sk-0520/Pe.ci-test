@@ -4,8 +4,7 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scriptFileNames = @(
-	'version.ps1',
-	'command.ps1'
+	'version.ps1'
 );
 foreach ($scriptFileName in $scriptFileNames) {
 	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
