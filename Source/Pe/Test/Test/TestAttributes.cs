@@ -1,4 +1,0 @@
-namespace ContentTypeTextNet.Pe.Test
-{
-
-}
