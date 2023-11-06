@@ -13,7 +13,7 @@ $scriptFileNames = @(
 	'project.ps1'
 );
 foreach ($scriptFileName in $scriptFileNames) {
-	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
+	$scriptFilePath = Join-Path -Path $currentDirPath -ChildPath $scriptFileName
 	. $scriptFilePath
 }
 $rootDirectory = Split-Path -Path $currentDirPath -Parent
@@ -22,11 +22,11 @@ $rootDirectory = Split-Path -Path $currentDirPath -Parent
 #*/[FUNCTIONS]-------------------------------------
 
 $inputItems = @{
-	buildTools = Join-Path $InputDirectory -ChildPath 'buildtools'
-	sql        = Join-Path $InputDirectory -ChildPath 'sql' | Join-Path -ChildPath 'sql.sqlite3'
-	help       = Join-Path $InputDirectory -ChildPath 'help'
-	boot       = Join-Path $InputDirectory -ChildPath 'boot'
-	main       = Join-Path $InputDirectory -ChildPath 'main-bin'
+	buildTools = Join-Path -Path $InputDirectory -ChildPath 'buildtools'
+	sql        = Join-Path -Path $InputDirectory -ChildPath 'sql' | Join-Path -ChildPath 'sql.sqlite3'
+	help       = Join-Path -Path $InputDirectory -ChildPath 'help'
+	boot       = Join-Path -Path $InputDirectory -ChildPath 'boot'
+	main       = Join-Path -Path $InputDirectory -ChildPath 'main-bin'
 }
 
 # 出力ディレクトリになんかあっても面倒なので更地にしてからあれこれする

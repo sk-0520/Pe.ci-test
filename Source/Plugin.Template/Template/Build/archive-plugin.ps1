@@ -12,7 +12,7 @@ $scriptFileNames = @(
 	'command.ps1'
 );
 foreach ($scriptFileName in $scriptFileNames) {
-	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
+	$scriptFilePath = Join-Path -Path $currentDirPath -ChildPath $scriptFileName
 	. $scriptFilePath
 }
 
@@ -22,5 +22,5 @@ foreach($removeTarget in $removeTargets) {
 	Remove-Item -Path $removeTarget -Recurse -Force
 }
 
-$destinationPath = Join-Path 'Output' -ChildPath "${OutputBaseName}.${Archive}"
-Compress-Archive -Force -Path (Join-Path $InputDirectory "*") -DestinationPath $destinationPath
+$destinationPath = Join-Path -Path 'Output' -ChildPath "${OutputBaseName}.${Archive}"
+Compress-Archive -Force -Path (Join-Path -Path $InputDirectory -ChildPath "*") -DestinationPath $destinationPath

@@ -11,7 +11,7 @@ $scriptFileNames = @(
 	'project.ps1'
 );
 foreach ($scriptFileName in $scriptFileNames) {
-	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
+	$scriptFilePath = Join-Path -Path $currentDirPath -ChildPath $scriptFileName
 	. $scriptFilePath
 }
 $rootDirPath = Split-Path -Parent $currentDirPath
@@ -221,7 +221,7 @@ function MakePlugins {
 		$pluginHtmlContent = $pluginHtmlContent.Replace('//SCRIPT', (Get-Content $compiledChangelogLinkFile -Raw -Encoding UTF8))
 		$pluginHtmlContent = $pluginHtmlContent.Replace('/*STYLE*/', (Get-Content $compiledChangelogStyleFile -Raw -Encoding UTF8))
 
-		Set-Content (Join-Path $OutputDirectory $outputName) -Value $pluginHtmlContent -Encoding UTF8
+		Set-Content (Join-Path -Path $OutputDirectory -ChildPath $outputName) -Value $pluginHtmlContent -Encoding UTF8
 
 		Pop-Location
 	}

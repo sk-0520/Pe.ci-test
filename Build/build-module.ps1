@@ -12,7 +12,7 @@ $scriptFileNames = @(
 	'project.ps1'
 );
 foreach ($scriptFileName in $scriptFileNames) {
-	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
+	$scriptFilePath = Join-Path -Path $currentDirPath -ChildPath $scriptFileName
 	. $scriptFilePath
 }
 
@@ -45,7 +45,7 @@ elseif ($Module -eq 'main') {
 		$testDirectories = GetTestProjectDirectories $Module
 
 		foreach ($testDirectory in $testDirectories) {
-			$testProjectFilePath = (Join-Path $testDirectory.FullName $testDirectory.Name) + ".csproj"
+			$testProjectFilePath = (Join-Path -Path $testDirectory.FullName -ChildPath $testDirectory.Name) + ".csproj"
 			dotnet build $testProjectFilePath /m --verbosity normal --configuration Release /p:Platform=$Platform /p:DefineConstants=$define --runtime win10-$Platform --no-self-contained
 			if (-not $?) {
 				throw "build error: $Module"

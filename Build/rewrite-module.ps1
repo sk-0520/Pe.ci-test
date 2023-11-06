@@ -12,7 +12,7 @@ $scriptFileNames = @(
 	'project.ps1'
 );
 foreach ($scriptFileName in $scriptFileNames) {
-	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
+	$scriptFilePath = Join-Path -Path $currentDirPath -ChildPath $scriptFileName
 	. $scriptFilePath
 }
 
@@ -67,7 +67,7 @@ $version = GetAppVersion
 $sourceMainDirectoryPath = GetSourceDirectory 'main'
 $sourceBootDirectoryPath = GetSourceDirectory 'boot'
 
-$projectCommonFilePath = Join-Path $sourceMainDirectoryPath "Directory.Build.props"
+$projectCommonFilePath = Join-Path -Path $sourceMainDirectoryPath -ChildPath "Directory.Build.props"
 $projectCommonXml = [XML](Get-Content $projectCommonFilePath  -Encoding UTF8)
 
 InsertElement $version $projectCommonXml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
@@ -90,7 +90,7 @@ $appIconPath = Join-Path -Path 'Resource\Icon' -ChildPath $appIconName
 Copy-Item -Path $appIconPath -Destination 'Source\Pe\Pe.Main\Resources\Icon\App.ico' -Force
 
 if ($Module -eq 'boot') {
-	ReplaceResourceValue $projectCommonXml (Join-Path $sourceBootDirectoryPath "Pe.Boot\Resource.rc")
+	ReplaceResourceValue $projectCommonXml (Join-Path -Path $sourceBootDirectoryPath -ChildPath 'Pe.Boot' | Join-Path -ChildPath 'Resource.rc')
 
 }
 elseif ($Module -eq 'main') {
