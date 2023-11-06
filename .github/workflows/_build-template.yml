@@ -616,8 +616,7 @@ jobs:
           - macos-12
           - macos-11
         TARGET:
-          # こいつはファイルパス周り未対応
-          # - Pe.Standard.Base.Test
+          - Pe.Standard.Base.Test
           - Pe.Standard.Database.Test
           - Pe.Standard.DependencyInjection.Test
 
