@@ -1,69 +1,13 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.213+",
+		"date": "2023/11/07",
+		"version": "0.99.214",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "もうなんでもいいから #900 はリリースしておきたいのです"
 					}
 				]
 			},
@@ -76,18 +20,6 @@
 						"comments": [
 							"CI/CD 周りの処理をがっつり変更した"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
