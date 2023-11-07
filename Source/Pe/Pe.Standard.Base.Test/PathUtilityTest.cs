@@ -23,6 +23,8 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             Assert.AreEqual(expected, actual);
         }
 
+#if OS_WINDOWS
+
         [TestMethod]
         [DataRow("", "", "!")]
         [DataRow("", " ", "!")]
@@ -181,6 +183,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             var actual = PathUtility.SafeCombine(directory, nodes);
             Assert.AreEqual(expected, actual);
         }
+#endif
     }
-
 }

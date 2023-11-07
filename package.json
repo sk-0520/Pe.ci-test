@@ -14,8 +14,7 @@
 		"help-build:output": "parcel build --no-autoinstall --no-source-maps --dist-dir Output/help/ --no-content-hash --public-url . Source/Help/index.pug",
 		"help-build:module": "ts-node Build/scripts/tune-module-entry.ts",
 		"help-build": "npm-run-all --sequential archive help-build:output help-build:module",
-		"help-app-copy": "cpx Output/help/** Source/Pe/Pe.Main/doc/help",
-		"help-ci": "npm-run-all --sequential help-build help-app-copy",
+		"help-ci": "npm-run-all --sequential help-build",
 		"npm-check": "ncu",
 		"npm-update": "ncu -u & npm install"
 	},

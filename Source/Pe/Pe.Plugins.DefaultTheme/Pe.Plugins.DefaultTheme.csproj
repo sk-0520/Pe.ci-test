@@ -18,12 +18,4 @@
     <ProjectReference Include="..\Pe.Standard.Base\Pe.Standard.Base.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="App.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_DeploymentManifestIconFile Remove="..\Pe.Main\Resources\Icon\App.ico" />
-  </ItemGroup>
-
 </Project>

@@ -1,0 +1,27 @@
+name: Build CI
+
+on:
+  push:
+    branches-ignore:
+      - master
+      - ci-test
+      - develop
+  pull_request:
+    branches-ignore:
+      - master
+      - ci-test
+      - develop
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    uses: ./.github/workflows/_build-template.yml
+    with:
+      APPLICATION_ARCHIVE: tar
+      PLUGINS_ARCHIVE: 7z
+      IS_PRODUCT: false
+      PE_RELEASE_ARCHIVE_BASE_URL: https://example.com
+      PE_RELEASE_NOTE_BASE_URL: https://example.com

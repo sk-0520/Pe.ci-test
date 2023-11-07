@@ -117,10 +117,10 @@ if ($reservedNames.Contains($PluginName)) {
 $parameters = @{
 	pluginName = $PluginName
 	directory  = [System.IO.DirectoryInfo][Environment]::ExpandEnvironmentVariables($ProjectDirectory)
-	git        = [Environment]::ExpandEnvironmentVariables((Join-Path $GitPath 'git.exe'))
-	dotnet     = [Environment]::ExpandEnvironmentVariables((Join-Path $DotNetPath 'dotnet.exe'))
+	git        = [Environment]::ExpandEnvironmentVariables((Join-Path -Path $GitPath -ChildPath 'git.exe'))
+	dotnet     = [Environment]::ExpandEnvironmentVariables((Join-Path -Path $DotNetPath -ChildPath 'dotnet.exe'))
 	pluginId   = $customPluginId
-	source     = [System.IO.DirectoryInfo][Environment]::ExpandEnvironmentVariables((Join-Path $ProjectDirectory 'Source'))
+	source     = [System.IO.DirectoryInfo][Environment]::ExpandEnvironmentVariables((Join-Path -Path $ProjectDirectory -ChildPath 'Source'))
 	repository = @{
 		application = @{
 			path = 'Source/Pe'
@@ -237,7 +237,7 @@ function New-Submodule {
 	try {
 		Push-Location $parameters.directory
 
-		$targetPath = Join-Path $parameters.directory $path
+		$targetPath = Join-Path -Path $parameters.directory -ChildPath $path
 		Write-Host "サブモジュール親ディレクトリ生成: " + $targetPath
 		& $parameters.git submodule add --branch $branch $uri $path
 	}
@@ -265,7 +265,7 @@ try {
 	}
 
 	Write-Verbose "Peを追加"
-	$appDir = Join-Path $parameters.source 'Pe' | Join-Path -ChildPath 'Source' | Join-Path -ChildPath 'Pe'
+	$appDir = Join-Path -Path $parameters.source -ChildPath 'Pe' | Join-Path -ChildPath 'Source' | Join-Path -ChildPath 'Pe'
 	$items = @(
 		@{
 			project   = 'Pe.Bridge'
@@ -305,12 +305,12 @@ try {
 		}
 	)
 	foreach ($item in $items) {
-		$projectFilePath = (Join-Path $appDir $item.project) | Join-Path -ChildPath ($item.project + '.csproj')
+		$projectFilePath = (Join-Path-Path $appDir -ChildPath $item.project) | Join-Path -ChildPath ($item.project + '.csproj')
 		& $parameters.dotnet sln add $projectFilePath --solution-folder $item.directory
 	}
 
 	$solutionFileName = "${PluginName}.sln"
-	$solutionPathName = Join-Path $parameters.source -ChildPath $solutionFileName
+	$solutionPathName = Join-Path -Path $parameters.source -ChildPath $solutionFileName
 
 	# Write-Verbose "ソリューションからAnyCPUを破棄"
 	# $solutionFileName = Update-TemplateValue 'TEMPLATE_PluginShortName.sln'
@@ -335,7 +335,7 @@ try {
 
 	Write-Verbose "ソリューションのショートカットをルートに作成"
 	$wsShell = New-Object -ComObject WScript.Shell
-	$shortcut = $wsShell.CreateShortcut((Join-Path $parameters.directory ($parameters.pluginName + ".lnk")))
+	$shortcut = $wsShell.CreateShortcut((Join-Path -Path $parameters.directory -ChildPath ($parameters.pluginName + ".lnk")))
 	$shortcut.TargetPath = $solutionPathName
 	$shortcut.Save()
 

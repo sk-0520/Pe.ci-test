@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>0.99.213</Version>
+    <Version>0.99.214</Version>
 
     <TargetFramework>net7.0-windows</TargetFramework>
     <Platforms>x64;x86</Platforms>
@@ -19,4 +19,19 @@
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+    <DefineConstants>OS_WINDOWS</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+    <DefineConstants>OS_LINUX</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('FreeBSD'))">
+    <DefineConstants>OS_FREEBSD</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+    <DefineConstants>OS_MAC</DefineConstants>
+  </PropertyGroup>
+
+
 </Project>

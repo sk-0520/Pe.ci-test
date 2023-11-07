@@ -14,9 +14,9 @@ if($srcChildItems.Count -eq 0){
 }
 
 $destRootDirPath = if ( $CreateDirectory ) {
-	Join-Path $DestinationDirectoryPath ([System.IO.Path]::GetFileName($SourceDirectoryPath))
+	Join-Path -Path $DestinationDirectoryPath -ChildPath ([System.IO.Path]::GetFileName($SourceDirectoryPath))
 } else {
-	Join-Path $DestinationDirectoryPath ''
+	Join-Path -Path $DestinationDirectoryPath -ChildPath ''
 }
 
 $srcDirs = $srcChildItems | Where-Object { $_.PSIsContainer }
