@@ -1,7 +1,7 @@
 # Pe
 
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/sk-0520/Pe?color=orange&label=version)
-[![Build CI/CD](https://github.com/sk-0520/Pe/actions/workflows/build-ci-cd.yml/badge.svg)](https://github.com/sk-0520/Pe/actions/workflows/build-ci-cd.yml)
+[![Build CI/CD](https://github.com/sk-0520/Pe/actions/workflows/build-ci-cd.yml/badge.svg?branch=master)](https://github.com/sk-0520/Pe/actions/workflows/build-ci-cd.yml)
 [![Build CI](https://github.com/sk-0520/Pe/actions/workflows/build-ci-only.yml/badge.svg)](https://github.com/sk-0520/Pe/actions/workflows/build-ci-only.yml)
 ![license](https://img.shields.io/github/license/sk-0520/Pe?style=flat)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sk-0520/Pe)
