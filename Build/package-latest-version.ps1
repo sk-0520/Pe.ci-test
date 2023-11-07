@@ -50,7 +50,7 @@ if (!(Test-Path -Path $_workDirectoryPath)) {
 }
 
 foreach ($platform in $platforms) {
-	$url = $gitHubReleaseUrl.Trim("/") + "/" + $versions["path"] + "/" + $versions["file"] + "_${platform}.${extension}";
+	$url = $gitHubReleaseUrl.Trim("/") + "/" + $versions["path"] + "/" + "Pe_${platform}.${extension}";
 	$fileName = $versions["file"] + "_${platform}.${extension}"
 
 	Write-Verbose "[$platform] $url $fileName"
