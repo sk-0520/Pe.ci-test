@@ -3,10 +3,6 @@
         {
             "name": "ROOT",
             "path": "."
-        },
-        {
-            "name": "EDIT",
-            "path": "Define"
         }
     ],
     "settings": {
