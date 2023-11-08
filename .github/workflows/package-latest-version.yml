@@ -1,8 +1,6 @@
 name: Package latest version
 
 on:
-  push:
-  workflow_call:
   workflow_dispatch:
 
 jobs:
