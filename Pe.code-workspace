@@ -45,6 +45,20 @@
             "THTML"
         ],
         "powershell.scriptAnalysis.enable": true,
-        "powershell.scriptAnalysis.settingsPath": "./PSScriptAnalyzerSettings.psd1"
+        "powershell.scriptAnalysis.settingsPath": "./PSScriptAnalyzerSettings.psd1",
+        "powershell.codeFormatting.newLineAfterCloseBrace": false,
+        "powershell.codeFormatting.whitespaceAfterSeparator": true,
+        "powershell.codeFormatting.whitespaceAroundOperator": true,
+        "powershell.codeFormatting.whitespaceBeforeOpenBrace": true,
+        "powershell.codeFormatting.whitespaceBeforeOpenParen": true,
+        "powershell.codeFormatting.useCorrectCasing": true,
+        "powershell.codeFormatting.useConstantStrings": true,
+        "powershell.codeFormatting.trimWhitespaceAroundPipe": true,
+        "powershell.codeFormatting.openBraceOnSameLine": true,
+        "powershell.codeFormatting.newLineAfterOpenBrace": true,
+        "powershell.codeFormatting.ignoreOneLineBlock": false,
+        "powershell.codeFormatting.avoidSemicolonsAsLineTerminators": false,
+        "powershell.codeFormatting.autoCorrectAliases": false,
+        "powershell.codeFormatting.alignPropertyValuePairs": false
     }
 }

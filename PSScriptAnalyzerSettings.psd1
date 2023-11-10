@@ -1,10 +1,10 @@
 @{
     IncludeDefaultRules = $false
-    Rules               = @{
+    Rules = @{
         PSAvoidLongLines = @{
-            Enable            = $true
+            Enable = $true
             MaximumLineLength = 40
         }
     }
-    ExcludeRules        = @()
+    ExcludeRules = @()
 }

@@ -31,8 +31,7 @@ if ($Module -eq 'boot') {
 			throw "test error: $Module"
 		}
 	}
-}
-elseif ($Module -eq 'main' -or $Module -eq 'plugins') {
+} elseif ($Module -eq 'main' -or $Module -eq 'plugins') {
 	$loggerArg = ''
 	if (![string]::IsNullOrEmpty($Logger)) {
 		$loggerArg = "--logger:$Logger"
@@ -51,7 +50,6 @@ elseif ($Module -eq 'main' -or $Module -eq 'plugins') {
 			throw "test error: $Module - $testFileName"
 		}
 	}
-}
-else {
+} else {
 	throw 'うわわわわ'
 }

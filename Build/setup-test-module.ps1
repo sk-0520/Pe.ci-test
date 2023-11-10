@@ -19,8 +19,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 if ($Service -eq 'github') {
 	if ($Module -eq 'boot') {
 		# 何もしない
-	}
-	elseif ($Module -eq 'main' -or $Module -eq 'plugins') {
+	} elseif ($Module -eq 'main' -or $Module -eq 'plugins') {
 		$testProjectDirs = GetTestProjectDirectories $Module
 		foreach ($testProjectDir in $testProjectDirs) {
 			Push-Location $testProjectDir
@@ -29,16 +28,13 @@ if ($Service -eq 'github') {
 				if (-not $?) {
 					throw "error: $Module - $testProjectDir"
 				}
-			}
-			finally {
+			} finally {
 				Pop-Location
 			}
 		}
-	}
-	else {
+	} else {
 		throw "error module: $Module"
 	}
-}
-else {
+} else {
 	throw "error service: $Service"
 }
