@@ -45,7 +45,11 @@ function ReplaceResourceValue([xml] $commonXml, [string] $resourcePath) {
 	$revisionElement = $commonXml.SelectSingleNode('/Project/PropertyGroup[1]/InformationalVersion');
 
 	$version = [version]$versionElement.InnerText
-	$versionRevision = if ($version.Revision -eq -1) { 0 } else { $version.Revision }
+	$versionRevision = if ($version.Revision -eq -1) {
+		0
+ } else {
+		$version.Revision
+ }
 	$csvVersion = @($version.Major, $version.Minor, $version.Build, $versionRevision) -join ','
 
 	$resourceContent = Get-Content -Path $resourcePath -Encoding Unicode -Raw
@@ -67,7 +71,7 @@ $version = GetAppVersion
 $sourceMainDirectoryPath = GetSourceDirectory 'main'
 $sourceBootDirectoryPath = GetSourceDirectory 'boot'
 
-$projectCommonFilePath = Join-Path -Path $sourceMainDirectoryPath -ChildPath "Directory.Build.props"
+$projectCommonFilePath = Join-Path -Path $sourceMainDirectoryPath -ChildPath 'Directory.Build.props'
 $projectCommonXml = [XML](Get-Content $projectCommonFilePath  -Encoding UTF8)
 
 InsertElement $version $projectCommonXml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
@@ -82,9 +86,15 @@ $projectCommonXml.Save($projectCommonFilePath)
 
 # アイコンファイルの差し替え
 $appIconName = switch ($BuildType) {
-	'BETA' { 'App-beta.ico' }
-	'' { 'App-release.ico' }
-	Default { 'App-debug.ico' }
+	'BETA' {
+		'App-beta.ico'
+ }
+	'' {
+		'App-release.ico'
+ }
+	Default {
+		'App-debug.ico'
+ }
 }
 $appIconPath = Join-Path -Path 'Resource\Icon' -ChildPath $appIconName
 Copy-Item -Path $appIconPath -Destination 'Source\Pe\Pe.Main\Resources\Icon\App.ico' -Force
@@ -92,11 +102,9 @@ Copy-Item -Path $appIconPath -Destination 'Source\Pe\Pe.Main\Resources\Icon\App.
 if ($Module -eq 'boot') {
 	ReplaceResourceValue $projectCommonXml (Join-Path -Path $sourceBootDirectoryPath -ChildPath 'Pe.Boot' | Join-Path -ChildPath 'Resource.rc')
 
-}
-elseif ($Module -eq 'main') {
+} elseif ($Module -eq 'main') {
 
-}
-elseif ($Module -eq 'plugins') {
+} elseif ($Module -eq 'plugins') {
 	$pluginProjectFiles = GetProjectDirectories 'plugins' `
 	| Get-ChildItem -File -Recurse -Include '*.csproj'
 
@@ -107,7 +115,6 @@ elseif ($Module -eq 'plugins') {
 		| ForEach-Object { $_ -replace '"0.0.0"', "`"$version`"" } `
 		| Set-Content -LiteralPath $assemblyInfoFilePath
 	}
-}
-else {
+} else {
 	throw 'うわわわわ'
 }

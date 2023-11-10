@@ -21,10 +21,10 @@ Write-Output "ProductMode = $ProductMode"
 
 if ($ProductMode) {
 	$removeTargets = @(
-		Get-ChildItem -Path $AssemblyDirectory -File -Filter "*.ilk" -Recurse
-		Get-ChildItem -Path $AssemblyDirectory -File -Filter "*.iobj" -Recurse
-		Get-ChildItem -Path $AssemblyDirectory -File -Filter "*.ipdb" -Recurse
-		Get-ChildItem -Path $AssemblyDirectory -File -Filter "*.pdb" -Recurse
+		Get-ChildItem -Path $AssemblyDirectory -File -Filter '*.ilk' -Recurse
+		Get-ChildItem -Path $AssemblyDirectory -File -Filter '*.iobj' -Recurse
+		Get-ChildItem -Path $AssemblyDirectory -File -Filter '*.ipdb' -Recurse
+		Get-ChildItem -Path $AssemblyDirectory -File -Filter '*.pdb' -Recurse
 	) | Select-Object -ExpandProperty FullName
 
 	foreach ($removeTarget in $removeTargets) {

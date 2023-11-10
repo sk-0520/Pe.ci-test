@@ -22,7 +22,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 }
 
 $version = GetAppVersion
-$hashAlgorithm = "SHA256"
+$hashAlgorithm = 'SHA256'
 $releaseTimestamp = (Get-Date).ToUniversalTime()
 
 #/*[FUNCTIONS]-------------------------------------
@@ -37,24 +37,24 @@ function OutputJson([object] $json, [string] $outputPath) {
 function ReplaceValues([string] $source) {
 	$work = $source
 
-	$work = $work.Replace("@VERSION@", $version)
-	$work = $work.Replace("@REVISION@", $Revision)
+	$work = $work.Replace('@VERSION@', $version)
+	$work = $work.Replace('@REVISION@', $Revision)
 
 	return $work
 }
 
 function CreateUpdateItem([string] $archive, [string] $platform, [string] $archiveFilePath, [uri] $noteUri, [version] $minimumVersion) {
 	return @{
-		release            = $releaseTimestamp.ToString("s")
-		version            = $version
-		revision           = $Revision
-		platform           = $platform
-		minimum_version    = ConvertVersion $minimumVersion '.'
-		note_uri           = $noteUri
-		archive_uri        = (ReplaceValues $ArchiveBaseUrl).Replace("@ARCHIVENAME@", (Split-Path $archiveFilePath -Leaf))
-		archive_size       = (Get-Item -Path $archiveFilePath).Length
-		archive_kind       = $archive
-		archive_hash_kind  = $hashAlgorithm
+		release = $releaseTimestamp.ToString('s')
+		version = $version
+		revision = $Revision
+		platform = $platform
+		minimum_version = ConvertVersion $minimumVersion '.'
+		note_uri = $noteUri
+		archive_uri = (ReplaceValues $ArchiveBaseUrl).Replace('@ARCHIVENAME@', (Split-Path $archiveFilePath -Leaf))
+		archive_size = (Get-Item -Path $archiveFilePath).Length
+		archive_kind = $archive
+		archive_hash_kind = $hashAlgorithm
 		archive_hash_value = (Get-FileHash -Path $archiveFilePath -Algorithm $hashAlgorithm).Hash
 	}
 }
@@ -62,13 +62,13 @@ function CreateUpdateItem([string] $archive, [string] $platform, [string] $archi
 #*/[FUNCTIONS]-------------------------------------
 
 if ($Module -eq 'application') {
-	$updateJson = Get-Content -Path (Join-Path -Path $currentDirPath -ChildPath "update.json") | ConvertFrom-Json
+	$updateJson = Get-Content -Path (Join-Path -Path $currentDirPath -ChildPath 'update.json') | ConvertFrom-Json
 	foreach ($platform in $Platforms) {
-		$targetName = 'Pe_'  + $platform + '.' + $Archive
+		$targetName = 'Pe_' + $platform + '.' + $Archive
 		$targetPath = Join-Path -Path $ArtifactDirectory -ChildPath $targetName
 
 		$noteName = 'Pe.html'
-		$noteUri = (ReplaceValues $NoteBaseUrl).Replace("@NOTENAME@", $noteName)
+		$noteUri = (ReplaceValues $NoteBaseUrl).Replace('@NOTENAME@', $noteName)
 		$item = CreateUpdateItem $Archive $platform $targetPath $noteUri $MinimumVersion
 
 		$updateJson.items += $item
@@ -77,24 +77,23 @@ if ($Module -eq 'application') {
 	$outputUpdateFile = Join-Path -Path $OutputDirectory -ChildPath 'update.json'
 	OutputJson $updateJson $outputUpdateFile
 
-}
-elseif ($Module -eq 'plugins') {
+} elseif ($Module -eq 'plugins') {
 	$pluginProjectDirs = GetProjectDirectories 'plugins'
 
-	foreach($pluginProjectDirectory in $pluginProjectDirs) {
+	foreach ($pluginProjectDirectory in $pluginProjectDirs) {
 		$items = @()
 		foreach ($platform in $Platforms) {
 			$pluginFileName = $pluginProjectDirectory.Name + '_' + $platform + '.' + $Archive
 			$pluginFilePath = Join-Path -Path $ArtifactDirectory -ChildPath $pluginFileName
 
 			$noteName = $pluginProjectDirectory.Name + '.html'
-			$noteUri = (ReplaceValues $NoteBaseUrl).Replace("@NOTENAME@", $noteName)
+			$noteUri = (ReplaceValues $NoteBaseUrl).Replace('@NOTENAME@', $noteName)
 			$item = CreateUpdateItem $Archive $platform $pluginFilePath $noteUri $version
 
 			$items += $item
 		}
 
-		if(0 -lt $items.Count) {
+		if (0 -lt $items.Count) {
 			$pluginFiles = @{
 				items = $items
 			}
@@ -102,7 +101,6 @@ elseif ($Module -eq 'plugins') {
 			OutputJson $pluginFiles $outputUpdateFile
 		}
 	}
-}
-else {
+} else {
 	throw "error module: $Module"
 }

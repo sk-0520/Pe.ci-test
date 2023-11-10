@@ -22,8 +22,7 @@ $hyphen = (ConvertVersion (GetAppVersion) '-')
 if ($TargetRepository -eq 'github') {
 	Write-Output "dot=$dot" >> $env:GITHUB_OUTPUT
 	Write-Output "hyphen=$hyphen" >> $env:GITHUB_OUTPUT
-}
-else {
+} else {
 	throw "TargetRepository: ${TargetRepository}"
 }
 

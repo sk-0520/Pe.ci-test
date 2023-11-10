@@ -2,8 +2,11 @@
     IncludeDefaultRules = $false
     Rules = @{
         PSAvoidLongLines = @{
-            Enable = $true
+            Enable = $false
             MaximumLineLength = 40
+        }
+        UseBOMForUnicodeEncodedFile = @{
+            Enable = $true
         }
     }
     ExcludeRules = @()

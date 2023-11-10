@@ -23,10 +23,10 @@ $rootDirectory = Split-Path -Path $currentDirPath -Parent
 
 $inputItems = @{
 	buildTools = Join-Path -Path $InputDirectory -ChildPath 'buildtools'
-	sql        = Join-Path -Path $InputDirectory -ChildPath 'sql' | Join-Path -ChildPath 'sql.sqlite3'
-	help       = Join-Path -Path $InputDirectory -ChildPath 'help'
-	boot       = Join-Path -Path $InputDirectory -ChildPath 'boot'
-	main       = Join-Path -Path $InputDirectory -ChildPath 'main-bin'
+	sql = Join-Path -Path $InputDirectory -ChildPath 'sql' | Join-Path -ChildPath 'sql.sqlite3'
+	help = Join-Path -Path $InputDirectory -ChildPath 'help'
+	boot = Join-Path -Path $InputDirectory -ChildPath 'boot'
+	main = Join-Path -Path $InputDirectory -ChildPath 'main-bin'
 }
 
 # 出力ディレクトリになんかあっても面倒なので更地にしてからあれこれする
@@ -59,10 +59,10 @@ Move-Item -Path $srcLibDir -Destination $dstLibDir
 
 # etc/appsettings.*.json の整理
 $outputEtcDir = Join-Path -Path $OutputDirectory -ChildPath 'etc'
-if ($BuildType -ne "BETA") {
-	Remove-Item -Path (Join-Path -Path $outputEtcDir -ChildPath "appsettings.beta.json")
+if ($BuildType -ne 'BETA') {
+	Remove-Item -Path (Join-Path -Path $outputEtcDir -ChildPath 'appsettings.beta.json')
 }
-Remove-Item -Path (Join-Path -Path $outputEtcDir -ChildPath "@appsettings.debug.json")
+Remove-Item -Path (Join-Path -Path $outputEtcDir -ChildPath '@appsettings.debug.json')
 
 # etc/sql の各 SQL をまとめたものに置き換え
 $outputSqlDir = Join-Path -Path $outputEtcDir -ChildPath 'sql'
@@ -77,9 +77,15 @@ Move-Item $inputItems.help -Destination $helpRootDir -Force
 
 # プラットフォームに合わないディレクトリを破棄(機械的にやってもいいけどちょっと自信ないのです)
 $unsupportPlatform = switch ($Platform) {
-	'x64' { 'x86' }
-	'x86' { 'x64' }
-	Default { throw "error: $Platform" }
+	'x64' {
+		'x86'
+ }
+	'x86' {
+		'x64'
+ }
+	Default {
+		throw "error: $Platform"
+ }
 }
 $unsupportTargets = @(
 	Join-Path -Path $outputMainDir -ChildPath $unsupportPlatform

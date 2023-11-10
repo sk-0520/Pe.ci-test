@@ -12,17 +12,17 @@ foreach ($scriptFileName in $scriptFileNames) {
 	. $scriptFilePath
 }
 
-$verionEndPoint = [uri]"https://peserver.gq/api/application/version/update"
+$verionEndPoint = [uri]'https://peserver.gq/api/application/version/update'
 $extension = '7z'
 $response = Invoke-WebRequest -Uri $verionEndPoint -Method Get
 $latestResult = ConvertFrom-Json ([System.Text.Encoding]::UTF8.GetString($response.Content))
 $latestItem = $latestResult.items[0]
 $latestVersion = $latestItem.version
 
-$workDirectoryPath = ".\work"
-$outputDirectoryPath = ".\package"
-$gitHubReleaseUrl = "https://github.com/sk-0520/Pe/releases/download"
-$7zipPath = "%PROGRAMFILES%\7-Zip\7z.exe"
+$workDirectoryPath = '.\work'
+$outputDirectoryPath = '.\package'
+$gitHubReleaseUrl = 'https://github.com/sk-0520/Pe/releases/download'
+$7zipPath = '%PROGRAMFILES%\7-Zip\7z.exe'
 
 $_workDirectoryPath = [System.IO.Path]::GetFullPath([System.Environment]::ExpandEnvironmentVariables($workDirectoryPath))
 $_outputDirectoryPath = [System.IO.Path]::GetFullPath([System.Environment]::ExpandEnvironmentVariables($outputDirectoryPath))
@@ -40,14 +40,14 @@ if (!(Test-Path -Path $_workDirectoryPath)) {
 
 
 $versions = @{
-	"path" = ConvertVersion $latestVersion "."
-	"file" = "Pe_" + (ConvertVersion $latestVersion "-")
+	'path' = ConvertVersion $latestVersion '.'
+	'file' = 'Pe_' + (ConvertVersion $latestVersion '-')
 }
 
 $archiveFilePath = ''
 
-$url = $gitHubReleaseUrl.Trim("/") + "/" + $versions["path"] + "/" + "Pe_${platform}.${extension}";
-$fileName = $versions["file"] + ".${extension}"
+$url = $gitHubReleaseUrl.Trim('/') + '/' + $versions['path'] + '/' + "Pe_${platform}.${extension}";
+$fileName = $versions['file'] + ".${extension}"
 
 Write-Output "[$Platform] $url $fileName"
 
@@ -58,7 +58,7 @@ $archiveFilePath = $filePath
 if (!(Test-Path -Path $_outputDirectoryPath)) {
 	New-Item -Path $_outputDirectoryPath -ItemType Directory
 }
-Remove-Item -Path (Join-Path -Path $_outputDirectoryPath -ChildPath "*") -Force -Recurse
+Remove-Item -Path (Join-Path -Path $_outputDirectoryPath -ChildPath '*') -Force -Recurse
 
 
 Write-Output "[TARGET] $archiveFilePath"
@@ -72,7 +72,6 @@ try {
 	Push-Location $parentDirPath
 	& "${_7zipPath}" x -y "-o$baseFileName" "$archiveFilePath"
 	& "${_7zipPath}" a $outputPath -sfx -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on $baseFileName\* -r
-}
-finally {
+} finally {
 	Pop-Location
 }

@@ -31,14 +31,15 @@ try {
 		'tar' {
 			7z a -ttar "$outputFileName" * -r -bsp1
 		}
-		Default { throw "error: $Archive" }
+		Default {
+			throw "error: $Archive"
+  }
 	}
 	if (-not $?) {
 		throw "7z: $outputFileName"
 	}
 
 	Move-Item -Path $outputFileName -Destination $rootDirectory
-}
-finally {
+} finally {
 	Pop-Location
 }

@@ -93,6 +93,26 @@ jobs:
           name: History
           path: history/*.html
 
+  lint-powershell:
+    name: Lint PowerShell
+
+    strategy:
+      matrix:
+        OS:
+          - windows-latest
+          - ubuntu-latest
+          - macos-latest
+
+    runs-on: ${{ matrix.OS }}
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Lint> PowerShell
+        shell: pwsh
+        run: Invoke-ScriptAnalyzer ./Build/*.ps1 -Settings PSScriptAnalyzerSettings.psd1
+
 
   build-tools:
     name: Build BuildTools

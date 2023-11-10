@@ -19,9 +19,9 @@ $rootDirPath = Split-Path -Parent $currentDirPath
 # STARTUP
 
 $contentMap = @{
-	'note'      = 'メモ'
-	'features'  = '機能'
-	'fixes'     = '修正'
+	'note' = 'メモ'
+	'features' = '機能'
+	'fixes' = '修正'
 	'developer' = '開発'
 }
 
@@ -95,15 +95,13 @@ class Element {
 			$html = @()
 			if ( 0 -eq $this.attributes.Count) {
 				$html += "<$($this.elementName)>"
-			}
-			else {
+			} else {
 				$attrs = @()
 				foreach ($key in $this.attributes.Keys) {
 					$val = $this.attributes[$key]
 					if ($val) {
 						$attrs += "${key}=`"$($this.Escape(${val}))`""
-					}
-					else {
+					} else {
 						$attrs += "${key}"
 					}
 				}
@@ -117,8 +115,7 @@ class Element {
 
 			$html += "</$($this.elementName)>"
 			return $html -join ''
-		}
-		else {
+		} else {
 			return $this.Escape($this.text)
 		}
 	}
@@ -138,7 +135,7 @@ function MakeApplication {
 	foreach ($content in $currentVersion.contents) {
 		if (!($content.PSObject.Properties.Match('logs').Count)) {
 			if (!$IgnoreEmpty) {
-				throw "!!empty logs!!"
+				throw '!!empty logs!!'
 			}
 			continue;
 		}
@@ -150,7 +147,7 @@ function MakeApplication {
 		$logs = $section.CreateChild('ul')
 		foreach ($log in $content.logs) {
 			if (!$IgnoreEmpty -And [string]::IsNullOrWhitespace($log.subject)) {
-				throw "!!empty log!!"
+				throw '!!empty log!!'
 			}
 
 			$logItem = $logs.CreateChild('li')
