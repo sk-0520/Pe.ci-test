@@ -88,33 +88,33 @@ $projectCommonXml.Save($projectCommonFilePath)
 $appIconName = switch ($BuildType) {
 	'BETA' {
 		'App-beta.ico'
- }
+	}
 	'' {
 		'App-release.ico'
- }
+	}
 	Default {
 		'App-debug.ico'
- }
+	}
 }
-$appIconPath = Join-Path -Path 'Resource\Icon' -ChildPath $appIconName
-Copy-Item -Path $appIconPath -Destination 'Source\Pe\Pe.Main\Resources\Icon\App.ico' -Force
+$appIconPath = Join-Path -Path 'Resource' -ChildPath 'Icon' | Join-Path -ChildPath $appIconName
+$dstIconPath = Join-Path -Path 'Source' -ChildPath 'Pe' | Join-Path -ChildPath 'Pe.Main' | Join-Path -ChildPath 'Resources' | Join-Path -ChildPath 'Icon' | Join-Path -ChildPath 'App.ico'
+Copy-Item -Path $appIconPath -Destination $dstIconPath -Force
 
 if ($Module -eq 'boot') {
 	ReplaceResourceValue $projectCommonXml (Join-Path -Path $sourceBootDirectoryPath -ChildPath 'Pe.Boot' | Join-Path -ChildPath 'Resource.rc')
-
 } elseif ($Module -eq 'main') {
-
+	#nop
 } elseif ($Module -eq 'plugins') {
-	$pluginProjectFiles = GetProjectDirectories 'plugins' `
-	| Get-ChildItem -File -Recurse -Include '*.csproj'
+	$pluginProjectFiles = GetProjectDirectories 'plugins' |
+		Get-ChildItem -File -Recurse -Include '*.csproj'
 
 	foreach ($pluginProjectFile in $pluginProjectFiles) {
 		# サポートバージョンを固定
 		$assemblyInfoFilePath = Join-Path -Path $pluginProjectFile.Directory -ChildPath 'AssemblyInfo.cs'
-		(Get-Content -LiteralPath $assemblyInfoFilePath) `
-		| ForEach-Object { $_ -replace '"0.0.0"', "`"$version`"" } `
-		| Set-Content -LiteralPath $assemblyInfoFilePath
+		(Get-Content -LiteralPath $assemblyInfoFilePath) |
+			ForEach-Object { $_ -replace '"0.0.0"', "`"$version`"" } |
+			Set-Content -LiteralPath $assemblyInfoFilePath
 	}
 } else {
-	throw 'うわわわわ'
+	throw "module error: $Module"
 }

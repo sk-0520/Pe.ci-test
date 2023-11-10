@@ -51,5 +51,5 @@ if ($Module -eq 'boot') {
 		}
 	}
 } else {
-	throw 'うわわわわ'
+	throw "module error: $Module"
 }

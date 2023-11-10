@@ -59,6 +59,8 @@
         "powershell.codeFormatting.ignoreOneLineBlock": false,
         "powershell.codeFormatting.avoidSemicolonsAsLineTerminators": false,
         "powershell.codeFormatting.autoCorrectAliases": false,
-        "powershell.codeFormatting.alignPropertyValuePairs": false
+        "powershell.codeFormatting.alignPropertyValuePairs": false,
+        "powershell.codeFormatting.addWhitespaceAroundPipe": true,
+        "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline"
     }
 }

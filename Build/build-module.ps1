@@ -59,8 +59,8 @@ if ($Module -eq 'boot') {
 	}
 } elseif ($Module -eq 'plugins') {
 	# プラグイン参考実装
-	$pluginProjectFiles = GetApplicationProjectDirectories $Module `
-	| Get-ChildItem -File -Recurse -Include '*.csproj'
+	$pluginProjectFiles = GetApplicationProjectDirectories $Module |
+		Get-ChildItem -File -Recurse -Include '*.csproj'
 
 	foreach ($pluginProjectFile in $pluginProjectFiles) {
 		$name = $pluginProjectFile.BaseName
@@ -71,7 +71,7 @@ if ($Module -eq 'boot') {
 		}
 	}
 } else {
-	throw 'うわわわわ'
+	throw "module error: $Module"
 }
 #$projectFiles = (Get-ChildItem -Path "Source\Pe\" -Recurse -Include *.csproj)
 

@@ -1,13 +1,19 @@
 @{
-    IncludeDefaultRules = $false
-    Rules = @{
-        PSAvoidLongLines = @{
-            Enable = $false
-            MaximumLineLength = 40
-        }
-        UseBOMForUnicodeEncodedFile = @{
-            Enable = $true
-        }
-    }
-    ExcludeRules = @()
+	IncludeDefaultRules = $false
+	Rules = @{
+		PSAvoidLongLines = @{
+			Enable = $false
+		}
+
+		PSPlaceOpenBrace = @{
+			Enable = $true
+			IgnoreOneLineBlock = $true
+			NoEmptyLineBefore = $true
+			NewLineAfter = $true
+		}
+
+	}
+	ExcludeRules = @(
+		'PSUseBOMForUnicodeEncodedFile'
+	)
 }

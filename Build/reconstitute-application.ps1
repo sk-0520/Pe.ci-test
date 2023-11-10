@@ -66,8 +66,8 @@ Remove-Item -Path (Join-Path -Path $outputEtcDir -ChildPath '@appsettings.debug.
 
 # etc/sql の各 SQL をまとめたものに置き換え
 $outputSqlDir = Join-Path -Path $outputEtcDir -ChildPath 'sql'
-Get-ChildItem -Path $outputSqlDir -Directory `
-| Remove-Item -Force -Recurse
+Get-ChildItem -Path $outputSqlDir -Directory |
+	Remove-Item -Force -Recurse
 Move-Item -Path $inputItems.sql -Destination $outputSqlDir
 
 # doc/help を生成済みヘルプに置き換え(ダミーのindex.htmlがあるので上書きOK)

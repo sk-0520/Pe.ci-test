@@ -111,8 +111,13 @@ jobs:
 
       - name: <Lint> PowerShell
         shell: pwsh
-        run: Invoke-ScriptAnalyzer ./Build/*.ps1 -Settings PSScriptAnalyzerSettings.psd1
-
+        run: Invoke-ScriptAnalyzer -Path ./ -Recurse -Settings PSScriptAnalyzerSettings.psd1
+        # uses: microsoft/psscriptanalyzer-action@v1.0
+        # with:
+        #  path: ./
+        #  recurse: true
+        #  settings: ./PSScriptAnalyzerSettings.psd1
+        #  output: results.sarif
 
   build-tools:
     name: Build BuildTools
