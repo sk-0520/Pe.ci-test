@@ -1,8 +1,8 @@
 Param(
 	[Parameter(mandatory = $true)][ValidateSet('boot', 'main', 'plugins')][string] $Module,
 	[switch] $ProductMode,
-	[string] $BuildType,
-	[string] $Revision
+	[Parameter(mandatory = $true)][string] $BuildType,
+	[Parameter(mandatory = $true)][string] $Revision
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -18,41 +18,63 @@ foreach ($scriptFileName in $scriptFileNames) {
 
 #/*[FUNCTIONS]-------------------------------------
 
-function InsertElement([string] $value, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {
-	$element = $xml.SelectSingleNode($targetXpath);
+function Insert-Element {
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseApprovedVerbs', '', scope='function')]
+	Param(
+		[Parameter(mandatory = $true)][string] $Value,
+		[Parameter(mandatory = $true)][xml] $Xml,
+		[Parameter(mandatory = $true)][string] $TargetXpath,
+		[Parameter(mandatory = $true)][string] $ParentXpath,
+		[Parameter(mandatory = $true)][string] $ElementName
+	)
+
+	$element = $Xml.SelectSingleNode($TargetXpath);
 	if ($null -eq $element) {
-		$propGroup = $xml.SelectSingleNode($parentXpath)
-		$element = $xml.CreateElement($elementName);
+		$propGroup = $Xml.SelectSingleNode($ParentXpath)
+		$element = $Xml.CreateElement($ElementName);
 		$propGroup.AppendChild($element) | Out-Null;
-		$element.InnerText = $value
+		$element.InnerText = $Value
 	}
 }
 
-function ReplaceElement([hashtable] $map, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {
-	$element = $xml.SelectSingleNode($targetXpath);
+function Replace-Element {
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseApprovedVerbs', '', scope='function')]
+	Param(
+		[Parameter(mandatory = $true)][hashtable] $Map,
+		[Parameter(mandatory = $true)][xml] $Xml,
+		[Parameter(mandatory = $true)][string] $TargetXpath
+	)
+
+	$element = $Xml.SelectSingleNode($TargetXpath);
 	if ($null -ne $element) {
 		$val = $element.InnerText
-		foreach ($key in $map.keys) {
-			$val = $val.Replace($key, $map[$key])
+		foreach ($key in $Map.keys) {
+			$val = $val.Replace($key, $Map[$key])
 		}
 		$element.InnerText = $val
 	}
 }
 
-function ReplaceResourceValue([xml] $commonXml, [string] $resourcePath) {
-	$versionElement = $commonXml.SelectSingleNode('/Project/PropertyGroup[1]/Version');
-	$copyrightElement = $commonXml.SelectSingleNode('/Project/PropertyGroup[1]/Copyright');
-	$revisionElement = $commonXml.SelectSingleNode('/Project/PropertyGroup[1]/InformationalVersion');
+function Update-ResourceValue {
+	[CmdletBinding(SupportsShouldProcess)]
+	Param(
+		[Parameter(mandatory = $true)][xml] $CommonXml,
+		[Parameter(mandatory = $true)][string] $ResourcePath
+	)
+
+	$versionElement = $CommonXml.SelectSingleNode('/Project/PropertyGroup[1]/Version');
+	$copyrightElement = $CommonXml.SelectSingleNode('/Project/PropertyGroup[1]/Copyright');
+	$revisionElement = $CommonXml.SelectSingleNode('/Project/PropertyGroup[1]/InformationalVersion');
 
 	$version = [version]$versionElement.InnerText
 	$versionRevision = if ($version.Revision -eq -1) {
 		0
- } else {
+	} else {
 		$version.Revision
- }
+	}
 	$csvVersion = @($version.Major, $version.Minor, $version.Build, $versionRevision) -join ','
 
-	$resourceContent = Get-Content -Path $resourcePath -Encoding Unicode -Raw
+	$resourceContent = Get-Content -Path $ResourcePath -Encoding Unicode -Raw
 
 	$replacedResourceContent = $resourceContent `
 		-replace '(\s*FILEVERSION)\s+[0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+.*', "`$1 ${csvVersion}" `
@@ -60,8 +82,12 @@ function ReplaceResourceValue([xml] $commonXml, [string] $resourcePath) {
 		-replace '(\s*VALUE\s+"FileVersion"\s*),.*', "`$1,`"$(${versionElement}.InnerText)`"" `
 		-replace '(\s*VALUE\s+"LegalCopyright"\s*),.*', "`$1,`"$(${copyrightElement}.InnerText)`"" `
 		-replace '(\s*VALUE\s+"ProductVersion"\s*),.*', "`$1,`"$(${revisionElement}.InnerText)`""
+	if ($PSCmdlet.ShouldProcess('ResourcePath', "$ResourcePath のテンプレート文字列を置き換え")) {
+		Set-Content -Path $ResourcePath -Value $replacedResourceContent -Encoding Unicode
+	} else {
+		Write-Verbose "`[DRY`] ResourcePath: $ResourcePath -> $replacedResourceContent"
+	}
 
-	Set-Content -Path $resourcePath -Value $replacedResourceContent -Encoding Unicode
 }
 
 #*/[FUNCTIONS]-------------------------------------
@@ -74,14 +100,14 @@ $sourceBootDirectoryPath = GetSourceDirectory 'boot'
 $projectCommonFilePath = Join-Path -Path $sourceMainDirectoryPath -ChildPath 'Directory.Build.props'
 $projectCommonXml = [XML](Get-Content $projectCommonFilePath  -Encoding UTF8)
 
-InsertElement $version $projectCommonXml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
-InsertElement $Revision $projectCommonXml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
+Insert-Element -Value $version  -Xml $projectCommonXml -TargetXpath '/Project/PropertyGroup[1]/Version[1]'              -ParentXpath '/Project/PropertyGroup[1]' -ElementName 'Version'
+Insert-Element -Value $Revision -Xml $projectCommonXml -TargetXpath '/Project/PropertyGroup[1]/InformationalVersion[1]' -ParentXpath '/Project/PropertyGroup[1]' -ElementName 'InformationalVersion'
 $repMap = @{
 	'@YYYY@' = (Get-Date).Year
 	'@NAME@' = 'sk'
 	'@SITE@' = 'content-type-text.net'
 }
-ReplaceElement $repMap $projectCommonXml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
+Replace-Element -Map $repMap -Xml $projectCommonXml -TargetXpath '/Project/PropertyGroup[1]/Copyright[1]'
 $projectCommonXml.Save($projectCommonFilePath)
 
 # アイコンファイルの差し替え
@@ -101,7 +127,7 @@ $dstIconPath = Join-Path -Path 'Source' -ChildPath 'Pe' | Join-Path -ChildPath '
 Copy-Item -Path $appIconPath -Destination $dstIconPath -Force
 
 if ($Module -eq 'boot') {
-	ReplaceResourceValue $projectCommonXml (Join-Path -Path $sourceBootDirectoryPath -ChildPath 'Pe.Boot' | Join-Path -ChildPath 'Resource.rc')
+	Update-ResourceValue -CommonXml $projectCommonXml -ResourcePath (Join-Path -Path $sourceBootDirectoryPath -ChildPath 'Pe.Boot' | Join-Path -ChildPath 'Resource.rc')
 } elseif ($Module -eq 'main') {
 	#nop
 } elseif ($Module -eq 'plugins') {

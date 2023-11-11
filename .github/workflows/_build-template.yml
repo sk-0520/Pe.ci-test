@@ -57,6 +57,34 @@ jobs:
           name: Help
           path: Output/help
 
+
+  lint-powershell:
+    name: Lint PowerShell
+
+    strategy:
+      matrix:
+        OS:
+          - windows-latest
+          - ubuntu-latest
+          - macos-latest
+
+    runs-on: ${{ matrix.OS }}
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Lint> PowerShell
+        shell: pwsh
+        run: Invoke-ScriptAnalyzer -Path ./ -Recurse -Settings PSScriptAnalyzerSettings.psd1 -EnableExit:$false
+        # uses: microsoft/psscriptanalyzer-action@v1.0
+        # with:
+        #  path: ./
+        #  recurse: true
+        #  settings: ./PSScriptAnalyzerSettings.psd1
+        #  output: results.sarif
+
+
   history:
     name: Release Note
     runs-on: ubuntu-latest
@@ -93,31 +121,6 @@ jobs:
           name: History
           path: history/*.html
 
-  lint-powershell:
-    name: Lint PowerShell
-
-    strategy:
-      matrix:
-        OS:
-          - windows-latest
-          - ubuntu-latest
-          - macos-latest
-
-    runs-on: ${{ matrix.OS }}
-
-    steps:
-      - name: <Checkout> Repository
-        uses: actions/checkout@v3
-
-      - name: <Lint> PowerShell
-        shell: pwsh
-        run: Invoke-ScriptAnalyzer -Path ./ -Recurse -Settings PSScriptAnalyzerSettings.psd1
-        # uses: microsoft/psscriptanalyzer-action@v1.0
-        # with:
-        #  path: ./
-        #  recurse: true
-        #  settings: ./PSScriptAnalyzerSettings.psd1
-        #  output: results.sarif
 
   build-tools:
     name: Build BuildTools
@@ -152,9 +155,9 @@ jobs:
 
   build-tools-sql:
     name: "BuildTools: SQL"
-    runs-on: windows-2022
     needs:
       - build-tools
+    runs-on: windows-2022
 
     steps:
       - name: <Checkout> Repository
@@ -179,9 +182,9 @@ jobs:
 
   build-boot:
     name: Build Boot
-    runs-on: windows-2022
     env:
       MODULE: boot
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -218,9 +221,9 @@ jobs:
 
   test-boot:
     name: Test Boot
-    runs-on: windows-2022
     env:
       MODULE: boot
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -268,9 +271,9 @@ jobs:
 
   build-main:
     name: Build Main
-    runs-on: windows-2022
     env:
       MODULE: main
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -319,9 +322,9 @@ jobs:
 
   test-main:
     name: Test Main
-    runs-on: windows-2022
     env:
       MODULE: main
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -470,9 +473,9 @@ jobs:
 
   build-plugins:
     name: Build Plugins
-    runs-on: windows-2022
     env:
       MODULE: plugins
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -511,9 +514,9 @@ jobs:
 
   test-plugins:
     name: Test Plugins
-    runs-on: windows-2022
     env:
       MODULE: plugins
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -546,9 +549,9 @@ jobs:
 
   reconstitution-plugins:
     name: Reconstitution Plugins
-    runs-on: windows-2022
     needs:
       - build-plugins
+    runs-on: windows-2022
 
     strategy:
       matrix:

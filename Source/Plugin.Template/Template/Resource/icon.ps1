@@ -9,12 +9,20 @@ $rootDirPath = Split-Path -Parent $currentDirPath
 $iconDirPath = Join-Path -Path $currentDirPath -ChildPath 'Icon'
 $workDirPath = Join-Path -Path $iconDirPath -ChildPath '@work'
 
-$exeIncspace = if ($env:INKSCAPE) { $env:INKSCAPE } else { [Environment]::ExpandEnvironmentVariables('C:\Program Files\Inkscape\bin\inkscape.exe') }
-$exeImageMagic = if ($env:IMAGEMAGIC) { $env:IMAGEMAGIC } else { [Environment]::ExpandEnvironmentVariables('C:\Applications\ImageMagick\convert.exe') }
+$exeIncspace = if ($env:INKSCAPE) {
+ $env:INKSCAPE
+} else {
+ [Environment]::ExpandEnvironmentVariables('C:\Program Files\Inkscape\bin\inkscape.exe')
+}
+$exeImageMagic = if ($env:IMAGEMAGIC) {
+ $env:IMAGEMAGIC
+} else {
+ [Environment]::ExpandEnvironmentVariables('C:\Applications\ImageMagick\convert.exe')
+}
 
 $appIcons = @(
 	@{
-		name  = 'Plugin'
+		name = 'Plugin'
 	}
 )
 $iconSize = @(
@@ -57,36 +65,36 @@ function PackAppIcon {
 
 function ConvertSvgToPng([string] $srcSvgPath) {
 	$pngBasePath = Join-Path (Split-Path -Parent $srcSvgPath) ([System.IO.Path]::GetFileNameWithoutExtension($srcSvgPath))
-	Write-Host "[SRC] $srcSvgPath";
+	Write-Information "[SRC] $srcSvgPath";
 	foreach ($size in $iconSize) {
 		$pngPath = "${pngBasePath}_${size}.png"
-		Write-Host "   -> $pngPath"
+		Write-Information "   -> $pngPath"
 
 		$incspaceArgumentList = @(
-			"--export-dpi=96",
+			'--export-dpi=96',
 			"--export-width=$size",
 			"--export-height=$size",
-			"--export-overwrite",
+			'--export-overwrite',
 			#"--without-gui", これ入れると動かん
-			"--export-type=png",
+			'--export-type=png',
 			"--export-filename=`"$pngPath`"",
 			"`"$srcSvgPath`""
 		)
 
 		$incspaceProcess = Start-Process -FilePath $exeIncspace -ArgumentList $incspaceArgumentList -WindowStyle Hidden -Wait -PassThru
-		if($incspaceProcess.ExitCode -ne 0) {
-			throw $exeIncspace + ":" + $incspaceProcess.ExitCode
+		if ($incspaceProcess.ExitCode -ne 0) {
+			throw $exeIncspace + ':' + $incspaceProcess.ExitCode
 		}
 	}
 }
 
 function PackIcon([string] $directoryPath, [string] $pngPattern, [string] $outputPath) {
-	Write-Host "$directoryPath $pngPattern"
+	Write-Information "$directoryPath $pngPattern"
 
 	$inputFiles = (
-		Get-ChildItem -Path $directoryPath -Filter $pngPattern -File `
-		| Select-Object -ExpandProperty FullName `
-		| Sort-Object { [regex]::Replace($_, '\d+', { $args[0].Value.PadLeft(20) }) }
+		Get-ChildItem -Path $directoryPath -Filter $pngPattern -File |
+			Select-Object -ExpandProperty FullName |
+			Sort-Object { [regex]::Replace($_, '\d+', { $args[0].Value.PadLeft(20) }) }
 	)
 
 	$imageMagicArgumentList = @()
@@ -94,8 +102,8 @@ function PackIcon([string] $directoryPath, [string] $pngPattern, [string] $outpu
 	$imageMagicArgumentList += $outputPath
 
 	$imageMagicProcess = Start-Process -File $exeImageMagic -ArgumentList $imageMagicArgumentList -WindowStyle Hidden -Wait -PassThru
-	if($imageMagicProcess.ExitCode -ne 0) {
-		throw $exeImageMagic + ":" + $imageMagicProcess.ExitCode
+	if ($imageMagicProcess.ExitCode -ne 0) {
+		throw $exeImageMagic + ':' + $imageMagicProcess.ExitCode
 	}
 }
 
@@ -104,22 +112,21 @@ function MoveAppIcon {
 	foreach ($appIcon in $appIcons) {
 		$srcPath = Join-Path -Path $currentDirPath -ChildPath "$($appIcon.name).ico"
 		$dstPath = Join-Path -Path $mainDir -ChildPath "$($appIcon.name).ico"
-		Write-Host "[COPY] $srcPath -> $dstPath"
+		Write-Information "[COPY] $srcPath -> $dstPath"
 		Copy-Item -Path $srcPath -Destination $dstPath
 	}
 
 }
 
 while ($true) {
-	Write-Host "1: Pe: SVG -> PNG"
-	Write-Host "2: Pe: PNG -> ICO"
-	Write-Host "x: 終了"
+	Write-Information '1: Pe: SVG -> PNG'
+	Write-Information '2: Pe: PNG -> ICO'
+	Write-Information 'x: 終了'
 	if ($FirstInput) {
 		$inputValue = $FirstInput
 		$FirstInput = ''
-	}
- else {
-		$inputValue = Read-Host "処理"
+	} else {
+		$inputValue = Read-Host '処理'
 	}
 	try {
 		switch ($inputValue) {
@@ -133,14 +140,13 @@ while ($true) {
 				exit 0;
 			}
 			default {
-				Write-Host "[$inputValue] は未定義"
+				Write-Error "[$inputValue] は未定義"
 			}
 		}
+	} catch {
+		Write-Information $Error[0] -ForegroundColor Red -BackgroundColor Black
 	}
- catch {
-		Write-Host $Error[0] -ForegroundColor Red -BackgroundColor Black
-	}
-	Write-Host ''
+	Write-Information ''
 	if ($BatchMode) {
 		exit 0
 	}

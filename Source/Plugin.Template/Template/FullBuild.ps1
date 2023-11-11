@@ -5,8 +5,8 @@ Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 $pluginName = 'TEMPLATE_PluginName'
-$pluginShortName = 'TEMPLATE_PluginShortName'
-$pluginId = 'TEMPLATE_PluginId'
+# $pluginShortName = 'TEMPLATE_PluginShortName'
+# $pluginId = 'TEMPLATE_PluginId'
 $repositoryOwner = '<RepositoryOwner>'
 
 $minimumVersion = [version]"0.0.0"
@@ -41,15 +41,15 @@ $scripts = @{
 	createInfo = Join-Path -Path $scriptDirPath -ChildPath 'create-info.ps1'
 }
 
-Write-Host 'プロジェクトビルド'
+Write-Information 'プロジェクトビルド'
 & $scripts.buildProject -ProjectName $pluginName -Platforms $platforms
 
-Write-Host 'アーカイブ'
+Write-Information 'アーカイブ'
 foreach($platform in $platforms) {
 	$outputBaseName = "${pluginName}_${vesion}_${platform}"
 	& $scripts.archivePlugin -InputDirectory (Get-OutputDirectoryPath $platform) -DestinationDirectory $outputRootDirPath -OutputBaseName $outputBaseName -Archive $archive -Filter '*.pdb'
 }
 
-Write-Host 'リリース情報生成'
+Write-Information 'リリース情報生成'
 $archiveBaseName = "${pluginName}_${vesion}"
 & $scripts.createInfo -ProjectName $pluginName -Version $cliVesion -ReleaseNoteUrl $releaseNoteUrl -ArchiveBaseUrl $archiveBaseUrl -ArchiveBaseName $archiveBaseName -Archive $archive -InputDirectory $outputRootDirPath -Destination (Join-Path -Path $outputRootDirPath -ChildPath "update-$pluginName.json") -MinimumVersion $minimumVersion -Platforms $platforms
