@@ -12,6 +12,13 @@
 			NewLineAfter = $true
 		}
 
+		PSUseConsistentIndentation = @{
+			Enable = $true
+			Kind = 'tab'
+			PipelineIndentation = 'IncreaseIndentationForFirstPipeline'
+			IndentationSize = 4
+		}
+
 	}
 	ExcludeRules = @(
 		'PSUseBOMForUnicodeEncodedFile'
