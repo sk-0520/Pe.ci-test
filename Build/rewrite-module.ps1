@@ -131,7 +131,7 @@ if ($Module -eq 'boot') {
 } elseif ($Module -eq 'main') {
 	#nop
 } elseif ($Module -eq 'plugins') {
-	$pluginProjectFiles = GetProjectDirectories 'plugins' |
+	$pluginProjectFiles = Get-ProjectDirectories -Kind 'plugins' |
 		Get-ChildItem -File -Recurse -Include '*.csproj'
 
 	foreach ($pluginProjectFile in $pluginProjectFiles) {

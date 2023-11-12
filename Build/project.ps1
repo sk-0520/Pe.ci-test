@@ -24,15 +24,19 @@ function Get-SourceDirectory {
 			Join-Path -Path $rootDirPath -ChildPath 'Source/Pe'
 		}
 		Default {
-			throw "kind: $Kind"
+			throw "unknown Kind: $Kind"
 		}
 	}
 
 	return [System.IO.DirectoryInfo]$result
 }
 
-function GetProjectDirectories([ValidateSet('boot', 'main', 'plugins')][string] $kind) {
-	switch ($kind) {
+function Get-ProjectDirectories {
+	Param(
+		[ValidateSet('boot', 'main', 'plugins')][string] $Kind
+	)
+
+	$result = switch ($Kind) {
 		'boot' {
 			return Get-ChildItem -Path (Join-Path -Path (Get-SourceDirectory -Kind 'boot') -ChildPath '*') -Directory
 		}
@@ -43,17 +47,19 @@ function GetProjectDirectories([ValidateSet('boot', 'main', 'plugins')][string] 
 			return Get-ChildItem -Path (Join-Path -Path (Get-SourceDirectory -Kind 'main') -ChildPath '*') -Directory | Where-Object { $_.Name -like 'Pe.Plugins.Reference.*' }
 		}
 		Default {
-			throw "unknown kind: $kind"
+			throw "unknown Kind: $Kind"
 		}
 	}
+
+	return $result | Select-Object { [System.IO.DirectoryInfo] $_ }
 }
 
 function GetApplicationProjectDirectories([ValidateSet('boot', 'main', 'plugins')][string] $kind) {
-	return GetProjectDirectories $kind |
+	return Get-ProjectDirectories -Kind $kind |
 		Where-Object { $_.Name -notlike '*.Test' }
 }
 
 function GetTestProjectDirectories([ValidateSet('boot', 'main', 'plugins')][string] $kind) {
-	return GetProjectDirectories $kind |
+	return Get-ProjectDirectories -Kind $kind |
 		Where-Object { $_.Name -like '*.Test' }
 }

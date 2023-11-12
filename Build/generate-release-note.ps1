@@ -198,7 +198,7 @@ function MakePlugins {
 
 	#$logFile = '@.txt'
 
-	$pluginProjectDirectories = GetProjectDirectories 'plugins'
+	$pluginProjectDirectories = Get-ProjectDirectories -Kind 'plugins'
 	foreach ($pluginProjectDirectory in $pluginProjectDirectories) {
 		$outputName = $pluginProjectDirectory.Name + '.html'
 

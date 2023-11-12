@@ -100,7 +100,7 @@ if ($Module -eq 'application') {
 	New-Json -InputObject $updateJson -OutputFilePath $outputUpdateFile
 
 } elseif ($Module -eq 'plugins') {
-	$pluginProjectDirs = GetProjectDirectories 'plugins'
+	$pluginProjectDirs = Get-ProjectDirectories -Kind 'plugins'
 
 	foreach ($pluginProjectDirectory in $pluginProjectDirs) {
 		$items = @()
