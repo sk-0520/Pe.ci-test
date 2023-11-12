@@ -4,20 +4,12 @@
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$scriptFileNames = @(
-	'project.ps1'
-);
-foreach ($scriptFileName in $scriptFileNames) {
-	$scriptFilePath = Join-Path -Path $currentDirPath -ChildPath $scriptFileName
-	. $scriptFilePath
-}
 
 #/*[FUNCTIONS]-------------------------------------
 #*/[FUNCTIONS]-------------------------------------
 
-Write-Output "AssemblyDirectory = $AssemblyDirectory"
-Write-Output "ProductMode = $ProductMode"
+Write-Verbose "AssemblyDirectory = $AssemblyDirectory"
+Write-Verbose "ProductMode = $ProductMode"
 
 if ($ProductMode) {
 	$removeTargets = @(
@@ -28,7 +20,7 @@ if ($ProductMode) {
 	) | Select-Object -ExpandProperty FullName
 
 	foreach ($removeTarget in $removeTargets) {
-		Write-Output "remove: $removeTarget"
+		Write-Information "remove: $removeTarget"
 		Remove-Item $removeTarget -Recurse -Force
 	}
 }

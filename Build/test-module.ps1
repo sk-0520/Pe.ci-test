@@ -26,6 +26,7 @@ if ($Module -eq 'boot') {
 		$testFileName = $projectDirItem.BaseName + '.dll'
 		$testFilePath = Join-Path -Path $testDirPath -ChildPath $testFileName
 
+		Write-Verbose "VSTest.Console $testFilePath /InIsolation /Platform:$Platform"
 		VSTest.Console $testFilePath /InIsolation /Platform:$Platform
 		if (-not $?) {
 			throw "test error: $Module"
@@ -44,7 +45,7 @@ if ($Module -eq 'boot') {
 		$testFileName = $projectDirItem.BaseName + '.dll'
 		$testFilePath = Join-Path -Path $testDirPath -ChildPath (Get-ChildItem -LiteralPath $testDirPath -Recurse -Name -File -Include $testFileName)
 
-		Write-Output "dotnet test $testFilePath --test-adapter-path:. $loggerArg"
+		Write-Verbose "dotnet test $testFilePath --test-adapter-path:. $loggerArg"
 		dotnet test $testFilePath --test-adapter-path:. $loggerArg
 		if (-not $?) {
 			throw "test error: $Module - $testFileName"

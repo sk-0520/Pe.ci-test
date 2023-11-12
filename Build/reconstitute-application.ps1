@@ -79,13 +79,13 @@ Move-Item $inputItems.help -Destination $helpRootDir -Force
 $unsupportPlatform = switch ($Platform) {
 	'x64' {
 		'x86'
- }
+	}
 	'x86' {
 		'x64'
- }
+	}
 	Default {
 		throw "error: $Platform"
- }
+	}
 }
 $unsupportTargets = @(
 	Join-Path -Path $outputMainDir -ChildPath $unsupportPlatform

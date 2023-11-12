@@ -12,9 +12,9 @@ $rootDirectory = Split-Path -Path $currentDirPath -Parent
 #/*[FUNCTIONS]-------------------------------------
 #*/[FUNCTIONS]-------------------------------------
 
-Write-Output $TargetDirectory
-Write-Output $OutputFileBaseName
-Write-Output $rootDirectory
+Write-Verbose "TargetDirectory = $TargetDirectory"
+Write-Verbose "OutputFileBaseName = $OutputFileBaseName"
+Write-Verbose "rootDirectory = $rootDirectory"
 
 $outputFileName = $OutputFileBaseName + '.' + $Archive
 
@@ -39,7 +39,7 @@ try {
 		throw "7z: $outputFileName"
 	}
 
-	Move-Item -Path $outputFileName -Destination $rootDirectory
+	Move-Item -Path $outputFileName -Destination $rootDirectory | Out-Null
 } finally {
 	Pop-Location
 }
