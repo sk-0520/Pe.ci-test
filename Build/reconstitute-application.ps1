@@ -92,7 +92,7 @@ $unsupportTargets = @(
 	Join-Path -Path $dstLibDir -ChildPath 'Redist.MSVC.CRT' | Join-Path -ChildPath $unsupportPlatform
 )
 foreach ($unsupportTarget in $unsupportTargets) {
-	Write-Output "Remove: $unsupportTarget"
+	Write-Information "Remove: $unsupportTarget"
 	Remove-Item $unsupportTarget -Recurse -Force
 }
 

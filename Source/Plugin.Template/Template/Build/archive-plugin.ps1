@@ -18,7 +18,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 
 $removeTargets = $Filter | ForEach-Object { Get-ChildItem -Path $InputDirectory -Filter $_ } | Select-Object -ExpandProperty FullName
 foreach($removeTarget in $removeTargets) {
-	Write-Output "DELETE: $removeTarget"
+	Write-Information "DELETE: $removeTarget"
 	Remove-Item -Path $removeTarget -Recurse -Force
 }
 

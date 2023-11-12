@@ -19,7 +19,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 $sourceDirectory = GetSourceDirectory 'main'
 $sqlDirectory = Join-Path -Path $sourceDirectory -ChildPath 'Pe.Main' | Join-Path -ChildPath 'etc' | Join-Path -ChildPath  'sql'
 
-Write-Output 'pack SQL'
+Write-Information 'Package SQL'
 if (Test-Path $OutputFile) {
 	Remove-Item -Path $OutputFile
 }

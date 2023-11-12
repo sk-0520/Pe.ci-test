@@ -48,8 +48,8 @@ jobs:
       - name: <Read> Version
         shell: pwsh
         run: |
-          Write-Output 'dot:    ${{ steps.version.outputs.dot }}'
-          Write-Output 'hyphen: ${{ steps.version.outputs.hyphen }}'
+          Write-Information 'dot:    ${{ steps.version.outputs.dot }}'
+          Write-Information 'hyphen: ${{ steps.version.outputs.hyphen }}'
 
 
       - name: <Download> Release Note

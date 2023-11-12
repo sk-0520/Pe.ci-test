@@ -28,11 +28,11 @@ $_workDirectoryPath = [System.IO.Path]::GetFullPath([System.Environment]::Expand
 $_outputDirectoryPath = [System.IO.Path]::GetFullPath([System.Environment]::ExpandEnvironmentVariables($outputDirectoryPath))
 $_7zipPath = [System.Environment]::ExpandEnvironmentVariables($7zipPath)
 
-Write-Output "[`$WorkDirectoryPath] $_workDirectoryPath"
-Write-Output "[`$OutputDirectoryPath] $_outputDirectoryPath"
-Write-Output "[`$7zipPath] $_7zipPath"
+Write-Verbose "WorkDirectoryPath: $_workDirectoryPath"
+Write-Verbose "OutputDirectoryPath: $_outputDirectoryPath"
+Write-Verbose "7zipPath: $_7zipPath"
 
-Write-Output "Version = $latestVersion"
+Write-Verbose "Version: $latestVersion"
 
 if (!(Test-Path -Path $_workDirectoryPath)) {
 	New-Item -Path $_workDirectoryPath -ItemType Directory
@@ -49,7 +49,7 @@ $archiveFilePath = ''
 $url = $gitHubReleaseUrl.Trim('/') + '/' + $versions['path'] + '/' + "Pe_${platform}.${extension}";
 $fileName = $versions['file'] + ".${extension}"
 
-Write-Output "[$Platform] $url $fileName"
+Write-Information "[$Platform] $url $fileName"
 
 $filePath = Join-Path -Path $_workDirectoryPath -ChildPath $fileName
 Invoke-WebRequest -Uri $url -Method Get -OutFile $filePath
@@ -61,7 +61,7 @@ if (!(Test-Path -Path $_outputDirectoryPath)) {
 Remove-Item -Path (Join-Path -Path $_outputDirectoryPath -ChildPath '*') -Force -Recurse
 
 
-Write-Output "[TARGET] $archiveFilePath"
+Write-Information "[TARGET] $archiveFilePath"
 
 $parentDirPath = [System.IO.Path]::GetDirectoryName($archiveFilePath)
 $baseFileName = [System.IO.Path]::GetFileNameWithoutExtension($archiveFilePath)

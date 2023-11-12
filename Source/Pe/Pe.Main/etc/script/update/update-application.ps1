@@ -74,7 +74,7 @@ try {
 		$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 		if ($ProcessId -ne 0 ) {
-			Write-Output "プロセス終了待機: $ProcessId ..."
+			Write-Information "プロセス終了待機: $ProcessId ..."
 			try {
 				Wait-Process -Id $ProcessId -Timeout $WaitSeconds
 				Write-Information "プロセス終了: $ProcessId"
