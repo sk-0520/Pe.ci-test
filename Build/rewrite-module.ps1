@@ -92,7 +92,7 @@ function Update-ResourceValue {
 
 #*/[FUNCTIONS]-------------------------------------
 
-$version = GetAppVersion
+$version = Get-ApplicationVersion
 
 $sourceMainDirectoryPath = Get-SourceDirectory -Kind 'main'
 $sourceBootDirectoryPath = Get-SourceDirectory -Kind 'boot'

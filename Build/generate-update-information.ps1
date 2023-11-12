@@ -21,7 +21,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 	. $scriptFilePath
 }
 
-$version = GetAppVersion
+$version = Get-ApplicationVersion
 $hashAlgorithm = 'SHA256'
 $releaseTimestamp = (Get-Date).ToUniversalTime()
 

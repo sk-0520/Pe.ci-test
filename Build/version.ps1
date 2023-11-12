@@ -3,7 +3,10 @@ Set-StrictMode -Version Latest
 
 $projectFile = Join-Path (Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)) "Source/Pe/Directory.Build.props"
 
-function GetAppVersion {
+function Get-ApplicationVersion {
+	[OutputType([version])]
+	Param()
+
 	$projectXml = [XML](Get-Content -Path $projectFile -Encoding UTF8)
 	$projectNav = $projectXml.CreateNavigator()
 	$vesion = $projectNav.Select('/Project/PropertyGroup/Version').Value

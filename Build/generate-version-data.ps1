@@ -16,8 +16,8 @@ foreach ($scriptFileName in $scriptFileNames) {
 #*/[FUNCTIONS]-------------------------------------
 
 
-$dot = GetAppVersion
-$hyphen = (ConvertVersion (GetAppVersion) '-')
+$dot = Get-ApplicationVersion
+$hyphen = (ConvertVersion (Get-ApplicationVersion) '-')
 
 if ($TargetRepository -eq 'github') {
 	Write-Output "dot=$dot" >> $env:GITHUB_OUTPUT

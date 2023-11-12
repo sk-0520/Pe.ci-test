@@ -32,6 +32,7 @@ function Get-SourceDirectory {
 }
 
 function Get-ProjectDirectories {
+	[OutputType([System.IO.DirectoryInfo[]])]
 	Param(
 		[ValidateSet('boot', 'main', 'plugins')][string] $Kind
 	)
@@ -55,6 +56,7 @@ function Get-ProjectDirectories {
 }
 
 function Get-ApplicationProjectDirectories {
+	[OutputType([System.IO.DirectoryInfo[]])]
 	Param(
 		[ValidateSet('boot', 'main', 'plugins')][string] $Kind
 	)
@@ -64,6 +66,7 @@ function Get-ApplicationProjectDirectories {
 }
 
 function Get-TestProjectDirectories {
+	[OutputType([System.IO.DirectoryInfo[]])]
 	Param(
 		[ValidateSet('boot', 'main', 'plugins')][string] $Kind
 	)
