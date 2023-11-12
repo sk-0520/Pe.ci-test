@@ -1,5 +1,10 @@
 @{
-	IncludeDefaultRules = $false
+	IncludeDefaultRules = $true
+
+	IncludeRules = @(
+		'AvoidUsingDoubleQuotesForConstantString'
+	)
+
 	Rules = @{
 		PSAvoidLongLines = @{
 			Enable = $false
@@ -19,9 +24,12 @@
 			IndentationSize = 4
 		}
 
+		PSAvoidSemicolonsAsLineTerminators = @{
+			Enable = $true
+		}
 	}
+
 	ExcludeRules = @(
-		'PSUseBOMForUnicodeEncodedFile'
 		'PSReviewUnusedParameter'
 	)
 }

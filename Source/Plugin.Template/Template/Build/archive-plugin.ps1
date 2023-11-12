@@ -1,4 +1,4 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][string] $InputDirectory,
 	[Parameter(mandatory = $true)][string] $DestinationDirectory,
 	[Parameter(mandatory = $true)][string] $OutputBaseName,

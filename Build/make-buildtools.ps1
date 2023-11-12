@@ -1,4 +1,4 @@
-Param(
+﻿Param(
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest

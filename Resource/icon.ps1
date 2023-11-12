@@ -5,7 +5,7 @@
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$rootDirPath = Split-Path -Parent $currentDirPath
+# $rootDirPath = Split-Path -Parent $currentDirPath
 $iconDirPath = Join-Path -Path $currentDirPath -ChildPath 'Icon'
 $workDirPath = Join-Path -Path $iconDirPath -ChildPath '@work'
 
@@ -112,16 +112,6 @@ function New-Icon {
 	}
 }
 
-
-function MoveAppIcon {
-	$mainDir = Join-Path -Path $rootDirPath -ChildPath 'Source\Pe\Pe.Main\Resources\Icon'
-	foreach ($appIcon in $appIcons) {
-		$srcPath = Join-Path -Path $currentDirPath -ChildPath "$($appIcon.name).ico"
-		$dstPath = Join-Path -Path $mainDir -ChildPath "$($appIcon.name).ico"
-		Write-Information "[COPY] $srcPath -> $dstPath"
-		Copy-Item -Path $srcPath -Destination $dstPath
-	}
-}
 
 while ($true) {
 	Write-Information '1: Pe: SVG -> PNG'

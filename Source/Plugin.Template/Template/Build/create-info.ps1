@@ -1,4 +1,4 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][string] $ProjectName,
 	[Parameter(mandatory = $true)][version] $Version,
 	[string] $ReleaseNoteUrl = 'https://excample.com/release?@VERSION@',

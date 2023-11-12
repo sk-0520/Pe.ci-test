@@ -1,4 +1,4 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][ValidateSet('boot', 'main', 'plugins')][string] $Module,
 	[Parameter(mandatory = $true)][ValidateSet('x86', 'x64')][string] $Platform,
 	[Parameter(mandatory = $true)][string] $Configuration,

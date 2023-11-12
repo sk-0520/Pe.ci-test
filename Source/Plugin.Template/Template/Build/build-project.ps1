@@ -1,4 +1,4 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][string] $ProjectName,
 	[Parameter(mandatory = $true)][string[]] $Platforms
 )

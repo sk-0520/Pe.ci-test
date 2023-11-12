@@ -1,4 +1,4 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][string] $OutputDirectory,
 	[switch] $IgnoreEmpty
 )

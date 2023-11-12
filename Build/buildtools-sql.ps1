@@ -1,4 +1,4 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][string] $BuildToolsSqlPack,
 	[Parameter(mandatory = $true)][string] $OutputFile
 )

@@ -1,4 +1,4 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][ValidateSet('boot', 'main', 'plugins')][string] $Module,
 	[ValidateSet('github')][string] $Service
 )

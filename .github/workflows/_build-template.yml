@@ -66,7 +66,6 @@ jobs:
         OS:
           - windows-latest
           - ubuntu-latest
-          - macos-latest
 
     runs-on: ${{ matrix.OS }}
 
@@ -76,7 +75,7 @@ jobs:
 
       - name: <Lint> PowerShell
         shell: pwsh
-        run: Invoke-ScriptAnalyzer -Path ./ -Recurse -Settings PSScriptAnalyzerSettings.psd1 -EnableExit:$false
+        run: Invoke-ScriptAnalyzer -Path ./ -Recurse -Settings PSScriptAnalyzerSettings.psd1 -EnableExit
         # uses: microsoft/psscriptanalyzer-action@v1.0
         # with:
         #  path: ./

@@ -1,4 +1,4 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][ValidateSet('x86', 'x64')][string] $Platform,
 	[Parameter(mandatory = $true)][ValidateSet('zip', '7z', 'tar')][string] $Archive,
 	[switch] $ProductMode,

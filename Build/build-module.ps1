@@ -1,7 +1,7 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][ValidateSet('boot', 'main', 'plugins')][string] $Module,
 	[switch] $ProductMode,
-	[string] $BuildType,
+	[Parameter(mandatory = $true)][string] $BuildType,
 	[Parameter(mandatory = $true)][ValidateSet('x86', 'x64')][string] $Platform,
 	[switch] $Test
 )
