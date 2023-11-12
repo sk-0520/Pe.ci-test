@@ -7,33 +7,40 @@ function Get-RootDirectory {
 	[OutputType([System.IO.DirectoryInfo])]
 	Param()
 
-	return Split-Path -Parent $PSScriptRoot
+	return [System.IO.DirectoryInfo](Split-Path -Parent $PSScriptRoot)
 }
 
-function GetSourceDirectory([ValidateSet('boot', 'main')][string] $kind) {
-	switch ($kind) {
+function Get-SourceDirectory {
+	[OutputType([System.IO.DirectoryInfo])]
+	Param(
+		[ValidateSet('boot', 'main')][string] $Kind
+	)
+
+	$result = switch ($Kind) {
 		'boot' {
-			return Join-Path -Path $rootDirPath -ChildPath 'Source/Pe.Boot'
+			Join-Path -Path $rootDirPath -ChildPath 'Source/Pe.Boot'
 		}
 		'main' {
-			return Join-Path -Path $rootDirPath -ChildPath 'Source/Pe'
+			Join-Path -Path $rootDirPath -ChildPath 'Source/Pe'
 		}
 		Default {
-			throw "kind: $kind"
+			throw "kind: $Kind"
 		}
 	}
+
+	return [System.IO.DirectoryInfo]$result
 }
 
 function GetProjectDirectories([ValidateSet('boot', 'main', 'plugins')][string] $kind) {
 	switch ($kind) {
 		'boot' {
-			return Get-ChildItem -Path (Join-Path -Path (GetSourceDirectory 'boot') -ChildPath '*') -Directory
+			return Get-ChildItem -Path (Join-Path -Path (Get-SourceDirectory -Kind 'boot') -ChildPath '*') -Directory
 		}
 		'main' {
-			return Get-ChildItem -Path (Join-Path -Path (GetSourceDirectory 'main') -ChildPath '*') -Directory | Where-Object { $_.Name -notlike 'Pe.Plugins.Reference.*' } | Where-Object { $_.Name -notlike 'Test*' }
+			return Get-ChildItem -Path (Join-Path -Path (Get-SourceDirectory -Kind 'main') -ChildPath '*') -Directory | Where-Object { $_.Name -notlike 'Pe.Plugins.Reference.*' } | Where-Object { $_.Name -notlike 'Test*' }
 		}
 		'plugins' {
-			return Get-ChildItem -Path (Join-Path -Path (GetSourceDirectory 'main') -ChildPath '*') -Directory | Where-Object { $_.Name -like 'Pe.Plugins.Reference.*' }
+			return Get-ChildItem -Path (Join-Path -Path (Get-SourceDirectory -Kind 'main') -ChildPath '*') -Directory | Where-Object { $_.Name -like 'Pe.Plugins.Reference.*' }
 		}
 		Default {
 			throw "unknown kind: $kind"

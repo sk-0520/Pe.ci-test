@@ -94,8 +94,8 @@ function Update-ResourceValue {
 
 $version = GetAppVersion
 
-$sourceMainDirectoryPath = GetSourceDirectory 'main'
-$sourceBootDirectoryPath = GetSourceDirectory 'boot'
+$sourceMainDirectoryPath = Get-SourceDirectory -Kind 'main'
+$sourceBootDirectoryPath = Get-SourceDirectory -Kind 'boot'
 
 $projectCommonFilePath = Join-Path -Path $sourceMainDirectoryPath -ChildPath 'Directory.Build.props'
 $projectCommonXml = [XML](Get-Content $projectCommonFilePath  -Encoding UTF8)

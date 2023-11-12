@@ -16,7 +16,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 #/*[FUNCTIONS]-------------------------------------
 #*/[FUNCTIONS]-------------------------------------
 
-$sourceDirectory = GetSourceDirectory 'main'
+$sourceDirectory = Get-SourceDirectory -Kind 'main'
 $sqlDirectory = Join-Path -Path $sourceDirectory -ChildPath 'Pe.Main' | Join-Path -ChildPath 'etc' | Join-Path -ChildPath  'sql'
 
 Write-Information 'Package SQL'
