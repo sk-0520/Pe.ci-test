@@ -3,6 +3,13 @@ Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $rootDirPath = Split-Path -Parent $currentDirPath
 
+function Get-RootDirectory {
+	[OutputType([System.IO.DirectoryInfo])]
+	Param()
+
+	return Split-Path -Parent $PSScriptRoot
+}
+
 function GetSourceDirectory([ValidateSet('boot', 'main')][string] $kind) {
 	switch ($kind) {
 		'boot' {
