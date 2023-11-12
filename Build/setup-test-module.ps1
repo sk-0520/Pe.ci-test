@@ -20,7 +20,7 @@ if ($Service -eq 'github') {
 	if ($Module -eq 'boot') {
 		# 何もしない
 	} elseif ($Module -eq 'main' -or $Module -eq 'plugins') {
-		$testProjectDirs = GetTestProjectDirectories $Module
+		$testProjectDirs = Get-TestProjectDirectories -Kind $Module
 		foreach ($testProjectDir in $testProjectDirs) {
 			Push-Location $testProjectDir
 			try {

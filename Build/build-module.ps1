@@ -41,7 +41,7 @@ if ($Module -eq 'boot') {
 	}
 } elseif ($Module -eq 'main') {
 	if ($Test) {
-		$testDirectories = GetTestProjectDirectories $Module
+		$testDirectories = Get-TestProjectDirectories -Kind $Module
 
 		foreach ($testDirectory in $testDirectories) {
 			$testProjectFilePath = (Join-Path -Path $testDirectory.FullName -ChildPath $testDirectory.Name) + '.csproj'
@@ -59,7 +59,7 @@ if ($Module -eq 'boot') {
 	}
 } elseif ($Module -eq 'plugins') {
 	# プラグイン参考実装
-	$pluginProjectFiles = GetApplicationProjectDirectories $Module |
+	$pluginProjectFiles = Get-ApplicationProjectDirectories -Kind $Module |
 		Get-ChildItem -File -Recurse -Include '*.csproj'
 
 	foreach ($pluginProjectFile in $pluginProjectFiles) {

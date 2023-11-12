@@ -54,12 +54,20 @@ function Get-ProjectDirectories {
 	return $result | Select-Object { [System.IO.DirectoryInfo] $_ }
 }
 
-function GetApplicationProjectDirectories([ValidateSet('boot', 'main', 'plugins')][string] $kind) {
-	return Get-ProjectDirectories -Kind $kind |
+function Get-ApplicationProjectDirectories {
+	Param(
+		[ValidateSet('boot', 'main', 'plugins')][string] $Kind
+	)
+
+	return Get-ProjectDirectories -Kind $Kind |
 		Where-Object { $_.Name -notlike '*.Test' }
 }
 
-function GetTestProjectDirectories([ValidateSet('boot', 'main', 'plugins')][string] $kind) {
-	return Get-ProjectDirectories -Kind $kind |
+function Get-TestProjectDirectories {
+	Param(
+		[ValidateSet('boot', 'main', 'plugins')][string] $Kind
+	)
+
+	return Get-ProjectDirectories -Kind $Kind |
 		Where-Object { $_.Name -like '*.Test' }
 }

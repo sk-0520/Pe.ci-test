@@ -19,7 +19,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 #*/[FUNCTIONS]-------------------------------------
 
 if ($Module -eq 'boot') {
-	$projectDirItems = GetTestProjectDirectories $Module
+	$projectDirItems = Get-TestProjectDirectories -Kind $Module
 
 	foreach ($projectDirItem in $projectDirItems) {
 		$testDirPath = Join-Path -Path $projectDirItem.FullName -ChildPath 'bin' | Join-Path -ChildPath $Configuration | Join-Path -ChildPath $Platform
@@ -38,7 +38,7 @@ if ($Module -eq 'boot') {
 		$loggerArg = "--logger:$Logger"
 	}
 
-	$projectDirItems = GetTestProjectDirectories $Module
+	$projectDirItems = Get-TestProjectDirectories -Kind $Module
 
 	foreach ($projectDirItem in $projectDirItems) {
 		$testDirPath = Join-Path -Path $projectDirItem.FullName -ChildPath 'bin' | Join-Path -ChildPath $Platform | Join-Path -ChildPath $Configuration
