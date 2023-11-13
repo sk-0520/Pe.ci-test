@@ -92,12 +92,6 @@ jobs:
       PROJECT_DIR: \test-plugin
       PROJECT_NAME: Plugin.Template
 
-    strategy:
-      matrix:
-        BRANCH:
-          - master
-          - ${{ github.ref_name }}
-
     runs-on: windows-2022
 
     steps:
@@ -123,7 +117,7 @@ jobs:
 
       - name: <Create> Plugin Template
         shell: pwsh
-        run: .\${{ env.EXPAND_DIR }}\create-project.ps1 -Verbose -ProjectDirectory ${{ env.PROJECT_DIR }} -PluginName ${{ env.PROJECT_NAME }} -PluginId ([Guid]::Empty) -DefaultNamespace ${{ env.PROJECT_NAME }}  -AppTargetBranch '${{ matrix.BRANCH }}'
+        run: .\${{ env.EXPAND_DIR }}\create-project.ps1 -Verbose -ProjectDirectory ${{ env.PROJECT_DIR }} -PluginName ${{ env.PROJECT_NAME }} -PluginId ([Guid]::Empty) -DefaultNamespace ${{ env.PROJECT_NAME }}  -AppTargetBranch '${{ github.ref_name }}'
 
       - name: <Build> Plugin Template
         shell: pwsh
@@ -144,7 +138,7 @@ jobs:
       - name: <Artifact> Plugin Template
         uses: actions/upload-artifact@v3
         with:
-          name: template-plugin-${{ matrix.BRANCH }}
+          name: template-plugin
           path: plugin-template.tar
 
 
