@@ -57,6 +57,73 @@ jobs:
           name: Help
           path: Output/help
 
+  plugin-template:
+    name: Plugin Template
+    needs:
+      - help
+    env:
+      EXPAND_DIR: plugin-template
+      PROJECT_DIR: \test-plugin
+      PROJECT_NAME: Plugin.Template
+
+    strategy:
+      matrix:
+        OS:
+          - windows-2022
+          # - windows-2019
+        BRANCH:
+          - master
+          - ${{ github.ref_name }}
+
+    runs-on: ${{ matrix.OS }}
+
+    steps:
+      - name: <Setting> Job
+        shell: pwsh
+        run: |
+          git config --global core.autocrlf false
+          git config --global user.email "${{ github.job }}@example.com"
+          git config --global user.name "${{ github.job }}"
+
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Download> Help
+        uses: actions/download-artifact@v3
+        with:
+          name: Help
+          path: artifacts/help
+
+      - name: <Expand> Plugin Template
+        shell: pwsh
+        run: Expand-Archive -Verbose -Path artifacts/help/archives/plugin-template.zip -DestinationPath ${{ env.EXPAND_DIR }}
+
+      - name: <Create> Plugin Template
+        shell: pwsh
+        run: .\${{ env.EXPAND_DIR }}\create-project.ps1 -Verbose -ProjectDirectory ${{ env.PROJECT_DIR }} -PluginName ${{ env.PROJECT_NAME }} -PluginId ([Guid]::Empty) -DefaultNamespace ${{ env.PROJECT_NAME }}  -AppTargetBranch '${{ matrix.BRANCH }}'
+
+      - name: <Build> Plugin Template
+        shell: pwsh
+        run: |
+          Set-Location ${{ env.PROJECT_DIR }}
+          .\FullBuild.ps1 -Verbose
+
+      - name: <Test> Plugin Template
+        shell: pwsh
+        run: |
+          Set-Location ${{ env.PROJECT_DIR }}
+          .\FullTest.ps1 -Verbose
+
+      - name: <Archive> Application
+        shell: bash
+        run: ./Build/archive-compress.sh "plugin-template.tar" "${{ env.PROJECT_DIR }}"
+
+      - name: <Artifact> Plugin Template
+        uses: actions/upload-artifact@v3
+        with:
+          name: template-plugin-${{ matrix.OS }}-${{ matrix.BRANCH }}
+          path: plugin-template.tar
+
 
   lint-powershell:
     name: Lint PowerShell

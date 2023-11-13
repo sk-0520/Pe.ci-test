@@ -1,7 +1,7 @@
 ﻿Param(
 	[Parameter(mandatory = $true)][ValidateSet('boot', 'main', 'plugins')][string] $Module,
 	[switch] $ProductMode,
-	[Parameter(mandatory = $true)][string] $BuildType,
+	[string] $BuildType,
 	[Parameter(mandatory = $true)][string] $Revision
 )
 $ErrorActionPreference = 'Stop'

@@ -116,7 +116,7 @@ class Element {
 }
 
 function MakeApplication {
-	$templateHtmlFile = Join-Path -Path $currentDirPath -ChildPath 'release-note.html'
+	$templateHtmlFile = Join-Path -Path $PSScriptRoot -ChildPath 'release-note.html'
 
 	# 速度とかどうでもいい
 	$root = New-Object Element 'div'
@@ -186,7 +186,7 @@ function MakeApplication {
 }
 
 function MakePlugins {
-	$pluginTemplateHtmlFile = Join-Path -Path $currentDirPath -ChildPath 'release-note.plugin.html'
+	$pluginTemplateHtmlFile = Join-Path -Path $PSScriptRoot -ChildPath 'release-note.plugin.html'
 
 	#Set-WinSystemLocale ja-JP
 

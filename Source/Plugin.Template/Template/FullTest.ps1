@@ -2,11 +2,10 @@
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 $pluginName = 'TEMPLATE_PluginName'
 
-$scriptDirPath = Join-Path -Path $currentDirPath -ChildPath 'Build'
+$scriptDirPath = Join-Path -Path $PSScriptRoot -ChildPath 'Build'
 
 $platforms = @('x64', 'x86')
 

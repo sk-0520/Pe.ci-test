@@ -43,7 +43,6 @@ Param(
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 $suppressBuild = $false
 $suppressScm = $false
@@ -143,7 +142,7 @@ Write-Information ('dotnet: ' + (& $parameters.dotnet --version))
 function Convert-TemplateValue {
 	[OutputType([string])]
 	Param(
-		[Parameter(Mandatory = $true)][string] $Value
+		[string] $Value
 	)
 
 	return [Regex]::Replace($Value, '\bTEMPLATE_([\w\d_]+)\b', {
@@ -187,7 +186,7 @@ function Update-TemplateFileContent {
 
 	$newContents = Get-Content -Path $File.FullName -Encoding $encoding | ForEach-Object { Convert-TemplateValue -Value $_ }
 	if ($PSCmdlet.ShouldProcess('File', "$($File.FullName) のテンプレート文字列を置き換え")) {
-		Set-Content -Path $File.FullName -Value $newContents -Encoding $encoding -WhatIf
+		Set-Content -Path $File.FullName -Value $newContents -Encoding $encoding
 	} else {
 		Write-Verbose "`[DRY`] 書き換え後文字列: $newContents"
 	}
@@ -195,7 +194,7 @@ function Update-TemplateFileContent {
 
 function Rename-TemplateFileName {
 	Param(
-		[Parameter(Mandatory = $true)][string] $ParentDirectory,
+		[Parameter(Mandatory = $true)][System.IO.DirectoryInfo] $ParentDirectory,
 		[Parameter(Mandatory = $true)][string] $Name
 	)
 
@@ -241,7 +240,7 @@ if (!$suppressScm) {
 	& $parameters.git init $parameters.directory
 }
 
-Copy-Item -Path (Join-Path -Path $currentDirPath -ChildPath 'Template\*') -Destination ($parameters.directory.FullName + '\') -Force -Recurse
+Copy-Item -Path (Join-Path -Path $PSScriptRoot -ChildPath 'Template\*') -Destination ($parameters.directory.FullName + '\') -Force -Recurse
 
 Rename-Directory $parameters.directory
 
@@ -258,10 +257,10 @@ function New-Submodule {
 
 		$targetPath = Join-Path -Path $parameters.directory -ChildPath $Path
 		Write-Information "サブモジュール親ディレクトリ生成: $targetPath"
-		if ($PSCmdlet.ShouldProcess('File', "$($File.FullName) のテンプレート文字列を置き換え")) {
-			& $parameters.git submodule add --branch $Branch $Uri $path
+		if ($PSCmdlet.ShouldProcess('Path', "$Path のテンプレート文字列を置き換え")) {
+			& $parameters.git submodule add --branch $Branch $Uri $Path
 		} else {
-			Write-Verbose "`[DRY`] $($parameters.git) submodule add --branch $Branch $Uri $path"
+			Write-Verbose "`[DRY`] $($parameters.git) submodule add --branch $Branch $Uri $Path"
 		}
 
 	} finally {
@@ -328,7 +327,7 @@ try {
 		}
 	)
 	foreach ($item in $items) {
-		$projectFilePath = (Join-Path-Path $appDir -ChildPath $item.project) | Join-Path -ChildPath ($item.project + '.csproj')
+		$projectFilePath = Join-Path -Path $appDir -ChildPath $item.project | Join-Path -ChildPath ($item.project + '.csproj')
 		& $parameters.dotnet sln add $projectFilePath --solution-folder $item.directory
 	}
 

@@ -71,8 +71,6 @@ try {
 		Write-Information "ExecuteCommand: $ExecuteCommand"
 		Write-Information "ExecuteArgument: $ExecuteArgument"
 
-		$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-
 		if ($ProcessId -ne 0 ) {
 			Write-Information "プロセス終了待機: $ProcessId ..."
 			try {
@@ -102,7 +100,7 @@ try {
 
 		Write-Information '本体アップデート処理実施'
 		Write-Information "$SourceDirectory -> $DestinationDirectory"
-		$escapeCustomCopyItem = (Join-Path -Path $currentDirPath -ChildPath 'custom-copy-item.ps1') -Replace ' ', '` '
+		$escapeCustomCopyItem = (Join-Path -Path $PSScriptRoot -ChildPath 'custom-copy-item.ps1') -Replace ' ', '` '
 		#Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
 		Invoke-Expression "$escapeCustomCopyItem -SourceDirectoryPath ""$SourceDirectory"" -DestinationDirectoryPath ""$DestinationDirectory"" -ProgressType 'output'"
 

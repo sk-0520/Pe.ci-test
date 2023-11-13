@@ -19,8 +19,6 @@ try {
 		Write-Information "ExecuteCommand: $ExecuteCommand"
 		Write-Information "ExecuteArgument: $ExecuteArgument"
 
-		# $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-
 		if ($ProcessId -ne 0 ) {
 			Write-Information "プロセス終了待機: $ProcessId ..."
 			try {

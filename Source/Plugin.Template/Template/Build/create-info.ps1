@@ -27,7 +27,7 @@ $revision = (git rev-parse HEAD)
 
 function Get-VersionText {
 	return @(
-		'{0}' -f $Value.Major
+		'{0}' -f $Version.Major
 		'{0:00}' -f $Version.Minor
 		'{0:000}' -f $Version.Build
 	) -join '.'
@@ -35,14 +35,15 @@ function Get-VersionText {
 
 function Get-UpdateItem {
 	param (
-		[version] $ArchiveFilePath
+		[Parameter(mandatory = $true)][ValidateSet('x86', 'x64')][string] $Platform,
+		[Parameter(mandatory = $true)][string] $ArchiveFilePath
 	)
 
 	return @{
 		release = $releaseTimestamp.ToString('s')
 		version = Get-VersionText $Version
 		revision = $revision
-		platform = $platform
+		platform = $Platform
 		minimum_version = Get-VersionText $MinimumVersion
 		note_uri = $ReleaseNoteUrl.Replace('@VERSION@', (Get-VersionText))
 		archive_uri = $ArchiveBaseUrl.Replace('@ARCHIVENAME@', (Split-Path $ArchiveFilePath -Leaf)).Replace('@VERSION@', (Get-VersionText))
@@ -59,7 +60,7 @@ $infoItems = @{
 }
 foreach ($platform in $Platforms) {
 	$archiveFilePath = Join-Path -Path $InputDirectory -ChildPath "${ArchiveBaseName}_${platform}.${Archive}"
-	$infoItems.items += Get-UpdateItem -ArchiveFilePath $archiveFilePath
+	$infoItems.items += Get-UpdateItem -Platform $platform -ArchiveFilePath $archiveFilePath
 }
 
 ConvertTo-Json -InputObject $infoItems |

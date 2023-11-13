@@ -79,7 +79,7 @@ function Get-UpdateItem {
 #*/[FUNCTIONS]-------------------------------------
 
 if ($Module -eq 'application') {
-	$updateJson = Get-Content -Path (Join-Path -Path $currentDirPath -ChildPath 'update.json') | ConvertFrom-Json
+	$updateJson = Get-Content -Path (Join-Path -Path $PSScriptRoot -ChildPath 'update.json') | ConvertFrom-Json
 	foreach ($platform in $Platforms) {
 		$targetName = 'Pe_' + $platform + '.' + $Archive
 		$targetPath = Join-Path -Path $ArtifactDirectory -ChildPath $targetName
