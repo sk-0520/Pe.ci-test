@@ -68,14 +68,11 @@ jobs:
 
     strategy:
       matrix:
-        OS:
-          - windows-2022
-          # - windows-2019
         BRANCH:
           - master
           - ${{ github.ref_name }}
 
-    runs-on: ${{ matrix.OS }}
+    runs-on: windows-2022
 
     steps:
       - name: <Setting> Job
@@ -121,7 +118,7 @@ jobs:
       - name: <Artifact> Plugin Template
         uses: actions/upload-artifact@v3
         with:
-          name: template-plugin-${{ matrix.OS }}-${{ matrix.BRANCH }}
+          name: template-plugin-${{ matrix.BRANCH }}
           path: plugin-template.tar
 
 
