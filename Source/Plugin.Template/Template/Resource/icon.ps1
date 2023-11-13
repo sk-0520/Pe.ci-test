@@ -4,9 +4,8 @@
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-# $rootDirPath = Split-Path -Parent $currentDirPath
-$iconDirPath = Join-Path -Path $currentDirPath -ChildPath 'Icon'
+
+$iconDirPath = Join-Path -Path $PSScriptRoot -ChildPath 'Icon'
 $workDirPath = Join-Path -Path $iconDirPath -ChildPath '@work'
 
 $exeIncspace = if ($env:INKSCAPE) {
@@ -40,7 +39,7 @@ function New-Png {
 		[Parameter(mandatory = $true)][string] $SvgPath
 	)
 
-	$pngBasePath = Join-Path -Path (Split-Path -Parent $SvgPath) -ChildPath ([System.IO.Path]::GetFileNameWithoutExtension($srcSvgPath))
+	$pngBasePath = Join-Path -Path (Split-Path -Parent $SvgPath) -ChildPath ([System.IO.Path]::GetFileNameWithoutExtension($SvgPath))
 	Write-Information "[SRC] $SvgPath";
 	foreach ($size in $iconSize) {
 		$pngPath = "${pngBasePath}_${size}.png"
@@ -144,7 +143,7 @@ while ($true) {
 			}
 		}
 	} catch {
-		Write-Information $Error[0] -ForegroundColor Red -BackgroundColor Black
+		Write-Error $Error[0]
 	}
 	Write-Information ''
 	if ($BatchMode) {

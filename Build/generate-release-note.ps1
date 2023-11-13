@@ -24,6 +24,7 @@ if ( Test-Path -Path $OutputDirectory ) {
 New-Item -Path $OutputDirectory -ItemType Directory
 $OutputDirectory = Convert-Path -Path $OutputDirectory
 
+$rootDirPath = Get-RootDirectory
 
 $rawChangelogLinkFile = Join-Path -Path $rootDirPath -ChildPath 'Source' | Join-Path -ChildPath 'Help' | Join-Path -ChildPath 'script' | Join-Path -ChildPath 'changelog-link.ts'
 $rawChangelogStyleFile = Join-Path -Path $rootDirPath -ChildPath 'Source' | Join-Path -ChildPath 'Help' | Join-Path -ChildPath 'style' | Join-Path -ChildPath 'changelog.scss'

@@ -6,15 +6,15 @@ Param(
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$rootDirectory = Split-Path -Path $currentDirPath -Parent
+
+Import-Module "${PSScriptRoot}/Modules/Project"
+
 
 #/*[FUNCTIONS]-------------------------------------
 #*/[FUNCTIONS]-------------------------------------
 
 Write-Verbose "TargetDirectory = $TargetDirectory"
 Write-Verbose "OutputFileBaseName = $OutputFileBaseName"
-Write-Verbose "rootDirectory = $rootDirectory"
 
 $outputFileName = $OutputFileBaseName + '.' + $Archive
 
@@ -39,7 +39,7 @@ try {
 		throw "7z: $outputFileName"
 	}
 
-	Move-Item -Path $outputFileName -Destination $rootDirectory | Out-Null
+	Move-Item -Path $outputFileName -Destination (Get-RootDirectory) | Out-Null
 } finally {
 	Pop-Location
 }
