@@ -16,6 +16,8 @@ foreach ($scriptFileName in $scriptFileNames) {
 }
 $rootDirPath = Split-Path -Parent $currentDirPath
 
+Import-Module "${PSScriptRoot}/Modules/Project"
+
 # STARTUP
 
 $contentMap = @{

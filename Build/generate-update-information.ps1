@@ -21,6 +21,9 @@ foreach ($scriptFileName in $scriptFileNames) {
 	. $scriptFilePath
 }
 
+Import-Module "${PSScriptRoot}/Modules/Project"
+
+
 $version = Get-ApplicationVersion
 $hashAlgorithm = 'SHA256'
 $releaseTimestamp = (Get-Date).ToUniversalTime()

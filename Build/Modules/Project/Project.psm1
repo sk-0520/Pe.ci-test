@@ -1,13 +1,12 @@
 ﻿$ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$rootDirPath = Split-Path -Parent $currentDirPath
+
 
 function Get-RootDirectory {
 	[OutputType([System.IO.DirectoryInfo])]
 	Param()
 
-	return [System.IO.DirectoryInfo](Split-Path -Parent $PSScriptRoot)
+	return [System.IO.DirectoryInfo](Split-Path -Parent $PSScriptRoot | Split-Path -Parent | Split-Path -Parent)
 }
 
 function Get-SourceDirectory {
@@ -18,10 +17,10 @@ function Get-SourceDirectory {
 
 	$result = switch ($Kind) {
 		'boot' {
-			Join-Path -Path $rootDirPath -ChildPath 'Source/Pe.Boot'
+			Join-Path -Path (Get-RootDirectory) -ChildPath 'Source' | Join-Path -ChildPath 'Pe.Boot'
 		}
 		'main' {
-			Join-Path -Path $rootDirPath -ChildPath 'Source/Pe'
+			Join-Path -Path (Get-RootDirectory) -ChildPath 'Source' | Join-Path -ChildPath 'Pe'
 		}
 		Default {
 			throw "unknown Kind: $Kind"

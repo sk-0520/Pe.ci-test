@@ -16,6 +16,9 @@ foreach ($scriptFileName in $scriptFileNames) {
 	. $scriptFilePath
 }
 
+Import-Module "${PSScriptRoot}/Modules/Project"
+
+
 #/*[FUNCTIONS]-------------------------------------
 
 function Insert-Element {
