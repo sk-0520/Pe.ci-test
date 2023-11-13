@@ -5,18 +5,9 @@
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $PSDefaultParameterValues['Out-File:Encoding'] = 'utf8'
-$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$scriptFileNames = @(
-	'version.ps1',
-	'project.ps1'
-);
-foreach ($scriptFileName in $scriptFileNames) {
-	$scriptFilePath = Join-Path -Path $currentDirPath -ChildPath $scriptFileName
-	. $scriptFilePath
-}
-$rootDirPath = Split-Path -Parent $currentDirPath
 
 Import-Module "${PSScriptRoot}/Modules/Project"
+Import-Module "${PSScriptRoot}/Modules/Version"
 
 # STARTUP
 
