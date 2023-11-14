@@ -44,13 +44,13 @@ jobs:
       - name: <Generate> Version
         id: version
         shell: pwsh
-        run: ./Build/generate-version-data.ps1 -TargetRepository 'github'
+        run: ./Build/generate-version-data.ps1 -InformationAction Continue -TargetRepository 'github'
 
       - name: <Read> Version
         shell: pwsh
         run: |
-          Write-Information 'dot:    ${{ steps.version.outputs.dot }}'
-          Write-Information 'hyphen: ${{ steps.version.outputs.hyphen }}'
+          Write-Output 'dot:    ${{ steps.version.outputs.dot }}'
+          Write-Output 'hyphen: ${{ steps.version.outputs.hyphen }}'
 
 
       - name: <Download> Release Note
@@ -101,7 +101,7 @@ jobs:
 
       - name: <🌳> 🌲
         shell: pwsh
-        run:  |
+        run: |
           Get-ChildItem artifacts -R -File | Select-Object FullName | Format-Table -AutoSize -Wrap
 
 

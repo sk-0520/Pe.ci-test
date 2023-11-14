@@ -117,19 +117,19 @@ jobs:
 
       - name: <Create> Plugin Template
         shell: pwsh
-        run: .\${{ env.EXPAND_DIR }}\create-project.ps1 -Verbose -ProjectDirectory ${{ env.PROJECT_DIR }} -PluginName ${{ env.PROJECT_NAME }} -PluginId ([Guid]::Empty) -DefaultNamespace ${{ env.PROJECT_NAME }}  -AppTargetBranch '${{ github.ref_name }}'
+        run: .\${{ env.EXPAND_DIR }}\create-project.ps1 -Verbose -InformationAction Continue -ProjectDirectory ${{ env.PROJECT_DIR }} -PluginName ${{ env.PROJECT_NAME }} -PluginId ([Guid]::Empty) -DefaultNamespace ${{ env.PROJECT_NAME }}  -AppTargetBranch '${{ github.ref_name }}'
 
       - name: <Build> Plugin Template
         shell: pwsh
         run: |
           Set-Location ${{ env.PROJECT_DIR }}
-          .\FullBuild.ps1 -Verbose
+          .\FullBuild.ps1 -Verbose -InformationAction Continue
 
       - name: <Test> Plugin Template
         shell: pwsh
         run: |
           Set-Location ${{ env.PROJECT_DIR }}
-          .\FullTest.ps1 -Verbose
+          .\FullTest.ps1 -Verbose -InformationAction Continue
 
       - name: <Archive> Plugin Template
         shell: bash
@@ -171,7 +171,7 @@ jobs:
           if( '${{ github.ref }}' -eq 'refs/heads/ci-test' ) {
             $ignoreEmpty = $true
           }
-          .\Build\generate-release-note.ps1 -OutputDirectory history -IgnoreEmpty:$ignoreEmpty
+          .\Build\generate-release-note.ps1 -InformationAction Continue -OutputDirectory history -IgnoreEmpty:$ignoreEmpty
 
       - name: <Artifact> Release Note
         uses: actions/upload-artifact@v3
@@ -203,7 +203,7 @@ jobs:
 
       - name: <Build> BuildTools
         shell: pwsh
-        run: .\Build\make-buildtools.ps1
+        run: .\Build\make-buildtools.ps1 -InformationAction Continue
 
       - name: <Artifact> BuildTools
         uses: actions/upload-artifact@v3
@@ -229,7 +229,7 @@ jobs:
 
       - name: <Pack> SQL
         shell: pwsh
-        run: .\Build\buildtools-sql.ps1 -BuildToolsSqlPack "artifacts\buildtools\SqlPack.exe" -OutputFile sql.sqlite3
+        run: .\Build\buildtools-sql.ps1 -InformationAction Continue -BuildToolsSqlPack "artifacts\buildtools\SqlPack.exe" -OutputFile sql.sqlite3
 
       - name: <Artifact> SQL
         uses: actions/upload-artifact@v3
@@ -262,14 +262,14 @@ jobs:
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
+          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Artifact> Module
         uses: actions/upload-artifact@v3
@@ -305,11 +305,11 @@ jobs:
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
+          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Setup> Module
         shell: pwsh
-        run: .\Build\setup-test-module.ps1 -Service github -Module ${{ env.MODULE }}
+        run: .\Build\setup-test-module.ps1 -InformationAction Continue -Service github -Module ${{ env.MODULE }}
 
       - name: <Build> Module
         shell: pwsh
@@ -320,11 +320,11 @@ jobs:
           if( '${{ matrix.CONFIGURATION }}' -eq 'CI_TEST') {
             $isTest = $true
           }
-          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode  -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test:$isTest
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode  -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test:$isTest
 
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration ${{ matrix.CONFIGURATION }}
+        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration ${{ matrix.CONFIGURATION }}
 
 
   build-main:
@@ -359,14 +359,14 @@ jobs:
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
+          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Archive> Application
         shell: bash
@@ -399,22 +399,22 @@ jobs:
 
       - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\rewrite-module.ps1 -Module  ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+        run: .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
 
       - name: <Setup> Module
         shell: pwsh
-        run: .\Build\setup-test-module.ps1 -Service github -Module ${{ env.MODULE }}
+        run: .\Build\setup-test-module.ps1 -InformationAction Continue -Service github -Module ${{ env.MODULE }}
 
       - name: <Build> Module
         shell: pwsh
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test
 
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
+        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
   reconstitution-application:
     name: Reconstitution Application
@@ -472,17 +472,17 @@ jobs:
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          ./Build/reconstitute-application.ps1 -Archive 7z -Platform ${{ matrix.PLATFORM }} -ProductMode:$productMode -BuildType $buildType -InputDirectory artifacts  -OutputDirectory Output
+          ./Build/reconstitute-application.ps1 -InformationAction Continue -Archive 7z -Platform ${{ matrix.PLATFORM }} -ProductMode:$productMode -BuildType $buildType -InputDirectory artifacts  -OutputDirectory Output
 
       - name: <Cleanup> Application
         shell: pwsh
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
-          .\Build\cleanup-module.ps1 -AssemblyDirectory 'Output' -ProductMode:$productMode
+          .\Build\cleanup-module.ps1 -InformationAction Continue -AssemblyDirectory 'Output' -ProductMode:$productMode
 
       - name: <Compress> Application
         shell: pwsh
-        run: .\Build\compress-module.ps1 -TargetDirectory 'Output' -OutputFileBaseName "Pe_${{ matrix.PLATFORM }}" -Archive ${{ inputs.APPLICATION_ARCHIVE }}
+        run: .\Build\compress-module.ps1 -InformationAction Continue -TargetDirectory 'Output' -OutputFileBaseName "Pe_${{ matrix.PLATFORM }}" -Archive ${{ inputs.APPLICATION_ARCHIVE }}
 
       - name: <Artifact> Application
         uses: actions/upload-artifact@v3
@@ -518,7 +518,7 @@ jobs:
 
       - name: <Generate> Update Information
         shell: pwsh
-        run: .\Build\generate-update-information.ps1 -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'application' -Archive ${{ inputs.APPLICATION_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe') -Platforms ${{ env.PLATFORMS }}
+        run: .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'application' -Archive ${{ inputs.APPLICATION_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe') -Platforms ${{ env.PLATFORMS }}
 
       - name: <Artifact> Update Information
         uses: actions/upload-artifact@v3
@@ -558,11 +558,11 @@ jobs:
 
       - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+        run: .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
-        run: .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
+        run: .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
 
       - name: <Artifact> Module
         uses: actions/upload-artifact@v3
@@ -591,19 +591,19 @@ jobs:
 
       - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\rewrite-module.ps1 -Module  ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+        run: .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
 
       - name: <Setup> Module
         shell: pwsh
-        run: .\Build\setup-test-module.ps1 -Service github -Module ${{ env.MODULE }}
+        run: .\Build\setup-test-module.ps1 -InformationAction Continue -Service github -Module ${{ env.MODULE }}
 
       - name: <Build> Module
         shell: pwsh
-        run: .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Test
+        run: .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Test
 
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
+        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
   reconstitution-plugins:
     name: Reconstitution Plugins
@@ -631,7 +631,7 @@ jobs:
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $dirs = Get-ChildItem -Path (Join-Path -Path 'artifacts' -ChildPath 'plugins')
           foreach($dir in $dirs) {
-            .\Build\cleanup-module.ps1 -AssemblyDirectory $dir.FullName -ProductMode:$productMode
+            .\Build\cleanup-module.ps1 -InformationAction Continue -AssemblyDirectory $dir.FullName -ProductMode:$productMode
           }
 
       - name: <Compress> Plugins
@@ -639,7 +639,7 @@ jobs:
         run: |
           $dirs = Get-ChildItem -Path (Join-Path -Path 'artifacts' -ChildPath 'plugins')
           foreach($dir in $dirs) {
-            .\Build\compress-module.ps1 -TargetDirectory $dir.FullName -OutputFileBaseName "$($dir.Name)_${{ matrix.PLATFORM }}" -Archive ${{ inputs.PLUGINS_ARCHIVE }}
+            .\Build\compress-module.ps1 -InformationAction Continue -TargetDirectory $dir.FullName -OutputFileBaseName "$($dir.Name)_${{ matrix.PLATFORM }}" -Archive ${{ inputs.PLUGINS_ARCHIVE }}
           }
 
       - name: <Artifact> Plugins
@@ -676,7 +676,7 @@ jobs:
 
       - name: <Generate> Update Information
         shell: pwsh
-        run: .\Build\generate-update-information.ps1 -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
+        run: .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
 
       - name: <Artifact> Update Information
         uses: actions/upload-artifact@v3
