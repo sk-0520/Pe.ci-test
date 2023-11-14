@@ -121,7 +121,13 @@ $parameters = @{
 	repository = @{
 		application = @{
 			path = 'Source/Pe'
-			url = [uri]'https://github.com/sk-0520/Pe.git'
+			url = if ($AppTargetBranch -eq 'ci-test') {
+				# 通常フローでここに入ることはない
+				# ci-test 処理でリリース処理試験を行う場合のみ通る想定
+				[uri]'https://github.com/sk-0520/Pe_ci-test'
+			} else {
+				[uri]'https://github.com/sk-0520/Pe.git'
+			}
 		}
 	}
 }
