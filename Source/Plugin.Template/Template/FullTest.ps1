@@ -13,5 +13,5 @@ $scripts = @{
 	test = Join-Path -Path $scriptDirPath -ChildPath 'test-project.ps1'
 }
 
-Write-Information 'プロジェクトビルド'
+Write-Information 'プロジェクトテスト'
 & $scripts.test -ProjectName "$pluginName.Test" -Platforms $platforms

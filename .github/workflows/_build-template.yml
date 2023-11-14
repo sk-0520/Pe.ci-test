@@ -131,7 +131,7 @@ jobs:
           Set-Location ${{ env.PROJECT_DIR }}
           .\FullTest.ps1 -Verbose
 
-      - name: <Archive> Application
+      - name: <Archive> Plugin Template
         shell: bash
         run: ./Build/archive-compress.sh "plugin-template.tar" "${{ env.PROJECT_DIR }}"
 
