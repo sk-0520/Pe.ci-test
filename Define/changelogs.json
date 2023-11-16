@@ -1,69 +1,14 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.214+",
+		"date": "2023/11/16",
+		"version": "0.99.215",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "a9028fdab25178ea3762147feb6f77670b0dc0d8",
 						"subject": "#910: 自己解凍形式生成処理、なんか落ちてますよ"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -71,23 +16,15 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "583e2d89b2996c3a47d63b29e01deea00753aabc",
 						"subject": "#909: node を 20.* へバージョンアップ",
 						"comments": [
 							"各モジュール系もついでに更新"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "6f64a93395d2d986cc2721b6cb7c0169025c9e9c",
 						"subject": "#907: PowerShell のソースを機械的にキレイにしたい"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
