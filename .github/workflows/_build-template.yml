@@ -1,5 +1,3 @@
-name: Build Template
-
 on:
   workflow_call:
     inputs:
@@ -27,6 +25,32 @@ env:
 
 
 jobs:
+  lint-powershell:
+    name: Lint PowerShell
+
+    strategy:
+      matrix:
+        OS:
+          - windows-latest
+          - ubuntu-latest
+
+    runs-on: ${{ matrix.OS }}
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Lint> PowerShell
+        shell: pwsh
+        run: Invoke-ScriptAnalyzer -Path ./ -Recurse -Settings PSScriptAnalyzerSettings.psd1 -EnableExit
+        # uses: microsoft/psscriptanalyzer-action@v1.0
+        # with:
+        #  path: ./
+        #  recurse: true
+        #  settings: ./PSScriptAnalyzerSettings.psd1
+        #  output: results.sarif
+
+
   help:
     name: Help
     runs-on: ubuntu-latest
@@ -59,6 +83,66 @@ jobs:
           name: Help
           path: Output/help
 
+  plugin-template:
+    name: Plugin Template
+    needs:
+      - help
+    env:
+      EXPAND_DIR: plugin-template
+      PROJECT_DIR: \test-plugin
+      PROJECT_NAME: Plugin.Template
+
+    runs-on: windows-2022
+
+    steps:
+      - name: <Setting> Job
+        shell: pwsh
+        run: |
+          git config --global core.autocrlf false
+          git config --global user.email "${{ github.job }}@example.com"
+          git config --global user.name "${{ github.job }}"
+
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
+
+      - name: <Download> Help
+        uses: actions/download-artifact@v3
+        with:
+          name: Help
+          path: artifacts/help
+
+      - name: <Expand> Plugin Template
+        shell: pwsh
+        run: Expand-Archive -Verbose -Path artifacts/help/archives/plugin-template.zip -DestinationPath ${{ env.EXPAND_DIR }}
+
+      - name: <Create> Plugin Template
+        shell: pwsh
+        run: .\${{ env.EXPAND_DIR }}\create-project.ps1 -Verbose -InformationAction Continue -ProjectDirectory ${{ env.PROJECT_DIR }} -PluginName ${{ env.PROJECT_NAME }} -PluginId ([Guid]::Empty) -DefaultNamespace ${{ env.PROJECT_NAME }}  -AppTargetBranch '${{ github.ref_name }}'
+
+      - name: <Build> Plugin Template
+        shell: pwsh
+        run: |
+          Set-Location ${{ env.PROJECT_DIR }}
+          .\FullBuild.ps1 -Verbose -InformationAction Continue
+
+      - name: <Test> Plugin Template
+        shell: pwsh
+        run: |
+          Set-Location ${{ env.PROJECT_DIR }}
+          .\FullTest.ps1 -Verbose -InformationAction Continue
+
+      - name: <Archive> Plugin Template
+        shell: bash
+        run: ./Build/archive-compress.sh "plugin-template.tar" "${{ env.PROJECT_DIR }}"
+
+      - name: <Artifact> Plugin Template
+        uses: actions/upload-artifact@v3
+        with:
+          name: template-plugin
+          path: plugin-template.tar
+
+
+
   history:
     name: Release Note
     runs-on: ubuntu-latest
@@ -87,7 +171,7 @@ jobs:
           if( '${{ github.ref }}' -eq 'refs/heads/ci-test' ) {
             $ignoreEmpty = $true
           }
-          .\Build\generate-release-note.ps1 -OutputDirectory history -IgnoreEmpty:$ignoreEmpty
+          .\Build\generate-release-note.ps1 -InformationAction Continue -OutputDirectory history -IgnoreEmpty:$ignoreEmpty
 
       - name: <Artifact> Release Note
         uses: actions/upload-artifact@v3
@@ -119,7 +203,7 @@ jobs:
 
       - name: <Build> BuildTools
         shell: pwsh
-        run: .\Build\make-buildtools.ps1
+        run: .\Build\make-buildtools.ps1 -InformationAction Continue
 
       - name: <Artifact> BuildTools
         uses: actions/upload-artifact@v3
@@ -129,9 +213,9 @@ jobs:
 
   build-tools-sql:
     name: "BuildTools: SQL"
-    runs-on: windows-2022
     needs:
       - build-tools
+    runs-on: windows-2022
 
     steps:
       - name: <Checkout> Repository
@@ -145,7 +229,7 @@ jobs:
 
       - name: <Pack> SQL
         shell: pwsh
-        run: .\Build\buildtools-sql.ps1 -BuildToolsSqlPack "artifacts\buildtools\SqlPack.exe" -OutputFile sql.sqlite3
+        run: .\Build\buildtools-sql.ps1 -InformationAction Continue -BuildToolsSqlPack "artifacts\buildtools\SqlPack.exe" -OutputFile sql.sqlite3
 
       - name: <Artifact> SQL
         uses: actions/upload-artifact@v3
@@ -156,9 +240,9 @@ jobs:
 
   build-boot:
     name: Build Boot
-    runs-on: windows-2022
     env:
       MODULE: boot
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -178,14 +262,14 @@ jobs:
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
+          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Artifact> Module
         uses: actions/upload-artifact@v3
@@ -195,9 +279,9 @@ jobs:
 
   test-boot:
     name: Test Boot
-    runs-on: windows-2022
     env:
       MODULE: boot
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -221,11 +305,11 @@ jobs:
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
+          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Setup> Module
         shell: pwsh
-        run: .\Build\setup-test-module.ps1 -Service github -Module ${{ env.MODULE }}
+        run: .\Build\setup-test-module.ps1 -InformationAction Continue -Service github -Module ${{ env.MODULE }}
 
       - name: <Build> Module
         shell: pwsh
@@ -236,18 +320,18 @@ jobs:
           if( '${{ matrix.CONFIGURATION }}' -eq 'CI_TEST') {
             $isTest = $true
           }
-          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode  -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test:$isTest
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode  -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test:$isTest
 
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration ${{ matrix.CONFIGURATION }}
+        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration ${{ matrix.CONFIGURATION }}
 
 
   build-main:
     name: Build Main
-    runs-on: windows-2022
     env:
       MODULE: main
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -275,14 +359,14 @@ jobs:
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
+          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Archive> Application
         shell: bash
@@ -296,9 +380,9 @@ jobs:
 
   test-main:
     name: Test Main
-    runs-on: windows-2022
     env:
       MODULE: main
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -315,31 +399,31 @@ jobs:
 
       - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\rewrite-module.ps1 -Module  ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+        run: .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
 
       - name: <Setup> Module
         shell: pwsh
-        run: .\Build\setup-test-module.ps1 -Service github -Module ${{ env.MODULE }}
+        run: .\Build\setup-test-module.ps1 -InformationAction Continue -Service github -Module ${{ env.MODULE }}
 
       - name: <Build> Module
         shell: pwsh
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test
 
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
+        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
   reconstitution-application:
     name: Reconstitution Application
-    runs-on: windows-2022
     needs:
       - help
       - build-tools-sql
       - build-boot
       - build-main
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -388,17 +472,17 @@ jobs:
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          ./Build/reconstitute-application.ps1 -Archive 7z -Platform ${{ matrix.PLATFORM }} -ProductMode:$productMode -BuildType $buildType -InputDirectory artifacts  -OutputDirectory Output
+          ./Build/reconstitute-application.ps1 -InformationAction Continue -Archive 7z -Platform ${{ matrix.PLATFORM }} -ProductMode:$productMode -BuildType $buildType -InputDirectory artifacts  -OutputDirectory Output
 
       - name: <Cleanup> Application
         shell: pwsh
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
-          .\Build\cleanup-module.ps1 -AssemblyDirectory 'Output' -ProductMode:$productMode
+          .\Build\cleanup-module.ps1 -InformationAction Continue -AssemblyDirectory 'Output' -ProductMode:$productMode
 
       - name: <Compress> Application
         shell: pwsh
-        run: .\Build\compress-module.ps1 -TargetDirectory 'Output' -OutputFileBaseName "Pe_${{ matrix.PLATFORM }}" -Archive ${{ inputs.APPLICATION_ARCHIVE }}
+        run: .\Build\compress-module.ps1 -InformationAction Continue -TargetDirectory 'Output' -OutputFileBaseName "Pe_${{ matrix.PLATFORM }}" -Archive ${{ inputs.APPLICATION_ARCHIVE }}
 
       - name: <Artifact> Application
         uses: actions/upload-artifact@v3
@@ -408,9 +492,9 @@ jobs:
 
   information-application:
     name: Information Application
-    runs-on: ubuntu-latest
     needs:
       - reconstitution-application
+    runs-on: ubuntu-latest
 
     steps:
       - name: <Checkout> Repository
@@ -434,7 +518,7 @@ jobs:
 
       - name: <Generate> Update Information
         shell: pwsh
-        run: .\Build\generate-update-information.ps1 -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'application' -Archive ${{ inputs.APPLICATION_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe') -Platforms ${{ env.PLATFORMS }}
+        run: .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'application' -Archive ${{ inputs.APPLICATION_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe') -Platforms ${{ env.PLATFORMS }}
 
       - name: <Artifact> Update Information
         uses: actions/upload-artifact@v3
@@ -447,9 +531,9 @@ jobs:
 
   build-plugins:
     name: Build Plugins
-    runs-on: windows-2022
     env:
       MODULE: plugins
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -474,11 +558,11 @@ jobs:
 
       - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\rewrite-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+        run: .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
-        run: .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
+        run: .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
 
       - name: <Artifact> Module
         uses: actions/upload-artifact@v3
@@ -488,9 +572,9 @@ jobs:
 
   test-plugins:
     name: Test Plugins
-    runs-on: windows-2022
     env:
       MODULE: plugins
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -507,25 +591,25 @@ jobs:
 
       - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\rewrite-module.ps1 -Module  ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+        run: .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
 
       - name: <Setup> Module
         shell: pwsh
-        run: .\Build\setup-test-module.ps1 -Service github -Module ${{ env.MODULE }}
+        run: .\Build\setup-test-module.ps1 -InformationAction Continue -Service github -Module ${{ env.MODULE }}
 
       - name: <Build> Module
         shell: pwsh
-        run: .\Build\build-module.ps1 -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Test
+        run: .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Test
 
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
+        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
   reconstitution-plugins:
     name: Reconstitution Plugins
-    runs-on: windows-2022
     needs:
       - build-plugins
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -547,7 +631,7 @@ jobs:
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $dirs = Get-ChildItem -Path (Join-Path -Path 'artifacts' -ChildPath 'plugins')
           foreach($dir in $dirs) {
-            .\Build\cleanup-module.ps1 -AssemblyDirectory $dir.FullName -ProductMode:$productMode
+            .\Build\cleanup-module.ps1 -InformationAction Continue -AssemblyDirectory $dir.FullName -ProductMode:$productMode
           }
 
       - name: <Compress> Plugins
@@ -555,7 +639,7 @@ jobs:
         run: |
           $dirs = Get-ChildItem -Path (Join-Path -Path 'artifacts' -ChildPath 'plugins')
           foreach($dir in $dirs) {
-            .\Build\compress-module.ps1 -TargetDirectory $dir.FullName -OutputFileBaseName "$($dir.Name)_${{ matrix.PLATFORM }}" -Archive ${{ inputs.PLUGINS_ARCHIVE }}
+            .\Build\compress-module.ps1 -InformationAction Continue -TargetDirectory $dir.FullName -OutputFileBaseName "$($dir.Name)_${{ matrix.PLATFORM }}" -Archive ${{ inputs.PLUGINS_ARCHIVE }}
           }
 
       - name: <Artifact> Plugins
@@ -592,7 +676,7 @@ jobs:
 
       - name: <Generate> Update Information
         shell: pwsh
-        run: .\Build\generate-update-information.ps1 -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
+        run: .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
 
       - name: <Artifact> Update Information
         uses: actions/upload-artifact@v3
@@ -641,3 +725,20 @@ jobs:
         run: |
           cd Source/Pe/${{ matrix.TARGET }}
           dotnet test
+
+  # st-powershell:
+  #   name: System Test PowerShell
+  #   runs-on: windows-latest
+  #   needs:
+  #     - lint-powershell
+
+  #   steps:
+  #     - name: <Checkout> Repository
+  #       uses: actions/checkout@v3
+
+  #     - name: <Check> Update
+  #       shell: pwsh
+  #       run: |
+  #         New-Item -Path \dest -ItemType Directory
+  #         .\Source\Pe\Pe.Main\etc\script\update\update-application.ps1 -LogPath \dest.log -ProcessId 0 -WaitSeconds 0 -SourceDirectory (Get-Location).Path -DestinationDirectory \dest -CurrentVersion 0.0.0 -Platform x64 -UpdateBeforeScript .\Source\Pe\Pe.Main\etc\script\update\update-new-before.ps1 -UpdateAfterScript .\Source\Pe\Pe.Main\etc\script\update\update-new-after.ps1 -ExecuteCommand ver
+

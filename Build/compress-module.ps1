@@ -1,4 +1,4 @@
-
+﻿
 Param(
 	[Parameter(mandatory = $true)][string] $TargetDirectory,
 	[Parameter(mandatory = $true)][string] $OutputFileBaseName,
@@ -6,15 +6,15 @@ Param(
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$rootDirectory = Split-Path -Path $currentDirPath -Parent
+
+Import-Module "${PSScriptRoot}/Modules/Project"
+
 
 #/*[FUNCTIONS]-------------------------------------
 #*/[FUNCTIONS]-------------------------------------
 
-Write-Output $TargetDirectory
-Write-Output $OutputFileBaseName
-Write-Output $rootDirectory
+Write-Verbose "TargetDirectory = $TargetDirectory"
+Write-Verbose "OutputFileBaseName = $OutputFileBaseName"
 
 $outputFileName = $OutputFileBaseName + '.' + $Archive
 
@@ -31,14 +31,15 @@ try {
 		'tar' {
 			7z a -ttar "$outputFileName" * -r -bsp1
 		}
-		Default { throw "error: $Archive" }
+		Default {
+			throw "error: $Archive"
+  }
 	}
 	if (-not $?) {
 		throw "7z: $outputFileName"
 	}
 
-	Move-Item -Path $outputFileName -Destination $rootDirectory
-}
-finally {
+	Move-Item -Path $outputFileName -Destination (Get-RootDirectory) | Out-Null
+} finally {
 	Pop-Location
 }

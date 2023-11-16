@@ -1,4 +1,4 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][ValidateSet('boot', 'main', 'plugins')][string] $Module,
 	[switch] $ProductMode,
 	[string] $BuildType,
@@ -7,14 +7,9 @@ Param(
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$scriptFileNames = @(
-	'project.ps1'
-);
-foreach ($scriptFileName in $scriptFileNames) {
-	$scriptFilePath = Join-Path -Path $currentDirPath -ChildPath $scriptFileName
-	. $scriptFilePath
-}
+
+Import-Module "${PSScriptRoot}/Modules/Project"
+
 
 #/*[FUNCTIONS]-------------------------------------
 #*/[FUNCTIONS]-------------------------------------
@@ -35,35 +30,32 @@ if ($Module -eq 'boot') {
 	if ($Test) {
 		$configuration = 'CI_TEST'
 	}
-	msbuild (Join-Path -Path (GetSourceDirectory 'boot') -ChildPath 'Pe.Boot.sln') /m /p:Configuration=$configuration /p:Platform=$Platform /p:DefineConstants=$define
+	msbuild (Join-Path -Path (Get-SourceDirectory -Kind 'boot') -ChildPath 'Pe.Boot.sln') /m /p:Configuration=$configuration /p:Platform=$Platform /p:DefineConstants=$define
 	if (-not $?) {
 		throw "build error: $Module"
 	}
-}
-elseif ($Module -eq 'main') {
+} elseif ($Module -eq 'main') {
 	if ($Test) {
-		$testDirectories = GetTestProjectDirectories $Module
+		$testDirectories = Get-TestProjectDirectories -Kind $Module
 
 		foreach ($testDirectory in $testDirectories) {
-			$testProjectFilePath = (Join-Path -Path $testDirectory.FullName -ChildPath $testDirectory.Name) + ".csproj"
+			$testProjectFilePath = (Join-Path -Path $testDirectory.FullName -ChildPath $testDirectory.Name) + '.csproj'
 			dotnet build $testProjectFilePath /m --verbosity normal --configuration Release /p:Platform=$Platform /p:DefineConstants=$define --runtime win10-$Platform --no-self-contained
 			if (-not $?) {
 				throw "build error: $Module"
 			}
 		}
-	}
-	else {
-		dotnet publish (Join-Path -Path (GetSourceDirectory $Module) -ChildPath 'Pe.Main/Pe.Main.csproj') /m --verbosity normal --configuration Release /p:Platform=$Platform /p:DefineConstants=$define --runtime win10-$Platform --output Output/Release/$Platform/Pe/bin --self-contained true
+	} else {
+		dotnet publish (Join-Path -Path (Get-SourceDirectory -Kind $Module) -ChildPath 'Pe.Main/Pe.Main.csproj') /m --verbosity normal --configuration Release /p:Platform=$Platform /p:DefineConstants=$define --runtime win10-$Platform --output Output/Release/$Platform/Pe/bin --self-contained true
 		if (-not $?) {
 			throw "build error: $Module"
 		}
 
 	}
-}
-elseif ($Module -eq 'plugins') {
+} elseif ($Module -eq 'plugins') {
 	# プラグイン参考実装
-	$pluginProjectFiles = GetApplicationProjectDirectories $Module `
-	| Get-ChildItem -File -Recurse -Include '*.csproj'
+	$pluginProjectFiles = Get-ApplicationProjectDirectories -Kind $Module |
+		Get-ChildItem -File -Recurse -Include '*.csproj'
 
 	foreach ($pluginProjectFile in $pluginProjectFiles) {
 		$name = $pluginProjectFile.BaseName
@@ -73,9 +65,8 @@ elseif ($Module -eq 'plugins') {
 			throw "build error: $Module - $name"
 		}
 	}
-}
-else {
-	throw 'うわわわわ'
+} else {
+	throw "module error: $Module"
 }
 #$projectFiles = (Get-ChildItem -Path "Source\Pe\" -Recurse -Include *.csproj)
 

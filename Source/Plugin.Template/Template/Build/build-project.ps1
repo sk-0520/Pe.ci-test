@@ -1,4 +1,4 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][string] $ProjectName,
 	[Parameter(mandatory = $true)][string[]] $Platforms
 )
@@ -17,6 +17,6 @@ foreach ($scriptFileName in $scriptFileNames) {
 foreach ($platform in $Platforms) {
 	dotnet publish Source/$ProjectName/$ProjectName.csproj /m --verbosity normal --configuration Release /p:Platform=$platform --runtime win-$platform --output Output/Release/$platform/$ProjectName --self-contained false
 	if (-not $?) {
-		exit 1
+		throw "build error: $?"
 	}
 }

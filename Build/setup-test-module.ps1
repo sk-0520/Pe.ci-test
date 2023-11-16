@@ -1,17 +1,12 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][ValidateSet('boot', 'main', 'plugins')][string] $Module,
 	[ValidateSet('github')][string] $Service
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$scriptFileNames = @(
-	'project.ps1'
-);
-foreach ($scriptFileName in $scriptFileNames) {
-	$scriptFilePath = Join-Path -Path $currentDirPath -ChildPath $scriptFileName
-	. $scriptFilePath
-}
+
+Import-Module "${PSScriptRoot}/Modules/Project"
+
 
 #/*[FUNCTIONS]-------------------------------------
 #*/[FUNCTIONS]-------------------------------------
@@ -19,9 +14,8 @@ foreach ($scriptFileName in $scriptFileNames) {
 if ($Service -eq 'github') {
 	if ($Module -eq 'boot') {
 		# 何もしない
-	}
-	elseif ($Module -eq 'main' -or $Module -eq 'plugins') {
-		$testProjectDirs = GetTestProjectDirectories $Module
+	} elseif ($Module -eq 'main' -or $Module -eq 'plugins') {
+		$testProjectDirs = Get-TestProjectDirectories -Kind $Module
 		foreach ($testProjectDir in $testProjectDirs) {
 			Push-Location $testProjectDir
 			try {
@@ -29,16 +23,13 @@ if ($Service -eq 'github') {
 				if (-not $?) {
 					throw "error: $Module - $testProjectDir"
 				}
-			}
-			finally {
+			} finally {
 				Pop-Location
 			}
 		}
-	}
-	else {
+	} else {
 		throw "error module: $Module"
 	}
-}
-else {
+} else {
 	throw "error service: $Service"
 }

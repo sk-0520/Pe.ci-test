@@ -1,5 +1,36 @@
 [
 	{
+		"date": "2023/11/16",
+		"version": "0.99.215",
+		"contents": [
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "a9028fdab25178ea3762147feb6f77670b0dc0d8",
+						"subject": "#910: 自己解凍形式生成処理、なんか落ちてますよ"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "583e2d89b2996c3a47d63b29e01deea00753aabc",
+						"subject": "#909: node を 20.* へバージョンアップ",
+						"comments": [
+							"各モジュール系もついでに更新"
+						]
+					},
+					{
+						"revision": "6f64a93395d2d986cc2721b6cb7c0169025c9e9c",
+						"subject": "#907: PowerShell のソースを機械的にキレイにしたい"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/11/07",
 		"version": "0.99.214",
 		"contents": [
@@ -15,7 +46,7 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "4ead3e1c471c80c91074279a10aed85a8091b707",
 						"subject": "#900: CI/CD のテストはもう単独実行でいいでしょ",
 						"comments": [
 							"CI/CD 周りの処理をがっつり変更した"

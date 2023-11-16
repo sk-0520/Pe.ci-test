@@ -1,36 +1,50 @@
 ﻿$ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
-function TestCommandExists {
-	Param ($command)
+function Test-CommandExist {
+	[OutputType([bool])]
+	Param (
+		[Parameter(Mandatory = $true)][string] $Command
+	)
 
 	$oldPreference = $ErrorActionPreference
 
 	$ErrorActionPreference = 'stop'
 
 	try {
-		if (Get-Command $command) {
+		if (Get-Command $Command) {
 			return $true
 		}
-	}
-	catch {
+	} catch {
 		return $false
-	}
-	finally {
+	} finally {
 		$ErrorActionPreference = $oldPreference
 	}
 }
 
-function SetCommand($command, $envName, $defaultPath) {
+function Set-Command {
+	[CmdletBinding(SupportsShouldProcess)]
+	Param (
+		[Parameter(Mandatory = $true)][string] $Command,
+		[Parameter(Mandatory = $true)][string] $EnvironmentVariableName,
+		[Parameter(Mandatory = $true)][string] $DefaultPath
+	)
 
-	if ( ! ( TestCommandExists $command )) {
+	if ( ! ( Test-CommandExist -Command $Command )) {
 		#$envValue = env:$envName
-		$envValue = Get-ChildItem env: | Where-Object { $_.Name -match $envName } | Select-Object -Property Value -First 1
+		$envValue = Get-ChildItem env: | Where-Object { $_.Name -match $EnvironmentVariableName } | Select-Object -Property Value -First 1
 		if ( $null -eq $envValue) {
-			$env:Path = [Environment]::ExpandEnvironmentVariables($defaultPath) + ';' + $env:Path
-		}
-		else {
-			$env:Path = [Environment]::ExpandEnvironmentVariables($envValue) + ';' + $env:Path
+			if ($PSCmdlet.ShouldProcess('Command', "$DefaultPath を PATH に設定")) {
+				$env:Path = [Environment]::ExpandEnvironmentVariables($DefaultPath) + ';' + $env:Path
+			} else {
+				Write-Verbose "`[DRY`] add $DefaultPath"
+			}
+		} else {
+			if ($PSCmdlet.ShouldProcess('Command', "$EnvironmentVariableName を PATH に設定")) {
+				$env:Path = [Environment]::ExpandEnvironmentVariables($EnvironmentVariableName) + ';' + $env:Path
+			} else {
+				Write-Verbose "`[DRY`] add $EnvironmentVariableName"
+			}
 		}
 	}
 }
@@ -44,20 +58,18 @@ function TestAliasExists([string] $alias) {
 		if (Get-Alias $alias) {
 			return $true
 		}
-	}
-	catch {
+	} catch {
 		return $false
-	}
-	finally {
+	} finally {
 		$ErrorActionPreference = $oldPreference
 	}
 }
 
-SetCommand 'git'     'BUILD_GIT_PATH'     "%PROGRAMFILES%\git\bin"
-SetCommand 'msbuild' 'BUILD_MSBUILD_PATH' "%PROGRAMFILES%\Microsoft Visual Studio\2022\Community\Msbuild\Current\Bin"
-SetCommand 'dotnet'  'BUILD_DOTNET_PATH'  "%PROGRAMFILES%\dotnet"
-SetCommand 'node'    'BUILD_NODE_PATH'    "%PROGRAMFILES%\nodejs"
-SetCommand 'npm'     'BUILD_NPM_PATH'     "%PROGRAMFILES%\nodejs"
-SetCommand 'npx'     'BUILD_NPX_PATH'     "%PROGRAMFILES%\nodejs"
-SetCommand '7z'      'BUILD_7ZIP_PATH'    "%PROGRAMFILES%\7-Zip"
+Set-Command -Command 'git'     -EnvironmentVariableName 'BUILD_GIT_PATH'     -DefaultPath '%PROGRAMFILES%\git\bin'
+Set-Command -Command 'msbuild' -EnvironmentVariableName 'BUILD_MSBUILD_PATH' -DefaultPath '%PROGRAMFILES%\Microsoft Visual Studio\2022\Community\Msbuild\Current\Bin'
+Set-Command -Command 'dotnet'  -EnvironmentVariableName 'BUILD_DOTNET_PATH'  -DefaultPath '%PROGRAMFILES%\dotnet'
+Set-Command -Command 'node'    -EnvironmentVariableName 'BUILD_NODE_PATH'    -DefaultPath '%PROGRAMFILES%\nodejs'
+Set-Command -Command 'npm'     -EnvironmentVariableName 'BUILD_NPM_PATH'     -DefaultPath '%PROGRAMFILES%\nodejs'
+Set-Command -Command 'npx'     -EnvironmentVariableName 'BUILD_NPX_PATH'     -DefaultPath '%PROGRAMFILES%\nodejs'
+Set-Command -Command '7z'      -EnvironmentVariableName 'BUILD_7ZIP_PATH'    -DefaultPath '%PROGRAMFILES%\7-Zip'
 

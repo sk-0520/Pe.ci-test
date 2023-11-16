@@ -6,6 +6,7 @@ on:
     - master
     - ci-test
     - develop
+  pull_request:
 
 
 concurrency:
@@ -43,7 +44,7 @@ jobs:
       - name: <Generate> Version
         id: version
         shell: pwsh
-        run: ./Build/generate-version-data.ps1 -TargetRepository 'github'
+        run: ./Build/generate-version-data.ps1 -InformationAction Continue -TargetRepository 'github'
 
       - name: <Read> Version
         shell: pwsh
@@ -100,7 +101,7 @@ jobs:
 
       - name: <🌳> 🌲
         shell: pwsh
-        run:  |
+        run: |
           Get-ChildItem artifacts -R -File | Select-Object FullName | Format-Table -AutoSize -Wrap
 
 

@@ -20,11 +20,11 @@ jobs:
 
       - name: <Embedded> git revision
         shell: pwsh
-        run: .\Build\embedded-revision.ps1 -Revision ${{ github.sha }} -ProjectFilePath .\Source\Directory.Build.props
+        run: .\Build\embedded-revision.ps1 -InformationAction Continue -Revision ${{ github.sha }} -ProjectFilePath .\Source\Directory.Build.props
 
       - name: <Build> Plugin
         shell: pwsh
-        run: .\FullBuild.ps1
+        run: .\FullBuild.ps1 -InformationAction Continue
 
       - name: <Artifact> Plugin
         uses: actions/upload-artifact@v3
@@ -52,7 +52,7 @@ jobs:
 
       - name: <Test> Plugin
         shell: pwsh
-        run: .\FullTest.ps1
+        run: .\FullTest.ps1 -InformationAction Continue
 
   deploy:
     needs:
