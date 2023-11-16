@@ -35,8 +35,8 @@ if (!(Test-Path -Path $_workDirectoryPath)) {
 
 
 $versions = @{
-	'path' = ConvertVersion $latestVersion '.'
-	'file' = 'Pe_' + (ConvertVersion $latestVersion '-')
+	'path' = Convert-Version -Version $latestVersion -Separator '.'
+	'file' = 'Pe_' + (Convert-Version -Version $latestVersion -Separator '-')
 }
 
 $archiveFilePath = ''

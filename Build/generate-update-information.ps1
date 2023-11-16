@@ -66,7 +66,7 @@ function Get-UpdateItem {
 		version = $version
 		revision = $Revision
 		platform = $Platform
-		minimum_version = ConvertVersion $MinimumVersion '.'
+		minimum_version = Convert-Version -Version $MinimumVersion -Separator '.'
 		note_uri = $NoteUri
 		archive_uri = (Convert-Template -Source $ArchiveBaseUrl).Replace('@ARCHIVENAME@', (Split-Path $ArchiveFilePath -Leaf))
 		archive_size = (Get-Item -Path $ArchiveFilePath).Length

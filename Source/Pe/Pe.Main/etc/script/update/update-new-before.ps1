@@ -6,9 +6,9 @@ Param(
 )
 $ErrorActionPreference = "Stop"
 
-Write-Information "最新アップデート前スクリプト実施!!"
+Write-Host "最新アップデート前スクリプト実施!!"
 
-Write-Information "DestinationDirectory: $DestinationDirectory"
-Write-Information "CurrentVersion: $CurrentVersion"
-Write-Information "Platform: $Platform"
+Write-Host "DestinationDirectory: $DestinationDirectory"
+Write-Host "CurrentVersion: $CurrentVersion"
+Write-Host "Platform: $Platform"
 

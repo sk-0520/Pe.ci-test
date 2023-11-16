@@ -725,3 +725,20 @@ jobs:
         run: |
           cd Source/Pe/${{ matrix.TARGET }}
           dotnet test
+
+  # st-powershell:
+  #   name: System Test PowerShell
+  #   runs-on: windows-latest
+  #   needs:
+  #     - lint-powershell
+
+  #   steps:
+  #     - name: <Checkout> Repository
+  #       uses: actions/checkout@v3
+
+  #     - name: <Check> Update
+  #       shell: pwsh
+  #       run: |
+  #         New-Item -Path \dest -ItemType Directory
+  #         .\Source\Pe\Pe.Main\etc\script\update\update-application.ps1 -LogPath \dest.log -ProcessId 0 -WaitSeconds 0 -SourceDirectory (Get-Location).Path -DestinationDirectory \dest -CurrentVersion 0.0.0 -Platform x64 -UpdateBeforeScript .\Source\Pe\Pe.Main\etc\script\update\update-new-before.ps1 -UpdateAfterScript .\Source\Pe\Pe.Main\etc\script\update\update-new-after.ps1 -ExecuteCommand ver
+

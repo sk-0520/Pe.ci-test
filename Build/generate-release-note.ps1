@@ -115,7 +115,7 @@ class Element {
 	}
 }
 
-function MakeApplication {
+function Make-Application {
 	$templateHtmlFile = Join-Path -Path $PSScriptRoot -ChildPath 'release-note.html'
 
 	# 速度とかどうでもいい
@@ -185,7 +185,7 @@ function MakeApplication {
 	Set-Content (Join-Path -Path $OutputDirectory -ChildPath 'Pe.html') -Value $htmlContent -Encoding UTF8
 }
 
-function MakePlugins {
+function Make-Plugins {
 	$pluginTemplateHtmlFile = Join-Path -Path $PSScriptRoot -ChildPath 'release-note.plugin.html'
 
 	#Set-WinSystemLocale ja-JP
@@ -221,6 +221,6 @@ function MakePlugins {
 #*/[FUNCTIONS]-------------------------------------
 
 
-MakeApplication
+Make-Application
 
-MakePlugins
+Make-Plugins

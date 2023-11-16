@@ -11,8 +11,9 @@ Import-Module "${PSScriptRoot}/Modules/Version"
 #*/[FUNCTIONS]-------------------------------------
 
 
-$dot = Get-ApplicationVersion
-$hyphen = (ConvertVersion (Get-ApplicationVersion) '-')
+$version = Get-ApplicationVersion
+$dot = Convert-Version -Version $version -Separator '.'
+$hyphen = Convert-Version -Version $version -Separator '-'
 
 if ($TargetRepository -eq 'github') {
 	Write-Output "dot=$dot" >> $env:GITHUB_OUTPUT

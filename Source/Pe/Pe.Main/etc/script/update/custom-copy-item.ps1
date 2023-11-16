@@ -50,8 +50,8 @@ foreach ($srcDir in $srcDirs) {
 			Write-Progress -Activity 'COPY' -CurrentOperation "mkdir $destPath" -PercentComplete $percent
 		}
 		$progressOutput {
-			#Write-Information "[$percent%] mkdir $destPath"
-			Write-Information "[$('{0,6:##0.00}' -f $percent)%] mkdir $destPath"
+			#Write-Host "[$percent%] mkdir $destPath"
+			Write-Host "[$('{0,6:##0.00}' -f $percent)%] mkdir $destPath"
 		}
 	}
 
@@ -67,7 +67,7 @@ foreach ($srcFile in $srcFiles) {
 			Write-Progress -Activity 'COPY' -CurrentOperation "$srcFile -> $destPath" -PercentComplete $percent
 		}
 		$progressOutput {
-			Write-Information "[$('{0,6:##0.00}' -f $percent)%] $srcPath -> $destPath"
+			Write-Host "[$('{0,6:##0.00}' -f $percent)%] $srcPath -> $destPath"
 		}
 	}
 
