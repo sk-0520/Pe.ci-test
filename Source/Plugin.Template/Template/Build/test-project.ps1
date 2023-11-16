@@ -1,4 +1,4 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][string] $ProjectName,
 	[Parameter(mandatory = $true)][string[]] $Platforms
 )
@@ -17,6 +17,6 @@ foreach ($scriptFileName in $scriptFileNames) {
 foreach ($platform in $Platforms) {
 	dotnet test Source/$ProjectName/$ProjectName.csproj /m --verbosity normal --configuration Release /p:Platform=$platform --runtime win-$platform
 	if (-not $?) {
-		exit 1
+		throw "test error: $?"
 	}
 }

@@ -1,27 +1,20 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][string] $OutputDirectory,
 	[switch] $IgnoreEmpty
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $PSDefaultParameterValues['Out-File:Encoding'] = 'utf8'
-$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$scriptFileNames = @(
-	'version.ps1',
-	'project.ps1'
-);
-foreach ($scriptFileName in $scriptFileNames) {
-	$scriptFilePath = Join-Path -Path $currentDirPath -ChildPath $scriptFileName
-	. $scriptFilePath
-}
-$rootDirPath = Split-Path -Parent $currentDirPath
+
+Import-Module "${PSScriptRoot}/Modules/Project"
+Import-Module "${PSScriptRoot}/Modules/Version"
 
 # STARTUP
 
 $contentMap = @{
-	'note'      = 'メモ'
-	'features'  = '機能'
-	'fixes'     = '修正'
+	'note' = 'メモ'
+	'features' = '機能'
+	'fixes' = '修正'
 	'developer' = '開発'
 }
 
@@ -31,6 +24,7 @@ if ( Test-Path -Path $OutputDirectory ) {
 New-Item -Path $OutputDirectory -ItemType Directory
 $OutputDirectory = Convert-Path -Path $OutputDirectory
 
+$rootDirPath = Get-RootDirectory
 
 $rawChangelogLinkFile = Join-Path -Path $rootDirPath -ChildPath 'Source' | Join-Path -ChildPath 'Help' | Join-Path -ChildPath 'script' | Join-Path -ChildPath 'changelog-link.ts'
 $rawChangelogStyleFile = Join-Path -Path $rootDirPath -ChildPath 'Source' | Join-Path -ChildPath 'Help' | Join-Path -ChildPath 'style' | Join-Path -ChildPath 'changelog.scss'
@@ -95,15 +89,13 @@ class Element {
 			$html = @()
 			if ( 0 -eq $this.attributes.Count) {
 				$html += "<$($this.elementName)>"
-			}
-			else {
+			} else {
 				$attrs = @()
 				foreach ($key in $this.attributes.Keys) {
 					$val = $this.attributes[$key]
 					if ($val) {
 						$attrs += "${key}=`"$($this.Escape(${val}))`""
-					}
-					else {
+					} else {
 						$attrs += "${key}"
 					}
 				}
@@ -117,15 +109,14 @@ class Element {
 
 			$html += "</$($this.elementName)>"
 			return $html -join ''
-		}
-		else {
+		} else {
 			return $this.Escape($this.text)
 		}
 	}
 }
 
-function MakeApplication {
-	$templateHtmlFile = Join-Path -Path $currentDirPath -ChildPath 'release-note.html'
+function Make-Application {
+	$templateHtmlFile = Join-Path -Path $PSScriptRoot -ChildPath 'release-note.html'
 
 	# 速度とかどうでもいい
 	$root = New-Object Element 'div'
@@ -138,7 +129,7 @@ function MakeApplication {
 	foreach ($content in $currentVersion.contents) {
 		if (!($content.PSObject.Properties.Match('logs').Count)) {
 			if (!$IgnoreEmpty) {
-				throw "!!empty logs!!"
+				throw '!!empty logs!!'
 			}
 			continue;
 		}
@@ -150,7 +141,7 @@ function MakeApplication {
 		$logs = $section.CreateChild('ul')
 		foreach ($log in $content.logs) {
 			if (!$IgnoreEmpty -And [string]::IsNullOrWhitespace($log.subject)) {
-				throw "!!empty log!!"
+				throw '!!empty log!!'
 			}
 
 			$logItem = $logs.CreateChild('li')
@@ -194,14 +185,14 @@ function MakeApplication {
 	Set-Content (Join-Path -Path $OutputDirectory -ChildPath 'Pe.html') -Value $htmlContent -Encoding UTF8
 }
 
-function MakePlugins {
-	$pluginTemplateHtmlFile = Join-Path -Path $currentDirPath -ChildPath 'release-note.plugin.html'
+function Make-Plugins {
+	$pluginTemplateHtmlFile = Join-Path -Path $PSScriptRoot -ChildPath 'release-note.plugin.html'
 
 	#Set-WinSystemLocale ja-JP
 
 	#$logFile = '@.txt'
 
-	$pluginProjectDirectories = GetProjectDirectories 'plugins'
+	$pluginProjectDirectories = Get-ProjectDirectories -Kind 'plugins'
 	foreach ($pluginProjectDirectory in $pluginProjectDirectories) {
 		$outputName = $pluginProjectDirectory.Name + '.html'
 
@@ -230,6 +221,6 @@ function MakePlugins {
 #*/[FUNCTIONS]-------------------------------------
 
 
-MakeApplication
+Make-Application
 
-MakePlugins
+Make-Plugins
