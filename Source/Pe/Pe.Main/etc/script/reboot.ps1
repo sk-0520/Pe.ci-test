@@ -25,7 +25,7 @@ try {
 				Wait-Process -Id $ProcessId -Timeout $WaitSeconds
 				Write-Host "プロセス終了: $ProcessId"
 			} catch {
-				Write-Warning $Error -ForegroundColor Yellow -BackgroundColor Black
+				Write-Host $Error -ForegroundColor Yellow -BackgroundColor Black
 				Write-Warning 'プロセス終了を無視'
 			}
 		}
@@ -46,7 +46,7 @@ try {
 	}
 
 } catch {
-	Write-Error $error
+	Write-Host $Error -ForegroundColor Yellow -BackgroundColor Black
 	Read-Host "エラーが発生しました。`r`nログファイル: $LogPath を参照してください。`r`nEnter で終了します"
 }
 
