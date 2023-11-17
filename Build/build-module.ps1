@@ -35,22 +35,9 @@ if ($Module -eq 'boot') {
 		throw "build error: $Module"
 	}
 } elseif ($Module -eq 'main') {
-	if ($Test) {
-		$testDirectories = Get-TestProjectDirectories -Kind $Module
-
-		foreach ($testDirectory in $testDirectories) {
-			$testProjectFilePath = (Join-Path -Path $testDirectory.FullName -ChildPath $testDirectory.Name) + '.csproj'
-			dotnet build $testProjectFilePath /m --verbosity normal --configuration Release /p:Platform=$Platform /p:DefineConstants=$define --runtime win-$Platform --no-self-contained
-			if (-not $?) {
-				throw "build error: $Module"
-			}
-		}
-	} else {
-		dotnet publish (Join-Path -Path (Get-SourceDirectory -Kind $Module) -ChildPath 'Pe.Main/Pe.Main.csproj') /m --verbosity normal --configuration Release /p:Platform=$Platform /p:DefineConstants=$define --runtime win-$Platform --output Output/Release/$Platform/Pe/bin --self-contained true
-		if (-not $?) {
-			throw "build error: $Module"
-		}
-
+	dotnet publish (Join-Path -Path (Get-SourceDirectory -Kind $Module) -ChildPath 'Pe.Main/Pe.Main.csproj') /m --verbosity normal --configuration Release /p:Platform=$Platform /p:DefineConstants=$define --runtime win-$Platform --output Output/Release/$Platform/Pe/bin --self-contained true
+	if (-not $?) {
+		throw "build error: $Module"
 	}
 } elseif ($Module -eq 'plugins') {
 	# プラグイン参考実装
