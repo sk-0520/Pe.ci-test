@@ -726,19 +726,27 @@ jobs:
           cd Source/Pe/${{ matrix.TARGET }}
           dotnet test
 
-  # st-powershell:
-  #   name: System Test PowerShell
-  #   runs-on: windows-latest
-  #   needs:
-  #     - lint-powershell
+  st-powershell:
+    name: System Test PowerShell
+    env:
+      UPDATE_DESTINATION: \dest
+    runs-on: windows-latest
+    needs:
+      - lint-powershell
 
-  #   steps:
-  #     - name: <Checkout> Repository
-  #       uses: actions/checkout@v3
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
 
-  #     - name: <Check> Update
-  #       shell: pwsh
-  #       run: |
-  #         New-Item -Path \dest -ItemType Directory
-  #         .\Source\Pe\Pe.Main\etc\script\update\update-application.ps1 -LogPath \dest.log -ProcessId 0 -WaitSeconds 0 -SourceDirectory (Get-Location).Path -DestinationDirectory \dest -CurrentVersion 0.0.0 -Platform x64 -UpdateBeforeScript .\Source\Pe\Pe.Main\etc\script\update\update-new-before.ps1 -UpdateAfterScript .\Source\Pe\Pe.Main\etc\script\update\update-new-after.ps1 -ExecuteCommand ver
+      - name: <Check> Update
+        shell: pwsh
+        run: .\Source\PowerShell.Test\ST\update-application.test.ps1 -Source (Get-Location).Path -Destination ${{ env.UPDATE_DESTINATION }} -Command ([Environment]::ExpandEnvironmentVariables('%SystemRoot%\System32\winver.exe'))
+
+      - name: <Artifact> Update
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.job }}-Update.log
+          path: ${{ env.UPDATE_DESTINATION }}.log
+
 
