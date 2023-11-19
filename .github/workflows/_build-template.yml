@@ -120,7 +120,7 @@ jobs:
       - name: <Add> msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
         with:
-          msbuild-architecture: x64
+          msbuild-architecture: ${{ matrix.PLATFORM }}
 
       - name: <Download> Help
         uses: actions/download-artifact@v3
