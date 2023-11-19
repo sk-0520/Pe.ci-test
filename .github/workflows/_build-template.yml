@@ -426,7 +426,7 @@ jobs:
     strategy:
       matrix:
         PLATFORM:
-          #- x86
+          - x86
           - x64
 
     steps:
@@ -442,6 +442,13 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
         with:
           msbuild-architecture: ${{ matrix.PLATFORM }}
+
+      - name: dotnet
+        shell: pwsh
+        run: |
+          dotnet --version
+          dotnet --list-sdks
+
 
       - name: <Rewrite> Module
         shell: pwsh
