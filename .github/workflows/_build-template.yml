@@ -773,9 +773,6 @@ jobs:
           - Pe.Standard.Base.Test
           - Pe.Standard.Database.Test
           - Pe.Standard.DependencyInjection.Test
-        PLATFORM:
-          - x86
-          - x64
 
     runs-on: ${{ matrix.OS }}
 
