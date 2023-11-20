@@ -16,6 +16,9 @@ on:
       PE_RELEASE_NOTE_BASE_URL:
         required: true
         type: string
+      OS_WINDOWS:
+        type: string
+        default: windows-2022
 
 
 env:
@@ -99,7 +102,7 @@ jobs:
           - x86
           - x64
 
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     steps:
       - name: <Setting> Job
@@ -200,7 +203,7 @@ jobs:
 
   build-tools:
     name: Build BuildTools
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     steps:
       - name: <Checkout> Repository
@@ -238,7 +241,7 @@ jobs:
     name: "BuildTools: SQL"
     needs:
       - build-tools
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     steps:
       - name: <Checkout> Repository
@@ -270,7 +273,7 @@ jobs:
     name: Build Boot
     env:
       MODULE: boot
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
@@ -311,7 +314,7 @@ jobs:
     name: Test Boot
     env:
       MODULE: boot
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
@@ -365,7 +368,7 @@ jobs:
     name: Build Main
     env:
       MODULE: main
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
@@ -423,7 +426,7 @@ jobs:
     name: Test Main
     env:
       MODULE: main
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
@@ -469,7 +472,7 @@ jobs:
       - build-tools-sql
       - build-boot
       - build-main
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
@@ -586,7 +589,7 @@ jobs:
     name: Build Plugins
     env:
       MODULE: plugins
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
@@ -634,7 +637,7 @@ jobs:
     name: Test Plugins
     env:
       MODULE: plugins
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
@@ -675,7 +678,7 @@ jobs:
     name: Reconstitution Plugins
     needs:
       - build-plugins
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
