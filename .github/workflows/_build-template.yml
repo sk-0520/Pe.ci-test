@@ -22,7 +22,7 @@ env:
   MINIMUM_VERSION: 0.91.0
   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
   PLATFORMS: x86,x64
-  DOTNET_VERSION: 8.x
+  DOTNET_VERSION: 8.0.x
 
 
 jobs:
