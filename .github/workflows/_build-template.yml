@@ -147,7 +147,7 @@ jobs:
 
       - name: <Test> Plugin Template
         # x86 が動かない問題, あとで対処
-        if: matrix.PLATFORM == 'x64'
+        #if: matrix.PLATFORM == 'x64'
         shell: pwsh
         run: |
           Set-Location ${{ env.PROJECT_DIR }}
@@ -458,7 +458,7 @@ jobs:
 
       - name: <Test> Module
         # x86 が動かない問題, あとで対処
-        if: matrix.PLATFORM == 'x64'
+        #if: matrix.PLATFORM == 'x64'
         shell: pwsh
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
