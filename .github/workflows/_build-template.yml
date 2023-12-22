@@ -293,16 +293,14 @@ jobs:
       - name: <Rewrite> Module
         shell: pwsh
         run: |
-          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
+          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
         run: |
-          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Artifact> Module
         uses: actions/upload-artifact@v3
@@ -340,9 +338,8 @@ jobs:
       - name: <Rewrite> Module
         shell: pwsh
         run: |
-          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
+          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Setup> Module
         shell: pwsh
@@ -357,7 +354,7 @@ jobs:
           if( '${{ matrix.CONFIGURATION }}' -eq 'CI_TEST') {
             $isTest = $true
           }
-          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode  -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test:$isTest
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test:$isTest
 
       - name: <Test> Module
         shell: pwsh
@@ -403,14 +400,14 @@ jobs:
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
+          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Archive> Application
         shell: bash
@@ -457,13 +454,8 @@ jobs:
         run: .\Build\setup-test-module.ps1 -InformationAction Continue -Service github -Module ${{ env.MODULE }}
 
       - name: <Test> Module
-        # x86 が動かない問題, あとで対処
-        #if: matrix.PLATFORM == 'x64'
         shell: pwsh
-        run: |
-          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
-          $buildType = $productMode ? '': 'BETA'
-          .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
+        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
   reconstitution-application:
     name: Reconstitution Application
@@ -669,10 +661,7 @@ jobs:
 
       - name: <Test> Module
         shell: pwsh
-        run: |
-          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
-          $buildType = $productMode ? '': 'BETA'
-          .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
+        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
   reconstitution-plugins:
     name: Reconstitution Plugins

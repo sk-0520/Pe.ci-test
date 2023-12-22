@@ -25,6 +25,8 @@ if ( $ProductMode ) {
 # ; を扱う https://docs.microsoft.com/ja-jp/visualstudio/msbuild/msbuild-special-characters?view=vs-2015&redirectedfrom=MSDN
 $define = $defines -join '%3B'
 
+Write-Information "define: $define"
+
 if ($Module -eq 'boot') {
 	$configuration = 'Release'
 	if ($Test) {
