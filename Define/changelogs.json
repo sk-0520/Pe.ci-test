@@ -1,5 +1,52 @@
 [
 	{
+		"date": "2023/12/12",
+		"version": "0.99.217",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "compatibility",
+						"class": "compatibility",
+						"subject": "本バージョンから .NET 8 で稼働します",
+						"comments": [
+							"多分大丈夫だと思うけど一応互換性注意"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "f5478d716aaf5d7dd426c71595f97218aafd946d",
+						"subject": "#911: .NET 8 へ移行"
+					},
+					{
+						"revision": "7b42504a5e3d0daba125467f5f7afa5c49022531",
+						"subject": "CefSharp.Wpf.NETCore 117.2.40 -> 120.1.80"
+					},
+					{
+						"revision": "c5570fcc77a8029631645262da9c9812f346a50c",
+						"subject": "Dapper 2.1.15 -> 2.1.24"
+					},
+					{
+						"revision": "dd94656b55f9e162c0e67755ff8a29335ae8923a",
+						"subject": "NLog.Extensions.Logging 5.3.5 -> 5.3.7"
+					},
+					{
+						"revision": "b70bcc973b0745d65febe9ac0e646439cef62505",
+						"subject": "Moq 4.20.69 -> 4.20.70",
+						"comments": [
+							"使ってないけどまぁ一応"
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/11/16",
 		"version": "0.99.215 + 0.99.216",
 		"contents": [

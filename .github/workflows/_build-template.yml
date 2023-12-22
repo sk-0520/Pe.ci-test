@@ -16,12 +16,16 @@ on:
       PE_RELEASE_NOTE_BASE_URL:
         required: true
         type: string
+      OS_WINDOWS:
+        type: string
+        default: windows-2022
 
 
 env:
   MINIMUM_VERSION: 0.91.0
   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
   PLATFORMS: x86,x64
+  DOTNET_VERSION: 8.0.x
 
 
 jobs:
@@ -92,7 +96,13 @@ jobs:
       PROJECT_DIR: \test-plugin
       PROJECT_NAME: Plugin.Template
 
-    runs-on: windows-2022
+    strategy:
+      matrix:
+        PLATFORM:
+          - x86
+          - x64
+
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     steps:
       - name: <Setting> Job
@@ -104,6 +114,16 @@ jobs:
 
       - name: <Checkout> Repository
         uses: actions/checkout@v3
+
+      - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: <Add> msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: ${{ matrix.PLATFORM }}
 
       - name: <Download> Help
         uses: actions/download-artifact@v3
@@ -123,13 +143,15 @@ jobs:
         shell: pwsh
         run: |
           Set-Location ${{ env.PROJECT_DIR }}
-          .\FullBuild.ps1 -Verbose -InformationAction Continue
+          .\FullBuild.ps1 -Verbose -InformationAction Continue -Platforms ${{ matrix.PLATFORM }}
 
       - name: <Test> Plugin Template
+        # x86 が動かない問題, あとで対処
+        #if: matrix.PLATFORM == 'x64'
         shell: pwsh
         run: |
           Set-Location ${{ env.PROJECT_DIR }}
-          .\FullTest.ps1 -Verbose -InformationAction Continue
+          .\FullTest.ps1 -Verbose -InformationAction Continue -Platforms ${{ matrix.PLATFORM }}
 
       - name: <Archive> Plugin Template
         shell: bash
@@ -138,9 +160,8 @@ jobs:
       - name: <Artifact> Plugin Template
         uses: actions/upload-artifact@v3
         with:
-          name: template-plugin
+          name: template-plugin-${{ matrix.PLATFORM }}
           path: plugin-template.tar
-
 
 
   history:
@@ -182,11 +203,16 @@ jobs:
 
   build-tools:
     name: Build BuildTools
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
+
+      - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: <Add> msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
@@ -215,11 +241,16 @@ jobs:
     name: "BuildTools: SQL"
     needs:
       - build-tools
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
+
+      - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: <Download> BuildTools
         uses: actions/download-artifact@v3
@@ -242,11 +273,13 @@ jobs:
     name: Build Boot
     env:
       MODULE: boot
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
-        PLATFORM: ["x86", "x64"]
+        PLATFORM:
+          - x86
+          - x64
 
     steps:
       - name: <Checkout> Repository
@@ -255,21 +288,19 @@ jobs:
       - name: <Add> msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
         with:
-          msbuild-architecture: x64
+          msbuild-architecture: ${{ matrix.PLATFORM }}
 
       - name: <Rewrite> Module
         shell: pwsh
         run: |
-          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
+          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
         run: |
-          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Artifact> Module
         uses: actions/upload-artifact@v3
@@ -281,12 +312,16 @@ jobs:
     name: Test Boot
     env:
       MODULE: boot
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
-        PLATFORM: ["x86", "x64"]
-        CONFIGURATION: ["Release", "CI_TEST"]
+        PLATFORM:
+          - x86
+          - x64
+        CONFIGURATION:
+          - Release
+          - CI_TEST
 
     steps:
       - name: <Checkout> Repository
@@ -295,7 +330,7 @@ jobs:
       - name: <Add> msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
         with:
-          msbuild-architecture: x64
+          msbuild-architecture: ${{ matrix.PLATFORM }}
 
       - name: <Add> VSTest
         uses: darenm/Setup-VSTest@v1.2
@@ -303,9 +338,8 @@ jobs:
       - name: <Rewrite> Module
         shell: pwsh
         run: |
-          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
+          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Setup> Module
         shell: pwsh
@@ -320,7 +354,7 @@ jobs:
           if( '${{ matrix.CONFIGURATION }}' -eq 'CI_TEST') {
             $isTest = $true
           }
-          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode  -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test:$isTest
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test:$isTest
 
       - name: <Test> Module
         shell: pwsh
@@ -331,20 +365,27 @@ jobs:
     name: Build Main
     env:
       MODULE: main
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
-        PLATFORM: ["x86", "x64"]
+        PLATFORM:
+          - x86
+          - x64
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
 
+      - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
       - name: <Add> msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
         with:
-          msbuild-architecture: x64
+          msbuild-architecture: ${{ matrix.PLATFORM }}
 
       - name: <Cache> Nuget
         uses: actions/cache@v3
@@ -359,14 +400,14 @@ jobs:
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Revision ${{ github.sha }}
+          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
         run: |
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
-          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Archive> Application
         shell: bash
@@ -382,20 +423,27 @@ jobs:
     name: Test Main
     env:
       MODULE: main
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
-        PLATFORM: ["x86", "x64"]
+        PLATFORM:
+          - x86
+          - x64
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
 
+      - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
       - name: <Add> msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
         with:
-          msbuild-architecture: x64
+          msbuild-architecture: ${{ matrix.PLATFORM }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -405,16 +453,9 @@ jobs:
         shell: pwsh
         run: .\Build\setup-test-module.ps1 -InformationAction Continue -Service github -Module ${{ env.MODULE }}
 
-      - name: <Build> Module
-        shell: pwsh
-        run: |
-          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
-          $buildType = $productMode ? '': 'BETA'
-          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode:$productMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }} -Test
-
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
+        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
   reconstitution-application:
     name: Reconstitution Application
@@ -423,21 +464,28 @@ jobs:
       - build-tools-sql
       - build-boot
       - build-main
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
-        PLATFORM: ["x86", "x64"]
+        PLATFORM:
+          - x86
+          - x64
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
 
-      - name: <Download> BuildTools
-        uses: actions/download-artifact@v3
-        with:
-          name: BuildTools
-          path: artifacts/buildtools
+      # - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
+      #   uses: actions/setup-dotnet@v4
+      #   with:
+      #     dotnet-version: ${{ env.DOTNET_VERSION }}
+      #
+      # - name: <Download> BuildTools
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: BuildTools
+      #     path: artifacts/buildtools
 
       - name: <Download> SQL
         uses: actions/download-artifact@v3
@@ -533,20 +581,27 @@ jobs:
     name: Build Plugins
     env:
       MODULE: plugins
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
-        PLATFORM: ["x86", "x64"]
+        PLATFORM:
+          - x86
+          - x64
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
 
+      - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
       - name: <Add> msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
         with:
-          msbuild-architecture: x64
+          msbuild-architecture: ${{ matrix.PLATFORM }}
 
       - name: <Cache> Nuget
         uses: actions/cache@v3
@@ -574,20 +629,27 @@ jobs:
     name: Test Plugins
     env:
       MODULE: plugins
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
-        PLATFORM: ["x86", "x64"]
+        PLATFORM:
+          - x86
+          - x64
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
 
+      - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
       - name: <Add> msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
         with:
-          msbuild-architecture: x64
+          msbuild-architecture: ${{ matrix.PLATFORM }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -597,23 +659,21 @@ jobs:
         shell: pwsh
         run: .\Build\setup-test-module.ps1 -InformationAction Continue -Service github -Module ${{ env.MODULE }}
 
-      - name: <Build> Module
-        shell: pwsh
-        run: .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Test
-
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
+        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
   reconstitution-plugins:
     name: Reconstitution Plugins
     needs:
       - build-plugins
-    runs-on: windows-2022
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     strategy:
       matrix:
-        PLATFORM: ["x86", "x64"]
+        PLATFORM:
+          - x86
+          - x64
 
     steps:
       - name: <Checkout> Repository
@@ -692,7 +752,6 @@ jobs:
 
     strategy:
       matrix:
-        PLATFORM: ["x86", "x64"]
         OS:
           - windows-2019
           - ubuntu-22.04
@@ -710,9 +769,10 @@ jobs:
       - name: <Checkout> Repository
         uses: actions/checkout@v3
 
-      - uses: actions/setup-dotnet@v3
+      - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 7.x
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       # - name: <Test> Add Logger ${{ matrix.TARGET }}
       #   shell: bash
@@ -726,19 +786,27 @@ jobs:
           cd Source/Pe/${{ matrix.TARGET }}
           dotnet test
 
-  # st-powershell:
-  #   name: System Test PowerShell
-  #   runs-on: windows-latest
-  #   needs:
-  #     - lint-powershell
+  st-powershell:
+    name: System Test PowerShell
+    env:
+      UPDATE_DESTINATION: \dest
+    runs-on: windows-latest
+    needs:
+      - lint-powershell
 
-  #   steps:
-  #     - name: <Checkout> Repository
-  #       uses: actions/checkout@v3
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v3
 
-  #     - name: <Check> Update
-  #       shell: pwsh
-  #       run: |
-  #         New-Item -Path \dest -ItemType Directory
-  #         .\Source\Pe\Pe.Main\etc\script\update\update-application.ps1 -LogPath \dest.log -ProcessId 0 -WaitSeconds 0 -SourceDirectory (Get-Location).Path -DestinationDirectory \dest -CurrentVersion 0.0.0 -Platform x64 -UpdateBeforeScript .\Source\Pe\Pe.Main\etc\script\update\update-new-before.ps1 -UpdateAfterScript .\Source\Pe\Pe.Main\etc\script\update\update-new-after.ps1 -ExecuteCommand ver
+      - name: <Test> Update
+        shell: pwsh
+        run: .\Source\PowerShell.Test\ST\update-application.test.ps1 -Source (Get-Location).Path -Destination ${{ env.UPDATE_DESTINATION }} -Command ([Environment]::ExpandEnvironmentVariables('%SystemRoot%\System32\winver.exe'))
+
+      - name: <Artifact> Update:Error
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.job }}-Update.log
+          path: ${{ env.UPDATE_DESTINATION }}.log
+
 
