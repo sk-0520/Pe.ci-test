@@ -1,4 +1,6 @@
-﻿Param()
+﻿Param(
+	[string[]] $Platforms = @('x64', 'x86')
+)
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -32,8 +34,6 @@ $vesion = @(
 	'{0:000}' -f $cliVesion.Build
 ) -join '-'
 
-$platforms = @('x64', 'x86')
-
 $scripts = @{
 	buildProject = Join-Path -Path $scriptDirPath -ChildPath 'build-project.ps1'
 	archivePlugin = Join-Path -Path $scriptDirPath -ChildPath 'archive-plugin.ps1'
@@ -41,11 +41,11 @@ $scripts = @{
 }
 
 Write-Information 'プロジェクトビルド'
-Write-Verbose "$($scripts.buildProject) -ProjectName $pluginName -Platforms $platforms"
-& $scripts.buildProject -ProjectName $pluginName -Platforms $platforms
+Write-Verbose "$($scripts.buildProject) -ProjectName $pluginName -Platforms $Platforms"
+& $scripts.buildProject -ProjectName $pluginName -Platforms $Platforms
 
 Write-Information 'アーカイブ'
-foreach ($platform in $platforms) {
+foreach ($platform in $Platforms) {
 	$outputBaseName = "${pluginName}_${vesion}_${platform}"
 	Write-Verbose "$($scripts.archivePlugin) -InputDirectory $(Get-OutputDirectoryPath $platform) -DestinationDirectory $outputRootDirPath -OutputBaseName $outputBaseName -Archive $archive -Filter '*.pdb'"
 	& $scripts.archivePlugin -InputDirectory (Get-OutputDirectoryPath $platform) -DestinationDirectory $outputRootDirPath -OutputBaseName $outputBaseName -Archive $archive -Filter '*.pdb'

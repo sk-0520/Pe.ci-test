@@ -7,9 +7,12 @@
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
+						"revision": "compatibility",
+						"class": "compatibility",
+						"subject": "本バージョンから .NET 8 で稼働します",
+						"comments": [
+							"多分大丈夫だと思うけど一応互換性注意"
+						]
 					},
 					{
 						"revision": "",
@@ -72,7 +75,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#911: .NET 8 へ移行"
 					},
 					{
 						"revision": "",

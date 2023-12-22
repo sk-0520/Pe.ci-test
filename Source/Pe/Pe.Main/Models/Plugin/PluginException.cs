@@ -18,9 +18,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected PluginException(string? message) : base(message)
         { }
 
-        protected PluginException(SerializationInfo info, StreamingContext context) : base(info, context)
-        { }
-
         protected PluginException(string? message, Exception? innerException) : base(message, innerException)
         { }
     }
@@ -35,9 +32,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         { }
 
         public PluginInvalidAssemblyException(string? message) : base(message)
-        { }
-
-        public PluginInvalidAssemblyException(SerializationInfo info, StreamingContext context) : base(info, context)
         { }
 
         public PluginInvalidAssemblyException(string? message, Exception? innerException) : base(message, innerException)
@@ -55,9 +49,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public PluginNotFoundException(string? message) : base(message)
         { }
 
-        public PluginNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
-        { }
-
         public PluginNotFoundException(string? message, Exception? innerException) : base(message, innerException)
         { }
     }
@@ -71,9 +62,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         { }
 
         public PluginInvalidArchiveKindException(string? message) : base(message)
-        { }
-
-        public PluginInvalidArchiveKindException(SerializationInfo info, StreamingContext context) : base(info, context)
         { }
 
         public PluginInvalidArchiveKindException(string? message, Exception? innerException) : base(message, innerException)
@@ -91,9 +79,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public PluginDuplicateExtractDirectoryException(string? message) : base(message)
         { }
 
-        public PluginDuplicateExtractDirectoryException(SerializationInfo info, StreamingContext context) : base(info, context)
-        { }
-
         public PluginDuplicateExtractDirectoryException(string? message, Exception? innerException) : base(message, innerException)
         { }
     }
@@ -107,9 +92,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         { }
 
         public PluginAssemblyException(string? message) : base(message)
-        { }
-
-        public PluginAssemblyException(SerializationInfo info, StreamingContext context) : base(info, context)
         { }
 
         public PluginAssemblyException(string? message, Exception? innerException) : base(message, innerException)
@@ -127,9 +109,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public PluginBrokenException(string? message) : base(message)
         { }
 
-        public PluginBrokenException(SerializationInfo info, StreamingContext context) : base(info, context)
-        { }
-
         public PluginBrokenException(string? message, Exception? innerException) : base(message, innerException)
         { }
     }
@@ -143,9 +122,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         { }
 
         public PluginInstallException(string? message) : base(message)
-        { }
-
-        public PluginInstallException(SerializationInfo info, StreamingContext context) : base(info, context)
         { }
 
         public PluginInstallException(string? message, Exception? innerException) : base(message, innerException)
@@ -163,9 +139,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public PluginArchiveNameException(string? message) : base(message)
         { }
 
-        public PluginArchiveNameException(SerializationInfo info, StreamingContext context) : base(info, context)
-        { }
-
         public PluginArchiveNameException(string? message, Exception? innerException) : base(message, innerException)
         { }
     }
@@ -179,9 +152,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         { }
 
         public PluginUnavailableContextException(string? message) : base(message)
-        { }
-
-        public PluginUnavailableContextException(SerializationInfo info, StreamingContext context) : base(info, context)
         { }
 
         public PluginUnavailableContextException(string? message, Exception? innerException) : base(message, innerException)
