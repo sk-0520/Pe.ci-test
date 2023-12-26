@@ -51,7 +51,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#913: アイコンの色がおかしい",
+						"comments": [
+							"たぶんCI処理を変えたあたりから狂ってた"
+						]
 					},
 					{
 						"revision": "",
