@@ -613,11 +613,17 @@ jobs:
 
       - name: <Rewrite> Module
         shell: pwsh
-        run: .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Revision ${{ github.sha }}
+        run: |
+          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
+          $buildType = $productMode ? '': 'BETA'
+          .\Build\rewrite-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Revision ${{ github.sha }}
 
       - name: <Build> Module
         shell: pwsh
-        run: .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }}
+        run: |
+          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
+          $buildType = $productMode ? '': 'BETA'
+          .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Artifact> Module
         uses: actions/upload-artifact@v3
