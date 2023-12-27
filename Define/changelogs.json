@@ -1,93 +1,17 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.217+",
+		"date": "2023/12/27",
+		"version": "0.99.218",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "e6a4823b4fab1077512ea4ea924fd94cf1e9e59c",
 						"subject": "#913: アイコンの色がおかしい",
 						"comments": [
 							"たぶんCI処理を変えたあたりから狂ってた"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "developer",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
