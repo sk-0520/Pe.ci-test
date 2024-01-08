@@ -144,12 +144,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="C:\Users\abcde\.nuget\packages\microsoft.ui.xaml\2.2.190917002\buildTransitive\DensityStyles\Compact.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Update="CefSharp">
       <Private>true</Private>
     </Reference>

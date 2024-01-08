@@ -14,7 +14,7 @@ Import-Module "${PSScriptRoot}/Modules/Version"
 #/*[FUNCTIONS]-------------------------------------
 
 function Insert-Element {
-	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseApprovedVerbs', '', scope='function')]
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseApprovedVerbs', '', scope = 'function')]
 	Param(
 		[Parameter(mandatory = $true)][string] $Value,
 		[Parameter(mandatory = $true)][xml] $Xml,
@@ -33,7 +33,7 @@ function Insert-Element {
 }
 
 function Replace-Element {
-	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseApprovedVerbs', '', scope='function')]
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseApprovedVerbs', '', scope = 'function')]
 	Param(
 		[Parameter(mandatory = $true)][hashtable] $Map,
 		[Parameter(mandatory = $true)][xml] $Xml,
@@ -117,9 +117,14 @@ $appIconName = switch ($BuildType) {
 		'App-debug.ico'
 	}
 }
-$appIconPath = Join-Path -Path 'Resource' -ChildPath 'Icon' | Join-Path -ChildPath $appIconName
-$dstIconPath = Join-Path -Path 'Source' -ChildPath 'Pe' | Join-Path -ChildPath 'Pe.Main' | Join-Path -ChildPath 'Resources' | Join-Path -ChildPath 'Icon' | Join-Path -ChildPath 'App.ico'
-Copy-Item -Path $appIconPath -Destination $dstIconPath -Force
+$srcIconPath = Join-Path -Path 'Resource' -ChildPath 'Icon' | Join-Path -ChildPath $appIconName
+$destIconPaths = @(
+	Join-Path -Path 'Source' -ChildPath 'Pe' | Join-Path -ChildPath 'Pe.Main' | Join-Path -ChildPath 'Resources' | Join-Path -ChildPath 'Icon' | Join-Path -ChildPath 'App.ico'
+	Join-Path -Path 'Source' -ChildPath 'Pe' | Join-Path -ChildPath 'Pe.Plugins.DefaultTheme' | Join-Path -ChildPath 'App.ico'
+)
+foreach ($destIconPath in $destIconPaths) {
+	Copy-Item -Path $srcIconPath -Destination $destIconPath -Force
+}
 
 if ($Module -eq 'boot') {
 	Update-ResourceValue -CommonXml $projectCommonXml -ResourcePath (Join-Path -Path $sourceBootDirectoryPath -ChildPath 'Pe.Boot' | Join-Path -ChildPath 'Resource.rc')
