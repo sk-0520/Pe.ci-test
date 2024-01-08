@@ -1,5 +1,48 @@
 [
 	{
+		"date": "2024/01/08",
+		"version": "0.99.219",
+		"contents": [
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "5bf11b70ae9c0f38c227273c72e34e925b854cb4",
+						"subject": "#914: デフォルトテーマプラグインが動いてないのに動いてる",
+						"comments": [
+							"無駄にややこしい無駄な処理がつらい",
+							"こういうのどうやってテスト作ればいいのか"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "150e6980773b864e3f81936291c53454b4a0fa23",
+						"subject": "update npm"
+					},
+					{
+						"revision": "9ad4310f9cc3b62c81e298824734275e06031ae2",
+						"class": "nuget",
+						"subject": "Dapper 2.1.24 -> 2.1.28"
+					},
+					{
+						"revision": "29a5eaf03b3d7c5d99d723ba2c1a2e6f08df55c1",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 5.3.7 -> 5.3.8"
+					},
+					{
+						"revision": "743af58861d72025cc556e6a08ee2b8663ee3352",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf.NETCore 120.1.80 -> 120.1.110"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2023/12/27",
 		"version": "0.99.218",
 		"contents": [
