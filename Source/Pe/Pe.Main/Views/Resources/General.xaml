@@ -3,6 +3,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=System.Runtime"
 
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
 >
   <sys:Double x:Key="GridSplitterLength">4</sys:Double>
@@ -110,6 +111,21 @@
     <Setter Property="Margin" Value="{StaticResource VerticalContrlMargin}" />
   </Style>
   <Style x:Key="Horizontal-TextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+    <Setter Property="Margin" Value="{StaticResource HorizontalContrlMargin}" />
+  </Style>
+
+  <!--#endregion-->
+
+  <!--#region PasswordBox2 -->
+  <Style TargetType="app_core_views:PasswordBox2">
+    <Setter Property="Padding" Value="{StaticResource TextBoxPadding}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style x:Key="Vertical-PasswordBox2" TargetType="app_core_views:PasswordBox2">
+    <Setter Property="Margin" Value="{StaticResource VerticalContrlMargin}" />
+  </Style>
+  <Style x:Key="Horizontal-PasswordBox2" TargetType="app_core_views:PasswordBox2">
     <Setter Property="Margin" Value="{StaticResource HorizontalContrlMargin}" />
   </Style>
 

@@ -30,7 +30,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#797: パスワード入力欄をマスク表示する",
+						"comments": [
+							"PasswordBox2 っていうほぼ無名クラス"
+						]
 					},
 					{
 						"revision": "",
