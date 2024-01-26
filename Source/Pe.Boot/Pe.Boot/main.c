@@ -149,7 +149,7 @@ static int application_main(HINSTANCE hInstance)
 
 #ifdef RES_CHECK
     library_rc_print(true);
-    library_rc_uninitialize();
+    library_rc_finalize();
 #endif
 
     return return_code;

@@ -247,7 +247,7 @@ void library_rc_initialize(library_func_rc_output output, size_t path_length, si
     library_rc_file_stock_item_count = 0;
 }
 
-void library_rc_uninitialize(void)
+void library_rc_finalize(void)
 {
     HeapFree(library_rc_heap, 0, library_rc_heap_stock_items);
     HeapFree(library_rc_heap, 0, library_rc_file_stock_items);
