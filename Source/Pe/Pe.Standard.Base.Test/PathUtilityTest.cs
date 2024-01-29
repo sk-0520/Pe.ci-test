@@ -30,6 +30,8 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         [DataRow("", " ", "!")]
         [DataRow("a", "a", "!")]
         [DataRow("a!", "a?", "!")]
+        [DataRow("a/", "a/", "/")]
+        [DataRow("a!", "a\\", "!")]
         [DataRow("a?", "a?", "?")]
         [DataRow("a@b@c@d", "a?b\\c*d", "@")]
         [DataRow("a<>b<>c<>d", "a?b\\c*d", "<>")]

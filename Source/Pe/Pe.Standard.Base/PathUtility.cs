@@ -43,6 +43,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         {
             Debug.Assert(fn != null);
 
+            //NOTE: GetInvalidFileNameChars だけでいいと思うけど一応ね
             var pattern = Regex.Escape(string.Concat(Path.GetInvalidPathChars().Concat(Path.GetInvalidFileNameChars())));
             var reg = new Regex("([" + pattern + "])");
             return reg.Replace(name.Trim(), m => fn(m.Groups[0].Value[0]));
