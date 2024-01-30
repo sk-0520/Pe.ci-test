@@ -82,7 +82,7 @@ jobs:
         run: npm run help-ci
 
       - name: <Artifact> Help
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Help
           path: Output/help
@@ -158,7 +158,7 @@ jobs:
         run: ./Build/archive-compress.sh "plugin-template.tar" "${{ env.PROJECT_DIR }}"
 
       - name: <Artifact> Plugin Template
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: template-plugin-${{ matrix.PLATFORM }}
           path: plugin-template.tar
@@ -195,7 +195,7 @@ jobs:
           .\Build\generate-release-note.ps1 -InformationAction Continue -OutputDirectory history -IgnoreEmpty:$ignoreEmpty
 
       - name: <Artifact> Release Note
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: History
           path: history/*.html
@@ -232,7 +232,7 @@ jobs:
         run: .\Build\make-buildtools.ps1 -InformationAction Continue
 
       - name: <Artifact> BuildTools
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: BuildTools
           path: Output\tools
@@ -263,7 +263,7 @@ jobs:
         run: .\Build\buildtools-sql.ps1 -InformationAction Continue -BuildToolsSqlPack "artifacts\buildtools\SqlPack.exe" -OutputFile sql.sqlite3
 
       - name: <Artifact> SQL
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: SQL
           path: sql.sqlite3
@@ -305,7 +305,7 @@ jobs:
           .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Artifact> Module
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.MODULE }}-${{ matrix.PLATFORM }}
           path: Output\Release\${{ matrix.PLATFORM }}\Pe\*
@@ -416,7 +416,7 @@ jobs:
         run: ./Build/archive-compress.sh "bin.tar" "Output/Release/${{ matrix.PLATFORM }}/Pe/bin"
 
       - name: <Artifact> Module
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.MODULE }}-bin-${{ matrix.PLATFORM }}
           path: bin.tar
@@ -535,7 +535,7 @@ jobs:
         run: .\Build\compress-module.ps1 -InformationAction Continue -TargetDirectory 'Output' -OutputFileBaseName "Pe_${{ matrix.PLATFORM }}" -Archive ${{ inputs.APPLICATION_ARCHIVE }}
 
       - name: <Artifact> Application
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Pe_${{ matrix.PLATFORM }}
           path: Pe_${{ matrix.PLATFORM }}.${{ inputs.APPLICATION_ARCHIVE }}
@@ -571,7 +571,7 @@ jobs:
         run: .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'application' -Archive ${{ inputs.APPLICATION_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe') -Platforms ${{ env.PLATFORMS }}
 
       - name: <Artifact> Update Information
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Information_Pe
           path: |
@@ -628,7 +628,7 @@ jobs:
           .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Artifact> Module
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: plugins-${{ matrix.PLATFORM }}
           path: Output\Release\${{ matrix.PLATFORM }}\Plugins
@@ -711,7 +711,7 @@ jobs:
           }
 
       - name: <Artifact> Plugins
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Pe.Plugins.Reference_${{ matrix.PLATFORM }}
           path: ./*.${{ inputs.PLUGINS_ARCHIVE }}
@@ -747,7 +747,7 @@ jobs:
         run: .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
 
       - name: <Artifact> Update Information
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Information_Pe.Plugins.Reference
           path: |
@@ -812,7 +812,7 @@ jobs:
 
       - name: <Artifact> Update:Error
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ github.job }}-Update.log
           path: ${{ env.UPDATE_DESTINATION }}.log
