@@ -42,7 +42,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Lint> PowerShell
         shell: pwsh
@@ -61,7 +61,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Add> Node/NPM
         uses: actions/setup-node@v3
@@ -113,7 +113,7 @@ jobs:
           git config --global user.name "${{ github.job }}"
 
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -170,7 +170,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         # with:
         #   fetch-depth: 0
 
@@ -207,7 +207,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -245,7 +245,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -283,7 +283,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Add> msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
@@ -327,7 +327,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Add> msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
@@ -377,7 +377,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -435,7 +435,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -476,7 +476,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
       #   uses: actions/setup-dotnet@v4
@@ -548,7 +548,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Download> Application x86
         uses: actions/download-artifact@v3
@@ -593,7 +593,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -647,7 +647,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -685,7 +685,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Download> Plugins
         uses: actions/download-artifact@v3
@@ -724,7 +724,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Download> Plugins x86
         uses: actions/download-artifact@v3
@@ -775,7 +775,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -804,7 +804,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Test> Update
         shell: pwsh
