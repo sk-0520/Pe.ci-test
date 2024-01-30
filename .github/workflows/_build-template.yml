@@ -26,6 +26,7 @@ env:
   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
   PLATFORMS: x86,x64
   DOTNET_VERSION: 8.0.x
+  VS_TEST_CONSOLE_PATH: C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow
 
 
 jobs:
@@ -334,9 +335,6 @@ jobs:
         with:
           msbuild-architecture: ${{ matrix.PLATFORM }}
 
-      - name: <Add> VSTest
-        uses: darenm/Setup-VSTest@v1.2
-
       - name: <Rewrite> Module
         shell: pwsh
         run: |
@@ -360,7 +358,10 @@ jobs:
 
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration ${{ matrix.CONFIGURATION }}
+        run: |
+          $env:Path += ';${{env.VS_TEST_CONSOLE_PATH}}'
+          echo $env:Path
+          .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration ${{ matrix.CONFIGURATION }}
 
 
   build-main:
