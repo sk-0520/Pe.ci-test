@@ -33,6 +33,7 @@ jobs:
           path: |
             Output\*.zip
             Output\update-*.json
+          if-no-files-found: error
 
   test:
 

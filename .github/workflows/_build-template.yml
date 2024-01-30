@@ -87,6 +87,7 @@ jobs:
         with:
           name: Help
           path: Output/help
+          if-no-files-found: error
 
   plugin-template:
     name: Plugin Template
@@ -163,6 +164,7 @@ jobs:
         with:
           name: template-plugin-${{ matrix.PLATFORM }}
           path: plugin-template.tar
+          if-no-files-found: error
 
 
   history:
@@ -200,6 +202,7 @@ jobs:
         with:
           name: History
           path: history/*.html
+          if-no-files-found: error
 
 
   build-tools:
@@ -237,6 +240,7 @@ jobs:
         with:
           name: BuildTools
           path: Output\tools
+          if-no-files-found: error
 
   build-tools-sql:
     name: "BuildTools: SQL"
@@ -268,6 +272,7 @@ jobs:
         with:
           name: SQL
           path: sql.sqlite3
+          if-no-files-found: error
 
 
   build-boot:
@@ -310,6 +315,7 @@ jobs:
         with:
           name: ${{ env.MODULE }}-${{ matrix.PLATFORM }}
           path: Output\Release\${{ matrix.PLATFORM }}\Pe\*
+          if-no-files-found: error
 
   test-boot:
     name: Test Boot
@@ -421,6 +427,7 @@ jobs:
         with:
           name: ${{ env.MODULE }}-bin-${{ matrix.PLATFORM }}
           path: bin.tar
+          if-no-files-found: error
 
   test-main:
     name: Test Main
@@ -540,6 +547,7 @@ jobs:
         with:
           name: Pe_${{ matrix.PLATFORM }}
           path: Pe_${{ matrix.PLATFORM }}.${{ inputs.APPLICATION_ARCHIVE }}
+          if-no-files-found: error
 
   information-application:
     name: Information Application
@@ -578,6 +586,7 @@ jobs:
           path: |
             Output/update.json
             Output/*.html
+            if-no-files-found: error
 
 
   build-plugins:
@@ -634,6 +643,7 @@ jobs:
         with:
           name: plugins-${{ matrix.PLATFORM }}
           path: Output\Release\${{ matrix.PLATFORM }}\Plugins
+          if-no-files-found: error
 
   test-plugins:
     name: Test Plugins
@@ -717,6 +727,7 @@ jobs:
         with:
           name: Pe.Plugins.Reference_${{ matrix.PLATFORM }}
           path: ./*.${{ inputs.PLUGINS_ARCHIVE }}
+          if-no-files-found: error
 
   information-plugins:
     name: Information Plugins
@@ -755,6 +766,7 @@ jobs:
           path: |
             Output/update-*.json
             Output/*.html
+            if-no-files-found: error
 
 
   test-library:
@@ -818,5 +830,6 @@ jobs:
         with:
           name: ${{ github.job }}-Update.log
           path: ${{ env.UPDATE_DESTINATION }}.log
+          if-no-files-found: error
 
 
