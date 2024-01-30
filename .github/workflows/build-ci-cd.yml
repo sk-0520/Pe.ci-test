@@ -54,46 +54,46 @@ jobs:
 
 
       - name: <Download> Release Note
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: History
           path: artifacts/history
 
 
       - name: <Download> Plugins x86
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Pe.Plugins.Reference_x86
           path: artifacts/Pe.Plugins.Reference
 
       - name: <Download> Plugins x64
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Pe.Plugins.Reference_x64
           path: artifacts/Pe.Plugins.Reference
 
 
       - name: <Download> Application x86
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Pe_x86
           path: artifacts/Pe
 
       - name: <Download> Application x64
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Pe_x64
           path: artifacts/Pe
 
 
       - name: <Download> Plugins Information
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Information_Pe.Plugins.Reference
           path: artifacts/info/plugins
 
       - name: <Download> Application Information
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Information_Pe
           path: artifacts/info/pe
