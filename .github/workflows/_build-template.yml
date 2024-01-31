@@ -759,6 +759,10 @@ jobs:
         shell: pwsh
         run: .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
 
+      - name: <🌳> 🌲
+        shell: pwsh
+        run:  Get-ChildItem artifacts -R | Select-Object Name
+
       - name: <Artifact> Update Information
         uses: actions/upload-artifact@v4
         with:
