@@ -157,7 +157,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/info/plugins/update-*.json
+          file: artifacts/info/plugins/Output/update-*.json
           file_glob: true
           tag: ${{ steps.version.outputs.dot }}
 
@@ -165,7 +165,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/info/pe/update.json
+          file: artifacts/info/pe/Output/update.json
           file_glob: false
           tag: ${{ steps.version.outputs.dot }}
 

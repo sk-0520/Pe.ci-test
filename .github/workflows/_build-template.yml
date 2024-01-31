@@ -766,7 +766,7 @@ jobs:
           path: |
             Output/update-*.json
             Output/*.html
-            if-no-files-found: error
+          if-no-files-found: error
 
 
   test-library:
