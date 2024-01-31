@@ -108,7 +108,7 @@ jobs:
       - name: <Delete> TEST Tag
         if: github.ref == 'refs/heads/ci-test'
         continue-on-error: true
-        uses: dev-drprasad/delete-tag-and-release@v0.2.1
+        uses: ClementTsang/delete-tag-and-release@v0.4.0
         with:
           delete_release: true
           tag_name: ${{ steps.version.outputs.dot }}
