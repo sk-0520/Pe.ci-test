@@ -26,6 +26,7 @@ env:
   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
   PLATFORMS: x86,x64
   DOTNET_VERSION: 8.0.x
+  VS_TEST_CONSOLE_PATH: C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow
 
 
 jobs:
@@ -42,7 +43,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Lint> PowerShell
         shell: pwsh
@@ -61,10 +62,10 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Add> Node/NPM
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ./.node-version
           cache: npm
@@ -82,10 +83,11 @@ jobs:
         run: npm run help-ci
 
       - name: <Artifact> Help
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Help
           path: Output/help
+          if-no-files-found: error
 
   plugin-template:
     name: Plugin Template
@@ -113,7 +115,7 @@ jobs:
           git config --global user.name "${{ github.job }}"
 
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -121,12 +123,12 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: <Add> msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v1.3.2
         with:
           msbuild-architecture: ${{ matrix.PLATFORM }}
 
       - name: <Download> Help
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Help
           path: artifacts/help
@@ -158,10 +160,11 @@ jobs:
         run: ./Build/archive-compress.sh "plugin-template.tar" "${{ env.PROJECT_DIR }}"
 
       - name: <Artifact> Plugin Template
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: template-plugin-${{ matrix.PLATFORM }}
           path: plugin-template.tar
+          if-no-files-found: error
 
 
   history:
@@ -170,12 +173,12 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         # with:
         #   fetch-depth: 0
 
       - name: <Add> Node/NPM
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ./.node-version
           cache: npm
@@ -195,10 +198,11 @@ jobs:
           .\Build\generate-release-note.ps1 -InformationAction Continue -OutputDirectory history -IgnoreEmpty:$ignoreEmpty
 
       - name: <Artifact> Release Note
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: History
           path: history/*.html
+          if-no-files-found: error
 
 
   build-tools:
@@ -207,7 +211,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -215,12 +219,12 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: <Add> msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v1.3.2
         with:
           msbuild-architecture: x64
 
       - name: <Cache> Nuget
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.nuget/packages
           key: nuget-${{ github.job }}-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
@@ -232,10 +236,11 @@ jobs:
         run: .\Build\make-buildtools.ps1 -InformationAction Continue
 
       - name: <Artifact> BuildTools
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: BuildTools
           path: Output\tools
+          if-no-files-found: error
 
   build-tools-sql:
     name: "BuildTools: SQL"
@@ -245,7 +250,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -253,7 +258,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: <Download> BuildTools
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: BuildTools
           path: artifacts/buildtools
@@ -263,10 +268,11 @@ jobs:
         run: .\Build\buildtools-sql.ps1 -InformationAction Continue -BuildToolsSqlPack "artifacts\buildtools\SqlPack.exe" -OutputFile sql.sqlite3
 
       - name: <Artifact> SQL
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: SQL
           path: sql.sqlite3
+          if-no-files-found: error
 
 
   build-boot:
@@ -283,10 +289,10 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Add> msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v1.3.2
         with:
           msbuild-architecture: ${{ matrix.PLATFORM }}
 
@@ -305,10 +311,11 @@ jobs:
           .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
 
       - name: <Artifact> Module
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.MODULE }}-${{ matrix.PLATFORM }}
           path: Output\Release\${{ matrix.PLATFORM }}\Pe\*
+          if-no-files-found: error
 
   test-boot:
     name: Test Boot
@@ -327,15 +334,12 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Add> msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v1.3.2
         with:
           msbuild-architecture: ${{ matrix.PLATFORM }}
-
-      - name: <Add> VSTest
-        uses: darenm/Setup-VSTest@v1.2
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -360,7 +364,10 @@ jobs:
 
       - name: <Test> Module
         shell: pwsh
-        run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration ${{ matrix.CONFIGURATION }}
+        run: |
+          $env:Path += ';${{env.VS_TEST_CONSOLE_PATH}}'
+          echo $env:Path
+          .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -Platform ${{ matrix.PLATFORM }} -Configuration ${{ matrix.CONFIGURATION }}
 
 
   build-main:
@@ -377,7 +384,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -385,12 +392,12 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: <Add> msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v1.3.2
         with:
           msbuild-architecture: ${{ matrix.PLATFORM }}
 
       - name: <Cache> Nuget
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.nuget/packages
           key: nuget-${{ github.job }}-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
@@ -416,10 +423,11 @@ jobs:
         run: ./Build/archive-compress.sh "bin.tar" "Output/Release/${{ matrix.PLATFORM }}/Pe/bin"
 
       - name: <Artifact> Module
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.MODULE }}-bin-${{ matrix.PLATFORM }}
           path: bin.tar
+          if-no-files-found: error
 
   test-main:
     name: Test Main
@@ -435,7 +443,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -443,7 +451,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: <Add> msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v1.3.2
         with:
           msbuild-architecture: ${{ matrix.PLATFORM }}
 
@@ -476,7 +484,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
       #   uses: actions/setup-dotnet@v4
@@ -484,31 +492,31 @@ jobs:
       #     dotnet-version: ${{ env.DOTNET_VERSION }}
       #
       # - name: <Download> BuildTools
-      #   uses: actions/download-artifact@v3
+      #   uses: actions/download-artifact@v4
       #   with:
       #     name: BuildTools
       #     path: artifacts/buildtools
 
       - name: <Download> SQL
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: SQL
           path: artifacts/sql
 
       - name: <Download> Help
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Help
           path: artifacts/help
 
       - name: <Download> Boot
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: boot-${{ matrix.PLATFORM }}
           path: artifacts/boot
 
       - name: <Download> Main
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: main-bin-${{ matrix.PLATFORM }}
           path: main-bin.tar
@@ -535,10 +543,11 @@ jobs:
         run: .\Build\compress-module.ps1 -InformationAction Continue -TargetDirectory 'Output' -OutputFileBaseName "Pe_${{ matrix.PLATFORM }}" -Archive ${{ inputs.APPLICATION_ARCHIVE }}
 
       - name: <Artifact> Application
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Pe_${{ matrix.PLATFORM }}
           path: Pe_${{ matrix.PLATFORM }}.${{ inputs.APPLICATION_ARCHIVE }}
+          if-no-files-found: error
 
   information-application:
     name: Information Application
@@ -548,16 +557,16 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Download> Application x86
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Pe_x86
           path: artifacts/Pe
 
       - name: <Download> Application x64
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Pe_x64
           path: artifacts/Pe
@@ -571,12 +580,13 @@ jobs:
         run: .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'application' -Archive ${{ inputs.APPLICATION_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe') -Platforms ${{ env.PLATFORMS }}
 
       - name: <Artifact> Update Information
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Information_Pe
           path: |
             Output/update.json
             Output/*.html
+            if-no-files-found: error
 
 
   build-plugins:
@@ -593,7 +603,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -601,12 +611,12 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: <Add> msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v1.3.2
         with:
           msbuild-architecture: ${{ matrix.PLATFORM }}
 
       - name: <Cache> Nuget
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.nuget/packages
           key: nuget-${{ github.job }}-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
@@ -626,12 +636,14 @@ jobs:
           $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
           $buildType = $productMode ? '': 'BETA'
           .\Build\build-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType $buildType -Platform ${{ matrix.PLATFORM }}
+          ls Output\Release\${{ matrix.PLATFORM }}\Plugins
 
       - name: <Artifact> Module
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: plugins-${{ matrix.PLATFORM }}
           path: Output\Release\${{ matrix.PLATFORM }}\Plugins
+          if-no-files-found: error
 
   test-plugins:
     name: Test Plugins
@@ -647,7 +659,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -655,7 +667,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: <Add> msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v1.3.2
         with:
           msbuild-architecture: ${{ matrix.PLATFORM }}
 
@@ -685,10 +697,10 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Download> Plugins
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: plugins-${{ matrix.PLATFORM }}
           path: artifacts/plugins
@@ -711,10 +723,11 @@ jobs:
           }
 
       - name: <Artifact> Plugins
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Pe.Plugins.Reference_${{ matrix.PLATFORM }}
           path: ./*.${{ inputs.PLUGINS_ARCHIVE }}
+          if-no-files-found: error
 
   information-plugins:
     name: Information Plugins
@@ -724,16 +737,16 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Download> Plugins x86
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Pe.Plugins.Reference_x86
           path: artifacts/Pe.Plugins.Reference
 
       - name: <Download> Plugins x64
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Pe.Plugins.Reference_x64
           path: artifacts/Pe.Plugins.Reference
@@ -746,13 +759,18 @@ jobs:
         shell: pwsh
         run: .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
 
+      - name: <🌳> 🌲
+        shell: pwsh
+        run:  Get-ChildItem artifacts -R | Select-Object Name
+
       - name: <Artifact> Update Information
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Information_Pe.Plugins.Reference
           path: |
             Output/update-*.json
             Output/*.html
+          if-no-files-found: error
 
 
   test-library:
@@ -775,7 +793,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Setup> .NET ${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v4
@@ -804,7 +822,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Test> Update
         shell: pwsh
@@ -812,9 +830,10 @@ jobs:
 
       - name: <Artifact> Update:Error
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ github.job }}-Update.log
           path: ${{ env.UPDATE_DESTINATION }}.log
+          if-no-files-found: error
 
 

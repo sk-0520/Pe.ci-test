@@ -46,6 +46,10 @@ if ($Module -eq 'boot') {
 	$pluginProjectFiles = Get-ApplicationProjectDirectories -Kind $Module |
 		Get-ChildItem -File -Recurse -Include '*.csproj'
 
+	if (($pluginProjectFiles | Measure-Object).Count -eq 0) {
+		throw "build error: $Module - 0 build - " + (Get-ProjectDirectories -Kind $Module)
+	}
+
 	foreach ($pluginProjectFile in $pluginProjectFiles) {
 		$name = $pluginProjectFile.BaseName
 
