@@ -75,7 +75,11 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#915: Node.js 16 actions are deprecated",
+						"comments": [
+							"actions/upload-artifact@v4 の速度アップは未調査のため zip 圧縮展開処理は継続",
+							"Release ページへのアップロード処理 svenstaro/upload-release-action は本件では未対応、 #916 で対応する"
+						]
 					},
 					{
 						"revision": "",
