@@ -54,7 +54,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#912: Fix code scanning alert - Overly permissive regular expression range"
 					},
 					{
 						"revision": "",
