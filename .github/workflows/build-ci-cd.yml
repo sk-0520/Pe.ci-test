@@ -126,6 +126,9 @@ jobs:
               sha: context.sha
             })
 
+      - name: <Upload> Assets
+        shell: pwsh
+        run: ./Build/upload-release-assets.ps1 -InformationAction Continue -TargetRepository 'github' -Token '${{ secrets.GITHUB_TOKEN }}' -ReleaseId '${{ steps.version.outputs.dot }}' -RepositoryOwner '${{ github.repository_owner }}' -RepositoryName '${{ github.repository }}'
 
       - name: <Upload> Pe.Plugins.Reference.*
         uses: svenstaro/upload-release-action@v2
