@@ -26,7 +26,29 @@ function Invoke-GithubAsset {
 		[string] $FileName
 	)
 
-	Write-Host "FilePath: $FilePath"
+	Write-Debug "FilePath: $FilePath"
+
+	$headers = @{
+		'Accept' = 'application/vnd.github+json'
+		'Authorization' = "Bearer $Token"
+		'X-GitHub-Api-Version' = '2022-11-28'
+	}
+	$contentType = 'application/octet-stream'
+
+	$name = $FileName
+	if ([string]::IsNullOrEmpty($name)) {
+		$name = Split-Path -Path $FilePath -Leaf
+	}
+
+	$uri = [uri]"https://uploads.github.com/repos/${RepositoryOwner}/${RepositoryName}/releases/${ReleaseId}/assets?name=${name}"
+	Write-Debug "uri: $uri"
+
+	Invoke-WebRequest `
+		-Uri $uri `
+		-Method Post `
+		-Headers $headers `
+		-ContentType $contentType `
+		-InFile $FilePath
 }
 
 function Invoke-Asset {
@@ -43,7 +65,14 @@ function Invoke-Asset {
 
 	switch ($TargetRepository) {
 		'github' {
-			Invoke-GithubAsset -Token $Token -ReleaseId $ReleaseId -RepositoryOwner $RepositoryOwner -RepositoryName $RepositoryName -FilePath $FilePath -ContentType $ContentType -FileName $FileName
+			Invoke-GithubAsset `
+				-Token $Token `
+				-ReleaseId $ReleaseId `
+				-RepositoryOwner $RepositoryOwner `
+				-RepositoryName $RepositoryName `
+				-FilePath $FilePath `
+				-ContentType $ContentType `
+				-FileName $FileName
 		}
 
 		Default {
@@ -55,42 +84,54 @@ function Invoke-Asset {
 
 #*/[FUNCTIONS]-------------------------------------
 
-Write-Host "TargetRepository: $TargetRepository"
-Write-Host "Token: $Token"
-Write-Host "ReleaseId: $ReleaseId"
-Write-Host "RepositoryOwner: $RepositoryOwner"
-Write-Host "RepositoryName: $RepositoryName"
+Write-Verbose "TargetRepository: $TargetRepository"
+Write-Verbose "Token: $Token"
+Write-Verbose "ReleaseId: $ReleaseId"
+Write-Verbose "RepositoryOwner: $RepositoryOwner"
+Write-Verbose "RepositoryName: $RepositoryName"
 
 $assetItems = @(
 	@{
-		path = "artifacts/Pe.Plugins.Reference/Pe.Plugins.Reference.*.*"
+		path = 'artifacts/Pe.Plugins.Reference/Pe.Plugins.Reference.*.*'
 		literalPath = $false
 	},
 	@{
-		path = "artifacts/Pe/Pe_*"
+		path = 'artifacts/Pe/Pe_*'
 		literalPath = $false
 	},
 	@{
-		path = "artifacts/history/*.html"
+		path = 'artifacts/history/*.html'
 		literalPath = $false
 	},
 	@{
-		path = "artifacts/info/plugins/update-*.json"
+		path = 'artifacts/info/plugins/update-*.json'
 		literalPath = $false
 	},
 	@{
-		path = "artifacts/info/pe/Output/update.json"
+		path = 'artifacts/info/pe/Output/update.json'
 		literalPath = $true
 	}
 )
 
-foreach($assetItem in $assetItems) {
-	if($assetItem.literalPath) {
-		Invoke-Asset -TargetRepository $TargetRepository -Token $Token -ReleaseId $ReleaseId -RepositoryOwner $RepositoryOwner -RepositoryName $RepositoryName -FilePath (Join-Path -Path $rootDirectory -ChildPath $path)
+foreach ($assetItem in $assetItems) {
+	if ($assetItem.literalPath) {
+		Invoke-Asset `
+			-TargetRepository $TargetRepository `
+			-Token $Token `
+			-ReleaseId $ReleaseId `
+			-RepositoryOwner $RepositoryOwner `
+			-RepositoryName $RepositoryName `
+			-FilePath (Join-Path -Path $rootDirectory -ChildPath $assetItem.path)
 	} else {
 		$files = Get-ChildItem -Path (Join-Path -Path $rootDirectory -ChildPath $assetItem.path)
-		foreach($file in $files) {
-			Invoke-Asset -TargetRepository $TargetRepository -Token $Token -ReleaseId $ReleaseId -RepositoryOwner $RepositoryOwner -RepositoryName $RepositoryName -FilePath $file.FullName
+		foreach ($file in $files) {
+			Invoke-Asset `
+				-TargetRepository $TargetRepository `
+				-Token $Token `
+				-ReleaseId $ReleaseId `
+				-RepositoryOwner $RepositoryOwner `
+				-RepositoryName $RepositoryName `
+				-FilePath $file.FullName
 		}
 	}
 }

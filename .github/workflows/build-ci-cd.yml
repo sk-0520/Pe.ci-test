@@ -116,61 +116,66 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: <Create> Release
+        id: create-release
         uses: actions/github-script@v7
         with:
           script: |
-            const releaseId = await github.rest.git.createRef({
+            const releaseResult = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: "refs/tags/${{ steps.version.outputs.dot }}",
-              sha: context.sha
-            })
+              draft: false,
+              prerelease: false,
+              generate_release_notes: true,
+              name: '${{ steps.version.outputs.dot }}',
+              tag_name: '${{ steps.version.outputs.dot }}',
+            });
+            return releaseResult['data']['id'];
 
       - name: <Upload> Assets
         shell: pwsh
-        run: ./Build/upload-release-assets.ps1 -InformationAction Continue -TargetRepository 'github' -Token '${{ secrets.GITHUB_TOKEN }}' -ReleaseId '${{ steps.version.outputs.dot }}' -RepositoryOwner '${{ github.repository_owner }}' -RepositoryName '${{ github.repository }}'
+        run: ./Build/upload-release-assets.ps1 -InformationAction Continue -TargetRepository 'github' -Token '${{ secrets.GITHUB_TOKEN }}' -ReleaseId '${{ steps.create-release.outputs.result }}' -RepositoryOwner '${{ github.repository_owner }}' -RepositoryName '${{ github.event.repository.name }}'
 
-      - name: <Upload> Pe.Plugins.Reference.*
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/Pe.Plugins.Reference/Pe.Plugins.Reference.*.*
-          file_glob: true
-          tag: ${{ steps.version.outputs.dot }}
+      # - name: <Upload> Pe.Plugins.Reference.*
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: artifacts/Pe.Plugins.Reference/Pe.Plugins.Reference.*.*
+      #     file_glob: true
+      #     tag: ${{ steps.version.outputs.dot }}
 
-      - name: <Upload> Applications
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/Pe/Pe_*
-          file_glob: true
-          tag: ${{ steps.version.outputs.dot }}
-
-
-      - name: <Upload> Html (Application/Pe.Plugins.Reference)
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/history/*.html
-          file_glob: true
-          tag: ${{ steps.version.outputs.dot }}
+      # - name: <Upload> Applications
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: artifacts/Pe/Pe_*
+      #     file_glob: true
+      #     tag: ${{ steps.version.outputs.dot }}
 
 
-      - name: <Upload> Update Information (Pe.Plugins.Reference)
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/info/plugins/update-*.json
-          file_glob: true
-          tag: ${{ steps.version.outputs.dot }}
+      # - name: <Upload> Html (Application/Pe.Plugins.Reference)
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: artifacts/history/*.html
+      #     file_glob: true
+      #     tag: ${{ steps.version.outputs.dot }}
 
-      - name: <Upload> Update Information (Application)
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/info/pe/Output/update.json
-          file_glob: false
-          tag: ${{ steps.version.outputs.dot }}
+
+      # - name: <Upload> Update Information (Pe.Plugins.Reference)
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: artifacts/info/plugins/update-*.json
+      #     file_glob: true
+      #     tag: ${{ steps.version.outputs.dot }}
+
+      # - name: <Upload> Update Information (Application)
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: artifacts/info/pe/Output/update.json
+      #     file_glob: false
+      #     tag: ${{ steps.version.outputs.dot }}
 
       # - name: <Update> Version API
       #   if: github.ref == 'refs/heads/master'
