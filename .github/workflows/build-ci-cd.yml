@@ -123,8 +123,6 @@ jobs:
             const releaseResult = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              draft: false,
-              prerelease: false,
               generate_release_notes: true,
               name: '${{ steps.version.outputs.dot }}',
               tag_name: '${{ steps.version.outputs.dot }}',
