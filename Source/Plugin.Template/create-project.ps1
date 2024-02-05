@@ -50,8 +50,8 @@ $suppressScm = $false
 #===================================================
 #プラグインIDのチェック・採番
 class PluginIdentity {
-	[Guid] $PluginId;
-	[string] $PluginName;
+	[Guid] $PluginId
+	[string] $PluginName
 
 	PluginIdentity([Guid] $pluginId, [string] $pluginName) {
 		$this.PluginId = $pluginId
@@ -154,7 +154,7 @@ function Convert-TemplateValue {
 	return [Regex]::Replace($Value, '\bTEMPLATE_([\w\d_]+)\b', {
 			$namespace = 'TEMPLATE_Namespace'
 			if (![string]::IsNullOrEmpty($DefaultNamespace)) {
-				$namespace = $DefaultNamespace.Trim();
+				$namespace = $DefaultNamespace.Trim()
 			}
 
 			$pluginShortName = $parameters.pluginName

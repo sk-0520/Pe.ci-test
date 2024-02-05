@@ -30,7 +30,7 @@ function Get-SourceDirectory {
 	return [System.IO.DirectoryInfo]$result
 }
 
-function Get-ProjectDirectories {
+function Get-ProjectDirectory {
 	[OutputType([System.IO.DirectoryInfo[]])]
 	Param(
 		[ValidateSet('boot', 'main', 'plugins')][string] $Kind
@@ -54,22 +54,22 @@ function Get-ProjectDirectories {
 	return [System.IO.DirectoryInfo[]]$result
 }
 
-function Get-ApplicationProjectDirectories {
+function Get-ApplicationProjectDirectory {
 	[OutputType([System.IO.DirectoryInfo[]])]
 	Param(
 		[ValidateSet('boot', 'main', 'plugins')][string] $Kind
 	)
 
-	return Get-ProjectDirectories -Kind $Kind |
+	return Get-ProjectDirectory -Kind $Kind |
 		Where-Object { $_.Name -notlike '*.Test' }
 }
 
-function Get-TestProjectDirectories {
+function Get-TestProjectDirectory {
 	[OutputType([System.IO.DirectoryInfo[]])]
 	Param(
 		[ValidateSet('boot', 'main', 'plugins')][string] $Kind
 	)
 
-	return Get-ProjectDirectories -Kind $Kind |
+	return Get-ProjectDirectory -Kind $Kind |
 		Where-Object { $_.Name -like '*.Test' }
 }

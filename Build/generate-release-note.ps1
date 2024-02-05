@@ -53,7 +53,7 @@ $currentVersion = $rawChangelogsContent[0]
 
 # ノード作らず適当に
 class Element {
-	[string] $elementName;
+	[string] $elementName
 	[Element[]] $children = @()
 	[hashtable] $attributes = @{ }
 	[string] $text
@@ -115,23 +115,26 @@ class Element {
 	}
 }
 
-function Make-Application {
+function New-ApplicationReleaseNote {
+	[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '')]
+	Param()
+
 	$templateHtmlFile = Join-Path -Path $PSScriptRoot -ChildPath 'release-note.html'
 
 	# 速度とかどうでもいい
 	$root = New-Object Element 'div'
 	$headline = $root.CreateChild('h2') # changelogs.ts のスタイル流用のため
-	$headline.CreateText($currentVersion.version);
-	$headline.CreateText(': ');
-	$headline.CreateText($currentVersion.date);
-	$contents = $root.CreateChild('div');
+	$headline.CreateText($currentVersion.version)
+	$headline.CreateText(': ')
+	$headline.CreateText($currentVersion.date)
+	$contents = $root.CreateChild('div')
 	$contents.attributes['id'] = 'content'
 	foreach ($content in $currentVersion.contents) {
 		if (!($content.PSObject.Properties.Match('logs').Count)) {
 			if (!$IgnoreEmpty) {
 				throw '!!empty logs!!'
 			}
-			continue;
+			continue
 		}
 
 		$section = $contents.CreateChild('section')
@@ -185,30 +188,33 @@ function Make-Application {
 	Set-Content (Join-Path -Path $OutputDirectory -ChildPath 'Pe.html') -Value $htmlContent -Encoding UTF8
 }
 
-function Make-Plugins {
+function New-PluginReleaseNote {
+	[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '')]
+	Param()
+
 	$pluginTemplateHtmlFile = Join-Path -Path $PSScriptRoot -ChildPath 'release-note.plugin.html'
 
 	#Set-WinSystemLocale ja-JP
 
 	#$logFile = '@.txt'
 
-	$pluginProjectDirectories = Get-ProjectDirectories -Kind 'plugins'
+	$pluginProjectDirectories = Get-ProjectDirectory -Kind 'plugins'
 	foreach ($pluginProjectDirectory in $pluginProjectDirectories) {
 		$outputName = $pluginProjectDirectory.Name + '.html'
 
 		Push-Location -Path $pluginProjectDirectory.FullName
 
 		$pluginRoot = New-Object Element 'div'
-		$pluginContents = $pluginRoot.CreateChild('div');
+		$pluginContents = $pluginRoot.CreateChild('div')
 		$logSection = $pluginContents.CreateChild('section')
 		$logList = $logSection.CreateChild('ul')
 
 		$logItem = $logList.CreateChild('li')
-		$logItem.CreateText('プラグイン版リリースノートは使い道ないので未実装');
+		$logItem.CreateText('プラグイン版リリースノートは使い道ないので未実装')
 
 		$pluginHtmlContent = (Get-Content $pluginTemplateHtmlFile -Encoding UTF8 -Raw)
 		$pluginHtmlContent = $pluginHtmlContent.Replace('<!--NAME-->', ($pluginProjectDirectory.Name + ', ' + $currentVersion.version))
-		$pluginHtmlContent = $pluginHtmlContent.Replace('<!--CONTENT-->', $pluginRoot.ToHtml());
+		$pluginHtmlContent = $pluginHtmlContent.Replace('<!--CONTENT-->', $pluginRoot.ToHtml())
 		$pluginHtmlContent = $pluginHtmlContent.Replace('//SCRIPT', (Get-Content $compiledChangelogLinkFile -Raw -Encoding UTF8))
 		$pluginHtmlContent = $pluginHtmlContent.Replace('/*STYLE*/', (Get-Content $compiledChangelogStyleFile -Raw -Encoding UTF8))
 
@@ -221,6 +227,6 @@ function Make-Plugins {
 #*/[FUNCTIONS]-------------------------------------
 
 
-Make-Application
+New-ApplicationReleaseNote
 
-Make-Plugins
+# New-PluginReleaseNote

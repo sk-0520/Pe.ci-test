@@ -16,7 +16,7 @@ Import-Module "${PSScriptRoot}/Modules/Project"
 #*/[FUNCTIONS]-------------------------------------
 
 if ($Module -eq 'boot') {
-	$projectDirItems = Get-TestProjectDirectories -Kind $Module
+	$projectDirItems = Get-TestProjectDirectory -Kind $Module
 
 	foreach ($projectDirItem in $projectDirItems) {
 		$testDirPath = Join-Path -Path $projectDirItem.FullName -ChildPath 'bin' | Join-Path -ChildPath $Configuration | Join-Path -ChildPath $Platform
@@ -35,7 +35,7 @@ if ($Module -eq 'boot') {
 		$loggerArg = "--logger:$Logger"
 	}
 
-	$projectDirItems = Get-TestProjectDirectories -Kind $Module
+	$projectDirItems = Get-TestProjectDirectory -Kind $Module
 
 	foreach ($projectDirItem in $projectDirItems) {
 		Push-Location -Path $projectDirItem

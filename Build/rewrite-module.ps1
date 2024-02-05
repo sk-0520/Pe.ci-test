@@ -23,11 +23,11 @@ function Insert-Element {
 		[Parameter(mandatory = $true)][string] $ElementName
 	)
 
-	$element = $Xml.SelectSingleNode($TargetXpath);
+	$element = $Xml.SelectSingleNode($TargetXpath)
 	if ($null -eq $element) {
 		$propGroup = $Xml.SelectSingleNode($ParentXpath)
-		$element = $Xml.CreateElement($ElementName);
-		$propGroup.AppendChild($element) | Out-Null;
+		$element = $Xml.CreateElement($ElementName)
+		$propGroup.AppendChild($element) | Out-Null
 		$element.InnerText = $Value
 	}
 }
@@ -40,7 +40,7 @@ function Replace-Element {
 		[Parameter(mandatory = $true)][string] $TargetXpath
 	)
 
-	$element = $Xml.SelectSingleNode($TargetXpath);
+	$element = $Xml.SelectSingleNode($TargetXpath)
 	if ($null -ne $element) {
 		$val = $element.InnerText
 		foreach ($key in $Map.keys) {
@@ -57,9 +57,9 @@ function Update-ResourceValue {
 		[Parameter(mandatory = $true)][string] $ResourcePath
 	)
 
-	$versionElement = $CommonXml.SelectSingleNode('/Project/PropertyGroup[1]/Version');
-	$copyrightElement = $CommonXml.SelectSingleNode('/Project/PropertyGroup[1]/Copyright');
-	$revisionElement = $CommonXml.SelectSingleNode('/Project/PropertyGroup[1]/InformationalVersion');
+	$versionElement = $CommonXml.SelectSingleNode('/Project/PropertyGroup[1]/Version')
+	$copyrightElement = $CommonXml.SelectSingleNode('/Project/PropertyGroup[1]/Copyright')
+	$revisionElement = $CommonXml.SelectSingleNode('/Project/PropertyGroup[1]/InformationalVersion')
 
 	$version = [version]$versionElement.InnerText
 	$versionRevision = if ($version.Revision -eq -1) {
@@ -131,7 +131,7 @@ if ($Module -eq 'boot') {
 } elseif ($Module -eq 'main') {
 	#nop
 } elseif ($Module -eq 'plugins') {
-	$pluginProjectFiles = Get-ProjectDirectories -Kind 'plugins' |
+	$pluginProjectFiles = Get-ProjectDirectory -Kind 'plugins' |
 		Get-ChildItem -File -Recurse -Include '*.csproj'
 
 	foreach ($pluginProjectFile in $pluginProjectFiles) {
