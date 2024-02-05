@@ -115,8 +115,8 @@ class Element {
 	}
 }
 
-function New-Application {
-	[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions')]
+function New-ApplicationReleaseNote {
+	[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '')]
 	Param()
 
 	$templateHtmlFile = Join-Path -Path $PSScriptRoot -ChildPath 'release-note.html'
@@ -188,8 +188,8 @@ function New-Application {
 	Set-Content (Join-Path -Path $OutputDirectory -ChildPath 'Pe.html') -Value $htmlContent -Encoding UTF8
 }
 
-function New-Plugin {
-	[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions')]
+function New-PluginReleaseNote {
+	[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '')]
 	Param()
 
 	$pluginTemplateHtmlFile = Join-Path -Path $PSScriptRoot -ChildPath 'release-note.plugin.html'
@@ -227,6 +227,6 @@ function New-Plugin {
 #*/[FUNCTIONS]-------------------------------------
 
 
-New-Application
+New-ApplicationReleaseNote
 
-New-Plugin
+# New-PluginReleaseNote

@@ -1,5 +1,5 @@
 ﻿
-[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost')]
+[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '')]
 Param(
 	[Parameter(mandatory = $true)][string] $SourceDirectoryPath, # 絶対パス
 	[Parameter(mandatory = $true)][string] $DestinationDirectoryPath, # 絶対パス

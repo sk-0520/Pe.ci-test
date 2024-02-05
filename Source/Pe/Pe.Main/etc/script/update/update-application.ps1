@@ -1,6 +1,6 @@
 ﻿# アップデート時に実施される処理
-[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost')]
-[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingInvokeExpression')]
+[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '')]
+[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingInvokeExpression', '')]
 Param(
 	[Parameter(mandatory = $true)][string] $LogPath,
 	[Parameter(mandatory = $true)][int] $ProcessId,
