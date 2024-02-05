@@ -43,7 +43,7 @@ if ($Module -eq 'boot') {
 	}
 } elseif ($Module -eq 'plugins') {
 	# プラグイン参考実装
-	$pluginProjectFiles = Get-ApplicationProjectDirectories -Kind $Module |
+	$pluginProjectFiles = Get-ApplicationProjectDirectory -Kind $Module |
 		Get-ChildItem -File -Recurse -Include '*.csproj'
 
 	if (($pluginProjectFiles | Measure-Object).Count -eq 0) {
