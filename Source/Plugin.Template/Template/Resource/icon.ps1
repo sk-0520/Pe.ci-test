@@ -40,7 +40,7 @@ function New-Png {
 	)
 
 	$pngBasePath = Join-Path -Path (Split-Path -Parent $SvgPath) -ChildPath ([System.IO.Path]::GetFileNameWithoutExtension($SvgPath))
-	Write-Information "[SRC] $SvgPath";
+	Write-Information "[SRC] $SvgPath"
 	foreach ($size in $iconSize) {
 		$pngPath = "${pngBasePath}_${size}.png"
 		Write-Information "   -> $pngPath"
@@ -136,7 +136,7 @@ while ($true) {
 				}
 			}
 			'x' {
-				exit 0;
+				exit 0
 			}
 			default {
 				Write-Error "[$inputValue] は未定義"

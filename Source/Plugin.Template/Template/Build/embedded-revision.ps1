@@ -12,11 +12,11 @@ function Insert-Element {
 		[string] $ParentXpath,
 		[string] $ElementName
 	)
-	$element = $Xml.SelectSingleNode($TargetXpath);
+	$element = $Xml.SelectSingleNode($TargetXpath)
 	if ($null -eq $element) {
 		$propGroup = $Xml.SelectSingleNode($ParentXpath)
-		$element = $Xml.CreateElement($ElementName);
-		$propGroup.AppendChild($element) | Out-Null;
+		$element = $Xml.CreateElement($ElementName)
+		$propGroup.AppendChild($element) | Out-Null
 		$element.InnerText = $Value
 	}
 }
@@ -31,7 +31,7 @@ function Replace-Element {
 		[Parameter(mandatory = $true)][string] $ParentXpath,
 		[Parameter(mandatory = $true)][string] $ElementName
 	)
-	$element = $Xml.SelectSingleNode($TargetXpath);
+	$element = $Xml.SelectSingleNode($TargetXpath)
 	if ($null -ne $element) {
 		$val = $element.InnerText
 		foreach ($key in $Map.keys) {
