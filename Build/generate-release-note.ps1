@@ -116,6 +116,9 @@ class Element {
 }
 
 function New-Application {
+	[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions')]
+	Param()
+
 	$templateHtmlFile = Join-Path -Path $PSScriptRoot -ChildPath 'release-note.html'
 
 	# 速度とかどうでもいい
@@ -186,6 +189,9 @@ function New-Application {
 }
 
 function New-Plugin {
+	[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions')]
+	Param()
+
 	$pluginTemplateHtmlFile = Join-Path -Path $PSScriptRoot -ChildPath 'release-note.plugin.html'
 
 	#Set-WinSystemLocale ja-JP

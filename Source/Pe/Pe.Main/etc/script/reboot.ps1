@@ -1,4 +1,5 @@
-﻿Param(
+﻿[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost')]
+Param(
 	[Parameter(mandatory = $true)][string] $LogPath,
 	[Parameter(mandatory = $true)][int] $ProcessId,
 	[Parameter(mandatory = $true)][int] $WaitSeconds,
