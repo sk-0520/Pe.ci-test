@@ -1,10 +1,6 @@
 @{
 	IncludeDefaultRules = $true
 
-	IncludeRules = @(
-		'AvoidUsingDoubleQuotesForConstantString'
-	)
-
 	Rules = @{
 		PSAvoidLongLines = @{
 			Enable = $false
@@ -25,6 +21,10 @@
 		}
 
 		PSAvoidSemicolonsAsLineTerminators = @{
+			Enable = $true
+		}
+
+		AvoidUsingDoubleQuotesForConstantString = @{
 			Enable = $true
 		}
 	}

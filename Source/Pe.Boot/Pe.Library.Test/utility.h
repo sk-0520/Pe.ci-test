@@ -246,7 +246,7 @@ public:
 #ifdef RES_CHECK
         library_rc_print(true);
         auto  exists_resource_leak = library_rc_exists_resource_leak();
-        library_rc_uninitialize();
+        library_rc_finalize();
 
         //#ifdef DEBUG
         Microsoft::VisualStudio::CppUnitTestFramework::Assert::IsFalse(exists_resource_leak);

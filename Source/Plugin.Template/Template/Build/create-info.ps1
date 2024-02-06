@@ -15,7 +15,7 @@ Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scriptFileNames = @(
 	'command.ps1'
-);
+)
 foreach ($scriptFileName in $scriptFileNames) {
 	$scriptFilePath = Join-Path -Path $currentDirPath -ChildPath $scriptFileName
 	. $scriptFilePath

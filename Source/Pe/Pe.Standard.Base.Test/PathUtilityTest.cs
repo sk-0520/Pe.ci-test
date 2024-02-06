@@ -23,29 +23,43 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             Assert.AreEqual(expected, actual);
         }
 
-#if OS_WINDOWS
-
         [TestMethod]
         [DataRow("", "", "!")]
         [DataRow("", " ", "!")]
         [DataRow("a", "a", "!")]
+#if OS_WINDOWS
         [DataRow("a!", "a?", "!")]
-        [DataRow("a?", "a?", "?")]
-        [DataRow("a@b@c@d", "a?b\\c*d", "@")]
-        [DataRow("a<>b<>c<>d", "a?b\\c*d", "<>")]
+        [DataRow("a!", "a/", "!")]
+        [DataRow("a/", "a/", "/")]
+        [DataRow("a!", "a\\", "!")]
+        [DataRow("a@b@c@d@e", "a?b\\c*d/e", "@")]
+        [DataRow("a<>b<>c<>d<>e", "a?b\\c*d/e", "<>")]
+#else
+        [DataRow("a?", "a?", "!")]
+        [DataRow("a!", "a/", "!")]
+        [DataRow("a/", "a/", "/")]
+        [DataRow("a\\", "a\\", "!")]
+        [DataRow("a?b\\c*d@e", "a?b\\c*d/e", "@")]
+        [DataRow("a?b\\c*d<>e", "a?b\\c*d/e", "<>")]
+#endif
         public void ToSafeNameTest(string expected, string value, string c)
         {
             var actual = PathUtility.ToSafeName(value, v => c);
             Assert.AreEqual(expected, actual);
         }
 
+
         [TestMethod]
         [DataRow("", "")]
         [DataRow("", " ")]
         [DataRow("a", "a")]
+#if OS_WINDOWS
         [DataRow("a_", "a?")]
-        [DataRow("a_", "a?")]
-        [DataRow("a_b_c_d", "a?b\\c*d")]
+        [DataRow("a_b_c_d_e", "a?b\\c*d/e")]
+#else
+        [DataRow("a?", "a?")]
+        [DataRow("a?b\\c*d_e", "a?b\\c*d/e")]
+#endif
         public void ToSafeNameDefaultTest(string expected, string value)
         {
             var actual = PathUtility.ToSafeNameDefault(value);
@@ -53,6 +67,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         }
 
         [TestMethod]
+#if OS_WINDOWS
         [DataRow(false, "exe")]
         [DataRow(false, "dll")]
         [DataRow(true, ".exe")]
@@ -61,6 +76,16 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         [DataRow(true, "a.exe")]
         [DataRow(true, "a.dll")]
         [DataRow(false, "a.ico")]
+#else
+        [DataRow(false, "exe")]
+        [DataRow(false, "dll")]
+        [DataRow(false, ".exe")]
+        [DataRow(false, ".dll")]
+        [DataRow(false, ".ico")]
+        [DataRow(false, "a.exe")]
+        [DataRow(false, "a.dll")]
+        [DataRow(false, "a.ico")]
+#endif
         public void HasIconTest(bool expected, string value)
         {
             var actual = PathUtility.HasIconPath(value);
@@ -68,12 +93,21 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         }
 
         [TestMethod]
+#if OS_WINDOWS
         [DataRow(false, @"")]
         [DataRow(false, @"/")]
         [DataRow(false, @"//")]
         [DataRow(false, @"\")]
         [DataRow(false, @"\\")]
         [DataRow(true, @"\\a")]
+#else
+        [DataRow(false, @"")]
+        [DataRow(false, @"/")]
+        [DataRow(false, @"//")]
+        [DataRow(false, @"\")]
+        [DataRow(false, @"\\")]
+        [DataRow(false, @"\\a")]
+#endif
         public void IsNetworkDirectoryPathTest(bool expected, string value)
         {
             var actual = PathUtility.IsNetworkDirectoryPath(value);
@@ -81,6 +115,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         }
 
         [TestMethod]
+#if OS_WINDOWS
         [DataRow(null, @"")]
         [DataRow(null, @"A")]
         [DataRow(null, @"\")]
@@ -89,6 +124,16 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         [DataRow(null, @"\\a\")]
         [DataRow("b", @"\\a\b")]
         [DataRow("b", @"\\a\\b")]
+#else
+        [DataRow(null, @"")]
+        [DataRow(null, @"A")]
+        [DataRow(null, @"\")]
+        [DataRow(null, @"\a")]
+        [DataRow(null, @"\\a")]
+        [DataRow(null, @"\\a\")]
+        [DataRow(null, @"\\a\b")]
+        [DataRow(null, @"\\a\\b")]
+#endif
         public void GetNetworkDirectoryName(string? expected, string value)
         {
             var actual = PathUtility.GetNetworkDirectoryName(value);
@@ -96,17 +141,28 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         }
 
         [TestMethod]
+#if OS_WINDOWS
         [DataRow(null, @"")]
         [DataRow(null, @"a")]
         [DataRow("", @"\a")]
         [DataRow(@"\a", @"\a\")]
         [DataRow(@"\a", @"\a\b")]
         [DataRow(@"\a\b", @"\a\b\c")]
+#else
+        [DataRow(null, @"")]
+        [DataRow(null, @"a")]
+        [DataRow(null, @"\a")]
+        [DataRow(null, @"\a\")]
+        [DataRow(null, @"\a\b")]
+        [DataRow(null, @"\a\b\c")]
+#endif
         public void GetNetworkOwnerName(string? expected, string value)
         {
             var actual = PathUtility.GetNetworkOwnerName(value);
             Assert.AreEqual(expected, actual);
         }
+
+#if OS_WINDOWS
 
         [TestMethod]
         [DataRow(false, null)]
@@ -129,11 +185,14 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             Assert.AreEqual(expected, actual);
         }
 
+#endif
+
         [TestMethod]
         [DataRow(true, null, null)]
         [DataRow(false, "", null)]
         [DataRow(false, null, "")]
         [DataRow(true, "", "")]
+#if OS_WINDOWS
         [DataRow(true, "a", "A")]
         [DataRow(true, "A", "a")]
         [DataRow(true, "A", "A")]
@@ -143,14 +202,18 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         [DataRow(true, "A\\", "a")]
         [DataRow(true, "A", "a\\")]
         [DataRow(true, "A\\", "A/")]
+        [DataRow(true, "A/", "A/")]
         [DataRow(true, "A\\", "a/")]
         [DataRow(true, "A\\", "a")]
         [DataRow(true, "A", "a/")]
+#endif
         public void IsEqualsTest(bool expected, string a, string b)
         {
             var actual = PathUtility.IsEquals(a, b);
             Assert.AreEqual(expected, actual);
         }
+
+#if OS_WINDOWS
 
         [TestMethod]
         [DataRow(new[] { "a" }, "a")]

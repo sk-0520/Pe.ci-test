@@ -64,7 +64,7 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* conso
     }
 
     CloseHandle(process_information.hProcess);
-    uninitialize_app_path_items(&app_path_items);
+    finalize_app_path_items(&app_path_items);
 
     return exit_code;
 }

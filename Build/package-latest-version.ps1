@@ -41,7 +41,7 @@ $versions = @{
 
 $archiveFilePath = ''
 
-$url = $gitHubReleaseUrl.Trim('/') + '/' + $versions['path'] + '/' + "Pe_${platform}.${extension}";
+$url = $gitHubReleaseUrl.Trim('/') + '/' + $versions['path'] + '/' + "Pe_${platform}.${extension}"
 $fileName = $versions['file'] + ".${extension}"
 
 Write-Information "[$Platform] $url $fileName"

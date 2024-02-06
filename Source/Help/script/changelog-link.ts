@@ -18,7 +18,7 @@ function makeAutoLink()
 	const itemList = document.getElementsByTagName('li');
 	for (let i = 0; i < itemList.length; i++) {
 		const li = itemList[i];
-		li.innerHTML = li.innerHTML.replace(/((http|https|ftp):\/\/[\w?=&./-;#~%-]+(?![\w\s?&./;#~%"=-]*>))/g, '<a href="$1" href="' + targetName + '">$1</a>'); //'"
+		li.innerHTML = li.innerHTML.replace(/((http|https|ftp):\/\/[\w?=&./\-;#~%-]+(?![\w\s?&./;#~%"=-]*>))/g, '<a href="$1" href="' + targetName + '">$1</a>'); //'"
 	}
 }
 

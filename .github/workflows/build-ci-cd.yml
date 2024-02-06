@@ -39,7 +39,7 @@ jobs:
 
     steps:
       - name: <Checkout> Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: <Generate> Version
         id: version
@@ -54,46 +54,46 @@ jobs:
 
 
       - name: <Download> Release Note
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: History
           path: artifacts/history
 
 
       - name: <Download> Plugins x86
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Pe.Plugins.Reference_x86
           path: artifacts/Pe.Plugins.Reference
 
       - name: <Download> Plugins x64
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Pe.Plugins.Reference_x64
           path: artifacts/Pe.Plugins.Reference
 
 
       - name: <Download> Application x86
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Pe_x86
           path: artifacts/Pe
 
       - name: <Download> Application x64
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Pe_x64
           path: artifacts/Pe
 
 
       - name: <Download> Plugins Information
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Information_Pe.Plugins.Reference
           path: artifacts/info/plugins
 
       - name: <Download> Application Information
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Information_Pe
           path: artifacts/info/pe
@@ -108,7 +108,7 @@ jobs:
       - name: <Delete> TEST Tag
         if: github.ref == 'refs/heads/ci-test'
         continue-on-error: true
-        uses: dev-drprasad/delete-tag-and-release@v0.2.1
+        uses: ClementTsang/delete-tag-and-release@v0.4.0
         with:
           delete_release: true
           tag_name: ${{ steps.version.outputs.dot }}
@@ -116,58 +116,64 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: <Create> Release
-        uses: actions/github-script@v6
+        id: create-release
+        uses: actions/github-script@v7
         with:
           script: |
-            const releaseId = await github.rest.git.createRef({
+            const releaseResult = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: "refs/tags/${{ steps.version.outputs.dot }}",
-              sha: context.sha
-            })
+              generate_release_notes: true,
+              name: '${{ steps.version.outputs.dot }}',
+              tag_name: '${{ steps.version.outputs.dot }}',
+            });
+            return releaseResult['data']['id'];
+
+      - name: <Upload> Assets
+        shell: pwsh
+        run: ./Build/upload-release-assets.ps1 -InformationAction Continue -TargetRepository 'github' -Token '${{ secrets.GITHUB_TOKEN }}' -ReleaseId '${{ steps.create-release.outputs.result }}' -RepositoryOwner '${{ github.repository_owner }}' -RepositoryName '${{ github.event.repository.name }}'
+
+      # - name: <Upload> Pe.Plugins.Reference.*
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: artifacts/Pe.Plugins.Reference/Pe.Plugins.Reference.*.*
+      #     file_glob: true
+      #     tag: ${{ steps.version.outputs.dot }}
+
+      # - name: <Upload> Applications
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: artifacts/Pe/Pe_*
+      #     file_glob: true
+      #     tag: ${{ steps.version.outputs.dot }}
 
 
-      - name: <Upload> Pe.Plugins.Reference.*
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/Pe.Plugins.Reference/Pe.Plugins.Reference.*.*
-          file_glob: true
-          tag: ${{ steps.version.outputs.dot }}
-
-      - name: <Upload> Applications
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/Pe/Pe_*
-          file_glob: true
-          tag: ${{ steps.version.outputs.dot }}
+      # - name: <Upload> Html (Application/Pe.Plugins.Reference)
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: artifacts/history/*.html
+      #     file_glob: true
+      #     tag: ${{ steps.version.outputs.dot }}
 
 
-      - name: <Upload> Html (Application/Pe.Plugins.Reference)
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/history/*.html
-          file_glob: true
-          tag: ${{ steps.version.outputs.dot }}
+      # - name: <Upload> Update Information (Pe.Plugins.Reference)
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: artifacts/info/plugins/update-*.json
+      #     file_glob: true
+      #     tag: ${{ steps.version.outputs.dot }}
 
-
-      - name: <Upload> Update Information (Pe.Plugins.Reference)
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/info/plugins/update-*.json
-          file_glob: true
-          tag: ${{ steps.version.outputs.dot }}
-
-      - name: <Upload> Update Information (Application)
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/info/pe/update.json
-          file_glob: false
-          tag: ${{ steps.version.outputs.dot }}
+      # - name: <Upload> Update Information (Application)
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: artifacts/info/pe/Output/update.json
+      #     file_glob: false
+      #     tag: ${{ steps.version.outputs.dot }}
 
       # - name: <Update> Version API
       #   if: github.ref == 'refs/heads/master'

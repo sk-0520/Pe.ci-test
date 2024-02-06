@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
 $projectFile = Join-Path -Path (Split-Path -Parent $PSScriptRoot | Split-Path -Parent | Split-Path -Parent) -ChildPath 'Source/Pe/Directory.Build.props'
@@ -11,7 +11,7 @@ function Get-ApplicationVersion {
 	$projectNav = $projectXml.CreateNavigator()
 	$vesion = $projectNav.Select('/Project/PropertyGroup/Version').Value
 
-	return $vesion
+	return [version]$vesion
 }
 
 function Convert-Version {

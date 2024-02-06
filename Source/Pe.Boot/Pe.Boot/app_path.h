@@ -39,4 +39,4 @@ void initialize_app_path_items(APP_PATH_ITEMS* result, HMODULE hInstance);
 /// アプリケーションパスの解放。
 /// </summary>
 /// <param name="items"></param>
-void uninitialize_app_path_items(APP_PATH_ITEMS* items);
+void finalize_app_path_items(APP_PATH_ITEMS* items);

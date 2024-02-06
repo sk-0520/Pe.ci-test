@@ -18,7 +18,7 @@ void initialize_app_path_items(APP_PATH_ITEMS* result, HMODULE hInstance)
     result->main_module = get_main_module_path(&result->root_directory);
 }
 
-void uninitialize_app_path_items(APP_PATH_ITEMS* items)
+void finalize_app_path_items(APP_PATH_ITEMS* items)
 {
     release_text(&items->application);
     release_text(&items->root_directory);

@@ -18,7 +18,7 @@ static EXIT_CODE boot_core(HINSTANCE hInstance, const TEXT* command_line)
 
     ShellExecute(NULL, _T("open"), app_path_items.main_module.value, is_enabled_text(command_line) ? command_line->value : NULL, NULL, SW_SHOWNORMAL);
 
-    uninitialize_app_path_items(&app_path_items);
+    finalize_app_path_items(&app_path_items);
 
     return 0;
 }

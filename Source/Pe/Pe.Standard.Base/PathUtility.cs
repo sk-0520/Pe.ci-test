@@ -35,6 +35,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// ファイル名をそれとなく安全な名称に変更する。
+        /// <para>OSに依存する。</para>
         /// </summary>
         /// <param name="name"></param>
         /// <param name="fn"></param>
@@ -43,6 +44,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         {
             Debug.Assert(fn != null);
 
+            //NOTE: GetInvalidFileNameChars だけでいいと思うけど一応ね
             var pattern = Regex.Escape(string.Concat(Path.GetInvalidPathChars().Concat(Path.GetInvalidFileNameChars())));
             var reg = new Regex("([" + pattern + "])");
             return reg.Replace(name.Trim(), m => fn(m.Groups[0].Value[0]));
@@ -50,6 +52,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// ファイル名のシステムで使用できない文字を '_' に置き換える。
+        /// <para>OSに依存する。</para>
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -85,6 +88,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <returns></returns>
         public static bool HasIconPath(string path)
         {
+            if(!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                return false;
+            }
+
             return HasExtensions(path, new[] { "exe", "dll" });
         }
 
@@ -96,6 +103,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <returns></returns>
         public static bool IsShortcut(string path)
         {
+            if(!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                return false;
+            }
+
             return HasExtensions(path, new[] { "lnk" });
         }
 
@@ -106,6 +117,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <returns></returns>
         public static bool IsProgram(string path)
         {
+            if(!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                return false;
+            }
+
             return HasExtensions(path, new[] { "exe", "dll" });
         }
 
@@ -116,12 +131,20 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <returns></returns>
         public static bool IsNetworkDirectoryPath(string path)
         {
+            if(!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                return false;
+            }
+
             var head = new string(Path.DirectorySeparatorChar, 2);
             return head.Length < path.Length && path.StartsWith(head);
         }
 
         public static string? GetNetworkDirectoryName(string path)
         {
+            if(!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                return null;
+            }
+
             var lastIndex = path.LastIndexOf(Path.DirectorySeparatorChar);
             if(lastIndex == -1) {
                 return null;
@@ -137,6 +160,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         public static string? GetNetworkOwnerName(string path)
         {
+            if(!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                return null;
+            }
+
             var lastIndex = path.LastIndexOf(Path.DirectorySeparatorChar);
             if(lastIndex == -1) {
                 return null;

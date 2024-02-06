@@ -44,7 +44,7 @@ void library_rc_print(bool leak);
 bool library_rc_exists_resource_leak(void);
 
 void library_rc_initialize(library_func_rc_output output, size_t path_length, size_t buffer_length, size_t heap_count, size_t file_count);
-void library_rc_uninitialize(void);
+void library_rc_finalize(void);
 
 #endif
 
