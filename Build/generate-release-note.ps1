@@ -229,4 +229,4 @@ function New-PluginReleaseNote {
 
 New-ApplicationReleaseNote
 
-# New-PluginReleaseNote
+New-PluginReleaseNote
