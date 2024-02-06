@@ -1,4 +1,4 @@
-Param(
+﻿Param(
 	[Parameter(mandatory = $true)][ValidateSet('github')][string] $TargetRepository,
 	[Parameter(mandatory = $true)][string] $Token,
 	[Parameter(mandatory = $true)][string] $ReleaseId,

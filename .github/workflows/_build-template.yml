@@ -30,8 +30,8 @@ env:
 
 
 jobs:
-  lint-powershell:
-    name: Lint PowerShell
+  powershell-source:
+    name: PowerShell
 
     strategy:
       matrix:
@@ -48,13 +48,17 @@ jobs:
       - name: <Lint> PowerShell
         shell: pwsh
         run: Invoke-ScriptAnalyzer -Path ./ -Recurse -Settings PSScriptAnalyzerSettings.psd1 -EnableExit
-        # uses: microsoft/psscriptanalyzer-action@v1.0
-        # with:
-        #  path: ./
-        #  recurse: true
-        #  settings: ./PSScriptAnalyzerSettings.psd1
-        #  output: results.sarif
 
+      - name: <Test> PowerShell
+        shell: pwsh
+        run: |
+          foreach($file in (Get-ChildItem -Path 'Source/PowerShell.Test' -Recurse -File -Include '*.Test.ps1')) {
+            echo "> $file"
+            $content = Get-Content $file | % { $_ -replace '\|\s+Should\s+(?<WORD>\w+)\b', '| Should -${WORD}' }
+            $content | Out-File -Path $file -Encoding UTF8
+            #Get-Content $file
+          }
+          Source/PowerShell.Test/UT/Test-UT.ps1
 
   help:
     name: Help
@@ -818,7 +822,7 @@ jobs:
       UPDATE_DESTINATION: \dest
     runs-on: windows-latest
     needs:
-      - lint-powershell
+      - powershell-source
 
     steps:
       - name: <Checkout> Repository
