@@ -48,7 +48,7 @@ function Convert-Template {
 
 	$work = $Source
 
-	$work = $work.Replace('@VERSION@', $version)
+	$work = $work.Replace('@VERSION@', (Get-ApplicationVersion -Version $version -Separator '.'))
 	$work = $work.Replace('@REVISION@', $Revision)
 
 	return $work
