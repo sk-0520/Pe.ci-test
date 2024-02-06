@@ -63,7 +63,7 @@ function Get-UpdateItem {
 
 	return @{
 		release = $releaseTimestamp.ToString('s')
-		version = $version
+		version = (Convert-Version -Version $version -Separator '.')
 		revision = $Revision
 		platform = $Platform
 		minimum_version = Convert-Version -Version $MinimumVersion -Separator '.'
