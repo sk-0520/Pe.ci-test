@@ -63,6 +63,7 @@
 	{
 		"date": "2023/12/12",
 		"version": "0.99.217",
+		"group": ".NET 8",
 		"contents": [
 			{
 				"type": "note",
@@ -1447,6 +1448,7 @@
 	{
 		"date": "2022/12/13",
 		"version": "0.99.180",
+		"group": ".NET 7",
 		"contents": [
 			{
 				"type": "note",
@@ -2110,6 +2112,7 @@
 	{
 		"date": "2021/11/28",
 		"version": "0.99.166",
+		"group": ".NET 6",
 		"contents": [
 			{
 				"type": "note",
@@ -2725,6 +2728,7 @@
 	{
 		"date": "2021/01/13",
 		"version": "0.99.095",
+		"group": ".NET 5",
 		"contents": [
 			{
 				"type": "developer",
@@ -4597,6 +4601,7 @@
 	{
 		"date": "2020/02/24",
 		"version": "0.84.000",
+		"group": ".NET Core 3.1",
 		"contents": [
 			{
 				"type": "note",
@@ -6391,6 +6396,7 @@
 	{
 		"date": "2015/09/13",
 		"version": "0.63.0",
+		"group": "WPF",
 		"contents": [
 			{
 				"type": "note",
@@ -9764,6 +9770,7 @@
 	{
 		"date": "2014/08/28",
 		"version": "0.11.0",
+		"group": "Windows Forms",
 		"contents": [
 			{
 				"type": "note",
