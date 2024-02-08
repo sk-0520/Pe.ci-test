@@ -51,7 +51,11 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#919: ドメインを変更する",
+						"comments": [
+							"くっそつらい修正",
+							"なんだこれもうまじで"
+						]
 					},
 					{
 						"revision": "",
