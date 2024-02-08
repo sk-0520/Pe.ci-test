@@ -75,10 +75,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         [Configuration("author_website_uri")]
         public Uri AuthorWebSiteUri { get; } = default!;
         /// <summary>
-        /// バージョン確認 URI。
+        /// バージョン確認URL。
+        /// <para>上から順にバージョン確認を行って、自身よりバージョンが大きければバージョンアップありとする。</para>
         /// </summary>
-        [Configuration("version_check_uri")]
-        public Uri UpdateCheckUri { get; } = default!;
+        [Configuration("version_check_url_items")]
+        public IReadOnlyList<string> UpdateCheckUrlItems { get; } = default!;
         /// <summary>
         /// アップデート確認前待機時間。
         /// </summary>
