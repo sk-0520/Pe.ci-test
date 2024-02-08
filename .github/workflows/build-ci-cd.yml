@@ -15,7 +15,7 @@ concurrency:
 
 
 env:
-  PE_UPDATE_API_ENDPOINT: https://peserver.gq/api/administrator/pe/version
+  PE_UPDATE_API_ENDPOINT: https://peserver.site/api/administrator/pe/version
 
 
 jobs:

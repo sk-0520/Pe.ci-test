@@ -48,7 +48,7 @@ function Convert-Template {
 
 	$work = $Source
 
-	$work = $work.Replace('@VERSION@', $version)
+	$work = $work.Replace('@VERSION@', (Convert-Version -Version $version -Separator '.'))
 	$work = $work.Replace('@REVISION@', $Revision)
 
 	return $work
@@ -63,7 +63,7 @@ function Get-UpdateItem {
 
 	return @{
 		release = $releaseTimestamp.ToString('s')
-		version = $version
+		version = (Convert-Version -Version $version -Separator '.')
 		revision = $Revision
 		platform = $Platform
 		minimum_version = Convert-Version -Version $MinimumVersion -Separator '.'

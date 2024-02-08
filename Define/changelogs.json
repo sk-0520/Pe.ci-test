@@ -1,7 +1,50 @@
 [
 	{
+		"date": "2024/02/08",
+		"version": "0.99.222",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"subject": "本バージョンアップは Pe から実行不可の悲しみ",
+						"comments": [
+							"Pe の API 周りのドメインを変更",
+							"peserver.gq -> peserver.site",
+							"つらい。ほんとつらい。めたぁ",
+							"次のバージョンアップがうまくいけば万歳"
+						]
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "e1c070080547923a981d17212b3698d94d7f3b7b",
+						"subject": "#919: ドメインを変更する",
+						"comments": [
+							"くっそつらい修正",
+							"なんだこれもうまじで"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "23d9b7627dd6b535313fd35c0715ca8d876bbc68",
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 17.8.0 -> 17.9.0"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2024/02/07",
-		"version": "0.99.220",
+		"version": "0.99.220 - 0.99.221",
 		"contents": [
 			{
 				"type": "features",
