@@ -57,7 +57,7 @@ async function setAutoGeneratePluginId() {
 	do {
 		try {
 			//const uri = 'http://localhost/api/plugin/generate-plugin-id';
-			const uri = 'https://peserver.gq/api/plugin/generate-plugin-id';
+			const uri = 'https://peserver.site/api/plugin/generate-plugin-id';
 			const response = await fetch(uri);
 			const json = await response.json()
 			guid = json['data']['plugin_id'];

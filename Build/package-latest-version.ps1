@@ -7,7 +7,7 @@ Set-StrictMode -Version Latest
 Import-Module "${PSScriptRoot}/Modules/Version"
 
 
-$verionEndPoint = [uri]'https://peserver.gq/api/application/version/update'
+$verionEndPoint = [uri]'https://peserver.site/api/application/version/update'
 $extension = '7z'
 $response = Invoke-WebRequest -Uri $verionEndPoint -Method Get
 $latestResult = ConvertFrom-Json ([System.Text.Encoding]::UTF8.GetString($response.Content))
