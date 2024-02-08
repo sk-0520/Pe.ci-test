@@ -26,27 +26,6 @@
 				]
 			},
 			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
 				"type": "fixes",
 				"logs": [
 					{
@@ -56,18 +35,6 @@
 							"くっそつらい修正",
 							"なんだこれもうまじで"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -76,7 +43,8 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 17.8.0 -> 17.9.0"
 					},
 					{
 						"revision": "",
