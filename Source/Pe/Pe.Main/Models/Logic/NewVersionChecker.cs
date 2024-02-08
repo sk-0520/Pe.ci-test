@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     var updateData = System.Text.Json.JsonSerializer.Deserialize<NewVersionData>(content);
                     if(updateData == null) {
                         Logger.LogError("復元失敗: {0}", content);
-                        continue;
+                        return null;
                     }
                     var result = updateData.Items
                         .Where(i => i.Platform == ProcessArchitecture.ApplicationArchitecture)
@@ -118,9 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     //#if DEBUG
                     //                result = updateData.Items.First();
                     //#endif
-                    if(result !=null) {
-                        return result;
-                    }
+                    return result;
                 } catch(Exception ex) {
                     Logger.LogWarning(ex, ex.Message);
                 }
