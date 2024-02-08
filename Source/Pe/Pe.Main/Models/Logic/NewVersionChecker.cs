@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -80,46 +81,49 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <returns>新バージョンがあれば新情報。なければ<c>null</c>。</returns>
         public async Task<NewVersionItemData?> CheckApplicationNewVersionAsync(CancellationToken token)
         {
-            var uri = new Uri(
-                TextUtility.ReplaceFromDictionary(
-                    ApplicationConfiguration.General.UpdateCheckUri.OriginalString,
-                    new Dictionary<string, string>() {
-                        ["CACHE-CLEAR"] = DateTime.UtcNow.ToBinary().ToString(CultureInfo.InvariantCulture),
-                    }
-                )
-            );
-
             using var agent = UserAgentManager.CreateUserAgent();
-            try {
-                var response = await agent.GetAsync(uri, token);
-                if(!response.IsSuccessStatusCode) {
-                    Logger.LogWarning("GetAsync: {0}, {1}", response.StatusCode, uri);
-                    return null;
+            foreach(var updateCheckUrl in ApplicationConfiguration.General.UpdateCheckUrlItems) {
+                var uri = new Uri(
+                    TextUtility.ReplaceFromDictionary(
+                        updateCheckUrl,
+                        new Dictionary<string, string>() {
+                            ["CACHE-CLEAR"] = DateTime.UtcNow.ToBinary().ToString(CultureInfo.InvariantCulture),
+                        }
+                    )
+                );
+                Logger.LogInformation("check app update: {uri}", uri);
+
+                try {
+                    var response = await agent.GetAsync(uri, token);
+                    if(!response.IsSuccessStatusCode) {
+                        Logger.LogWarning("GetAsync: {0}, {1}", response.StatusCode, uri);
+                        continue;
+                    }
+                    var content = await response.Content.ReadAsStringAsync(token);
+
+                    //TODO: Serializer.cs に統合したい
+                    var updateData = System.Text.Json.JsonSerializer.Deserialize<NewVersionData>(content);
+                    if(updateData == null) {
+                        Logger.LogError("復元失敗: {0}", content);
+                        return null;
+                    }
+                    var result = updateData.Items
+                        .Where(i => i.Platform == ProcessArchitecture.ApplicationArchitecture)
+                        .Where(i => i.MinimumVersion <= BuildStatus.Version)
+                        .Where(i => BuildStatus.Version < i.Version)
+                        .OrderByDescending(i => i.Version)
+                        .FirstOrDefault()
+                    ;
+
+                    //#if DEBUG
+                    //                result = updateData.Items.First();
+                    //#endif
+                    return result;
+                } catch(Exception ex) {
+                    Logger.LogWarning(ex, ex.Message);
                 }
-                var content = await response.Content.ReadAsStringAsync(token);
-
-                //TODO: Serializer.cs に統合したい
-                var updateData = System.Text.Json.JsonSerializer.Deserialize<NewVersionData>(content);
-                if(updateData == null) {
-                    Logger.LogError("復元失敗: {0}", content);
-                    return null;
-                }
-                var result = updateData.Items
-                    .Where(i => i.Platform == ProcessArchitecture.ApplicationArchitecture)
-                    .Where(i => i.MinimumVersion <= BuildStatus.Version)
-                    .Where(i => BuildStatus.Version < i.Version)
-                    .OrderByDescending(i => i.Version)
-                    .FirstOrDefault()
-                ;
-
-                //#if DEBUG
-                //                result = updateData.Items.First();
-                //#endif
-
-                return result;
-            } catch(Exception ex) {
-                Logger.LogWarning(ex, ex.Message);
             }
+
             return null;
         }
 
