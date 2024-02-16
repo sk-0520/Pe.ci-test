@@ -71,7 +71,7 @@ foreach ($srcFile in $srcFiles) {
 		}
 	}
 
-	Copy-Item -Path "$srcPath" -Destination "$destPath" -Force | Out-Null
+	Copy-Item -Path $srcPath -Destination $destPath -Force | Out-Null
 }
 
 if ($progress -eq $progressAnimation) {
