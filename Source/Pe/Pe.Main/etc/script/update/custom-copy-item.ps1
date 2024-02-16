@@ -1,5 +1,4 @@
-﻿
-[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '')]
+﻿[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '')]
 Param(
 	[Parameter(mandatory = $true)][string] $SourceDirectoryPath, # 絶対パス
 	[Parameter(mandatory = $true)][string] $DestinationDirectoryPath, # 絶対パス
@@ -72,7 +71,7 @@ foreach ($srcFile in $srcFiles) {
 		}
 	}
 
-	Copy-Item -Path "$srcPath" -Destination "$destPath" -Force | Out-Null
+	Copy-Item -Path $srcPath -Destination $destPath -Force | Out-Null
 }
 
 if ($progress -eq $progressAnimation) {

@@ -62,72 +62,67 @@ Start-Sleep -Seconds 3
 
 Start-Transcript -Path "$LogPath" -Force
 try {
-	try {
-		Write-Host "ProcessId: $ProcessId"
-		Write-Host "WaitSeconds: $WaitSeconds"
-		Write-Host "SourceDirectory: $SourceDirectory"
-		Write-Host "DestinationDirectory: $DestinationDirectory"
-		Write-Host "CurrentVersion: $CurrentVersion"
-		Write-Host "Platform: $Platform"
-		Write-Host "ExecuteCommand: $ExecuteCommand"
-		Write-Host "ExecuteArgument: $ExecuteArgument"
+	Write-Host "ProcessId: $ProcessId"
+	Write-Host "WaitSeconds: $WaitSeconds"
+	Write-Host "SourceDirectory: $SourceDirectory"
+	Write-Host "DestinationDirectory: $DestinationDirectory"
+	Write-Host "CurrentVersion: $CurrentVersion"
+	Write-Host "Platform: $Platform"
+	Write-Host "ExecuteCommand: $ExecuteCommand"
+	Write-Host "ExecuteArgument: $ExecuteArgument"
 
-		if ($ProcessId -ne 0 ) {
-			Write-Host "プロセス終了待機: $ProcessId ..."
-			try {
-				Wait-Process -Id $ProcessId -Timeout $WaitSeconds
-				Write-Host "プロセス終了: $ProcessId"
-			} catch {
-				Write-Host $Error -ForegroundColor Yellow -BackgroundColor Black
-				Write-Host 'プロセス終了を無視'
-			}
+	if ($ProcessId -ne 0 ) {
+		Write-Host "プロセス終了待機: $ProcessId ..."
+		try {
+			Wait-Process -Id $ProcessId -Timeout $WaitSeconds
+			Write-Host "プロセス終了: $ProcessId"
+		} catch {
+			Write-Host $Error -ForegroundColor Yellow -BackgroundColor Black
+			Write-Host 'プロセス終了を無視'
 		}
-
-		Write-Host ''
-		Write-Host 'アップデート処理を実施します'
-		Write-Host ''
-
-		Write-Host ''
-		Write-Host '最新アップデート前スクリプト'
-		if ( Test-Path -Path $UpdateBeforeScript ) {
-			Write-Host "実施: $UpdateBeforeScript" -BackgroundColor Gray
-			$escapeUpdateBeforeScript = $UpdateBeforeScript -Replace ' ', '` '
-			Invoke-Expression "$escapeUpdateBeforeScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform"
-			Write-Host '---------------------------' -BackgroundColor Gray
-		} else {
-			Write-Host 'スクリプトなし' -BackgroundColor Gray
-		}
-		Write-Host ''
-
-		Write-Host '本体アップデート処理実施'
-		Write-Host "$SourceDirectory -> $DestinationDirectory"
-		$escapeCustomCopyItem = (Join-Path -Path $PSScriptRoot -ChildPath 'custom-copy-item.ps1') -Replace ' ', '` '
-		#Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
-		Invoke-Expression "$escapeCustomCopyItem -SourceDirectoryPath ""$SourceDirectory"" -DestinationDirectoryPath ""$DestinationDirectory"" -ProgressType 'output'"
-
-		Write-Host ''
-		Write-Host '最新アップデート後スクリプト'
-		if ( Test-Path -Path $UpdateAfterScript ) {
-			Write-Host "実施: $UpdateAfterScript" -BackgroundColor Gray
-			$escapeUpdateAfterScript = $UpdateAfterScript -Replace ' ', '` '
-			Invoke-Expression "$escapeUpdateAfterScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
-			Write-Host '---------------------------' -BackgroundColor Gray
-		} else {
-			Write-Host 'スクリプトなし' -BackgroundColor Gray
-		}
-
-		Write-Host ''
-		Write-Host 'Pe を起動しています...'
-		if ( $ExecuteArgument ) {
-			$process = Start-Process -PassThru -FilePath $ExecuteCommand -ArgumentList $ExecuteArgument
-		} else {
-			$process = Start-Process -PassThru -FilePath $ExecuteCommand
-		}
-		$process.WaitForInputIdle() | Out-Null
-	} finally {
-		Stop-Transcript
 	}
 
+	Write-Host ''
+	Write-Host 'アップデート処理を実施します'
+	Write-Host ''
+
+	Write-Host ''
+	Write-Host '最新アップデート前スクリプト'
+	if ( Test-Path -Path $UpdateBeforeScript ) {
+		Write-Host "実施: $UpdateBeforeScript" -BackgroundColor Gray
+		$escapeUpdateBeforeScript = $UpdateBeforeScript -Replace ' ', '` '
+		Invoke-Expression "$escapeUpdateBeforeScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform"
+		Write-Host '---------------------------' -BackgroundColor Gray
+	} else {
+		Write-Host 'スクリプトなし' -BackgroundColor Gray
+	}
+	Write-Host ''
+
+	Write-Host '本体アップデート処理実施'
+	Write-Host "$SourceDirectory -> $DestinationDirectory"
+	$escapeCustomCopyItem = (Join-Path -Path $PSScriptRoot -ChildPath 'custom-copy-item.ps1') -Replace ' ', '` '
+	#Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
+	Invoke-Expression "$escapeCustomCopyItem -SourceDirectoryPath ""$SourceDirectory"" -DestinationDirectoryPath ""$DestinationDirectory"" -ProgressType 'output'"
+
+	Write-Host ''
+	Write-Host '最新アップデート後スクリプト'
+	if ( Test-Path -Path $UpdateAfterScript ) {
+		Write-Host "実施: $UpdateAfterScript" -BackgroundColor Gray
+		$escapeUpdateAfterScript = $UpdateAfterScript -Replace ' ', '` '
+		Invoke-Expression "$escapeUpdateAfterScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
+		Write-Host '---------------------------' -BackgroundColor Gray
+	} else {
+		Write-Host 'スクリプトなし' -BackgroundColor Gray
+	}
+
+	Write-Host ''
+	Write-Host 'Pe を起動しています...'
+	if ( $ExecuteArgument ) {
+		$process = Start-Process -PassThru -FilePath $ExecuteCommand -ArgumentList $ExecuteArgument
+	} else {
+		$process = Start-Process -PassThru -FilePath $ExecuteCommand
+	}
+	$process.WaitForInputIdle() | Out-Null
 } catch {
 	Write-Error $error
 	Read-Host "エラーが発生しました。`r`nログファイル: $LogPath を参照してください。`r`nEnter で終了します"
