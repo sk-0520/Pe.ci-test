@@ -136,12 +136,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             switch(e.Action) {
                 case NotifyCollectionChangedAction.Add:
-                    if(e.NewStartingIndex == 0 && Collection.Count == 0) {
-                        if(e.NewItems != null) {
+                    if(e.NewItems != null) {
+                        // Collection.Count はすでに増えている(イベントから動いているので本処理は事後となる)
+                        // ただし終端への挿入は追加扱いとなる(3要素ある際に Insert(`3', obj) とした場合は追加)
+                        if(e.NewStartingIndex + 1 == Collection.Count) {
                             AddItems(ConvertList(e.NewItems));
-                        }
-                    } else {
-                        if(e.NewItems != null) {
+                        } else {
                             InsertItems(e.NewStartingIndex, ConvertList(e.NewItems));
                         }
                     }
