@@ -403,7 +403,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 static void ClearBindings(DependencyObject dependencyObject)
                 {
-                    foreach(var child in LogicalTreeHelper.GetChildren(dependencyObject).OfType<DependencyObject>()) {
+                    var children = LogicalTreeHelper
+                        .GetChildren(dependencyObject)
+                        .OfType<DependencyObject>()
+                        .ToArray()
+                    ;
+                    foreach(var child in children) {
                         ClearBindings(child);
                     }
 
