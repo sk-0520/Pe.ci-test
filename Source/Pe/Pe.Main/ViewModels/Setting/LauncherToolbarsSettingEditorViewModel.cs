@@ -18,15 +18,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public LauncherToolbarsSettingEditorViewModel(LauncherToolbarsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> allLauncherGroupCollection, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherToolbarsSettingEditorViewModel(LauncherToolbarsSettingEditorElement model, ModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> allLauncherGroupCollection, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             AllLauncherGroupCollection = allLauncherGroupCollection;
             AllLauncherGroupItems = AllLauncherGroupCollection.CreateView();
             GeneralTheme = generalTheme;
-            ToolbarCollection = new ActionModelViewModelObservableCollectionManager<LauncherToolbarSettingEditorElement, LauncherToolbarSettingEditorViewModel>(Model.Toolbars) {
+            ToolbarCollection = new ModelViewModelObservableCollectionManager<LauncherToolbarSettingEditorElement, LauncherToolbarSettingEditorViewModel>(Model.Toolbars, new ModelViewModelObservableCollectionOptions<LauncherToolbarSettingEditorElement, LauncherToolbarSettingEditorViewModel>() {
                 ToViewModel = m => new LauncherToolbarSettingEditorViewModel(m, AllLauncherGroupCollection, () => IsSelected, GeneralTheme, DispatcherWrapper, LoggerFactory),
-            };
+            });
             ToolbarItems = ToolbarCollection.GetDefaultView();
         }
 
@@ -34,10 +34,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private IGeneralTheme GeneralTheme { get; }
         public RequestSender ShowAllScreensRequest { get; } = new RequestSender();
 
-        private ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> AllLauncherGroupCollection { get; }
+        private ModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> AllLauncherGroupCollection { get; }
         public ICollectionView AllLauncherGroupItems { get; }
 
-        private ModelViewModelObservableCollectionManagerBase<LauncherToolbarSettingEditorElement, LauncherToolbarSettingEditorViewModel> ToolbarCollection { get; }
+        private ModelViewModelObservableCollectionManager<LauncherToolbarSettingEditorElement, LauncherToolbarSettingEditorViewModel> ToolbarCollection { get; }
         public ICollectionView ToolbarItems { get; }
 
         public LauncherToolbarSettingEditorViewModel? SelectedToolbar

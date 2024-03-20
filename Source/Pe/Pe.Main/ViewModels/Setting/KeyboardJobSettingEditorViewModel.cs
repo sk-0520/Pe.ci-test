@@ -196,9 +196,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         protected KeyboardPressedJobSettingEditorViewModelBase(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            MappingCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<KeyMappingData>, KeyMappingEditorViewModel>(Model.Mappings) {
+            MappingCollection = new ModelViewModelObservableCollectionManager<WrapModel<KeyMappingData>, KeyMappingEditorViewModel>(Model.Mappings, new ModelViewModelObservableCollectionOptions<WrapModel<KeyMappingData>, KeyMappingEditorViewModel>() {
                 ToViewModel = m => new KeyMappingEditorViewModel(m.Data, LoggerFactory),
-            };
+            });
             MappingItems = MappingCollection.GetDefaultView();
         }
 
@@ -224,7 +224,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
-        private ModelViewModelObservableCollectionManagerBase<WrapModel<KeyMappingData>, KeyMappingEditorViewModel> MappingCollection { get; }
+        private ModelViewModelObservableCollectionManager<WrapModel<KeyMappingData>, KeyMappingEditorViewModel> MappingCollection { get; }
         public ICollectionView MappingItems { get; }
 
         #endregion
@@ -291,7 +291,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     public sealed class KeyboardLauncherItemJobSettingEditorViewModel: KeyboardPressedJobSettingEditorViewModelBase<KeyActionContentLauncherItem>
     {
-        public KeyboardLauncherItemJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public KeyboardLauncherItemJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, ModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             AllLauncherItemCollection = allLauncherItemCollection;
@@ -301,7 +301,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region property
 
         [IgnoreValidation]
-        private ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        private ModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
         [IgnoreValidation]
         public ICollectionView AllLauncherItems { get; }
 

@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContentTypeTextNet.Pe.Core.Test.Models
 {
+    // 保守したくはないけどテストくらいはまぁ。。。 という気持ち
     [TestClass]
     public class ObservableCollectionManagerBaseTest
     {
@@ -57,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
                 LastAction = LastAction.Remove;
             }
 
-            protected override void ReplaceItemsImpl(IReadOnlyList<T> newItems, IReadOnlyList<T> oldItems)
+            protected override void ReplaceItemsImpl(int startIndex, IReadOnlyList<T> newItems, IReadOnlyList<T> oldItems)
             {
                 LastAction = LastAction.Replace;
             }
@@ -94,6 +95,12 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         {
             var collection = Create(1, 2, 3);
             Assert.AreEqual(LastAction.None, collection.Manager.LastAction);
+        }
+
+        [TestMethod]
+        public void Constructor_throw_Test()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => new TestObservableCollectionManager<int>((ReadOnlyObservableCollection<int>)null!));
         }
 
         [TestMethod]

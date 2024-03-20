@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public LauncherGroupSettingEditorViewModel(LauncherGroupSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherGroupSettingEditorViewModel(LauncherGroupSettingEditorElement model, ModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             if(!Model.IsInitialized) {
@@ -32,13 +32,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             DispatcherWrapper = dispatcherWrapper;
             AllLauncherItemCollection = allLauncherItemCollection;
 
-            LauncherCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<LauncherItemId>, LauncherItemSettingEditorViewModel>(Model.LauncherItems) {
-                ManagingResource = false, // 共有アイテムを使用しているので破棄させない
+            LauncherCollection = new ModelViewModelObservableCollectionManager<WrapModel<LauncherItemId>, LauncherItemSettingEditorViewModel>(Model.LauncherItems, new ModelViewModelObservableCollectionOptions<WrapModel<LauncherItemId>, LauncherItemSettingEditorViewModel>() {
+                AutoDisposeViewModel = false, // 共有アイテムを使用しているので破棄させない
                 ToViewModel = (m) => {
                     var itemVm = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == m.Data);
                     return itemVm.Clone();
-                },
-            };
+                }
+            });
             LauncherItems = LauncherCollection.ViewModels;
         }
 
@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         /// <para>親元でアイコンと共通項目構築済みのランチャーアイテム。毎回作るのあれだし。</para>
         /// </summary>
         [IgnoreValidation]
-        private ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        private ModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
 
         /// <summary>
         /// 所属ランチャーアイテム。
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         /// </summary>
         //public ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherItems { get; }
         [IgnoreValidation]
-        private ModelViewModelObservableCollectionManagerBase<WrapModel<LauncherItemId>, LauncherItemSettingEditorViewModel> LauncherCollection { get; }
+        private ModelViewModelObservableCollectionManager<WrapModel<LauncherItemId>, LauncherItemSettingEditorViewModel> LauncherCollection { get; }
         [IgnoreValidation]
         public ReadOnlyObservableCollection<LauncherItemSettingEditorViewModel> LauncherItems { get; }
 

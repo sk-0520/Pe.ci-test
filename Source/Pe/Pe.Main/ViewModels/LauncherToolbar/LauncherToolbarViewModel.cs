@@ -52,14 +52,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             LauncherToolbarTheme = launcherToolbarTheme;
             GeneralTheme = generalTheme;
 
-            LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups) {
+            LauncherGroupCollection = new ModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups, new ModelViewModelObservableCollectionOptions<LauncherGroupElement, LauncherGroupViewModel>() {
                 ToViewModel = (m) => new LauncherGroupViewModel(m, DispatcherWrapper, LoggerFactory),
-            };
+            });
             LauncherGroupItems = LauncherGroupCollection.ViewModels;
 
-            LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherDetailViewModelBase>(Model.LauncherItems) {
+            LauncherItemCollection = new ModelViewModelObservableCollectionManager<LauncherItemElement, LauncherDetailViewModelBase>(Model.LauncherItems, new ModelViewModelObservableCollectionOptions<LauncherItemElement, LauncherDetailViewModelBase>() {
                 ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DockScreen, KeyGestureGuide, DispatcherWrapper, LauncherToolbarTheme, LoggerFactory),
-            };
+            });
             LauncherItems = LauncherItemCollection.GetDefaultView();
 
             ViewDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
@@ -185,10 +185,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             set => SetProperty(ref this._showWaiting, value);
         }
 
-        private ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
+        private ModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
         public ReadOnlyObservableCollection<LauncherGroupViewModel> LauncherGroupItems { get; }
 
-        private ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherDetailViewModelBase> LauncherItemCollection { get; }
+        private ModelViewModelObservableCollectionManager<LauncherItemElement, LauncherDetailViewModelBase> LauncherItemCollection { get; }
         public ICollectionView LauncherItems { get; }
 
         public RequestSender CloseRequest { get; } = new RequestSender();

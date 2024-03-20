@@ -25,14 +25,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             : base(model, dispatcherWrapper, loggerFactory)
         {
             ImageLoader = imageLoader;
-            PluginCollection = new ActionModelViewModelObservableCollectionManager<PluginSettingEditorElement, PluginSettingEditorViewModel>(Model.PluginItems) {
+            PluginCollection = new ModelViewModelObservableCollectionManager<PluginSettingEditorElement, PluginSettingEditorViewModel>(Model.PluginItems, new ModelViewModelObservableCollectionOptions<PluginSettingEditorElement, PluginSettingEditorViewModel>() {
                 ToViewModel = m => new PluginSettingEditorViewModel(m, ImageLoader, DispatcherWrapper, LoggerFactory),
-            };
+            });
             PluginItems = PluginCollection.GetDefaultView();
 
-            InstallPluginCollection = new ActionModelViewModelObservableCollectionManager<PluginInstallItemElement, PluginInstallItemViewModel>(Model.InstallPluginItems) {
+            InstallPluginCollection = new ModelViewModelObservableCollectionManager<PluginInstallItemElement, PluginInstallItemViewModel>(Model.InstallPluginItems, new ModelViewModelObservableCollectionOptions<PluginInstallItemElement, PluginInstallItemViewModel>() {
                 ToViewModel = m => new PluginInstallItemViewModel(m, LoggerFactory),
-            };
+            });
             InstallPluginItems = InstallPluginCollection.GetDefaultView();
         }
 
@@ -42,10 +42,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public RequestSender ShowMessageRequest { get; } = new RequestSender();
         public RequestSender WebInstallRequest { get; } = new RequestSender();
 
-        private ModelViewModelObservableCollectionManagerBase<PluginSettingEditorElement, PluginSettingEditorViewModel> PluginCollection { get; }
+        private ModelViewModelObservableCollectionManager<PluginSettingEditorElement, PluginSettingEditorViewModel> PluginCollection { get; }
         public ICollectionView PluginItems { get; }
 
-        private ModelViewModelObservableCollectionManagerBase<PluginInstallItemElement, PluginInstallItemViewModel> InstallPluginCollection { get; }
+        private ModelViewModelObservableCollectionManager<PluginInstallItemElement, PluginInstallItemViewModel> InstallPluginCollection { get; }
         public ICollectionView InstallPluginItems { get; }
 
         public PluginSettingEditorViewModel? SelectedPlugin

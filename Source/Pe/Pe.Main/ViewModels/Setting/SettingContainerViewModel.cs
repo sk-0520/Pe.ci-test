@@ -26,12 +26,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             GeneralTheme = generalTheme;
 
-            AllLauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel>(Model.AllLauncherItems) {
+            AllLauncherItemCollection = new ModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel>(Model.AllLauncherItems, new ModelViewModelObservableCollectionOptions<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel>() {
                 ToViewModel = m => new LauncherItemSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
-            };
-            AllLauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel>(Model.AllLauncherGroups) {
+            });
+            AllLauncherGroupCollection = new ModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel>(Model.AllLauncherGroups, new ModelViewModelObservableCollectionOptions<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel>() {
                 ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory),
-            };
+            });
 
             GeneralSettingEditor = new GeneralsSettingEditorViewModel(Model.GeneralsSettingEditor, applicationConfiguration, generalTheme, imageLoader, DispatcherWrapper, LoggerFactory);
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
@@ -63,9 +63,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public RequestSender CloseRequest { get; } = new RequestSender();
 
         [IgnoreValidation]
-        public ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        public ModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
         [IgnoreValidation]
-        public ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> AllLauncherGroupCollection { get; }
+        public ModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> AllLauncherGroupCollection { get; }
 
         [IgnoreValidation]
         public IReadOnlyList<ISettingEditorViewModel> EditorItems { get; }

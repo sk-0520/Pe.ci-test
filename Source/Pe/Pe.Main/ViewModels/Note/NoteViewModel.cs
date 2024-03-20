@@ -97,9 +97,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 DropAction = FileDrop,
             };
 
-            FileCollection = new ActionModelViewModelObservableCollectionManager<NoteFileElement, NoteFileViewModel>(Model.Files) {
+            FileCollection = new ModelViewModelObservableCollectionManager<NoteFileElement, NoteFileViewModel>(Model.Files, new ModelViewModelObservableCollectionOptions<NoteFileElement, NoteFileViewModel>() {
                 ToViewModel = m => new NoteFileViewModel(m, UserTracker, DispatcherWrapper, LoggerFactory)
-            };
+            });
             FileItems = FileCollection.GetDefaultView();
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public NoteId NoteId => Model.NoteId;
 
-        public ModelViewModelObservableCollectionManagerBase<NoteFileElement, NoteFileViewModel> FileCollection { get; }
+        public ModelViewModelObservableCollectionManager<NoteFileElement, NoteFileViewModel> FileCollection { get; }
         public ICollectionView FileItems { get; }
 
 

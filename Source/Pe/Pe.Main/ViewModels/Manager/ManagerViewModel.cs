@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         private IKeyGestureGuide KeyGestureGuide { get; }
         private IUserTracker UserTracker { get; }
 
-        private ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> LauncherToolbarCollection { get; }
+        private ModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> LauncherToolbarCollection { get; }
         public ReadOnlyObservableCollection<LauncherToolbarNotifyAreaViewModel> LauncherToolbarItems { get; }
 
 
@@ -94,11 +94,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             }
         }
 
-        private ModelViewModelObservableCollectionManagerBase<NoteElement, NoteNotifyAreaViewModel> NoteCollection { get; }
+        private ModelViewModelObservableCollectionManager<NoteElement, NoteNotifyAreaViewModel> NoteCollection { get; }
         public ICollectionView NoteVisibleItems { get; }
         public ICollectionView NoteHiddenItems { get; }
 
-        private ModelViewModelObservableCollectionManagerBase<WidgetElement, WidgetNotifyAreaViewModel> WidgetCollection { get; }
+        private ModelViewModelObservableCollectionManager<WidgetElement, WidgetNotifyAreaViewModel> WidgetCollection { get; }
         public ICollectionView WidgetItems { get; }
 
         #endregion
