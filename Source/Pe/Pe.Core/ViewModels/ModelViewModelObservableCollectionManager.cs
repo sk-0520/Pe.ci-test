@@ -63,19 +63,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// <summary>
         /// 外部使用する<typeparamref name="TViewModel"/>のコレクション。
         /// </summary>
-        public ReadOnlyObservableCollection<TViewModel> ViewModels
-        {
-            get
-            {
-                if(this._readOnlyViewModels == null) {
-                    this._readOnlyViewModels = new ReadOnlyObservableCollection<TViewModel>(EditableViewModels);
-                }
-
-                return this._readOnlyViewModels;
-            }
-        }
-
-
+        public ReadOnlyObservableCollection<TViewModel> ViewModels => this._readOnlyViewModels ??= new ReadOnlyObservableCollection<TViewModel>(EditableViewModels);
 
         /// <inheritdoc cref="ICollection{TViewModel}.Count"/>
         public int Count => EditableViewModels.Count;
@@ -136,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         public int IndexOf(TViewModel viewModel) => EditableViewModels.IndexOf(viewModel);
 
-        public bool TryGetModel(TViewModel viewModel, [MaybeNullWhen(false)]  out TModel result)
+        public bool TryGetModel(TViewModel viewModel, [MaybeNullWhen(false)] out TModel result)
         {
             var index = IndexOf(viewModel);
 
@@ -147,21 +135,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             result = Collection[index];
             return true;
-        }
-
-        /// <summary>
-        /// 対になる<typeparamref name="TModel"/>を取得。
-        /// </summary>
-        /// <param name="viewModel">対になっている<typeparamref name="TViewModel"/>。</param>
-        /// <returns>見つからない場合は <typeparamref name="TModel"/> の初期値。</returns>
-        [return: MaybeNull]
-        public TModel GetModel(TViewModel viewModel)
-        {
-            if(TryGetModel(viewModel, out var result)) {
-                return result;
-            }
-
-            return default;
         }
 
         public bool TryGetViewModel(TModel model, [MaybeNullWhen(false)] out TViewModel result)
@@ -177,22 +150,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             return true;
         }
 
-
-        /// <summary>
-        /// 対になる<typeparamref name="TViewModel"/>を取得。
-        /// </summary>
-        /// <param name="model">対になっている<typeparamref name="TModel"/>。</param>
-        /// <returns>見つからない場合は <typeparamref name="TViewModel"/> の初期値。</returns>
-        [return: MaybeNull]
-        public TViewModel GetViewModel(TModel model)
-        {
-            if(TryGetViewModel(model, out var result)) {
-                return result;
-            }
-
-            return default;
-        }
-
         #endregion
 
         #region ObservableManager
@@ -201,7 +158,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         {
             var newViewModels = newItems
                 .Select(m => ToViewModelImpl(m))
-                .ToList()
+                .ToArray()
             ;
 
             var parameter = new ModelViewModelObservableCollectionOptions<TModel, TViewModel>.AddItemParameter() {
@@ -226,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             var newViewModels = newItems
                 .Select(m => ToViewModelImpl(m))
                 .Select((v, i) => (index: i + insertIndex, value: v))
-                .ToList()
+                .ToArray()
             ;
 
             var parameter = new ModelViewModelObservableCollectionOptions<TModel, TViewModel>.InsertItemParameter() {
@@ -239,8 +196,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             InsertItemsKindImpl(parameter);
 
-            foreach(var item in newViewModels) {
-                EditableViewModels.Insert(item.index, item.value);
+            foreach(var (index, value) in newViewModels) {
+                EditableViewModels.Insert(index, value);
             }
 
             parameter.Apply = ModelViewModelObservableCollectionViewModelApply.After;
@@ -253,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             var oldViewModels = EditableViewModels
                 .Skip(oldStartingIndex)
                 .Take(oldItems.Count)
-                .ToList()
+                .ToArray()
             ;
 
             var parameter = new ModelViewModelObservableCollectionOptions<TModel, TViewModel>.RemoveItemParameter() {
@@ -266,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             RemoveItemsKindImpl(parameter);
 
-            foreach(var _ in Enumerable.Range(0, oldViewModels.Count)) {
+            foreach(var _ in Enumerable.Range(0, oldViewModels.Length)) {
                 EditableViewModels.RemoveAt(oldStartingIndex);
             }
             if(Options.AutoDisposeViewModel) {
@@ -284,13 +241,13 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             //TODO: インデックスが必要
             var newViewModels = newItems
                 .Select(m => ToViewModelImpl(m))
-                .ToList()
+                .ToArray()
             ;
 
             var oldViewModels = EditableViewModels
                 .Skip(startIndex)
                 .Take(oldItems.Count)
-                .ToList()
+                .ToArray()
             ;
 
             var parameter = new ModelViewModelObservableCollectionOptions<TModel, TViewModel>.ReplaceItemParameter() {
@@ -305,7 +262,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             ReplaceItemsKindImpl(parameter);
 
-            for(var i = 0; i < newViewModels.Count; i++) {
+            for(var i = 0; i < newViewModels.Length; i++) {
                 EditableViewModels[i + startIndex] = newViewModels[i];
             }
             //if (Options.AutoDisposeViewModel)
