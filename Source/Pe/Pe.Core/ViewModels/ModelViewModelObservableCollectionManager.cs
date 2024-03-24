@@ -21,7 +21,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     /// <typeparam name="TModel"></typeparam>
     /// <typeparam name="TViewModel"></typeparam>
     public class ModelViewModelObservableCollectionManager<TModel, TViewModel>: ObservableCollectionManagerBase<TModel>
-        where TModel : NotifyPropertyBase
         where TViewModel : ViewModelBase
     {
         #region variable
@@ -152,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #endregion
 
-        #region ObservableManager
+        #region ObservableCollectionManagerBase
 
         protected override void AddItemsImpl(IReadOnlyList<TModel> newItems)
         {

@@ -98,6 +98,43 @@ namespace ContentTypeTextNet.Pe.Core.Test.ViewModels
             Assert.AreEqual("options." + nameof(ModelViewModelObservableCollectionOptions<Model, ViewModel>.ToViewModel), actual2.ParamName);
         }
 
+
+        [TestMethod]
+        public void IndexOfTest()
+        {
+            var test = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
+                ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
+            });
+            Assert.AreEqual(1, test.ViewModel.IndexOf(test.ViewModel.ViewModels[1]));
+            Assert.AreEqual(-1, test.ViewModel.IndexOf(new Model() { Value = 4 }));
+        }
+
+        [TestMethod]
+        public void TryGetModelTest()
+        {
+            var test = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
+                ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
+            });
+
+            Assert.IsTrue(test.ViewModel.TryGetModel(test.ViewModel.ViewModels[1], out var actual));
+            Assert.AreEqual(2, actual.Value);
+
+            Assert.IsFalse(test.ViewModel.TryGetModel(new ViewModel(new Model() { Value = 4 }, NullLoggerFactory.Instance), out var _));
+        }
+
+        [TestMethod]
+        public void TryGetViewModelTest()
+        {
+            var test = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
+                ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
+            });
+
+            Assert.IsTrue(test.ViewModel.TryGetViewModel(test.Model[1], out var actual));
+            Assert.AreEqual(2, actual.Value);
+
+            Assert.IsFalse(test.ViewModel.TryGetViewModel(new Model() { Value = 4 }, out var _));
+        }
+
         [TestMethod]
         public void AddTest()
         {
@@ -183,6 +220,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.ViewModels
                     } else {
                         Debug.Assert(p.Apply == ModelViewModelObservableCollectionViewModelApply.After);
                         Assert.IsTrue(p.OldViewModels[0].IsDisposed);
+                        Assert.ThrowsException<NullReferenceException>(() => p.OldViewModels[0].Value); // モデルには null が強制設定されている
                     }
                 }
             });

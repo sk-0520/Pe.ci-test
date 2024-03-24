@@ -14,7 +14,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     /// <typeparam name="TModel"></typeparam>
     /// <typeparam name="TViewModel"></typeparam>
     public class ModelViewModelObservableCollectionOptions<TModel, TViewModel>
-        where TModel : NotifyPropertyBase
         where TViewModel : ViewModelBase
     {
         #region define
