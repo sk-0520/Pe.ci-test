@@ -76,7 +76,10 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#922: テストフレームワークの変更",
+						"comments": [
+							"MSTest -> xUnit"
+						]
 					},
 					{
 						"revision": "",

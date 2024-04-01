@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
 {
-    [TestClass]
     public class KeyOptionConverterTest
     {
         #region define
@@ -31,29 +30,28 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
 
         #region function
 
-        [TestMethod]
+        [Fact]
         public void GetAttributeTest()
         {
             var koc = new KeyOptionConverter();
-            Assert.ThrowsException<InvalidOperationException>(() => koc.GetAttribute(Option.A));
-            Assert.ThrowsException<InvalidOperationException>(() => koc.GetAttribute((Option)(-1)));
+            Assert.Throws<InvalidOperationException>(() => koc.GetAttribute(Option.A));
+            Assert.Throws<InvalidOperationException>(() => koc.GetAttribute((Option)(-1)));
             var actual = koc.GetAttribute(Option.B);
-            Assert.AreEqual("NAME", actual.OptionName);
-            Assert.AreEqual(typeof(int), actual.ToType);
+            Assert.Equal("NAME", actual.OptionName);
+            Assert.Equal(typeof(int), actual.ToType);
         }
 
         #endregion
     }
 
 
-    [TestClass]
     public class DisableOptionConverterTest
     {
-        [TestMethod]
-        [DataRow(true, "true")]
-        [DataRow(true, "TRUE")]
-        [DataRow(false, "false")]
-        [DataRow(false, "FALSE")]
+        [Theory]
+        [InlineData(true, "true")]
+        [InlineData(true, "TRUE")]
+        [InlineData(false, "false")]
+        [InlineData(false, "FALSE")]
         public void ToForeverTest(bool expected, string input)
         {
             var doc = new DisableOptionConverter();
@@ -61,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
                 [nameof(KeyActionDisableOption.Forever)] = input,
             };
             var actual = doc.ToForever(map);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
     }
 }

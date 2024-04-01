@@ -1,24 +1,23 @@
 using System;
 using System.Reflection;
 using ContentTypeTextNet.Pe.Main.Models.Command;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Command
 {
-    [TestClass]
     public class ApplicationCommandTest
     {
         #region property
 
-        [TestMethod]
+        [Fact]
         public void EnumCheck()
         {
             var enumType = typeof(ApplicationCommand);
             var members = Enum.GetValues<ApplicationCommand>();
             foreach(var member in members) {
                 var memberType = enumType.GetField(member.ToString());
-                Assert.IsNotNull(memberType);
-                Assert.IsNotNull(memberType!.GetCustomAttributes<CommandDescriptionAttribute>(), member.ToString());
+                Assert.NotNull(memberType);
+                Assert.NotNull(memberType!.GetCustomAttributes<CommandDescriptionAttribute>());
             }
         }
 

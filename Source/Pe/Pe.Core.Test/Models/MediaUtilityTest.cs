@@ -1,16 +1,15 @@
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Core.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Core.Test.Models
 {
-    [TestClass]
     public class MediaUtilityTest
     {
-        [TestMethod]
-        [DataRow(0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff)]
-        [DataRow(0x00, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00)]
-        [DataRow(0x00, 0x10, 0xff, 0xff, 0x00, 0xef, 0x00, 0x00)]
+        [Theory]
+        [InlineData(0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff)]
+        [InlineData(0x00, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00)]
+        [InlineData(0x00, 0x10, 0xff, 0xff, 0x00, 0xef, 0x00, 0x00)]
         public void GetNegativeColorTest(int expectedA, int expectedR, int expectedG, int expectedB, int argA, int argR, int argG, int argB)
         {
             var expected = Color.FromArgb((byte)expectedA, (byte)expectedR, (byte)expectedG, (byte)expectedB);
@@ -18,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
 
             var result = MediaUtility.GetNegativeColor(arg);
 
-            Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
     }
 }

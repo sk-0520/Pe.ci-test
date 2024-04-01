@@ -5,36 +5,35 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
-    [TestClass]
     public class ReaderWriterLockerTest
     {
-        [TestMethod]
+        [Fact]
         public void ReadLockTest()
         {
             var rwl = new ReaderWriterLocker();
             Parallel.For(0, 1000, n => {
                 using(rwl.BeginRead()) {
-                    Assert.IsTrue(true);
+                    Assert.True(true);
                     //Console.WriteLine(n);
                 }
             });
         }
 
-        [TestMethod]
+        [Fact]
         public void WriteLockTest()
         {
             var rwl = new ReaderWriterLocker();
             using(rwl.BeginWrite()) {
                 try {
                     using(rwl.BeginRead()) {
-                        Assert.IsTrue(false);
+                        Assert.True(false);
                     }
                 } catch(LockRecursionException) {
-                    Assert.IsTrue(true);
+                    Assert.True(true);
                 }
             }
         }

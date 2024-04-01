@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ContentTypeTextNet.Pe.Standard.Base;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
-    [TestClass]
     public class ObjectDumperTest
     {
         class Simple
@@ -37,68 +36,67 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             public Nest2? NullNest2 { get; }
         }
 
-        [TestMethod]
+        [Fact]
         public void Dump_Flat_Test()
         {
             var od = new ObjectDumper();
             var simple = new Simple();
 
-            Assert.ThrowsException<ArgumentException>(() => od.Dump(simple, 0, false));
+            Assert.Throws<ArgumentException>(() => od.Dump(simple, 0, false));
 
             var items1 = od.Dump(simple, 1, true).ToList();
-            Assert.AreEqual(4, items1.Count);
+            Assert.Equal(4, items1.Count);
 
             var items2 = od.Dump(simple, 1, false).ToList();
-            Assert.AreEqual(6, items2.Count);
+            Assert.Equal(6, items2.Count);
         }
 
-        [TestMethod]
+        [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Assertions", "xUnit2013:Do not use equality check to check for collection size.", Justification = "<保留中>")]
         public void Dump_Nest2_1_Test()
         {
             var od = new ObjectDumper();
             var nest = new Nest2();
 
             var items = od.Dump(nest, 1, true).ToList();
-            Assert.AreEqual(3, items.Count);
+            Assert.Equal(3, items.Count);
 
-            Assert.AreEqual(0, items.First(i => i.MemberInfo.Name == nameof(Nest2.Value)).Children.Count);
-            Assert.AreEqual("aaa", items.First(i => i.MemberInfo.Name == nameof(Nest2.Value)).Value);
+            Assert.Equal(0, items.First(i => i.MemberInfo.Name == nameof(Nest2.Value)).Children.Count);
+            Assert.Equal("aaa", items.First(i => i.MemberInfo.Name == nameof(Nest2.Value)).Value);
 
-            Assert.AreEqual(0, items.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.Count);
+            Assert.Equal(0, items.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Dump_Nest2_2_Test()
         {
             var od = new ObjectDumper();
             var nest = new Nest2();
 
             var items = od.Dump(nest, 2, true);
-            Assert.AreEqual(3, items.Count);
+            Assert.Equal(3, items.Count);
 
-            Assert.AreEqual(0, items.First(i => i.MemberInfo.Name == nameof(Nest2.Value)).Children.Count);
-            Assert.AreEqual("aaa", items.First(i => i.MemberInfo.Name == nameof(Nest2.Value)).Value);
+            Assert.Empty(items.First(i => i.MemberInfo.Name == nameof(Nest2.Value)).Children);
+            Assert.Equal("aaa", items.First(i => i.MemberInfo.Name == nameof(Nest2.Value)).Value);
 
-            Assert.AreEqual(0, items.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.Count);
-
+            Assert.Empty(items.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children);
         }
 
-        [TestMethod]
+        [Fact]
         public void Dump_Nest3_Test()
         {
             var od = new ObjectDumper();
             var nest3 = new Nest3();
 
             var items = od.Dump(nest3);
-            Assert.AreEqual(5, items.Count);
+            Assert.Equal(5, items.Count);
 
-            //Assert.AreEqual(3, items.First(i => i.MemberInfo.Name == nameof(Nest3.NotNullNest2)).Children.Count);
-            //Assert.AreEqual(4, items.First(i => i.MemberInfo.Name == nameof(Nest3.NotNullNest2)).Children.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.Count);
-            //Assert.AreEqual(3, items.First(i => i.MemberInfo.Name == nameof(Nest3.NotNullNest2)).Children.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.First(i => i.MemberInfo.Name == nameof(Simple.PublicF)).Value);
-
+            //Assert.Equal(3, items.First(i => i.MemberInfo.Name == nameof(Nest3.NotNullNest2)).Children.Count);
+            //Assert.Equal(4, items.First(i => i.MemberInfo.Name == nameof(Nest3.NotNullNest2)).Children.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.Count);
+            //Assert.Equal(3, items.First(i => i.MemberInfo.Name == nameof(Nest3.NotNullNest2)).Children.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.First(i => i.MemberInfo.Name == nameof(Simple.PublicF)).Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void DictionaryTest()
         {
             var od = new ObjectDumper();
@@ -110,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
 
             try {
                 var items = od.Dump(dic);
-                Assert.IsTrue(true);
+                Assert.True(true);
             } catch(StackOverflowException ex) {
                 Assert.Fail(ex.Message);
             }

@@ -4,28 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
-    [TestClass]
     public class ActionDisposerTest
     {
-        [TestMethod]
+        [Fact]
         public void UsingTest()
         {
             using(var disposer = new ActionDisposer(disposing => {
-                Assert.IsTrue(disposing);
+                Assert.True(disposing);
             })) {
-                Assert.IsTrue(true);
+                Assert.True(true);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void FinalizeTest()
         {
             var disposer = new ActionDisposer(disposing => {
-                Assert.IsFalse(disposing);
+                Assert.False(disposing);
             });
         }
     }

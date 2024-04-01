@@ -6,25 +6,24 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
-    [TestClass]
     public class FileRotatorTest
     {
         #region function
 
-        [TestMethod]
+        [Fact]
         public void ExecuteRegex_0()
         {
             var dir = new DirectoryInfo("nul");
             var fileRotator = new FileRotator();
             var actual = fileRotator.ExecuteRegex(dir, new Regex("."), 10, ex => true);
-            Assert.AreEqual(-1, actual);
+            Assert.Equal(-1, actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void ExecuteRegex()
         {
             var dir = TestIO.InitializeMethod(this);
@@ -36,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             
             var fileRotator = new FileRotator();
             var actual = fileRotator.ExecuteRegex(dir, new Regex("^target"), 3, ex => true);
-            Assert.AreEqual(2, actual);
+            Assert.Equal(2, actual);
         }
 
         #endregion

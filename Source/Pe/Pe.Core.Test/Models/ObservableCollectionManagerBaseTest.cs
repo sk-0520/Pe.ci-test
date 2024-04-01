@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Core.Test.Models
 {
     // 保守したくはないけどテストくらいはまぁ。。。 という気持ち
-    [TestClass]
     public class ObservableCollectionManagerBaseTest
     {
         #region define
@@ -90,87 +89,87 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             return new Collections<T>(args);
         }
 
-        [TestMethod]
+        [Fact]
         public void NoneTest()
         {
             var collection = Create(1, 2, 3);
-            Assert.AreEqual(LastAction.None, collection.Manager.LastAction);
+            Assert.Equal(LastAction.None, collection.Manager.LastAction);
         }
 
-        [TestMethod]
+        [Fact]
         public void Constructor_throw_Test()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new TestObservableCollectionManager<int>((ReadOnlyObservableCollection<int>)null!));
+            Assert.Throws<ArgumentNullException>(() => new TestObservableCollectionManager<int>((ReadOnlyObservableCollection<int>)null!));
         }
 
-        [TestMethod]
+        [Fact]
         public void AddTest()
         {
             var collection = Create(1, 2, 3);
             collection.Source.Add(4);
-            Assert.AreEqual(LastAction.Add, collection.Manager.LastAction);
+            Assert.Equal(LastAction.Add, collection.Manager.LastAction);
         }
 
-        [TestMethod]
+        [Fact]
         public void InsertTest()
         {
             var collection = Create(1, 2, 3);
             collection.Source.Insert(1, 4);
-            Assert.AreEqual(LastAction.Insert, collection.Manager.LastAction);
+            Assert.Equal(LastAction.Insert, collection.Manager.LastAction);
         }
 
-        [TestMethod]
+        [Fact]
         public void InsertIsAddTest()
         {
             var collection = Create(1, 2, 3);
             // 終端挿入は追加扱い
             collection.Source.Insert(3, 4);
-            Assert.AreEqual(LastAction.Add, collection.Manager.LastAction);
+            Assert.Equal(LastAction.Add, collection.Manager.LastAction);
         }
 
-        [TestMethod]
+        [Fact]
         public void MoveTest()
         {
             var collection = Create(1, 2, 3);
             collection.Source.Move(1, 2);
-            Assert.AreEqual(LastAction.Move, collection.Manager.LastAction);
+            Assert.Equal(LastAction.Move, collection.Manager.LastAction);
         }
 
-        [TestMethod]
+        [Fact]
         public void RemoveTest()
         {
             var collection = Create(1, 2, 3);
             collection.Source.Remove(2);
-            Assert.AreEqual(LastAction.Remove, collection.Manager.LastAction);
+            Assert.Equal(LastAction.Remove, collection.Manager.LastAction);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReplaceTest()
         {
             var collection = Create(1, 2, 3);
             collection.Source[1] = 20;
-            Assert.AreEqual(LastAction.Replace, collection.Manager.LastAction);
+            Assert.Equal(LastAction.Replace, collection.Manager.LastAction);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResetTest()
         {
             var collection = Create(1, 2, 3);
             collection.Source.Clear();
-            Assert.AreEqual(LastAction.Reset, collection.Manager.LastAction);
+            Assert.Equal(LastAction.Reset, collection.Manager.LastAction);
         }
 
-        [TestMethod]
-        [DataRow(0, 10)]
-        [DataRow(1, 20)]
-        [DataRow(2, 30)]
-        [DataRow(-1, 0)]
-        [DataRow(-1, 40)]
+        [Theory]
+        [InlineData(0, 10)]
+        [InlineData(1, 20)]
+        [InlineData(2, 30)]
+        [InlineData(-1, 0)]
+        [InlineData(-1, 40)]
         public void IndexOfTest(int expected, int value)
         {
             var collection = Create(10, 20, 30);
             var actual = collection.Manager.IndexOf(value);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

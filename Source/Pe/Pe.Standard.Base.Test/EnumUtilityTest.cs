@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
-    [TestClass]
     public class EnumUtilityTest
     {
         #region define
@@ -37,15 +36,15 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
 
         #region function
 
-        [TestMethod]
+        [Fact]
         public void NormalizeTest()
         {
-            Assert.AreEqual(E2.A, EnumUtility.Normalize("A", E2.A));
-            Assert.AreEqual(E2.B, EnumUtility.Normalize("B", E2.A));
-            Assert.AreEqual(E2.A, EnumUtility.Normalize("C", E2.A));
-            Assert.AreEqual(E2.B, EnumUtility.Normalize("C", E2.B));
-            Assert.AreEqual(E2.A, EnumUtility.Normalize("💩", E2.A));
-            Assert.AreEqual(E2.B, EnumUtility.Normalize("💩", E2.B));
+            Assert.Equal(E2.A, EnumUtility.Normalize("A", E2.A));
+            Assert.Equal(E2.B, EnumUtility.Normalize("B", E2.A));
+            Assert.Equal(E2.A, EnumUtility.Normalize("C", E2.A));
+            Assert.Equal(E2.B, EnumUtility.Normalize("C", E2.B));
+            Assert.Equal(E2.A, EnumUtility.Normalize("💩", E2.A));
+            Assert.Equal(E2.B, EnumUtility.Normalize("💩", E2.B));
         }
 
         #endregion

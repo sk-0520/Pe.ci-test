@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 {
-    [TestClass]
     public class DiContainerTest
     {
         #region define
@@ -204,77 +203,77 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
         #endregion
 
-        [TestMethod]
+        [Fact]
         public void GetTest_Create()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
 
             var i1_1 = dic.Get<I1>();
-            Assert.AreEqual(3, i1_1.Func(1, 2));
+            Assert.Equal(3, i1_1.Func(1, 2));
 
             var i1_2 = dic.Get<I1>();
-            Assert.AreEqual(30, i1_2.Func(10, 20));
+            Assert.Equal(30, i1_2.Func(10, 20));
 
-            Assert.IsFalse(i1_1 == i1_2);
+            Assert.False(i1_1 == i1_2);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTest_Singleton()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Singleton);
 
             var i1_1 = dic.Get<I1>();
-            Assert.AreEqual(3, i1_1.Func(1, 2));
+            Assert.Equal(3, i1_1.Func(1, 2));
 
             var i1_2 = dic.Get<I1>();
-            Assert.AreEqual(30, i1_2.Func(10, 20));
+            Assert.Equal(30, i1_2.Func(10, 20));
 
-            Assert.IsTrue(i1_1 == i1_2);
+            Assert.True(i1_1 == i1_2);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTest_Singleton2()
         {
             using(var dic1 = new DiContainer()) {
-                dic1.Register<ActionDisposer, ActionDisposer>(DiLifecycle.Singleton, () => new ActionDisposer(d => { Assert.IsFalse(d); }));
+                dic1.Register<ActionDisposer, ActionDisposer>(DiLifecycle.Singleton, () => new ActionDisposer(d => { Assert.False(d); }));
             }
 
             ActionDisposer ad2;
             using(var dic2 = new DiContainer()) {
-                dic2.Register<ActionDisposer, ActionDisposer>(DiLifecycle.Singleton, () => new ActionDisposer(d => { Assert.IsTrue(d); }));
+                dic2.Register<ActionDisposer, ActionDisposer>(DiLifecycle.Singleton, () => new ActionDisposer(d => { Assert.True(d); }));
                 ad2 = dic2.Get<ActionDisposer>();
             }
 
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTest_Name_Create()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
             dic.Register<I1, C1_other>("other", DiLifecycle.Transient);
 
-            Assert.AreEqual(3, dic.Get<I1>().Func(1, 2));
-            Assert.AreEqual(-1, dic.Get<I1>("other").Func(1, 2));
+            Assert.Equal(3, dic.Get<I1>().Func(1, 2));
+            Assert.Equal(-1, dic.Get<I1>("other").Func(1, 2));
 
 
             dic.Register<string, string>("NAMELESS");
             dic.Register<string, string>("name", "NAMED");
 
-            Assert.AreEqual("NAMELESS", dic.Get<string>());
-            Assert.AreEqual("NAMED", dic.Get<string>("name"));
+            Assert.Equal("NAMELESS", dic.Get<string>());
+            Assert.Equal("NAMED", dic.Get<string>("name"));
 
             dic.Register<I0, C0>(DiLifecycle.Transient, () => new C0(a => a + 2));
             dic.Register<I0, C0>("b", DiLifecycle.Transient, () => new C0(a => a * 2));
 
-            Assert.AreEqual(5, dic.Get<I0>().Func(3));
-            Assert.AreEqual(6, dic.Get<I0>("b").Func(3));
+            Assert.Equal(5, dic.Get<I0>().Func(3));
+            Assert.Equal(6, dic.Get<I0>("b").Func(3));
 
         }
 
-        [TestMethod]
+        [Fact]
         public void NewTest_I1()
         {
             var dic = new DiContainer();
@@ -283,54 +282,54 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
             // 引数のない人はそのまんま生成される
             var i1 = dic.New<I1>();
-            Assert.AreEqual(10, i1.Func(4, 6));
+            Assert.Equal(10, i1.Func(4, 6));
 
             var i2 = dic.New<I1>("name");
-            Assert.AreEqual(-2, i2.Func(4, 6));
+            Assert.Equal(-2, i2.Func(4, 6));
         }
 
-        [TestMethod]
+        [Fact]
         public void NewTest_I1_2()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(new C1());
 
             var i1 = dic.New<I1>();
-            Assert.AreEqual(10, i1.Func(4, 6));
+            Assert.Equal(10, i1.Func(4, 6));
             var i1_2 = dic.New<C1>();
-            Assert.AreEqual(100, i1_2.Func(40, 60));
+            Assert.Equal(100, i1_2.Func(40, 60));
         }
 
-        [TestMethod]
+        [Fact]
         public void NewTest_C1()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
 
             var c1 = dic.New<C1>();
-            Assert.AreEqual(4, c1.Func(2, 2));
+            Assert.Equal(4, c1.Func(2, 2));
         }
 
-        [TestMethod]
+        [Fact]
         public void NewTest_C1toC1()
         {
             var dic = new DiContainer();
             dic.Register<C1, C1>(DiLifecycle.Transient);
 
             var c1 = dic.New<C1>();
-            Assert.AreEqual(4, c1.Func(2, 2));
+            Assert.Equal(4, c1.Func(2, 2));
         }
 
 #if false
-        [TestMethod]
+        [Fact]
         public void NewTest_C1toI1()
         {
             var dic = new DiContainer();
-            Assert.ThrowsException<ArgumentException>(() => dic.Register<C1, I1>(DiLifecycle.Transient));
+            Assert.Throws<ArgumentException>(() => dic.Register<C1, I1>(DiLifecycle.Transient));
         }
 #endif
 
-        [TestMethod]
+        [Fact]
         public void NewTest_C2()
         {
             var dic = new DiContainer();
@@ -338,65 +337,65 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
             // 引数から頑張ってパラメータ割り当て
             var c2 = dic.New<C2>();
-            Assert.AreEqual(-1, c2.Plus(1, -2));
+            Assert.Equal(-1, c2.Plus(1, -2));
         }
 
-        [TestMethod]
+        [Fact]
         public void NewTest_Manual_C3()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
 
-            Assert.ThrowsException<DiException>(() => dic.New<C3>(new object[] { 1 }));
+            Assert.Throws<DiException>(() => dic.New<C3>(new object[] { 1 }));
 
             var c3 = dic.New<C3>(new object[] { 1, 10 });
-            Assert.AreEqual(11, c3.Get());
+            Assert.Equal(11, c3.Get());
         }
 
-        [TestMethod]
+        [Fact]
         public void NewTest_Manual_C4()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
 
-            Assert.ThrowsException<DiException>(() => dic.New<C4>(new object[] { 1 }));
+            Assert.Throws<DiException>(() => dic.New<C4>(new object[] { 1 }));
 
             var c4 = dic.New<C4>(new object[] { 99, 1 });
-            Assert.AreEqual(100, c4.Get());
+            Assert.Equal(100, c4.Get());
         }
 
-        [TestMethod]
+        [Fact]
         public void NewTest_Manual_C5_LongLong()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
 
             var c5 = dic.New<C5_LongLong>(new object[] { 99, 1 });
-            Assert.AreEqual((99 + 1) * 3, c5.Get());
+            Assert.Equal((99 + 1) * 3, c5.Get());
         }
 
-        [TestMethod]
+        [Fact]
         public void NewTest_Manual_C5_Private()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
 
             var c5 = dic.New<C5_Private>(new object[] { 99, 1 });
-            Assert.AreEqual((99 + 1) * 4, c5.Get());
+            Assert.Equal((99 + 1) * 4, c5.Get());
         }
 
-        [TestMethod]
+        [Fact]
         public void NewTest_Manual_C5_Minimum()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
 
             var c5 = dic.New<C5_Minimum>(new object[] { 99, 1 });
-            Assert.AreEqual((99 + 1) * 1, c5.Get());
+            Assert.Equal((99 + 1) * 1, c5.Get());
         }
 
 #if PrivateObject
-        [TestMethod]
+        [Fact]
         public void InjectTest_C6()
         {
             var dic = new DiContainer();
@@ -405,20 +404,20 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             var c = dic.New<C6>();
             dic.Inject(c);
             var p = new PrivateObject(c);
-            Assert.IsNull(c.fieldUnset_public);
-            Assert.IsNull(p.GetField("fieldUnset_private"));
-            Assert.IsNotNull(c.fieldSet_public);
-            Assert.IsNotNull(p.GetField("fieldSet_private"));
+            Assert.Null(c.fieldUnset_public);
+            Assert.Null(p.GetField("fieldUnset_private"));
+            Assert.NotNull(c.fieldSet_public);
+            Assert.NotNull(p.GetField("fieldSet_private"));
 
-            Assert.IsNull(c.PropertyUnset_public);
-            Assert.IsNull(p.GetProperty("PropertyUnset_private"));
-            Assert.IsNotNull(c.PropertySet_public);
-            Assert.IsNotNull(p.GetProperty("PropertySet_private"));
+            Assert.Null(c.PropertyUnset_public);
+            Assert.Null(p.GetProperty("PropertyUnset_private"));
+            Assert.NotNull(c.PropertySet_public);
+            Assert.NotNull(p.GetProperty("PropertySet_private"));
         }
 #endif
 
 #if ENABLED_STRUCT
-        [TestMethod]
+        [Fact]
         public void InjectTest_S1()
         {
             var dic = new DependencyInjectionContainer();
@@ -429,15 +428,15 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             var s = new S1();
             dic.Inject(ref s);
             var p = new PrivateObject(s);
-            Assert.IsNull(s.fieldUnset_public);
-            Assert.IsNull(p.GetField("fieldUnset_private"));
-            Assert.IsNotNull(s.fieldSet_public);
-            Assert.IsNotNull(p.GetField("fieldSet_private"));
+            Assert.Null(s.fieldUnset_public);
+            Assert.Null(p.GetField("fieldUnset_private"));
+            Assert.NotNull(s.fieldSet_public);
+            Assert.NotNull(p.GetField("fieldSet_private"));
 
-            Assert.IsNull(s.PropertyUnset_public);
-            Assert.IsNull(p.GetProperty("PropertyUnset_private"));
-            Assert.IsNotNull(s.PropertySet_public);
-            Assert.IsNotNull(p.GetProperty("PropertySet_private"));
+            Assert.Null(s.PropertyUnset_public);
+            Assert.Null(p.GetProperty("PropertyUnset_private"));
+            Assert.NotNull(s.PropertySet_public);
+            Assert.NotNull(p.GetProperty("PropertySet_private"));
         }
 #endif
 
@@ -514,7 +513,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             public bool True => true;
         }
 
-        [TestMethod]
+        [Fact]
         public void NestTest()
         {
             var dic = new DiContainer();
@@ -525,17 +524,17 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
             var root = dic.New<Root>();
 
-            Assert.IsTrue(root.Nest1.Nest2.Nest3.Nest4.True);
-            Assert.IsTrue(root.Nest2.Nest3.Nest4.True);
-            Assert.IsTrue(root.Nest3.Nest4.True);
-            Assert.IsTrue(root.Nest4.True);
+            Assert.True(root.Nest1.Nest2.Nest3.Nest4.True);
+            Assert.True(root.Nest2.Nest3.Nest4.True);
+            Assert.True(root.Nest3.Nest4.True);
+            Assert.True(root.Nest4.True);
 
-            Assert.IsFalse(root.Nest2 == root.Nest1.Nest2);
-            Assert.IsFalse(root.Nest3 == root.Nest1.Nest2.Nest3);
-            Assert.IsFalse(root.Nest4 == root.Nest1.Nest2.Nest3.Nest4);
+            Assert.False(root.Nest2 == root.Nest1.Nest2);
+            Assert.False(root.Nest3 == root.Nest1.Nest2.Nest3);
+            Assert.False(root.Nest4 == root.Nest1.Nest2.Nest3.Nest4);
         }
 
-        [TestMethod]
+        [Fact]
         public void NestTest_Singleton()
         {
             var dic = new DiContainer();
@@ -546,14 +545,14 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
             var root = dic.New<Root>();
 
-            Assert.IsTrue(root.Nest1.Nest2.Nest3.Nest4.True);
-            Assert.IsTrue(root.Nest2.Nest3.Nest4.True);
-            Assert.IsTrue(root.Nest3.Nest4.True);
-            Assert.IsTrue(root.Nest4.True);
+            Assert.True(root.Nest1.Nest2.Nest3.Nest4.True);
+            Assert.True(root.Nest2.Nest3.Nest4.True);
+            Assert.True(root.Nest3.Nest4.True);
+            Assert.True(root.Nest4.True);
 
-            Assert.IsTrue(root.Nest2 == root.Nest1.Nest2);
-            Assert.IsTrue(root.Nest3 == root.Nest1.Nest2.Nest3);
-            Assert.IsTrue(root.Nest4 == root.Nest1.Nest2.Nest3.Nest4);
+            Assert.True(root.Nest2 == root.Nest1.Nest2);
+            Assert.True(root.Nest3 == root.Nest1.Nest2.Nest3);
+            Assert.True(root.Nest4 == root.Nest1.Nest2.Nest3.Nest4);
         }
 
         #endregion
@@ -575,43 +574,43 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             public int Func(int a, int b) => a / b;
         }
 
-        [TestMethod]
+        [Fact]
         public void ScopeTest()
         {
             var dic1 = new DiContainer();
 
             dic1.Register<I1, CScopeA>(DiLifecycle.Transient);
-            Assert.AreEqual(10, dic1.New<I1>().Func(3, 7));
+            Assert.Equal(10, dic1.New<I1>().Func(3, 7));
 
             using(var dic2 = dic1.Scope()) {
-                Assert.AreEqual(10, dic2.New<I1>().Func(3, 7));
+                Assert.Equal(10, dic2.New<I1>().Func(3, 7));
 
                 dic2.Register<I1, CScopeB>(DiLifecycle.Transient);
-                Assert.AreEqual(-4, dic2.New<I1>().Func(3, 7));
-                Assert.AreEqual(10, dic1.New<I1>().Func(3, 7));
+                Assert.Equal(-4, dic2.New<I1>().Func(3, 7));
+                Assert.Equal(10, dic1.New<I1>().Func(3, 7));
 
-                Assert.ThrowsException<ArgumentException>(() => dic2.Register<I1, CScopeB>(DiLifecycle.Transient));
+                Assert.Throws<ArgumentException>(() => dic2.Register<I1, CScopeB>(DiLifecycle.Transient));
 
                 using(var dic3 = dic2.Scope()) {
-                    Assert.AreEqual(-4, dic3.New<I1>().Func(3, 7));
+                    Assert.Equal(-4, dic3.New<I1>().Func(3, 7));
 
                     dic3.Register<I1, CScopeC>(DiLifecycle.Transient);
-                    Assert.AreEqual(21, dic3.New<I1>().Func(3, 7));
-                    Assert.AreEqual(-4, dic2.New<I1>().Func(3, 7));
-                    Assert.AreEqual(10, dic1.New<I1>().Func(3, 7));
+                    Assert.Equal(21, dic3.New<I1>().Func(3, 7));
+                    Assert.Equal(-4, dic2.New<I1>().Func(3, 7));
+                    Assert.Equal(10, dic1.New<I1>().Func(3, 7));
 
-                    Assert.ThrowsException<ArgumentException>(() => dic3.Register<I1, CScopeC>(DiLifecycle.Transient));
+                    Assert.Throws<ArgumentException>(() => dic3.Register<I1, CScopeC>(DiLifecycle.Transient));
 
                     using(var dic4 = dic3.Scope()) {
-                        Assert.AreEqual(21, dic4.New<I1>().Func(3, 7));
+                        Assert.Equal(21, dic4.New<I1>().Func(3, 7));
 
                         dic4.Register<I1, CScopeD>(DiLifecycle.Transient);
-                        Assert.AreEqual(2, dic4.New<I1>().Func(10, 5));
-                        Assert.AreEqual(21, dic3.New<I1>().Func(3, 7));
-                        Assert.AreEqual(-4, dic2.New<I1>().Func(3, 7));
-                        Assert.AreEqual(10, dic1.New<I1>().Func(3, 7));
+                        Assert.Equal(2, dic4.New<I1>().Func(10, 5));
+                        Assert.Equal(21, dic3.New<I1>().Func(3, 7));
+                        Assert.Equal(-4, dic2.New<I1>().Func(3, 7));
+                        Assert.Equal(10, dic1.New<I1>().Func(3, 7));
 
-                        Assert.ThrowsException<ArgumentException>(() => dic4.Register<I1, CScopeD>(DiLifecycle.Transient));
+                        Assert.Throws<ArgumentException>(() => dic4.Register<I1, CScopeD>(DiLifecycle.Transient));
 
                     }
                 }
@@ -626,19 +625,19 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             public I1? I1_4 { get; set; }
         }
 
-        [TestMethod]
+        [Fact]
         public void RegisterMemberTest()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
 
             dic.RegisterMember<D1, I1>("I1_1");
-            Assert.ThrowsException<NullReferenceException>(() => dic.RegisterMember<D1, I1>("I1_0"));
-            Assert.ThrowsException<ArgumentException>(() => dic.RegisterMember<D1, I1>("I1_1"));
+            Assert.Throws<NullReferenceException>(() => dic.RegisterMember<D1, I1>("I1_0"));
+            Assert.Throws<ArgumentException>(() => dic.RegisterMember<D1, I1>("I1_1"));
         }
 
 #if PrivateObject
-        [TestMethod]
+        [Fact]
         public void DirtyRegisterTest_New()
         {
             var dic = new DiContainer();
@@ -652,23 +651,23 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
             var p = new PrivateObject(d);
 
-            Assert.IsNotNull(p.GetProperty("I1_1"));
-            Assert.IsNull(p.GetProperty("I1_2"));
-            Assert.IsNotNull(d.I1_3);
-            Assert.IsNull(d.I1_4);
+            Assert.NotNull(p.GetProperty("I1_1"));
+            Assert.Null(p.GetProperty("I1_2"));
+            Assert.NotNull(d.I1_3);
+            Assert.Null(d.I1_4);
         }
 #endif
-        [TestMethod]
+        [Fact]
         public void UnregisterTest()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
             var i1 = dic.New<I1>();
-            Assert.IsNotNull(i1);
+            Assert.NotNull(i1);
 
-            Assert.IsFalse(dic.Unregister<C1>());
-            Assert.IsTrue(dic.Unregister<I1>());
-            Assert.ThrowsException<DiException>(() => dic.New<I1>());
+            Assert.False(dic.Unregister<C1>());
+            Assert.True(dic.Unregister<I1>());
+            Assert.Throws<DiException>(() => dic.New<I1>());
         }
 
         interface ID2
@@ -704,7 +703,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
         }
 #pragma warning restore 169, 649
 
-        [TestMethod]
+        [Fact]
         public void BuildTest()
         {
             var dic = new DiContainer();
@@ -715,12 +714,12 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             dic.RegisterMember<D2, I1>(nameof(D1.I1_4));
 
             var d = (D2)dic.Build<ID2>();
-            Assert.IsNotNull(d.I1_1);
-            Assert.IsNotNull(d.I1_2);
-            Assert.IsNotNull(d.I1_3);
-            Assert.IsNotNull(d.I1_4);
-            Assert.IsNull(d.I1_5);
-            Assert.IsNull(d.I1_6);
+            Assert.NotNull(d.I1_1);
+            Assert.NotNull(d.I1_2);
+            Assert.NotNull(d.I1_3);
+            Assert.NotNull(d.I1_4);
+            Assert.Null(d.I1_5);
+            Assert.Null(d.I1_6);
         }
 
         class Wrap
@@ -742,7 +741,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
         }
 
 
-        [TestMethod]
+        [Fact]
         public void Inject_Name_Test()
         {
             var dic = new DiContainer();
@@ -750,19 +749,19 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             dic.Register<Wrap, Wrap>("name", new Wrap("b"));
 
             var nc = dic.New<NamedClass>();
-            Assert.AreEqual(string.Empty, nc.A.S);
-            Assert.AreEqual(string.Empty, nc.B.S);
-            //Assert.AreEqual(string.Empty, nc.C.S);
+            Assert.Equal(string.Empty, nc.A.S);
+            Assert.Equal(string.Empty, nc.B.S);
+            //Assert.Equal(string.Empty, nc.C.S);
 
             dic.Inject(nc);
-            Assert.AreEqual("a", nc.A.S);
-            Assert.AreEqual("b", nc.B.S);
-            //Assert.AreEqual("a", nc.C.S);
+            Assert.Equal("a", nc.A.S);
+            Assert.Equal("b", nc.B.S);
+            //Assert.Equal("a", nc.C.S);
 
             var nc2 = dic.Build<NamedClass>();
-            Assert.AreEqual("a", nc2.A.S);
-            Assert.AreEqual("b", nc2.B.S);
-            //Assert.AreEqual("a", nc2.C.S);
+            Assert.Equal("a", nc2.A.S);
+            Assert.Equal("b", nc2.B.S);
+            //Assert.Equal("a", nc2.C.S);
 
         }
 
@@ -779,7 +778,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             public string B { get; } = string.Empty;
             public string C { get; } = string.Empty;
         }
-        [TestMethod]
+        [Fact]
         public void New_Name_Test()
         {
             var dic = new DiContainer();
@@ -787,9 +786,9 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             dic.Register<string, string>("named", "b");
 
             var nc = dic.New<NamedClass2>();
-            Assert.AreEqual("a", nc.A);
-            Assert.AreEqual("b", nc.B);
-            Assert.AreEqual("a", nc.C);
+            Assert.Equal("a", nc.A);
+            Assert.Equal("b", nc.B);
+            Assert.Equal("a", nc.C);
         }
 
         public class CallClass
@@ -818,7 +817,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CallMethod_0_Test()
         {
             var dic = new DiContainer();
@@ -826,18 +825,18 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
             var methodInt = callClass.GetType().GetMethod(nameof(callClass.FuncInt_0))!;
             var actualInt = dic.CallMethod(string.Empty, callClass, methodInt, Array.Empty<object>());
-            Assert.AreEqual(10, actualInt);
+            Assert.Equal(10, actualInt);
 
             var methodStr = callClass.GetType().GetMethod(nameof(callClass.FuncStr_0))!;
             var actualStr = dic.CallMethod(string.Empty, callClass, methodStr, Array.Empty<object>());
-            Assert.AreEqual("str", actualStr);
+            Assert.Equal("str", actualStr);
 
             var methodVoid = callClass.GetType().GetMethod(nameof(callClass.Action_0))!;
             var actualVoid = dic.CallMethod(string.Empty, callClass, methodVoid, Array.Empty<object>());
-            Assert.IsNull(actualVoid);
+            Assert.Null(actualVoid);
         }
 
-        [TestMethod]
+        [Fact]
         public void CallMethod_1_Test()
         {
             var dic = new DiContainer();
@@ -848,19 +847,19 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             var methodStr = callClass.GetType().GetMethod(nameof(callClass.FuncStr_1))!;
 
             var actualEmptyName1 = dic.CallMethod(string.Empty, callClass, methodStr, Array.Empty<object>());
-            Assert.AreEqual("a:a", actualEmptyName1);
+            Assert.Equal("a:a", actualEmptyName1);
 
             var actualDefinedName1 = dic.CallMethod("named", callClass, methodStr, Array.Empty<object>());
-            Assert.AreEqual("b:b", actualDefinedName1);
+            Assert.Equal("b:b", actualDefinedName1);
 
             var actualEmptyName2 = dic.CallMethod(string.Empty, callClass, methodStr, new[] { "A" });
-            Assert.AreEqual("A:A", actualEmptyName2);
+            Assert.Equal("A:A", actualEmptyName2);
 
             var actualDefinedName2 = dic.CallMethod("named", callClass, methodStr, new[] { "B" });
-            Assert.AreEqual("B:B", actualDefinedName2);
+            Assert.Equal("B:B", actualDefinedName2);
         }
 
-        [TestMethod]
+        [Fact]
         public void CallMethod_2_Test()
         {
             var dic = new DiContainer();
@@ -871,35 +870,35 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             var methodStr = callClass.GetType().GetMethod(nameof(callClass.FuncStr_2))!;
 
             var actualEmptyName1 = dic.CallMethod(string.Empty, callClass, methodStr, Array.Empty<object>());
-            Assert.AreEqual("a:a", actualEmptyName1);
+            Assert.Equal("a:a", actualEmptyName1);
             var actualEmptyName1_Call = dic.Call<string>(callClass, methodStr.Name);
-            Assert.AreEqual("a:a", actualEmptyName1_Call);
+            Assert.Equal("a:a", actualEmptyName1_Call);
 
             var actualDefinedName1 = dic.CallMethod("named", callClass, methodStr, Array.Empty<object>());
-            Assert.AreEqual("b:b", actualDefinedName1);
+            Assert.Equal("b:b", actualDefinedName1);
 
             var actualEmptyName2 = dic.CallMethod(string.Empty, callClass, methodStr, new[] { "A" });
-            Assert.AreEqual("A:a", actualEmptyName2);
+            Assert.Equal("A:a", actualEmptyName2);
             var actualEmptyName2_Call = dic.Call<string>(callClass, methodStr.Name, "A");
-            Assert.AreEqual("A:a", actualEmptyName2_Call);
+            Assert.Equal("A:a", actualEmptyName2_Call);
 
             var actualDefinedName2 = dic.CallMethod("named", callClass, methodStr, new[] { "B" });
-            Assert.AreEqual("B:b", actualDefinedName2);
+            Assert.Equal("B:b", actualDefinedName2);
 
             var actualEmptyName3 = dic.CallMethod(string.Empty, callClass, methodStr, new[] { "A", "A'" });
-            Assert.AreEqual("A:A'", actualEmptyName3);
+            Assert.Equal("A:A'", actualEmptyName3);
             var actualEmptyName3_Call = dic.Call<string>(callClass, methodStr.Name, "A", "A");
-            Assert.AreEqual("A:A", actualEmptyName3_Call);
+            Assert.Equal("A:A", actualEmptyName3_Call);
 
             var actualDefinedName3 = dic.CallMethod("named", callClass, methodStr, new[] { "B", "B'" });
-            Assert.AreEqual("B:B'", actualDefinedName3);
+            Assert.Equal("B:B'", actualDefinedName3);
 
             //あかん
             //var actualEmptyName4 = dic.CallMethod(string.Empty, callClass, methodStr, new object[] { new DiDefaultParameter(typeof(string)), "A" });
-            //Assert.AreEqual("a:A", actualEmptyName4);
+            //Assert.Equal("a:A", actualEmptyName4);
 
             //var actualDefinedName4 = dic.CallMethod("named", callClass, methodStr, new object[] { new DiDefaultParameter(typeof(string)), "B" });
-            //Assert.AreEqual("b:B", actualDefinedName4);
+            //Assert.Equal("b:B", actualDefinedName4);
         }
     }
 

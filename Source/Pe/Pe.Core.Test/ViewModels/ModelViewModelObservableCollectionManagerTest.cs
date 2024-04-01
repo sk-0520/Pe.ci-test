@@ -9,11 +9,10 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Core.Test.ViewModels
 {
-    [TestClass]
     public class ModelViewModelObservableCollectionManagerTest
     {
         #region define
@@ -68,74 +67,74 @@ namespace ContentTypeTextNet.Pe.Core.Test.ViewModels
             return new Collections(args, options);
         }
 
-        [TestMethod]
+        [Fact]
         public void Constructor_none_Test()
         {
             var cm = Create(Array.Empty<int>(), new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
             });
-            Assert.AreEqual(0, cm.Model.Count);
-            Assert.AreEqual(0, cm.ViewModel.Count);
+            Assert.Empty(cm.Model);
+            Assert.Equal(0, cm.ViewModel.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Constructor_some_Test()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
             });
-            Assert.AreEqual(3, cm.Model.Count);
-            Assert.AreEqual(3, cm.ViewModel.Count);
+            Assert.Equal(3, cm.Model.Count);
+            Assert.Equal(3, cm.ViewModel.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Constructor_throw_Test()
         {
-            var actual1 = Assert.ThrowsException<ArgumentNullException>(() => Create(Array.Empty<int>(), new ModelViewModelObservableCollectionOptions<Model, ViewModel>() { ToViewModel = null! }));
-            Assert.AreEqual("options." + nameof(ModelViewModelObservableCollectionOptions<Model, ViewModel>.ToViewModel), actual1.ParamName);
+            var actual1 = Assert.Throws<ArgumentNullException>(() => Create(Array.Empty<int>(), new ModelViewModelObservableCollectionOptions<Model, ViewModel>() { ToViewModel = null! }));
+            Assert.Equal("options." + nameof(ModelViewModelObservableCollectionOptions<Model, ViewModel>.ToViewModel), actual1.ParamName);
 
-            var actual2 = Assert.ThrowsException<ArgumentNullException>(() => Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() { ToViewModel = null! }));
-            Assert.AreEqual("options." + nameof(ModelViewModelObservableCollectionOptions<Model, ViewModel>.ToViewModel), actual2.ParamName);
+            var actual2 = Assert.Throws<ArgumentNullException>(() => Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() { ToViewModel = null! }));
+            Assert.Equal("options." + nameof(ModelViewModelObservableCollectionOptions<Model, ViewModel>.ToViewModel), actual2.ParamName);
         }
 
 
-        [TestMethod]
+        [Fact]
         public void IndexOfTest()
         {
             var test = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
             });
-            Assert.AreEqual(1, test.ViewModel.IndexOf(test.ViewModel.ViewModels[1]));
-            Assert.AreEqual(-1, test.ViewModel.IndexOf(new Model() { Value = 4 }));
+            Assert.Equal(1, test.ViewModel.IndexOf(test.ViewModel.ViewModels[1]));
+            Assert.Equal(-1, test.ViewModel.IndexOf(new Model() { Value = 4 }));
         }
 
-        [TestMethod]
+        [Fact]
         public void TryGetModelTest()
         {
             var test = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
             });
 
-            Assert.IsTrue(test.ViewModel.TryGetModel(test.ViewModel.ViewModels[1], out var actual));
-            Assert.AreEqual(2, actual.Value);
+            Assert.True(test.ViewModel.TryGetModel(test.ViewModel.ViewModels[1], out var actual));
+            Assert.Equal(2, actual.Value);
 
-            Assert.IsFalse(test.ViewModel.TryGetModel(new ViewModel(new Model() { Value = 4 }, NullLoggerFactory.Instance), out var _));
+            Assert.False(test.ViewModel.TryGetModel(new ViewModel(new Model() { Value = 4 }, NullLoggerFactory.Instance), out var _));
         }
 
-        [TestMethod]
+        [Fact]
         public void TryGetViewModelTest()
         {
             var test = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
             });
 
-            Assert.IsTrue(test.ViewModel.TryGetViewModel(test.Model[1], out var actual));
-            Assert.AreEqual(2, actual.Value);
+            Assert.True(test.ViewModel.TryGetViewModel(test.Model[1], out var actual));
+            Assert.Equal(2, actual.Value);
 
-            Assert.IsFalse(test.ViewModel.TryGetViewModel(new Model() { Value = 4 }, out var _));
+            Assert.False(test.ViewModel.TryGetViewModel(new Model() { Value = 4 }, out var _));
         }
 
-        [TestMethod]
+        [Fact]
         public void AddTest()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
@@ -143,27 +142,27 @@ namespace ContentTypeTextNet.Pe.Core.Test.ViewModels
             });
             cm.Model.Add(new Model() { Value = 4 });
 
-            Assert.AreEqual(4, cm.ViewModel.ViewModels[3].Value);
+            Assert.Equal(4, cm.ViewModel.ViewModels[3].Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void AddDelegateTest()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
                 AddItems = p => {
-                    Assert.AreEqual(p.NewModels.Count, p.NewViewModels.Count);
+                    Assert.Equal(p.NewModels.Count, p.NewViewModels.Count);
 
-                    Assert.AreEqual(4, p.NewModels[0].Value);
-                    Assert.AreEqual(4, p.NewViewModels[0].Value);
+                    Assert.Equal(4, p.NewModels[0].Value);
+                    Assert.Equal(4, p.NewViewModels[0].Value);
                 }
             });
             cm.Model.Add(new Model() { Value = 4 });
 
-            Assert.AreEqual(4, cm.ViewModel.ViewModels[3].Value);
+            Assert.Equal(4, cm.ViewModel.ViewModels[3].Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void InsertTest()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
@@ -171,28 +170,29 @@ namespace ContentTypeTextNet.Pe.Core.Test.ViewModels
             });
             cm.Model.Insert(1, new Model() { Value = 40 });
 
-            Assert.AreEqual(40, cm.ViewModel.ViewModels[1].Value);
+            Assert.Equal(40, cm.ViewModel.ViewModels[1].Value);
         }
 
-        [TestMethod]
+        [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Assertions", "xUnit2013:Do not use equality check to check for collection size.", Justification = "<保留中>")]
         public void InsertDelegateTest()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
                 InsertItems = p => {
-                    Assert.AreEqual(1, p.NewModels.Count);
+                    Assert.Equal(1, p.NewModels.Count);
 
-                    Assert.AreEqual(1, p.InsertIndex);
-                    Assert.AreEqual(40, p.NewModels[0].Value);
+                    Assert.Equal(1, p.InsertIndex);
+                    Assert.Equal(40, p.NewModels[0].Value);
                 }
             });
             cm.Model.Insert(1, new Model() { Value = 40 });
 
-            Assert.AreEqual(40, cm.ViewModel.ViewModels[1].Value);
+            Assert.Equal(40, cm.ViewModel.ViewModels[1].Value);
         }
 
 
-        [TestMethod]
+        [Fact]
         public void RemoveTest()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
@@ -200,136 +200,136 @@ namespace ContentTypeTextNet.Pe.Core.Test.ViewModels
             });
             cm.Model.RemoveAt(1);
 
-            Assert.AreEqual(2, cm.ViewModel.Count);
-            Assert.AreEqual(3, cm.ViewModel.ViewModels[1].Value);
+            Assert.Equal(2, cm.ViewModel.Count);
+            Assert.Equal(3, cm.ViewModel.ViewModels[1].Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void RemoveDelegateTest()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
                 RemoveItems = p => {
-                    Assert.AreEqual(p.OldModels.Count, p.OldViewModels.Count);
+                    Assert.Equal(p.OldModels.Count, p.OldViewModels.Count);
 
-                    Assert.AreEqual(1, p.OldStartingIndex);
-                    Assert.AreEqual(2, p.OldModels[0].Value);
+                    Assert.Equal(1, p.OldStartingIndex);
+                    Assert.Equal(2, p.OldModels[0].Value);
                     if(p.Apply == ModelViewModelObservableCollectionViewModelApply.Before) {
-                        Assert.IsFalse(p.OldViewModels[0].IsDisposed);
-                        Assert.AreEqual(2, p.OldViewModels[0].Value);
+                        Assert.False(p.OldViewModels[0].IsDisposed);
+                        Assert.Equal(2, p.OldViewModels[0].Value);
                     } else {
                         Debug.Assert(p.Apply == ModelViewModelObservableCollectionViewModelApply.After);
-                        Assert.IsTrue(p.OldViewModels[0].IsDisposed);
-                        Assert.ThrowsException<NullReferenceException>(() => p.OldViewModels[0].Value); // モデルには null が強制設定されている
+                        Assert.True(p.OldViewModels[0].IsDisposed);
+                        Assert.Throws<NullReferenceException>(() => p.OldViewModels[0].Value); // モデルには null が強制設定されている
                     }
                 }
             });
             cm.Model.RemoveAt(1);
 
-            Assert.AreEqual(2, cm.ViewModel.Count);
-            Assert.AreEqual(3, cm.ViewModel.ViewModels[1].Value);
+            Assert.Equal(2, cm.ViewModel.Count);
+            Assert.Equal(3, cm.ViewModel.ViewModels[1].Value);
         }
 
 
-        [TestMethod]
+        [Fact]
         public void RemoveDisposeTest()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
                 RemoveItems = p => {
-                    Assert.AreEqual(p.OldModels.Count, p.OldViewModels.Count);
+                    Assert.Equal(p.OldModels.Count, p.OldViewModels.Count);
 
-                    Assert.AreEqual(1, p.OldStartingIndex);
-                    Assert.AreEqual(2, p.OldModels[0].Value);
-                    Assert.AreEqual(2, p.OldViewModels[0].Value);
-                    Assert.IsFalse(p.OldViewModels[0].IsDisposed);
+                    Assert.Equal(1, p.OldStartingIndex);
+                    Assert.Equal(2, p.OldModels[0].Value);
+                    Assert.Equal(2, p.OldViewModels[0].Value);
+                    Assert.False(p.OldViewModels[0].IsDisposed);
                 },
                 AutoDisposeViewModel = false,
             });
             cm.Model.RemoveAt(1);
 
-            Assert.AreEqual(2, cm.ViewModel.Count);
-            Assert.AreEqual(3, cm.ViewModel.ViewModels[1].Value);
+            Assert.Equal(2, cm.ViewModel.Count);
+            Assert.Equal(3, cm.ViewModel.ViewModels[1].Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReplaceTest()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
             });
             cm.Model[1] = new Model { Value = -2 };
-            Assert.AreEqual(-2, cm.ViewModel.ViewModels[1].Value);
+            Assert.Equal(-2, cm.ViewModel.ViewModels[1].Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReplaceDelegateTest()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
                 ReplaceItems = p => {
-                    Assert.AreEqual(p.NewModels.Count, p.OldModels.Count);
+                    Assert.Equal(p.NewModels.Count, p.OldModels.Count);
 
-                    Assert.AreEqual(1, p.StartIndex);
-                    Assert.AreEqual(2, p.OldModels[0].Value);
-                    Assert.AreEqual(2, p.OldViewModels[0].Value);
-                    Assert.IsFalse(p.OldViewModels[0].IsDisposed);
+                    Assert.Equal(1, p.StartIndex);
+                    Assert.Equal(2, p.OldModels[0].Value);
+                    Assert.Equal(2, p.OldViewModels[0].Value);
+                    Assert.False(p.OldViewModels[0].IsDisposed);
                 }
             });
             cm.Model[1] = new Model { Value = -2 };
-            Assert.AreEqual(-2, cm.ViewModel.ViewModels[1].Value);
+            Assert.Equal(-2, cm.ViewModel.ViewModels[1].Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void MoveTest()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
             });
             cm.Model.Move(2, 0);
-            Assert.AreEqual(3, cm.ViewModel.ViewModels[0].Value);
-            Assert.AreEqual(2, cm.ViewModel.ViewModels[2].Value);
+            Assert.Equal(3, cm.ViewModel.ViewModels[0].Value);
+            Assert.Equal(2, cm.ViewModel.ViewModels[2].Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResetTest()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
             });
             cm.Model.Clear();
-            Assert.AreEqual(0, cm.ViewModel.Count);
+            Assert.Equal(0, cm.ViewModel.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResetDelegateTest()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
                 ResetItems = p => {
                     if(p.Apply == ModelViewModelObservableCollectionViewModelApply.Before) {
-                        Assert.IsTrue(p.OldViewModels.All(a => !a.IsDisposed));
+                        Assert.True(p.OldViewModels.All(a => !a.IsDisposed));
                     } else {
                         Debug.Assert(p.Apply == ModelViewModelObservableCollectionViewModelApply.After);
-                        Assert.IsTrue(p.OldViewModels.All(a => a.IsDisposed));
+                        Assert.True(p.OldViewModels.All(a => a.IsDisposed));
                     }
                 }
             });
             cm.Model.Clear();
-            Assert.AreEqual(0, cm.ViewModel.Count);
+            Assert.Equal(0, cm.ViewModel.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResetDisposeTest()
         {
             var cm = Create(new int[] { 1, 2, 3 }, new ModelViewModelObservableCollectionOptions<Model, ViewModel>() {
                 ToViewModel = m => new ViewModel(m, NullLoggerFactory.Instance),
                 ResetItems = p => {
-                    Assert.IsTrue(p.OldViewModels.All(a => !a.IsDisposed));
+                    Assert.True(p.OldViewModels.All(a => !a.IsDisposed));
                 }
             });
             cm.Model.Clear();
-            Assert.AreEqual(0, cm.ViewModel.Count);
+            Assert.Equal(0, cm.ViewModel.Count);
         }
 
         #endregion

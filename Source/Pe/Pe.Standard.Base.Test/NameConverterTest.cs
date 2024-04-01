@@ -4,135 +4,134 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
-    [TestClass]
     public class NameConverterTest
     {
         #region function
 
-        [TestMethod]
+        [Fact]
         public void PascalToKebab_Exception_Test()
         {
             var nc = new NameConverter();
-            Assert.ThrowsException<ArgumentNullException>(() => nc.PascalToKebab(null!));
+            Assert.Throws<ArgumentNullException>(() => nc.PascalToKebab(null!));
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow(" ", " ")]
-        [DataRow("a", "a")]
-        [DataRow("a", "A")]
-        [DataRow("abc", "Abc")]
-        [DataRow("abc-def", "AbcDef")]
-        [DataRow("abc-def-ghi", "AbcDefGHI")]
-        [DataRow("abc-d", "ABcD")]
-        [DataRow("あ", "あ")]
-        [DataRow("int32", "Int32")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData(" ", " ")]
+        [InlineData("a", "a")]
+        [InlineData("a", "A")]
+        [InlineData("abc", "Abc")]
+        [InlineData("abc-def", "AbcDef")]
+        [InlineData("abc-def-ghi", "AbcDefGHI")]
+        [InlineData("abc-d", "ABcD")]
+        [InlineData("あ", "あ")]
+        [InlineData("int32", "Int32")]
         public void PascalToKebabTest(string expected, string input)
         {
             var nc = new NameConverter();
             var actual = nc.PascalToKebab(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
 
-        [TestMethod]
+        [Fact]
         public void PascalToSnake_Exception_Test()
         {
             var nc = new NameConverter();
-            Assert.ThrowsException<ArgumentNullException>(() => nc.PascalToSnake(null!));
+            Assert.Throws<ArgumentNullException>(() => nc.PascalToSnake(null!));
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow(" ", " ")]
-        [DataRow("a", "a")]
-        [DataRow("a", "A")]
-        [DataRow("abc", "Abc")]
-        [DataRow("abc_def", "AbcDef")]
-        [DataRow("abc_def_ghi", "AbcDefGHI")]
-        [DataRow("abc_d", "ABcD")]
-        [DataRow("あ", "あ")]
-        [DataRow("int32", "Int32")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData(" ", " ")]
+        [InlineData("a", "a")]
+        [InlineData("a", "A")]
+        [InlineData("abc", "Abc")]
+        [InlineData("abc_def", "AbcDef")]
+        [InlineData("abc_def_ghi", "AbcDefGHI")]
+        [InlineData("abc_d", "ABcD")]
+        [InlineData("あ", "あ")]
+        [InlineData("int32", "Int32")]
         public void PascalToSnakeTest(string expected, string input)
         {
             var nc = new NameConverter();
             var actual = nc.PascalToSnake(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void PascalToCamel_Exception_Test()
         {
             var nc = new NameConverter();
-            Assert.ThrowsException<ArgumentNullException>(() => nc.PascalToCamel(null!));
+            Assert.Throws<ArgumentNullException>(() => nc.PascalToCamel(null!));
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow(" ", " ")]
-        [DataRow("a", "a")]
-        [DataRow("a", "A")]
-        [DataRow("abc", "Abc")]
-        [DataRow("abcDef", "AbcDef")]
-        [DataRow("abcDefGhi", "AbcDefGHI")]
-        [DataRow("abcD", "ABcD")]
-        [DataRow("あ", "あ")]
-        [DataRow("int32", "Int32")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData(" ", " ")]
+        [InlineData("a", "a")]
+        [InlineData("a", "A")]
+        [InlineData("abc", "Abc")]
+        [InlineData("abcDef", "AbcDef")]
+        [InlineData("abcDefGhi", "AbcDefGHI")]
+        [InlineData("abcD", "ABcD")]
+        [InlineData("あ", "あ")]
+        [InlineData("int32", "Int32")]
         public void PascalToCamelTest(string expected, string input)
         {
             var nc = new NameConverter();
             var actual = nc.PascalToCamel(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow(" ", " ")]
-        [DataRow("A", "a")]
-        [DataRow("Abc", "abc")]
-        [DataRow("AbcDef", "abc-def")]
-        [DataRow("AbcDef", "abc-def-")]
-        [DataRow("AbcDef", "abc--def-")]
-        [DataRow("AbcDef", "-abc--def-")]
-        [DataRow("AbcDef", "---abc--def-")]
-        [DataRow("AbcDef", "---abc--def---------")]
-        [DataRow("ABC", "a-b-c")]
-        [DataRow("ABC", "a-B-c")]
-        [DataRow("ABC", "aB-c")]
-        [DataRow("ABc", "a-Bc")]
-        [DataRow("A_b_cD_e", "a_b_c-d_e")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData(" ", " ")]
+        [InlineData("A", "a")]
+        [InlineData("Abc", "abc")]
+        [InlineData("AbcDef", "abc-def")]
+        [InlineData("AbcDef", "abc-def-")]
+        [InlineData("AbcDef", "abc--def-")]
+        [InlineData("AbcDef", "-abc--def-")]
+        [InlineData("AbcDef", "---abc--def-")]
+        [InlineData("AbcDef", "---abc--def---------")]
+        [InlineData("ABC", "a-b-c")]
+        [InlineData("ABC", "a-B-c")]
+        [InlineData("ABC", "aB-c")]
+        [InlineData("ABc", "a-Bc")]
+        [InlineData("A_b_cD_e", "a_b_c-d_e")]
         public void KebabToPascalTest(string expected, string input)
         {
             var nc = new NameConverter();
             var actual = nc.KebabToPascal(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow(" ", " ")]
-        [DataRow("A", "a")]
-        [DataRow("Abc", "abc")]
-        [DataRow("AbcDef", "abc_def")]
-        [DataRow("AbcDef", "abc_def_")]
-        [DataRow("AbcDef", "abc__def_")]
-        [DataRow("AbcDef", "_abc__def_")]
-        [DataRow("AbcDef", "___abc__def_")]
-        [DataRow("AbcDef", "___abc__def_________")]
-        [DataRow("ABC", "a_b_c")]
-        [DataRow("ABC", "a_B_c")]
-        [DataRow("ABC", "aB_c")]
-        [DataRow("ABc", "a_Bc")]
-        [DataRow("A-b-cD-e", "a-b-c_d-e")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData(" ", " ")]
+        [InlineData("A", "a")]
+        [InlineData("Abc", "abc")]
+        [InlineData("AbcDef", "abc_def")]
+        [InlineData("AbcDef", "abc_def_")]
+        [InlineData("AbcDef", "abc__def_")]
+        [InlineData("AbcDef", "_abc__def_")]
+        [InlineData("AbcDef", "___abc__def_")]
+        [InlineData("AbcDef", "___abc__def_________")]
+        [InlineData("ABC", "a_b_c")]
+        [InlineData("ABC", "a_B_c")]
+        [InlineData("ABC", "aB_c")]
+        [InlineData("ABc", "a_Bc")]
+        [InlineData("A-b-cD-e", "a-b-c_d-e")]
         public void SnakeToPascalTest(string expected, string input)
         {
             var nc = new NameConverter();
             var actual = nc.SnakeToPascal(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

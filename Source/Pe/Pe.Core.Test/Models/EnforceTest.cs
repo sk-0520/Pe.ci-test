@@ -4,33 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Core.Test.Models
 {
-    [TestClass]
     public class EnforceTest
     {
-        [TestMethod]
+        [Fact]
         public void ThrowIf_Target_Test()
         {
-            Assert.ThrowsException<NullReferenceException>(() => Enforce.ThrowIf<NullReferenceException>(false));
+            Assert.Throws<NullReferenceException>(() => Enforce.ThrowIf<NullReferenceException>(false));
             Enforce.ThrowIf<NullReferenceException>(true);
-            Assert.IsTrue(true);
+            Assert.True(true);
 
-            Assert.ThrowsException<NotImplementedException>(() => Enforce.ThrowIf<NotImplementedException>(false));
+            Assert.Throws<NotImplementedException>(() => Enforce.ThrowIf<NotImplementedException>(false));
             Enforce.ThrowIf<NotImplementedException>(true);
-            Assert.IsTrue(true);
+            Assert.True(true);
         }
 
-        [TestMethod]
+        [Fact]
         public void ThrowIf_Default_Test()
         {
             try {
                 Enforce.ThrowIf(1 == 0);
                 Assert.Fail();
             } catch(EnforceException ex) {
-                Assert.AreEqual("1 == 0", ex.Message);
+                Assert.Equal("1 == 0", ex.Message);
             }
 
             try {
@@ -39,53 +38,53 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
                 Enforce.ThrowIf(a == b);
                 Assert.Fail();
             } catch(EnforceException ex) {
-                Assert.AreEqual("a == b", ex.Message);
+                Assert.Equal("a == b", ex.Message);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ThrowIfNull_Target_Test()
         {
-            Assert.ThrowsException<NullReferenceException>(() => Enforce.ThrowIfNull<object, NullReferenceException>(default));
-            Assert.ThrowsException<NotImplementedException>(() => Enforce.ThrowIfNull<object, NotImplementedException>(default));
+            Assert.Throws<NullReferenceException>(() => Enforce.ThrowIfNull<object, NullReferenceException>(default));
+            Assert.Throws<NotImplementedException>(() => Enforce.ThrowIfNull<object, NotImplementedException>(default));
         }
 
-        [TestMethod]
+        [Fact]
         public void ThrowIfNull_Default_Test()
         {
-            Assert.ThrowsException<EnforceException>(() => Enforce.ThrowIfNull(default(object)));
+            Assert.Throws<EnforceException>(() => Enforce.ThrowIfNull(default(object)));
         }
 
-        [TestMethod]
+        [Fact]
         public void ThrowIfNullOrEmpty_Target_Test()
         {
-            Assert.ThrowsException<NullReferenceException>(() => Enforce.ThrowIfNullOrEmpty<NullReferenceException>(default));
-            Assert.ThrowsException<NullReferenceException>(() => Enforce.ThrowIfNullOrEmpty<NullReferenceException>(""));
+            Assert.Throws<NullReferenceException>(() => Enforce.ThrowIfNullOrEmpty<NullReferenceException>(default));
+            Assert.Throws<NullReferenceException>(() => Enforce.ThrowIfNullOrEmpty<NullReferenceException>(""));
             Enforce.ThrowIfNullOrEmpty<NullReferenceException>(" ");
             Enforce.ThrowIfNullOrEmpty<NullReferenceException>("a");
-            Assert.IsTrue(true);
+            Assert.True(true);
 
-            Assert.ThrowsException<NotImplementedException>(() => Enforce.ThrowIfNullOrEmpty<NotImplementedException>(default));
-            Assert.ThrowsException<NotImplementedException>(() => Enforce.ThrowIfNullOrEmpty<NotImplementedException>(""));
+            Assert.Throws<NotImplementedException>(() => Enforce.ThrowIfNullOrEmpty<NotImplementedException>(default));
+            Assert.Throws<NotImplementedException>(() => Enforce.ThrowIfNullOrEmpty<NotImplementedException>(""));
             Enforce.ThrowIfNullOrEmpty<NotImplementedException>(" ");
             Enforce.ThrowIfNullOrEmpty<NotImplementedException>("a");
-            Assert.IsTrue(true);
+            Assert.True(true);
         }
 
-        [TestMethod]
+        [Fact]
         public void ThrowIfNullOrWhiteSpace_Target_Test()
         {
-            Assert.ThrowsException<NullReferenceException>(() => Enforce.ThrowIfNullOrWhiteSpace<NullReferenceException>(default));
-            Assert.ThrowsException<NullReferenceException>(() => Enforce.ThrowIfNullOrWhiteSpace<NullReferenceException>(""));
-            Assert.ThrowsException<NullReferenceException>(() => Enforce.ThrowIfNullOrWhiteSpace<NullReferenceException>(" "));
+            Assert.Throws<NullReferenceException>(() => Enforce.ThrowIfNullOrWhiteSpace<NullReferenceException>(default));
+            Assert.Throws<NullReferenceException>(() => Enforce.ThrowIfNullOrWhiteSpace<NullReferenceException>(""));
+            Assert.Throws<NullReferenceException>(() => Enforce.ThrowIfNullOrWhiteSpace<NullReferenceException>(" "));
             Enforce.ThrowIfNullOrWhiteSpace<NullReferenceException>("a");
-            Assert.IsTrue(true);
+            Assert.True(true);
 
-            Assert.ThrowsException<NotImplementedException>(() => Enforce.ThrowIfNullOrWhiteSpace<NotImplementedException>(default));
-            Assert.ThrowsException<NotImplementedException>(() => Enforce.ThrowIfNullOrWhiteSpace<NotImplementedException>(""));
-            Assert.ThrowsException<NotImplementedException>(() => Enforce.ThrowIfNullOrWhiteSpace<NotImplementedException>(" "));
+            Assert.Throws<NotImplementedException>(() => Enforce.ThrowIfNullOrWhiteSpace<NotImplementedException>(default));
+            Assert.Throws<NotImplementedException>(() => Enforce.ThrowIfNullOrWhiteSpace<NotImplementedException>(""));
+            Assert.Throws<NotImplementedException>(() => Enforce.ThrowIfNullOrWhiteSpace<NotImplementedException>(" "));
             Enforce.ThrowIfNullOrWhiteSpace<NotImplementedException>("a");
-            Assert.IsTrue(true);
+            Assert.True(true);
         }
     }
 }

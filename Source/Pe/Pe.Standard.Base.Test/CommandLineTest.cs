@@ -5,49 +5,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
-    [TestClass]
     public class CommandLineTest
     {
-        [TestMethod]
-        [DataRow(new[] { "a" }, true, "a", 0)]
-        [DataRow(new[] { "A", "a" }, true, "A", 1)]
-        [DataRow(new[] { "A", "a" }, false, "", 2)]
-        [DataRow(new string[] { }, true, "", 0)]
-        [DataRow(new string[] { }, false, "", 0)]
+        [Theory]
+        [InlineData(new[] { "a" }, true, "a", 0)]
+        [InlineData(new[] { "A", "a" }, true, "A", 1)]
+        [InlineData(new[] { "A", "a" }, false, "", 2)]
+        [InlineData(new string[] { }, true, "", 0)]
+        [InlineData(new string[] { }, false, "", 0)]
         public void ConstructorTest(string[] args, bool withCommand, string expectedProgramName, int expectedArgumentCount)
         {
             var commandLine = new CommandLine(args, withCommand);
-            Assert.IsTrue(commandLine.CommandName == expectedProgramName);
-            Assert.IsTrue(commandLine.Arguments.Count == expectedArgumentCount);
+            Assert.True(commandLine.CommandName == expectedProgramName);
+            Assert.True(commandLine.Arguments.Count == expectedArgumentCount);
         }
 
-        [TestMethod]
-        [DataRow(true, 'a', "aa")]
-        [DataRow(true, '\0', "aa")]
-        [DataRow(true, 'a', "")]
-        [DataRow(false, '\0', "")]
-        [DataRow(false, '\0', "a")]
+        [Theory]
+        [InlineData(true, 'a', "aa")]
+        [InlineData(true, '\0', "aa")]
+        [InlineData(true, 'a', "")]
+        [InlineData(false, '\0', "")]
+        [InlineData(false, '\0', "a")]
         public void AddTest(bool expected, char shortKey, string longKey)
         {
             var commandLine = new CommandLine();
             try {
                 var key = commandLine.Add(shortKey, longKey);
-                Assert.IsTrue(expected);
+                Assert.True(expected);
             } catch(ArgumentException ex) {
-                Assert.IsFalse(expected, ex.ToString());
+                Assert.False(expected, ex.ToString());
             }
         }
 
-        [TestMethod]
-        [DataRow(false, 'a', "")]
-        [DataRow(false, '\0', "aa")]
-        [DataRow(false, '\0', "bb")]
-        [DataRow(false, 'c', "")]
-        [DataRow(true, 'b', "aaa")]
+        [Theory]
+        [InlineData(false, 'a', "")]
+        [InlineData(false, '\0', "aa")]
+        [InlineData(false, '\0', "bb")]
+        [InlineData(false, 'c', "")]
+        [InlineData(true, 'b', "aaa")]
         public void AddTest_Exists(bool expected, char shortKey, string longKey)
         {
             var commandLine = new CommandLine();
@@ -57,74 +56,73 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
 
             try {
                 var key = commandLine.Add(shortKey, longKey);
-                Assert.IsTrue(expected);
+                Assert.True(expected);
             } catch(ArgumentException ex) {
-                Assert.IsFalse(expected, ex.ToString());
+                Assert.False(expected, ex.ToString());
             }
         }
 
-        [TestMethod]
-        [DataRow("A", new[] { "/a", "A" }, 'a', "aaa")]
-        [DataRow("A", new[] { "/aaa", "A" }, 'a', "aaa")]
-        [DataRow("AA", new[] { "/aaa", "AA", "/a", "A" }, 'a', "aaa")]
-        //[DataRow("A", new[] { "-a", "A" }, 'a', "aaa")]
-        [DataRow(   "A", new[] { "--aaa", "A" }, 'a', "aaa")]
-        [DataRow(   "AA", new[] { "--aaa", "AA", "-a", "A" }, 'a', "aaa")]
-        [DataRow("A", new[] { "/a=A" }, 'a', "aaa")]
-        [DataRow("A", new[] { "/aaa=A" }, 'a', "aaa")]
-        [DataRow("AA", new[] { "/aaa=AA", "/a=A" }, 'a', "aaa")]
-        //[DataRow("A", new[] { "-a=A" }, 'a', "aaa")]
-        [DataRow("A", new[] { "--aaa=A" }, 'a', "aaa")]
-        [DataRow("AA", new[] { "--aaa=AA", "-a=A" }, 'a', "aaa")]
-        //[DataRow("A", new[] { "/a=\"A\"" }, 'a', "aaa")]
-        [DataRow("A", new[] { "/aaa=\"A\"" }, 'a', "aaa")]
-        [DataRow("AA", new[] { "/aaa=\"AA\"", "/a=\"A\"" }, 'a', "aaa")]
-        //[DataRow("A", new[] { "-a=\"A\"" }, 'a', "aaa")]
-        [DataRow("A", new[] { "--aaa=\"A\"" }, 'a', "aaa")]
-        [DataRow("AA", new[] { "--aaa=\"AA\"", "-a=\"A\"" }, 'a', "aaa")]
+        [Theory]
+        [InlineData("A", new[] { "/a", "A" }, 'a', "aaa")]
+        [InlineData("A", new[] { "/aaa", "A" }, 'a', "aaa")]
+        [InlineData("AA", new[] { "/aaa", "AA", "/a", "A" }, 'a', "aaa")]
+        //[InlineData("A", new[] { "-a", "A" }, 'a', "aaa")]
+        [InlineData(   "A", new[] { "--aaa", "A" }, 'a', "aaa")]
+        [InlineData(   "AA", new[] { "--aaa", "AA", "-a", "A" }, 'a', "aaa")]
+        [InlineData("A", new[] { "/a=A" }, 'a', "aaa")]
+        [InlineData("A", new[] { "/aaa=A" }, 'a', "aaa")]
+        [InlineData("AA", new[] { "/aaa=AA", "/a=A" }, 'a', "aaa")]
+        //[InlineData("A", new[] { "-a=A" }, 'a', "aaa")]
+        [InlineData("A", new[] { "--aaa=A" }, 'a', "aaa")]
+        [InlineData("AA", new[] { "--aaa=AA", "-a=A" }, 'a', "aaa")]
+        //[InlineData("A", new[] { "/a=\"A\"" }, 'a', "aaa")]
+        [InlineData("A", new[] { "/aaa=\"A\"" }, 'a', "aaa")]
+        [InlineData("AA", new[] { "/aaa=\"AA\"", "/a=\"A\"" }, 'a', "aaa")]
+        //[InlineData("A", new[] { "-a=\"A\"" }, 'a', "aaa")]
+        [InlineData("A", new[] { "--aaa=\"A\"" }, 'a', "aaa")]
+        [InlineData("AA", new[] { "--aaa=\"AA\"", "-a=\"A\"" }, 'a', "aaa")]
         public void ExecuteTest_Simple(string expected, string[] args, char shortKey, string longKey)
         {
             var commandLine = new CommandLine(args, false);
             var commandKey = commandLine.Add(shortKey, longKey, true);
 
-            Assert.IsTrue(commandLine.Parse());
+            Assert.True(commandLine.Parse());
             var value = commandLine.Values[commandKey];
-            Assert.IsTrue(value.First == expected);
+            Assert.True(value.First == expected);
         }
 
-        [TestMethod]
-        [DataRow(true, new[] { "/a" }, 'a', "aaa")]
-        [DataRow(true, new[] { "/aaa" }, 'a', "aaa")]
-        //[DataRow(true, new[] { "-a" }, 'a', "aaa")]
-        [DataRow(true, new[] { "--aaa" }, 'a', "aaa")]
+        [Theory]
+        [InlineData(true, new[] { "/a" }, 'a', "aaa")]
+        [InlineData(true, new[] { "/aaa" }, 'a', "aaa")]
+        //[InlineData(true, new[] { "-a" }, 'a', "aaa")]
+        [InlineData(true, new[] { "--aaa" }, 'a', "aaa")]
         public void ExecuteTest_Switch(bool expected, string[] args, char shortKey, string longKey)
         {
             var commandLine = new CommandLine(args, false);
             var commandKey = commandLine.Add(shortKey, longKey, false);
 
-            Assert.IsTrue(commandLine.Parse());
+            Assert.True(commandLine.Parse());
             var has = commandLine.Switches.Contains(commandKey);
-            Assert.IsTrue(has == expected);
+            Assert.True(has == expected);
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow("a", "a")]
-        [DataRow("a", " a")]
-        [DataRow("a", "a ")]
-        [DataRow("a", " a ")]
-        [DataRow("\"a a\"", "a a")]
-        [DataRow("a\"\"b", "a\"b")]
-        [DataRow("a\"\"\"\"\"\"b", "a\"\"\"b")]
-        [DataRow("\"a \"\"\"\"\"\" b\"", "a \"\"\" b")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("a", "a")]
+        [InlineData("a", " a")]
+        [InlineData("a", "a ")]
+        [InlineData("a", " a ")]
+        [InlineData("\"a a\"", "a a")]
+        [InlineData("a\"\"b", "a\"b")]
+        [InlineData("a\"\"\"\"\"\"b", "a\"\"\"b")]
+        [InlineData("\"a \"\"\"\"\"\" b\"", "a \"\"\" b")]
         public void Escape(string expected, string input)
         {
             var actual = CommandLine.Escape(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
     }
 
-    [TestClass]
     public class CommandLineUtilityTest
     {
         class Cts
@@ -175,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             public Func<bool> Test { get; }
         }
 
-        [TestMethod]
+        [Fact]
         public void MappingTest()
         {
             var cts = new Cts();
@@ -200,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             var commandLineConverter = new CommandLineConverter<Cts>(new CommandLine(data.Select(d => new[] { d.Key, d.Value }).SelectMany(i => i), false), cts);
             commandLineConverter.Mapping();
             foreach(var item in data) {
-                Assert.IsTrue(item.Test(), $"{item.Key}, {item.Value}");
+                Assert.True(item.Test(), $"{item.Key}, {item.Value}");
             }
         }
 
@@ -228,7 +226,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             public string Empty { get; set; } = string.Empty;
         }
 
-        [TestMethod]
+        [Fact]
         public void MappingTest_class()
         {
             var actual = new Class();
@@ -250,13 +248,13 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
                 actual
             );
             var result = commandLineConverter.Mapping();
-            Assert.IsTrue(result);
-            Assert.AreEqual(actual.A, 1);
-            CollectionAssert.AreEqual(actual.B, new[] { "a", "b" });
-            CollectionAssert.AreEqual(actual.C, new[] { "aa", "bb" });
-            CollectionAssert.AreEqual(actual.D, new[] { "aaa", "bbb" });
-            CollectionAssert.AreEqual(actual.E.ToList(), new[] { "aaaa", "bbbb" });
-            CollectionAssert.AreEqual(actual.F.ToList(), new[] { "aaaaa", "bbbbb" });
+            Assert.True(result);
+            Assert.Equal(1, actual.A);
+            Assert.Equal(actual.B, new[] { "a", "b" });
+            Assert.Equal(actual.C, new[] { "aa", "bb" });
+            Assert.Equal(actual.D, new[] { "aaa", "bbb" });
+            Assert.Equal(actual.E.ToList(), new[] { "aaaa", "bbbb" });
+            Assert.Equal(actual.F.ToList(), new[] { "aaaaa", "bbbbb" });
         }
     }
 }
