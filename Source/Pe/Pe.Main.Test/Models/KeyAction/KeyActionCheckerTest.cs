@@ -6,16 +6,15 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
 {
-    [TestClass]
     public class KeyActionCheckerTest
     {
         #region function
 
-        [TestMethod]
+        [Fact]
         public void FindTest_Simple()
         {
             var keyActionChecker = new KeyActionChecker(Test.LoggerFactory) {
@@ -33,20 +32,20 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
             var expectedUpA = keyActionChecker.Find(false, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             var expectedUpB = keyActionChecker.Find(false, Key.B, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             var expectedUpC = keyActionChecker.Find(false, Key.C, modifierKeyStatus, new KBDLLHOOKSTRUCT());
-            Assert.IsFalse(expectedUpA.Any());
-            Assert.IsFalse(expectedUpB.Any());
-            Assert.IsFalse(expectedUpC.Any());
+            Assert.False(expectedUpA.Any());
+            Assert.False(expectedUpB.Any());
+            Assert.False(expectedUpC.Any());
 
             var expectedDownA = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             var expectedDownB = keyActionChecker.Find(true, Key.B, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             var expectedDownC = keyActionChecker.Find(true, Key.C, modifierKeyStatus, new KBDLLHOOKSTRUCT());
-            Assert.IsFalse(expectedDownA.Any());
-            Assert.IsTrue(expectedDownB.Any());
-            Assert.IsFalse(expectedDownC.Any());
+            Assert.False(expectedDownA.Any());
+            Assert.True(expectedDownB.Any());
+            Assert.False(expectedDownC.Any());
 
         }
 
-        [TestMethod]
+        [Fact]
         public void FindTest_DisableToEnable()
         {
             var keyActionChecker = new KeyActionChecker(Test.LoggerFactory);
@@ -64,12 +63,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
             var expected2 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             keyActionChecker.KeyDisableToEnableTime = TimeSpan.Zero;
             var expected3 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
-            Assert.IsTrue(expected1.Any());
-            Assert.IsFalse(expected2.Any());
-            Assert.IsTrue(expected3.Any());
+            Assert.True(expected1.Any());
+            Assert.False(expected2.Any());
+            Assert.True(expected3.Any());
         }
 
-        [TestMethod]
+        [Fact]
         public void FindTest_DisableStopEnable()
         {
             var keyActionChecker = new KeyActionChecker(Test.LoggerFactory);
@@ -87,12 +86,13 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
             var expected2 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
             keyActionChecker.KeyDisableToEnableTime = TimeSpan.Zero;
             var expected3 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
-            Assert.IsTrue(expected1.Any());
-            Assert.IsTrue(expected2.Any());
-            Assert.IsTrue(expected3.Any());
+            Assert.True(expected1.Any());
+            Assert.True(expected2.Any());
+            Assert.True(expected3.Any());
         }
 
-        [TestMethod]
+        [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Assertions", "xUnit2013:Do not use equality check to check for collection size.", Justification = "<保留中>")]
         public void FindTest_Replace()
         {
             var keyActionChecker = new KeyActionChecker(Test.LoggerFactory);
@@ -118,10 +118,10 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
             var modifierKeyStatus = new ModifierKeyStatus();
 
             var expected1 = keyActionChecker.Find(true, Key.C, modifierKeyStatus, new KBDLLHOOKSTRUCT());
-            Assert.AreEqual(1, expected1.Count);
+            Assert.Equal(1, expected1.Count);
 
             var expected2 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
-            Assert.AreEqual(1, expected2.Count);
+            Assert.Equal(1, expected2.Count);
 
             keyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
                 new KeyActionDisableData(KeyActionId.NewId(), false),
@@ -130,9 +130,9 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
                 }
             ));
             var expected3 = keyActionChecker.Find(true, Key.A, modifierKeyStatus, new KBDLLHOOKSTRUCT());
-            Assert.AreEqual(1, expected3.Count);
+            Assert.Equal(1, expected3.Count);
             var job = (KeyActionReplaceJob)expected3.First();
-            Assert.AreEqual(Key.B, keyActionChecker.ReplaceJobs[0].ActionData.ReplaceKey);
+            Assert.Equal(Key.B, keyActionChecker.ReplaceJobs[0].ActionData.ReplaceKey);
         }
         #endregion
     }

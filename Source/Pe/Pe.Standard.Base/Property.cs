@@ -322,13 +322,13 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         private IReadOnlyDictionary<string, PropertyInfo> Properties { get; }
 
-        private ConcurrentDictionary<string, PropertyAccessor> AccesserCache { get; } = new ConcurrentDictionary<string, PropertyAccessor>(); // CPUの数とかこの層で取得するのしんどいのでコンストラクタでキャパ指定せず。
+        private ConcurrentDictionary<string, PropertyAccessor> AccessorCache { get; } = new ConcurrentDictionary<string, PropertyAccessor>(); // CPUの数とかこの層で取得するのしんどいのでコンストラクタでキャパ指定せず。
 
         #endregion
 
         #region function
 
-        private PropertyAccessor GetAccessor(string propertyName) => AccesserCache.GetOrAdd(propertyName, s => {
+        private PropertyAccessor GetAccessor(string propertyName) => AccessorCache.GetOrAdd(propertyName, s => {
             var propertyInfo = Properties[s];
             return new PropertyAccessor(OwnerExpression, propertyInfo);
         });

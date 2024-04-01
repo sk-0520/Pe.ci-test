@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
             ThemeProperties = new ThemeProperties(this);
 
-            //CommandItemCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<ICommandItem>, CommandItemViewModel>(Model.CommandItems) {
+            //CommandItemCollection = new ModelViewModelObservableCollectionManager<WrapModel<ICommandItem>, CommandItemViewModel>(Model.CommandItems) {
             //    ToViewModel = m => new CommandItemViewModel(m.Data, IconBox, DispatcherWrapper, LoggerFactory),
             //};
             //CommandItems = CommandItemCollection.GetDefaultView();
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         private DispatcherTimer HideWaitTimer { get; }
 
-        //ModelViewModelObservableCollectionManagerBase<WrapModel<ICommandItem>, CommandItemViewModel> CommandItemCollection { get; }
+        //ModelViewModelObservableCollectionManager<WrapModel<ICommandItem>, CommandItemViewModel> CommandItemCollection { get; }
         public IReadOnlyList<CommandItemViewModel> CommandItems
         {
             get => this._commandItems;

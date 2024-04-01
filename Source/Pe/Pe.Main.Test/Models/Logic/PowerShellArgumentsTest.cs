@@ -1,32 +1,31 @@
 using System;
 using System.Collections.Generic;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
 {
-    [TestClass]
     public class PowerShellArgumentsTest
     {
         #region function
 
-        [TestMethod]
+        [Fact]
         public void Create_Exception_Test()
         {
             var psa = new PowerShellArguments();
-            Assert.ThrowsException<ArgumentException>(() => psa.Create("k y", "value"));
-            Assert.ThrowsException<ArgumentException>(() => psa.Create("k ", "value"));
-            Assert.ThrowsException<ArgumentException>(() => psa.Create(" k", "value"));
-            Assert.ThrowsException<ArgumentException>(() => psa.Create(" ", "value"));
-            Assert.ThrowsException<ArgumentException>(() => psa.Create("", "value"));
+            Assert.Throws<ArgumentException>(() => psa.Create("k y", "value"));
+            Assert.Throws<ArgumentException>(() => psa.Create("k ", "value"));
+            Assert.Throws<ArgumentException>(() => psa.Create(" k", "value"));
+            Assert.Throws<ArgumentException>(() => psa.Create(" ", "value"));
+            Assert.Throws<ArgumentException>(() => psa.Create("", "value"));
         }
 
-        [TestMethod]
-        [DataRow("-k", "\"\"", "k", "")]
-        [DataRow("-k", "v", "k", "v")]
-        [DataRow("-k", "v", "-k", "v")]
-        [DataRow("-k", "\"v v\"", "k", "v v")]
-        [DataRow("-k", "\"v\"\" \"\"v\"", "k", "v\" \"v")]
+        [Theory]
+        [InlineData("-k", "\"\"", "k", "")]
+        [InlineData("-k", "v", "k", "v")]
+        [InlineData("-k", "v", "-k", "v")]
+        [InlineData("-k", "\"v v\"", "k", "v v")]
+        [InlineData("-k", "\"v\"\" \"\"v\"", "k", "v\" \"v")]
         public void CreateTest(string expectedKey, string expectedValue, string inputKey, string inputValue)
         {
             var psa = new PowerShellArguments();
@@ -34,13 +33,13 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             var actual1 = psa.Create(p);
             var actual2 = psa.Create(inputKey, inputValue);
 
-            Assert.AreEqual(expectedKey, actual1.Key);
-            Assert.AreEqual(expectedValue, actual1.Value);
-            Assert.AreEqual(expectedKey, actual2.Key);
-            Assert.AreEqual(expectedValue, actual2.Value);
+            Assert.Equal(expectedKey, actual1.Key);
+            Assert.Equal(expectedValue, actual1.Value);
+            Assert.Equal(expectedKey, actual2.Key);
+            Assert.Equal(expectedValue, actual2.Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateParameters()
         {
             var psa = new PowerShellArguments();
@@ -49,28 +48,26 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                 KeyValuePair.Create("-key2", "value2"),
                 KeyValuePair.Create("-key3", "value 3"),
             });
-            Assert.AreEqual(parameters[0], "-key1");
-            Assert.AreEqual(parameters[1], "value1");
+            Assert.Equal("-key1", parameters[0]);
+            Assert.Equal("value1", parameters[1]);
 
-            Assert.AreEqual(parameters[2], "-key2");
-            Assert.AreEqual(parameters[3], "value2");
+            Assert.Equal("-key2", parameters[2]);
+            Assert.Equal("value2", parameters[3]);
 
-            Assert.AreEqual(parameters[4], "-key3");
-            Assert.AreEqual(parameters[5], "\"value 3\"");
-
-
+            Assert.Equal("-key3", parameters[4]);
+            Assert.Equal("\"value 3\"", parameters[5]);
         }
 
-        [TestMethod]
-        [DataRow("\"\"\"\"\"\"", "")]
-        [DataRow("\"\"\"ab\"\"\"", "ab")]
-        [DataRow("\"\"\"a b\"\"\"", "a b")]
-        [DataRow("\"\"\"a\"\"b\"\"\"", "a\"b")]
+        [Theory]
+        [InlineData("\"\"\"\"\"\"", "")]
+        [InlineData("\"\"\"ab\"\"\"", "ab")]
+        [InlineData("\"\"\"a b\"\"\"", "a b")]
+        [InlineData("\"\"\"a\"\"b\"\"\"", "a\"b")]
         public void ToRemainingValueTest(string expected, string input)
         {
             var psa = new PowerShellArguments();
             var actual = psa.ToRemainingValue(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

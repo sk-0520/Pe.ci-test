@@ -1,5 +1,35 @@
 [
 	{
+		"date": "YYYY/MM/DD",
+		"version": "0.99.222+",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"subject": "とりあえず一旦リリースしたい気持ち"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "bc5387ea09fef5fd093b736a100ad4b97b9216ce",
+						"subject": "#920: Stop-Transcript って別にいらない"
+					},
+					{
+						"revision": "f8e60a674233527e950486e28a75ff7714397b22",
+						"subject": "#922: テストフレームワークの変更",
+						"comments": [
+							"MSTest -> xUnit"
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2024/02/08",
 		"version": "0.99.222",
 		"contents": [

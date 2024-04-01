@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
-    [TestClass]
     public class CounterTest
     {
-        [TestMethod]
+        [Fact]
         public void CountTest()
         {
             var i = 1;
@@ -16,25 +15,26 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             var counter = new Counter(max);
             foreach(var c in counter) {
                 if(i == 1) {
-                    Assert.IsTrue(c.IsFirst);
+                    Assert.True(c.IsFirst);
                 } else {
-                    Assert.IsFalse(c.IsFirst);
+                    Assert.False(c.IsFirst);
                 }
 
-                Assert.AreEqual(c.CurrentCount, i);
-                Assert.IsFalse(c.IsCompleted);
+                Assert.Equal(c.CurrentCount, i);
+                Assert.False(c.IsCompleted);
 
                 if(i == max) {
-                    Assert.IsTrue(c.IsLast);
+                    Assert.True(c.IsLast);
                 } else {
-                    Assert.IsFalse(c.IsLast);
+                    Assert.False(c.IsLast);
                 }
                 i += 1;
             }
 
-            Assert.IsTrue(counter.IsCompleted);
+            Assert.True(counter.IsCompleted);
         }
-        [TestMethod]
+
+        [Fact]
         public void CompleteTest()
         {
             var i = 1;
@@ -42,18 +42,18 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             var counter = new Counter(max);
             foreach(var c in counter) {
                 if(i == 1) {
-                    Assert.IsTrue(c.IsFirst);
+                    Assert.True(c.IsFirst);
                 } else {
-                    Assert.IsFalse(c.IsFirst);
+                    Assert.False(c.IsFirst);
                 }
 
-                Assert.AreEqual(c.CurrentCount, i);
-                Assert.IsFalse(c.IsCompleted);
+                Assert.Equal(c.CurrentCount, i);
+                Assert.False(c.IsCompleted);
 
                 if(i == max) {
-                    Assert.IsTrue(c.IsLast);
+                    Assert.True(c.IsLast);
                 } else {
-                    Assert.IsFalse(c.IsLast);
+                    Assert.False(c.IsLast);
                 }
                 if(i == max - 1) {
                     break;
@@ -61,64 +61,64 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
                 i += 1;
             }
 
-            Assert.IsFalse(counter.IsCompleted);
+            Assert.False(counter.IsCompleted);
         }
 
-        [TestMethod]
+        [Fact]
         public void IncrementTest()
         {
             var counter = new Counter(3);
+            
+            Assert.Equal(1, counter.CurrentCount);
+            Assert.True(counter.IsFirst);
+            Assert.False(counter.IsLast);
+            Assert.False(counter.IsCompleted);
 
-            Assert.AreEqual(1, counter.CurrentCount);
-            Assert.IsTrue(counter.IsFirst);
-            Assert.IsFalse(counter.IsLast);
-            Assert.IsFalse(counter.IsCompleted);
+            Assert.True(counter.Increment());
+            Assert.Equal(2, counter.CurrentCount);
+            Assert.False(counter.IsFirst);
+            Assert.False(counter.IsLast);
+            Assert.False(counter.IsCompleted);
 
-            Assert.IsTrue(counter.Increment());
-            Assert.AreEqual(2, counter.CurrentCount);
-            Assert.IsFalse(counter.IsFirst);
-            Assert.IsFalse(counter.IsLast);
-            Assert.IsFalse(counter.IsCompleted);
+            Assert.True(counter.Increment());
+            Assert.Equal(3, counter.CurrentCount);
+            Assert.False(counter.IsFirst);
+            Assert.True(counter.IsLast);
+            Assert.True(counter.IsCompleted);
 
-            Assert.IsTrue(counter.Increment());
-            Assert.AreEqual(3, counter.CurrentCount);
-            Assert.IsFalse(counter.IsFirst);
-            Assert.IsTrue(counter.IsLast);
-            Assert.IsTrue(counter.IsCompleted);
-
-            Assert.IsFalse(counter.Increment());
-            Assert.IsFalse(counter.IsFirst);
-            Assert.IsTrue(counter.IsLast);
-            Assert.IsTrue(counter.IsCompleted);
+            Assert.False(counter.Increment());
+            Assert.False(counter.IsFirst);
+            Assert.True(counter.IsLast);
+            Assert.True(counter.IsCompleted);
         }
 
-        [TestMethod]
+        [Fact]
         public void ForeachAndIncrement()
         {
             var counter = new Counter(3);
             foreach(var c in counter) {
-                Assert.AreEqual(counter.CurrentCount, c.CurrentCount);
-                Assert.AreEqual(counter.IsFirst, c.IsFirst);
-                Assert.AreEqual(counter.IsLast, c.IsLast);
-                Assert.AreEqual(counter.IsCompleted, c.IsCompleted);
+                Assert.Equal(counter.CurrentCount, c.CurrentCount);
+                Assert.Equal(counter.IsFirst, c.IsFirst);
+                Assert.Equal(counter.IsLast, c.IsLast);
+                Assert.Equal(counter.IsCompleted, c.IsCompleted);
 
                 if(counter.CurrentCount == 1) {
-                    Assert.IsTrue(counter.IsFirst);
-                    Assert.IsFalse(counter.IsLast);
-                    Assert.IsFalse(counter.IsCompleted);
+                    Assert.True(counter.IsFirst);
+                    Assert.False(counter.IsLast);
+                    Assert.False(counter.IsCompleted);
                     counter.Increment();
-                    Assert.AreEqual(2, counter.CurrentCount);
-                    Assert.IsFalse(counter.IsFirst);
-                    Assert.IsFalse(counter.IsLast);
-                    Assert.IsFalse(counter.IsCompleted);
+                    Assert.Equal(2, counter.CurrentCount);
+                    Assert.False(counter.IsFirst);
+                    Assert.False(counter.IsLast);
+                    Assert.False(counter.IsCompleted);
                 } else {
-                    Assert.AreEqual(3, counter.CurrentCount);
-                    Assert.IsFalse(counter.IsFirst);
-                    Assert.IsTrue(counter.IsLast);
-                    Assert.IsFalse(counter.IsCompleted);
+                    Assert.Equal(3, counter.CurrentCount);
+                    Assert.False(counter.IsFirst);
+                    Assert.True(counter.IsLast);
+                    Assert.False(counter.IsCompleted);
                 }
             }
-            Assert.IsTrue(counter.IsCompleted);
+            Assert.True(counter.IsCompleted);
         }
     }
 }

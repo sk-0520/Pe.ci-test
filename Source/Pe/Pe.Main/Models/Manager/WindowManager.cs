@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element;
 using ContentTypeTextNet.Pe.Main.ViewModels;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
+using System.Windows.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -138,9 +139,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public Window Window { get; }
 
         /// <summary>
-        /// ウィンドウが閉じられた際に <see cref="System.Windows.Window.DataContext"/> に null を設定するか。
+        /// ウィンドウが閉じられた際に <see cref="System.Windows.Window.DataContext"/> およびバインド状態をクリアするか。
         /// </summary>
-        public bool CloseToDataContextNull { get; set; } = true;
+        public bool CloseToClearDataContext { get; set; } = true;
         /// <summary>
         /// ウィンドウが閉じられた際に <see cref="ViewModel"/> の <see cref="IDisposable.Dispose"/> を呼び出すか。
         /// </summary>
@@ -325,8 +326,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 item.Window.Closed -= Window_Closed!;
                 item.Window.Close();
 
-                if(item.CloseToDataContextNull) {
+                if(item.CloseToClearDataContext) {
                     ClearUnsafeElements(item.Window);
+                    //ClearBindings いる？
                     item.Window.DataContext = null;
                 }
 
@@ -396,8 +398,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 hWndSource.Dispose();
             }
 
-            if(item.CloseToDataContextNull) {
+            if(item.CloseToClearDataContext) {
                 ClearUnsafeElements(item.Window);
+
+                static void ClearBindings(DependencyObject dependencyObject)
+                {
+                    var children = LogicalTreeHelper
+                        .GetChildren(dependencyObject)
+                        .OfType<DependencyObject>()
+                        .ToArray()
+                    ;
+                    foreach(var child in children) {
+                        ClearBindings(child);
+                    }
+
+                    BindingOperations.ClearAllBindings(dependencyObject);
+                }
+                ClearBindings(item.Window);
+
                 item.Window.DataContext = null;
                 var dataContextChildren = UIUtility.FindChildren<FrameworkElement>(item.Window)
                     .Where(i => i.DataContext != null)

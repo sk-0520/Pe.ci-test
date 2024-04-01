@@ -4,35 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
 {
-    [TestClass]
     public class NoteCaptionPositionExtensionsTest
     {
         #region function
 
-        [TestMethod]
-        [DataRow(true, NoteCaptionPosition.Top)]
-        [DataRow(true, NoteCaptionPosition.Bottom)]
-        [DataRow(false, NoteCaptionPosition.Left)]
-        [DataRow(false, NoteCaptionPosition.Right)]
+        [Theory]
+        [InlineData(true, NoteCaptionPosition.Top)]
+        [InlineData(true, NoteCaptionPosition.Bottom)]
+        [InlineData(false, NoteCaptionPosition.Left)]
+        [InlineData(false, NoteCaptionPosition.Right)]
         public void IsVerticalTest(bool expected, NoteCaptionPosition input)
         {
             var actual = input.IsVertical();
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
-        [DataRow(false, NoteCaptionPosition.Top)]
-        [DataRow(false, NoteCaptionPosition.Bottom)]
-        [DataRow(true, NoteCaptionPosition.Left)]
-        [DataRow(true, NoteCaptionPosition.Right)]
+        [Theory]
+        [InlineData(false, NoteCaptionPosition.Top)]
+        [InlineData(false, NoteCaptionPosition.Bottom)]
+        [InlineData(true, NoteCaptionPosition.Left)]
+        [InlineData(true, NoteCaptionPosition.Right)]
         public void IsHorizontalTest(bool expected, NoteCaptionPosition input)
         {
             var actual = input.IsHorizontal();
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

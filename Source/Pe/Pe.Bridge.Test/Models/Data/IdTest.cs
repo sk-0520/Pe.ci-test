@@ -6,11 +6,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
 {
-    [TestClass]
     public class IdTest
     {
         #region define
@@ -39,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
 
         #region function
 
-        [TestMethod]
+        [Fact]
         public void SerializeClassDataTest()
         {
             var input = new ClassData() {
@@ -47,10 +46,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
             };
             var clone = JsonSerializer.Serialize(input);
             var deserialize = JsonSerializer.Deserialize<ClassData>(clone)!;
-            Assert.AreEqual(input.LauncherItemId, deserialize.LauncherItemId);
+            Assert.Equal(input.LauncherItemId, deserialize.LauncherItemId);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeClassRecordDataTest()
         {
             var input = new ClassRecordData() {
@@ -58,10 +57,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
             };
             var clone = JsonSerializer.Serialize(input);
             var deserialize = JsonSerializer.Deserialize<ClassRecordData>(clone)!;
-            Assert.AreEqual(input.LauncherItemId, deserialize.LauncherItemId);
+            Assert.Equal(input.LauncherItemId, deserialize.LauncherItemId);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeStructDataTest()
         {
             var input = new StructData() {
@@ -69,10 +68,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
             };
             var clone = JsonSerializer.Serialize(input);
             var deserialize = JsonSerializer.Deserialize<StructData>(clone)!;
-            Assert.AreEqual(input.LauncherItemId, deserialize.LauncherItemId);
+            Assert.Equal(input.LauncherItemId, deserialize.LauncherItemId);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeStructRecordDataTest()
         {
             var input = new StructRecordData() {
@@ -80,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
             };
             var clone = JsonSerializer.Serialize(input);
             var deserialize = JsonSerializer.Deserialize<StructRecordData>(clone)!;
-            Assert.AreEqual(input.LauncherItemId, deserialize.LauncherItemId);
+            Assert.Equal(input.LauncherItemId, deserialize.LauncherItemId);
         }
 
         #endregion

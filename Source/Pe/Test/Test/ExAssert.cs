@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Test
 {
@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Test
         {
             var e = TextUtility.ReadLines(expected).JoinString(Environment.NewLine);
             var a = TextUtility.ReadLines(actual).JoinString(Environment.NewLine);
-            Assert.AreEqual(e, a);
+            Assert.Equal(e, a);
         }
 
         #endregion

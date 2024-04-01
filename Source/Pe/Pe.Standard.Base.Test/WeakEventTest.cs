@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
@@ -68,14 +68,14 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         public void Strong(object? sender, EventArgs e)
         {
             StrongCount += 1;
-            Assert.IsTrue(true);
+            Assert.True(true);
         }
 
         public void Weak(object? sender, EventArgs e)
         {
             if(WeakCount == 0) {
                 WeakCount += 1;
-                Assert.IsTrue(true);
+                Assert.True(true);
             } else {
                 Assert.Fail();
             }
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         {
             if(NoGenericsCount == 0) {
                 NoGenericsCount += 1;
-                Assert.IsTrue(true);
+                Assert.True(true);
             } else {
                 Assert.Fail();
             }
@@ -94,7 +94,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         #endregion
     }
 
-    [TestClass]
     public class WeakEventTest
     {
         #region property
@@ -107,17 +106,17 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
 
         #region function
 
-        [TestMethod]
+        [Fact]
         public void StrongTest()
         {
             var source = new EventSource();
 
             source.RaiseStrong();
-            Assert.AreEqual(0, StrongTestCount);
+            Assert.Equal(0, StrongTestCount);
 
             source.Strong += Source_Strong;
             source.RaiseStrong();
-            Assert.AreEqual(1, StrongTestCount);
+            Assert.Equal(1, StrongTestCount);
 
             static void Scope(EventSource source)
             {
@@ -127,27 +126,27 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
                 listener = null;
             }
             Scope(source);
-            Assert.AreEqual(2, StrongTestCount);
+            Assert.Equal(2, StrongTestCount);
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
 
             source.RaiseStrong();
-            Assert.AreEqual(3, StrongTestCount);
+            Assert.Equal(3, StrongTestCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void WeakTest()
         {
             var source = new EventSource();
 
             source.RaiseWeak();
-            Assert.AreEqual(0, WeakTestCount);
+            Assert.Equal(0, WeakTestCount);
 
             source.Weak += Source_Weak;
             source.RaiseWeak();
-            Assert.AreEqual(1, WeakTestCount);
+            Assert.Equal(1, WeakTestCount);
 
             static void Scope(EventSource source)
             {
@@ -157,27 +156,27 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
                 listener = null;
             }
             Scope(source);
-            Assert.AreEqual(2, WeakTestCount);
+            Assert.Equal(2, WeakTestCount);
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
 
             source.RaiseWeak();
-            Assert.AreEqual(3, WeakTestCount);
+            Assert.Equal(3, WeakTestCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void NoGenericsTest()
         {
             var source = new EventSource();
 
             source.RaiseNoGenerics();
-            Assert.AreEqual(0, NoGenericsTestCount);
+            Assert.Equal(0, NoGenericsTestCount);
 
             source.NoGenerics += Source_NoGenerics;
             source.RaiseNoGenerics();
-            Assert.AreEqual(1, NoGenericsTestCount);
+            Assert.Equal(1, NoGenericsTestCount);
 
             static void Scope(EventSource source)
             {
@@ -187,14 +186,14 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
                 listener = null;
             }
             Scope(source);
-            Assert.AreEqual(2, NoGenericsTestCount);
+            Assert.Equal(2, NoGenericsTestCount);
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
 
             source.RaiseNoGenerics();
-            Assert.AreEqual(3, NoGenericsTestCount);
+            Assert.Equal(3, NoGenericsTestCount);
         }
 
         #endregion

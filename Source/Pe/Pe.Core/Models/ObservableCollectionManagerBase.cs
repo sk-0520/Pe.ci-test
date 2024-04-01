@@ -9,8 +9,8 @@ using ContentTypeTextNet.Pe.Standard.Base;
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
-    /// <see cref="ObservableCollection{TValue}"/> の変更通知を受け取ってなんかする人。
-    /// <para>管理者が誰かもうワケわからんことになるのです。</para>
+    /// <see cref="ObservableCollection{TValue}"/> の変更通知を処理する。
+    /// <para>原則このクラスは使用せず、<see cref="ModelViewModelObservableCollectionOptions{TModel, TViewModel}"/>の使用を想定している。ただし実装上一本にまとめると複雑になるために本クラスを継承元として分割している。</para>
     /// </summary>
     public abstract class ObservableCollectionManagerBase<TValue>: NotifyPropertyBase
     {
@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Collection = collection ?? throw new ArgumentNullException(nameof(collection));
 
             CollectionNotifyCollectionChanged = collectionNotifyCollectionChanged;
-            CollectionNotifyCollectionChanged.CollectionChanged += Collection_CollectionChanged;
+            CollectionNotifyCollectionChanged.CollectionChanged += Collection_CollectionChanged!;
         }
 
         protected ObservableCollectionManagerBase(ReadOnlyObservableCollection<TValue> collection)
@@ -89,12 +89,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="newItems"></param>
         /// <param name="oldItems"></param>
-        protected abstract void ReplaceItemsImpl(IReadOnlyList<TValue> newItems, IReadOnlyList<TValue> oldItems);
-        private void ReplaceItems(IReadOnlyList<TValue> newItems, IReadOnlyList<TValue> oldItems)
+        protected abstract void ReplaceItemsImpl(int startIndex, IReadOnlyList<TValue> newItems, IReadOnlyList<TValue> oldItems);
+        private void ReplaceItems(int startIndex, IReadOnlyList<TValue> newItems, IReadOnlyList<TValue> oldItems)
         {
             ThrowIfDisposed();
 
-            ReplaceItemsImpl(newItems, oldItems);
+            ReplaceItemsImpl(startIndex, newItems, oldItems);
         }
 
         /// <summary>
@@ -136,12 +136,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             switch(e.Action) {
                 case NotifyCollectionChangedAction.Add:
-                    if(e.NewStartingIndex == 0 && Collection.Count == 0) {
-                        if(e.NewItems != null) {
+                    if(e.NewItems != null) {
+                        // Collection.Count はすでに増えている(イベントから動いているので本処理は事後となる)
+                        // ただし終端への挿入は追加扱いとなる(3要素ある際に Insert(`3', obj) とした場合は追加)
+                        if(e.NewStartingIndex + 1 == Collection.Count) {
                             AddItems(ConvertList(e.NewItems));
-                        }
-                    } else {
-                        if(e.NewItems != null) {
+                        } else {
                             InsertItems(e.NewStartingIndex, ConvertList(e.NewItems));
                         }
                     }
@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
                 case NotifyCollectionChangedAction.Replace:
                     if(e.NewItems != null && e.OldItems != null) {
-                        ReplaceItems(ConvertList(e.NewItems), ConvertList(e.OldItems));
+                        ReplaceItems(e.NewStartingIndex, ConvertList(e.NewItems), ConvertList(e.OldItems));
                     }
                     break;
 
@@ -177,34 +177,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public int IndexOf(TValue value)
         {
             ThrowIfDisposed();
 
-            if(Collection is IList<TValue> list) {
-                return list.IndexOf(value);
-            }
-
-            var items = Collection.Counting();
-            foreach(var item in items) {
-                if(object.Equals(item.Value, value)) {
-                    return item.Number;
-                }
-            }
-
-            return -1;
+            return Collection.IndexOf(value);
         }
 
 
         #endregion
 
-        #region NotifyPropertyBase
+        #region BindModelBase
 
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed && Collection != null) {
-                CollectionNotifyCollectionChanged.CollectionChanged -= Collection_CollectionChanged;
+                CollectionNotifyCollectionChanged.CollectionChanged -= Collection_CollectionChanged!;
                 CollectionNotifyCollectionChanged = null!;
                 Collection = null!;
             }
@@ -214,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
-        private void Collection_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        private void Collection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             CollectionChanged(e);
         }

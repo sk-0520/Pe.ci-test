@@ -4,11 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
 {
-    [TestClass]
     public class DaoTest
     {
         #region function
@@ -18,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
         /// <para>ファイルからメソッドを見つける形で対応する。</para>
         /// <para>現時点では Pe.Main.* のみが対象となる制限付き。</para>
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void SqlFileTest()
         {
             static string TrimDirectory(string inputPath, string rootDirectoryPath)
@@ -90,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
                 }
             }
 
-            Assert.IsTrue(errorMessages.Count == 0, string.Join(Environment.NewLine, errorMessages));
+            Assert.True(errorMessages.Count == 0, string.Join(Environment.NewLine, errorMessages));
         }
 
         #endregion

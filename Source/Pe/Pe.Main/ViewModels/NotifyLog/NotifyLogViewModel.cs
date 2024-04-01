@@ -34,14 +34,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 
             PlatformTheme.Changed += PlatformTheme_Changed;
 
-            TopmostNotifyLogCollection = new ActionModelViewModelObservableCollectionManager<NotifyLogItemElement, NotifyLogItemViewModel>(Model.TopmostNotifyLogs) {
+            TopmostNotifyLogCollection = new ModelViewModelObservableCollectionManager<NotifyLogItemElement, NotifyLogItemViewModel>(Model.TopmostNotifyLogs, new ModelViewModelObservableCollectionOptions<NotifyLogItemElement, NotifyLogItemViewModel>() {
                 ToViewModel = m => new NotifyLogItemViewModel(m, UserTracker, DispatcherWrapper, LoggerFactory)
-            };
+            });
             TopmostNotifyLogItems = TopmostNotifyLogCollection.GetDefaultView();
 
-            StreamNotifyLogCollection = new ActionModelViewModelObservableCollectionManager<NotifyLogItemElement, NotifyLogItemViewModel>(Model.StreamNotifyLogs) {
+            StreamNotifyLogCollection = new ModelViewModelObservableCollectionManager<NotifyLogItemElement, NotifyLogItemViewModel>(Model.StreamNotifyLogs, new ModelViewModelObservableCollectionOptions<NotifyLogItemElement, NotifyLogItemViewModel>() {
                 ToViewModel = m => new NotifyLogItemViewModel(m, UserTracker, DispatcherWrapper, LoggerFactory)
-            };
+            });
             StreamNotifyLogItems = StreamNotifyLogCollection.GetDefaultView();
 
             ExecuteLogCommand = new DelegateCommand<NotifyLogItemViewModel>(
@@ -61,9 +61,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         private ThemeProperties ThemeProperties { get; }
         private PropertyChangedHooker PropertyChangedHooker { get; }
 
-        private ModelViewModelObservableCollectionManagerBase<NotifyLogItemElement, NotifyLogItemViewModel> TopmostNotifyLogCollection { get; }
+        private ModelViewModelObservableCollectionManager<NotifyLogItemElement, NotifyLogItemViewModel> TopmostNotifyLogCollection { get; }
         public ICollectionView TopmostNotifyLogItems { get; }
-        private ModelViewModelObservableCollectionManagerBase<NotifyLogItemElement, NotifyLogItemViewModel> StreamNotifyLogCollection { get; }
+        private ModelViewModelObservableCollectionManager<NotifyLogItemElement, NotifyLogItemViewModel> StreamNotifyLogCollection { get; }
         public ICollectionView StreamNotifyLogItems { get; }
 
         public NotifyLogPosition Position => Model.Position;

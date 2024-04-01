@@ -5,29 +5,28 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace TEMPLATE_Namespace.Test
 {
-    [TestClass]
     public class SampleTest
     {
         #region function
 
-        [TestMethod]
+        [Fact]
         public void SimpleTest()
         {
-            Assert.AreEqual(2, 1 + 1);
+            Assert.Equal(2, 1 + 1);
         }
 
-        [TestMethod]
-        [DataRow(2, 1)]
-        [DataRow(4, 2)]
-        [DataRow(6, 3)]
-        [DataRow(8, 4)]
+        [Theory]
+        [InlineData(2, 1)]
+        [InlineData(4, 2)]
+        [InlineData(6, 3)]
+        [InlineData(8, 4)]
         public void ParameterTest(int excepted, int input)
         {
-            Assert.AreEqual(excepted, input + input);
+            Assert.Equal(excepted, input + input);
         }
 
         #endregion

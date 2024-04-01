@@ -52,14 +52,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             LauncherToolbarTheme = launcherToolbarTheme;
             GeneralTheme = generalTheme;
 
-            LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups) {
+            LauncherGroupCollection = new ModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups, new ModelViewModelObservableCollectionOptions<LauncherGroupElement, LauncherGroupViewModel>() {
                 ToViewModel = (m) => new LauncherGroupViewModel(m, DispatcherWrapper, LoggerFactory),
-            };
+            });
             LauncherGroupItems = LauncherGroupCollection.ViewModels;
 
-            LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherDetailViewModelBase>(Model.LauncherItems) {
+            LauncherItemCollection = new ModelViewModelObservableCollectionManager<LauncherItemElement, LauncherDetailViewModelBase>(Model.LauncherItems, new ModelViewModelObservableCollectionOptions<LauncherItemElement, LauncherDetailViewModelBase>() {
                 ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DockScreen, KeyGestureGuide, DispatcherWrapper, LauncherToolbarTheme, LoggerFactory),
-            };
+            });
             LauncherItems = LauncherItemCollection.GetDefaultView();
 
             ViewDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
@@ -185,10 +185,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             set => SetProperty(ref this._showWaiting, value);
         }
 
-        private ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
+        private ModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
         public ReadOnlyObservableCollection<LauncherGroupViewModel> LauncherGroupItems { get; }
 
-        private ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherDetailViewModelBase> LauncherItemCollection { get; }
+        private ModelViewModelObservableCollectionManager<LauncherItemElement, LauncherDetailViewModelBase> LauncherItemCollection { get; }
         public ICollectionView LauncherItems { get; }
 
         public RequestSender CloseRequest { get; } = new RequestSender();
@@ -201,7 +201,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public LauncherGroupViewModel? SelectedLauncherGroup
         {
-            get => Model?.SelectedLauncherGroup != null ? LauncherGroupCollection.GetViewModel(Model.SelectedLauncherGroup) : null;
+            get
+            {
+                if(Model?.SelectedLauncherGroup != null) {
+                    if(LauncherGroupCollection.TryGetViewModel(Model.SelectedLauncherGroup, out var result)) {
+                        return result;
+                    }
+                }
+
+                return null;
+            }
         }
 
         public LauncherToolbarContentDropMode ContentDropMode => Model.ContentDropMode;
@@ -333,11 +342,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public ICommand AddNewGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
                  var newGroupElement = Model.AddNewGroup(LauncherGroupKind.Normal);
-                 var newGroupViewModel = LauncherGroupCollection.GetViewModel(newGroupElement);
-                 if(newGroupViewModel is null) {
+
+                 if(!LauncherGroupCollection.TryGetViewModel(newGroupElement, out var newGroupViewModel)) {
                      Logger.LogError("生成したグループが存在しない異常: {0}", newGroupElement.LauncherGroupId);
                      return;
                  }
+
                  ChangeLauncherGroup(newGroupViewModel);
              }
          ));
@@ -350,12 +360,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         {
             var currentLauncherItems = LauncherItemCollection.ViewModels.ToList();
 
-            var groupModel = LauncherGroupCollection.GetModel(targetGroup)!;
-            Model.ChangeLauncherGroup(groupModel);
-            LauncherItems.Refresh();
+            if(LauncherGroupCollection.TryGetModel(targetGroup, out var groupModel)) {
+                Model.ChangeLauncherGroup(groupModel);
+                LauncherItems.Refresh();
 
-            foreach(var vm in currentLauncherItems) {
-                vm.Dispose();
+                foreach(var vm in currentLauncherItems) {
+                    vm.Dispose();
+                }
             }
         }
 
@@ -536,149 +547,149 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         /// 自動的に隠すか。
         /// </summary>
         public bool IsAutoHide => Model.IsAutoHide;
-    /// <summary>
-    /// 自動的に隠す処理を一時的に中断するか。
-    /// </summary>
-    public bool PausingAutoHide => Model.PausingAutoHide;
-    /// <summary>
-    /// 隠れているか。
-    /// </summary>
-    public bool IsHiding => Model.IsHiding;
-    /// <summary>
-    /// 自動的に隠れるまでの時間。
-    /// </summary>
-    public TimeSpan AutoHideTime => Model.AutoHideTime;
+        /// <summary>
+        /// 自動的に隠す処理を一時的に中断するか。
+        /// </summary>
+        public bool PausingAutoHide => Model.PausingAutoHide;
+        /// <summary>
+        /// 隠れているか。
+        /// </summary>
+        public bool IsHiding => Model.IsHiding;
+        /// <summary>
+        /// 自動的に隠れるまでの時間。
+        /// </summary>
+        public TimeSpan AutoHideTime => Model.AutoHideTime;
 
-    /// <summary>
-    /// 表示中のサイズ。
-    /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
-    /// </summary>
-    [PixelKind(Px.Logical)]
-    public Size DisplaySize => Model.DisplaySize;
+        /// <summary>
+        /// 表示中のサイズ。
+        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
+        /// </summary>
+        [PixelKind(Px.Logical)]
+        public Size DisplaySize => Model.DisplaySize;
 
-    /// <summary>
-    /// 表示中の論理バーサイズ。
-    /// </summary>
-    [PixelKind(Px.Logical)]
-    public Rect DisplayBarArea => Model.DisplayBarArea;
-    /// <summary>
-    /// 隠れた状態のバー論理サイズ。
-    /// </summary>
-    [PixelKind(Px.Logical)]
-    public Size HiddenSize => Model.HiddenSize;
-    /// <summary>
-    /// 表示中の隠れたバーの論理領域。
-    /// </summary>
-    [PixelKind(Px.Logical)]
-    public Rect HiddenBarArea => Model.HiddenBarArea;
+        /// <summary>
+        /// 表示中の論理バーサイズ。
+        /// </summary>
+        [PixelKind(Px.Logical)]
+        public Rect DisplayBarArea => Model.DisplayBarArea;
+        /// <summary>
+        /// 隠れた状態のバー論理サイズ。
+        /// </summary>
+        [PixelKind(Px.Logical)]
+        public Size HiddenSize => Model.HiddenSize;
+        /// <summary>
+        /// 表示中の隠れたバーの論理領域。
+        /// </summary>
+        [PixelKind(Px.Logical)]
+        public Rect HiddenBarArea => Model.HiddenBarArea;
 
-    /// <summary>
-    /// フルスクリーンウィンドウが存在するか。
-    /// </summary>
-    public bool ExistsFullScreenWindow => Model.ExistsFullScreenWindow;
+        /// <summary>
+        /// フルスクリーンウィンドウが存在するか。
+        /// </summary>
+        public bool ExistsFullScreenWindow => Model.ExistsFullScreenWindow;
 
 
-    /// <summary>
-    /// 対象ディスプレイ。
-    /// </summary>
-    public IScreen DockScreen => Model.DockScreen;
+        /// <summary>
+        /// 対象ディスプレイ。
+        /// </summary>
+        public IScreen DockScreen => Model.DockScreen;
 
-    #endregion
+        #endregion
 
-    //#region ILoggerFactory
+        //#region ILoggerFactory
 
-    //public ILogger CreateLogger(string header) => LoggerFactory.CreateLogger(header);
+        //public ILogger CreateLogger(string header) => LoggerFactory.CreateLogger(header);
 
-    //#endregion
+        //#endregion
 
-    #region IViewLifecycleReceiver
-    public void ReceiveViewInitialized(Window window)
-    { }
+        #region IViewLifecycleReceiver
+        public void ReceiveViewInitialized(Window window)
+        { }
 
-    public void ReceiveViewLoaded(Window window)
-    {
-        if(!IsVisible) {
-            window.Visibility = Visibility.Collapsed;
+        public void ReceiveViewLoaded(Window window)
+        {
+            if(!IsVisible) {
+                window.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
+        {
+            e.Cancel = !Model.ReceiveViewUserClosing();
+        }
+
+
+        public void ReceiveViewClosing(Window window, CancelEventArgs e)
+        {
+            e.Cancel = !Model.ReceiveViewClosing();
+        }
+
+        public void ReceiveViewClosed(Window window, bool isUserOperation)
+        {
+            Model.ReceiveViewClosed(isUserOperation);
+        }
+
+
+        #endregion
+
+        #region SingleModelViewModelBase
+
+        protected override void AttachModelEventsImpl()
+        {
+            base.AttachModelEventsImpl();
+            Model.PropertyChanged += Model_PropertyChanged;
+        }
+
+        protected override void DetachModelEventsImpl()
+        {
+            base.DetachModelEventsImpl();
+            Model.PropertyChanged -= Model_PropertyChanged;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    PlatformThemeLoader.Changed -= PlatformThemeLoader_Changed;
+                    LauncherItemCollection.Dispose();
+                    LauncherGroupCollection.Dispose();
+                    Font.Dispose();
+                }
+
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
+        private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+        }
+
+        private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
+        {
+            DispatcherWrapper.BeginAsync(vm => {
+                if(vm.IsDisposed) {
+                    return;
+                }
+
+                foreach(var propertyName in vm.ThemeProperties.GetPropertyNames()) {
+                    vm.RaisePropertyChanged(propertyName);
+                }
+            }, this, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+        }
+
+        private void AutoHideShowWaitTimer_Tick(object? sender, EventArgs e)
+        {
+            Logger.LogTrace("自動的に隠すの強制隠しからの復帰抑制を解除");
+            ShowWaiting = false;
+
+            if(AutoHideShowWaitTimer != null) {
+                AutoHideShowWaitTimer.Tick -= AutoHideShowWaitTimer_Tick;
+                AutoHideShowWaitTimer.Stop();
+                AutoHideShowWaitTimer = null;
+            }
         }
     }
-
-    public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
-    {
-        e.Cancel = !Model.ReceiveViewUserClosing();
-    }
-
-
-    public void ReceiveViewClosing(Window window, CancelEventArgs e)
-    {
-        e.Cancel = !Model.ReceiveViewClosing();
-    }
-
-    public void ReceiveViewClosed(Window window, bool isUserOperation)
-    {
-        Model.ReceiveViewClosed(isUserOperation);
-    }
-
-
-    #endregion
-
-    #region SingleModelViewModelBase
-
-    protected override void AttachModelEventsImpl()
-    {
-        base.AttachModelEventsImpl();
-        Model.PropertyChanged += Model_PropertyChanged;
-    }
-
-    protected override void DetachModelEventsImpl()
-    {
-        base.DetachModelEventsImpl();
-        Model.PropertyChanged -= Model_PropertyChanged;
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        if(!IsDisposed) {
-            if(disposing) {
-                PlatformThemeLoader.Changed -= PlatformThemeLoader_Changed;
-                LauncherItemCollection.Dispose();
-                LauncherGroupCollection.Dispose();
-                Font.Dispose();
-            }
-
-        }
-        base.Dispose(disposing);
-    }
-
-    #endregion
-
-    private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        PropertyChangedHooker.Execute(e, RaisePropertyChanged);
-    }
-
-    private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
-    {
-        DispatcherWrapper.BeginAsync(vm => {
-            if(vm.IsDisposed) {
-                return;
-            }
-
-            foreach(var propertyName in vm.ThemeProperties.GetPropertyNames()) {
-                vm.RaisePropertyChanged(propertyName);
-            }
-        }, this, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
-    }
-
-    private void AutoHideShowWaitTimer_Tick(object? sender, EventArgs e)
-    {
-        Logger.LogTrace("自動的に隠すの強制隠しからの復帰抑制を解除");
-        ShowWaiting = false;
-
-        if(AutoHideShowWaitTimer != null) {
-            AutoHideShowWaitTimer.Tick -= AutoHideShowWaitTimer_Tick;
-            AutoHideShowWaitTimer.Stop();
-            AutoHideShowWaitTimer = null;
-        }
-    }
-}
 }

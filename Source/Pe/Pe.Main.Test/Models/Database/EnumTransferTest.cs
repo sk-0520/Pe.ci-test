@@ -1,9 +1,8 @@
 using ContentTypeTextNet.Pe.Main.Models.Database;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Database
 {
-    [TestClass]
     public class EnumTransferTest
     {
         enum A
@@ -23,24 +22,24 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database
             TEStENUm,
         }
 
-        [TestMethod]
+        [Fact]
         public void ToTest_A()
         {
             var expected = "test-enum";
             var enumTransfer = new EnumTransfer<A>();
-            Assert.AreEqual(expected, enumTransfer.ToString(A.TestEnum));
-            Assert.AreEqual(expected, enumTransfer.ToString(A.testEnum));
-            Assert.AreEqual(expected, enumTransfer.ToString(A.TEStENUm));
+            Assert.Equal(expected, enumTransfer.ToString(A.TestEnum));
+            Assert.Equal(expected, enumTransfer.ToString(A.testEnum));
+            Assert.Equal(expected, enumTransfer.ToString(A.TEStENUm));
         }
 
-        [TestMethod]
+        [Fact]
         public void ToTest_B()
         {
             var expected = "abc";
             var enumTransfer = new EnumTransfer<B>();
-            Assert.AreEqual(expected, enumTransfer.ToString(B.TestEnum));
-            Assert.AreEqual(expected, enumTransfer.ToString(B.testEnum));
-            Assert.AreEqual(expected, enumTransfer.ToString(B.TEStENUm));
+            Assert.Equal(expected, enumTransfer.ToString(B.TestEnum));
+            Assert.Equal(expected, enumTransfer.ToString(B.testEnum));
+            Assert.Equal(expected, enumTransfer.ToString(B.TEStENUm));
         }
 
         enum C
@@ -50,21 +49,21 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database
             TestMember3,
         }
 
-        [TestMethod]
+        [Fact]
         public void FromTest_C()
         {
             var enumTransfer = new EnumTransfer<C>();
-            Assert.AreEqual(C.TestMember1, enumTransfer.ToEnum("testmember1"));
-            Assert.AreEqual(C.TestMember2, enumTransfer.ToEnum("testmember2"));
-            Assert.AreEqual(C.TestMember3, enumTransfer.ToEnum("testmember3"));
+            Assert.Equal(C.TestMember1, enumTransfer.ToEnum("testmember1"));
+            Assert.Equal(C.TestMember2, enumTransfer.ToEnum("testmember2"));
+            Assert.Equal(C.TestMember3, enumTransfer.ToEnum("testmember3"));
 
-            Assert.AreEqual(C.TestMember1, enumTransfer.ToEnum("test-member-1"));
-            Assert.AreEqual(C.TestMember2, enumTransfer.ToEnum("test-member-2"));
-            Assert.AreEqual(C.TestMember3, enumTransfer.ToEnum("test-member-3"));
+            Assert.Equal(C.TestMember1, enumTransfer.ToEnum("test-member-1"));
+            Assert.Equal(C.TestMember2, enumTransfer.ToEnum("test-member-2"));
+            Assert.Equal(C.TestMember3, enumTransfer.ToEnum("test-member-3"));
 
-            Assert.AreEqual(C.TestMember1, enumTransfer.ToEnum("TestMember1"));
-            Assert.AreEqual(C.TestMember2, enumTransfer.ToEnum("TestMember2"));
-            Assert.AreEqual(C.TestMember3, enumTransfer.ToEnum("TestMember3"));
+            Assert.Equal(C.TestMember1, enumTransfer.ToEnum("TestMember1"));
+            Assert.Equal(C.TestMember2, enumTransfer.ToEnum("TestMember2"));
+            Assert.Equal(C.TestMember3, enumTransfer.ToEnum("TestMember3"));
         }
 
         enum D
@@ -77,25 +76,25 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database
             TestMember3,
         }
 
-        [TestMethod]
+        [Fact]
         public void FromTest_D()
         {
             var enumTransfer = new EnumTransfer<D>();
-            Assert.AreEqual(D.TestMember1, enumTransfer.ToEnum("test1"));
-            Assert.AreEqual(D.TestMember2, enumTransfer.ToEnum("TEST2"));
-            Assert.AreEqual(D.TestMember3, enumTransfer.ToEnum("3"));
+            Assert.Equal(D.TestMember1, enumTransfer.ToEnum("test1"));
+            Assert.Equal(D.TestMember2, enumTransfer.ToEnum("TEST2"));
+            Assert.Equal(D.TestMember3, enumTransfer.ToEnum("3"));
 
-            Assert.AreEqual(D.TestMember1, enumTransfer.ToEnum("testmember1"));
-            Assert.AreEqual(D.TestMember2, enumTransfer.ToEnum("testmember2"));
-            Assert.AreEqual(D.TestMember3, enumTransfer.ToEnum("testmember3"));
+            Assert.Equal(D.TestMember1, enumTransfer.ToEnum("testmember1"));
+            Assert.Equal(D.TestMember2, enumTransfer.ToEnum("testmember2"));
+            Assert.Equal(D.TestMember3, enumTransfer.ToEnum("testmember3"));
 
-            Assert.AreEqual(D.TestMember1, enumTransfer.ToEnum("test-member-1"));
-            Assert.AreEqual(D.TestMember2, enumTransfer.ToEnum("test-member-2"));
-            Assert.AreEqual(D.TestMember3, enumTransfer.ToEnum("test-member-3"));
+            Assert.Equal(D.TestMember1, enumTransfer.ToEnum("test-member-1"));
+            Assert.Equal(D.TestMember2, enumTransfer.ToEnum("test-member-2"));
+            Assert.Equal(D.TestMember3, enumTransfer.ToEnum("test-member-3"));
 
-            Assert.AreEqual(D.TestMember1, enumTransfer.ToEnum("TestMember1"));
-            Assert.AreEqual(D.TestMember2, enumTransfer.ToEnum("TestMember2"));
-            Assert.AreEqual(D.TestMember3, enumTransfer.ToEnum("TestMember3"));
+            Assert.Equal(D.TestMember1, enumTransfer.ToEnum("TestMember1"));
+            Assert.Equal(D.TestMember2, enumTransfer.ToEnum("TestMember2"));
+            Assert.Equal(D.TestMember3, enumTransfer.ToEnum("TestMember3"));
         }
 
         enum E
@@ -106,14 +105,14 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database
             C = 10,
             D,
         }
-        [TestMethod]
+        [Fact]
         public void FromTest_E()
         {
             var enumTransfer = new EnumTransfer<E>();
-            Assert.AreEqual(E.A, enumTransfer.ToEnum(enumTransfer.ToString(E.A)));
-            Assert.AreEqual(E.B, enumTransfer.ToEnum(enumTransfer.ToString(E.B)));
-            Assert.AreEqual(E.C, enumTransfer.ToEnum(enumTransfer.ToString(E.C)));
-            Assert.AreEqual(E.D, enumTransfer.ToEnum(enumTransfer.ToString(E.D)));
+            Assert.Equal(E.A, enumTransfer.ToEnum(enumTransfer.ToString(E.A)));
+            Assert.Equal(E.B, enumTransfer.ToEnum(enumTransfer.ToString(E.B)));
+            Assert.Equal(E.C, enumTransfer.ToEnum(enumTransfer.ToString(E.C)));
+            Assert.Equal(E.D, enumTransfer.ToEnum(enumTransfer.ToString(E.D)));
         }
 
 

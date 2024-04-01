@@ -1,10 +1,10 @@
+using System.Runtime.CompilerServices;
 using ContentTypeTextNet.Pe.Standard.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test
 {
-    [TestClass]
     public class Test
     {
         #region property
@@ -23,8 +23,8 @@ namespace ContentTypeTextNet.Pe.Main.Test
 
         #region function
 
-        [AssemblyInitialize]
-        public static void AssemblyInitialize(TestContext context)
+        [ModuleInitializer]
+        public static void AssemblyInitialize()
         {
             var logger = LoggerFactory.CreateLogger(nameof(Test));
             logger.LogInformation("START Pe.Main.Test");
@@ -37,12 +37,6 @@ namespace ContentTypeTextNet.Pe.Main.Test
             DiContainer = diContainer;
         }
 
-        [AssemblyCleanup]
-        public static void AssemblyCleanup()
-        {
-            var logger = LoggerFactory.CreateLogger(nameof(Test));
-            logger.LogInformation("END Pe.Main.Test");
-        }
         #endregion
     }
 }

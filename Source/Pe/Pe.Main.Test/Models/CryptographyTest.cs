@@ -4,21 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Main.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models
 {
-    [TestClass]
     public class CryptographyTest
     {
         #region function
 
-        [TestMethod]
-        [DataRow(1, 0)]
-        [DataRow(1, 1)]
-        [DataRow(10000, 0)]
-        [DataRow(10000, 1)]
-        [DataRow(10000, 999)]
+        [Theory]
+        [InlineData(1, 0)]
+        [InlineData(1, 1)]
+        [InlineData(10000, 0)]
+        [InlineData(10000, 1)]
+        [InlineData(10000, 999)]
         public void EncryptAndDecryptByteTest(int count, int seed)
         {
             var random = new Random(seed);
@@ -29,15 +28,15 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models
 
             var output = cryptography.EncryptBinaryByCurrentUser(input);
             var actual = cryptography.DecryptBinaryByCurrentUser(output);
-            CollectionAssert.AreEqual(input, actual);
+            Assert.Equal(input, actual);
         }
 
-        [TestMethod]
-        [DataRow(1, 0)]
-        [DataRow(1, 1)]
-        [DataRow(10000, 0)]
-        [DataRow(10000, 1)]
-        [DataRow(10000, 999)]
+        [Theory]
+        [InlineData(1, 0)]
+        [InlineData(1, 1)]
+        [InlineData(10000, 0)]
+        [InlineData(10000, 1)]
+        [InlineData(10000, 999)]
         public void EncryptAndDecryptStringTest(int count, int seed)
         {
             string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -47,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models
             var input = new string(Enumerable.Repeat(characters, count).Select(s => s[random.Next(s.Length)]).ToArray());
             var output = cryptography.EncryptStringByCurrentUser(input);
             var actual = cryptography.DecryptStringByCurrentUser(output);
-            Assert.AreEqual(input, actual);
+            Assert.Equal(input, actual);
         }
 
         #endregion

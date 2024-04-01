@@ -1,27 +1,26 @@
 using System;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
 {
-    [TestClass]
     public class IconSizeTest
     {
-        [TestMethod]
+        [Fact]
         public void ConstructorTest()
         {
-            Assert.ThrowsException<ArgumentException>(() => new IconSize(-1, -1));
-            Assert.ThrowsException<ArgumentException>(() => new IconSize(0, -1));
-            Assert.ThrowsException<ArgumentException>(() => new IconSize(0, 0));
-            Assert.ThrowsException<ArgumentException>(() => new IconSize(1, 0));
-            Assert.ThrowsException<ArgumentException>(() => new IconSize(-1));
-            Assert.ThrowsException<ArgumentException>(() => new IconSize(0));
+            Assert.Throws<ArgumentException>(() => new IconSize(-1, -1));
+            Assert.Throws<ArgumentException>(() => new IconSize(0, -1));
+            Assert.Throws<ArgumentException>(() => new IconSize(0, 0));
+            Assert.Throws<ArgumentException>(() => new IconSize(1, 0));
+            Assert.Throws<ArgumentException>(() => new IconSize(-1));
+            Assert.Throws<ArgumentException>(() => new IconSize(0));
             try {
                 new IconSize(1, 1);
                 new IconSize(1);
-                Assert.IsTrue(true);
+                Assert.True(true);
             } catch {
-                Assert.IsTrue(false);
+                Assert.True(false);
             }
         }
 

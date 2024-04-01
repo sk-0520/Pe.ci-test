@@ -1,5 +1,5 @@
 ﻿$root = Split-Path -Path $PSScriptRoot -Parent | Split-Path -Parent | Split-Path -Parent | Split-Path -Parent | Split-Path -Parent | Split-Path -Parent
-Import-Module "$root/Build/Modules/Version"
+Import-Module "$root/Build/Modules/Version" -Force
 
 Describe "Get-ApplicationVersion" {
 	It "動けばいい" {

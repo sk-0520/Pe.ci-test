@@ -6,274 +6,273 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
-    [TestClass]
     public class TextConverterTest
     {
-        [TestMethod]
+        [Fact]
         public void ConvertHiraganaToKatakanaTest_Test()
         {
             var textMatcher = new TextConverter();
-            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertHiraganaToKatakana(null!));
+            Assert.Throws<ArgumentNullException>(() => textMatcher.ConvertHiraganaToKatakana(null!));
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow("a", "a")]
-        [DataRow("ア", "あ")]
-        [DataRow("アア亜", "あア亜")]
-        [DataRow("アイウエオ", "あいうえお")]
-        [DataRow("カキクケコ", "かきくけこ")]
-        [DataRow("サシスセソ", "さしすせそ")]
-        [DataRow("タチツテト", "たちつてと")]
-        [DataRow("ナニヌネノ", "なにぬねの")]
-        [DataRow("ハヒフヘホ", "はひふへほ")]
-        [DataRow("マミムメモ", "まみむめも")]
-        [DataRow("ヤユヨ", "やゆよ")]
-        [DataRow("ラリルレロ", "らりるれろ")]
-        [DataRow("ワヲン", "わをん")]
-        [DataRow("ァィゥェォ", "ぁぃぅぇぉ")]
-        [DataRow("ャュョ", "ゃゅょ")]
-        [DataRow("ヵヶ", "ゕゖ")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("a", "a")]
+        [InlineData("ア", "あ")]
+        [InlineData("アア亜", "あア亜")]
+        [InlineData("アイウエオ", "あいうえお")]
+        [InlineData("カキクケコ", "かきくけこ")]
+        [InlineData("サシスセソ", "さしすせそ")]
+        [InlineData("タチツテト", "たちつてと")]
+        [InlineData("ナニヌネノ", "なにぬねの")]
+        [InlineData("ハヒフヘホ", "はひふへほ")]
+        [InlineData("マミムメモ", "まみむめも")]
+        [InlineData("ヤユヨ", "やゆよ")]
+        [InlineData("ラリルレロ", "らりるれろ")]
+        [InlineData("ワヲン", "わをん")]
+        [InlineData("ァィゥェォ", "ぁぃぅぇぉ")]
+        [InlineData("ャュョ", "ゃゅょ")]
+        [InlineData("ヵヶ", "ゕゖ")]
         public void ConvertHiraganaToKatakaTest_Normal(string expected, string input)
         {
             var textMatcher = new TextConverter();
             var actual = textMatcher.ConvertHiraganaToKatakana(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
 
-        [TestMethod]
+        [Fact]
         public void ConvertKatakanaToHiraganaTest_Null()
         {
             var textMatcher = new TextConverter();
-            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertKatakanaToHiragana(null!));
+            Assert.Throws<ArgumentNullException>(() => textMatcher.ConvertKatakanaToHiragana(null!));
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow("a", "a")]
-        [DataRow("あ", "ア")]
-        [DataRow("ああ亜", "あア亜")]
-        [DataRow("あいうえお", "アイウエオ")]
-        [DataRow("かきくけこ", "カキクケコ")]
-        [DataRow("さしすせそ", "サシスセソ")]
-        [DataRow("たちつてと", "タチツテト")]
-        [DataRow("なにぬねの", "ナニヌネノ")]
-        [DataRow("はひふへほ", "ハヒフヘホ")]
-        [DataRow("まみむめも", "マミムメモ")]
-        [DataRow("やゆよ", "ヤユヨ")]
-        [DataRow("らりるれろ", "ラリルレロ")]
-        [DataRow("わをん", "ワヲン")]
-        [DataRow("ぁぃぅぇぉ", "ァィゥェォ")]
-        [DataRow("ゃゅょ", "ャュョ")]
-        [DataRow("ゕゖ", "ヵヶ")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("a", "a")]
+        [InlineData("あ", "ア")]
+        [InlineData("ああ亜", "あア亜")]
+        [InlineData("あいうえお", "アイウエオ")]
+        [InlineData("かきくけこ", "カキクケコ")]
+        [InlineData("さしすせそ", "サシスセソ")]
+        [InlineData("たちつてと", "タチツテト")]
+        [InlineData("なにぬねの", "ナニヌネノ")]
+        [InlineData("はひふへほ", "ハヒフヘホ")]
+        [InlineData("まみむめも", "マミムメモ")]
+        [InlineData("やゆよ", "ヤユヨ")]
+        [InlineData("らりるれろ", "ラリルレロ")]
+        [InlineData("わをん", "ワヲン")]
+        [InlineData("ぁぃぅぇぉ", "ァィゥェォ")]
+        [InlineData("ゃゅょ", "ャュョ")]
+        [InlineData("ゕゖ", "ヵヶ")]
         public void ConvertKatakanaToHiraganaTest_Normal(string expected, string input)
         {
             var textMatcher = new TextConverter();
             var actual = textMatcher.ConvertKatakanaToHiragana(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void ConvertHankakuKatakanaToZenkakuKatakanaTest_Null()
         {
             var textMatcher = new TextConverter();
-            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertHankakuKatakanaToZenkakuKatakana(null!));
+            Assert.Throws<ArgumentNullException>(() => textMatcher.ConvertHankakuKatakanaToZenkakuKatakana(null!));
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow("a", "a")]
-        [DataRow("あ", "あ")]
-        [DataRow("ア", "ア")]
-        [DataRow("アイウエオ", "ｱｲｳｴｵ")]
-        [DataRow("カキクケコ", "ｶｷｸｹｺ")]
-        [DataRow("サシスセソ", "ｻｼｽｾｿ")]
-        [DataRow("タチツテト", "ﾀﾁﾂﾃﾄ")]
-        [DataRow("ナニヌネノ", "ﾅﾆﾇﾈﾉ")]
-        [DataRow("ハヒフヘホ", "ﾊﾋﾌﾍﾎ")]
-        [DataRow("マミムメモ", "ﾏﾐﾑﾒﾓ")]
-        [DataRow("ヤユヨ", "ﾔﾕﾖ")]
-        [DataRow("ラリルレロ", "ﾗﾘﾙﾚﾛ")]
-        [DataRow("ワヲン", "ﾜｦﾝ")]
-        [DataRow("ァィゥェォ", "ｧｨｩｪｫ")]
-        [DataRow("ャュョ", "ｬｭｮ")]
-        [DataRow("ガギグゲゴ", "ｶﾞｷﾞｸﾞｹﾞｺﾞ")]
-        [DataRow("ザジズゼゾ", "ｻﾞｼﾞｽﾞｾﾞｿﾞ")]
-        [DataRow("ダヂヅデド", "ﾀﾞﾁﾞﾂﾞﾃﾞﾄﾞ")]
-        [DataRow("バビブベボ", "ﾊﾞﾋﾞﾌﾞﾍﾞﾎﾞ")]
-        [DataRow("パピプペポ", "ﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟ")]
-        [DataRow("ヴ", "ｳﾞ")]
-        [DataRow("゛", "ﾞ")]
-        [DataRow("゜", "ﾟ")]
-        [DataRow("「ー・、。」", "｢ｰ･､｡｣")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("a", "a")]
+        [InlineData("あ", "あ")]
+        [InlineData("ア", "ア")]
+        [InlineData("アイウエオ", "ｱｲｳｴｵ")]
+        [InlineData("カキクケコ", "ｶｷｸｹｺ")]
+        [InlineData("サシスセソ", "ｻｼｽｾｿ")]
+        [InlineData("タチツテト", "ﾀﾁﾂﾃﾄ")]
+        [InlineData("ナニヌネノ", "ﾅﾆﾇﾈﾉ")]
+        [InlineData("ハヒフヘホ", "ﾊﾋﾌﾍﾎ")]
+        [InlineData("マミムメモ", "ﾏﾐﾑﾒﾓ")]
+        [InlineData("ヤユヨ", "ﾔﾕﾖ")]
+        [InlineData("ラリルレロ", "ﾗﾘﾙﾚﾛ")]
+        [InlineData("ワヲン", "ﾜｦﾝ")]
+        [InlineData("ァィゥェォ", "ｧｨｩｪｫ")]
+        [InlineData("ャュョ", "ｬｭｮ")]
+        [InlineData("ガギグゲゴ", "ｶﾞｷﾞｸﾞｹﾞｺﾞ")]
+        [InlineData("ザジズゼゾ", "ｻﾞｼﾞｽﾞｾﾞｿﾞ")]
+        [InlineData("ダヂヅデド", "ﾀﾞﾁﾞﾂﾞﾃﾞﾄﾞ")]
+        [InlineData("バビブベボ", "ﾊﾞﾋﾞﾌﾞﾍﾞﾎﾞ")]
+        [InlineData("パピプペポ", "ﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟ")]
+        [InlineData("ヴ", "ｳﾞ")]
+        [InlineData("゛", "ﾞ")]
+        [InlineData("゜", "ﾟ")]
+        [InlineData("「ー・、。」", "｢ｰ･､｡｣")]
 #if !IGNORE_NET5
-        [DataRow("ア゙", "ｱﾞ")]
-        [DataRow("ア゚", "ｱﾟ")]
-        [DataRow("ア゙ﾞ", "ｱﾞﾞ")]
-        [DataRow("ア゚ﾟ", "ｱﾟﾟ")]
+        [InlineData("ア゙", "ｱﾞ")]
+        [InlineData("ア゚", "ｱﾟ")]
+        [InlineData("ア゙ﾞ", "ｱﾞﾞ")]
+        [InlineData("ア゚ﾟ", "ｱﾟﾟ")]
 #endif
         public void ConvertHankakuKatakanaToZenkakuKatakanaTest_Normal(string expected, string input)
         {
             var textMatcher = new TextConverter();
             var actual = textMatcher.ConvertHankakuKatakanaToZenkakuKatakana(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void ConvertZenkakuKatakanaToHankakuKatakanaTest_Null()
         {
             var textMatcher = new TextConverter();
-            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertZenkakuKatakanaToHankakuKatakana(null!));
+            Assert.Throws<ArgumentNullException>(() => textMatcher.ConvertZenkakuKatakanaToHankakuKatakana(null!));
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow("a", "a")]
-        [DataRow("あ", "あ")]
-        [DataRow("ｱ", "ア")]
-        [DataRow("ｱｲｳｴｵ", "アイウエオ")]
-        [DataRow("ｶｷｸｹｺ", "カキクケコ")]
-        [DataRow("ｻｼｽｾｿ", "サシスセソ")]
-        [DataRow("ﾀﾁﾂﾃﾄ", "タチツテト")]
-        [DataRow("ﾅﾆﾇﾈﾉ", "ナニヌネノ")]
-        [DataRow("ﾊﾋﾌﾍﾎ", "ハヒフヘホ")]
-        [DataRow("ﾏﾐﾑﾒﾓ", "マミムメモ")]
-        [DataRow("ﾔﾕﾖ", "ヤユヨ")]
-        [DataRow("ﾗﾘﾙﾚﾛ", "ラリルレロ")]
-        [DataRow("ﾜｦﾝ", "ワヲン")]
-        [DataRow("ｧｨｩｪｫ", "ァィゥェォ")]
-        [DataRow("ｬｭｮ", "ャュョ")]
-        [DataRow("ｶﾞｷﾞｸﾞｹﾞｺﾞ", "ガギグゲゴ")]
-        [DataRow("ｻﾞｼﾞｽﾞｾﾞｿﾞ", "ザジズゼゾ")]
-        [DataRow("ﾀﾞﾁﾞﾂﾞﾃﾞﾄﾞ", "ダヂヅデド")]
-        [DataRow("ﾊﾞﾋﾞﾌﾞﾍﾞﾎﾞ", "バビブベボ")]
-        [DataRow("ﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟ", "パピプペポ")]
-        [DataRow("ｳﾞ", "ヴ")]
-        [DataRow("ﾞ", "ﾞ")]
-        [DataRow("ﾟ", "ﾟ")]
-        [DataRow("ﾞ", "゛")]
-        [DataRow("ﾟ", "゜")]
-        [DataRow("ｱﾞ", "ア゙")]
-        [DataRow("ｱﾟ", "ア゚")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("a", "a")]
+        [InlineData("あ", "あ")]
+        [InlineData("ｱ", "ア")]
+        [InlineData("ｱｲｳｴｵ", "アイウエオ")]
+        [InlineData("ｶｷｸｹｺ", "カキクケコ")]
+        [InlineData("ｻｼｽｾｿ", "サシスセソ")]
+        [InlineData("ﾀﾁﾂﾃﾄ", "タチツテト")]
+        [InlineData("ﾅﾆﾇﾈﾉ", "ナニヌネノ")]
+        [InlineData("ﾊﾋﾌﾍﾎ", "ハヒフヘホ")]
+        [InlineData("ﾏﾐﾑﾒﾓ", "マミムメモ")]
+        [InlineData("ﾔﾕﾖ", "ヤユヨ")]
+        [InlineData("ﾗﾘﾙﾚﾛ", "ラリルレロ")]
+        [InlineData("ﾜｦﾝ", "ワヲン")]
+        [InlineData("ｧｨｩｪｫ", "ァィゥェォ")]
+        [InlineData("ｬｭｮ", "ャュョ")]
+        [InlineData("ｶﾞｷﾞｸﾞｹﾞｺﾞ", "ガギグゲゴ")]
+        [InlineData("ｻﾞｼﾞｽﾞｾﾞｿﾞ", "ザジズゼゾ")]
+        [InlineData("ﾀﾞﾁﾞﾂﾞﾃﾞﾄﾞ", "ダヂヅデド")]
+        [InlineData("ﾊﾞﾋﾞﾌﾞﾍﾞﾎﾞ", "バビブベボ")]
+        [InlineData("ﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟ", "パピプペポ")]
+        [InlineData("ｳﾞ", "ヴ")]
+        [InlineData("ﾞ", "ﾞ")]
+        [InlineData("ﾟ", "ﾟ")]
+        [InlineData("ﾞ", "゛")]
+        [InlineData("ﾟ", "゜")]
+        [InlineData("ｱﾞ", "ア゙")]
+        [InlineData("ｱﾟ", "ア゚")]
 #if !IGNORE_NET5
-        [DataRow("ｱﾞﾞ", "ア゙ﾞ")]
-        [DataRow("ｱﾟﾟ", "ア゚ﾟ")]
+        [InlineData("ｱﾞﾞ", "ア゙ﾞ")]
+        [InlineData("ｱﾟﾟ", "ア゚ﾟ")]
 #endif
         public void ConvertZenkakuKatakanaToHankakuKatakanaTest_Normal(string expected, string input)
         {
             var textMatcher = new TextConverter();
             var actual = textMatcher.ConvertZenkakuKatakanaToHankakuKatakana(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void ConvertAsciiAlphabetToZenkakuAlphabetTest_Null()
         {
             var textMatcher = new TextConverter();
-            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertAsciiAlphabetToZenkakuAlphabet(null!));
+            Assert.Throws<ArgumentNullException>(() => textMatcher.ConvertAsciiAlphabetToZenkakuAlphabet(null!));
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow("ａ", "a")]
-        [DataRow("Ａ", "A")]
-        [DataRow("1", "1")]
-        [DataRow("１", "１")]
-        [DataRow("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "abcdefghijklmnopqrstuvwxyz")]
-        [DataRow("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ABCDEFGHIJKLMNOPQRSTUVWXYZ")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("ａ", "a")]
+        [InlineData("Ａ", "A")]
+        [InlineData("1", "1")]
+        [InlineData("１", "１")]
+        [InlineData("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "abcdefghijklmnopqrstuvwxyz")]
+        [InlineData("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ABCDEFGHIJKLMNOPQRSTUVWXYZ")]
         public void ConvertAsciiAlphabetToZenkakuAlphabetTest_Normal(string expected, string input)
         {
             var textMatcher = new TextConverter();
             var actual = textMatcher.ConvertAsciiAlphabetToZenkakuAlphabet(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void ConvertZenkakuAlphabetToAsciiAlphabetTest_Null()
         {
             var textMatcher = new TextConverter();
-            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertZenkakuAlphabetToAsciiAlphabet(null!));
+            Assert.Throws<ArgumentNullException>(() => textMatcher.ConvertZenkakuAlphabetToAsciiAlphabet(null!));
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow("a", "ａ")]
-        [DataRow("A", "Ａ")]
-        [DataRow("1", "1")]
-        [DataRow("１", "１")]
-        [DataRow("abcdefghijklmnopqrstuvwxyz", "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ")]
-        [DataRow("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("a", "ａ")]
+        [InlineData("A", "Ａ")]
+        [InlineData("1", "1")]
+        [InlineData("１", "１")]
+        [InlineData("abcdefghijklmnopqrstuvwxyz", "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ")]
+        [InlineData("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ")]
         public void ConvertZenkakuAlphabetToAsciiAlphabetTest_Normal(string expected, string input)
         {
             var textMatcher = new TextConverter();
             var actual = textMatcher.ConvertZenkakuAlphabetToAsciiAlphabet(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void ConvertAsciiDigitToZenkakuDigitTest_Null()
         {
             var textMatcher = new TextConverter();
-            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertAsciiDigitToZenkakuDigit(null!));
+            Assert.Throws<ArgumentNullException>(() => textMatcher.ConvertAsciiDigitToZenkakuDigit(null!));
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow("ａ", "ａ")]
-        [DataRow("Ａ", "Ａ")]
-        [DataRow("１", "1")]
-        [DataRow("１", "１")]
-        [DataRow("０１２３４５６７８９", "0123456789")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("ａ", "ａ")]
+        [InlineData("Ａ", "Ａ")]
+        [InlineData("１", "1")]
+        [InlineData("１", "１")]
+        [InlineData("０１２３４５６７８９", "0123456789")]
         public void ConvertAsciiDigitToZenkakuDigitTest_Normal(string expected, string input)
         {
             var textMatcher = new TextConverter();
             var actual = textMatcher.ConvertAsciiDigitToZenkakuDigit(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void ConvertZenkakuDigitToAsciiDigitTest_Null()
         {
             var textMatcher = new TextConverter();
-            Assert.ThrowsException<ArgumentNullException>(() => textMatcher.ConvertZenkakuDigitToAsciiDigit(null!));
+            Assert.Throws<ArgumentNullException>(() => textMatcher.ConvertZenkakuDigitToAsciiDigit(null!));
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow("ａ", "ａ")]
-        [DataRow("Ａ", "Ａ")]
-        [DataRow("1", "1")]
-        [DataRow("1", "１")]
-        [DataRow("0123456789", "０１２３４５６７８９")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("ａ", "ａ")]
+        [InlineData("Ａ", "Ａ")]
+        [InlineData("1", "1")]
+        [InlineData("1", "１")]
+        [InlineData("0123456789", "０１２３４５６７８９")]
         public void ConvertZenkakuDigitToAsciiDigitTest_Normal(string expected, string input)
         {
             var textMatcher = new TextConverter();
             var actual = textMatcher.ConvertZenkakuDigitToAsciiDigit(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow("a", "あ")]
-        [DataRow("a i u e o", "あ い う え お")]
-        [DataRow("アイウエオ", "アイウエオ")]
-        [DataRow("shi", "し")]
-        [DataRow("n", "ん")]
-        [DataRow("gya", "ぎゃ")]
-        [DataRow("ja", "じゃ")]
-        [DataRow("jajujo", "じゃじゅじょ")]
-        [DataRow("nyanyunyo", "にゃにゅにょ")]
-        [DataRow("shafu", "しゃふ")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("a", "あ")]
+        [InlineData("a i u e o", "あ い う え お")]
+        [InlineData("アイウエオ", "アイウエオ")]
+        [InlineData("shi", "し")]
+        [InlineData("n", "ん")]
+        [InlineData("gya", "ぎゃ")]
+        [InlineData("ja", "じゃ")]
+        [InlineData("jajujo", "じゃじゅじょ")]
+        [InlineData("nyanyunyo", "にゃにゅにょ")]
+        [InlineData("shafu", "しゃふ")]
         public void ConvertHiraganaToAsciiRomeTest(string expected, string input)
         {
             var textConverter = new TextConverter();
             var actual = textConverter.ConvertHiraganaToAsciiRome(input);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
     }
 

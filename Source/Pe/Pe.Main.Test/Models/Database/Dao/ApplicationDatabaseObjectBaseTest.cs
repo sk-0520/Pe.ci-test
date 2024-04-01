@@ -8,11 +8,10 @@ using System.Transactions;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao;
 using ContentTypeTextNet.Pe.Standard.Database;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
 {
-    [TestClass]
     public class ApplicationDatabaseObjectBaseTest
     {
         #region define
@@ -192,17 +191,17 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
 
         #region function
 
-        [TestMethod]
-        [DataRow(0, 0)]
-        [DataRow(int.MaxValue, int.MaxValue)]
-        [DataRow(int.MaxValue, (long)int.MaxValue + 1)]
-        [DataRow(int.MinValue, (long)int.MinValue - 1)]
-        [DataRow(int.MinValue, int.MinValue)]
+        [Theory]
+        [InlineData(0, 0)]
+        [InlineData(int.MaxValue, int.MaxValue)]
+        [InlineData(int.MaxValue, (long)int.MaxValue + 1)]
+        [InlineData(int.MinValue, (long)int.MinValue - 1)]
+        [InlineData(int.MinValue, int.MinValue)]
         public void ToIntTest(int expected, long value)
         {
             var adao = new Adao();
             var actual = adao.ToInt_Public(value);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

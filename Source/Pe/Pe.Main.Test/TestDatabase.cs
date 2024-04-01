@@ -9,7 +9,7 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test
 {
@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Test
                 accessor.Execute("pragma foreign_keys = true");
             }
             var lastVersion = databaseSetupper.GetLastVersion(databaseAccessorPack.Main);
-            Assert.IsNotNull(lastVersion);
+            Assert.NotNull(lastVersion);
             
             // 3桁バージョンってこうなってんのかよ
             var versionElements = new[] {
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Test
                 new { Now = BuildStatus.Version.Minor, Init = lastVersion.Minor},
                 new { Now = BuildStatus.Version.Build, Init = lastVersion.Build},
             };
-            Assert.IsTrue(versionElements.All(i => i.Now == i.Init));
+            Assert.True(versionElements.All(i => i.Now == i.Init));
         }
 
 

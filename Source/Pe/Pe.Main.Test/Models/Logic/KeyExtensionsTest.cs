@@ -1,29 +1,28 @@
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
 {
-    [TestClass]
     public class KeyExtensionsTest
     {
         #region function
 
-        [TestMethod]
-        [DataRow(false, Key.None)]
-        [DataRow(false, Key.A)]
-        [DataRow(true, Key.LeftShift)]
-        [DataRow(true, Key.RightShift)]
-        [DataRow(true, Key.LeftCtrl)]
-        [DataRow(true, Key.RightCtrl)]
-        [DataRow(true, Key.LeftAlt)]
-        [DataRow(true, Key.RightAlt)]
-        [DataRow(true, Key.LWin)]
-        [DataRow(true, Key.RWin)]
+        [Theory]
+        [InlineData(false, Key.None)]
+        [InlineData(false, Key.A)]
+        [InlineData(true, Key.LeftShift)]
+        [InlineData(true, Key.RightShift)]
+        [InlineData(true, Key.LeftCtrl)]
+        [InlineData(true, Key.RightCtrl)]
+        [InlineData(true, Key.LeftAlt)]
+        [InlineData(true, Key.RightAlt)]
+        [InlineData(true, Key.LWin)]
+        [InlineData(true, Key.RWin)]
         public void IsModifierKeyTest(bool expected, Key inputKey)
         {
             var actual = inputKey.IsModifierKey();
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

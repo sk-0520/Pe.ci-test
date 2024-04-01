@@ -3,248 +3,247 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
-    [TestClass]
     public class PathUtilityTest
     {
-        [TestMethod]
-        [DataRow("a.txt", "a", "txt")]
-        [DataRow("a.txt.txt", "a.txt", "txt")]
-        [DataRow("a.txt", "a.", "txt")]
-        [DataRow("a.txt", "a", ".txt")]
-        [DataRow("a.txt", "a.....", "......txt")]
-        [DataRow("a.txt.", "a.....", "......txt.")]
+        [Theory]
+        [InlineData("a.txt", "a", "txt")]
+        [InlineData("a.txt.txt", "a.txt", "txt")]
+        [InlineData("a.txt", "a.", "txt")]
+        [InlineData("a.txt", "a", ".txt")]
+        [InlineData("a.txt", "a.....", "......txt")]
+        [InlineData("a.txt.", "a.....", "......txt.")]
         public void AddExtensionTest(string expected, string path, string ext)
         {
             var actual = PathUtility.AddExtension(path, ext);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
-        [DataRow("", "", "!")]
-        [DataRow("", " ", "!")]
-        [DataRow("a", "a", "!")]
+        [Theory]
+        [InlineData("", "", "!")]
+        [InlineData("", " ", "!")]
+        [InlineData("a", "a", "!")]
 #if OS_WINDOWS
-        [DataRow("a!", "a?", "!")]
-        [DataRow("a!", "a/", "!")]
-        [DataRow("a/", "a/", "/")]
-        [DataRow("a!", "a\\", "!")]
-        [DataRow("a@b@c@d@e", "a?b\\c*d/e", "@")]
-        [DataRow("a<>b<>c<>d<>e", "a?b\\c*d/e", "<>")]
+        [InlineData("a!", "a?", "!")]
+        [InlineData("a!", "a/", "!")]
+        [InlineData("a/", "a/", "/")]
+        [InlineData("a!", "a\\", "!")]
+        [InlineData("a@b@c@d@e", "a?b\\c*d/e", "@")]
+        [InlineData("a<>b<>c<>d<>e", "a?b\\c*d/e", "<>")]
 #else
-        [DataRow("a?", "a?", "!")]
-        [DataRow("a!", "a/", "!")]
-        [DataRow("a/", "a/", "/")]
-        [DataRow("a\\", "a\\", "!")]
-        [DataRow("a?b\\c*d@e", "a?b\\c*d/e", "@")]
-        [DataRow("a?b\\c*d<>e", "a?b\\c*d/e", "<>")]
+        [InlineData("a?", "a?", "!")]
+        [InlineData("a!", "a/", "!")]
+        [InlineData("a/", "a/", "/")]
+        [InlineData("a\\", "a\\", "!")]
+        [InlineData("a?b\\c*d@e", "a?b\\c*d/e", "@")]
+        [InlineData("a?b\\c*d<>e", "a?b\\c*d/e", "<>")]
 #endif
         public void ToSafeNameTest(string expected, string value, string c)
         {
             var actual = PathUtility.ToSafeName(value, v => c);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
 
-        [TestMethod]
-        [DataRow("", "")]
-        [DataRow("", " ")]
-        [DataRow("a", "a")]
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("", " ")]
+        [InlineData("a", "a")]
 #if OS_WINDOWS
-        [DataRow("a_", "a?")]
-        [DataRow("a_b_c_d_e", "a?b\\c*d/e")]
+        [InlineData("a_", "a?")]
+        [InlineData("a_b_c_d_e", "a?b\\c*d/e")]
 #else
-        [DataRow("a?", "a?")]
-        [DataRow("a?b\\c*d_e", "a?b\\c*d/e")]
+        [InlineData("a?", "a?")]
+        [InlineData("a?b\\c*d_e", "a?b\\c*d/e")]
 #endif
         public void ToSafeNameDefaultTest(string expected, string value)
         {
             var actual = PathUtility.ToSafeNameDefault(value);
-            Assert.AreEqual(actual, expected);
+            Assert.Equal(actual, expected);
         }
 
-        [TestMethod]
+        [Theory]
 #if OS_WINDOWS
-        [DataRow(false, "exe")]
-        [DataRow(false, "dll")]
-        [DataRow(true, ".exe")]
-        [DataRow(true, ".dll")]
-        [DataRow(false, ".ico")]
-        [DataRow(true, "a.exe")]
-        [DataRow(true, "a.dll")]
-        [DataRow(false, "a.ico")]
+        [InlineData(false, "exe")]
+        [InlineData(false, "dll")]
+        [InlineData(true, ".exe")]
+        [InlineData(true, ".dll")]
+        [InlineData(false, ".ico")]
+        [InlineData(true, "a.exe")]
+        [InlineData(true, "a.dll")]
+        [InlineData(false, "a.ico")]
 #else
-        [DataRow(false, "exe")]
-        [DataRow(false, "dll")]
-        [DataRow(false, ".exe")]
-        [DataRow(false, ".dll")]
-        [DataRow(false, ".ico")]
-        [DataRow(false, "a.exe")]
-        [DataRow(false, "a.dll")]
-        [DataRow(false, "a.ico")]
+        [InlineData(false, "exe")]
+        [InlineData(false, "dll")]
+        [InlineData(false, ".exe")]
+        [InlineData(false, ".dll")]
+        [InlineData(false, ".ico")]
+        [InlineData(false, "a.exe")]
+        [InlineData(false, "a.dll")]
+        [InlineData(false, "a.ico")]
 #endif
         public void HasIconTest(bool expected, string value)
         {
             var actual = PathUtility.HasIconPath(value);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
+        [Theory]
 #if OS_WINDOWS
-        [DataRow(false, @"")]
-        [DataRow(false, @"/")]
-        [DataRow(false, @"//")]
-        [DataRow(false, @"\")]
-        [DataRow(false, @"\\")]
-        [DataRow(true, @"\\a")]
+        [InlineData(false, @"")]
+        [InlineData(false, @"/")]
+        [InlineData(false, @"//")]
+        [InlineData(false, @"\")]
+        [InlineData(false, @"\\")]
+        [InlineData(true, @"\\a")]
 #else
-        [DataRow(false, @"")]
-        [DataRow(false, @"/")]
-        [DataRow(false, @"//")]
-        [DataRow(false, @"\")]
-        [DataRow(false, @"\\")]
-        [DataRow(false, @"\\a")]
+        [InlineData(false, @"")]
+        [InlineData(false, @"/")]
+        [InlineData(false, @"//")]
+        [InlineData(false, @"\")]
+        [InlineData(false, @"\\")]
+        [InlineData(false, @"\\a")]
 #endif
         public void IsNetworkDirectoryPathTest(bool expected, string value)
         {
             var actual = PathUtility.IsNetworkDirectoryPath(value);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
+        [Theory]
 #if OS_WINDOWS
-        [DataRow(null, @"")]
-        [DataRow(null, @"A")]
-        [DataRow(null, @"\")]
-        [DataRow("a", @"\a")]
-        [DataRow("a", @"\\a")]
-        [DataRow(null, @"\\a\")]
-        [DataRow("b", @"\\a\b")]
-        [DataRow("b", @"\\a\\b")]
+        [InlineData(null, @"")]
+        [InlineData(null, @"A")]
+        [InlineData(null, @"\")]
+        [InlineData("a", @"\a")]
+        [InlineData("a", @"\\a")]
+        [InlineData(null, @"\\a\")]
+        [InlineData("b", @"\\a\b")]
+        [InlineData("b", @"\\a\\b")]
 #else
-        [DataRow(null, @"")]
-        [DataRow(null, @"A")]
-        [DataRow(null, @"\")]
-        [DataRow(null, @"\a")]
-        [DataRow(null, @"\\a")]
-        [DataRow(null, @"\\a\")]
-        [DataRow(null, @"\\a\b")]
-        [DataRow(null, @"\\a\\b")]
+        [InlineData(null, @"")]
+        [InlineData(null, @"A")]
+        [InlineData(null, @"\")]
+        [InlineData(null, @"\a")]
+        [InlineData(null, @"\\a")]
+        [InlineData(null, @"\\a\")]
+        [InlineData(null, @"\\a\b")]
+        [InlineData(null, @"\\a\\b")]
 #endif
         public void GetNetworkDirectoryName(string? expected, string value)
         {
             var actual = PathUtility.GetNetworkDirectoryName(value);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
+        [Theory]
 #if OS_WINDOWS
-        [DataRow(null, @"")]
-        [DataRow(null, @"a")]
-        [DataRow("", @"\a")]
-        [DataRow(@"\a", @"\a\")]
-        [DataRow(@"\a", @"\a\b")]
-        [DataRow(@"\a\b", @"\a\b\c")]
+        [InlineData(null, @"")]
+        [InlineData(null, @"a")]
+        [InlineData("", @"\a")]
+        [InlineData(@"\a", @"\a\")]
+        [InlineData(@"\a", @"\a\b")]
+        [InlineData(@"\a\b", @"\a\b\c")]
 #else
-        [DataRow(null, @"")]
-        [DataRow(null, @"a")]
-        [DataRow(null, @"\a")]
-        [DataRow(null, @"\a\")]
-        [DataRow(null, @"\a\b")]
-        [DataRow(null, @"\a\b\c")]
+        [InlineData(null, @"")]
+        [InlineData(null, @"a")]
+        [InlineData(null, @"\a")]
+        [InlineData(null, @"\a\")]
+        [InlineData(null, @"\a\b")]
+        [InlineData(null, @"\a\b\c")]
 #endif
         public void GetNetworkOwnerName(string? expected, string value)
         {
             var actual = PathUtility.GetNetworkOwnerName(value);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
 #if OS_WINDOWS
 
-        [TestMethod]
-        [DataRow(false, null)]
-        [DataRow(false, @"")]
-        [DataRow(false, @"A")]
-        [DataRow(true, @"\A")]
-        [DataRow(true, @"\\A")]
-        [DataRow(true, @"\\A")]
-        [DataRow(true, @"\\A\")]
-        [DataRow(false, @"\\A\B")]
-        [DataRow(true, @"\\C:")]
-        [DataRow(true, @"\\C:\")]
-        [DataRow(false, @"\\C:\B")]
-        [DataRow(true, @"C:")]
-        [DataRow(true, @"C:\")]
-        [DataRow(false, @"C:\A")]
+        [Theory]
+        [InlineData(false, null)]
+        [InlineData(false, @"")]
+        [InlineData(false, @"A")]
+        [InlineData(true, @"\A")]
+        [InlineData(true, @"\\A")]
+        //[InlineData(true, @"\\A")]
+        [InlineData(true, @"\\A\")]
+        [InlineData(false, @"\\A\B")]
+        [InlineData(true, @"\\C:")]
+        [InlineData(true, @"\\C:\")]
+        [InlineData(false, @"\\C:\B")]
+        [InlineData(true, @"C:")]
+        [InlineData(true, @"C:\")]
+        [InlineData(false, @"C:\A")]
         public void IsRootNameTest(bool expected, string? value)
         {
             var actual = PathUtility.IsRootName(value);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
 #endif
 
-        [TestMethod]
-        [DataRow(true, null, null)]
-        [DataRow(false, "", null)]
-        [DataRow(false, null, "")]
-        [DataRow(true, "", "")]
+        [Theory]
+        [InlineData(true, null, null)]
+        [InlineData(false, "", null)]
+        [InlineData(false, null, "")]
+        [InlineData(true, "", "")]
 #if OS_WINDOWS
-        [DataRow(true, "a", "A")]
-        [DataRow(true, "A", "a")]
-        [DataRow(true, "A", "A")]
-        [DataRow(false, "A", "B")]
-        [DataRow(true, "A\\", "A\\")]
-        [DataRow(true, "A\\", "a\\")]
-        [DataRow(true, "A\\", "a")]
-        [DataRow(true, "A", "a\\")]
-        [DataRow(true, "A\\", "A/")]
-        [DataRow(true, "A/", "A/")]
-        [DataRow(true, "A\\", "a/")]
-        [DataRow(true, "A\\", "a")]
-        [DataRow(true, "A", "a/")]
+        [InlineData(true, "a", "A")]
+        [InlineData(true, "A", "a")]
+        [InlineData(true, "A", "A")]
+        [InlineData(false, "A", "B")]
+        [InlineData(true, "A\\", "A\\")]
+        [InlineData(true, "A\\", "a\\")]
+        [InlineData(true, "A\\", "a")]
+        [InlineData(true, "A", "a\\")]
+        [InlineData(true, "A\\", "A/")]
+        [InlineData(true, "A/", "A/")]
+        [InlineData(true, "A\\", "a/")]
+        //[InlineData(true, "A\\", "a")]
+        [InlineData(true, "A", "a/")]
 #endif
-        public void IsEqualsTest(bool expected, string a, string b)
+        public void IsEqualsTest(bool expected, string? a, string? b)
         {
             var actual = PathUtility.IsEquals(a, b);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
 #if OS_WINDOWS
 
-        [TestMethod]
-        [DataRow(new[] { "a" }, "a")]
-        [DataRow(new[] { "a", "b" }, "a/b")]
-        [DataRow(new[] { "a", "b", "c" }, "a/b/c")]
-        [DataRow(new[] { "a", "b", "c" }, "/a/b/c")]
-        [DataRow(new[] { "a", "b", "c" }, "a/b/c/")]
-        [DataRow(new[] { "a", "b", "c" }, "/a/b/c/")]
-        [DataRow(new[] { "a", "b", "c" }, "\\a\\b\\c\\")]
+        [Theory]
+        [InlineData(new[] { "a" }, "a")]
+        [InlineData(new[] { "a", "b" }, "a/b")]
+        [InlineData(new[] { "a", "b", "c" }, "a/b/c")]
+        [InlineData(new[] { "a", "b", "c" }, "/a/b/c")]
+        [InlineData(new[] { "a", "b", "c" }, "a/b/c/")]
+        [InlineData(new[] { "a", "b", "c" }, "/a/b/c/")]
+        [InlineData(new[] { "a", "b", "c" }, "\\a\\b\\c\\")]
         public void SplitTest(string[] expected, string input)
         {
             var actual = PathUtility.Split(input);
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [TestMethod]
-        [DataRow(@"", @"", @"")]
-        [DataRow(@"a", @"a", @"")]
-        [DataRow(@"A", @"", @"A")]
-        [DataRow(@"C:\dir", @"C:\", @"dir")]
-        [DataRow(@"C:\dir\sub", @"C:\dir", @"sub")]
-        [DataRow(@"C:\dir\sub", @"C:\dir\", @"\sub")]
-        [DataRow(@"C:\dir\sub\sub2", @"C:\dir\", @"sub/./sub2")]
-        [DataRow(@"C:\dir\sub2", @"C:\dir\", @"sub/../sub2")]
-        [DataRow(@"C:\dir\sub\sub2", @"C:\dir\", @"sub/./sub2")]
-        [DataRow(@"C:\dir\next", @"C:\dir\", @"sub/../../../../next")]
-        [DataRow(@"sub2\sub3", @"", @"sub/../../../../sub2/next/../sub3")]
+        [Theory]
+        [InlineData(@"", @"", @"")]
+        [InlineData(@"a", @"a", @"")]
+        [InlineData(@"A", @"", @"A")]
+        [InlineData(@"C:\dir", @"C:\", @"dir")]
+        [InlineData(@"C:\dir\sub", @"C:\dir", @"sub")]
+        [InlineData(@"C:\dir\sub", @"C:\dir\", @"\sub")]
+        [InlineData(@"C:\dir\sub\sub2", @"C:\dir\", @"sub/./sub2")]
+        [InlineData(@"C:\dir\sub2", @"C:\dir\", @"sub/../sub2")]
+        //[InlineData(@"C:\dir\sub\sub2", @"C:\dir\", @"sub/./sub2")]
+        [InlineData(@"C:\dir\next", @"C:\dir\", @"sub/../../../../next")]
+        [InlineData(@"sub2\sub3", @"", @"sub/../../../../sub2/next/../sub3")]
         public void SafeCombineTest(string expected, string directory, string nodes)
         {
             var actual = PathUtility.SafeCombine(directory, nodes);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 #endif
     }

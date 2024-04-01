@@ -1170,27 +1170,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return result;
         }
 
-        public ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> GetLauncherNotifyCollection()
+        public ModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> GetLauncherNotifyCollection()
         {
-            var collection = new ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel>(LauncherToolbarElements) {
+            var collection = new ModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel>(LauncherToolbarElements, new ModelViewModelObservableCollectionOptions<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel>() {
                 ToViewModel = m => ApplicationDiContainer.Build<LauncherToolbarNotifyAreaViewModel>(m)
-            };
+            });
             return collection;
         }
 
-        public ModelViewModelObservableCollectionManagerBase<NoteElement, NoteNotifyAreaViewModel> GetNoteCollection()
+        public ModelViewModelObservableCollectionManager<NoteElement, NoteNotifyAreaViewModel> GetNoteCollection()
         {
-            var collection = new ActionModelViewModelObservableCollectionManager<NoteElement, NoteNotifyAreaViewModel>(NoteElements) {
+            var collection = new ModelViewModelObservableCollectionManager<NoteElement, NoteNotifyAreaViewModel>(NoteElements, new ModelViewModelObservableCollectionOptions<NoteElement, NoteNotifyAreaViewModel>() {
                 ToViewModel = m => ApplicationDiContainer.Build<NoteNotifyAreaViewModel>(m)
-            };
+            });
             return collection;
         }
 
-        public ModelViewModelObservableCollectionManagerBase<WidgetElement, WidgetNotifyAreaViewModel> GetWidgetCollection()
+        public ModelViewModelObservableCollectionManager<WidgetElement, WidgetNotifyAreaViewModel> GetWidgetCollection()
         {
-            var collection = new ActionModelViewModelObservableCollectionManager<WidgetElement, WidgetNotifyAreaViewModel>(Widgets) {
+            var collection = new ModelViewModelObservableCollectionManager<WidgetElement, WidgetNotifyAreaViewModel>(Widgets, new ModelViewModelObservableCollectionOptions<WidgetElement, WidgetNotifyAreaViewModel>() {
                 ToViewModel = m => ApplicationDiContainer.Build<WidgetNotifyAreaViewModel>(m),
-            };
+            });
             return collection;
         }
 
