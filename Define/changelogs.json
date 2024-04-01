@@ -1,13 +1,16 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.222+",
+		"date": "2024/04/01",
+		"version": "0.99.224",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"subject": "とりあえず一旦リリースしたい気持ち"
+						"subject": "とりあえず一旦リリースしたい気持ち",
+						"comments": [
+							"master ブランチのルールをミスった悲しみ"
+						]
 					}
 				]
 			},
