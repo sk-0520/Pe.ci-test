@@ -1,13 +1,22 @@
 {
 	"library": [
 		{
-			"name": ".NET 7",
-			"uri": "https://dotnet.microsoft.com/download/dotnet/7.0",
+			"name": ".NET 8",
+			"uri": "https://dotnet.microsoft.com/download/dotnet/8.0",
 			"license": {
 				"name": "MIT License",
 				"uri": "https://github.com/microsoft/dotnet/blob/master/LICENSE"
 			},
-			"comment": "Microsoft.Extension.*, MSTest.*, (MS)System.*　を含む"
+			"comment": "Microsoft.Extension.*, (MS)System.*　を含む"
+		},
+		{
+			"name": "xUnit.net",
+			"uri": "https://xunit.net/",
+			"license": {
+				"name": "Apache License 2.0",
+				"uri": "https://github.com/xunit/xunit"
+			},
+			"comment": "xunit, xunit.runner.visualstudio"
 		},
 		{
 			"name": "AvalonEdit",
