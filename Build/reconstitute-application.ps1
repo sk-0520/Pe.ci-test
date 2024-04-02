@@ -67,11 +67,11 @@ Get-ChildItem -Path $outputSqlDir -Directory |
 Move-Item -Path $inputItems.sql -Destination $outputSqlDir
 
 # doc/help を生成済みヘルプに置き換え
-$helpRootDir = Join-Path -Path $OutputDirectory -ChildPath 'doc'
+$helpRootDir = Join-Path -Path $OutputDirectory -ChildPath 'doc' | Join-Path -ChildPath 'help'
 Get-ChildItem -Path $helpRootDir -Directory |
 	Remove-Item -Force -Recurse
-Move-Item $inputItems.help -Destination $helpRootDir -Force
-
+Get-ChildItem -Path $inputItems.help -Recurse |
+	Move-Item -Destination $helpRootDir -Force
 
 # プラットフォームに合わないディレクトリを破棄(機械的にやってもいいけどちょっと自信ないのです)
 $unsupportPlatform = switch ($Platform) {
