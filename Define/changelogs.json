@@ -1,7 +1,7 @@
 [
 	{
-		"date": "2024/04/01",
-		"version": "0.99.224",
+		"date": "2024/04/01, 2024/04/02",
+		"version": "0.99.223, 0.99.224, 0.99.225",
 		"contents": [
 			{
 				"type": "note",
@@ -10,6 +10,25 @@
 						"subject": "とりあえず一旦リリースしたい気持ち",
 						"comments": [
 							"master ブランチのルールをミスった悲しみ"
+						]
+					},
+					{
+						"subject": "本バージョンアップも Pe から実行不可の悲しみ",
+						"comments": [
+							"appsettings.json のテストいるなぁ……"
+						]
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "f23c17b5da2acc7991a03f4955ac6f992a251dd5",
+						"subject": "#923: アプリアップデート機能が死んでる",
+						"comments": [
+							"appsettings.json",
+							"version_check_uris -> version_check_url_items"
 						]
 					}
 				]
