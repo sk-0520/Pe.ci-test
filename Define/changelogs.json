@@ -1,7 +1,7 @@
 [
 	{
 		"date": "2024/04/01, 2024/04/02",
-		"version": "0.99.223, 0.99.224, 0.99.225",
+		"version": "0.99.223, 0.99.224, 0.99.225, 0.99.226",
 		"contents": [
 			{
 				"type": "note",
@@ -29,6 +29,14 @@
 						"comments": [
 							"appsettings.json",
 							"version_check_uris -> version_check_url_items"
+						]
+					},
+					{
+						"revision": "50a9ff5dca1bbeafc1e55b8dc49b737b784ac0a8",
+						"subject": "#924: 成果物に doc/license が含まれていない",
+						"comments": [
+							"CI再構築した際にミスっていた模様",
+							"ファイルない状態で情報開くと落ちるっていうね"
 						]
 					}
 				]
