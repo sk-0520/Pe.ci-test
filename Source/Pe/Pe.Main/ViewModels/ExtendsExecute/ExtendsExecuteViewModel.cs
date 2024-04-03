@@ -369,6 +369,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                 Option = TextUtility.JoinLines(e.Data.GetText());
                 e.Handled = true;
             }
+
+            return Task.CompletedTask;
         }
 
         private IResultSuccess<DragParameter> OptionGetDragParameter(UIElement sender, MouseEventArgs e)
@@ -420,6 +422,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                     Logger.LogInformation("D&Dデータはディレクトリではない");
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         private IResultSuccess<DragParameter> WorkDirectoryGetDragParameter(UIElement sender, MouseEventArgs e)

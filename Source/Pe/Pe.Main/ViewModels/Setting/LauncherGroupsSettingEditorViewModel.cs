@@ -333,7 +333,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private Task LauncherItemDropAsync(UIElement sender, DragEventArgs e)
         {
             if(SelectedGroup == null) {
-                return;
+                return Task.CompletedTask;
             }
 
             if(e.Data.TryGet<LauncherItemDragData>(out var dragData)) {
@@ -385,6 +385,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     }
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         private IResultSuccess<DragParameter> LauncherItemGetDragParameter(UIElement sender, MouseEventArgs e)
@@ -434,8 +436,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private Task GroupsDropAsync(UIElement sender, DragEventArgs e)
         {
             if(SelectedGroup == null) {
-                return;
+                return Task.CompletedTask;
             }
+
             if(e.Data.TryGet<LauncherGroupSettingEditorViewModel>(out var dragData)) {
                 if(e.OriginalSource is DependencyObject dependencyObject) {
                     var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
@@ -461,6 +464,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     }
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         private IResultSuccess<DragParameter> GroupsGetDragParameter(UIElement sender, MouseEventArgs e)
@@ -496,7 +501,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         { }
 
         private Task LauncherItemsDropAsync(UIElement sender, DragEventArgs e)
-        { }
+        {
+            return Task.CompletedTask;
+        }
 
         private IResultSuccess<DragParameter> LauncherItemsGetDragParameter(UIElement sender, MouseEventArgs e)
         {
