@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
@@ -115,15 +116,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand AddNewFileItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            AddNewItem(LauncherItemKind.File, PluginId.Empty);
+        public ICommand AddNewFileItemCommand => GetOrCreateCommand(() => new DelegateCommand(async () => {
+            await AddNewItemAsync(LauncherItemKind.File, PluginId.Empty);
         }));
-        public ICommand AddNewStoreAppItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            AddNewItem(LauncherItemKind.StoreApp, PluginId.Empty);
+        public ICommand AddNewStoreAppItemCommand => GetOrCreateCommand(() => new DelegateCommand(async () => {
+            await AddNewItemAsync(LauncherItemKind.StoreApp, PluginId.Empty);
         }));
         public ICommand AddNewAddonItemCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherItemAddonViewModel>(
-            o => {
-                AddNewItem(LauncherItemKind.Addon, o.PluginId);
+            async o => {
+                await AddNewItemAsync(LauncherItemKind.Addon, o.PluginId);
             }
         ));
 
@@ -139,10 +140,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        private void AddNewItem(LauncherItemKind kind, PluginId pluginId)
+        private async Task AddNewItemAsync(LauncherItemKind kind, PluginId pluginId)
         {
             IsPopupAddItemMenu = false;
-            var newLauncherItemId = Model.AddNewItem(kind, pluginId);
+            var newLauncherItemId = await Model.AddNewItemAsync(kind, pluginId);
             var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);
             SelectedItem = newItem;
             ScrollSelectedItemRequest.Send();
@@ -172,10 +173,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
             dd.Drop(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, (path, expand) => {
-                var launcherItemId = Model.RegisterFile(path, expand);
-                var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == launcherItemId);
-                SelectedItem = newItem;
-                ScrollSelectedItemRequest.Send();
+                Model.RegisterFileAsync(path, expand).ContinueWith(t => {
+                    var launcherItemId = t.Result;
+                    var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == launcherItemId);
+                    SelectedItem = newItem;
+                    ScrollSelectedItemRequest.Send();
+                });
             }));
         }
 

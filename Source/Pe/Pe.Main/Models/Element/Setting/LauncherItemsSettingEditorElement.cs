@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
@@ -83,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             SettingNotifyManager.SendLauncherItemRemove(launcherItemId);
         }
 
-        public LauncherItemId AddNewItem(LauncherItemKind kind, PluginId pluginId)
+        public async Task<LauncherItemId> AddNewItemAsync(LauncherItemKind kind, PluginId pluginId)
         {
             ThrowIfDisposed();
 
@@ -147,7 +148,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             var customizeEditor = new LauncherItemSettingEditorElement(newLauncherItemId, new LauncherItemAddonFinder(PluginContainer.Addon, LoggerFactory), LauncherItemAddonContextFactory, ClipboardManager, MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            customizeEditor.Initialize();
+            await customizeEditor.InitializeAsync();
 
             AllLauncherItems.Add(customizeEditor);
 
@@ -160,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         /// </summary>
         /// <param name="filePath">対象ファイルパス。</param>
         /// <param name="expandShortcut"><paramref name="filePath"/>がショートカットの場合にショートカットの内容を登録するか</param>
-        public LauncherItemId RegisterFile(string filePath, bool expandShortcut)
+        public async Task<LauncherItemId> RegisterFileAsync(string filePath, bool expandShortcut)
         {
             ThrowIfDisposed();
 
@@ -188,7 +189,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             var customizeEditor = new LauncherItemSettingEditorElement(data.Item.LauncherItemId, new LauncherItemAddonFinder(PluginContainer.Addon, LoggerFactory), LauncherItemAddonContextFactory, ClipboardManager, MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            customizeEditor.Initialize();
+            await customizeEditor.InitializeAsync();
 
             AllLauncherItems.Add(customizeEditor);
 
@@ -199,7 +200,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region SettingEditorElementBase
 
-        protected override void LoadImpl()
+        protected override Task LoadCoreAsync()
         {
             ThrowIfDisposed();
 
@@ -223,6 +224,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //    var item = LauncherItemWithIconElement.Create(customizeEditor, launcherIconElement, LoggerFactory);
             //    Items.Add(item);
             //}
+
+            return Task.CompletedTask;
         }
 
         protected override void SaveImpl(IDatabaseContextsPack contextsPack)

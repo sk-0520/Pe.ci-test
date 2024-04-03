@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -35,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region SettingEditorElementBase
 
-        protected override void LoadImpl()
+        protected override async Task LoadCoreAsync()
         {
             IReadOnlyList<LauncherToolbarId> launcherToolbarIds;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -51,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             foreach(var toolbar in toolbars) {
-                toolbar.Initialize();
+                await toolbar.InitializeAsync();
             }
             // 1.プライマリを最上位
             var topToolbar = toolbars.First(i => i.Screen?.Primary ?? true);

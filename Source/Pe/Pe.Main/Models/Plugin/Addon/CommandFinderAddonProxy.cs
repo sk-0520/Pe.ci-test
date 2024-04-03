@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -56,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             IsInitialized = true;
         }
 
-        public IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        public async IAsyncEnumerable<ICommandItem> EnumerateCommandItemsAsync(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             if(!IsInitialized) {
                 throw new InvalidOperationException(nameof(IsInitialized));
@@ -64,8 +65,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
             foreach(var addonFunctions in FunctionUnits) {
                 Debug.Assert(addonFunctions.IsInitialized);
-                var results = addonFunctions.EnumerateCommandItems(inputValue, inputRegex, hitValuesCreator, cancellationToken);
-                foreach(var result in results) {
+                var results = addonFunctions.EnumerateCommandItemsAsync(inputValue, inputRegex, hitValuesCreator, cancellationToken);
+                await foreach(var result in results) {
                     yield return result;
                 }
             }

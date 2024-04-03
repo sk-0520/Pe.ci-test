@@ -187,12 +187,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         #region command
 
         public ICommand CreateNoteCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
+            async () => {
                 NativeMethods.GetCursorPos(out var rawCursorPosition);
                 var deviceCursorPosition = PodStructUtility.Convert(rawCursorPosition);
                 var currentScreen = Screen.FromDevicePoint(deviceCursorPosition);
 
-                var noteElement = ApplicationManager.CreateNote(currentScreen, Models.Data.NoteStartupPosition.CenterScreen);
+                var noteElement = await ApplicationManager.CreateNoteAsync(currentScreen, Models.Data.NoteStartupPosition.CenterScreen);
                 noteElement.StartView();
             }
         ));
@@ -215,21 +215,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         ));
 
         public ICommand ShowCommandViewCommand => GetOrCreateCommand(() => new DelegateCommand(
-           () => {
-               ApplicationManager.ShowCommandView();
+           async () => {
+              await ApplicationManager.ShowCommandViewAsync();
            }
        ));
 
         public ICommand OpenSettingCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
+            async () => {
                 // めんどいし直接ビュー開くよ
-                ApplicationManager.ShowSettingView();
+                await ApplicationManager.ShowSettingViewAsync();
             }
         ));
         public ICommand OpenStartupCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
+            async () => {
                 // めんどいし直接ビュー開くよ
-                ApplicationManager.ShowStartupView(false);
+                await ApplicationManager.ShowStartupViewAsync(false);
             }
         ));
         public ICommand OpenHelpCommand => GetOrCreateCommand(() => new DelegateCommand(
@@ -239,9 +239,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         ));
 
         public ICommand OpenAboutCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
+            async () => {
                 // めんどいし直接ビュー開くよ
-                ApplicationManager.ShowAboutView();
+                await ApplicationManager.ShowAboutViewAsync();
             }
         ));
 
@@ -293,8 +293,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         ));
 
         public ICommand ShowFeedbackViewCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                ApplicationManager.ShowFeedbackView();
+            async () => {
+                await ApplicationManager.ShowFeedbackViewAsync();
             }
         ));
 

@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
@@ -69,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             targetItem.Dispose();
         }
 
-        public LauncherGroupId AddNewGroup(LauncherGroupKind kind)
+        public async Task<LauncherGroupId> AddNewGroupAsync(LauncherGroupKind kind)
         {
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
             var newGroupName = launcherFactory.CreateUniqueGroupName(GroupItems.Select(i => i.Name).ToList());
@@ -83,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             var group = new LauncherGroupSettingEditorElement(groupData.LauncherGroupId, MainDatabaseBarrier, DatabaseStatementLoader, IdFactory, LoggerFactory);
-            group.Initialize();
+            await group.InitializeAsync();
             GroupItems.Add(group);
 
             return group.LauncherGroupId;
@@ -93,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region SettingEditorElementBase
 
-        protected override void LoadImpl()
+        protected override Task LoadCoreAsync()
         {
             ThrowIfDisposed();
 
@@ -115,6 +116,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //    element.Initialize();
             //    GroupItems.Add(element);
             //}
+
+            return Task.CompletedTask;
         }
 
         protected override void SaveImpl(IDatabaseContextsPack contextsPack)

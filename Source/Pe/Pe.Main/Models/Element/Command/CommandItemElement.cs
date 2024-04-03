@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Command;
@@ -143,9 +144,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         protected override void ExecuteImpl(ICommandExecuteParameter parameter)
         {
             if(parameter.IsExtend) {
-                LauncherItemElement.OpenExtendsExecuteView(parameter.Screen);
+                LauncherItemElement.OpenExtendsExecuteViewAsync(parameter.Screen);
             } else {
-                LauncherItemElement.Execute(parameter.Screen);
+                LauncherItemElement.ExecuteAsync(parameter.Screen);
             }
         }
 
@@ -158,8 +159,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             return false;
         }
 
-        protected override void InitializeImpl()
-        { }
+        protected override Task InitializeCoreAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
     }
@@ -205,8 +208,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             return false;
         }
 
-        protected override void InitializeImpl()
-        { }
+        protected override Task InitializeCoreAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
     }

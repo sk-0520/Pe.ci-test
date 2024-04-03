@@ -20,6 +20,7 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 {
@@ -431,13 +432,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             if(IsLazyLoad) {
-                return;
+                return Task.CompletedTask;
             }
 
             LoadLauncherItem();
+            return Task.CompletedTask;
         }
 
         protected override void Dispose(bool disposing)

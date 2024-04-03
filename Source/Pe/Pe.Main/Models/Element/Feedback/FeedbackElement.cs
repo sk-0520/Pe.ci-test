@@ -213,8 +213,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 
         #region WebViewElementBase
 
-        protected override void InitializeImpl()
-        { }
+        protected override Task InitializeCoreAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
     }

@@ -29,6 +29,7 @@ using ContentTypeTextNet.Pe.Main.Models.WebView;
 using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
@@ -237,7 +238,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return !file.Exists;
         }
 
-        private AcceptResult ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, EnvironmentParameters environmentParameters, ILoggerFactory? loggerFactory)
+        private async Task<AcceptResult> ShowAcceptViewAsync(IDiScopeContainerFactory scopeContainerCreator, EnvironmentParameters environmentParameters, ILoggerFactory? loggerFactory)
         {
             using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
                 if(loggerFactory != null) {
@@ -252,7 +253,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 ;
                 using(var windowManager = new WindowManager(diContainer, CultureService.Instance, diContainer.Get<ILoggerFactory>())) {
                     using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
-                    acceptModel.Initialize();
+                    await acceptModel.InitializeAsync();
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
                     windowManager.Register(new WindowItem(Manager.WindowKind.Accept, acceptModel, view));
                     view.ShowDialog();
@@ -496,7 +497,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
-        public bool Initialize(App app, StartupEventArgs e)
+        public async Task<bool> InitializeAsync(App app, StartupEventArgs e)
         {
             InitializeEnvironmentVariable();
             InitializeClr();
@@ -579,7 +580,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     logger.LogInformation("初回実行");
                     if(!skipAccept) {
                         // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                        acceptResult = ShowAcceptView(new DiContainer(false), environmentParameters, loggerFactory);
+                        acceptResult = await ShowAcceptViewAsync(new DiContainer(false), environmentParameters, loggerFactory);
                         if(!acceptResult.Accepted) {
                             // 初回の使用許諾を得られなかったのでばいちゃ
                             logger.LogInformation("使用許諾得られず");

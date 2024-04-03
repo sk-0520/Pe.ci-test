@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
@@ -56,25 +57,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             return information.UserClosing();
         }
 
-        public void ReceiveViewClosed(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
         {
             var information = InformationItems.FirstOrDefault(i => i.WindowItem.Window == window);
             if(information == null) {
                 Logger.LogWarning("対象ウィンドウは未登録: {0}", HandleUtility.GetWindowHandle(window));
-                return;
+                return Task.CompletedTask;
             }
 
             information.ClosedWindow();
             InformationItems.Remove(information);
+
+            return Task.CompletedTask;
         }
 
         #endregion
 
         #region LauncherItemExtensionElement
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             Logger.LogTrace("ランチャーアイテムアドオン初期化: {0}", PluginInformation.PluginIdentifiers);
+            return Task.CompletedTask;
         }
 
         #endregion

@@ -5,6 +5,7 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Command;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -12,7 +13,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         #region function
 
-        private IReadOnlyList<ApplicationCommandParameter> CreateApplicationCommandParameters()
+#pragma warning disable CS1998 // 非同期メソッドは、'await' 演算子がないため、同期的に実行されます
+        private async Task<IReadOnlyList<ApplicationCommandParameter>> CreateApplicationCommandParametersAsync()
+#pragma warning restore CS1998 // 非同期メソッドは、'await' 演算子がないため、同期的に実行されます
         {
             var factory = ApplicationDiContainer.Build<ApplicationCommandParameterFactory>();
 
@@ -31,12 +34,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 factory.CreateParameter(ApplicationCommand.About, p => {
                     Debug.Assert(CommandElement != null);
                     CommandElement.HideView(false);
-                    ShowAboutView();
+                    _ = ShowAboutViewAsync();
                 }),
                 factory.CreateParameter(ApplicationCommand.Setting, p => {
                     Debug.Assert(CommandElement != null);
                     CommandElement.HideView(false);
-                    ShowSettingView();
+                     _ = ShowSettingViewAsync();
                 }),
                 factory.CreateParameter(ApplicationCommand.GarbageCollection, p => {
                     GarbageCollection(p.IsExtend);
@@ -57,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         Properties.Resources.String_Proxy_Toggle_Header,
                         new NotifyLogContent(isEnabledProxy ? Properties.Resources.String_Proxy_Toggle_Content_IsEnabled: Properties.Resources.String_Proxy_Toggle_Content_IsDisabled)
                     );
-                    NotifyManager.AppendLog(log);
+                    NotifyManager.AppendLogAsync(log);
                 }),
                 factory.CreateParameter(ApplicationCommand.Help, p => {
                     ShowHelp();

@@ -31,6 +31,7 @@ using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using ContentTypeTextNet.Pe.Standard.Base;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -462,10 +463,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 var argument = string.Join(' ', filePaths.Select(i => CommandLine.Escape(i)));
-                DispatcherWrapper.BeginAsync(() => ExecuteExtendDropData(launcherItemId, argument));
+                var task = DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument));
+                task.ConfigureAwait(false);
+                task.Wait();
             } else if(e.Data.IsTextPresent()) {
                 var argument = TextUtility.JoinLines(e.Data.GetText());
-                DispatcherWrapper.BeginAsync(() => ExecuteExtendDropData(launcherItemId, argument));
+                var task = DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument));
+                task.ConfigureAwait(false);
+                task.Wait();
             }
 
             e.Handled = true;
@@ -476,15 +481,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        void ExecuteExtendDropData(LauncherItemId launcherItemId, string argument)
+        private async Task ExecuteExtendDropDataAsync(LauncherItemId launcherItemId, string argument)
         {
             switch(ContentDropMode) {
                 case LauncherToolbarContentDropMode.ExtendsExecute:
-                    Model.OpenExtendsExecuteView(launcherItemId, argument, DockScreen);
+                    await Model.OpenExtendsExecuteViewAsync(launcherItemId, argument, DockScreen);
                     break;
 
                 case LauncherToolbarContentDropMode.DirectExecute:
-                    Model.ExecuteWithArgument(launcherItemId, argument);
+                    await Model.ExecuteWithArgumentAsync(launcherItemId, argument);
                     break;
             }
         }
@@ -624,9 +629,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public void ReceiveViewClosed(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
         {
-            Model.ReceiveViewClosed(isUserOperation);
+            return Model.ReceiveViewClosedAsync(isUserOperation);
         }
 
 

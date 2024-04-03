@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -102,9 +103,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             LoadFont();
+
+            return Task.CompletedTask;
         }
 
         protected override void Dispose(bool disposing)

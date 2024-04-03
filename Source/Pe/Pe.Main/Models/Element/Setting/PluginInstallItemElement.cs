@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 
@@ -26,8 +27,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region ElementBase
 
-        protected override void InitializeImpl()
-        { }
+        protected override Task InitializeCoreAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
     }

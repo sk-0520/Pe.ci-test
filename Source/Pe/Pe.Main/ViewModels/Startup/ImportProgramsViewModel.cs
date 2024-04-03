@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -111,8 +112,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         { }
 
         /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
-        public void ReceiveViewClosed(Window window, bool isUserOperation)
-        { }
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
     }

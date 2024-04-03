@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -61,10 +62,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region SettingEditorElementBase
 
-        protected override void LoadImpl()
+        protected override async Task LoadCoreAsync()
         {
             foreach(var editor in Editors) {
-                editor.Initialize();
+                await editor.InitializeAsync();
             }
         }
 

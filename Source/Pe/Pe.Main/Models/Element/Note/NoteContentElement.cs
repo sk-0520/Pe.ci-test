@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -429,22 +430,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             base.Dispose(disposing);
         }
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             if(!Exists()) {
-                return;
+                return Task.CompletedTask;
             }
 
             var values = LoadLinkWatchParameter();
             if(!values.success) {
                 Logger.LogError("ノート内容初期化失敗: {0}", NoteId);
-                return;
+                return Task.CompletedTask;
             }
 
             IsLink = values.isLink;
             if(IsLink) {
                 StartLinkWatch(values.parameter);
             }
+
+            return Task.CompletedTask;
         }
 
         #endregion

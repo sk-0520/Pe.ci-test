@@ -75,7 +75,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // LauncherGroups.Sequence を調整すること
             var i = LauncherToolbarElements.First().LauncherItems.FirstOrDefault();
             if(i != null) {
-                i.OpenCustomizeView(Screen.PrimaryScreen!);
+                var task = i.OpenCustomizeViewAsync(Screen.PrimaryScreen!);
+                task.ConfigureAwait(false);
+                task.Wait();
             }
         }
 
@@ -83,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var i = LauncherToolbarElements.First().LauncherItems.FirstOrDefault();
             if(i != null) {
-                i.OpenExtendsExecuteView(Screen.PrimaryScreen!);
+                i.OpenExtendsExecuteViewAsync(Screen.PrimaryScreen!);
             }
         }
 
@@ -112,7 +114,7 @@ echo end
                 IsEnabledStandardInputOutput = true,
             };
             var env = new List<LauncherEnvironmentVariableData>();
-            var result = launcherExecutor.Execute(LauncherItemKind.File, data, data, env, LauncherRedoData.GetDisable(), Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null"));
+            var result = launcherExecutor.ExecuteAsync(LauncherItemKind.File, data, data, env, LauncherRedoData.GetDisable(), Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null"));
         }
 
         private KeyboardHooker? dbgKeyboardHooker { get; set; }
@@ -202,7 +204,7 @@ echo end
 
         private void DebugSetting()
         {
-            ShowSettingView();
+            _ = ShowSettingViewAsync();
         }
         private void DebugColorPicker()
         {
@@ -248,7 +250,7 @@ echo end
 
                         NativeMethods.GetCursorPos(out var podDevicePoint);
                         var screen = Screen.FromDevicePoint(new Point(podDevicePoint.X, podDevicePoint.Y));
-                        launcherItemElement.Execute(screen);
+                        launcherItemElement.ExecuteAsync(screen);
                     }
                     break;
 

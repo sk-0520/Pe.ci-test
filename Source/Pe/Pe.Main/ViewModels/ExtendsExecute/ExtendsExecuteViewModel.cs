@@ -24,6 +24,7 @@ using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 {
@@ -219,7 +220,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         public ICommand ExecuteCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 if(Validate()) {
-                    Execute();
+                    ExecuteAsync();
                     CloseRequest.Send();
                 }
             }
@@ -289,7 +290,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         #region function
 
-        private void Execute()
+        private Task ExecuteAsync()
         {
             ThrowIfDisposed();
 
@@ -331,7 +332,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
             var screen = DpiScaleOutpour.GetOwnerScreen();
 
-            Model.Execute(launcherFileData, envItems, redo, screen);
+            return Model.ExecuteAsync(launcherFileData, envItems, redo, screen);
         }
 
         #endregion
@@ -472,9 +473,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public void ReceiveViewClosed(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
         {
-            Model.ReceiveViewClosed(isUserOperation);
+            return Model.ReceiveViewClosedAsync(isUserOperation);
         }
 
         #endregion

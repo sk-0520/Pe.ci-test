@@ -34,8 +34,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         #region command
 
         public ICommand ImportProgramsCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                Model.ShowImportProgramsView();
+            async () => {
+                await Model.ShowImportProgramsViewAsync();
                 if(Model.IsRegisteredLauncher) {
                     RaisePropertyChanged(nameof(IsRegisteredLauncher));
                 }

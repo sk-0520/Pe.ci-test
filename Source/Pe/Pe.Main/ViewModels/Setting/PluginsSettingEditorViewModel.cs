@@ -95,8 +95,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         ));
 
         public ICommand WebInstallCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                var parameter = Model.CreatePluginWebInstallRequestParameter();
+            async () => {
+                var parameter = await Model.CreatePluginWebInstallRequestParameterAsync();
                 WebInstallRequest.Send(parameter, async r => {
                     var response = (PluginWebInstallRequestResponse)r;
                     if(response.ResponseIsCancel) {

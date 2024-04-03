@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -175,8 +176,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region command
 
         public ICommand AddNewNormalGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                AddNewGroup(LauncherGroupKind.Normal);
+            async () => {
+                await AddNewGroupAsync(LauncherGroupKind.Normal);
             }
         ));
 
@@ -261,11 +262,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region function
-        private void AddNewGroup(LauncherGroupKind kind)
+
+        private async Task AddNewGroupAsync(LauncherGroupKind kind)
         {
             IsPopupCreateGroupMenu = false;
 
-            var launcherGroupId = Model.AddNewGroup(kind);
+            var launcherGroupId = await Model.AddNewGroupAsync(kind);
             /*
             var newLauncherGroupId = Model.CreateNewGroup(kind);
             var newItem = ItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Printing;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -228,8 +229,10 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
             IsInitialized = true;
         }
 
-        /// <inheritdoc cref="ICommandFinder.EnumerateCommandItems(string, Regex, IHitValuesCreator, CancellationToken)"/>
-        public IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        /// <inheritdoc cref="ICommandFinder.EnumerateCommandItemsAsync(string, Regex, IHitValuesCreator, CancellationToken)"/>
+#pragma warning disable CS1998 // 非同期メソッドは、'await' 演算子がないため、同期的に実行されます
+        public async IAsyncEnumerable<ICommandItem> EnumerateCommandItemsAsync(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, [EnumeratorCancellation] CancellationToken cancellationToken)
+#pragma warning restore CS1998 // 非同期メソッドは、'await' 演算子がないため、同期的に実行されます
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 // 未入力状態ならドライブ一覧を返す

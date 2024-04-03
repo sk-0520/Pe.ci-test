@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -162,8 +163,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region ILauncherItemAddonViewSupporter
 
-        /// <inheritdoc cref="ILauncherItemAddonViewSupporter.RegisterWindow(Window, Func{bool}?, Action?)"/>
-        public bool RegisterWindow(Window window, Func<bool>? userClosing, Action? closedWindow)
+        /// <inheritdoc cref="ILauncherItemAddonViewSupporter.RegisterWindowAsync(Window, Func{bool}?, Action?)"/>
+        public async Task<bool> RegisterWindowAsync(Window window, Func<bool>? userClosing, Action? closedWindow)
         {
             if(window == null) {
                 throw new ArgumentNullException(nameof(window));
@@ -175,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             }
 
             if(Element == null) {
-                Element = OrderManager.CreateLauncherItemExtensionElement(PluginInformation, LauncherItemId);
+                Element = await OrderManager.CreateLauncherItemExtensionElementAsync(PluginInformation, LauncherItemId);
             }
             //NOTE: 引数がどんどこ増えるようなら IOrderManager に移す
             var windowItem = new WindowItem(Manager.WindowKind.LauncherItemExtension, Element, new LauncherItemExtensionViewModel(Element, UserTracker, DispatcherWrapper, LoggerFactory), window);
