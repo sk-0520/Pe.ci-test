@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 DragEnterAction = LauncherItemDragOverOrEnter,
                 DragOverAction = LauncherItemDragOverOrEnter,
                 DragLeaveAction = LauncherItemDragLeave,
-                DropAction = LauncherItemDrop,
+                DropActionAsync = LauncherItemDropAsync,
                 GetDragParameter = LauncherItemGetDragParameter,
             };
             launcherItemDragAndDrop.DragStartSize = new Size(launcherItemDragAndDrop.DragStartSize.Width, 0);
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 DragEnterAction = GroupsDragOverOrEnter,
                 DragOverAction = GroupsDragOverOrEnter,
                 DragLeaveAction = GroupsDragLeave,
-                DropAction = GroupsDrop,
+                DropActionAsync = GroupsDropAsync,
                 GetDragParameter = GroupsGetDragParameter,
             };
             groupsDragAndDrop.DragStartSize = new Size(groupsDragAndDrop.DragStartSize.Width, 0);
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 DragEnterAction = LauncherItemsDragOverOrEnter,
                 DragOverAction = LauncherItemsDragOverOrEnter,
                 DragLeaveAction = LauncherItemsDragLeave,
-                DropAction = LauncherItemsDrop,
+                DropActionAsync = LauncherItemsDropAsync,
                 GetDragParameter = LauncherItemsGetDragParameter,
             };
             launcherItemsDragAndDrop.DragStartSize = new Size(launcherItemsDragAndDrop.DragStartSize.Width, 0);
@@ -330,7 +330,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private void LauncherItemDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void LauncherItemDrop(UIElement sender, DragEventArgs e)
+        private Task LauncherItemDropAsync(UIElement sender, DragEventArgs e)
         {
             if(SelectedGroup == null) {
                 return;
@@ -431,7 +431,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private void GroupsDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void GroupsDrop(UIElement sender, DragEventArgs e)
+        private Task GroupsDropAsync(UIElement sender, DragEventArgs e)
         {
             if(SelectedGroup == null) {
                 return;
@@ -495,7 +495,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private void LauncherItemsDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void LauncherItemsDrop(UIElement sender, DragEventArgs e)
+        private Task LauncherItemsDropAsync(UIElement sender, DragEventArgs e)
         { }
 
         private IResultSuccess<DragParameter> LauncherItemsGetDragParameter(UIElement sender, MouseEventArgs e)

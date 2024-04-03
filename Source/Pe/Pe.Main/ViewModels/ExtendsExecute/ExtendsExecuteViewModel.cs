@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                 DragEnterAction = OptionDragOverOrEnter,
                 DragOverAction = OptionDragOverOrEnter,
                 DragLeaveAction = OptionDragLeave,
-                DropAction = OptionDrop,
+                DropActionAsync = OptionDropAsync,
                 GetDragParameter = OptionGetDragParameter,
             };
             WorkDirectoryDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                 DragEnterAction = WorkDirectoryDragOversOrEnter,
                 DragOverAction = WorkDirectoryDragOversOrEnter,
                 DragLeaveAction = WorkDirectoryDragLeave,
-                DropAction = WorkDirectoryDrop,
+                DropActionAsync = WorkDirectoryDropAsync,
                 GetDragParameter = WorkDirectoryGetDragParameter,
             };
         }
@@ -359,7 +359,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         private void OptionDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void OptionDrop(UIElement sender, DragEventArgs e)
+        private Task OptionDropAsync(UIElement sender, DragEventArgs e)
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -398,7 +398,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         private void WorkDirectoryDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void WorkDirectoryDrop(UIElement sender, DragEventArgs e)
+        private Task WorkDirectoryDropAsync(UIElement sender, DragEventArgs e)
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);

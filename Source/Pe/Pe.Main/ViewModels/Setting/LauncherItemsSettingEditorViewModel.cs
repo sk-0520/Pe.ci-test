@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 DragEnterAction = DragOverOrEnter,
                 DragOverAction = DragOverOrEnter,
                 DragLeaveAction = DragLeave,
-                DropAction = Drop,
+                DropActionAsync = DropAsync,
                 GetDragParameter = GetDragParameter,
             };
 
@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             dd.DragOverOrEnter(sender, e);
         }
 
-        private void Drop(UIElement sender, DragEventArgs e)
+        private Task DropAsync(UIElement sender, DragEventArgs e)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
             dd.Drop(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, (path, expand) => {

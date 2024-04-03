@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 DragEnterAction = FileDragEnterAndOver,
                 DragOverAction = FileDragEnterAndOver,
                 DragLeaveAction = FileDragLeave,
-                DropAction = FileDrop,
+                DropActionAsync = FileDropAsync,
             };
 
             FileCollection = new ModelViewModelObservableCollectionManager<NoteFileElement, NoteFileViewModel>(Model.Files, new ModelViewModelObservableCollectionOptions<NoteFileElement, NoteFileViewModel>() {
@@ -1263,7 +1263,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private void FileDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void FileDrop(UIElement sender, DragEventArgs e)
+        private Task FileDropAsync(UIElement sender, DragEventArgs e)
         {
             if(e.Effects.HasFlag(DragDropEffects.Copy) && e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);

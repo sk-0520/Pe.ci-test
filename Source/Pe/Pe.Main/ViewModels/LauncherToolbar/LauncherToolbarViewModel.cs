@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 DragEnterAction = ViewDragOverOrEnter,
                 DragOverAction = ViewDragOverOrEnter,
                 DragLeaveAction = ViewDragLeave,
-                DropAction = ViewDrop,
+                DropActionAsync = ViewDropAsync,
                 GetDragParameter = ViewGetDragParameter,
             };
             ItemDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 DragEnterAction = ItemDragOverOrEnter,
                 DragOverAction = ItemDragOverOrEnter,
                 DragLeaveAction = ItemDragLeave,
-                DropAction = ItemDrop,
+                DropActionAsync = ItemDropAsync,
                 GetDragParameter = ItemGetDragParameter,
             };
 
@@ -392,7 +392,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             dd.DragOverOrEnter(sender, e);
         }
 
-        private void ViewDrop(UIElement sender, DragEventArgs e)
+        private Task ViewDropAsync(UIElement sender, DragEventArgs e)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
             dd.Drop(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, Model.RegisterFile));
@@ -435,7 +435,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             e.Handled = true;
         }
 
-        private void ItemDrop(UIElement sender, DragEventArgs e)
+        private Task ItemDropAsync(UIElement sender, DragEventArgs e)
         {
             LauncherItemId launcherItemId = LauncherItemId.Empty;
             var frameworkElement = (FrameworkElement)sender;
@@ -456,7 +456,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 if(appButton.Name != nameof(LauncherToolbarWindow.appButton.Name)) {
                     return;
                 }
-                ViewDrop(sender, e);
+                ViewDropAsync(sender, e);
                 return;
             }
 
