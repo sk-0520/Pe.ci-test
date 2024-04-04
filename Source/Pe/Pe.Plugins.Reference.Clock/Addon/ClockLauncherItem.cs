@@ -166,7 +166,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
                 DataContext = viewModel,
             };
 
-            launcherItemExtensionExecuteParameter.ViewSupporter.RegisterWindow(
+            launcherItemExtensionExecuteParameter.ViewSupporter.RegisterWindowAsync(
                 view,
                 () => !viewModel.CanStop,
                 () => {

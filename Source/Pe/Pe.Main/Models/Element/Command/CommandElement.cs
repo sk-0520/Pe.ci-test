@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -150,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             StopViewClose();
         }
 
-        private void RefreshSetting()
+        private async Task RefreshSettingAsync()
         {
             SettingAppCommandSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -159,7 +160,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             }
 
             Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            Font.Initialize();
+            await Font.InitializeAsync();
 
             IconBox = setting.IconBox;
             Width = setting.Width;
@@ -167,10 +168,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             FindTag = setting.FindTag;
         }
 
-        public void Refresh()
+        public async Task RefreshAsync()
         {
             // アイテム一覧とったりなんかしたりあれこれしたり
-            RefreshSetting();
+            await RefreshSettingAsync();
 
             if(LauncherItemCommandFinder != null) {
                 // 諦め
@@ -184,14 +185,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             }
         }
 
-        private IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        private async IAsyncEnumerable<ICommandItem> EnumerateCommandItemsAsync(string inputValue, IHitValuesCreator hitValuesCreator, [EnumeratorCancellation]  CancellationToken cancellationToken)
         {
             var simpleRegexFactory = new SimpleRegexFactory(LoggerFactory);
             var regex = simpleRegexFactory.CreateFilterRegex(inputValue);
 
             foreach(var commandFinder in CommandFinders) {
-                var items = commandFinder.EnumerateCommandItems(inputValue, regex, hitValuesCreator, cancellationToken);
-                foreach(var item in items) {
+                var items = commandFinder.EnumerateCommandItemsAsync(inputValue, regex, hitValuesCreator, cancellationToken);
+                await foreach(var item in items) {
                     yield return item;
                 }
             }
@@ -201,14 +202,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public Task<IReadOnlyList<ICommandItem>> EnumerateCommandItemsAsync(string inputValue, CancellationToken cancellationToken)
         {
-            return Task.Run(() => {
+            return Task.Run(async () => {
                 Logger.LogTrace("検索開始");
                 var stopwatch = Stopwatch.StartNew();
 
                 var hitValuesCreator = new HitValuesCreator(LoggerFactory);
 
                 var commandItems = new List<ICommandItem>();
-                foreach(var item in EnumerateCommandItems(inputValue, hitValuesCreator, cancellationToken)) {
+                await foreach(var item in EnumerateCommandItemsAsync(inputValue, hitValuesCreator, cancellationToken)) {
                     commandItems.Add(item);
                     //Logger.LogDebug(string.Join(" - ", item.HeaderValues.Select(i => i.Value)));
                 }
@@ -255,7 +256,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override async Task InitializeCoreAsync()
         {
             foreach(var commandFinder in CommandFinders) {
                 if(!commandFinder.IsInitialized) {
@@ -263,7 +264,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 }
             }
 
-            Refresh();
+            await RefreshAsync();
         }
 
         protected override void Dispose(bool disposing)
@@ -345,10 +346,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
-        public void ReceiveViewClosed(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
+        public Task ReceiveViewClosedAsync(bool isUserOperation)
         {
             ViewCreated = false;
+            return Task.CompletedTask;
         }
 
 

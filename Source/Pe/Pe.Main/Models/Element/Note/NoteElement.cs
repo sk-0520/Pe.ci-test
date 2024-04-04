@@ -320,7 +320,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             return Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null");
         }
 
-        private void LoadNote()
+        private async Task LoadNoteAsync()
         {
             ThrowIfDisposed();
 
@@ -338,7 +338,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 }
                 var fileElements = files.Select(a => new NoteFileElement(a, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory));
                 foreach(var fileElement in fileElements) {
-                    fileElement.Initialize();
+                    await fileElement.InitializeAsync();
                     Files.Add(fileElement);
                 }
             }
@@ -358,9 +358,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             HiddenMode = noteData.HiddenMode;
             CaptionPosition = noteData.CaptionPosition;
 
-            FontElement = OrderManager.CreateFontElement(DefaultFontKind.Note, noteData.FontId, UpdateFontId);
+            FontElement = await OrderManager.CreateFontElementAsync(DefaultFontKind.Note, noteData.FontId, UpdateFontId);
             var oldContentElement = ContentElement;
-            ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
+            ContentElement = await OrderManager.CreateNoteContentElementAsync(NoteId, ContentKind);
             oldContentElement?.Dispose();
         }
 
@@ -620,7 +620,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        public void ConvertContentKind(NoteContentKind toContentKind)
+        public async Task ConvertContentKindAsync(NoteContentKind toContentKind)
         {
             if(ContentKind == toContentKind) {
                 throw new ArgumentException($"{nameof(ContentKind)} == {nameof(toContentKind)}");
@@ -661,7 +661,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
 
             ContentKind = toContentKind;
-            ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
+            ContentElement = await OrderManager.CreateNoteContentElementAsync(NoteId, ContentKind);
 
             oldContentElement?.Dispose();
         }
@@ -818,7 +818,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         /// <returns></returns>
         public Task<bool> AddFileAsync(string path, NoteFileKind kind, CancellationToken cancellationToken)
         {
-            return Task.Run(() => {
+            return Task.Run(async () => {
                 var isFile = File.Exists(path);
                 var idDir = !isFile && Directory.Exists(path);
 
@@ -871,7 +871,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
                 if(noteFileData is not null) {
                     var noteFileElement = new NoteFileElement(noteFileData, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory);
-                    noteFileElement.Initialize();
+                    await noteFileElement.InitializeAsync();
                     Files.Add(noteFileElement);
                 }
 
@@ -921,9 +921,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
-            LoadNote();
+            return LoadNoteAsync();
         }
 
         protected override void Dispose(bool disposing)
@@ -996,8 +996,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
-        public void ReceiveViewClosed(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
+        public async Task ReceiveViewClosedAsync(bool isUserOperation)
         {
             if(isUserOperation) {
                 if(!IsVisible) {
@@ -1020,7 +1020,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                             }
                         }
                     );
-                    RestoreVisibleNotifyLogId = NotifyManager.AppendLog(notifyMessage);
+                    RestoreVisibleNotifyLogId = await NotifyManager.AppendLogAsync(notifyMessage);
                 }
             }
 

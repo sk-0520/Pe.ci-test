@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element._Debug_
@@ -23,13 +24,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element._Debug_
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
-        public virtual void ReceiveViewClosed(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
+        public virtual Task ReceiveViewClosedAsync(bool isUserOperation)
         {
+            return Task.CompletedTask;
         }
 
 
         #endregion
-
     }
 }

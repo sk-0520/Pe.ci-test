@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -156,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        private ILauncherExecuteResult ExecuteFilePath(ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
+        private async Task<ILauncherExecuteResult> ExecuteFilePathAsync(ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
         {
             var process = new Process();
             var startInfo = process.StartInfo;
@@ -245,7 +246,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             StandardInputOutputElement? stdIoElement = null;
             if(streamWatch) {
                 process.EnableRaisingEvents = true;
-                stdIoElement = OrderManager.CreateStandardInputOutputElement(customParameter.Caption, process, screen);
+                stdIoElement = await OrderManager.CreateStandardInputOutputElementAsync(customParameter.Caption, process, screen);
                 //DispatcherWrapper.BeginAsync(element => {
                 //    element.StartView();
                 //    element!.PreparateReceiver();
@@ -261,7 +262,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(streamWatch) {
                 Debug.Assert(stdIoElement != null);
                 // 受信前に他の処理を終わらせるため少し待つ
-                DispatcherWrapper.BeginAsync(element => {
+                await DispatcherWrapper.BeginAsync(element => {
                     element.StartView();
                     element.PreparateReceiver();
                     if(element.PreparedReceive) {
@@ -275,7 +276,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return result;
         }
 
-        public ILauncherExecuteResult Execute(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IReadOnlyCollection<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
+        public Task<ILauncherExecuteResult> ExecuteAsync(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IReadOnlyCollection<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
         {
             if(pathParameter == null) {
                 throw new ArgumentNullException(nameof(pathParameter));
@@ -289,7 +290,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             switch(kind) {
                 case LauncherItemKind.File:
-                    return ExecuteFilePath(pathParameter, customParameter, environmentVariableItems, redoData, screen);
+                    return ExecuteFilePathAsync(pathParameter, customParameter, environmentVariableItems, redoData, screen);
 
                 default:
                     throw new NotImplementedException();

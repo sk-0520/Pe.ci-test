@@ -19,6 +19,7 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 {
@@ -150,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
         }
 
-        private ILauncherExecuteResult ExecuteFile(string? customArgument, IScreen screen)
+        private async Task<ILauncherExecuteResult> ExecuteFileAsync(string? customArgument, IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -183,7 +184,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             fileData.Caption = Name;
 
             var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
-            var result = launcherExecutor.Execute(Kind, fileData, fileData, envItems, redoData, screen);
+            var result = await launcherExecutor.ExecuteAsync(Kind, fileData, fileData, envItems, redoData, screen);
 
             return result;
         }
@@ -224,7 +225,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             };
         }
 
-        private ILauncherExecuteResult ExecuteCore(string? argument, IScreen screen)
+        private async Task<ILauncherExecuteResult> ExecuteCoreAsync(string? argument, IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -232,7 +233,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 ILauncherExecuteResult result;
                 switch(Kind) {
                     case LauncherItemKind.File:
-                        result = ExecuteFile(argument, screen);
+                        result = await ExecuteFileAsync(argument, screen);
                         break;
 
                     case LauncherItemKind.Addon:
@@ -255,14 +256,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
         }
 
-        public ILauncherExecuteResult Execute(IScreen screen)
+        public Task<ILauncherExecuteResult> ExecuteAsync(IScreen screen)
         {
             ThrowIfDisposed();
 
-            return ExecuteCore(null, screen);
+            return ExecuteCoreAsync(null, screen);
         }
 
-        public ILauncherExecuteResult DirectExecute(string argument, IScreen screen)
+        public async Task<ILauncherExecuteResult> DirectExecuteAsync(string argument, IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -270,7 +271,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 return new LauncherExecuteErrorResult(Kind, new ArgumentNullException(nameof(argument)));
             }
 
-            return ExecuteCore(argument, screen);
+            return await ExecuteCoreAsync(argument, screen);
         }
 
         private void IncrementExecuteCount()
@@ -282,21 +283,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
         }
 
-        public void OpenExtendsExecuteView(IScreen screen)
+        public Task OpenExtendsExecuteViewAsync(IScreen screen)
         {
             ThrowIfDisposed();
 
-            DispatcherWrapper.BeginAsync(() => {
-                var element = OrderManager.CreateLauncherExtendsExecuteElement(LauncherItemId, screen);
+            return DispatcherWrapper.BeginAsync(async () => {
+                var element = await OrderManager.CreateLauncherExtendsExecuteElementAsync(LauncherItemId, screen);
                 element.StartView();
             });
         }
 
-        public void OpenExtendsExecuteViewWidthArgument(string argument, IScreen screen)
+        public async Task OpenExtendsExecuteViewWidthArgumentAsync(string argument, IScreen screen)
         {
             ThrowIfDisposed();
 
-            var element = OrderManager.CreateLauncherExtendsExecuteElement(LauncherItemId, screen);
+            var element = await OrderManager.CreateLauncherExtendsExecuteElementAsync(LauncherItemId, screen);
             element.SetOption(argument);
             element.StartView();
         }
@@ -404,7 +405,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ClipboardManager.CopyText(pathData.WorkDirectoryPath, ClipboardNotify.None);
         }
 
-        public void OpenCustomizeView(IScreen screen)
+        public async Task OpenCustomizeViewAsync(IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -423,7 +424,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             //TODO: 確定時の処理
             NowCustomizing = true;
             NotifyManager.CustomizeLauncherItemExited += NotifyManager_CustomizeLauncherItemExited;
-            var element = OrderManager.CreateCustomizeLauncherItemContainerElement(LauncherItemId, screen);
+            var element = await OrderManager.CreateCustomizeLauncherItemContainerElementAsync(LauncherItemId, screen);
             element.StartView();
         }
 
@@ -457,9 +458,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         #region ElementBase
 
-        override protected void InitializeImpl()
+        override protected Task InitializeCoreAsync()
         {
             LoadLauncherItem();
+
+            return Task.CompletedTask;
         }
 
         protected override void Dispose(bool disposing)

@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         public ICommand ExecuteExtendsCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.OpenExtendsExecuteView(Screen);
+                Model.OpenExtendsExecuteViewAsync(Screen);
             },
             () => !NowLoading && CanExecutePath
         ));
@@ -213,7 +213,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
             Logger.LogTrace("TODO: 起動準備 {0}, {1}", Model.LauncherItemId, Detail?.FullPath);
             return Task.Run(() => {
-                Model.Execute(Screen);
+                Model.ExecuteAsync(Screen);
             });
         }
 

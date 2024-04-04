@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         /// <param name="notifyMessage"></param>
         /// <returns></returns>
-        NotifyLogId AppendLog(NotifyMessage notifyMessage);
+        Task<NotifyLogId> AppendLogAsync(NotifyMessage notifyMessage);
         /// <summary>
         ///通知ログ置き換え。
         /// </summary>
@@ -475,19 +475,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return NotifyLogs.Contains(notifyLogId);
         }
 
-        /// <inheritdoc cref="INotifyManager.AppendLog(NotifyMessage)" />
-        public NotifyLogId AppendLog(NotifyMessage notifyMessage)
+        /// <inheritdoc cref="INotifyManager.AppendLogAsync(NotifyMessage)" />
+        public async Task<NotifyLogId> AppendLogAsync(NotifyMessage notifyMessage)
         {
             if(notifyMessage == null) {
                 throw new ArgumentNullException(nameof(notifyMessage));
             }
 
             var element = DiContainer.Build<NotifyLogItemElement>(NotifyLogId.NewId(), notifyMessage);
-            element.Initialize();
+            await element.InitializeAsync();
 
             Logger.LogDebug("[{0}] {1}: {2}, {3}", notifyMessage.Header, notifyMessage.Kind, notifyMessage.Content.Message, element.NotifyLogId);
 
-            DispatcherWrapper.BeginAsync(() => {
+            await DispatcherWrapper.BeginAsync(() => {
                 NotifyLogs.Add(element);
                 if(element.Kind == NotifyLogKind.Topmost) {
                     TopmostNotifyLogsImpl.Add(element);

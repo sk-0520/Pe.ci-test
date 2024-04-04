@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
@@ -81,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             SettingAppExecuteSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -96,6 +97,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             if(!userIdManager.IsValidUserId(UserId)) {
                 UserId = userIdManager.CreateFromEnvironment();
             }
+
+            return Task.CompletedTask;
         }
 
         protected override void SaveImpl(IDatabaseContextsPack contextsPack)
@@ -139,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             SettingAppGeneralSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -171,6 +174,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 StartupWaitTime = TimeSpan.FromSeconds(3);
                 StartupArgument = string.Empty;
             }
+
+            return Task.CompletedTask;
         }
 
         protected override void SaveImpl(IDatabaseContextsPack contextsPack)
@@ -216,7 +221,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             SettingAppUpdateSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -225,6 +230,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             UpdateKind = setting.UpdateKind;
+
+            return Task.CompletedTask;
         }
 
         protected override void SaveImpl(IDatabaseContextsPack contextsPack)
@@ -257,7 +264,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             var setting = MainDatabaseBarrier.ReadData(c => {
                 var dao = new AppNotifyLogSettingEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
@@ -266,6 +273,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             IsVisible = setting.IsVisible;
             Position = setting.Position;
+
+            return Task.CompletedTask;
         }
 
         protected override void SaveImpl(IDatabaseContextsPack contextsPack)
@@ -299,7 +308,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             var setting = MainDatabaseBarrier.ReadData(c => {
                 var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
@@ -308,6 +317,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             ContentDropMode = setting.ContentDropMode;
             GroupMenuPosition = setting.GroupMenuPosition;
+
+            return Task.CompletedTask;
         }
 
         protected override void SaveImpl(IDatabaseContextsPack contextsPack)
@@ -346,7 +357,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override void InitializeImpl()
+        protected override async Task InitializeCoreAsync()
         {
             SettingAppCommandSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -355,7 +366,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            Font.Initialize();
+            await Font.InitializeAsync();
 
             IconBox = setting.IconBox;
             Width = setting.Width;
@@ -421,7 +432,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override void InitializeImpl()
+        protected override async Task InitializeCoreAsync()
         {
             SettingAppNoteSettingData setting;
             WaitTimes.Clear();
@@ -436,7 +447,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            Font.Initialize();
+            await Font.InitializeAsync();
 
             TitleKind = setting.TitleKind;
             LayoutKind = setting.LayoutKind;
@@ -506,7 +517,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override void InitializeImpl()
+        protected override async Task InitializeCoreAsync()
         {
             SettingAppStandardInputOutputSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -515,7 +526,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            Font.Initialize();
+            await Font.InitializeAsync();
 
             OutputForegroundColor = setting.OutputForegroundColor;
             OutputBackgroundColor = setting.OutputBackgroundColor;
@@ -575,7 +586,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             AppProxySettingData data;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -588,6 +599,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             CredentialIsEnabled = data.CredentialIsEnabled;
             CredentialUser = data.CredentialUser;
             CredentialPassword = data.CredentialPassword;
+
+            return Task.CompletedTask;
         }
 
         protected override void SaveImpl(IDatabaseContextsPack contextsPack)

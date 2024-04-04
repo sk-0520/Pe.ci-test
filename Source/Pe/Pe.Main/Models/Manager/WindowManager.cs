@@ -376,7 +376,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        private void Window_Closed(object sender, EventArgs e)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:命名スタイル", Justification = "<保留中>")]
+        private async void Window_Closed(object sender, EventArgs e)
         {
             var window = (Window)sender;
             Logger.LogDebug("ウィンドウ破棄: {0}", window);
@@ -426,7 +427,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
-                viewLifecycleReceiver.ReceiveViewClosed(item.Window, item.IsUserClosed);
+                await viewLifecycleReceiver.ReceiveViewClosedAsync(item.Window, item.IsUserClosed);
             }
 
             if(item.CloseToDispose) {

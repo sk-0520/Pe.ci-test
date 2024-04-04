@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -57,15 +58,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
-        protected abstract void LoadImpl();
+        protected abstract Task LoadCoreAsync();
 
-        public void Load()
+        public async Task LoadAsync()
         {
             if(IsLoaded) {
                 throw new InvalidOperationException(nameof(IsLoaded));
             }
 
-            LoadImpl();
+            await LoadCoreAsync();
 
             IsLoaded = true;
         }
@@ -88,9 +89,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             //NOTE: 設定処理では初期かではなくページ切り替え処理であれこれ頑張る
+            return Task.CompletedTask;
         }
 
         protected override void Dispose(bool disposing)

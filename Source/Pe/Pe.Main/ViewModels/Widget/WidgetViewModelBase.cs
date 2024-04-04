@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -51,9 +52,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public virtual void ReceiveViewClosed(Window window, bool isUserOperation)
+        public virtual Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
         {
-            Model.ReceiveViewClosed(isUserOperation);
+            return Model.ReceiveViewClosedAsync(isUserOperation);
         }
 
         #endregion

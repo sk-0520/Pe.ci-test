@@ -72,7 +72,11 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#890: 諸々を async 処理に置き換える",
+						"comments": [
+							"Task.Wait() 入り乱れる謎実装になってしまった",
+							"たぶんうごく。たぶん"
+						]
 					},
 					{
 						"revision": "",

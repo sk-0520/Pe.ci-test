@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
@@ -103,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             });
         }
 
-        private void RefreshSetting()
+        private Task RefreshSettingAsync()
         {
             var setting = MainDatabaseBarrier.ReadData(c => {
                 var dao = new AppNotifyLogSettingEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
@@ -111,20 +112,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             });
             IsVisible = setting.IsVisible;
             Position = setting.Position;
+
+            return Task.CompletedTask;
         }
 
-        public void Refresh()
+        public Task RefreshAsync()
         {
-            RefreshSetting();
+            return RefreshSettingAsync();
         }
 
         #endregion
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
-            Refresh();
+            return RefreshAsync();
         }
 
         protected override void Dispose(bool disposing)
@@ -275,10 +278,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
-        public void ReceiveViewClosed(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
+        public Task ReceiveViewClosedAsync(bool isUserOperation)
         {
             ViewCreated = false;
+            return Task.CompletedTask;
         }
 
 

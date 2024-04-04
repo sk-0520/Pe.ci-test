@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -205,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             if(Plugin != null) {
                 PluginVersion = Plugin.PluginInformation.PluginVersions.PluginVersion;
@@ -218,6 +219,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                     PluginVersion = pluginVersion;
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         #endregion

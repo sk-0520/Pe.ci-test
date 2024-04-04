@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationUpdateInfo = ApplicationDiContainer.Build<NewVersionInfo>();
 
             NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
-            NotifyLogElement.Initialize();
+            _ = NotifyLogElement.InitializeAsync();
 
             LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), customConfiguration.Platform.ScreenElementsResetWaitTime);
 
@@ -233,7 +233,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <summary>
         /// すべてここで完結する神の所業。
         /// </summary>
-        public void ShowSettingView()
+        public async Task ShowSettingViewAsync()
         {
             SaveWidgets();
             using var viewPausing = PauseAllViews();
@@ -283,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             PersistenceHelper.Copy(workingDatabasePack.Temporary, settingDatabasePack.Temporary);
 
             var settingElement = new SettingContainerElement(container, Logging.PauseReceiveLog, container.Build<ILoggerFactory>());
-            settingElement.Initialize();
+            await settingElement.InitializeAsync();
             var windowItem = OrderManager.CreateSettingWindow(settingElement);
             WindowManager.Register(windowItem);
             var dialogResult = windowItem.Window.ShowDialog();
@@ -342,14 +342,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 RebuildHook();
                 RebuildSchedulerSetting();
                 ResetNotifyArea();
-                ExecuteElements();
+                await ExecuteElementsAsync();
 
                 if(CommandElement != null) {
                     if(CommandElement.IsInitialized) {
-                        CommandElement.Refresh();
+                        await CommandElement.RefreshAsync();
                     }
                 }
-                NotifyLogElement.Refresh();
+                await NotifyLogElement.RefreshAsync();
                 NotifyManager.SendSettingChanged();
 
                 ExistsPluginChanges = CheckPluginChanges();
@@ -428,7 +428,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             });
         }
 
-        public void ShowStartupView(bool isFirstSetup)
+        public async Task ShowStartupViewAsync(bool isFirstSetup)
         {
             using var viewPausing = isFirstSetup
                 ? new ActionDisposer(d => { Logger.LogInformation("初回スタートアップ終了"); })
@@ -440,7 +440,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     .RegisterMvvm<Element.Startup.StartupElement, ViewModels.Startup.StartupViewModel, Views.Startup.StartupWindow>()
                 ;
                 var startupModel = diContainer.New<Element.Startup.StartupElement>();
-                startupModel.Initialize();
+                await startupModel.InitializeAsync();
                 var view = diContainer.Build<Views.Startup.StartupWindow>();
 
                 var windowManager = diContainer.Get<IWindowManager>();
@@ -450,7 +450,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 if(!isFirstSetup) {
                     if(startupModel.IsRegisteredLauncher) {
-                        ResetScreenViewElements();
+                        await ResetScreenViewElementsAsync();
                     }
                 }
             }
@@ -540,7 +540,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 #endif
 
-        public void ShowAboutView()
+        public async Task ShowAboutViewAsync()
         {
             using var viewPausing = PauseAllViews();
 
@@ -549,7 +549,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     .RegisterMvvm<Element.About.AboutElement, ViewModels.About.AboutViewModel, Views.About.AboutWindow>()
                 ;
                 var model = diContainer.New<Element.About.AboutElement>();
-                model.Initialize();
+                await model.InitializeAsync();
 
                 var view = diContainer.Build<Views.About.AboutWindow>();
 
@@ -571,34 +571,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        private void ShowNewVersionReleaseNoteCore(NewVersionItemData updateItem, bool isCheckOnly)
+        private async Task ShowNewVersionReleaseNoteCoreAsync(NewVersionItemData updateItem, bool isCheckOnly)
         {
             var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(ApplicationUpdateInfo, updateItem, isCheckOnly);
-            element.Initialize();
+            await element.InitializeAsync();
             var view = ApplicationDiContainer.Build<Views.ReleaseNote.ReleaseNoteWindow>();
             view.DataContext = ApplicationDiContainer.Build<ViewModels.ReleaseNote.ReleaseNoteViewModel>(element);
             WindowManager.Register(new WindowItem(WindowKind.Release, element, view));
             view.Show();
         }
 
-        private void ShowNewVersionReleaseNote(NewVersionItemData updateItem, bool isCheckOnly)
+        private async Task ShowNewVersionReleaseNoteAsync(NewVersionItemData updateItem, bool isCheckOnly)
         {
             var windowItem = WindowManager.GetWindowItems(WindowKind.Release);
             if(windowItem.Any()) {
                 // 再表示
-                ApplicationDiContainer.Build<IDispatcherWrapper>().BeginAsync(() => {
+                await ApplicationDiContainer.Build<IDispatcherWrapper>().BeginAsync(async () => {
                     var window = windowItem.FirstOrDefault();
                     if(window != null) {
                         window.Window.Activate();
                     } else {
-                        ShowNewVersionReleaseNoteCore(updateItem, isCheckOnly);
+                        await ShowNewVersionReleaseNoteCoreAsync(updateItem, isCheckOnly);
                     }
                 }, DispatcherPriority.ApplicationIdle);
                 return;
             }
 
-            ApplicationDiContainer.Build<IDispatcherWrapper>().BeginAsync(() => {
-                ShowNewVersionReleaseNoteCore(updateItem, isCheckOnly);
+            await ApplicationDiContainer.Build<IDispatcherWrapper>().BeginAsync(async () => {
+                await ShowNewVersionReleaseNoteCoreAsync(updateItem, isCheckOnly);
             }, DispatcherPriority.ApplicationIdle);
         }
 
@@ -1062,7 +1062,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogInformation("[各種情報]" + Environment.NewLine + s);
         }
 
-        public bool Startup(App app, StartupEventArgs e)
+        public async Task<bool> StartupAsync(App app, StartupEventArgs e)
         {
             StartupUsageStatistics();
             LoggingInformation();
@@ -1094,14 +1094,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 // 初期登録の画面を表示
 #if DEBUG
                 if(IsDebugDevelopMode) {
-                    Task.Run(() => {
-                        return StartDebugDevelopModeAsync();
-                    }).Wait();
+                    await StartDebugDevelopModeAsync();
                 } else {
-                    ShowStartupView(true);
+                    await ShowStartupViewAsync(true);
                 }
 #else
-                ShowStartupView(true);
+                await ShowStartupViewAsync(true);
 #endif
             }
 
@@ -1117,7 +1115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return viewModel;
         }
 
-        private IReadOnlyList<LauncherGroupElement> CreateLauncherGroupElements()
+        private async Task<IReadOnlyList<LauncherGroupElement>> CreateLauncherGroupElementsAsync()
         {
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
@@ -1130,27 +1128,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var result = new List<LauncherGroupElement>(launcherGroupIds.Count);
             foreach(var launcherGroupId in launcherGroupIds) {
-                var element = CreateLauncherGroupElement(launcherGroupId);
+                var element = await CreateLauncherGroupElementAsync(launcherGroupId);
                 result.Add(element);
             }
 
             return result;
         }
 
-        private IReadOnlyList<LauncherToolbarElement> CreateLauncherToolbarElements(ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
+        private async Task<IReadOnlyList<LauncherToolbarElement>> CreateLauncherToolbarElementsAsync(ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
         {
             var screens = Screen.AllScreens;
             var result = new List<LauncherToolbarElement>(screens.Length);
 
             foreach(var screen in screens.OrderByDescending(i => i.Primary)) {
-                var element = CreateLauncherToolbarElement(screen, launcherGroups);
+                var element = await CreateLauncherToolbarElementAsync(screen, launcherGroups);
                 result.Add(element);
             }
 
             return result;
         }
 
-        private IReadOnlyList<NoteElement> CreateNoteElements()
+        private async Task<IReadOnlyList<NoteElement>> CreateNoteElementsAsync()
         {
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
@@ -1163,7 +1161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var result = new List<NoteElement>(noteIds.Count);
             foreach(var noteId in noteIds) {
-                var element = CreateNoteElement(noteId, default(IScreen), NoteStartupPosition.Setting);
+                var element = await CreateNoteElementAsync(noteId, default(IScreen), NoteStartupPosition.Setting);
                 result.Add(element);
             }
 
@@ -1194,12 +1192,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return collection;
         }
 
-        public NoteElement CreateNote(IScreen dockScreen, NoteStartupPosition noteStartupPosition)
+        public async Task<NoteElement> CreateNoteAsync(IScreen dockScreen, NoteStartupPosition noteStartupPosition)
         {
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
             var noteId = idFactory.CreateNoteId();
             Logger.LogInformation("new note id: {0}, {1}", noteId, ObjectDumper.GetDumpString(dockScreen));
-            var noteElement = CreateNoteElement(noteId, dockScreen, noteStartupPosition);
+            var noteElement = await CreateNoteElementAsync(noteId, dockScreen, noteStartupPosition);
 
             NoteElements.Add(noteElement);
 
@@ -1252,7 +1250,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        private void ExecuteElements()
+        private async Task ExecuteElementsAsync()
         {
             var currentActiveWindowHandle = NativeMethods.GetActiveWindow();
             //if(currentActiveWindowHandle == IntPtr.Zero) {
@@ -1260,15 +1258,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //}
 
             // グループ構築
-            var launcherGroups = CreateLauncherGroupElements();
+            var launcherGroups = await CreateLauncherGroupElementsAsync();
             LauncherGroupElements.AddRange(launcherGroups);
 
             // ツールバーの生成
-            var launcherToolbars = CreateLauncherToolbarElements(new ReadOnlyObservableCollection<LauncherGroupElement>(LauncherGroupElements));
+            var launcherToolbars = await CreateLauncherToolbarElementsAsync(new ReadOnlyObservableCollection<LauncherGroupElement>(LauncherGroupElements));
             LauncherToolbarElements.AddRange(launcherToolbars);
 
             // ノートの生成
-            var notes = CreateNoteElements();
+            var notes = await CreateNoteElementsAsync();
             NoteElements.AddRange(notes);
 
             var viewShowStaters = Enumerable.Empty<IViewShowStarter>()
@@ -1281,7 +1279,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 viewShowStater.StartView();
             }
 
-            ExecuteWidgets();
+            await ExecuteWidgetsAsync();
 
 #if DEBUG
             if(IsDevDebug) {
@@ -1289,7 +1287,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return;
             }
 #endif
-            ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(() => {
+            await ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(() => {
                 // ノート生成で最後のノートがアクティブになる対応。設定でも発生するけど起動時に何とかしていって思い
                 if(currentActiveWindowHandle != IntPtr.Zero && currentActiveWindowHandle != MessageWindowHandleSource?.Handle) {
                     WindowsUtility.ShowActive(currentActiveWindowHandle);
@@ -1298,7 +1296,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }, DispatcherPriority.SystemIdle);
         }
 
-        private void ExecuteWidgets()
+        private async Task ExecuteWidgetsAsync()
         {
             //TODO: 表示・非表示状態を読み込んだりの諸々が必要
             if(Widgets.Count == 0) {
@@ -1313,7 +1311,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 foreach(var widget in PluginContainer.Addon.GetWidgets()) {
                     var element = new WidgetElement(widget, widget.Addon, widgetAddonContextFactory, mainDatabaseBarrier, mainDatabaseLazyWriter, databaseStatementLoader, cultureService, WindowManager, NotifyManager, environmentParameters, dispatcherWrapper, LoggerFactory);
-                    element.Initialize();
+                    await element.InitializeAsync();
                     Widgets.Add(element);
                 }
             }
@@ -1359,7 +1357,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        public void Execute()
+        public async Task ExecuteAsync()
         {
             Logger.LogInformation("がんばる！");
 #if DEBUG
@@ -1371,7 +1369,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             StartPlatform();
 
-            ExecuteElements();
+            await ExecuteElementsAsync();
 
 #if DEBUG
             DebugExecuteAfter();
@@ -1602,28 +1600,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Exit(true);
         }
 
-        public void ShowCommandView()
+        public async Task ShowCommandViewAsync()
         {
             if(CommandElement == null) {
                 CommandElement = ApplicationDiContainer.Build<CommandElement>();
-                CommandElement.Initialize();
+                await CommandElement.InitializeAsync();
 
                 var commandFinders = new ICommandFinder[] {
                     ApplicationDiContainer.Build<LauncherItemCommandFinder>(),
-                    ApplicationDiContainer.Build<ApplicationCommandFinder>(CreateApplicationCommandParameters()),
+                    ApplicationDiContainer.Build<ApplicationCommandFinder>(CreateApplicationCommandParametersAsync()),
                     PluginContainer.Addon.GetCommandFinder(),
                 };
 
                 foreach(var commandFinder in commandFinders) {
                     CommandElement.AddCommandFinder(commandFinder);
                 }
-                CommandElement.Refresh();
+                await CommandElement.RefreshAsync();
             }
 
             CommandElement.StartView();
         }
 
-        public void ShowFeedbackView()
+        public async Task ShowFeedbackViewAsync()
         {
             var items = WindowManager.GetWindowItems(WindowKind.Feedback).ToList();
             if(items.Count != 0) {
@@ -1634,7 +1632,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var feedbackElement = ApplicationDiContainer.Build<FeedbackElement>();
-            feedbackElement.Initialize();
+            await feedbackElement.InitializeAsync();
             var windowItem = OrderManager.CreateFeedbackWindow(feedbackElement);
             WindowManager.Register(windowItem);
             windowItem.Window.Show();
@@ -1699,13 +1697,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DisposeNoteElements();
         }
 
-        private void ResetScreenViewElements()
+        private async Task ResetScreenViewElementsAsync()
         {
             ClearScreenViewElements();
 
             ResetNotifyArea();
 
-            ExecuteElements();
+            await ExecuteElementsAsync();
         }
 
         private void ResetNotifyArea()
@@ -1726,7 +1724,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             void DelayExecuteElements()
             {
                 LazyScreenElementReset.DelayAction(() => {
-                    ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(ResetScreenViewElements, DispatcherPriority.SystemIdle);
+                    ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(async () => await ResetScreenViewElementsAsync(), DispatcherPriority.SystemIdle);
                     ResetWaiting = false;
                 });
             }
@@ -1954,13 +1952,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        public LauncherGroupElement CreateLauncherGroupElement(LauncherGroupId launcherGroupId)
+        public Task<LauncherGroupElement> CreateLauncherGroupElementAsync(LauncherGroupId launcherGroupId)
         {
-            return OrderManager.CreateLauncherGroupElement(launcherGroupId);
+            return OrderManager.CreateLauncherGroupElementAsync(launcherGroupId);
         }
-        public LauncherToolbarElement CreateLauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
+        public Task<LauncherToolbarElement> CreateLauncherToolbarElementAsync(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
         {
-            return OrderManager.CreateLauncherToolbarElement(dockScreen, launcherGroups);
+            return OrderManager.CreateLauncherToolbarElementAsync(dockScreen, launcherGroups);
         }
 
         public LauncherItemElement GetOrCreateLauncherItemElement(LauncherItemId launcherItemId)
@@ -1969,25 +1967,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
         public void RefreshLauncherItemElement(LauncherItemId launcherItemId) => OrderManager.RefreshLauncherItemElement(launcherItemId);
 
-        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(LauncherItemId launcherItemId, IScreen screen)
+        public Task<LauncherItemCustomizeContainerElement> CreateCustomizeLauncherItemContainerElementAsync(LauncherItemId launcherItemId, IScreen screen)
         {
-            return OrderManager.CreateCustomizeLauncherItemContainerElement(launcherItemId, screen);
+            return OrderManager.CreateCustomizeLauncherItemContainerElementAsync(launcherItemId, screen);
         }
 
-        public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen)
+        public Task<ExtendsExecuteElement> CreateExtendsExecuteElementAsync(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen)
         {
-            return OrderManager.CreateExtendsExecuteElement(captionName, launcherFileData, launcherEnvironmentVariables, screen);
+            return OrderManager.CreateExtendsExecuteElementAsync(captionName, launcherFileData, launcherEnvironmentVariables, screen);
         }
 
-        public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(LauncherItemId launcherItemId, IScreen screen)
+        public Task<LauncherExtendsExecuteElement> CreateLauncherExtendsExecuteElementAsync(LauncherItemId launcherItemId, IScreen screen)
         {
-            return OrderManager.CreateLauncherExtendsExecuteElement(launcherItemId, screen);
+            return OrderManager.CreateLauncherExtendsExecuteElementAsync(launcherItemId, screen);
         }
 
 
-        public NoteElement CreateNoteElement(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition)
+        public Task<NoteElement> CreateNoteElementAsync(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition)
         {
-            return OrderManager.CreateNoteElement(noteId, screen, startupPosition);
+            return OrderManager.CreateNoteElementAsync(noteId, screen, startupPosition);
         }
         public bool RemoveNoteElement(NoteId noteId)
         {
@@ -2015,28 +2013,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return false;
         }
 
-        public NoteContentElement CreateNoteContentElement(NoteId noteId, NoteContentKind contentKind)
+        public Task<NoteContentElement> CreateNoteContentElementAsync(NoteId noteId, NoteContentKind contentKind)
         {
-            return OrderManager.CreateNoteContentElement(noteId, contentKind);
+            return OrderManager.CreateNoteContentElementAsync(noteId, contentKind);
         }
 
-        public SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater)
+        public Task<SavingFontElement> CreateFontElementAsync(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater)
         {
-            return OrderManager.CreateFontElement(defaultFontKind, fontId, parentUpdater);
+            return OrderManager.CreateFontElementAsync(defaultFontKind, fontId, parentUpdater);
         }
 
-        /// <inheritdoc cref="IOrderManager.CreateStandardInputOutputElement(string, Process, IScreen)"/>
-        public StandardInputOutputElement CreateStandardInputOutputElement(string caption, Process process, IScreen screen)
+        /// <inheritdoc cref="IOrderManager.CreateStandardInputOutputElementAsync(string, Process, IScreen)"/>
+        public async Task<StandardInputOutputElement> CreateStandardInputOutputElementAsync(string caption, Process process, IScreen screen)
         {
-            var element = OrderManager.CreateStandardInputOutputElement(caption, process, screen);
+            var element = await OrderManager.CreateStandardInputOutputElementAsync(caption, process, screen);
             StandardInputOutputs.Add(element);
             return element;
         }
 
-        /// <inheritdoc cref="IOrderManager.CreateLauncherItemExtensionElement(IPluginInformation, LauncherItemId)"/>
-        public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformation pluginInformation, LauncherItemId launcherItemId)
+        /// <inheritdoc cref="IOrderManager.CreateLauncherItemExtensionElementAsync(IPluginInformation, LauncherItemId)"/>
+        public async Task<LauncherItemExtensionElement> CreateLauncherItemExtensionElementAsync(IPluginInformation pluginInformation, LauncherItemId launcherItemId)
         {
-            var element = OrderManager.CreateLauncherItemExtensionElement(pluginInformation, launcherItemId);
+            var element = await OrderManager.CreateLauncherItemExtensionElementAsync(pluginInformation, launcherItemId);
             LauncherItemExtensions.Add(element);
             return element;
         }
@@ -2160,9 +2158,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #endregion
 
-        private void NotifyManagerImpl_LauncherGroupItemRegistered(object? sender, LauncherGroupItemRegisteredEventArgs e)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:命名スタイル", Justification = "<保留中>")]
+        private async void NotifyManagerImpl_LauncherGroupItemRegistered(object? sender, LauncherGroupItemRegisteredEventArgs e)
         {
-            var launcherGroupElement = OrderManager.CreateLauncherGroupElement(e.LauncherGroupId);
+            var launcherGroupElement = await OrderManager.CreateLauncherGroupElementAsync(e.LauncherGroupId);
             LauncherGroupElements.Add(launcherGroupElement);
         }
 

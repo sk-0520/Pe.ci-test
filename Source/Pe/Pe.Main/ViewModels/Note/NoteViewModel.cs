@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -94,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 DragEnterAction = FileDragEnterAndOver,
                 DragOverAction = FileDragEnterAndOver,
                 DragLeaveAction = FileDragLeave,
-                DropAction = FileDrop,
+                DropActionAsync = FileDropAsync,
             };
 
             FileCollection = new ModelViewModelObservableCollectionManager<NoteFileElement, NoteFileViewModel>(Model.Files, new ModelViewModelObservableCollectionOptions<NoteFileElement, NoteFileViewModel>() {
@@ -348,7 +349,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     ShowContentKindChangeConfirm = true;
                 } else {
                     // 変換するがユーザー選択は不要
-                    Model.ConvertContentKind(value);
+                    _ = Model.ConvertContentKindAsync(value);
                 }
             }
         }
@@ -580,10 +581,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
 
         public ICommand ContentKindChangeConvertCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
+            async () => {
                 Flush();
 
-                Model.ConvertContentKind(ChangingContentKind);
+                await Model.ConvertContentKindAsync(ChangingContentKind);
                 ShowContentKindChangeConfirm = false;
             }
         ));
@@ -1262,14 +1263,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private void FileDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void FileDrop(UIElement sender, DragEventArgs e)
+        private async Task FileDropAsync(UIElement sender, DragEventArgs e)
         {
             if(e.Effects.HasFlag(DragDropEffects.Copy) && e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if(filePaths.Length == 1) {
                     e.Handled = true;
                     Logger.LogDebug("A");
-                    DispatcherWrapper.Dispatcher.BeginInvoke(async () => {
+                    await DispatcherWrapper.BeginAsync(async () => {
                         var result = await Model.AddFileAsync(filePaths[0], NoteFileKind.Reference, CancellationToken.None);
                         Logger.LogDebug("C: {result}", result);
                     }, DispatcherPriority.ApplicationIdle);
@@ -1337,11 +1338,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public void ReceiveViewClosed(Window window, bool isUserOperation)
+        public async Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
         {
             window.Deactivated -= Window_Deactivated;
 
-            Model.ReceiveViewClosed(isUserOperation);
+            await Model.ReceiveViewClosedAsync(isUserOperation);
 
             if(PrepareToRemove) {
                 Flush();

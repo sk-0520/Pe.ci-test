@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 {
@@ -68,13 +69,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #region function
 
-        public virtual ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IReadOnlyLauncherRedoData redoData, IScreen screen)
+        public virtual async Task<ILauncherExecuteResult> ExecuteAsync(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IReadOnlyLauncherRedoData redoData, IScreen screen)
         {
             ThrowIfDisposed();
 
             try {
                 var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache.Instance, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
-                var result = launcherExecutor.Execute(LauncherItemKind.File, fileData, fileData, environmentVariables, redoData, screen);
+                var result = await launcherExecutor.ExecuteAsync(LauncherItemKind.File, fileData, fileData, environmentVariables, redoData, screen);
                 return result;
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
@@ -91,9 +92,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             // 独立した何かなのでここでは何もしない
+            return Task.CompletedTask;
         }
 
         #endregion
@@ -133,10 +135,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
-        public void ReceiveViewClosed(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
+        public Task ReceiveViewClosedAsync(bool isUserOperation)
         {
             ViewCreated = false;
+            return Task.CompletedTask;
         }
 
         #endregion
@@ -218,7 +221,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #region ExtendsExecuteElement
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             LauncherItemData launcherItem;
             LauncherFileData fileData;
@@ -256,11 +259,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             var histories2 = histories.ToList();
             HistoryOptions = histories2.Where(i => i.Kind == LauncherHistoryKind.Option).ToList();
             HistoryWorkDirectories = histories2.Where(i => i.Kind == LauncherHistoryKind.WorkDirectory).ToList();
+
+            return Task.CompletedTask;
         }
 
-        public override ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IReadOnlyLauncherRedoData redoData, IScreen screen)
+        public override async Task<ILauncherExecuteResult> ExecuteAsync(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IReadOnlyLauncherRedoData redoData, IScreen screen)
         {
-            var result = base.Execute(fileData, environmentVariables, redoData, screen);
+            var result = await base.ExecuteAsync(fileData, environmentVariables, redoData, screen);
 
             if(result.Success) {
                 using(var context = MainDatabaseBarrier.WaitWrite()) {

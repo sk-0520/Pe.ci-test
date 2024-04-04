@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -114,8 +115,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region command
 
         public ICommand AddReplaceJobCommand => GetOrCreateCommand(() => new DelegateCommand(
-             () => {
-                 Model.AddReplaceJob();
+             async () => {
+                 await Model.AddReplaceJobAsync();
              }
          ));
         public ICommand RemoveReplaceJobCommand => GetOrCreateCommand(() => new DelegateCommand<KeyboardReplaceJobSettingEditorViewMode>(
@@ -125,8 +126,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
          ));
 
         public ICommand AddDisableJobCommand => GetOrCreateCommand(() => new DelegateCommand(
-             () => {
-                 Model.AddDisableJob();
+             async () => {
+                 await Model.AddDisableJobAsync();
              }
          ));
         public ICommand RemoveDisableJobCommand => GetOrCreateCommand(() => new DelegateCommand<KeyboardDisableJobSettingEditorViewModel>(
@@ -142,26 +143,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         ));
 
         public ICommand AddCommandJobCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                AddPressedJob(KeyActionKind.Command);
+            async () => {
+                await AddPressedJobAsync(KeyActionKind.Command);
             }
         ));
 
         public ICommand AddLauncherItemJobCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                AddPressedJob(KeyActionKind.LauncherItem);
+            async () => {
+                await AddPressedJobAsync(KeyActionKind.LauncherItem);
             }
         ));
 
         public ICommand AddLauncherToolbarJobCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                AddPressedJob(KeyActionKind.LauncherToolbar);
+            async () => {
+                await AddPressedJobAsync(KeyActionKind.LauncherToolbar);
             }
         ));
 
         public ICommand AddNoteJobCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                AddPressedJob(KeyActionKind.Note);
+            async () => {
+                await AddPressedJobAsync(KeyActionKind.Note);
             }
         ));
 
@@ -169,9 +170,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        private void AddPressedJob(KeyActionKind kind)
+        private async Task AddPressedJobAsync(KeyActionKind kind)
         {
-            Model.AddPressedJob(kind);
+            await Model.AddPressedJobAsync(kind);
             IsPopupCreateJobMenu = false;
         }
 
