@@ -94,6 +94,10 @@
 						"subject": "CefSharp.Wpf.NETCore 120.2.70 -> 123.0.60"
 					},
 					{
+						"revision": "update npm",
+						"subject": ""
+					},
+					{
 						"revision": "",
 						"subject": ""
 					}
