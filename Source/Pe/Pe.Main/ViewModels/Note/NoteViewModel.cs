@@ -1263,14 +1263,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private void FileDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private Task FileDropAsync(UIElement sender, DragEventArgs e)
+        private async Task FileDropAsync(UIElement sender, DragEventArgs e)
         {
             if(e.Effects.HasFlag(DragDropEffects.Copy) && e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if(filePaths.Length == 1) {
                     e.Handled = true;
                     Logger.LogDebug("A");
-                    DispatcherWrapper.Dispatcher.BeginInvoke(async () => {
+                    await DispatcherWrapper.BeginAsync(async () => {
                         var result = await Model.AddFileAsync(filePaths[0], NoteFileKind.Reference, CancellationToken.None);
                         Logger.LogDebug("C: {result}", result);
                     }, DispatcherPriority.ApplicationIdle);

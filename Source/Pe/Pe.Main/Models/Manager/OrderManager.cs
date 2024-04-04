@@ -167,7 +167,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             {
                 return LauncherItems.GetOrAdd(launcherItemId, launcherItemIdKey => {
                     var launcherItemElement = DiContainer.Build<LauncherItemElement>(launcherItemIdKey);
-                    launcherItemElement.InitializeAsync().Wait();
+                    // これたまたま動いてるだけだと思う
+                    var task = launcherItemElement.InitializeAsync();
+                    task.ConfigureAwait(false);
+                    task.Wait();
                     return launcherItemElement;
                 });
             }

@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         CancellationTokenSource.Cancel(true);
                     }
 
-                    LastWorkWait.Wait();
+                    //LastWorkWait.Wait();
                     LastWorkWait.Dispose();
 
                     CancellationTokenSource.Dispose();

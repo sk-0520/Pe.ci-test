@@ -150,9 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationUpdateInfo = ApplicationDiContainer.Build<NewVersionInfo>();
 
             NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
-            var notifyLogElementTask = NotifyLogElement.InitializeAsync();
-            notifyLogElementTask.ConfigureAwait(false);
-            notifyLogElementTask.Wait();
+            _ = NotifyLogElement.InitializeAsync();
 
             LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), customConfiguration.Platform.ScreenElementsResetWaitTime);
 

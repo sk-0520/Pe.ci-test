@@ -76,9 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 WaitEndTimer.Start();
             }
             if(FirstResult.Process != null) {
-                var task = WatchingAsync(FirstResult.Process, false);
-                task.ConfigureAwait(false);
-                task.Wait();
+                _ = WatchingAsync(FirstResult.Process, false).ConfigureAwait(false);
             }
         }
 

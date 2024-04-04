@@ -169,16 +169,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             dd.DragOverOrEnter(sender, e);
         }
 
-        private Task DropAsync(UIElement sender, DragEventArgs e)
+        private async Task DropAsync(UIElement sender, DragEventArgs e)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
-            dd.Drop(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, (path, expand) => {
-                Model.RegisterFileAsync(path, expand).ContinueWith(t => {
-                    var launcherItemId = t.Result;
-                    var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == launcherItemId);
-                    SelectedItem = newItem;
-                    ScrollSelectedItemRequest.Send();
-                });
+            await dd.DropAsync(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, async (path, expand) => {
+                var launcherItemId = await Model.RegisterFileAsync(path, expand);
+                var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == launcherItemId);
+                SelectedItem = newItem;
+                ScrollSelectedItemRequest.Send();
             }));
         }
 
@@ -238,6 +236,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region ILauncherItemId
 
         #endregion
-
     }
 }

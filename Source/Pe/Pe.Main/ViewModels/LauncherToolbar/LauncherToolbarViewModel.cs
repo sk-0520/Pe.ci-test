@@ -395,7 +395,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         private Task ViewDropAsync(UIElement sender, DragEventArgs e)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
-            dd.Drop(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, Model.RegisterFile));
+            return dd.DropAsync(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, Model.RegisterFile));
         }
 
         private void ViewDragLeave(UIElement sender, DragEventArgs e)
@@ -435,7 +435,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             e.Handled = true;
         }
 
-        private Task ItemDropAsync(UIElement sender, DragEventArgs e)
+        private async Task ItemDropAsync(UIElement sender, DragEventArgs e)
         {
             LauncherItemId launcherItemId = LauncherItemId.Empty;
             var frameworkElement = (FrameworkElement)sender;
@@ -456,21 +456,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 if(appButton.Name != nameof(LauncherToolbarWindow.appButton.Name)) {
                     return;
                 }
-                ViewDropAsync(sender, e);
+                await ViewDropAsync(sender, e);
                 return;
             }
 
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 var argument = string.Join(' ', filePaths.Select(i => CommandLine.Escape(i)));
-                var task = DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument));
-                task.ConfigureAwait(false);
-                task.Wait();
+                await DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument));
             } else if(e.Data.IsTextPresent()) {
                 var argument = TextUtility.JoinLines(e.Data.GetText());
-                var task = DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument));
-                task.ConfigureAwait(false);
-                task.Wait();
+                await DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument));
             }
 
             e.Handled = true;
