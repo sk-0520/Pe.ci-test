@@ -1608,7 +1608,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 var commandFinders = new ICommandFinder[] {
                     ApplicationDiContainer.Build<LauncherItemCommandFinder>(),
-                    ApplicationDiContainer.Build<ApplicationCommandFinder>(CreateApplicationCommandParametersAsync()),
+                    ApplicationDiContainer.Build<ApplicationCommandFinder>(CreateApplicationCommandParameters()),
                     PluginContainer.Addon.GetCommandFinder(),
                 };
 

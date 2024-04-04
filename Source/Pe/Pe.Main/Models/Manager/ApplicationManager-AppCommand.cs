@@ -13,9 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         #region function
 
-#pragma warning disable CS1998 // 非同期メソッドは、'await' 演算子がないため、同期的に実行されます
-        private async Task<IReadOnlyList<ApplicationCommandParameter>> CreateApplicationCommandParametersAsync()
-#pragma warning restore CS1998 // 非同期メソッドは、'await' 演算子がないため、同期的に実行されます
+        private IEnumerable<ApplicationCommandParameter> CreateApplicationCommandParameters()
         {
             var factory = ApplicationDiContainer.Build<ApplicationCommandParameterFactory>();
 
