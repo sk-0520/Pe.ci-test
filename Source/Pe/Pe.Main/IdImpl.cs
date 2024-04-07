@@ -36,26 +36,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             #endregion
         }
-        private class CredentialIdIdHandler: SqlMapper.TypeHandler<CredentialIdId>
+        private class CredentialIdIdHandler: SqlMapper.TypeHandler<CredentialId>
         {
             #region TypeHandler
 
-            public override void SetValue(IDbDataParameter parameter, CredentialIdId value)
+            public override void SetValue(IDbDataParameter parameter, CredentialId value)
             {
                 parameter.Value = value.ToString();
             }
 
-            public override CredentialIdId Parse(object value)
+            public override CredentialId Parse(object value)
             {
 
                 var s = (string)value;
                 if(s != null) {
-                    if(CredentialIdId.TryParse(s, out var ret)) {
+                    if(CredentialId.TryParse(s, out var ret)) {
                         return ret;
                     }
                 }
 
-                return CredentialIdId.Empty;
+                return CredentialId.Empty;
             }
 
             #endregion
@@ -283,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         static ApplicationDatabaseImplementation()
         {
             SqlMapper.AddTypeHandler(typeof(LauncherItemId), new LauncherItemIdHandler());
-            SqlMapper.AddTypeHandler(typeof(CredentialIdId), new CredentialIdIdHandler());
+            SqlMapper.AddTypeHandler(typeof(CredentialId), new CredentialIdIdHandler());
             SqlMapper.AddTypeHandler(typeof(LauncherToolbarId), new LauncherToolbarIdHandler());
             SqlMapper.AddTypeHandler(typeof(FontId), new FontIdHandler());
             SqlMapper.AddTypeHandler(typeof(LauncherGroupId), new LauncherGroupIdHandler());
