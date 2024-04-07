@@ -28,15 +28,19 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         /// <summary>
         /// 連絡先方法。
+        /// </summary>
+        /// <remarks>
         /// <para>ガッチガチに固めない文字列指定。</para>
         /// <para><see cref="ContactKinds"/>で指定するのがよろし。</para>
-        /// </summary>
+        /// </remarks>
         string ContactKind { get; }
         /// <summary>
         /// 連絡先。
+        /// </summary>
+        /// <remarks>
         /// <para><see cref="ContactKind"/>によりプログラムでの挙動や表示方法が変わる。</para>
         /// <para><see cref="ContactKinds"/>にあるものはサポートしている。</para>
-        /// </summary>
+        /// </remarks>
         string ContactValue { get; }
         #endregion
     }

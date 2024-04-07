@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         private Timer Timer { get; }
         /// <summary>
         /// 遅延処理本体。
-        /// <para>遅延処理待機中のみ非<c>null</c>。</para>
+        /// <para>遅延処理待機中のみ非<see langword="null" />。</para>
         /// </summary>
         private Action? Action { get; set; }
 

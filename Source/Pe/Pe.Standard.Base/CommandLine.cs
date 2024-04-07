@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// プログラム/コマンド名。
-        /// <para><c>null</c>が入ることはない。</para>
+        /// <para><see langword="null" />が入ることはない。</para>
         /// </summary>
         public string CommandName { get; }
         /// <summary>
@@ -397,7 +397,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// 短いキーから値取得。
         /// </summary>
         /// <param name="shortKey">短いキー。</param>
-        /// <returns>取得した値。取得できない場合は<c>null</c>。</returns>
+        /// <returns>取得した値。取得できない場合は<see langword="null" />。</returns>
         public CommandLineKey? GetKey(char shortKey)
         {
             return KeyItems
@@ -411,7 +411,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// 長いキーから値取得。
         /// </summary>
         /// <param name="longKey">長いキー。</param>
-        /// <returns>取得した値。取得できない場合は<c>null</c>。</returns>
+        /// <returns>取得した値。取得できない場合は<see langword="null" />。</returns>
         public CommandLineKey? GetKey(string longKey)
         {
             return KeyItems

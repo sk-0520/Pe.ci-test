@@ -5,8 +5,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 {
     /// <summary>
     /// アイコン固定サイズ。
-    /// <para>名前の迷走よ。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>名前の迷走よ。</para>
+    /// </remarks>
     public enum IconBox
     {
         /// <summary>

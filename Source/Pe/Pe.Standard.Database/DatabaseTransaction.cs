@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         /// <summary>
         /// CRL上のトランザクション実体。
-        /// <para>トランザクションを開始しない場合 <c>null</c> となり、扱いは <see cref="IDatabaseTransaction"/> 実装側依存となる。</para>
+        /// <para>トランザクションを開始しない場合 <see langword="null" /> となり、扱いは <see cref="IDatabaseTransaction"/> 実装側依存となる。</para>
         /// </summary>
         IDbTransaction? Transaction { get; }
 

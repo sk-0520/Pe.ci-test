@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// イベントハンドラ保管箱。
-        /// <para>操作する際は <see cref="_locker"/> の <c>lock</c> を行うこと。</para>
+        /// <para>操作する際は <see cref="_locker"/> の <see langword="lock" /> を行うこと。</para>
         /// </summary>
         private IList<WeakHandler> Handlers { get; } = new List<WeakHandler>();
 
@@ -270,7 +270,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// イベントハンドラ保管箱。
-        /// <para>操作する際は <see cref="_locker"/> の <c>lock</c> を行うこと。</para>
+        /// <para>操作する際は <see cref="_locker"/> の <see langword="lock" /> を行うこと。</para>
         /// </summary>
         private IList<WeakHandler> Handlers { get; } = new List<WeakHandler>();
 

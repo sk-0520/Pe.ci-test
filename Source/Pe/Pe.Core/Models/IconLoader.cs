@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="iconPath">ファイルパス。</param>
         /// <param name="iconSize">アイコンサイズ。</param>
-        /// <returns>成功した場合にイメージ。失敗すれば<c>null</c>を返す。</returns>
+        /// <returns>成功した場合にイメージ。失敗すれば<see langword="null" />を返す。</returns>
         public BitmapSource? GetThumbnailImage(string iconPath, in IconSize iconSize)
         {
             try {

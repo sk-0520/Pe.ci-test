@@ -100,8 +100,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         /// <summary>
         /// IDを文字列表現に変換。
-        /// <para>ファイル名として使用可能な文字列表現にもなる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>ファイル名として使用可能な文字列表現にもなる。</para>
+        /// </remarks>
         /// <returns></returns>
         public override string ToString()
         {

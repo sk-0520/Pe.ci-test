@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// 各行に対して処理した結果を返す。
         /// </summary>
         /// <param name="reader">リーダー。</param>
-        /// <param name="func">処理。戻り値が<c>null</c>の場合は該当行は結果に使用されない。</param>
+        /// <param name="func">処理。戻り値が<see langword="null" />の場合は該当行は結果に使用されない。</param>
         /// <returns>処理した各行を<see cref="NewLine"/>で結合した結果。</returns>
         public string Aggregate(TextReader reader, Func<TextLineInput, string?> func)
         {

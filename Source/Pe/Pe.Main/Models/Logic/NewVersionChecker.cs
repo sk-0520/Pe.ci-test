@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <summary>
         /// アプリケーションの新バージョン確認。
         /// </summary>
-        /// <returns>新バージョンがあれば新情報。なければ<c>null</c>。</returns>
+        /// <returns>新バージョンがあれば新情報。なければ<see langword="null" />。</returns>
         public async Task<NewVersionItemData?> CheckApplicationNewVersionAsync(CancellationToken token)
         {
             using var agent = UserAgentManager.CreateUserAgent();
@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <param name="baseUrl">元URL。</param>
         /// <param name="pluginId">プラグインID。</param>
         /// <param name="pluginVersion">プラグインバージョン。</param>
-        /// <returns>構築したURI。構築できなかった場合は<c>null</c></returns>
+        /// <returns>構築したURI。構築できなかった場合は<see langword="null" /></returns>
         private Uri? BuildPluginUri(string baseUrl, PluginId pluginId, Version pluginVersion)
         {
             if(string.IsNullOrWhiteSpace(baseUrl)) {
@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// プラグインの新バージョン確認。
         /// </summary>
         /// <param name="plugin">プラグイン。</param>
-        /// <returns>新バージョンがあれば新情報。なければ<c>null</c>。</returns>
+        /// <returns>新バージョンがあれば新情報。なければ<see langword="null" />。</returns>
         public async Task<NewVersionItemData?> CheckPluginNewVersionAsync(PluginId pluginId, Version pluginVersion, IEnumerable<string> urls)
         {
             Debug.Assert(pluginId != ContentTypeTextNet.Pe.Plugins.DefaultTheme.DefaultTheme.Information.PluginIdentifiers.PluginId);

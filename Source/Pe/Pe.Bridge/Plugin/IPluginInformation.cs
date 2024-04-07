@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
     /// <summary>
     /// Pe の解釈可能なライセンス一覧。
-    /// <para><c>const</c> なのでバージョンアップ時に変になるかもねー。</para>
+    /// <para><see langword="const" />なのでバージョンアップ時に変になるかもねー。</para>
     /// </summary>
     public static class PluginLicense
     {

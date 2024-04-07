@@ -12,29 +12,39 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #region Pe
         /// <summary>
         /// コマンドはランチャーアイテム。
-        /// <para>Pe 専用。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>Pe 専用。</para>
+        /// </remarks>
         LauncherItem,
         /// <summary>
         /// ランチャーアイテムの名前に一致。
-        /// <para>Pe 専用。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>Pe 専用。</para>
+        /// </remarks>
         LauncherItemName,
         /// <summary>
         /// ランチャーアイテムのコードに一致。
-        /// <para>Pe 専用。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>Pe 専用。</para>
+        /// </remarks>
         LauncherItemCode,
         /// <summary>
         /// ランチャーアイテムのタグに一致。
-        /// <para>Pe 専用。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>Pe 専用。</para>
+        /// </remarks>
         LauncherItemTag,
 
         /// <summary>
         /// アプリケーション固有処理。
-        /// <para>Pe 専用。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>Pe 専用。</para>
+        /// </remarks>
         ApplicationCommand,
 
         #endregion
@@ -75,8 +85,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         /// <summary>
         /// このアイテムを選択可能な入力文字列。
-        /// <para>この文字列を入力すれば確実にリストアップされることを保証する</para>
         /// </summary>
+        /// <remarks>
+        /// <para>この文字列を入力すれば確実にリストアップされることを保証する</para>
+        /// </remarks>
         public string FullMatchValue { get; }
 
         /// <summary>
@@ -99,8 +111,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         /// <summary>
         /// 表示優先度。
-        /// <para><see cref="ScoreKind"/>と<see cref="IHitValuesCreator"/>からもろもろ算出する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="ScoreKind"/>と<see cref="IHitValuesCreator"/>からもろもろ算出する。</para>
+        /// </remarks>
         int Score { get; }
 
         #endregion
@@ -109,8 +123,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         /// <summary>
         /// アイコン取得。
-        /// <para>UIスレッド上で実行を保証。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>UIスレッド上で実行を保証。</para>
+        /// </remarks>
         /// <param name="iconScale"></param>
         /// <returns>アイコンとなるデータ。</returns>
         object GetIcon(in IconScale iconScale);

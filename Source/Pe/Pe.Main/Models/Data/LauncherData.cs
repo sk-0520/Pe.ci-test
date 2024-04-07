@@ -327,7 +327,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public bool IsEnabled { get; set; }
 
         /// <summary>
-        /// <see cref="IsEnabled"/> が有効な場合は非<c>null</c>となる。
+        /// <see cref="IsEnabled"/> が有効な場合は非<see langword="null" />となる。
         /// </summary>
         public ILauncherItemExtension? Extension { get; set; }
 

@@ -9,7 +9,7 @@ using ContentTypeTextNet.Pe.Standard.Base;
 namespace ContentTypeTextNet.Pe.Main.Models.Database
 {
     /// <summary>
-    /// <c>enum</c> の属性設定にて <see cref="EnumTransfer{TEnum}"/> を制御する。
+    /// <see langword="enum" /> の属性設定にて <see cref="EnumTransfer{TEnum}"/> を制御する。
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
     public class EnumTransferAttribute: Attribute
@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
     }
 
     /// <summary>
-    /// <see cref="Dapper"/> で <c>enum</c> (の文字列)を扱えるように変換する。
+    /// <see cref="Dapper"/> で <see langword="enum" /> (の文字列)を扱えるように変換する。
     /// <para>キャッシュとかは気が向けば。。。</para>
     /// </summary>
     public class EnumTransfer<TEnum>
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         #region function
 
         /// <summary>
-        /// <c>enum</c> 値をそれっぽい文字列に変換。
+        /// <see langword="enum" /> 値をそれっぽい文字列に変換。
         /// </summary>
         /// <param name="member"></param>
         /// <returns></returns>
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         }
 
         /// <summary>
-        /// DB の値を <c>enum</c> 値に変換。
+        /// DB の値を <see langword="enum" /> 値に変換。
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>

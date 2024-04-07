@@ -188,7 +188,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// </summary>
         /// <inheritdoc cref="string.Trim"/>
         /// <param name="s">対象文字列。</param>
-        /// <returns><paramref name="s"/>が<c>null</c>の場合は空文字列、それ以外はトリムされた文字列。</returns>
+        /// <returns><paramref name="s"/>が<see langword="null" />の場合は空文字列、それ以外はトリムされた文字列。</returns>
         public static string SafeTrim(string? s)
         {
             if(s == null) {
