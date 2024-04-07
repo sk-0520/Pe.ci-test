@@ -48,5 +48,6 @@ node_modules/
 /Source/Pe/Pe.Main/etc/appsettings.*-*-*.json
 /Source/Pe/Pe.Main/doc/help/
 /Source/Help/archives
+coverage.opencover.xml
 desktop.ini
 /.parcel-cache
