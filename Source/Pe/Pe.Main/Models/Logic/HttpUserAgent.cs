@@ -322,6 +322,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             var httpClient = new HttpClient(handler, true);
             httpClient.DefaultRequestHeaders.CacheControl = cacheControl;
 
+            var ua = ApplicationStringFormats.GetHttpUserAgentValue(WebConfiguration.ClientUserAgentFormat);
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", ua);
+
             var newUserAgent = new HttpUserAgent(name, httpClient, LoggerFactory);
             return newUserAgent;
         }

@@ -30,7 +30,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#906: HTTP アクセス時に UA 未設定"
 					},
 					{
 						"revision": "",

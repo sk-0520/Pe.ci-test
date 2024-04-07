@@ -27,6 +27,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             target.Add("BROWSER-REVISION", Cef.CefCommitHash);
         }
 
+        /// <summary>
+        /// 通常HTTP処理のUA文字列を取得。
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
         public static string GetHttpUserAgentValue(string format)
         {
             var map = new Dictionary<string, string>();
@@ -36,6 +41,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return TextUtility.ReplaceFromDictionary(format, map);
         }
 
+        /// <summary>
+        /// WebViewのUA文字列を取得。
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
         public static string GetHttpUserAgentWebViewValue(string format)
         {
             var map = new Dictionary<string, string>();
