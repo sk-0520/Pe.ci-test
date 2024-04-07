@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
-    /// 別段指定しない<see cref="Enforce"/>処理で継続できない場合に投げられる例外。
+    /// 別段指定しない<see cref="Throws"/>処理で継続できない場合に投げられる例外。
     /// </summary>
     [Serializable]
-    public sealed class EnforceException: Exception
+    public sealed class LogicException: Exception
     {
-        public EnforceException()
+        public LogicException()
         { }
 
-        public EnforceException(string message)
+        public LogicException(string message)
             : base(message)
         { }
 
-        public EnforceException(string message, Exception inner)
+        public LogicException(string message, Exception inner)
             : base(message, inner)
         { }
     }
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// 状態を強制。
     /// </summary>
-    public static class Enforce
+    public static class Throws
     {
         #region function
 
@@ -56,9 +56,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <inheritdoc cref="ThrowIf{EnforceException}"/>
-        /// <exception cref="EnforceException"></exception>
+        /// <exception cref="LogicException"></exception>
         public static void ThrowIf(bool value, [CallerArgumentExpression("value")] string callerArgument = "")
-            => ThrowIf<EnforceException>(value, callerArgument);
+            => ThrowIf<LogicException>(value, callerArgument);
 
         /// <summary>
         /// 指定値が<c>null</c>の場合に例外を投げる。
@@ -77,9 +77,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <inheritdoc cref="ThrowIfNull{T, EnforceException}"/>
-        /// <exception cref="EnforceException"></exception>
+        /// <exception cref="LogicException"></exception>
         public static void ThrowIfNull<T>([AllowNull][NotNull] T value, [CallerArgumentExpression("value")] string callerArgument = "")
-            => ThrowIfNull<T, EnforceException>(value, callerArgument);
+            => ThrowIfNull<T, LogicException>(value, callerArgument);
 
         /// <summary>
         /// 指定値が<see cref="string.IsNullOrEmpty"/>に該当する場合、例外を投げる。
@@ -96,9 +96,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <inheritdoc cref="ThrowIfNullOrEmpty{EnforceException}"/>
-        /// <exception cref="EnforceException"></exception>
+        /// <exception cref="LogicException"></exception>
         public static void ThrowIfNullOrEmpty([NotNull] string? value, [CallerArgumentExpression("value")] string callerArgument = "")
-            => ThrowIfNullOrEmpty<EnforceException>(value, callerArgument);
+            => ThrowIfNullOrEmpty<LogicException>(value, callerArgument);
 
         /// <summary>
         /// 指定値が<see cref="string.IsNullOrWhiteSpace"/>に該当する場合、例外を投げる。
@@ -115,9 +115,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <inheritdoc cref="ThrowIfNullOrWhiteSpace{EnforceException}"/>
-        /// <exception cref="EnforceException"></exception>
+        /// <exception cref="LogicException"></exception>
         public static void ThrowIfNullOrWhiteSpace([NotNull] string? value, [CallerArgumentExpression("value")] string callerArgument = "")
-            => ThrowIfNullOrWhiteSpace<EnforceException>(value, callerArgument);
+            => ThrowIfNullOrWhiteSpace<LogicException>(value, callerArgument);
 
         #endregion
     }
