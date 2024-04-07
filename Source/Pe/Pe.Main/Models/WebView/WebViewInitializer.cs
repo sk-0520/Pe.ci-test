@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
 
             settings.CachePath = environmentParameters.TemporaryWebViewCacheDirectory.FullName;
 
-            settings.UserAgent = ApplicationStringFormats.GetHttpUserAgentValue(environmentParameters.ApplicationConfiguration.Web.ViewUserAgentFormat);
+            settings.UserAgent = ApplicationStringFormats.GetHttpUserAgentWebViewValue(environmentParameters.ApplicationConfiguration.Web.ViewUserAgentFormat);
 
             settings.PersistSessionCookies = true;
 
