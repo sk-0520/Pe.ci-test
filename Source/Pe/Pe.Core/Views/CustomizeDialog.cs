@@ -252,7 +252,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         public bool NowGrouping => CurrentGroup != null;
         /// <summary>
         /// 現在のグループ。
-        /// <para><c>null</c>はグループなし。</para>
+        /// <para><see langword="null" />はグループなし。</para>
         /// </summary>
         CustomizeDialogGroup? CurrentGroup { get; set; }
         /// <summary>

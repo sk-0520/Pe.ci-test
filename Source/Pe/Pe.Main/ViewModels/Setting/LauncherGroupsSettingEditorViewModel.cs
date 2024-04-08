@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -61,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 DragEnterAction = LauncherItemDragOverOrEnter,
                 DragOverAction = LauncherItemDragOverOrEnter,
                 DragLeaveAction = LauncherItemDragLeave,
-                DropAction = LauncherItemDrop,
+                DropActionAsync = LauncherItemDropAsync,
                 GetDragParameter = LauncherItemGetDragParameter,
             };
             launcherItemDragAndDrop.DragStartSize = new Size(launcherItemDragAndDrop.DragStartSize.Width, 0);
@@ -72,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 DragEnterAction = GroupsDragOverOrEnter,
                 DragOverAction = GroupsDragOverOrEnter,
                 DragLeaveAction = GroupsDragLeave,
-                DropAction = GroupsDrop,
+                DropActionAsync = GroupsDropAsync,
                 GetDragParameter = GroupsGetDragParameter,
             };
             groupsDragAndDrop.DragStartSize = new Size(groupsDragAndDrop.DragStartSize.Width, 0);
@@ -83,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 DragEnterAction = LauncherItemsDragOverOrEnter,
                 DragOverAction = LauncherItemsDragOverOrEnter,
                 DragLeaveAction = LauncherItemsDragLeave,
-                DropAction = LauncherItemsDrop,
+                DropActionAsync = LauncherItemsDropAsync,
                 GetDragParameter = LauncherItemsGetDragParameter,
             };
             launcherItemsDragAndDrop.DragStartSize = new Size(launcherItemsDragAndDrop.DragStartSize.Width, 0);
@@ -175,8 +176,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region command
 
         public ICommand AddNewNormalGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                AddNewGroup(LauncherGroupKind.Normal);
+            async () => {
+                await AddNewGroupAsync(LauncherGroupKind.Normal);
             }
         ));
 
@@ -261,11 +262,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region function
-        private void AddNewGroup(LauncherGroupKind kind)
+
+        private async Task AddNewGroupAsync(LauncherGroupKind kind)
         {
             IsPopupCreateGroupMenu = false;
 
-            var launcherGroupId = Model.AddNewGroup(kind);
+            var launcherGroupId = await Model.AddNewGroupAsync(kind);
             /*
             var newLauncherGroupId = Model.CreateNewGroup(kind);
             var newItem = ItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);
@@ -328,10 +330,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private void LauncherItemDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void LauncherItemDrop(UIElement sender, DragEventArgs e)
+        private Task LauncherItemDropAsync(UIElement sender, DragEventArgs e)
         {
             if(SelectedGroup == null) {
-                return;
+                return Task.CompletedTask;
             }
 
             if(e.Data.TryGet<LauncherItemDragData>(out var dragData)) {
@@ -383,6 +385,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     }
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         private IResultSuccess<DragParameter> LauncherItemGetDragParameter(UIElement sender, MouseEventArgs e)
@@ -429,11 +433,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private void GroupsDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void GroupsDrop(UIElement sender, DragEventArgs e)
+        private Task GroupsDropAsync(UIElement sender, DragEventArgs e)
         {
             if(SelectedGroup == null) {
-                return;
+                return Task.CompletedTask;
             }
+
             if(e.Data.TryGet<LauncherGroupSettingEditorViewModel>(out var dragData)) {
                 if(e.OriginalSource is DependencyObject dependencyObject) {
                     var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
@@ -459,6 +464,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     }
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         private IResultSuccess<DragParameter> GroupsGetDragParameter(UIElement sender, MouseEventArgs e)
@@ -493,8 +500,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private void LauncherItemsDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void LauncherItemsDrop(UIElement sender, DragEventArgs e)
-        { }
+        private Task LauncherItemsDropAsync(UIElement sender, DragEventArgs e)
+        {
+            return Task.CompletedTask;
+        }
 
         private IResultSuccess<DragParameter> LauncherItemsGetDragParameter(UIElement sender, MouseEventArgs e)
         {

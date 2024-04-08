@@ -6,7 +6,7 @@ using System.Text;
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
     /// <summary>
-    /// <see cref="ISupportInitialize"/>の初期化から初期化終了までを<c>using</c>で実施できるようにする。
+    /// <see cref="ISupportInitialize"/>の初期化から初期化終了までを<see langword="using" />で実施できるようにする。
     /// </summary>
     public class Initializer<TSupportInitialize>: DisposerBase
         where TSupportInitialize : ISupportInitialize

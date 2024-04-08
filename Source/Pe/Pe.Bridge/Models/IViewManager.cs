@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// </summary>
         Desktop,
         /// <summary>
-        /// WIndows Explorer。
+        /// Windows Explorer。
         /// </summary>
         Explorer,
         /// <summary>

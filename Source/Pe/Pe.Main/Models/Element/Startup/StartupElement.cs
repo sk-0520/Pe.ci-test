@@ -5,6 +5,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.ViewModels.Startup;
 using ContentTypeTextNet.Pe.Main.Views.Startup;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 {
@@ -42,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             return startupRegister.Register(new StartupParameter());
         }
 
-        public void ShowImportProgramsView()
+        public async Task ShowImportProgramsViewAsync()
         {
             ThrowIfDisposed();
 
@@ -51,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                     .RegisterMvvm<ImportProgramsElement, ImportProgramsViewModel, ImportProgramsWindow>()
                 ;
                 var importProgramsModel = diContainer.New<ImportProgramsElement>();
-                importProgramsModel.Initialize();
+                await importProgramsModel.InitializeAsync();
                 var view = diContainer.Build<ImportProgramsWindow>();
 
                 WindowManager.Register(new WindowItem(WindowKind.ImportPrograms, importProgramsModel, view));
@@ -67,9 +68,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         #region ContextElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             Logger.LogTrace("not impl");
+            return Task.CompletedTask;
         }
 
         #endregion

@@ -129,8 +129,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         ));
 
         public ICommand CustomizeCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                Model.OpenCustomizeView(Screen);
+            async () => {
+                await Model.OpenCustomizeViewAsync(Screen);
             }
         ));
 

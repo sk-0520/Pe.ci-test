@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="hitValuesCreator"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken);
+        IAsyncEnumerable<ICommandItem> EnumerateCommandItemsAsync(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken);
 
         #endregion
     }

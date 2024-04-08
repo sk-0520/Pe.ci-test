@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -91,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override async Task InitializeCoreAsync()
         {
             LauncherToolbarsDisplayData data;
             LauncherToolbarsScreenData screenToolbar;
@@ -107,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ScreenName = screenToolbar.ScreenName;
 
             Font = new FontElement(data.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            Font.Initialize();
+            await Font.InitializeAsync();
 
             LauncherGroupId = data.LauncherGroupId;
 

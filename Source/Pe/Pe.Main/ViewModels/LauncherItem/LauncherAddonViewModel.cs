@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         protected override Task ExecuteMainImplAsync()
         {
             return Task.Run(() => {
-                Model.Execute(Screen);
+                Model.ExecuteAsync(Screen);
             });
         }
 

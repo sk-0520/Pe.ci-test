@@ -21,6 +21,7 @@ using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
@@ -110,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region ContextElementBase
 
-        protected override void InitializeImpl()
+        protected override async Task InitializeCoreAsync()
         {
             IReadOnlyList<LauncherItemId> launcherItemIds;
             IReadOnlyList<LauncherGroupId> groupIds;
@@ -166,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
             */
             foreach(var element in launcherItemElements) {
-                element.Initialize();
+                await element.InitializeAsync();
             }
             AllLauncherItems.SetRange(launcherItemElements);
 
@@ -181,12 +182,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 launcherGroupElements.Add(element);
             }
             foreach(var element in launcherGroupElements) {
-                element.Initialize();
+                await element.InitializeAsync();
             }
             AllLauncherGroups.SetRange(launcherGroupElements);
 
             foreach(var editor in Editors) {
-                editor.Initialize();
+                await editor.InitializeAsync();
             }
         }
 

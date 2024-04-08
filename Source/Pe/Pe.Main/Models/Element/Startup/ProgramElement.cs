@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -93,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         #region ContextElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             if(IsShortcut) {
                 try {
@@ -102,13 +103,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                     var targetPath = Environment.ExpandEnvironmentVariables(shortcutFile.TargetPath);
                     IsImport = IsAutoImportTarget(targetPath);
                     ApplyShortcutFileIconLoader(targetPath, shortcutFile.IconPath, shortcutFile.IconIndex);
-                    return;
+                    return Task.CompletedTask;
                 } catch(Exception ex) {
                     Logger.LogError(ex, "{0}, ショートカット情報読み込み失敗のためショートカットファイルから処理: {1}", ex.Message, FileInfo.FullName);
                 }
             }
 
             IsImport = IsAutoImportTarget(FileInfo.Name);
+
+            return Task.CompletedTask;
         }
 
         #endregion

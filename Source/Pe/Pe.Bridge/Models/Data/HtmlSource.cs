@@ -83,8 +83,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         public string SourceCode { get; }
         /// <summary>
         /// HTMLの元URI。
-        /// <para>厳密に<see cref="SourceCode"/>と紐付くわけではない(HTML内のbaseとは別物)。たぶんまぁ元ファイルパスとかそんな感じ。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>厳密に<see cref="SourceCode"/>と紐付くわけではない(HTML内のbaseとは別物)。たぶんまぁ元ファイルパスとかそんな感じ。</para>
+        /// </remarks>
         public Uri? BaseAddress { get; }
 
         #endregion

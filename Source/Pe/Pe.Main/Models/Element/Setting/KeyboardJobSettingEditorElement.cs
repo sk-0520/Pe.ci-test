@@ -12,6 +12,7 @@ using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
@@ -60,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             using(var context = MainDatabaseBarrier.WaitRead()) {
                 var keyOptionsEntityDao = new KeyOptionsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
@@ -81,6 +82,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                     Mappings.Add(new WrapModel<KeyMappingData>(new KeyMappingData(), LoggerFactory));
                 }
             }
+
+            return Task.CompletedTask;
         }
 
 
@@ -162,9 +165,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region KeyboardJobSettingEditorElementBase
 
-        protected override void InitializeImpl()
+        protected override async Task InitializeCoreAsync()
         {
-            base.InitializeImpl();
+            await base.InitializeCoreAsync();
 
             var doc = new DisableOptionConverter();
             if(!doc.TryGetForever(Options, out _)) {
@@ -207,15 +210,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region KeyboardJobSettingEditorElementBase
 
-        protected override void InitializeImpl()
+        protected override async Task InitializeCoreAsync()
         {
-            base.InitializeImpl();
+            await base.InitializeCoreAsync();
 
             var poc = new PressedOptionConverter();
             if(!poc.TryGetThroughSystem(Options, out _)) {
                 poc.SetThroughSystem(Options, false);
             }
         }
+
         #endregion
     }
 

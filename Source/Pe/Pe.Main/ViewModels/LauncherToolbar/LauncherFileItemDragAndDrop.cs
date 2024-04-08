@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -39,12 +40,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             }
         }
 
-        public void Drop(UIElement sender, DragEventArgs e, Action<string> action)
+        public async Task DropAsync(UIElement sender, DragEventArgs e, Action<string> action)
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if(filePaths.Length == 1) {
-                    DispatcherWrapper.BeginAsync(() => action(filePaths[0]));
+                    await DispatcherWrapper.BeginAsync(() => action(filePaths[0]));
                     e.Handled = true;
                 }
             }

@@ -24,6 +24,7 @@ using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 {
@@ -94,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                 DragEnterAction = OptionDragOverOrEnter,
                 DragOverAction = OptionDragOverOrEnter,
                 DragLeaveAction = OptionDragLeave,
-                DropAction = OptionDrop,
+                DropActionAsync = OptionDropAsync,
                 GetDragParameter = OptionGetDragParameter,
             };
             WorkDirectoryDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
@@ -102,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                 DragEnterAction = WorkDirectoryDragOversOrEnter,
                 DragOverAction = WorkDirectoryDragOversOrEnter,
                 DragLeaveAction = WorkDirectoryDragLeave,
-                DropAction = WorkDirectoryDrop,
+                DropActionAsync = WorkDirectoryDropAsync,
                 GetDragParameter = WorkDirectoryGetDragParameter,
             };
         }
@@ -219,7 +220,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         public ICommand ExecuteCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 if(Validate()) {
-                    Execute();
+                    ExecuteAsync();
                     CloseRequest.Send();
                 }
             }
@@ -289,7 +290,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         #region function
 
-        private void Execute()
+        private Task ExecuteAsync()
         {
             ThrowIfDisposed();
 
@@ -331,7 +332,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
             var screen = DpiScaleOutpour.GetOwnerScreen();
 
-            Model.Execute(launcherFileData, envItems, redo, screen);
+            return Model.ExecuteAsync(launcherFileData, envItems, redo, screen);
         }
 
         #endregion
@@ -358,7 +359,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         private void OptionDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void OptionDrop(UIElement sender, DragEventArgs e)
+        private Task OptionDropAsync(UIElement sender, DragEventArgs e)
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -368,6 +369,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                 Option = TextUtility.JoinLines(e.Data.GetText());
                 e.Handled = true;
             }
+
+            return Task.CompletedTask;
         }
 
         private IResultSuccess<DragParameter> OptionGetDragParameter(UIElement sender, MouseEventArgs e)
@@ -397,7 +400,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         private void WorkDirectoryDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void WorkDirectoryDrop(UIElement sender, DragEventArgs e)
+        private Task WorkDirectoryDropAsync(UIElement sender, DragEventArgs e)
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -419,6 +422,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                     Logger.LogInformation("D&Dデータはディレクトリではない");
                 }
             }
+
+            return Task.CompletedTask;
         }
 
         private IResultSuccess<DragParameter> WorkDirectoryGetDragParameter(UIElement sender, MouseEventArgs e)
@@ -472,9 +477,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public void ReceiveViewClosed(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
         {
-            Model.ReceiveViewClosed(isUserOperation);
+            return Model.ReceiveViewClosedAsync(isUserOperation);
         }
 
         #endregion

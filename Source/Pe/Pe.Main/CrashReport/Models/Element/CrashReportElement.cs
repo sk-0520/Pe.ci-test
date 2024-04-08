@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             var rawData = LoadRawData();
 
@@ -171,6 +171,8 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
                 Information = rawData.InformationMap,
                 LogItems = rawData.LogItems,
             };
+
+            return Task.CompletedTask;
         }
 
         #endregion

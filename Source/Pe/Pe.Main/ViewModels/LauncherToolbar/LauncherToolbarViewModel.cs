@@ -31,6 +31,7 @@ using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using ContentTypeTextNet.Pe.Standard.Base;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -67,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 DragEnterAction = ViewDragOverOrEnter,
                 DragOverAction = ViewDragOverOrEnter,
                 DragLeaveAction = ViewDragLeave,
-                DropAction = ViewDrop,
+                DropActionAsync = ViewDropAsync,
                 GetDragParameter = ViewGetDragParameter,
             };
             ItemDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
@@ -75,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 DragEnterAction = ItemDragOverOrEnter,
                 DragOverAction = ItemDragOverOrEnter,
                 DragLeaveAction = ItemDragLeave,
-                DropAction = ItemDrop,
+                DropActionAsync = ItemDropAsync,
                 GetDragParameter = ItemGetDragParameter,
             };
 
@@ -391,10 +392,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             dd.DragOverOrEnter(sender, e);
         }
 
-        private void ViewDrop(UIElement sender, DragEventArgs e)
+        private Task ViewDropAsync(UIElement sender, DragEventArgs e)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
-            dd.Drop(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, Model.RegisterFile));
+            return dd.DropAsync(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, Model.RegisterFile));
         }
 
         private void ViewDragLeave(UIElement sender, DragEventArgs e)
@@ -434,7 +435,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             e.Handled = true;
         }
 
-        private void ItemDrop(UIElement sender, DragEventArgs e)
+        private async Task ItemDropAsync(UIElement sender, DragEventArgs e)
         {
             LauncherItemId launcherItemId = LauncherItemId.Empty;
             var frameworkElement = (FrameworkElement)sender;
@@ -455,17 +456,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 if(appButton.Name != nameof(LauncherToolbarWindow.appButton.Name)) {
                     return;
                 }
-                ViewDrop(sender, e);
+                await ViewDropAsync(sender, e);
                 return;
             }
 
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 var argument = string.Join(' ', filePaths.Select(i => CommandLine.Escape(i)));
-                DispatcherWrapper.BeginAsync(() => ExecuteExtendDropData(launcherItemId, argument));
+                await DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument));
             } else if(e.Data.IsTextPresent()) {
                 var argument = TextUtility.JoinLines(e.Data.GetText());
-                DispatcherWrapper.BeginAsync(() => ExecuteExtendDropData(launcherItemId, argument));
+                await DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument));
             }
 
             e.Handled = true;
@@ -476,15 +477,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        void ExecuteExtendDropData(LauncherItemId launcherItemId, string argument)
+        private async Task ExecuteExtendDropDataAsync(LauncherItemId launcherItemId, string argument)
         {
             switch(ContentDropMode) {
                 case LauncherToolbarContentDropMode.ExtendsExecute:
-                    Model.OpenExtendsExecuteView(launcherItemId, argument, DockScreen);
+                    await Model.OpenExtendsExecuteViewAsync(launcherItemId, argument, DockScreen);
                     break;
 
                 case LauncherToolbarContentDropMode.DirectExecute:
-                    Model.ExecuteWithArgument(launcherItemId, argument);
+                    await Model.ExecuteWithArgumentAsync(launcherItemId, argument);
                     break;
             }
         }
@@ -624,9 +625,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public void ReceiveViewClosed(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
         {
-            Model.ReceiveViewClosed(isUserOperation);
+            return Model.ReceiveViewClosedAsync(isUserOperation);
         }
 
 

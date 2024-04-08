@@ -45,8 +45,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     }
 
     /// <summary>
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface IHitValuesCreator
     {
         #region property

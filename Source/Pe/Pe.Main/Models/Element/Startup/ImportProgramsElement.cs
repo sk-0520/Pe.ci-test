@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             ;
         }
 
-        private void LoadPrograms()
+        public async Task LoadProgramsAsync()
         {
             ThrowIfDisposed();
 
@@ -105,17 +105,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             ;
 
             foreach(var element in elements) {
-                element.Initialize();
+                await element.InitializeAsync();
                 ProgramItems.Add(element);
             }
 
-        }
-
-        public Task LoadProgramsAsync()
-        {
-            ThrowIfDisposed();
-
-            return Task.Run(() => LoadPrograms());
         }
 
         private void Import()
@@ -201,9 +194,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         #region ContextElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             Logger.LogTrace("not impl");
+            return Task.CompletedTask;
         }
 
         #endregion

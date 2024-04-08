@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
 
                 if(ApplicationUpdateInfo.NewVersionItem != null) {
-                    ShowNewVersionReleaseNote(ApplicationUpdateInfo.NewVersionItem, false);
+                    await ShowNewVersionReleaseNoteAsync(ApplicationUpdateInfo.NewVersionItem, false);
                 } else {
                     Logger.LogInformation("アップデート情報未取得");
                 }
@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(updateCheckKind != UpdateCheckKind.ForceUpdate) {
                 try {
-                    ShowNewVersionReleaseNote(ApplicationUpdateInfo.NewVersionItem, updateCheckKind == UpdateCheckKind.CheckOnly);
+                    await ShowNewVersionReleaseNoteAsync(ApplicationUpdateInfo.NewVersionItem, updateCheckKind == UpdateCheckKind.CheckOnly);
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
                     ApplicationUpdateInfo.SetError(ex.Message);
@@ -239,7 +239,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 );
 
                 // リリースノート再表示
-                ShowNewVersionReleaseNote(ApplicationUpdateInfo.NewVersionItem, false);
+                await ShowNewVersionReleaseNoteAsync(ApplicationUpdateInfo.NewVersionItem, false);
 
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);

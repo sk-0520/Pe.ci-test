@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 {
@@ -76,12 +77,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             NotifyManager.LauncherItemRegistered += NotifyManager_LauncherItemRegistered;
             NotifyManager.LauncherItemRemovedInLauncherGroup += NotifyManager_LauncherItemRemovedInLauncherGroup;
 
             LoadGroup();
+
+            return Task.CompletedTask;
         }
 
         protected override void Dispose(bool disposing)

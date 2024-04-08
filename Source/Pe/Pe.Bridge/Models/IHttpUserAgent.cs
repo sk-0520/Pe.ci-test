@@ -162,10 +162,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
     /// <summary>
     /// <see cref="IHttpUserAgent"/>生成処理。
-    /// <para>生成したやつは <see cref="IDisposable.Dispose"/> すること。</para>
-    /// HttpClientFactoryを使いたかったけど今の仕組みに乗せるのは難しそうな気がした(裏で使うかも)。
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>生成したやつは <see cref="IDisposable.Dispose"/> すること。</para>
+    /// <para>HttpClientFactoryを使いたかったけど今の仕組みに乗せるのは難しそうな気がした(裏で使うかも)。</para>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface IHttpUserAgentFactory
     {
         #region property

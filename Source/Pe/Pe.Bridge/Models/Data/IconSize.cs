@@ -5,8 +5,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 {
     /// <summary>
     /// アイコン固定サイズ。
-    /// <para>名前の迷走よ。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>名前の迷走よ。</para>
+    /// </remarks>
     public enum IconBox
     {
         /// <summary>
@@ -35,19 +37,20 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         public IconSize([PixelKind(Px.Device)] int width, [PixelKind(Px.Device)] int height)
         {
             if(width <= 0) {
-                throw new ArgumentException(nameof(width));
+                throw new ArgumentException(null, nameof(width));
             }
             if(height <= 0) {
-                throw new ArgumentException(nameof(height));
+                throw new ArgumentException(null, nameof(height));
             }
 
             Width = width;
             Height = height;
         }
+
         public IconSize([PixelKind(Px.Device)] int boxSize)
         {
             if(boxSize <= 0) {
-                throw new ArgumentException(nameof(boxSize));
+                throw new ArgumentException(null, nameof(boxSize));
             }
 
             Width = Height = boxSize;
@@ -60,13 +63,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
             Height = (int)((int)iconBox * dpiScale.Y);
         }
 
-
         #region property
 
         /// <summary>
         /// DPI が取得できないところで使用するしゃあなしDPIスケール。
         /// </summary>
-        public static Point DefaultScale => new Point(1, 1);
+        public readonly static Point DefaultScale = new(1, 1);
 
         /// <summary>
         /// 横幅。
@@ -91,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <see cref="Size"/> への変換。
         /// </summary>
         /// <returns></returns>
-        public readonly Size ToSize() => new Size(Width, Height);
+        public readonly Size ToSize() => new(Width, Height);
 
         #endregion
 
@@ -140,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// 現在の設定値から<see cref="IconSize"/>を算出。
         /// </summary>
         /// <returns></returns>
-        public readonly IconSize ToIconSize() => new IconSize(Box, Dpi);
+        public readonly IconSize ToIconSize() => new(Box, Dpi);
 
         #endregion
 

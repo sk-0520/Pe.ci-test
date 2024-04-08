@@ -7,8 +7,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 {
     /// <summary>
     /// 特定の <see cref="System.Windows.Threading.Dispatcher"/> で実行する。
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface IDispatcherWrapper
     {
         #region property
@@ -50,9 +52,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         /// <summary>
         /// 対象 <see cref="Dispatcher"/> でなんかした結果を取得する。
+        /// </summary>
+        /// <remarks>
         /// <para>内部的には停止状態。</para>
         /// <para>癌。</para>
-        /// </summary>
+        /// </remarks>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="func"></param>
         /// <param name="dispatcherPriority"></param>

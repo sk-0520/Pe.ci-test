@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
@@ -71,9 +72,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
         }
 
-        public override void Load()
+        public override async Task LoadAsync()
         {
-            base.Load();
+            await base.LoadAsync();
             SelectedToolbar = ToolbarCollection.ViewModels.First();
         }
 

@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         //public IconBox IconBox { get; }
 
         /// <summary>
-        /// 非 <c>null</c> の場合に、<see cref="DependencyObject"/>操作時に指定の<see cref="IDispatcherWrapper"/>で処理する。
+        /// 非 <see langword="null" /> の場合に、<see cref="DependencyObject"/>操作時に指定の<see cref="IDispatcherWrapper"/>で処理する。
         /// </summary>
         protected IDispatcherWrapper? DispatcherWrapper { get; }
 

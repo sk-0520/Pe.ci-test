@@ -70,9 +70,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
-            //nop
+            return Task.CompletedTask;
         }
 
         #endregion

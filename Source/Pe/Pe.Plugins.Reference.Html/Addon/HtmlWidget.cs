@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media;
@@ -131,7 +133,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html.Addon
 
         #endregion
 
-        private void SendTimer_Elapsed(object? sender, ElapsedEventArgs e)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:命名スタイル", Justification = "<保留中>")]
+        private async void SendTimer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             Debug.Assert(SendTimer != null);
 
@@ -140,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html.Addon
             var timestamp = DateTime.Now.ToString("u");
             var memory = GC.GetTotalMemory(false);
 
-            WebViewGrass!.ExecuteScriptAsync("receiveSample", timestamp, memory);
+            await WebViewGrass!.ExecuteScriptAsync("receiveSample", timestamp, memory);
 
             SendTimer.Start();
         }

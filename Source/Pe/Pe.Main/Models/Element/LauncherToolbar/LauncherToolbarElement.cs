@@ -25,6 +25,7 @@ using ContentTypeTextNet.Pe.Main.Views.Extend;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 {
@@ -305,7 +306,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             HiddenSize = LauncherToolbarTheme.GetHiddenSize(ButtonPadding, IconMargin, iconScale, IsIconOnly, TextWidth);
         }
 
-        private void LoadLauncherToolbar()
+        private Task LoadLauncherToolbarAsync()
         {
             Logger.LogInformation("toolbar id: {0}", LauncherToolbarId);
             ThrowIfDisposed();
@@ -340,7 +341,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             ;
 
             Font = new FontElement(displayData.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            Font.Initialize();
+            return Font.InitializeAsync();
         }
 
         private IEnumerable<LauncherItemElement> GetLauncherItems()
@@ -458,7 +459,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             NotifyManager.SendLauncherItemRegistered(SelectedLauncherGroup.LauncherGroupId, data.Item.LauncherItemId);
         }
 
-        public void OpenExtendsExecuteView(LauncherItemId launcherItemId, string argument, IScreen screen)
+        public async Task OpenExtendsExecuteViewAsync(LauncherItemId launcherItemId, string argument, IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -468,27 +469,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 return;
             }
 
-            launcherItem.OpenExtendsExecuteViewWidthArgument(argument, screen);
+            await launcherItem.OpenExtendsExecuteViewWidthArgumentAsync(argument, screen);
         }
 
-        public void ExecuteWithArgument(LauncherItemId launcherItemId, string argument)
+        public Task ExecuteWithArgumentAsync(LauncherItemId launcherItemId, string argument)
         {
             ThrowIfDisposed();
 
             var launcherItem = LauncherItems.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
             if(launcherItem == null) {
                 Logger.LogError("指定のランチャーアイテムは存在しない: {0}", launcherItemId);
-                return;
+                return Task.CompletedTask;
             }
 
-            launcherItem.DirectExecute(argument, DockScreen);
+            return launcherItem.DirectExecuteAsync(argument, DockScreen);
         }
 
         #endregion
 
         #region ElementBase
 
-        override protected void InitializeImpl()
+        override protected Task InitializeCoreAsync()
         {
             Logger.LogInformation("initialize {0}:{1}, {2}: {3}", DockScreen.DeviceName, DockScreen.DeviceBounds, nameof(DockScreen.Primary), DockScreen.Primary);
 
@@ -501,9 +502,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 launcherToolbarId = CreateLauncherToolbar();
             }
             LauncherToolbarId = launcherToolbarId;
-            LoadLauncherToolbar();
+            LoadLauncherToolbarAsync();
             LoadLauncherItems();
             UpdateDesign();
+
+            return Task.CompletedTask;
         }
 
         protected override void Dispose(bool disposing)
@@ -570,8 +573,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
-        public void ReceiveViewClosed(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
+        public async Task ReceiveViewClosedAsync(bool isUserOperation)
         {
             if(isUserOperation) {
                 if(!IsVisible) {
@@ -596,7 +599,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                            }
                        }
                     );
-                    RestoreVisibleNotifyLogId = NotifyManager.AppendLog(notifyMessage);
+                    RestoreVisibleNotifyLogId = await NotifyManager.AppendLogAsync(notifyMessage);
                 }
             }
             ViewCreated = false;

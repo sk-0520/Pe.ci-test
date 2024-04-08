@@ -12,6 +12,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 {
@@ -146,13 +147,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             var components = LoadComponents();
 
             ComponentsImpl.AddRange(GetApplicationItems());
             ComponentsImpl.AddRange(ToItems(AboutComponentKind.Library, components.Library));
             ComponentsImpl.AddRange(ToItems(AboutComponentKind.Resource, components.Resource));
+
+            return Task.CompletedTask;
         }
 
         public bool CheckCreateUninstallBatch(string uninstallBatchFilePath, UninstallTarget uninstallTargets)

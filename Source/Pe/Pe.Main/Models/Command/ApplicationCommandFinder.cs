@@ -18,6 +18,8 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
@@ -248,7 +250,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         }
 
 
-        public IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        public async IAsyncEnumerable<ICommandItem> EnumerateCommandItemsAsync(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             if(!IsInitialized) {
                 throw new InvalidOperationException(nameof(IsInitialized));
@@ -257,7 +259,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 foreach(var parameter in Parameters) {
                     var element = new ApplicationCommandItemElement(parameter, DispatcherWrapper, LoggerFactory);
-                    element.Initialize();
+                    await element.InitializeAsync();
                     element.EditableScore = hitValuesCreator.GetScore(ScoreKind.Initial, hitValuesCreator.NoBonus) - 1;
                     yield return element;
                 }
@@ -276,7 +278,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                     var hitValue = hitValuesCreator.ConvertHitValues(parameter.Header, ranges);
 
                     var element = new ApplicationCommandItemElement(parameter, DispatcherWrapper, LoggerFactory);
-                    element.Initialize();
+                    await element.InitializeAsync();
 
                     element.EditableHeaderValues.SetRange(hitValue);
                     element.EditableScore = hitValuesCreator.CalcScore(parameter.Header, element.EditableHeaderValues);

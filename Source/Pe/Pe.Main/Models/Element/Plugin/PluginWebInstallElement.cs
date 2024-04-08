@@ -137,8 +137,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
 
         #region ElementBase
 
-        protected override void InitializeImpl()
-        { }
+        protected override Task InitializeCoreAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
 
@@ -175,10 +177,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
-        public void ReceiveViewClosed(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
+        public Task ReceiveViewClosedAsync(bool isUserOperation)
         {
             ViewCreated = false;
+            return Task.CompletedTask;
         }
 
         #endregion

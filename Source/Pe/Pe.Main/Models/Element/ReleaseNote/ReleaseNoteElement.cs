@@ -60,8 +60,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
 
         #region ElementBase
 
-        protected override void InitializeImpl()
-        { }
+        protected override Task InitializeCoreAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
     }

@@ -127,11 +127,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
             foreach(var setupperType in setupperTypes) {
                 var databaseSetupVersion = setupperType.GetCustomAttribute<DatabaseSetupVersionAttribute>();
-                Enforce.ThrowIfNull(databaseSetupVersion);
+                Throws.ThrowIfNull(databaseSetupVersion);
                 if(lastVersion < databaseSetupVersion.Version) {
                     Logger.LogInformation("マイグレーション対象: {0} < {1}", lastVersion, databaseSetupVersion.Version);
                     var setupper = (SetupperBase?)Activator.CreateInstance(setupperType, new object[] { IdFactory, StatementLoader, LoggerFactory });
-                    Enforce.ThrowIfNull(setupper);
+                    Throws.ThrowIfNull(setupper);
                     Execute(accessorPack, dto, setupper);
                 }
             }

@@ -15,6 +15,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
@@ -102,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override Task InitializeCoreAsync()
         {
             LauncherGroupData data;
             IEnumerable<LauncherItemId> launcherItemIds;
@@ -120,6 +121,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ImageColor = data.ImageColor;
             Sequence = data.Sequence;
             LauncherItems.SetRange(launcherItemIds.Select(i => WrapModel.Create(i, LoggerFactory)));
+
+            return Task.CompletedTask;
         }
 
         protected override void Dispose(bool disposing)

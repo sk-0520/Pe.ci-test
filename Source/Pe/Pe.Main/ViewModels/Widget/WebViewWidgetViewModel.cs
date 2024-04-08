@@ -151,22 +151,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         object IWebViewGrass.WebView => WebView;
 
         /// <inheritdoc cref="IWebViewGrass.ExecuteScriptAsync(string)"/>
-        public void ExecuteScriptAsync(string script)
+        public Task ExecuteScriptAsync(string script)
         {
             if(WebView.CanExecuteJavascriptInMainFrame) {
                 WebView.ExecuteScriptAsync(script);
             } else {
                 Logger.LogError("{0} のスクリプト実行不可状態, {1}", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId);
             }
+            return Task.CompletedTask;
         }
         /// <inheritdoc cref="IWebViewGrass.ExecuteScriptAsync(string, object[])"/>
-        public void ExecuteScriptAsync(string methodName, params object[] parameters)
+        public Task ExecuteScriptAsync(string methodName, params object[] parameters)
         {
             if(WebView.CanExecuteJavascriptInMainFrame) {
                 WebView.ExecuteScriptAsync(methodName, parameters);
             } else {
                 Logger.LogError("{0} スクリプト実行不可状態, {1}", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId);
             }
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc cref="IWebViewGrass.EvaluateScriptAsync(string)"/>

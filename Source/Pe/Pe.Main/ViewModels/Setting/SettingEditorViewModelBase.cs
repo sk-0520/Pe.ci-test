@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -22,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         /// <summary>
         /// データ読み込み。
         /// </summary>
-        void Load();
+        Task LoadAsync();
         /// <summary>
         /// 情報更新。
         /// </summary>
@@ -71,13 +72,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetProperty(ref this._isSelected, value);
         }
 
-        public virtual void Load()
+        public virtual async Task LoadAsync()
         {
             if(Model.IsLoaded) {
                 Refresh();
                 return;
             }
-            Model.Load();
+            await Model.LoadAsync();
         }
 
         public abstract void Flush();

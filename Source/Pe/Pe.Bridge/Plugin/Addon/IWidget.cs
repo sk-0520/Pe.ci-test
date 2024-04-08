@@ -205,8 +205,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         object WebView { get; }
 
-        void ExecuteScriptAsync(string script);
-        void ExecuteScriptAsync(string methodName, params object[] parameters);
+        Task ExecuteScriptAsync(string script);
+        Task ExecuteScriptAsync(string methodName, params object[] parameters);
 
         Task<IWebViewScriptResult> EvaluateScriptAsync(string script);
         Task<IWebViewScriptResult> EvaluateScriptAsync(string methodName, params object[] parameters);

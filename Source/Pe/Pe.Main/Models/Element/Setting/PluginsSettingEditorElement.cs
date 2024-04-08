@@ -155,14 +155,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             var pluginInstallData = await PluginInstaller.InstallPluginArchiveAsync(archiveFile, ext, true, InstallPluginItemsImpl.Select(i => i.Data), PluginInstallAssemblyMode.Process, TemporaryDatabaseBarrier);
             var element = new PluginInstallItemElement(pluginInstallData, LoggerFactory);
-            element.Initialize();
+            await element.InitializeAsync();
             MergeInstallPlugin(element);
         }
 
-        internal PluginWebInstallRequestParameter CreatePluginWebInstallRequestParameter()
+        internal async Task<PluginWebInstallRequestParameter> CreatePluginWebInstallRequestParameterAsync()
         {
             var element = new Plugin.PluginWebInstallElement(PluginContainer, EnvironmentParameters, NewVersionChecker, NewVersionDownloader, UserAgentFactory, LoggerFactory);
-            element.Initialize();
+            await element.InitializeAsync();
 
             return new PluginWebInstallRequestParameter() {
                 Element = element,
@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region SettingEditorElementBase
 
-        protected override void LoadImpl()
+        protected override async Task LoadCoreAsync()
         {
             IList<PluginStateData> pluginStates;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             foreach(var installDataItem in installDataItems) {
                 var element = new PluginInstallItemElement(installDataItem, LoggerFactory);
-                element.Initialize();
+                await element.InitializeAsync();
                 InstallPluginItemsImpl.Add(element);
             }
 
@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             foreach(var pluginState in pluginStates) {
                 var plugin = PluginContainer.Plugins.FirstOrDefault(i => pluginState.PluginId == i.PluginInformation.PluginIdentifiers.PluginId);
                 var element = new PluginSettingEditorElement(pluginState, plugin, PreferencesContextFactory, MainDatabaseBarrier, DatabaseStatementLoader, UserAgentFactory, ViewManager, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
-                element.Initialize();
+                await element.InitializeAsync();
                 PluginItemsImpl.Add(element);
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -134,8 +135,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
         public void ReceiveViewClosing(Window window, CancelEventArgs e)
         { }
 
-        public void ReceiveViewClosed(Window window, bool isUserOperation)
-        { }
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
 

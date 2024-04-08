@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
-    /// 別段指定しない<see cref="Enforce"/>処理で継続できない場合に投げられる例外。
+    /// 別段指定しない<see cref="Throws"/>処理で継続できない場合に投げられる例外。
     /// </summary>
     [Serializable]
-    public sealed class EnforceException: Exception
+    public sealed class LogicException: Exception
     {
-        public EnforceException()
+        public LogicException()
         { }
 
-        public EnforceException(string message)
+        public LogicException(string message)
             : base(message)
         { }
 
-        public EnforceException(string message, Exception inner)
+        public LogicException(string message, Exception inner)
             : base(message, inner)
         { }
     }
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// 状態を強制。
     /// </summary>
-    public static class Enforce
+    public static class Throws
     {
         #region function
 
@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         private static void ThrowCore<TException>(string callerArgument)
             where TException : Exception
         {
-            throw (TException)Activator.CreateInstance(typeof(TException), new object[] { callerArgument })!;
+            throw (TException)Activator.CreateInstance(typeof(TException), [callerArgument])!;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <typeparam name="TException">投げられる例外。</typeparam>
         /// <param name="value">真偽値。</param>
         /// <param name="callerArgument"></param>
-        public static void ThrowIf<TException>(bool value, [CallerArgumentExpression("value")] string callerArgument = "")
+        public static void ThrowIf<TException>(bool value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
             where TException : Exception
         {
             if(!value) {
@@ -55,20 +55,20 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        /// <inheritdoc cref="ThrowIf{EnforceException}"/>
-        /// <exception cref="EnforceException"></exception>
-        public static void ThrowIf(bool value, [CallerArgumentExpression("value")] string callerArgument = "")
-            => ThrowIf<EnforceException>(value, callerArgument);
+        /// <inheritdoc cref="ThrowIf{LogicException}"/>
+        /// <exception cref="LogicException"></exception>
+        public static void ThrowIf(bool value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
+            => ThrowIf<LogicException>(value, callerArgument);
 
         /// <summary>
-        /// 指定値が<c>null</c>の場合に例外を投げる。
+        /// 指定値が<see langword="null" />の場合に例外を投げる。
         /// </summary>
         /// <typeparam name="T">指定値</typeparam>
         /// <typeparam name="TException">投げられる例外。</typeparam>
         /// <param name="value"></param>
         /// <param name="callerArgument"></param>
-        /// <exception cref="TException"><paramref name="value"/>が<c>null</c></exception>。
-        public static void ThrowIfNull<T, TException>([AllowNull][NotNull] T value, [CallerArgumentExpression("value")] string callerArgument = "")
+        /// <exception cref="TException"><paramref name="value"/>が<see langword="null" /></exception>。
+        public static void ThrowIfNull<T, TException>([AllowNull][NotNull] T value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
             where TException : Exception
         {
             if(value is null) {
@@ -76,10 +76,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        /// <inheritdoc cref="ThrowIfNull{T, EnforceException}"/>
-        /// <exception cref="EnforceException"></exception>
-        public static void ThrowIfNull<T>([AllowNull][NotNull] T value, [CallerArgumentExpression("value")] string callerArgument = "")
-            => ThrowIfNull<T, EnforceException>(value, callerArgument);
+        /// <inheritdoc cref="ThrowIfNull{T, LogicException}"/>
+        /// <exception cref="LogicException"></exception>
+        public static void ThrowIfNull<T>([AllowNull][NotNull] T value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
+            => ThrowIfNull<T, LogicException>(value, callerArgument);
 
         /// <summary>
         /// 指定値が<see cref="string.IsNullOrEmpty"/>に該当する場合、例外を投げる。
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <typeparam name="TException">投げられる例外。</typeparam>
         /// <param name="value"></param>
         /// <param name="callerArgument"></param>
-        public static void ThrowIfNullOrEmpty<TException>([NotNull] string? value, [CallerArgumentExpression("value")] string callerArgument = "")
+        public static void ThrowIfNullOrEmpty<TException>([NotNull] string? value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
             where TException : Exception
         {
             if(string.IsNullOrEmpty(value)) {
@@ -95,10 +95,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        /// <inheritdoc cref="ThrowIfNullOrEmpty{EnforceException}"/>
-        /// <exception cref="EnforceException"></exception>
-        public static void ThrowIfNullOrEmpty([NotNull] string? value, [CallerArgumentExpression("value")] string callerArgument = "")
-            => ThrowIfNullOrEmpty<EnforceException>(value, callerArgument);
+        /// <inheritdoc cref="ThrowIfNullOrEmpty{LogicException}"/>
+        /// <exception cref="LogicException"></exception>
+        public static void ThrowIfNullOrEmpty([NotNull] string? value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
+            => ThrowIfNullOrEmpty<LogicException>(value, callerArgument);
 
         /// <summary>
         /// 指定値が<see cref="string.IsNullOrWhiteSpace"/>に該当する場合、例外を投げる。
@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <typeparam name="TException">投げられる例外。</typeparam>
         /// <param name="value"></param>
         /// <param name="callerArgument"></param>
-        public static void ThrowIfNullOrWhiteSpace<TException>([NotNull] string? value, [CallerArgumentExpression("value")] string callerArgument = "")
+        public static void ThrowIfNullOrWhiteSpace<TException>([NotNull] string? value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
             where TException : Exception
         {
             if(string.IsNullOrWhiteSpace(value)) {
@@ -114,10 +114,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        /// <inheritdoc cref="ThrowIfNullOrWhiteSpace{EnforceException}"/>
-        /// <exception cref="EnforceException"></exception>
-        public static void ThrowIfNullOrWhiteSpace([NotNull] string? value, [CallerArgumentExpression("value")] string callerArgument = "")
-            => ThrowIfNullOrWhiteSpace<EnforceException>(value, callerArgument);
+        /// <inheritdoc cref="ThrowIfNullOrWhiteSpace{LogicException}"/>
+        /// <exception cref="LogicException"></exception>
+        public static void ThrowIfNullOrWhiteSpace([NotNull] string? value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
+            => ThrowIfNullOrWhiteSpace<LogicException>(value, callerArgument);
 
         #endregion
     }

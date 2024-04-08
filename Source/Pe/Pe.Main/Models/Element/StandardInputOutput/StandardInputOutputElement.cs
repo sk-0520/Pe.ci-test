@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -139,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         #region ElementBase
 
-        protected override void InitializeImpl()
+        protected override async Task InitializeCoreAsync()
         {
             SettingAppStandardInputOutputSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -148,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             }
 
             Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            Font.Initialize();
+            await Font.InitializeAsync();
 
             OutputForegroundColor = setting.OutputForegroundColor;
             OutputBackgroundColor = setting.OutputBackgroundColor;
@@ -200,12 +201,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
-        public void ReceiveViewClosed(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
+        public Task ReceiveViewClosedAsync(bool isUserOperation)
         {
             ViewCreated = false;
+            return Task.CompletedTask;
         }
-
 
         #endregion
 

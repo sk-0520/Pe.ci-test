@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
@@ -34,9 +35,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels._Debug_
         }
 
         /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
-        public void ReceiveViewClosed(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
         {
-            Model.ReceiveViewClosed(isUserOperation);
+            return Model.ReceiveViewClosedAsync(isUserOperation);
         }
 
         #endregion

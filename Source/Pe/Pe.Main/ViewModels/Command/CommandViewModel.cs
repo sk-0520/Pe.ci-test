@@ -469,10 +469,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public void ReceiveViewClosed(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
         {
-            Model.ReceiveViewClosed(isUserOperation);
+            Model.ReceiveViewClosedAsync(isUserOperation);
             HideWaitTimer.Stop();
+            return Task.CompletedTask;
         }
 
         #endregion

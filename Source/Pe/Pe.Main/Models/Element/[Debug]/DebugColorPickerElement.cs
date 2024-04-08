@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element._Debug_
@@ -17,8 +18,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element._Debug_
 
         #region DebugElementBase
 
-        protected override void InitializeImpl()
-        { }
+        protected override Task InitializeCoreAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
 

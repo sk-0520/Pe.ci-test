@@ -103,7 +103,7 @@ private:
     void get_path_from_test_dir_core(tstring& result, std::initializer_list<tstring> path_items)
     {
         std::filesystem::path path = test_root_directory_path;
-        for (auto path_item : path_items) {
+        for (auto& path_item : path_items) {
             path /= path_item;
         }
         result = path;
@@ -146,7 +146,7 @@ private:
         Microsoft::VisualStudio::CppUnitTestFramework::Logger::WriteMessage(message);
     }
 
-    void logging(const LOG_ITEM* log_item)
+    void logging(const LOG_ITEM* log_item) const
     {
         tstring message(_T("["));
         message += this->test_namespace_name;
@@ -208,10 +208,7 @@ public:
         library_rc_initialize(output, RES_CHECK_INIT_PATH_LENGTH, RES_CHECK_INIT_BUFFER_LENGTH, RES_CHECK_INIT_HEAP_COUNT, RES_CHECK_INIT_FILE_COUNT);
 #endif
 
-
-        LOGGER logger;
-        logger.function = logging;
-        logger.data = this,
+        LOGGER logger{ logging, this };
         attach_logger(&logger);
         initialize_logger(DEFAULT_MEMORY_ARENA);
         logger_put_info(_T("TEST START"));

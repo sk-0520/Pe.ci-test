@@ -142,25 +142,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         internal CronItemSetting(int minutes, int hour, int day, int month)
         {
-            Minutes.Add(EnforceMinutes(minutes, nameof(minutes)));
-            Hours.Add(EnforceHour(hour, nameof(hour)));
-            Days.Add(EnforceDay(day, nameof(day)));
-            Months.Add(EnforceMonth(month, nameof(month)));
+            Minutes.Add(ThrowIfNotMinutes(minutes, nameof(minutes)));
+            Hours.Add(ThrowIfNotHour(hour, nameof(hour)));
+            Days.Add(ThrowIfNotDay(day, nameof(day)));
+            Months.Add(ThrowIfNotMonth(month, nameof(month)));
             DayOfWeeks.AddRange(Enum.GetValues<DayOfWeek>());
         }
 
         internal CronItemSetting(int minutes, int hour, int day, int month, DayOfWeek dayOfWeek)
         {
-            Minutes.Add(EnforceMinutes(minutes, nameof(minutes)));
-            Hours.Add(EnforceHour(hour, nameof(hour)));
-            Days.Add(EnforceDay(day, nameof(day)));
-            Months.Add(EnforceMonth(month, nameof(month)));
+            Minutes.Add(ThrowIfNotMinutes(minutes, nameof(minutes)));
+            Hours.Add(ThrowIfNotHour(hour, nameof(hour)));
+            Days.Add(ThrowIfNotDay(day, nameof(day)));
+            Months.Add(ThrowIfNotMonth(month, nameof(month)));
             DayOfWeeks.Add(dayOfWeek);
         }
 
         #region function
 
-        private static int Enforce(int value, int min, int max, string valueArgumentName)
+        private static int ThrowIfNotInMinMax(int value, int min, int max, string valueArgumentName)
         {
             if(min <= value && value <= max) {
                 return value;
@@ -169,16 +169,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             throw new ArgumentException(valueArgumentName);
         }
 
-        private static int EnforceMinutes(int value, string valueArgumentName) => Enforce(value, 0, 59, valueArgumentName);
-        private static int EnforceHour(int value, string valueArgumentName) => Enforce(value, 0, 23, valueArgumentName);
+        private static int ThrowIfNotMinutes(int value, string valueArgumentName) => ThrowIfNotInMinMax(value, 0, 59, valueArgumentName);
+        private static int ThrowIfNotHour(int value, string valueArgumentName) => ThrowIfNotInMinMax(value, 0, 23, valueArgumentName);
         /// <summary>
         /// 年情報がないのでうるう年とか月最終日は知らん。
         /// </summary>
         /// <param name="value"></param>
         /// <param name="valueArgumentName"></param>
         /// <returns></returns>
-        private static int EnforceDay(int value, string valueArgumentName) => Enforce(value, 1, 31, valueArgumentName);
-        private static int EnforceMonth(int value, string valueArgumentName) => Enforce(value, 1, 12, valueArgumentName);
+        private static int ThrowIfNotDay(int value, string valueArgumentName) => ThrowIfNotInMinMax(value, 1, 31, valueArgumentName);
+        private static int ThrowIfNotMonth(int value, string valueArgumentName) => ThrowIfNotInMinMax(value, 1, 12, valueArgumentName);
 
         #endregion
 

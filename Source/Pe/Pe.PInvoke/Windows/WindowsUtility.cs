@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         #region function
 
         /// <summary>
-        /// <c>GetWindowLongPtr/GetWindowLong</c> のプラットフォーム吸収処理。
+        /// <c>GetWindowLongPtr/GetWindowLong</c>(<see cref="SetWindowLongPtr(nint, int, nint)"/>) のプラットフォーム吸収処理。
         /// </summary>
         /// <param name="hWnd"></param>
         /// <param name="nIndex"></param>
@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         }
 
         /// <summary>
-        /// <c>SetWindowLongPtr/SetWindowLong</c> のプラットフォーム吸収処理。
+        /// <c>SetWindowLongPtr/SetWindowLong</c>(<see cref="SetWindowLongPtr(nint, int, nint)"/>) のプラットフォーム吸収処理。
         /// </summary>
         /// <param name="hWnd"></param>
         /// <param name="nIndex"></param>
