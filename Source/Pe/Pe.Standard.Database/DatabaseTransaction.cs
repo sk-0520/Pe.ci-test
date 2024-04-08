@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
@@ -9,37 +8,6 @@ using System.Diagnostics;
 
 namespace ContentTypeTextNet.Pe.Standard.Database
 {
-    /// <summary>
-    /// データベース実装におけるトランザクション処理。
-    /// <para>これが実体化されてればトランザクション中でしょうね。</para>
-    /// </summary>
-    public interface IDatabaseTransaction: IDatabaseContext, IDatabaseContexts, IDisposable
-    {
-        #region property
-
-        /// <summary>
-        /// CRL上のトランザクション実体。
-        /// <para>トランザクションを開始しない場合 <see langword="null" /> となり、扱いは <see cref="IDatabaseTransaction"/> 実装側依存となる。</para>
-        /// </summary>
-        IDbTransaction? Transaction { get; }
-
-        #endregion
-
-        #region function
-
-        /// <summary>
-        /// コミット！
-        /// </summary>
-        void Commit();
-
-        /// <summary>
-        /// なかったことにしたい人生の一部。
-        /// </summary>
-        void Rollback();
-
-        #endregion
-    }
-
     /// <summary>
     /// トランザクション中の処理をサポート。
     /// <para>基本的にはユーザーコードで登場せず <see cref="IDatabaseContext"/>がすべて上位から良しなに対応する。</para>
@@ -279,32 +247,6 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
             base.Dispose(disposing);
         }
-
-        #endregion
-    }
-
-    /// <summary>
-    /// 読み込み専用トランザクション。
-    /// </summary>
-    public sealed class ReadOnlyDatabaseTransaction: DatabaseTransaction
-    {
-        /// <inheritdoc cref="DatabaseTransaction.DatabaseTransaction(bool, IDatabaseAccessor)" />
-        public ReadOnlyDatabaseTransaction(bool beginTransaction, IDatabaseAccessor databaseAccessor)
-            : base(beginTransaction, databaseAccessor)
-        { }
-
-        /// <inheritdoc cref="DatabaseTransaction.DatabaseTransaction(bool, IDatabaseAccessor, IsolationLevel)" />
-        public ReadOnlyDatabaseTransaction(bool beginTransaction, IDatabaseAccessor databaseAccessor, IsolationLevel isolationLevel)
-            : base(beginTransaction, databaseAccessor, isolationLevel)
-        { }
-
-        #region DatabaseTransaction
-
-        public override void Commit() => throw new NotSupportedException();
-
-        public override int Execute(string statement, object? parameter = null) => throw new NotSupportedException();
-
-        public override Task<int> ExecuteAsync(string statement, object? parameter = null, CancellationToken cancellationToken = default) => throw new NotSupportedException();
 
         #endregion
     }
