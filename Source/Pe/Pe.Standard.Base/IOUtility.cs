@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return path;
         }
 
-        private static void EnforceOptions(TemporaryOptions options)
+        private static void ThrowIfInvalidOptions(TemporaryOptions options)
         {
             if(options.RetryCount < 1) {
                 throw new ArgumentException(nameof(options) + "." + nameof(options.RetryCount));
@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         private static TemporaryDirectory CreateTemporaryDirectoryCore(DirectoryInfo baseDirectory, TemporaryDirectoryOptions options)
         {
-            EnforceOptions(options);
+            ThrowIfInvalidOptions(options);
 
             if(!baseDirectory.Exists) {
                 baseDirectory.Create();
@@ -228,7 +228,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         private static TemporaryFile CreateTemporaryFileCore(DirectoryInfo baseDirectory, TemporaryFileOptions options)
         {
-            EnforceOptions(options);
+            ThrowIfInvalidOptions(options);
 
             var randomNameCharacters = options.RandomNameCharacters.ToArray();
             var random = new Random();

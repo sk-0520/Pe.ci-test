@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        /// <inheritdoc cref="ThrowIf{EnforceException}"/>
+        /// <inheritdoc cref="ThrowIf{LogicException}"/>
         /// <exception cref="LogicException"></exception>
         public static void ThrowIf(bool value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
             => ThrowIf<LogicException>(value, callerArgument);
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        /// <inheritdoc cref="ThrowIfNull{T, EnforceException}"/>
+        /// <inheritdoc cref="ThrowIfNull{T, LogicException}"/>
         /// <exception cref="LogicException"></exception>
         public static void ThrowIfNull<T>([AllowNull][NotNull] T value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
             => ThrowIfNull<T, LogicException>(value, callerArgument);
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        /// <inheritdoc cref="ThrowIfNullOrEmpty{EnforceException}"/>
+        /// <inheritdoc cref="ThrowIfNullOrEmpty{LogicException}"/>
         /// <exception cref="LogicException"></exception>
         public static void ThrowIfNullOrEmpty([NotNull] string? value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
             => ThrowIfNullOrEmpty<LogicException>(value, callerArgument);
@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        /// <inheritdoc cref="ThrowIfNullOrWhiteSpace{EnforceException}"/>
+        /// <inheritdoc cref="ThrowIfNullOrWhiteSpace{LogicException}"/>
         /// <exception cref="LogicException"></exception>
         public static void ThrowIfNullOrWhiteSpace([NotNull] string? value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
             => ThrowIfNullOrWhiteSpace<LogicException>(value, callerArgument);

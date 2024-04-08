@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         #region function
 
         [Conditional("DEBUG")]
-        private static void EnforceOrderBy(string statement)
+        private static void ThrowIfNotOrderBy(string statement)
         {
             if(!Regex.IsMatch(statement, @"\border\s+by\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
                 throw new DatabaseContextException("order by");
@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <returns></returns>
         public static IEnumerable<T> SelectOrdered<T>(this IDatabaseReader reader, string statement, object? parameter = null, bool buffered = true)
         {
-            EnforceOrderBy(statement);
+            ThrowIfNotOrderBy(statement);
 
             return reader.Query<T>(statement, parameter, buffered);
         }
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="SelectOrdered{T}(IDatabaseReader, string, object?, bool)"/>
         public static IEnumerable<dynamic> SelectOrdered(this IDatabaseReader reader, string statement, object? parameter = null, bool buffered = true)
         {
-            EnforceOrderBy(statement);
+            ThrowIfNotOrderBy(statement);
 
             return reader.Query(statement, parameter, buffered);
         }
@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="SelectOrdered{T}(IDatabaseReader, string, object?, bool)"/>
         public static Task<IEnumerable<T>> SelectOrderedAsync<T>(this IDatabaseReader reader, string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
         {
-            EnforceOrderBy(statement);
+            ThrowIfNotOrderBy(statement);
 
             return reader.QueryAsync<T>(statement, parameter, buffered, cancellationToken);
         }
@@ -58,14 +58,14 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="SelectOrdered{T}(IDatabaseReader, string, object?, bool)"/>
         public static Task<IEnumerable<dynamic>> SelectOrderedAsync(this IDatabaseReader reader, string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
         {
-            EnforceOrderBy(statement);
+            ThrowIfNotOrderBy(statement);
 
             return reader.QueryAsync(statement, parameter, buffered, cancellationToken);
         }
 
 
         [Conditional("DEBUG")]
-        private static void EnforceSingleCount(string statement)
+        private static void ThrowIfNotSingleCount(string statement)
         {
             if(!Regex.IsMatch(statement, @"\bselect\s+count\s*\(", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
                 throw new DatabaseContextException("select count()");
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <returns></returns>
         public static long SelectSingleCount(this IDatabaseReader reader, string statement, object? parameter = null)
         {
-            EnforceSingleCount(statement);
+            ThrowIfNotSingleCount(statement);
 
             return reader.QueryFirst<long>(statement, parameter);
         }
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="SelectSingleCount(IDatabaseReader, string, object?)"/>
         public static Task<long> SelectSingleCountAsync(this IDatabaseReader reader, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
-            EnforceSingleCount(statement);
+            ThrowIfNotSingleCount(statement);
 
             return reader.QueryFirstAsync<long>(statement, parameter, cancellationToken);
         }
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         #region function
 
         [Conditional("DEBUG")]
-        private static void EnforceUpdate(string statement)
+        private static void ThrowIfNotUpdate(string statement)
         {
             if(!Regex.IsMatch(statement, @"\bupdate\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
                 throw new DatabaseContextException("update");
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <returns>更新件数。</returns>
         public static int Update(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
-            EnforceUpdate(statement);
+            ThrowIfNotUpdate(statement);
 
             return writer.Execute(statement, parameter);
         }
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="Update(IDatabaseWriter, string, object?)"/>
         public static Task<int> UpdateAsync(this IDatabaseWriter writer, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
-            EnforceUpdate(statement);
+            ThrowIfNotUpdate(statement);
 
             return writer.ExecuteAsync(statement, parameter, cancellationToken);
         }
@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static void UpdateByKey(this IDatabaseWriter writer, string statement, object parameter)
         {
-            EnforceUpdate(statement);
+            ThrowIfNotUpdate(statement);
 
             var result = writer.Execute(statement, parameter);
             if(result != 1) {
@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="UpdateByKey(IDatabaseWriter, string, object)"/>
         public static async Task UpdateByKeyAsync(this IDatabaseWriter writer, string statement, object parameter, CancellationToken cancellationToken = default)
         {
-            EnforceUpdate(statement);
+            ThrowIfNotUpdate(statement);
 
             var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(result != 1) {
@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static bool UpdateByKeyOrNothing(this IDatabaseWriter writer, string statement, object parameter)
         {
-            EnforceUpdate(statement);
+            ThrowIfNotUpdate(statement);
 
             var result = writer.Execute(statement, parameter);
             if(1 < result) {
@@ -187,7 +187,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="UpdateByKeyOrNothing(IDatabaseWriter, string, object)"/>
         public static async Task<bool> UpdateByKeyOrNothingAsync(this IDatabaseWriter writer, string statement, object parameter, CancellationToken cancellationToken = default)
         {
-            EnforceUpdate(statement);
+            ThrowIfNotUpdate(statement);
 
             var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(1 < result) {
@@ -198,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         }
 
         [Conditional("DEBUG")]
-        private static void EnforceInsert(string statement)
+        private static void ThrowIfNotInsert(string statement)
         {
             if(!Regex.IsMatch(statement, @"\binsert\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
                 throw new DatabaseContextException("insert");
@@ -214,7 +214,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <returns>挿入件数。</returns>
         public static int Insert(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
-            EnforceInsert(statement);
+            ThrowIfNotInsert(statement);
 
             return writer.Execute(statement, parameter);
         }
@@ -222,7 +222,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="Insert(IDatabaseWriter, string, object?)"/>
         public static Task<int> InsertAsync(this IDatabaseWriter writer, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
-            EnforceInsert(statement);
+            ThrowIfNotInsert(statement);
 
             return writer.ExecuteAsync(statement, parameter, cancellationToken);
         }
@@ -237,7 +237,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static void InsertSingle(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
-            EnforceInsert(statement);
+            ThrowIfNotInsert(statement);
 
             var result = writer.Execute(statement, parameter);
             if(result != 1) {
@@ -248,7 +248,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="InsertSingle(IDatabaseWriter, string, object?)"/>
         public static async Task InsertSingleAsync(this IDatabaseWriter writer, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
-            EnforceInsert(statement);
+            ThrowIfNotInsert(statement);
 
             var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(result != 1) {
@@ -257,7 +257,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         }
 
         [Conditional("DEBUG")]
-        private static void EnforceDelete(string statement)
+        private static void ThrowIfNotDelete(string statement)
         {
             if(!Regex.IsMatch(statement, @"\bdelete\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
                 throw new DatabaseContextException("delete");
@@ -273,7 +273,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <returns>削除件数。</returns>
         public static int Delete(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
-            EnforceDelete(statement);
+            ThrowIfNotDelete(statement);
 
             return writer.Execute(statement, parameter);
         }
@@ -281,7 +281,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="Delete(IDatabaseWriter, string, object?)"/>
         public static Task<int> DeleteAsync(this IDatabaseWriter writer, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
-            EnforceDelete(statement);
+            ThrowIfNotDelete(statement);
 
             return writer.ExecuteAsync(statement, parameter, cancellationToken);
         }
@@ -296,7 +296,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static void DeleteByKey(this IDatabaseWriter writer, string statement, object parameter)
         {
-            EnforceDelete(statement);
+            ThrowIfNotDelete(statement);
 
             var result = writer.Execute(statement, parameter);
             if(result != 1) {
@@ -306,7 +306,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="DeleteByKey(IDatabaseWriter, string, object)"/>
         public static async Task DeleteByKeyAsync(this IDatabaseWriter writer, string statement, object parameter, CancellationToken cancellationToken = default)
         {
-            EnforceDelete(statement);
+            ThrowIfNotDelete(statement);
 
             var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(result != 1) {
@@ -326,7 +326,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static bool DeleteByKeyOrNothing(this IDatabaseWriter writer, string statement, object parameter)
         {
-            EnforceDelete(statement);
+            ThrowIfNotDelete(statement);
 
             var result = writer.Execute(statement, parameter);
             if(1 < result) {
@@ -339,7 +339,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="DeleteByKeyOrNothing(IDatabaseWriter, string, object)"/>
         public static async Task<bool> DeleteByKeyOrNothingAsync(this IDatabaseWriter writer, string statement, object parameter, CancellationToken cancellationToken = default)
         {
-            EnforceDelete(statement);
+            ThrowIfNotDelete(statement);
 
             var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(1 < result) {
