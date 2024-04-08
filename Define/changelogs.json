@@ -1,48 +1,14 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.226+",
+		"date": "2024/04/08",
+		"version": "0.99.227",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "d48e27afda47c080fb2bf25393cd620d8dc4c211",
 						"subject": "#906: HTTP アクセス時に UA 未設定"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -50,20 +16,8 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "dbb83f459f88e84779e8927689bfe29533c5e161",
 						"subject": "#925: API周りのソースコードURIがふるい"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -71,7 +25,7 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "91a1cf8e5160a4388c1e3e737c53199f80d5028f",
 						"subject": "#890: 諸々を async 処理に置き換える",
 						"comments": [
 							"Task.Wait() 入り乱れる謎実装になってしまった",
@@ -79,27 +33,23 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "52302e29c52545eae52dce497d23b633fbe38bac",
 						"class": "nuget",
 						"subject": "Dapper 2.1.28 -> 2.1.35"
 					},
 					{
-						"revision": "",
+						"revision": "74e320e05a72dc0160f4663c498d5ef06962562b",
 						"class": "nuget",
 						"subject": "Microsoft.Extensions.Logging.Abstractions 8.0.0 -> 8.0.1"
 					},
 					{
-						"revision": "",
+						"revision": "0c8fec415ee46ba86abe2730133832f41e60a66b",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf.NETCore 120.2.70 -> 123.0.60"
 					},
 					{
-						"revision": "update npm",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"revision": "01b47c80f1ed7e8b0a7cb515001bee9c6289eaa7",
+						"subject": "update npm"
 					}
 				]
 			}
