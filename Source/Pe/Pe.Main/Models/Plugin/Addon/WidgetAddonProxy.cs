@@ -51,16 +51,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             throw new NotSupportedException();
         }
 
-        /// <inheritdoc cref="IWidget.CreateWebViewWidget(IWidgetAddonCreateContext)"/>
-        public IWebViewSeed CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext)
-        {
-            if(ViewType == WidgetViewType.WebView) {
-                return FunctionUnit.CreateWebViewWidget(widgetAddonCreateContext);
-            }
-
-            throw new NotSupportedException();
-        }
-
         /// <inheritdoc cref="IWidget.OpeningWidget(IPluginContext)"/>
         public void OpeningWidget(IPluginContext pluginContext)
         {

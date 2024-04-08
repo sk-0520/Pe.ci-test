@@ -92,43 +92,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             return window;
         }
 
-        private Window CreateWebViewWidget(WidgetAddonCreateContext context)
-        {
-            Debug.Assert(Widget.ViewType == WidgetViewType.WebView);
-
-            var seed = Widget.CreateWebViewWidget(context);
-
-            WebViewWidgetViewModel viewModel;
-            var window = new WebViewWidgetWindow();
-            using(Initializer.Begin(window)) {
-                window.ResizeMode = seed.ResizeMode;
-                window.WindowStyle = seed.WindowStyle;
-                if(window.WindowStyle == WindowStyle.None) {
-                    window.AllowsTransparency = true;
-                }
-                if(0 < seed.ViewSize.Width && 0 < seed.ViewSize.Height && !double.IsNaN(seed.ViewSize.Width) && !double.IsNaN(seed.ViewSize.Height)) {
-                    window.Width = seed.ViewSize.Width;
-                    window.Height = seed.ViewSize.Height;
-                }
-                window.Background = seed.Background;
-
-                var pluginDirPath = Path.GetDirectoryName(Plugin.GetType().Assembly.Location)!;
-                var publicDirPath = Path.Combine(pluginDirPath, seed.PublicDirectoryName);
-                Logger.LogTrace("{0}", publicDirPath);
-                var publicDir = new DirectoryInfo(publicDirPath);
-
-                window.webView.RequestHandler = new WebViewWidgetRequestHandler(publicDir, LoggerFactory);
-                window.webView.LifeSpanHandler = new PlatformLifeSpanHandler(LoggerFactory);
-                window.webView.MenuHandler = new DisableContextMenuHandler();
-                WebViewSetupper.SetupDefault(window.webView);
-
-                viewModel = new WebViewWidgetViewModel(context.PluginIdentifiers, window, seed.HtmlSource, seed.SoilCallback, seed.Extensions, EnvironmentParameters, DispatcherWrapper, LoggerFactory);
-                window.DataContext = viewModel;
-            }
-
-            return window;
-        }
-
         /// <summary>
         /// ウィジェット用にウィンドウを調節。
         /// <para>生成時のスタイル変更は<see cref="WidgetViewModelBase.ReceiveViewInitialized(Window)"/>を参照。</para>
@@ -189,7 +152,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 using var context = WidgetAddonContextFactory.CreateCreateContext(PluginInformation, reader);
                 window = Widget.ViewType switch {
                     WidgetViewType.Window => CreateWindowWidget(context),
-                    WidgetViewType.WebView => CreateWebViewWidget(context),
                     _ => throw new NotImplementedException(),
                 };
             }
