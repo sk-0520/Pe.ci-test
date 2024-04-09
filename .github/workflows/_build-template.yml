@@ -36,7 +36,7 @@ jobs:
     strategy:
       matrix:
         OS:
-          - windows-latest
+          - ${{ inputs.OS_WINDOWS }}
           - ubuntu-latest
 
     runs-on: ${{ matrix.OS }}
@@ -820,7 +820,7 @@ jobs:
     name: System Test PowerShell
     env:
       UPDATE_DESTINATION: \dest
-    runs-on: windows-latest
+    runs-on: ${{ inputs.OS_WINDOWS }}
     needs:
       - powershell-source
 
@@ -839,5 +839,3 @@ jobs:
           name: ${{ github.job }}-Update.log
           path: ${{ env.UPDATE_DESTINATION }}.log
           if-no-files-found: error
-
-
