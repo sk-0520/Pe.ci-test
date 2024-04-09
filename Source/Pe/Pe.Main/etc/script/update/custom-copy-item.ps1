@@ -8,22 +8,21 @@ Param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
-$srcChildItems = Get-ChildItem -LiteralPath $SourceDirectoryPath -Recurse -Force
-if ($srcChildItems.Count -eq 0) {
+$srcChildItems = @(Get-ChildItem -LiteralPath $SourceDirectoryPath -Recurse -Force)
+if ($srcChildItems.Length -eq 0) {
 	return
 }
 
-$destRootDirPath = if ( $CreateDirectory ) {
-	Join-Path -Path $DestinationDirectoryPath -ChildPath ([System.IO.Path]::GetFileName($SourceDirectoryPath))
-} else {
-	Join-Path -Path $DestinationDirectoryPath -ChildPath ''
+$destRootDirPath = $DestinationDirectoryPath
+if ( $CreateDirectory ) {
+	$destRootDirPath = Join-Path -Path $DestinationDirectoryPath -ChildPath ([System.IO.Path]::GetFileName($SourceDirectoryPath))
 }
 
 $srcDirs = $srcChildItems | Where-Object { $_.PSIsContainer }
 $srcFiles = $srcChildItems | Where-Object { !$_.PSIsContainer }
 
 $processCount = 0
-$totalProcessCount = $srcChildItems.Count
+$totalProcessCount = $srcChildItems.Length
 
 $progressAnimation = 1
 $progressOutput = 2
@@ -71,7 +70,7 @@ foreach ($srcFile in $srcFiles) {
 		}
 	}
 
-	Copy-Item -Path $srcPath -Destination $destPath -Force | Out-Null
+	Copy-Item -LiteralPath $srcPath -Destination $destPath -Force
 }
 
 if ($progress -eq $progressAnimation) {

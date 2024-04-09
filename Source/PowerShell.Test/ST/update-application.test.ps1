@@ -20,7 +20,35 @@ Write-Output "? = $?"
 if(-not $?) {
 	throw "? = $?"
 }
-# $source = Get-Childitem -Path $Source -Recurse
-# $destination = Get-Childitem -Path $Destination -Recurse
+$sourceFiles = @(Get-Childitem -LiteralPath $Source -Recurse -Force)
+$destinationFiles = @(Get-Childitem -LiteralPath $Destination -Recurse -Force)
 
-# Compare-Object $source $destination -Property Name, Length
+$errors = @()
+if($sourceFiles.Length -ne $destinationFiles.Length) {
+	$errors += "source($($sourceFiles.Length)) -ne destination($($destinationFiles.Length))"
+}
+
+for ($i = 0; $i -lt $sourceFiles.Length; $i++) {
+	$sourceFile = $sourceFiles[$i]
+	$destPath = $sourceFile.FullName.Replace($Source, $Destination)
+	if(Test-Path -LiteralPath $destPath) {
+		if(Test-Path -LiteralPath $sourceFile.FullName -PathType Container) {
+			if(!(Test-Path -LiteralPath $destPath -PathType Container)) {
+				$errors += "sourceFile($($sourceFile.FullName))[dir] : destPath($destPath)[file]"
+			}
+		} else {
+			$srcHash = Get-FileHash -LiteralPath $sourceFile.FullName -Algorithm SHA256
+			$dstHash = Get-FileHash -LiteralPath $destPath -Algorithm SHA256
+
+			if($srcHash.Hash -ne $dstHash.Hash) {
+				$errors += "srcHash($($srcHash.Hash)) -ne dstHash($($dstHash.Hash))"
+			}
+		}
+	} else {
+		$errors += "not found $destPath"
+	}
+}
+
+if(0 -lt $errors.Length) {
+	throw ($errors -join [System.Environment]::NewLine)
+}

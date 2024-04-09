@@ -1,5 +1,23 @@
 [
 	{
+		"date": "2024/04/09",
+		"version": "0.99.228",
+		"contents": [
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "",
+						"subject": "#927: アップデート処理のコピー処理に不具合ありそう",
+						"comments": [
+							"なかったなぁ……"
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2024/04/08",
 		"version": "0.99.227",
 		"contents": [
