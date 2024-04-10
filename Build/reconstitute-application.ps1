@@ -80,7 +80,6 @@ $unsupportPlatform = switch ($Platform) {
 }
 $unsupportTargets = @(
 	Join-Path -Path $outputMainDir -ChildPath $unsupportPlatform
-	Join-Path -Path $dstLibDir -ChildPath 'Redist.MSVC.CRT' | Join-Path -ChildPath $unsupportPlatform
 )
 foreach ($unsupportTarget in $unsupportTargets) {
 	Write-Information "Remove: $unsupportTarget"
