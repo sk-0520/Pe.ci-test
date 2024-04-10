@@ -8,8 +8,14 @@
 				"logs": [
 					{
 						"revision": "",
-						"class": "",
-						"subject": ""
+						"class": "compatibility",
+						"subject": "#717 対応により WebView2 ランタイムが必要になります",
+						"comments": [
+							"Windows 11 では対応不要です",
+							"Windows 10 では状況次第で必要ですがたぶんまぁ大丈夫ですが必要に応じてランタイムインストールが必要です(以下URLを参照)",
+							"https://developer.microsoft.com/microsoft-edge/webview2",
+							"https://jpdsi.github.io/blog/internet-explorer-microsoft-edge/webview2-faq/"
+						]
 					},
 					{
 						"revision": "",
@@ -30,7 +36,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#717: 内蔵ブラウザをWebView2にする"
 					},
 					{
 						"revision": "",
