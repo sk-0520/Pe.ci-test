@@ -49,8 +49,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
             //);
 
             //CefSharp.Cef.Initialize(settings, performDependencyCheck: false, browserProcessHandler: null);
+            var userDataDirectoryPath = environmentParameters.MachineWebViewDirectory.FullName;
+            var webViewEnvironment = await CoreWebView2Environment.CreateAsync(null, userDataDirectoryPath);
 
-            await webView.EnsureCoreWebView2Async();
+            await webView.EnsureCoreWebView2Async(webViewEnvironment);
 
             webView.CoreWebView2.Settings.AreDevToolsEnabled = environmentParameters.ApplicationConfiguration.Web.DeveloperTools;
         }

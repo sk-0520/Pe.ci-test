@@ -127,24 +127,6 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo MainSqlDirectory => CombineDirectory(false, SqlDirectory, "ContentTypeTextNet.Pe.Main");
 
-        public DirectoryInfo WebViewTemplateDirectory => CombineDirectory(false, EtcDirectory, "web-view");
-        //public DirectoryInfo WebViewThirdPartyDirectory => CombineDirectory(false, WebViewTemplateDirectory, "third-party");
-        //public DirectoryInfo WebViewScriptDirectory => CombineDirectory(false, WebViewTemplateDirectory, "script");
-        //public DirectoryInfo WebViewJqueryDirectory => CombineDirectory(false, WebViewThirdPartyDirectory, "jquery");
-        //public FileInfo WebViewJqueryScriptFile => CombineFile(WebViewJqueryDirectory, "jquery.js");
-        //public DirectoryInfo WebViewMarkedDirectory => CombineDirectory(false, WebViewThirdPartyDirectory, "Marked");
-        //public FileInfo WebViewMarkedScriptFile => CombineFile(WebViewMarkedDirectory, "marked.min.js");
-        //public DirectoryInfo WebViewStyleDirectory => CombineDirectory(false, WebViewTemplateDirectory, "style");
-        //public FileInfo WebViewBasicStyleFile => CombineFile(WebViewStyleDirectory, "basic.css");
-        public DirectoryInfo WebViewFeedbackTemplateDirectory => CombineDirectory(false, WebViewTemplateDirectory, "feedback");
-        public FileInfo WebViewFeedbackTemplateFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.html");
-        //public FileInfo WebViewFeedbackStyleFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.css");
-        //public FileInfo WebViewFeedbackScriptFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.js");
-
-        public DirectoryInfo WebViewWidgetDirectory => CombineDirectory(false, WebViewTemplateDirectory, "widget");
-        public FileInfo WebViewWidgetInjectionScriptFile => CombineFile(WebViewWidgetDirectory, "injection.js");
-        public FileInfo WebViewWidgetInjectionStyleSheetFile => CombineFile(WebViewWidgetDirectory, "injection.css");
-
         /// <summary>
         /// 文書ディレクトリ。
         /// </summary>
@@ -244,7 +226,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo TemporarySettingDirectory => CombineDirectory(true, TemporaryDirectory, "setting");
         /// <summary>
-        /// WebViewのユーザーディレクトリ。
+        /// 一時プラグインディレクトリ。
         /// </summary>
         public DirectoryInfo TemporaryPluginDirectory => CombineDirectory(true, TemporaryDirectory, "plugin");
         /// <summary>
@@ -274,14 +256,6 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// プラグイン手動展開ディレクトリ。
         /// </summary>
         public DirectoryInfo TemporaryPluginManualExtractDirectory => CombineDirectory(true, TemporaryPluginExtractBaseDirectory, "manual");
-        /// <summary>
-        /// WebViewの一時親ディレクトリ。
-        /// </summary>
-        public DirectoryInfo TemporaryWebViewDirectory => CombineDirectory(true, TemporaryDirectory, "web-view");
-        /// <summary>
-        /// WebViewのキャッシュディレクトリ。
-        /// </summary>
-        public DirectoryInfo TemporaryWebViewCacheDirectory => CombineDirectory(true, TemporaryWebViewDirectory, "cache");
         /// <summary>
         /// アップデート時ログファイル。
         /// </summary>
