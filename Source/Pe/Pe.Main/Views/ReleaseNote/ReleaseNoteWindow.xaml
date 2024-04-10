@@ -19,6 +19,8 @@
   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
   BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
 
+  SourceInitialized="root_SourceInitialized"
+
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:datacontext="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote" d:DataContext="{d:DesignInstance Type=datacontext:ReleaseNoteViewModel}"
   mc:Ignorable="d"

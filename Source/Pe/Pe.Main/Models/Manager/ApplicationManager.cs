@@ -2113,9 +2113,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return windowItem;
         }
 
-
-
-
         #endregion
 
         #region DisposerBase

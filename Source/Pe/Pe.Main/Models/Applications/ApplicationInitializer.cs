@@ -611,10 +611,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 InitializeDirectory(environmentParameters, logger, loggerFactory);
             }
 
-            if(RunModeUtility.IsBuildWebView(RunMode)) {
-                var webViewInitializer = new WebViewInitializer(loggerFactory);
-                webViewInitializer.Initialize(environmentParameters, cultureService);
-            }
+            // note: webview2
+            //if(RunModeUtility.IsBuildWebView(RunMode)) {
+            //    var webViewInitializer = new WebViewInitializer(loggerFactory);
+            //    await webViewInitializer.InitializeAsync(environmentParameters, cultureService);
+            //}
 
             ApplicationDatabaseFactoryPack? factory = null;
             if(RunModeUtility.IsBuildPersistence(RunMode)) {

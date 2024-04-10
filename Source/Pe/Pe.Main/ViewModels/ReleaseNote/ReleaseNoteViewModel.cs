@@ -83,9 +83,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
 
                 if(t.IsCompletedSuccessfully) {
                     var htmlSource = t.Result;
-                    //view.webView.LoadHtml(htmlSource, Model.NewVersionItem.NoteUri.ToString());
+                    view.webView.NavigateToString(htmlSource);
                 } else {
-                    //view.webView.LoadHtml(Properties.Resources.File_ReleaseNote_ErrorReleaseNote, nameof(Properties.Resources.File_ReleaseNote_ErrorReleaseNote));
+                    view.webView.NavigateToString(Properties.Resources.File_ReleaseNote_ErrorReleaseNote);
                 }
             }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }

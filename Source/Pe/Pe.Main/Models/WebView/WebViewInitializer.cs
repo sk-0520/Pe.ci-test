@@ -1,5 +1,9 @@
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Web.WebView2.Core;
+using Microsoft.Web.WebView2.Wpf;
 
 namespace ContentTypeTextNet.Pe.Main.Models.WebView
 {
@@ -22,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
 
         #region function
 
-        public void Initialize(EnvironmentParameters environmentParameters, CultureService cultureService)
+        public async Task InitializeAsync(WebView2 webView, EnvironmentParameters environmentParameters, CultureService cultureService)
         {
             ////NOTE: プラグイン開発等においてここで死ぬ場合はリビルドを。
             //var settings = new CefSharp.Wpf.CefSettings();
@@ -45,6 +49,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
             //);
 
             //CefSharp.Cef.Initialize(settings, performDependencyCheck: false, browserProcessHandler: null);
+
+            await webView.EnsureCoreWebView2Async();
+
+            webView.CoreWebView2.Settings.AreDevToolsEnabled = environmentParameters.ApplicationConfiguration.Web.DeveloperTools;
         }
 
         //public void AddVisualCppRuntimeRedist(EnvironmentParameters environmentParameters)

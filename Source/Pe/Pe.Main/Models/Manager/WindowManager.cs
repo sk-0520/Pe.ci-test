@@ -236,8 +236,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             if(ApplicationConfiguration.Web.DeveloperTools) {
-                var cef = UIUtility.FindChildren<WebView2>(item.Window).FirstOrDefault();
-                if(cef != null) {
+                var webView = UIUtility.FindChildren<WebView2>(item.Window).FirstOrDefault();
+                if(webView != null) {
                     item.Window.PreviewKeyDown += Window_DeveloperTools_KeyDown;
                 }
             }
@@ -444,13 +444,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             if(dev) {
-                //TODO: webview2
-                //var cef = UIUtility.FindChildren<CefSharp.Wpf.ChromiumWebBrowser>((Window)sender).FirstOrDefault();
-                //if(cef != null) {
-                //    if(cef.IsBrowserInitialized && !cef.IsLoading) {
-                //        cef.ShowDevTools();
-                //    }
-                //}
+                var window = (Window)sender;
+                var webView = UIUtility.FindChildren<WebView2>(window).FirstOrDefault();
+                if(webView is not null) {
+                    webView.CoreWebView2.OpenDevToolsWindow();
+                }
             }
         }
     }
