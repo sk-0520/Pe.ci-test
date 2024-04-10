@@ -12,7 +12,7 @@
 						"subject": "#717 対応により WebView2 ランタイムが必要になります",
 						"comments": [
 							"Windows 11 では対応不要です",
-							"Windows 10 では状況次第で必要ですがたぶんまぁ大丈夫ですが必要に応じてランタイムインストールが必要です(以下URLを参照)",
+							"Windows 10 では状況次第で必要ですがたぶんまぁ大丈夫。ただし状況(Windows Update 未適用等)に応じてランタイムインストールが必要です(以下URLを参照)",
 							"https://developer.microsoft.com/microsoft-edge/webview2",
 							"https://jpdsi.github.io/blog/internet-explorer-microsoft-edge/webview2-faq/"
 						]
