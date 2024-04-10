@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using CefSharp;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Standard.DependencyInjection;
@@ -17,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.ViewModels;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using System.Windows.Data;
+using Microsoft.Web.WebView2.Wpf;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -236,7 +236,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             if(ApplicationConfiguration.Web.DeveloperTools) {
-                var cef = UIUtility.FindChildren<CefSharp.Wpf.ChromiumWebBrowser>(item.Window).FirstOrDefault();
+                var cef = UIUtility.FindChildren<WebView2>(item.Window).FirstOrDefault();
                 if(cef != null) {
                     item.Window.PreviewKeyDown += Window_DeveloperTools_KeyDown;
                 }
@@ -444,12 +444,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             if(dev) {
-                var cef = UIUtility.FindChildren<CefSharp.Wpf.ChromiumWebBrowser>((Window)sender).FirstOrDefault();
-                if(cef != null) {
-                    if(cef.IsBrowserInitialized && !cef.IsLoading) {
-                        cef.ShowDevTools();
-                    }
-                }
+                //TODO: webview2
+                //var cef = UIUtility.FindChildren<CefSharp.Wpf.ChromiumWebBrowser>((Window)sender).FirstOrDefault();
+                //if(cef != null) {
+                //    if(cef.IsBrowserInitialized && !cef.IsLoading) {
+                //        cef.ShowDevTools();
+                //    }
+                //}
             }
         }
     }

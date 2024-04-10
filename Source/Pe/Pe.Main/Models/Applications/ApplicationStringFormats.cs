@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using CefSharp;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Standard.Base;
@@ -22,9 +21,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         private static void WriteHttpUserAgentWebViewValue(IDictionary<string, string> target)
         {
-            target.Add("BROWSER-CORE-VERSION", Cef.CefVersion);
-            target.Add("BROWSER-LIBRARY-VERSION", Cef.CefSharpVersion);
-            target.Add("BROWSER-REVISION", Cef.CefCommitHash);
+            target.Add("BROWSER-CORE-VERSION", "#Cef.CefVersion");
+            target.Add("BROWSER-LIBRARY-VERSION", "#Cef.CefSharpVersion");
+            target.Add("BROWSER-REVISION", "#Cef.CefCommitHash");
         }
 
         /// <summary>

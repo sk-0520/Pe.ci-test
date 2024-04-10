@@ -1447,7 +1447,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void DisposeWebView()
         {
-            CefSharp.Cef.Shutdown();
+            //CefSharp.Cef.Shutdown();
         }
 
         /// <summary>

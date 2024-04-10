@@ -24,27 +24,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
 
         public void Initialize(EnvironmentParameters environmentParameters, CultureService cultureService)
         {
-            //NOTE: プラグイン開発等においてここで死ぬ場合はリビルドを。
-            var settings = new CefSharp.Wpf.CefSettings();
+            ////NOTE: プラグイン開発等においてここで死ぬ場合はリビルドを。
+            //var settings = new CefSharp.Wpf.CefSettings();
 
-            settings.Locale = cultureService.Culture.TwoLetterISOLanguageName;
-            settings.AcceptLanguageList = cultureService.Culture.Name;
+            //settings.Locale = cultureService.Culture.TwoLetterISOLanguageName;
+            //settings.AcceptLanguageList = cultureService.Culture.Name;
 
-            settings.CachePath = environmentParameters.TemporaryWebViewCacheDirectory.FullName;
+            //settings.CachePath = environmentParameters.TemporaryWebViewCacheDirectory.FullName;
 
-            settings.UserAgent = ApplicationStringFormats.GetHttpUserAgentWebViewValue(environmentParameters.ApplicationConfiguration.Web.ViewUserAgentFormat);
+            //settings.UserAgent = ApplicationStringFormats.GetHttpUserAgentWebViewValue(environmentParameters.ApplicationConfiguration.Web.ViewUserAgentFormat);
 
-            settings.PersistSessionCookies = true;
+            //settings.PersistSessionCookies = true;
 
-            settings.RegisterScheme(
-                new CefSharp.CefCustomScheme() {
-                    SchemeName = ApplicationStorageSchemeHandlerFactory.SchemeName,
-                    DomainName = ApplicationStorageSchemeHandlerFactory.DomainName,
-                    SchemeHandlerFactory = new ApplicationStorageSchemeHandlerFactory(environmentParameters, LoggerFactory)
-                }
-            );
+            //settings.RegisterScheme(
+            //    new CefSharp.CefCustomScheme() {
+            //        SchemeName = ApplicationStorageSchemeHandlerFactory.SchemeName,
+            //        DomainName = ApplicationStorageSchemeHandlerFactory.DomainName,
+            //        SchemeHandlerFactory = new ApplicationStorageSchemeHandlerFactory(environmentParameters, LoggerFactory)
+            //    }
+            //);
 
-            CefSharp.Cef.Initialize(settings, performDependencyCheck: false, browserProcessHandler: null);
+            //CefSharp.Cef.Initialize(settings, performDependencyCheck: false, browserProcessHandler: null);
         }
 
         //public void AddVisualCppRuntimeRedist(EnvironmentParameters environmentParameters)
