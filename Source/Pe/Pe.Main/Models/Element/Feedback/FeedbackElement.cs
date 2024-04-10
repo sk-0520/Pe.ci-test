@@ -21,16 +21,17 @@ using ContentTypeTextNet.Pe.Standard.Database;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 {
-    public class FeedbackElement: WebViewElementBase
+    public class FeedbackElement: ElementBase
     {
         public FeedbackElement(EnvironmentParameters environmentParameters, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
-            : base(userAgentManager, loggerFactory)
+            : base(loggerFactory)
         {
             EnvironmentParameters = environmentParameters;
             MainDatabaseBarrier = mainDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
             OrderManager = orderManager;
             CultureService = cultureService;
+            UserAgentManager = userAgentManager;
 
             SendStatus = new RunningStatus(LoggerFactory);
         }
@@ -43,6 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
         private IDatabaseStatementLoader DatabaseStatementLoader { get; }
         private IOrderManager OrderManager { get; }
         private CultureService CultureService { get; }
+        IUserAgentManager UserAgentManager { get; }
 
         private TimeSpan RetryWaitTime { get; } = TimeSpan.FromSeconds(5);
         public RunningStatus SendStatus { get; }
