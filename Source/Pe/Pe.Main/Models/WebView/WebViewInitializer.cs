@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
             await webView.EnsureCoreWebView2Async(webViewEnvironment);
 
             webView.CoreWebView2.Settings.AreDevToolsEnabled = environmentParameters.ApplicationConfiguration.Web.DeveloperTools;
+            webView.CoreWebView2.Settings.UserAgent = ApplicationStringFormats.GetHttpUserAgentWebViewValue(environmentParameters.ApplicationConfiguration.Web.ViewUserAgentFormat, webView);
         }
 
         //public void AddVisualCppRuntimeRedist(EnvironmentParameters environmentParameters)

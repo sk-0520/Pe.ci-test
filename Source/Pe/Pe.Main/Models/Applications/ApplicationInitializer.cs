@@ -611,12 +611,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 InitializeDirectory(environmentParameters, logger, loggerFactory);
             }
 
-            // note: webview2
-            //if(RunModeUtility.IsBuildWebView(RunMode)) {
-            //    var webViewInitializer = new WebViewInitializer(loggerFactory);
-            //    await webViewInitializer.InitializeAsync(environmentParameters, cultureService);
-            //}
-
             ApplicationDatabaseFactoryPack? factory = null;
             if(RunModeUtility.IsBuildPersistence(RunMode)) {
                 (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;

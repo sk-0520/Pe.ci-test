@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Standard.Base;
+using Microsoft.Web.WebView2.Wpf;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
@@ -19,11 +20,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             target.Add("APPLICATION-REVISION", BuildStatus.Revision);
         }
 
-        private static void WriteHttpUserAgentWebViewValue(IDictionary<string, string> target)
+        private static void WriteHttpUserAgentWebViewValue(IDictionary<string, string> target, WebView2 webView)
         {
-            target.Add("BROWSER-CORE-VERSION", "#Cef.CefVersion");
-            target.Add("BROWSER-LIBRARY-VERSION", "#Cef.CefSharpVersion");
-            target.Add("BROWSER-REVISION", "#Cef.CefCommitHash");
+            target.Add("BROWSER-LIBRARY-NAME", typeof(WebView2).FullName!);
+            target.Add("BROWSER-CORE-VERSION", webView.CoreWebView2.Environment.BrowserVersionString);
+            target.Add("BROWSER-LIBRARY-VERSION", typeof(WebView2).Assembly.GetName().Version!.ToString());
         }
 
         /// <summary>
@@ -45,12 +46,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         /// </summary>
         /// <param name="format"></param>
         /// <returns></returns>
-        public static string GetHttpUserAgentWebViewValue(string format)
+        public static string GetHttpUserAgentWebViewValue(string format, WebView2 webView)
         {
             var map = new Dictionary<string, string>();
 
             WriteHttpUserAgentValue(map);
-            WriteHttpUserAgentWebViewValue(map);
+            WriteHttpUserAgentWebViewValue(map, webView);
 
             return TextUtility.ReplaceFromDictionary(format, map);
         }
