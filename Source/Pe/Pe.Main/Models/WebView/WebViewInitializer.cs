@@ -1,5 +1,9 @@
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Web.WebView2.Core;
+using Microsoft.Web.WebView2.Wpf;
 
 namespace ContentTypeTextNet.Pe.Main.Models.WebView
 {
@@ -22,29 +26,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
 
         #region function
 
-        public void Initialize(EnvironmentParameters environmentParameters, CultureService cultureService)
+        public async Task InitializeAsync(WebView2 webView, EnvironmentParameters environmentParameters, CultureService cultureService)
         {
-            //NOTE: プラグイン開発等においてここで死ぬ場合はリビルドを。
-            var settings = new CefSharp.Wpf.CefSettings();
+            ////NOTE: プラグイン開発等においてここで死ぬ場合はリビルドを。
+            //var settings = new CefSharp.Wpf.CefSettings();
 
-            settings.Locale = cultureService.Culture.TwoLetterISOLanguageName;
-            settings.AcceptLanguageList = cultureService.Culture.Name;
+            //settings.Locale = cultureService.Culture.TwoLetterISOLanguageName;
+            //settings.AcceptLanguageList = cultureService.Culture.Name;
 
-            settings.CachePath = environmentParameters.TemporaryWebViewCacheDirectory.FullName;
+            //settings.CachePath = environmentParameters.TemporaryWebViewCacheDirectory.FullName;
 
-            settings.UserAgent = ApplicationStringFormats.GetHttpUserAgentWebViewValue(environmentParameters.ApplicationConfiguration.Web.ViewUserAgentFormat);
+            //settings.UserAgent = ApplicationStringFormats.GetHttpUserAgentWebViewValue(environmentParameters.ApplicationConfiguration.Web.ViewUserAgentFormat);
 
-            settings.PersistSessionCookies = true;
+            //settings.PersistSessionCookies = true;
 
-            settings.RegisterScheme(
-                new CefSharp.CefCustomScheme() {
-                    SchemeName = ApplicationStorageSchemeHandlerFactory.SchemeName,
-                    DomainName = ApplicationStorageSchemeHandlerFactory.DomainName,
-                    SchemeHandlerFactory = new ApplicationStorageSchemeHandlerFactory(environmentParameters, LoggerFactory)
-                }
-            );
+            //settings.RegisterScheme(
+            //    new CefSharp.CefCustomScheme() {
+            //        SchemeName = ApplicationStorageSchemeHandlerFactory.SchemeName,
+            //        DomainName = ApplicationStorageSchemeHandlerFactory.DomainName,
+            //        SchemeHandlerFactory = new ApplicationStorageSchemeHandlerFactory(environmentParameters, LoggerFactory)
+            //    }
+            //);
 
-            CefSharp.Cef.Initialize(settings, performDependencyCheck: false, browserProcessHandler: null);
+            //CefSharp.Cef.Initialize(settings, performDependencyCheck: false, browserProcessHandler: null);
+            var userDataDirectoryPath = environmentParameters.MachineWebViewDirectory.FullName;
+            var webViewEnvironment = await CoreWebView2Environment.CreateAsync(null, userDataDirectoryPath);
+
+            await webView.EnsureCoreWebView2Async(webViewEnvironment);
+
+            webView.CoreWebView2.Settings.AreDevToolsEnabled = environmentParameters.ApplicationConfiguration.Web.DeveloperTools;
+            webView.CoreWebView2.Settings.UserAgent = ApplicationStringFormats.GetHttpUserAgentWebViewValue(environmentParameters.ApplicationConfiguration.Web.ViewUserAgentFormat, webView);
         }
 
         //public void AddVisualCppRuntimeRedist(EnvironmentParameters environmentParameters)

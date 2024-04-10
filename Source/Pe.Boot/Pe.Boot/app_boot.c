@@ -7,14 +7,11 @@
 #include "../Pe.Library/platform.h"
 #include "../Pe.Library/command_line.h"
 #include "app_command_line.h"
-#include "execute.h"
 
 static EXIT_CODE boot_core(HINSTANCE hInstance, const TEXT* command_line)
 {
     APP_PATH_ITEMS app_path_items;
     initialize_app_path_items(&app_path_items, hInstance);
-
-    add_visual_cpp_runtime_redist_env_path(&app_path_items.root_directory);
 
     ShellExecute(NULL, _T("open"), app_path_items.main_module.value, is_enabled_text(command_line) ? command_line->value : NULL, NULL, SW_SHOWNORMAL);
 

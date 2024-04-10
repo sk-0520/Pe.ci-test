@@ -3,7 +3,6 @@
 #include "../Pe.Library/logging.h"
 #include "app_command_line.h"
 #include "app_console.h"
-#include "execute.h"
 #include "app_path.h"
 
 static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* console_resource, const TEXT* command_line)
@@ -12,8 +11,6 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* conso
 
     APP_PATH_ITEMS app_path_items;
     initialize_app_path_items(&app_path_items, hInstance);
-
-    add_visual_cpp_runtime_redist_env_path(&app_path_items.root_directory);
 
     STARTUPINFO startupinfo;
     set_memory(&startupinfo, 0, sizeof(startupinfo));

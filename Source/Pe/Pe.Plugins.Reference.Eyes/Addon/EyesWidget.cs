@@ -83,11 +83,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
             return WidgetView;
         }
 
-        public IWebViewSeed CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext)
-        {
-            throw new NotSupportedException();
-        }
-
         /// <inheritdoc cref="IWidget.OpeningWidget(IPluginContext)"/>
         public void OpeningWidget(IPluginContext pluginContext)
         {

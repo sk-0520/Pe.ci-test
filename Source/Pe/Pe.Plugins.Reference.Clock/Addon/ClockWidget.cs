@@ -77,11 +77,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
             return WidgetView;
         }
 
-        public IWebViewSeed CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext)
-        {
-            throw new NotSupportedException();
-        }
-
         /// <inheritdoc cref="IWidget.OpeningWidget(IPluginContext)"/>
         public void OpeningWidget(IPluginContext pluginContext)
         {
