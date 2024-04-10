@@ -10,13 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="etc\web-view\script\**" />
-    <EmbeddedResource Remove="etc\web-view\script\**" />
-    <None Remove="etc\web-view\script\**" />
-    <Page Remove="etc\web-view\script\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="etc\script\UpdaterScript.cs" />
   </ItemGroup>
 
