@@ -44,6 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
         {
             await WebViewInitializer.InitializeAsync(this.webView, EnvironmentParameters, CultureService);
             this.webView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
+            this.webView.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
             this.webView.Unloaded += WebView_Unloaded;
             this.webView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
         }
