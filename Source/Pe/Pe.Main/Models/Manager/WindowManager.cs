@@ -236,8 +236,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             if(ApplicationConfiguration.Web.DeveloperTools) {
-                var webView = UIUtility.FindChildren<WebView2>(item.Window).FirstOrDefault();
-                if(webView != null) {
+                var hasWebView = UIUtility.FindChildren<WebView2>(item.Window).Any();
+                if(hasWebView) {
                     item.Window.PreviewKeyDown += Window_DeveloperTools_KeyDown;
                 }
             }
