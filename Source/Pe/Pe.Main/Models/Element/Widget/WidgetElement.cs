@@ -26,14 +26,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 {
     public class WidgetElement: ElementBase, IViewCloseReceiver, IPluginId
     {
-        internal WidgetElement(IWidget widget, IPlugin plugin, WidgetAddonContextFactory widgetAddonContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IWindowManager windowManager, INotifyManager notifyManager, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal WidgetElement(IWidget widget, IPlugin plugin, WidgetAddonContextFactory widgetAddonContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseDelayWriter mainDatabaseDelayWriter, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IWindowManager windowManager, INotifyManager notifyManager, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Widget = widget;
             Plugin = plugin;
             WidgetAddonContextFactory = widgetAddonContextFactory;
             MainDatabaseBarrier = mainDatabaseBarrier;
-            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
+            MainDatabaseDelayWriter = mainDatabaseDelayWriter;
             DatabaseStatementLoader = databaseStatementLoader;
             CultureService = cultureService;
             WindowManager = windowManager;
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
         //PluginContextFactory PluginContextFactory { get; }
         private WidgetAddonContextFactory WidgetAddonContextFactory { get; }
         private IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        private IMainDatabaseDelayWriter MainDatabaseDelayWriter { get; }
         private IDatabaseStatementLoader DatabaseStatementLoader { get; }
         private CultureService CultureService { get; }
         private IWindowManager WindowManager { get; }

@@ -22,11 +22,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public LauncherItemCustomizeEnvironmentVariableViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            EnvironmentVariableLazyChanger = new LazyAction("環境変数編集:" + Model.LauncherItemId.ToString(), TimeSpan.FromSeconds(5), LoggerFactory);
+            EnvironmentVariableDelayChanger = new DelayAction("環境変数編集:" + Model.LauncherItemId.ToString(), TimeSpan.FromSeconds(5), LoggerFactory);
         }
 
         #region property
-        private LazyAction EnvironmentVariableLazyChanger { get; }
+        private DelayAction EnvironmentVariableDelayChanger { get; }
         public TextDocument? MergeTextDocument { get; private set; }
         public TextDocument? RemoveTextDocument { get; private set; }
 
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    EnvironmentVariableLazyChanger.Dispose();
+                    EnvironmentVariableDelayChanger.Dispose();
                 }
 
                 if(MergeTextDocument != null) {
@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public void Flush()
         {
-            EnvironmentVariableLazyChanger.SafeFlush();
+            EnvironmentVariableDelayChanger.SafeFlush();
         }
 
         #endregion
@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 return;
             }
 
-            EnvironmentVariableLazyChanger.DelayAction(ChangedEnvironmentVariable);
+            EnvironmentVariableDelayChanger.Callback(ChangedEnvironmentVariable);
         }
     }
 }

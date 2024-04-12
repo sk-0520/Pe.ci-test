@@ -375,7 +375,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             var container = new ApplicationDiContainer();
 
-            var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
+            var delayWriterWaitTimePack = new DelayWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
 
             DatabaseAccessor? statementAccessor = null;
             environmentParameters.SqlStatementAccessorFile.Refresh();
@@ -426,7 +426,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             if(factory is not null) {
                 container.Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), statementAccessor, environmentParameters.ApplicationConfiguration.File.GivePriorityToFile, loggerFactory));
-                container.RegisterDatabase(factory, lazyWriterWaitTimePack, loggerFactory);
+                container.RegisterDatabase(factory, delayWriterWaitTimePack, loggerFactory);
             }
 
 

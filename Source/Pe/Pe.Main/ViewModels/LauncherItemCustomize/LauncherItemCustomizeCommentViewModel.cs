@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public LauncherItemCustomizeCommentViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            CommentLazyChanger = new LazyAction("コメント編集: " + Model.LauncherItemId.ToString(), TimeSpan.FromSeconds(3), LoggerFactory);
+            CommentDelayChanger = new DelayAction("コメント編集: " + Model.LauncherItemId.ToString(), TimeSpan.FromSeconds(3), LoggerFactory);
 
             CommentDocument = new TextDocument(Model.Comment);
             CommentDocument.TextChanged += CommentDocument_TextChanged;
@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region property
 
-        private LazyAction CommentLazyChanger { get; }
+        private DelayAction CommentDelayChanger { get; }
         public TextDocument CommentDocument { get; }
 
 
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    CommentLazyChanger.Dispose();
+                    CommentDelayChanger.Dispose();
                 }
 
                 CommentDocument.TextChanged -= CommentDocument_TextChanged;
@@ -70,13 +70,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #region IFlushable
         public void Flush()
         {
-            CommentLazyChanger.SafeFlush();
+            CommentDelayChanger.SafeFlush();
         }
         #endregion
 
         private void CommentDocument_TextChanged(object? sender, EventArgs e)
         {
-            CommentLazyChanger.DelayAction(ChangedComment);
+            CommentDelayChanger.Callback(ChangedComment);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        public NoteContentElement(NoteId noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteContentElement(NoteId noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseDelayWriter mainDatabaseDelayWriter, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -42,10 +42,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
             DispatcherWrapper = dispatcherWrapper;
 
-            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
+            MainDatabaseDelayWriter = mainDatabaseDelayWriter;
 
-            LinkContentLazyChanger = new LazyAction(nameof(LinkContentLazyChanger), TimeSpan.FromSeconds(5), LoggerFactory);
-
+            LinkContentDelayChanger = new DelayAction(nameof(LinkContentDelayChanger), TimeSpan.FromSeconds(5), LoggerFactory);
         }
 
         #region property
@@ -63,11 +62,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         private IMainDatabaseBarrier MainDatabaseBarrier { get; }
         private IDatabaseStatementLoader DatabaseStatementLoader { get; }
         private IDispatcherWrapper DispatcherWrapper { get; }
-        private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        private IMainDatabaseDelayWriter MainDatabaseDelayWriter { get; }
         private UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         private NoteLinkWatcher? LinkWatcher { get; set; }
-        private LazyAction LinkContentLazyChanger { get; }
+        private DelayAction LinkContentDelayChanger { get; }
 
         #endregion
 
@@ -232,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 return;
             }
 
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var dao = new NoteContentsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 var data = new NoteContentData() {
                     NoteId = NoteId,
@@ -423,7 +422,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 Flush();
                 DisposeLinkWatcher();
                 if(disposing) {
-                    LinkContentLazyChanger.Dispose();
+                    LinkContentDelayChanger.Dispose();
                 }
             }
 
@@ -456,8 +455,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public void Flush()
         {
-            LinkContentLazyChanger.SafeFlush();
-            MainDatabaseLazyWriter.SafeFlush();
+            LinkContentDelayChanger.SafeFlush();
+            MainDatabaseDelayWriter.SafeFlush();
         }
 
         #endregion

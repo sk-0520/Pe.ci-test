@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             WatchParameter = watchParameter;
             Logger = loggerFactory.CreateLogger(GetType());
 
-            DelayWatcher = new LazyAction(WatchParameter.File.Name, watchParameter.DelayTime, loggerFactory);
+            DelayWatcher = new DelayAction(WatchParameter.File.Name, watchParameter.DelayTime, loggerFactory);
         }
 
         #region property
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         protected ILogger Logger { get; }
         private FileSystemWatcher? FileSystemWatcher { get; set; }
 
-        private LazyAction DelayWatcher { get; }
+        private DelayAction DelayWatcher { get; }
 
         #endregion
 
@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 return;
             }
 
-            DelayWatcher.DelayAction(() => {
+            DelayWatcher.Callback(() => {
                 var args = new FileChangedEventArgs(new FileInfo(e.FullPath), false);
                 OnFileContentChanged(args);
             });

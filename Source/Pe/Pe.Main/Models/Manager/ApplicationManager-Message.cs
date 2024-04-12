@@ -340,8 +340,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return Task.Run(async () => {
                 void UpdateKeyExecuteCount(IKeyActionId keyActionId)
                 {
-                    var mainDatabaseLazyWriter = ApplicationDiContainer.Build<IMainDatabaseLazyWriter>();
-                    mainDatabaseLazyWriter.Stock(c => {
+                    var mainDatabaseDelayWriter = ApplicationDiContainer.Build<IMainDatabaseDelayWriter>();
+                    mainDatabaseDelayWriter.Stock(c => {
                         var dao = ApplicationDiContainer.Build<KeyActionsEntityDao>(c, c.Implementation);
                         dao.UpdateUsageCountIncrement(keyActionId.KeyActionId, DatabaseCommonStatus.CreateCurrentAccount());
                     });
@@ -516,8 +516,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 flag = true;
             }
 
-            var lazyWriter = ApplicationDiContainer.Build<IMainDatabaseLazyWriter>();
-            lazyWriter.Stock(c => {
+            var delayWriter = ApplicationDiContainer.Build<IMainDatabaseDelayWriter>();
+            delayWriter.Stock(c => {
                 var appPlatformSettingEntityDao = ApplicationDiContainer.Build<AppPlatformSettingEntityDao>(c, c.Implementation);
                 appPlatformSettingEntityDao.UpdateSuppressSystemIdle(flag, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -554,8 +554,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 flag = true;
             }
 
-            var lazyWriter = ApplicationDiContainer.Build<IMainDatabaseLazyWriter>();
-            lazyWriter.Stock(c => {
+            var delayWriter = ApplicationDiContainer.Build<IMainDatabaseDelayWriter>();
+            delayWriter.Stock(c => {
                 var appPlatformSettingEntityDao = ApplicationDiContainer.Build<AppPlatformSettingEntityDao>(c, c.Implementation);
                 appPlatformSettingEntityDao.UpdateSupportExplorer(flag, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());

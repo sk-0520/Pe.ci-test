@@ -12,12 +12,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     public abstract class PluginContextFactoryBase
     {
-        protected PluginContextFactoryBase(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        protected PluginContextFactoryBase(IDatabaseBarrierPack databaseBarrierPack, IDatabaseDelayWriterPack databaseDelayWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             DatabaseBarrierPack = databaseBarrierPack;
-            DatabaseLazyWriterPack = databaseLazyWriterPack;
+            DatabaseDelayWriterPack = databaseDelayWriterPack;
             DatabaseStatementLoader = databaseStatementLoader;
             EnvironmentParameters = environmentParameters;
             UserAgentManager = userAgentManager;
@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected ILogger Logger { get; }
 
         protected IDatabaseBarrierPack DatabaseBarrierPack { get; }
-        protected IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
+        protected IDatabaseDelayWriterPack DatabaseDelayWriterPack { get; }
         protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
         protected EnvironmentParameters EnvironmentParameters { get; }
 
@@ -123,14 +123,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// </summary>
         /// <param name="pluginInformation"></param>
         /// <param name="databaseBarrierPack"></param>
-        /// <param name="databaseLazyWriterPack"></param>
+        /// <param name="databaseDelayWriterPack"></param>
         /// <returns></returns>
-        protected virtual PluginPersistence CreatePluginPersistenceLazyWriter(IPluginInformation pluginInformation, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
+        protected virtual PluginPersistence CreatePluginPersistenceDelayWriter(IPluginInformation pluginInformation, IDatabaseBarrierPack databaseBarrierPack, IDatabaseDelayWriterPack databaseDelayWriterPack)
         {
             var pluginPersistence = new PluginPersistence(
-                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseBarrierPack.Main, databaseLazyWriterPack.Main, DatabaseStatementLoader, LoggerFactory),
-                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseBarrierPack.Large, databaseLazyWriterPack.Large, DatabaseStatementLoader, LoggerFactory),
-                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseBarrierPack.Temporary, databaseLazyWriterPack.Temporary, DatabaseStatementLoader, LoggerFactory)
+                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseBarrierPack.Main, databaseDelayWriterPack.Main, DatabaseStatementLoader, LoggerFactory),
+                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseBarrierPack.Large, databaseDelayWriterPack.Large, DatabaseStatementLoader, LoggerFactory),
+                new PluginPersistenceStorage(pluginInformation.PluginIdentifiers, pluginInformation.PluginVersions, databaseBarrierPack.Temporary, databaseDelayWriterPack.Temporary, DatabaseStatementLoader, LoggerFactory)
             );
 
             return pluginPersistence;

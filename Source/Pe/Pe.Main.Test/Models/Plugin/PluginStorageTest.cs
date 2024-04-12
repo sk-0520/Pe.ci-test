@@ -273,7 +273,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
         {
             DeletePluginSetting();
 
-            var persistenceNormal = new PluginPersistenceStorage(this.Information.PluginIdentifiers, this.Information.PluginVersions, Test.DiContainer.Build<IMainDatabaseBarrier>(), Test.DiContainer.Build<IMainDatabaseLazyWriter>(), Test.DiContainer.Build<IDatabaseStatementLoader>(), Test.DiContainer.Build<ILoggerFactory>());
+            var persistenceNormal = new PluginPersistenceStorage(this.Information.PluginIdentifiers, this.Information.PluginVersions, Test.DiContainer.Build<IMainDatabaseBarrier>(), Test.DiContainer.Build<IMainDatabaseDelayWriter>(), Test.DiContainer.Build<IDatabaseStatementLoader>(), Test.DiContainer.Build<ILoggerFactory>());
 
             Assert.False(persistenceNormal.Exists(""));
             Assert.False(persistenceNormal.TryGet<string>("", out _));

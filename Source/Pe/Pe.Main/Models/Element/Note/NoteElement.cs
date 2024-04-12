@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        public NoteElement(NoteId noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, NoteConfiguration noteConfiguration, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public NoteElement(NoteId noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IMainDatabaseDelayWriter mainDatabaseDelayWriter, IDatabaseStatementLoader databaseStatementLoader, NoteConfiguration noteConfiguration, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             NoteTheme = noteTheme;
             IdFactory = idFactory;
 
-            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
+            MainDatabaseDelayWriter = mainDatabaseDelayWriter;
         }
 
         #region property
@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         private INoteTheme NoteTheme { get; }
         public SavingFontElement? FontElement { get; private set; }
 
-        private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        private IMainDatabaseDelayWriter MainDatabaseDelayWriter { get; }
         private UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         /// <summary>
@@ -385,7 +385,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 HiddenCompact = false;
             }
 
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateCompact(NoteId, IsCompact, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -396,7 +396,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             IsTopmost = !IsTopmost;
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateTopmost(NoteId, IsTopmost, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -412,7 +412,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             IsLocked = !IsLocked;
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateLock(NoteId, IsLocked, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -423,7 +423,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             TextWrap = !TextWrap;
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateTextWrap(NoteId, TextWrap, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -438,7 +438,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             Title = editingTitle;
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateTitle(NoteId, Title, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -458,7 +458,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             ThrowIfDisposed();
 
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var noteLayoutsEntityDao = new NoteLayoutsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 var layout = new NoteLayoutData() {
                     NoteId = NoteId,
@@ -480,7 +480,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             ThrowIfDisposed();
 
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 var currentNote = notesEntityDao.SelectNote(NoteId);
                 if(currentNote is null) {
@@ -504,7 +504,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             ForegroundColor = color;
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateForegroundColor(NoteId, ForegroundColor, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -514,7 +514,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             BackgroundColor = color;
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateBackgroundColor(NoteId, BackgroundColor, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -525,7 +525,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             CaptionPosition = captionPosition;
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateCaptionPosition(NoteId, CaptionPosition, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -637,7 +637,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             var prevContentKind = ContentKind;
             var oldContentElement = ContentElement;
 
-            using(MainDatabaseLazyWriter.Pause()) {
+            using(MainDatabaseDelayWriter.Pause()) {
                 var fromRawContent = ContentElement.LoadRawContent();
                 var convertedContent = ConvertContent(ContentKind, fromRawContent, toContentKind);
                 var contentData = new NoteContentData() {
@@ -694,7 +694,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
 
             IsVisible = isVisible;
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateVisible(NoteId, IsVisible, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -705,7 +705,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             HiddenMode = hiddenMode;
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateHiddenMode(NoteId, HiddenMode, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -952,7 +952,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             FontElement.SafeFlush();
             ContentElement.SafeFlush();
-            MainDatabaseLazyWriter.SafeFlush();
+            MainDatabaseDelayWriter.SafeFlush();
         }
 
         #endregion

@@ -74,9 +74,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             : base(pluginIdentifiers, pluginVersions, databaseBarrier, databaseStatementLoader, isReadOnly, loggerFactory)
         { }
 
-        /// <inheritdoc cref="PluginPersistenceStorageBase.PluginPersistenceStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseLazyWriter, IDatabaseStatementLoader, ILoggerFactory)"/>
-        public LauncherItemAddonPersistenceStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(pluginIdentifiers, pluginVersions, databaseBarrier, databaseLazyWriter, databaseStatementLoader, loggerFactory)
+        /// <inheritdoc cref="PluginPersistenceStorageBase.PluginPersistenceStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseDelayWriter, IDatabaseStatementLoader, ILoggerFactory)"/>
+        public LauncherItemAddonPersistenceStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseDelayWriter databaseDelayWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(pluginIdentifiers, pluginVersions, databaseBarrier, databaseDelayWriter, databaseStatementLoader, loggerFactory)
         { }
 
         #region ILauncherItemAddonPersistenceStorage
