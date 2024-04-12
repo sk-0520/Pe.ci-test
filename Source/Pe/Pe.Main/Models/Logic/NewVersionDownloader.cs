@@ -134,11 +134,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         };
                         var format = Properties.Resources.String_Download_Seconds_Format_DOTNET;
                         while(true) {
-                            var donwloadSize = await networkStream.ReadAsync(downloadChunk, 0, downloadChunk.Length);
-                            if(0 < donwloadSize) {
-                                await localStream.WriteAsync(downloadChunk, 0, donwloadSize);
-                                totalDownloadedSize += donwloadSize;
-                                sizePerTime.Add(donwloadSize);
+                            var downloadSize = await networkStream.ReadAsync(downloadChunk, 0, downloadChunk.Length);
+                            if(0 < downloadSize) {
+                                await localStream.WriteAsync(downloadChunk, 0, downloadSize);
+                                totalDownloadedSize += downloadSize;
+                                sizePerTime.Add(downloadSize);
                                 var size = sizeConverter.ConvertHumanReadableByte(sizePerTime.Size, format, units);
                                 userNotifyProgress.Report(totalDownloadedSize / (double)updateItem.ArchiveSize, size);
                             } else {
