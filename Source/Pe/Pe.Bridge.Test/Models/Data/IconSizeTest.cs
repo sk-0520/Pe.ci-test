@@ -8,19 +8,19 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
     public class IconSizeTest
     {
         [Fact]
-        public void ConstructorTest()
+        public void Constructor_1_Test()
         {
-            Assert.Throws<ArgumentException>(() => new IconSize(-1, -1));
-            Assert.Throws<ArgumentException>(() => new IconSize(0, -1));
-            Assert.Throws<ArgumentException>(() => new IconSize(0, 0));
-            Assert.Throws<ArgumentException>(() => new IconSize(1, 0));
-            try {
-                new IconSize(1, 1);
-                new IconSize(1);
-                Assert.True(true);
-            } catch {
-                Assert.True(false);
-            }
+            var actual = new IconSize(1);
+            Assert.Equal(1, actual.Width);
+            Assert.Equal(1, actual.Height);
+        }
+
+        [Fact]
+        public void Constructor_2_Test()
+        {
+            var actual = new IconSize(1, 2);
+            Assert.Equal(1, actual.Width);
+            Assert.Equal(2, actual.Height);
         }
 
         [Theory]
