@@ -1,7 +1,7 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.228+",
+		"date": "2024/04/17",
+		"version": "0.99.229",
 		"contents": [
 			{
 				"type": "note",
@@ -16,18 +16,6 @@
 							"https://developer.microsoft.com/microsoft-edge/webview2",
 							"https://jpdsi.github.io/blog/internet-explorer-microsoft-edge/webview2-faq/"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -35,62 +23,8 @@
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "b93e51212301d089efc0d977016483d701d1462c",
 						"subject": "#717: 内蔵ブラウザをWebView2にする"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "developer",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
