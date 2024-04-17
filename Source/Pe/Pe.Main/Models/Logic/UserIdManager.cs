@@ -45,21 +45,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return SHA512.Create();
         }
 
-        private string ComputeHash(byte[] buffer)
+        private string ComputeHash(byte[] buffer, int count)
         {
             byte[] hashValue;
             using(var hash = CreateHash()) {
-                hashValue = hash.ComputeHash(buffer);
+                hashValue = hash.ComputeHash(buffer, 0, count);
             }
             return BitConverter.ToString(hashValue).Replace("-", string.Empty).ToLowerInvariant();
         }
 
         public string CreateFromRandom()
         {
-            var buffer = new byte[20 * 1024];
+            var bufferCount = 20 * 1024;
+            var buffer = new byte[bufferCount];
             var rand = new Random();
             rand.NextBytes(buffer);
-            return ComputeHash(buffer);
+            return ComputeHash(buffer, bufferCount);
         }
 
         public string CreateFromEnvironment()
@@ -72,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             buffer.Append(pi.GetCpuCaption());
             //TODO: メモリを追加する
             var a = Encoding.UTF8.GetBytes(buffer.ToString());
-            return ComputeHash(a);
+            return ComputeHash(a, a.Length);
         }
 
         public string SafeGetOrCreateUserId(AppExecuteSettingEntityDao appExecuteSettingEntityDao)

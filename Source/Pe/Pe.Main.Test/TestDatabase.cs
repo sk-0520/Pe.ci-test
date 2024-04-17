@@ -24,14 +24,14 @@ namespace ContentTypeTextNet.Pe.Main.Test
                 new ApplicationDatabaseFactory(true, false),
                 new ApplicationDatabaseFactory(true, false)
             );
-            var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
+            var delayWriterWaitTimePack = new DelayWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
 
             var testAssemblyPath = Assembly.GetExecutingAssembly().Location;
             var sqlRootDirPath = Path.Combine(Path.GetDirectoryName(testAssemblyPath)!, "etc", "sql", "ContentTypeTextNet.Pe.Main");
 
             diContainer
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(new DirectoryInfo(sqlRootDirPath), TimeSpan.FromMinutes(6), null, false, diContainer.Build<LoggerFactory>()))
-                .RegisterDatabase(factoryPack, lazyWriterWaitTimePack, diContainer.Build<ILoggerFactory>())
+                .RegisterDatabase(factoryPack, delayWriterWaitTimePack, diContainer.Build<ILoggerFactory>())
             ;
 
             var databaseAccessorPack = diContainer.Build<IDatabaseAccessorPack>();

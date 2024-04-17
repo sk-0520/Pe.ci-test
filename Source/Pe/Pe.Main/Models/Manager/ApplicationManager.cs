@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
             _ = NotifyLogElement.InitializeAsync();
 
-            LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), customConfiguration.Platform.ScreenElementsResetWaitTime);
+            DelayScreenElementReset = ApplicationDiContainer.Build<DelayAction>(nameof(DelayScreenElementReset), customConfiguration.Platform.ScreenElementsResetWaitTime);
 
             LowScheduler = new System.Timers.Timer(customConfiguration.Schedule.LowSchedulerTime.TotalMilliseconds);
             LowScheduler.Elapsed += LowScheduler_Elapsed;
@@ -219,7 +219,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public bool UnhandledExceptionHandled => ApplicationDiContainer.Get<GeneralConfiguration>().UnhandledExceptionHandled;
 
         private bool ResetWaiting { get; set; }
-        private LazyAction LazyScreenElementReset { get; }
+        private DelayAction DelayScreenElementReset { get; }
 
         private DirectoryInfo? TestPluginDirectory { get; }
         private string TestPluginName { get; } = string.Empty;
@@ -239,12 +239,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             using var viewPausing = PauseAllViews();
 
             Logger.LogDebug("遅延書き込み処理停止");
-            var lazyWriterPack = ApplicationDiContainer.Get<IDatabaseLazyWriterPack>();
-            var lazyWriterItemMap = new Dictionary<IDatabaseLazyWriter, IDisposable>();
-            foreach(var lazyWriter in lazyWriterPack.Items) {
-                lazyWriter.Flush();
-                var pausing = lazyWriter.Pause();
-                lazyWriterItemMap.Add(lazyWriter, pausing);
+            var delayWriterPack = ApplicationDiContainer.Get<IDatabaseDelayWriterPack>();
+            var delayWriterItemMap = new Dictionary<IDatabaseDelayWriter, IDisposable>();
+            foreach(var delayWriter in delayWriterPack.Items) {
+                delayWriter.Flush();
+                var pausing = delayWriter.Pause();
+                delayWriterItemMap.Add(delayWriter, pausing);
             }
 
             // 現在DBを編集用として再構築
@@ -270,12 +270,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 new ApplicationDatabaseFactory(settings.File, true, false),
                 new ApplicationDatabaseFactory(true, false)
             );
-            var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
-
+            var delayWriterWaitTimePack = new DelayWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
             container
                 .Register<IDiContainer, DiContainer>((DiContainer)container) // むりやりぃ
                 .Register<ISettingNotifyManager, SettingNotifyManager>(DiLifecycle.Singleton)
-                .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
+                .RegisterDatabase(factory, delayWriterWaitTimePack, LoggerFactory)
             ;
 
             var workingDatabasePack = ApplicationDiContainer.Build<IDatabaseAccessorPack>();
@@ -359,7 +358,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             Logger.LogDebug("遅延書き込み処理再開");
-            foreach(var pair in lazyWriterItemMap) {
+            foreach(var pair in delayWriterItemMap) {
                 if(settingElement.IsSubmit) {
                     // 確定処理の書き込みが天に召されるのでため込んでいた処理(ないはず)を消す
                     pair.Key.ClearStock();
@@ -1303,14 +1302,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 //var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
                 var widgetAddonContextFactory = ApplicationDiContainer.Build<WidgetAddonContextFactory>();
                 var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
-                var mainDatabaseLazyWriter = ApplicationDiContainer.Build<IMainDatabaseLazyWriter>();
+                var mainDatabaseDelayWriter = ApplicationDiContainer.Build<IMainDatabaseDelayWriter>();
                 var databaseStatementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
                 var cultureService = ApplicationDiContainer.Build<CultureService>();
                 var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
                 var dispatcherWrapper = ApplicationDiContainer.Build<IDispatcherWrapper>();
 
                 foreach(var widget in PluginContainer.Addon.GetWidgets()) {
-                    var element = new WidgetElement(widget, widget.Addon, widgetAddonContextFactory, mainDatabaseBarrier, mainDatabaseLazyWriter, databaseStatementLoader, cultureService, WindowManager, NotifyManager, environmentParameters, dispatcherWrapper, LoggerFactory);
+                    var element = new WidgetElement(widget, widget.Addon, widgetAddonContextFactory, mainDatabaseBarrier, mainDatabaseDelayWriter, databaseStatementLoader, cultureService, WindowManager, NotifyManager, environmentParameters, dispatcherWrapper, LoggerFactory);
                     await element.InitializeAsync();
                     Widgets.Add(element);
                 }
@@ -1447,7 +1446,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void DisposeWebView()
         {
-            CefSharp.Cef.Shutdown();
+            //CefSharp.Cef.Shutdown();
         }
 
         /// <summary>
@@ -1723,7 +1722,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             void DelayExecuteElements()
             {
-                LazyScreenElementReset.DelayAction(() => {
+                DelayScreenElementReset.Callback(() => {
                     ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(async () => await ResetScreenViewElementsAsync(), DispatcherPriority.SystemIdle);
                     ResetWaiting = false;
                 });
@@ -2113,9 +2112,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return windowItem;
         }
 
-
-
-
         #endregion
 
         #region DisposerBase
@@ -2129,7 +2125,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     ApplicationMutex.ReleaseMutex();
                     ApplicationMutex.Dispose();
 
-                    LazyScreenElementReset.Dispose();
+                    DelayScreenElementReset.Dispose();
 
                     CloseViews(false);
                     DisposeElements();

@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             Logger = loggerFactory.CreateLogger(GetType());
             PlatformConfiguration = platformConfiguration;
 
-            LazyChanger = new LazyAction(GetType().Name, TimeSpan.FromMilliseconds(400), loggerFactory);
+            DelayChanger = new DelayAction(GetType().Name, TimeSpan.FromMilliseconds(400), loggerFactory);
             Refresh();
         }
 
@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         private ILogger Logger { get; }
         private PlatformConfiguration PlatformConfiguration { get; }
 
-        private LazyAction LazyChanger { get; }
+        private DelayAction DelayChanger { get; }
 
         WeakEvent<EventArgs> ChangedWeakEvent { get; } = new WeakEvent<EventArgs>(nameof(Changed));
 
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             Logger.LogTrace("WM_DWMCOLORIZATIONCOLORCHANGED");
             var rawColor = (uint)wParam.ToInt64();
             SetAccentColor(MediaUtility.ConvertColorFromRawColor(rawColor));
-            LazyChanger.DelayAction(OnThemeChanged);
+            DelayChanger.Callback(OnThemeChanged);
             handled = true;
         }
 
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             if(lParamMessage == "ImmersiveColorSet") {
                 Logger.LogTrace("WM_SETTINGCHANGE");
                 ApplyFromRegistry();
-                LazyChanger.DelayAction(OnThemeChanged);
+                DelayChanger.Callback(OnThemeChanged);
             }
             handled = true;
         }
@@ -203,8 +203,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    LazyChanger.SafeFlush();
-                    LazyChanger.Dispose();
+                    DelayChanger.SafeFlush();
+                    DelayChanger.Dispose();
                 }
             }
 

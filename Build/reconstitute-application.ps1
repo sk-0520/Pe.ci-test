@@ -12,8 +12,6 @@ Set-StrictMode -Version Latest
 Import-Module "${PSScriptRoot}/Modules/Project"
 
 
-$rootDirectory = Get-RootDirectory
-
 #/*[FUNCTIONS]-------------------------------------
 #*/[FUNCTIONS]-------------------------------------
 
@@ -47,11 +45,6 @@ foreach ($mainSubDirName in $mainSubDirNames) {
 	$mainSubDir = Join-Path -Path $outputMainDir -ChildPath $mainSubDirName
 	Move-Item -Path $mainSubDir -Destination $OutputDirectory
 }
-
-# bin/lib にVC++ 再頒布可能パッケージ埋め込み
-$srcLibDir = Join-Path -Path $rootDirectory -ChildPath 'Resource' | Join-Path -ChildPath 'Library'
-$dstLibDir = Join-Path -Path $outputMainDir -ChildPath 'lib'
-Move-Item -Path $srcLibDir -Destination $dstLibDir
 
 # etc/appsettings.*.json の整理
 $outputEtcDir = Join-Path -Path $OutputDirectory -ChildPath 'etc'
@@ -87,7 +80,6 @@ $unsupportPlatform = switch ($Platform) {
 }
 $unsupportTargets = @(
 	Join-Path -Path $outputMainDir -ChildPath $unsupportPlatform
-	Join-Path -Path $dstLibDir -ChildPath 'Redist.MSVC.CRT' | Join-Path -ChildPath $unsupportPlatform
 )
 foreach ($unsupportTarget in $unsupportTargets) {
 	Write-Information "Remove: $unsupportTarget"

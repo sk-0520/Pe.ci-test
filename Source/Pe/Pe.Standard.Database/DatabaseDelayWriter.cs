@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Standard.Database
 {
-    public class DatabaseLazyWriter: DisposerBase, IDatabaseLazyWriter
+    public class DatabaseDelayWriter: DisposerBase, IDatabaseDelayWriter
     {
         #region define
 
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         #endregion
 
-        public DatabaseLazyWriter(IDatabaseBarrier databaseBarrier, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
+        public DatabaseDelayWriter(IDatabaseBarrier databaseBarrier, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
         {
             if(databaseBarrier == null) {
                 throw new ArgumentNullException(nameof(databaseBarrier));
@@ -126,12 +126,12 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         #endregion
 
-        #region IDatabaseLazyWriter
+        #region IDatabaseDelayWriter
 
-        /// <inheritdoc cref="IDatabaseLazyWriter.IsPausing"/>
+        /// <inheritdoc cref="IDatabaseDelayWriter.IsPausing"/>
         public bool IsPausing { get; private set; }
 
-        /// <inheritdoc cref="IDatabaseLazyWriter.Pause"/>
+        /// <inheritdoc cref="IDatabaseDelayWriter.Pause"/>
         public IDisposer Pause()
         {
             ThrowIfDisposed();
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             });
         }
 
-        /// <inheritdoc cref="IDatabaseLazyWriter.Stock(Action{IDatabaseTransaction}, object)"/>
+        /// <inheritdoc cref="IDatabaseDelayWriter.Stock(Action{IDatabaseTransaction}, object)"/>
         public void Stock(Action<IDatabaseTransaction> action, object uniqueKey)
         {
             if(uniqueKey == null) {
@@ -159,14 +159,14 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             StockCore(action, uniqueKey);
         }
 
-        /// <inheritdoc cref="IDatabaseLazyWriter.Stock(Action{IDatabaseTransaction})"/>
+        /// <inheritdoc cref="IDatabaseDelayWriter.Stock(Action{IDatabaseTransaction})"/>
         public void Stock(Action<IDatabaseTransaction> action)
         {
             ThrowIfDisposed();
             StockCore(action, null);
         }
 
-        /// <inheritdoc cref="IDatabaseLazyWriter.ClearStock"/>
+        /// <inheritdoc cref="IDatabaseDelayWriter.ClearStock"/>
         public void ClearStock()
         {
             ThrowIfDisposed();

@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using CefSharp;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
@@ -75,10 +74,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         public void ReceiveViewInitialized(Window window)
         {
             var view = (ReleaseNoteWindow)window;
-            view.webView.LifeSpanHandler = new PlatformLifeSpanHandler(LoggerFactory);
-            view.webView.RequestHandler = new PlatformRequestHandler(LoggerFactory);
-            view.webView.MenuHandler = new DisableContextMenuHandler();
-            WebViewSetupper.SetupDefault(view.webView);
 
             Model.LoadReleaseNoteDocumentAsync().ContinueWith(t => {
                 if(IsDisposed) {
@@ -88,9 +83,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
 
                 if(t.IsCompletedSuccessfully) {
                     var htmlSource = t.Result;
-                    view.webView.LoadHtml(htmlSource, Model.NewVersionItem.NoteUri.ToString());
+                    view.webView.NavigateToString(htmlSource);
                 } else {
-                    view.webView.LoadHtml(Properties.Resources.File_ReleaseNote_ErrorReleaseNote, nameof(Properties.Resources.File_ReleaseNote_ErrorReleaseNote));
+                    view.webView.NavigateToString(Properties.Resources.File_ReleaseNote_ErrorReleaseNote);
                 }
             }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }

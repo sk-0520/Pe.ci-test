@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <summary>
         /// 遅延書き込み。
         /// </summary>
-        LazyWriter,
+        DelayWriter,
     }
 
     public abstract class PluginPersistenceStorageBase: IPluginId
@@ -271,20 +271,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="pluginIdentifiers"></param>
         /// <param name="pluginVersions"></param>
         /// <param name="databaseBarrier"></param>
-        /// <param name="databaseLazyWriter"></param>
+        /// <param name="databaseDelayWriter"></param>
         /// <param name="databaseStatementLoader"></param>
         /// <param name="loggerFactory"></param>
-        protected PluginPersistenceStorageBase(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        protected PluginPersistenceStorageBase(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseDelayWriter databaseDelayWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             PluginIdentifiers = pluginIdentifiers;
             PluginVersions = pluginVersions;
             DatabaseBarrier = databaseBarrier;
-            DatabaseLazyWriter = databaseLazyWriter;
+            DatabaseDelayWriter = databaseDelayWriter;
             DatabaseStatementLoader = databaseStatementLoader;
             IsReadOnly = false;
-            Mode = PluginPersistenceMode.LazyWriter;
+            Mode = PluginPersistenceMode.DelayWriter;
         }
 
         #region property
@@ -302,7 +302,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected IDatabaseImplementation? DatabaseImplementation { get; }
         protected IDatabaseContext? DatabaseContext { get; }
         protected IDatabaseBarrier? DatabaseBarrier { get; }
-        protected IDatabaseLazyWriter? DatabaseLazyWriter { get; }
+        protected IDatabaseDelayWriter? DatabaseDelayWriter { get; }
         protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         public bool IsReadOnly { get; }
@@ -330,12 +330,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     }
 
                 case PluginPersistenceMode.Barrier:
-                case PluginPersistenceMode.LazyWriter: {
+                case PluginPersistenceMode.DelayWriter: {
                         Debug.Assert(DatabaseBarrier != null);
 
-                        if(Mode == PluginPersistenceMode.LazyWriter) {
-                            Debug.Assert(DatabaseLazyWriter != null);
-                            DatabaseLazyWriter.Flush();
+                        if(Mode == PluginPersistenceMode.DelayWriter) {
+                            Debug.Assert(DatabaseDelayWriter != null);
+                            DatabaseDelayWriter.Flush();
                         }
 
                         return DatabaseBarrier.ReadData(c => {
@@ -359,12 +359,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     }
 
                 case PluginPersistenceMode.Barrier:
-                case PluginPersistenceMode.LazyWriter: {
+                case PluginPersistenceMode.DelayWriter: {
                         Debug.Assert(DatabaseBarrier != null);
 
-                        if(Mode == PluginPersistenceMode.LazyWriter) {
-                            Debug.Assert(DatabaseLazyWriter != null);
-                            DatabaseLazyWriter.Flush();
+                        if(Mode == PluginPersistenceMode.DelayWriter) {
+                            Debug.Assert(DatabaseDelayWriter != null);
+                            DatabaseDelayWriter.Flush();
                         }
 
                         return DatabaseBarrier.ReadData(c => {
@@ -379,10 +379,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         protected bool TryGetImpl<TValue, TParameter>(TParameter parameter, Func<TParameter, DatabaseParameter, PluginSettingRawValue?> func, [MaybeNullWhen(returnValue: false)] out TValue value)
         {
-            if(Mode == PluginPersistenceMode.LazyWriter) {
+            if(Mode == PluginPersistenceMode.DelayWriter) {
                 // 遅延書き込み待機を終了
-                Debug.Assert(DatabaseLazyWriter != null);
-                DatabaseLazyWriter.Flush();
+                Debug.Assert(DatabaseDelayWriter != null);
+                DatabaseDelayWriter.Flush();
             }
 
             PluginSettingRawValue? data;
@@ -396,12 +396,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     break;
 
                 case PluginPersistenceMode.Barrier:
-                case PluginPersistenceMode.LazyWriter: {
+                case PluginPersistenceMode.DelayWriter: {
                         Debug.Assert(DatabaseBarrier != null);
 
-                        if(Mode == PluginPersistenceMode.LazyWriter) {
-                            Debug.Assert(DatabaseLazyWriter != null);
-                            DatabaseLazyWriter.Flush();
+                        if(Mode == PluginPersistenceMode.DelayWriter) {
+                            Debug.Assert(DatabaseDelayWriter != null);
+                            DatabaseDelayWriter.Flush();
                         }
 
                         data = DatabaseBarrier.ReadData(c => {
@@ -545,10 +545,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     }
                     break;
 
-                case PluginPersistenceMode.LazyWriter: {
-                        Debug.Assert(DatabaseLazyWriter != null);
+                case PluginPersistenceMode.DelayWriter: {
+                        Debug.Assert(DatabaseDelayWriter != null);
 
-                        DatabaseLazyWriter.Stock(c => {
+                        DatabaseDelayWriter.Stock(c => {
                             action(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(c, c.Implementation), LoggerFactory), data);
                         });
                     }
@@ -567,10 +567,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 throw new InvalidOperationException(nameof(IsReadOnly));
             }
 
-            if(Mode == PluginPersistenceMode.LazyWriter) {
+            if(Mode == PluginPersistenceMode.DelayWriter) {
                 // 遅延書き込み待機を終了
-                Debug.Assert(DatabaseLazyWriter != null);
-                DatabaseLazyWriter.Flush();
+                Debug.Assert(DatabaseDelayWriter != null);
+                DatabaseDelayWriter.Flush();
             }
 
             switch(Mode) {
@@ -591,10 +591,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                         }
                     }
 
-                case PluginPersistenceMode.LazyWriter: {
-                        Debug.Assert(DatabaseLazyWriter != null);
+                case PluginPersistenceMode.DelayWriter: {
+                        Debug.Assert(DatabaseDelayWriter != null);
 
-                        DatabaseLazyWriter.Stock(c => {
+                        DatabaseDelayWriter.Stock(c => {
                             var result = func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseContexts(c, c.Implementation), LoggerFactory));
                             Logger.LogWarning("result = {0}", result);
                         });
@@ -629,9 +629,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             : base(pluginIdentifiers, pluginVersions, databaseBarrier, databaseStatementLoader, isReadOnly, loggerFactory)
         { }
 
-        /// <inheritdoc cref="PluginPersistenceStorageBase.PluginPersistenceStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseLazyWriter, IDatabaseStatementLoader, ILoggerFactory)"/>
-        public PluginPersistenceStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(pluginIdentifiers, pluginVersions, databaseBarrier, databaseLazyWriter, databaseStatementLoader, loggerFactory)
+        /// <inheritdoc cref="PluginPersistenceStorageBase.PluginPersistenceStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseDelayWriter, IDatabaseStatementLoader, ILoggerFactory)"/>
+        public PluginPersistenceStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseDelayWriter databaseDelayWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(pluginIdentifiers, pluginVersions, databaseBarrier, databaseDelayWriter, databaseStatementLoader, loggerFactory)
         { }
 
         #region property

@@ -7,7 +7,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// <summary>
     /// 遅延処理。
     /// </summary>
-    public class LazyAction: DisposerBase, IFlushable
+    public class DelayAction: DisposerBase, IFlushable
     {
         #region variable
 
@@ -18,15 +18,15 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <summary>
         ///
         /// </summary>
-        /// <param name="lazyName">遅延処理名。</param>
-        /// <param name="lazyTime">遅延時間。</param>
+        /// <param name="delayName">遅延処理名。</param>
+        /// <param name="delayTime">遅延時間。</param>
         /// <param name="loggerFactory"></param>
-        public LazyAction(string lazyName, TimeSpan lazyTime, ILoggerFactory loggerFactory)
+        public DelayAction(string delayName, TimeSpan delayTime, ILoggerFactory loggerFactory)
         {
-            LazyName = lazyName;
+            DelayName = delayName;
             Logger = loggerFactory.CreateLogger(GetType());
             Timer = new Timer() {
-                Interval = lazyTime.TotalMilliseconds,
+                Interval = delayTime.TotalMilliseconds,
                 AutoReset = false,
             };
             Timer.Elapsed += Timer_Elapsed;
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <summary>
         /// 遅延処理名。
         /// </summary>
-        public string LazyName { get; }
+        public string DelayName { get; }
         protected ILogger Logger { get; }
         /// <summary>
         /// 遅延処理タイマー。
@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             lock(this._timerLocker) {
                 if(Timer.Enabled) {
                     Timer.Stop();
-                    Logger.LogTrace("[{0}] タイマー終了", LazyName);
+                    Logger.LogTrace("[{0}] タイマー終了", DelayName);
                 }
                 Action = null;
             }
@@ -74,23 +74,23 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// </summary>
         /// <param name="action">実際に行われる処理。</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
-        public void DelayAction(Action action)
+        public void Callback(Action action)
         {
             ThrowIfDisposed();
 
             lock(this._timerLocker) {
                 if(Timer.Enabled) {
                     Timer.Stop();
-                    Logger.LogTrace("[{0}] タイマー停止, 抑制", LazyName);
+                    Logger.LogTrace("[{0}] タイマー停止, 抑制", DelayName);
                 }
                 Action = action;
-                Logger.LogTrace("[{0}] タイマー開始", LazyName);
+                Logger.LogTrace("[{0}] タイマー開始", DelayName);
                 Timer.Start();
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
-        private void DoAction(bool disposing)
+        private void FlushCore(bool disposing)
         {
             ThrowIfDisposed();
 
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                     Timer.Stop();
                 }
                 if(Action != null) {
-                    Logger.LogTrace("[{0}] 実行", LazyName);
+                    Logger.LogTrace("[{0}] 実行", DelayName);
                     Action();
                 }
                 Action = null;
@@ -112,12 +112,12 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         void Flush(bool disposing)
         {
-            DoAction(disposing);
+            FlushCore(disposing);
         }
 
         public void Flush()
         {
-            DoAction(true);
+            FlushCore(true);
         }
 
         #endregion
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
-            DoAction(true);
+            FlushCore(true);
         }
     }
 }

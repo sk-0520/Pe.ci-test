@@ -31,13 +31,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
     public class CommandElement: ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
-        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, ApplicationConfiguration applicationConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IMainDatabaseDelayWriter mainDatabaseDelayWriter, ApplicationConfiguration applicationConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
             LargeDatabaseBarrier = largeDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
-            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
+            MainDatabaseDelayWriter = mainDatabaseDelayWriter;
             OrderManager = orderManager;
             WindowManager = windowManager;
             NotifyManager = notifyManager;
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         private IMainDatabaseBarrier MainDatabaseBarrier { get; }
         private ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
         private IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        private IMainDatabaseDelayWriter MainDatabaseDelayWriter { get; }
         private IOrderManager OrderManager { get; }
         private IWindowManager WindowManager { get; }
         private INotifyManager NotifyManager { get; }
@@ -233,7 +233,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             }
             Width = width;
 
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var dao = new AppCommandSettingEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 dao.UpdateCommandSettingWidth(Width, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -360,7 +360,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public void Flush()
         {
-            MainDatabaseLazyWriter.SafeFlush();
+            MainDatabaseDelayWriter.SafeFlush();
         }
 
         #endregion

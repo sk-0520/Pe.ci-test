@@ -8,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 {
     /// <summary>
     /// 呼び出し側で一意なオブジェクトを生成するヘルパー。
-    /// <para><see cref="Database.IDatabaseLazyWriter.Stock(Action{Database.IDatabaseTransaction}, object)"/>の使用のみに特化。</para>
+    /// <para><see cref="Database.IDatabaseDelayWriter.Stock(Action{Database.IDatabaseTransaction}, object)"/>の使用のみに特化。</para>
     /// </summary>
     public class UniqueKeyPool
     {

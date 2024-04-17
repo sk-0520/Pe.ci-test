@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             });
         }
 
-        public static TContainer RegisterDatabase<TContainer>(this TContainer container, ApplicationDatabaseFactoryPack factoryPack, LazyWriterWaitTimePack lazyWriterWaitTimePack, ILoggerFactory loggerFactory)
+        public static TContainer RegisterDatabase<TContainer>(this TContainer container, ApplicationDatabaseFactoryPack factoryPack, DelayWriterWaitTimePack delayWriterWaitTimePack, ILoggerFactory loggerFactory)
             where TContainer : IDiRegisterContainer
         {
             var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory);
@@ -82,10 +82,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 new ApplicationDatabaseBarrier(accessorPack.Temporary, readerWriterLockerPack.Temporary)
             );
 
-            var lazyWriterPack = new ApplicationDatabaseLazyWriterPack(
-                new ApplicationDatabaseLazyWriter(barrierPack.Main, lazyWriterWaitTimePack.Main, loggerFactory),
-                new ApplicationDatabaseLazyWriter(barrierPack.Large, lazyWriterWaitTimePack.Large, loggerFactory),
-                new ApplicationDatabaseLazyWriter(barrierPack.Temporary, lazyWriterWaitTimePack.Temporary, loggerFactory)
+            var delayWriterPack = new ApplicationDatabaseDelayWriterPack(
+                new ApplicationDatabaseDelayWriter(barrierPack.Main, delayWriterWaitTimePack.Main, loggerFactory),
+                new ApplicationDatabaseDelayWriter(barrierPack.Large, delayWriterWaitTimePack.Large, loggerFactory),
+                new ApplicationDatabaseDelayWriter(barrierPack.Temporary, delayWriterWaitTimePack.Temporary, loggerFactory)
             );
 
             container
@@ -93,15 +93,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<IDatabaseAccessorPack, ApplicationDatabaseAccessorPack>(accessorPack)
                 .Register<IDatabaseBarrierPack, ApplicationDatabaseBarrierPack>(barrierPack)
                 .Register<IReaderWriterLockerPack, ApplicationReaderWriterLockerPack>(readerWriterLockerPack)
-                .Register<IDatabaseLazyWriterPack, ApplicationDatabaseLazyWriterPack>(lazyWriterPack)
+                .Register<IDatabaseDelayWriterPack, ApplicationDatabaseDelayWriterPack>(delayWriterPack)
 
                 .Register<IMainDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.Main)
                 .Register<ILargeDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.Large)
                 .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.Temporary)
 
-                .Register<IMainDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Main)
-                .Register<ILargeDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Large)
-                .Register<ITemporaryDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Temporary)
+                .Register<IMainDatabaseDelayWriter, ApplicationDatabaseDelayWriter>(delayWriterPack.Main)
+                .Register<ILargeDatabaseDelayWriter, ApplicationDatabaseDelayWriter>(delayWriterPack.Large)
+                .Register<ITemporaryDatabaseDelayWriter, ApplicationDatabaseDelayWriter>(delayWriterPack.Temporary)
             ;
 
             return container;
@@ -114,15 +114,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 () => container.Unregister<IDatabaseAccessorPack>(),
                 () => container.Unregister<IDatabaseBarrierPack>(),
                 () => container.Unregister<IReaderWriterLockerPack>(),
-                () => container.Unregister<IDatabaseLazyWriterPack>(),
+                () => container.Unregister<IDatabaseDelayWriterPack>(),
 
                 () => container.Unregister<IMainDatabaseBarrier>(),
                 () => container.Unregister<ILargeDatabaseBarrier>(),
                 () => container.Unregister<ITemporaryDatabaseBarrier>(),
 
-                () => container.Unregister<IMainDatabaseLazyWriter>(),
-                () => container.Unregister<ILargeDatabaseLazyWriter>(),
-                () => container.Unregister<ITemporaryDatabaseLazyWriter>(),
+                () => container.Unregister<IMainDatabaseDelayWriter>(),
+                () => container.Unregister<ILargeDatabaseDelayWriter>(),
+                () => container.Unregister<ITemporaryDatabaseDelayWriter>(),
             };
 
             foreach(var unreg in unregisters.Reverse()) {

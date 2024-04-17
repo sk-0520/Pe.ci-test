@@ -44,8 +44,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Reference.Eyes",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Reference.FileFinder", "Pe.Plugins.Reference.FileFinder\Pe.Plugins.Reference.FileFinder.csproj", "{1DF129D6-E2BC-4671-9012-646B8CE7C023}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Reference.Html", "Pe.Plugins.Reference.Html\Pe.Plugins.Reference.Html.csproj", "{5874965B-F278-4112-9533-B5F40811825F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Base", "Pe.Standard.Base\Pe.Standard.Base.csproj", "{EF043BDE-4205-42A8-BEA1-E26B4FED0457}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Base.Test", "Pe.Standard.Base.Test\Pe.Standard.Base.Test.csproj", "{18425900-CBF3-46FE-905A-838140538B12}"
@@ -58,7 +56,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.DependencyInjec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.DependencyInjection.Test", "Pe.Standard.DependencyInjection.Test\Pe.Standard.DependencyInjection.Test.csproj", "{13665FFC-B8BB-4E27-B5EF-6B1B0035C497}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pe.Standard.Database.Test", "Pe.Standard.Database.Test\Pe.Standard.Database.Test.csproj", "{B2C00064-2CE7-4D45-895A-D3BBE333C75C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Database.Test", "Pe.Standard.Database.Test\Pe.Standard.Database.Test.csproj", "{B2C00064-2CE7-4D45-895A-D3BBE333C75C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -172,14 +170,6 @@ Global
 		{1DF129D6-E2BC-4671-9012-646B8CE7C023}.Release|x64.Build.0 = Release|x64
 		{1DF129D6-E2BC-4671-9012-646B8CE7C023}.Release|x86.ActiveCfg = Release|x86
 		{1DF129D6-E2BC-4671-9012-646B8CE7C023}.Release|x86.Build.0 = Release|x86
-		{5874965B-F278-4112-9533-B5F40811825F}.Debug|x64.ActiveCfg = Debug|x64
-		{5874965B-F278-4112-9533-B5F40811825F}.Debug|x64.Build.0 = Debug|x64
-		{5874965B-F278-4112-9533-B5F40811825F}.Debug|x86.ActiveCfg = Debug|x86
-		{5874965B-F278-4112-9533-B5F40811825F}.Debug|x86.Build.0 = Debug|x86
-		{5874965B-F278-4112-9533-B5F40811825F}.Release|x64.ActiveCfg = Release|x64
-		{5874965B-F278-4112-9533-B5F40811825F}.Release|x64.Build.0 = Release|x64
-		{5874965B-F278-4112-9533-B5F40811825F}.Release|x86.ActiveCfg = Release|x86
-		{5874965B-F278-4112-9533-B5F40811825F}.Release|x86.Build.0 = Release|x86
 		{EF043BDE-4205-42A8-BEA1-E26B4FED0457}.Debug|x64.ActiveCfg = Debug|x64
 		{EF043BDE-4205-42A8-BEA1-E26B4FED0457}.Debug|x64.Build.0 = Debug|x64
 		{EF043BDE-4205-42A8-BEA1-E26B4FED0457}.Debug|x86.ActiveCfg = Debug|x86
@@ -246,7 +236,6 @@ Global
 		{D4D3EED2-7738-4941-AFA0-D73A8079B67E} = {8253ACFA-E9A5-4F53-9D74-370093EAB2A4}
 		{19C7E31F-EFEE-4CD6-9297-A3BF47762C49} = {8253ACFA-E9A5-4F53-9D74-370093EAB2A4}
 		{1DF129D6-E2BC-4671-9012-646B8CE7C023} = {8253ACFA-E9A5-4F53-9D74-370093EAB2A4}
-		{5874965B-F278-4112-9533-B5F40811825F} = {8253ACFA-E9A5-4F53-9D74-370093EAB2A4}
 		{EF043BDE-4205-42A8-BEA1-E26B4FED0457} = {7D2653BF-3D84-44F4-8158-21179F8EE206}
 		{18425900-CBF3-46FE-905A-838140538B12} = {7D2653BF-3D84-44F4-8158-21179F8EE206}
 		{7D2653BF-3D84-44F4-8158-21179F8EE206} = {136A9EA3-D95D-4C23-A5EA-DD12A1E09F7B}
@@ -256,8 +245,8 @@ Global
 		{B2C00064-2CE7-4D45-895A-D3BBE333C75C} = {7D2653BF-3D84-44F4-8158-21179F8EE206}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_PrefixTranslations = False
-		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
 		RESX_NeutralResourcesLanguage = ja-JP
+		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
+		RESX_PrefixTranslations = False
 	EndGlobalSection
 EndGlobal

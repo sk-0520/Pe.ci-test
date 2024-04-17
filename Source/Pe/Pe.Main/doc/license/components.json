@@ -7,7 +7,7 @@
 				"name": "MIT License",
 				"uri": "https://github.com/microsoft/dotnet/blob/master/LICENSE"
 			},
-			"comment": "Microsoft.Extension.*, (MS)System.*　を含む"
+			"comment": "Microsoft.Extension.*, (MS)System.*, Microsoft.Web.WebView2.* を含む"
 		},
 		{
 			"name": "xUnit.net",
@@ -73,15 +73,6 @@
 			"comment": ""
 		},
 		{
-			"name": "CefSharp",
-			"uri": "https://cefsharp.github.io/",
-			"license": {
-				"name": "BSD",
-				"uri": "https://github.com/cefsharp/CefSharp/blob/master/LICENSE"
-			},
-			"comment": "CefSharp.Wpf"
-		},
-		{
 			"name": "SevenZipExtractor",
 			"uri": "https://github.com/adoconnection/SevenZipExtractor",
 			"license": {
@@ -91,7 +82,6 @@
 			"comment": "7z"
 		}
 	],
-
 	"resource": [
 		{
 			"name": "Visual Studio 2017/2019 Image Library",

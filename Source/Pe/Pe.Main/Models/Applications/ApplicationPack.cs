@@ -129,19 +129,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         { }
     }
 
-    internal class LazyWriterWaitTimePack: TApplicationPackBase<TimeSpan, TimeSpan>
+    internal class DelayWriterWaitTimePack: TApplicationPackBase<TimeSpan, TimeSpan>
     {
-        public LazyWriterWaitTimePack(TimeSpan main, TimeSpan large, TimeSpan temporary)
+        public DelayWriterWaitTimePack(TimeSpan main, TimeSpan large, TimeSpan temporary)
             : base(main, large, temporary)
         { }
     }
 
-    public interface IDatabaseLazyWriterPack: IApplicationPack<IDatabaseLazyWriter>
+    public interface IDatabaseDelayWriterPack: IApplicationPack<IDatabaseDelayWriter>
     { }
 
-    internal sealed class ApplicationDatabaseLazyWriterPack: TApplicationPackBase<IDatabaseLazyWriter, ApplicationDatabaseLazyWriter>, IDatabaseLazyWriterPack
+    internal sealed class ApplicationDatabaseDelayWriterPack: TApplicationPackBase<IDatabaseDelayWriter, ApplicationDatabaseDelayWriter>, IDatabaseDelayWriterPack
     {
-        public ApplicationDatabaseLazyWriterPack(ApplicationDatabaseLazyWriter main, ApplicationDatabaseLazyWriter large, ApplicationDatabaseLazyWriter temporary)
+        public ApplicationDatabaseDelayWriterPack(ApplicationDatabaseDelayWriter main, ApplicationDatabaseDelayWriter large, ApplicationDatabaseDelayWriter temporary)
             : base(main, large, temporary)
         { }
     }

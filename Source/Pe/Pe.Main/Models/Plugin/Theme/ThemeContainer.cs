@@ -26,13 +26,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         private DefaultTheme? _defaultTheme;
 
         #endregion
-        public ThemeContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IViewManager viewManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ThemeContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseDelayWriterPack databaseDelayWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IViewManager viewManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
             DatabaseBarrierPack = databaseBarrierPack;
-            DatabaseLazyWriterPack = databaseLazyWriterPack;
+            DatabaseDelayWriterPack = databaseDelayWriterPack;
             DatabaseStatementLoader = databaseStatementLoader;
             EnvironmentParameters = environmentParameters;
             UserAgentManager = userAgentManager;
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         /// <inheritdoc cref="ILoggerFactory"/>
         private ILoggerFactory LoggerFactory { get; }
         private IDatabaseBarrierPack DatabaseBarrierPack { get; }
-        private IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
+        private IDatabaseDelayWriterPack DatabaseDelayWriterPack { get; }
         private IDatabaseStatementLoader DatabaseStatementLoader { get; }
         private EnvironmentParameters EnvironmentParameters { get; }
         private IUserAgentManager UserAgentManager { get; }
@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(!CurrentThemeIsDefaultTheme) {
                 if(!DefaultTheme.IsLoaded(PluginKind.Theme)) {
                     Logger.LogInformation("標準テーマ先生準備できておらず。");
-                    var pluginContextFactory = new PluginContextFactory(DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
+                    var pluginContextFactory = new PluginContextFactory(DatabaseBarrierPack, DatabaseDelayWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
                     using(var readerPack = DatabaseBarrierPack.WaitRead()) {
                         using var loadContext = pluginContextFactory.CreateLoadContext(DefaultTheme.PluginInformation, readerPack);
                         DefaultTheme.Load(PluginKind.Theme, loadContext);

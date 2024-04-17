@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, ILauncherToolbarTheme launcherToolbarTheme, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public LauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseDelayWriter mainDatabaseDelayWriter, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, ILauncherToolbarTheme launcherToolbarTheme, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             DockScreen = dockScreen;
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             IdFactory = idFactory;
             LauncherToolbarTheme = launcherToolbarTheme;
 
-            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
+            MainDatabaseDelayWriter = mainDatabaseDelayWriter;
         }
 
         #region property
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         private IIdFactory IdFactory { get; }
         private ILauncherToolbarTheme LauncherToolbarTheme { get; }
 
-        private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        private IMainDatabaseDelayWriter MainDatabaseDelayWriter { get; }
         private UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         public ReadOnlyObservableCollection<LauncherGroupElement> LauncherGroups { get; }
@@ -375,7 +375,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             UpdateDesign();
             IsOpenedAppMenu = false;
 
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 dao.UpdateToolbarPosition(LauncherToolbarId, ToolbarPosition, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -388,7 +388,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             IsTopmost = isTopmost;
             IsOpenedAppMenu = false;
 
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 dao.UpdateIsTopmost(LauncherToolbarId, IsTopmost, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -401,7 +401,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             IsAutoHide = isAutoHide;
             IsOpenedAppMenu = false;
 
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 dao.UpdateIsAutoHide(LauncherToolbarId, IsAutoHide, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -414,7 +414,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             IsVisible = isVisible;
             IsOpenedAppMenu = false;
 
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 var dao = new LauncherToolbarsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 dao.UpdateIsVisible(LauncherToolbarId, IsVisible, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
@@ -528,7 +528,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public void Flush()
         {
-            MainDatabaseLazyWriter.SafeFlush();
+            MainDatabaseDelayWriter.SafeFlush();
         }
 
         #endregion

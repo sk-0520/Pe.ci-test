@@ -21,14 +21,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public LauncherItemCustomizeTagViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            TagLazyChanger = new LazyAction("タグ編集編集:" + Model.LauncherItemId.ToString(), TimeSpan.FromSeconds(3), LoggerFactory);
+            TagDelayChanger = new DelayAction("タグ編集編集:" + Model.LauncherItemId.ToString(), TimeSpan.FromSeconds(3), LoggerFactory);
             TagDocument = new TextDocument(string.Join(Environment.NewLine, Model.TagItems));
             TagDocument.TextChanged += TagDocument_TextChanged;
         }
 
         #region property
 
-        private LazyAction TagLazyChanger { get; }
+        private DelayAction TagDelayChanger { get; }
 
         public TextDocument TagDocument { get; }
 
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    TagLazyChanger.Dispose();
+                    TagDelayChanger.Dispose();
                 }
                 TagDocument.TextChanged -= TagDocument_TextChanged;
             }
@@ -84,14 +84,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #region IFlushable
         public void Flush()
         {
-            TagLazyChanger.SafeFlush();
+            TagDelayChanger.SafeFlush();
         }
 
         #endregion
 
         private void TagDocument_TextChanged(object? sender, EventArgs e)
         {
-            TagLazyChanger.DelayAction(ChangedTag);
+            TagDelayChanger.Callback(ChangedTag);
         }
     }
 }

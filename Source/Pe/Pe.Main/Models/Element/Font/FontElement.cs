@@ -134,14 +134,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
     public class SavingFontElement: FontElement
     {
-        public SavingFontElement(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public SavingFontElement(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseDelayWriter mainDatabaseDelayWriter, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(fontId, mainDatabaseBarrier, statementLoader, loggerFactory)
         {
             DefaultFontKind = defaultFontKind;
             ParentUpdater = parentUpdater;
             IdFactory = idFactory;
 
-            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
+            MainDatabaseDelayWriter = mainDatabaseDelayWriter;
         }
 
         #region property
@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
         private ParentUpdater ParentUpdater { get; }
         private IIdFactory IdFactory { get; }
 
-        private IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        private IMainDatabaseDelayWriter MainDatabaseDelayWriter { get; }
         private UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         public bool IsDefaultFont { get; private set; } = true;
@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
         {
             ThrowIfDisposed();
 
-            MainDatabaseLazyWriter.Stock(c => {
+            MainDatabaseDelayWriter.Stock(c => {
                 if(IsDefaultFont) {
                     CreateAndSaveFontId(c, c.Implementation);
                 }
@@ -251,7 +251,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
         {
             ThrowIfDisposed();
 
-            MainDatabaseLazyWriter.SafeFlush();
+            MainDatabaseDelayWriter.SafeFlush();
         }
 
         protected override FontData GetFontData()

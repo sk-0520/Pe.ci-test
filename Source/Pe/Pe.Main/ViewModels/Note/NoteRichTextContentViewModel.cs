@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public NoteRichTextContentViewModel(NoteContentElement model, NoteConfiguration noteConfiguration, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, noteConfiguration, clipboardManager, dispatcherWrapper, loggerFactory)
         {
-            TextChangeLazyAction = new LazyAction("RTF変更抑制", TimeSpan.FromSeconds(2), LoggerFactory);
+            TextChangeDelayAction = new DelayAction("RTF変更抑制", TimeSpan.FromSeconds(2), LoggerFactory);
             SelectionForegroundColor = Colors.Black;
             SelectionBackgroundColor = Colors.Yellow;
         }
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private FlowDocument Document => ControlElement?.Document ?? throw new NullReferenceException(nameof(ControlElement));
 
-        private LazyAction TextChangeLazyAction { get; }
+        private DelayAction TextChangeDelayAction { get; }
 
         public double FontMinimumSize => NoteConfiguration.FontSize.Minimum;
         public double FontMaximumSize => NoteConfiguration.FontSize.Maximum;
@@ -422,7 +422,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #region IFlushable
         public void Flush()
         {
-            TextChangeLazyAction.SafeFlush();
+            TextChangeDelayAction.SafeFlush();
         }
 
         #endregion
@@ -430,7 +430,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private void Control_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextChangeLazyAction.DelayAction(ChangedText);
+            TextChangeDelayAction.Callback(ChangedText);
         }
 
         private void RichTextBox_SelectionChanged(object sender, RoutedEventArgs e)

@@ -1,5 +1,36 @@
 [
 	{
+		"date": "2024/04/17",
+		"version": "0.99.229",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"class": "compatibility",
+						"subject": "#717 対応により WebView2 ランタイムが必要になります",
+						"comments": [
+							"Windows 11 では対応不要です",
+							"Windows 10 では状況次第で必要ですがたぶんまぁ大丈夫。ただし状況(Windows Update 未適用等)に応じてランタイムインストールが必要です(以下URLを参照)",
+							"https://developer.microsoft.com/microsoft-edge/webview2",
+							"https://jpdsi.github.io/blog/internet-explorer-microsoft-edge/webview2-faq/"
+						]
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "b93e51212301d089efc0d977016483d701d1462c",
+						"subject": "#717: 内蔵ブラウザをWebView2にする"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2024/04/09",
 		"version": "0.99.228",
 		"contents": [
@@ -7,7 +38,7 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "11cc85fa42a89fe91163781d3f76099bc5149ffa",
 						"subject": "#927: アップデート処理のコピー処理に不具合ありそう",
 						"comments": [
 							"なかったなぁ……"

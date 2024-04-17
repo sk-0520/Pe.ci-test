@@ -5,19 +5,19 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
-    public interface IApplicationDatabaseLazyWriter: IDatabaseLazyWriter
+    public interface IApplicationDatabaseDelayWriter: IDatabaseDelayWriter
     { }
 
-    public interface IMainDatabaseLazyWriter: IApplicationDatabaseLazyWriter
+    public interface IMainDatabaseDelayWriter: IApplicationDatabaseDelayWriter
     { }
-    public interface ILargeDatabaseLazyWriter: IApplicationDatabaseLazyWriter
+    public interface ILargeDatabaseDelayWriter: IApplicationDatabaseDelayWriter
     { }
-    public interface ITemporaryDatabaseLazyWriter: IApplicationDatabaseLazyWriter
+    public interface ITemporaryDatabaseDelayWriter: IApplicationDatabaseDelayWriter
     { }
 
-    internal class ApplicationDatabaseLazyWriter: DatabaseLazyWriter, IMainDatabaseLazyWriter, ILargeDatabaseLazyWriter, ITemporaryDatabaseLazyWriter
+    internal class ApplicationDatabaseDelayWriter: DatabaseDelayWriter, IMainDatabaseDelayWriter, ILargeDatabaseDelayWriter, ITemporaryDatabaseDelayWriter
     {
-        public ApplicationDatabaseLazyWriter(IDatabaseBarrier databaseBarrier, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
+        public ApplicationDatabaseDelayWriter(IDatabaseBarrier databaseBarrier, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
             : base(databaseBarrier, pauseRetryTime, loggerFactory)
         { }
     }
