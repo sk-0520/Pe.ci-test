@@ -5,8 +5,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
 {
     /// <summary>
     /// 追跡用基底処理。
-    /// <para>名前ほど大層なことではないけどどこで何が起き方を知っておきたい。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>名前ほど大層なことではないけどどこで何が起き方を知っておきたい。</para>
+    /// </remarks>
     public abstract class TelemeterBase
     {
         protected TelemeterBase(ILoggerFactory loggerFactory)

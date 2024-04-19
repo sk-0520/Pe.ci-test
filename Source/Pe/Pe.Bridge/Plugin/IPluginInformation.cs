@@ -14,15 +14,19 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         /// <summary>
         /// プラグインの識別ID。
-        /// <para>重複してるとバグる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>重複してるとバグる。</para>
+        /// </remarks>
         PluginId PluginId { get; }
 
         /// <summary>
         /// プラグインを人が見て判断するための名前。
+        /// </summary>
+        /// <remarks>
         /// <para>ローカライズ不要。</para>
         /// <para>手動インストールの場合に、<see cref="PluginId"/> を使用しないディレクトリ名として ASCII 範囲内でかつディレクトリ名として有効な文字のみを使用すること。ディレクトリ名として扱われる場合は重複するとバグる。</para>
-        /// </summary>
+        /// </remarks>
         string PluginName { get; }
 
         #endregion
@@ -77,13 +81,17 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         /// <summary>
         /// プラグインが動作可能な Pe の最低バージョン(以上)。
-        /// <para>0.0.0 で全バージョン稼働OK。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>0.0.0 で全バージョン稼働OK。</para>
+        /// </remarks>
         Version MinimumSupportVersion { get; }
         /// <summary>
         /// プラグインが動作可能な Pe の最大バージョン(以下)。
-        /// <para>0.0.0 で全バージョン稼働OK。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>0.0.0 で全バージョン稼働OK。</para>
+        /// </remarks>
         Version MaximumSupportVersion { get; }
 
         /// <summary>
@@ -146,8 +154,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
     /// <summary>
     /// Pe の解釈可能なライセンス一覧。
-    /// <para><see langword="const" />なのでバージョンアップ時に変になるかもねー。</para>
     /// </summary>
+    /// <remarks>
+    /// <para><see langword="const" />なのでバージョンアップ時に変になるかもねー。</para>
+    /// </remarks>
     public static class PluginLicense
     {
         #region property

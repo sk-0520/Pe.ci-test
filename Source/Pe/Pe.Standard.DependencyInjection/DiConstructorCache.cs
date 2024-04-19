@@ -82,8 +82,10 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
         /// <summary>
         /// コンストラクタの呼び出し。
-        /// <para>内部実装は DiConstructorCacheImpl.tt にて機械生成。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>内部実装は DiConstructorCacheImpl.tt にて機械生成。</para>
+        /// </remarks>
         /// <param name="parameters"></param>
         /// <returns></returns>
         public object Create(object[] parameters)

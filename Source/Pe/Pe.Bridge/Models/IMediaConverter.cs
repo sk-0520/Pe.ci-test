@@ -4,24 +4,30 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 {
     /// <summary>
     /// 色とかその辺の変換処理。
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface IMediaConverter
     {
         #region function
 
         /// <summary>
         /// 色反転。
-        /// <para>透明度は保ったまま。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>透明度は保ったまま。</para>
+        /// </remarks>
         /// <param name="color"></param>
         /// <returns></returns>
         Color GetNegativeColor(Color color);
 
         /// <summary>
         /// 補色。
-        /// <para>透明度は保ったまま。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>透明度は保ったまま。</para>
+        /// </remarks>
         /// <param name="color"></param>
         /// <returns></returns>
         Color GetComplementaryColor(Color color);

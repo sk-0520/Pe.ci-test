@@ -49,8 +49,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public TimeSpan RefreshTime { get; set; } = TimeSpan.FromMilliseconds(250);
         /// <summary>
         /// そもそも取りこぼしを考慮するか。
-        /// <para>将来用。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>将来用。</para>
+        /// </remarks>
         public bool IsEnabledRefresh { get; set; } = true;
 
         #endregion

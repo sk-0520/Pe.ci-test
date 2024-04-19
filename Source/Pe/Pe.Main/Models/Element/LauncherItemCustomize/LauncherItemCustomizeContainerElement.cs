@@ -11,8 +11,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 {
     /// <summary>
     /// 独立したランチャーアイテム編集処理。
-    /// <para>アイテムを単体編集する要素。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>アイテムを単体編集する要素。</para>
+    /// </remarks>
     sealed public class LauncherItemCustomizeContainerElement: ElementBase, IViewShowStarter, IViewCloseReceiver
     {
         #region variable

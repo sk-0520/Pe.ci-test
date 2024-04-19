@@ -46,15 +46,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         /// <summary>
         /// 共用しているランチャーアイテム一覧。
-        /// <para>親元でアイコンと共通項目構築済みのランチャーアイテム。毎回作るのあれだし。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>親元でアイコンと共通項目構築済みのランチャーアイテム。毎回作るのあれだし。</para>
+        /// </remarks>
         [IgnoreValidation]
         private ModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
 
         /// <summary>
         /// 所属ランチャーアイテム。
-        /// <para>注意: 設定中データ状態はモデル側に送らない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>注意: 設定中データ状態はモデル側に送らない。</para>
+        /// </remarks>
         //public ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherItems { get; }
         [IgnoreValidation]
         private ModelViewModelObservableCollectionManager<WrapModel<LauncherItemId>, LauncherItemSettingEditorViewModel> LauncherCollection { get; }

@@ -7,9 +7,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
 {
     /// <summary>
     /// 設定変更を受け付けるメンバに対して付与する属性。
-    /// <para><see cref="EventHandler{NotifyEventArgs}"/>で使用する前提。</para>
-    /// <see cref=""/>
     /// </summary>
+    /// <remarks>
+    /// <para><see cref="EventHandler{NotifyEventArgs}"/>で使用する前提。</para>
+    /// </remarks>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class SettingChangedTargetAttribute: Attribute
     { }

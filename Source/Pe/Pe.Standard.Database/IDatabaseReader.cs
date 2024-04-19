@@ -8,8 +8,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// データ読み込みを担当。
-    /// <para>データが変更されるかはDBMS依存となる。シーケンスやファンクション呼び出し・トリガーなどの実装は<see cref="IDatabaseReader"/>からは判定不可。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>データが変更されるかはDBMS依存となる。シーケンスやファンクション呼び出し・トリガーなどの実装は<see cref="IDatabaseReader"/>からは判定不可。</para>
+    /// </remarks>
     public interface IDatabaseReader
     {
         #region function

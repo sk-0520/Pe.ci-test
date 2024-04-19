@@ -229,8 +229,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         /// <summary>
         /// <inheritdoc cref="IDatabaseBarrier.WaitWrite" />
-        /// <para><see cref="ReaderWriterLocker.WaitWriteByDefaultTimeout()"/>が規定時間。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="ReaderWriterLocker.WaitWriteByDefaultTimeout()"/>が規定時間。</para>
+        /// </remarks>
         public virtual IDatabaseTransaction WaitWrite()
         {
             var locker = Locker.WaitWriteByDefaultTimeout();
@@ -250,8 +252,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         /// <summary>
         /// <inheritdoc cref="IDatabaseBarrier.WaitRead" />
-        /// <para><see cref="ReaderWriterLocker.WaitReadByDefaultTimeout()"/>が規定時間。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="ReaderWriterLocker.WaitReadByDefaultTimeout()"/>が規定時間。</para>
+        /// </remarks>
         /// <returns></returns>
         public virtual IDatabaseTransaction WaitRead()
         {

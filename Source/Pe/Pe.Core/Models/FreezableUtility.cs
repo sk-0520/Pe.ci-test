@@ -10,8 +10,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         /// <summary>
         /// 安全に<see cref="Freezable.Freeze()"/>する。
-        /// <para>どんな時にできないのかは知らん。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>どんな時にできないのかは知らん。</para>
+        /// </remarks>
         /// <param name="freezable"></param>
         /// <returns></returns>
         public static bool SafeFreeze(Freezable? freezable)

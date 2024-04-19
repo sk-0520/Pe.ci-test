@@ -105,16 +105,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         /// <summary>
         /// コンテンツが必要になった際に呼び出される。
+        /// </summary>
+        /// <remarks>
         /// <para>UI要素への購買処理も実施すること。</para>
         /// <para>例外処理も対応が必要。</para>
-        /// </summary>
+        /// </remarks>
         /// <param name="baseElement"></param>
         /// <returns>正常に読み込めたか</returns>
         protected abstract Task<bool> LoadContentAsync();
         /// <summary>
         /// コンテンツが不要になった際に呼び出される。
-        /// <para>UI要素への解除処理も実施すること。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>UI要素への解除処理も実施すること。</para>
+        /// </remarks>
         protected abstract void UnloadContent();
 
         /// <summary>

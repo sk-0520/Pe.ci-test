@@ -16,8 +16,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         /// <summary>
         /// プラグインとなり得る拡張子。
-        /// <para>先に一致したものを優先する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>先に一致したものを優先する。</para>
+        /// </remarks>
         [Configuration]
         public IReadOnlyList<string> Extensions { get; } = default!;
         

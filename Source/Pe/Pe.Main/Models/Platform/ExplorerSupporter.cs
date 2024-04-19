@@ -12,8 +12,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
     /// <summary>
     /// Windows Explorer に対する(独善的)補助処理。
-    /// <para>今んとこフォルダツリーの横スクロールくらい。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>今んとこフォルダツリーの横スクロールくらい。</para>
+    /// </remarks>
     public class ExplorerSupporter: DisposerBase
     {
         #region define

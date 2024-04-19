@@ -31,9 +31,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
         /// <summary>
         /// 対象バージョン。
+        /// </summary>
+        /// <remarks>
         /// <para>最終実行バージョンがこのバージョン未満であれば処理実行対象となる。</para>
         /// <para>開発メモ: リリース時のバージョンとクラス名に変更すること。</para>
-        /// </summary>
+        /// </remarks>
         public abstract Version Version { get; }
         /*
 #if DEBUG || BETA

@@ -373,8 +373,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         /// <summary>
         /// 一時的に表示系と表示処理に起因する処理を停止する。
-        /// <para>モーダルダイアログ表示の際に使用する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>モーダルダイアログ表示の際に使用する。</para>
+        /// </remarks>
         /// <returns></returns>
         private IDisposable PauseAllViews()
         {
@@ -621,8 +623,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         /// <summary>
         /// 全プラグインの読み込み。
-        /// <para>管理者権限実行時は読み込まない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>管理者権限実行時は読み込まない。</para>
+        /// </remarks>
         private void LoadPlugins()
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();

@@ -10,8 +10,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
     /// <see cref="ObservableCollection{TValue}"/> の変更通知を処理する。
-    /// <para>原則このクラスは使用せず、<see cref="ModelViewModelObservableCollectionOptions{TModel, TViewModel}"/>の使用を想定している。ただし実装上一本にまとめると複雑になるために本クラスを継承元として分割している。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>原則このクラスは使用せず、<see cref="ModelViewModelObservableCollectionOptions{TModel, TViewModel}"/>の使用を想定している。ただし実装上一本にまとめると複雑になるために本クラスを継承元として分割している。</para>
+    /// </remarks>
     public abstract class ObservableCollectionManagerBase<TValue>: NotifyPropertyBase
     {
         private ObservableCollectionManagerBase(IReadOnlyList<TValue> collection, INotifyCollectionChanged collectionNotifyCollectionChanged)

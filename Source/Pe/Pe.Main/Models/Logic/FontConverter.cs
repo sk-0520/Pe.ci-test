@@ -44,8 +44,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         }
 
         /// <summary>
-        /// <para>TODO: この環境で再現できないのでスタブのみ作成</para>
         /// </summary>
+        /// <remarks>
+        /// <para>TODO: この環境で再現できないのでスタブのみ作成</para>
+        /// </remarks>
         /// <param name="fontFamily"></param>
         /// <returns></returns>
         public string GetOriginalFontFamilyName(FontFamily fontFamily)

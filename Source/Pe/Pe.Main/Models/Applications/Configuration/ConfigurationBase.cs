@@ -34,9 +34,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
     /// <summary>
     /// アプリケーション構成ファイルの読み込み基底処理。
+    /// </summary>
+    /// <remarks>
     /// <para>すべてをコンストラクタで処理し、失敗時は例外を投げて先に進ませないようにする。</para>
     /// <para>バッキングフィールド名を信じてえんやこらさっさ。</para>
-    /// </summary>
+    /// </remarks>
     public abstract class ConfigurationBase
     {
         /// <summary>

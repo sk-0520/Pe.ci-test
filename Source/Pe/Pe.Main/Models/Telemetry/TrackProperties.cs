@@ -6,8 +6,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
 {
     /// <summary>
     /// 追跡用プロパティ。
-    /// <para><see cref="IDictionary{TKey, TValue}"/>となんら変わらないけど宣言を短くする目的。</para>
     /// </summary>
+    /// <remarks>
+    /// <para><see cref="IDictionary{TKey, TValue}"/>となんら変わらないけど宣言を短くする目的。</para>
+    /// </remarks>
     [SuppressMessage("Naming", "CA1710:識別子は、正しいサフィックスを含んでいなければなりません", Justification = "OK")]
     public class TrackProperties: IDictionary<string, string>, IReadOnlyDictionary<string, string>
     {

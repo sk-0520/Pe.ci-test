@@ -7,8 +7,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 {
     /// <summary>
     /// テーマ対象となるプロパティに設定。
-    /// <para><see cref="ContentTypeTextNet.Pe.Bridge.Models.IPlatformTheme.Changed"/>の追従で手書きはしんどい。</para>
     /// </summary>
+    /// <remarks>
+    /// <para><see cref="ContentTypeTextNet.Pe.Bridge.Models.IPlatformTheme.Changed"/>の追従で手書きはしんどい。</para>
+    /// </remarks>
     [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
     public sealed class ThemePropertyAttribute: Attribute
     {

@@ -58,8 +58,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         /// <summary>
         /// ファイルアイコン表示用。
-        /// <para>一応持ってるけど使わない方針。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>一応持ってるけど使わない方針。</para>
+        /// </remarks>
         public IconImageLoader IconImageLoader { get; }
 
         #endregion

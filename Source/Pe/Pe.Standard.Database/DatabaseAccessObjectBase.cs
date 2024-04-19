@@ -11,8 +11,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// データベースアクセス基底！
-    /// <para>詳細なアクセス手法は実装先にて処理する。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>詳細なアクセス手法は実装先にて処理する。</para>
+    /// </remarks>
     public abstract class DatabaseAccessObjectBase
     {
         #region variable
@@ -70,14 +72,18 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         public string NewLine { get; set; /* TODO: 本来 init */ } = Environment.NewLine;
         /// <summary>
         /// ファイル読み込み時に使用するキーの結合文字列。
-        /// <para>ファイル名に使用出来てメソッド名に使用できない(できなさそう)なのが良い。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>ファイル名に使用出来てメソッド名に使用できない(できなさそう)なのが良い。</para>
+        /// </remarks>
         protected string JoinSeparator { get; set; /* TODO: 本来 init */ } = "!";
 
         /// <summary>
         /// 処理対象文の取得用正規表現。
-        /// <para>KEY: 処理対象キー, BODY: 文。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>KEY: 処理対象キー, BODY: 文。</para>
+        /// </remarks>
         protected virtual Regex ProcessBodyRegex
         {
             get
@@ -109,8 +115,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         /// <summary>
         /// 置き換え対象文取得用正規表現。
-        /// <para>NAME: 対象名, KIND: 文(CODE)/読込(LOAD)</para>
         /// </summary>
+        /// <remarks>
+        /// <para>NAME: 対象名, KIND: 文(CODE)/読込(LOAD)</para>
+        /// </remarks>
         protected virtual Regex ProcessContentRegex
         {
             get
@@ -141,9 +149,11 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         /// <summary>
         /// 指定条件に合わせて文を加工する。
+        /// </summary>
+        /// <remarks>
         /// <para>必須条件として<see cref="IDatabaseImplementation.SupportedBlockComment"/>が真、<see cref="IDatabaseImplementation.BlockComments"/>が1要素以上。</para>
         /// <para><see cref="IDatabaseImplementation.BlockComments"/>最初の要素が使用される。</para>
-        /// </summary>
+        /// </remarks>
         /// <example>
         /// select *
         /// from /*{{*//*KEY[改行]

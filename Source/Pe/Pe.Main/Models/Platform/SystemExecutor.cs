@@ -9,8 +9,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
     /// <summary>
     /// システム上処理の実行。
-    /// <para>OS上での実行を行う(ファイルなら開いてEXEなら起動的な)</para>
     /// </summary>
+    /// <remarks>
+    /// <para>OS上での実行を行う(ファイルなら開いてEXEなら起動的な)</para>
+    /// </remarks>
     public class SystemExecutor
     {
         #region property
@@ -55,8 +57,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         /// <summary>
         /// ファイル配置されているディレクトリを開く。
-        /// <para>まぁ Explorer で開く。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>まぁ Explorer で開く。</para>
+        /// </remarks>
         /// <param name="filePath">ファイルパス。</param>
         /// <returns></returns>
         public Process OpenDirectoryWithFileSelect(string filePath)

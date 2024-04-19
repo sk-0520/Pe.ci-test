@@ -95,8 +95,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
     /// <summary>
     /// OSテーマ情報。
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface IPlatformTheme
     {
         #region event
@@ -112,13 +114,17 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         /// <summary>
         /// Windowsモードの色。
-        /// <para>タスクバーとかの色っぽい。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>タスクバーとかの色っぽい。</para>
+        /// </remarks>
         PlatformThemeKind WindowsThemeKind { get; }
         /// <summary>
         /// アプリモードの色。
-        /// <para>背景色っぽい。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>背景色っぽい。</para>
+        /// </remarks>
         PlatformThemeKind ApplicationThemeKind { get; }
         /// <summary>
         /// アクセントカラー！

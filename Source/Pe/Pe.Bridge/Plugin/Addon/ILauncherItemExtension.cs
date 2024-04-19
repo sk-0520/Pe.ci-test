@@ -41,9 +41,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// ランチャーアイテム専用文言。
+        /// </summary>
+        /// <remarks>
         /// <para><see cref="CustomDisplayText"/>が有効な場合に使用される。</para>
         /// <para>変更を通知するには<see cref="INotifyPropertyChanged.PropertyChanged"/>を使用する。</para>
-        /// </summary>
+        /// </remarks>
         string DisplayText { get; }
 
         /// <summary>
@@ -67,9 +69,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// アイコン取得。
+        /// </summary>
+        /// <remarks>
         /// <para>(TODO: 考え中)<see cref="CustomLauncherIcon"/>が有効な場合に使用される。</para>
         /// <para>UIスレッド上で実行を保証。</para>
-        /// </summary>
+        /// </remarks>
         /// <param name="iconMode"></param>
         /// <param name="iconScale"></param>
         /// <param name="launcherItemAddonContext"></param>
@@ -78,8 +82,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// アイテムの実行。
-        /// <para>ウィンドウを表示する場合はこの処理で行うこと(ユーザー操作を起点にする必要がある)。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>ウィンドウを表示する場合はこの処理で行うこと(ユーザー操作を起点にする必要がある)。</para>
+        /// </remarks>
         /// <param name="argument">外部から渡された引数。null の場合は渡されていない。使用有無はアドオン側に任される。</param>
         /// <param name="commandExecuteParameter">実行パラメータ。</param>
         /// <param name="launcherItemExtensionExecuteParameter">ランチャーアイテムパラメータ。</param>
@@ -88,9 +94,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// 設定処理。
+        /// </summary>
+        /// <remarks>
         /// <para><see cref="SupportedPreferences"/>が有効な場合に使用される。</para>
         /// <para>混乱中: データを読み込むには<see cref="ILauncherItemPreferences.BeginPreferences(ILauncherItemPreferencesLoadContext)"/>で行うこと。</para>
-        /// </summary>
+        /// </remarks>
         /// <returns></returns>
         ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext);
 

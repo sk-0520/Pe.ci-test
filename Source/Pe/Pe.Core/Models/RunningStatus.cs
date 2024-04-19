@@ -18,18 +18,24 @@ namespace ContentTypeTextNet.Pe.Core.Models
         Running,
         /// <summary>
         /// 実行完了。
-        /// <para>実行は終了している。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>実行は終了している。</para>
+        /// </remarks>
         End,
         /// <summary>
         /// 実行取り消し。
-        /// <para>実行は終了している。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>実行は終了している。</para>
+        /// </remarks>
         Cancel,
         /// <summary>
         /// 実行中エラー。
-        /// <para>実行は終了している。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>実行は終了している。</para>
+        /// </remarks>
         Error,
     }
 

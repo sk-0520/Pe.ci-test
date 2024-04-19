@@ -7,8 +7,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 {
     /// <summary>
     /// ディレクトリクリーンアップ処理。
-    /// <para>指定ディレクトリ以下のファイルを再帰的に削除する。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>指定ディレクトリ以下のファイルを再帰的に削除する。</para>
+    /// </remarks>
     public class DirectoryCleaner
     {
         /// <summary>

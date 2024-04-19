@@ -32,8 +32,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
-        /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
+        /// </remarks>
         event EventHandler<EventArgs>? Disposing;
 
         #endregion
@@ -59,8 +61,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
-        /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
+        /// </remarks>
         public event EventHandler<EventArgs>? Disposing
         {
             add => WeakDisposing.Add(value);
@@ -94,8 +98,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>の内部処理。
-        /// <para>継承先クラスでは本メソッドを呼び出す必要がある。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>継承先クラスでは本メソッドを呼び出す必要がある。</para>
+        /// </remarks>
         /// <param name="disposing">CLRの管理下か。</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA1816:Dispose メソッドは、SuppressFinalize を呼び出す必要があります", Justification = "<保留中>")]
         protected virtual void Dispose(bool disposing)
@@ -126,8 +132,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
     /// <summary>
     /// その場で破棄する処理。
-    /// <para><c>using var xxx = new ActionDisposer(d => ...)</c>で実装する前提。</para>
     /// </summary>
+    /// <remarks>
+    /// <para><c>using var xxx = new ActionDisposer(d => ...)</c>で実装する前提。</para>
+    /// </remarks>
     public sealed class ActionDisposer: DisposerBase
     {
         public ActionDisposer(Action<bool> action)
@@ -225,8 +233,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
     /// <summary>
     /// <see cref="IDisposable"/> をまとめて保持する。
-    /// <para>破棄順序は後入れ先出になる。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>破棄順序は後入れ先出になる。</para>
+    /// </remarks>
     public sealed class DisposableStocker: DisposerBase
     {
         #region property

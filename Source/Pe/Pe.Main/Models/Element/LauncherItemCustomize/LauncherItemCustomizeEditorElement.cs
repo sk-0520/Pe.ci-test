@@ -60,8 +60,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         /// <summary>
         /// 一括用遅延読み込みモードか。
-        /// <para>設定画面が遅い(#634)対応。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>設定画面が遅い(#634)対応。</para>
+        /// </remarks>
         internal bool IsLazyLoad
         {
             get => this._isLazyLoad;

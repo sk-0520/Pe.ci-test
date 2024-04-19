@@ -5,8 +5,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
 {
     /// <summary>
     /// 設定機能構築時に Pe から渡されるデータ。
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface IPreferencesParameter: IPluginParameter
     {
         #region property

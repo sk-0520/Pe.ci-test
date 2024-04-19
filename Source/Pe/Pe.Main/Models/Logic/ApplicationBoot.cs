@@ -19,8 +19,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     /// <summary>
     /// 本体アプリケーション起動処理。
-    /// <para>プロセス間通信処理しかしない。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>プロセス間通信処理しかしない。</para>
+    /// </remarks>
     public class ApplicationBoot
     {
         public ApplicationBoot(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
@@ -41,8 +43,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         /// <summary>
         /// 本体起動コマンドパス。
-        /// <para>Pe.Main.exe と話せればいいので上位階層の Pe.exe を指定する必要なし。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>Pe.Main.exe と話せればいいので上位階層の Pe.exe を指定する必要なし。</para>
+        /// </remarks>
         public static string CommandPath { get; } = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, "exe");
 
         #endregion
@@ -51,8 +55,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         /// <summary>
         /// プロセス間通信起動。
-        /// <para>現在のユーザー・端末・一時ディレクトリ情報が引き継がれ、強制ログ出力(<see cref="EnvironmentParameters.TemporaryIpcLogFile"/>)が行われる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>現在のユーザー・端末・一時ディレクトリ情報が引き継がれ、強制ログ出力(<see cref="EnvironmentParameters.TemporaryIpcLogFile"/>)が行われる。</para>
+        /// </remarks>
         /// <param name="ipcMode">プロセス間通信内容。</param>
         /// <param name="keyValueArguments">コマンドライン引数(キー:値)</param>
         /// <param name="switchArguments">コマンドライン引数(スイッチ, -- は不要)</param>

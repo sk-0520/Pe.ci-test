@@ -41,8 +41,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         /// <summary>
         /// バージョンをファイルとして使用できる形にする。
-        /// <para>ファイル名として扱う共通処理。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>ファイル名として扱う共通処理。</para>
+        /// </remarks>
         /// <param name="version"></param>
         /// <returns></returns>
         public string ToFileString(Version version) => ConvertDisplayVersion(version, "-");

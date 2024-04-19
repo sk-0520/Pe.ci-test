@@ -32,8 +32,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
     /// <summary>
     /// <see cref="Dapper"/> で <see langword="enum" /> (の文字列)を扱えるように変換する。
-    /// <para>キャッシュとかは気が向けば。。。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>キャッシュとかは気が向けば。。。</para>
+    /// </remarks>
     public class EnumTransfer<TEnum>
         where TEnum : struct, Enum
     {

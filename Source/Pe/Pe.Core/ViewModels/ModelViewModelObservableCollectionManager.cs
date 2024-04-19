@@ -16,8 +16,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 {
     /// <summary>
     /// <typeparamref name="TModel"/> と <typeparamref name="TViewModel"/> の一元的管理。
-    /// <para>対になっている部分は内部で対応するがその前後処理までは面倒見ない。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>対になっている部分は内部で対応するがその前後処理までは面倒見ない。</para>
+    /// </remarks>
     /// <typeparam name="TModel"></typeparam>
     /// <typeparam name="TViewModel"></typeparam>
     public class ModelViewModelObservableCollectionManager<TModel, TViewModel>: ObservableCollectionManagerBase<TModel>

@@ -4,8 +4,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
     /// 取り合えず画像が欲しい。
-    /// <para>いろんなフォーマットに手を付けられる場合にこれが実装される、はず。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>いろんなフォーマットに手を付けられる場合にこれが実装される、はず。</para>
+    /// </remarks>
     public interface IMakeBitmapSource
     {
         /// <summary>

@@ -73,8 +73,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public ObservableCollection<KeyboardPressedJobSettingEditorElement> PressedJobEditors { get; } = new ObservableCollection<KeyboardPressedJobSettingEditorElement>();
         /// <summary>
         /// 削除したアイテム。
-        /// <para>最後にdelete流してあげる用。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>最後に delete 流してあげる用。</para>
+        /// </remarks>
         private IList<KeyboardJobSettingEditorElementBase> RemovedJobEditors { get; } = new List<KeyboardJobSettingEditorElementBase>();
 
         #endregion

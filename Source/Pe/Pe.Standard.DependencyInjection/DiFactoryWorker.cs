@@ -33,8 +33,10 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
         /// <summary>
         /// シングルトンデータとして作成されているか。
-        /// <para>シングルトンの場合に、<see cref="DiFactoryWorker"/>の<see cref="Dispose"/>時に対象が<see cref="IDisposable"/>を実装していれば<see cref="IDisposable.Dispose"/>を呼び出す。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>シングルトンの場合に、<see cref="DiFactoryWorker"/>の<see cref="Dispose"/>時に対象が<see cref="IDisposable"/>を実装していれば<see cref="IDisposable.Dispose"/>を呼び出す。</para>
+        /// </remarks>
         private bool CreatedSingleton { get; set; }
 
         #endregion

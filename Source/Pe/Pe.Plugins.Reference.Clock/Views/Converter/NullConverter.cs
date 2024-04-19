@@ -8,8 +8,10 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Views.Converter
 {
     /// <summary>
     /// DataContext が null の際にバインドエラーがばんばん出るのを抑制するためだけの人。
-    /// <para>知らんし・・・ System.Windows.Data Error: 5 : Value produced by BindingExpression is not valid for target property. null BindingExpression:Path=; DataItem=null; target element is 'RotateTransform' (HashCode=37304191); target property is 'Angle' (type 'Double')</para>
     /// </summary>
+    /// <remarks>
+    /// <para>知らんし・・・ System.Windows.Data Error: 5 : Value produced by BindingExpression is not valid for target property. null BindingExpression:Path=; DataItem=null; target element is 'RotateTransform' (HashCode=37304191); target property is 'Angle' (type 'Double')</para>
+    /// </remarks>
     [ValueConversion(typeof(double), typeof(double))]
     public class NullConverter: IValueConverter
     {

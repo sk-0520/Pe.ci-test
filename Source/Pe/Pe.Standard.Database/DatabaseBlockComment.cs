@@ -1,9 +1,11 @@
-﻿namespace ContentTypeTextNet.Pe.Standard.Database
+namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// DBMS依存DBブロックコメントとコメント文中で特殊処理する起点・終点。
-    /// <para>あえてなんかすることはないはず。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>あえてなんかすることはないはず。</para>
+    /// </remarks>
     public readonly struct DatabaseBlockComment
     {
         /// <summary>

@@ -327,8 +327,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         /// <summary>
         /// マウスボタン系のイベントか。
-        /// <para>真の場合のみ、<see cref="Button"/>, <seealso cref="ButtonState"/> が有効な値となる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>真の場合のみ、<see cref="Button"/>, <seealso cref="ButtonState"/> が有効な値となる。</para>
+        /// </remarks>
         public bool IsButtonEvent { get; }
 
         [PixelKind(Px.Device)]

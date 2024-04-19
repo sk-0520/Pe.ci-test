@@ -116,14 +116,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         None,
         /// <summary>
         /// メクラ板。
-        /// <para>テーマに依存。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>テーマに依存。</para>
+        /// </remarks>
         [EnumResource]
         Blind,
         /// <summary>
         /// 最小化。
-        /// <para>設定値が変動する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>設定値が変動する。</para>
+        /// </remarks>
         [EnumResource]
         Compact,
     }
@@ -215,8 +219,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public TimeSpan RefreshTime { get; set; }
         /// <summary>
         /// そもそも取りこぼしを考慮するか。
-        /// <para>将来用。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>将来用。</para>
+        /// </remarks>
         [DataMember]
         public bool IsEnabledRefresh { get; set; }
 

@@ -27,8 +27,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         Large,
         /// <summary>
         /// 一時データ。
-        /// <para>次回起動時は存在しない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>次回起動時は存在しない。</para>
+        /// </remarks>
         Temporary,
     }
 
@@ -204,8 +206,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         /// <summary>
         /// トランザクション処理を確定する。
-        /// <para>トランザクション中でない場合は特に何も起きない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>トランザクション中でない場合は特に何も起きない。</para>
+        /// </remarks>
         void Save();
 
         #endregion

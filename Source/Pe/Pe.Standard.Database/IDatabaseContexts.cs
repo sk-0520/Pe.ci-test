@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Standard.Database
+namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// データベース会話・データベース実装処理のペア。
@@ -9,8 +9,10 @@
 
         /// <summary>
         /// データベース会話処理。
-        /// <para>トランザクション状態は上位で管理。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>トランザクション状態は上位で管理。</para>
+        /// </remarks>
         IDatabaseContext Context { get; }
         /// <summary>
         /// データベース実装依存。

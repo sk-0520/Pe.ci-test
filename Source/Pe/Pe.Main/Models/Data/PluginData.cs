@@ -29,14 +29,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         /// <summary>
         /// アンインストール対象。
-        /// <para>次回起動時に該当プラグインは破棄する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>次回起動時に該当プラグインは破棄する。</para>
+        /// </remarks>
         Uninstall,
 
         /// <summary>
         /// なんかもうダメダメ。
-        /// <para>プラグインの読み込み失敗時に発生するのでこの状態が状態として保存されることはない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>プラグインの読み込み失敗時に発生するのでこの状態が状態として保存されることはない。</para>
+        /// </remarks>
         IllegalAssembly,
     }
 
@@ -137,13 +141,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         /// <summary>
         /// 対象プラグインの開放状態。
-        /// <para><see cref="LoadState"/> が <see cref="PluginState.Disable"/> だと null。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="LoadState"/> が <see cref="PluginState.Disable"/> だと null。</para>
+        /// </remarks>
         public PluginAssemblyLoadContext? LoadContext { get; private set; }
         /// <summary>
         /// 対象プラグイン。
-        /// <para><see cref="LoadState"/> が <see cref="PluginState.Enable"/> のみ有効でそれ以外の場合はもうたぶん解放されてる(はず)。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="LoadState"/> が <see cref="PluginState.Enable"/> のみ有効でそれ以外の場合はもうたぶん解放されてる(はず)。</para>
+        /// </remarks>
         public IPlugin? Plugin { get; }
 
         #endregion

@@ -8,8 +8,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 {
     /// <summary>
     /// 特定の削除処理を一括して行う。
-    /// <para>ランチャーアイテム削除時とかもうしんどいのよ。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>ランチャーアイテム削除時とかもうしんどいのよ。</para>
+    /// </remarks>
     public abstract class EntityEraserBase
     {
         protected EntityEraserBase(IDatabaseContextsPack contextsPack, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)

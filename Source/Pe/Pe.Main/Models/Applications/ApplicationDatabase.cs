@@ -18,8 +18,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
     /// <summary>
     /// アプリケーション用<see cref="IDatabaseFactory"/>実装。
-    /// <para>Peは<see cref="SqliteFactory"/>を継承する。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Peは<see cref="SqliteFactory"/>を継承する。</para>
+    /// </remarks>
     internal class ApplicationDatabaseFactory: SqliteFactory
     {
         /// <summary>

@@ -7,8 +7,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 {
     /// <summary>
     /// <see cref="KeyedCollection{TKey, TItem}"/>をラムダで対応する暫定クラス。
-    /// <para>クラス内で完結する場合のみに使用する前提、複数個所で使用する場合はちゃんと<see cref="KeyedCollection{TKey, TItem}"/>の実装を作成すべき。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>クラス内で完結する場合のみに使用する前提、複数個所で使用する場合はちゃんと<see cref="KeyedCollection{TKey, TItem}"/>の実装を作成すべき。</para>
+    /// </remarks>
     /// <typeparam name="TKey">コレクション内のキーの型。</typeparam>
     /// <typeparam name="TValue">コレクション内の項目の型。</typeparam>
     public sealed class SimpleKeyedCollection<TKey, TValue>: KeyedCollection<TKey, TValue>
@@ -36,8 +38,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// <inheritdoc cref="SimpleKeyedCollection{TKey, TValue}(IEqualityComparer{TKey}, Func{TValue, TKey})"/>
-        /// <para>閾値付き。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>閾値付き。</para>
+        /// </remarks>
         /// <param name="comparer">比較処理。</param>
         /// <param name="dictionaryCreationThreshold"></param>
         /// <param name="toKey"><inheritdoc cref="ToKey"/></param>

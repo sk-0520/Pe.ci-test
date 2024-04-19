@@ -4,8 +4,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 {
     /// <summary>
     /// ランチャーアイテムビルド時に Pe から渡されるデータ。
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface ILauncherItemExtensionCreateParameter: IAddonParameter, ILauncherItemId
     {
         #region property
@@ -17,8 +19,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
     /// <summary>
     /// ランチャーアイテム実行時に Pe から渡されるデータ。
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface ILauncherItemExtensionExecuteParameter: IAddonParameter, ILauncherItemId
     {
         #region property

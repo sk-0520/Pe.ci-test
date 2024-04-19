@@ -8,9 +8,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 {
     /// <summary>
     /// 時間単位でのオクテット使用量を算出。
+    /// </summary>
+    /// <remarks>
     /// <para><see cref="Size"/>を使っておけば幸せになれる。</para>
     /// <para>色々あったけど byte 基準(<see cref="SizeConverter"/>も参照のこと)。</para>
-    /// </summary>
+    /// </remarks>
     /// <example>
     /// <code>
     /// var sizePerTime = new SizePerTime(TimeSpan.FromSeconds(1));

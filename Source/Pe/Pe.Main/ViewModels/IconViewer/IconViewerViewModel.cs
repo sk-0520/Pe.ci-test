@@ -96,8 +96,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         /// <summary>
         /// アイコン読み込み処理。
-        /// <para><see cref="IDisposable.Dispose"/>時にVM側で<see cref="IDisposable.Dispose"/>される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="IDisposable.Dispose"/>時にVM側で<see cref="IDisposable.Dispose"/>される。</para>
+        /// </remarks>
         IconImageLoaderBase? IconImageLoader { get; }
         PropertyChangedHooker? PropertyChangedHooker { get; }
         public RunningStatusViewModel? RunningStatus { get; }

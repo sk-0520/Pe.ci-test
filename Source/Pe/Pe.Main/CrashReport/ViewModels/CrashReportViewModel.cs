@@ -68,8 +68,10 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
         }
 
         /// <summary>
-        /// <para>クラッシュレポートの寿命は短いのでViewModelで囲うことはしない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>クラッシュレポートの寿命は短いのでViewModelで囲うことはしない。</para>
+        /// </remarks>
         public IReadOnlyList<CrashReportItemViewModel> RawProperties { get; }
 
         public string CrashReportSaveFilePath => Model.CrashReportSaveFilePath;

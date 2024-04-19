@@ -13,16 +13,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
     /// <summary>
     /// クリップボード操作用。
-    /// <para>もっかしたら<see cref="IOrderManager"/>で完結するかも。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>もっかしたら<see cref="IOrderManager"/>で完結するかも。</para>
+    /// </remarks>
     public interface IClipboardManager
     {
         #region function
 
         /// <summary>
         /// <see cref="Clipboard.SetDataObject(object)"/> を用いたコピー処理。
-        /// <para>本処理にて例外は握りつぶされる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>本処理にて例外は握りつぶされる。</para>
+        /// </remarks>
         /// <param name="data">クリップボードにコピーするデータ。</param>
         /// <param name="clipboardNotify">通知方法。</param>
         /// <returns>クリップボードへコピーできたか。</returns>
@@ -30,8 +34,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         /// <summary>
         /// <see cref="Clipboard.SetText(string, TextDataFormat)"/>(<see cref="TextDataFormat.UnicodeText"/>) を用いたコピー処理。
-        /// <para>本処理にて例外は握りつぶされる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>本処理にて例外は握りつぶされる。</para>
+        /// </remarks>
         /// <param name="data">クリップボードにコピーする文字列。</param>
         /// <param name="clipboardNotify">通知方法。</param>
         /// <returns>クリップボードへコピーできたか。</returns>
@@ -39,8 +45,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         /// <summary>
         /// <see cref="Clipboard.Clear"/> を用いたクリップボードクリア処理。
-        /// <para>まったくもっていらんけど <see cref="IClipboardManager"/> の名前なので一応ね。一応。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>まったくもっていらんけど <see cref="IClipboardManager"/> の名前なので一応ね。一応。</para>
+        /// </remarks>
         void Clear();
 
         #endregion

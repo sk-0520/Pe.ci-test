@@ -93,8 +93,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
         /// <summary>
         /// ウィジェット用にウィンドウを調節。
-        /// <para>生成時のスタイル変更は<see cref="WidgetViewModelBase.ReceiveViewInitialized(Window)"/>を参照。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>生成時のスタイル変更は<see cref="WidgetViewModelBase.ReceiveViewInitialized(Window)"/>を参照。</para>
+        /// </remarks>
         /// <param name="window"></param>
         private void AdjustWindow(Window window)
         {

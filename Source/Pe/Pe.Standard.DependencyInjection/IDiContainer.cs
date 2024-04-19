@@ -23,8 +23,10 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
         /// <summary>
         /// マッピングから実体を取得。
-        /// <para>必ずしも依存が解決されるわけではない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>必ずしも依存が解決されるわけではない。</para>
+        /// </remarks>
         /// <param name="interfaceType"></param>
         /// <returns>実体そのまま</returns>
         object Get(Type interfaceType);
@@ -41,12 +43,14 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
         /// <summary>
         /// コンストラクタインジェクション。
-        /// <para>依存を解決する。</para>
         /// </summary>
         /// <param name="type"></param>
         /// <param name="manualParameters">依存関係以外のパラメータ。前方から型に一致するものが使用される。</param>
         /// <returns></returns>
-        /// <remarks>null をパラメータとして使用する場合は型情報が死ぬので <see cref="DiDefaultParameter"/> を使用すること。</remarks>
+        /// <remarks>
+        /// <para>依存を解決する。</para>
+        /// <para><see langword="null"/> をパラメータとして使用する場合は型情報が死ぬので <see cref="DiDefaultParameter"/> を使用すること。</para>
+        /// </remarks>
         object New(Type type, IReadOnlyList<object> manualParameters);
         /// <inheritdoc cref="New(Type, IReadOnlyList{object})"/>
         object New(Type type, string name, IReadOnlyList<object> manualParameters);
@@ -84,8 +88,10 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
         /// <summary>
         /// 指定メソッドを実行する。
-        /// <para>基本的に <see cref="IDiContainerExtensions.Call{TResult}(IDiContainer, object, string, object, object[])"/> を使用すればよろし。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>基本的に <see cref="IDiContainerExtensions.Call{TResult}(IDiContainer, object, string, object, object[])"/> を使用すればよろし。</para>
+        /// </remarks>
         /// <param name="name"></param>
         /// <param name="instance">対象インスタンス。</param>
         /// <param name="methodInfo">メソッド。</param>
@@ -99,8 +105,10 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
         /// <summary>
         /// プロパティインジェクション。
-        /// <para><see cref="InjectAttribute"/> を補完する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="InjectAttribute"/> を補完する。</para>
+        /// </remarks>
         /// <typeparam name="TObject">生成済みオブジェクト</typeparam>
         /// <param name="target">クラスインスタンス。</param>
         void Inject<TObject>(TObject target)

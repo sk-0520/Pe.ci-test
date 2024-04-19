@@ -157,8 +157,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         /// <summary>
         /// 処理単位一覧。
-        /// <para>初回参照時に読み込まれる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>初回参照時に読み込まれる。</para>
+        /// </remarks>
         protected IReadOnlyList<TFunctionUnit> FunctionUnits
         {
             get

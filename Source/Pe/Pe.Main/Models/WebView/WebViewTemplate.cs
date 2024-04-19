@@ -8,8 +8,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
     /// <summary>
     /// HTML に対して${ から } までの文字列を置き換える。
     /// </summary>
+    /// <remarks>
     /// <para>&lt;!--${}--&gt;, /*${}*/ で記述されている場合、コメント部分は破棄される。ただしコメント自体が正しいものかどうかまでは把握していない(script内にHTMLコメントとかあっても気にしない)</para>
     /// <para>${ } の中に : が存在する場合、以降はオプション扱いとなる(${ABC:OPTION} の場合、 ABC がキー、 OPTION がオプション値)。</para>
+    /// </remarks>
     public abstract class WebViewTemplateBase
     {
         #region function

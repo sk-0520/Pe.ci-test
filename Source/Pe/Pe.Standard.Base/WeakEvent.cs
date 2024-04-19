@@ -7,9 +7,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 {
     /// <summary>
     /// 弱いイベントのなんか受け側のそれっぽいの。
-    /// <para><see cref="WeakEvent{TEventArgs}"/> 使ってればよろし。</para>
-    /// <para>TODO: 静的リスナー未対応。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>TODO: 静的リスナー未対応。</para>
+    /// <para><see cref="WeakEvent{TEventArgs}"/> 使ってればよろし。</para>
+    /// </remarks>
     /// <typeparam name="TEventListener">リスナークラス。</typeparam>
     /// <typeparam name="TEventArgs">イベント。</typeparam>
     public class WeakEvent<TEventListener, TEventArgs>
@@ -78,14 +80,18 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// イベント名。
-        /// <para>いらん気がするのですよね。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>いらん気がするのですよね。</para>
+        /// </remarks>
         public string EventName { get; }
 
         /// <summary>
         /// イベントハンドラ保管箱。
-        /// <para>操作する際は <see cref="_locker"/> の <see langword="lock" /> を行うこと。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>操作する際は <see cref="_locker"/> の <see langword="lock" /> を行うこと。</para>
+        /// </remarks>
         private IList<WeakHandler> Handlers { get; } = new List<WeakHandler>();
 
         #endregion
@@ -189,8 +195,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
     /// <summary>
     /// <see cref="WeakEvent{TEventListener, TEventArgs}"/> の リスナーが <see cref="object"/> 版。
-    /// <para>基本的にこっち使ってればいい。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>基本的にこっち使ってればいい。</para>
+    /// </remarks>
     /// <typeparam name="TEventArgs"></typeparam>
     public class WeakEvent<TEventArgs>: WeakEvent<object, TEventArgs>
         where TEventArgs : EventArgs
@@ -264,14 +272,18 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// イベント名。
-        /// <para>いらん気がするのですよね。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>いらん気がするのですよね。</para>
+        /// </remarks>
         public string EventName { get; }
 
         /// <summary>
         /// イベントハンドラ保管箱。
-        /// <para>操作する際は <see cref="_locker"/> の <see langword="lock" /> を行うこと。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>操作する際は <see cref="_locker"/> の <see langword="lock" /> を行うこと。</para>
+        /// </remarks>
         private IList<WeakHandler> Handlers { get; } = new List<WeakHandler>();
 
         #endregion

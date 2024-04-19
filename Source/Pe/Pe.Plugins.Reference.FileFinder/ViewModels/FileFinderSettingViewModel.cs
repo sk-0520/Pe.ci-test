@@ -42,8 +42,10 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.ViewModels
 
         /// <summary>
         /// パスからの列挙において列挙する上限数。
-        /// <para>0 で制限しない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>0 で制限しない。</para>
+        /// </remarks>
         public int MaximumPathItem
         {
             get => Setting.MaximumPathItem;

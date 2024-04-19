@@ -67,8 +67,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
     /// <summary>
     /// Enumのリソース名を管理。
-    /// <para>なにをどうしても <see cref="NameHeader"/> + <see cref="Separator"/> が先頭にくっつくことに注意。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>なにをどうしても <see cref="NameHeader"/> + <see cref="Separator"/> が先頭にくっつくことに注意。</para>
+    /// </remarks>
     public class EnumResourceManager
     {
         #region property

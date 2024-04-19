@@ -55,8 +55,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// 正規表現に該当したファイルのローテート処理。
-        /// <para>降順で列挙する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>降順で列挙する。</para>
+        /// </remarks>
         /// <param name="parentDirectory">親ディレクトリ。</param>
         /// <param name="regex"><paramref name="parentDirectory"/>直下の対象ファイル。</param>
         /// <param name="leaveCount">列挙されたファイルの残す数。</param>
@@ -82,8 +84,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// ワイルドカードに該当したファイルのローテート処理。
-        /// <para>降順で列挙する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>降順で列挙する。</para>
+        /// </remarks>
         /// <param name="parentDirectory">親ディレクトリ。</param>
         /// <param name="wildCard"><paramref name="parentDirectory"/>直下の対象ファイル。</param>
         /// <param name="leaveCount">列挙されたファイルの残す数。</param>
@@ -112,8 +116,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// 拡張子に該当したファイルのローテート処理。
-        /// <para>降順で列挙する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>降順で列挙する。</para>
+        /// </remarks>
         /// <param name="parentDirectory">親ディレクトリ。</param>
         /// <param name="extensions"><paramref name="parentDirectory"/>直下の拡張子。</param>
         /// <param name="leaveCount">列挙されたファイルの残す数。</param>

@@ -8,21 +8,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
     /// <summary>
     /// キーボード処理の種別。
-    /// <para>修飾キー単体での起動は行わない方針。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>修飾キー単体での起動は行わない方針。</para>
+    /// </remarks>
     public enum KeyActionKind
     {
         /// <summary>
         /// キー置き換え。
+        /// </summary>
+        /// <remarks>
         /// <para>マッピングデータは起点となる一つのみ。</para>
         /// <para>アクション内容は置き換えキー。</para>
-        /// </summary>
+        /// </remarks>
         Replace,
         /// <summary>
         /// キー無効化。
+        /// </summary>
+        /// <remarks>
         /// <para>無効化するが二重入力で活性とする。</para>
         /// <para>マッピングデータは起点となる一つのみ。</para>
-        /// </summary>
+        /// </remarks>
         Disable,
         /// <summary>
         /// コマンド型ランチャーの起動。
@@ -30,20 +36,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Command,
         /// <summary>
         /// ランチャーアイテムの起動。
+        /// </summary>
+        /// <remarks>
         /// <para>アクション内容は起動する方法。</para>
         /// <para>アクションオプションは起動するアイテム。</para>
-        /// </summary>
+        /// </remarks>
         LauncherItem,
         /// <summary>
         /// ランチャーツールバーの処理。
+        /// </summary>
+        /// <remarks>
         /// <para>アクション内容は処理内容。</para>
         /// <para>オプション内容はまちまち。</para>
-        /// </summary>
+        /// </remarks>
         LauncherToolbar,
         /// <summary>
         /// ノートの処理。
-        /// <para>アクション内容は処理内容。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>アクション内容は処理内容。</para>
+        /// </remarks>
         Note,
     }
 

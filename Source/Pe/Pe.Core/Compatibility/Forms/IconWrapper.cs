@@ -10,8 +10,10 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
 {
     /// <summary>
     /// <see cref="System.Drawing.Icon"/>の簡易ラッパー。
-    /// <para><see cref="System.IDisposable"/>は実装されていないため使用側で<see cref="System.Drawing.Icon"/>の面倒を見ること。</para>
     /// </summary>
+    /// <remarks>
+    /// <para><see cref="System.IDisposable"/>は実装されていないため使用側で<see cref="System.Drawing.Icon"/>の面倒を見ること。</para>
+    /// </remarks>
     public class IconWrapper: IMakeBitmapSource
     {
         public IconWrapper(Stream stream, IconSize iconSize)

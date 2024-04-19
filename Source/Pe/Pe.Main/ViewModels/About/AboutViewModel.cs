@@ -46,8 +46,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
 
         /// <summary>
         /// 削除対象。
-        /// <para>初期値ではユーザーデータを一応残しておく。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>初期値ではユーザーデータを一応残しておく。</para>
+        /// </remarks>
         private UninstallTarget UninstallTargets { get; set; } = UninstallTarget.Application | UninstallTarget.Batch | UninstallTarget.Machine | UninstallTarget.Temporary;
         public string UninstallBatchFilePath
         {

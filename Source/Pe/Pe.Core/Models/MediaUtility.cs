@@ -40,8 +40,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
         /// <summary>
         /// 色反転。
-        /// <para>透明度は保ったまま。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>透明度は保ったまま。</para>
+        /// </remarks>
         /// <param name="color"></param>
         /// <returns></returns>
         public static Color GetNegativeColor(Color color)
@@ -56,8 +58,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         /// <summary>
         /// 補色。
-        /// <para>透明度は保ったまま。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>透明度は保ったまま。</para>
+        /// </remarks>
         /// <param name="color"></param>
         /// <returns></returns>
         public static Color GetComplementaryColor(Color color)
@@ -168,8 +172,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         /// <summary>
         /// 指定要素をビットマップに落とし込む。
-        /// <para>DPIは96を使用する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>DPIは96を使用する。</para>
+        /// </remarks>
         /// <param name="element"></param>
         /// <param name="useActual"></param>
         /// <returns></returns>

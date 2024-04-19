@@ -63,9 +63,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         private string CommandLineTestPluginDirectoryPath { get; } = "test-plugin-dir";
         /// <summary>
         /// テストプラグイン名。
+        /// </summary>
+        /// <remarks>
         /// <para>通常は<see cref="CommandLineTestPluginDirectoryPath"/>のディレクトリ名を使用するが、デバッグ実行時などのプラグインディレクトリ名とプラグイン名が異なる場合に指定する。</para>
         /// <para>なお指定の際には拡張子を除外すること(plugin-name.dll -> plugin-name)</para>
-        /// </summary>
+        /// </remarks>
         private string CommandLineTestPluginName { get; } = "test-plugin-name";
 
         public bool IsFirstStartup { get; private set; }

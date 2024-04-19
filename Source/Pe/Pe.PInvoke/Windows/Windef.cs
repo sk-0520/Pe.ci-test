@@ -149,11 +149,13 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
     /// <summary>
     ///COLORREF 値は、 RGB 色を指定するために使用されます。
+    /// </summary>
+    /// <remarks>
     ///<para>明示的な RGB 色を指定する場合、 COLORREF 値には次の16進数形式があります。</para>
     ///<code>0x00bbggrr</code>
     ///<para>下位バイトには、赤の相対的な輝度の値が含まれています。2番目のバイトには緑の値が含まれます。3番目のバイトには blue の値が含まれています。 上位バイトは0にする必要があります。 1バイトの最大値は0xFF です。</para>
     ///<para>COLORREF color 値を作成するには、 RGBマクロを使用します。 色の値の赤、緑、および青の各要素の個々の値を抽出するには、それぞれ GetRValue、 Getgvalue、および getgvalue マクロを使用します。</para>
-    /// </summary>
+    /// </remarks>
     /// <seealso href="https://docs.microsoft.com/ja-jp/windows/win32/gdi/colorref" />
     [StructLayout(LayoutKind.Explicit, Size = 4)]
     public struct COLORREF

@@ -145,8 +145,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     {
         /// <summary>
         /// 再帰ロック不可で作成。
-        /// <para>通常はこっちでいいはず。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>通常はこっちでいいはず。</para>
+        /// </remarks>
         public ReaderWriterLocker()
         {
             Locker = new ReaderWriterLockSlim();

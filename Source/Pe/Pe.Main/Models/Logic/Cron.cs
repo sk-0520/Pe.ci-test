@@ -388,8 +388,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         /// <summary>
         /// 最後に実行した時間。
-        /// <para>実行を開始した時間で実行終了の時間ではない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>実行を開始した時間で実行終了の時間ではない。</para>
+        /// </remarks>
         [DateTimeKind(DateTimeKind.Local)]
         public DateTime LastExecuteTimestamp { get; private set; } = DateTime.MinValue;
         /// <summary>
@@ -610,8 +612,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         /// <summary>
         /// 指定のスケジュールを破棄。
-        /// <para>実行中のものは実行しっぱで参照が切れる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>実行中のものは実行しっぱで参照が切れる。</para>
+        /// </remarks>
         /// <param name="scheduleJobId"></param>
         /// <returns></returns>
         public bool RemoveSchedule(ScheduleJobId scheduleJobId)
@@ -625,8 +629,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         /// <summary>
         /// すべてのスケジュールを破棄。
-        /// <para>実行中のものは実行しっぱで参照が切れる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>実行中のものは実行しっぱで参照が切れる。</para>
+        /// </remarks>
         public void ClearAllSchedule()
         {
             Jobs.Clear();

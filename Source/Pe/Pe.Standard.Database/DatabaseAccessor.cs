@@ -14,8 +14,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// DBアクセスに対してラップする。
-    /// <para>DBまで行く前にプログラム側で制御する目的。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>DBまで行く前にプログラム側で制御する目的。</para>
+    /// </remarks>
     public class DatabaseAccessor: DisposerBase, IDatabaseAccessor
     {
         public DatabaseAccessor(IDatabaseFactory databaseFactory, ILogger logger)
@@ -80,8 +82,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         /// <summary>
         /// 問い合わせ文をログ出力。
-        /// <para>あくまで実行するための文をログに出すだけで実際に実行される文ではない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>あくまで実行するための文をログに出すだけで実際に実行される文ではない。</para>
+        /// </remarks>
         /// <param name="statement">問い合わせ文。</param>
         /// <param name="parameter">パラメータ。</param>
         protected virtual void LoggingStatement(string statement, object? parameter)
@@ -133,8 +137,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         /// <summary>
         /// 実行結果のログ出力。
-        /// <para><see cref="IDatabaseWriter.Execute(string, object?)"/>で使用される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="IDatabaseWriter.Execute(string, object?)"/>で使用される。</para>
+        /// </remarks>
         /// <param name="result"></param>
         /// <param name="startUtcTime"></param>
         /// <param name="endUtcTime"></param>
@@ -149,8 +155,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         /// <summary>
         /// 問い合わせ結果のログ出力。
-        /// <para><see cref="IDatabaseReader.GetDataTable(string, object?)"/>で使用される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="IDatabaseReader.GetDataTable(string, object?)"/>で使用される。</para>
+        /// </remarks>
         /// <param name="table"></param>
         /// <param name="startUtcTime"></param>
         /// <param name="endUtcTime"></param>

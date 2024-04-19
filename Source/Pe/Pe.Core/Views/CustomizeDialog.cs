@@ -16,8 +16,10 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         /// <summary>
         /// コントロールID。
-        /// <para>自動割り振りされる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>自動割り振りされる。</para>
+        /// </remarks>
         public int ControlId { get; private set; }
 
         /// <summary>
@@ -31,9 +33,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         /// <summary>
         /// ビルド処理。
+        /// </summary>
+        /// <remarks>
         /// <para>継承先で実装すること。</para>
         /// <para><see cref="ControlId"/>, <see cref="FileDialogCustomize"/>は有効。</para>
-        /// </summary>
+        /// </remarks>
         protected abstract void BuildImpl();
 
         /// <summary>
@@ -235,8 +239,10 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
     /// <summary>
     /// 標準ダイアログカスタマイズ。
-    /// <para>基本的にはこれ使ってりゃOK。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>基本的にはこれ使ってりゃOK。</para>
+    /// </remarks>
     public class CustomizeDialog
     {
         #region property
@@ -252,8 +258,10 @@ namespace ContentTypeTextNet.Pe.Core.Views
         public bool NowGrouping => CurrentGroup != null;
         /// <summary>
         /// 現在のグループ。
-        /// <para><see langword="null" />はグループなし。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see langword="null" />はグループなし。</para>
+        /// </remarks>
         CustomizeDialogGroup? CurrentGroup { get; set; }
         /// <summary>
         /// ビルド済み。

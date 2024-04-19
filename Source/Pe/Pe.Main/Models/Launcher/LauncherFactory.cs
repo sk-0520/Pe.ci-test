@@ -118,19 +118,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         /// <summary>
         /// ランチャーアイテムコードを生成。
+        /// </summary>
+        /// <remarks>
         /// <para>
         /// ランチャーアイテムコードはコマンドとかで使うユーザー入力可能な一意文字列で、
         /// IME使わずにコマンド入力したいし後々のことを考えてASCIIなものだけが許容される世界を目指す。
         /// </para>
         /// <list type="bullet">
-        /// <item><description>ホワイトスペース, 許容できない記号は _ に変換する。</description></item>
-        /// <item><description>コントロールコードは [c-ff-ff-...] に変換する。</description></item>
-        /// <item><description>ASCII範囲外は [x-ff-ff-...] に変換する。</description></item>
-        /// <item><description>ASCII範囲外でカタカナは平仮名はローマ字に変換する。</description></item>
-        /// <item><description>アルファベットは機械的に小文字。</description></item>
-        /// <item><term>許容する記号</term><description><see cref="CodeSymbols"/>を参照</description></item>
+        ///     <item><description>ホワイトスペース, 許容できない記号は _ に変換する。</description></item>
+        ///     <item><description>コントロールコードは [c-ff-ff-...] に変換する。</description></item>
+        ///     <item><description>ASCII範囲外は [x-ff-ff-...] に変換する。</description></item>
+        ///     <item><description>ASCII範囲外でカタカナは平仮名はローマ字に変換する。</description></item>
+        ///     <item><description>アルファベットは機械的に小文字。</description></item>
+        ///     <item><term>許容する記号</term><description><see cref="CodeSymbols"/>を参照</description></item>
         /// </list>
-        /// </summary>
+        /// </remarks>
         /// <param name="source">ランチャーアイテムコードのもとになる文字列。<para>想定用途はファイル名。</para></param>
         /// <returns></returns>
         public string ToCode(string source)

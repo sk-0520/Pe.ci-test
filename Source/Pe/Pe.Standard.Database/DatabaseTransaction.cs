@@ -10,8 +10,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// トランザクション中の処理をサポート。
-    /// <para>基本的にはユーザーコードで登場せず <see cref="IDatabaseContext"/>がすべて上位から良しなに対応する。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>基本的にはユーザーコードで登場せず <see cref="IDatabaseContext"/>がすべて上位から良しなに対応する。</para>
+    /// </remarks>
     public class DatabaseTransaction: DisposerBase, IDatabaseTransaction
     {
         /// <summary>

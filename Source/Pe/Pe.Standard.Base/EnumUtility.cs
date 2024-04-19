@@ -6,8 +6,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 {
     /// <summary>
     /// <see langword="enum" />のしょうもない処理ユーティリティ。
-    /// <para>.NET Framework 時代から考えると結構色々削られた。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>.NET Framework 時代から考えると結構色々削られた。</para>
+    /// </remarks>
     public static class EnumUtility
     {
         /// <summary>
@@ -29,8 +31,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// 内部的に <see langword="enum" /> を文字列化する処理。
-        /// <para>属性とか全部無視して小文字にする。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>属性とか全部無視して小文字にする。</para>
+        /// </remarks>
         /// <typeparam name="TEnum"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>

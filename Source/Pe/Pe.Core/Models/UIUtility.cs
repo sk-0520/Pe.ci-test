@@ -13,8 +13,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
     /// 要素の属する(?)DPIを出力。
-    /// <para>ウィンドウのいるディスプレイのDPIを出力する感じ。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>ウィンドウのいるディスプレイのDPIを出力する感じ。</para>
+    /// </remarks>
     public interface IDpiScaleOutpour
     {
         #region function
@@ -35,8 +37,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     /// <summary>
     /// 空の <see cref="IDpiScaleOutpour"/>。
-    /// <para>固定値を取得する。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>固定値を取得する。</para>
+    /// </remarks>
     public sealed class EmptyDpiScaleOutpour: IDpiScaleOutpour
     {
         #region IDpiScaleOutputor
@@ -56,8 +60,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         /// <summary>
         /// 表示要素の子孫を取得する。
-        /// <para>http://stackoverflow.com/questions/974598/find-all-controls-in-wpf-window-by-type</para>
         /// </summary>
+        /// <remarks>
+        /// <para>http://stackoverflow.com/questions/974598/find-all-controls-in-wpf-window-by-type</para>
+        /// </remarks>
         /// <typeparam name="T"></typeparam>
         /// <param name="dependencyObject"></param>
         /// <returns></returns>

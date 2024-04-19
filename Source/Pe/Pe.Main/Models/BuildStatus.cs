@@ -41,8 +41,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         /// <summary>
         /// リビジョン。
-        /// <para>ビルド時の git コミット。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>ビルド時の git コミット。</para>
+        /// </remarks>
         string Revision { get; }
 
         #endregion
@@ -72,8 +74,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         /// <summary>
         /// 本番バージョンか。
-        /// <para>本番バージョンはそれ以外と違って稼働ディレクトリが一段上になる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>本番バージョンはそれ以外と違って稼働ディレクトリが一段上になる。</para>
+        /// </remarks>
         public static bool IsProduct { get; } =
 #if PRODUCT
             true

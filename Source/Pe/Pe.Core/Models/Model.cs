@@ -25,8 +25,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
-        /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
+        /// </remarks>
         [field: NonSerialized]
         public event EventHandler<EventArgs>? Disposing;
 
@@ -46,8 +48,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>の内部処理。
-        /// <para>継承先クラスでは本メソッドを呼び出す必要がある。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>継承先クラスでは本メソッドを呼び出す必要がある。</para>
+        /// </remarks>
         /// <param name="disposing">CLRの管理下か。</param>
         protected virtual void Dispose(bool disposing)
         {

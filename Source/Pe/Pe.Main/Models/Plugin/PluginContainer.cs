@@ -139,8 +139,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         /// <summary>
         /// プラグインの実ファイル一覧を取得。
-        /// <para>Pe 付属のプラグイン(<see cref="DefaultTheme"/>とか)は含まれない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>Pe 付属のプラグイン(<see cref="DefaultTheme"/>とか)は含まれない。</para>
+        /// </remarks>
         /// <param name="baseDirectory"></param>
         /// <returns></returns>
         public IEnumerable<FileInfo> GetPluginFiles(DirectoryInfo baseDirectory, IReadOnlyCollection<string> ignoreBaseFileName, IReadOnlyList<string> extensions)
@@ -169,8 +171,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         /// <summary>
         /// プラグインの読み込み。
-        /// <para>検証結果がダメダメな場合は解放される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>検証結果がダメダメな場合は解放される。</para>
+        /// </remarks>
         /// <param name="pluginFile"></param>
         /// <returns>読み込み結果。</returns>
         [MethodImpl(MethodImplOptions.NoInlining)]

@@ -21,23 +21,29 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
     /// <summary>
     /// プラグインの既定インターフェイス。
+    /// </summary>
+    /// <remarks>
     /// <para><see cref="Addon.IAddon"/>か<see cref="Theme.ITheme"/>をさらに実装している必要あり。</para>
     /// <para>設定機能を有する場合はさらに<see cref="Preferences.IPreferences"/>を実装する必要あり。</para>
-    /// </summary>
+    /// </remarks>
     public interface IPlugin
     {
         #region property
 
         /// <summary>
         /// プラグイン情報。
-        /// <para>このプロパティ以下は<see cref="IsInitialized"/>の状態にかかわらず読み込み可能であること。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>このプロパティ以下は<see cref="IsInitialized"/>の状態にかかわらず読み込み可能であること。</para>
+        /// </remarks>
         IPluginInformation PluginInformation { get; }
 
         /// <summary>
         /// 初期化処理が行われたか。
-        /// <para><see cref="Initialize(IPluginInitializeContext)"/>が呼び出された後、プラグイン側で責任をもって真にすること。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="Initialize(IPluginInitializeContext)"/>が呼び出された後、プラグイン側で責任をもって真にすること。</para>
+        /// </remarks>
         bool IsInitialized { get; }
 
         #endregion
@@ -46,15 +52,19 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         /// <summary>
         /// プラグインの初期化。
-        /// <para>この段階ではあんまり小難しいことをしないこと。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>この段階ではあんまり小難しいことをしないこと。</para>
+        /// </remarks>
         /// <param name="pluginInitializeContext"></param>
         void Initialize(IPluginInitializeContext pluginInitializeContext);
 
         /// <summary>
         /// プラグイン終了。
-        /// <para>可能な限りプラグイン開放可能な状態になること。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>可能な限りプラグイン開放可能な状態になること。</para>
+        /// </remarks>
         /// <param name="pluginFinalizeContext"></param>
         void Finalize(IPluginFinalizeContext pluginFinalizeContext);
 
@@ -80,8 +90,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         /// <summary>
         /// プラグインを示すアイコンを取得。
-        /// <para>この処理は<see cref="IsInitialized"/>の状態にかかわらず実行可能であること。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>この処理は<see cref="IsInitialized"/>の状態にかかわらず実行可能であること。</para>
+        /// </remarks>
         /// <param name="iconScale"></param>
         /// <returns></returns>
         DependencyObject GetIcon(IImageLoader imageLoader, in IconScale iconScale);

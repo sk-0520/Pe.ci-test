@@ -10,8 +10,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
     /// <summary>
     /// システムに対してユーザーが生きている旨を通知。
-    /// <para>アイドル状態になって画面ロックやらスリープになるのを抑制。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>アイドル状態になって画面ロックやらスリープになるのを抑制。</para>
+    /// </remarks>
     public class HeartBeatSender: DisposerBase
     {
         public HeartBeatSender(TimeSpan sendSpan, TimeSpan checkSpan, ILoggerFactory loggerFactory)
