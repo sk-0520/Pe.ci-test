@@ -10,8 +10,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 {
     /// <summary>
     /// booleanを制御
-    /// <para>0: 偽, 0以外: 真</para>
     /// </summary>
+    /// <remarks>
+    /// <para>0: 偽, 0以外: 真</para>
+    /// </remarks>
     internal class SqliteBooleanHandler: SqlMapper.TypeHandler<bool>
     {
         public override void SetValue(IDbDataParameter parameter, bool value)

@@ -91,8 +91,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         /// <summary>
         /// そもそもアンインストール可能か。
-        /// <para>Pe 提供プラグインが偽になる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>Pe 提供プラグインが偽になる。</para>
+        /// </remarks>
         public bool CanUninstall { get; private set; }
 
         #endregion
@@ -178,8 +180,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         /// <summary>
         /// プラグイン設定ではなくプラグイン状態に対する保存処理。
-        /// <para>アンインストールとかね。将来的には非活性もここでやる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>アンインストールとかね。将来的には非活性もここでやる。</para>
+        /// </remarks>
         /// <param name="contextsPack"></param>
         public void Save(IDatabaseContextsPack contextsPack)
         {

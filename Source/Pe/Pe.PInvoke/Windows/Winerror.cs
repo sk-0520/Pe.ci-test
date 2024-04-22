@@ -397,15 +397,19 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
         ///<summary>
         ///The server process could not be started as the configured identity.
-        ///<para>The pathname may be incorrect or unavailable.</para>
         ///</summary>
+        ///<remarks>
+        ///<para>The pathname may be incorrect or unavailable.</para>
+        ///</remarks>
         [Description("The server process could not be started as the configured identity.\nThe pathname may be incorrect or unavailable.")]
         public const int CO_E_RUNAS_CREATEPROCESS_FAILURE = unchecked((int)0x80004019);
 
         ///<summary>
         ///The server process could not be started because the configured identity is incorrect.
-        ///<para>Check the username and password.</para>
         ///</summary>
+        ///<remarks>
+        ///<para>Check the username and password.</para>
+        ///</remarks>
         [Description("The server process could not be started because the configured identity is incorrect.\nCheck the username and password.")]
         public const int CO_E_RUNAS_LOGON_FAILURE = unchecked((int)0x8000401A);
 

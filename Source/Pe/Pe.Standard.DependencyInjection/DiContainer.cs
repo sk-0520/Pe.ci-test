@@ -17,9 +17,11 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 {
     /// <summary>
     /// DI コンテナ。
+    /// </summary>
+    /// <remarks>
     /// <para>コンストラクタ・メンバインジェクションに対応。</para>
     /// TODO: 関数注入なかったっけか・・・？
-    /// </summary>
+    /// </remarks>
     public class DiContainer: DisposerBase, IDiRegisterContainer
     {
         #region define

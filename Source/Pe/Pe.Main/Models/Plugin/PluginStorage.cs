@@ -180,13 +180,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     {
         /// <summary>
         /// 上流に影響される読み書き。
-        /// <para>書き込みは状況により不可。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>書き込みは状況により不可。</para>
+        /// </remarks>
         Context,
         /// <summary>
         /// 単独実施する読み書き。
-        /// <para>書き込みは状況により不可。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>書き込みは状況により不可。</para>
+        /// </remarks>
         Barrier,
         /// <summary>
         /// 遅延書き込み。
@@ -221,8 +225,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         /// <summary>
         /// プラグイン用DB操作処理構築。
-        /// <para>読み込み専用・書き込み可能に分かれる。書き込み専用は基本的に設定画面くらい。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>読み込み専用・書き込み可能に分かれる。書き込み専用は基本的に設定画面くらい。</para>
+        /// </remarks>
         /// <param name="pluginIdentifiers"></param>
         /// <param name="pluginVersions"></param>
         /// <param name="databaseContexts"></param>
@@ -244,8 +250,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         /// <summary>
         /// プラグイン用DB操作処理構築。
-        /// <para>読み込み専用・書き込み可能に分かれる。逐次処理される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>読み込み専用・書き込み可能に分かれる。逐次処理される。</para>
+        /// </remarks>
         /// <param name="pluginIdentifiers"></param>
         /// <param name="pluginVersions"></param>
         /// <param name="databaseBarrier"></param>
@@ -266,8 +274,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         /// <summary>
         /// プラグイン用DB操作処理構築。
-        /// <para>通常実行時の書き込み処理で、遅延処理される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>通常実行時の書き込み処理で、遅延処理される。</para>
+        /// </remarks>
         /// <param name="pluginIdentifiers"></param>
         /// <param name="pluginVersions"></param>
         /// <param name="databaseBarrier"></param>

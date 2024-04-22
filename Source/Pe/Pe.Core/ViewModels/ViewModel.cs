@@ -152,8 +152,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         /// <summary>
         /// コマンド生成。
-        /// <para>メモリ状態は知らんけどコマンドプロパティ記述位置でインスタンスを触りながら処理書きたいのよ。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>メモリ状態は知らんけどコマンドプロパティ記述位置でインスタンスを触りながら処理書きたいのよ。</para>
+        /// </remarks>
         /// <typeparam name="TCommand"></typeparam>
         /// <param name="creator"></param>
         /// <param name="callerMemberName"><see cref="CallerMemberNameAttribute"/></param>
@@ -262,8 +264,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         /// <summary>
         /// ビジネスロジックの検証。
-        /// <para>継承先でこいつを最初に呼び出すこと。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>継承先でこいつを最初に呼び出すこと。</para>
+        /// </remarks>
         protected virtual void ValidateDomain()
         {
             ThrowIfDisposed();
@@ -401,8 +405,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
-        /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
+        /// </remarks>
         public event EventHandler<EventArgs>? Disposing
         {
             add => WeakDisposing.Add(value);
@@ -416,8 +422,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>の内部処理。
-        /// <para>継承先クラスでは本メソッドを呼び出す必要がある。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>継承先クラスでは本メソッドを呼び出す必要がある。</para>
+        /// </remarks>
         /// <param name="disposing">CLRの管理下か。</param>
         protected virtual void Dispose(bool disposing)
         {
@@ -478,8 +486,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         /// <summary>
         /// 取り込んだモデル。
-        /// <para><see cref="Dispose(bool)"/>後は null が入るので注意ね。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="Dispose(bool)"/>後は null が入るので注意ね。</para>
+        /// </remarks>
         protected TModel Model { get; private set; }
 
         #endregion
@@ -501,8 +511,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         /// <summary>
         /// モデルを取り込んだ際に一度だけ呼び出される処理。
-        /// <para>継承クラスでは一番最初に呼び出すこと。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>継承クラスでは一番最初に呼び出すこと。</para>
+        /// </remarks>
         protected virtual void AttachModelEventsImpl()
         {
             ThrowIfDisposed();
@@ -519,8 +531,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         /// <summary>
         /// モデルとサヨナラするとき(<see cref="Dispose(bool)"/>とか)するときに一度だけ呼び出される。
-        /// <para>継承クラスでは一番最初に呼び出すこと。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>継承クラスでは一番最初に呼び出すこと。</para>
+        /// </remarks>
         protected virtual void DetachModelEventsImpl()
         { }
 

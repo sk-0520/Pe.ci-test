@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
@@ -9,8 +9,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// DBアクセス処理。
-    /// <para>使用者側はトランザクション処理を原則使用しない。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>使用者側はトランザクション処理を原則使用しない。</para>
+    /// </remarks>
     public interface IDatabaseAccessor: IDatabaseContext
     {
         #region property
@@ -30,8 +32,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         /// <summary>
         /// 一時的に切断状態へ遷移。
-        /// <para><see cref="IDisposable.Dispose()"/>が完了するまでの間接続できない状態になる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="IDisposable.Dispose()"/>が完了するまでの間接続できない状態になる。</para>
+        /// </remarks>
         /// <returns>切断状態終了のトリガー。 GC 任せにせず明示的に <see cref="IDisposable.Dispose()"/> すること。</returns>
         IDisposable PauseConnection();
 
@@ -96,8 +100,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         IDatabaseTransaction BeginReadOnlyTransaction();
         /// <summary>
         /// 読み込み専用でトランザクション開始。
-        /// <para>意味わからん名前だけどいるの！</para>
         /// </summary>
+        /// <remarks>
+        /// <para>意味わからん名前だけどいるの！</para>
+        /// </remarks>
         /// <param name="isolationLevel"></param>
         /// <returns></returns>
         IDatabaseTransaction BeginReadOnlyTransaction(IsolationLevel isolationLevel);

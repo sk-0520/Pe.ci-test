@@ -12,8 +12,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
     /// <summary>
     /// フルスクリーン状態の検知。
-    /// <para>こいつ自身は呼ばれた際にフルスクリーンの確認を行うだけで定周期処理されるわけではない。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>こいつ自身は呼ばれた際にフルスクリーンの確認を行うだけで定周期処理されるわけではない。</para>
+    /// </remarks>
     public interface IFullscreenWatcher
     {
         #region function

@@ -24,8 +24,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// シーケンス値。
-        /// <para><see cref="IEnumerableExtensions.Counting{TElement}(IEnumerable{TElement}, int)"/>の基点からの加算値。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="IEnumerableExtensions.Counting{TElement}(IEnumerable{TElement}, int)"/>の基点からの加算値。</para>
+        /// </remarks>
         public readonly TNumber Number { get; }
         /// <summary>
         /// 現在の値。
@@ -79,8 +81,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// 入力シーケンスを結合した文字列を返す。
-        /// <para><see cref="string.Join"/>してるだけだけど、 linq でふわっと使いたい。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="string.Join"/>してるだけだけど、 linq でふわっと使いたい。</para>
+        /// </remarks>
         /// <inheritdoc cref="string.Join"/>
         public static string JoinString<T>(this IEnumerable<T> source, string? separator) => string.Join(separator, source);
 
@@ -128,9 +132,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     {
         /// <summary>
         /// 全要素を削除してから指定コレクションを追加。
+        /// </summary>
+        /// <remarks>
         /// <para><see cref="ICollection{T}.Clear"/>からの<see cref="ICollection{T}.Add"/></para>
         /// <para><see cref="ICollection{T}"/>が<see cref="List{T}"/>なら<see cref="List{T}.AddRange(IEnumerable{T})"/>する</para>
-        /// </summary>
+        /// </remarks>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <param name="collection"></param>

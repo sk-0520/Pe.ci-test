@@ -44,10 +44,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// フィルタリング処理用正規表現作成。
         /// </summary>
         /// <param name="pattern">
-        /// <para>/で始まる場合に正規表現パターンとして扱う。</para>
-        /// <para>正規表現ではなく ? * を含む場合にワイルドカードとして扱う。</para>
-        /// <para>正規表現・ワイルドカードでない場合は部分一致としてあつかう。</para>
-        /// <para>最初に見つかったアルファベットが大文字の場合に大文字小文字を区別する。</para>
+        ///     <para>/で始まる場合に正規表現パターンとして扱う。</para>
+        ///     <para>正規表現ではなく ? * を含む場合にワイルドカードとして扱う。</para>
+        ///     <para>正規表現・ワイルドカードでない場合は部分一致としてあつかう。</para>
+        ///     <para>最初に見つかったアルファベットが大文字の場合に大文字小文字を区別する。</para>
         /// </param>
         /// <returns></returns>
         public Regex CreateFilterRegex(string pattern)

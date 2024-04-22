@@ -186,8 +186,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         /// <summary>
         /// アイテム削除時に対象 ViewModel の <see cref="IDisposable.Dispose"/> を呼び出すか。
-        /// <para>置き換え時(<c>list[n] = newViewModel</c>)には破棄されない点に注意。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>置き換え時(<c>list[n] = newViewModel</c>)には破棄されない点に注意。</para>
+        /// </remarks>
         public bool AutoDisposeViewModel { get; set; } = true;
 
         #endregion

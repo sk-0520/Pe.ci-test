@@ -8,8 +8,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// データ書き込みを担当。
-    /// <para>それが実際に書き込んでいるのかはDBMS依存。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>それが実際に書き込んでいるのかはDBMS依存。</para>
+    /// </remarks>
     public interface IDatabaseWriter
     {
         #region function

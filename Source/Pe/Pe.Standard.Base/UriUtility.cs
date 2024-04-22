@@ -43,8 +43,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// <inheritdoc cref="CombinePath(Uri, bool, string, string[])"/>
-        /// <para>パス末尾に / は付与されない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>パス末尾に / は付与されない。</para>
+        /// </remarks>
         /// <inheritdoc cref="CombinePath(Uri, bool, string, string[])"/>
         public static Uri CombinePath(Uri uri, string path, params string[] paths) => CombinePath(uri, false, path, paths);
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace ContentTypeTextNet.Pe.Standard.Database
 {
@@ -21,8 +21,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         /// <summary>
         /// データ読み込み。
-        /// <para>パラメータ付き。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>パラメータ付き。</para>
+        /// </remarks>
         /// <typeparam name="TArgument"></typeparam>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="databaseBarrier"></param>

@@ -11,8 +11,10 @@ namespace ContentTypeTextNet.Pe.Main.Views
 {
     /// <summary>
     /// マウスホイールでスクロールする際にいろんな要因で吸い取られるイベントを自然に処理する。
-    /// <para>WPFが標準で用意してるやつは基本的に大丈夫そうだけどサードパーティ製のやつとか自前のやつとかに特化。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>WPFが標準で用意してるやつは基本的に大丈夫そうだけどサードパーティ製のやつとか自前のやつとかに特化。</para>
+    /// </remarks>
     public sealed class ScrollAdjuster: DisposerBase
     {
         /// <summary>

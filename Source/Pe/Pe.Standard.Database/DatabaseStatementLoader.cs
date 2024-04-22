@@ -6,8 +6,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// <see cref="IDatabaseStatementLoader"/> の最小実装。
-    /// <para><see cref="IDatabaseStatementLoader.LoadStatement(string)"/>だけ対応すればよろし。</para>
     /// </summary>
+    /// <remarks>
+    /// <para><see cref="IDatabaseStatementLoader.LoadStatement(string)"/>だけ対応すればよろし。</para>
+    /// </remarks>
     public abstract class DatabaseStatementLoaderBase: IDatabaseStatementLoader
     {
         /// <summary>

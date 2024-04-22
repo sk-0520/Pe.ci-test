@@ -104,8 +104,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         /// <summary>
         /// データベース内データを複製。
-        /// <para>DB実装依存。Sqliteべったり。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>DB実装依存。Sqliteべったり。</para>
+        /// </remarks>
         /// <param name="source"></param>
         /// <param name="destination"></param>
         public static void Copy(IDatabaseAccessor source, IDatabaseAccessor destination)

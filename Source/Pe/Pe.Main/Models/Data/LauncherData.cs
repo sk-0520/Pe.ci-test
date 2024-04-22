@@ -23,27 +23,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Unknown,
         /// <summary>
         /// ファイルアイテム。
-        /// <para>可能な限りPATHを考慮するので旧来のコマンドに近い挙動も可能。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>可能な限りPATHを考慮するので旧来のコマンドに近い挙動も可能。</para>
+        /// </remarks>
         [EnumResource]
         File,
         /// <summary>
         /// ストアアプリ。
+        /// </summary>
+        /// <remarks>
         /// <para>プロトコルとかエイリアスであれこれ。</para>
         /// <para><see cref="File"/>と違って小難しい処理は無理。</para>
-        /// </summary>
+        /// </remarks>
         [EnumResource]
         StoreApp,
         /// <summary>
         /// プラグインアイテム。
-        /// <para>プラグインのみぞ知る機能。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>プラグインのみぞ知る機能。</para>
+        /// </remarks>
         [EnumResource]
         Addon,
         /// <summary>
         /// セパレータ。
-        /// <para>いる、これ？</para>
         /// </summary>
+        /// <remarks>
+        /// <para>いる、これ？</para>
+        /// </remarks>
         [EnumResource]
         Separator,
     }

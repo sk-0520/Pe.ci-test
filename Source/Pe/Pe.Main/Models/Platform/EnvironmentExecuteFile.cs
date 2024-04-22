@@ -154,8 +154,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         /// <summary>
         /// 次に %PATH% を検索するまでの時間。
-        /// <para><see cref="LastSearch"/>に加算。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="LastSearch"/>に加算。</para>
+        /// </remarks>
         private TimeSpan CacheTime { get; }
         /// <summary>
         /// 最後に %PATH% を検索した時間。

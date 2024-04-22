@@ -145,13 +145,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         }
         /// <summary>
         /// Windowsモードの色。
-        /// <para>タスクバーとかの色っぽい。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>タスクバーとかの色っぽい。</para>
+        /// </remarks>
         public PlatformThemeKind WindowsThemeKind { get; private set; }
         /// <summary>
         /// アプリモードの色。
-        /// <para>背景色っぽい。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>背景色っぽい。</para>
+        /// </remarks>
         public PlatformThemeKind ApplicationThemeKind { get; private set; }
         /// <summary>
         /// アクセントカラー！

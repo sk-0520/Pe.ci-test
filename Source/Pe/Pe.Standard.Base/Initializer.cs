@@ -66,8 +66,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// 初期化用処理を簡略化。
-        /// <para>多分こいつしか使わない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>多分こいつしか使わない。</para>
+        /// </remarks>
         /// <example>
         /// using(Initializer.Begin(obj)) {
         ///     obj.Property = xxx;

@@ -76,9 +76,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public Uri AuthorWebSiteUri { get; } = default!;
         /// <summary>
         /// バージョン確認URL。
+        /// </summary>
+        /// <remarks>
         /// <para>上から順にバージョン確認を行って、アクセス成功時に自身よりバージョンが大きければバージョンアップありとする。</para>
         /// <para>サーバーが死んでる・ドメインが死んでる等の場合に次項目を対象とするため、最上位URLが古いバージョンを返すのであれば次項目には移らない。</para>
-        /// </summary>
+        /// </remarks>
         [Configuration("version_check_url_items")]
         public IReadOnlyList<string> UpdateCheckUrlItems { get; } = default!;
         /// <summary>

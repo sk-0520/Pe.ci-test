@@ -117,8 +117,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         /// <summary>
         /// シーケンスを再採番。
-        /// <para>あかんっぽいから使ってない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>あかんっぽいから使ってない。</para>
+        /// </remarks>
         /// <param name="noteId"></param>
         /// <param name="databaseCommonStatus"></param>
         /// <returns></returns>

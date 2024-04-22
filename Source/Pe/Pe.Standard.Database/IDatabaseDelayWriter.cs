@@ -33,17 +33,21 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         void Stock(Action<IDatabaseTransaction> action);
         /// <summary>
         /// DB処理を遅延実行。
+        /// </summary>
+        /// <remarks>
         /// <para><paramref name="uniqueKey"/>でグルーピングし、一番若い処理が実行される。</para>
         /// <para><see cref="UniqueKeyPool"/>を用いる前提。</para>
-        /// </summary>
+        /// </remarks>
         /// <param name="action">DB処理本体。</param>
         /// <param name="uniqueKey">一意オブジェクト。</param>
         void Stock(Action<IDatabaseTransaction> action, object uniqueKey);
 
         /// <summary>
         /// ため込んでいるDB処理をなかったことにする。
-        /// <para>特定の状況でしか使い道がないので使用には注意すること。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>特定の状況でしか使い道がないので使用には注意すること。</para>
+        /// </remarks>
         void ClearStock();
 
         #endregion

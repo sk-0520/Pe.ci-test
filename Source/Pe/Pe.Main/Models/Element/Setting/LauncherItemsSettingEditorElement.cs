@@ -157,8 +157,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         /// <summary>
         /// ファイルを登録する。
-        /// <para>TODO: <see cref="LauncherToolbar.LauncherToolbarElement.RegisterFile"/>と重複</para>
         /// </summary>
+        /// <remarks>
+        /// <para>TODO: <see cref="LauncherToolbar.LauncherToolbarElement.RegisterFile"/>と重複</para>
+        /// </remarks>
         /// <param name="filePath">対象ファイルパス。</param>
         /// <param name="expandShortcut"><paramref name="filePath"/>がショートカットの場合にショートカットの内容を登録するか</param>
         public async Task<LauncherItemId> RegisterFileAsync(string filePath, bool expandShortcut)

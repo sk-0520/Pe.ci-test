@@ -163,9 +163,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         /// <summary>
         /// 後付けオプション設定。
+        /// </summary>
+        /// <remarks>
         /// <para>null を許容しているけど設定未設定の判別のみに使用するため null は設定不可。</para>
         /// <para>設定には <see cref="SetOption(string)"/> を使用する。</para>
-        /// </summary>
+        /// </remarks>
         public string? CustomOption { get; private set; }
 
         #endregion

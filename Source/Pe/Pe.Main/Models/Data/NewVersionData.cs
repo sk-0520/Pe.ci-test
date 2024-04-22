@@ -45,13 +45,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public string Revision { get; }
         /// <summary>
         /// モジュールの対象プラットフォーム。
+        /// </summary>
+        /// <remarks>
         /// <para>使用可能文字列: x64, x86</para>
+        /// </remarks>
         public string Platform { get; }
 
         /// <summary>
         /// モジュールを適用可能な Pe の最低バージョン。
-        /// <para>このバージョン未満は使用・インストール不可。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>このバージョン未満は使用・インストール不可。</para>
+        /// </remarks>
         public Version MinimumVersion { get; }
 
         /// <summary>
@@ -69,8 +74,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         long ArchiveSize { get; }
         /// <summary>
         /// モジュールのDLファイル形式。
-        /// <para>使用可能文字列: 7z, zip</para>
         /// </summary>
+        /// <remarks>
+        /// <para>使用可能文字列: 7z, zip</para>
+        /// </remarks>
         string ArchiveKind { get; }
 
         /// <summary>

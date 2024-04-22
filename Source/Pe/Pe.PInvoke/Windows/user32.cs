@@ -39,8 +39,10 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
         /// <summary>
         /// 最後に発生した入力イベントの時刻を取得します。
-        /// <para>これは、入力のアイドル状態を検出する場合に使うことができます。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>これは、入力のアイドル状態を検出する場合に使うことができます。</para>
+        /// </remarks>
         /// <param name="plii">最後の入力イベントの時刻が入る、<see cref="LASTINPUTINFO"/> 構造体へのポインタを指定します。</param>
         /// <returns>関数が成功すると、0 以外の値が返ります。関数が失敗すると、0 が返ります。</returns>
         [DllImport("user32.dll")]

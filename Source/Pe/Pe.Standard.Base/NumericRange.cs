@@ -12,8 +12,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 {
     /// <summary>
     /// 連続した数値的なものを扱う。
-    /// <para>1,2,10-20 的なの。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>1,2,10-20 的なの。</para>
+    /// </remarks>
     public class NumericRange
     {
         /// <summary>

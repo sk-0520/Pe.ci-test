@@ -50,8 +50,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// <inheritdoc cref="File.Exists(string)"/>
-        /// <para>非同期版。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>非同期版。</para>
+        /// </remarks>
         /// <param name="path"><inheritdoc cref="File.Exists(string)"/></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -62,8 +64,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// <inheritdoc cref="Directory.Exists(string)"/>
-        /// <para>非同期版。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>非同期版。</para>
+        /// </remarks>
         /// <param name="path"><inheritdoc cref="Directory.Exists(string)"/></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -83,8 +87,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// ファイル・ディレクトリ問わずに対象パスを削除。
-        /// <para>ファイル・ディレクトリを問わない(ディレクトリの場合は再帰的削除)。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>ディレクトリの場合は再帰的削除。</para>
+        /// </remarks>
         /// <param name="path">対象パス。</param>
         /// <exception cref="IOException">ファイルでもディレクトリでもなかった。</exception>
         public static void Delete(string path)

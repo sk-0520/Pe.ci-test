@@ -8,8 +8,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 {
     /// <summary>
     /// だだっと表示させるための暫定的VM。
-    /// <para>バグのにほい</para>
     /// </summary>
+    /// <remarks>
+    /// <para>バグのにほい</para>
+    /// </remarks>
     internal class TemporaryWidgetViewModel: WidgetViewModelBase<WidgetElement>
     {
         public TemporaryWidgetViewModel(WidgetElement model, IUserTracker userTracker, IWindowManager windowManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)

@@ -14,9 +14,11 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
 
         /// <summary>
         /// SQL ファイルと Dao の各種クラス・メソッドが対になっているか調査: #616
+        /// </summary>
+        /// <remarks>
         /// <para>ファイルからメソッドを見つける形で対応する。</para>
         /// <para>現時点では Pe.Main.* のみが対象となる制限付き。</para>
-        /// </summary>
+        /// </remarks>
         [Fact]
         public void SqlFileTest()
         {

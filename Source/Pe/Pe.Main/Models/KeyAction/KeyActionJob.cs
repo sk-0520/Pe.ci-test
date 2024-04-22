@@ -231,20 +231,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         private int NextIndex { get; set; }
         /// <summary>
         /// キー設定にヒットしたか。
-        /// <para><see cref="Check"/>ではあくまで今のキー設定にヒットしたかどうかを確認するのでキー設定全てに該当したかを判定するために使用する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="Check"/>ではあくまで今のキー設定にヒットしたかどうかを確認するのでキー設定全てに該当したかを判定するために使用する。</para>
+        /// </remarks>
         public bool IsAllHit { get; private set; }
         /// <summary>
         /// 次キー入力待ちか。
-        /// <para></para>
         /// </summary>
         public bool NextWaiting => 0 < NextIndex;
 
         /// <summary>
         /// OSへキー入力を伝達させるか。
+        /// </summary>
+        /// <remarks>
         /// <para>基本的には伝達しないが特別な状況でこれを認めたい場合に有効にする。 他の<see cref="KeyActionPressedJobBase"/>が伝達を抑制していても優先される。</para>
         /// <para>Pe の過去機能で ESC 2回押下でツールーバーを隠す処理を再現する場合など、一度目のキー入力は通常操作で使用する場合などが有効にしたい目的。</para>
-        /// </summary>
+        /// </remarks>
         public bool ThroughSystem { get; private set; }
 
         #endregion
@@ -267,8 +270,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         }
 
         /// <summary>
-        /// <para>有効であるかどうかは<see cref="IsAllHit"/>を確認すること。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>有効であるかどうかは<see cref="IsAllHit"/>を確認すること。</para>
+        /// </remarks>
         /// <returns></returns>
         public override bool Check(bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
         {

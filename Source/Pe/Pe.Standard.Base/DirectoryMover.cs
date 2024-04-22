@@ -24,8 +24,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// ディレクトリの移動。
-        /// <para>移動できない場合に<see cref="Copy(DirectoryInfo, DirectoryInfo)"/>を行い、処理後削除される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>移動できない場合に<see cref="Copy(DirectoryInfo, DirectoryInfo)"/>を行い、処理後削除される。</para>
+        /// </remarks>
         /// <param name="source"></param>
         /// <param name="destination"></param>
         public void Move(DirectoryInfo source, DirectoryInfo destination)

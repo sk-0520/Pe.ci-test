@@ -55,8 +55,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         /// <summary>
         /// アクセントカラーの透明度を無効と判断する最低A値。
-        /// <para>この値未満であれば無効。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>この値未満であれば無効。</para>
+        /// </remarks>
         [Configuration]
         public byte ThemeAccentColorMinimumAlpha { get; }
         /// <summary>
@@ -82,8 +84,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         /// <summary>
         /// アイドル抑制実施時間間隔。
-        /// <para>前回抑制時間を超過している場合に抑制実施。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>前回抑制時間を超過している場合に抑制実施。</para>
+        /// </remarks>
         [Configuration]
         public TimeSpan IdleDisableCycleTime { get; }
         /// <summary>

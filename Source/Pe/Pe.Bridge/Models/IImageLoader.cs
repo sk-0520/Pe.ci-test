@@ -7,8 +7,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 {
     /// <summary>
     /// 画像系のただめんどい処理を担当。
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface IImageLoader
     {
         #region function

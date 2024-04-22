@@ -163,8 +163,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         private DirectoryInfo UserPluginDirectory => CombineDirectory(true, UserSettingDirectory, "plugin");
         /// <summary>
         /// プラグイン設定ディレクトリ。
-        /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
+        /// </remarks>
         public DirectoryInfo UserPluginDataDirectory => CombineDirectory(true, UserPluginDirectory, "data");
 
         /// <summary>
@@ -192,18 +194,24 @@ namespace ContentTypeTextNet.Pe.Main.Models
         private DirectoryInfo MachinePluginDirectory => CombineDirectory(true, MachineDirectory, "plugin");
         /// <summary>
         /// ユーザー端末プラグイン設定ディレクトリ。
-        /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
+        /// </remarks>
         public DirectoryInfo MachinePluginDataDirectory => CombineDirectory(true, MachinePluginDirectory, "data");
         /// <summary>
         /// プラグインモジュール配置ディレクトリ。
-        /// <para>この下にプラグインごとのディレクトリを配置してバイナリを置く。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>この下にプラグインごとのディレクトリを配置してバイナリを置く。</para>
+        /// </remarks>
         public DirectoryInfo MachinePluginModuleDirectory => CombineDirectory(true, MachinePluginDirectory, "modules");
         /// <summary>
         /// インストール対象プラグインの配置ディレクトリ。
-        /// <para>起動時にこの下にあるプラグインを<see cref="MachinePluginModuleDirectory"/>に転送する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>起動時にこの下にあるプラグインを<see cref="MachinePluginModuleDirectory"/>に転送する。</para>
+        /// </remarks>
         public DirectoryInfo MachinePluginInstallDirectory => CombineDirectory(true, MachinePluginDirectory, "install");
 
         /// <summary>
@@ -231,8 +239,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public DirectoryInfo TemporaryPluginDirectory => CombineDirectory(true, TemporaryDirectory, "plugin");
         /// <summary>
         /// 一時プラグイン設定ディレクトリ。
-        /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
+        /// </remarks>
         public DirectoryInfo TemporaryPluginDataDirectory => CombineDirectory(true, TemporaryPluginDirectory, "data");
 
         /// <summary>
@@ -245,8 +255,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public DirectoryInfo TemporaryApplicationExtractDirectory => CombineDirectory(true, TemporaryExtractDirectory, "application");
         /// <summary>
         /// プラグイン展開親ディレクトリ。
-        /// <para>この下にプラグインごとのディレクトリを作成して展開する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>この下にプラグインごとのディレクトリを作成して展開する。</para>
+        /// </remarks>
         public DirectoryInfo TemporaryPluginExtractBaseDirectory => CombineDirectory(true, TemporaryExtractDirectory, "plugins");
         /// <summary>
         /// プラグイン自動展開ディレクトリ。
@@ -266,8 +278,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public FileInfo TemporaryRebootLogFile => CombineFile(TemporaryDirectory, "reboot.log");
         /// <summary>
         /// プロセス間通信実行ログ
-        /// <para>TODO: ただひたすら大きくなるのでどっかのタイミング綺麗にはしたいなぁ、と思いつつ後回し。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>TODO: ただひたすら大きくなるのでどっかのタイミング綺麗にはしたいなぁ、と思いつつ後回し。</para>
+        /// </remarks>
         public FileInfo TemporaryIpcLogFile => CombineFile(TemporaryDirectory, "ipc.log");
         /// <summary>
         /// 生クラッシュレポート配置ディレクトリ。

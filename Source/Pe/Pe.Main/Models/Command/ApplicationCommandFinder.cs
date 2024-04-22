@@ -54,16 +54,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         Close,
         /// <summary>
         /// アプリケーションの終了。
+        /// </summary>
+        /// <remarks>
         /// <para>通常はアップデートが可能であればアップデート行う</para>
         /// <para>拡張機能: アップデートがあっても終了する。</para>
-        /// </summary>
+        /// </remarks>
         [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Exit), false)]
         [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Exit_Extend), true)]
         Exit,
         /// <summary>
         /// 再起動。
-        /// <para>アップデートがあっても再起動。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>アップデートがあっても再起動。</para>
+        /// </remarks>
         [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Reboot))]
         Reboot,
         [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_About))]

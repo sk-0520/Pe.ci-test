@@ -1,5 +1,24 @@
 [
 	{
+		"date": "2024/04/22",
+		"version": "0.99.230",
+		"contents": [
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "e0bf9443bc31adf73f6d1dbb6780e74dc5ea981f",
+						"subject": "#921: グループ設定時にグループ最終ランチャーアイテムに対して選択可能ランチャーアイテムを D&D すると落ちる"
+					},
+					{
+						"revision": "dbd4c79e47e61d45afec6944b7045c4b1d2d0023",
+						"subject": "スピンコントロールの初期表示におけるボタンの活性状態を修正"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2024/04/17",
 		"version": "0.99.229",
 		"contents": [

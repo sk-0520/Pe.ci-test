@@ -27,8 +27,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         /// <summary>
         /// ウィンドウ生成(インスタンス化)時点でWEBブラウザっぽいのがあればそれに対して開発者ツールを呼び出せる拡張処理を行うか。
-        /// <para>複数あったり動的に生成する場合は個別対応が必要。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>複数あったり動的に生成する場合は個別対応が必要。</para>
+        /// </remarks>
         [Configuration]
         public bool DeveloperTools { get; }
 

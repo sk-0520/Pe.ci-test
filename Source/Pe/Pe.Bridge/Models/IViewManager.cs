@@ -72,9 +72,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
     /// <summary>
     /// View 周りの処理。
+    /// </summary>
+    /// <remarks>
     /// <para>NOTE: これ未実装。</para>
     /// <para>Pe から提供される。</para>
-    /// </summary>
+    /// </remarks>
     public interface IViewManager
     {
         #region function
@@ -88,7 +90,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         /// <summary>
         /// Pe に所属するウィンドウ種別か。
-        /// <para></para>
         /// </summary>
         /// <param name="kind"></param>
         /// <returns></returns>

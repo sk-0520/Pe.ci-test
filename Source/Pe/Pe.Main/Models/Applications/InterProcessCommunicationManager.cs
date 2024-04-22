@@ -89,8 +89,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         /// <summary>
         /// プロセス間通信 パイプハンドル。
-        /// <para>必須。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>必須。</para>
+        /// </remarks>
         public static string CommandLineKeyIpcHandle { get; } = "ipc-handle";
         /// <summary>
         /// プロセス間通信 処理モード。
@@ -99,8 +101,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public static string CommandLineKeyIpcMode { get; } = "ipc-mode";
         /// <summary>
         /// プロセス間通信 対象ファイル。
-        /// <para><see cref="CommandLineKeyIpcMode"/>依存。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="CommandLineKeyIpcMode"/>依存。</para>
+        /// </remarks>
         public static string CommandLineKeyIpcFile { get; } = "ipc-file";
 
         private ApplicationLogging Logging { get; set; }

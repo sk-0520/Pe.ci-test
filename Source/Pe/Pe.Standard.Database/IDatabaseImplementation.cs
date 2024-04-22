@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace ContentTypeTextNet.Pe.Standard.Database
 {
@@ -92,8 +92,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         string ToBlockComment(string statement);
         /// <summary>
         /// 実行文に対するエスケープ処理。
-        /// <para>基本的にはバインド処理で対応すること。本処理はしゃあなし動的SQL作成時に無理やり使用する前提。<see cref="DatabaseAccessObjectBase.LoadStatement(string)"/>で動的に組み上げた方が建設的。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>基本的にはバインド処理で対応すること。本処理はしゃあなし動的SQL作成時に無理やり使用する前提。<see cref="DatabaseAccessObjectBase.LoadStatement(string)"/>で動的に組み上げた方が建設的。</para>
+        /// </remarks>
         /// <param name="word">対象単語。文全体ではなく値を指定する想定。</param>
         /// <returns>変換された値。</returns>
         string Escape(string word);

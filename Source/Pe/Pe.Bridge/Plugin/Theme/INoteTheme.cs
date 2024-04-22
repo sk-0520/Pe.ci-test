@@ -53,8 +53,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 
         /// <summary>
         /// タイトルバーの高さを取得。
-        /// <para>縦置き(左右指定)の場合は横幅となる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>縦置き(左右指定)の場合は横幅となる。</para>
+        /// </remarks>
         /// <returns>論理ピクセル。</returns>
         [return: PixelKind(Px.Logical)]
         double GetCaptionHeight();

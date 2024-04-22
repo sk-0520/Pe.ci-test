@@ -61,8 +61,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
 
         /// <summary>
         /// アップデート処理実施ファイル（*.bat とか *.exe とか）。
-        /// <para>batかなぁ。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>batかなぁ。</para>
+        /// </remarks>
         public ILauncherExecutePathParameter? Path { get; set; }
 
         #endregion

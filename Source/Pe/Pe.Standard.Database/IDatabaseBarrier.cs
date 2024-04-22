@@ -1,11 +1,13 @@
-﻿using System;
+using System;
 
 namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// データベースに対する読み書き制御。
-    /// <para>NOTE: 役割が完全にSQLiteに合わせた挙動。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>NOTE: 役割が完全にSQLiteに合わせた挙動。</para>
+    /// </remarks>
     public interface IDatabaseBarrier
     {
         #region function

@@ -53,8 +53,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         /// <summary>
         /// テキストデータを取得。
-        /// <para>あらかじめ<see cref="IsTextPresent(IDataObject)"/>を使用すること。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>あらかじめ<see cref="IsTextPresent(IDataObject)"/>を使用すること。</para>
+        /// </remarks>
         /// <param name="dataObject"></param>
         /// <returns></returns>
         /// <exception cref="InvalidCastException">テキストデータが存在しない。</exception>

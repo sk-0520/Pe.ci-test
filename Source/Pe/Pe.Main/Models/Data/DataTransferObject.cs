@@ -141,9 +141,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         /// <summary>
         /// 最終使用バージョン。
+        /// </summary>
+        /// <remarks>
         /// <para>前バージョンじゃなくて前回の実行バージョンね。</para>
         /// <para>初回(0.84.0以下)なら0.0.0.0ね！</para>
-        /// </summary>
+        /// </remarks>
         Version? LastVersion { get; }
         /// <summary>
         /// 現在バージョン。

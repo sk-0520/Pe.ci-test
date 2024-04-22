@@ -41,13 +41,17 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// 短いキー。
-        /// <para>一文字。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>一文字。</para>
+        /// </remarks>
         public char ShortKey { get; }
         /// <summary>
         /// 長いキー。
-        /// <para><see cref="ShortKey"/>の長い文字列。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="ShortKey"/>の長い文字列。</para>
+        /// </remarks>
         public string LongKey { get; }
         /// <summary>
         /// 値を持つか。
@@ -120,23 +124,27 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     }
 
     /// <summary>
+    /// </summary>
+    /// <remarks>
     /// <list type="bullet">
-    /// <item><c>/key value</c></item>
-    /// <item><c>/key=value</c></item>
-    /// <item><c>--key value</c></item>
-    /// <item><c>--key=value</c></item>
-    /// <item><c>/switch</c></item>
-    /// <item><c>--switch</c></item>
+    ///     <item><c>/key value</c></item>
+    ///     <item><c>/key=value</c></item>
+    ///     <item><c>--key value</c></item>
+    ///     <item><c>--key=value</c></item>
+    ///     <item><c>/switch</c></item>
+    ///     <item><c>--switch</c></item>
     /// </list>
     /// <para>短いキーをいっぱいくっつけてどうとかはできない。</para>
-    /// </summary>
+    /// </remarks>
     public class CommandLine
     {
         /// <summary>
         /// アプリ状態から生成。
+        /// </summary>
+        /// <remarks>
         /// <para><see cref="Environment.GetCommandLineArgs()"/>からコマンドライン分解。</para>
         /// <para><see cref="CommandName"/>を含む。</para>
-        /// </summary>
+        /// </remarks>
         public CommandLine()
             : this(Environment.GetCommandLineArgs(), true)
         { }
@@ -161,8 +169,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// プログラム/コマンド名。
-        /// <para><see langword="null" />が入ることはない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see langword="null" />が入ることはない。</para>
+        /// </remarks>
         public string CommandName { get; }
         /// <summary>
         /// プログラム名を含まないコマンドライン引数。
@@ -509,8 +519,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public char ShortKey { get; }
         /// <summary>
         /// 長いキー。
-        /// <para><see cref="ShortKey"/>の長ーい文字列。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="ShortKey"/>の長ーい文字列。</para>
+        /// </remarks>
         public string LongKey { get; }
         /// <summary>
         /// 値を持つか。

@@ -45,8 +45,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         private Timer Timer { get; }
         /// <summary>
         /// 遅延処理本体。
-        /// <para>遅延処理待機中のみ非<see langword="null" />。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>遅延処理待機中のみ非<see langword="null" />。</para>
+        /// </remarks>
         private Action? Action { get; set; }
 
         #endregion
@@ -70,8 +72,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// 遅延処理。
-        /// <para>複数回呼び出した場合、最後に渡された処理が遅延処理対象となる。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>複数回呼び出した場合、最後に渡された処理が遅延処理対象となる。</para>
+        /// </remarks>
         /// <param name="action">実際に行われる処理。</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
         public void Callback(Action action)

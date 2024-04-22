@@ -107,37 +107,47 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 
         /// <summary>
         /// 基本テーマ生成。
-        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </remarks>
         /// <param name="parameter"></param>
         /// <returns></returns>
         IGeneralTheme BuildGeneralTheme(IThemeParameter parameter);
         /// <summary>
         /// ランチャーツールバーテーマ生成。
-        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </remarks>
         /// <param name="parameter"></param>
         /// <returns></returns>
         ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter);
         /// <summary>
         /// ノートテーマ生成。
-        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </remarks>
         /// <param name="parameter"></param>
         /// <returns></returns>
         INoteTheme BuildNoteTheme(IThemeParameter parameter);
         /// <summary>
         /// コマンド入力テーマ生成。
-        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </remarks>
         /// <param name="parameter"></param>
         /// <returns></returns>
         ICommandTheme BuildCommandTheme(IThemeParameter parameter);
 
         /// <summary>
         /// 通知ログテーマ生成。
-        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </remarks>
         /// <param name="parameter"></param>
         /// <returns></returns>
         INotifyLogTheme BuildNotifyLogTheme(IThemeParameter parameter);

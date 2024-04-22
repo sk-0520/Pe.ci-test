@@ -9,9 +9,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
     /// <summary>
     /// ランチャーアイテムアドオンファイル操作処理。
+    /// </summary>
+    /// <remarks>
     /// <para>Pe の管理下で処理する。</para>
     /// <para>Pe から提供される。</para>
-    /// </summary>
+    /// </remarks>
     public interface ILauncherItemAddonFileStorage
     {
         #region function
@@ -63,17 +65,21 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
     /// <summary>
     /// ランチャーアイテムアドオン永続データ操作処理。
+    /// </summary>
+    /// <remarks>
     /// <para>Pe の管理下で処理する。</para>
     /// <para>Pe から提供される。</para>
-    /// </summary>
+    /// </remarks>
     public interface ILauncherItemAddonPersistenceStorage
     {
         #region property
 
         /// <summary>
         /// 永続データアクセスは読み取り専用か。
-        /// <para>読み取り専用の場合、書き込み処理実行で例外発生。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>読み取り専用の場合、書き込み処理実行で例外発生。</para>
+        /// </remarks>
         bool IsReadOnly { get; }
 
         #endregion
@@ -107,8 +113,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// 指定データを保存する。
-        /// <para><see cref="PluginPersistenceFormat.Text"/>を使用する以外は原則使用せず<see cref="Set{TValue}(string, TValue)"/>を用いること。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="PluginPersistenceFormat.Text"/>を使用する以外は原則使用せず<see cref="Set{TValue}(string, TValue)"/>を用いること。</para>
+        /// </remarks>
         /// <typeparam name="TValue">保存データ。</typeparam>
         /// <param name="launcherItemId">ランチャーアイテムID。</param>
         /// <param name="key">キー。</param>
@@ -139,8 +147,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
     /// <summary>
     /// ランチャーアイテムアドオンファイル操作処理グループ。
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface ILauncherItemAddonFiles
     {
         #region property
@@ -151,13 +161,17 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         ILauncherItemAddonFileStorage User { get; }
         /// <summary>
         /// 非バックアップ対象。
-        /// <para>次回起動時に存在する可能性あり。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>次回起動時に存在する可能性あり。</para>
+        /// </remarks>
         ILauncherItemAddonFileStorage Machine { get; }
         /// <summary>
         /// 非バックアップ対象。
-        /// <para>次回起動時に存在しない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>次回起動時に存在しない。</para>
+        /// </remarks>
         ILauncherItemAddonFileStorage Temporary { get; }
 
         #endregion
@@ -165,8 +179,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
     /// <summary>
     /// ランチャーアイテムアドオン永続データ操作処理グループ。
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface ILauncherItemAddonPersistence
     {
         #region property
@@ -189,8 +205,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
     /// <summary>
     /// ランチャーアイテムアドオンからのストレージ操作処理。
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface ILauncherItemAddonStorage
     {
         #region property

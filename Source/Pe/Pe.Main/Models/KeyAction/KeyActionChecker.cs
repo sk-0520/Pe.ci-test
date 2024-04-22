@@ -59,14 +59,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         public TimeSpan KeyDisableToEnableTime { get; set; } = SystemInformation.DoubleClickTime;
         /// <summary>
         /// 自身の入力を弾くかの設定。
-        /// <para>呼び出し側で制御。。。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>呼び出し側で制御。。。</para>
+        /// </remarks>
         public bool IgnoreSelfJobInput { get; set; } = false;
         /// <summary>
         /// 置き換えに使用する入力に埋め込むIDの設定。
+        /// </summary>
+        /// <remarks>
         /// <para>0以外の場合 <see cref="KBDLLHOOKSTRUCT.dwExtraInfo"/> を確認して同じなら弾くようにする。</para>
         /// <para>呼び出し側で制御。。。</para>
-        /// </summary>
+        /// </remarks>
         public uint SelfJobInputId
         {
             get => this._selfJobInputId;

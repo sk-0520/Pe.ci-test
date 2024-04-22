@@ -244,8 +244,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private double NormalWindowWidth { get; set; }
         /// <summary>
         /// ウィンドウの横幅。
-        /// <para>最小化時も含む。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>最小化時も含む。</para>
+        /// </remarks>
         public double WindowWidth
         {
             get => this._windowWidth;
@@ -265,8 +267,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private double NormalWindowHeight { get; set; }
         /// <summary>
         /// ウィンドウの縦幅。
-        /// <para>最小化時も含む。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>最小化時も含む。</para>
+        /// </remarks>
         public double WindowHeight
         {
             get => this._windowHeight;

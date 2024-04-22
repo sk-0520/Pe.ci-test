@@ -83,9 +83,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
     /// <summary>
     /// 一時ディレクトリ処理。
+    /// </summary>
+    /// <remarks>
     /// <para>渡されたディレクトリを破棄時に削除する。</para>
     /// <para><see cref="IOUtility.CreateTemporaryDirectory(DirectoryInfo, TemporaryOptions?)"/>から使用する前提。</para>
-    /// </summary>
+    /// </remarks>
     public class TemporaryDirectory: DisposerBase
     {
         internal TemporaryDirectory(DirectoryInfo directory)
@@ -158,8 +160,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// ファイル情報。
-        /// <para>ストリーム処理の解放とか諸々の管理をしたくない場合は<see cref="CreateStream"/>を用いること。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>ストリーム処理の解放とか諸々の管理をしたくない場合は<see cref="CreateStream"/>を用いること。</para>
+        /// </remarks>
         public FileInfo File { get; }
 
         /// <summary>

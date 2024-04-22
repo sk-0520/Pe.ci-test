@@ -67,8 +67,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
 
         /// <summary>
         /// 表示抑制時間。
-        /// <para>カーソルがツールバー上に入ってから表示するまでの待機時間(ミリ秒レベルを想定)</para>
         /// </summary>
+        /// <remarks>
+        /// <para>カーソルがツールバー上に入ってから表示するまでの待機時間(ミリ秒レベルを想定)</para>
+        /// </remarks>
         TimeSpan DisplayDelayTime { get; }
 
         /// <summary>
@@ -90,27 +92,35 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
 
         /// <summary>
         /// 表示中のサイズ。
-        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
+        /// </remarks>
         [PixelKind(Px.Logical)]
         Size DisplaySize { get; }
         /// <summary>
         /// 表示中の論理バーサイズ。
-        /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
+        /// </remarks>
         [PixelKind(Px.Logical)]
         Rect DisplayBarArea { get; }
 
         /// <summary>
         /// 隠れた状態のバー論理サイズ。
-        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
+        /// </remarks>
         [PixelKind(Px.Logical)]
         Size HiddenSize { get; }
         /// <summary>
         /// 表示中の隠れたバーの論理領域。
-        /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
+        /// </remarks>
         [PixelKind(Px.Logical)]
         Rect HiddenBarArea { get; }
 
@@ -161,14 +171,18 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
 
         /// <summary>
         /// 表示中のサイズ。
-        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
+        /// </remarks>
         [PixelKind(Px.Logical)]
         new Size DisplaySize { get; set; }
         /// <summary>
         /// 表示中の論理バーサイズ。
-        /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
+        /// </remarks>
         [PixelKind(Px.Logical)]
         new Rect DisplayBarArea { get; set; }
 
@@ -180,8 +194,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         //new Size HiddenSize { get; }
         /// <summary>
         /// 表示中の隠れたバーの論理領域。
-        /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="AppDesktopToolbarExtend"/>で設定されるためユーザーコードで変更は行わないこと。</para>
+        /// </remarks>
         [PixelKind(Px.Logical)]
         new Rect HiddenBarArea { get; set; }
 

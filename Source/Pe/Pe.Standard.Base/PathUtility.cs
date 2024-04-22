@@ -35,8 +35,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// ファイル名をそれとなく安全な名称に変更する。
-        /// <para>OSに依存する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>OSに依存する。</para>
+        /// </remarks>
         /// <param name="name"></param>
         /// <param name="fn"></param>
         /// <returns></returns>
@@ -52,8 +54,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// ファイル名のシステムで使用できない文字を '_' に置き換える。
-        /// <para>OSに依存する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>OSに依存する。</para>
+        /// </remarks>
         /// <param name="name"></param>
         /// <returns></returns>
         public static string ToSafeNameDefault(string name)
@@ -204,8 +208,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// ファイル名は同じか。
-        /// <para>パス適用は不可。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>パス適用は不可。</para>
+        /// </remarks>
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
@@ -220,8 +226,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// パスを比較。
-        ///<para>Windows で動けば満足です！</para>
         /// </summary>
+        /// <remarks>
+        /// <para>Windows で動けば満足です！</para>
+        /// </remarks>
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>

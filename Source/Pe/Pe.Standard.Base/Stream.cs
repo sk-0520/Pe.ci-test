@@ -9,8 +9,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 {
     /// <summary>
     /// <see cref="Stream"/>をラップするストリーム。
-    /// <para>解放処理は継承先で対応すること。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>解放処理は継承先で対応すること。</para>
+    /// </remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1710:識別子は、正しいサフィックスを含んでいなければなりません")]
     public abstract class WrapStreamBase: Stream
     {
@@ -59,9 +61,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
     /// <summary>
     /// 渡されたストリームを閉じないストリーム。
+    /// </summary>
+    /// <remarks>
     /// <para>他のストリーム使用処理へ渡した後 閉じられると困る場合にこいつをかませて閉じないようにすることが目的。</para>
     /// <para>用途が用途なので <see cref="Dispose"/> しても <see cref="KeepStream.BaseStream"/> は何もケアされない、つまりはひらきっぱなことに注意。</para>
-    /// </summary>
+    /// </remarks>
     public sealed class KeepStream: WrapStreamBase
     {
         /// <summary>
@@ -95,8 +99,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         private bool KeepPosition { get; }
         /// <summary>
         /// <see cref="Stream.Dispose"/> 時に移動させるストリーム位置。
-        /// <para><see cref="KeepPosition"/>が真の場合に有効値が設定される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="KeepPosition"/>が真の場合に有効値が設定される。</para>
+        /// </remarks>
         private long RestorePosition { get; }
 
         #endregion

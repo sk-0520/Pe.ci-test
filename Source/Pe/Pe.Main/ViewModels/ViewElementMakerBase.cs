@@ -37,8 +37,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels
 
         /// <summary>
         /// 箱形の要素を作成する。
-        /// <para>同じようなものを共通の見栄えで作成するため細かい部分は内部実装に隠ぺいする。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>同じようなものを共通の見栄えで作成するため細かい部分は内部実装に隠ぺいする。</para>
+        /// </remarks>
         /// <param name="borderColor">境界線の色。</param>
         /// <param name="fillColor">背景色</param>
         /// <param name="size">サイズ。</param>

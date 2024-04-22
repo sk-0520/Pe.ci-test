@@ -86,9 +86,11 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         RT_VERSION = 16,
         /// <summary>
         /// リソース編集ツールで文字列を .rc ファイルに関連付けることができるようにします。
+        /// </summary>
+        /// <remarks>
         /// <para>通常、文字列は、シンボル名を提供するヘッダーファイルの名前です。 リソースコンパイラは文字列を解析しますが、それ以外の場合は値を無視します。 たとえば、次のように入力します。</para>
         /// <code>1 DLGINCLUDE "MyFile.h"</code>
-        /// </summary>
+        /// </remarks>
         RT_DLGINCLUDE = 17,
         /// <summary>
         /// プラグアンドプレイリソース。

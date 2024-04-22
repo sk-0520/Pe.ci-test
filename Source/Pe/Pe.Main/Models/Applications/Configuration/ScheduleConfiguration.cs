@@ -21,7 +21,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public TimeSpan LowSchedulerTime { get; }
         /// <summary>
         /// アイコン更新タイミング。
-        /// <para></para>
         /// </summary>
         [Configuration]
         public string LauncherItemIconRefresh { get; } = default!;

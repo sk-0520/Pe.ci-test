@@ -20,8 +20,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// 行文字列。
-        /// <para>改行は含まれない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>改行は含まれない。</para>
+        /// </remarks>
         public string Line { get; }
         /// <summary>
         /// 行番号(1基底)。

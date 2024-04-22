@@ -20,8 +20,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         /// <summary>
         ///<see cref="UIElement.PreviewMouseMove"/> 的な Preview のイベントを使用する。
-        ///<para>基本的には偽で <see cref="UIElement.MouseMove"/> を使用する。 なんにせよ<see cref="UIElement.PreviewMouseDown"/> は強制される。</para>
         /// </summary>
+        /// <remarks>
+        ///<para>基本的には偽で <see cref="UIElement.MouseMove"/> を使用する。 なんにせよ<see cref="UIElement.PreviewMouseDown"/> は強制される。</para>
+        /// </remarks>
         bool UsePreviewEvent { get; }
 
         #endregion

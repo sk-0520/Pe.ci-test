@@ -120,8 +120,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public bool IsFullscreen { get; }
         /// <summary>
         /// フルスクリーン化した対象ウィンドウハンドル。
-        /// <para><see cref="IsFullscreen"/>が真の場合に有効値が設定される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="IsFullscreen"/>が真の場合に有効値が設定される。</para>
+        /// </remarks>
         public IntPtr FullscreenWindowHandle { get; }
 
         #endregion
@@ -179,8 +181,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         /// <summary>
         /// ランチャーアイテム変更通知。
-        /// <para>ランチャーアイテム使用機能側に変更を通知するだけなので受け取り手によるが可能な限り<see cref="IOrderManager.RefreshLauncherItemElement(Guid)"/>を先に呼んでおくこと。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>ランチャーアイテム使用機能側に変更を通知するだけなので受け取り手によるが可能な限り<see cref="IOrderManager.RefreshLauncherItemElement(Guid)"/>を先に呼んでおくこと。</para>
+        /// </remarks>
         /// <param name="launcherItemId">変更されたランチャーアイテムID。</param>
         void SendLauncherItemChanged(LauncherItemId launcherItemId);
         void SendLauncherItemRegistered(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId);

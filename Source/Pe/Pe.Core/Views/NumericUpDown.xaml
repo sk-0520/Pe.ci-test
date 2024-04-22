@@ -23,6 +23,7 @@
       <Setter Property="IsTabStop" Value="False" />
       <Setter Property="Focusable" Value="False" />
     </Style>
+    <Geometry x:Key="Arrow">M1,21H23L12,2</Geometry>
   </UserControl.Resources>
 
   <Grid>
@@ -54,7 +55,7 @@
       <!-- https://materialdesignicons.com/icon/triangle -->
       <Viewbox>
         <Canvas Width="24" Height="24">
-          <Path Data="M1,21H23L12,2" Fill="{Binding Foreground, ElementName=PART_UP_BUTTON}" />
+          <Path Data="{StaticResource Arrow}" Fill="{Binding Foreground, ElementName=PART_UP_BUTTON}" />
         </Canvas>
       </Viewbox>
     </RepeatButton>
@@ -65,7 +66,7 @@
           <ScaleTransform ScaleY="-1" />
         </Viewbox.RenderTransform>
         <Canvas Width="24" Height="24">
-          <Path Data="M1,21H23L12,2" Fill="{Binding Foreground, ElementName=PART_DOWN_BUTTON}" />
+          <Path Data="{StaticResource Arrow}" Fill="{Binding Foreground, ElementName=PART_DOWN_BUTTON}" />
         </Canvas>
       </Viewbox>
     </RepeatButton>

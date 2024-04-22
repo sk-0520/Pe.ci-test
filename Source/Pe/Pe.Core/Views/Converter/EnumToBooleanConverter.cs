@@ -4,8 +4,10 @@ using System.Windows.Data;
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
     /// <summary>
-    /// <para>http://stackoverflow.com/questions/397556/how-to-bind-radiobuttons-to-an-enum</para>
     /// </summary>
+    /// <remarks>
+    /// <para>http://stackoverflow.com/questions/397556/how-to-bind-radiobuttons-to-an-enum</para>
+    /// </remarks>
     public class EnumToBooleanConverter: IValueConverter
     {
         #region IValueConverter

@@ -11,13 +11,17 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         Running,
         /// <summary>
         /// キーボードフック。
-        /// <para>キーボードの押下は取得できるが取り消しは不可。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>キーボードの押下は取得できるが取り消しは不可。</para>
+        /// </remarks>
         KeyboardHook,
         /// <summary>
         /// マウスフック。
-        /// <para>マウスの押下・移動は取得できるが取り消しは不可。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>マウスの押下・移動は取得できるが取り消しは不可。</para>
+        /// </remarks>
         MouseHook,
     }
 
@@ -31,8 +35,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
     /// <summary>
     /// バックグラウンドで適当に何かする処理。
-    /// <para><see cref="IBackground"/>毎の優先度は存在しない。</para>
     /// </summary>
+    /// <remarks>
+    /// <para><see cref="IBackground"/>毎の優先度は存在しない。</para>
+    /// </remarks>
     public interface IBackground
     {
         #region property
@@ -42,16 +48,20 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// サポートしているバックグラウンド処理。
-        /// <para>必要な種別を定義しておかないと必要な Hook* 関数が呼ばれない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>必要な種別を定義しておかないと必要な Hook* 関数が呼ばれない。</para>
+        /// </remarks>
         /// <param name="backgroundKind"></param>
         /// <returns></returns>
         bool IsSupported(BackgroundKind backgroundKind);
 
         /// <summary>
         /// バックグランド処理開始時点で呼び出される。
-        /// <para>非同期で呼び出される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>非同期で呼び出される。</para>
+        /// </remarks>
         /// <param name="backgroundAddonRunStartupContext"></param>
         void RunStartup(IBackgroundAddonRunStartupContext backgroundAddonRunStartupContext);
         /// <summary>
@@ -63,7 +73,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <summary>
         /// 何かしらが実行された際に呼び出される。
         /// </summary>
+        /// <remarks>
         /// <para>非同期で呼び出される。</para>
+        /// </remarks>
         /// <param name="backgroundAddonRunExecuteContext"></param>
         void RunExecute(IBackgroundAddonRunExecuteContext backgroundAddonRunExecuteContext);
 
@@ -76,37 +88,47 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// キーが押下された。
+        /// </summary>
+        /// <remarks>
         /// <para>Pe による無効化・差し替えは無視される。</para>
         /// <para>非同期で呼び出される。</para>
-        /// </summary>
+        /// </remarks>
         void HookKeyDown(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext);
         /// <summary>
         /// キーが離された。
+        /// </summary>
+        /// <remarks>
         /// <para>Pe による無効化・差し替えは無視される。</para>
         /// <para>非同期で呼び出される。</para>
-        /// </summary>
+        /// </remarks>
         void HookKeyUp(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext);
 
 
         /// <summary>
         /// マウスが移動した。
+        /// </summary>
+        /// <remarks>
         /// <para>Pe による無効化・差し替えは無視される。</para>
         /// <para>非同期で呼び出される。</para>
-        /// </summary>
+        /// </remarks>
         void HookMouseMove(IBackgroundAddonMouseMoveContext backgroundAddonMouseMoveContext);
         /// <summary>
         /// マウスのボタンが押された。
+        /// </summary>
+        /// <remarks>
         /// <para>Pe による無効化・差し替えは無視される。</para>
         /// <para>非同期で呼び出される。</para>
-        /// </summary>
+        /// </remarks>
         /// <param name="mouseButton"></param>
         /// <param name="mouseButtonState"></param>
         void HookMouseDown(IBackgroundAddonMouseButtonContext backgroundAddonMouseButtonContext);
         /// <summary>
         /// マウスのボタンが離された。
+        /// </summary>
+        /// <remarks>
         /// <para>Pe による無効化・差し替えは無視される。</para>
         /// <para>非同期で呼び出される。</para>
-        /// </summary>
+        /// </remarks>
         /// <param name="mouseButton"></param>
         /// <param name="mouseButtonState"></param>
         void HookMouseUp(IBackgroundAddonMouseButtonContext backgroundAddonMouseButtonContext);

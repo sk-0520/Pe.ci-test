@@ -349,7 +349,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                             //var newLauncherItem = new LauncherItemWithIconViewModel<CommonLauncherItemViewModel>(baseLauncherItem.Item, baseLauncherItem.Icon, LoggerFactory);
                             //SelectedGroup.LauncherItems.Insert(currentIndex, newLauncherItem);
                             SelectedGroup.InsertNewLauncherItem(currentIndex, dragData.Item);
-                            SelectedLauncherItem = AllLauncherItemCollection.ViewModels[currentIndex];
+                            SelectedLauncherItem = SelectedGroup.LauncherItems[currentIndex];
                             UIUtility.GetVisualClosest<ListBox>(listBoxItem)!.Focus();
                         } else {
                             // 現在アイテム内での並び替え
@@ -369,7 +369,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                                 SelectedGroup.LauncherItems.Insert(currentIndex, dragData.Item); // 自分消えてるからインデックスずれていいかんじになるはず
                             }
                             */
-                            SelectedGroup.SelectedLauncherItem = SelectedGroup!.LauncherItems[currentIndex];
+                            SelectedGroup.SelectedLauncherItem = SelectedGroup.LauncherItems[currentIndex];
                         }
                     } else if(dragData.FromAllItems) {
                         // 一覧から持ってきた際にデータが空っぽだとここ
@@ -380,7 +380,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                         SelectedLauncherItem = newLauncherItem;
                         */
                         SelectedGroup.InsertNewLauncherItem(SelectedGroup.LauncherItems.Count, dragData.Item);
-                        SelectedGroup.SelectedLauncherItem = SelectedGroup!.LauncherItems.Last();
+                        SelectedGroup.SelectedLauncherItem = SelectedGroup.LauncherItems.Last();
                         UIUtility.GetVisualClosest<ListBox>(dependencyObject)!.Focus();
                     }
                 }

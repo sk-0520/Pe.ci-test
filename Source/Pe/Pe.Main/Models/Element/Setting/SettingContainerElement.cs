@@ -59,8 +59,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         /// <summary>
         ///編集中のランチャーアイテム一覧。
-        ///<para>みんなで共有する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>みんなで共有する。</para>
+        /// </remarks>
         public ObservableCollection<LauncherItemSettingEditorElement> AllLauncherItems { get; } = new ObservableCollection<LauncherItemSettingEditorElement>();
         public ObservableCollection<LauncherGroupSettingEditorElement> AllLauncherGroups { get; } = new ObservableCollection<LauncherGroupSettingEditorElement>();
 

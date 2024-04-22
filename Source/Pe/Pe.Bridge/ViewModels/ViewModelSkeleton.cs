@@ -24,8 +24,10 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
 
     /// <summary>
     /// プラグイン側でのViewModel作成を簡略化。
-    /// <para><see cref="ISkeletonImplements"/>が本体。</para>
     /// </summary>
+    /// <remarks>
+    /// <para><see cref="ISkeletonImplements"/>が本体。</para>
+    /// </remarks>
     public abstract class ViewModelSkeleton: INotifyPropertyChanged, IDisposable
     {
         protected ViewModelSkeleton(ISkeletonImplements skeletonImplements, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)

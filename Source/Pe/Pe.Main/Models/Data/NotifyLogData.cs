@@ -16,32 +16,42 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Cursor,
         /// <summary>
         /// 中央表示。
-        /// <para>デスクトップ固定。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>デスクトップ固定。</para>
+        /// </remarks>
         [EnumResource]
         Center,
         /// <summary>
         /// 左上。
-        /// <para>デスクトップ固定。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>デスクトップ固定。</para>
+        /// </remarks>
         [EnumResource]
         LeftTop,
         /// <summary>
         /// 右上。
-        /// <para>デスクトップ固定。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>デスクトップ固定。</para>
+        /// </remarks>
         [EnumResource]
         RightTop,
         /// <summary>
         /// 左下。
-        /// <para>デスクトップ固定。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>デスクトップ固定。</para>
+        /// </remarks>
         [EnumResource]
         LeftBottom,
         /// <summary>
         /// 右下。
-        /// <para>デスクトップ固定。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>デスクトップ固定。</para>
+        /// </remarks>
         [EnumResource]
         RightBottom,
     }

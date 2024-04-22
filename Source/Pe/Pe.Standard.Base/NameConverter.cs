@@ -53,8 +53,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// パスカル形式をケバブ形式に変換。
-        /// <para>AbcDef -&gt; abc-def</para>
         /// </summary>
+        /// <remarks>
+        /// <para>AbcDef -&gt; abc-def</para>
+        /// </remarks>
         /// <param name="source"></param>
         /// <returns></returns>
         public string PascalToKebab(string source)
@@ -71,8 +73,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// パスカル形式をスネーク形式に変換。
-        /// <para>AbcDef -&gt; abc_def</para>
         /// </summary>
+        /// <remarks>
+        /// <para>AbcDef -&gt; abc_def</para>
+        /// </remarks>
         /// <param name="source"></param>
         /// <returns></returns>
         public string PascalToSnake(string source)
@@ -89,9 +93,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// パスカル形式をキャメル形式に変換。
+        /// </summary>
+        /// <remarks>
         /// <para>AbcDef -&gt; abcDef</para>
         /// <para>連続する大文字の2文字目以降は小文字に変換される</para>
-        /// </summary>
+        /// </remarks>
         /// <param name="source"></param>
         /// <returns></returns>
         public string PascalToCamel(string source)
@@ -170,8 +176,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// ケバブ形式をパスカル形式に変換。
-        /// <para>abc-def -&gt; AbcDef</para>
         /// </summary>
+        /// <remarks>
+        /// <para>abc-def -&gt; AbcDef</para>
+        /// </remarks>
         /// <param name="source"></param>
         /// <returns></returns>
         public string KebabToPascal(string source)
@@ -188,8 +196,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <summary>
         /// スネーク形式をパスカル形式に変換。
-        /// <para>abc_def -&gt; AbcDef</para>
         /// </summary>
+        /// <remarks>
+        /// <para>abc_def -&gt; AbcDef</para>
+        /// </remarks>
         /// <param name="source"></param>
         /// <returns></returns>
         public string SnakeToPascal(string source)

@@ -10,8 +10,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
 {
     /// <summary>
     /// 暗号化処理。
-    /// <para>プラグインでも使用される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>プラグインでも使用される。</para>
+    /// </remarks>
     internal class Cryptography: ICryptography
     {
         #region property

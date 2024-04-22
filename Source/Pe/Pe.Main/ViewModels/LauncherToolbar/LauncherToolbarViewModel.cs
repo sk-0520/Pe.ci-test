@@ -563,8 +563,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         /// <summary>
         /// 表示中のサイズ。
-        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
+        /// </remarks>
         [PixelKind(Px.Logical)]
         public Size DisplaySize => Model.DisplaySize;
 

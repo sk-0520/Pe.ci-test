@@ -1,12 +1,14 @@
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 
 namespace ContentTypeTextNet.Pe.Standard.Database
 {
     /// <summary>
     /// データベースに対する問い合わせ文を取得する。
-    /// <para>RDB を主軸に実装しているので基本的に SQL となる。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>RDB を主軸に実装しているので基本的に SQL となる。</para>
+    /// </remarks>
     public interface IDatabaseStatementLoader
     {
         #region function

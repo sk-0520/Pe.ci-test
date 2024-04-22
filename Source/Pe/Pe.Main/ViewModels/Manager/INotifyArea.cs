@@ -28,8 +28,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         DependencyObject? MenuIcon { get; }
         /// <summary>
         /// 通知領域 メニューアイコンが有効か。
-        /// <para>これが真の場合にのみ <see cref="MenuIcon"/> が使用される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>これが真の場合にのみ <see cref="MenuIcon"/> が使用される。</para>
+        /// </remarks>
         bool MenuHasIcon { get; }
         /// <summary>
         /// 通知領域 メニュー 有効状態。

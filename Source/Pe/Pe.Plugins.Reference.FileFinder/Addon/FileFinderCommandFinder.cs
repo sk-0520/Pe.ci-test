@@ -21,8 +21,10 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
 {
     /// <summary>
     /// 入力からファイル検索を行う。
-    /// <para>もうちと簡単にやるなら Pe.Core から IconLoader を参照するべきかなぁ。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>もうちと簡単にやるなら Pe.Core から IconLoader を参照するべきかなぁ。</para>
+    /// </remarks>
     internal class FileFinderCommandFinder: ICommandFinder, IDisposable
     {
         #region define
@@ -71,8 +73,10 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
         private bool IncludePath { get; set; }
         /// <summary>
         /// パスからの列挙において列挙する上限数。
-        /// <para>0 で制限しない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>0 で制限しない。</para>
+        /// </remarks>
         private int MaximumPathItem { get; set; }
         /// <summary>
         /// パス検索を有効にする入力文字数(以上)。

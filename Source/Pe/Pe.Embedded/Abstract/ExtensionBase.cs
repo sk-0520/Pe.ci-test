@@ -9,8 +9,10 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
     /// <summary>
     /// 拡張機能としての最下層クラス。
-    /// <para>プラグイン実装者がこのクラスに対して手を入れることはない。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>プラグイン実装者がこのクラスに対して手を入れることはない。</para>
+    /// </remarks>
     internal class ExtensionBase: IPlugin
     {
         protected ExtensionBase(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)

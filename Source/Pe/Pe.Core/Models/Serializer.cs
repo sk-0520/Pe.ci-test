@@ -42,21 +42,27 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         /// <summary>
         /// 内部ストリーム生成処理。
-        /// <para><see cref="InnerStreamFactory"/>を使用するが、未設定時は<see cref="MemoryStream"/>と<see cref="BufferSize"/>が使用される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="InnerStreamFactory"/>を使用するが、未設定時は<see cref="MemoryStream"/>と<see cref="BufferSize"/>が使用される。</para>
+        /// </remarks>
         /// <returns></returns>
         protected Stream CreateInnerStream() => InnerStreamFactory?.Invoke() ?? new MemoryReleaseStream(BufferSize);
         /// <summary>
         /// ストリームからリーダーを取得。
-        /// <para><see cref="Encoding"/>, <see cref="BufferSize"/>が使用される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="Encoding"/>, <see cref="BufferSize"/>が使用される。</para>
+        /// </remarks>
         /// <param name="stream"></param>
         /// <returns></returns>
         protected TextReader GetReader(Stream stream) => new StreamReader(stream, Encoding, true, BufferSize, true);
         /// <summary>
         /// ストリームからライターを取得。
-        /// <para><see cref="Encoding"/>, <see cref="BufferSize"/>が使用される。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="Encoding"/>, <see cref="BufferSize"/>が使用される。</para>
+        /// </remarks>
         /// <param name="stream"></param>
         /// <returns></returns>
         protected TextWriter GetWriter(Stream stream) => new StreamWriter(stream, Encoding, BufferSize, true);

@@ -68,8 +68,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     /// <summary>
     /// ダイアログで使用するフィルタのアイテム。
-    /// <para>値を保持する。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>値を保持する。</para>
+    /// </remarks>
     public record DialogFilterItem<TValue>: DialogFilterItem
     {
         public DialogFilterItem(TValue value, string display, string defaultExtension, IEnumerable<string> wildcard)

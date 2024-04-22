@@ -102,8 +102,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         /// <summary>
         /// View と Model の間に真っ当な ViewModel が噛んでいる関係を生成。
-        /// <para>Pe 純正の子たち。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>Pe 純正の子たち。</para>
+        /// </remarks>
         /// <param name="windowKind"></param>
         /// <param name="model"></param>
         /// <param name="window"></param>
@@ -117,8 +119,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         /// <summary>
         /// View と Model のとは関係のない ViewModel が噛んでいる関係を生成。
-        /// <para>プラグイン系の妾の子たち。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>プラグイン系の妾の子たち。</para>
+        /// </remarks>
         /// <param name="windowKind"></param>
         /// <param name="model"></param>
         /// <param name="viewModel"></param>

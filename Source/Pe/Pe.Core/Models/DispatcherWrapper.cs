@@ -9,8 +9,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
     /// <see cref="Dispatcher"/>の使用をラップ。
-    /// <para><see cref="Dispatcher"/>自体は大公開しているがなんかそれっぽく楽に使いたい。</para>
     /// </summary>
+    /// <remarks>
+    /// <para><see cref="Dispatcher"/>自体は大公開しているがなんかそれっぽく楽に使いたい。</para>
+    /// </remarks>
     public class DispatcherWrapper: IDispatcherWrapper
     {
         #region define

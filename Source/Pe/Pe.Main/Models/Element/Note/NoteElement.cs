@@ -451,8 +451,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         /// <summary>
         /// 座標・サイズの変更。
-        /// <para>各種算出済みの値。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>各種算出済みの値。</para>
+        /// </remarks>
         /// <param name="location"></param>
         public void ChangeViewAreaDelaySave(ViewAreaChangeTarget viewAreaChangeTargets, Point location, Size size)
         {
@@ -533,8 +535,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         /// <summary>
         /// 単純にコンテンツ種別変更が可能であるかをチェック。
-        /// <para>ほぼ空っぽ状態じゃないと無理。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>ほぼ空っぽ状態じゃないと無理。</para>
+        /// </remarks>
         /// <param name="targetContentKind"></param>
         /// <returns></returns>
         public bool CanChangeContentKind(NoteContentKind targetContentKind)
@@ -881,8 +885,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         /// <summary>
         /// ノートに添付したファイルの削除。
-        /// <para>物理削除はされない。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>物理削除はされない。</para>
+        /// </remarks>
         /// <param name="noteFileId">ノートファイルID。</param>
         /// <returns>削除成功状態。</returns>
         public bool UnlinkFile(NoteFileId noteFileId)

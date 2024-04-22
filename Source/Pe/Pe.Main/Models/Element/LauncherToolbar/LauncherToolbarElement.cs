@@ -101,15 +101,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         /// <summary>
         /// アイコンの余白。
-        /// <para>CSS の margin と同じ考え方。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>CSS の margin と同じ考え方。</para>
+        /// </remarks>
         [PixelKind(Px.Logical)]
         public Thickness IconMargin { get; private set; }
 
         /// <summary>
         /// ボタンの詰め領域。
-        /// <para>CSS の padding と同じ考え方。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>CSS の padding と同じ考え方。</para>
+        /// </remarks>
         [PixelKind(Px.Logical)]
         public Thickness ButtonPadding { get; private set; }
 
@@ -663,8 +667,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         /// <summary>
         /// 表示中のサイズ。
-        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="AppDesktopToolbarPosition"/>の各辺に対応</para>
+        /// </remarks>
         [PixelKind(Px.Logical)]
         public Size DisplaySize { get; set; }
 

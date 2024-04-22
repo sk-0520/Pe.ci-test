@@ -146,8 +146,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         /// <summary>
         /// アーカイブファイルからプラグイン名を取得。
-        /// <para>性善説を信じたファイル名判定。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>性善説を信じたファイル名判定。</para>
+        /// </remarks>
         /// <param name="archiveFile"></param>
         /// <returns></returns>
         /// <exception cref="PluginArchiveNameException" />

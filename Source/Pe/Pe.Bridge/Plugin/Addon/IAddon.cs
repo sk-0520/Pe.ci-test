@@ -7,18 +7,24 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     {
         /// <summary>
         /// ランチャーアイテムとして処理可能アドオン。
-        /// <para>TODO: 現状の実装だとむずかすぃ。。。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>TODO: 現状の実装だとむずかすぃ。。。</para>
+        /// </remarks>
         LauncherItem,
         /// <summary>
         /// コマンド入力として処理可能アドオン。
-        /// <para><see cref="LauncherItem"/>では登録内容がコマンドに表示される可能性があるが、こちらは完全に独立した何か。</para>
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="LauncherItem"/>では登録内容がコマンドに表示される可能性があるが、こちらは完全に独立した何か。</para>
+        /// </remarks>
         CommandFinder,
         /// <summary>
         /// ウィジェットとして処理可能アドオン。
-        /// <para>1 プラグインにつき、 1 ウィンドウを想定。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>1 プラグインにつき、 1 ウィンドウを想定。</para>
+        /// </remarks>
         Widget,
         /// <summary>
         /// 後ろでなんかしてるやつ。
@@ -35,8 +41,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// 対象のアドオン種別がサポートされているか。
-        /// <para>このプロパティ以下は<see cref="IPlugin.IsInitialized"/>の状態、<see cref="IPlugin.IsLoaded(PluginKind)"/>にかかわらず読み込み可能であること。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>このプロパティ以下は<see cref="IPlugin.IsInitialized"/>の状態、<see cref="IPlugin.IsLoaded(PluginKind)"/>にかかわらず読み込み可能であること。</para>
+        /// </remarks>
         /// <param name="addonKind"></param>
         /// <returns></returns>
         bool IsSupported(AddonKind addonKind);
@@ -50,24 +58,30 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// コマンド型アドオンの生成。
-        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </remarks>
         /// <param name="parameter"></param>
         /// <returns></returns>
         ICommandFinder BuildCommandFinder(IAddonParameter parameter);
 
         /// <summary>
         /// ウィジェットアドオンの生成。
-        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </remarks>
         /// <param name="parameter"></param>
         /// <returns></returns>
         IWidget BuildWidget(IAddonParameter parameter);
 
         /// <summary>
         /// バックグラウンドアドオンの生成。
-        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </remarks>
         /// <param name="parameter"></param>
         /// <returns></returns>
         IBackground BuildBackground(IAddonParameter parameter);

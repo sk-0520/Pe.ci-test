@@ -8,8 +8,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 {
     /// <summary>
     /// <see cref="HttpClient"/>を意識せずに(寿命とか) <see cref="IDisposable.Dispose"/> できる子。
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface IHttpUserAgent: IDisposable
     {
         #region function
@@ -131,8 +133,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
     /// <summary>
     /// <see cref="IHttpUserAgent"/>を生成する際に使用する名前の生成器。
-    /// <para>Pe から提供される。</para>
     /// </summary>
+    /// <remarks>
+    /// <para>Pe から提供される。</para>
+    /// </remarks>
     public interface IHttpUserAgentName
     {
         #region property
@@ -180,8 +184,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         /// <summary>
         /// 標準の<see cref="IHttpUserAgent"/>を生成。
-        /// <para>基本的にこれを使用すればよい。</para>
         /// </summary>
+        /// <remarks>
+        /// <para>基本的にこれを使用すればよい。</para>
+        /// </remarks>
         /// <returns></returns>
         public IHttpUserAgent CreateUserAgent();
         /// <summary>
