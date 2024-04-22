@@ -87,6 +87,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 throw new ArgumentOutOfRangeException($"{nameof(ctrl.Maximum)} < {nameof(minimum)}");
             }
             ctrl.Minimum = minimum;
+            ctrl.PART_DOWN_BUTTON.IsEnabled = ctrl.Minimum < ctrl.Value;
         }
 
         #endregion
@@ -114,6 +115,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 throw new ArgumentOutOfRangeException($"{nameof(maximum)} < {nameof(ctrl.Minimum)}");
             }
             ctrl.Maximum = maximum;
+            ctrl.PART_UP_BUTTON.IsEnabled = ctrl.Value < ctrl.Maximum;
         }
 
         #endregion
