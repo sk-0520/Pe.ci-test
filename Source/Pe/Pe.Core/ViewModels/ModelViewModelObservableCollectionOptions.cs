@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -14,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     /// <typeparam name="TModel"></typeparam>
     /// <typeparam name="TViewModel"></typeparam>
     public class ModelViewModelObservableCollectionOptions<TModel, TViewModel>
-        where TViewModel : ViewModelBase
+        where TViewModel : INotifyPropertyChanged
     {
         #region define
 
