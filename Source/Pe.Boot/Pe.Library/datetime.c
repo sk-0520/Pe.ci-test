@@ -5,7 +5,7 @@ TIME_ZONE get_current_time_zone()
     TIME_ZONE time_zone = {
         .library = {
             .enabled = GetTimeZoneInformation(&time_zone.tzi) != TIME_ZONE_ID_UNKNOWN,
-        },
+    },
     };
 
     return time_zone;
@@ -13,7 +13,7 @@ TIME_ZONE get_current_time_zone()
 
 DATETIME get_current_datetime()
 {
-    DATETIME datetime;
+    DATETIME datetime = { 0 };
     GetSystemTimeAsFileTime(&datetime.filetime);
     return datetime;
 }

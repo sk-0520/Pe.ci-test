@@ -142,8 +142,7 @@ bool set_position_file_resource(const FILE_RESOURCE* file_resource, const DATA_I
 
 DATA_INT64 get_position_file_resource(const FILE_RESOURCE* file_resource)
 {
-    DATA_INT64 result;
-    result.large.HighPart = 0;
+    DATA_INT64 result = { 0 };
 
     result.large.LowPart = SetFilePointer(file_resource->handle, 0, &result.large.HighPart, FILE_CURRENT);
 
@@ -157,7 +156,8 @@ bool set_current_position_file_resource(const FILE_RESOURCE* file_resource)
 
 DATA_INT64 get_size_file_resource(const FILE_RESOURCE* file_resource)
 {
-    DATA_INT64 data;
+    DATA_INT64 data = { 0 };
+
     if (!GetFileSizeEx(file_resource->handle, &data.large)) {
         data.plain = -1;
     }
