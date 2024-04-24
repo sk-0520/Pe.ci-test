@@ -27,13 +27,13 @@ namespace PeLibraryTest
             LINKED_LIST linked_list = new_linked_list(sizeof(int), NULL, compare_linked_list_value_null, release_linked_list_value_null, DEFAULT_MEMORY_ARENA, DEFAULT_MEMORY_ARENA);
 
             int input_1 = 1;
-            int acutal_1 = *(int*)add_linked_list(&linked_list, &input_1);
-            Assert::AreEqual(input_1, acutal_1);
+            int actual_1 = *(int*)add_linked_list(&linked_list, &input_1);
+            Assert::AreEqual(input_1, actual_1);
             Assert::AreEqual((size_t)1, linked_list.length);
 
             int input_2 = 2;
-            int acutal_2 = *(int*)add_linked_list(&linked_list, &input_2);
-            Assert::AreEqual(input_2, acutal_2);
+            int actual_2 = *(int*)add_linked_list(&linked_list, &input_2);
+            Assert::AreEqual(input_2, actual_2);
             Assert::AreEqual((size_t)2, linked_list.length);
 
             release_linked_list(&linked_list, true);
@@ -258,9 +258,9 @@ namespace PeLibraryTest
             Assert::AreEqual(SIZEOF_ARRAY(inputs), object_list.length);
 
             for (size_t i = 0; i < object_list.length; i++) {
-                OBJECT_RESULT_VALUE acutal = get_object_list(&object_list, i);;
-                Assert::IsTrue(acutal.exists);
-                Assert::AreEqual(inputs[i], *(int*)acutal.value);
+                OBJECT_RESULT_VALUE actual = get_object_list(&object_list, i);;
+                Assert::IsTrue(actual.exists);
+                Assert::AreEqual(inputs[i], *(int*)actual.value);
             }
             release_object_list(&object_list, true);
 
