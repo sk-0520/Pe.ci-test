@@ -31,7 +31,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
         #region property
 
         private PopupAdjuster PopupAdjuster { get; }
-        private CommandStore CommandStore { get; } = new CommandStore();
         [Inject]
         private ILogger? Logger { get; set; }
 
@@ -39,17 +38,19 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
 
         #region command
 
-        public ICommand ScrollSelectedItemCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        private ICommand? _ScrollSelectedItemCommand;
+        public ICommand ScrollSelectedItemCommand => this._ScrollSelectedItemCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 this.listItems.ScrollIntoView(this.listItems.SelectedItem);
             }
-        ));
+        );
 
-        public ICommand FocusEndCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
+        private ICommand? _FocusEndCommand;
+        public ICommand FocusEndCommand => this._FocusEndCommand ??= new DelegateCommand(
             () => {
                 this.inputCommand.Select(this.inputCommand.Text.Length, 0);
             }
-        ));
+        );
 
         #endregion
 

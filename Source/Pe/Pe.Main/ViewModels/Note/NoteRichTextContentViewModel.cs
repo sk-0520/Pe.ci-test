@@ -106,66 +106,93 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region command
 
-        public ICommand ApplySelectionForegroundColorCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ApplySelectionForegroundColorCommand;
+        public ICommand ApplySelectionForegroundColorCommand => this._ApplySelectionForegroundColorCommand ??= new DelegateCommand(
             () => {
                 ApplySelectionForegroundColor();
             }
-        ));
-        public ICommand ApplySelectionBackgroundColorCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _ApplySelectionBackgroundColorCommand;
+        public ICommand ApplySelectionBackgroundColorCommand => this._ApplySelectionBackgroundColorCommand ??= new DelegateCommand(
             () => {
                 ApplySelectionBackgroundColor();
             }
-        ));
+        );
 
-        public ICommand ToggleSelectionUnderlineCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleSelectionUnderlineCommand;
+        public ICommand ToggleSelectionUnderlineCommand => this._ToggleSelectionUnderlineCommand ??= new DelegateCommand(
             () => {
                 ToggleSelectionDecoration(TextDecorationLocation.Underline);
             }
-        ));
+        );
 
-        public ICommand ToggleSelectionStrikeThroughCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleSelectionStrikeThroughCommand;
+        public ICommand ToggleSelectionStrikeThroughCommand => this._ToggleSelectionStrikeThroughCommand ??= new DelegateCommand(
             () => {
                 ToggleSelectionDecoration(TextDecorationLocation.Strikethrough);
             }
-        ));
+        );
 
-        public ICommand ToggleSelectionIncreaseFontSizeCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleSelectionIncreaseFontSizeCommand;
+        public ICommand ToggleSelectionIncreaseFontSizeCommand => this._ToggleSelectionIncreaseFontSizeCommand ??= new DelegateCommand(
             () => EditingCommands.IncreaseFontSize.Execute(null, ControlElement)
-        ));
-        public ICommand ToggleSelectionDecreaseFontSizeCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => EditingCommands.DecreaseFontSize.Execute(null, ControlElement)
-        ));
+        );
 
-        public ICommand ToggleSelectionSubscriptCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleSelectionDecreaseFontSizeCommand;
+        public ICommand ToggleSelectionDecreaseFontSizeCommand => this._ToggleSelectionDecreaseFontSizeCommand ??= new DelegateCommand(
+            () => EditingCommands.DecreaseFontSize.Execute(null, ControlElement)
+        );
+
+        private ICommand? _ToggleSelectionSubscriptCommand;
+        public ICommand ToggleSelectionSubscriptCommand => this._ToggleSelectionSubscriptCommand ??= new DelegateCommand(
             () => EditingCommands.ToggleSubscript.Execute(null, ControlElement)
-        ));
-        public ICommand ToggleSelectionSuperscriptCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _ToggleSelectionSuperscriptCommand;
+        public ICommand ToggleSelectionSuperscriptCommand => this._ToggleSelectionSuperscriptCommand ??= new DelegateCommand(
             () => EditingCommands.ToggleSuperscript.Execute(null, ControlElement)
-        ));
-        public ICommand ToggleSelectionBoldCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _ToggleSelectionBoldCommand;
+        public ICommand ToggleSelectionBoldCommand => this._ToggleSelectionBoldCommand ??= new DelegateCommand(
             () => EditingCommands.ToggleBold.Execute(null, ControlElement)
-        ));
-        public ICommand ToggleSelectionItalicCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _ToggleSelectionItalicCommand;
+        public ICommand ToggleSelectionItalicCommand => this._ToggleSelectionItalicCommand ??= new DelegateCommand(
             () => EditingCommands.ToggleItalic.Execute(null, ControlElement)
-        ));
-        public ICommand ToggleNumberingCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _ToggleNumberingCommand;
+        public ICommand ToggleNumberingCommand => this._ToggleNumberingCommand ??= new DelegateCommand(
             () => EditingCommands.ToggleNumbering.Execute(null, ControlElement)
-        ));
-        public ICommand ToggleBulletsCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _ToggleBulletsCommand;
+        public ICommand ToggleBulletsCommand => this._ToggleBulletsCommand ??= new DelegateCommand(
             () => EditingCommands.ToggleBullets.Execute(null, ControlElement)
-        ));
-        public ICommand AlignLeftCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _AlignLeftCommand;
+        public ICommand AlignLeftCommand => this._AlignLeftCommand ??= new DelegateCommand(
             () => EditingCommands.AlignLeft.Execute(null, ControlElement)
-        ));
-        public ICommand AlignCenterCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _AlignCenterCommand;
+        public ICommand AlignCenterCommand => this._AlignCenterCommand ??= new DelegateCommand(
             () => EditingCommands.AlignCenter.Execute(null, ControlElement)
-        ));
-        public ICommand AlignRightCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _AlignRightCommand;
+        public ICommand AlignRightCommand => this._AlignRightCommand ??= new DelegateCommand(
             () => EditingCommands.AlignRight.Execute(null, ControlElement)
-        ));
-        public ICommand AlignJustifyCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _AlignJustifyCommand;
+        public ICommand AlignJustifyCommand => this._AlignJustifyCommand ??= new DelegateCommand(
             () => EditingCommands.AlignJustify.Execute(null, ControlElement)
-        ));
+        );
 
         #endregion
 

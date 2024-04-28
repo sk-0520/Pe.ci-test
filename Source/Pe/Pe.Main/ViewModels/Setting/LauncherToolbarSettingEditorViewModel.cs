@@ -195,13 +195,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand SelectDefaultLauncherGroupCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherGroupSettingEditorViewModel?>(
+        private ICommand? _SelectDefaultLauncherGroupCommand;
+        public ICommand SelectDefaultLauncherGroupCommand => this._SelectDefaultLauncherGroupCommand ??= new DelegateCommand<LauncherGroupSettingEditorViewModel?>(
             o => {
                 LauncherGroupId = o?.LauncherGroupId ?? LauncherGroupId.Empty;
                 ShowGroupPopupMenu = false;
                 Refresh();
             }
-        ));
+        );
 
         #endregion
 

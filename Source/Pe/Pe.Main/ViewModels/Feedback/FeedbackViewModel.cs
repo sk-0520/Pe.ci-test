@@ -63,13 +63,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
 
         #region command
 
-        public ICommand ShowSourceUriCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ShowSourceUriCommand;
+        public ICommand ShowSourceUriCommand => this._ShowSourceUriCommand ??= new DelegateCommand(
              () => {
                  Model.ShowSourceUri();
              }
-        ));
+        );
 
-        public ICommand SetTemplateCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _SetTemplateCommand;
+        public ICommand SetTemplateCommand => this._SetTemplateCommand ??= new DelegateCommand(
             () => {
                 var text = SelectedFeedbackKind switch {
                     FeedbackKind.Bug => Properties.Resources.String_Feedback_Comment_Kind_Bug,
@@ -79,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
                 };
                 ContentDocument.Text = text;
             }
-        ));
+        );
 
         //public ICommand SendCommand => GetOrCreateCommand(() => new DelegateCommand<IWebBrowser>(
         //    async (webView) => {
@@ -94,7 +96,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
         //    }
         //));
 
-        public ICommand SendCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _SendCommand;
+        public ICommand SendCommand => this._SendCommand ??= new DelegateCommand(
             async () => {
                 if(Validate()) {
                     var data = new FeedbackInputData() {
@@ -106,13 +109,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
                     await Model.SendAsync(data);
                 }
             }
-        ));
+        );
 
-        public ICommand CorrectCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CorrectCommand;
+        public ICommand CorrectCommand => this._CorrectCommand ??= new DelegateCommand(
              () => {
                  Model.Cancel();
              }
-        ));
+        );
 
         #endregion
 

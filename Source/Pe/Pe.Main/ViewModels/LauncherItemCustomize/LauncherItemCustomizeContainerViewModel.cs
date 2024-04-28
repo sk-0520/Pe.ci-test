@@ -47,22 +47,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region command
 
-        public ICommand SubmitCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _SubmitCommand;
+        public ICommand SubmitCommand => this._SubmitCommand ??= new DelegateCommand(
             () => {
-
                 Editor.Flush();
                 if(Validate()) {
                     Model.Save();
                     CloseRequest.Send();
                 }
             }
-        ));
+        );
 
-        public ICommand CancelCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CancelCommand;
+        public ICommand CancelCommand => this._CancelCommand ??= new DelegateCommand(
             () => {
                 CloseRequest.Send();
             }
-        ));
+        );
 
         #endregion
 

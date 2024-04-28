@@ -22,7 +22,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
 
         #region property
 
-        private CommandStore CommandStore { get; } = new CommandStore();
         [Inject]
         private ILogger? Logger { get; set; }
 

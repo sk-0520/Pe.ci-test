@@ -122,13 +122,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand ToggleUninstallMarkCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleUninstallMarkCommand;
+        public ICommand ToggleUninstallMarkCommand => this._ToggleUninstallMarkCommand ??= new DelegateCommand(
             () => {
                 Model.ToggleUninstallMark();
                 RaisePropertyChanged(nameof(MarkedUninstall));
                 RaisePropertyChanged(nameof(IsEnabledPlugin));
             }
-        ));
+        );
 
         #endregion
 

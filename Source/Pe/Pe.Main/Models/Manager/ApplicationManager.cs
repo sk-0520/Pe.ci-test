@@ -1375,7 +1375,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             await ExecuteElementsAsync();
 
 #if DEBUG
-            DebugExecuteAfter();
+            await DebugExecuteAfterAsync();
 #endif
         }
 

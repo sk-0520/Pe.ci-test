@@ -96,7 +96,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand SubmitCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _SubmitCommand;
+        public ICommand SubmitCommand => this._SubmitCommand ??= new DelegateCommand(
             () => {
                 if(Validate()) {
                     foreach(var editor in EditorItems) {
@@ -106,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     CloseRequest.Send();
                 }
             }
-        ));
+        );
 
         #endregion
 

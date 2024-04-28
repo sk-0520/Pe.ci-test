@@ -18,29 +18,31 @@ namespace ContentTypeTextNet.Pe.Main.Views.About
 
         #region property
 
-        CommandStore CommandStore { get; } = new CommandStore();
         DialogRequestReceiver DialogRequestReceiver { get; }
 
         #endregion
 
         #region command
 
-        public ICommand CloseCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
+        private ICommand? _CloseCommand;
+        public ICommand CloseCommand => this._CloseCommand ??= new DelegateCommand(
             () => Close()
-        ));
+        );
 
-        public ICommand FileSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        private ICommand? _FileSelectCommand;
+        public ICommand FileSelectCommand => this._FileSelectCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 DialogRequestReceiver.ReceiveFileSystemSelectDialogRequest(o);
             }
-        ));
+        );
 
-        public ICommand OpenCommonMessageDialogCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        private ICommand? _OpenCommonMessageDialogCommand;
+        public ICommand OpenCommonMessageDialogCommand => this._OpenCommonMessageDialogCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 var parameter = (CommonMessageDialogRequestParameter)o.Parameter;
                 MessageBox.Show(Window.GetWindow(this), parameter.Message, parameter.Caption, parameter.Button, parameter.Icon, parameter.DefaultResult, parameter.Options);
             }
-        ));
+        );
 
         #endregion
     }

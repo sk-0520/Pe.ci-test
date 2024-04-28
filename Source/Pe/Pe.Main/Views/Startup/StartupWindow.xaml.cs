@@ -22,14 +22,15 @@ namespace ContentTypeTextNet.Pe.Main.Views.Startup
 
         [Inject]
         private ILogger? Logger { get; set; }
-        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
         #region command
-        public ICommand CloseCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
+
+        private ICommand? _CloseCommand;
+        public ICommand CloseCommand => this._CloseCommand ??= new DelegateCommand(
             () => Close()
-        ));
+        );
 
         #endregion
 

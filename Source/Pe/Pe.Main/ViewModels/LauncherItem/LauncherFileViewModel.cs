@@ -47,68 +47,79 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region command
 
-        public ICommand ExecuteExtendsCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ExecuteExtendsCommand;
+        public ICommand ExecuteExtendsCommand => this._ExecuteExtendsCommand ??= new DelegateCommand(
             () => {
                 Model.OpenExtendsExecuteViewAsync(Screen);
             },
             () => !NowLoading && CanExecutePath
-        ));
+        );
 
 
-        public ICommand ExecuteSimpleCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ExecuteSimpleCommand;
+        public ICommand ExecuteSimpleCommand => this._ExecuteSimpleCommand ??= new DelegateCommand(
             () => {
                 ExecuteMainAsync().ConfigureAwait(false);
             },
             () => !NowLoading && CanExecutePath
-        ));
+        );
 
-        public ICommand OpenParentDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _OpenParentDirectoryCommand;
+        public ICommand OpenParentDirectoryCommand => this._OpenParentDirectoryCommand ??= new DelegateCommand(
             () => {
                 Model.OpenParentDirectory();
             },
             () => !NowLoading && CanOpenParentDirectory
-        ));
+        );
 
-        public ICommand CopyOptionCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CopyOptionCommand;
+        public ICommand CopyOptionCommand => this._CopyOptionCommand ??= new DelegateCommand(
             () => {
                 Model.CopyOption();
             },
             () => !NowLoading && CanCopyOption
-        ));
-        public ICommand CopyExecutePathCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _CopyExecutePathCommand;
+        public ICommand CopyExecutePathCommand => this._CopyExecutePathCommand ??= new DelegateCommand(
               () => {
                   Model.CopyExecutePath();
               },
               () => !NowLoading && CanCopyPath
-          ));
+          );
 
-        public ICommand CopyParentDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CopyParentDirectoryCommand;
+        public ICommand CopyParentDirectoryCommand => this._CopyParentDirectoryCommand ??= new DelegateCommand(
              () => {
                  Model.CopyParentDirectory();
              },
              () => !NowLoading && CanCopyParentDirectory
-         ));
+         );
 
-
-        public ICommand OpenWorkingDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _OpenWorkingDirectoryCommand;
+        public ICommand OpenWorkingDirectoryCommand => this._OpenWorkingDirectoryCommand ??= new DelegateCommand(
             () => {
                 Model.OpenWorkingDirectory();
             },
             () => !NowLoading && CanOpenWorkingDirectory
-        ));
-        public ICommand CopyWorkingDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _CopyWorkingDirectoryCommand;
+        public ICommand CopyWorkingDirectoryCommand => this._CopyWorkingDirectoryCommand ??= new DelegateCommand(
             () => {
                 Model.CopyWorkingDirectory();
             },
             () => !NowLoading && CanCopyWorkingDirectory
-        ));
+        );
 
-        public ICommand ShowPropertyCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ShowPropertyCommand;
+        public ICommand ShowPropertyCommand => this._ShowPropertyCommand ??= new DelegateCommand(
              () => {
                  Model.ShowProperty();
              },
              () => !NowLoading && CanExecutePath
-         ));
+         );
+
         #endregion
 
         #region function

@@ -53,7 +53,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 
         #region command
 
-        public ICommand OpenUriCommand => GetOrCreateCommand(() => new DelegateCommand<string>(
+        private ICommand? _OpenUriCommand;
+        public ICommand OpenUriCommand => this._OpenUriCommand ??= new DelegateCommand<string>(
            (o) => {
                try {
                    var uri = new Uri(o);
@@ -62,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
                    Logger.LogError(ex, ex.Message);
                }
            }
-        ));
+        );
 
 
         #endregion
@@ -80,21 +81,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 
         #region IDialogCommand
 
-        public ICommand AffirmativeCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _AffirmativeCommand;
+        public ICommand AffirmativeCommand => this._AffirmativeCommand ??= new DelegateCommand(
             () => {
                 ThrowIfDisposed();
 
                 Model.Accepted = true;
                 CloseRequest.Send();
             }
-        ));
-        public ICommand NegativeCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _NegativeCommand;
+        public ICommand NegativeCommand => this._NegativeCommand ??= new DelegateCommand(
             () => {
                 ThrowIfDisposed();
 
                 CloseRequest.Send();
             }
-        ));
+        );
 
         #endregion
 

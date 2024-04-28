@@ -57,7 +57,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region command
 
-        public ICommand LoadedCommand => GetOrCreateCommand(() => new DelegateCommand<FrameworkElement>(
+        private ICommand? _LoadedCommand;
+        public ICommand LoadedCommand => this._LoadedCommand ??= new DelegateCommand<FrameworkElement>(
             async o => {
                 if(CanVisible) {
                     return;
@@ -75,14 +76,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     throw; // 投げなくてもいいかも
                 }
             }
-        ));
+        );
 
-        public ICommand CopyCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CopyCommand;
+        public ICommand CopyCommand => this._CopyCommand ??= new DelegateCommand(
             () => {
                 var data = GetClipboardContentData();
                 ClipboardManager.CopyData(data, ClipboardNotify.None);
             }
-        ));
+        );
 
         #endregion
 

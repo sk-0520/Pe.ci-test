@@ -26,20 +26,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Startup
 
         #region command
 
-        ICommand? _closeCommand;
-        public ICommand CloseCommand
-        {
-            get
-            {
-                if(this._closeCommand == null) {
-                    this._closeCommand = new DelegateCommand<RequestEventArgs>(
-                        o => Close()
-                    );
-                }
-
-                return this._closeCommand;
-            }
-        }
+        private ICommand? _CloseCommand;
+        public ICommand CloseCommand => this._CloseCommand ??= new DelegateCommand<RequestEventArgs>(
+            o => Close()
+        );
 
         #endregion
     }

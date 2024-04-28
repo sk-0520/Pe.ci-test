@@ -109,30 +109,34 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region command
 
-        public ICommand LoadCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _LoadCommand;
+        public ICommand LoadCommand => this._LoadCommand ??= new DelegateCommand(
             () => {
                 LoadAsync();
             }
-        ));
+        );
 
-        public ICommand UnloadCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _UnloadCommand;
+        public ICommand UnloadCommand => this._UnloadCommand ??= new DelegateCommand(
             () => {
                 UnloadAsync();
             }
-        ));
+        );
 
-        public ICommand ExecuteMainCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ExecuteMainCommand;
+        public ICommand ExecuteMainCommand => this._ExecuteMainCommand ??= new DelegateCommand(
             () => {
                 ExecuteMainAsync();
             },
             () => CanExecuteMain
-        ));
+        );
 
-        public ICommand CustomizeCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CustomizeCommand;
+        public ICommand CustomizeCommand => this._CustomizeCommand ??= new DelegateCommand(
             async () => {
                 await Model.OpenCustomizeViewAsync(Screen);
             }
-        ));
+        );
 
         #endregion
 

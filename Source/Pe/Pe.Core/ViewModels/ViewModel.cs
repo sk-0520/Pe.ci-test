@@ -75,13 +75,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// ロガー。
         /// </summary>
         protected ILogger Logger { get; }
-        //IDictionary<string, ICommand> CommandCache { get; } = new Dictionary<string, ICommand>();
-        /// <summary>
-        /// コマンド一覧。
-        /// </summary>
-        protected IEnumerable<ICommand> Commands => CommandStore.Commands;
-        /// <inheritdoc cref="Models.CommandStore"/>
-        private CommandStore CommandStore { get; } = new CommandStore();
 
         /// <summary>
         /// プロパティアクセス処理キャッシュ。
@@ -148,29 +141,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// コマンド生成。
-        /// </summary>
-        /// <remarks>
-        /// <para>メモリ状態は知らんけどコマンドプロパティ記述位置でインスタンスを触りながら処理書きたいのよ。</para>
-        /// </remarks>
-        /// <typeparam name="TCommand"></typeparam>
-        /// <param name="creator"></param>
-        /// <param name="callerMemberName"><see cref="CallerMemberNameAttribute"/></param>
-        /// <param name="callerFilePath"></param>
-        /// <param name="callerLineNumber"><see cref="CallerLineNumberAttribute"/></param>
-        /// <returns></returns>
-        protected TCommand GetOrCreateCommand<TCommand>(Func<TCommand> creator, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
-            where TCommand : ICommand
-        {
-            if(IsDisposed) {
-                // なーんかワケわからんことになるので破棄後は null を返すようにしておく
-                return default!;
-            }
-
-            return CommandStore.GetOrCreate(creator, callerMemberName, callerFilePath, callerLineNumber);
         }
 
         /// <summary>
@@ -441,10 +411,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             ErrorsContainer.ClearErrors();
             PropertyChangedEventArgsCache.Clear();
-
-            if(disposing) {
-                CommandStore.Dispose();
-            }
 
             if(disposing) {
 #pragma warning disable S3971 // "GC.SuppressFinalize" should not be called

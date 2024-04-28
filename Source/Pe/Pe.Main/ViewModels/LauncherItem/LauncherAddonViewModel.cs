@@ -27,12 +27,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region command
 
-        public ICommand ExecuteSimpleCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ExecuteSimpleCommand;
+        public ICommand ExecuteSimpleCommand => this._ExecuteSimpleCommand ??= new DelegateCommand(
             () => {
                 ExecuteMainAsync().ConfigureAwait(false);
             },
             () => !NowLoading
-        ));
+        );
 
         #endregion
 

@@ -231,21 +231,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand AddMappingCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _AddMappingCommand;
+        public ICommand AddMappingCommand => this._AddMappingCommand ??= new DelegateCommand(
             () => {
                 Model.AddMapping();
             }
-        ));
+        );
 
-        public ICommand RemoveMappingCommand => GetOrCreateCommand(() => new DelegateCommand<KeyMappingEditorViewModel>(
+        private ICommand? _RemoveMappingCommand;
+        public ICommand RemoveMappingCommand => this._RemoveMappingCommand ??= new DelegateCommand<KeyMappingEditorViewModel>(
             o => {
                 var index = MappingCollection.ViewModels.IndexOf(o);
                 Model.RemoveMappingAt(index);
             },
             o => 1 < MappingCollection.ViewModels.Count
-        ).ObservesProperty(() => MappingCollection.ViewModels.Count));
+        ).ObservesProperty(() => MappingCollection.ViewModels.Count);
 
-        public ICommand UpMappingCommand => GetOrCreateCommand(() => new DelegateCommand<KeyMappingEditorViewModel>(
+        private ICommand? _UpMappingCommand;
+        public ICommand UpMappingCommand => this._UpMappingCommand ??= new DelegateCommand<KeyMappingEditorViewModel>(
              o => {
                  var index = MappingCollection.ViewModels.IndexOf(o);
                  if(index == 0) {
@@ -254,8 +257,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                  var next = index - 1;
                  Model.MoveMapping(index, next);
              }
-        ));
-        public ICommand DownMappingCommand => GetOrCreateCommand(() => new DelegateCommand<KeyMappingEditorViewModel>(
+        );
+
+        private ICommand? _DownMappingCommand;
+        public ICommand DownMappingCommand => this._DownMappingCommand ??= new DelegateCommand<KeyMappingEditorViewModel>(
              o => {
                  var index = MappingCollection.ViewModels.IndexOf(o);
                  if(index == MappingCollection.ViewModels.Count - 1) {
@@ -264,7 +269,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                  var next = index + 1;
                  Model.MoveMapping(index, next);
              }
-        ));
+        );
 
         #endregion
     }

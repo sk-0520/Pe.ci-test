@@ -79,7 +79,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public bool MenuIsEnabled { get; } = true;
         public bool MenuIsChecked => Model.IsVisible;
 
-        public ICommand MenuCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _MenuCommand;
+        public ICommand MenuCommand => this._MenuCommand ??= new DelegateCommand(
              () => {
                  var isVisible = Model.IsVisible;
                  Model.ChangeVisibleDelaySave(!isVisible);
@@ -92,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                      target.Window.Close();
                  }
              }
-         ));
+         );
 
         #endregion
 

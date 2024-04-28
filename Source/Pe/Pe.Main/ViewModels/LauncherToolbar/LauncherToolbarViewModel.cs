@@ -241,7 +241,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #region command
 
-        public ICommand ChangeToolbarPositionCommand => GetOrCreateCommand(() => new DelegateCommand<AppDesktopToolbarPosition?>(
+        private ICommand? _ChangeToolbarPositionCommand;
+        public ICommand ChangeToolbarPositionCommand => this._ChangeToolbarPositionCommand ??= new DelegateCommand<AppDesktopToolbarPosition?>(
             o => {
                 if(o.HasValue) {
                     Model.ChangeToolbarPositionDelaySave(o.Value);
@@ -251,21 +252,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 }
             },
             o => o.HasValue && o.Value != ToolbarPosition
-        ));
+        );
 
-        public ICommand ToggleTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleTopmostCommand;
+        public ICommand ToggleTopmostCommand => this._ToggleTopmostCommand ??= new DelegateCommand(
             () => {
                 Model.ChangeTopmostDelaySave(!Model.IsTopmost);
             }
-        ));
+        );
 
-        public ICommand ToggleAutoHideCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleAutoHideCommand;
+        public ICommand ToggleAutoHideCommand => this._ToggleAutoHideCommand ??= new DelegateCommand(
             () => {
                 Model.ChangeAutoHideDelaySave(!Model.IsAutoHide);
             }
-        ));
+        );
 
-        public ICommand CloseCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CloseCommand;
+        public ICommand CloseCommand => this._CloseCommand ??= new DelegateCommand(
              () => {
                  Model.ChangeVisibleDelaySave(false);
 
@@ -273,15 +277,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                  //CloseRequest.Raise(notification);
                  CloseRequest.Send();
              }
-        ));
+        );
 
-        public ICommand ChangeLauncherGroupCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherGroupViewModel>(
+        private ICommand? _ChangeLauncherGroupCommand;
+        public ICommand ChangeLauncherGroupCommand => this._ChangeLauncherGroupCommand ??= new DelegateCommand<LauncherGroupViewModel>(
            o => {
                ChangeLauncherGroup(o);
            }
-       ));
+       );
 
-        public ICommand RemoveCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherDetailViewModelBase>(
+        private ICommand? _RemoveCommand;
+        public ICommand RemoveCommand => this._RemoveCommand ??= new DelegateCommand<LauncherDetailViewModelBase>(
             o => {
                 Debug.Assert(SelectedLauncherGroup != null);
 
@@ -294,15 +300,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
                 Model.RemoveLauncherItem(SelectedLauncherGroup.LauncherGroupId, o.LauncherItemId, targetIndex);
             }
-        ));
+        );
 
-        public ICommand AutoHideToHideCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _AutoHideToHideCommand;
+        public ICommand AutoHideToHideCommand => this._AutoHideToHideCommand ??= new DelegateCommand(
             () => {
                 HideAndShowWaiting();
             }
-        ));
+        );
 
-        public ICommand PreviewMouseDownCommand => GetOrCreateCommand(() => new DelegateCommand<MouseButtonEventArgs>(
+        private ICommand? _PreviewMouseDownCommand;
+        public ICommand PreviewMouseDownCommand => this._PreviewMouseDownCommand ??= new DelegateCommand<MouseButtonEventArgs>(
             o => {
                 if(SelectedLauncherGroup == null) {
                     Logger.LogError("こねぇよ");
@@ -338,9 +346,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                     o.Handled = true;
                 }
             }
-        ));
+        );
 
-        public ICommand AddNewGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _AddNewGroupCommand;
+        public ICommand AddNewGroupCommand => this._AddNewGroupCommand ??= new DelegateCommand(
              () => {
                  var newGroupElement = Model.AddNewGroup(LauncherGroupKind.Normal);
 
@@ -351,7 +360,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
                  ChangeLauncherGroup(newGroupViewModel);
              }
-         ));
+         );
 
         #endregion
 

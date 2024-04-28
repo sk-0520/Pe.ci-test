@@ -25,27 +25,28 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
         #region property
 
         private DialogRequestReceiver DialogRequestReceiver { get; }
-        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
         #region command
 
-
-        public ICommand SelectPluginFileCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        private ICommand? _SelectPluginFileCommand;
+        public ICommand SelectPluginFileCommand => this._SelectPluginFileCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 DialogRequestReceiver.ReceiveFileSystemSelectDialogRequest(o);
             }
-        ));
+        );
 
-        public ICommand ShowMessageCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        private ICommand? _ShowMessageCommand;
+        public ICommand ShowMessageCommand => this._ShowMessageCommand ??= new DelegateCommand<RequestEventArgs>(
              o => {
                  var parameter = (CommonMessageDialogRequestParameter)o.Parameter;
                  var result = MessageBox.Show(UIUtility.GetLogicalClosest<Window>(this)!, parameter.Message, parameter.Caption, parameter.Button, parameter.Icon, parameter.DefaultResult, parameter.Options);
              }
-         ));
+         );
 
-        public ICommand WebInstallCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        private ICommand? _WebInstallCommand;
+        public ICommand WebInstallCommand => this._WebInstallCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 using var parameter = (PluginWebInstallRequestParameter)o.Parameter;
 
@@ -74,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
                 o.Callback(response);
             }
-        ));
+        );
 
         #endregion
 
