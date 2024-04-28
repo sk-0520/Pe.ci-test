@@ -32,10 +32,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             DispatcherWrapper = dispatcherWrapper;
             AllLauncherItemCollection = allLauncherItemCollection;
 
-            LauncherCollection = new ModelViewModelObservableCollectionManager<WrapModel<LauncherItemId>, LauncherItemSettingEditorViewModel>(Model.LauncherItems, new ModelViewModelObservableCollectionOptions<WrapModel<LauncherItemId>, LauncherItemSettingEditorViewModel>() {
+            LauncherCollection = new ModelViewModelObservableCollectionManager<LauncherItemId, LauncherItemSettingEditorViewModel>(Model.LauncherItems, new ModelViewModelObservableCollectionOptions<LauncherItemId, LauncherItemSettingEditorViewModel>() {
                 AutoDisposeViewModel = false, // 共有アイテムを使用しているので破棄させない
                 ToViewModel = (m) => {
-                    var itemVm = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == m.Data);
+                    var itemVm = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == m);
                     return itemVm.Clone();
                 }
             });
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         /// </remarks>
         //public ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherItems { get; }
         [IgnoreValidation]
-        private ModelViewModelObservableCollectionManager<WrapModel<LauncherItemId>, LauncherItemSettingEditorViewModel> LauncherCollection { get; }
+        private ModelViewModelObservableCollectionManager<LauncherItemId, LauncherItemSettingEditorViewModel> LauncherCollection { get; }
         [IgnoreValidation]
         public ReadOnlyObservableCollection<LauncherItemSettingEditorViewModel> LauncherItems { get; }
 

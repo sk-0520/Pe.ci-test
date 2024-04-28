@@ -80,13 +80,12 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <summary>
         /// 既に破棄済みの場合は処理を中断する。
         /// </summary>
-        /// <param name="_callerMemberName"></param>
         /// <exception cref="ObjectDisposedException">破棄済み。</exception>
         /// <seealso cref="IDisposed"/>
-        protected void ThrowIfDisposed([CallerMemberName] string _callerMemberName = "")
+        protected void ThrowIfDisposed()
         {
             if(IsDisposed) {
-                throw new ObjectDisposedException(_callerMemberName);
+                throw new ObjectDisposedException(GetType().FullName);
             }
         }
 
@@ -112,10 +111,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
             OnDisposing();
 
-            if(disposing) {
-                GC.SuppressFinalize(this);
-            }
-
             IsDisposed = true;
         }
 
@@ -125,6 +120,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion

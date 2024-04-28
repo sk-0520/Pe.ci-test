@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
 
         public ObservableCollection<LauncherGroupSettingEditorElement> GroupItems { get; }
-        public ObservableCollection<WrapModel<LauncherItemId>> LauncherItems { get; } = new ObservableCollection<WrapModel<LauncherItemId>>();
+        public ObservableCollection<LauncherItemId> LauncherItems { get; } = new ObservableCollection<LauncherItemId>();
 
 
         #endregion
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 //groupIds = launcherGroupsEntityDao.SelectAllLauncherGroupIds().ToList();
             }
 
-            LauncherItems.SetRange(launcherItemIds.Select(i => WrapModel.Create(i, LoggerFactory)));
+            LauncherItems.SetRange(launcherItemIds);
 
             //GroupItems.Clear();
             //foreach(var groupId in groupIds) {
@@ -136,9 +136,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    foreach(var item in LauncherItems) {
-                        item.Dispose();
-                    }
                     LauncherItems.Clear();
                 }
             }
@@ -149,10 +146,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             base.ReceiveLauncherItemRemoved(launcherItemId);
 
-            foreach(var grouItem in GroupItems) {
-                var targetItems = grouItem.LauncherItems.Where(i => i.Data == launcherItemId).ToList();
+            foreach(var groupItem in GroupItems) {
+                var targetItems = groupItem.LauncherItems.Where(i => i == launcherItemId).ToArray();
                 foreach(var targetItem in targetItems) {
-                    grouItem.LauncherItems.Remove(targetItem);
+                    groupItem.LauncherItems.Remove(targetItem);
                 }
             }
         }

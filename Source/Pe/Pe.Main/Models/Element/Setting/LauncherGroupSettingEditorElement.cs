@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public Color ImageColor { get; set; }
         public long Sequence { get; set; }
 
-        public ObservableCollection<WrapModel<LauncherItemId>> LauncherItems { get; } = new ObservableCollection<WrapModel<LauncherItemId>>();
+        public ObservableCollection<LauncherItemId> LauncherItems { get; } = new ObservableCollection<LauncherItemId>();
 
         #endregion
 
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public void InsertLauncherItemId(int index, LauncherItemId launcherItemId)
         {
-            LauncherItems.Insert(index, WrapModel.Create(launcherItemId, LoggerFactory));
+            LauncherItems.Insert(index, launcherItemId);
         }
 
         public void MoveLauncherItemId(int startIndex, int insertIndex)
@@ -81,7 +81,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             // 存在しないランチャーアイテムは保存対象外とする
             var launcherItemsEntityDao = new LauncherItemsEntityDao(pack.Main.Context, DatabaseStatementLoader, pack.Main.Implementation, LoggerFactory);
             var launcherItemIds = LauncherItems
-                .Select(i => i.Data)
                 // こんなとこでSQL発行するとか業務じゃむり
                 .Where(i => launcherItemsEntityDao.SelectExistsLauncherItem(i))
                 .ToList()
@@ -120,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ImageName = data.ImageName;
             ImageColor = data.ImageColor;
             Sequence = data.Sequence;
-            LauncherItems.SetRange(launcherItemIds.Select(i => WrapModel.Create(i, LoggerFactory)));
+            LauncherItems.SetRange(launcherItemIds);
 
             return Task.CompletedTask;
         }
@@ -129,9 +128,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    foreach(var item in LauncherItems) {
-                        item.Dispose();
-                    }
                     LauncherItems.Clear();
                 }
             }

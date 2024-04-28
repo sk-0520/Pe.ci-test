@@ -78,11 +78,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             get
             {
-                return Model.Mappings[0].Data.Key;
+                return Model.Mappings[0].Key;
             }
             set
             {
-                Model.Mappings[0].Data.Key = value;
+                Model.Mappings[0].Key = value;
                 RaisePropertyChanged();
             }
         }
@@ -109,11 +109,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             get
             {
-                return Model.Mappings[0].Data.Key;
+                return Model.Mappings[0].Key;
             }
             set
             {
-                Model.Mappings[0].Data.Key = value;
+                Model.Mappings[0].Key = value;
                 RaisePropertyChanged();
             }
         }
@@ -196,8 +196,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         protected KeyboardPressedJobSettingEditorViewModelBase(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            MappingCollection = new ModelViewModelObservableCollectionManager<WrapModel<KeyMappingData>, KeyMappingEditorViewModel>(Model.Mappings, new ModelViewModelObservableCollectionOptions<WrapModel<KeyMappingData>, KeyMappingEditorViewModel>() {
-                ToViewModel = m => new KeyMappingEditorViewModel(m.Data, LoggerFactory),
+            MappingCollection = new ModelViewModelObservableCollectionManager<KeyMappingData, KeyMappingEditorViewModel>(Model.Mappings, new ModelViewModelObservableCollectionOptions<KeyMappingData, KeyMappingEditorViewModel>() {
+                ToViewModel = m => new KeyMappingEditorViewModel(m, LoggerFactory),
             });
             MappingItems = MappingCollection.GetDefaultView();
         }
@@ -224,7 +224,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
-        private ModelViewModelObservableCollectionManager<WrapModel<KeyMappingData>, KeyMappingEditorViewModel> MappingCollection { get; }
+        private ModelViewModelObservableCollectionManager<KeyMappingData, KeyMappingEditorViewModel> MappingCollection { get; }
         public ICollectionView MappingItems { get; }
 
         #endregion

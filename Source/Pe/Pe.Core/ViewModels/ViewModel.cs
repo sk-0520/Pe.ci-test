@@ -113,21 +113,21 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             PropertyInfo? propertyInfo = null;
             CachedProperty? cachedProperty = null;
-            object? nowValue;
+            TValue? nowValue;
 
             if(CachedProperty is null) {
                 var type = obj.GetType();
                 propertyInfo = type.GetProperty(targetMemberName);
                 Debug.Assert(propertyInfo != null);
 
-                nowValue = propertyInfo.GetValue(obj);
+                nowValue = (TValue?)propertyInfo.GetValue(obj);
             } else {
                 cachedProperty = CachedProperty.GetOrAdd(obj, o => new CachedProperty(o));
 
-                nowValue = cachedProperty.Get(targetMemberName);
+                nowValue = (TValue?)cachedProperty.Get(targetMemberName);
             }
 
-            if(!Equals(nowValue, value)) {
+            if(!EqualityComparer<TValue>.Default.Equals(nowValue, value)) {
                 if(CachedProperty is null) {
                     propertyInfo!.SetValue(obj, value);
                 } else {
@@ -342,11 +342,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
         }
 
-        protected void ThrowIfDisposed([CallerMemberName] string _callerMemberName = "")
+        protected void ThrowIfDisposed()
         {
-            if(IsDisposed) {
-                throw new ObjectDisposedException(_callerMemberName);
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, this);
         }
 
         #endregion
@@ -412,12 +410,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             ErrorsContainer.ClearErrors();
             PropertyChangedEventArgsCache.Clear();
 
-            if(disposing) {
-#pragma warning disable S3971 // "GC.SuppressFinalize" should not be called
-                GC.SuppressFinalize(this);
-#pragma warning restore S3971 // "GC.SuppressFinalize" should not be called
-            }
-
             IsDisposed = true;
         }
 
@@ -427,6 +419,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion
@@ -454,7 +447,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// 取り込んだモデル。
         /// </summary>
         /// <remarks>
-        /// <para><see cref="Dispose(bool)"/>後は null が入るので注意ね。</para>
+        /// <para><see cref="Dispose(bool)"/>後は <see langword="null" /> が入るので注意ね。</para>
         /// </remarks>
         protected TModel Model { get; private set; }
 
