@@ -216,9 +216,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             }
             set
             {
-                if(value is null) {
-                    throw new ArgumentNullException();
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 this._archiveFile = value;
             }
