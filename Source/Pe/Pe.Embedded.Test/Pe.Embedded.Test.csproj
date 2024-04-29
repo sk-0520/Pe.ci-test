@@ -1,25 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>Pe.Bridge.Test</AssemblyName>
-    <RootNamespace>ContentTypeTextNet.Pe.Bridge.Test</RootNamespace>
-    
+    <AssemblyName>Pe.Embedded.Test</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.Embedded.Test</RootNamespace>
+
+    <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageReference Include="xunit" Version="2.7.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pe.Bridge\Pe.Bridge.csproj" />
+    <ProjectReference Include="..\Pe.Embedded\Pe.Embedded.csproj" />
   </ItemGroup>
-
 </Project>
