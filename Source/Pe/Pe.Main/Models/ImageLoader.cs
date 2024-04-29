@@ -16,11 +16,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
     {
         public ImageLoader(ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateLogger(GetType());
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
+        private ILoggerFactory LoggerFactory { get; }
         private ILogger Logger { get; }
 
         #endregion
@@ -54,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <inheritdoc cref="IImageLoader.LoadIconFromFile(string, int, in IconScale)"/>
         public BitmapSource? LoadIconFromFile(string iconPath, int iconIndex, in IconScale iconScale)
         {
-            var iconLoader = new IconLoader(Logger);
+            var iconLoader = new IconLoader(LoggerFactory);
             var result = iconLoader.Load(iconPath, iconIndex, iconScale.ToIconSize());
             return result;
         }
