@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
         /// </summary>
         /// <remarks>
-        /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
+        /// <para>呼び出し時点では<see cref="IDisposed.IsDisposed"/>は偽のまま。</para>
         /// </remarks>
         event EventHandler<EventArgs>? Disposing;
 
