@@ -194,9 +194,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #region property
 
         /// <summary>
-        /// <see cref="BaseElement"/> を特定の非 <see langword="null" /> コントロールで取得。
+        /// <see cref="NoteContentViewModelBase.BaseElement"/> を特定の非 <see langword="null" /> コントロールで取得。
         /// </summary>
-        /// <exception cref="InvalidOperationException"><see cref="BaseElement"/> が <see langword="null" /></exception>
+        /// <exception cref="InvalidOperationException"><see cref="NoteContentViewModelBase.BaseElement"/> が <see langword="null" /></exception>
         protected TControlElement ControlElement
         {
             get
