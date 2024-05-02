@@ -1,0 +1,36 @@
+{
+	"metadata": [
+		{
+			"src": [
+				{
+					"files": [
+						"Source/Pe/Pe.Bridge/Pe.Core.csproj",
+						"Source/Pe/Pe.Standard.Base/Pe.Standard.Base.csproj",
+						"Source/Pe/Pe.Standard.Database/Pe.Standard.Database.csproj",
+						"Source/Pe/Pe.Standard.DependencyInjection/Pe.Standard.DependencyInjection.csproj",
+						"Source/Pe/Pe.Embedded/Pe.Embedded.csproj",
+						"Source/Pe/Pe.PInvoke/Pe.PInvoke.csproj",
+						"Source/Pe/Pe.Core/Pe.Core.csproj",
+						"Source/Pe/Pe.Plugins.DefaultTheme/Pe.Plugins.DefaultTheme.csproj",
+						"Source/Pe/Pe.Main/Pe.Main.csproj"
+					],
+					"exclude": [
+						"**/bin/**",
+						"**/obj/**"
+					]
+				}
+			],
+			"dest": "_doc-comment/metadata"
+		}
+	],
+	"build": {
+		"content": [
+			{
+				"files": [
+					"_doc-comment/metadata/**.yml"
+				]
+			}
+		],
+		"dest": "_doc-comment/document"
+	}
+}
