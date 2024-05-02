@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <param name="requestSender"></param>
         /// <param name="path"></param>
         /// <param name="filters"></param>
-        /// <param name="response"><see cref="FileSystemSelectDialogRequestResponse.ResponseIsCancel"/>は真。</param>
+        /// <param name="response"><see cref="CancelResponse.ResponseIsCancel"/>は真。</param>
         public void SelectFile(IRequestSender requestSender, string path, bool isOpen, IEnumerable<DialogFilterItem> filters, Action<FileSystemSelectDialogRequestResponse> response)
         {
             var mode = isOpen ? FileSystemDialogMode.FileOpen : FileSystemDialogMode.FileSave;

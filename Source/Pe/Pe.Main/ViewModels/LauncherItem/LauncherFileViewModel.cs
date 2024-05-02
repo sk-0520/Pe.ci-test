@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         /// NOTE: こいつは CanExecute を意図的に固定。
         /// </summary>
         /// <remarks>
-        /// <para><see cref="ExecuteMainCommand"/>と<see cref="ExecuteSimpleCommand"/>で分けておかないとツールバー右クリックでアイテムのメニューが出なくなる気がする</para>
+        /// <para><see cref="LauncherDetailViewModelBase.ExecuteMainCommand"/>と<see cref="ExecuteSimpleCommand"/>で分けておかないとツールバー右クリックでアイテムのメニューが出なくなる気がする</para>
         /// </remarks>
         protected override bool CanExecuteMain => true;
 

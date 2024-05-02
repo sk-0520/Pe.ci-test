@@ -219,13 +219,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="baseDirectory">親ディレクトリ。</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
         public static TemporaryDirectory CreateTemporaryDirectory(DirectoryInfo baseDirectory, TemporaryDirectoryOptions? options = null)
         {
             return CreateTemporaryDirectoryCore(baseDirectory, options ?? new TemporaryDirectoryOptions());
         }
 
-        /// <inheritdoc cref="CreateTemporaryDirectory(DirectoryInfo, TemporaryDirectoryOptions?)"/>
         public static TemporaryDirectory CreateTemporaryDirectory(TemporaryDirectoryOptions? options = null)
         {
             var tempDir = new DirectoryInfo(Path.GetTempPath());

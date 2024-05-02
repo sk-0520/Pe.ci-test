@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// 指定データを保存する。
         /// </summary>
         /// <remarks>
-        /// <para><see cref="PluginPersistenceFormat.Text"/>を使用する以外は原則使用せず<see cref="Set{TValue}(string, TValue)"/>を用いること。</para>
+        /// <para><see cref="PluginPersistenceFormat.Text"/>を使用する以外は原則使用せず<see cref="Set{TValue}(LauncherItemId, string, TValue)"/>を用いること。</para>
         /// </remarks>
         /// <typeparam name="TValue">保存データ。</typeparam>
         /// <param name="launcherItemId">ランチャーアイテムID。</param>

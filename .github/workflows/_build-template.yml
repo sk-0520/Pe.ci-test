@@ -93,6 +93,30 @@ jobs:
           path: Output/help
           if-no-files-found: error
 
+  documment-comment:
+    name: Document Comment
+    runs-on: ${{ inputs.OS_WINDOWS }}
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v4
+
+      - name: <Prepare> docfx
+        run: |
+          dotnet tool install docfx --tool-path _tools
+
+      - name: <Build> Main
+        run: |
+          .\_tools\docfx docfx.json --template statictoc
+
+      - name: <Artifact> Document Comment
+        uses: actions/upload-artifact@v4
+        with:
+          name: DocumentComment
+          path: |
+            _doc-comment\metadata
+            _doc-comment\document
+
   plugin-template:
     name: Plugin Template
     needs:

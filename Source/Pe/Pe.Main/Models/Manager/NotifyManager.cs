@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// ランチャーアイテム変更通知。
         /// </summary>
         /// <remarks>
-        /// <para>ランチャーアイテム使用機能側に変更を通知するだけなので受け取り手によるが可能な限り<see cref="IOrderManager.RefreshLauncherItemElement(Guid)"/>を先に呼んでおくこと。</para>
+        /// <para>ランチャーアイテム使用機能側に変更を通知するだけなので受け取り手によるが可能な限り<see cref="IOrderManager.RefreshLauncherItemElement(LauncherItemId)"/>を先に呼んでおくこと。</para>
         /// </remarks>
         /// <param name="launcherItemId">変更されたランチャーアイテムID。</param>
         void SendLauncherItemChanged(LauncherItemId launcherItemId);
@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         /// <param name="launcherGroupId"></param>
         /// <param name="launcherItemId"></param>
-        /// <param name="index">同一の<see cref="launcherItemId"/>に該当するもののうち何番目のアイテムかを示す。</param>
+        /// <param name="index">同一の <paramref name="launcherItemId"/> に該当するもののうち何番目のアイテムかを示す。</param>
         void SendLauncherItemRemoveInLauncherGroup(LauncherGroupId launcherGroupId, LauncherItemId launcherItemId, int index);
         void SendCustomizeLauncherItemExited(LauncherItemId launcherItemId);
         /// <summary>

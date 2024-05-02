@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// 指定引数から生成。
         /// </summary>
         /// <param name="arguments">コマンドライン引数。</param>
-        /// <param name="withCommand"><see cref="arguments"/>の先頭はプログラム/コマンドか。<para>Main関数だと含まれず、<see cref="Environment.GetCommandLineArgs()"/>だと含まれてる的な。</para></param>
+        /// <param name="withCommand"><paramref name="arguments"/>の先頭はプログラム/コマンドか。<para>Main関数だと含まれず、<see cref="Environment.GetCommandLineArgs()"/>だと含まれてる的な。</para></param>
         public CommandLine(IEnumerable<string> arguments, bool withCommand = false)
         {
             if(withCommand) {

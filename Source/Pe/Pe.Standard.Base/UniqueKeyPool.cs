@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// 呼び出し側で一意なオブジェクトを生成するヘルパー。
     /// </summary>
     /// <remarks>
-    /// <para><see cref="Database.IDatabaseDelayWriter.Stock(Action{Database.IDatabaseTransaction}, object)"/>の使用のみに特化。</para>
+    /// <para>`Database.IDatabaseDelayWriter.Stock` の使用のみに特化。</para>
     /// </remarks>
     public class UniqueKeyPool
     {

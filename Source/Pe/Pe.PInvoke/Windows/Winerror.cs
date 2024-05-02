@@ -384,7 +384,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public const int CO_E_OLE1DDE_DISABLED = unchecked((int)0x80004016);
 
         ///<summary>
-        ///A RunAs specification must be &lt;domain name>\<user name> or simply &lt;user name>
+        ///A RunAs specification must be &lt;domain name&gt;\&lt;user name&gt; or simply &lt;user name&gt;
         ///</summary>
         [Description("A RunAs specification must be <domain name>\\<user name> or simply <user name>")]
         public const int CO_E_RUNAS_SYNTAX = unchecked((int)0x80004017);
@@ -921,7 +921,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public const int CO_E_NETACCESSAPIFAILED = unchecked((int)0x8001012B);
 
         ///<summary>
-        ///One of the trustee strings provided by the user did not conform to the &lt;Domain>\<Name> syntax and it was not the "*" string
+        ///One of the trustee strings provided by the user did not conform to the &lt;Domain&gt;\&lt;Name&gt; syntax and it was not the "*" string
         ///</summary>
         [Description("One of the trustee strings provided by the user did not conform to the <Domain>\\<Name> syntax and it was not the \"*\" string")]
         public const int CO_E_WRONGTRUSTEENAMESYNTAX = unchecked((int)0x8001012C);

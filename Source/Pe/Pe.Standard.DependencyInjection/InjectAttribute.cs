@@ -7,7 +7,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
     /// 注入マーク。
     /// </summary>
     /// <remarks>
-    /// <para><see cref="IDiContainer.New{T}(IEnumerable{object})"/> する際の対象コンストラクタを限定。</para>
+    /// <para><see cref="IDiContainer.New{TObject}(IReadOnlyList{object})"/> する際の対象コンストラクタを限定。</para>
     /// <para><see cref="IDiContainer.Inject{T}(T)"/> を使用する際の対象を指定。</para>
     /// </remarks>
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]

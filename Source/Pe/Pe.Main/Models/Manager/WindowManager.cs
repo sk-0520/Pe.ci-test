@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public Window Window { get; }
 
         /// <summary>
-        /// ウィンドウが閉じられた際に <see cref="System.Windows.Window.DataContext"/> およびバインド状態をクリアするか。
+        /// ウィンドウが閉じられた際に <see cref="FrameworkElement.DataContext"/> およびバインド状態をクリアするか。
         /// </summary>
         public bool CloseToClearDataContext { get; set; } = true;
         /// <summary>
