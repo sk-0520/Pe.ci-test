@@ -63,10 +63,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     ///
     /// </summary>
     /// <param name="characterBlocks">入力文字列全体の文字単位分割。</param>
-    /// <param name="currentIndex">今処理すべき <seealso cref="characterBlocks"/>のインデックス。</param>
+    /// <param name="currentIndex">今処理すべき <paramref name="characterBlocks"/>のインデックス。</param>
     /// <param name="isLastIndex">現在処理は最終インデックスか</param>
-    /// <param name="currentText">今処理する文字列。<seealso cref="characterBlocks"/>[<seealso cref="currentIndex"/>]と同じ</param>
-    /// <param name="resultBuffer">変換後文字列。格納された場合はそのまま、格納しない場合は<param name="resultBuffer" />に書き込んだ場合にのみ使用される。<seealso cref="currentText"/>が格納される。</param>
+    /// <param name="currentText">今処理する文字列。<paramref name="characterBlocks"/>[<paramref name="currentIndex"/>]と同じ</param>
+    /// <param name="resultBuffer">変換後文字列。格納された場合はそのまま、格納しない場合は<paramref name="resultBuffer"/>に書き込んだ場合にのみ使用される。<paramref name="currentText"/>が格納される。</param>
     /// <returns>次回読み飛ばし数。0で次文字列へ進んでいく。</returns>
     public delegate int TextConvertDelegate(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer);
 
