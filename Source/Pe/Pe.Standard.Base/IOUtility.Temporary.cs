@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// </summary>
     /// <remarks>
     /// <para>渡されたディレクトリを破棄時に削除する。</para>
-    /// <para><see cref="IOUtility.CreateTemporaryDirectory(DirectoryInfo, TemporaryOptions?)"/>から使用する前提。</para>
+    /// <para><see cref="IOUtility.CreateTemporaryDirectoryCore(DirectoryInfo, TemporaryDirectoryOptions)"/>から使用する前提。</para>
     /// </remarks>
     public class TemporaryDirectory: DisposerBase
     {
