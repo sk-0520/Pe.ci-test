@@ -66,7 +66,7 @@ foreach ($dir in $targetProjectDirs) {
 			Select-Object -First 1
 
 		# 作業ディレクトリにお引越し
-		$testDestPath = Join-Path -Path $resultBaseDir -ChildPath "$($dir.Name)_${testResultFileName}"
+		$testDestPath = Join-Path -Path $resultBaseDir -ChildPath "$($dir.Name)_$($testResultFile.Name)"
 		Move-Item -LiteralPath $testResultFile.FullName -Destination $testDestPath
 		$testResultFiles += $testDestPath
 	} finally {
