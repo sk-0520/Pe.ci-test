@@ -20,7 +20,8 @@
 					]
 				}
 			],
-			"dest": "_doc-comment/metadata"
+			"dest": "_doc-comment/metadata",
+			"namespaceLayout": "nested"
 		}
 	],
 	"build": {
