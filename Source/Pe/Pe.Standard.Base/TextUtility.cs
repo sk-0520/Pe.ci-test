@@ -243,7 +243,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// 文字列の特定の文字を置き換える。
         /// </summary>
         /// <param name="target">対象文字列。</param>
-        /// <param name="characters"><see cref="IReadOnlyDictionary{char}.Keys"/>に対して<see cref="IReadOnlyDictionary{char}.Values"/>に置き換える。</param>
+        /// <param name="characters"><see cref="IReadOnlyDictionary{char, char}.Keys"/>に対して<see cref="IReadOnlyDictionary{char, char}.Values"/>に置き換える。</param>
         /// <returns>置き換え後文字列。</returns>
         public static string ReplaceCharacters(string target, IReadOnlyDictionary<char, char> characters)
         {

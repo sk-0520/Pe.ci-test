@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         }
 
         /// <summary>
-        /// <see cref="IDiContainer.New{TObject}(IEnumerable{object})"/> して <see cref="IDiContainer.Inject{TObject}(TObject)"/> する。
+        /// <see cref="IDiContainer.New{TObject}(IReadOnlyList{object})"/> して <see cref="IDiContainer.Inject{TObject}(TObject)"/> する。
         /// </summary>
         /// <typeparam name="TObject"></typeparam>
         /// <param name="diContainer"></param>
