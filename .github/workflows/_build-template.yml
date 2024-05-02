@@ -471,6 +471,32 @@ jobs:
         shell: pwsh
         run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
+      - name: <Make> CodeCoverage
+        shell: pwsh
+        run: |
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          $files = @(Get-ChildItem -Filter coverage.cobertura.xml -Recurse)
+          # ソースファイルの位置を渡しておかないとソースが読めない問題対応(Pe.Bridgeは一人ではしゃいでるのでこれだけ単独補正)
+          $sources = @(
+            Join-Path -Path (Get-Location) -ChildPath Source | Join-Path -ChildPath Pe
+            Join-Path -Path (Get-Location) -ChildPath Source | Join-Path -ChildPath Pe | Join-Path -ChildPath Pe.Bridge
+          )
+          reportgenerator `
+            -reports:$($files -join ';') `
+            -sourcedirs:$($sources -join ';') `
+            -targetdir:"coveragereport" `
+            -reporttypes:Html
+          Get-Location
+
+      - name: <Artifact> CodeCoverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test_Pe.Main_${{ matrix.PLATFORM }}
+          path: |
+            Source/Pe/*.Test/TestResults/**/coverage.cobertura.xml
+            coveragereport
+          if-no-files-found: error
+
   reconstitution-application:
     name: Reconstitution Application
     needs:
@@ -686,6 +712,13 @@ jobs:
       - name: <Test> Module
         shell: pwsh
         run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
+
+      # - name: <Artifact> result
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: Test_Pe.Plugins.Reference_${{ matrix.PLATFORM }}
+      #     path: Source/**/coverage.cobertura.xml
+      #     if-no-files-found: error
 
   reconstitution-plugins:
     name: Reconstitution Plugins

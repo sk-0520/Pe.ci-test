@@ -30,3 +30,15 @@ Pe は Windows 10 以上で動作するデスクトップユーティリティ�
 
 * `dotnet`: [8](https://dotnet.microsoft.com/download/dotnet/8.0)
 * `node`: `<Pe.git>/.node-version` 参照
+
+### ローカルでのテスト
+
+1. リポジトリルートへ移動
+1. reportgenerator のローカルインストール  
+   `PS> dotnet tool install dotnet-reportgenerator-globaltool --tool-path _tools`
+1. テスト実行  
+   `PS1> .\Build\local-main-test-.ps1 -Project Pe.Main.Test`
+   * `Source\Pe` 内の `*.Test` プロジェクトを指定
+   * 複数指定は `,` を使用する
+   * 全て指定する場合は `*` を使用する
+   * ディレクトリ名だけをあてにしているのでゴミが残ってたりすると変になることに注意
