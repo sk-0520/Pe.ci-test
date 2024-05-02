@@ -4,7 +4,7 @@
 			"src": [
 				{
 					"files": [
-						"Source/Pe/Pe.Bridge/Pe.Core.csproj",
+						"Source/Pe/Pe.Bridge/Pe.Bridge.csproj",
 						"Source/Pe/Pe.Standard.Base/Pe.Standard.Base.csproj",
 						"Source/Pe/Pe.Standard.Database/Pe.Standard.Database.csproj",
 						"Source/Pe/Pe.Standard.DependencyInjection/Pe.Standard.DependencyInjection.csproj",
