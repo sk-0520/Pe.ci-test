@@ -2725,7 +2725,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         [DllImport("user32.dll", SetLastError = true)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1711:識別子は、不適切なサフィックスを含むことはできません", Justification = "WindowsAPI")]
         public static extern bool UnhookWindowsHookEx(IntPtr hhk);
-        // <summary>
+        /// <summary>
         ///     Passes the hook information to the next hook procedure in the current hook chain. A hook procedure can call this
         ///     function either before or after processing the hook information.
         ///     <para>
