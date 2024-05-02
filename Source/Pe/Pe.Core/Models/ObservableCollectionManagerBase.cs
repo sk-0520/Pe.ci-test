@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Core.Models
@@ -12,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <see cref="ObservableCollection{TValue}"/> の変更通知を処理する。
     /// </summary>
     /// <remarks>
-    /// <para>原則このクラスは使用せず、<see cref="ModelViewModelObservableCollectionOptions{TModel, TViewModel}"/>の使用を想定している。ただし実装上一本にまとめると複雑になるために本クラスを継承元として分割している。</para>
+    /// <para>原則このクラスは使用せず、<see cref="ModelViewModelObservableCollectionManager{TModel, TViewModel}"/>の使用を想定している。ただし実装上一本にまとめると複雑になるために本クラスを継承元として分割している。</para>
     /// </remarks>
     public abstract class ObservableCollectionManagerBase<TValue>: NotifyPropertyBase
     {

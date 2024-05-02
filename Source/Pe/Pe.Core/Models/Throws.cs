@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <typeparam name="TException">投げられる例外。</typeparam>
         /// <param name="value"></param>
         /// <param name="callerArgument"></param>
-        /// <exception cref="TException"><paramref name="value"/>が<see langword="null" /></exception>。
+        /// <exception cref="Exception"><paramref name="value"/>が<see langword="null" />の際に投げられる例外。ドキュメント制約により<see cref="Exception"/> としているが <typeparamref name="TException"/> が投げられる</exception>。
         public static void ThrowIfNull<T, TException>([AllowNull][NotNull] T value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
             where TException : Exception
         {

@@ -81,15 +81,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             return PluginHelper.GetDefaultPluginIcon(imageLoader, iconScale);
         }
 
-        /// <summary>
-        /// 初期化処理内部実装。
-        /// </summary>
         /// <inheritdoc cref="IPlugin.Initialize(IPluginInitializeContext)"/>
         protected abstract void InitializeImpl(IPluginInitializeContext pluginInitializeContext);
-        /// <summary>
-        /// 解放処理内部実装。
-        /// </summary>
-        /// <param name="pluginFinalizeContext"></param>
         /// <inheritdoc cref="IPlugin.Finalize(IPluginFinalizeContext)"/>
         protected abstract void FinalizeImpl(IPluginFinalizeContext pluginFinalizeContext);
 
