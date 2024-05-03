@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -11,6 +11,11 @@ namespace ContentTypeTextNet.Pe.Standard.Database
     /// <summary>
     /// 読み込み処理の安全のしおり。
     /// </summary>
+    /// <remarks>
+    /// <para>問い合わせ文として非ユーザー入力でデバッグ中に検証可能なものを想定している。</para>
+    /// <para>そのため問い合わせ文の確認自体もデバッグ時のみ有効となる。</para>
+    /// <para>なお確認自体はただの文字列比較であるため該当ワードをコメントアウトしても通過する点に注意。</para>
+    /// </remarks>
     public static class IDatabaseReaderExtensions
     {
         #region function
@@ -19,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         private static void ThrowIfNotOrderBy(string statement)
         {
             if(!Regex.IsMatch(statement, @"\border\s+by\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
-                throw new DatabaseContextException("order by");
+                throw new DatabaseStatementException("order by");
             }
         }
 
@@ -67,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         private static void ThrowIfNotSingleCount(string statement)
         {
             if(!Regex.IsMatch(statement, @"\bselect\s+count\s*\(", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
-                throw new DatabaseContextException("select count()");
+                throw new DatabaseStatementException("select count()");
             }
         }
 
