@@ -66,13 +66,13 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             var blockComment = BlockComments.First();
 
             var builder = new StringBuilder(NewLine.Length * 4 + blockComment.Begin.Length + blockComment.End.Length + statement.Length);
-            builder.AppendLine(NewLine);
-            builder.AppendLine(blockComment.Begin);
-            builder.AppendLine(NewLine);
-            builder.AppendLine(statement);
-            builder.AppendLine(NewLine);
-            builder.AppendLine(blockComment.End);
-            builder.AppendLine(NewLine);
+            builder.Append(NewLine);
+            builder.Append(blockComment.Begin);
+            builder.Append(NewLine);
+            builder.Append(statement);
+            builder.Append(NewLine);
+            builder.Append(blockComment.End);
+            builder.Append(NewLine);
 
             return builder.ToString();
         }
