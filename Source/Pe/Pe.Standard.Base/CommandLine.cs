@@ -251,7 +251,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             }
 
             if(key.IsEnabledLongKey && key.LongKey.Length == 1) {
-                throw new ArgumentException(nameof(key.LongKey));
+                throw new ArgumentException(null, nameof(key.LongKey));
             }
 
             if(KeyItems.Where(k => k.IsEnabledShortKey).Any(k => k.ShortKey == key.ShortKey)) {

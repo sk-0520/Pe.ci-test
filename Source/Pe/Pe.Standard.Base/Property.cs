@@ -338,10 +338,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 #if CHECK_PROPERTY_NAME
             if(Properties.TryGetValue(propertyName, out var prop)) {
                 if(!prop.CanRead) {
-                    throw new ArgumentException(nameof(propertyName));
+                    throw new ArgumentException(null, nameof(propertyName));
                 }
             } else {
-                throw new ArgumentException(nameof(propertyName));
+                throw new ArgumentException(null, nameof(propertyName));
             }
 #endif
             var accessor = GetAccessor(propertyName);
@@ -353,10 +353,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 #if CHECK_PROPERTY_NAME
             if(Properties.TryGetValue(propertyName, out var prop)) {
                 if(!prop.CanWrite) {
-                    throw new ArgumentException(nameof(propertyName));
+                    throw new ArgumentException(null, nameof(propertyName));
                 }
             } else {
-                throw new ArgumentException(nameof(propertyName));
+                throw new ArgumentException(null, nameof(propertyName));
             }
 #endif
             var accessor = GetAccessor(propertyName);

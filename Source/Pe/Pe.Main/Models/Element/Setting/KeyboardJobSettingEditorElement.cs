@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             : base(keyActionData, isNewJob, mainDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {
             if(keyActionData.KeyActionKind != KeyActionKind.Replace) {
-                throw new ArgumentException(nameof(keyActionData));
+                throw new ArgumentException(null, nameof(keyActionData));
             }
         }
     }
@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             : base(keyActionData, isNewJob, mainDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {
             if(keyActionData.KeyActionKind != KeyActionKind.Disable) {
-                throw new ArgumentException(nameof(keyActionData));
+                throw new ArgumentException(null, nameof(keyActionData));
             }
         }
 
@@ -181,7 +181,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             : base(keyActionData, isNewJob, mainDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {
             if(keyActionData.KeyActionKind == KeyActionKind.Replace || keyActionData.KeyActionKind == KeyActionKind.Disable) {
-                throw new ArgumentException(nameof(keyActionData));
+                throw new ArgumentException(null, nameof(keyActionData));
             }
         }
 

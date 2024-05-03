@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         internal HttpUserAgent CreateUserAgent(string name)
         {
             if(name == AppName) {
-                throw new ArgumentException(nameof(name));
+                throw new ArgumentException(null, nameof(name));
             }
 
             return UserAgentFactory.CreateUserAgent(name);

@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public IReadOnlyHookItem AddHook(string notifyAndRaisePropertyName)
         {
             if(string.IsNullOrWhiteSpace(notifyAndRaisePropertyName)) {
-                throw new ArgumentException(nameof(notifyAndRaisePropertyName));
+                throw new ArgumentException(null, nameof(notifyAndRaisePropertyName));
             }
             ThrowIfDisposed();
 
@@ -189,10 +189,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public IReadOnlyHookItem AddHook(string notifyPropertyName, string raisePropertyName)
         {
             if(string.IsNullOrWhiteSpace(notifyPropertyName)) {
-                throw new ArgumentException(nameof(notifyPropertyName));
+                throw new ArgumentException(null, nameof(notifyPropertyName));
             }
             if(string.IsNullOrWhiteSpace(raisePropertyName)) {
-                throw new ArgumentException(nameof(raisePropertyName));
+                throw new ArgumentException(null, nameof(raisePropertyName));
             }
             ThrowIfDisposed();
 
@@ -210,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 throw new ArgumentException(nameof(notifyPropertyName));
             }
             if(raisePropertyNames == null || raisePropertyNames.Length == 0) {
-                throw new ArgumentException(nameof(raisePropertyNames));
+                throw new ArgumentException(null, nameof(raisePropertyNames));
             }
             ThrowIfDisposed();
 
@@ -243,10 +243,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public IReadOnlyHookItem AddHook(string notifyPropertyName, params ICommand[] raiseCommands)
         {
             if(string.IsNullOrWhiteSpace(notifyPropertyName)) {
-                throw new ArgumentException(nameof(notifyPropertyName));
+                throw new ArgumentException(null, nameof(notifyPropertyName));
             }
             if(raiseCommands == null || raiseCommands.Length == 0) {
-                throw new ArgumentException(nameof(raiseCommands));
+                throw new ArgumentException(null, nameof(raiseCommands));
             }
             ThrowIfDisposed();
 
@@ -261,10 +261,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public IReadOnlyHookItem AddHook(string notifyPropertyName, Action callback)
         {
             if(string.IsNullOrWhiteSpace(notifyPropertyName)) {
-                throw new ArgumentException(nameof(notifyPropertyName));
+                throw new ArgumentException(null, nameof(notifyPropertyName));
             }
             if(callback == null) {
-                throw new ArgumentException(nameof(callback));
+                throw new ArgumentException(null, nameof(callback));
             }
             ThrowIfDisposed();
 
@@ -279,13 +279,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public IReadOnlyHookItem AddHook(string notifyPropertyName, IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands)
         {
             if(string.IsNullOrWhiteSpace(notifyPropertyName)) {
-                throw new ArgumentException(nameof(notifyPropertyName));
+                throw new ArgumentException(null, nameof(notifyPropertyName));
             }
             if(raisePropertyNames == null) {
-                throw new ArgumentException(nameof(raisePropertyNames));
+                throw new ArgumentException(null, nameof(raisePropertyNames));
             }
             if(raiseCommands == null) {
-                throw new ArgumentException(nameof(raiseCommands));
+                throw new ArgumentException(null, nameof(raiseCommands));
             }
             ThrowIfDisposed();
 
@@ -300,16 +300,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public IReadOnlyHookItem AddHook(string notifyPropertyName, IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands, Action callback)
         {
             if(string.IsNullOrWhiteSpace(notifyPropertyName)) {
-                throw new ArgumentException(nameof(notifyPropertyName));
+                throw new ArgumentException(null, nameof(notifyPropertyName));
             }
             if(raisePropertyNames == null) {
-                throw new ArgumentException(nameof(raisePropertyNames));
+                throw new ArgumentException(null, nameof(raisePropertyNames));
             }
             if(raiseCommands == null) {
-                throw new ArgumentException(nameof(raiseCommands));
+                throw new ArgumentException(null, nameof(raiseCommands));
             }
             if(callback == null) {
-                throw new ArgumentException(nameof(callback));
+                throw new ArgumentException(null, nameof(callback));
             }
             ThrowIfDisposed();
 

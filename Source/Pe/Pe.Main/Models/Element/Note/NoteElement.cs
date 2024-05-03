@@ -627,7 +627,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         public async Task ConvertContentKindAsync(NoteContentKind toContentKind)
         {
             if(ContentKind == toContentKind) {
-                throw new ArgumentException($"{nameof(ContentKind)} == {nameof(toContentKind)}");
+                throw new ArgumentException(null, $"{nameof(ContentKind)} == {nameof(toContentKind)}");
             }
             if(IsLink) {
                 throw new InvalidOperationException(nameof(IsLink));
@@ -732,7 +732,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 throw new ArgumentNullException(nameof(layout));
             }
             if(layout.NoteId != NoteId) {
-                throw new ArgumentException($"{nameof(layout)}.{nameof(layout.NoteId)}");
+                throw new ArgumentException(null, $"{nameof(layout)}.{nameof(layout.NoteId)}");
             }
             ThrowIfDisposed();
 

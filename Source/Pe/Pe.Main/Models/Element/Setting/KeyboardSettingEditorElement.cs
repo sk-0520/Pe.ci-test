@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public async Task AddPressedJobAsync(KeyActionKind kind)
         {
             if(kind == KeyActionKind.Replace || kind == KeyActionKind.Disable) {
-                throw new ArgumentException(nameof(kind));
+                throw new ArgumentException(null, nameof(kind));
             }
 
             var keyActionData = new KeyActionData() {

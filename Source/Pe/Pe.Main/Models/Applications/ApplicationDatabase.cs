@@ -181,11 +181,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var values = fullName.Split('.', StringSplitOptions.None);
 
             if(values.Length < 2) {
-                throw new ArgumentException(fullName);
+                throw new ArgumentException(null, fullName);
             }
 
             if(values.Any(i => string.IsNullOrWhiteSpace(i))) {
-                throw new ArgumentException(fullName);
+                throw new ArgumentException(null, fullName);
             }
 
             if(values.Length == 2) {

@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public FixedQueue(int limit)
         {
             if(limit < 1) {
-                throw new ArgumentException(nameof(limit));
+                throw new ArgumentException(null, nameof(limit));
             }
 
             Limit = limit;
@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public ConcurrentFixedQueue(int limit)
         {
             if(limit < 1) {
-                throw new ArgumentException(nameof(limit));
+                throw new ArgumentException(null, nameof(limit));
             }
 
             Limit = limit;

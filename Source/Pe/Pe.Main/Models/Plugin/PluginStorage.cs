@@ -40,13 +40,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             }
 
             if(string.IsNullOrWhiteSpace(name)) {
-                throw new ArgumentException(nameof(name));
+                throw new ArgumentException(null, nameof(name));
             }
 
             var s = name.Trim();
             var cs = Path.GetInvalidFileNameChars();
             if(s.Any(i => cs.Any(cc => cc == i))) {
-                throw new ArgumentException(nameof(name));
+                throw new ArgumentException(null, nameof(name));
             }
 
             return s;

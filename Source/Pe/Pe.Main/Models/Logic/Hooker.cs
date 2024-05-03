@@ -308,7 +308,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public MouseHookEventArgs(int buttonX, MouseButtonState mouseButtonState, in MSLLHOOKSTRUCT msll)
         {
             if(buttonX == 0) {
-                throw new ArgumentException(nameof(buttonX));
+                throw new ArgumentException(null, nameof(buttonX));
             }
 
             this.msll = msll;

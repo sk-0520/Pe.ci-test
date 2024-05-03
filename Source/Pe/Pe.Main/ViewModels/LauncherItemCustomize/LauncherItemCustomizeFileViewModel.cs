@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             : base(model, dispatcherWrapper, loggerFactory)
         {
             if(Model.Kind != Models.Data.LauncherItemKind.File) {
-                throw new ArgumentException(nameof(model) + "." + nameof(Model.Kind));
+                throw new ArgumentException(null, nameof(model) + "." + nameof(Model.Kind));
             }
             if(!Model.IsLazyLoad) {
                 if(Model.File == null) {

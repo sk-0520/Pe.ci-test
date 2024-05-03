@@ -746,7 +746,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
             var member = new DiInjectionMember(baseType, memberInfo[0], objectType, ToInjectionName(name));
             if(CanAdd(InjectionMembers, member)) {
-                throw new ArgumentException($"{baseType}.{memberInfo}");
+                throw new ArgumentException(null, $"{baseType}.{memberInfo}");
             }
             InjectionMembers.Add(member);
 

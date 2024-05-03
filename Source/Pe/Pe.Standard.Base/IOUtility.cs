@@ -171,13 +171,13 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         private static void ThrowIfInvalidOptions(TemporaryOptions options)
         {
             if(options.RetryCount < 1) {
-                throw new ArgumentException(nameof(options) + "." + nameof(options.RetryCount));
+                throw new ArgumentException(null, nameof(options) + "." + nameof(options.RetryCount));
             }
             if(options.RandomNameCharacters.Count == 0) {
-                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameCharacters));
+                throw new ArgumentException(null, nameof(options) + "." + nameof(options.RandomNameCharacters));
             }
             if(options.RandomNameLength < 1) {
-                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameLength));
+                throw new ArgumentException(null, nameof(options) + "." + nameof(options.RandomNameLength));
             }
         }
 

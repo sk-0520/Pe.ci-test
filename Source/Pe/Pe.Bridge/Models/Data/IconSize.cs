@@ -112,10 +112,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         public IconScale(IconBox box, Point dpiScale)
         {
             if(double.IsNaN(dpiScale.X) || double.IsInfinity(dpiScale.X) || dpiScale.X < 1) {
-                throw new ArgumentException(nameof(dpiScale) + "." + nameof(dpiScale.X));
+                throw new ArgumentException(null, nameof(dpiScale) + "." + nameof(dpiScale.X));
             }
             if(double.IsNaN(dpiScale.Y) || double.IsInfinity(dpiScale.Y) || dpiScale.Y < 1) {
-                throw new ArgumentException(nameof(dpiScale) + "." + nameof(dpiScale.Y));
+                throw new ArgumentException(null, nameof(dpiScale) + "." + nameof(dpiScale.Y));
             }
 
             Box = box;

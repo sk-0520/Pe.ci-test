@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             set
             {
                 if(value == 0) {
-                    throw new ArgumentException("error: 0");
+                    throw new ArgumentException(null, "error: 0");
                 }
                 this._selfJobInputId = value;
 

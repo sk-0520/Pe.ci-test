@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             : base(loggerFactory)
         {
             if(!process.EnableRaisingEvents) {
-                throw new ArgumentException($"{nameof(process)}.{process.EnableRaisingEvents}");
+                throw new ArgumentException(null, $"{nameof(process)}.{process.EnableRaisingEvents}");
             }
 
             CaptionName = captionName;

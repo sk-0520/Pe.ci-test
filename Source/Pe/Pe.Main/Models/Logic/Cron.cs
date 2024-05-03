@@ -166,7 +166,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return value;
             }
 
-            throw new ArgumentException(valueArgumentName);
+            throw new ArgumentException(null, valueArgumentName);
         }
 
         private static int ThrowIfNotMinutes(int value, string valueArgumentName) => ThrowIfNotInMinMax(value, 0, 59, valueArgumentName);
@@ -235,7 +235,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             } else if(value.Contains('/')) {
                 var elements = value.Split('/');
                 if(elements.Length != 2) {
-                    throw new ArgumentException(value);
+                    throw new ArgumentException(null, value);
                 }
                 var a = elements[0];
                 var b = elements[1];
@@ -262,7 +262,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         private bool TryParseCore(string cronPattern, [NotNullWhen(false)] out Exception? resultException, [NotNullWhen(true)] out CronItemSetting? resultSetting)
         {
             if(string.IsNullOrWhiteSpace(cronPattern)) {
-                resultException = new ArgumentException(nameof(cronPattern));
+                resultException = new ArgumentException(null, nameof(cronPattern));
                 resultSetting = default;
                 return false;
             }

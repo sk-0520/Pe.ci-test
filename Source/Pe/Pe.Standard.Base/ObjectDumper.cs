@@ -280,7 +280,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 throw new ArgumentNullException(nameof(target));
             }
             if(nest == 0) {
-                throw new ArgumentException(nameof(nest));
+                throw new ArgumentException(null, nameof(nest));
             }
 
             return DumpCore(target, nest, ignoreAutoMember);
@@ -292,7 +292,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 throw new ArgumentNullException(nameof(target));
             }
             if(nest == 0) {
-                throw new ArgumentException(nameof(nest));
+                throw new ArgumentException(null, nameof(nest));
             }
 
             return DumpCore(target, nest, true);
