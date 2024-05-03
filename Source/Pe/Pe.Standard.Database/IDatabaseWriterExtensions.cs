@@ -11,6 +11,11 @@ namespace ContentTypeTextNet.Pe.Standard.Database
     /// <summary>
     /// 書き込み処理の安全のしおり。
     /// </summary>
+    /// <remarks>
+    /// <para>問い合わせ文として非ユーザー入力でデバッグ中に検証可能なものを想定している。</para>
+    /// <para>そのため問い合わせ文の確認自体もデバッグ時のみ有効となる。</para>
+    /// <para>なお確認自体はただの文字列比較であるため該当ワードをコメントアウトしても通過する点に注意。</para>
+    /// </remarks>
     public static class IDatabaseWriterExtensions
     {
         #region function
@@ -19,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         private static void ThrowIfNotUpdate(string statement)
         {
             if(!Regex.IsMatch(statement, @"\bupdate\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
-                throw new DatabaseContextException("update");
+                throw new DatabaseStatementException("update");
             }
         }
 
@@ -51,26 +56,26 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <param name="writer"></param>
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <exception cref="DatabaseContextException">未更新。</exception>
+        /// <exception cref="DatabaseStatementException">未更新。</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
-        public static void UpdateByKey(this IDatabaseWriter writer, string statement, object parameter)
+        public static void UpdateByKey(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
             ThrowIfNotUpdate(statement);
 
             var result = writer.Execute(statement, parameter);
             if(result != 1) {
-                throw new DatabaseContextException($"update -> {result}");
+                throw new DatabaseManipulationException($"update -> {result}");
             }
         }
 
-        /// <inheritdoc cref="UpdateByKey(IDatabaseWriter, string, object)"/>
-        public static async Task UpdateByKeyAsync(this IDatabaseWriter writer, string statement, object parameter, CancellationToken cancellationToken = default)
+        /// <inheritdoc cref="UpdateByKey(IDatabaseWriter, string, object?)"/>
+        public static async Task UpdateByKeyAsync(this IDatabaseWriter writer, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfNotUpdate(statement);
 
             var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(result != 1) {
-                throw new DatabaseContextException($"update -> {result}");
+                throw new DatabaseManipulationException($"update -> {result}");
             }
         }
 
@@ -80,29 +85,29 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <param name="writer"></param>
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <exception cref="DatabaseContextException">複数更新。</exception>
+        /// <exception cref="DatabaseStatementException">複数更新。</exception>
         /// <returns>真: 単一更新、偽: 未更新。</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
-        public static bool UpdateByKeyOrNothing(this IDatabaseWriter writer, string statement, object parameter)
+        public static bool UpdateByKeyOrNothing(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
             ThrowIfNotUpdate(statement);
 
             var result = writer.Execute(statement, parameter);
             if(1 < result) {
-                throw new DatabaseContextException($"update -> {result}");
+                throw new DatabaseManipulationException($"update -> {result}");
             }
 
             return result == 1;
         }
 
         /// <inheritdoc cref="UpdateByKeyOrNothing(IDatabaseWriter, string, object)"/>
-        public static async Task<bool> UpdateByKeyOrNothingAsync(this IDatabaseWriter writer, string statement, object parameter, CancellationToken cancellationToken = default)
+        public static async Task<bool> UpdateByKeyOrNothingAsync(this IDatabaseWriter writer, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfNotUpdate(statement);
 
             var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(1 < result) {
-                throw new DatabaseContextException($"update -> {result}");
+                throw new DatabaseManipulationException($"update -> {result}");
             }
 
             return result == 1;
@@ -112,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         private static void ThrowIfNotInsert(string statement)
         {
             if(!Regex.IsMatch(statement, @"\binsert\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
-                throw new DatabaseContextException("insert");
+                throw new DatabaseStatementException("insert");
             }
         }
 
@@ -144,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <param name="writer"></param>
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <exception cref="DatabaseContextException">未挿入か複数挿入。</exception>
+        /// <exception cref="DatabaseStatementException">未挿入か複数挿入。</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static void InsertSingle(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
@@ -152,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
             var result = writer.Execute(statement, parameter);
             if(result != 1) {
-                throw new DatabaseContextException($"insert -> {result}");
+                throw new DatabaseManipulationException($"insert -> {result}");
             }
         }
 
@@ -163,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
             var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(result != 1) {
-                throw new DatabaseContextException($"insert -> {result}");
+                throw new DatabaseManipulationException($"insert -> {result}");
             }
         }
 
@@ -171,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         private static void ThrowIfNotDelete(string statement)
         {
             if(!Regex.IsMatch(statement, @"\bdelete\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
-                throw new DatabaseContextException("delete");
+                throw new DatabaseStatementException("delete");
             }
         }
 
@@ -203,25 +208,25 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <param name="writer"></param>
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <exception cref="DatabaseContextException">未削除。</exception>
+        /// <exception cref="DatabaseStatementException">未削除。</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
-        public static void DeleteByKey(this IDatabaseWriter writer, string statement, object parameter)
+        public static void DeleteByKey(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
             ThrowIfNotDelete(statement);
 
             var result = writer.Execute(statement, parameter);
             if(result != 1) {
-                throw new DatabaseContextException($"delete -> {result}");
+                throw new DatabaseManipulationException($"delete -> {result}");
             }
         }
-        /// <inheritdoc cref="DeleteByKey(IDatabaseWriter, string, object)"/>
-        public static async Task DeleteByKeyAsync(this IDatabaseWriter writer, string statement, object parameter, CancellationToken cancellationToken = default)
+        /// <inheritdoc cref="DeleteByKey(IDatabaseWriter, string, object?)"/>
+        public static async Task DeleteByKeyAsync(this IDatabaseWriter writer, string statement, object? parameter=null, CancellationToken cancellationToken = default)
         {
             ThrowIfNotDelete(statement);
 
             var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(result != 1) {
-                throw new DatabaseContextException($"delete -> {result}");
+                throw new DatabaseManipulationException($"delete -> {result}");
             }
         }
 
@@ -232,29 +237,29 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <param name="statement">データベース問い合わせ文。</param>
         /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
         /// <returns></returns>
-        /// <exception cref="DatabaseContextException">複数削除。</exception>
+        /// <exception cref="DatabaseStatementException">複数削除。</exception>
         /// <returns>真: 単一削除、偽: 未削除。</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
-        public static bool DeleteByKeyOrNothing(this IDatabaseWriter writer, string statement, object parameter)
+        public static bool DeleteByKeyOrNothing(this IDatabaseWriter writer, string statement, object? parameter = null)
         {
             ThrowIfNotDelete(statement);
 
             var result = writer.Execute(statement, parameter);
             if(1 < result) {
-                throw new DatabaseContextException($"delete -> {result}");
+                throw new DatabaseManipulationException($"delete -> {result}");
             }
 
             return result == 1;
         }
 
-        /// <inheritdoc cref="DeleteByKeyOrNothing(IDatabaseWriter, string, object)"/>
-        public static async Task<bool> DeleteByKeyOrNothingAsync(this IDatabaseWriter writer, string statement, object parameter, CancellationToken cancellationToken = default)
+        /// <inheritdoc cref="DeleteByKeyOrNothing(IDatabaseWriter, string, object?)"/>
+        public static async Task<bool> DeleteByKeyOrNothingAsync(this IDatabaseWriter writer, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfNotDelete(statement);
 
             var result = await writer.ExecuteAsync(statement, parameter, cancellationToken);
             if(1 < result) {
-                throw new DatabaseContextException($"delete -> {result}");
+                throw new DatabaseManipulationException($"delete -> {result}");
             }
 
             return result == 1;

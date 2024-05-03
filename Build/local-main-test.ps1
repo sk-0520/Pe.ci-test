@@ -10,6 +10,8 @@ Set-StrictMode -Version Latest
 
 Import-Module "${PSScriptRoot}/Modules/Project"
 
+$maxCount = 30
+
 $testDirs = @()
 $testDirs += Get-TestProjectDirectory -Kind main
 $testDirs += Get-TestProjectDirectory -Kind plugins
@@ -41,7 +43,8 @@ foreach ($pj in $Project) {
 
 
 $rootDir = Get-RootDirectory
-$workBaseDir = Join-Path -Path $rootDir -ChildPath '_coverage' | Join-Path -ChildPath 'main' | Join-Path -ChildPath (Get-Date -Format 'yyyy-MM-dd_HHmmss')
+$baseDir = Join-Path -Path $rootDir -ChildPath '_coverage' | Join-Path -ChildPath 'main'
+$workBaseDir = Join-Path -Path $baseDir -ChildPath (Get-Date -Format 'yyyy-MM-dd_HHmmss')
 if (!(Test-Path $workBaseDir)) {
 	New-Item $workBaseDir -ItemType Directory
 }
@@ -81,14 +84,27 @@ $sources = @(
 	Join-Path -Path (Get-SourceDirectory -Kind main) -ChildPath Pe.Bridge
 )
 
+$assemblyfilters = @()
+foreach($dir in $targetProjectDirs) {
+	$assemblyfilters += "+$($dir.Name.SubString(0, $dir.Name.Length - '.Test'.Length))"
+}
+
 $reportgenerator = Join-Path -Path $rootDir -ChildPath '_tools' | Join-Path -ChildPath 'reportgenerator.exe'
 & $reportgenerator `
 	-reports:$($testResultFiles -join ';') `
 	-sourcedirs:$($sources -join ';') `
 	-targetdir:"$codeCoverageDir" `
+	-assemblyfilters:"$($assemblyfilters -join ';')" `
 	-reporttypes:Html
 
 if (! $SuppressOpen) {
 	$html = Join-Path -Path $codeCoverageDir -ChildPath 'index.html'
 	Start-Process $html
+}
+
+
+$dirs = @(Get-ChildItem -LiteralPath $baseDir -Directory | Sort-Object BaseName -Descending)
+for($i = $maxCount; $i -lt $dirs.Count; $i++) {
+	$dir = $dirs[$i]
+	Remove-Item -LiteralPath $dir.FullName -Force -Recurse
 }
