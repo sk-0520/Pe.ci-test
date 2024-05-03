@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 using ContentTypeTextNet.Pe.Test;
+using System.Runtime.CompilerServices;
 
 namespace ContentTypeTextNet.Pe.Standard.Database.Test.Vender.Public.SQLite
 {
@@ -15,10 +16,39 @@ namespace ContentTypeTextNet.Pe.Standard.Database.Test.Vender.Public.SQLite
     {
         #region define
 
+        private class TestStatementLoader: IDatabaseStatementLoader
+        {
+            #region IDatabaseStatementLoader
+
+            /// <summary>
+            /// キーからデータベース実行文を取得。
+            /// </summary>
+            /// <param name="key"></param>
+            /// <returns></returns>
+            public string LoadStatement(string key)
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <summary>
+            /// 呼び出しクラス・メンバ名の完全名からデータベース実行文を取得する。
+            /// </summary>
+            /// <returns></returns>
+            public string LoadStatementByCurrent(Type callerType, [CallerMemberName] string callerMemberName = "")
+            {
+                var current = TestIO.InitializeMethod(this);
+                var file = TestIO.CreateTextFile(current, "MEMBER!NAME.sql", "file-sql1\nfile-sql2");
+                using var reader = file.OpenText();
+                return reader.ReadToEnd();
+            }
+
+            #endregion
+        }
+
         private class SqliteDatabaseAccessObject: DatabaseAccessObjectBase
         {
             public SqliteDatabaseAccessObject()
-                : base(default!, default!, new Pe.Core.Models.Database.Vender.Public.SQLite.SqliteImplementation(), NullLoggerFactory.Instance)
+                : base(default!, new TestStatementLoader(), new Pe.Core.Models.Database.Vender.Public.SQLite.SqliteImplementation(), NullLoggerFactory.Instance)
             { }
 
             #region function
@@ -33,17 +63,9 @@ namespace ContentTypeTextNet.Pe.Standard.Database.Test.Vender.Public.SQLite
 
         #endregion
 
-        #region function
+        #region property
 
-        SqliteDatabaseAccessObject CreateDao()
-        {
-            return new SqliteDatabaseAccessObject();
-        }
-
-        [Fact]
-        public void ProcessStatementTest_1()
-        {
-            var input = @"
+        private string Sql { get; } = @"
 select
 *
 from
@@ -54,7 +76,7 @@ VALUE2:CODE
     2
     22
 VALUE3:LOAD
-    NAME
+    NAME.sql
 */
 
 TABLE
@@ -69,10 +91,23 @@ VALUE2:CODE
 */COL3/*}}*/
 
 ";
+
+        #endregion
+
+        #region function
+
+        SqliteDatabaseAccessObject CreateDao()
+        {
+            return new SqliteDatabaseAccessObject();
+        }
+
+        [Fact]
+        public void ProcessStatementTest_1()
+        {
             var dao = CreateDao();
             var map = new Dictionary<string, string>();
             map["KEY1"] = "VALUE1";
-            var actual1 = dao.ProcessStatement2(input, map);
+            var actual1 = dao.ProcessStatement2(Sql, map);
             var expected1 = @"
 select
 *
@@ -83,11 +118,17 @@ COL3
 
 ";
             ExAssert.AreMultiLineTextEqualWithoutNewline(expected1, actual1);
+        }
 
-            map.Clear();
+        [Fact]
+        public void ProcessStatementTest_2()
+        {
+            var dao = CreateDao();
+            var map = new Dictionary<string, string>();
+
             map["KEY1"] = "VALUE2";
             map["KEY2"] = "VALUE2";
-            var actual2 = dao.ProcessStatement2(input, map);
+            var actual2 = dao.ProcessStatement2(Sql, map);
             var expected2 = @"
 select
 *
@@ -99,11 +140,28 @@ order by
 
 ";
             ExAssert.AreMultiLineTextEqualWithoutNewline(expected2, actual2);
-
-            //LOADは諸々の事情でテストなし
         }
 
+        [Fact]
+        public void ProcessStatementTest_3()
+        {
+            var dao = CreateDao();
+            var map = new Dictionary<string, string>();
 
+            map["KEY1"] = "VALUE3";
+            var actual3 = dao.ProcessStatement2(Sql, map, "MEMBER");
+            var expected3 = @"
+select
+*
+from
+file-sql1
+file-sql2
+order by
+COL3
+
+";
+            ExAssert.AreMultiLineTextEqualWithoutNewline(expected3, actual3);
+        }
 
         #endregion
     }
