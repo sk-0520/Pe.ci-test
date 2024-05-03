@@ -11,17 +11,18 @@ using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Database.Test.Vender.Public.SQLite
 {
-    public class SqliteSimpleTest
+    public class DatabaseAccessorTest
     {
         #region define
 
         #endregion
-        public SqliteSimpleTest()
+
+        public DatabaseAccessorTest()
         {
             var factory = new TestSqliteFactory();
             DatabaseAccessor = new SqliteAccessor(factory, NullLoggerFactory.Instance);
 
-            var logger = NullLoggerFactory.Instance.CreateLogger(nameof(SqliteSimpleTest));
+            var logger = NullLoggerFactory.Instance.CreateLogger(nameof(DatabaseAccessorTest));
 
             var statements = new[] {
 @"
