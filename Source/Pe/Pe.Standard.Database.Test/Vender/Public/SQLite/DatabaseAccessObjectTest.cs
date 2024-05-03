@@ -16,8 +16,12 @@ namespace ContentTypeTextNet.Pe.Standard.Database.Test.Vender.Public.SQLite
     {
         #region define
 
-        private class TestStatementLoader: IDatabaseStatementLoader
+        private class TestStatementLoader: DatabaseStatementLoaderBase
         {
+            public TestStatementLoader()
+                : base(NullLoggerFactory.Instance)
+            { }
+
             #region IDatabaseStatementLoader
 
             /// <summary>
@@ -25,22 +29,14 @@ namespace ContentTypeTextNet.Pe.Standard.Database.Test.Vender.Public.SQLite
             /// </summary>
             /// <param name="key"></param>
             /// <returns></returns>
-            public string LoadStatement(string key)
-            {
-                throw new NotImplementedException();
-            }
-
-            /// <summary>
-            /// 呼び出しクラス・メンバ名の完全名からデータベース実行文を取得する。
-            /// </summary>
-            /// <returns></returns>
-            public string LoadStatementByCurrent(Type callerType, [CallerMemberName] string callerMemberName = "")
+            public override string LoadStatement(string key)
             {
                 var current = TestIO.InitializeMethod(this);
                 var file = TestIO.CreateTextFile(current, "MEMBER!NAME.sql", "file-sql1\nfile-sql2");
                 using var reader = file.OpenText();
                 return reader.ReadToEnd();
             }
+
 
             #endregion
         }
