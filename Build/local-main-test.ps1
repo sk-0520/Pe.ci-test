@@ -81,11 +81,17 @@ $sources = @(
 	Join-Path -Path (Get-SourceDirectory -Kind main) -ChildPath Pe.Bridge
 )
 
+$assemblyfilters = @()
+foreach($dir in $targetProjectDirs) {
+	$assemblyfilters += "+$($dir.Name.SubString(0, $dir.Name.Length - '.Test'.Length))"
+}
+
 $reportgenerator = Join-Path -Path $rootDir -ChildPath '_tools' | Join-Path -ChildPath 'reportgenerator.exe'
 & $reportgenerator `
 	-reports:$($testResultFiles -join ';') `
 	-sourcedirs:$($sources -join ';') `
 	-targetdir:"$codeCoverageDir" `
+	-assemblyfilters:"$($assemblyfilters -join ';')" `
 	-reporttypes:Html
 
 if (! $SuppressOpen) {
