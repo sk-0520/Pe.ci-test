@@ -266,33 +266,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     }
 
     /// <summary>
-    /// プロパティアクセス処理生成。
-    /// </summary>
-    public static class PropertyAccessorFactory
-    {
-        #region function
-
-        /// <summary>
-        /// 汎用版を生成。
-        /// </summary>
-        /// <param name="owner"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        public static PropertyAccessor Create(object owner, string propertyName) => new PropertyAccessor(owner, propertyName);
-        /// <summary>
-        /// ジェネリック版を生成。
-        /// </summary>
-        /// <typeparam name="TOwner"></typeparam>
-        /// <typeparam name="TValue"></typeparam>
-        /// <param name="owner"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        public static PropertyAccessor<TOwner, TValue> Create<TOwner, TValue>([DisallowNull] TOwner owner, string propertyName) => new PropertyAccessor<TOwner, TValue>(owner, propertyName);
-
-        #endregion
-    }
-
-    /// <summary>
     /// プロパティアクセス処理キャッシュ。
     /// </summary>
     public class CachedProperty
