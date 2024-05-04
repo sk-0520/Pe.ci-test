@@ -13,6 +13,40 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
+
+    [Serializable]
+    public class PropertyException: Exception
+    {
+        public PropertyException(string message) : base(message) { }
+        public PropertyException(string message, Exception inner) : base(message, inner) { }
+        protected PropertyException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
+
+    public abstract class PropertyCanNotAccessExceptionBase: PropertyException
+    {
+        public PropertyCanNotAccessExceptionBase(Type ownerType, string propertyName)
+            : base($"{ownerType.FullName}.{propertyName}")
+        { }
+    }
+
+    [Serializable]
+    public sealed class PropertyCanNotReadException: PropertyCanNotAccessExceptionBase
+    {
+        public PropertyCanNotReadException(Type ownerType, string propertyName)
+            :base(ownerType, propertyName)
+        { }
+    }
+
+    [Serializable]
+    public sealed class PropertyCanNotWriteException: PropertyCanNotAccessExceptionBase
+    {
+        public PropertyCanNotWriteException(Type ownerType, string propertyName)
+            :base(ownerType, propertyName)
+        { }
+    }
+
     /// <summary>
     /// 汎用プロパティ取得処理。
     /// </summary>
@@ -92,9 +126,27 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public static ParameterExpression CreateOwner(object owner) => Expression.Parameter(owner.GetType(), nameof(owner));
         public static ParameterExpression CreateOwner<T>() => Expression.Parameter(typeof(T), typeof(T).Name);
 
+        private static void ThrowIfCanNotRead(object owner, MemberExpression member)
+        {
+            switch(member.Member) {
+                case PropertyInfo info:
+                    if(!info.CanRead) {
+                        throw new PropertyCanNotReadException(owner.GetType(), member.Member.Name);
+                    }
+                    break;
+
+                case FieldInfo:
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         public static Func<object, object?> CreateGetter(ParameterExpression owner, string propertyName)
         {
             var property = Expression.PropertyOrField(owner, propertyName);
+            ThrowIfCanNotRead(owner, property);
 
             var lambda = Expression.Lambda(
                 Expression.Convert(
@@ -110,6 +162,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public static Func<TOwner, TValue> CreateGetter<TOwner, TValue>(ParameterExpression owner, string propertyName)
         {
             var property = Expression.PropertyOrField(owner, propertyName);
+            ThrowIfCanNotRead(owner, property);
 
             var lambda = Expression.Lambda<Func<TOwner, TValue>>(
                 Expression.Convert(
@@ -121,9 +174,30 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return lambda.Compile();
         }
 
+        private static void ThrowIfCanNotWrite(object owner, MemberExpression member)
+        {
+            switch(member.Member) {
+                case PropertyInfo info:
+                    if(!info.CanWrite) {
+                        throw new PropertyCanNotWriteException(owner.GetType(), member.Member.Name);
+                    }
+                    break;
+
+                case FieldInfo info:
+                    if(info.IsInitOnly) {
+                        throw new PropertyCanNotWriteException(owner.GetType(), member.Member.Name);
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         public static Action<object, object?> CreateSetter(ParameterExpression owner, string propertyName)
         {
             var property = Expression.PropertyOrField(owner, propertyName);
+            ThrowIfCanNotWrite(owner, property);
             var value = Expression.Parameter(typeof(object), "value");
 
             var lambda = Expression.Lambda(
@@ -140,6 +214,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public static Action<TOwner, TValue> CreateSetter<TOwner, TValue>(ParameterExpression owner, string propertyName)
         {
             var property = Expression.PropertyOrField(owner, propertyName);
+            ThrowIfCanNotWrite(owner, property);
             var value = Expression.Parameter(typeof(TValue), "value");
 
             var lambda = Expression.Lambda<Action<TOwner, TValue>>(

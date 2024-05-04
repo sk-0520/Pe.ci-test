@@ -43,6 +43,16 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         }
 
         [Fact]
+        public void CreateSetterOnlyTest()
+        {
+            var gsi = new Get();
+            var gso = PropertyExpressionFactory.CreateOwner(gsi);
+            var exception = Record.Exception(() => PropertyExpressionFactory.CreateGetter<Get, int>(gso, "Property"));
+            Assert.Null(exception);
+            Assert.Throws<PropertyCanNotWriteException>(() => PropertyExpressionFactory.CreateSetter<Get, int>(gso, "Property"));
+        }
+
+        [Fact]
         public void CreateSetterTest()
         {
             var gsi = new GetSet();
