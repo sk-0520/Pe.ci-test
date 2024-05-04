@@ -13,6 +13,47 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
+
+    [Serializable]
+    public class PropertyException: Exception
+    {
+        public PropertyException(string message) : base(message) { }
+        public PropertyException(string message, Exception inner) : base(message, inner) { }
+        protected PropertyException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
+
+    public abstract class PropertyCanNotAccessExceptionBase: PropertyException
+    {
+        public PropertyCanNotAccessExceptionBase(Type ownerType, string propertyName)
+            : base($"{ownerType.FullName}.{propertyName}")
+        { }
+    }
+
+    [Serializable]
+    public sealed class PropertyCanNotReadException: PropertyCanNotAccessExceptionBase
+    {
+        public PropertyCanNotReadException(Type ownerType, string propertyName)
+            : base(ownerType, propertyName)
+        { }
+    }
+
+    [Serializable]
+    public sealed class PropertyCanNotWriteException: PropertyCanNotAccessExceptionBase
+    {
+        public PropertyCanNotWriteException(Type ownerType, string propertyName)
+            : base(ownerType, propertyName)
+        { }
+    }
+
+    public sealed class PropertyNotFoundException: PropertyException
+    {
+        public PropertyNotFoundException(string propertyName)
+            : base(propertyName)
+        { }
+    }
+
     /// <summary>
     /// 汎用プロパティ取得処理。
     /// </summary>
@@ -92,9 +133,27 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public static ParameterExpression CreateOwner(object owner) => Expression.Parameter(owner.GetType(), nameof(owner));
         public static ParameterExpression CreateOwner<T>() => Expression.Parameter(typeof(T), typeof(T).Name);
 
+        private static void ThrowIfCanNotRead(object owner, MemberExpression member)
+        {
+            switch(member.Member) {
+                case PropertyInfo info:
+                    if(!info.CanRead) {
+                        throw new PropertyCanNotReadException(owner.GetType(), member.Member.Name);
+                    }
+                    break;
+
+                case FieldInfo:
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         public static Func<object, object?> CreateGetter(ParameterExpression owner, string propertyName)
         {
             var property = Expression.PropertyOrField(owner, propertyName);
+            ThrowIfCanNotRead(owner, property);
 
             var lambda = Expression.Lambda(
                 Expression.Convert(
@@ -110,6 +169,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public static Func<TOwner, TValue> CreateGetter<TOwner, TValue>(ParameterExpression owner, string propertyName)
         {
             var property = Expression.PropertyOrField(owner, propertyName);
+            ThrowIfCanNotRead(owner, property);
 
             var lambda = Expression.Lambda<Func<TOwner, TValue>>(
                 Expression.Convert(
@@ -121,9 +181,30 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return lambda.Compile();
         }
 
+        private static void ThrowIfCanNotWrite(object owner, MemberExpression member)
+        {
+            switch(member.Member) {
+                case PropertyInfo info:
+                    if(!info.CanWrite) {
+                        throw new PropertyCanNotWriteException(owner.GetType(), member.Member.Name);
+                    }
+                    break;
+
+                case FieldInfo info:
+                    if(info.IsInitOnly) {
+                        throw new PropertyCanNotWriteException(owner.GetType(), member.Member.Name);
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         public static Action<object, object?> CreateSetter(ParameterExpression owner, string propertyName)
         {
             var property = Expression.PropertyOrField(owner, propertyName);
+            ThrowIfCanNotWrite(owner, property);
             var value = Expression.Parameter(typeof(object), "value");
 
             var lambda = Expression.Lambda(
@@ -140,6 +221,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public static Action<TOwner, TValue> CreateSetter<TOwner, TValue>(ParameterExpression owner, string propertyName)
         {
             var property = Expression.PropertyOrField(owner, propertyName);
+            ThrowIfCanNotWrite(owner, property);
             var value = Expression.Parameter(typeof(TValue), "value");
 
             var lambda = Expression.Lambda<Action<TOwner, TValue>>(
@@ -175,7 +257,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             var ownerExpression = PropertyExpressionFactory.CreateOwner(owner);
             var propertyInfo = ownerExpression.Type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             if(propertyInfo == null) {
-                throw new ArgumentException($"{nameof(propertyName)}: {propertyName}");
+                throw new PropertyNotFoundException($"{nameof(propertyName)}: {propertyName}");
             }
             PropertyInfo = propertyInfo;
             if(PropertyInfo.CanWrite) {
@@ -266,33 +348,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     }
 
     /// <summary>
-    /// プロパティアクセス処理生成。
-    /// </summary>
-    public static class PropertyAccessorFactory
-    {
-        #region function
-
-        /// <summary>
-        /// 汎用版を生成。
-        /// </summary>
-        /// <param name="owner"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        public static PropertyAccessor Create(object owner, string propertyName) => new PropertyAccessor(owner, propertyName);
-        /// <summary>
-        /// ジェネリック版を生成。
-        /// </summary>
-        /// <typeparam name="TOwner"></typeparam>
-        /// <typeparam name="TValue"></typeparam>
-        /// <param name="owner"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        public static PropertyAccessor<TOwner, TValue> Create<TOwner, TValue>([DisallowNull] TOwner owner, string propertyName) => new PropertyAccessor<TOwner, TValue>(owner, propertyName);
-
-        #endregion
-    }
-
-    /// <summary>
     /// プロパティアクセス処理キャッシュ。
     /// </summary>
     public class CachedProperty
@@ -336,12 +391,8 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public object? Get(string propertyName)
         {
 #if CHECK_PROPERTY_NAME
-            if(Properties.TryGetValue(propertyName, out var prop)) {
-                if(!prop.CanRead) {
-                    throw new ArgumentException(null, nameof(propertyName));
-                }
-            } else {
-                throw new ArgumentException(null, nameof(propertyName));
+            if(!Properties.ContainsKey(propertyName)) {
+                throw new PropertyNotFoundException(propertyName);
             }
 #endif
             var accessor = GetAccessor(propertyName);
@@ -351,12 +402,8 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public void Set(string propertyName, object? value)
         {
 #if CHECK_PROPERTY_NAME
-            if(Properties.TryGetValue(propertyName, out var prop)) {
-                if(!prop.CanWrite) {
-                    throw new ArgumentException(null, nameof(propertyName));
-                }
-            } else {
-                throw new ArgumentException(null, nameof(propertyName));
+            if(!Properties.ContainsKey(propertyName)) {
+                throw new PropertyNotFoundException(propertyName);
             }
 #endif
             var accessor = GetAccessor(propertyName);

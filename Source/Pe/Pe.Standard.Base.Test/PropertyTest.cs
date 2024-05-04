@@ -7,8 +7,26 @@ using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
-    public class Get { int Property { get; } = 1; }
-    public class GetSet { int Property { get; set; } }
+    public class Get
+    {
+        private int Property { get; } = 1;
+    }
+
+    public class GetSet
+    {
+        private int Property { get; set; }
+    }
+
+    public interface ITypeData
+    {
+        int Property { get; set; }
+    }
+
+    public class TypeData: ITypeData
+    {
+        public int Property { get; set; }
+        private string Custom { get; set; } = string.Empty;
+    }
 
     public class PropertyFactoryTest
     {
@@ -22,6 +40,16 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             var propertyGetter = PropertyExpressionFactory.CreateGetter<Get, int>(go, "Property");
             var gi1 = propertyGetter(gi);
             Assert.Equal(1, gi1);
+        }
+
+        [Fact]
+        public void CreateSetterOnlyTest()
+        {
+            var gsi = new Get();
+            var gso = PropertyExpressionFactory.CreateOwner(gsi);
+            var exception = Record.Exception(() => PropertyExpressionFactory.CreateGetter<Get, int>(gso, "Property"));
+            Assert.Null(exception);
+            Assert.Throws<PropertyCanNotWriteException>(() => PropertyExpressionFactory.CreateSetter<Get, int>(gso, "Property"));
         }
 
         [Fact]
@@ -60,10 +88,37 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             Assert.Equal(10, gi1);
         }
 
+        [Fact]
+        public void CreateType_interface_Test()
+        {
+            var td = new TypeData();
+
+            var tdo = PropertyExpressionFactory.CreateOwner<ITypeData>();
+            var propertyGetter = PropertyExpressionFactory.CreateGetter(tdo, "Property");
+            var propertySetter = PropertyExpressionFactory.CreateSetter(tdo, "Property");
+
+            propertySetter.DynamicInvoke(td, 10);
+            var gi1 = propertyGetter.DynamicInvoke(td);
+            Assert.Equal(10, gi1);
+            Assert.Equal(10, td.Property);
+        }
+
+        [Fact]
+        public void CreateType_interface_no_property_Test()
+        {
+            var td = new TypeData();
+
+            var tdo = PropertyExpressionFactory.CreateOwner<ITypeData>();
+            // 型から作成しているので存在しないプロパティは許容されない
+            Assert.Throws<ArgumentException>(() => PropertyExpressionFactory.CreateGetter(tdo, "Custom"));
+            Assert.Throws<ArgumentException>(() => PropertyExpressionFactory.CreateSetter(tdo, "Custom"));
+        }
+
+
         #endregion
     }
 
-    public class PropertyAccessor
+    public class PropertyAccessorTest
     {
         #region function
 
@@ -95,6 +150,59 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
                 Assert.Equal(100, gsi1);
             }
 
+        }
+
+        #endregion
+    }
+
+    public class CachedPropertyTest
+    {
+        public class Class
+        {
+            #region property
+
+            public int EditableNumber { get; set; } = 123;
+            public int ReadonlyNumber { get; } = 777;
+
+            #endregion
+        }
+
+        #region function
+
+        [Fact]
+        public void Get_EditableNumber_Test()
+        {
+            var obj = new Class();
+            var test = new CachedProperty(obj);
+            var actual = test.Get(nameof(obj.EditableNumber));
+            Assert.Equal(123, actual);
+        }
+
+        [Fact]
+        public void Set_EditableNumber_Test()
+        {
+            var obj = new Class();
+            var test = new CachedProperty(obj);
+            test.Set(nameof(obj.EditableNumber), 456);
+            Assert.Equal(456, test.Get(nameof(obj.EditableNumber)));
+            Assert.Equal(456, obj.EditableNumber);
+        }
+
+        [Fact]
+        public void Get_ReadonlyNumber_Test()
+        {
+            var obj = new Class();
+            var test = new CachedProperty(obj);
+            var actual = test.Get(nameof(obj.ReadonlyNumber));
+            Assert.Equal(777, actual);
+        }
+
+        [Fact]
+        public void Set_ReadonlyNumber_Test()
+        {
+            var obj = new Class();
+            var test = new CachedProperty(obj);
+            Assert.Throws<NotSupportedException>(() => test.Set(nameof(obj.ReadonlyNumber), 789));
         }
 
         #endregion
