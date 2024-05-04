@@ -23,7 +23,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="TestResults\**" />
+    <EmbeddedResource Remove="TestResults\**" />
+    <None Remove="TestResults\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <ProjectReference Include="..\Pe.Bridge\Pe.Bridge.csproj" />
   </ItemGroup>
+
 
 </Project>
