@@ -846,6 +846,7 @@ jobs:
           - macos-12
           - macos-11
         TARGET:
+          - Pe.Standard.Property.Test
           - Pe.Standard.Base.Test
           - Pe.Standard.Database.Test
           - Pe.Standard.DependencyInjection.Test

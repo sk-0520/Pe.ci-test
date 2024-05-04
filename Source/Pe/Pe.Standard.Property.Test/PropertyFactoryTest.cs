@@ -1,35 +1,35 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using Xunit;
 
-namespace ContentTypeTextNet.Pe.Standard.Base.Test
+namespace ContentTypeTextNet.Pe.Standard.Property.Test
 {
-    public class Get
-    {
-        private int Property { get; } = 1;
-    }
-
-    public class GetSet
-    {
-        private int Property { get; set; }
-    }
-
-    public interface ITypeData
-    {
-        int Property { get; set; }
-    }
-
-    public class TypeData: ITypeData
-    {
-        public int Property { get; set; }
-        private string Custom { get; set; } = string.Empty;
-    }
-
     public class PropertyFactoryTest
     {
+        #region define
+
+        private class Get
+        {
+            private int Property { get; } = 1;
+        }
+
+        private class GetSet
+        {
+            private int Property { get; set; }
+        }
+
+        private interface ITypeData
+        {
+            int Property { get; set; }
+        }
+
+        private class TypeData: ITypeData
+        {
+            public int Property { get; set; }
+            private string Custom { get; set; } = string.Empty;
+        }
+
+        #endregion
+
         #region function
 
         [Fact]
@@ -114,96 +114,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             Assert.Throws<ArgumentException>(() => PropertyExpressionFactory.CreateSetter(tdo, "Custom"));
         }
 
-
-        #endregion
-    }
-
-    public class PropertyAccessorTest
-    {
-        #region function
-
-        [Fact]
-        public void GetterTest()
-        {
-            var gi = new Get();
-            var gp = new PropertyAccessor<Get, int>(gi, "Property");
-            var gi1 = gp.Get(gi);
-            Assert.Equal(1, gi1);
-        }
-
-        [Fact]
-        public void SetterTest()
-        {
-            {
-                var gi = new Get();
-                var gp = new PropertyAccessor<Get, int>(gi, "Property");
-                Assert.False(gp.PropertyInfo.CanWrite);
-                Assert.Throws<NotSupportedException>(() => gp.Set(gi, 100));
-            }
-
-            {
-                var gsi = new GetSet();
-                var gsp = new PropertyAccessor<GetSet, int>(gsi, "Property");
-                Assert.True(gsp.PropertyInfo.CanWrite);
-                gsp.Set(gsi, 100);
-                var gsi1 = gsp.Get(gsi);
-                Assert.Equal(100, gsi1);
-            }
-
-        }
-
-        #endregion
-    }
-
-    public class CachedPropertyTest
-    {
-        public class Class
-        {
-            #region property
-
-            public int EditableNumber { get; set; } = 123;
-            public int ReadonlyNumber { get; } = 777;
-
-            #endregion
-        }
-
-        #region function
-
-        [Fact]
-        public void Get_EditableNumber_Test()
-        {
-            var obj = new Class();
-            var test = new CachedProperty(obj);
-            var actual = test.Get(nameof(obj.EditableNumber));
-            Assert.Equal(123, actual);
-        }
-
-        [Fact]
-        public void Set_EditableNumber_Test()
-        {
-            var obj = new Class();
-            var test = new CachedProperty(obj);
-            test.Set(nameof(obj.EditableNumber), 456);
-            Assert.Equal(456, test.Get(nameof(obj.EditableNumber)));
-            Assert.Equal(456, obj.EditableNumber);
-        }
-
-        [Fact]
-        public void Get_ReadonlyNumber_Test()
-        {
-            var obj = new Class();
-            var test = new CachedProperty(obj);
-            var actual = test.Get(nameof(obj.ReadonlyNumber));
-            Assert.Equal(777, actual);
-        }
-
-        [Fact]
-        public void Set_ReadonlyNumber_Test()
-        {
-            var obj = new Class();
-            var test = new CachedProperty(obj);
-            Assert.Throws<NotSupportedException>(() => test.Set(nameof(obj.ReadonlyNumber), 789));
-        }
 
         #endregion
     }

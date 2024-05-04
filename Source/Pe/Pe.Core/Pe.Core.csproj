@@ -19,6 +19,7 @@
     <ProjectReference Include="..\Pe.PInvoke\Pe.PInvoke.csproj" />
     <ProjectReference Include="..\Pe.Standard.Base\Pe.Standard.Base.csproj" />
     <ProjectReference Include="..\Pe.Standard.Database\Pe.Standard.Database.csproj" />
+    <ProjectReference Include="..\Pe.Standard.Property\Pe.Standard.Property.csproj" />
   </ItemGroup>
 
 </Project>
