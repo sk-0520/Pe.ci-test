@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     public sealed class PropertyCanNotReadException: PropertyCanNotAccessExceptionBase
     {
         public PropertyCanNotReadException(Type ownerType, string propertyName)
-            :base(ownerType, propertyName)
+            : base(ownerType, propertyName)
         { }
     }
 
@@ -43,7 +43,14 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     public sealed class PropertyCanNotWriteException: PropertyCanNotAccessExceptionBase
     {
         public PropertyCanNotWriteException(Type ownerType, string propertyName)
-            :base(ownerType, propertyName)
+            : base(ownerType, propertyName)
+        { }
+    }
+
+    public sealed class PropertyNotFoundException: PropertyException
+    {
+        public PropertyNotFoundException(string propertyName)
+            : base(propertyName)
         { }
     }
 
@@ -250,7 +257,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             var ownerExpression = PropertyExpressionFactory.CreateOwner(owner);
             var propertyInfo = ownerExpression.Type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             if(propertyInfo == null) {
-                throw new ArgumentException($"{nameof(propertyName)}: {propertyName}");
+                throw new PropertyNotFoundException($"{nameof(propertyName)}: {propertyName}");
             }
             PropertyInfo = propertyInfo;
             if(PropertyInfo.CanWrite) {
@@ -384,12 +391,8 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public object? Get(string propertyName)
         {
 #if CHECK_PROPERTY_NAME
-            if(Properties.TryGetValue(propertyName, out var prop)) {
-                if(!prop.CanRead) {
-                    throw new ArgumentException(null, nameof(propertyName));
-                }
-            } else {
-                throw new ArgumentException(null, nameof(propertyName));
+            if(!Properties.ContainsKey(propertyName)) {
+                throw new PropertyNotFoundException(propertyName);
             }
 #endif
             var accessor = GetAccessor(propertyName);
@@ -399,12 +402,8 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public void Set(string propertyName, object? value)
         {
 #if CHECK_PROPERTY_NAME
-            if(Properties.TryGetValue(propertyName, out var prop)) {
-                if(!prop.CanWrite) {
-                    throw new ArgumentException(null, nameof(propertyName));
-                }
-            } else {
-                throw new ArgumentException(null, nameof(propertyName));
+            if(!Properties.ContainsKey(propertyName)) {
+                throw new PropertyNotFoundException(propertyName);
             }
 #endif
             var accessor = GetAccessor(propertyName);

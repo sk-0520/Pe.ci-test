@@ -155,10 +155,55 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         #endregion
     }
 
-    public class PropertyAccessorFactoryTest
+    public class CachedPropertyTest
     {
+        public class Class
+        {
+            #region property
+
+            public int EditableNumber { get; set; } = 123;
+            public int ReadonlyNumber { get; } = 777;
+
+            #endregion
+        }
+
         #region function
 
+        [Fact]
+        public void Get_EditableNumber_Test()
+        {
+            var obj = new Class();
+            var test = new CachedProperty(obj);
+            var actual = test.Get(nameof(obj.EditableNumber));
+            Assert.Equal(123, actual);
+        }
+
+        [Fact]
+        public void Set_EditableNumber_Test()
+        {
+            var obj = new Class();
+            var test = new CachedProperty(obj);
+            test.Set(nameof(obj.EditableNumber), 456);
+            Assert.Equal(456, test.Get(nameof(obj.EditableNumber)));
+            Assert.Equal(456, obj.EditableNumber);
+        }
+
+        [Fact]
+        public void Get_ReadonlyNumber_Test()
+        {
+            var obj = new Class();
+            var test = new CachedProperty(obj);
+            var actual = test.Get(nameof(obj.ReadonlyNumber));
+            Assert.Equal(777, actual);
+        }
+
+        [Fact]
+        public void Set_ReadonlyNumber_Test()
+        {
+            var obj = new Class();
+            var test = new CachedProperty(obj);
+            Assert.Throws<NotSupportedException>(() => test.Set(nameof(obj.ReadonlyNumber), 789));
+        }
 
         #endregion
     }
