@@ -21,9 +21,7 @@ if ($null -eq $Project -or $Project.Count -eq 0) {
 	exit
 }
 if ($Project.Count -eq 1 -and $Project[0] -eq '*') {
-	$Project
 	$Project = $testDirs | Select-Object -ExpandProperty Name
-	$Project
 }
 
 $targetProjectDirs = @()
