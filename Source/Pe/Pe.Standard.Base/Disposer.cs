@@ -304,6 +304,48 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// <see cref="ArrayPool{T}"/> のラッパー。
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    public readonly ref struct ArrayPoolValue<T>
+    {
+        public ArrayPoolValue(int length)
+            : this(length, ArrayPool<T>.Shared)
+        { }
+
+        public ArrayPoolValue(int length, ArrayPool<T> pool)
+        {
+            Pool = pool;
+            Items = Pool.Rent(length);
+            Length = length;
+        }
+
+        #region property
+
+        private ArrayPool<T> Pool { get; }
+        public T[] Items { get; }
+
+        public int Length { get; }
+
+        #endregion
+
+        #region function
+
+        public ref T this[int index] => ref Items[index];
+
+        #endregion
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            Pool.Return(Items);
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// <see cref="ArrayPool{T}"/> のラッパー。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public sealed class ArrayPoolObject<T>: DisposerBase
     {
         public ArrayPoolObject(int length)
