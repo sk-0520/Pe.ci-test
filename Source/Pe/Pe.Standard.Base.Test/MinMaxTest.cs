@@ -33,5 +33,38 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             Assert.Equal(expectedMin, actual.Minimum);
             Assert.Equal(expectedMax, actual.Maximum);
         }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("0")]
+        [InlineData("0,1,2")]
+        public void Parse_throw_Test(string s)
+        {
+            Assert.Throws<ArgumentException>(() => MinMax.Parse<int>(s));
+        }
+
+        [Theory]
+        [InlineData(1, 2, "1,2")]
+        [InlineData(-1, -2, "-1,-2")]
+        [InlineData(1, 2, " 1 , 2 ")]
+        public void TryParse_success_Test(int expectedMin, int expectedMax, string s)
+        {
+            var result = MinMax.TryParse<int>(s, out var actual);
+            Assert.True(result);
+            Assert.Equal(expectedMin, actual.Minimum);
+            Assert.Equal(expectedMax, actual.Maximum);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("0")]
+        [InlineData("0,1,2")]
+        public void TryParse_failure_Test(string s)
+        {
+            var result = MinMax.TryParse<int>(s, out var actual);
+            Assert.False(result);
+            Assert.Equal(0, actual.Minimum);
+            Assert.Equal(0, actual.Maximum);
+        }
     }
 }
