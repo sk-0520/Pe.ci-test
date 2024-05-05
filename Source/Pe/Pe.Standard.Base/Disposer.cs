@@ -287,7 +287,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    for(var i = StockItems.Count - 1; 0 < i; i--) {
+                    for(var i = StockItems.Count - 1; 0 <= i; i--) {
                         StockItems[i].Dispose();
                     }
                     StockItems.Clear();
