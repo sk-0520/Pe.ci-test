@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Test
     /// <summary>
     /// テスト拡張系。
     /// </summary>
-    public static class ExAssert
+    public static class AssertEx
     {
         #region function
 
@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Test
         /// </summary>
         /// <param name="expected"></param>
         /// <param name="actual"></param>
-        public static void AreMultiLineTextEqualWithoutNewline(string expected, string actual)
+        public static void EqualMultiLineTextWithoutNewline(string expected, string actual)
         {
             var e = string.Join(Environment.NewLine, ReadLines(expected));
             var a = string.Join(Environment.NewLine, ReadLines(actual));
