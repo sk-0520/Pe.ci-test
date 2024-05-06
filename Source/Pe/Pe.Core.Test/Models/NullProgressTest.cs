@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Test;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
+
+// こいつの評価基準はモックをありゃこりゃするやつなんですよ
 
 namespace ContentTypeTextNet.Pe.Core.Test.Models
 {
@@ -17,23 +20,35 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [Fact]
         public void ReportTest()
         {
-            var mockLogger = new Mock<ILogger>();
+            var mockLog = TestMock.CreateLog();
 
-            var mockLoggerFactory = new Mock<ILoggerFactory>();
-            mockLoggerFactory
-                .Setup(a => a.CreateLogger(It.IsAny<string>()))
-                .Returns(() => mockLogger.Object)
-            ;
+            mockLog.VerifyLoggerFactoryNone();
+            mockLog.VerifyLoggerNone();
 
-            mockLoggerFactory.Verify(a => a.CreateLogger(It.IsAny<string>()), Times.Exactly(0));
-            mockLogger.Verify(a => a.Log(It.IsAny<LogLevel>(), It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Exactly(0));
-
-            var test = new NullDoubleProgress(mockLoggerFactory.Object);
-            mockLoggerFactory.Verify(a => a.CreateLogger(It.IsAny<string>()), Times.Exactly(1));
-            mockLogger.Verify(a => a.Log(It.IsAny<LogLevel>(), It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Exactly(0));
+            var test = new NullDoubleProgress(mockLog.LoggerFactory.Object);
+            mockLog.VerifyLoggerFactory(Times.Once());
+            mockLog.VerifyLoggerNone();
 
             test.Report(0.5);
-            mockLogger.Verify(a => a.Log(It.IsAny<LogLevel>(), It.IsAny<EventId>(), It.Is<It.IsAnyType>((a, _) => a.ToString() == "0.5"), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Exactly(1));
+            mockLog.VerifyLoggerMessage("0.5", Times.Exactly(1));
+            //mockLog.VerifyLoggerMessage(LogLevel.Trace, "0.5", Times.Exactly(0));
+            //mockLog.VerifyLoggerMessage(LogLevel.Debug, "0.5", Times.Exactly(1));
+            //mockLog.VerifyLoggerMessage(LogLevel.Information, "0.5", Times.Exactly(0));
+            //mockLog.VerifyLoggerMessage(LogLevel.Warning, "0.5", Times.Exactly(0));
+            //mockLog.VerifyLoggerMessage(LogLevel.Error, "0.5", Times.Exactly(0));
+            //mockLog.VerifyLoggerMessage(LogLevel.Critical, "0.5", Times.Exactly(0));
+
+            test.Report(0.75);
+            mockLog.VerifyLoggerMessage("0.75", Times.Exactly(1));
+            //mockLog.VerifyLoggerMessage(LogLevel.Trace, "0.75", Times.Exactly(0));
+            //mockLog.VerifyLoggerMessage(LogLevel.Debug, "0.75", Times.Exactly(2));
+            //mockLog.VerifyLoggerMessage(LogLevel.Information, "0.75", Times.Exactly(0));
+            //mockLog.VerifyLoggerMessage(LogLevel.Warning, "0.75", Times.Exactly(0));
+            //mockLog.VerifyLoggerMessage(LogLevel.Error, "0.75", Times.Exactly(0));
+            //mockLog.VerifyLoggerMessage(LogLevel.Critical, "0.75", Times.Exactly(0));
+
+            test.Report(0.75);
+            mockLog.VerifyLoggerMessage("0.75", Times.Exactly(2));
         }
 
         #endregion
