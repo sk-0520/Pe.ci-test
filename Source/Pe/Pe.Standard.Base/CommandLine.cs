@@ -451,6 +451,16 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             }
         }
 
+        /// <summary>
+        /// <see cref="IDictionary{TKey, TValue}"/>をいい感じにつなげる。
+        /// </summary>
+        /// <param name="map"></param>
+        /// <returns></returns>
+        public static IEnumerable<string> ToCommandLineArguments(IReadOnlyDictionary<string, string> map, string header = "--", char separator = '=')
+        {
+            return map.Select(i => header + i.Key + separator + Escape(i.Value));
+        }
+
         #endregion
     }
 
@@ -720,23 +730,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public override bool Mapping()
         {
             throw new NotSupportedException();
-        }
-
-        #endregion
-    }
-
-    public static class CommandLineDictionaryExtensions
-    {
-        #region function
-
-        /// <summary>
-        /// <see cref="IDictionary{TKey, TValue}"/>をいい感じにつなげる。
-        /// </summary>
-        /// <param name="map"></param>
-        /// <returns></returns>
-        public static IEnumerable<string> ToCommandLineArguments(this IDictionary<string, string> map, string header = "--", char separator = '=')
-        {
-            return map.Select(i => header + i.Key + separator + CommandLine.Escape(i.Value));
         }
 
         #endregion
