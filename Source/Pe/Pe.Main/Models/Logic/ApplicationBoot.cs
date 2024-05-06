@@ -88,8 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     ipcArgs[keyValue.Key] = keyValue.Value;
                 }
 
-                var args = ipcArgs
-                    .ToCommandLineArguments()
+                var args = CommandLine.ToCommandLineArguments(ipcArgs)
                     .Concat(ipcSwitchArgs.Select(i => "--" + i))
                 ;
                 var argument = args.JoinString(" ");

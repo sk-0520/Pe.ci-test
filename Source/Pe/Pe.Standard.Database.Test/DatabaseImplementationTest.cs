@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database.Test
         {
             var test = new DatabaseImplementation();
             var actual = test.ToLineComment("ABC\rDEF\nGHI\r\nJKL");
-            ExAssert.AreMultiLineTextEqualWithoutNewline("--ABC\n--DEF\n--GHI\n--JKL", actual);
+            AssertEx.EqualMultiLineTextWithoutNewline("--ABC\n--DEF\n--GHI\n--JKL", actual);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database.Test
         {
             var test = new DatabaseImplementation();
             var actual = test.ToBlockComment("ABC");
-            ExAssert.AreMultiLineTextEqualWithoutNewline("\n/*\nABC\n*/\n", actual);
+            AssertEx.EqualMultiLineTextWithoutNewline("\n/*\nABC\n*/\n", actual);
         }
 
         [Theory]

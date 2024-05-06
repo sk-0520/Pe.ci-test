@@ -3,12 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using ContentTypeTextNet.Pe.Standard.Base;
-using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
+
 using Xunit;
 
 namespace ContentTypeTextNet.Pe.Test
@@ -16,19 +11,28 @@ namespace ContentTypeTextNet.Pe.Test
     /// <summary>
     /// テスト拡張系。
     /// </summary>
-    public static class ExAssert
+    public static class AssertEx
     {
         #region function
+
+        private static IEnumerable<string> ReadLines(string s)
+        {
+            using var reader = new StringReader(s);
+            string? line;
+            while((line = reader.ReadLine()) != null) {
+                yield return line;
+            }
+        }
 
         /// <summary>
         /// 複数行文字列の場合に改行符を無視する。
         /// </summary>
         /// <param name="expected"></param>
         /// <param name="actual"></param>
-        public static void AreMultiLineTextEqualWithoutNewline(string expected, string actual)
+        public static void EqualMultiLineTextWithoutNewline(string expected, string actual)
         {
-            var e = TextUtility.ReadLines(expected).JoinString(Environment.NewLine);
-            var a = TextUtility.ReadLines(actual).JoinString(Environment.NewLine);
+            var e = string.Join(Environment.NewLine, ReadLines(expected));
+            var a = string.Join(Environment.NewLine, ReadLines(actual));
             Assert.Equal(e, a);
         }
 

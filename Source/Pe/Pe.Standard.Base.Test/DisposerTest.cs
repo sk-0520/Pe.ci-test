@@ -30,6 +30,51 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         }
     }
 
+    public class DisposableStockerTest
+    {
+        #region function
+
+        [Fact]
+        public void Test()
+        {
+            var stocks = new List<int>();
+
+            var test = new DisposableStocker();
+            test.Add(ActionDisposerHelper.Create(a => stocks.Add(10)));
+            test.AddRange(new[] {
+                ActionDisposerHelper.Create(a => stocks.Add(20)),
+                ActionDisposerHelper.Create(a => stocks.Add(30)),
+            });
+
+            Assert.Empty(stocks);
+
+            test.Dispose();
+
+            Assert.Equal(3, stocks.Count);
+            Assert.Equal(30, stocks[0]);
+            Assert.Equal(20, stocks[1]);
+            Assert.Equal(10, stocks[2]);
+
+            test.Dispose();
+        }
+
+        [Fact]
+        public void Add_throw_Test()
+        {
+            var test = new DisposableStocker();
+            Assert.Throws<ArgumentNullException>(() => test.Add(default(IDisposable)!));
+        }
+
+        [Fact]
+        public void AddRange_throw_Test()
+        {
+            var test = new DisposableStocker();
+            Assert.Throws<ArgumentNullException>(() => test.AddRange(default(IDisposable[])!));
+        }
+
+        #endregion
+    }
+
     public class ArrayPoolValueTest
     {
         #region function

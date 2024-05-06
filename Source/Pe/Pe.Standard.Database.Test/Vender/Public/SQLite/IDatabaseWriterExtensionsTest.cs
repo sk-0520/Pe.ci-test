@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,6 +71,7 @@ values
             Assert.Equal(expected, actual);
         }
 
+#if DEBUG
         [Theory]
         [InlineData("")]
         [InlineData("select * from table")]
@@ -79,7 +81,7 @@ values
             var exception = Assert.Throws<DatabaseStatementException>(() => DatabaseAccessor.Update(sql));
             Assert.Equal("update", exception.Message);
         }
-
+#endif
 
         [Theory]
         [InlineData(4, "update TestTable1 set ColVal = ColVal + ColVal")]
@@ -98,6 +100,7 @@ values
             Assert.Equal(expected, actual);
         }
 
+#if DEBUG
         [Theory]
         [InlineData("")]
         [InlineData("select * from table")]
@@ -107,6 +110,7 @@ values
             var exception = await Assert.ThrowsAsync<DatabaseStatementException>(() => DatabaseAccessor.UpdateAsync(sql));
             Assert.Equal("update", exception.Message);
         }
+#endif
 
         [Fact]
         public void UpdateByKeyTest()
@@ -115,13 +119,14 @@ values
             Assert.Null(exception);
         }
 
+#if DEBUG
         [Fact]
         public void UpdateByKey_throw_Test()
         {
             var exception = Assert.Throws<DatabaseStatementException>(() => DatabaseAccessor.UpdateByKey("updatee TestTable1 set ColVal = ColVal + ColVal"));
             Assert.Equal("update", exception.Message);
         }
-
+#endif
 
         [Fact]
         public void UpdateByKey_throw_0_Test()
@@ -144,13 +149,14 @@ values
             Assert.Null(exception);
         }
 
+#if DEBUG
         [Fact]
         public async Task UpdateByKeyAsync_throw_Test()
         {
             var exception = await Assert.ThrowsAsync<DatabaseStatementException>(() => DatabaseAccessor.UpdateByKeyAsync("updatee TestTable1 set ColVal = ColVal + ColVal"));
             Assert.Equal("update", exception.Message);
         }
-
+#endif
 
         [Fact]
         public async Task UpdateByKeyAsync_throw_0_Test()
@@ -180,12 +186,14 @@ values
             Assert.False(actual);
         }
 
+#if DEBUG
         [Fact]
         public void UpdateByKeyOrNothing_throw_Test()
         {
             var exception = Assert.Throws<DatabaseStatementException>(() => DatabaseAccessor.UpdateByKeyOrNothing("updatee TestTable1 set ColVal = ColVal + ColVal"));
             Assert.Equal("update", exception.Message);
         }
+#endif
 
         [Fact]
         public void UpdateByKeyOrNothing_throw_2_Test()
@@ -214,12 +222,14 @@ values
             }
         }
 
+#if DEBUG
         [Fact]
         public async Task UpdateByKeyOrNothingAsync_throw_Test()
         {
             var exception = await Assert.ThrowsAsync<DatabaseStatementException>(() => DatabaseAccessor.UpdateByKeyOrNothingAsync("updatee TestTable1 set ColVal = ColVal + ColVal"));
             Assert.Equal("update", exception.Message);
         }
+#endif
 
         [Fact]
         public async Task UpdateByKeyOrNothingAsync_throw_2_Test()
@@ -254,6 +264,7 @@ values
             Assert.Equal(expected, actual);
         }
 
+#if DEBUG
         [Theory]
         [InlineData("")]
         [InlineData("select * from table")]
@@ -263,6 +274,7 @@ values
             var exception = Assert.Throws<DatabaseStatementException>(() => DatabaseAccessor.Insert(sql));
             Assert.Equal("insert", exception.Message);
         }
+#endif
 
         [Theory]
         [InlineData(1, "insert into TestTable1(ColKey, ColVal) values (5, 'E')")]
@@ -288,6 +300,7 @@ values
             Assert.Equal(expected, actual);
         }
 
+#if DEBUG
         [Theory]
         [InlineData("")]
         [InlineData("select * from table")]
@@ -297,6 +310,7 @@ values
             var exception = await Assert.ThrowsAsync<DatabaseStatementException>(() => DatabaseAccessor.InsertAsync(sql));
             Assert.Equal("insert", exception.Message);
         }
+#endif
 
         [Fact]
         public void InsertSingleTest()
@@ -305,11 +319,13 @@ values
             Assert.Null(exception);
         }
 
+#if DEBUG
         [Fact]
         public void InsertSingle_throw_Test()
         {
             Assert.Throws<DatabaseStatementException>(() => DatabaseAccessor.InsertSingle("iinsert into TestTable1(ColKey, ColVal) values (5, 'E')"));
         }
+#endif
 
         [Fact]
         public void InsertSingle_throw_0_Test()
@@ -333,11 +349,13 @@ values
             Assert.Null(exception);
         }
 
+#if DEBUG
         [Fact]
         public async Task InsertSingleAsync_throw_Test()
         {
             await Assert.ThrowsAsync<DatabaseStatementException>(() => DatabaseAccessor.InsertSingleAsync("iinsert into TestTable1(ColKey, ColVal) values (5, 'E')"));
         }
+#endif
 
         [Fact]
         public async Task InsertSingleAsync_throw_0_Test()
@@ -369,6 +387,7 @@ values
             Assert.Equal(expected, actual);
         }
 
+#if DEBUG
         [Theory]
         [InlineData("")]
         [InlineData("select * from table")]
@@ -377,6 +396,7 @@ values
         {
             Assert.Throws<DatabaseStatementException>(() => DatabaseAccessor.Delete(sql));
         }
+#endif
 
         [Theory]
         [InlineData(1, "delete from TestTable1 where ColKey = 1")]
@@ -394,6 +414,7 @@ values
             Assert.Equal(expected, actual);
         }
 
+#if DEBUG
         [Theory]
         [InlineData("")]
         [InlineData("select * from table")]
@@ -402,6 +423,7 @@ values
         {
             await Assert.ThrowsAsync<DatabaseStatementException>(() => DatabaseAccessor.DeleteAsync(sql));
         }
+#endif
 
         [Fact]
         public void DeleteByKeyTest()
@@ -410,12 +432,14 @@ values
             Assert.Null(exception);
         }
 
+#if DEBUG
         [Fact]
         public void DeleteByKey_throw_Test()
         {
             var exception = Assert.Throws<DatabaseStatementException>(() => DatabaseAccessor.DeleteByKey("deletee from TestTable1 where ColKey = 1"));
             Assert.Equal("delete", exception.Message);
         }
+#endif
 
         [Fact]
         public void DeleteByKey_throw_0_Test()
@@ -438,12 +462,14 @@ values
             Assert.Null(exception);
         }
 
+#if DEBUG
         [Fact]
         public async Task DeleteByKeyAsync_throw_Test()
         {
             var exception = await Assert.ThrowsAsync<DatabaseStatementException>(() => DatabaseAccessor.DeleteByKeyAsync("deletee from TestTable1 where ColKey = 1"));
             Assert.Equal("delete", exception.Message);
         }
+#endif
 
         [Fact]
         public async Task DeleteByKeyAsync_throw_0_Test()
@@ -473,12 +499,14 @@ values
             Assert.False(actual);
         }
 
+#if DEBUG
         [Fact]
         public void DeleteByKeyOrNothing_throw_Test()
         {
             var exception = Assert.Throws<DatabaseStatementException>(() => DatabaseAccessor.DeleteByKeyOrNothing("deletee from TestTable1 where ColKey = 1"));
             Assert.Equal("delete", exception.Message);
         }
+#endif
 
         [Fact]
         public void DeleteByKeyOrNothing_2_Test()
@@ -501,13 +529,14 @@ values
             Assert.False(actual);
         }
 
+#if DEBUG
         [Fact]
         public async Task DeleteByKeyOrNothingAsync_throw_Test()
         {
             var exception = await Assert.ThrowsAsync<DatabaseStatementException>(() => DatabaseAccessor.DeleteByKeyOrNothingAsync("deletee from TestTable1 where ColKey = 1"));
             Assert.Equal("delete", exception.Message);
         }
-
+#endif
         [Fact]
         public async Task DeleteByKeyOrNothingAsync_2_Test()
         {

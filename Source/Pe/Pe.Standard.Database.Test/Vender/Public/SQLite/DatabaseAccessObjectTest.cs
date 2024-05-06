@@ -113,7 +113,7 @@ order by
 COL3
 
 ";
-            ExAssert.AreMultiLineTextEqualWithoutNewline(expected1, actual1);
+            AssertEx.EqualMultiLineTextWithoutNewline(expected1, actual1);
         }
 
         [Fact]
@@ -135,7 +135,7 @@ order by
     COL2
 
 ";
-            ExAssert.AreMultiLineTextEqualWithoutNewline(expected2, actual2);
+            AssertEx.EqualMultiLineTextWithoutNewline(expected2, actual2);
         }
 
         [Fact]
@@ -156,7 +156,7 @@ order by
 COL3
 
 ";
-            ExAssert.AreMultiLineTextEqualWithoutNewline(expected3, actual3);
+            AssertEx.EqualMultiLineTextWithoutNewline(expected3, actual3);
         }
 
         #endregion

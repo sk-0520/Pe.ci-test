@@ -75,6 +75,7 @@ values
             Assert.Null(exception2);
         }
 
+#if DEBUG
         [Theory]
         [InlineData("")]
         [InlineData("select ColVal from TestTable1 order ColKey")]
@@ -85,6 +86,7 @@ values
             Assert.Throws<DatabaseStatementException>(() => DatabaseAccessor.SelectOrdered<string>(sql));
             Assert.Throws<DatabaseStatementException>(() => DatabaseAccessor.SelectOrdered(sql));
         }
+#endif
 
         [Theory]
         [InlineData("select ColVal from TestTable1 order by ColKey")]
@@ -109,6 +111,7 @@ values
             Assert.Null(exception2);
         }
 
+#if DEBUG
         [Theory]
         [InlineData("")]
         [InlineData("select ColVal from TestTable1 order ColKey")]
@@ -119,6 +122,7 @@ values
             await Assert.ThrowsAsync<DatabaseStatementException>(() => DatabaseAccessor.SelectOrderedAsync<string>(sql));
             await Assert.ThrowsAsync<DatabaseStatementException>(() => DatabaseAccessor.SelectOrderedAsync(sql));
         }
+#endif
 
         [Theory]
         [InlineData("select count(*) from TestTable1")]
@@ -139,6 +143,7 @@ values
             Assert.Null(exception);
         }
 
+#if DEBUG
         [Theory]
         [InlineData("")]
         [InlineData("select * from TestTable1")]
@@ -147,6 +152,7 @@ values
         {
             Assert.Throws<DatabaseStatementException>(() => DatabaseAccessor.SelectSingleCount(sql));
         }
+#endif
 
         [Theory]
         [InlineData("select count(*) from TestTable1")]
@@ -167,6 +173,7 @@ values
             Assert.Null(exception);
         }
 
+#if DEBUG
         [Theory]
         [InlineData("")]
         [InlineData("select * from TestTable1")]
@@ -175,6 +182,7 @@ values
         {
             await Assert.ThrowsAsync<DatabaseStatementException>(() => DatabaseAccessor.SelectSingleCountAsync(sql));
         }
+#endif
 
         #endregion
     }
