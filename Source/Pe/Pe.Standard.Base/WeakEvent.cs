@@ -131,11 +131,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <returns></returns>
         public bool Add(EventHandler<TEventArgs>? eventHandler)
         {
-            try {
-                if(eventHandler is null) {
-                    return false;
-                }
+            if(eventHandler is null) {
+                return false;
+            }
 
+            try {
                 var weakHandler = new WeakHandler(eventHandler);
 
                 lock(this._locker) {
@@ -323,11 +323,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <returns></returns>
         public bool Add(EventHandler? eventHandler)
         {
-            try {
-                if(eventHandler is null) {
-                    return false;
-                }
+            if(eventHandler is null) {
+                return false;
+            }
 
+            try {
                 var weakHandler = new WeakHandler(eventHandler);
 
                 lock(this._locker) {
