@@ -24,4 +24,18 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Plugin.Theme
         #endregion
     }
 
+    public class ColorPairTest
+    {
+        #region function
+
+        [Fact]
+        public void CreateTest()
+        {
+            var actual = ColorPair.Create("abc", "xyz");
+            Assert.Equal("abc", actual.Foreground);
+            Assert.Equal("xyz", actual.Background);
+        }
+
+        #endregion
+    }
 }
