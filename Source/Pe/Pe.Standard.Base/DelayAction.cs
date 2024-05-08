@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     {
         #region variable
 
-        private readonly object _timerLocker = new object();
+        private readonly object _sync = new object();
 
         #endregion
 
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
         public void Clear()
         {
-            lock(this._timerLocker) {
+            lock(this._sync) {
                 if(Timer.Enabled) {
                     Timer.Stop();
                     Logger.LogTrace("[{0}] タイマー終了", DelayName);
@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         {
             ThrowIfDisposed();
 
-            lock(this._timerLocker) {
+            lock(this._sync) {
                 if(Timer.Enabled) {
                     Timer.Stop();
                     Logger.LogTrace("[{0}] タイマー停止, 抑制", DelayName);
@@ -98,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         {
             ThrowIfDisposed();
 
-            lock(this._timerLocker) {
+            lock(this._sync) {
                 if(disposing) {
                     Timer.Stop();
                 }

@@ -1,20 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Reflection;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
-    /// <summary>
-    /// 弱いイベントのなんか受け側のそれっぽいの。
-    /// </summary>
-    /// <remarks>
-    /// <para>TODO: 静的リスナー未対応。</para>
-    /// <para><see cref="WeakEvent{TEventArgs}"/> 使ってればよろし。</para>
-    /// </remarks>
-    /// <typeparam name="TEventListener">リスナークラス。</typeparam>
-    /// <typeparam name="TEventArgs">イベント。</typeparam>
-    public class WeakEvent<TEventListener, TEventArgs>
+    public class WeakEventBase<TEventListener, TEventArgs>
         where TEventListener : class
         where TEventArgs : EventArgs
     {
@@ -23,14 +15,14 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <summary>
         /// イベントハンドラを弱く保持。
         /// </summary>
-        private readonly record struct WeakHandler
+        protected internal readonly record struct WeakHandler
         {
             /// <summary>
             /// 生成。
             /// </summary>
             /// <param name="handler"></param>
             /// <exception cref="ArgumentException"></exception>
-            public WeakHandler(EventHandler<TEventArgs> handler)
+            public WeakHandler(Delegate handler)
             {
                 var target = handler.Target;
                 if(target is TEventListener listener) {
@@ -63,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <summary>
         /// <see cref="Handlers"/> の処理ロックオブジェクト。
         /// </summary>
-        private readonly object _locker = new();
+        private readonly object _sync = new();
 
         #endregion
 
@@ -71,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// 生成。
         /// </summary>
         /// <param name="eventName">イベント名。なくていいなぁ。</param>
-        public WeakEvent(string eventName)
+        protected WeakEventBase(string eventName)
         {
             EventName = eventName;
         }
@@ -90,9 +82,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// イベントハンドラ保管箱。
         /// </summary>
         /// <remarks>
-        /// <para>操作する際は <see cref="_locker"/> の <see langword="lock" /> を行うこと。</para>
+        /// <para>操作する際は <see cref="_sync"/> の <see langword="lock" /> を行うこと。</para>
         /// </remarks>
-        private IList<WeakHandler> Handlers { get; } = new List<WeakHandler>();
+        protected IList<WeakHandler> Handlers { get; } = new List<WeakHandler>();
 
         #endregion
 
@@ -105,15 +97,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="eventArgs"></param>
         public void Raise(object sender, TEventArgs eventArgs)
         {
-            IReadOnlyList<WeakHandler> weakHandlers;
-            lock(this._locker) {
-                if(Handlers.Count == 0) {
-                    return;
-                }
-
-                weakHandlers = Handlers.ToArray();
+            if(Handlers.Count == 0) {
+                return;
             }
 
+            var weakHandlers = Handlers.ToArray();
             var parameters = new object[2] { sender, eventArgs };
             foreach(var handler in weakHandlers) {
                 if(handler.Listener.TryGetTarget(out var listener)) {
@@ -129,16 +117,16 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// </summary>
         /// <param name="eventHandler"></param>
         /// <returns></returns>
-        public bool Add(EventHandler<TEventArgs>? eventHandler)
+        protected bool AddCore(Delegate? eventHandler)
         {
-            try {
-                if(eventHandler is null) {
-                    return false;
-                }
+            if(eventHandler is null) {
+                return false;
+            }
 
+            try {
                 var weakHandler = new WeakHandler(eventHandler);
 
-                lock(this._locker) {
+                lock(this._sync) {
                     Handlers.Add(weakHandler);
                 }
                 return true;
@@ -152,13 +140,13 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// </summary>
         /// <param name="eventHandler"></param>
         /// <returns>削除成功状態: 真 成功</returns>
-        public bool Remove(EventHandler<TEventArgs>? eventHandler)
+        protected bool RemoveCore(Delegate? eventHandler)
         {
             if(eventHandler is null) {
                 return false;
             }
 
-            lock(this._locker) {
+            lock(this._sync) {
                 for(var i = 0; i < Handlers.Count; i++) {
                     var handler = Handlers[i];
 
@@ -177,9 +165,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <summary>
         /// すでに参照されていないやつの整理。
         /// </summary>
-        private void Refresh()
+        protected void Refresh()
         {
-            lock(this._locker) {
+            lock(this._sync) {
                 for(var i = Handlers.Count - 1; 0 <= i; i--) {
                     var handler = Handlers[i];
 
@@ -188,6 +176,41 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                     }
                 }
             }
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 弱いイベントのなんか受け側のそれっぽいの。
+    /// </summary>
+    /// <remarks>
+    /// <para>TODO: 静的リスナー未対応。</para>
+    /// <para><see cref="WeakEvent{TEventArgs}"/> 使ってればよろし。</para>
+    /// </remarks>
+    /// <typeparam name="TEventListener">リスナークラス。</typeparam>
+    /// <typeparam name="TEventArgs">イベント。</typeparam>
+    public class WeakEvent<TEventListener, TEventArgs>: WeakEventBase<TEventListener, EventArgs>
+        where TEventListener : class
+        where TEventArgs : EventArgs
+    {
+        /// <inheritdoc />
+        public WeakEvent(string eventName)
+            : base(eventName)
+        { }
+
+        #region function
+
+        /// <inheritdoc cref="WeakEventBase{TEventListener, TEventArgs}.AddCore(Delegate?)"/>
+        public bool Add(EventHandler<TEventArgs>? eventHandler)
+        {
+            return AddCore(eventHandler);
+        }
+
+        /// <inheritdoc cref="WeakEventBase{TEventListener, TEventArgs}.RemoveCore(Delegate?)"/>
+        public bool Remove(EventHandler<TEventArgs>? eventHandler)
+        {
+            return RemoveCore(eventHandler);
         }
 
         #endregion
@@ -203,183 +226,31 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     public class WeakEvent<TEventArgs>: WeakEvent<object, TEventArgs>
         where TEventArgs : EventArgs
     {
+        /// <inheritdoc />
         public WeakEvent(string eventName)
             : base(eventName)
         { }
     }
 
-    public sealed class WeakEvent
+    public sealed class WeakEvent: WeakEventBase<object, EventArgs>
     {
-        #region define
-
-        /// <summary>
-        /// イベントハンドラを弱く保持。
-        /// </summary>
-        private readonly record struct WeakHandler
-        {
-            /// <summary>
-            /// 生成。
-            /// </summary>
-            /// <param name="handler"></param>
-            /// <exception cref="ArgumentException"></exception>
-            public WeakHandler(EventHandler handler)
-            {
-                var target = handler.Target;
-                if(target is object listener) {
-                    Listener = new WeakReference<object>(listener);
-                } else {
-                    throw new ArgumentException($"{nameof(handler)}.{nameof(handler.Target)}", nameof(handler));
-                }
-
-                MethodInfo = handler.GetMethodInfo();
-            }
-
-            #region property
-
-            /// <summary>
-            /// 弱参照リスナー。
-            /// </summary>
-            public WeakReference<object> Listener { get; }
-            /// <summary>
-            /// 呼び出しメソッド。
-            /// </summary>
-            public MethodInfo MethodInfo { get; }
-
-            #endregion
-        }
-
-        #endregion
-
-        #region variable
-
-        /// <summary>
-        /// <see cref="Handlers"/> の処理ロックオブジェクト。
-        /// </summary>
-        private readonly object _locker = new();
-
-        #endregion
-
-        /// <summary>
-        /// 生成。
-        /// </summary>
-        /// <param name="eventName">イベント名。なくていいなぁ。</param>
+        /// <inheritdoc />
         public WeakEvent(string eventName)
-        {
-            EventName = eventName;
-        }
-
-        #region property
-
-        /// <summary>
-        /// イベント名。
-        /// </summary>
-        /// <remarks>
-        /// <para>いらん気がするのですよね。</para>
-        /// </remarks>
-        public string EventName { get; }
-
-        /// <summary>
-        /// イベントハンドラ保管箱。
-        /// </summary>
-        /// <remarks>
-        /// <para>操作する際は <see cref="_locker"/> の <see langword="lock" /> を行うこと。</para>
-        /// </remarks>
-        private IList<WeakHandler> Handlers { get; } = new List<WeakHandler>();
-
-        #endregion
+            : base(eventName)
+        { }
 
         #region function
 
-        /// <summary>
-        /// イベント呼び出し。
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="eventArgs"></param>
-        public void Raise(object sender, EventArgs eventArgs)
-        {
-            IReadOnlyList<WeakHandler> weakHandlers;
-            lock(this._locker) {
-                if(Handlers.Count == 0) {
-                    return;
-                }
-
-                weakHandlers = Handlers.ToArray();
-            }
-
-            var parameters = new object[2] { sender, eventArgs };
-            foreach(var handler in weakHandlers) {
-                if(handler.Listener.TryGetTarget(out var listener)) {
-                    handler.MethodInfo.Invoke(listener, parameters);
-                }
-            }
-
-            Refresh();
-        }
-
-        /// <summary>
-        /// <c>event.add</c> で使用する想定。
-        /// </summary>
-        /// <param name="eventHandler"></param>
-        /// <returns></returns>
+        /// <inheritdoc cref="WeakEventBase{TEventListener, TEventArgs}.AddCore(Delegate?)"/>
         public bool Add(EventHandler? eventHandler)
         {
-            try {
-                if(eventHandler is null) {
-                    return false;
-                }
-
-                var weakHandler = new WeakHandler(eventHandler);
-
-                lock(this._locker) {
-                    Handlers.Add(weakHandler);
-                }
-                return true;
-            } finally {
-                Refresh();
-            }
+            return AddCore(eventHandler);
         }
 
-        /// <summary>
-        /// <c>event.remove</c> で使用する想定。
-        /// </summary>
-        /// <param name="eventHandler"></param>
-        /// <returns>削除成功状態: 真 成功</returns>
+        /// <inheritdoc cref="WeakEventBase{TEventListener, TEventArgs}.Remove(Delegate?)"/>
         public bool Remove(EventHandler? eventHandler)
         {
-            if(eventHandler is null) {
-                return false;
-            }
-
-            lock(this._locker) {
-                for(var i = 0; i < Handlers.Count; i++) {
-                    var handler = Handlers[i];
-
-                    if(handler.Listener.TryGetTarget(out var listener)) {
-                        if(eventHandler.Target == listener && handler.MethodInfo == eventHandler.Method) {
-                            Handlers.RemoveAt(i);
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// すでに参照されていないやつの整理。
-        /// </summary>
-        private void Refresh()
-        {
-            lock(this._locker) {
-                for(var i = Handlers.Count - 1; 0 <= i; i--) {
-                    var handler = Handlers[i];
-
-                    if(!handler.Listener.TryGetTarget(out _)) {
-                        Handlers.RemoveAt(i);
-                    }
-                }
-            }
+            return RemoveCore(eventHandler);
         }
 
         #endregion
