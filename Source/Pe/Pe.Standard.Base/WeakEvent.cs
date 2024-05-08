@@ -97,15 +97,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="eventArgs"></param>
         public void Raise(object sender, TEventArgs eventArgs)
         {
-            IReadOnlyList<WeakHandler> weakHandlers;
-            lock(this._sync) {
-                if(Handlers.Count == 0) {
-                    return;
-                }
-
-                weakHandlers = Handlers.ToArray();
+            if(Handlers.Count == 0) {
+                return;
             }
 
+            var weakHandlers = Handlers.ToArray();
             var parameters = new object[2] { sender, eventArgs };
             foreach(var handler in weakHandlers) {
                 if(handler.Listener.TryGetTarget(out var listener)) {
@@ -254,7 +250,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <inheritdoc cref="WeakEventBase{TEventListener, TEventArgs}.Remove(Delegate?)"/>
         public bool Remove(EventHandler? eventHandler)
         {
-            return RemoveCore(eventHandler) ;
+            return RemoveCore(eventHandler);
         }
 
         #endregion
