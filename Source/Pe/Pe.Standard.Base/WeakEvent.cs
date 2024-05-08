@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <summary>
         /// <see cref="Handlers"/> の処理ロックオブジェクト。
         /// </summary>
-        private readonly object _locker = new();
+        private readonly object _sync = new();
 
         #endregion
 
@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// イベントハンドラ保管箱。
         /// </summary>
         /// <remarks>
-        /// <para>操作する際は <see cref="_locker"/> の <see langword="lock" /> を行うこと。</para>
+        /// <para>操作する際は <see cref="_sync"/> の <see langword="lock" /> を行うこと。</para>
         /// </remarks>
         protected IList<WeakHandler> Handlers { get; } = new List<WeakHandler>();
 
@@ -98,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public void Raise(object sender, TEventArgs eventArgs)
         {
             IReadOnlyList<WeakHandler> weakHandlers;
-            lock(this._locker) {
+            lock(this._sync) {
                 if(Handlers.Count == 0) {
                     return;
                 }
@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             try {
                 var weakHandler = new WeakHandler(eventHandler);
 
-                lock(this._locker) {
+                lock(this._sync) {
                     Handlers.Add(weakHandler);
                 }
                 return true;
@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 return false;
             }
 
-            lock(this._locker) {
+            lock(this._sync) {
                 for(var i = 0; i < Handlers.Count; i++) {
                     var handler = Handlers[i];
 
@@ -171,7 +171,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// </summary>
         protected void Refresh()
         {
-            lock(this._locker) {
+            lock(this._sync) {
                 for(var i = Handlers.Count - 1; 0 <= i; i--) {
                     var handler = Handlers[i];
 

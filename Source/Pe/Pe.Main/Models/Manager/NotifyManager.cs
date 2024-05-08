@@ -248,7 +248,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <summary>
         /// ログデータの排他用オブジェクト。
         /// </summary>
-        readonly object _notifyLogsLocker = new object();
+        readonly object _sync = new object();
 
         #endregion
 
@@ -386,7 +386,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public void ClearAllLogs()
         {
-            lock(this._notifyLogsLocker) {
+            lock(this._sync) {
                 TopmostNotifyLogsImpl.Clear();
                 StreamNotifyLogsImpl.Clear();
                 NotifyLogs.Clear();
@@ -525,7 +525,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return false;
             }
 
-            lock(this._notifyLogsLocker) {
+            lock(this._sync) {
                 if(0 < NotifyLogs.Count && NotifyLogs.Remove(notifyLogId)) {
                     DispatcherWrapper.BeginAsync(() => {
                         if(element.Kind == NotifyLogKind.Topmost) {
