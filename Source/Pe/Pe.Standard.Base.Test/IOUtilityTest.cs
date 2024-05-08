@@ -93,6 +93,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
 
             Assert.False(IOUtility.Exists(f.FullName));
             Assert.False(IOUtility.Exists(d.FullName));
+            Assert.False(IOUtility.Exists(null));
         }
 
         [Fact]
