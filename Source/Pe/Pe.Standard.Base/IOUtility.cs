@@ -9,6 +9,18 @@ using System.Linq;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
+
+    [Serializable]
+    public class IOUtilityException: Exception
+    {
+        public IOUtilityException() { }
+        public IOUtilityException(string message) : base(message) { }
+        public IOUtilityException(string message, Exception inner) : base(message, inner) { }
+        protected IOUtilityException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
+
     /// <summary>
     /// ファイル関連の共通処理。
     /// </summary>
@@ -18,12 +30,13 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// ファイルパスを元にディレクトリを作成
         /// </summary>
         /// <param name="path">ファイルパス</param>
-        /// <returns>ディレクトリパス。<paramref name="path"/>から親ディレクトリが判定できなかった場合はから文字列。</returns>
+        /// <returns>ディレクトリパス。<paramref name="path"/>の親ディレクトリパス。</returns>
+        /// <exception cref="IOUtilityException"><paramref name="path"/>から親ディレクトリパスが取得できなかった。</exception>
         public static string MakeFileParentDirectory(string path)
         {
             var dirPath = Path.GetDirectoryName(path);
             if(dirPath == null) {
-                return string.Empty;
+                throw new IOUtilityException(path);
             }
 
             var dirInfo = Directory.CreateDirectory(dirPath);
