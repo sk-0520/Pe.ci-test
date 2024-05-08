@@ -26,6 +26,14 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
 
         #endregion
 
+        public EventSource() {
+            WeakEvent = new WeakEvent<EventArgs>(nameof(Weak));
+            NoGenericsEvent = new WeakEvent(nameof(NoGenerics));
+
+            Assert.Equal(nameof(Weak), WeakEvent.EventName);
+            Assert.Equal(nameof(NoGenerics), NoGenericsEvent.EventName);
+        }
+
         #region property
 
         private WeakEvent<EventArgs> WeakEvent { get; } = new WeakEvent<EventArgs>(nameof(Weak));
