@@ -87,6 +87,11 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
+						"subject": "Microsoft.Web.WebView2 1.0.2420.47 -> 1.0.2478.35"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
