@@ -32,7 +32,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2478.35" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="5.3.8" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.3.11" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
     <PackageReference Include="SevenZipExtractor" Version="1.0.17" />
     <PackageReference Include="System.DirectoryServices.AccountManagement" Version="8.0.0" />
