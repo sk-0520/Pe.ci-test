@@ -1,102 +1,38 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.230+",
+		"date": "2024/05/10",
+		"version": "0.99.231",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "8cee873999de85ed2be5539f2c201e95b1441089",
 						"subject": "#546: CI上でコードカバレッジを取得する"
 					},
 					{
-						"revision": "",
+						"revision": "f5fbd79d3a44d886fb24f042158d6cb3161950f5",
 						"subject": "#930: CI にドキュメントコメントの出力機能を追加する",
 						"comments": [
 							"諸々おかしいけど完全な異常は修正したので一旦セーフとする"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "80ceeaa447e51358873336dfa7b45b532ff244fb",
 						"subject": "プロパティへのアクセス系処理をプロジェクト独立"
 					},
 					{
-						"revision": "",
+						"revision": "7aa4f83b2a6192de0343a1a575f93e692e1197d7",
 						"class": "nuget",
 						"subject": "Microsoft.Web.WebView2 1.0.2420.47 -> 1.0.2478.35"
 					},
 					{
-						"revision": "",
+						"revision": "6caf27d75110db25ee9183b6685a9fb36cb3c497",
 						"class": "nuget",
 						"subject": "xunit 2.7.0 -> 2.8.0"
 					},
 					{
-						"revision": "",
+						"revision": "c6a5bf74ed960b5eeee7acfb3b3a84982a7842aa",
 						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 5.3.8 -> 5.3.11"
 					}
