@@ -1,0 +1,17 @@
+name: GitHub Actions Version
+
+on:
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: 8.0.x
+
+
+jobs:
+  package:
+    name: "Package"
+    runs-on: windows-latest
+
+    steps:
+      - name: .NET
+        run: dotnet --version
