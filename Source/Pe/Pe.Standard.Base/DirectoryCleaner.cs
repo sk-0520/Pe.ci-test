@@ -23,7 +23,13 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public DirectoryCleaner(DirectoryInfo directory, int retryCount, TimeSpan waitTime, ILoggerFactory loggerFactory)
         {
             Directory = directory;
+            if(retryCount < 1) {
+                throw new ArgumentException(null, nameof(retryCount));
+            }
             RetryCount = retryCount;
+            if(waitTime <= TimeSpan.Zero) {
+                throw new ArgumentException(null, nameof(waitTime));
+            }
             WaitTime = waitTime;
             Logger = loggerFactory.CreateLogger(GetType());
         }
