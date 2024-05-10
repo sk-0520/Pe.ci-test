@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Test
             return new DirectoryInfo(methodTestDirPath);
         }
 
-        public static DirectoryInfo CreateDirectory(DirectoryInfo dir)
+        private static DirectoryInfo CreateDirectory(DirectoryInfo dir)
         {
             dir.Refresh();
             if(dir.Exists) {
