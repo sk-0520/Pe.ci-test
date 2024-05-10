@@ -26,6 +26,14 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
 
         #endregion
 
+        public EventSource() {
+            WeakEvent = new WeakEvent<EventArgs>(nameof(Weak));
+            NoGenericsEvent = new WeakEvent(nameof(NoGenerics));
+
+            Assert.Equal(nameof(Weak), WeakEvent.EventName);
+            Assert.Equal(nameof(NoGenerics), NoGenericsEvent.EventName);
+        }
+
         #region property
 
         private WeakEvent<EventArgs> WeakEvent { get; } = new WeakEvent<EventArgs>(nameof(Weak));
@@ -111,12 +119,20 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         {
             var source = new EventSource();
 
+            source.Strong += null;
             source.RaiseStrong();
             Assert.Equal(0, StrongTestCount);
+            source.Strong -= null;
 
             source.Strong += Source_Strong;
             source.RaiseStrong();
             Assert.Equal(1, StrongTestCount);
+
+            source.Strong -= Source_Strong;
+            source.RaiseStrong();
+            Assert.Equal(1, StrongTestCount);
+            source.Strong -= Source_Strong;
+            source.Strong += Source_Strong;
 
             static void Scope(EventSource source)
             {
@@ -141,12 +157,20 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         {
             var source = new EventSource();
 
+            source.Weak += null;
             source.RaiseWeak();
             Assert.Equal(0, WeakTestCount);
+            source.Weak -= null;
 
             source.Weak += Source_Weak;
             source.RaiseWeak();
             Assert.Equal(1, WeakTestCount);
+
+            source.Weak -= Source_Weak;
+            source.RaiseWeak();
+            Assert.Equal(1, WeakTestCount);
+            source.Weak -= Source_Weak;
+            source.Weak += Source_Weak;
 
             static void Scope(EventSource source)
             {
@@ -171,12 +195,20 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         {
             var source = new EventSource();
 
+            source.NoGenerics += null;
             source.RaiseNoGenerics();
             Assert.Equal(0, NoGenericsTestCount);
+            source.NoGenerics -= null;
 
             source.NoGenerics += Source_NoGenerics;
             source.RaiseNoGenerics();
             Assert.Equal(1, NoGenericsTestCount);
+
+            source.NoGenerics -= Source_NoGenerics;
+            source.RaiseWeak();
+            Assert.Equal(1, NoGenericsTestCount);
+            source.NoGenerics -= Source_NoGenerics;
+            source.NoGenerics += Source_NoGenerics;
 
             static void Scope(EventSource source)
             {

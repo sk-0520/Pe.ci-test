@@ -175,22 +175,25 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand AddNewNormalGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _AddNewNormalGroupCommand;
+        public ICommand AddNewNormalGroupCommand => this._AddNewNormalGroupCommand ??= new DelegateCommand(
             async () => {
                 await AddNewGroupAsync(LauncherGroupKind.Normal);
             }
-        ));
+        );
 
-        public ICommand RemoveSelectedGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _RemoveSelectedGroupCommand;
+        public ICommand RemoveSelectedGroupCommand => this._RemoveSelectedGroupCommand ??= new DelegateCommand(
              () => {
                  var launcherGroupId = SelectedGroup!.LauncherGroupId;
                  SelectedGroup = null;
                  Model.RemoveGroup(launcherGroupId);
              },
              () => SelectedGroup != null && 1 < GroupCollection.ViewModels.Count
-         ).ObservesProperty(() => SelectedGroup));
+         ).ObservesProperty(() => SelectedGroup);
 
-        public ICommand UpSelectedGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _UpSelectedGroupCommand;
+        public ICommand UpSelectedGroupCommand => this._UpSelectedGroupCommand ??= new DelegateCommand(
             () => {
                 var currentIndex = GroupCollection.IndexOf(SelectedGroup!);
                 var nextIndex = currentIndex - 1;
@@ -198,9 +201,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 SelectedGroup = GroupCollection.ViewModels[nextIndex];
             },
             () => SelectedGroup != null && 0 < GroupCollection.IndexOf(SelectedGroup)
-        ).ObservesProperty(() => SelectedGroup));
+        ).ObservesProperty(() => SelectedGroup);
 
-        public ICommand DownSelectedGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _DownSelectedGroupCommand;
+        public ICommand DownSelectedGroupCommand => this._DownSelectedGroupCommand ??= new DelegateCommand(
             () => {
                 var currentIndex = GroupCollection.IndexOf(SelectedGroup!);
                 var nextIndex = currentIndex + 1;
@@ -208,56 +212,57 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 SelectedGroup = GroupCollection.ViewModels[nextIndex];
             },
             () => SelectedGroup != null && GroupCollection.IndexOf(SelectedGroup) != GroupCollection.ViewModels.Count - 1
-        ).ObservesProperty(() => SelectedGroup));
+        ).ObservesProperty(() => SelectedGroup);
 
 
-        public ICommand RemoveSelectedLauncherItemCommand => GetOrCreateCommand(
-            () => new DelegateCommand(
-                () => {
-                    SelectedGroup!.RemoveLauncherItem(SelectedGroup.SelectedLauncherItem!);
-                },
-                () => SelectedGroup != null && SelectedGroup.SelectedLauncherItem != null
-            )
+        private ICommand? _RemoveSelectedLauncherItemCommand;
+        public ICommand RemoveSelectedLauncherItemCommand => this._RemoveSelectedLauncherItemCommand ??= new DelegateCommand(
+            () => {
+                SelectedGroup!.RemoveLauncherItem(SelectedGroup.SelectedLauncherItem!);
+            },
+            () => SelectedGroup != null && SelectedGroup.SelectedLauncherItem != null
+        )
             .ObservesProperty(() => SelectedGroup)
             .ObservesProperty(() => SelectedGroup!.SelectedLauncherItem)
-        );
+        ;
 
+        private ICommand? _UpSelectedLauncherItemCommand;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S2692:\"IndexOf\" checks should not be for positive numbers")]
-        public ICommand UpSelectedLauncherItemCommand => GetOrCreateCommand(
-            () => new DelegateCommand(
-                () => {
-                    var currentIndex = SelectedGroup!.LauncherItems.IndexOf(SelectedGroup.SelectedLauncherItem!);
-                    var nextIndex = currentIndex - 1;
-                    SelectedGroup.MoveLauncherItem(currentIndex, nextIndex);
-                    SelectedGroup.SelectedLauncherItem = SelectedGroup!.LauncherItems[nextIndex];
-                },
-                () => SelectedGroup != null && SelectedGroup.SelectedLauncherItem != null && 0 < SelectedGroup!.LauncherItems.IndexOf(SelectedGroup.SelectedLauncherItem)
-            )
+        public ICommand UpSelectedLauncherItemCommand => this._UpSelectedLauncherItemCommand ??= new DelegateCommand(
+            () => {
+                var currentIndex = SelectedGroup!.LauncherItems.IndexOf(SelectedGroup.SelectedLauncherItem!);
+                var nextIndex = currentIndex - 1;
+                SelectedGroup.MoveLauncherItem(currentIndex, nextIndex);
+                SelectedGroup.SelectedLauncherItem = SelectedGroup!.LauncherItems[nextIndex];
+            },
+            () => SelectedGroup != null && SelectedGroup.SelectedLauncherItem != null && 0 < SelectedGroup!.LauncherItems.IndexOf(SelectedGroup.SelectedLauncherItem)
+        )
             .ObservesProperty(() => SelectedGroup)
             .ObservesProperty(() => SelectedGroup!.SelectedLauncherItem)
-        );
+        ;
 
-        public ICommand DownSelectedLauncherItemCommand => GetOrCreateCommand(
-            () => new DelegateCommand(
-                () => {
-                    var currentIndex = SelectedGroup!.LauncherItems.IndexOf(SelectedGroup.SelectedLauncherItem!);
-                    var nextIndex = currentIndex + 1;
-                    SelectedGroup.MoveLauncherItem(currentIndex, nextIndex);
-                    SelectedGroup.SelectedLauncherItem = SelectedGroup!.LauncherItems[nextIndex];
-                },
-                () => SelectedGroup != null && SelectedGroup.SelectedLauncherItem != null && SelectedGroup.LauncherItems.IndexOf(SelectedGroup.SelectedLauncherItem) != SelectedGroup.LauncherItems.Count - 1
-            )
+        private ICommand? _DownSelectedLauncherItemCommand;
+        public ICommand DownSelectedLauncherItemCommand => this._DownSelectedLauncherItemCommand ??= new DelegateCommand(
+            () => {
+                var currentIndex = SelectedGroup!.LauncherItems.IndexOf(SelectedGroup.SelectedLauncherItem!);
+                var nextIndex = currentIndex + 1;
+                SelectedGroup.MoveLauncherItem(currentIndex, nextIndex);
+                SelectedGroup.SelectedLauncherItem = SelectedGroup!.LauncherItems[nextIndex];
+            },
+            () => SelectedGroup != null && SelectedGroup.SelectedLauncherItem != null && SelectedGroup.LauncherItems.IndexOf(SelectedGroup.SelectedLauncherItem) != SelectedGroup.LauncherItems.Count - 1
+        )
             .ObservesProperty(() => SelectedGroup)
             .ObservesProperty(() => SelectedGroup!.SelectedLauncherItem)
-        );
+        ;
 
-        public ICommand AddSelectedLauncherItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _AddSelectedLauncherItemCommand;
+        public ICommand AddSelectedLauncherItemCommand => this._AddSelectedLauncherItemCommand ??= new DelegateCommand(
             () => {
                 SelectedGroup!.InsertNewLauncherItem(SelectedGroup.LauncherItems.Count, SelectedLauncherItem!);
                 SelectedGroup.SelectedLauncherItem = SelectedGroup.LauncherItems[SelectedGroup.LauncherItems.Count - 1];
             },
             () => SelectedLauncherItem != null
-        ).ObservesProperty(() => SelectedLauncherItem));
+        ).ObservesProperty(() => SelectedLauncherItem);
 
         #endregion
 

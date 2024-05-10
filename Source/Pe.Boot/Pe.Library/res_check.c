@@ -154,7 +154,7 @@ static void rc_check_core(void* p, const void* data, bool allocate, RES_CHECK_TY
                 item.file = (TCHAR*)HeapAlloc(library_rc_heap, HEAP_ZERO_MEMORY, library_rc_path_length * sizeof(TCHAR));
 #pragma warning(push)
 #pragma warning(disable:6387)
-                lstrcpy(item.file, RES_CHECK_ARG_FLIE); // tstring.h を取り込みたくないのでAPIを直接呼び出し
+                lstrcpy(item.file, RES_CHECK_ARG_FILE); // tstring.h を取り込みたくないのでAPIを直接呼び出し
 #pragma warning(pop)
 
                 rc_item.stock_items[i] = item;

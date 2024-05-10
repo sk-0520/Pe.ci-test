@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             : base(model, loggerFactory)
         {
             if(!Model.IsInitialized) {
-                throw new ArgumentException(nameof(Model.IsInitialized));
+                throw new ArgumentException(null, nameof(Model.IsInitialized));
             }
 
             DispatcherWrapper = dispatcherWrapper;

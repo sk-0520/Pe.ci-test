@@ -3,6 +3,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
     /// <summary>
     /// 標準的な連絡先の一覧。
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public static class ContactKinds
     {
         /// <summary>

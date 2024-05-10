@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //Exit(true);
         }
 
-        private void DebugExecuteAfter()
+        private async Task DebugExecuteAfterAsync()
         {
             Logger.LogDebug("デバッグ用後処理");
 
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //DebugStdIoExecute();
             //DebugHook();
             //DebugKeyAction();
-            //DebugSetting();
+            //await DebugSettingAsync();
             //ShowCommandView();
             //ShowAboutView();
             //DebugEnvironmentExecuteFile();
@@ -68,6 +68,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //Uninstall();
 
             //Exit(true);
+
+            await Task.CompletedTask;
         }
 
         private void DebugCustomize()
@@ -202,9 +204,9 @@ echo end
             dbgKeyboardHooker.Register();
         }
 
-        private void DebugSetting()
+        private Task DebugSettingAsync()
         {
-            _ = ShowSettingViewAsync();
+            return ShowSettingViewAsync();
         }
         private void DebugColorPicker()
         {

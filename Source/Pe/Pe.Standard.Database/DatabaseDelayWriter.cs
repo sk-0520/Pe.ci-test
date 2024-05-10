@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         #region variable
 
-        private readonly object _timerLocker = new object();
+        private readonly object _sync = new object();
 
         #endregion
 
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         private void StockCore(Action<IDatabaseTransaction> action, object? uniqueKey)
         {
-            lock(this._timerLocker) {
+            lock(this._sync) {
                 StopTimer();
 
                 // 既に登録されている処理が存在する場合は破棄しておく
@@ -171,7 +171,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         {
             ThrowIfDisposed();
 
-            lock(this._timerLocker) {
+            lock(this._sync) {
                 StopTimer();
 
                 StockItems.Clear();
@@ -187,7 +187,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         void Flush(bool disposing)
         {
             LazyStockItem[] items;
-            lock(this._timerLocker) {
+            lock(this._sync) {
                 if(disposing) {
                     StopTimer();
                 }

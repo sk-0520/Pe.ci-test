@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
+{
+    public class InjectAttributeTest
+    {
+        #region function
+
+        [Fact]
+        public void Constructor_0_Test()
+        {
+            var test = new InjectAttribute();
+            Assert.Empty(test.Name);
+        }
+
+        [Fact]
+        public void Constructor_1_Test()
+        {
+            var test = new InjectAttribute(" abc ");
+            Assert.Equal(" abc ", test.Name);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void Constructor_throw_Test(string? s)
+        {
+            Assert.Throws<ArgumentException>(() => new InjectAttribute(s!));
+        }
+
+        #endregion
+    }
+}

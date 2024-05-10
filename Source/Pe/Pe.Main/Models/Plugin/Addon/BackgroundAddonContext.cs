@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             : base(pluginIdentifiers)
         {
             if(mouseHookEventArgs.IsButtonEvent) {
-                throw new ArgumentException(nameof(mouseHookEventArgs.IsButtonEvent));
+                throw new ArgumentException(null, nameof(mouseHookEventArgs.IsButtonEvent));
             }
 
             Location = mouseHookEventArgs.DeviceLocation;
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public BackgroundAddonMouseButtonContext(IPluginIdentifiers pluginIdentifiers, MouseHookEventArgs mouseHookEventArgs)
         {
             if(!mouseHookEventArgs.IsButtonEvent) {
-                throw new ArgumentException(nameof(mouseHookEventArgs.IsButtonEvent));
+                throw new ArgumentException(null, nameof(mouseHookEventArgs.IsButtonEvent));
             }
 
             Button = mouseHookEventArgs.Button;

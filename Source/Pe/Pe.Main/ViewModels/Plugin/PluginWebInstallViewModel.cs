@@ -64,7 +64,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Plugin
 
         #region command
 
-        public ICommand InstallCommand => GetOrCreateCommand(() => new DelegateCommand<Window>(
+        private ICommand? _InstallCommand;
+        public ICommand InstallCommand => this._InstallCommand ??= new DelegateCommand<Window>(
             async o => {
                 ExceptionMessage = string.Empty;
                 NowInstalling = true;
@@ -78,14 +79,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Plugin
                 }
             },
             o => !NowInstalling
-        ));
+        );
 
-        public ICommand OpenProjectPluginsUrl => GetOrCreateCommand(() => new DelegateCommand<Window>(
+        private ICommand? _OpenProjectPluginsUrl;
+        public ICommand OpenProjectPluginsUrl => this._OpenProjectPluginsUrl ??= new DelegateCommand<Window>(
             o => {
                 Model.OpenProjectPluginsUri();
             }
-        ));
-        
+        );
+
         #endregion
 
         #region IViewLifecycleReceiver

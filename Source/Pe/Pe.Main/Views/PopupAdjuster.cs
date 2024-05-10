@@ -7,7 +7,7 @@ using ContentTypeTextNet.Pe.Standard.Base;
 namespace ContentTypeTextNet.Pe.Main.Views
 {
     /// <summary>
-    /// <see cref="Popup"/>をいい感じに自動で動かす。
+    /// <see cref="System.Windows.Controls.Primitives.Popup"/>をいい感じに自動で動かす。
     /// </summary>
     public sealed class PopupAdjuster: DisposerBase
     {

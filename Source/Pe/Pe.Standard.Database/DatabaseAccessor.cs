@@ -187,21 +187,17 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         {
             ThrowIfDisposed();
 
-            if(!IsOpened) {
+            if(!IsOpened || ConnectionPausing) {
                 return ActionDisposerHelper.CreateEmpty();
             }
 
-            if(!ConnectionPausing) {
-                BaseConnection.Close();
-                IsOpened = false;
-                ConnectionPausing = true;
-                return new ActionDisposer(d => {
-                    ConnectionPausing = false;
-                    LazyConnection = new Lazy<IDbConnection>(OpenConnection);
-                });
-            }
-
-            return ActionDisposerHelper.CreateEmpty();
+            BaseConnection.Close();
+            IsOpened = false;
+            ConnectionPausing = true;
+            return new ActionDisposer(d => {
+                ConnectionPausing = false;
+                LazyConnection = new Lazy<IDbConnection>(OpenConnection);
+            });
         }
 
         public IDataReader GetDataReader(IDatabaseTransaction? transaction, string statement, object? parameter = null)

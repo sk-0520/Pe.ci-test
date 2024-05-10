@@ -93,6 +93,30 @@ jobs:
           path: Output/help
           if-no-files-found: error
 
+  documment-comment:
+    name: Document Comment
+    runs-on: ${{ inputs.OS_WINDOWS }}
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v4
+
+      - name: <Prepare> docfx
+        run: |
+          dotnet tool install docfx --tool-path _tools
+
+      - name: <Build> Main
+        run: |
+          .\_tools\docfx docfx.json --template statictoc
+
+      - name: <Artifact> Document Comment
+        uses: actions/upload-artifact@v4
+        with:
+          name: DocumentComment
+          path: |
+            _doc-comment\metadata
+            _doc-comment\document
+
   plugin-template:
     name: Plugin Template
     needs:
@@ -471,6 +495,32 @@ jobs:
         shell: pwsh
         run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
+      - name: <Make> CodeCoverage
+        shell: pwsh
+        run: |
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          $files = @(Get-ChildItem -Filter coverage.cobertura.xml -Recurse)
+          # ソースファイルの位置を渡しておかないとソースが読めない問題対応(Pe.Bridgeは一人ではしゃいでるのでこれだけ単独補正)
+          $sources = @(
+            Join-Path -Path (Get-Location) -ChildPath Source | Join-Path -ChildPath Pe
+            Join-Path -Path (Get-Location) -ChildPath Source | Join-Path -ChildPath Pe | Join-Path -ChildPath Pe.Bridge
+          )
+          reportgenerator `
+            -reports:$($files -join ';') `
+            -sourcedirs:$($sources -join ';') `
+            -targetdir:"coveragereport" `
+            -reporttypes:Html
+          Get-Location
+
+      - name: <Artifact> CodeCoverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test_Pe.Main_${{ matrix.PLATFORM }}
+          path: |
+            Source/Pe/*.Test/TestResults/**/coverage.cobertura.xml
+            coveragereport
+          if-no-files-found: error
+
   reconstitution-application:
     name: Reconstitution Application
     needs:
@@ -687,6 +737,13 @@ jobs:
         shell: pwsh
         run: .\Build\test-module.ps1 -InformationAction Continue -Module ${{ env.MODULE }} -ProductMode -BuildType BETA -Platform ${{ matrix.PLATFORM }} -Configuration Release -Logger GitHubActions
 
+      # - name: <Artifact> result
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: Test_Pe.Plugins.Reference_${{ matrix.PLATFORM }}
+      #     path: Source/**/coverage.cobertura.xml
+      #     if-no-files-found: error
+
   reconstitution-plugins:
     name: Reconstitution Plugins
     needs:
@@ -789,6 +846,7 @@ jobs:
           - macos-12
           - macos-11
         TARGET:
+          - Pe.Standard.Property.Test
           - Pe.Standard.Base.Test
           - Pe.Standard.Database.Test
           - Pe.Standard.DependencyInjection.Test

@@ -11,32 +11,14 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     public class Initializer<TSupportInitialize>: DisposerBase
         where TSupportInitialize : ISupportInitialize
     {
-        #region variable
-
-        private TSupportInitialize? _target;
-
-        #endregion
-
         public Initializer(TSupportInitialize target)
         {
-            this._target = target;
+            Target = target;
         }
 
         #region property
 
-        public TSupportInitialize Target
-        {
-            get
-            {
-                ThrowIfDisposed();
-
-                if(this._target is null) {
-                    throw new InvalidOperationException();
-                }
-
-                return this._target;
-            }
-        }
+        public TSupportInitialize Target { get; }
 
         #endregion
 
@@ -45,10 +27,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                if(this._target != null) {
-                    this._target.EndInit();
-                    this._target = default;
-                }
+                Target.EndInit();
             }
 
             base.Dispose(disposing);

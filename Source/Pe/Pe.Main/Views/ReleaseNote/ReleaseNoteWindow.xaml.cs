@@ -21,8 +21,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
 
         #region property
 
-        private CommandStore CommandStore { get; } = new CommandStore();
-
         [Inject]
         private WebViewInitializer WebViewInitializer { get; set; } = default!;
         [Inject]
@@ -33,9 +31,11 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
         #endregion
 
         #region command
-        public ICommand CloseCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
+
+        private ICommand? _CloseCommand;
+        public ICommand CloseCommand => this._CloseCommand ??= new DelegateCommand(
             () => Close()
-        ));
+        );
 
         #endregion
 

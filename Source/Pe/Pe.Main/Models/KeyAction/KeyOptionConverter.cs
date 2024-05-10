@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 return func(attribute, optionValue);
             }
 
-            throw new ArgumentException(nameof(map) + "[" + attribute.OptionName + "]");
+            throw new ArgumentException(null, nameof(map) + "[" + attribute.OptionName + "]");
         }
 
         protected bool TryConvert<TValue>(KeyActionOptionAttribute attribute, IReadOnlyDictionary<string, string> map, Func<KeyActionOptionAttribute, string, TValue> func, out TValue result)

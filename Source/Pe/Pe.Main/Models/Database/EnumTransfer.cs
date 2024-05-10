@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         public EnumTransferAttribute(string value)
         {
             if(string.IsNullOrWhiteSpace(value)) {
-                throw new ArgumentException(nameof(value));
+                throw new ArgumentException(null, nameof(value));
             }
 
             Value = value;

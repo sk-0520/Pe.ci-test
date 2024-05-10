@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     {
         #region define
 
-        private abstract class KeyboardJobSettingBaseComparsion: Comparer<KeyboardJobSettingEditorElementBase>
+        private abstract class KeyboardJobSettingBaseComparer: Comparer<KeyboardJobSettingEditorElementBase>
         {
             #region Comparer
 
@@ -48,16 +48,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                     return +1;
                 }
 
-                return x.Mappings[0].Data.Key - y.Mappings[0].Data.Key;
+                return x.Mappings[0].Key - y.Mappings[0].Key;
             }
 
             #endregion
         }
 
-        private class ReplaceComparsion: KeyboardJobSettingBaseComparsion
+        private class ReplaceComparer: KeyboardJobSettingBaseComparer
         { }
 
-        private class DisableComparsion: KeyboardJobSettingBaseComparsion
+        private class DisableComparer: KeyboardJobSettingBaseComparer
         { }
 
         #endregion
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public async Task AddPressedJobAsync(KeyActionKind kind)
         {
             if(kind == KeyActionKind.Replace || kind == KeyActionKind.Disable) {
-                throw new ArgumentException(nameof(kind));
+                throw new ArgumentException(null, nameof(kind));
             }
 
             var keyActionData = new KeyActionData() {
@@ -183,8 +183,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 await editor.InitializeAsync();
             }
 
-            Array.Sort(replaceJobEditor, new ReplaceComparsion());
-            Array.Sort(disableJobEditor, new DisableComparsion());
+            Array.Sort(replaceJobEditor, new ReplaceComparer());
+            Array.Sort(disableJobEditor, new DisableComparer());
 
             ReplaceJobEditors.SetRange(replaceJobEditor);
             DisableJobEditors.SetRange(disableJobEditor);

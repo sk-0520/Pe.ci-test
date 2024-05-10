@@ -33,16 +33,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 
         #region command
 
-        public ICommand ImportProgramsCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ImportProgramsCommand;
+        public ICommand ImportProgramsCommand => this._ImportProgramsCommand ??= new DelegateCommand(
             async () => {
                 await Model.ShowImportProgramsViewAsync();
                 if(Model.IsRegisteredLauncher) {
                     RaisePropertyChanged(nameof(IsRegisteredLauncher));
                 }
             }
-        ));
+        );
 
-        public ICommand RegisterStartupCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _RegisterStartupCommand;
+        public ICommand RegisterStartupCommand => this._RegisterStartupCommand ??= new DelegateCommand(
             () => {
                 if(!Model.ExistsStartup()) {
                     Model.RegisterStartup();
@@ -50,14 +52,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
                 // 状況によらずマークだけつける
                 IsRegisteredStartup = true;
             }
-        ));
+        );
 
-        public ICommand ShowNotificationAreaCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ShowNotificationAreaCommand;
+        public ICommand ShowNotificationAreaCommand => this._ShowNotificationAreaCommand ??= new DelegateCommand(
             () => {
                 var systemExecutor = new SystemExecutor();
                 systemExecutor.OpenNotificationAreaHistory();
             }
-        ));
+        );
 
         #endregion
     }

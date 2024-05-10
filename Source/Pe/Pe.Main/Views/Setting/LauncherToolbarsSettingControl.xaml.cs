@@ -24,8 +24,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #region property
 
-        private CommandStore CommandStore { get; } = new CommandStore();
-
         private IList<ScreenWindow> ScreenWindows { get; set; } = new List<ScreenWindow>();
 
         #endregion
@@ -73,7 +71,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #region command
 
-        public ICommand DisplayAllScreensCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
+        private ICommand? _DisplayAllScreensCommand;
+        public ICommand DisplayAllScreensCommand => this._DisplayAllScreensCommand ??= new DelegateCommand(
             () => {
                 if(ScreenWindows.Any()) {
                     CloseWindows();
@@ -95,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
                 }
                 ScreenWindows.First().Activate();
             }
-        ));
+        );
 
         #endregion
 

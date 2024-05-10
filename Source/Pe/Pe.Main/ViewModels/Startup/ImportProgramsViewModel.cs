@@ -46,20 +46,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 
         #region command
 
-        public ICommand ViewLoadedCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ViewLoadedCommand;
+        public ICommand ViewLoadedCommand => this._ViewLoadedCommand ??= new DelegateCommand(
             () => {
                 Model.LoadProgramsAsync().ConfigureAwait(false);
             }
-        ));
+        );
 
-        public ICommand CloseCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CloseCommand;
+        public ICommand CloseCommand => this._CloseCommand ??= new DelegateCommand(
             () => {
                 CloseRequest.Send();
             },
             () => !NowImporting
-        ).ObservesProperty(() => NowImporting));
+        ).ObservesProperty(() => NowImporting);
 
-        public ICommand ImportCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ImportCommand;
+        public ICommand ImportCommand => this._ImportCommand ??= new DelegateCommand(
             async () => {
                 UserTracker.Track(nameof(ImportCommand), new TrackProperties() {
                     ["TotalCount"] = Model.ProgramItems.Count.ToString(CultureInfo.InvariantCulture),
@@ -74,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
                 }
             },
             () => !NowImporting
-        ).ObservesProperty(() => NowImporting));
+        ).ObservesProperty(() => NowImporting);
 
         #endregion
 

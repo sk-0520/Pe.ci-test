@@ -114,57 +114,68 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand AddReplaceJobCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _AddReplaceJobCommand;
+        public ICommand AddReplaceJobCommand => this._AddReplaceJobCommand ??= new DelegateCommand(
              async () => {
                  await Model.AddReplaceJobAsync();
              }
-         ));
-        public ICommand RemoveReplaceJobCommand => GetOrCreateCommand(() => new DelegateCommand<KeyboardReplaceJobSettingEditorViewMode>(
+         );
+
+        private ICommand? _RemoveReplaceJobCommand;
+        public ICommand RemoveReplaceJobCommand => this._RemoveReplaceJobCommand ??= new DelegateCommand<KeyboardReplaceJobSettingEditorViewMode>(
              o => {
                  Model.RemoveReplaceJob(o.KeyActionId);
              }
-         ));
+         );
 
-        public ICommand AddDisableJobCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _AddDisableJobCommand;
+        public ICommand AddDisableJobCommand => this._AddDisableJobCommand ??= new DelegateCommand(
              async () => {
                  await Model.AddDisableJobAsync();
              }
-         ));
-        public ICommand RemoveDisableJobCommand => GetOrCreateCommand(() => new DelegateCommand<KeyboardDisableJobSettingEditorViewModel>(
+         );
+
+        private ICommand? _RemoveDisableJobCommand;
+        public ICommand RemoveDisableJobCommand => this._RemoveDisableJobCommand ??= new DelegateCommand<KeyboardDisableJobSettingEditorViewModel>(
              o => {
                  Model.RemoveDisableJob(o.KeyActionId);
              }
-         ));
+         );
 
-        public ICommand RemovePressedJobCommand => GetOrCreateCommand(() => new DelegateCommand<KeyboardPressedJobSettingEditorViewModelBase>(
+        private ICommand? _RemovePressedJobCommand;
+        public ICommand RemovePressedJobCommand => this._RemovePressedJobCommand ??= new DelegateCommand<KeyboardPressedJobSettingEditorViewModelBase>(
             o => {
                 Model.RemovePressedJob(o.KeyActionId);
             }
-        ));
+        );
 
-        public ICommand AddCommandJobCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _AddCommandJobCommand;
+        public ICommand AddCommandJobCommand => this._AddCommandJobCommand ??= new DelegateCommand(
             async () => {
                 await AddPressedJobAsync(KeyActionKind.Command);
             }
-        ));
+        );
 
-        public ICommand AddLauncherItemJobCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _AddLauncherItemJobCommand;
+        public ICommand AddLauncherItemJobCommand => this._AddLauncherItemJobCommand ??= new DelegateCommand(
             async () => {
                 await AddPressedJobAsync(KeyActionKind.LauncherItem);
             }
-        ));
+        );
 
-        public ICommand AddLauncherToolbarJobCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _AddLauncherToolbarJobCommand;
+        public ICommand AddLauncherToolbarJobCommand => this._AddLauncherToolbarJobCommand ??= new DelegateCommand(
             async () => {
                 await AddPressedJobAsync(KeyActionKind.LauncherToolbar);
             }
-        ));
+        );
 
-        public ICommand AddNoteJobCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _AddNoteJobCommand;
+        public ICommand AddNoteJobCommand => this._AddNoteJobCommand ??= new DelegateCommand(
             async () => {
                 await AddPressedJobAsync(KeyActionKind.Note);
             }
-        ));
+        );
 
         #endregion
 

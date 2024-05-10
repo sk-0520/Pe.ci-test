@@ -16,18 +16,15 @@ namespace ContentTypeTextNet.Pe.Embedded.Attributes
         /// <param name="pluginId">プラグインID。<see cref="PluginId"/>へ変換可能な値を指定すること。</param>
         public PluginIdentifiersAttribute(string pluginName, string pluginId)
         {
-            if(string.IsNullOrWhiteSpace(pluginName)) {
-                throw new ArgumentException(nameof(pluginName));
-            }
+            ArgumentException.ThrowIfNullOrWhiteSpace(pluginName);
+            ArgumentNullException.ThrowIfNull(pluginId);
+
             PluginName = pluginName.Trim();
-            if(PluginName.Length == 0) {
-                throw new ArgumentException(nameof(pluginName));
-            }
 
             if(PluginId.TryParse(pluginId, out var guid)) {
                 PluginId = guid;
             } else {
-                throw new ArgumentException(nameof(pluginId));
+                throw new ArgumentException(null, nameof(pluginId));
             }
         }
 

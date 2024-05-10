@@ -12,6 +12,12 @@ namespace PeLibraryTest
     {
     public:
 
+        TEST_METHOD(is_enabled_text_false_test)
+        {
+            auto test = create_invalid_text();
+            Assert::IsFalse(is_enabled_text(&test));
+        }
+
         TEST_METHOD(new_test)
         {
             TCHAR input[] = _T("あいう");
@@ -90,6 +96,5 @@ namespace PeLibraryTest
                 release_string(actual, DEFAULT_MEMORY_ARENA);
             }
         }
-            
     };
 }

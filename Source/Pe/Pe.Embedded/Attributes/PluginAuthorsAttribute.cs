@@ -19,14 +19,10 @@ namespace ContentTypeTextNet.Pe.Embedded.Attributes
         /// <param name="email">プラグインの作者E-Mail。</param>
         public PluginAuthorsAttribute(string name, string license, string website = "", string projectSite = "", string email = "")
         {
-            if(string.IsNullOrWhiteSpace(name)) {
-                throw new ArgumentException(nameof(name));
-            }
-            Name = name;
+            ArgumentException.ThrowIfNullOrWhiteSpace(name);
+            ArgumentException.ThrowIfNullOrWhiteSpace(license);
 
-            if(string.IsNullOrWhiteSpace(license)) {
-                throw new ArgumentException(nameof(license));
-            }
+            Name = name;
             License = license;
 
             Website = website;

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using System.Windows.Input;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Standard.Property;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
 using Prism.Mvvm;
@@ -75,13 +76,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// ロガー。
         /// </summary>
         protected ILogger Logger { get; }
-        //IDictionary<string, ICommand> CommandCache { get; } = new Dictionary<string, ICommand>();
-        /// <summary>
-        /// コマンド一覧。
-        /// </summary>
-        protected IEnumerable<ICommand> Commands => CommandStore.Commands;
-        /// <inheritdoc cref="Models.CommandStore"/>
-        private CommandStore CommandStore { get; } = new CommandStore();
 
         /// <summary>
         /// プロパティアクセス処理キャッシュ。
@@ -120,21 +114,21 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             PropertyInfo? propertyInfo = null;
             CachedProperty? cachedProperty = null;
-            object? nowValue;
+            TValue? nowValue;
 
             if(CachedProperty is null) {
                 var type = obj.GetType();
                 propertyInfo = type.GetProperty(targetMemberName);
                 Debug.Assert(propertyInfo != null);
 
-                nowValue = propertyInfo.GetValue(obj);
+                nowValue = (TValue?)propertyInfo.GetValue(obj);
             } else {
                 cachedProperty = CachedProperty.GetOrAdd(obj, o => new CachedProperty(o));
 
-                nowValue = cachedProperty.Get(targetMemberName);
+                nowValue = (TValue?)cachedProperty.Get(targetMemberName);
             }
 
-            if(!Equals(nowValue, value)) {
+            if(!EqualityComparer<TValue>.Default.Equals(nowValue, value)) {
                 if(CachedProperty is null) {
                     propertyInfo!.SetValue(obj, value);
                 } else {
@@ -148,29 +142,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// コマンド生成。
-        /// </summary>
-        /// <remarks>
-        /// <para>メモリ状態は知らんけどコマンドプロパティ記述位置でインスタンスを触りながら処理書きたいのよ。</para>
-        /// </remarks>
-        /// <typeparam name="TCommand"></typeparam>
-        /// <param name="creator"></param>
-        /// <param name="callerMemberName"><see cref="CallerMemberNameAttribute"/></param>
-        /// <param name="callerFilePath"></param>
-        /// <param name="callerLineNumber"><see cref="CallerLineNumberAttribute"/></param>
-        /// <returns></returns>
-        protected TCommand GetOrCreateCommand<TCommand>(Func<TCommand> creator, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
-            where TCommand : ICommand
-        {
-            if(IsDisposed) {
-                // なーんかワケわからんことになるので破棄後は null を返すようにしておく
-                return default!;
-            }
-
-            return CommandStore.GetOrCreate(creator, callerMemberName, callerFilePath, callerLineNumber);
         }
 
         /// <summary>
@@ -372,11 +343,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
         }
 
-        protected void ThrowIfDisposed([CallerMemberName] string _callerMemberName = "")
+        protected void ThrowIfDisposed()
         {
-            if(IsDisposed) {
-                throw new ObjectDisposedException(_callerMemberName);
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, this);
         }
 
         #endregion
@@ -442,16 +411,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             ErrorsContainer.ClearErrors();
             PropertyChangedEventArgsCache.Clear();
 
-            if(disposing) {
-                CommandStore.Dispose();
-            }
-
-            if(disposing) {
-#pragma warning disable S3971 // "GC.SuppressFinalize" should not be called
-                GC.SuppressFinalize(this);
-#pragma warning restore S3971 // "GC.SuppressFinalize" should not be called
-            }
-
             IsDisposed = true;
         }
 
@@ -461,6 +420,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion
@@ -488,7 +448,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// 取り込んだモデル。
         /// </summary>
         /// <remarks>
-        /// <para><see cref="Dispose(bool)"/>後は null が入るので注意ね。</para>
+        /// <para><see cref="Dispose(bool)"/>後は <see langword="null" /> が入るので注意ね。</para>
         /// </remarks>
         protected TModel Model { get; private set; }
 

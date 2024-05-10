@@ -19,6 +19,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
     /// <summary>
     /// <#= item.Description #>。
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public readonly record struct <#= item.Name #>
     {
         /// <summary>

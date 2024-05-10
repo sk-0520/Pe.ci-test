@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public EnvironmentParameters(DirectoryInfo rootDirectory, CommandLine commandLine)
         {
             if(!commandLine.IsParsed) {
-                throw new ArgumentException(nameof(commandLine));
+                throw new ArgumentException(null, nameof(commandLine));
             }
             //CommandLine = commandLine;
 

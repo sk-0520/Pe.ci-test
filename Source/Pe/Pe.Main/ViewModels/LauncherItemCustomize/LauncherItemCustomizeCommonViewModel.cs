@@ -82,7 +82,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region command
 
-        public ICommand IconFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _IconFileSelectCommand;
+        public ICommand IconFileSelectCommand => this._IconFileSelectCommand ??= new DelegateCommand(
             () => {
                 var dialogRequester = new DialogRequester(LoggerFactory);
                 dialogRequester.SelectIcon(
@@ -98,8 +99,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 );
 
             }
-        ));
-        public ICommand IconImageSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _IconImageSelectCommand;
+        public ICommand IconImageSelectCommand => this._IconImageSelectCommand ??= new DelegateCommand(
             () => {
                 var dialogRequester = new DialogRequester(LoggerFactory);
                 dialogRequester.SelectFile(
@@ -117,12 +120,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     }
                 );
             }
-        ));
-        public ICommand IconClearSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _IconClearSelectCommand;
+        public ICommand IconClearSelectCommand => this._IconClearSelectCommand ??= new DelegateCommand(
             () => {
                 IconData = new IconData();
             }
-        ));
+        );
 
         #endregion
 

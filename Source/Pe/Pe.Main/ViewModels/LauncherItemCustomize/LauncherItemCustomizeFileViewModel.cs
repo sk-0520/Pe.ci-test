@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             : base(model, dispatcherWrapper, loggerFactory)
         {
             if(Model.Kind != Models.Data.LauncherItemKind.File) {
-                throw new ArgumentException(nameof(model) + "." + nameof(Model.Kind));
+                throw new ArgumentException(null, nameof(model) + "." + nameof(Model.Kind));
             }
             if(!Model.IsLazyLoad) {
                 if(Model.File == null) {
@@ -129,7 +129,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region command
 
-        public ICommand LauncherFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _LauncherFileSelectCommand;
+        public ICommand LauncherFileSelectCommand => this._LauncherFileSelectCommand ??= new DelegateCommand(
             () => {
                 var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
                 var exeExtensions = environmentExecuteFile.GetSystemExecuteExtensions(true);
@@ -148,9 +149,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     }
                 );
             }
-        ));
+        );
 
-        public ICommand LauncherDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _LauncherDirectorySelectCommand;
+        public ICommand LauncherDirectorySelectCommand => this._LauncherDirectorySelectCommand ??= new DelegateCommand(
             () => {
                 var dialogRequester = new DialogRequester(LoggerFactory);
                 dialogRequester.SelectDirectory(
@@ -161,16 +163,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     }
                 );
             }
-        ));
+        );
 
-        public ICommand SetPathToFullPathCommand => GetOrCreateCommand(() => new DelegateCommand<EnvironmentPathExecuteItemViewModel>(
+        private ICommand? _SetPathToFullPathCommand;
+        public ICommand SetPathToFullPathCommand => this._SetPathToFullPathCommand ??= new DelegateCommand<EnvironmentPathExecuteItemViewModel>(
             o => {
                 Path = o.FullPath;
                 IsDropDownPathItems = false;
             }
-        ));
+        );
 
-        public ICommand OptionFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _OptionFileSelectCommand;
+        public ICommand OptionFileSelectCommand => this._OptionFileSelectCommand ??= new DelegateCommand(
             () => {
                 var dialogRequester = new DialogRequester(LoggerFactory);
                 dialogRequester.SelectFile(
@@ -183,9 +187,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     }
                 );
             }
-        ));
+        );
 
-        public ICommand OptionDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _OptionDirectorySelectCommand;
+        public ICommand OptionDirectorySelectCommand => this._OptionDirectorySelectCommand ??= new DelegateCommand(
             () => {
                 var dialogRequester = new DialogRequester(LoggerFactory);
                 dialogRequester.SelectDirectory(
@@ -196,15 +201,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     }
                 );
             }
-        ));
+        );
 
-        public ICommand OptionClearCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _OptionClearCommand;
+        public ICommand OptionClearCommand => this._OptionClearCommand ??= new DelegateCommand(
             () => {
                 Option = string.Empty;
             }
-        ));
+        );
 
-        public ICommand WorkingDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _WorkingDirectorySelectCommand;
+        public ICommand WorkingDirectorySelectCommand => this._WorkingDirectorySelectCommand ??= new DelegateCommand(
              () => {
                  var dialogRequester = new DialogRequester(LoggerFactory);
                  dialogRequester.SelectDirectory(
@@ -215,13 +222,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                      }
                  );
              }
-         ));
+         );
 
-        public ICommand WorkingDirectoryClearCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _WorkingDirectoryClearCommand;
+        public ICommand WorkingDirectoryClearCommand => this._WorkingDirectoryClearCommand ??= new DelegateCommand(
              () => {
                  WorkingDirectoryPath = string.Empty;
              }
-         ));
+         );
 
         #endregion
 

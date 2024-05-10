@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Database", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.DependencyInjection", "..\Pe\Pe.Standard.DependencyInjection\Pe.Standard.DependencyInjection.csproj", "{1D540342-3899-43BA-AEB1-EB58A9584F79}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Property", "..\Pe\Pe.Standard.Property\Pe.Standard.Property.csproj", "{CA2F36F1-A571-4DEB-80FF-160B21B40781}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -109,6 +111,14 @@ Global
 		{1D540342-3899-43BA-AEB1-EB58A9584F79}.Release|x64.Build.0 = Release|x64
 		{1D540342-3899-43BA-AEB1-EB58A9584F79}.Release|x86.ActiveCfg = Release|x86
 		{1D540342-3899-43BA-AEB1-EB58A9584F79}.Release|x86.Build.0 = Release|x86
+		{CA2F36F1-A571-4DEB-80FF-160B21B40781}.Debug|x64.ActiveCfg = Debug|x64
+		{CA2F36F1-A571-4DEB-80FF-160B21B40781}.Debug|x64.Build.0 = Debug|x64
+		{CA2F36F1-A571-4DEB-80FF-160B21B40781}.Debug|x86.ActiveCfg = Debug|x86
+		{CA2F36F1-A571-4DEB-80FF-160B21B40781}.Debug|x86.Build.0 = Debug|x86
+		{CA2F36F1-A571-4DEB-80FF-160B21B40781}.Release|x64.ActiveCfg = Release|x64
+		{CA2F36F1-A571-4DEB-80FF-160B21B40781}.Release|x64.Build.0 = Release|x64
+		{CA2F36F1-A571-4DEB-80FF-160B21B40781}.Release|x86.ActiveCfg = Release|x86
+		{CA2F36F1-A571-4DEB-80FF-160B21B40781}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +135,7 @@ Global
 		{A99BC63C-7FEC-422F-9A76-AD1201D216B7} = {E19062EF-1472-482E-AA42-665522E9ED7B}
 		{A5B22D83-0067-495A-84AA-E937A366D984} = {A99BC63C-7FEC-422F-9A76-AD1201D216B7}
 		{1D540342-3899-43BA-AEB1-EB58A9584F79} = {A99BC63C-7FEC-422F-9A76-AD1201D216B7}
+		{CA2F36F1-A571-4DEB-80FF-160B21B40781} = {A99BC63C-7FEC-422F-9A76-AD1201D216B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {78A52B18-BFFB-4349-8EA1-EFA11783A571}

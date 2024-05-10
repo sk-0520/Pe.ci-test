@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
         public Dictionary<string, string> Options { get; } = new Dictionary<string, string>();
-        public ObservableCollection<WrapModel<KeyMappingData>> Mappings { get; } = new ObservableCollection<WrapModel<KeyMappingData>>();
+        public ObservableCollection<KeyMappingData> Mappings { get; } = new ObservableCollection<KeyMappingData>();
 
         #endregion
 
@@ -74,12 +74,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                     Options.Add(pair.Key, pair.Value);
                 }
 
-                Mappings.AddRange(mappings.Select(i => WrapModel.Create(i, LoggerFactory)));
+                Mappings.AddRange(mappings);
                 if(Mappings.Count == 0) {
                     if(!IsNewJob) {
                         Logger.LogWarning("マッピングデータが存在しないため補正: {0}", KeyActionId);
                     }
-                    Mappings.Add(new WrapModel<KeyMappingData>(new KeyMappingData(), LoggerFactory));
+                    Mappings.Add(new KeyMappingData());
                 }
             }
 
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var keyMappingFactory = new KeyMappingFactory();
             foreach(var mapping in Mappings.Counting()) {
                 var seq = keyMappingFactory.MappingStep * mapping.Number;
-                keyMappingsEntityDao.InsertMapping(ActionData.KeyActionId, mapping.Value.Data, seq, commonStatus);
+                keyMappingsEntityDao.InsertMapping(ActionData.KeyActionId, mapping.Value, seq, commonStatus);
             }
 
         }
@@ -128,9 +128,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    foreach(var item in Mappings) {
-                        item.Dispose();
-                    }
                     Mappings.Clear();
                 }
             }
@@ -148,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             : base(keyActionData, isNewJob, mainDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {
             if(keyActionData.KeyActionKind != KeyActionKind.Replace) {
-                throw new ArgumentException(nameof(keyActionData));
+                throw new ArgumentException(null, nameof(keyActionData));
             }
         }
     }
@@ -159,7 +156,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             : base(keyActionData, isNewJob, mainDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {
             if(keyActionData.KeyActionKind != KeyActionKind.Disable) {
-                throw new ArgumentException(nameof(keyActionData));
+                throw new ArgumentException(null, nameof(keyActionData));
             }
         }
 
@@ -184,7 +181,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             : base(keyActionData, isNewJob, mainDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {
             if(keyActionData.KeyActionKind == KeyActionKind.Replace || keyActionData.KeyActionKind == KeyActionKind.Disable) {
-                throw new ArgumentException(nameof(keyActionData));
+                throw new ArgumentException(null, nameof(keyActionData));
             }
         }
 
@@ -193,7 +190,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public void AddMapping()
         {
             var mapping = new KeyMappingData();
-            Mappings.Add(WrapModel.Create(mapping, LoggerFactory));
+            Mappings.Add(mapping);
         }
 
         public void RemoveMappingAt(int index)

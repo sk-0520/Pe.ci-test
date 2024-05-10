@@ -55,12 +55,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand ShowAllScreensCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ShowAllScreensCommand;
+        public ICommand ShowAllScreensCommand => this._ShowAllScreensCommand ??= new DelegateCommand(
             () => {
                 ShowAllScreensRequest.Send();
             }
-        ));
-
+        );
 
         #endregion
 

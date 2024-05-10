@@ -11,17 +11,18 @@ using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Database.Test.Vender.Public.SQLite
 {
-    public class SqliteSimpleTest
+    public class DatabaseAccessorTest
     {
         #region define
 
         #endregion
-        public SqliteSimpleTest()
+
+        public DatabaseAccessorTest()
         {
             var factory = new TestSqliteFactory();
             DatabaseAccessor = new SqliteAccessor(factory, NullLoggerFactory.Instance);
 
-            var logger = NullLoggerFactory.Instance.CreateLogger(nameof(SqliteSimpleTest));
+            var logger = NullLoggerFactory.Instance.CreateLogger(nameof(DatabaseAccessorTest));
 
             var statements = new[] {
 @"
@@ -50,11 +51,51 @@ values
 
         #region property
 
-        IDatabaseAccessor DatabaseAccessor { get; }
+        private IDatabaseAccessor DatabaseAccessor { get; }
 
         #endregion
 
         #region function
+
+        [Fact]
+        public void PauseConnectionTest()
+        {
+            var databaseAccessor = (DatabaseAccessor)DatabaseAccessor;
+            Assert.True(databaseAccessor.IsOpened);
+            Assert.False(databaseAccessor.ConnectionPausing);
+
+            // テスト初期化のテーブル 1 + ダミーテーブル 1のみ
+            databaseAccessor.Execute("create table X (col integer)");
+            var actual1 = databaseAccessor.QueryFirst<long>("select count(*) from sqlite_master where type = 'table'");
+            Assert.Equal(2, actual1);
+
+            using(DatabaseAccessor.PauseConnection()) {
+                Assert.False(databaseAccessor.IsOpened);
+                Assert.True(databaseAccessor.ConnectionPausing);
+
+                // つながってないのでアクセスできない(処理正常終了は sqlite connection に依存している)
+                databaseAccessor.Execute("create table X (col integer)");
+                var actual2 = databaseAccessor.QueryFirst<long>("select count(*) from sqlite_master where type = 'table'");
+                Assert.Equal(0, actual2);
+
+                // 非オープン時(=ネスト)した状態は何も行われない
+                using(DatabaseAccessor.PauseConnection()) {
+                    databaseAccessor.Execute("create table X (col integer)");
+                    var actual3 = databaseAccessor.QueryFirst<long>("select count(*) from sqlite_master where type = 'table'");
+                    Assert.Equal(0, actual3);
+                }
+
+                // ネストから復帰しても大本がまだ閉じているのでアクセスできない
+                databaseAccessor.Execute("create table X (col integer)");
+                var actual4 = databaseAccessor.QueryFirst<long>("select count(*) from sqlite_master where type = 'table'");
+                Assert.Equal(0, actual4);
+            }
+
+            // 再接続によりテスト初期化データが破棄されている(in memory 前提)
+            databaseAccessor.Execute("create table X (col integer)");
+            var actual5 = databaseAccessor.QueryFirst<long>("select count(*) from sqlite_master where type = 'table'");
+            Assert.Equal(1, actual5);
+        }
 
         [Fact]
         public void GetDataReaderTest()
@@ -71,6 +112,7 @@ values
 
                 rowNumber += 1;
             }
+            Assert.Equal(4, rowNumber);
         }
 
         [Fact]
@@ -88,6 +130,7 @@ values
 
                 rowNumber += 1;
             }
+            Assert.Equal(4, rowNumber);
         }
 
         [Fact]
@@ -121,8 +164,8 @@ values
             var actual1 = DatabaseAccessor.GetScalar<string>("select ColVal from TestTable1 order by ColKey");
             Assert.Equal("A", actual1);
 
-            var actual2 = DatabaseAccessor.GetScalar<string>("select ColVal from TestTable1 where ColKey <> 1 order by ColKey");
-            Assert.Equal("B", actual2);
+            var actual2 = DatabaseAccessor.GetScalar<string>("select ColVal from TestTable1 order by ColKey desc");
+            Assert.Equal("D", actual2);
 
             var actual3 = DatabaseAccessor.GetScalar<string>("select ColVal from TestTable1 where ColKey = -1");
             Assert.Null(actual3);
@@ -134,8 +177,8 @@ values
             var actual1 = await DatabaseAccessor.GetScalarAsync<string>("select ColVal from TestTable1 order by ColKey");
             Assert.Equal("A", actual1);
 
-            var actual2 = await DatabaseAccessor.GetScalarAsync<string>("select ColVal from TestTable1 where ColKey <> 1 order by ColKey");
-            Assert.Equal("B", actual2);
+            var actual2 = await DatabaseAccessor.GetScalarAsync<string>("select ColVal from TestTable1 order by ColKey desc");
+            Assert.Equal("D", actual2);
 
             var actual3 = await DatabaseAccessor.GetScalarAsync<string>("select ColVal from TestTable1 where ColKey = -1");
             Assert.Null(actual3);
@@ -192,8 +235,8 @@ values
         [Fact]
         public void QueryFirstTest()
         {
-            var actual = DatabaseAccessor.QueryFirst<string>("select ColVal from TestTable1 where ColKey = 2");
-            Assert.Equal("B", actual);
+            var actual = DatabaseAccessor.QueryFirst<string>("select ColVal from TestTable1 where ColKey = 4");
+            Assert.Equal("D", actual);
 
             Assert.Throws<InvalidOperationException>(() => DatabaseAccessor.QueryFirst<string>("select ColVal from TestTable1 where ColKey = -1"));
         }
@@ -201,8 +244,8 @@ values
         [Fact]
         public async Task QueryFirstAsyncTest()
         {
-            var actual = await DatabaseAccessor.QueryFirstAsync<string>("select ColVal from TestTable1 where ColKey = 2");
-            Assert.Equal("B", actual);
+            var actual = await DatabaseAccessor.QueryFirstAsync<string>("select ColVal from TestTable1 where ColKey = 4");
+            Assert.Equal("D", actual);
 
             try {
                 await DatabaseAccessor.QueryFirstAsync<string>("select ColVal from TestTable1 where ColKey = -1");
@@ -214,8 +257,8 @@ values
         [Fact]
         public void QueryFirstOrDefaultTest()
         {
-            var actual = DatabaseAccessor.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = 2");
-            Assert.Equal("B", actual);
+            var actual = DatabaseAccessor.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = 4");
+            Assert.Equal("D", actual);
 
             var actualDefault = DatabaseAccessor.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = -1");
             Assert.Equal(default, actualDefault);
@@ -224,8 +267,8 @@ values
         [Fact]
         public async Task QueryFirstOrDefaultAsyncTest()
         {
-            var actual = await DatabaseAccessor.QueryFirstOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = 2");
-            Assert.Equal("B", actual);
+            var actual = await DatabaseAccessor.QueryFirstOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = 4");
+            Assert.Equal("D", actual);
 
             var actualDefault = await DatabaseAccessor.QueryFirstOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = -1");
             Assert.Equal(default, actualDefault);
@@ -234,8 +277,8 @@ values
         [Fact]
         public void QuerySingleTest()
         {
-            var actual = DatabaseAccessor.QuerySingle<string>("select ColVal from TestTable1 where ColKey = 2");
-            Assert.Equal("B", actual);
+            var actual = DatabaseAccessor.QuerySingle<string>("select ColVal from TestTable1 where ColKey = 4");
+            Assert.Equal("D", actual);
 
             Assert.Throws<InvalidOperationException>(() => DatabaseAccessor.QuerySingle<string>("select ColVal from TestTable1 where ColKey = -1"));
             Assert.Throws<InvalidOperationException>(() => DatabaseAccessor.QuerySingle<string>("select ColVal from TestTable1 where ColKey in (1, 2)"));
@@ -244,8 +287,8 @@ values
         [Fact]
         public async Task QuerySingleAsyncTest()
         {
-            var actual = await DatabaseAccessor.QuerySingleAsync<string>("select ColVal from TestTable1 where ColKey = 2");
-            Assert.Equal("B", actual);
+            var actual = await DatabaseAccessor.QuerySingleAsync<string>("select ColVal from TestTable1 where ColKey = 4");
+            Assert.Equal("D", actual);
 
             try {
                 await DatabaseAccessor.QuerySingleAsync<string>("select ColVal from TestTable1 where ColKey = -1");
@@ -265,8 +308,8 @@ values
         [Fact]
         public void QuerySingleOrDefaultTest()
         {
-            var actual = DatabaseAccessor.QuerySingleOrDefault<string>("select ColVal from TestTable1 where ColKey = 2");
-            Assert.Equal("B", actual);
+            var actual = DatabaseAccessor.QuerySingleOrDefault<string>("select ColVal from TestTable1 where ColKey = 4");
+            Assert.Equal("D", actual);
 
             var actualNull = DatabaseAccessor.QuerySingleOrDefault<string>("select ColVal from TestTable1 where ColKey = -1");
             Assert.Null(actualNull);
@@ -275,11 +318,25 @@ values
         [Fact]
         public async Task QuerySingleOrDefaultAsyncTest()
         {
-            var actual = await DatabaseAccessor.QuerySingleOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = 2");
-            Assert.Equal("B", actual);
+            var actual = await DatabaseAccessor.QuerySingleOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = 4");
+            Assert.Equal("D", actual);
 
             var actualNull = await DatabaseAccessor.QuerySingleOrDefaultAsync<string>("select ColVal from TestTable1 where ColKey = -1");
             Assert.Null(actualNull);
+        }
+
+        [Fact]
+        public void ExecuteTest()
+        {
+            var actual = DatabaseAccessor.Execute("create table TestTable2 as select * from TestTable1");
+            Assert.Equal(4, actual);
+        }
+
+        [Fact]
+        public async Task ExecuteAsyncTest()
+        {
+            var actual = await DatabaseAccessor.ExecuteAsync("create table TestTable2 as select * from TestTable1");
+            Assert.Equal(4, actual);
         }
 
         [Fact]
@@ -293,6 +350,25 @@ values
                 var actualZ = transaction.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = 0");
                 Assert.NotNull(actualZ);
                 Assert.Equal("Z", actualZ);
+            }
+
+            var actualNone2 = DatabaseAccessor.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = 0");
+            Assert.Null(actualNone2);
+        }
+
+        [Fact]
+        public async Task ReadonlyTransactionTest()
+        {
+            using(var transaction = DatabaseAccessor.BeginReadOnlyTransaction()) {
+                Assert.Null(transaction.Transaction);
+
+                var actualNone = transaction.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = 0");
+                Assert.Null(actualNone);
+
+                Assert.Throws<NotSupportedException>(() => transaction.Execute("insert into TestTable1(ColKey, ColVal) values (0, 'Z')"));
+                await Assert.ThrowsAsync<NotSupportedException>(() => transaction.ExecuteAsync("insert into TestTable1(ColKey, ColVal) values (0, 'Z')"));
+
+                Assert.Throws<NotSupportedException>(() => transaction.Commit());
             }
 
             var actualNone2 = DatabaseAccessor.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = 0");

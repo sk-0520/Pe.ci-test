@@ -48,7 +48,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region command
 
-        public ICommand OpenFileCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _OpenFileCommand;
+        public ICommand OpenFileCommand => this._OpenFileCommand ??= new DelegateCommand(
             () => {
                 Logger.LogInformation("ファイルを開く: {NoteFilePath}, {NoteFileId}", FilePath, NoteFileId);
                 try {
@@ -58,9 +59,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     Logger.LogError(ex, ex.Message);
                 }
             }
-        ));
+        );
 
-        public ICommand ShowPropertyCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ShowPropertyCommand;
+        public ICommand ShowPropertyCommand => this._ShowPropertyCommand ??= new DelegateCommand(
             () => {
                 Logger.LogInformation("プロパティ: {NoteFilePath}, {NoteFileId}", FilePath, NoteFileId);
                 try {
@@ -70,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     Logger.LogError(ex, ex.Message);
                 }
             }
-        ));
+        );
 
         #endregion
     }

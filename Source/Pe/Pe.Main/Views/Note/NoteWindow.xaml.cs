@@ -40,40 +40,28 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
         private ILoggerFactory? LoggerFactory { get; set; }
 
         private PopupAdjuster? PopupAdjuster { get; set; }
-        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
         #region command
 
         private ICommand? _TitleEditStartCommand;
-        public ICommand TitleEditStartCommand
-        {
-            get
-            {
-                return this._TitleEditStartCommand ?? (this._TitleEditStartCommand = new DelegateCommand<RequestEventArgs>(
-                    o => {
-                        this.inputTitle.Focus();
-                        this.inputTitle.SelectAll();
-                    }
-                ));
+        public ICommand TitleEditStartCommand => this._TitleEditStartCommand ??= new DelegateCommand<RequestEventArgs>(
+            o => {
+                this.inputTitle.Focus();
+                this.inputTitle.SelectAll();
             }
-        }
+        );
 
         private ICommand? _CloseCommand;
-        public ICommand CloseCommand
-        {
-            get
-            {
-                return this._CloseCommand ?? (this._CloseCommand = new DelegateCommand<RequestEventArgs>(
-                    o => {
-                        Close();
-                    }
-                ));
+        public ICommand CloseCommand => this._CloseCommand ??= new DelegateCommand<RequestEventArgs>(
+            o => {
+                Close();
             }
-        }
+        );
 
-        public ICommand LinkChangeCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        private ICommand? _LinkChangeCommand;
+        public ICommand LinkChangeCommand => this._LinkChangeCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 var linkParameter = (NoteLinkChangeRequestParameter)o.Parameter;
 
@@ -123,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
                     }
                 }
             }
-        ));
+        );
 
         #endregion
 

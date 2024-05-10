@@ -25,6 +25,7 @@
     <ProjectReference Include="..\Pe\Pe.Standard.Base\Pe.Standard.Base.csproj" />
     <ProjectReference Include="..\Pe\Pe.Standard.Database\Pe.Standard.Database.csproj" />
     <ProjectReference Include="..\Pe\Pe.Standard.DependencyInjection\Pe.Standard.DependencyInjection.csproj" />
+    <ProjectReference Include="..\Pe\Pe.Standard.Property\Pe.Standard.Property.csproj" />
   </ItemGroup>
   
 

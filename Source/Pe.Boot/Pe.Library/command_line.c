@@ -75,8 +75,11 @@ static void convert_map_from_arguments(MAP* result, const TEXT arguments[], size
         // 先頭のマークを外した引数取得
         TEXT arg = wrap_text_with_length(current->value + mark_text->length, (size_t)current->length - mark_text->length, false, NULL);
 
-        COMMAND_LINE_ITEM item;
-        item.key_index = i;
+        COMMAND_LINE_ITEM item = {
+            .key_index = i,
+            .value_index = 0,
+            .value = create_invalid_text(),
+        };
 
         TEXT key;
         TEXT option;

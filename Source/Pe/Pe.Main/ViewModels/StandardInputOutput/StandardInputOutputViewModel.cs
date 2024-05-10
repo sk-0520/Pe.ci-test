@@ -119,7 +119,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         #region command
 
-        public ICommand ClearOutputCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ClearOutputCommand;
+        public ICommand ClearOutputCommand => this._ClearOutputCommand ??= new DelegateCommand(
             () => {
                 try {
                     DispatcherWrapper.BeginAsync(() => {
@@ -130,9 +131,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 }
             },
             () => !ProcessExited
-        ));
+        );
 
-        public ICommand KillOutputCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _KillOutputCommand;
+        public ICommand KillOutputCommand => this._KillOutputCommand ??= new DelegateCommand(
             () => {
                 try {
                     Model.Kill();
@@ -141,9 +143,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 }
             },
             () => !ProcessExited
-        ));
+        );
 
-        public ICommand SaveCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _SaveCommand;
+        public ICommand SaveCommand => this._SaveCommand ??= new DelegateCommand(
             () => {
                 var dialogRequester = new DialogRequester(LoggerFactory);
                 dialogRequester.SelectFile(
@@ -165,9 +168,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 );
             },
             () => 0 < TextDocument.TextLength
-        ));
+        );
 
-        public ICommand SendInputCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _SendInputCommand;
+        public ICommand SendInputCommand => this._SendInputCommand ??= new DelegateCommand(
             () => {
                 var rawValue = InputValue;
                 try {
@@ -192,13 +196,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 InputtedHistories.Insert(0, element);
             },
             () => !ProcessExited
-        ));
+        );
 
-        public ICommand ClearInputCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ClearInputCommand;
+        public ICommand ClearInputCommand => this._ClearInputCommand ??= new DelegateCommand(
             () => {
                 InputValue = string.Empty;
             }
-        ));
+        );
 
         #endregion
 

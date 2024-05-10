@@ -8,6 +8,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
     /// </summary>
     /// <remarks>
     /// <para>これが実体化されてればトランザクション中でしょうね。</para>
+    /// <para>コミット・ロールバックは一回だけ実行される使用を想定している。</para>
     /// </remarks>
     public interface IDatabaseTransaction: IDatabaseContext, IDatabaseContexts, IDisposable
     {

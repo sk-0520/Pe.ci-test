@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     public class DirectoryCleaner
     {
         /// <summary>
-        /// 
+        /// 生成。
         /// </summary>
         /// <param name="directory">対象ディレクトリ。</param>
         /// <param name="retryCount">ディレクトリ作成失敗時の再試行回数。</param>
@@ -23,7 +23,13 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public DirectoryCleaner(DirectoryInfo directory, int retryCount, TimeSpan waitTime, ILoggerFactory loggerFactory)
         {
             Directory = directory;
+            if(retryCount < 1) {
+                throw new ArgumentException(null, nameof(retryCount));
+            }
             RetryCount = retryCount;
+            if(waitTime <= TimeSpan.Zero) {
+                throw new ArgumentException(null, nameof(waitTime));
+            }
             WaitTime = waitTime;
             Logger = loggerFactory.CreateLogger(GetType());
         }
@@ -33,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <summary>
         /// 対象ディレクトリ。
         /// </summary>
-        private DirectoryInfo Directory { get; }
+        public DirectoryInfo Directory { get; }
         /// <summary>
         /// 待機回数。
         /// </summary>

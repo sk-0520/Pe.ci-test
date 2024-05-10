@@ -32,9 +32,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         {
             if(Type.IsValueType) {
                 var instance = Activator.CreateInstance(Type);
-#pragma warning disable CS8619 // 値における参照型の Null 許容性が、対象の型と一致しません。
-                return KeyValuePair.Create(Type, instance);
-#pragma warning restore CS8619 // 値における参照型の Null 許容性が、対象の型と一致しません。
+                return new KeyValuePair<Type, object?>(Type, instance);
             }
 
             return new KeyValuePair<Type, object?>(Type, null);

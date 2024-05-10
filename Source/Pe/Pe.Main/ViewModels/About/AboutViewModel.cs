@@ -88,65 +88,85 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
 
         #region command
 
-        public ICommand OpenLicenseCommand => GetOrCreateCommand(() => new DelegateCommand<AboutComponentItemViewModel>(
+        private ICommand? _OpenLicenseCommand;
+        public ICommand OpenLicenseCommand => this._OpenLicenseCommand ??= new DelegateCommand<AboutComponentItemViewModel>(
             o => {
                 Model.OpenUri(o.LicenseUri);
             }
-        ));
+        );
 
-        public ICommand OpenUriCommand => GetOrCreateCommand(() => new DelegateCommand<AboutComponentItemViewModel>(
+        private ICommand? _OpenUriCommand;
+        public ICommand OpenUriCommand => this._OpenUriCommand ??= new DelegateCommand<AboutComponentItemViewModel>(
             o => {
                 Model.OpenUri(o.Uri);
             }
-        ));
-        public ICommand OpenForumUriCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _OpenForumUriCommand;
+        public ICommand OpenForumUriCommand => this._OpenForumUriCommand ??= new DelegateCommand(
             () => {
                 Model.OpenForumUri();
             }
-        ));
-        public ICommand OpenRepositoryUriCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _OpenRepositoryUriCommand;
+        public ICommand OpenRepositoryUriCommand => this._OpenRepositoryUriCommand ??= new DelegateCommand(
             () => {
                 Model.OpenRepositoryUri();
             }
-        ));
-        public ICommand OpenWebsiteUriCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _OpenWebsiteUriCommand;
+        public ICommand OpenWebsiteUriCommand => this._OpenWebsiteUriCommand ??= new DelegateCommand(
             () => {
                 Model.OpenWebsiteUri();
             }
-        ));
-        public ICommand CopyShortInformationCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _CopyShortInformationCommand;
+        public ICommand CopyShortInformationCommand => this._CopyShortInformationCommand ??= new DelegateCommand(
             () => {
                 Model.CopyShortInformation();
             }
-        ));
-        public ICommand CopyLongInformationCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _CopyLongInformationCommand;
+        public ICommand CopyLongInformationCommand => this._CopyLongInformationCommand ??= new DelegateCommand(
             () => {
                 Model.CopyLongInformation();
             }
-        ));
+        );
 
-        public ICommand OpenApplicationDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _OpenApplicationDirectoryCommand;
+        public ICommand OpenApplicationDirectoryCommand => this._OpenApplicationDirectoryCommand ??= new DelegateCommand(
             () => {
                 Model.OpenApplicationDirectory();
             }
-        ));
-        public ICommand OpenUserDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _OpenUserDirectoryCommand;
+        public ICommand OpenUserDirectoryCommand => this._OpenUserDirectoryCommand ??= new DelegateCommand(
             () => {
                 Model.OpenUserDirectory();
             }
-        ));
-        public ICommand OpenMachineDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _OpenMachineDirectoryCommand;
+        public ICommand OpenMachineDirectoryCommand => this._OpenMachineDirectoryCommand ??= new DelegateCommand(
             () => {
                 Model.OpenMachineDirectory();
             }
-        ));
-        public ICommand OpenTemporaryDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _OpenTemporaryDirectoryCommand;
+        public ICommand OpenTemporaryDirectoryCommand => this._OpenTemporaryDirectoryCommand ??= new DelegateCommand(
             () => {
                 Model.OpenTemporaryDirectory();
             }
-        ));
+        );
 
-        public ICommand SelectUninstallBatchFilePathCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _SelectUninstallBatchFilePathCommand;
+        public ICommand SelectUninstallBatchFilePathCommand => this._SelectUninstallBatchFilePathCommand ??= new DelegateCommand(
              () => {
                  var dialogRequester = new DialogRequester(LoggerFactory);
                  dialogRequester.SelectFile(
@@ -166,9 +186,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
                      }
                  );
              }
-         ));
+         );
 
-        public ICommand CreateUninstallBatchCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CreateUninstallBatchCommand;
+        public ICommand CreateUninstallBatchCommand => this._CreateUninstallBatchCommand ??= new DelegateCommand(
             () => {
                 if(Model.CheckCreateUninstallBatch(UninstallBatchFilePath, UninstallTargets)) {
                     try {
@@ -200,8 +221,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
                     }
                 }
             }
-        ));
-
+        );
 
         #endregion
 

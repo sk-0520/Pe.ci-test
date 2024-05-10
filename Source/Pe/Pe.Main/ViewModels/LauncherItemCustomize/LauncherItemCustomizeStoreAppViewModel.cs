@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             : base(model, dispatcherWrapper, loggerFactory)
         {
             if(Model.Kind != Models.Data.LauncherItemKind.StoreApp) {
-                throw new ArgumentException(nameof(model) + "." + nameof(Model.Kind));
+                throw new ArgumentException(null, nameof(model) + "." + nameof(Model.Kind));
             }
             if(Model.StoreApp == null) {
                 throw new ArgumentNullException(nameof(model) + "." + nameof(Model.StoreApp));

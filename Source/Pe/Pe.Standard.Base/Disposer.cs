@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <see cref="IDisposable.Dispose"/>時に呼び出されるイベント。
         /// </summary>
         /// <remarks>
-        /// <para>呼び出し時点では<see cref="IsDisposed"/>は偽のまま。</para>
+        /// <para>呼び出し時点では<see cref="IDisposed.IsDisposed"/>は偽のまま。</para>
         /// </remarks>
         event EventHandler<EventArgs>? Disposing;
 
@@ -80,13 +80,12 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <summary>
         /// 既に破棄済みの場合は処理を中断する。
         /// </summary>
-        /// <param name="_callerMemberName"></param>
         /// <exception cref="ObjectDisposedException">破棄済み。</exception>
         /// <seealso cref="IDisposed"/>
-        protected void ThrowIfDisposed([CallerMemberName] string _callerMemberName = "")
+        protected void ThrowIfDisposed()
         {
             if(IsDisposed) {
-                throw new ObjectDisposedException(_callerMemberName);
+                throw new ObjectDisposedException(GetType().FullName);
             }
         }
 
@@ -112,10 +111,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
             OnDisposing();
 
-            if(disposing) {
-                GC.SuppressFinalize(this);
-            }
-
             IsDisposed = true;
         }
 
@@ -125,6 +120,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion
@@ -291,7 +287,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    for(var i = StockItems.Count - 1; 0 < i; i--) {
+                    for(var i = StockItems.Count - 1; 0 <= i; i--) {
                         StockItems[i].Dispose();
                     }
                     StockItems.Clear();

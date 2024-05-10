@@ -38,13 +38,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         [IgnoreDataMember, XmlIgnore]
         public bool IsDisposed { get; private set; }
 
-        protected void ThrowIfDisposed([CallerMemberName] string _callerMemberName = "")
+        protected void ThrowIfDisposed()
         {
-            if(IsDisposed) {
-                throw new ObjectDisposedException(_callerMemberName);
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, this);
         }
-
 
         /// <summary>
         /// <see cref="IDisposable.Dispose"/>の内部処理。
@@ -61,14 +58,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             Disposing?.Invoke(this, EventArgs.Empty);
 
-            if(disposing) {
-#pragma warning disable S3971 // "GC.SuppressFinalize" should not be called
-#pragma warning disable CA1816 // Dispose メソッドは、SuppressFinalize を呼び出す必要があります
-                GC.SuppressFinalize(this);
-#pragma warning restore CA1816 // Dispose メソッドは、SuppressFinalize を呼び出す必要があります
-#pragma warning restore S3971 // "GC.SuppressFinalize" should not be called
-            }
-
             IsDisposed = true;
         }
 
@@ -78,6 +67,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion
@@ -120,54 +110,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         //#endregion
 
-    }
-
-    public sealed class WrapModel<TData>: BindModelBase
-    {
-        public WrapModel(TData data, ILoggerFactory loggerFactory)
-            : this(data, true, loggerFactory)
-        { }
-        public WrapModel(TData data, bool useDispose, ILoggerFactory loggerFactory)
-            : base(loggerFactory)
-        {
-            Data = data;
-            UseDispose = useDispose;
-        }
-
-        #region property
-
-        public TData Data { get; private set; }
-        private bool UseDispose { get; }
-
-        #endregion
-
-        #region BindModelBase
-
-        protected override void Dispose(bool disposing)
-        {
-            if(!IsDisposed) {
-                if(UseDispose && Data is IDisposable disposer) {
-                    disposer.Dispose();
-                }
-            }
-            base.Dispose(disposing);
-            // 参照があれば切っておく
-            Data = default!;
-        }
-
-        #endregion
-    }
-
-    public static class WrapModel
-    {
-        public static WrapModel<TData> Create<TData>(TData data, ILoggerFactory loggerFactory)
-        {
-            return new WrapModel<TData>(data, loggerFactory);
-        }
-
-        public static WrapModel<TData> Create<TData>(TData data, bool useDispose, ILoggerFactory loggerFactory)
-        {
-            return new WrapModel<TData>(data, useDispose, loggerFactory);
-        }
     }
 }

@@ -28,17 +28,17 @@ namespace ContentTypeTextNet.Pe.Main.Views.StandardInputOutput
         private StandardInputOutputViewModel ViewModel => (StandardInputOutputViewModel)DataContext;
 
         private DialogRequestReceiver DialogRequestReceiver { get; }
-        private CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
         #region command
 
-        public ICommand FileSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        private ICommand? _FileSelectCommand;
+        public ICommand FileSelectCommand => this._FileSelectCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 DialogRequestReceiver.ReceiveFileSystemSelectDialogRequest(o);
             }
-        ));
+        );
 
         #endregion
     }

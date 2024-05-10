@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             : base(model, loggerFactory)
         {
             if(!Model.IsInitialized) {
-                throw new ArgumentException(nameof(model) + "." + nameof(Model.IsInitialized));
+                throw new ArgumentException(null, nameof(model) + "." + nameof(Model.IsInitialized));
             }
             DispatcherWrapper = dispatcherWrapper;
 

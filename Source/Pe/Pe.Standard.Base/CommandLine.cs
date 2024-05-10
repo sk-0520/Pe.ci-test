@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// 指定引数から生成。
         /// </summary>
         /// <param name="arguments">コマンドライン引数。</param>
-        /// <param name="withCommand"><see cref="arguments"/>の先頭はプログラム/コマンドか。<para>Main関数だと含まれず、<see cref="Environment.GetCommandLineArgs()"/>だと含まれてる的な。</para></param>
+        /// <param name="withCommand"><paramref name="arguments"/>の先頭はプログラム/コマンドか。<para>Main関数だと含まれず、<see cref="Environment.GetCommandLineArgs()"/>だと含まれてる的な。</para></param>
         public CommandLine(IEnumerable<string> arguments, bool withCommand = false)
         {
             if(withCommand) {
@@ -251,7 +251,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             }
 
             if(key.IsEnabledLongKey && key.LongKey.Length == 1) {
-                throw new ArgumentException(nameof(key.LongKey));
+                throw new ArgumentException(null, nameof(key.LongKey));
             }
 
             if(KeyItems.Where(k => k.IsEnabledShortKey).Any(k => k.ShortKey == key.ShortKey)) {
@@ -449,6 +449,16 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             } else {
                 return "\"" + result + "\"";
             }
+        }
+
+        /// <summary>
+        /// <see cref="IDictionary{TKey, TValue}"/>をいい感じにつなげる。
+        /// </summary>
+        /// <param name="map"></param>
+        /// <returns></returns>
+        public static IEnumerable<string> ToCommandLineArguments(IReadOnlyDictionary<string, string> map, string header = "--", char separator = '=')
+        {
+            return map.Select(i => header + i.Key + separator + Escape(i.Value));
         }
 
         #endregion
@@ -720,23 +730,6 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public override bool Mapping()
         {
             throw new NotSupportedException();
-        }
-
-        #endregion
-    }
-
-    public static class CommandLineDictionaryExtensions
-    {
-        #region function
-
-        /// <summary>
-        /// <see cref="IDictionary{TKey, TValue}"/>をいい感じにつなげる。
-        /// </summary>
-        /// <param name="map"></param>
-        /// <returns></returns>
-        public static IEnumerable<string> ToCommandLineArguments(this IDictionary<string, string> map, string header = "--", char separator = '=')
-        {
-            return map.Select(i => header + i.Key + separator + CommandLine.Escape(i.Value));
         }
 
         #endregion

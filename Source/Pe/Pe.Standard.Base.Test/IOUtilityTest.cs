@@ -35,6 +35,49 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         }
 
         [Fact]
+        public void MakeFileParentDirectory_FileInfo_Test()
+        {
+            var dir = TestIO.InitializeMethod(this);
+
+            var nextDirPath = Path.Combine(dir.FullName, "next");
+            var nextFilePath = Path.Combine(nextDirPath, "file");
+            var nextSubFilePath = Path.Combine(nextDirPath, "file-sub");
+
+            Assert.False(Directory.Exists(nextDirPath));
+            Assert.False(File.Exists(nextFilePath));
+
+            IOUtility.MakeFileParentDirectory(new FileInfo(nextFilePath));
+            Assert.True(Directory.Exists(nextDirPath));
+            Assert.False(File.Exists(nextFilePath));
+
+            IOUtility.MakeFileParentDirectory(new FileInfo(nextSubFilePath));
+            Assert.True(Directory.Exists(nextDirPath));
+            Assert.False(File.Exists(nextSubFilePath));
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("/")]
+#if OS_WINDOWS
+        [InlineData("c:\\")]
+#endif
+        public void MakeFileParentDirectory_throw_Test(string? s)
+        {
+            Assert.Throws<IOUtilityException>(() => IOUtility.MakeFileParentDirectory(s!));
+        }
+
+        [Theory]
+        [InlineData("/")]
+#if OS_WINDOWS
+        [InlineData("c:\\")]
+#endif
+        public void MakeFileParentDirectory_FileInfo_throw_Test(string s)
+        {
+            Assert.Throws<IOUtilityException>(() => IOUtility.MakeFileParentDirectory(new FileInfo(s)));
+        }
+
+        [Fact]
         public void ExistsTest()
         {
             var dir = TestIO.InitializeMethod(this);
@@ -50,6 +93,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
 
             Assert.False(IOUtility.Exists(f.FullName));
             Assert.False(IOUtility.Exists(d.FullName));
+            Assert.False(IOUtility.Exists(null));
         }
 
         [Fact]

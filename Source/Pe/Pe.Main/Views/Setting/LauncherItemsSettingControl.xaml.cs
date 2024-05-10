@@ -45,27 +45,28 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #region property
 
-        private CommandStore CommandStore { get; } = new CommandStore();
-
         #endregion
 
         #region command
 
-        public ICommand ScrollSelectedItemCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        private ICommand? _ScrollSelectedItemCommand;
+        public ICommand ScrollSelectedItemCommand => this._ScrollSelectedItemCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 var listItems = (ListBox)FindName("items");
                 listItems.ScrollIntoView(Editor.SelectedItem);
             }
-        ));
+        );
 
-        public ICommand ScrollToTopCustomizeCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        private ICommand? _ScrollToTopCustomizeCommand;
+        public ICommand ScrollToTopCustomizeCommand => this._ScrollToTopCustomizeCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 var scrollCustomize = (ScrollViewer)FindName("customize");
                 scrollCustomize.ScrollToTop();
             }
-        ));
+        );
 
-        public ICommand OpenCommonMessageDialogCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        private ICommand? _OpenCommonMessageDialogCommand;
+        public ICommand OpenCommonMessageDialogCommand => this._OpenCommonMessageDialogCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 var parameter = (CommonMessageDialogRequestParameter)o.Parameter;
                 var result = MessageBox.Show(Window.GetWindow(this), parameter.Message, parameter.Caption, parameter.Button, parameter.Icon, parameter.DefaultResult, parameter.Options);
@@ -89,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
                 o.Callback(response);
             }
-        ));
+        );
 
         #endregion
     }

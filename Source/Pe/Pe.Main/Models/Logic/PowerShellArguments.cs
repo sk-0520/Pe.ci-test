@@ -19,10 +19,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public KeyValuePair<string, string> Create(KeyValuePair<string, string> input)
         {
             if(string.IsNullOrWhiteSpace(input.Key)) {
-                throw new ArgumentException(nameof(input.Key));
+                throw new ArgumentException(null, nameof(input.Key));
             }
             if(input.Key.IndexOf(' ') != -1) {
-                throw new ArgumentException(nameof(input.Key));
+                throw new ArgumentException(null, nameof(input.Key));
             }
 
             static string Escape(string value)

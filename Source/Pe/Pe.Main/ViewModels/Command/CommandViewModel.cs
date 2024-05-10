@@ -289,7 +289,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         #region command
 
-        public ICommand ExecuteCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ExecuteCommand;
+        public ICommand ExecuteCommand => this._ExecuteCommand ??= new DelegateCommand(
             () => {
                 Logger.LogInformation("コマンドアイテムの起動: {0}", SelectedItem!.Header);
                 SelectedItem.Execute(DpiScaleOutpour.GetOwnerScreen());
@@ -298,27 +299,31 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 HideView();
             },
             () => SelectedItem != null
-        ).ObservesProperty(() => SelectedItem));
+        ).ObservesProperty(() => SelectedItem);
 
-        public ICommand HideCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _HideCommand;
+        public ICommand HideCommand => this._HideCommand ??= new DelegateCommand(
             () => {
                 HideView();
             }
-        ));
+        );
 
-        public ICommand UpSelectItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _UpSelectItemCommand;
+        public ICommand UpSelectItemCommand => this._UpSelectItemCommand ??= new DelegateCommand(
             () => {
                 UpDownSelectItem(true);
             }
-        ));
+        );
 
-        public ICommand DownSelectItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _DownSelectItemCommand;
+        public ICommand DownSelectItemCommand => this._DownSelectItemCommand ??= new DelegateCommand(
             () => {
                 UpDownSelectItem(false);
             }
-        ));
+        );
 
-        public ICommand EnterSelectedItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _EnterSelectedItemCommand;
+        public ICommand EnterSelectedItemCommand => this._EnterSelectedItemCommand ??= new DelegateCommand(
             async () => {
                 if(SelectedItem == null) {
                     return;
@@ -337,31 +342,34 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 FocusEndRequest.Send();
                 ScrollSelectedItemRequest.Send();
             }
-        ));
+        );
 
-        public ICommand ViewActivatedCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand? _ViewActivatedCommand;
+        public ICommand ViewActivatedCommand => this._ViewActivatedCommand ??= new DelegateCommand(
             () => {
                 HideWaitTimer.Stop();
             }
-        ));
-        public ICommand ViewDeactivatedCommand => GetOrCreateCommand(() => new DelegateCommand<Window>(
+        );
+
+        private ICommand? _ViewDeactivatedCommand;
+        public ICommand ViewDeactivatedCommand => this._ViewDeactivatedCommand ??= new DelegateCommand<Window>(
             o => {
                 if(o.IsVisible) {
                     HideWaitTimer.Stop();
                     HideWaitTimer.Start();
                 }
             }
-        ));
+        );
 
-        public ICommand ViewIsVisibleChangedCommand => GetOrCreateCommand(() => new DelegateCommand<Window>(
+        private ICommand? _ViewIsVisibleChangedCommand;
+        public ICommand ViewIsVisibleChangedCommand => this._ViewIsVisibleChangedCommand ??= new DelegateCommand<Window>(
              o => {
                  if(o.IsVisible) {
                      InputValue = string.Empty;
                      RaisePropertyChanged(nameof(InputValue));
                  }
              }
-         ));
-
+         );
 
         #endregion
 

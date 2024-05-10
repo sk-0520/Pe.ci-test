@@ -21,8 +21,8 @@ namespace ContentTypeTextNet.Pe.Test
         private static string RootDirectoryName { get; } = "_test_io_";
 
         private static bool InitializedProjectDirectory { get; set; }
-        private static ISet<string> InitializedClassDirectory { get; set; } = new HashSet<string>();
-        private static ISet<string> InitializedMethodDirectory { get; set; } = new HashSet<string>();
+        private static HashSet<string> InitializedClassDirectory { get; set; } = [];
+        private static HashSet<string> InitializedMethodDirectory { get; set; } = [];
 
         #endregion
 
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Test
             return new DirectoryInfo(methodTestDirPath);
         }
 
-        public static DirectoryInfo CreateDirectory(DirectoryInfo dir)
+        private static DirectoryInfo CreateDirectory(DirectoryInfo dir)
         {
             dir.Refresh();
             if(dir.Exists) {

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Main.ViewModels
 {
     /// <summary>
-    /// たぶんめちゃくちゃになっていくD&D処理のメソッドを整理したかったのではないかと。。。
+    /// たぶんめちゃくちゃになっていくD&amp;D処理のメソッドを整理したかったのではないかと。。。
     /// </summary>
     public abstract class DragAndDropGuidelineBase
     {

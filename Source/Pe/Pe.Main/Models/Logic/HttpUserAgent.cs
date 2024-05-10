@@ -239,7 +239,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
 
             if(name.IndexOf(Separator) != -1) {
-                throw new ArgumentException(nameof(name));
+                throw new ArgumentException(null, nameof(name));
             }
 
             return JoinCore(name, isEnabledSession, isEnabledCache);

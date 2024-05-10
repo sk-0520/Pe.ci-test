@@ -26,18 +26,18 @@ namespace ContentTypeTextNet.Pe.Main.Views.Accept
 
         #region command
 
-        private ICommand? _closeCommand;
+        private ICommand? _CloseCommand;
         public ICommand CloseCommand
         {
             get
             {
-                if(this._closeCommand == null) {
-                    this._closeCommand = new DelegateCommand<RequestEventArgs>(
+                if(this._CloseCommand == null) {
+                    this._CloseCommand = new DelegateCommand<RequestEventArgs>(
                         o => Close()
                     );
                 }
 
-                return this._closeCommand;
+                return this._CloseCommand;
             }
         }
 

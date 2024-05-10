@@ -16,7 +16,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
 {
     public class ReleaseNoteViewModel: ElementViewModelBase<ReleaseNoteElement>, IViewLifecycleReceiver
     {
-
         public ReleaseNoteViewModel(ReleaseNoteElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
@@ -40,7 +39,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
 
         #region command
 
-        public ICommand DownloadCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _DownloadCommand;
+        public ICommand DownloadCommand => this._DownloadCommand ??= new DelegateCommand(
             () => {
                 // CanExecute に対してどうこうする手間がしんどい
                 if(IsCheckOnly || UpdateInfo?.State == NewVersionState.Error) {
@@ -48,16 +48,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
                     RaisePropertyChanged(nameof(IsCheckOnly));
                 }
             }
-        ));
+        );
 
-        public ICommand UpdateCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _UpdateCommand;
+        public ICommand UpdateCommand => this._UpdateCommand ??= new DelegateCommand(
             () => {
                 // CanExecute に対してどうこうする手間がしんどい
                 if(UpdateInfo?.IsReady ?? false) {
                     Model.StartUpdate();
                 }
             }
-        ));
+        );
 
         #endregion
 

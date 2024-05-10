@@ -186,7 +186,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         #region command
 
-        public ICommand CreateNoteCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CreateNoteCommand;
+        public ICommand CreateNoteCommand => this._CreateNoteCommand ??= new DelegateCommand(
             async () => {
                 NativeMethods.GetCursorPos(out var rawCursorPosition);
                 var deviceCursorPosition = PodStructUtility.Convert(rawCursorPosition);
@@ -195,109 +196,129 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 var noteElement = await ApplicationManager.CreateNoteAsync(currentScreen, Models.Data.NoteStartupPosition.CenterScreen);
                 noteElement.StartView();
             }
-        ));
+        );
 
-        public ICommand CompactAllNotesCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CompactAllNotesCommand;
+        public ICommand CompactAllNotesCommand => this._CompactAllNotesCommand ??= new DelegateCommand(
             () => {
                 ApplicationManager.CompactAllNotes();
             }
-        ));
-        public ICommand MoveZOrderTopAllNotesCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _MoveZOrderTopAllNotesCommand;
+        public ICommand MoveZOrderTopAllNotesCommand => this._MoveZOrderTopAllNotesCommand ??= new DelegateCommand(
              () => {
                  ApplicationManager.MoveZOrderAllNotes(true);
              }
-         ));
+         );
 
-        public ICommand MoveZOrderBottomAllNotesCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _MoveZOrderBottomAllNotesCommand;
+        public ICommand MoveZOrderBottomAllNotesCommand => this._MoveZOrderBottomAllNotesCommand ??= new DelegateCommand(
             () => {
                 ApplicationManager.MoveZOrderAllNotes(false);
             }
-        ));
+        );
 
-        public ICommand ShowCommandViewCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ShowCommandViewCommand;
+        public ICommand ShowCommandViewCommand => this._ShowCommandViewCommand ??= new DelegateCommand(
            async () => {
-              await ApplicationManager.ShowCommandViewAsync();
+               await ApplicationManager.ShowCommandViewAsync();
            }
-       ));
+       );
 
-        public ICommand OpenSettingCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _OpenSettingCommand;
+        public ICommand OpenSettingCommand => this._OpenSettingCommand ??= new DelegateCommand(
             async () => {
                 // めんどいし直接ビュー開くよ
                 await ApplicationManager.ShowSettingViewAsync();
             }
-        ));
-        public ICommand OpenStartupCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _OpenStartupCommand;
+        public ICommand OpenStartupCommand => this._OpenStartupCommand ??= new DelegateCommand(
             async () => {
                 // めんどいし直接ビュー開くよ
                 await ApplicationManager.ShowStartupViewAsync(false);
             }
-        ));
-        public ICommand OpenHelpCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _OpenHelpCommand;
+        public ICommand OpenHelpCommand => this._OpenHelpCommand ??= new DelegateCommand(
             () => {
                 ApplicationManager.ShowHelp();
             }
-        ));
+        );
 
-        public ICommand OpenAboutCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _OpenAboutCommand;
+        public ICommand OpenAboutCommand => this._OpenAboutCommand ??= new DelegateCommand(
             async () => {
                 // めんどいし直接ビュー開くよ
                 await ApplicationManager.ShowAboutViewAsync();
             }
-        ));
+        );
 
-        public ICommand UpdateCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _UpdateCommand;
+        public ICommand UpdateCommand => this._UpdateCommand ??= new DelegateCommand(
              () => {
                  ApplicationManager.CheckNewVersionsAsync(false);
              }
-         ));
+         );
 
-        public ICommand ToggleHookCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleHookCommand;
+        public ICommand ToggleHookCommand => this._ToggleHookCommand ??= new DelegateCommand(
            () => {
                ApplicationManager.ToggleHook();
            }
-        ));
-        public ICommand ToggleDisabledSystemIdleCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _ToggleDisabledSystemIdleCommand;
+        public ICommand ToggleDisabledSystemIdleCommand => this._ToggleDisabledSystemIdleCommand ??= new DelegateCommand(
             () => {
                 ApplicationManager.ToggleDisableSystemIdle();
             }
-        ));
+        );
 
-        public ICommand ToggleSupportExplorerCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleSupportExplorerCommand;
+        public ICommand ToggleSupportExplorerCommand => this._ToggleSupportExplorerCommand ??= new DelegateCommand(
             () => {
                 ApplicationManager.ToggleSupportExplorer();
             }
-        ));
+        );
 
-        public ICommand ToggleProxyIsEnabled => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleProxyIsEnabled;
+        public ICommand ToggleProxyIsEnabled => this._ToggleProxyIsEnabled ??= new DelegateCommand(
             () => {
                 ApplicationManager.ToggleProxyIsEnabled();
             }
-        ));
+        );
 
-        public ICommand RebootCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _RebootCommand;
+        public ICommand RebootCommand => this._RebootCommand ??= new DelegateCommand(
              () => {
                  ApplicationManager.Reboot();
              }
-         ));
+         );
 
-        public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ExitCommand;
+        public ICommand ExitCommand => this._ExitCommand ??= new DelegateCommand(
             () => {
                 ApplicationManager.Exit(false);
             }
-        ));
+        );
 
-        public ICommand NoUpdateExitCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _NoUpdateExitCommand;
+        public ICommand NoUpdateExitCommand => this._NoUpdateExitCommand ??= new DelegateCommand(
             () => {
                 ApplicationManager.Exit(true);
             }
-        ));
+        );
 
-        public ICommand ShowFeedbackViewCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ShowFeedbackViewCommand;
+        public ICommand ShowFeedbackViewCommand => this._ShowFeedbackViewCommand ??= new DelegateCommand(
             async () => {
                 await ApplicationManager.ShowFeedbackViewAsync();
             }
-        ));
-
+        );
 
         #endregion
 

@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                 throw new ArgumentNullException(nameof(destination));
             }
             if(source == destination) {
-                throw new ArgumentException($"{nameof(source)} == {nameof(destination)}");
+                throw new ArgumentException(null, $"{nameof(source)} == {nameof(destination)}");
             }
 
             var src = (ApplicationDatabaseAccessor)source;

@@ -78,11 +78,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             get
             {
-                return Model.Mappings[0].Data.Key;
+                return Model.Mappings[0].Key;
             }
             set
             {
-                Model.Mappings[0].Data.Key = value;
+                Model.Mappings[0].Key = value;
                 RaisePropertyChanged();
             }
         }
@@ -109,11 +109,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             get
             {
-                return Model.Mappings[0].Data.Key;
+                return Model.Mappings[0].Key;
             }
             set
             {
-                Model.Mappings[0].Data.Key = value;
+                Model.Mappings[0].Key = value;
                 RaisePropertyChanged();
             }
         }
@@ -196,8 +196,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         protected KeyboardPressedJobSettingEditorViewModelBase(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            MappingCollection = new ModelViewModelObservableCollectionManager<WrapModel<KeyMappingData>, KeyMappingEditorViewModel>(Model.Mappings, new ModelViewModelObservableCollectionOptions<WrapModel<KeyMappingData>, KeyMappingEditorViewModel>() {
-                ToViewModel = m => new KeyMappingEditorViewModel(m.Data, LoggerFactory),
+            MappingCollection = new ModelViewModelObservableCollectionManager<KeyMappingData, KeyMappingEditorViewModel>(Model.Mappings, new ModelViewModelObservableCollectionOptions<KeyMappingData, KeyMappingEditorViewModel>() {
+                ToViewModel = m => new KeyMappingEditorViewModel(m, LoggerFactory),
             });
             MappingItems = MappingCollection.GetDefaultView();
         }
@@ -224,28 +224,31 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
-        private ModelViewModelObservableCollectionManager<WrapModel<KeyMappingData>, KeyMappingEditorViewModel> MappingCollection { get; }
+        private ModelViewModelObservableCollectionManager<KeyMappingData, KeyMappingEditorViewModel> MappingCollection { get; }
         public ICollectionView MappingItems { get; }
 
         #endregion
 
         #region command
 
-        public ICommand AddMappingCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _AddMappingCommand;
+        public ICommand AddMappingCommand => this._AddMappingCommand ??= new DelegateCommand(
             () => {
                 Model.AddMapping();
             }
-        ));
+        );
 
-        public ICommand RemoveMappingCommand => GetOrCreateCommand(() => new DelegateCommand<KeyMappingEditorViewModel>(
+        private ICommand? _RemoveMappingCommand;
+        public ICommand RemoveMappingCommand => this._RemoveMappingCommand ??= new DelegateCommand<KeyMappingEditorViewModel>(
             o => {
                 var index = MappingCollection.ViewModels.IndexOf(o);
                 Model.RemoveMappingAt(index);
             },
             o => 1 < MappingCollection.ViewModels.Count
-        ).ObservesProperty(() => MappingCollection.ViewModels.Count));
+        ).ObservesProperty(() => MappingCollection.ViewModels.Count);
 
-        public ICommand UpMappingCommand => GetOrCreateCommand(() => new DelegateCommand<KeyMappingEditorViewModel>(
+        private ICommand? _UpMappingCommand;
+        public ICommand UpMappingCommand => this._UpMappingCommand ??= new DelegateCommand<KeyMappingEditorViewModel>(
              o => {
                  var index = MappingCollection.ViewModels.IndexOf(o);
                  if(index == 0) {
@@ -254,8 +257,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                  var next = index - 1;
                  Model.MoveMapping(index, next);
              }
-        ));
-        public ICommand DownMappingCommand => GetOrCreateCommand(() => new DelegateCommand<KeyMappingEditorViewModel>(
+        );
+
+        private ICommand? _DownMappingCommand;
+        public ICommand DownMappingCommand => this._DownMappingCommand ??= new DelegateCommand<KeyMappingEditorViewModel>(
              o => {
                  var index = MappingCollection.ViewModels.IndexOf(o);
                  if(index == MappingCollection.ViewModels.Count - 1) {
@@ -264,7 +269,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                  var next = index + 1;
                  Model.MoveMapping(index, next);
              }
-        ));
+        );
 
         #endregion
     }

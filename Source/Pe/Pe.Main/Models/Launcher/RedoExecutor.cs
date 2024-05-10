@@ -53,10 +53,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         public RedoExecutor(LauncherExecutor executor, LauncherFileExecuteResult firstResult, RedoParameter parameter, INotifyManager notifyManager, ILoggerFactory loggerFactory)
         {
             if(firstResult.Data == null) {
-                throw new ArgumentException($"{nameof(firstResult)}.{nameof(firstResult.Data)}");
+                throw new ArgumentException(null, $"{nameof(firstResult)}.{nameof(firstResult.Data)}");
             }
             if(parameter.RedoData.RedoMode == RedoMode.None) {
-                throw new ArgumentException($"{nameof(parameter)}.{nameof(parameter.RedoData)}.{nameof(parameter.RedoData.RedoMode)}");
+                throw new ArgumentException(null, $"{nameof(parameter)}.{nameof(parameter.RedoData)}.{nameof(parameter.RedoData.RedoMode)}");
             }
 
             Logger = loggerFactory.CreateLogger(GetType());

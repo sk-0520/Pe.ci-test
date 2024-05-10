@@ -266,7 +266,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         /// <summary>
         /// ビルド済み。
         /// </summary>
-        public bool IsBuilded { get; private set; }
+        public bool IsBuilt { get; private set; }
 
         #endregion
 
@@ -328,7 +328,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         internal void Build(Com<IFileDialogCustomize> FileDialogCustomize)
         {
-            if(IsBuilded) {
+            if(IsBuilt) {
                 FileDialogCustomize.Instance.ClearClientData();
             }
 
@@ -350,7 +350,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 currentGroup.Close();
             }
 
-            IsBuilded = true;
+            IsBuilt = true;
         }
 
         internal void ChangeStatus()

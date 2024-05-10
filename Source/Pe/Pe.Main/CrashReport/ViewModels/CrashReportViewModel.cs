@@ -79,7 +79,8 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
 
         #region command
 
-        public ICommand LoadedCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _LoadedCommand;
+        public ICommand LoadedCommand => this._LoadedCommand ??= new DelegateCommand(
             () => {
                 if(AutoSend) {
                     AutoSendWaitTimer = new DispatcherTimer();
@@ -94,40 +95,45 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
                     }, DispatcherPriority.SystemIdle);
                 }
             }
-        ));
+        );
 
-        public ICommand StopAutoSendCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _StopAutoSendCommand;
+        public ICommand StopAutoSendCommand => this._StopAutoSendCommand ??= new DelegateCommand(
             () => {
                 StopAutoSend();
             }
-        ));
+        );
 
-        public ICommand ShowSourceUriCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ShowSourceUriCommand;
+        public ICommand ShowSourceUriCommand => this._ShowSourceUriCommand ??= new DelegateCommand(
              () => {
                  Model.ShowSourceUri();
              }
-         ));
+         );
 
-        public ICommand SendCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _SendCommand;
+        public ICommand SendCommand => this._SendCommand ??= new DelegateCommand(
             () => {
                 StopAutoSend();
 
                 Model.SendAsync().ConfigureAwait(false);
             }
-        ));
+        );
 
-        public ICommand RebootCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _RebootCommand;
+        public ICommand RebootCommand => this._RebootCommand ??= new DelegateCommand(
             () => {
                 Model.Reboot();
                 CloseRequest.Send();
             }
-        ));
+        );
 
-        public ICommand CancelCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CancelCommand;
+        public ICommand CancelCommand => this._CancelCommand ??= new DelegateCommand(
              () => {
                  Model.Cancel();
              }
-         ));
+         );
 
         #endregion
 

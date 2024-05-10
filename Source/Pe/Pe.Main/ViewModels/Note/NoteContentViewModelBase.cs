@@ -57,7 +57,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region command
 
-        public ICommand LoadedCommand => GetOrCreateCommand(() => new DelegateCommand<FrameworkElement>(
+        private ICommand? _LoadedCommand;
+        public ICommand LoadedCommand => this._LoadedCommand ??= new DelegateCommand<FrameworkElement>(
             async o => {
                 if(CanVisible) {
                     return;
@@ -75,14 +76,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     throw; // 投げなくてもいいかも
                 }
             }
-        ));
+        );
 
-        public ICommand CopyCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CopyCommand;
+        public ICommand CopyCommand => this._CopyCommand ??= new DelegateCommand(
             () => {
                 var data = GetClipboardContentData();
                 ClipboardManager.CopyData(data, ClipboardNotify.None);
             }
-        ));
+        );
 
         #endregion
 
@@ -192,9 +194,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #region property
 
         /// <summary>
-        /// <see cref="BaseElement"/> を特定の非 <see langword="null" /> コントロールで取得。
+        /// <see cref="NoteContentViewModelBase.BaseElement"/> を特定の非 <see langword="null" /> コントロールで取得。
         /// </summary>
-        /// <exception cref="InvalidOperationException"><see cref="BaseElement"/> が <see langword="null" /></exception>
+        /// <exception cref="InvalidOperationException"><see cref="NoteContentViewModelBase.BaseElement"/> が <see langword="null" /></exception>
         protected TControlElement ControlElement
         {
             get

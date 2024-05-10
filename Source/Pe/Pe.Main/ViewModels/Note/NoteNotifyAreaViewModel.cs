@@ -77,7 +77,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public bool MenuIsEnabled { get; } = true;
         public bool MenuIsChecked { get; } = false;
 
-        public ICommand MenuCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _MenuCommand;
+        public ICommand MenuCommand => this._MenuCommand ??= new DelegateCommand(
             () => {
                 if(IsVisible) {
                     var target = WindowManager.GetWindowItems(WindowKind.Note)
@@ -92,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 }
             },
             () => MenuIsEnabled
-        ));
+        );
 
         #endregion
 

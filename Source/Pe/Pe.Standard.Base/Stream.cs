@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// </summary>
     /// <remarks>
     /// <para>他のストリーム使用処理へ渡した後 閉じられると困る場合にこいつをかませて閉じないようにすることが目的。</para>
-    /// <para>用途が用途なので <see cref="Dispose"/> しても <see cref="KeepStream.BaseStream"/> は何もケアされない、つまりはひらきっぱなことに注意。</para>
+    /// <para>用途が用途なので <see cref="Dispose"/> しても <see cref="WrapStreamBase.BaseStream"/> は何もケアされない、つまりはひらきっぱなことに注意。</para>
     /// </remarks>
     public sealed class KeepStream: WrapStreamBase
     {

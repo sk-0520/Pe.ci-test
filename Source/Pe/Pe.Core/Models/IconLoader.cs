@@ -21,6 +21,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public class IconLoader
     {
+        #region define
+
         private const int SIZEOF_GRPICONDIR_idCount = 4;
         private const int OFFSET_GRPICONDIRENTRY_nID = 12;
         private const int OFFSET_GRPICONDIRENTRY_dwBytesInRes = 8;
@@ -28,10 +30,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         private static readonly int SIZEOF_ICONDIRENTRY = Marshal.SizeOf<ICONDIRENTRY>();
         private static readonly int SIZEOF_GRPICONDIRENTRY = Marshal.SizeOf<GRPICONDIRENTRY>();
 
-        public IconLoader(ILogger logger)
-        {
-            Logger = logger;
-        }
+        #endregion
+
 
         public IconLoader(ILoggerFactory loggerFactory)
         {
@@ -304,7 +304,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             IImageList? resultImageList = null;
             try {
-                var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out resultImageList);
+                var iidImageList = NativeMethods.IID_IImageList;
+                var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref iidImageList, out resultImageList);
 
                 if(getImageListResult == HRESULT.S_OK) {
                     Debug.Assert(resultImageList != null);

@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             var values = value.Split(',');
 
             if(values.Length != 2) {
-                throw new ArgumentException($"{nameof(value)}: illegal, {value}");
+                throw new ArgumentException($"{nameof(value)}: illegal, {value}", nameof(value));
             }
 
             var rawRanges = values
@@ -170,7 +170,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             var values = value.Split(',');
 
             if(values.Length != 3) {
-                throw new ArgumentException($"{nameof(value)}: illegal, {value}");
+                throw new ArgumentException($"{nameof(value)}: illegal, {value}", nameof(value));
             }
 
             var rawValues = values

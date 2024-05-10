@@ -529,51 +529,62 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region command
 
-        public ICommand ToggleCompactCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleCompactCommand;
+        public ICommand ToggleCompactCommand => this._ToggleCompactCommand ??= new DelegateCommand(
             () => {
                 ToggleCompact();
             }
-        ));
-        public ICommand ToggleTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _ToggleTopmostCommand;
+        public ICommand ToggleTopmostCommand => this._ToggleTopmostCommand ??= new DelegateCommand(
             () => {
                 Model.ToggleTopmostDelaySave();
             }
-        ));
+        );
 
-        public ICommand ToggleLockCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleLockCommand;
+        public ICommand ToggleLockCommand => this._ToggleLockCommand ??= new DelegateCommand(
             () => {
                 Model.ToggleLockDelaySave();
             }
-        ));
+        );
 
-        public ICommand ToggleTextWrapCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleTextWrapCommand;
+        public ICommand ToggleTextWrapCommand => this._ToggleTextWrapCommand ??= new DelegateCommand(
             () => {
                 Model.ToggleTextWrapDelaySave();
             }
-        ));
+        );
 
-        public ICommand CancelTitleEditCommand => GetOrCreateCommand(() => new DelegateCommand<TextBox>(
+        private ICommand? _CancelTitleEditCommand;
+        public ICommand CancelTitleEditCommand => this._CancelTitleEditCommand ??= new DelegateCommand<TextBox>(
             o => {
                 TitleEditMode = false;
                 EditingTitle = string.Empty;
                 o.Select(0, 0);
             }
-        ));
-        public ICommand SaveTitleEditCommand => GetOrCreateCommand(() => new DelegateCommand<TextBox>(
+        );
+
+        private ICommand? _SaveTitleEditCommand;
+        public ICommand SaveTitleEditCommand => this._SaveTitleEditCommand ??= new DelegateCommand<TextBox>(
             o => {
                 TitleEditMode = false;
                 Model.ChangeTitleDelaySave(EditingTitle ?? string.Empty);
                 o.Select(0, 0);
             },
             o => TitleEditMode
-        ));
+        );
 
-        public ICommand ViewActivatedCommand => GetOrCreateCommand(() => new DelegateCommand<Window>(
+        private ICommand? _ViewActivatedCommand;
+        public ICommand ViewActivatedCommand => this._ViewActivatedCommand ??= new DelegateCommand<Window>(
             o => {
                 Model.StopHidden(true);
             }
-        ));
-        public ICommand ViewDeactivatedCommand => GetOrCreateCommand(() => new DelegateCommand<Window>(
+        );
+
+        private ICommand? _ViewDeactivatedCommand;
+        public ICommand ViewDeactivatedCommand => this._ViewDeactivatedCommand ??= new DelegateCommand<Window>(
             o => {
                 if(o.IsVisible) {
                     if(!IsCompact && Model.HiddenMode != NoteHiddenMode.None) {
@@ -581,53 +592,60 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     }
                 }
             }
-        ));
+        );
 
-
-        public ICommand ContentKindChangeConvertCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ContentKindChangeConvertCommand;
+        public ICommand ContentKindChangeConvertCommand => this._ContentKindChangeConvertCommand ??= new DelegateCommand(
             async () => {
                 Flush();
 
                 await Model.ConvertContentKindAsync(ChangingContentKind);
                 ShowContentKindChangeConfirm = false;
             }
-        ));
+        );
 
-        public ICommand ContentKindChangeCancelCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ContentKindChangeCancelCommand;
+        public ICommand ContentKindChangeCancelCommand => this._ContentKindChangeCancelCommand ??= new DelegateCommand(
             () => {
                 ShowContentKindChangeConfirm = false;
             }
-        ));
+        );
 
-        public ICommand RemoveCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _RemoveCommand;
+        public ICommand RemoveCommand => this._RemoveCommand ??= new DelegateCommand(
             () => {
                 PrepareToRemove = true;
                 IsPopupRemoveNote = false;
                 CloseRequest.Send();
             }
-        ));
+        );
 
-        public ICommand SilentCloseCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _SilentCloseCommand;
+        public ICommand SilentCloseCommand => this._SilentCloseCommand ??= new DelegateCommand(
            () => {
                IsPopupRemoveNote = false;
                // Viewへの通知はユーザー操作に当たらないため明示的に非表示を設定
                Model.ChangeVisibleDelaySave(false);
                CloseRequest.Send();
            }
-       ));
+       );
 
-        public ICommand LinkChangeCancelCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _LinkChangeCancelCommand;
+        public ICommand LinkChangeCancelCommand => this._LinkChangeCancelCommand ??= new DelegateCommand(
             () => {
                 ShowLinkChangeConfirm = false;
             }
-        ));
+        );
 
-        public ICommand LinkChangeCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _LinkChangeCommand;
+        public ICommand LinkChangeCommand => this._LinkChangeCommand ??= new DelegateCommand(
             () => {
                 ShowLinkChangeConfirm = true;
             }
-        ));
-        public ICommand UnlinkCommand => GetOrCreateCommand(() => new DelegateCommand(
+        );
+
+        private ICommand? _UnlinkCommand;
+        public ICommand UnlinkCommand => this._UnlinkCommand ??= new DelegateCommand(
             () => {
                 Model.Unlink(false);
                 switch(Content) {
@@ -647,9 +665,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 ShowLinkChangeConfirm = false;
             },
             () => IsLink
-        ).ObservesProperty(() => IsLink));
+        ).ObservesProperty(() => IsLink);
 
-        public ICommand DeleteCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _DeleteCommand;
+        public ICommand DeleteCommand => this._DeleteCommand ??= new DelegateCommand(
             () => {
                 Model.Unlink(true);
                 RaisePropertyChanged(nameof(IsLink));
@@ -657,10 +676,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 ShowLinkChangeConfirm = false;
             },
             () => IsLink
-        ).ObservesProperty(() => IsLink));
+        ).ObservesProperty(() => IsLink);
 
 
-        public ICommand SaveLinkCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _SaveLinkCommand;
+        public ICommand SaveLinkCommand => this._SaveLinkCommand ??= new DelegateCommand(
             () => {
                 var parameter = CreateLinkParameter(false);
                 LinkChangeRequest.Send<NoteLinkChangeRequestResponse>(parameter, r => {
@@ -677,8 +697,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 ShowLinkChangeConfirm = false;
             },
             () => !IsLink
-        ).ObservesProperty(() => IsLink));
-        public ICommand OpenLinkCommand => GetOrCreateCommand(() => new DelegateCommand(
+        ).ObservesProperty(() => IsLink);
+
+        private ICommand? _OpenLinkCommand;
+        public ICommand OpenLinkCommand => this._OpenLinkCommand ??= new DelegateCommand(
             () => {
                 var parameter = CreateLinkParameter(true);
                 LinkChangeRequest.Send<NoteLinkChangeRequestResponse>(parameter, r => {
@@ -695,9 +717,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 ShowLinkChangeConfirm = false;
             },
             () => !IsLink
-        ).ObservesProperty(() => IsLink));
+        ).ObservesProperty(() => IsLink);
 
-        public ICommand OpenLinkFileDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _OpenLinkFileDirectoryCommand;
+        public ICommand OpenLinkFileDirectoryCommand => this._OpenLinkFileDirectoryCommand ??= new DelegateCommand(
             () => {
                 if(string.IsNullOrWhiteSpace(LinkPath)) {
                     Logger.LogWarning("リンク未設定");
@@ -712,15 +735,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 }
                 ShowLinkChangeConfirm = false;
             }
-        ));
+        );
 
-        public ICommand UnlinkFileCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+        private ICommand? _UnlinkFileCommand;
+        public ICommand UnlinkFileCommand => this._UnlinkFileCommand ??= new DelegateCommand<NoteFileViewModel>(
             o => {
                 Model.UnlinkFile(o.NoteFileId);
             }
-        ));
+        );
 
-        public ICommand ContentSearchCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+        private ICommand? _ContentSearchCommand;
+        public ICommand ContentSearchCommand => this._ContentSearchCommand ??= new DelegateCommand<NoteFileViewModel>(
             o => {
                 Logger.LogDebug("Ctrl+F");
                 if(!IsSearching) {
@@ -734,28 +759,30 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 }
             },
             o => !IsCompact
-        ).ObservesProperty(() => IsCompact));
+        ).ObservesProperty(() => IsCompact);
 
-        public ICommand CloseSearchCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+        private ICommand? _CloseSearchCommand;
+        public ICommand CloseSearchCommand => this._CloseSearchCommand ??= new DelegateCommand<NoteFileViewModel>(
             o => {
                 IsSearching = false;
             }
-        ));
+        );
 
-        public ICommand SearchNextCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+        private ICommand? _SearchNextCommand;
+        public ICommand SearchNextCommand => this._SearchNextCommand ??= new DelegateCommand<NoteFileViewModel>(
             o => {
                 SearchContent(SearchValue, true);
             },
             o => CanSearchContent()
-        ));
-        public ICommand SearchPrevCommand => GetOrCreateCommand(() => new DelegateCommand<NoteFileViewModel>(
+        );
+
+        private ICommand? _SearchPrevCommand;
+        public ICommand SearchPrevCommand => this._SearchPrevCommand ??= new DelegateCommand<NoteFileViewModel>(
             o => {
                 SearchContent(SearchValue, false);
             },
             o => CanSearchContent()
-        ));
-
-
+        );
 
         #endregion
 
@@ -1365,7 +1392,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private void SearchContent(string searchValue, bool toNext)
         {
-            Logger.LogDebug(toNext ? "Next": "Prev");
+            Logger.LogDebug(toNext ? "Next" : "Prev");
 
             var focusedInputSearch = InputSearchElement?.IsFocused ?? false;
 

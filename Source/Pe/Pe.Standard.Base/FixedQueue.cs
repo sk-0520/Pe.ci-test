@@ -7,11 +7,7 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
-    /// <summary>
-    /// 最大数制限ありのキュー。
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IFixedQueue<T>: IEnumerable<T>
+    public interface IReadOnlyFixedQueue<T>: IEnumerable<T>
     {
         #region property
 
@@ -32,17 +28,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         #region function
 
-        /// <inheritdoc cref="Queue{T}.Clear"/>
-        void Clear();
         /// <inheritdoc cref="Queue{T}.CopyTo(T[], int)"/>
         void CopyTo(T[] array, int index);
         /// <inheritdoc cref="Queue{T}.ToArray"/>
         T[] ToArray();
 
-        /// <inheritdoc cref="Queue{T}.Enqueue(T)"/>
-        void Enqueue(T item);
-        /// <inheritdoc cref="Queue{T}.TryDequeue(out T)"/>
-        bool TryDequeue([MaybeNullWhen(false)] out T result);
         /// <inheritdoc cref="Queue{T}.TryPeek(out T)"/>
         bool TryPeek([MaybeNullWhen(false)] out T result);
 
@@ -50,16 +40,35 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     }
 
     /// <summary>
-    /// <inheritdoc cref="IFixedQueue{T}"/>
-    /// <see cref="Queue{T}"/>
+    /// 最大数制限ありのキュー。
     /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IFixedQueue<T>: IReadOnlyFixedQueue<T>
+    {
+        #region function
+
+        /// <inheritdoc cref="Queue{T}.Clear"/>
+        void Clear();
+
+        /// <inheritdoc cref="Queue{T}.Enqueue(T)"/>
+        void Enqueue(T item);
+        /// <inheritdoc cref="Queue{T}.TryDequeue(out T)"/>
+        bool TryDequeue([MaybeNullWhen(false)] out T result);
+
+        #endregion
+    }
+
+    /// <summary>
+    /// <inheritdoc cref="IFixedQueue{T}"/>
+    /// </summary>
+    /// <seealso cref="Queue{T}"/>
     /// <typeparam name="T"></typeparam>
     public class FixedQueue<T>: IFixedQueue<T>
     {
         public FixedQueue(int limit)
         {
             if(limit < 1) {
-                throw new ArgumentException(nameof(limit));
+                throw new ArgumentException(null, nameof(limit));
             }
 
             Limit = limit;
@@ -69,12 +78,12 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         private Queue<T> Queue { get; } = new Queue<T>();
 
-        /// <inheritdoc cref="IFixedQueue{T}.Limit"/>
+        /// <inheritdoc cref="IReadOnlyFixedQueue{T}.Limit"/>
         public int Limit { get; }
 
-        /// <inheritdoc cref="IFixedQueue{T}.Count"/>
+        /// <inheritdoc cref="IReadOnlyFixedQueue{T}.Count"/>
         public int Count => Queue.Count;
-        /// <inheritdoc cref="IFixedQueue{T}.IsEmpty"/>
+        /// <inheritdoc cref="IReadOnlyFixedQueue{T}.IsEmpty"/>
         public bool IsEmpty => Queue.Count == 0;
 
         #endregion
@@ -83,9 +92,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <inheritdoc cref="IFixedQueue{T}.Clear"/>
         public void Clear() => Queue.Clear();
-        /// <inheritdoc cref="IFixedQueue{T}.CopyTo(T[], int)"/>
+        /// <inheritdoc cref="IReadOnlyFixedQueue{T}.CopyTo(T[], int)"/>
         public void CopyTo(T[] array, int index) => Queue.CopyTo(array, index);
-        /// <inheritdoc cref="IFixedQueue{T}.ToArray"/>
+        /// <inheritdoc cref="IReadOnlyFixedQueue{T}.ToArray"/>
         public T[] ToArray() => Queue.ToArray();
 
         /// <inheritdoc cref="IFixedQueue{T}.Enqueue(T)"/>
@@ -100,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <inheritdoc cref="IFixedQueue{T}.TryDequeue(out T)"/>
         public bool TryDequeue([MaybeNullWhen(false)] out T result) => Queue.TryDequeue(out result);
 
-        /// <inheritdoc cref="IFixedQueue{T}.TryPeek(out T)"/>
+        /// <inheritdoc cref="IReadOnlyFixedQueue{T}.TryPeek(out T)"/>
         public bool TryPeek([MaybeNullWhen(false)] out T result) => Queue.TryPeek(out result);
 
 
@@ -119,15 +128,15 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
     /// <summary>
     /// スレッド セーフ<inheritdoc cref="IFixedQueue{T}"/>
-    /// <see cref="ConcurrentQueue{T}"/>
     /// </summary>
+    /// <seealso cref="ConcurrentQueue{T}"/>
     /// <typeparam name="T"></typeparam>
     public class ConcurrentFixedQueue<T>: IFixedQueue<T>
     {
         public ConcurrentFixedQueue(int limit)
         {
             if(limit < 1) {
-                throw new ArgumentException(nameof(limit));
+                throw new ArgumentException(null, nameof(limit));
             }
 
             Limit = limit;
@@ -137,12 +146,12 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         private ConcurrentQueue<T> Queue { get; } = new ConcurrentQueue<T>();
 
-        /// <inheritdoc cref="IFixedQueue{T}.Count"/>
+        /// <inheritdoc cref="IReadOnlyFixedQueue{T}.Count"/>
         public int Limit { get; }
 
-        /// <inheritdoc cref="IFixedQueue{T}.Count"/>
+        /// <inheritdoc cref="IReadOnlyFixedQueue{T}.Count"/>
         public int Count => Queue.Count;
-        /// <inheritdoc cref="IFixedQueue{T}.IsEmpty"/>
+        /// <inheritdoc cref="IReadOnlyFixedQueue{T}.IsEmpty"/>
         public bool IsEmpty => Queue.IsEmpty;
 
         #endregion
@@ -151,9 +160,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         /// <inheritdoc cref="IFixedQueue{T}.Clear"/>
         public void Clear() => Queue.Clear();
-        /// <inheritdoc cref="IFixedQueue{T}.CopyTo(T[], int)"/>
+        /// <inheritdoc cref="IReadOnlyFixedQueue{T}.CopyTo(T[], int)"/>
         public void CopyTo(T[] array, int index) => Queue.CopyTo(array, index);
-        /// <inheritdoc cref="IFixedQueue{T}.ToArray"/>
+        /// <inheritdoc cref="IReadOnlyFixedQueue{T}.ToArray"/>
         public T[] ToArray() => Queue.ToArray();
 
         /// <inheritdoc cref="IFixedQueue{T}.Enqueue(T)"/>
@@ -168,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <inheritdoc cref="IFixedQueue{T}.TryDequeue(out T)"/>
         public bool TryDequeue([MaybeNullWhen(false)] out T result) => Queue.TryDequeue(out result);
 
-        /// <inheritdoc cref="IFixedQueue{T}.TryPeek(out T)"/>
+        /// <inheritdoc cref="IReadOnlyFixedQueue{T}.TryPeek(out T)"/>
         public bool TryPeek([MaybeNullWhen(false)] out T result) => Queue.TryPeek(out result);
 
         #endregion

@@ -116,25 +116,31 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand AddNewFileItemCommand => GetOrCreateCommand(() => new DelegateCommand(async () => {
+        private ICommand? _AddNewFileItemCommand;
+        public ICommand AddNewFileItemCommand => this._AddNewFileItemCommand ??= new DelegateCommand(async () => {
             await AddNewItemAsync(LauncherItemKind.File, PluginId.Empty);
-        }));
-        public ICommand AddNewStoreAppItemCommand => GetOrCreateCommand(() => new DelegateCommand(async () => {
+        });
+
+        private ICommand? _AddNewStoreAppItemCommand;
+        public ICommand AddNewStoreAppItemCommand => this._AddNewStoreAppItemCommand ??= new DelegateCommand(async () => {
             await AddNewItemAsync(LauncherItemKind.StoreApp, PluginId.Empty);
-        }));
-        public ICommand AddNewAddonItemCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherItemAddonViewModel>(
+        });
+
+        private ICommand? _AddNewAddonItemCommand;
+        public ICommand AddNewAddonItemCommand => this._AddNewAddonItemCommand ??= new DelegateCommand<LauncherItemAddonViewModel>(
             async o => {
                 await AddNewItemAsync(LauncherItemKind.Addon, o.PluginId);
             }
-        ));
+        );
 
-        public ICommand RemoveItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _RemoveItemCommand;
+        public ICommand RemoveItemCommand => this._RemoveItemCommand ??= new DelegateCommand(
             () => {
                 Model.RemoveItem(SelectedItem!.LauncherItemId);
                 SelectedItem = null;
             },
             () => SelectedItem != null
-        ).ObservesProperty(() => SelectedItem));
+        ).ObservesProperty(() => SelectedItem);
 
         #endregion
 

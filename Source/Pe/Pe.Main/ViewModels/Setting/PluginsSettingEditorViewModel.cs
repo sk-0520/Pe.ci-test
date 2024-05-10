@@ -60,13 +60,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand CancelInstallCommand => GetOrCreateCommand(() => new DelegateCommand<PluginInstallItemViewModel>(
+        private ICommand? _CancelInstallCommand;
+        public ICommand CancelInstallCommand => this._CancelInstallCommand ??= new DelegateCommand<PluginInstallItemViewModel>(
             o => {
                 Model.CancelInstall(o.PluginId);
             }
-        ));
+        );
 
-        public ICommand LocalInstallCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _LocalInstallCommand;
+        public ICommand LocalInstallCommand => this._LocalInstallCommand ??= new DelegateCommand(
             () => {
                 var parameter = new FileSystemSelectDialogRequestParameter() {
                     FileSystemDialogMode = FileSystemDialogMode.FileOpen,
@@ -92,9 +94,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     }
                 });
             }
-        ));
+        );
 
-        public ICommand WebInstallCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _WebInstallCommand;
+        public ICommand WebInstallCommand => this._WebInstallCommand ??= new DelegateCommand(
             async () => {
                 var parameter = await Model.CreatePluginWebInstallRequestParameterAsync();
                 WebInstallRequest.Send(parameter, async r => {
@@ -116,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     }
                 });
             }
-        ));
+        );
 
         #endregion
 

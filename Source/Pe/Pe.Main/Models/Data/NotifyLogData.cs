@@ -149,24 +149,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public NotifyMessage(NotifyLogKind kind, string header, NotifyLogContent notifyLogContent)
         {
             if(!(kind == NotifyLogKind.Normal || kind == NotifyLogKind.Topmost)) {
-                throw new ArgumentException(nameof(kind));
+                throw new ArgumentException(null, nameof(kind));
             }
 
             Kind = kind;
             Header = !string.IsNullOrWhiteSpace(header) ? header : throw new ArgumentException(nameof(header));
-            Content = notifyLogContent ?? throw new ArgumentException(nameof(notifyLogContent));
+            Content = notifyLogContent ?? throw new ArgumentException(null, nameof(notifyLogContent));
             Callback = EmptyCallback;
         }
 
         public NotifyMessage(NotifyLogKind kind, string header, NotifyLogContent notifyLogContent, Action callback)
         {
             if(!(kind == NotifyLogKind.Platform || kind == NotifyLogKind.Undo || kind == NotifyLogKind.Command)) {
-                throw new ArgumentException(nameof(kind));
+                throw new ArgumentException(null, nameof(kind));
             }
 
             Kind = kind;
-            Header = !string.IsNullOrWhiteSpace(header) ? header : throw new ArgumentException(nameof(header));
-            Content = notifyLogContent ?? throw new ArgumentException(nameof(notifyLogContent));
+            Header = !string.IsNullOrWhiteSpace(header) ? header : throw new ArgumentException(null, nameof(header));
+            Content = notifyLogContent ?? throw new ArgumentException(null, nameof(notifyLogContent));
             Callback = callback ?? throw new ArgumentNullException(nameof(callback));
         }
 

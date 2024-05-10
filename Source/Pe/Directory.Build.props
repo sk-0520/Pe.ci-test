@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>0.99.230</Version>
+    <Version>0.99.231</Version>
 
     <TargetFramework>net8.0-windows</TargetFramework>
     <Platforms>x64;x86</Platforms>
@@ -13,11 +13,13 @@
     <Copyright>Copyright © 2014-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
     <Configurations>Debug;Release</Configurations>
     <ImplicitUsings>disable</ImplicitUsings>
-      <PathMap>$(MSBuildThisFileDirectory)=.</PathMap>
+    <IsPackable>false</IsPackable>
+    <PathMap>$(MSBuildThisFileDirectory)=.</PathMap>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
   </PropertyGroup>
 
   <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">

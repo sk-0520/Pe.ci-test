@@ -48,23 +48,24 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
         #region property
 
         DialogRequestReceiver DialogRequestReceiver { get; }
-        CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
         #region command
 
-        public ICommand FileSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        private ICommand? _FileSelectCommand;
+        public ICommand FileSelectCommand => this._FileSelectCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 DialogRequestReceiver.ReceiveFileSystemSelectDialogRequest(o);
             }
-        ));
+        );
 
-        public ICommand IconSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        private ICommand? _IconSelectCommand;
+        public ICommand IconSelectCommand => this._IconSelectCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 DialogRequestReceiver.ReceiveIconSelectDialogRequest(o);
             }
-        ));
+        );
 
         #endregion
 

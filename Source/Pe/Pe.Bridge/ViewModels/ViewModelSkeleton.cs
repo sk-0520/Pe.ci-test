@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Bridge.ViewModels
@@ -62,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
 
         protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = "")
         {
-            if(Equals(storage, value)) {
+            if(EqualityComparer<T>.Default.Equals(storage, value)) {
                 return false;
             }
 
@@ -88,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
 
             var nowValue = (TValue?)propertyInfo.GetValue(obj);
 
-            if(!Equals(nowValue, value)) {
+            if(!EqualityComparer<TValue>.Default.Equals(nowValue, value)) {
 
                 propertyInfo.SetValue(obj, value);
 
@@ -117,11 +119,9 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
 
         public bool IsDisposed { get; private set; }
 
-        protected void ThrowIfDisposed([CallerMemberName] string _callerMemberName = "")
+        protected void ThrowIfDisposed()
         {
-            if(IsDisposed) {
-                throw new ObjectDisposedException(_callerMemberName);
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, this);
         }
 
         protected virtual void Dispose(bool disposing)

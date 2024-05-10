@@ -103,10 +103,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             : base(actionData, new[] { mapping })
         {
             if(ActionData.ReplaceKey == System.Windows.Input.Key.None) {
-                throw new ArgumentException(nameof(actionData) + "." + nameof(actionData.ReplaceKey));
+                throw new ArgumentException(null, nameof(actionData) + "." + nameof(actionData.ReplaceKey));
             }
             if(ActionData.ReplaceKey == Mappings[0].Key) {
-                throw new ArgumentException(nameof(actionData.ReplaceKey) + " == " + nameof(IReadOnlyKeyMappingData.Key));
+                throw new ArgumentException(null, nameof(actionData.ReplaceKey) + " == " + nameof(IReadOnlyKeyMappingData.Key));
             }
             if(ActionData.ReplaceKey.IsModifierKey()) {
                 var mods = new[] {
@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                     throw new ArgumentException("setting: any none");
                 }
             } else if(Mapping.Key == Key.None) {
-                throw new ArgumentException(nameof(mapping) + "." + nameof(mapping.Key));
+                throw new ArgumentException(null, nameof(mapping) + "." + nameof(mapping.Key));
             }
         }
 
@@ -211,7 +211,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             : base(actionData, mappings)
         {
             if(Mappings.Count == 0) {
-                throw new ArgumentException(nameof(mappings));
+                throw new ArgumentException(null, nameof(mappings));
             }
 
             var keyIsNoneOrMods = Mappings.Counting().Where(i => i.Value.Key == Key.None || i.Value.Key.IsModifierKey()).ToList();
@@ -314,7 +314,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             PressedData = actionData;
 
             if(Mappings.Count == 0) {
-                throw new ArgumentException(nameof(mappings));
+                throw new ArgumentException(null, nameof(mappings));
             }
 
             var keyIsNoneOrMods = Mappings.Counting().Where(i => i.Value.Key == Key.None || i.Value.Key.IsModifierKey()).ToList();

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Data;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Standard.Base;
 
@@ -23,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     /// <typeparam name="TModel"></typeparam>
     /// <typeparam name="TViewModel"></typeparam>
     public class ModelViewModelObservableCollectionManager<TModel, TViewModel>: ObservableCollectionManagerBase<TModel>
-        where TViewModel : ViewModelBase
+        where TViewModel : INotifyPropertyChanged
     {
         #region variable
 
@@ -151,6 +152,17 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             return true;
         }
 
+        /// <summary>
+        /// ViewModel が <see cref="IDisposable"/> を実装している場合に破棄する。
+        /// </summary>
+        /// <param name="viewModel"></param>
+        private void DisposeIfViewModel(TViewModel viewModel)
+        {
+            if(viewModel is IDisposable disposable) {
+                disposable.Dispose();
+            }
+        }
+
         #endregion
 
         #region ObservableCollectionManagerBase
@@ -229,7 +241,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
             if(Options.AutoDisposeViewModel) {
                 foreach(var oldViewModel in oldViewModels) {
-                    oldViewModel.Dispose();
+                    DisposeIfViewModel(oldViewModel);
                 }
             }
 
@@ -310,7 +322,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             EditableViewModels.Clear();
             if(Options.AutoDisposeViewModel) {
                 foreach(var viewModel in oldViewModels) {
-                    viewModel.Dispose();
+                    DisposeIfViewModel(viewModel);
                 }
             }
 
@@ -337,7 +349,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
                     if(Options.AutoDisposeViewModel) {
                         foreach(var oldItem in oldItems) {
-                            oldItem.Dispose();
+                            DisposeIfViewModel(oldItem);
                         }
                     }
                 }

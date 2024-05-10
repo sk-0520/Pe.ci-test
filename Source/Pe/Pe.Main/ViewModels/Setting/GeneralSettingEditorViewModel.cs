@@ -89,25 +89,28 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand CreateUserIdFromRandomCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CreateUserIdFromRandomCommand;
+        public ICommand CreateUserIdFromRandomCommand => this._CreateUserIdFromRandomCommand ??= new DelegateCommand(
             () => {
                 var userIdManager = new UserIdManager(LoggerFactory);
                 UserId = userIdManager.CreateFromRandom();
             }
-        ));
+        );
 
-        public ICommand CreateUserIdFromEnvironmentCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _CreateUserIdFromEnvironmentCommand;
+        public ICommand CreateUserIdFromEnvironmentCommand => this._CreateUserIdFromEnvironmentCommand ??= new DelegateCommand(
             () => {
                 var userIdManager = new UserIdManager(LoggerFactory);
                 UserId = userIdManager.CreateFromEnvironment();
             }
-        ));
+        );
 
-        public ICommand OpenPrivacyPolicyDocumentCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _OpenPrivacyPolicyDocumentCommand;
+        public ICommand OpenPrivacyPolicyDocumentCommand => this._OpenPrivacyPolicyDocumentCommand ??= new DelegateCommand(
             () => {
                 Model.OpenPrivacyPolicyDocument();
             }
-        ));
+        );
 
         #endregion
 
@@ -230,7 +233,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand UserBackupDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _UserBackupDirectorySelectCommand;
+        public ICommand UserBackupDirectorySelectCommand => this._UserBackupDirectorySelectCommand ??= new DelegateCommand(
             () => {
                 var dialogRequester = new DialogRequester(LoggerFactory);
                 dialogRequester.SelectDirectory(
@@ -241,7 +245,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     }
                 );
             }
-        ));
+        );
 
         #endregion
 

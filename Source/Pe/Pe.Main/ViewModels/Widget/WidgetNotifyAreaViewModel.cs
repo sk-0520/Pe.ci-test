@@ -26,7 +26,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
         #region command
 
-        public ICommand ToggleVisibleCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleVisibleCommand;
+        public ICommand ToggleVisibleCommand => this._ToggleVisibleCommand ??= new DelegateCommand(
             () => {
                 if(Model.ViewCreated) {
                     Model.SaveStatus(false);
@@ -37,14 +38,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
                 }
                 RaisePropertyChanged(nameof(IsVisible));
             }
-        ));
+        );
 
-        public ICommand ToggleTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
+        private ICommand? _ToggleTopmostCommand;
+        public ICommand ToggleTopmostCommand => this._ToggleTopmostCommand ??= new DelegateCommand(
             () => {
                 Model.ToggleTopmost();
                 RaisePropertyChanged(nameof(IsTopmost));
             }
-        ));
+        );
 
         #endregion
 

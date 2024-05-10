@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             var fieldInfo = enumType.GetField(enumValue.ToString()!)!;
             var attribute = fieldInfo.GetCustomAttribute<EnumResourceAttribute>();
             if(attribute == null) {
-                throw new ArgumentException(nameof(enumType));
+                throw new ArgumentException(null, nameof(enumType));
             }
 
             //TODO: resourceNameKind

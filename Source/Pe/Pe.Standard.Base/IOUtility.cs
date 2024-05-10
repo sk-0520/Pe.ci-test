@@ -9,6 +9,18 @@ using System.Linq;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
+
+    [Serializable]
+    public class IOUtilityException: Exception
+    {
+        public IOUtilityException() { }
+        public IOUtilityException(string message) : base(message) { }
+        public IOUtilityException(string message, Exception inner) : base(message, inner) { }
+        protected IOUtilityException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
+
     /// <summary>
     /// ファイル関連の共通処理。
     /// </summary>
@@ -18,12 +30,13 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// ファイルパスを元にディレクトリを作成
         /// </summary>
         /// <param name="path">ファイルパス</param>
-        /// <returns>ディレクトリパス。<paramref name="path"/>から親ディレクトリが判定できなかった場合はから文字列。</returns>
+        /// <returns>ディレクトリパス。<paramref name="path"/>の親ディレクトリパス。</returns>
+        /// <exception cref="IOUtilityException"><paramref name="path"/>から親ディレクトリパスが取得できなかった。</exception>
         public static string MakeFileParentDirectory(string path)
         {
             var dirPath = Path.GetDirectoryName(path);
             if(dirPath == null) {
-                return string.Empty;
+                throw new IOUtilityException(path);
             }
 
             var dirInfo = Directory.CreateDirectory(dirPath);
@@ -171,13 +184,13 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         private static void ThrowIfInvalidOptions(TemporaryOptions options)
         {
             if(options.RetryCount < 1) {
-                throw new ArgumentException(nameof(options) + "." + nameof(options.RetryCount));
+                throw new ArgumentException(null, nameof(options) + "." + nameof(options.RetryCount));
             }
             if(options.RandomNameCharacters.Count == 0) {
-                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameCharacters));
+                throw new ArgumentException(null, nameof(options) + "." + nameof(options.RandomNameCharacters));
             }
             if(options.RandomNameLength < 1) {
-                throw new ArgumentException(nameof(options) + "." + nameof(options.RandomNameLength));
+                throw new ArgumentException(null, nameof(options) + "." + nameof(options.RandomNameLength));
             }
         }
 
@@ -219,13 +232,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <param name="baseDirectory">親ディレクトリ。</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
         public static TemporaryDirectory CreateTemporaryDirectory(DirectoryInfo baseDirectory, TemporaryDirectoryOptions? options = null)
         {
             return CreateTemporaryDirectoryCore(baseDirectory, options ?? new TemporaryDirectoryOptions());
         }
 
-        /// <inheritdoc cref="CreateTemporaryDirectory(DirectoryInfo, TemporaryDirectoryOptions?)"/>
         public static TemporaryDirectory CreateTemporaryDirectory(TemporaryDirectoryOptions? options = null)
         {
             var tempDir = new DirectoryInfo(Path.GetTempPath());

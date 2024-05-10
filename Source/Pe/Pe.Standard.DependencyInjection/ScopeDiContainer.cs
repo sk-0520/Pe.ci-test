@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
                 base.RegisterFactoryCore(interfaceType, objectType, name, lifecycle, creator);
                 RegisteredTypeSet[name].Add(interfaceType);
             } else {
-                throw new ArgumentException(nameof(interfaceType));
+                throw new ArgumentException(null, nameof(interfaceType));
             }
         }
 
