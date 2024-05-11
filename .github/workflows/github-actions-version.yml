@@ -8,8 +8,8 @@ env:
 
 
 jobs:
-  package:
-    name: "Package"
+  versions:
+    name: "Versions"
     runs-on: windows-latest
 
     steps:
