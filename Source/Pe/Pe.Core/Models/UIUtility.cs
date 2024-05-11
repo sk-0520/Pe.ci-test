@@ -58,6 +58,31 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public static class UIUtility
     {
+        #region variable
+
+        /// <summary>
+        /// デフォルトDPI(X)。
+        /// </summary>
+        public const int DefaultDpiX = 96;
+        /// <summary>
+        /// デフォルトDPI(Y)。
+        /// </summary>
+        public const int DefaultDpiY = 96;
+
+        #endregion
+
+        #region property
+
+        /// <summary>
+        /// デフォルトDPI。
+        /// </summary>
+        /// <remarks><see cref="Size"/>を使うべきかもしれないけど X/Y の名称を使いたいので <see cref="Point"/> を使用している。</remarks>
+        public static Point DefaultDpi { get; } = new Point(DefaultDpiX, DefaultDpiY);
+
+        #endregion
+
+        #region function
+
         /// <summary>
         /// 表示要素の子孫を取得する。
         /// </summary>
@@ -434,5 +459,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
             WindowsUtility.SetWindowLongPtr(hWnd, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
         }
+
+        #endregion
     }
 }

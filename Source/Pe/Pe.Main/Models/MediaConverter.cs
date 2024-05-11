@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public Color GetNegativeColor(Color color) => MediaUtility.GetNegativeColor(color);
 
         /// <inheritdoc cref="IMediaConverter.GetNonTransparentColor(Color)" />
-        public Color GetNonTransparentColor(Color value) => MediaUtility.GetNonTransparentColor(value);
+        public Color GetNonTransparentColor(Color value) => MediaUtility.GetOpaqueColor(value);
 
         #endregion
     }
