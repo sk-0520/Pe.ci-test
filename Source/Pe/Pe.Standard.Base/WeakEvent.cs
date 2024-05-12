@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <remarks>
         /// <para>操作する際は <see cref="_sync"/> の <see langword="lock" /> を行うこと。</para>
         /// </remarks>
-        protected IList<WeakHandler> Handlers { get; } = new List<WeakHandler>();
+        private List<WeakHandler> Handlers { get; } = new List<WeakHandler>();
 
         #endregion
 
