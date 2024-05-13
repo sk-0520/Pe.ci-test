@@ -8,24 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="%2a%2a\**" />
-    <EmbeddedResource Remove="%2a%2a\**" />
-    <None Remove="%2a%2a\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="%2a%2a/%2a.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="%2a%2a/%2a.resx" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="%2a%2a/%2a" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -38,6 +20,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Xunit.StaFact" Version="1.1.11" />
   </ItemGroup>
   
   <ItemGroup>

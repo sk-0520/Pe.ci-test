@@ -9,27 +9,27 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
     public enum Compare
     {
         /// <summary>
-        /// value == parameter
+        /// <c>value == parameter</c>
         /// </summary>
         Equal,
         /// <summary>
-        /// value != parameter
+        /// <c>value != parameter</c>
         /// </summary>
         NotEqual,
         /// <summary>
-        /// value &gt; parameter
+        /// <c>value &gt; parameter</c>
         /// </summary>
         Greater,
         /// <summary>
-        /// value &gt;= parameter
+        /// <c>value &gt;= parameter</c>
         /// </summary>
         GreaterEqual,
         /// <summary>
-        /// value &lt; parameter
+        /// <c>value &lt; parameter</c>
         /// </summary>
         Less,
         /// <summary>
-        /// value &lt;= parameter
+        /// <c>value &lt;= parameter</c>
         /// </summary>
         LessEqual,
     }
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if(value is T left) {
-                var right = (T)System.Convert.ChangeType(parameter, typeof(T), CultureInfo.InvariantCulture);
+                var right = (T)System.Convert.ChangeType(parameter, typeof(T), culture);
                 switch(Compare) {
                     case Compare.Equal:
                         return left.CompareTo(right) == 0;
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
                         return 0 < left.CompareTo(right) || left.CompareTo(right) == 0;
 
                     case Compare.Less:
-                        return 0 < left.CompareTo(right);
+                        return left.CompareTo(right) < 0;
 
                     case Compare.LessEqual:
                         return left.CompareTo(right) < 0 || left.CompareTo(right) == 0;

@@ -69,9 +69,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    internal class HookItemCache
+    internal class CachedHookItem
     {
-        public HookItemCache(IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands, IEnumerable<DelegateCommandBase> raiseDelegateCommands, IEnumerable<Action> callbacks)
+        public CachedHookItem(IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands, IEnumerable<DelegateCommandBase> raiseDelegateCommands, IEnumerable<Action> callbacks)
         {
             RaisePropertyNames = raisePropertyNames.ToList();
             RaiseCommands = raiseCommands.ToList();
@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         protected ILogger Logger { get; }
 
         protected IDictionary<string, List<HookItem>> Hookers { get; } = new Dictionary<string, List<HookItem>>();
-        private IDictionary<string, HookItemCache> Cache { get; } = new Dictionary<string, HookItemCache>();
+        private IDictionary<string, CachedHookItem> Cache { get; } = new Dictionary<string, CachedHookItem>();
 
         #endregion
 
@@ -322,7 +322,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return AddHookCore(hookItem);
         }
 
-        private HookItemCache MakeCache(IEnumerable<IReadOnlyHookItem> hookItems)
+        private CachedHookItem MakeCache(IEnumerable<IReadOnlyHookItem> hookItems)
         {
             ThrowIfDisposed();
 
@@ -332,7 +332,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 .ToList()
             ;
 
-            var result = new HookItemCache(
+            var result = new CachedHookItem(
                 hookItems.Where(i => i.RaisePropertyNames != null).SelectMany(i => i.RaisePropertyNames!),
                 commands.Where(i => !(i is DelegateCommandBase)),
                 commands.OfType<DelegateCommandBase>(),
@@ -410,7 +410,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return true;
         }
 
-        private bool ExecuteCache(HookItemCache hookItemCache, Action<string> raiser)
+        private bool ExecuteCache(CachedHookItem hookItemCache, Action<string> raiser)
         {
             ThrowIfDisposed();
 

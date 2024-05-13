@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 文字列の場合のエンコーディング。
         /// </summary>
-        public Encoding Encoding { get; set; } = Encoding.UTF8;
+        public Encoding Encoding { get; set; } = Encoding.UTF8; // new UTF8Encoding(false);
         /// <summary>
         /// バッファサイズ。
         /// </summary>
@@ -268,6 +268,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             return new XmlWriterSettings() {
                 CloseOutput = false,
+                //Encoding = Encoding,
                 NewLineHandling = NewLineHandling.Entitize,
             };
         }

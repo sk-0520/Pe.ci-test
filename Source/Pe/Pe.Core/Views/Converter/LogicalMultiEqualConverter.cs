@@ -3,6 +3,7 @@ using System.Windows.Data;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
+    [Obsolete("なんだこれ")]
     public class LogicalMultiEqualConverter: IMultiValueConverter
     {
         #region IValueConverter
