@@ -474,7 +474,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 var argument = string.Join(' ', filePaths.Select(i => CommandLine.Escape(i)));
                 await DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument));
             } else if(e.Data.IsTextPresent()) {
-                var argument = TextUtility.JoinLines(e.Data.GetText());
+                var argument = TextUtility.JoinLines(e.Data.RequireText());
                 await DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument));
             }
 

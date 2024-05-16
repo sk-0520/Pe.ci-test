@@ -50,7 +50,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                Marshal.ReleaseComObject(Instance);
+                if(Instance is not null) {
+                    Marshal.ReleaseComObject(Instance);
+                }
             }
 
             base.Dispose(disposing);

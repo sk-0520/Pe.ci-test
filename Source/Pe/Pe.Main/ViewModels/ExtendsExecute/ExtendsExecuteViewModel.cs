@@ -372,7 +372,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                 Option = string.Join(" ", filePaths.Select(i => CommandLine.Escape(i)));
                 e.Handled = true;
             } else if(e.Data.IsTextPresent()) {
-                Option = TextUtility.JoinLines(e.Data.GetText());
+                Option = TextUtility.JoinLines(e.Data.RequireText());
                 e.Handled = true;
             }
 
