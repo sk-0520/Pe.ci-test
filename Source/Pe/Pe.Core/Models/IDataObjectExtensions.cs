@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="dataObject"></param>
         /// <returns></returns>
         /// <exception cref="InvalidCastException">テキストデータが存在しない。</exception>
-        public static string GetText(this IDataObject dataObject)
+        public static string RequireText(this IDataObject dataObject)
         {
             foreach(var format in Formats) {
                 if(dataObject.GetDataPresent(format)) {
