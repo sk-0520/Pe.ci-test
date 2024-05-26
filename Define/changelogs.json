@@ -72,7 +72,8 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 17.9.0 -> 17.10.0"
 					},
 					{
 						"revision": "",
