@@ -41,6 +41,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 size = size / KbSize;
             }
 
+            if(units.Count <= order) {
+                order -= 1;
+            }
+
             return string.Format(CultureInfo.InvariantCulture, sizeFormat, size, units[order]);
         }
 

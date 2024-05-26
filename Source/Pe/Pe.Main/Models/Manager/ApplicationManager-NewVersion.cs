@@ -113,7 +113,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             ApplicationUpdateInfo.State = NewVersionState.Checking;
             {
-                var appVersion = await newVersionChecker.CheckApplicationNewVersionAsync().ConfigureAwait(false);
+                var generalConfiguration = ApplicationDiContainer.Build<GeneralConfiguration>();
+                var appVersion = await newVersionChecker.CheckApplicationNewVersionAsync(generalConfiguration.UpdateCheckUrlItems).ConfigureAwait(false);
                 if(appVersion == null) {
                     Logger.LogInformation("アップデートなし");
                     ApplicationUpdateInfo.State = NewVersionState.None;
@@ -263,6 +264,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private async Task<bool> CheckPluginNewVersionAsync(PluginId pluginId, Version pluginVersion)
         {
+            var apiConfiguration = ApplicationDiContainer.Build<ApiConfiguration>();
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
             var newVersionChecker = ApplicationDiContainer.Build<NewVersionChecker>();
             var mainDatabaseBarrier = ApplicationDiContainer.Get<IMainDatabaseBarrier>();
@@ -276,7 +278,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 urls = pluginVersionChecksEntityDao.SelectPluginVersionCheckUrls(pluginId).ToList();
             }
 
-            var newVersionItem = await newVersionChecker.CheckPluginNewVersionAsync(pluginId, pluginVersion, urls);
+            var newVersionItem = await newVersionChecker.CheckPluginNewVersionAsync(apiConfiguration.ServerPluginInformation, pluginId, pluginVersion, urls);
             if(newVersionItem is null) {
                 return false;
             }

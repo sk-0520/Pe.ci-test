@@ -47,4 +47,10 @@
     <ProjectReference Include="..\Pe.Main\Pe.Main.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="**\*.config\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

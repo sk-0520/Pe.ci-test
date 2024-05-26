@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region property
 
         /// <summary>
-        /// 許可された。
+        /// 許可されたか。
         /// </summary>
         public bool Accepted { get; }
         /// <summary>

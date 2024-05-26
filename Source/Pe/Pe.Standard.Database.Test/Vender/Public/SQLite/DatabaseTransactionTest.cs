@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
-using ContentTypeTextNet.Pe.Standard.Database.Test.TestImpl.Vender.Public.SQLite;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
@@ -14,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database.Test.Vender.Public.SQLite
     {
         public DatabaseTransactionTest()
         {
-            var factory = new TestSqliteFactory();
+            var factory = new InMemorySqliteFactory();
             DatabaseAccessor = new SqliteAccessor(factory, NullLoggerFactory.Instance);
 
             var logger = NullLoggerFactory.Instance.CreateLogger(nameof(DatabaseAccessorTest));

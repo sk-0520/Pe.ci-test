@@ -218,7 +218,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             return GetDataReader(null, statement, parameter);
         }
 
-        public Task<IDataReader> GetDataReaderAsync(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
+        public Task<IDataReader> GetDataReaderAsync(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
@@ -363,7 +363,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         }
 
         /// <inheritdoc cref="IDatabaseAccessor.QueryAsync{T}(IDatabaseTransaction?, string, object?, bool, CancellationToken)"/>
-        public virtual async Task<IEnumerable<T>> QueryAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken)
+        public virtual async Task<IEnumerable<T>> QueryAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
@@ -416,7 +416,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         }
 
         /// <inheritdoc cref="IDatabaseAccessor.QueryAsync{T}(IDatabaseTransaction?, string, object?, bool, CancellationToken)"/>
-        public virtual async Task<IEnumerable<dynamic>> QueryAsync(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken)
+        public virtual async Task<IEnumerable<dynamic>> QueryAsync(IDatabaseTransaction? transaction, string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
@@ -468,7 +468,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             return QueryFirst<T>(null, statement, parameter);
         }
 
-        public virtual async Task<T> QueryFirstAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
+        public virtual async Task<T> QueryFirstAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
@@ -488,7 +488,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             return result;
         }
 
-        public virtual Task<T> QueryFirstAsync<T>(string statement, object? parameter, CancellationToken cancellationToken)
+        public virtual Task<T> QueryFirstAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
@@ -497,7 +497,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
 
         [return: MaybeNull]
-        public virtual T QueryFirstOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
+        public virtual T QueryFirstOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
@@ -596,7 +596,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         }
 
         [return: MaybeNull]
-        public virtual T QuerySingleOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
+        public virtual T QuerySingleOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
@@ -611,14 +611,14 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         }
 
         [return: MaybeNull]
-        public virtual T QuerySingleOrDefault<T>(string statement, object? parameter)
+        public virtual T QuerySingleOrDefault<T>(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
             return QuerySingleOrDefault<T>(null, statement, parameter);
         }
 
-        public virtual async Task<T?> QuerySingleOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
+        public virtual async Task<T?> QuerySingleOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
@@ -638,14 +638,14 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             return result;
         }
 
-        public virtual Task<T?> QuerySingleOrDefaultAsync<T>(string statement, object? parameter, CancellationToken cancellationToken = default)
+        public virtual Task<T?> QuerySingleOrDefaultAsync<T>(string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
             return QuerySingleOrDefaultAsync<T>(null, statement, parameter, cancellationToken);
         }
 
-        public virtual int Execute(IDatabaseTransaction? transaction, string statement, object? parameter)
+        public virtual int Execute(IDatabaseTransaction? transaction, string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
@@ -666,7 +666,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             return Execute(null, statement, parameter);
         }
 
-        public virtual async Task<int> ExecuteAsync(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken)
+        public virtual async Task<int> ExecuteAsync(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 

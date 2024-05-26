@@ -8,6 +8,7 @@ using System.Transactions;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao;
 using ContentTypeTextNet.Pe.Standard.Database;
+using Microsoft.Extensions.Logging;
 using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
@@ -181,11 +182,17 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
         class Adao: ApplicationDatabaseObjectBase
         {
             public Adao()
-                : base(new Dc(), new Dsl(), new Di(), Test.LoggerFactory)
+                : base(new Dc(), new Dsl(), new Di(), new LoggerFactory())
             { }
 
             public int ToInt_Public(long v) => base.ToInt(v);
         }
+
+        #endregion
+
+        #region property
+
+        private Test Test { get; } = Test.Create();
 
         #endregion
 

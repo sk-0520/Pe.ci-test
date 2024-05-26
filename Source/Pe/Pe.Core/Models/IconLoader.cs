@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models.Unmanaged;
+using ContentTypeTextNet.Pe.Core.Models.Unmanaged.Gdi;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;

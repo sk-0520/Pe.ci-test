@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 
@@ -21,6 +22,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 
         #region property
 
+        public IntPtr Heap => this.handle;
+
         /// <summary>
         /// 確保サイズ。
         /// </summary>
@@ -29,6 +32,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
         #endregion
 
         #region function
+
+        //private void ThrowIfDisposed()
+        //{
+        //    ObjectDisposedException.ThrowIf(IsInvalid, this);
+        //}
 
         public static GlobalAlloc Create<T>()
         {
@@ -54,6 +62,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
         {
             Marshal.FreeHGlobal(this.handle);
             return true;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if(!IsInvalid) {
+                this.handle = IntPtr.Zero;
+            }
         }
 
         #endregion

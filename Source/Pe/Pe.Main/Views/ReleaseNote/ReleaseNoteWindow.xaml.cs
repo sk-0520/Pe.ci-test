@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
         [Inject]
         private EnvironmentParameters EnvironmentParameters { get; set; } = default!;
         [Inject]
-        private CultureService CultureService { get; set; } = default!;
+        private ICultureService CultureService { get; set; } = default!;
 
         #endregion
 

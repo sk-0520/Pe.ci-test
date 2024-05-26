@@ -14,32 +14,24 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         public void ThrowIf_Target_Test()
         {
             Assert.Throws<NullReferenceException>(() => Throws.ThrowIf<NullReferenceException>(false));
-            Throws.ThrowIf<NullReferenceException>(true);
-            Assert.True(true);
+            var exception1 = Record.Exception(() => Throws.ThrowIf<NullReferenceException>(true));
+            Assert.Null(exception1);
 
             Assert.Throws<NotImplementedException>(() => Throws.ThrowIf<NotImplementedException>(false));
-            Throws.ThrowIf<NotImplementedException>(true);
-            Assert.True(true);
+            var exception2 = Record.Exception(() => Throws.ThrowIf<NotImplementedException>(true));
+            Assert.Null(exception2);
         }
 
         [Fact]
         public void ThrowIf_Default_Test()
         {
-            try {
-                Throws.ThrowIf(1 == 0);
-                Assert.Fail();
-            } catch(LogicException ex) {
-                Assert.Equal("1 == 0", ex.Message);
-            }
+            var exception1 = Assert.Throws<LogicException>(() => Throws.ThrowIf<LogicException>(1 == 0));
+            Assert.Equal("1 == 0", exception1.Message);
 
-            try {
-                var a = 1;
-                var b = 0;
-                Throws.ThrowIf(a == b);
-                Assert.Fail();
-            } catch(LogicException ex) {
-                Assert.Equal("a == b", ex.Message);
-            }
+            var a = 1;
+            var b = 0;
+            var exception2 = Assert.Throws<LogicException>(() => Throws.ThrowIf<LogicException>(a == b));
+            Assert.Equal("a == b", exception2.Message);
         }
 
         [Fact]
@@ -53,6 +45,9 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         public void ThrowIfNull_Default_Test()
         {
             Assert.Throws<LogicException>(() => Throws.ThrowIfNull(default(object)));
+
+            var exception = Record.Exception(() => Throws.ThrowIfNull<object>(new object()));
+            Assert.Null(exception);
         }
 
         [Fact]
@@ -62,13 +57,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.Throws<NullReferenceException>(() => Throws.ThrowIfNullOrEmpty<NullReferenceException>(""));
             Throws.ThrowIfNullOrEmpty<NullReferenceException>(" ");
             Throws.ThrowIfNullOrEmpty<NullReferenceException>("a");
-            Assert.True(true);
 
             Assert.Throws<NotImplementedException>(() => Throws.ThrowIfNullOrEmpty<NotImplementedException>(default));
             Assert.Throws<NotImplementedException>(() => Throws.ThrowIfNullOrEmpty<NotImplementedException>(""));
             Throws.ThrowIfNullOrEmpty<NotImplementedException>(" ");
             Throws.ThrowIfNullOrEmpty<NotImplementedException>("a");
-            Assert.True(true);
         }
 
         [Fact]
@@ -78,13 +71,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.Throws<NullReferenceException>(() => Throws.ThrowIfNullOrWhiteSpace<NullReferenceException>(""));
             Assert.Throws<NullReferenceException>(() => Throws.ThrowIfNullOrWhiteSpace<NullReferenceException>(" "));
             Throws.ThrowIfNullOrWhiteSpace<NullReferenceException>("a");
-            Assert.True(true);
 
             Assert.Throws<NotImplementedException>(() => Throws.ThrowIfNullOrWhiteSpace<NotImplementedException>(default));
             Assert.Throws<NotImplementedException>(() => Throws.ThrowIfNullOrWhiteSpace<NotImplementedException>(""));
             Assert.Throws<NotImplementedException>(() => Throws.ThrowIfNullOrWhiteSpace<NotImplementedException>(" "));
             Throws.ThrowIfNullOrWhiteSpace<NotImplementedException>("a");
-            Assert.True(true);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ContentTypeTextNet.Pe.Standard.Database
 {
     [Serializable]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public class DatabaseException: Exception
     {
         /// <inheritdoc cref="Exception()"/>
@@ -21,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
     }
 
     [Serializable]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public class DatabaseStatementException: DatabaseException
     {
         /// <inheritdoc cref="DatabaseException()"/>
@@ -36,6 +38,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
     }
 
     [Serializable]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public class DatabaseManipulationException: DatabaseException
     {
         /// <inheritdoc cref="DatabaseException()"/>

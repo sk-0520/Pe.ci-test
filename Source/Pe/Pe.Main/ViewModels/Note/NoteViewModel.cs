@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, NoteConfiguration noteConfiguration, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, ApplicationConfiguration applicationConfiguration, IOrderManager orderManager, IClipboardManager clipboardManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, NoteConfiguration noteConfiguration, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, ApplicationConfiguration applicationConfiguration, IOrderManager orderManager, ICultureService cultureService,  IClipboardManager clipboardManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
             NoteConfiguration = noteConfiguration;
@@ -82,6 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PlatformTheme = platformTheme;
             ApplicationConfiguration = applicationConfiguration;
             OrderManager = orderManager;
+            CultureService = cultureService;
             ClipboardManager = clipboardManager;
 
             PlatformTheme.Changed += PlatformTheme_Changed;
@@ -138,6 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private IGeneralTheme GeneralTheme { get; }
         private IPlatformTheme PlatformTheme { get; }
         private IOrderManager OrderManager { get; }
+        private ICultureService CultureService { get; }
         private IClipboardManager ClipboardManager { get; }
         private PropertyChangedHooker PropertyChangedHooker { get; }
 
@@ -492,8 +494,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 return TextUtility.ReplaceFromDictionary(
                     Properties.Resources.String_Note_KindChanging_Change_Format,
                     new Dictionary<string, string>() {
-                        ["FROM-KIND"] = CultureService.Instance.GetString(ContentKind, Models.ResourceNameKind.Normal),
-                        ["TO-KIND"] = CultureService.Instance.GetString(ChangingContentKind, Models.ResourceNameKind.Normal),
+                        ["FROM-KIND"] = CultureService.GetString(ContentKind, Models.ResourceNameKind.Normal),
+                        ["TO-KIND"] = CultureService.GetString(ChangingContentKind, Models.ResourceNameKind.Normal),
                     }
                 );
             }

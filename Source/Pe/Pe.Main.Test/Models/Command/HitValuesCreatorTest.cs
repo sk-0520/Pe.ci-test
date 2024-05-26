@@ -7,6 +7,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Command
 {
     public class HitValuesCreatorTest
     {
+        #region property
+
+        private Test Test { get; } = Test.Create();
+
+        #endregion
+
         #region function
 
         [Theory]

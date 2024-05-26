@@ -18,11 +18,79 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models
         #region function
 
         [Fact]
+        public async Task GetAsyncTest()
+        {
+            var mock = new Mock<IHttpUserAgent>();
+            mock
+                .Setup(a => a.SendAsync(It.Is<HttpRequestMessage>(a => a.Method == HttpMethod.Get), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => {
+                    return new HttpResponseMessage {
+                        StatusCode = HttpStatusCode.OK,
+                        Content = new StreamContent(new MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }))
+                    };
+                })
+            ;
+            var actual = await mock.Object.GetAsync(default!);
+            Assert.Equal(HttpStatusCode.OK, actual.StatusCode);
+        }
+
+        [Fact]
+        public async Task PostAsyncTest()
+        {
+            var mock = new Mock<IHttpUserAgent>();
+            mock
+                .Setup(a => a.SendAsync(It.Is<HttpRequestMessage>(a => a.Method == HttpMethod.Post), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => {
+                    return new HttpResponseMessage {
+                        StatusCode = HttpStatusCode.OK,
+                        Content = new StreamContent(new MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }))
+                    };
+                })
+            ;
+            var actual = await mock.Object.PostAsync(default!, default!);
+            Assert.Equal(HttpStatusCode.OK, actual.StatusCode);
+        }
+
+        [Fact]
+        public async Task PutAsyncTest()
+        {
+            var mock = new Mock<IHttpUserAgent>();
+            mock
+                .Setup(a => a.SendAsync(It.Is<HttpRequestMessage>(a => a.Method == HttpMethod.Put), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => {
+                    return new HttpResponseMessage {
+                        StatusCode = HttpStatusCode.OK,
+                        Content = new StreamContent(new MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }))
+                    };
+                })
+            ;
+            var actual = await mock.Object.PutAsync(default!, default!);
+            Assert.Equal(HttpStatusCode.OK, actual.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteAsyncTest()
+        {
+            var mock = new Mock<IHttpUserAgent>();
+            mock
+                .Setup(a => a.SendAsync(It.Is<HttpRequestMessage>(a => a.Method == HttpMethod.Delete), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => {
+                    return new HttpResponseMessage {
+                        StatusCode = HttpStatusCode.OK,
+                        Content = new StreamContent(new MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }))
+                    };
+                })
+            ;
+            var actual = await mock.Object.DeleteAsync(default!, default!);
+            Assert.Equal(HttpStatusCode.OK, actual.StatusCode);
+        }
+
+        [Fact]
         public async Task GetStringAsyncTest()
         {
             var mock = new Mock<IHttpUserAgent>();
             mock
-                .Setup(a => a.GetAsync(It.IsAny<Uri>(), It.IsAny<CancellationToken>()))
+                .Setup(a => a.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => {
                     return new HttpResponseMessage {
                         StatusCode = HttpStatusCode.OK,
@@ -39,11 +107,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models
         {
             var mock = new Mock<IHttpUserAgent>();
             mock
-                .Setup(a => a.GetAsync(It.IsAny<Uri>(), It.IsAny<CancellationToken>()))
+                .Setup(a => a.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => {
                     return new HttpResponseMessage {
                         StatusCode = HttpStatusCode.OK,
-                        Content = new StreamContent(new MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9}))
+                        Content = new StreamContent(new MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }))
                     };
                 })
             ;
@@ -58,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models
         {
             var mock = new Mock<IHttpUserAgent>();
             mock
-                .Setup(a => a.GetAsync(It.IsAny<Uri>(), It.IsAny<CancellationToken>()))
+                .Setup(a => a.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => {
                     return new HttpResponseMessage {
                         StatusCode = HttpStatusCode.OK,

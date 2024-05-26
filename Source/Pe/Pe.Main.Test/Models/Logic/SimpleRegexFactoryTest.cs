@@ -5,6 +5,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
 {
     public class SimpleRegexFactoryTest
     {
+        #region property
+
+        private Test Test { get; } = Test.Create();
+
+        #endregion
+
         #region function
 
         [Theory]

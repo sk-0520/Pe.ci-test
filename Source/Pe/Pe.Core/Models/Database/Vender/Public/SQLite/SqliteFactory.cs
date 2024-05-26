@@ -9,7 +9,7 @@ using ContentTypeTextNet.Pe.Standard.Database;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 {
-    public abstract class SqliteFactory: IDatabaseFactory
+    public abstract class SqliteFactoryBase: IDatabaseFactory
     {
         #region function
 
@@ -43,6 +43,34 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 
         #endregion
     }
+
+    public class ConnectionStringSqliteFactory: SqliteFactoryBase
+    {
+        #region property
+
+        protected string ConnectionString { get; set; } = string.Empty;
+
+        #endregion
+
+        #region IDatabaseFactory
+
+        public override IDbConnection CreateConnection() => new SQLiteConnection(ConnectionString);
+
+        #endregion
+    }
+
+    public sealed class InMemorySqliteFactory: ConnectionStringSqliteFactory
+    {
+        public InMemorySqliteFactory()
+        {
+            var builder = CreateConnectionBuilder();
+            builder.DataSource = ":memory:";
+            builder.ForeignKeys = true;
+
+            ConnectionString = builder.ToString();
+        }
+    }
+
 }
 
 #endif

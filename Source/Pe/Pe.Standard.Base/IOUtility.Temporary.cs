@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
     [Serializable]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public class TemporaryException: Exception
     {
         public TemporaryException()

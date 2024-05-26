@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.Serialization;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {

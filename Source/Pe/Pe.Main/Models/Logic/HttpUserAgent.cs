@@ -84,30 +84,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             Interlocked.Increment(ref this._referenceCount);
         }
 
-        private Task<HttpResponseMessage> GetCoreAsync(Uri requestUri, CancellationToken cancellationToken)
-        {
-            Stopwatch.Restart();
-            return HttpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
-        }
-
-        private Task<HttpResponseMessage> PostCoreAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken)
-        {
-            Stopwatch.Restart();
-            return HttpClient.PostAsync(requestUri, content, cancellationToken);
-        }
-
-        private Task<HttpResponseMessage> PutCoreAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken)
-        {
-            Stopwatch.Restart();
-            return HttpClient.PutAsync(requestUri, content, cancellationToken);
-        }
-
-        private Task<HttpResponseMessage> DeleteCoreAsync(Uri requestUri, CancellationToken cancellationToken)
-        {
-            Stopwatch.Restart();
-            return HttpClient.DeleteAsync(requestUri, cancellationToken);
-        }
-
         private Task<HttpResponseMessage> SendCoreAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             Stopwatch.Restart();
@@ -134,49 +110,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region IUserAgent
 
-        public Task<HttpResponseMessage> GetAsync(Uri requestUri, CancellationToken cancellationToken)
-        {
-            return GetCoreAsync(requestUri, cancellationToken);
-        }
-        public Task<HttpResponseMessage> GetAsync(Uri requestUri)
-        {
-            return GetCoreAsync(requestUri, CancellationToken.None);
-        }
-
-        public Task<HttpResponseMessage> PostAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken)
-        {
-            return PostCoreAsync(requestUri, content, cancellationToken);
-        }
-        public Task<HttpResponseMessage> PostAsync(Uri requestUri, HttpContent content)
-        {
-            return PostCoreAsync(requestUri, content, CancellationToken.None);
-        }
-
-        public Task<HttpResponseMessage> PutAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken)
-        {
-            return PutCoreAsync(requestUri, content, cancellationToken);
-        }
-        public Task<HttpResponseMessage> PutAsync(Uri requestUri, HttpContent content)
-        {
-            return PutCoreAsync(requestUri, content, CancellationToken.None);
-        }
-
-        public Task<HttpResponseMessage> DeleteAsync(Uri requestUri, CancellationToken cancellationToken)
-        {
-            return DeleteCoreAsync(requestUri, cancellationToken);
-        }
-        public Task<HttpResponseMessage> DeleteAsync(Uri requestUri)
-        {
-            return DeleteCoreAsync(requestUri, CancellationToken.None);
-        }
-
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
         {
             return SendCoreAsync(request, cancellationToken);
-        }
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
-        {
-            return SendCoreAsync(request, CancellationToken.None);
         }
 
         #endregion

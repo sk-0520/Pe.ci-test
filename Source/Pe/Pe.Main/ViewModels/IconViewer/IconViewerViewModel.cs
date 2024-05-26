@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
             IconImageLoader.PropertyChanged += Model_PropertyChanged;
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddHook(nameof(RunningStatus), nameof(RunningStatus), nameof(ImageSource));
+            PropertyChangedHooker.AddHook(nameof(RunningStatus), new string[] { nameof(RunningStatus), nameof(ImageSource) });
         }
 
         public IconViewerViewModel(LauncherItemId launcherItemId, ILauncherItemExtension launcherItemExtension, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)

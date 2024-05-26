@@ -17,56 +17,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         #region function
 
         /// <summary>
-        /// HTTP GET 要求。
-        /// </summary>
-        /// <param name="requestUri"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>HTTP 応答。</returns>
-        Task<HttpResponseMessage> GetAsync(Uri requestUri, CancellationToken cancellationToken);
-        /// <inheritdoc cref="GetAsync(Uri, CancellationToken)"/>
-        Task<HttpResponseMessage> GetAsync(Uri requestUri);
-
-        /// <summary>
-        /// HTTP POST 要求。
-        /// </summary>
-        /// <param name="requestUri"></param>
-        /// <param name="content"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>HTTP 応答。</returns>
-        Task<HttpResponseMessage> PostAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken);
-        /// <inheritdoc cref="PostAsync(Uri, HttpContent, CancellationToken)"/>
-        Task<HttpResponseMessage> PostAsync(Uri requestUri, HttpContent content);
-
-        /// <summary>
-        /// HTTP PUT 要求。
-        /// </summary>
-        /// <param name="requestUri"></param>
-        /// <param name="content"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>HTTP 応答。</returns>
-        Task<HttpResponseMessage> PutAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken);
-        /// <inheritdoc cref="PutAsync(Uri, HttpContent, CancellationToken)"/>
-        Task<HttpResponseMessage> PutAsync(Uri requestUri, HttpContent content);
-
-        /// <summary>
-        /// HTTP DELETE 要求。
-        /// </summary>
-        /// <param name="requestUri"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>HTTP 応答。</returns>
-        Task<HttpResponseMessage> DeleteAsync(Uri requestUri, CancellationToken cancellationToken);
-        /// <inheritdoc cref="DeleteAsync(Uri, CancellationToken)"/>
-        Task<HttpResponseMessage> DeleteAsync(Uri requestUri);
-
-        /// <summary>
         /// HTTP 要求。
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>HTTP 応答。</returns>
-        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken);
-        /// <inheritdoc cref="SendAsync(HttpRequestMessage, CancellationToken)"/>
-        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request);
+        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default);
 
         #endregion
     }
@@ -76,21 +32,66 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         #region function
 
         /// <summary>
+        /// HTTP GET 要求。
+        /// </summary>
+        /// <param name="requestUri"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>HTTP 応答。</returns>
+        public static Task<HttpResponseMessage> GetAsync(this IHttpUserAgent httpUserAgent, Uri requestUri, CancellationToken cancellationToken = default)
+        {
+            return httpUserAgent.SendAsync(new HttpRequestMessage(HttpMethod.Get, requestUri), cancellationToken);
+        }
+
+        /// <summary>
+        /// HTTP POST 要求。
+        /// </summary>
+        /// <param name="requestUri"></param>
+        /// <param name="content"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>HTTP 応答。</returns>
+        public static Task<HttpResponseMessage> PostAsync(this IHttpUserAgent httpUserAgent, Uri requestUri, HttpContent content, CancellationToken cancellationToken = default)
+        {
+            return httpUserAgent.SendAsync(new HttpRequestMessage(HttpMethod.Post, requestUri) { Content = content }, cancellationToken);
+        }
+
+        /// <summary>
+        /// HTTP PUT 要求。
+        /// </summary>
+        /// <param name="requestUri"></param>
+        /// <param name="content"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>HTTP 応答。</returns>
+        public static Task<HttpResponseMessage> PutAsync(this IHttpUserAgent httpUserAgent, Uri requestUri, HttpContent content, CancellationToken cancellationToken = default)
+        {
+            return httpUserAgent.SendAsync(new HttpRequestMessage(HttpMethod.Put, requestUri) { Content = content }, cancellationToken);
+        }
+
+        /// <summary>
+        /// HTTP DELETE 要求。
+        /// </summary>
+        /// <param name="requestUri"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>HTTP 応答。</returns>
+        public static Task<HttpResponseMessage> DeleteAsync(this IHttpUserAgent httpUserAgent, Uri requestUri, CancellationToken cancellationToken = default)
+        {
+            return httpUserAgent.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri), cancellationToken);
+        }
+
+
+        /// <summary>
         /// 簡易 GET 文字列要求。
         /// </summary>
         /// <param name="httpUserAgent"></param>
         /// <param name="requestUri"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>HTTP 応答 文字列本文。</returns>
-        public static Task<string> GetStringAsync(this IHttpUserAgent httpUserAgent, Uri requestUri, CancellationToken cancellationToken)
+        public static Task<string> GetStringAsync(this IHttpUserAgent httpUserAgent, Uri requestUri, CancellationToken cancellationToken = default)
         {
             return httpUserAgent.GetAsync(requestUri, cancellationToken).ContinueWith(t => {
                 cancellationToken.ThrowIfCancellationRequested();
                 return t.Result.Content.ReadAsStringAsync(cancellationToken);
             }, cancellationToken).Unwrap();
         }
-        /// <inheritdoc cref="GetStringAsync(IHttpUserAgent, Uri, CancellationToken)"/>
-        public static Task<string> GetStringAsync(this IHttpUserAgent httpUserAgent, Uri requestUri) => GetStringAsync(httpUserAgent, requestUri, CancellationToken.None);
 
         /// <summary>
         /// 簡易 GET <see cref="Stream"/>要求。
@@ -99,16 +100,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <param name="requestUri"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>HTTP 応答 <see cref="Stream"/>本文。</returns>
-        public static Task<Stream> GetStreamAsync(this IHttpUserAgent httpUserAgent, Uri requestUri, CancellationToken cancellationToken)
+        public static Task<Stream> GetStreamAsync(this IHttpUserAgent httpUserAgent, Uri requestUri, CancellationToken cancellationToken = default)
         {
             return httpUserAgent.GetAsync(requestUri, cancellationToken).ContinueWith(t => {
                 cancellationToken.ThrowIfCancellationRequested();
                 return t.Result.Content.ReadAsStreamAsync(cancellationToken);
             }, cancellationToken).Unwrap();
         }
-        /// <inheritdoc cref="GetStreamAsync(IHttpUserAgent, Uri, CancellationToken)"/>
-        public static Task<Stream> GetStreamAsync(this IHttpUserAgent httpUserAgent, Uri requestUri)
-            => GetStreamAsync(httpUserAgent, requestUri, CancellationToken.None);
 
         /// <summary>
         /// 簡易 GET byte配列要求。
@@ -117,16 +115,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <param name="requestUri"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>HTTP 応答 byte配列本文。</returns>
-        public static Task<byte[]> GetByteArrayAsync(this IHttpUserAgent httpUserAgent, Uri requestUri, CancellationToken cancellationToken)
+        public static Task<byte[]> GetByteArrayAsync(this IHttpUserAgent httpUserAgent, Uri requestUri, CancellationToken cancellationToken = default)
         {
             return httpUserAgent.GetAsync(requestUri, cancellationToken).ContinueWith(t => {
                 cancellationToken.ThrowIfCancellationRequested();
                 return t.Result.Content.ReadAsByteArrayAsync(cancellationToken);
             }, cancellationToken).Unwrap();
         }
-        /// <inheritdoc cref="GetByteArrayAsync(IHttpUserAgent, Uri, CancellationToken)"/>
-        public static Task<byte[]> GetByteArrayAsync(this IHttpUserAgent httpUserAgent, Uri requestUri)
-            => GetByteArrayAsync(httpUserAgent, requestUri, CancellationToken.None);
 
         #endregion
     }

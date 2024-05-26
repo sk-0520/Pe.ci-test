@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows.Markup;
 using ContentTypeTextNet.Pe.Main.Models;
 
@@ -8,6 +9,12 @@ namespace ContentTypeTextNet.Pe.Main
 {
     public interface ICultureService
     {
+        #region property
+
+        CultureInfo Culture { get; }
+
+        #endregion
+
         #region function
 
         /// <summary>
@@ -28,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main
         #endregion
     }
 
-    public sealed class CultureService: INotifyPropertyChanged
+    public sealed class CultureService: ICultureService, INotifyPropertyChanged
     {
         #region event
 
@@ -53,8 +60,6 @@ namespace ContentTypeTextNet.Pe.Main
         public static CultureService Instance { get; private set; } = null!;
 
         public Properties.Resources Resources { get; } = new Properties.Resources();
-
-        public CultureInfo Culture => Properties.Resources.Culture;
 
         #endregion
 
@@ -109,6 +114,9 @@ namespace ContentTypeTextNet.Pe.Main
         #endregion
 
         #region ICultureService
+
+        public CultureInfo Culture => Properties.Resources.Culture;
+
 
         public XmlLanguage GetXmlLanguage() => XmlLanguage.GetLanguage(Culture.IetfLanguageTag);
 

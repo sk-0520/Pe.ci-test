@@ -2,6 +2,7 @@ using System;
 
 namespace ContentTypeTextNet.Pe.Standard.Database
 {
+    // これもういわらんわ
     public static class IDatabaseBarrierExtensions
     {
         #region function

@@ -240,7 +240,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return !file.Exists;
         }
 
-        private async Task<AcceptResult> ShowAcceptViewAsync(IDiScopeContainerFactory scopeContainerCreator, EnvironmentParameters environmentParameters, ILoggerFactory? loggerFactory)
+        private async Task<AcceptResult> ShowAcceptViewAsync(IDiScopeContainerFactory scopeContainerCreator, EnvironmentParameters environmentParameters, ICultureService cultureService, ILoggerFactory? loggerFactory)
         {
             using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
                 if(loggerFactory != null) {
@@ -253,7 +253,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     .Register<ApplicationConfiguration, ApplicationConfiguration>(environmentParameters.ApplicationConfiguration)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModels.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
                 ;
-                using(var windowManager = new WindowManager(diContainer, CultureService.Instance, diContainer.Get<ILoggerFactory>())) {
+                using(var windowManager = new WindowManager(diContainer, cultureService, diContainer.Get<ILoggerFactory>())) {
                     using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
                     await acceptModel.InitializeAsync();
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
@@ -407,6 +407,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register(environmentParameters.ApplicationConfiguration.Command)
                 .Register(environmentParameters.ApplicationConfiguration.Platform)
                 .Register(environmentParameters.ApplicationConfiguration.Schedule)
+                .Register<IApplicationInformation>(new ApplicationInformation(BuildStatus.Version, ProcessArchitecture.ApplicationArchitecture))
 
                 .Register<PluginContextFactory>(DiLifecycle.Transient)
                 .Register<PreferencesContextFactory>(DiLifecycle.Transient)
@@ -416,6 +417,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
                 .Register<IDispatcherWrapper, IDispatcherWrapper>(DiLifecycle.Transient, () => new ApplicationDispatcherWrapper(environmentParameters.ApplicationConfiguration.General.DispatcherWait))
                 .Register(cultureService)
+                .Register<ICultureService>(cultureService)
                 .Register<IViewManager, ViewManager>(DiLifecycle.Transient)
                 .Register<IImageLoader, ImageLoader>(DiLifecycle.Transient)
                 .Register<IMediaConverter, MediaConverter>(DiLifecycle.Transient)
@@ -435,9 +437,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return container;
         }
 
-        private WindowManager SetupWindowManager(IDiRegisterContainer diContainer)
+        private WindowManager SetupWindowManager(IDiRegisterContainer diContainer, ICultureService cultureService)
         {
-            var manager = diContainer.Build<WindowManager>(CultureService.Instance);
+            var manager = diContainer.Build<WindowManager>(cultureService);
 
             return manager;
         }
@@ -582,7 +584,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     logger.LogInformation("初回実行");
                     if(!skipAccept) {
                         // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                        acceptResult = await ShowAcceptViewAsync(new DiContainer(false), environmentParameters, loggerFactory);
+                        acceptResult = await ShowAcceptViewAsync(new DiContainer(false), environmentParameters, cultureService, loggerFactory);
                         if(!acceptResult.Accepted) {
                             // 初回の使用許諾を得られなかったのでばいちゃ
                             logger.LogInformation("使用許諾得られず");
@@ -641,7 +643,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 databaseSetupper.Adjust(DiContainer.Build<IDatabaseAccessorPack>(), lastVersion);
             }
 
-            WindowManager = SetupWindowManager(DiContainer);
+            WindowManager = SetupWindowManager(DiContainer, cultureService);
             //OrderManager = SetupOrderManager(DiContainer);
             NotifyManager = SetupNotifyManager(DiContainer);
             StatusManager = SetupStatusManager(DiContainer);

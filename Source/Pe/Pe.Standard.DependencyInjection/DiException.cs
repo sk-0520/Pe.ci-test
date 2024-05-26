@@ -9,6 +9,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
     /// <para>内部的に <see cref="ArgumentException"/> 等を投げる場合はわざわざラップしないのでこの例外だけ受ければ良いという話ではない。</para>
     /// </remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3925:\"ISerializable\" should be implemented correctly")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public sealed class DiException: ApplicationException
     {
         public DiException()

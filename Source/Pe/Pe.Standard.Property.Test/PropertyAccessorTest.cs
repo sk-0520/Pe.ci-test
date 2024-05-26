@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Property.Test
@@ -49,6 +49,13 @@ namespace ContentTypeTextNet.Pe.Standard.Property.Test
                 Assert.Equal(100, gsi1);
             }
 
+        }
+
+        [Fact]
+        public void Constructor_throw_Test()
+        {
+            var obj = new Get();
+            Assert.Throws<PropertyNotFoundException>(() => new PropertyAccessor(obj, "NotFoundProperty"));
         }
 
         #endregion

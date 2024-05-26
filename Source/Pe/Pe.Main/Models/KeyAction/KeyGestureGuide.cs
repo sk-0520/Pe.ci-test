@@ -28,12 +28,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
     internal class KeyGestureGuide: IKeyGestureGuide
     {
-        public KeyGestureGuide(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public KeyGestureGuide(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ICultureService cultureService, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             MainDatabaseBarrier = mainDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
+            CultureService = cultureService;
         }
 
         #region property
@@ -45,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         private IMainDatabaseBarrier MainDatabaseBarrier { get; }
         private IDatabaseStatementLoader DatabaseStatementLoader { get; }
-
+        private ICultureService CultureService { get; }
         #endregion
 
         #region function
@@ -54,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         {
             var factory = new KeyMappingFactory();
 
-            var keyMessages = keyGestureItem.Mappings.Select(i => factory.ToString(CultureService.Instance, i, Properties.Resources.String_Hook_Keyboard_Join));
+            var keyMessages = keyGestureItem.Mappings.Select(i => factory.ToString(CultureService, i, Properties.Resources.String_Hook_Keyboard_Join));
             var keyMessage = string.Join(Properties.Resources.String_Hook_Keyboard_Separator, keyMessages);
 
             return keyMessage;

@@ -13,6 +13,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// 別段指定しない<see cref="Throws"/>処理で継続できない場合に投げられる例外。
     /// </summary>
     [Serializable]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public sealed class LogicException: Exception
     {
         public LogicException()
@@ -45,20 +46,20 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 指定値が偽の場合、例外を投げる。
         /// </summary>
         /// <typeparam name="TException">投げられる例外。</typeparam>
-        /// <param name="value">真偽値。</param>
+        /// <param name="isThrow">真偽値。</param>
         /// <param name="callerArgument"></param>
-        public static void ThrowIf<TException>(bool value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
+        public static void ThrowIf<TException>(bool isThrow, [CallerArgumentExpression(nameof(isThrow))] string callerArgument = "")
             where TException : Exception
         {
-            if(!value) {
+            if(!isThrow) {
                 ThrowCore<TException>(callerArgument);
             }
         }
 
         /// <inheritdoc cref="ThrowIf{LogicException}"/>
         /// <exception cref="LogicException"></exception>
-        public static void ThrowIf(bool value, [CallerArgumentExpression(nameof(value))] string callerArgument = "")
-            => ThrowIf<LogicException>(value, callerArgument);
+        public static void ThrowIf(bool isThrow, [CallerArgumentExpression(nameof(isThrow))] string callerArgument = "")
+            => ThrowIf<LogicException>(isThrow, callerArgument);
 
         /// <summary>
         /// 指定値が<see langword="null" />の場合に例外を投げる。

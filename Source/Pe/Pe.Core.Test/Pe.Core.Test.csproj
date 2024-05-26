@@ -34,6 +34,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="..\..\..\Resource\Icon\App-debug.ico" Link="App-debug.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Pe.Core\Pe.Core.csproj" />
     <ProjectReference Include="..\Pe.Standard.DependencyInjection\Pe.Standard.DependencyInjection.csproj" />
   </ItemGroup>

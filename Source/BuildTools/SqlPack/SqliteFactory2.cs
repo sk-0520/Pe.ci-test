@@ -7,7 +7,7 @@ using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
 
 namespace SqlPack
 {
-    public class SqliteFactory2 : SqliteFactory
+    public class SqliteFactory2 : ConnectionStringSqliteFactory
     {
         public SqliteFactory2(string databasePath)
         {

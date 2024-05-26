@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
     public class WindowManager: ManagerBase, IWindowManager
     {
-        public WindowManager(IDiContainer diContainer, CultureService cultureService, ILoggerFactory loggerFactory)
+        public WindowManager(IDiContainer diContainer, ICultureService cultureService, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             CultureService = cultureService;
@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region property
 
-        private CultureService CultureService { get; }
+        private ICultureService CultureService { get; }
         private ApplicationConfiguration ApplicationConfiguration { get; }
 
         private ISet<WindowItem> Items { get; } = new HashSet<WindowItem>();

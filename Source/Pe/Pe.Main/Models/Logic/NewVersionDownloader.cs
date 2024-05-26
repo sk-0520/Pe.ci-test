@@ -9,6 +9,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
@@ -30,6 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         private ApplicationConfiguration ApplicationConfiguration { get; }
         private IUserAgentManager UserAgentManager { get; }
+        internal int ChecksumSize { get; init; } = 1024 * 2;
+        internal int DownloadChunkSize { get; init; } = 1024 * 4;
 
         #endregion
 
@@ -66,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 Logger.LogWarning("ファイルサイズが異なる: ファイル {0}, 定義 {1}", targetFile.Length, updateItem.ArchiveSize);
                 return false;
             }
-            
+
             Logger.LogInformation("ハッシュ: {0}, {1}", updateItem.ArchiveHashKind, updateItem.ArchiveHashValue);
             using(var hashAlgorithm = HashUtility.Create(updateItem.ArchiveHashKind)) {
                 if(hashAlgorithm == null) {
@@ -76,25 +79,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
                 using var stream = targetFile.OpenRead();
 
-                var buffer = new byte[1024 * 4];
+                using var CheckSumBuffer = new ArrayPoolObject<byte>(ChecksumSize);
                 long totalReadSize = 0;
                 while(true) {
-                    var readSize = await stream.ReadAsync(buffer, 0, buffer.Length);
+                    var readSize = await stream.ReadAsync(CheckSumBuffer.Items, 0, CheckSumBuffer.Items.Length);
                     if(readSize == 0) {
                         break;
                     }
-                    hashAlgorithm.TransformBlock(buffer, 0, readSize, buffer, 0);
+                    hashAlgorithm.TransformBlock(CheckSumBuffer.Items, 0, readSize, CheckSumBuffer.Items, 0);
                     totalReadSize += readSize;
                     userNotifyProgress.Report(totalReadSize / (double)updateItem.ArchiveSize, string.Empty);
                 }
-                hashAlgorithm.TransformFinalBlock(buffer, 0, 0);
+                hashAlgorithm.TransformFinalBlock(CheckSumBuffer.Items, 0, 0);
                 var hash = ToCompareValue(BitConverter.ToString(hashAlgorithm.Hash!));
 
                 Logger.LogInformation("算出ハッシュ: {0}", hash);
                 userNotifyProgress.Report(1, hash);
 
                 userNotifyProgress.End();
-
 
                 return hash == ToCompareValue(updateItem.ArchiveHashValue);
             }
@@ -117,34 +119,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
                 //NOTE: long が使えない！
                 int totalDownloadedSize = 0;
-                const int downloadChunkSize = 1024 * 4;
                 var sizePerTime = new SizePerTime(TimeSpan.FromSeconds(1));
 
                 sizePerTime.Start();
 
                 using(var networkStream = await content.Content.ReadAsStreamAsync()) {
-                    using(var localStream = downloadFile.Create()) {
-                        var downloadChunk = new byte[downloadChunkSize];
-                        var sizeConverter = new SizeConverter();
-                        var units = new[] {
+                    using var downloadChunkBuffer = new ArrayPoolObject<byte>(DownloadChunkSize);
+                    using var localStream = downloadFile.Create();
+                    var sizeConverter = new SizeConverter();
+                    var units = new[] {
                             Properties.Resources.String_Download_Seconds_Byte,
                             Properties.Resources.String_Download_Seconds_KB,
                             Properties.Resources.String_Download_Seconds_MB,
                             Properties.Resources.String_Download_Seconds_GB,
                         };
-                        var format = Properties.Resources.String_Download_Seconds_Format_DOTNET;
-                        while(true) {
-                            var downloadSize = await networkStream.ReadAsync(downloadChunk, 0, downloadChunk.Length);
-                            if(0 < downloadSize) {
-                                await localStream.WriteAsync(downloadChunk, 0, downloadSize);
-                                totalDownloadedSize += downloadSize;
-                                sizePerTime.Add(downloadSize);
-                                var size = sizeConverter.ConvertHumanReadableByte(sizePerTime.Size, format, units);
-                                userNotifyProgress.Report(totalDownloadedSize / (double)updateItem.ArchiveSize, size);
-                            } else {
-                                userNotifyProgress.End();
-                                break;
-                            }
+                    var format = Properties.Resources.String_Download_Seconds_Format_DOTNET;
+                    while(true) {
+                        var downloadSize = await networkStream.ReadAsync(downloadChunkBuffer.Items, 0, downloadChunkBuffer.Length);
+                        if(0 < downloadSize) {
+                            await localStream.WriteAsync(downloadChunkBuffer.Items, 0, downloadSize);
+                            totalDownloadedSize += downloadSize;
+                            sizePerTime.Add(downloadSize);
+                            var size = sizeConverter.ConvertHumanReadableByte(sizePerTime.Size, format, units);
+                            userNotifyProgress.Report(totalDownloadedSize / (double)updateItem.ArchiveSize, size);
+                        } else {
+                            userNotifyProgress.End();
+                            break;
                         }
                     }
                 }
