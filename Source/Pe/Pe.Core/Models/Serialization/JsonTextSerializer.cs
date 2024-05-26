@@ -39,13 +39,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Serialization
 
         #region property
 
-        /// <summary>
-        /// <see cref="byte"/>配列使用時のスタック配置サイズ上限。
-        /// </summary>
-        public int StackSize { get; init; } = 512;
-
-        public ArrayPool<byte> ArrayPool { get; init; } = ArrayPool<byte>.Shared;
-
         public JsonReaderOptions ReaderOptions { get; set; } = new JsonReaderOptions() {
             AllowTrailingCommas = true,
             CommentHandling = JsonCommentHandling.Skip,
