@@ -1,69 +1,16 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.231+",
+		"date": "2024/05/26",
+		"version": "0.99.232",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "機能追加・バグ修正なし",
+						"comments": [
+							"ライブラリの更新とコード周りのテスト追加とそれに伴うソース修正"
+						]
 					}
 				]
 			},
@@ -71,22 +18,14 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "9fe24f76eec2f7a8ac48a528775332359142068c",
 						"class": "nuget",
 						"subject": "Microsoft.NET.Test.Sdk 17.9.0 -> 17.10.0"
 					},
 					{
-						"revision": "",
+						"revision": "5d38412fb3a18dfd4ad85065a04ace817b7da669",
 						"class": "nuget",
 						"subject": "xunit 2.8.0 -> 2.8.1"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
