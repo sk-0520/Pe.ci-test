@@ -20,9 +20,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     /// アプリケーション用<see cref="IDatabaseFactory"/>実装。
     /// </summary>
     /// <remarks>
-    /// <para>Peは<see cref="SqliteFactory"/>を継承する。</para>
+    /// <para>Peは<see cref="SqliteFactoryBase"/>を継承する。</para>
     /// </remarks>
-    internal class ApplicationDatabaseFactory: SqliteFactory
+    internal class ApplicationDatabaseFactory: ConnectionStringSqliteFactory
     {
         /// <summary>
         /// インメモリDBとして構築。
@@ -58,15 +58,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             ConnectionString = builder.ToString();
         }
-
-        #region property
-
-        /// <summary>
-        /// 接続文字列。
-        /// </summary>
-        private string ConnectionString { get; }
-
-        #endregion
 
         #region IDatabaseFactory
 

@@ -93,6 +93,7 @@ $reportgenerator = Join-Path -Path $rootDir -ChildPath '_tools' | Join-Path -Chi
 	-sourcedirs:$($sources -join ';') `
 	-targetdir:"$codeCoverageDir" `
 	-assemblyfilters:"$($assemblyfilters -join ';')" `
+	-classfilters:"-*.Properties.Resources" `
 	-reporttypes:Html
 
 if (! $SuppressOpen) {

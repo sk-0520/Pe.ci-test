@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -16,9 +17,12 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
                 return !view.IsEmpty;
             }
 
-            var collection = value as IEnumerable<object>;
+            var collection = value as IEnumerable;
             if(collection != null) {
-                return collection.Any();
+                var enumerator = collection.GetEnumerator();
+                while(enumerator.MoveNext()) {
+                    return true;
+                }
             }
 
             return false;

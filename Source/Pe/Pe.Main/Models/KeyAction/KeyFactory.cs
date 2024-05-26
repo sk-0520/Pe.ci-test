@@ -229,7 +229,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region function
 
-        public string ToString(CultureService cultureService, ModifierKeys key, ModifierKey modifierKey)
+        public string ToString(ICultureService cultureService, ModifierKeys key, ModifierKey modifierKey)
         {
             if(modifierKey == ModifierKey.None) {
                 return string.Empty;
@@ -248,7 +248,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             );
         }
 
-        public string ToString(CultureService cultureService, IReadOnlyKeyMappingData data, string join)
+        public string ToString(ICultureService cultureService, IReadOnlyKeyMappingData data, string join)
         {
             var key = cultureService.GetString(data.Key, ResourceNameKind.Normal, true);
 

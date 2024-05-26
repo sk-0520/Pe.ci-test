@@ -6,6 +6,10 @@
 ![license](https://img.shields.io/github/license/sk-0520/Pe?style=flat)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sk-0520/Pe)
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sk-0520_Pe&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=sk-0520_Pe)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=sk-0520_Pe&metric=bugs)](https://sonarcloud.io/summary/new_code?id=sk-0520_Pe)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=sk-0520_Pe&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=sk-0520_Pe)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=sk-0520_Pe&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=sk-0520_Pe)
 
 Pe は Windows 10 以上で動作するデスクトップユーティリティです。
 

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
@@ -18,11 +19,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
 {
     public class PluginWebInstallElement: ElementBase, IViewShowStarter, IViewCloseReceiver
     {
-        internal PluginWebInstallElement(PluginContainer pluginContainer, EnvironmentParameters environmentParameters, NewVersionChecker newVersionChecker, NewVersionDownloader newVersionDownloader, IHttpUserAgentFactory userAgentFactory, ILoggerFactory loggerFactory)
+        internal PluginWebInstallElement(PluginContainer pluginContainer, EnvironmentParameters environmentParameters, ApiConfiguration apiConfiguration, NewVersionChecker newVersionChecker, NewVersionDownloader newVersionDownloader, IHttpUserAgentFactory userAgentFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             PluginContainer = pluginContainer;
             EnvironmentParameters = environmentParameters;
+            ApiConfiguration = apiConfiguration;
             NewVersionDownloader = newVersionDownloader;
             NewVersionChecker = newVersionChecker;
             UserAgentFactory = userAgentFactory;
@@ -32,6 +34,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
 
         private PluginContainer PluginContainer { get; }
         private EnvironmentParameters EnvironmentParameters { get; }
+        private ApiConfiguration ApiConfiguration { get; }
+
         private NewVersionDownloader NewVersionDownloader { get; }
         private NewVersionChecker NewVersionChecker { get; }
         private IHttpUserAgentFactory UserAgentFactory { get; }
@@ -62,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
         private async Task<Uri> GetCheckUriAsync(string pluginIdOrInfoUrl)
         {
             if(Guid.TryParse(pluginIdOrInfoUrl, out var guid)) {
-                var info = await NewVersionChecker.GetPluginVersionInfoByApiAsync(new PluginId(guid));
+                var info = await NewVersionChecker.GetPluginVersionInfoByApiAsync(ApiConfiguration.ServerPluginInformation, new PluginId(guid));
                 if(info is null) {
                     throw new Exception(Properties.Resources.String_PluginWebInstall_NotFoundByPluginId);
                 }
@@ -89,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
             }
 
             var versionConverter = new VersionConverter();
-            var newVersionItem = NewVersionChecker.GetNewVersionItem(new Version(), updateData.Items);
+            var newVersionItem = NewVersionChecker.GetPluginNewVersionItem(new Version(), updateData.Items);
             if(newVersionItem is null) {
                 throw new Exception(Properties.Resources.String_PluginWebInstall_NewVersionData_NotFound);
             }

@@ -42,22 +42,23 @@ WAIT_TIME_ARG get_wait_time(const COMMAND_LINE_OPTION* command_line_option)
     for (size_t i = 0; i < SIZEOF_ARRAY(wait_keys); i++) {
         const TEXT* wait_key = wait_keys + i;
         const COMMAND_LINE_ITEM* item = get_command_line_item(command_line_option, wait_key);
-        if (item) {
-            WAIT_TIME_ARG result = {
-                .item = item,
-            };
-            if (is_inputted_command_line_item(item)) {
-                TEXT_PARSED_I32_RESULT time_result = parse_i32_from_text(&item->value, PARSE_BASE_NUMBER_D);
-                result.enabled = time_result.success && 0 < time_result.value;
-                if (result.enabled) {
-                    result.time = time_result.value;
-                }
-            } else {
-                result.enabled = false;
-            }
-
-            return result;
+        if (!item) {
+            continue;
         }
+
+        WAIT_TIME_ARG result = {
+            .item = item,
+            .enabled = false,
+        };
+        if (is_inputted_command_line_item(item)) {
+            TEXT_PARSED_I32_RESULT time_result = parse_i32_from_text(&item->value, PARSE_BASE_NUMBER_D);
+            result.enabled = time_result.success && 0 < time_result.value;
+            if (result.enabled) {
+                result.time = time_result.value;
+            }
+        }
+
+        return result;
     }
 
     WAIT_TIME_ARG none = {

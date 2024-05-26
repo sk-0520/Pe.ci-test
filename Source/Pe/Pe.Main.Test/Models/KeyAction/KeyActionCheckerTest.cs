@@ -12,6 +12,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
 {
     public class KeyActionCheckerTest
     {
+        #region property
+
+        private Test Test { get; } = Test.Create();
+
+        #endregion
+
         #region function
 
         [Fact]

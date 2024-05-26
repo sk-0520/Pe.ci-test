@@ -18,15 +18,16 @@ using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.WebView;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
+using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 {
     public class FeedbackElement: ElementBase
     {
-        public FeedbackElement(EnvironmentParameters environmentParameters, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public FeedbackElement(ApiConfiguration apiConfiguration, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ICultureService cultureService, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            EnvironmentParameters = environmentParameters;
+            ApiConfiguration = apiConfiguration;
             MainDatabaseBarrier = mainDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
             OrderManager = orderManager;
@@ -38,12 +39,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 
         #region property
 
-        private EnvironmentParameters EnvironmentParameters { get; }
-        private ApiConfiguration ApiConfiguration => EnvironmentParameters.ApplicationConfiguration.Api;
+        private ApiConfiguration ApiConfiguration { get; }
         private IMainDatabaseBarrier MainDatabaseBarrier { get; }
         private IDatabaseStatementLoader DatabaseStatementLoader { get; }
         private IOrderManager OrderManager { get; }
-        private CultureService CultureService { get; }
+        private ICultureService CultureService { get; }
         IUserAgentManager UserAgentManager { get; }
 
         private TimeSpan RetryWaitTime { get; } = TimeSpan.FromSeconds(5);

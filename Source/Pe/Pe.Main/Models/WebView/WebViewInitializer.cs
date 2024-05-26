@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
 
         #region function
 
-        public async Task InitializeAsync(WebView2 webView, EnvironmentParameters environmentParameters, CultureService cultureService)
+        public async Task InitializeAsync(WebView2 webView, EnvironmentParameters environmentParameters, ICultureService cultureService)
         {
             ////NOTE: プラグイン開発等においてここで死ぬ場合はリビルドを。
             //var settings = new CefSharp.Wpf.CefSettings();

@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
@@ -57,10 +58,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public string CreateFromRandom()
         {
             var bufferCount = 20 * 1024;
-            var buffer = new byte[bufferCount];
+            using var buffer = new ArrayPoolObject<byte>(bufferCount);
             var rand = new Random();
-            rand.NextBytes(buffer);
-            return ComputeHash(buffer, bufferCount);
+            rand.NextBytes(buffer.Items);
+            return ComputeHash(buffer.Items, bufferCount);
         }
 
         public string CreateFromEnvironment()

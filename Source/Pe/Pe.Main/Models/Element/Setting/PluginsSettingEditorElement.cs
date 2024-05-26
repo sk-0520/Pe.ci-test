@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -76,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
 
-        internal PluginsSettingEditorElement(PluginContainer pluginContainer, NewVersionChecker newVersionChecker, NewVersionDownloader newVersionDownloader, IPluginConstructorContext pluginConstructorContext, PauseReceiveLogDelegate pauseReceiveLog, PreferencesContextFactory preferencesContextFactory, IWindowManager windowManager, IUserTracker userTracker, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IHttpUserAgentFactory userAgentFactory, IViewManager viewManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal PluginsSettingEditorElement(PluginContainer pluginContainer, NewVersionChecker newVersionChecker, NewVersionDownloader newVersionDownloader, IPluginConstructorContext pluginConstructorContext, PauseReceiveLogDelegate pauseReceiveLog, PreferencesContextFactory preferencesContextFactory, IWindowManager windowManager, IUserTracker userTracker, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, GeneralConfiguration generalConfiguration, ApiConfiguration apiConfiguration, IHttpUserAgentFactory userAgentFactory, IViewManager viewManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, statementLoader, idFactory, imageLoader, mediaConverter, policy, dispatcherWrapper, loggerFactory)
         {
             PluginContainer = pluginContainer;
@@ -93,6 +94,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ViewManager = viewManager;
             PlatformTheme = platformTheme;
             EnvironmentParameters = environmentParameters;
+            GeneralConfiguration = generalConfiguration;
+            ApiConfiguration = apiConfiguration;
 
             PluginItems = new ReadOnlyObservableCollection<PluginSettingEditorElement>(PluginItemsImpl);
             InstallPluginItems = new ReadOnlyObservableCollection<PluginInstallItemElement>(InstallPluginItemsImpl);
@@ -110,6 +113,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         private IViewManager ViewManager { get; }
         private IPlatformTheme PlatformTheme { get; }
         private EnvironmentParameters EnvironmentParameters { get; }
+        private GeneralConfiguration GeneralConfiguration { get; }
+        private ApiConfiguration ApiConfiguration { get; }
 
         private PluginContainer PluginContainer { get; }
         private IPluginConstructorContext PluginConstructorContext { get; }
@@ -161,7 +166,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         internal async Task<PluginWebInstallRequestParameter> CreatePluginWebInstallRequestParameterAsync()
         {
-            var element = new Plugin.PluginWebInstallElement(PluginContainer, EnvironmentParameters, NewVersionChecker, NewVersionDownloader, UserAgentFactory, LoggerFactory);
+            var element = new Plugin.PluginWebInstallElement(PluginContainer, EnvironmentParameters, ApiConfiguration, NewVersionChecker, NewVersionDownloader, UserAgentFactory, LoggerFactory);
             await element.InitializeAsync();
 
             return new PluginWebInstallRequestParameter() {

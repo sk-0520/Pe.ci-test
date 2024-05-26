@@ -11,6 +11,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 {
 
     [Serializable]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public class IOUtilityException: Exception
     {
         public IOUtilityException() { }

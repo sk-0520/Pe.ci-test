@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Core.Models.Serialization;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data.ServerApi;
@@ -20,6 +21,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
@@ -28,11 +30,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     /// </summary>
     public class NewVersionChecker
     {
-        public NewVersionChecker(ApplicationConfiguration applicationConfiguration, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public NewVersionChecker(IApplicationInformation applicationInformation, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
         {
-            LoggerFactory = loggerFactory;
-            Logger = LoggerFactory.CreateLogger(GetType());
-            ApplicationConfiguration = applicationConfiguration;
+            Logger = loggerFactory.CreateLogger(GetType());
+            ApplicationInformation = applicationInformation;
             UserAgentManager = userAgentManager;
         }
 
@@ -40,9 +41,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         /// <inheritdoc cref="ILogger"/>
         private ILogger Logger { get; }
-        private ILoggerFactory LoggerFactory { get; }
 
-        private ApplicationConfiguration ApplicationConfiguration { get; }
+        private IApplicationInformation ApplicationInformation { get; }
         private IUserAgentManager UserAgentManager { get; }
 
         #endregion
@@ -79,10 +79,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// アプリケーションの新バージョン確認。
         /// </summary>
         /// <returns>新バージョンがあれば新情報。なければ<see langword="null" />。</returns>
-        public async Task<NewVersionItemData?> CheckApplicationNewVersionAsync(CancellationToken token)
+        public async Task<NewVersionItemData?> CheckApplicationNewVersionAsync(IEnumerable<string> updateCheckUrlItems, CancellationToken cancellationToken = default)
         {
             using var agent = UserAgentManager.CreateUserAgent();
-            foreach(var updateCheckUrl in ApplicationConfiguration.General.UpdateCheckUrlItems) {
+            foreach(var updateCheckUrl in updateCheckUrlItems) {
                 var uri = new Uri(
                     TextUtility.ReplaceFromDictionary(
                         updateCheckUrl,
@@ -94,12 +94,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 Logger.LogInformation("check app update: {uri}", uri);
 
                 try {
-                    var response = await agent.GetAsync(uri, token);
+                    var response = await agent.GetAsync(uri, cancellationToken);
                     if(!response.IsSuccessStatusCode) {
                         Logger.LogWarning("GetAsync: {0}, {1}", response.StatusCode, uri);
                         continue;
                     }
-                    var content = await response.Content.ReadAsStringAsync(token);
+                    var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
                     //TODO: Serializer.cs に統合したい
                     var updateData = System.Text.Json.JsonSerializer.Deserialize<NewVersionData>(content);
@@ -108,9 +108,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         return null;
                     }
                     var result = updateData.Items
-                        .Where(i => i.Platform == ProcessArchitecture.ApplicationArchitecture)
-                        .Where(i => i.MinimumVersion <= BuildStatus.Version)
-                        .Where(i => BuildStatus.Version < i.Version)
+                        .Where(i => i.Platform == ApplicationInformation.Architecture)
+                        .Where(i => i.MinimumVersion <= ApplicationInformation.Version)
+                        .Where(i => ApplicationInformation.Version < i.Version)
                         .OrderByDescending(i => i.Version)
                         .FirstOrDefault()
                     ;
@@ -127,8 +127,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return null;
         }
 
-        public Task<NewVersionItemData?> CheckApplicationNewVersionAsync() => CheckApplicationNewVersionAsync(CancellationToken.None);
-
         /// <summary>
         /// プラグイン用URIの構築。
         /// </summary>
@@ -136,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <param name="pluginId">プラグインID。</param>
         /// <param name="pluginVersion">プラグインバージョン。</param>
         /// <returns>構築したURI。構築できなかった場合は<see langword="null" /></returns>
-        private Uri? BuildPluginUri(string baseUrl, PluginId pluginId, Version pluginVersion)
+        protected internal Uri? BuildPluginUri(string baseUrl, PluginId pluginId, Version pluginVersion)
         {
             if(string.IsNullOrWhiteSpace(baseUrl)) {
                 return null;
@@ -153,18 +151,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             };
 
             var replaced = TextUtility.ReplaceFromDictionary(baseUrl, map);
-            if(Uri.TryCreate(replaced, UriKind.RelativeOrAbsolute, out var uri)) {
+            if(Uri.TryCreate(replaced, UriKind.Absolute, out var uri)) {
                 return uri;
             }
 
             return null;
         }
 
-        public static NewVersionItemData? GetNewVersionItem(Version pluginVersion, IEnumerable<NewVersionItemData> items)
+        public NewVersionItemData? GetPluginNewVersionItem(Version pluginVersion, IEnumerable<NewVersionItemData> items)
         {
             return items
-                .Where(i => i.Platform == ProcessArchitecture.ApplicationArchitecture)
-                .Where(i => i.MinimumVersion <= BuildStatus.Version)
+                .Where(i => i.Platform == ApplicationInformation.Architecture)
+                .Where(i => i.MinimumVersion <= ApplicationInformation.Version)
                 .Where(i => pluginVersion < i.Version)
                 .OrderByDescending(i => i.Version)
                 .FirstOrDefault()
@@ -178,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         /// <param name="plugin">プラグイン。</param>
         /// <returns>新バージョンがあれば新情報。なければ<see langword="null" />。</returns>
-        public async Task<NewVersionItemData?> CheckPluginNewVersionAsync(PluginId pluginId, Version pluginVersion, IEnumerable<string> urls)
+        public async Task<NewVersionItemData?> CheckPluginNewVersionAsync(Uri apiServerPluginInformation, PluginId pluginId, Version pluginVersion, IEnumerable<string> urls)
         {
             Debug.Assert(pluginId != ContentTypeTextNet.Pe.Plugins.DefaultTheme.DefaultTheme.Information.PluginIdentifiers.PluginId);
 
@@ -193,16 +191,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     continue;
                 }
 
-                var result = GetNewVersionItem(pluginVersion, updateData.Items);
+                var result = GetPluginNewVersionItem(pluginVersion, updateData.Items);
                 return result;
             }
 
-            var apiResult = await CheckPluginNewVersionByApiAsync(pluginId, pluginVersion);
+            var apiResult = await CheckPluginNewVersionByApiAsync(apiServerPluginInformation, pluginId, pluginVersion);
 
             return apiResult;
         }
 
-        public async Task<PluginInformationItemData?> GetPluginVersionInfoByApiAsync(PluginId pluginId)
+        public async Task<PluginInformationItemData?> GetPluginVersionInfoByApiAsync(Uri apiServerPluginInformation, PluginId pluginId)
         {
             var json = JsonSerializer.Serialize(new {
                 plugin_ids = new[] {
@@ -216,7 +214,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             );
 
             using var agent = UserAgentManager.CreateUserAgent();
-            var response = await agent.PostAsync(ApplicationConfiguration.Api.ServerPluginInformation, content);
+            var response = await agent.PostAsync(apiServerPluginInformation, content);
 
             if(!response.IsSuccessStatusCode) {
                 return null;
@@ -232,9 +230,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return null;
         }
 
-        private async Task<NewVersionItemData?> CheckPluginNewVersionByApiAsync(PluginId pluginId, Version pluginVersion)
+        private async Task<NewVersionItemData?> CheckPluginNewVersionByApiAsync(Uri apiServerPluginInformation, PluginId pluginId, Version pluginVersion)
         {
-            var item = await GetPluginVersionInfoByApiAsync(pluginId);
+            var item = await GetPluginVersionInfoByApiAsync(apiServerPluginInformation, pluginId);
             if(item is null) {
                 return null;
             }
@@ -245,7 +243,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return null;
             }
 
-            return GetNewVersionItem(pluginVersion, updateData.Items);
+            return GetPluginNewVersionItem(pluginVersion, updateData.Items);
         }
 
         /// <summary>

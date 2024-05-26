@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         public PlatformAccentColors GetAccentColors(Color accentColor)
         {
-            var nonTransAccentColor = MediaUtility.GetNonTransparentColor(accentColor);
+            var nonTransAccentColor = MediaUtility.GetOpaqueColor(accentColor);
             return new PlatformAccentColors(
                 accentColor,
                 nonTransAccentColor,

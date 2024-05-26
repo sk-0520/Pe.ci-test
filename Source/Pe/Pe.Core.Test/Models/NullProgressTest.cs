@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Test;
@@ -20,35 +21,37 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [Fact]
         public void ReportTest()
         {
-            var mockLog = TestMock.CreateLog();
+            var mockLog = MockLog.Create();
 
-            mockLog.VerifyLoggerFactoryNone();
-            mockLog.VerifyLoggerNone();
+            mockLog.VerifyFactoryNever();
+            mockLog.VerifyLogNever();
 
-            var test = new NullDoubleProgress(mockLog.LoggerFactory.Object);
-            mockLog.VerifyLoggerFactory(Times.Once());
-            mockLog.VerifyLoggerNone();
+            var test = new NullDoubleProgress(mockLog.Factory.Object);
+            mockLog.VerifyFactory(Times.Once());
+            mockLog.VerifyLogNever();
 
             test.Report(0.5);
-            mockLog.VerifyLoggerMessage("0.5", Times.Exactly(1));
-            //mockLog.VerifyLoggerMessage(LogLevel.Trace, "0.5", Times.Exactly(0));
-            //mockLog.VerifyLoggerMessage(LogLevel.Debug, "0.5", Times.Exactly(1));
-            //mockLog.VerifyLoggerMessage(LogLevel.Information, "0.5", Times.Exactly(0));
-            //mockLog.VerifyLoggerMessage(LogLevel.Warning, "0.5", Times.Exactly(0));
-            //mockLog.VerifyLoggerMessage(LogLevel.Error, "0.5", Times.Exactly(0));
-            //mockLog.VerifyLoggerMessage(LogLevel.Critical, "0.5", Times.Exactly(0));
+            mockLog.VerifyMessage(LogLevel.Trace, "0.5", Times.Exactly(0));
+            mockLog.VerifyMessage(LogLevel.Debug, "0.5", Times.Exactly(1));
+            mockLog.VerifyMessage(LogLevel.Information, "0.5", Times.Exactly(0));
+            mockLog.VerifyMessage(LogLevel.Warning, "0.5", Times.Exactly(0));
+            mockLog.VerifyMessage(LogLevel.Error, "0.5", Times.Exactly(0));
+            mockLog.VerifyMessage(LogLevel.Critical, "0.5", Times.Exactly(0));
 
             test.Report(0.75);
-            mockLog.VerifyLoggerMessage("0.75", Times.Exactly(1));
-            //mockLog.VerifyLoggerMessage(LogLevel.Trace, "0.75", Times.Exactly(0));
-            //mockLog.VerifyLoggerMessage(LogLevel.Debug, "0.75", Times.Exactly(2));
-            //mockLog.VerifyLoggerMessage(LogLevel.Information, "0.75", Times.Exactly(0));
-            //mockLog.VerifyLoggerMessage(LogLevel.Warning, "0.75", Times.Exactly(0));
-            //mockLog.VerifyLoggerMessage(LogLevel.Error, "0.75", Times.Exactly(0));
-            //mockLog.VerifyLoggerMessage(LogLevel.Critical, "0.75", Times.Exactly(0));
+            mockLog.VerifyMessage(LogLevel.Trace, "0.75", Times.Exactly(0));
+            mockLog.VerifyMessage(LogLevel.Debug, "0.75", Times.Exactly(1));
+            mockLog.VerifyMessage(LogLevel.Information, "0.75", Times.Exactly(0));
+            mockLog.VerifyMessage(LogLevel.Warning, "0.75", Times.Exactly(0));
+            mockLog.VerifyMessage(LogLevel.Error, "0.75", Times.Exactly(0));
+            mockLog.VerifyMessage(LogLevel.Critical, "0.75", Times.Exactly(0));
 
             test.Report(0.75);
-            mockLog.VerifyLoggerMessage("0.75", Times.Exactly(2));
+            mockLog.VerifyMessage(LogLevel.Debug, "0.75", Times.Exactly(2));
+            mockLog.VerifyMessageStartsWith(LogLevel.Debug, "0.7", Times.Exactly(2));
+            mockLog.VerifyMessageEndsWith(LogLevel.Debug, ".75", Times.Exactly(2));
+            mockLog.VerifyMessageContains(LogLevel.Debug, "7", Times.Exactly(2));
+            mockLog.VerifyMessageRegex(LogLevel.Debug, new Regex("\\d\\.\\d{2}"), Times.Exactly(2));
         }
 
         #endregion

@@ -311,6 +311,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
 
     public class CronSchedulerTest
     {
+        #region property
+
+        private Test Test { get; } = Test.Create();
+
+        #endregion
+
         #region function
 
         [Theory]

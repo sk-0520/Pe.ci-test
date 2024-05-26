@@ -42,6 +42,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
 
         #endregion
 
+        #region property
+
+        private Test Test { get; } = Test.Create(TestSetup.Database);
+
+        #endregion
+
         public PluginPersistenceStorageTest()
         {
             using var context = Test.DiContainer.Build<IMainDatabaseBarrier>().WaitWrite();

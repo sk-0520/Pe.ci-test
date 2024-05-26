@@ -384,8 +384,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 if(firstWaitingPressedJob != null) {
                     var factory = new KeyMappingFactory();
-                    var cultureService = ApplicationDiContainer.Get<CultureService>();
-                    var keyMessages = firstWaitingPressedJob.GetCurrentMappings().Select(i => factory.ToString(CultureService.Instance, i, Properties.Resources.String_Hook_Keyboard_Join));
+                    var cultureService = ApplicationDiContainer.Get<ICultureService>();
+                    var keyMessages = firstWaitingPressedJob.GetCurrentMappings().Select(i => factory.ToString(cultureService, i, Properties.Resources.String_Hook_Keyboard_Join));
                     var keyMessage = string.Join(Properties.Resources.String_Hook_Keyboard_Separator, keyMessages);
 
                     if(KeyboardNotifyLogId == NotifyLogId.Empty) {

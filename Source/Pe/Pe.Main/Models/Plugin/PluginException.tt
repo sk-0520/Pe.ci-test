@@ -52,15 +52,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <summary>
     /// プラグイン処理にて明示的に発生させる基底の例外。
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public abstract class PluginException: Exception
     {
         protected PluginException()
         { }
 
         protected PluginException(string? message) : base(message)
-        { }
-
-        protected PluginException(SerializationInfo info, StreamingContext context) : base(info, context)
         { }
 
         protected PluginException(string? message, Exception? innerException) : base(message, innerException)
@@ -72,15 +70,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <#= item.Comment #>
     /// </summary>
     [Serializable]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public sealed class <#= item.Name #>: PluginException
     {
         public <#= item.Name #>()
         { }
 
         public <#= item.Name #>(string? message) : base(message)
-        { }
-
-        public <#= item.Name #>(SerializationInfo info, StreamingContext context) : base(info, context)
         { }
 
         public <#= item.Name #>(string? message, Exception? innerException) : base(message, innerException)

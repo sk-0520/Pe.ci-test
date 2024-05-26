@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (double)value * System.Convert.ToDouble(parameter, CultureInfo.InvariantCulture);
+            return (double)value * System.Convert.ToDouble(parameter, culture);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -1308,7 +1308,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
                 var mainDatabaseDelayWriter = ApplicationDiContainer.Build<IMainDatabaseDelayWriter>();
                 var databaseStatementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
-                var cultureService = ApplicationDiContainer.Build<CultureService>();
+                var cultureService = ApplicationDiContainer.Build<ICultureService>();
                 var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
                 var dispatcherWrapper = ApplicationDiContainer.Build<IDispatcherWrapper>();
 
@@ -1795,7 +1795,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var serializer = new CrashReportSerializer();
                 serializer.Save(rawData, stream);
             }
-#if false
+#if DEBUG
             using(var stream = file.Open(FileMode.Open)) {
                 var serializer = new CrashReportSerializer();
                 var data = serializer.Load<CrashReportRawData>(new KeepStream(stream));

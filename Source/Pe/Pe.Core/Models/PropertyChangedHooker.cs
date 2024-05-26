@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Standard.Base.Throw;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -22,11 +23,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 変更通知を送るプロパティ名。
         /// </summary>
-        IReadOnlyList<string>? RaisePropertyNames { get; }
+        IReadOnlyCollection<string>? RaisePropertyNames { get; }
         /// <summary>
         /// 状態を更新するコマンド。
         /// </summary>
-        IReadOnlyList<ICommand>? RaiseCommands { get; }
+        IReadOnlyCollection<ICommand>? RaiseCommands { get; }
         /// <summary>
         /// 変更通知により呼び出される処理。
         /// </summary>
@@ -58,10 +59,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public string NotifyPropertyName { get; }
         /// <inheritdoc cref="IReadOnlyHookItem.RaisePropertyNames"/>
         public List<string>? RaisePropertyNames { get; }
-        IReadOnlyList<string>? IReadOnlyHookItem.RaisePropertyNames => RaisePropertyNames;
+        IReadOnlyCollection<string>? IReadOnlyHookItem.RaisePropertyNames => RaisePropertyNames;
         /// <inheritdoc cref="IReadOnlyHookItem.RaiseCommands"/>
         public List<ICommand>? RaiseCommands { get; }
-        IReadOnlyList<ICommand>? IReadOnlyHookItem.RaiseCommands => RaiseCommands;
+        IReadOnlyCollection<ICommand>? IReadOnlyHookItem.RaiseCommands => RaiseCommands;
 
         /// <inheritdoc cref="IReadOnlyHookItem.Callback"/>
         public Action? Callback { get; }
@@ -69,9 +70,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    internal class HookItemCache
+    internal class CachedHookItem
     {
-        public HookItemCache(IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands, IEnumerable<DelegateCommandBase> raiseDelegateCommands, IEnumerable<Action> callbacks)
+        public CachedHookItem(IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands, IEnumerable<DelegateCommandBase> raiseDelegateCommands, IEnumerable<Action> callbacks)
         {
             RaisePropertyNames = raisePropertyNames.ToList();
             RaiseCommands = raiseCommands.ToList();
@@ -97,6 +98,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </remarks>
     public class PropertyChangedHooker: DisposerBase
     {
+        HashSet<string> RaisePropertyNames { get; } = new HashSet<string>();
         public PropertyChangedHooker(IDispatcherWrapper dispatcherWrapper, ILogger logger)
         {
             DispatcherWrapper = dispatcherWrapper;
@@ -114,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         protected ILogger Logger { get; }
 
         protected IDictionary<string, List<HookItem>> Hookers { get; } = new Dictionary<string, List<HookItem>>();
-        private IDictionary<string, HookItemCache> Cache { get; } = new Dictionary<string, HookItemCache>();
+        private IDictionary<string, CachedHookItem> Cache { get; } = new Dictionary<string, CachedHookItem>();
 
         #endregion
 
@@ -164,18 +166,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public IReadOnlyHookItem AddHook(HookItem hookItem)
         {
-            if(hookItem == null) {
-                throw new ArgumentNullException(nameof(hookItem));
-            }
+            ArgumentNullException.ThrowIfNull(hookItem);
+
             ThrowIfDisposed();
 
             return AddHookCore(hookItem);
         }
         public IReadOnlyHookItem AddHook(string notifyAndRaisePropertyName)
         {
-            if(string.IsNullOrWhiteSpace(notifyAndRaisePropertyName)) {
-                throw new ArgumentException(null, nameof(notifyAndRaisePropertyName));
-            }
+            ArgumentException.ThrowIfNullOrWhiteSpace(notifyAndRaisePropertyName);
+
             ThrowIfDisposed();
 
             var hookItem = new HookItem(
@@ -188,12 +188,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
         public IReadOnlyHookItem AddHook(string notifyPropertyName, string raisePropertyName)
         {
-            if(string.IsNullOrWhiteSpace(notifyPropertyName)) {
-                throw new ArgumentException(null, nameof(notifyPropertyName));
-            }
-            if(string.IsNullOrWhiteSpace(raisePropertyName)) {
-                throw new ArgumentException(null, nameof(raisePropertyName));
-            }
+            ArgumentException.ThrowIfNullOrWhiteSpace(notifyPropertyName);
+            ArgumentException.ThrowIfNullOrWhiteSpace(raisePropertyName);
+
             ThrowIfDisposed();
 
             var hookItem = new HookItem(
@@ -204,14 +201,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             );
             return AddHookCore(hookItem);
         }
-        public IReadOnlyHookItem AddHook(string notifyPropertyName, params string[] raisePropertyNames)
+        public IReadOnlyHookItem AddHook(string notifyPropertyName, IEnumerable<string> raisePropertyNames)
         {
-            if(string.IsNullOrWhiteSpace(notifyPropertyName)) {
-                throw new ArgumentException(nameof(notifyPropertyName));
-            }
-            if(raisePropertyNames == null || raisePropertyNames.Length == 0) {
-                throw new ArgumentException(null, nameof(raisePropertyNames));
-            }
+            ArgumentException.ThrowIfNullOrWhiteSpace(notifyPropertyName);
+            ArgumentEmptyCollectionException.ThrowIfEmpty(raisePropertyNames, nameof(raisePropertyNames));
+
             ThrowIfDisposed();
 
             var hookItem = new HookItem(
@@ -224,12 +218,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
         public IReadOnlyHookItem AddHook(string notifyPropertyName, ICommand raiseCommand)
         {
-            if(string.IsNullOrWhiteSpace(notifyPropertyName)) {
-                throw new ArgumentException(nameof(notifyPropertyName));
-            }
-            if(raiseCommand == null) {
-                throw new ArgumentNullException(nameof(raiseCommand));
-            }
+            ArgumentException.ThrowIfNullOrWhiteSpace(notifyPropertyName);
+            ArgumentNullException.ThrowIfNull(raiseCommand);
+
             ThrowIfDisposed();
 
             var hookItem = new HookItem(
@@ -240,14 +231,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             );
             return AddHookCore(hookItem);
         }
-        public IReadOnlyHookItem AddHook(string notifyPropertyName, params ICommand[] raiseCommands)
+        public IReadOnlyHookItem AddHook(string notifyPropertyName, IEnumerable<ICommand> raiseCommands)
         {
-            if(string.IsNullOrWhiteSpace(notifyPropertyName)) {
-                throw new ArgumentException(null, nameof(notifyPropertyName));
-            }
-            if(raiseCommands == null || raiseCommands.Length == 0) {
-                throw new ArgumentException(null, nameof(raiseCommands));
-            }
+            ArgumentException.ThrowIfNullOrWhiteSpace(notifyPropertyName);
+            ArgumentEmptyCollectionException.ThrowIfEmpty(raiseCommands, nameof(raiseCommands));
+
             ThrowIfDisposed();
 
             var hookItem = new HookItem(
@@ -260,12 +248,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
         public IReadOnlyHookItem AddHook(string notifyPropertyName, Action callback)
         {
-            if(string.IsNullOrWhiteSpace(notifyPropertyName)) {
-                throw new ArgumentException(null, nameof(notifyPropertyName));
-            }
-            if(callback == null) {
-                throw new ArgumentException(null, nameof(callback));
-            }
+            ArgumentException.ThrowIfNullOrWhiteSpace(notifyPropertyName);
+            ArgumentNullException.ThrowIfNull(callback);
+
             ThrowIfDisposed();
 
             var hookItem = new HookItem(
@@ -276,53 +261,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
             );
             return AddHookCore(hookItem);
         }
-        public IReadOnlyHookItem AddHook(string notifyPropertyName, IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands)
-        {
-            if(string.IsNullOrWhiteSpace(notifyPropertyName)) {
-                throw new ArgumentException(null, nameof(notifyPropertyName));
-            }
-            if(raisePropertyNames == null) {
-                throw new ArgumentException(null, nameof(raisePropertyNames));
-            }
-            if(raiseCommands == null) {
-                throw new ArgumentException(null, nameof(raiseCommands));
-            }
-            ThrowIfDisposed();
 
-            var hookItem = new HookItem(
-                notifyPropertyName,
-                raisePropertyNames,
-                raiseCommands,
-                null
-            );
-            return AddHookCore(hookItem);
-        }
-        public IReadOnlyHookItem AddHook(string notifyPropertyName, IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands, Action callback)
-        {
-            if(string.IsNullOrWhiteSpace(notifyPropertyName)) {
-                throw new ArgumentException(null, nameof(notifyPropertyName));
-            }
-            if(raisePropertyNames == null) {
-                throw new ArgumentException(null, nameof(raisePropertyNames));
-            }
-            if(raiseCommands == null) {
-                throw new ArgumentException(null, nameof(raiseCommands));
-            }
-            if(callback == null) {
-                throw new ArgumentException(null, nameof(callback));
-            }
-            ThrowIfDisposed();
-
-            var hookItem = new HookItem(
-                notifyPropertyName,
-                raisePropertyNames,
-                raiseCommands,
-                callback
-            );
-            return AddHookCore(hookItem);
-        }
-
-        private HookItemCache MakeCache(IEnumerable<IReadOnlyHookItem> hookItems)
+        private CachedHookItem MakeCache(IEnumerable<IReadOnlyHookItem> hookItems)
         {
             ThrowIfDisposed();
 
@@ -332,7 +272,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 .ToList()
             ;
 
-            var result = new HookItemCache(
+            var result = new CachedHookItem(
                 hookItems.Where(i => i.RaisePropertyNames != null).SelectMany(i => i.RaisePropertyNames!),
                 commands.Where(i => !(i is DelegateCommandBase)),
                 commands.OfType<DelegateCommandBase>(),
@@ -410,7 +350,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return true;
         }
 
-        private bool ExecuteCache(HookItemCache hookItemCache, Action<string> raiser)
+        private bool ExecuteCache(CachedHookItem hookItemCache, Action<string> raiser)
         {
             ThrowIfDisposed();
 

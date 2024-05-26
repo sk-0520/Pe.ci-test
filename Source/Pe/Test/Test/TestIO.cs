@@ -109,9 +109,12 @@ namespace ContentTypeTextNet.Pe.Test
         /// <param name="test"></param>
         /// <param name="callerMemberName"></param>
         /// <returns></returns>
-        public static DirectoryInfo InitializeMethod(object test, [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = 0)
+        public static DirectoryInfo InitializeMethod(object test, string suffix = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = 0)
         {
             var dir = GetMethodDirectory(test, callerMemberName, callerLineNumber);
+            if(!string.IsNullOrWhiteSpace(suffix)) {
+                dir = new DirectoryInfo(dir.FullName + "@" + suffix);
+            }
 
             if(InitializedMethodDirectory.Contains(dir.FullName)) {
                 throw new TestException();

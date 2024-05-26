@@ -4,13 +4,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
 {
     public static class ICommandExtensions
     {
-        public static void ExecuteIfCanExecute(this ICommand command, object? parameter)
+        public static bool ExecuteIfCanExecute(this ICommand command, object? parameter)
         {
-            //Debug.Assert(command != null);
-
             if(command.CanExecute(parameter)) {
                 command.Execute(parameter);
+                return true;
             }
+
+            return false;
         }
     }
 }

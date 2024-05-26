@@ -10,6 +10,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
 {
     public static class MediaUtility
     {
+        #region variable
+
+        /// <summary>
+        /// <see cref="Color.A"/>の完全な透明。
+        /// </summary>
+        public const byte Transparent = 0x00;
+        /// <summary>
+        /// <see cref="Color.A"/>の完全な不透明。
+        /// </summary>
+        public const byte Opaque = 0xff;
+
+        #endregion
+
+        #region function
+
         /// <summary>
         /// 色を生値に変換。
         /// </summary>
@@ -105,13 +120,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <summary>
-        /// 指定色を非透明にする。
+        /// 指定色を不透明にする。
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Color GetNonTransparentColor(Color value)
+        public static Color GetOpaqueColor(Color value)
         {
-            value.A = 0xff;
+            value.A = Opaque;
             return value;
         }
 
@@ -183,5 +198,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             return MakeBitmapSource(element, new Point(96, 96), useActual);
         }
+
+        #endregion
     }
 }

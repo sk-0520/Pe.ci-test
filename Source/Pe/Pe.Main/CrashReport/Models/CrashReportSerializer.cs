@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
-using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.Serialization;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models
 {
@@ -15,9 +15,9 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models
 
         #region SerializerBase
 
-        public override TResult Load<TResult>(Stream stream)
+        protected override TResult LoadImpl<TResult>(Stream stream)
         {
-            using var reader = GetReader(stream);
+            using var reader = CreateReader(stream);
             var json = reader.ReadToEnd();
             var result = System.Text.Json.JsonSerializer.Deserialize<TResult>(json);
             if(result is null) {
@@ -27,9 +27,9 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models
             return result;
         }
 
-        public override void Save(object value, Stream stream)
+        protected override void SaveImpl(object value, Stream stream)
         {
-            using var writer = GetWriter(stream);
+            using var writer = CreateWriter(stream);
             var json = System.Text.Json.JsonSerializer.Serialize(value); // TODO: ストリーム直接でいいと思う
             writer.Write(json);
         }

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Transactions;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
-using ContentTypeTextNet.Pe.Standard.Database.Test.TestImpl.Vender.Public.SQLite;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
@@ -19,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database.Test.Vender.Public.SQLite
 
         public DatabaseAccessorTest()
         {
-            var factory = new TestSqliteFactory();
+            var factory = new InMemorySqliteFactory();
             DatabaseAccessor = new SqliteAccessor(factory, NullLoggerFactory.Instance);
 
             var logger = NullLoggerFactory.Instance.CreateLogger(nameof(DatabaseAccessorTest));
@@ -51,16 +50,24 @@ values
 
         #region property
 
-        private IDatabaseAccessor DatabaseAccessor { get; }
+        private DatabaseAccessor DatabaseAccessor { get; }
 
         #endregion
 
         #region function
 
         [Fact]
+        public void ConnectionTest()
+        {
+            var factory = new InMemorySqliteFactory();
+            var databaseAccessor = new SqliteAccessor(factory, NullLoggerFactory.Instance.CreateLogger(GetType().ToString()));
+            Assert.Equal(databaseAccessor.BaseConnection, databaseAccessor.Connection);
+        }
+
+        [Fact]
         public void PauseConnectionTest()
         {
-            var databaseAccessor = (DatabaseAccessor)DatabaseAccessor;
+            var databaseAccessor = DatabaseAccessor;
             Assert.True(databaseAccessor.IsOpened);
             Assert.False(databaseAccessor.ConnectionPausing);
 
