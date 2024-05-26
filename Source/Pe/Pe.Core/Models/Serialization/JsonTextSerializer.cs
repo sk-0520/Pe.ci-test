@@ -1,6 +1,7 @@
 using System;
 using System.Buffers;
 using System.IO;
+using System.Net.Sockets;
 using System.Runtime.Serialization;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -61,26 +62,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Serialization
 
         protected override TResult LoadImpl<TResult>(Stream stream)
         {
-            var length = (int)stream.Length;
-            var allocHeap = StackSize < length;
+            var options = new JsonSerializerOptions() {
+                AllowTrailingCommas = ReaderOptions.AllowTrailingCommas,
+                ReadCommentHandling = ReaderOptions.CommentHandling,
+            };
 
-            byte[]? heapBuffer = null;
-            Span<byte> buffer = allocHeap
-                ? (heapBuffer = ArrayPool.Rent(length)).AsSpan()
-                : stackalloc byte[length]
-            ;
-
-            stream.Read(buffer);
-            var reader = new Utf8JsonReader(buffer, ReaderOptions);
-            try {
-                var rawResult = JsonSerializer.Deserialize<TResult>(ref reader);
-                if(rawResult is TResult result) {
-                    return result;
-                }
-            } finally {
-                if(heapBuffer is not null) {
-                    ArrayPool.Return(heapBuffer);
-                }
+            var rawResult = JsonSerializer.Deserialize(stream, typeof(TResult), options);
+            if(rawResult is TResult result) {
+                return result;
             }
 
             throw new SerializationException();
