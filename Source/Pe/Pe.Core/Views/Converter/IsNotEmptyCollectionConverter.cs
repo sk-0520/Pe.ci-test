@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
@@ -17,12 +18,9 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
                 return !view.IsEmpty;
             }
 
-            var collection = value as IEnumerable;
-            if(collection != null) {
-                var enumerator = collection.GetEnumerator();
-                while(enumerator.MoveNext()) {
-                    return true;
-                }
+            var enumerable = value as IEnumerable;
+            if(enumerable is not null) {
+                return enumerable.NonGenericsAny();
             }
 
             return false;

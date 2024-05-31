@@ -1,5 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Standard.Base;
@@ -187,6 +190,41 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             }
 
             return -1;
+        }
+
+        #endregion
+    }
+
+    public static class IEnumerableNonGenericsExtensions
+    {
+        #region function
+
+        private static bool NonGenericsAnyCore(IEnumerable source, Predicate<object?>? predicate)
+        {
+            if(predicate is null) {
+                predicate = o => true;
+            }
+
+            var enumerator = source.GetEnumerator();
+
+            while(enumerator.MoveNext()) {
+                if(predicate(enumerator.Current)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool NonGenericsAny(this IEnumerable source)
+        {
+            return NonGenericsAnyCore(source, null);
+        }
+
+        public static bool NonGenericsAny(this IEnumerable source, Predicate<object?> predicate)
+        {
+            Debug.Assert(predicate is not null);
+            return NonGenericsAnyCore(source, predicate);
         }
 
         #endregion
