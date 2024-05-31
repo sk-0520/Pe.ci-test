@@ -125,16 +125,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static IEnumerable<T> FindLogicalChildren<T>(DependencyObject dependencyObject)
             where T : DependencyObject
         {
-            if(dependencyObject != null) {
-                foreach(var child in LogicalTreeHelper.GetChildren(dependencyObject).OfType<DependencyObject>()) {
-                    if(child != null) {
-                        if(child is T childObj) {
-                            yield return childObj;
-                        }
-                        foreach(var childOfChild in FindLogicalChildren<T>(child)) {
-                            yield return childOfChild;
-                        }
-                    }
+            if(dependencyObject is null) {
+                yield break;
+            }
+
+            foreach(var child in LogicalTreeHelper.GetChildren(dependencyObject).OfType<DependencyObject>()) {
+                if(child is null) {
+                    continue;
+                }
+
+                if(child is T childObj) {
+                    yield return childObj;
+                }
+
+                foreach(var childOfChild in FindLogicalChildren<T>(child)) {
+                    yield return childOfChild;
                 }
             }
         }
