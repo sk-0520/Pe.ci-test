@@ -1,4 +1,4 @@
-﻿#include <windows.h>
+﻿#include <Windows.h>
 
 #include "debug.h"
 #include "tcharacter.h"

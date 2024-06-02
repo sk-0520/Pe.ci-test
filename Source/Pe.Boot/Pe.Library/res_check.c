@@ -2,7 +2,7 @@
 #   include <tchar.h>
 #endif
 
-#include <windows.h>
+#include <Windows.h>
 
 #include "res_check.h"
 #include "debug.h"

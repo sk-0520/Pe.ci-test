@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <stdbool.h>
 
-#include <windows.h>
+#include <Windows.h>
 
 #include "memory.h"
 
