@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
-    internal class LauncherItemAddonFinder: ILauncherItemAddonFinder
+    public class LauncherItemAddonFinder: ILauncherItemAddonFinder
     {
         public LauncherItemAddonFinder(AddonContainer addonContainer, ILoggerFactory loggerFactory)
         {

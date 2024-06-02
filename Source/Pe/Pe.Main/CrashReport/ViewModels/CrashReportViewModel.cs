@@ -13,7 +13,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
 {
-    internal class CrashReportViewModel: ElementViewModelBase<CrashReportElement>
+    public class CrashReportViewModel: ElementViewModelBase<CrashReportElement>
     {
         #region variable
 

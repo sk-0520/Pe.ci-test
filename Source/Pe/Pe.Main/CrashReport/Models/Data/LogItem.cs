@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
 {
     [Serializable, DataContract]
-    internal class LogItem
+    public class LogItem
     {
         #region property
 

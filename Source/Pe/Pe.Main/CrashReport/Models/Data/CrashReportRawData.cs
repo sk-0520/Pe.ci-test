@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
 {
     [Serializable, DataContract]
-    internal class CrashReportRawData
+    public class CrashReportRawData
     {
         #region property
 

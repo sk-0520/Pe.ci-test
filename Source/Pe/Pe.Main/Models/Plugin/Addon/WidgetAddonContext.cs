@@ -3,7 +3,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    internal class WidgetAddonCreateContext: PluginIdentifiersContextBase, IWidgetAddonCreateContext
+    public class WidgetAddonCreateContext: PluginIdentifiersContextBase, IWidgetAddonCreateContext
     {
         #region variable
 
@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
-    internal class WidgetAddonClosedContext: PluginIdentifiersContextBase, IWidgetAddonClosedContext
+    public class WidgetAddonClosedContext: PluginIdentifiersContextBase, IWidgetAddonClosedContext
     {
         #region variable
 

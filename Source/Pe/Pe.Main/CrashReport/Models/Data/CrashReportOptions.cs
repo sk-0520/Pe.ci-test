@@ -3,7 +3,7 @@ using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
 {
-    internal class CrashReportOptions
+    public class CrashReportOptions
     {
         #region property
 

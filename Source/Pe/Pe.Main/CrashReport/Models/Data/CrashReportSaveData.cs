@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
 {
     [Serializable, DataContract]
-    internal class CrashReportSaveData
+    public class CrashReportSaveData
     {
         #region property
 

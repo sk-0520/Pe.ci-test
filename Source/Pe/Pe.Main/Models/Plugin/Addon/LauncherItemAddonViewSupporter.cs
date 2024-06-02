@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
-    internal class LauncherItemAddonViewSupporter: ILauncherItemAddonViewSupporter, ILauncherItemId
+    public class LauncherItemAddonViewSupporter: ILauncherItemAddonViewSupporter, ILauncherItemId
     {
         public LauncherItemAddonViewSupporter(IPluginInformation pluginInformation, LauncherItemId launcherItemId, IOrderManager orderManager, IWindowManager windowManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {

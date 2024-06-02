@@ -30,6 +30,7 @@ using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Main.Models.Element.Setting.Factory;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
@@ -426,6 +427,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
                 .Register<IKeyGestureGuide, KeyGestureGuide>(DiLifecycle.Transient)
+
+                .Register<ISettingElementFactory, SettingElementFactory>(DiLifecycle.Transient)
             ;
 
             if(factory is not null) {

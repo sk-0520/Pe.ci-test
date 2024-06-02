@@ -72,7 +72,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#933: DI の型よわよわ生成処理を Factory 作って早め対応できるようにする",
+						"comments": [
+							"リファクタしないと無理なので気になるところだけ対応"
+						]
 					},
 					{
 						"revision": "",

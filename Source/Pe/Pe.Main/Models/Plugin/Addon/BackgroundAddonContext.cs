@@ -9,7 +9,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     /// <inheritdoc cref="IBackgroundAddonRunStartupContext" />
-    internal class BackgroundAddonRunStartupContext: PluginIdentifiersContextBase, IBackgroundAddonRunStartupContext
+    public class BackgroundAddonRunStartupContext: PluginIdentifiersContextBase, IBackgroundAddonRunStartupContext
     {
         public BackgroundAddonRunStartupContext(IPluginIdentifiers pluginIdentifiers)
             : base(pluginIdentifiers)
@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     }
 
     /// <inheritdoc cref="IBackgroundAddonRunPauseContext" />
-    internal class BackgroundAddonRunPauseContext: PluginIdentifiersContextBase, IBackgroundAddonRunPauseContext
+    public class BackgroundAddonRunPauseContext: PluginIdentifiersContextBase, IBackgroundAddonRunPauseContext
     {
         public BackgroundAddonRunPauseContext(IPluginIdentifiers pluginIdentifiers, bool isPausing)
              : base(pluginIdentifiers)
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
-    internal class BackgroundAddonRunExecuteContext: PluginIdentifiersContextBase, IBackgroundAddonRunExecuteContext
+    public class BackgroundAddonRunExecuteContext: PluginIdentifiersContextBase, IBackgroundAddonRunExecuteContext
     {
         public BackgroundAddonRunExecuteContext(IPluginIdentifiers pluginIdentifiers, RunExecuteKind runExecuteKind, object? parameter, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp)
             : base(pluginIdentifiers)
@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
 
     /// <inheritdoc cref="IBackgroundAddonRunShutdownContext" />
-    internal class BackgroundAddonRunShutdownContext: PluginIdentifiersContextBase, IBackgroundAddonRunShutdownContext
+    public class BackgroundAddonRunShutdownContext: PluginIdentifiersContextBase, IBackgroundAddonRunShutdownContext
     {
         public BackgroundAddonRunShutdownContext(IPluginIdentifiers pluginIdentifiers)
             : base(pluginIdentifiers)
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     }
 
     /// <inheritdoc cref="IBackgroundAddonKeyboardContext" />
-    internal class BackgroundAddonKeyboardContext: PluginIdentifiersContextBase, IBackgroundAddonKeyboardContext
+    public class BackgroundAddonKeyboardContext: PluginIdentifiersContextBase, IBackgroundAddonKeyboardContext
     {
         public BackgroundAddonKeyboardContext(IPluginIdentifiers pluginIdentifiers, KeyboardHookEventArgs keyboardHookEventArgs)
             : base(pluginIdentifiers)
@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     }
 
     /// <inheritdoc cref="IBackgroundAddonMouseMoveContext" />
-    internal class BackgroundAddonMouseMoveContext: PluginIdentifiersContextBase, IBackgroundAddonMouseMoveContext
+    public class BackgroundAddonMouseMoveContext: PluginIdentifiersContextBase, IBackgroundAddonMouseMoveContext
     {
         public BackgroundAddonMouseMoveContext(IPluginIdentifiers pluginIdentifiers, MouseHookEventArgs mouseHookEventArgs)
             : base(pluginIdentifiers)
@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     }
 
     /// <inheritdoc cref="IBackgroundAddonMouseButtonContext" />
-    internal class BackgroundAddonMouseButtonContext: IBackgroundAddonMouseButtonContext
+    public class BackgroundAddonMouseButtonContext: IBackgroundAddonMouseButtonContext
     {
         public BackgroundAddonMouseButtonContext(IPluginIdentifiers pluginIdentifiers, MouseHookEventArgs mouseHookEventArgs)
         {

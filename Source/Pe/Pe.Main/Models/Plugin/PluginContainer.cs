@@ -21,7 +21,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    internal abstract class PluginContainerBase
+    public abstract class PluginContainerBase
     {
         #region function
 
@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
-    internal class PluginContainer: PluginContainerBase
+    public class PluginContainer: PluginContainerBase
     {
         #region define
 
