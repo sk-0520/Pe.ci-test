@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         }
 
         /// <summary>
-        /// <see cref="IDiContainer.New{TObject}(IReadOnlyList{object})"/> して <see cref="IDiContainer.Inject{TObject}(TObject)"/> する。
+        /// <see cref="IDiContainer.New{TObject}(IReadOnlyCollection{object})"/> して <see cref="IDiContainer.Inject{TObject}(TObject)"/> する。
         /// </summary>
         /// <remarks>
         /// <para><see cref="IDiContainer.New"/>/<see cref="IDiContainer.Get"/> で悩むくらいなら多分状況ワケわからんことになっているのでこれだけ使っておけばいい。</para>
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             return obj;
         }
 
-        private static object? CallCore(IDiContainer diContainer, object instance, string methodName, IReadOnlyList<object> manualParameters)
+        private static object? CallCore(IDiContainer diContainer, object instance, string methodName, IReadOnlyCollection<object> manualParameters)
         {
             var methodInfo = instance.GetType().GetMethod(methodName);
             if(methodInfo is null) {

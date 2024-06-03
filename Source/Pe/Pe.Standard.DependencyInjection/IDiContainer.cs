@@ -51,35 +51,35 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         /// <para>依存を解決する。</para>
         /// <para><see langword="null"/> をパラメータとして使用する場合は型情報が死ぬので <see cref="DiDefaultParameter"/> を使用すること。</para>
         /// </remarks>
-        object New(Type type, IReadOnlyList<object> manualParameters);
-        /// <inheritdoc cref="New(Type, IReadOnlyList{object})"/>
-        object New(Type type, string name, IReadOnlyList<object> manualParameters);
+        object New(Type type, IReadOnlyCollection<object> manualParameters);
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
+        object New(Type type, string name, IReadOnlyCollection<object> manualParameters);
 
-        /// <inheritdoc cref="New(Type, IReadOnlyList{object})"/>
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
         object New(Type type);
-        /// <inheritdoc cref="New(Type, IReadOnlyList{object})"/>
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
         object New(Type type, string name);
 
-        /// <inheritdoc cref="New(Type, IReadOnlyList{object})"/>
-        TObject New<TObject>(IReadOnlyList<object> manualParameters)
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
+        TObject New<TObject>(IReadOnlyCollection<object> manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         ;
-        /// <inheritdoc cref="New(Type, IReadOnlyList{object})"/>
-        TObject New<TObject>(string name, IReadOnlyList<object> manualParameters)
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
+        TObject New<TObject>(string name, IReadOnlyCollection<object> manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         ;
 
-        /// <inheritdoc cref="New(Type, IReadOnlyList{object})"/>
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
         TObject New<TObject>()
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         ;
-        /// <inheritdoc cref="New(Type, IReadOnlyList{object})"/>
+        /// <inheritdoc cref="New(Type, IReadOnlyCollection{object})"/>
         TObject New<TObject>(string name)
 #if !ENABLED_STRUCT
             where TObject : class
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         /// <param name="methodInfo">メソッド。</param>
         /// <param name="manualParameters"></param>
         /// <returns></returns>
-        object? CallMethod(string name, object instance, MethodInfo methodInfo, IReadOnlyList<object> manualParameters);
+        object? CallMethod(string name, object instance, MethodInfo methodInfo, IReadOnlyCollection<object> manualParameters);
 
         #endregion
 
