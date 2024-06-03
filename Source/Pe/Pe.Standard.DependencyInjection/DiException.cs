@@ -24,6 +24,22 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         { }
     }
 
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    public class DiFunctionMethodNotFoundException: DiException
+    {
+        public DiFunctionMethodNotFoundException()
+        { }
+
+        public DiFunctionMethodNotFoundException(string? message)
+            : base(message)
+        { }
+
+        public DiFunctionMethodNotFoundException(string? message, Exception? innerException)
+            : base(message, innerException)
+        { }
+    }
+
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public class DiFunctionResultException: DiException
     {
         public DiFunctionResultException()

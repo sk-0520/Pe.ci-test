@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Test;
 using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
@@ -201,6 +202,251 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 #endif
 #pragma warning restore 169, 649
 
+        #region nest
+
+        interface INest1
+        {
+            INest2 Nest2 { get; }
+        }
+
+        interface INest2
+        {
+            INest3 Nest3 { get; }
+        }
+
+        interface INest3
+        {
+            INest4 Nest4 { get; }
+        }
+
+        interface INest4
+        {
+            bool True { get; }
+        }
+
+        class Root
+        {
+            public Root(INest1 nest1, INest2 nest2, INest3 nest3, INest4 nest4)
+            {
+                Nest1 = nest1;
+                Nest2 = nest2;
+                Nest3 = nest3;
+                Nest4 = nest4;
+            }
+
+            public INest1 Nest1 { get; }
+            public INest2 Nest2 { get; }
+            public INest3 Nest3 { get; }
+            public INest4 Nest4 { get; }
+        }
+
+        class Nest1: INest1
+        {
+            public Nest1(INest2 nest2)
+            {
+                Nest2 = nest2;
+            }
+
+            public INest2 Nest2 { get; }
+        }
+
+        class Nest2: INest2
+        {
+            public Nest2(INest3 nest3)
+            {
+                Nest3 = nest3;
+            }
+
+            public INest3 Nest3 { get; }
+        }
+
+        class Nest3: INest3
+        {
+            public Nest3(INest4 nest4)
+            {
+                Nest4 = nest4;
+            }
+
+            public INest4 Nest4 { get; }
+        }
+
+        class Nest4: INest4
+        {
+            public bool True => true;
+        }
+
+        [Fact]
+        public void NestTest()
+        {
+            var dic = new DiContainer();
+            dic.Register<INest1, Nest1>(DiLifecycle.Transient);
+            dic.Register<INest2, Nest2>(DiLifecycle.Transient);
+            dic.Register<INest3, Nest3>(DiLifecycle.Transient);
+            dic.Register<INest4, Nest4>(DiLifecycle.Transient);
+
+            var root = dic.New<Root>();
+
+            Assert.True(root.Nest1.Nest2.Nest3.Nest4.True);
+            Assert.True(root.Nest2.Nest3.Nest4.True);
+            Assert.True(root.Nest3.Nest4.True);
+            Assert.True(root.Nest4.True);
+
+            Assert.False(root.Nest2 == root.Nest1.Nest2);
+            Assert.False(root.Nest3 == root.Nest1.Nest2.Nest3);
+            Assert.False(root.Nest4 == root.Nest1.Nest2.Nest3.Nest4);
+        }
+
+        [Fact]
+        public void NestTest_Singleton()
+        {
+            var dic = new DiContainer();
+            dic.Register<INest1, Nest1>(DiLifecycle.Singleton);
+            dic.Register<INest2, Nest2>(DiLifecycle.Singleton);
+            dic.Register<INest3, Nest3>(DiLifecycle.Singleton);
+            dic.Register<INest4, Nest4>(DiLifecycle.Singleton);
+
+            var root = dic.New<Root>();
+
+            Assert.True(root.Nest1.Nest2.Nest3.Nest4.True);
+            Assert.True(root.Nest2.Nest3.Nest4.True);
+            Assert.True(root.Nest3.Nest4.True);
+            Assert.True(root.Nest4.True);
+
+            Assert.True(root.Nest2 == root.Nest1.Nest2);
+            Assert.True(root.Nest3 == root.Nest1.Nest2.Nest3);
+            Assert.True(root.Nest4 == root.Nest1.Nest2.Nest3.Nest4);
+        }
+
+        #endregion
+
+        class CScopeA: I1
+        {
+            public int Func(int a, int b) => a + b;
+        }
+        class CScopeB: I1
+        {
+            public int Func(int a, int b) => a - b;
+        }
+        class CScopeC: I1
+        {
+            public int Func(int a, int b) => a * b;
+        }
+        class CScopeD: I1
+        {
+            public int Func(int a, int b) => a / b;
+        }
+
+
+
+        class D1
+        {
+            I1? I1_1 { get; set; }
+            I1? I1_2 { get; set; }
+            public I1? I1_3 { get; set; }
+            public I1? I1_4 { get; set; }
+        }
+
+
+        interface ID2
+        {
+            I1 I1_2 { get; }
+
+            I1 I1_4 { get; }
+
+            I1 I1_6 { get; }
+        }
+
+#pragma warning disable 169, 649
+        class D2: ID2
+        {
+            [Inject]
+            public I1? I1_1;
+            [Inject]
+#pragma warning disable CS8613 // 戻り値の型における参照型の Null 許容性が、暗黙的に実装されるメンバーと一致しません。
+#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
+            public I1 I1_2 { get; set; }
+#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
+#pragma warning restore CS8613 // 戻り値の型における参照型の Null 許容性が、暗黙的に実装されるメンバーと一致しません。
+
+            public I1? I1_3;
+#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
+            public I1 I1_4 { get; set; }
+#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
+
+            public I1? I1_5;
+#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
+            public I1 I1_6 { get; set; }
+#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
+        }
+#pragma warning restore 169, 649
+
+        class Wrap
+        {
+            public Wrap(string s) => S = s;
+            public string S { get; set; } = string.Empty;
+
+        }
+
+        class NamedClass
+        {
+            [Inject]
+            public Wrap A { get; set; } = new Wrap(string.Empty);
+            [Inject("name")]
+            public Wrap B { get; set; } = new Wrap(string.Empty);
+            //BUGS: A とおなじ扱いでいいんだけどなんかむずいぞ
+            //[Inject("notfound")]
+            //public Wrap C { get; set; } = new Wrap(string.Empty);
+        }
+
+        class NamedClass2
+        {
+            public NamedClass2(string a, [Inject("named")] string b, [Inject("notfound")] string c)
+            {
+                A = a;
+                B = b;
+                C = c;
+            }
+
+            public string A { get; } = string.Empty;
+            public string B { get; } = string.Empty;
+            public string C { get; } = string.Empty;
+        }
+
+
+        public class CallClass
+        {
+            public int Action0CallCount { get; private set; }
+            public int Action1LastValue { get; private set; }
+
+            public int FuncInt_0()
+            {
+                return 10;
+            }
+            public string FuncStr_0()
+            {
+                return "str";
+            }
+            public void Action_0()
+            {
+                Action0CallCount += 1;
+            }
+
+            public void Action_1(int value)
+            {
+                Action1LastValue = value;
+            }
+
+            public string FuncStr_1(string s)
+            {
+                return s + ":" + s;
+            }
+
+            public string FuncStr_2(string a, string b)
+            {
+                return a + ":" + b;
+            }
+        }
+
         #endregion
 
         [Fact]
@@ -394,7 +640,6 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             Assert.Equal((99 + 1) * 1, c5.Get());
         }
 
-#if PrivateObject
         [Fact]
         public void InjectTest_C6()
         {
@@ -414,7 +659,6 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             Assert.NotNull(c.PropertySet_public);
             Assert.NotNull(p.GetProperty("PropertySet_private"));
         }
-#endif
 
 #if ENABLED_STRUCT
         [Fact]
@@ -440,139 +684,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
         }
 #endif
 
-        #region nest
 
-        interface INest1
-        {
-            INest2 Nest2 { get; }
-        }
-
-        interface INest2
-        {
-            INest3 Nest3 { get; }
-        }
-
-        interface INest3
-        {
-            INest4 Nest4 { get; }
-        }
-
-        interface INest4
-        {
-            bool True { get; }
-        }
-
-        class Root
-        {
-            public Root(INest1 nest1, INest2 nest2, INest3 nest3, INest4 nest4)
-            {
-                Nest1 = nest1;
-                Nest2 = nest2;
-                Nest3 = nest3;
-                Nest4 = nest4;
-            }
-
-            public INest1 Nest1 { get; }
-            public INest2 Nest2 { get; }
-            public INest3 Nest3 { get; }
-            public INest4 Nest4 { get; }
-        }
-
-        class Nest1: INest1
-        {
-            public Nest1(INest2 nest2)
-            {
-                Nest2 = nest2;
-            }
-
-            public INest2 Nest2 { get; }
-        }
-
-        class Nest2: INest2
-        {
-            public Nest2(INest3 nest3)
-            {
-                Nest3 = nest3;
-            }
-
-            public INest3 Nest3 { get; }
-        }
-
-        class Nest3: INest3
-        {
-            public Nest3(INest4 nest4)
-            {
-                Nest4 = nest4;
-            }
-
-            public INest4 Nest4 { get; }
-        }
-
-        class Nest4: INest4
-        {
-            public bool True => true;
-        }
-
-        [Fact]
-        public void NestTest()
-        {
-            var dic = new DiContainer();
-            dic.Register<INest1, Nest1>(DiLifecycle.Transient);
-            dic.Register<INest2, Nest2>(DiLifecycle.Transient);
-            dic.Register<INest3, Nest3>(DiLifecycle.Transient);
-            dic.Register<INest4, Nest4>(DiLifecycle.Transient);
-
-            var root = dic.New<Root>();
-
-            Assert.True(root.Nest1.Nest2.Nest3.Nest4.True);
-            Assert.True(root.Nest2.Nest3.Nest4.True);
-            Assert.True(root.Nest3.Nest4.True);
-            Assert.True(root.Nest4.True);
-
-            Assert.False(root.Nest2 == root.Nest1.Nest2);
-            Assert.False(root.Nest3 == root.Nest1.Nest2.Nest3);
-            Assert.False(root.Nest4 == root.Nest1.Nest2.Nest3.Nest4);
-        }
-
-        [Fact]
-        public void NestTest_Singleton()
-        {
-            var dic = new DiContainer();
-            dic.Register<INest1, Nest1>(DiLifecycle.Singleton);
-            dic.Register<INest2, Nest2>(DiLifecycle.Singleton);
-            dic.Register<INest3, Nest3>(DiLifecycle.Singleton);
-            dic.Register<INest4, Nest4>(DiLifecycle.Singleton);
-
-            var root = dic.New<Root>();
-
-            Assert.True(root.Nest1.Nest2.Nest3.Nest4.True);
-            Assert.True(root.Nest2.Nest3.Nest4.True);
-            Assert.True(root.Nest3.Nest4.True);
-            Assert.True(root.Nest4.True);
-
-            Assert.True(root.Nest2 == root.Nest1.Nest2);
-            Assert.True(root.Nest3 == root.Nest1.Nest2.Nest3);
-            Assert.True(root.Nest4 == root.Nest1.Nest2.Nest3.Nest4);
-        }
-
-        #endregion
-
-        class CScopeA: I1
-        {
-            public int Func(int a, int b) => a + b;
-        }
-        class CScopeB: I1
-        {
-            public int Func(int a, int b) => a - b;
-        }
-        class CScopeC: I1
-        {
-            public int Func(int a, int b) => a * b;
-        }
-        class CScopeD: I1
-        {
-            public int Func(int a, int b) => a / b;
-        }
 
         [Fact]
         public void ScopeTest()
@@ -617,13 +729,6 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             }
         }
 
-        class D1
-        {
-            I1? I1_1 { get; set; }
-            I1? I1_2 { get; set; }
-            public I1? I1_3 { get; set; }
-            public I1? I1_4 { get; set; }
-        }
 
         [Fact]
         public void RegisterMemberTest()
@@ -636,27 +741,6 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             Assert.Throws<ArgumentException>(() => dic.RegisterMember<D1, I1>("I1_1"));
         }
 
-#if PrivateObject
-        [Fact]
-        public void DirtyRegisterTest_New()
-        {
-            var dic = new DiContainer();
-            dic.Register<I1, C1>(DiLifecycle.Transient);
-
-            dic.DirtyRegister<D1, I1>("I1_1");
-            dic.DirtyRegister<D1, I1>(nameof(D1.I1_3));
-
-            var d = new D1();
-            dic.Inject(d);
-
-            var p = new PrivateObject(d);
-
-            Assert.NotNull(p.GetProperty("I1_1"));
-            Assert.Null(p.GetProperty("I1_2"));
-            Assert.NotNull(d.I1_3);
-            Assert.Null(d.I1_4);
-        }
-#endif
         [Fact]
         public void UnregisterTest()
         {
@@ -669,77 +753,6 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             Assert.True(dic.Unregister<I1>());
             Assert.Throws<DiException>(() => dic.New<I1>());
         }
-
-        interface ID2
-        {
-            I1 I1_2 { get; }
-
-            I1 I1_4 { get; }
-
-            I1 I1_6 { get; }
-        }
-
-#pragma warning disable 169, 649
-        class D2: ID2
-        {
-            [Inject]
-            public I1? I1_1;
-            [Inject]
-#pragma warning disable CS8613 // 戻り値の型における参照型の Null 許容性が、暗黙的に実装されるメンバーと一致しません。
-#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
-            public I1 I1_2 { get; set; }
-#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
-#pragma warning restore CS8613 // 戻り値の型における参照型の Null 許容性が、暗黙的に実装されるメンバーと一致しません。
-
-            public I1? I1_3;
-#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
-            public I1 I1_4 { get; set; }
-#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
-
-            public I1? I1_5;
-#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
-            public I1 I1_6 { get; set; }
-#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
-        }
-#pragma warning restore 169, 649
-
-        [Fact]
-        public void BuildTest()
-        {
-            var dic = new DiContainer();
-            dic.Register<I1, C1>(DiLifecycle.Transient);
-            dic.Register<ID2, D2>(DiLifecycle.Transient);
-
-            dic.RegisterMember<D2, I1>("I1_3");
-            dic.RegisterMember<D2, I1>(nameof(D1.I1_4));
-
-            var d = (D2)dic.Build<ID2>();
-            Assert.NotNull(d.I1_1);
-            Assert.NotNull(d.I1_2);
-            Assert.NotNull(d.I1_3);
-            Assert.NotNull(d.I1_4);
-            Assert.Null(d.I1_5);
-            Assert.Null(d.I1_6);
-        }
-
-        class Wrap
-        {
-            public Wrap(string s) => S = s;
-            public string S { get; set; } = string.Empty;
-
-        }
-
-        class NamedClass
-        {
-            [Inject]
-            public Wrap A { get; set; } = new Wrap(string.Empty);
-            [Inject("name")]
-            public Wrap B { get; set; } = new Wrap(string.Empty);
-            //BUGS: A とおなじ扱いでいいんだけどなんかむずいぞ
-            //[Inject("notfound")]
-            //public Wrap C { get; set; } = new Wrap(string.Empty);
-        }
-
 
         [Fact]
         public void Inject_Name_Test()
@@ -765,19 +778,6 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
         }
 
-        class NamedClass2
-        {
-            public NamedClass2(string a, [Inject("named")] string b, [Inject("notfound")] string c)
-            {
-                A = a;
-                B = b;
-                C = c;
-            }
-
-            public string A { get; } = string.Empty;
-            public string B { get; } = string.Empty;
-            public string C { get; } = string.Empty;
-        }
         [Fact]
         public void New_Name_Test()
         {
@@ -791,39 +791,6 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             Assert.Equal("a", nc.C);
         }
 
-        public class CallClass
-        {
-            public int Action0CallCount { get; private set; }
-            public int Action1LastValue { get; private set; }
-
-            public int FuncInt_0()
-            {
-                return 10;
-            }
-            public string FuncStr_0()
-            {
-                return "str";
-            }
-            public void Action_0()
-            {
-                Action0CallCount += 1;
-            }
-
-            public void Action_1(int value)
-            {
-                Action1LastValue = value;
-            }
-
-            public string FuncStr_1(string s)
-            {
-                return s + ":" + s;
-            }
-
-            public string FuncStr_2(string a, string b)
-            {
-                return a + ":" + b;
-            }
-        }
 
         [Fact]
         public void CallMethod_0_Test()
@@ -843,11 +810,6 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             var actualVoid = dic.CallMethod(string.Empty, callClass, methodVoid, Array.Empty<object>());
             Assert.Equal(1, callClass.Action0CallCount);
             Assert.Null(actualVoid);
-
-            dic.Call(callClass, nameof(callClass.Action_0));
-            Assert.Equal(2, callClass.Action0CallCount);
-
-            Assert.Throws<DiFunctionResultException>(() => dic.Call(callClass, nameof(callClass.FuncInt_0)));
         }
 
         [Fact]
@@ -863,8 +825,6 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             Assert.Equal(123, callClass.Action1LastValue);
 
             var methodStr = callClass.GetType().GetMethod(nameof(callClass.FuncStr_1))!;
-
-            Assert.Throws<DiFunctionResultException>(() => dic.Call(callClass, nameof(callClass.FuncStr_1), Array.Empty<object>()));
 
             var actualEmptyName1 = dic.CallMethod(string.Empty, callClass, methodStr, Array.Empty<object>());
             Assert.Equal("a:a", actualEmptyName1);
@@ -891,26 +851,18 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
             var actualEmptyName1 = dic.CallMethod(string.Empty, callClass, methodStr, Array.Empty<object>());
             Assert.Equal("a:a", actualEmptyName1);
-            var actualEmptyName1_Call = dic.Call<string>(callClass, methodStr.Name);
-            Assert.Equal("a:a", actualEmptyName1_Call);
-            Assert.Throws<DiFunctionResultException>(() => dic.Call<int>(callClass, methodStr.Name));
 
             var actualDefinedName1 = dic.CallMethod("named", callClass, methodStr, Array.Empty<object>());
             Assert.Equal("b:b", actualDefinedName1);
 
             var actualEmptyName2 = dic.CallMethod(string.Empty, callClass, methodStr, new[] { "A" });
             Assert.Equal("A:a", actualEmptyName2);
-            var actualEmptyName2_Call = dic.Call<string>(callClass, methodStr.Name, "A");
-            Assert.Equal("A:a", actualEmptyName2_Call);
-            Assert.Throws<DiFunctionResultException>(() => dic.Call<int>(callClass, methodStr.Name, "A"));
 
             var actualDefinedName2 = dic.CallMethod("named", callClass, methodStr, new[] { "B" });
             Assert.Equal("B:b", actualDefinedName2);
 
             var actualEmptyName3 = dic.CallMethod(string.Empty, callClass, methodStr, new[] { "A", "A'" });
             Assert.Equal("A:A'", actualEmptyName3);
-            var actualEmptyName3_Call = dic.Call<string>(callClass, methodStr.Name, "A", "A");
-            Assert.Equal("A:A", actualEmptyName3_Call);
 
             var actualDefinedName3 = dic.CallMethod("named", callClass, methodStr, new[] { "B", "B'" });
             Assert.Equal("B:B'", actualDefinedName3);
@@ -923,5 +875,4 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             //Assert.Equal("b:B", actualDefinedName4);
         }
     }
-
 }

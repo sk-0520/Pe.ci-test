@@ -21,6 +21,9 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         /// <summary>
         /// <see cref="IDiContainer.New{TObject}(IReadOnlyList{object})"/> して <see cref="IDiContainer.Inject{TObject}(TObject)"/> する。
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="IDiContainer.New"/>/<see cref="IDiContainer.Get"/> で悩むくらいなら多分状況ワケわからんことになっているのでこれだけ使っておけばいい。</para>
+        /// </remarks>
         /// <typeparam name="TObject"></typeparam>
         /// <param name="diContainer"></param>
         /// <param name="manualParameter"></param>
@@ -53,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         {
             var methodInfo = instance.GetType().GetMethod(methodName);
             if(methodInfo is null) {
-                throw new DiException($"{nameof(methodInfo)}: {methodName}");
+                throw new DiFunctionMethodNotFoundException($"{nameof(methodInfo)}: {methodName}");
             }
 
             var obj = diContainer.CallMethod(string.Empty, instance, methodInfo, manualParameters);
