@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #region property
 
-        [Inject]
+        [DiInjection]
         private ILogger? Logger { get; set; }
         private ScrollAdjuster ScrollAdjuster { get; }
 

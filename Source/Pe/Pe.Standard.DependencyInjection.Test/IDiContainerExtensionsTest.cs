@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
                 : base(a, b, new[] { i1, i2, i3, })
             { }
 
-            [Inject]
+            [DiInjection]
             private C5_Private(int a, I1 i1, int b, I1 i2, I1 i3, I1 i4)
                 : base(a, b, new[] { i1, i2, i3, i4 })
             { }
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
         class C5_Minimum: C5
         {
-            [Inject]
+            [DiInjection]
             public C5_Minimum(int a, I1 i1, int b)
                 : base(a, b, new[] { i1 })
             { }
@@ -168,16 +168,16 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
         {
             private I1? fieldUnset_private;
             public I1? fieldUnset_public;
-            [Inject]
+            [DiInjection]
             private I1? fieldSet_private;
-            [Inject]
+            [DiInjection]
             public I1? fieldSet_public;
 
             private I1? PropertyUnset_private { get; set; }
             public I1? PropertyUnset_public { get; set; }
-            [Inject]
+            [DiInjection]
             private I1? PropertySet_private { get; set; }
-            [Inject]
+            [DiInjection]
             public I1? PropertySet_public { get; set; }
         }
 
@@ -358,9 +358,9 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 #pragma warning disable 169, 649
         class D2: ID2
         {
-            [Inject]
+            [DiInjection]
             public I1? I1_1;
-            [Inject]
+            [DiInjection]
 #pragma warning disable CS8613 // 戻り値の型における参照型の Null 許容性が、暗黙的に実装されるメンバーと一致しません。
 #pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
             public I1 I1_2 { get; set; }
@@ -388,9 +388,9 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
         class NamedClass
         {
-            [Inject]
+            [DiInjection]
             public Wrap A { get; set; } = new Wrap(string.Empty);
-            [Inject("name")]
+            [DiInjection("name")]
             public Wrap B { get; set; } = new Wrap(string.Empty);
             //BUGS: A とおなじ扱いでいいんだけどなんかむずいぞ
             //[Inject("notfound")]
@@ -399,7 +399,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
         class NamedClass2
         {
-            public NamedClass2(string a, [Inject("named")] string b, [Inject("notfound")] string c)
+            public NamedClass2(string a, [DiInjection("named")] string b, [DiInjection("notfound")] string c)
             {
                 A = a;
                 B = b;

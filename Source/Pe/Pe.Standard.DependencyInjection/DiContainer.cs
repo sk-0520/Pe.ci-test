@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         protected DiNamedContainer<ConcurrentDictionary<Type, object>> ObjectPool { get; } = new DiNamedContainer<ConcurrentDictionary<Type, object>>();
         protected IList<DiInjectionMember> InjectionMembers { get; } = new List<DiInjectionMember>();
 
-        private static IReadOnlyDictionary<ParameterInfo, InjectAttribute> EmptyInjections = new Dictionary<ParameterInfo, InjectAttribute>();
+        private static IReadOnlyDictionary<ParameterInfo, DiInjectionAttribute> EmptyInjections = new Dictionary<ParameterInfo, DiInjectionAttribute>();
 
         #endregion
 
@@ -220,7 +220,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             return result;
         }
 
-        private object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfoItems, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
+        private object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfoItems, IReadOnlyDictionary<ParameterInfo, DiInjectionAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
         {
             var manualParameterItems = BuildManualParameters(manualParameters);
 
@@ -356,7 +356,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
                 .Select(c => (
                     constructor: c,
                     parameters: c.GetParameters(),
-                    attribute: c.GetCustomAttribute<InjectAttribute>()
+                    attribute: c.GetCustomAttribute<DiInjectionAttribute>()
                 ))
                 .Where(i => i.attribute != null || i.constructor.IsPublic)
                 .OrderBy(i => i.attribute != null ? 0 : 1)
@@ -462,7 +462,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         {
             var targetType = GetMappingType(typeof(TObject), name);
             var memberItems = targetType.GetMembers(MemberBindingFlags)
-                .Select(m => (memberInfo: m, inject: m.GetCustomAttribute<InjectAttribute>()))
+                .Select(m => (memberInfo: m, inject: m.GetCustomAttribute<DiInjectionAttribute>()))
                 .ToList()
             ;
             foreach(var memberItem in memberItems.Where(a => a.inject is not null)) {

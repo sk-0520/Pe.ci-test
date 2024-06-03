@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Views._Debug_
             InitializeComponent();
         }
 
-        [Inject]
+        [DiInjection]
         ILogger? Logger { get; set; }
     }
 }

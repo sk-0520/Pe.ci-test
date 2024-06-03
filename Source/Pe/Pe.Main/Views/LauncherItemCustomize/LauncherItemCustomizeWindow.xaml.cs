@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 
         #region property
 
-        [Inject]
+        [DiInjection]
         private ILogger? Logger { get; set; }
         private ScrollAdjuster ScrollAdjuster { get; }
 

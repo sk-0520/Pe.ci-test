@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         /// プロパティインジェクション。
         /// </summary>
         /// <remarks>
-        /// <para><see cref="InjectAttribute"/> を補完する。</para>
+        /// <para><see cref="DiInjectionAttribute"/> を補完する。</para>
         /// </remarks>
         /// <typeparam name="TObject">生成済みオブジェクト</typeparam>
         /// <param name="target">クラスインスタンス。</param>
