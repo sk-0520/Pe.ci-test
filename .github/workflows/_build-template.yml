@@ -124,6 +124,8 @@ jobs:
 
   plugin-template:
     name: Plugin Template
+    needs:
+      - help
     env:
       EXPAND_DIR: plugin-template
       PROJECT_DIR: \test-plugin
