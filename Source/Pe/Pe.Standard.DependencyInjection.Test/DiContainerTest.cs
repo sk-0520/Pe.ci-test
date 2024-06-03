@@ -793,6 +793,9 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
         public class CallClass
         {
+            public int Action0CallCount { get; private set; }
+            public int Action1LastValue { get; private set; }
+
             public int FuncInt_0()
             {
                 return 10;
@@ -803,7 +806,12 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             }
             public void Action_0()
             {
-                //nop
+                Action0CallCount += 1;
+            }
+
+            public void Action_1(int value)
+            {
+                Action1LastValue = value;
             }
 
             public string FuncStr_1(string s)
@@ -833,7 +841,13 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
 
             var methodVoid = callClass.GetType().GetMethod(nameof(callClass.Action_0))!;
             var actualVoid = dic.CallMethod(string.Empty, callClass, methodVoid, Array.Empty<object>());
+            Assert.Equal(1, callClass.Action0CallCount);
             Assert.Null(actualVoid);
+
+            dic.Call(callClass, nameof(callClass.Action_0));
+            Assert.Equal(2, callClass.Action0CallCount);
+
+            Assert.Throws<DiFunctionResultException>(() => dic.Call(callClass, nameof(callClass.FuncInt_0)));
         }
 
         [Fact]
@@ -844,7 +858,13 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             dic.Register<string, string>("named", "b");
 
             var callClass = dic.New<CallClass>();
+
+            dic.Call(callClass, nameof(callClass.Action_1), 123);
+            Assert.Equal(123, callClass.Action1LastValue);
+
             var methodStr = callClass.GetType().GetMethod(nameof(callClass.FuncStr_1))!;
+
+            Assert.Throws<DiFunctionResultException>(() => dic.Call(callClass, nameof(callClass.FuncStr_1), Array.Empty<object>()));
 
             var actualEmptyName1 = dic.CallMethod(string.Empty, callClass, methodStr, Array.Empty<object>());
             Assert.Equal("a:a", actualEmptyName1);
@@ -873,6 +893,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             Assert.Equal("a:a", actualEmptyName1);
             var actualEmptyName1_Call = dic.Call<string>(callClass, methodStr.Name);
             Assert.Equal("a:a", actualEmptyName1_Call);
+            Assert.Throws<DiFunctionResultException>(() => dic.Call<int>(callClass, methodStr.Name));
 
             var actualDefinedName1 = dic.CallMethod("named", callClass, methodStr, Array.Empty<object>());
             Assert.Equal("b:b", actualDefinedName1);
@@ -881,6 +902,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
             Assert.Equal("A:a", actualEmptyName2);
             var actualEmptyName2_Call = dic.Call<string>(callClass, methodStr.Name, "A");
             Assert.Equal("A:a", actualEmptyName2_Call);
+            Assert.Throws<DiFunctionResultException>(() => dic.Call<int>(callClass, methodStr.Name, "A"));
 
             var actualDefinedName2 = dic.CallMethod("named", callClass, methodStr, new[] { "B" });
             Assert.Equal("B:b", actualDefinedName2);

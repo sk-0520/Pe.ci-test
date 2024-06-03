@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
     /// </remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3925:\"ISerializable\" should be implemented correctly")]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    public sealed class DiException: ApplicationException
+    public class DiException: ApplicationException
     {
         public DiException()
         { }
@@ -20,6 +20,20 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         { }
 
         public DiException(string? message, Exception? innerException)
+            : base(message, innerException)
+        { }
+    }
+
+    public class DiFunctionResultException: DiException
+    {
+        public DiFunctionResultException()
+        { }
+
+        public DiFunctionResultException(string? message)
+            : base(message)
+        { }
+
+        public DiFunctionResultException(string? message, Exception? innerException)
             : base(message, innerException)
         { }
     }
