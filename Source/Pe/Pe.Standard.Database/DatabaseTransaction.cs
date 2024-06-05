@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         {
             ThrowIfDisposed();
 
-            if(Transaction is not null) {
+            if(Transaction is not null && Transaction.Connection is not null) {
                 Transaction.Rollback();
             }
         }

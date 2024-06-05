@@ -144,6 +144,9 @@ namespace ContentTypeTextNet.Pe.Main.Test
                 new { Now = BuildStatus.Version.Build, Init = lastVersion.Build},
             };
             Assert.True(versionElements.All(i => i.Now == i.Init));
+
+            var databaseAdjuster = diContainer.Build<DatabaseAdjuster>();
+            databaseAdjuster.Adjust();
         }
 
         public static Test Create(TestSetup setups = TestSetup.None)

@@ -9,28 +9,6 @@ using ContentTypeTextNet.Pe.Standard.Base;
 namespace ContentTypeTextNet.Pe.Main.Models.Database
 {
     /// <summary>
-    /// <see langword="enum" /> の属性設定にて <see cref="EnumTransfer{TEnum}"/> を制御する。
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
-    public class EnumTransferAttribute: Attribute
-    {
-        public EnumTransferAttribute(string value)
-        {
-            if(string.IsNullOrWhiteSpace(value)) {
-                throw new ArgumentException(null, nameof(value));
-            }
-
-            Value = value;
-        }
-
-        #region property
-
-        public string Value { get; }
-
-        #endregion
-    }
-
-    /// <summary>
     /// <see cref="Dapper"/> で <see langword="enum" /> (の文字列)を扱えるように変換する。
     /// </summary>
     /// <remarks>

@@ -91,6 +91,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             container
                 .Register<IDatabaseFactoryPack, ApplicationDatabaseFactoryPack>(factoryPack)
                 .Register<IDatabaseAccessorPack, ApplicationDatabaseAccessorPack>(accessorPack)
+
+                .Register<IMainDatabaseAccessor, ApplicationDatabaseAccessor>(accessorPack.Main)
+                .Register<ILargeDatabaseAccessor, ApplicationDatabaseAccessor>(accessorPack.Large)
+                .Register<ITemporaryDatabaseAccessor, ApplicationDatabaseAccessor>(accessorPack.Temporary)
+
                 .Register<IDatabaseBarrierPack, ApplicationDatabaseBarrierPack>(barrierPack)
                 .Register<IReaderWriterLockerPack, ApplicationReaderWriterLockerPack>(readerWriterLockerPack)
                 .Register<IDatabaseDelayWriterPack, ApplicationDatabaseDelayWriterPack>(delayWriterPack)
