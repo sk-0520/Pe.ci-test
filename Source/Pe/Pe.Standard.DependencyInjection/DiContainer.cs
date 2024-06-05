@@ -220,11 +220,11 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             return result;
         }
 
-        private object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfoItems, IReadOnlyDictionary<ParameterInfo, DiInjectionAttribute> parameterInjections, IReadOnlyCollection<object> manualParameters)
+        private object?[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfoItems, IReadOnlyDictionary<ParameterInfo, DiInjectionAttribute> parameterInjections, IReadOnlyCollection<object> manualParameters)
         {
             var manualParameterItems = BuildManualParameters(manualParameters);
 
-            var arguments = new object[parameterInfoItems.Count];
+            var arguments = new object?[parameterInfoItems.Count];
             for(var i = 0; i < parameterInfoItems.Count; i++) {
                 var parameterInfo = parameterInfoItems[i];
                 // 入力パラメータを優先して設定
@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
                     //var item = manualParameterItems.FirstOrDefault(p => p.Key == parameterInfo.ParameterType || parameterInfo.ParameterType.IsAssignableFrom(p.Key));
                     var item = GetParameter(parameterInfo, manualParameterItems);
                     if(item.Key != default) {
-                        arguments[i] = item.Value!; // 正しい null
+                        arguments[i] = item.Value;
                         manualParameterItems.Remove(item);
                         continue;
                     }

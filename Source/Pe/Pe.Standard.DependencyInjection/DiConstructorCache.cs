@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         public ConstructorInfo ConstructorInfo { get; }
         public IReadOnlyList<ParameterInfo> ParameterInfoItems { get; }
         public IReadOnlyDictionary<ParameterInfo, DiInjectionAttribute> ParameterInjections { get; }
-        private Func<object[], object>? Creator { get; set; }
+        private Func<object?[], object>? Creator { get; set; }
 
         #endregion
 
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         /// </remarks>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public object Create(object[] parameters)
+        public object Create(object?[] parameters)
         {
             if(Creator == null) {
                 if(ParameterInfoItems.Count == 0) {
