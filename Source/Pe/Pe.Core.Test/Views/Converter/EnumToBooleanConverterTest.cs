@@ -15,6 +15,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Views.Converter
     {
         #region define
 
+        [SuppressMessage("Minor Code Smell", "S2344:Enumeration type names should not have \"Flags\" or \"Enum\" suffixes", Justification = "<保留中>")]
         public enum TestEnum
         {
             A,
