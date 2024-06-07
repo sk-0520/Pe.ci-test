@@ -19,8 +19,11 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         }
 
         /// <summary>
-        /// <see cref="IDiContainer.New{TObject}(IReadOnlyList{object})"/> して <see cref="IDiContainer.Inject{TObject}(TObject)"/> する。
+        /// <see cref="IDiContainer.New{TObject}(IReadOnlyCollection{object})"/> して <see cref="IDiContainer.Inject{TObject}(TObject)"/> する。
         /// </summary>
+        /// <remarks>
+        /// <para><see cref="IDiContainer.New"/>/<see cref="IDiContainer.Get"/> で悩むくらいなら多分状況ワケわからんことになっているのでこれだけ使っておけばいい。</para>
+        /// </remarks>
         /// <typeparam name="TObject"></typeparam>
         /// <param name="diContainer"></param>
         /// <param name="manualParameter"></param>
@@ -49,11 +52,11 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             return obj;
         }
 
-        private static object? CallCore(IDiContainer diContainer, object instance, string methodName, IReadOnlyList<object> manualParameters)
+        private static object? CallCore(IDiContainer diContainer, object instance, string methodName, IReadOnlyCollection<object> manualParameters)
         {
             var methodInfo = instance.GetType().GetMethod(methodName);
             if(methodInfo is null) {
-                throw new DiException($"{nameof(methodInfo)}: {methodName}");
+                throw new DiFunctionMethodNotFoundException($"{nameof(methodInfo)}: {methodName}");
             }
 
             var obj = diContainer.CallMethod(string.Empty, instance, methodInfo, manualParameters);
@@ -65,31 +68,37 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         {
             var parameters = JoinParameters(manualParameter, manualParameters);
 
-#pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
-#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
-            return (TResult)CallCore(diContainer, instance, methodName, parameters);
-#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
-#pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
+            var raw = CallCore(diContainer, instance, methodName, parameters);
+            if(raw is not TResult) {
+                throw new DiFunctionResultException();
+            }
+            return (TResult)raw;
         }
 
         public static TResult Call<TResult>(this IDiContainer diContainer, object instance, string methodName)
         {
-#pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
-#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
-            return (TResult)CallCore(diContainer, instance, methodName, Array.Empty<object>());
-#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
-#pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
+            var raw = CallCore(diContainer, instance, methodName, Array.Empty<object>());
+            if(raw is not TResult) {
+                throw new DiFunctionResultException();
+            }
+            return (TResult)raw;
         }
 
         public static void Call(this IDiContainer diContainer, object instance, string methodName, object manualParameter, params object[] manualParameters)
         {
             var parameters = JoinParameters(manualParameter, manualParameters);
 
-            CallCore(diContainer, instance, methodName, parameters);
+            var raw = CallCore(diContainer, instance, methodName, parameters);
+            if(raw is not null) {
+                throw new DiFunctionResultException();
+            }
         }
         public static void Call(this IDiContainer diContainer, object instance, string methodName)
         {
-            CallCore(diContainer, instance, methodName, Array.Empty<object>());
+            var raw = CallCore(diContainer, instance, methodName, Array.Empty<object>());
+            if(raw is not null) {
+                throw new DiFunctionResultException();
+            }
         }
 
         #endregion

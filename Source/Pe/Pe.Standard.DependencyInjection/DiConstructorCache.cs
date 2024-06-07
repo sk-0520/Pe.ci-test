@@ -23,9 +23,9 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             ConstructorInfo = constructorInfo;
             ParameterInfoItems = parameterInfoItems;
 
-            var map = new Dictionary<ParameterInfo, InjectAttribute>();
+            var map = new Dictionary<ParameterInfo, DiInjectionAttribute>();
             foreach(var parameterInfo in ParameterInfoItems) {
-                var attr = parameterInfo.GetCustomAttribute<InjectAttribute>();
+                var attr = parameterInfo.GetCustomAttribute<DiInjectionAttribute>();
                 if(attr != null) {
                     map.Add(parameterInfo, attr);
                 }
@@ -37,8 +37,8 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
         public ConstructorInfo ConstructorInfo { get; }
         public IReadOnlyList<ParameterInfo> ParameterInfoItems { get; }
-        public IReadOnlyDictionary<ParameterInfo, InjectAttribute> ParameterInjections { get; }
-        private Func<object[], object>? Creator { get; set; }
+        public IReadOnlyDictionary<ParameterInfo, DiInjectionAttribute> ParameterInjections { get; }
+        private Func<object?[], object>? Creator { get; set; }
 
         #endregion
 
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         /// </remarks>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public object Create(object[] parameters)
+        public object Create(object?[] parameters)
         {
             if(Creator == null) {
                 if(ParameterInfoItems.Count == 0) {

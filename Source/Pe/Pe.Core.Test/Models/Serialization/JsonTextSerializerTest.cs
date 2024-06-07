@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Serialization
     {
         #region define
 
-        private class SerializableData_A
+        private class SerializableData
         {
             #region property
 
@@ -24,16 +24,6 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Serialization
             #endregion
         }
 
-        private class SerializableData_B
-        {
-            #region property
-
-            public int Int { get; set; }
-            public string String { get; set; } = string.Empty;
-
-            #endregion
-        }
-
         #endregion
 
         #region function
@@ -43,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Serialization
         {
             var test = new JsonTextSerializer();
 
-            var data = new SerializableData_A() {
+            var data = new SerializableData() {
                 DefaultVersion = new Version(1, 2, 3, 4),
                 ConverterVersion1 = new Version(4, 5, 6, 7),
                 ConverterVersion2 = null,
@@ -54,42 +44,6 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Serialization
             Assert.Equal(actual.DefaultVersion, data.DefaultVersion);
             Assert.Equal(actual.ConverterVersion1, data.ConverterVersion1);
             Assert.Null(actual.ConverterVersion2);
-        }
-
-        [Fact]
-        public void Load_Heap_Test()
-        {
-            var test = new JsonTextSerializer() {
-                StackSize = 0,
-            };
-
-            var data = new SerializableData_B() {
-                Int = 1234,
-                String = "String",
-            };
-
-            var actual = test.Clone(data);
-
-            Assert.Equal(actual.Int, data.Int);
-            Assert.Equal(actual.String, data.String);
-        }
-
-        [Fact]
-        public void Load_Stack_Test()
-        {
-            var test = new JsonTextSerializer() {
-                StackSize = 1024,
-            };
-
-            var data = new SerializableData_B() {
-                Int = 1234,
-                String = "String",
-            };
-
-            var actual = test.Clone(data);
-
-            Assert.Equal(actual.Int, data.Int);
-            Assert.Equal(actual.String, data.String);
         }
 
         #endregion

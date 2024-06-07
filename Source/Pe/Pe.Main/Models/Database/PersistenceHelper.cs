@@ -1,5 +1,6 @@
 using System;
 using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Standard.Database;
@@ -112,18 +113,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         /// <param name="destination"></param>
         public static void Copy(IDatabaseAccessor source, IDatabaseAccessor destination)
         {
-            if(source == null) {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if(destination == null) {
-                throw new ArgumentNullException(nameof(destination));
-            }
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(destination);
             if(source == destination) {
-                throw new ArgumentException(null, $"{nameof(source)} == {nameof(destination)}");
+                throw new ArgumentException($"{nameof(source)} == {nameof(destination)}");
             }
 
-            var src = (ApplicationDatabaseAccessor)source;
-            var dst = (ApplicationDatabaseAccessor)destination;
+            //--------------------------------
+            // SQLite しか知らん
+            var src = (SqliteAccessor)source;
+            var dst = (SqliteAccessor)destination;
 
             var dbNames = new[] { "main", "temp" };
             foreach(var dbName in dbNames) {

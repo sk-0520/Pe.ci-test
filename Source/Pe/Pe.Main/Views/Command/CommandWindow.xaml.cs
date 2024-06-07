@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
         #region property
 
         private PopupAdjuster PopupAdjuster { get; }
-        [Inject]
+        [DiInjection]
         private ILogger? Logger { get; set; }
 
         #endregion

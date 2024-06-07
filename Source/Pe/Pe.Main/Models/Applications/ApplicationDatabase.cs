@@ -76,10 +76,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     internal partial class ApplicationDatabaseImplementation: SqliteImplementation
     { }
 
+    public interface IApplicationDatabaseAccessor: IDatabaseAccessor
+    { }
+
+    public interface IMainDatabaseAccessor: IApplicationDatabaseAccessor
+    { }
+    public interface ILargeDatabaseAccessor: IApplicationDatabaseAccessor
+    { }
+    public interface ITemporaryDatabaseAccessor: IApplicationDatabaseAccessor
+    { }
+
     /// <summary>
     /// アプリケーション用<see cref="IDatabaseAccessor"/>実装。
     /// </summary>
-    internal class ApplicationDatabaseAccessor: SqliteAccessor
+    internal class ApplicationDatabaseAccessor: SqliteAccessor, IMainDatabaseAccessor, ILargeDatabaseAccessor, ITemporaryDatabaseAccessor
     {
         public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILogger logger)
             : base(connectionCreator, logger)

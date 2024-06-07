@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
     {
         #region property
 
-        protected string ConnectionString { get; set; } = string.Empty;
+        public string ConnectionString { get; protected set; } = string.Empty;
 
         #endregion
 

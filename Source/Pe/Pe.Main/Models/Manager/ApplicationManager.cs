@@ -65,6 +65,7 @@ using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Main.Models.Element.Setting.Factory;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -281,7 +282,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var settingDatabasePack = container.Build<IDatabaseAccessorPack>();
             PersistenceHelper.Copy(workingDatabasePack.Temporary, settingDatabasePack.Temporary);
 
-            var settingElement = new SettingContainerElement(container, Logging.PauseReceiveLog, container.Build<ILoggerFactory>());
+            var settingElement = new SettingContainerElement(container, Logging.PauseReceiveLog, container.Build<ISettingElementFactory>(), container.Build<ILoggerFactory>());
             await settingElement.InitializeAsync();
             var windowItem = OrderManager.CreateSettingWindow(settingElement);
             WindowManager.Register(windowItem);

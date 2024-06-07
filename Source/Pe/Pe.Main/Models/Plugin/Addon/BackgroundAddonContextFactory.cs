@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    internal class BackgroundAddonContextFactory: PluginContextFactoryBase
+    public class BackgroundAddonContextFactory: PluginContextFactoryBase
     {
         public BackgroundAddonContextFactory(IDatabaseBarrierPack databaseBarrierPack, IDatabaseDelayWriterPack databaseDelayWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
           : base(databaseBarrierPack, databaseDelayWriterPack, databaseStatementLoader, environmentParameters, userAgentManager, loggerFactory)
@@ -48,7 +48,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             var context = new BackgroundAddonKeyboardContext(pluginInformation.PluginIdentifiers, keyboardHookEventArgs);
             return context;
         }
-
 
         public BackgroundAddonMouseMoveContext CreateMouseMoveContext(IPluginInformation pluginInformation, MouseHookEventArgs mouseHookEventArgs)
         {

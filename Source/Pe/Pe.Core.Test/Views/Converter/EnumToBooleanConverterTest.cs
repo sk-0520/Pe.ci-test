@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -45,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Views.Converter
         }
 
         [Fact]
+        [SuppressMessage("SonarLint", "S2701", Justification = "result object")]
         public void Convert_null_Test()
         {
             var test = new EnumToBooleanConverter();

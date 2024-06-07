@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         #region RegisterMember
 
         /// <summary>
-        /// <see cref="IDiContainer.Inject{TObject}(TObject)"/> を行う際に <see cref="InjectAttribute"/> を設定できないプロパティに無理やり設定する。
+        /// <see cref="IDiContainer.Inject{TObject}(TObject)"/> を行う際に <see cref="DiInjectionAttribute"/> を設定できないプロパティに無理やり設定する。
         /// </summary>
         /// <param name="baseType"></param>
         /// <param name="memberName"></param>

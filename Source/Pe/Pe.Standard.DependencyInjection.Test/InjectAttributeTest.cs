@@ -14,14 +14,14 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
         [Fact]
         public void Constructor_0_Test()
         {
-            var test = new InjectAttribute();
+            var test = new DiInjectionAttribute();
             Assert.Empty(test.Name);
         }
 
         [Fact]
         public void Constructor_1_Test()
         {
-            var test = new InjectAttribute(" abc ");
+            var test = new DiInjectionAttribute(" abc ");
             Assert.Equal(" abc ", test.Name);
         }
 
@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection.Test
         [InlineData(" ")]
         public void Constructor_throw_Test(string? s)
         {
-            Assert.Throws<ArgumentException>(() => new InjectAttribute(s!));
+            Assert.Throws<ArgumentException>(() => new DiInjectionAttribute(s!));
         }
 
         #endregion

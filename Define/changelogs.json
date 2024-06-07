@@ -1,5 +1,27 @@
 [
 	{
+		"date": "2024/06/07",
+		"version": "0.99.234",
+		"contents": [
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "",
+						"subject": "#933: DI の型よわよわ生成処理を Factory 作って早め対応できるようにする",
+						"comments": [
+							"リファクタしないと無理なので気になるところだけ対応"
+						]
+					},
+					{
+						"revision": "",
+						"subject": "Microsoft.Web.WebView2 1.0.2478.35 -> 1.0.2535.41"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2024/05/26",
 		"version": "0.99.232, 0.99.233",
 		"contents": [

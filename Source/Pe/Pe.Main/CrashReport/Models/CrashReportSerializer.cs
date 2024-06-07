@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Core.Models.Serialization;
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models
 {
     //TODO: JsonTextSerializer に統合
-    internal sealed class CrashReportSerializer: SerializerBase
+    public sealed class CrashReportSerializer: SerializerBase
     {
         public CrashReportSerializer()
         { }

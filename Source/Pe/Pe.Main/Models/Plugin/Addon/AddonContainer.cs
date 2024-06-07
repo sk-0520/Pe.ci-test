@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// <summary>
     /// アドオン用コンテナ。
     /// </summary>
-    internal class AddonContainer: PluginContainerBase
+    public class AddonContainer: PluginContainerBase
     {
         #region variable
 

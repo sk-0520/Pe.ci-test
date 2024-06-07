@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         protected DiNamedContainer<ConcurrentDictionary<Type, object>> ObjectPool { get; } = new DiNamedContainer<ConcurrentDictionary<Type, object>>();
         protected IList<DiInjectionMember> InjectionMembers { get; } = new List<DiInjectionMember>();
 
-        private static IReadOnlyDictionary<ParameterInfo, InjectAttribute> EmptyInjections = new Dictionary<ParameterInfo, InjectAttribute>();
+        private static IReadOnlyDictionary<ParameterInfo, DiInjectionAttribute> EmptyInjections = new Dictionary<ParameterInfo, DiInjectionAttribute>();
 
         #endregion
 
@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             throw new DiException($"get error: {interfaceType} [{name}]");
         }
 
-        private static List<KeyValuePair<Type, object?>> BuildManualParameters(IReadOnlyList<object> manualParameters)
+        private static List<KeyValuePair<Type, object?>> BuildManualParameters(IReadOnlyCollection<object> manualParameters)
         {
             using var arrayPoolDisposer = new ArrayPoolObject<KeyValuePair<Type, object?>>(manualParameters.Count);
             int resultIndex = 0;
@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             return result;
         }
 
-        private static KeyValuePair<Type, object?> GetParameter(ParameterInfo parameterInfo, IReadOnlyList<KeyValuePair<Type, object?>> manualParameterItems)
+        private static KeyValuePair<Type, object?> GetParameter(ParameterInfo parameterInfo, IReadOnlyCollection<KeyValuePair<Type, object?>> manualParameterItems)
         {
             foreach(var manualParameterItem in manualParameterItems) {
                 if(manualParameterItem.Key == parameterInfo.ParameterType) {
@@ -220,11 +220,11 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             return result;
         }
 
-        private object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfoItems, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IReadOnlyList<object> manualParameters)
+        private object?[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfoItems, IReadOnlyDictionary<ParameterInfo, DiInjectionAttribute> parameterInjections, IReadOnlyCollection<object> manualParameters)
         {
             var manualParameterItems = BuildManualParameters(manualParameters);
 
-            var arguments = new object[parameterInfoItems.Count];
+            var arguments = new object?[parameterInfoItems.Count];
             for(var i = 0; i < parameterInfoItems.Count; i++) {
                 var parameterInfo = parameterInfoItems[i];
                 // 入力パラメータを優先して設定
@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
                     //var item = manualParameterItems.FirstOrDefault(p => p.Key == parameterInfo.ParameterType || parameterInfo.ParameterType.IsAssignableFrom(p.Key));
                     var item = GetParameter(parameterInfo, manualParameterItems);
                     if(item.Key != default) {
-                        arguments[i] = item.Value!; // 正しい null
+                        arguments[i] = item.Value;
                         manualParameterItems.Remove(item);
                         continue;
                     }
@@ -298,7 +298,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
 
         }
 
-        private bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IReadOnlyList<object> manualParameters, [NotNullWhen(true)] out object? createdObject)
+        private bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IReadOnlyCollection<object> manualParameters, [NotNullWhen(true)] out object? createdObject)
         {
             var parameters = constructorCache.ParameterInfoItems;
             var parameterInjections = constructorCache.ParameterInjections;
@@ -328,7 +328,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             return true;
         }
 
-        private bool TryNewObject(Type objectType, string name, IReadOnlyList<object> manualParameters, bool useFactoryCache, [NotNullWhen(true)] out object? createdObject)
+        private bool TryNewObject(Type objectType, string name, IReadOnlyCollection<object> manualParameters, bool useFactoryCache, [NotNullWhen(true)] out object? createdObject)
         {
             if(ObjectPool[name].TryGetValue(objectType, out var poolValue)) {
                 createdObject = poolValue;
@@ -356,7 +356,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
                 .Select(c => (
                     constructor: c,
                     parameters: c.GetParameters(),
-                    attribute: c.GetCustomAttribute<InjectAttribute>()
+                    attribute: c.GetCustomAttribute<DiInjectionAttribute>()
                 ))
                 .Where(i => i.attribute != null || i.constructor.IsPublic)
                 .OrderBy(i => i.attribute != null ? 0 : 1)
@@ -381,7 +381,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             return false;
         }
 
-        private object NewCore(Type type, string name, IReadOnlyList<object> manualParameters, bool useFactoryCache)
+        private object NewCore(Type type, string name, IReadOnlyCollection<object> manualParameters, bool useFactoryCache)
         {
             if(ObjectPool[name].TryGetValue(type, out var poolValue)) {
                 return poolValue;
@@ -399,7 +399,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             throw new DiException($"{type}: create error{Environment.NewLine}{exceptionConstructorLines}");
         }
 
-        private bool TryGetInstance(Type interfaceType, string name, IReadOnlyList<object> manualParameters, [MaybeNullWhen(false)] out object value)
+        private bool TryGetInstance(Type interfaceType, string name, IReadOnlyCollection<object> manualParameters, [MaybeNullWhen(false)] out object value)
         {
             if(ObjectPool[name].TryGetValue(interfaceType, out var poolValue)) {
                 value = poolValue;
@@ -462,7 +462,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         {
             var targetType = GetMappingType(typeof(TObject), name);
             var memberItems = targetType.GetMembers(MemberBindingFlags)
-                .Select(m => (memberInfo: m, inject: m.GetCustomAttribute<InjectAttribute>()))
+                .Select(m => (memberInfo: m, inject: m.GetCustomAttribute<DiInjectionAttribute>()))
                 .ToList()
             ;
             foreach(var memberItem in memberItems.Where(a => a.inject is not null)) {
@@ -521,13 +521,13 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
             return (TInterface)Get(typeof(TInterface), ToInjectionName(name));
         }
 
-        /// <inheritdoc cref="IDiContainer.New(Type, IReadOnlyList{object})"/>
-        public object New(Type type, IReadOnlyList<object> manualParameters)
+        /// <inheritdoc cref="IDiContainer.New(Type, IReadOnlyCollection{object})"/>
+        public object New(Type type, IReadOnlyCollection<object> manualParameters)
         {
             return NewCore(type, string.Empty, manualParameters, true);
         }
-        /// <inheritdoc cref="IDiContainer.New(Type, string, IReadOnlyList{object})"/>
-        public object New(Type type, string name, IReadOnlyList<object> manualParameters)
+        /// <inheritdoc cref="IDiContainer.New(Type, string, IReadOnlyCollection{object})"/>
+        public object New(Type type, string name, IReadOnlyCollection<object> manualParameters)
         {
             return NewCore(type, ToInjectionName(name), manualParameters, true);
         }
@@ -544,16 +544,16 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         }
 
 
-        /// <inheritdoc cref="IDiContainer.New{TObject}(IReadOnlyList{object})"/>
-        public TObject New<TObject>(IReadOnlyList<object> manualParameters)
+        /// <inheritdoc cref="IDiContainer.New{TObject}(IReadOnlyCollection{object})"/>
+        public TObject New<TObject>(IReadOnlyCollection<object> manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         {
             return (TObject)New(typeof(TObject), manualParameters);
         }
-        /// <inheritdoc cref="IDiContainer.New{TObject}(string, IReadOnlyList{object})"/>
-        public TObject New<TObject>(string name, IReadOnlyList<object> manualParameters)
+        /// <inheritdoc cref="IDiContainer.New{TObject}(string, IReadOnlyCollection{object})"/>
+        public TObject New<TObject>(string name, IReadOnlyCollection<object> manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
@@ -580,7 +580,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         }
 
         [return: MaybeNull]
-        public object? CallMethod(string name, object instance, MethodInfo methodInfo, IReadOnlyList<object> manualParameters)
+        public object? CallMethod(string name, object instance, MethodInfo methodInfo, IReadOnlyCollection<object> manualParameters)
         {
             var parameters = methodInfo.GetParameters();
             var arguments = CreateParameters(name, parameters, EmptyInjections, manualParameters);

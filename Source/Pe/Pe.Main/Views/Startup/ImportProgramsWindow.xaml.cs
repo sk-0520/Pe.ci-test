@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Startup
 
         #region property
 
-        [Inject]
+        [DiInjection]
         private ILogger? Logger { get; set; }
 
         #endregion

@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
 
         #region property
 
-        [Inject]
+        [DiInjection]
         private ILogger? Logger { get; set; }
         private LauncherToolbarViewModel ViewModel => (LauncherToolbarViewModel)DataContext;
 

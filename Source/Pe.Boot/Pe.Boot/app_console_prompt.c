@@ -6,7 +6,7 @@ EXIT_CODE console_execute_prompt(HINSTANCE hInstance, const COMMAND_LINE_OPTION*
     while (running_prompt) {
         TEXT t = wrap_text(_T("abc"));
         output_console_text(console_resource, &t, true);
-    };
+    }
 
     return EXIT_CODE_SUCCESS;
 }

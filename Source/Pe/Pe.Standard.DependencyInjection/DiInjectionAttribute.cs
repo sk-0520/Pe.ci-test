@@ -7,16 +7,16 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
     /// 注入マーク。
     /// </summary>
     /// <remarks>
-    /// <para><see cref="IDiContainer.New{TObject}(IReadOnlyList{object})"/> する際の対象コンストラクタを限定。</para>
+    /// <para><see cref="IDiContainer.New{TObject}(IReadOnlyCollection{object})"/> する際の対象コンストラクタを限定。</para>
     /// <para><see cref="IDiContainer.Inject{T}(T)"/> を使用する際の対象を指定。</para>
     /// </remarks>
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public class InjectAttribute: Attribute
+    public class DiInjectionAttribute: Attribute
     {
         /// <summary>
         /// コンストラクタの限定、対象プロパティ(or フィールド)をマーク。
         /// </summary>
-        public InjectAttribute()
+        public DiInjectionAttribute()
         {
             Name = string.Empty;
         }
@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Standard.DependencyInjection
         /// コンストラクタの限定、対象プロパティ(or フィールド)を名前付きでマーク。
         /// </summary>
         /// <param name="name">名前。</param>
-        public InjectAttribute(string name)
+        public DiInjectionAttribute(string name)
         {
             if(string.IsNullOrWhiteSpace(name)) {
                 throw new ArgumentException("empty", nameof(name));

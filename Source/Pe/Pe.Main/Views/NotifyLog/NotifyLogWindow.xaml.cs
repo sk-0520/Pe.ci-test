@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
 
         #region property
 
-        [Inject]
+        [DiInjection]
         private ILogger? Logger { get; set; }
 
 

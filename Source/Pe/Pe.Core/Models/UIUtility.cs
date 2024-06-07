@@ -95,20 +95,23 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static IEnumerable<T> FindVisualChildren<T>(DependencyObject dependencyObject)
             where T : DependencyObject
         {
-            if(dependencyObject != null) {
-                var childCount = VisualTreeHelper.GetChildrenCount(dependencyObject);
-                for(int i = 0; i < childCount; i++) {
-                    var child = VisualTreeHelper.GetChild(dependencyObject, i);
-                    if(child != null) {
-                        if(child is T childObj) {
-                            yield return childObj;
-                        }
-                    }
-                    if(child != null) {
-                        foreach(var childOfChild in FindVisualChildren<T>(child)) {
-                            yield return childOfChild;
-                        }
-                    }
+            if(dependencyObject is null) {
+                yield break;
+            }
+
+            var childCount = VisualTreeHelper.GetChildrenCount(dependencyObject);
+            for(int i = 0; i < childCount; i++) {
+                var child = VisualTreeHelper.GetChild(dependencyObject, i);
+                if(child is null) {
+                    continue;
+                }
+
+                if(child is T childObj) {
+                    yield return childObj;
+                }
+
+                foreach(var childOfChild in FindVisualChildren<T>(child)) {
+                    yield return childOfChild;
                 }
             }
         }
@@ -122,16 +125,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static IEnumerable<T> FindLogicalChildren<T>(DependencyObject dependencyObject)
             where T : DependencyObject
         {
-            if(dependencyObject != null) {
-                foreach(var child in LogicalTreeHelper.GetChildren(dependencyObject).OfType<DependencyObject>()) {
-                    if(child != null) {
-                        if(child is T childObj) {
-                            yield return childObj;
-                        }
-                        foreach(var childOfChild in FindLogicalChildren<T>(child)) {
-                            yield return childOfChild;
-                        }
-                    }
+            if(dependencyObject is null) {
+                yield break;
+            }
+
+            foreach(var child in LogicalTreeHelper.GetChildren(dependencyObject).OfType<DependencyObject>()) {
+                if(child is null) {
+                    continue;
+                }
+
+                if(child is T childObj) {
+                    yield return childObj;
+                }
+
+                foreach(var childOfChild in FindLogicalChildren<T>(child)) {
+                    yield return childOfChild;
                 }
             }
         }

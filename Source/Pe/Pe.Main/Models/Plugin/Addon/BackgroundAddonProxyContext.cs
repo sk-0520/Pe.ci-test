@@ -7,10 +7,10 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    internal class BackgroundAddonProxyRunStartupContext: IBackgroundAddonRunStartupContext
+    public class BackgroundAddonProxyRunStartupContext: IBackgroundAddonRunStartupContext
     { }
 
-    internal class BackgroundAddonProxyRunPauseContext: IBackgroundAddonRunPauseContext
+    public class BackgroundAddonProxyRunPauseContext: IBackgroundAddonRunPauseContext
     {
         public BackgroundAddonProxyRunPauseContext(bool isPausing)
         {
@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
-    internal class BackgroundAddonProxyRunExecuteContext: IBackgroundAddonRunExecuteContext
+    public class BackgroundAddonProxyRunExecuteContext: IBackgroundAddonRunExecuteContext
     {
         public BackgroundAddonProxyRunExecuteContext(RunExecuteKind runExecuteKind, object? parameter, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp)
         {
@@ -47,10 +47,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
-    internal class BackgroundAddonProxyRunShutdownContext: IBackgroundAddonRunShutdownContext
+    public class BackgroundAddonProxyRunShutdownContext: IBackgroundAddonRunShutdownContext
     { }
 
-    internal class BackgroundAddonProxyKeyboardContext: IBackgroundAddonKeyboardContext
+    public class BackgroundAddonProxyKeyboardContext: IBackgroundAddonKeyboardContext
     {
         public BackgroundAddonProxyKeyboardContext(KeyboardHookEventArgs keyboardHookEventArgs)
         {
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
-    internal class BackgroundAddonProxyMouseMoveContext: IBackgroundAddonMouseMoveContext
+    public class BackgroundAddonProxyMouseMoveContext: IBackgroundAddonMouseMoveContext
     {
         public BackgroundAddonProxyMouseMoveContext(MouseHookEventArgs mouseHookEventArgs)
         {
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
-    internal class BackgroundAddonProxyMouseButtonContext: IBackgroundAddonMouseButtonContext
+    public class BackgroundAddonProxyMouseButtonContext: IBackgroundAddonMouseButtonContext
     {
         public BackgroundAddonProxyMouseButtonContext(MouseHookEventArgs mouseHookEventArgs)
         {

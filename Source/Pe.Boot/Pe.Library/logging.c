@@ -1,6 +1,6 @@
 ﻿#include <stdarg.h>
 
-#include <windows.h>
+#include <Windows.h>
 
 #include "debug.h"
 #include "logging.h"

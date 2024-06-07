@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.StandardInputOutput
 
         #region property
 
-        [Inject]
+        [DiInjection]
         private ILogger? Logger { get; set; }
         private StandardInputOutputViewModel ViewModel => (StandardInputOutputViewModel)DataContext;
 

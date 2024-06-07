@@ -60,9 +60,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Database.Test",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Embedded.Test", "Pe.Embedded.Test\Pe.Embedded.Test.csproj", "{739EDCF5-37F4-4F99-84BF-797C062BEE94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pe.Standard.Property", "Pe.Standard.Property\Pe.Standard.Property.csproj", "{4F3B87B3-4820-4F08-90A2-0C90410E911C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Property", "Pe.Standard.Property\Pe.Standard.Property.csproj", "{4F3B87B3-4820-4F08-90A2-0C90410E911C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pe.Standard.Property.Test", "Pe.Standard.Property.Test\Pe.Standard.Property.Test.csproj", "{2C126598-F933-4F0B-AF12-BD4642A37EFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Property.Test", "Pe.Standard.Property.Test\Pe.Standard.Property.Test.csproj", "{2C126598-F933-4F0B-AF12-BD4642A37EFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pe.Standard.CliProxy", "Pe.Standard.CliProxy\Pe.Standard.CliProxy.csproj", "{391E9157-81A9-47D1-A757-D110C6D2D375}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pe.Standard.CliProxy.Test", "Pe.Standard.CliProxy.Test\Pe.Standard.CliProxy.Test.csproj", "{8CAF4F50-CE0B-4D6B-948C-C7B83CD59E27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -248,6 +252,22 @@ Global
 		{2C126598-F933-4F0B-AF12-BD4642A37EFF}.Release|x64.Build.0 = Release|x64
 		{2C126598-F933-4F0B-AF12-BD4642A37EFF}.Release|x86.ActiveCfg = Release|x86
 		{2C126598-F933-4F0B-AF12-BD4642A37EFF}.Release|x86.Build.0 = Release|x86
+		{391E9157-81A9-47D1-A757-D110C6D2D375}.Debug|x64.ActiveCfg = Debug|x64
+		{391E9157-81A9-47D1-A757-D110C6D2D375}.Debug|x64.Build.0 = Debug|x64
+		{391E9157-81A9-47D1-A757-D110C6D2D375}.Debug|x86.ActiveCfg = Debug|x86
+		{391E9157-81A9-47D1-A757-D110C6D2D375}.Debug|x86.Build.0 = Debug|x86
+		{391E9157-81A9-47D1-A757-D110C6D2D375}.Release|x64.ActiveCfg = Release|x64
+		{391E9157-81A9-47D1-A757-D110C6D2D375}.Release|x64.Build.0 = Release|x64
+		{391E9157-81A9-47D1-A757-D110C6D2D375}.Release|x86.ActiveCfg = Release|x86
+		{391E9157-81A9-47D1-A757-D110C6D2D375}.Release|x86.Build.0 = Release|x86
+		{8CAF4F50-CE0B-4D6B-948C-C7B83CD59E27}.Debug|x64.ActiveCfg = Debug|x64
+		{8CAF4F50-CE0B-4D6B-948C-C7B83CD59E27}.Debug|x64.Build.0 = Debug|x64
+		{8CAF4F50-CE0B-4D6B-948C-C7B83CD59E27}.Debug|x86.ActiveCfg = Debug|x86
+		{8CAF4F50-CE0B-4D6B-948C-C7B83CD59E27}.Debug|x86.Build.0 = Debug|x86
+		{8CAF4F50-CE0B-4D6B-948C-C7B83CD59E27}.Release|x64.ActiveCfg = Release|x64
+		{8CAF4F50-CE0B-4D6B-948C-C7B83CD59E27}.Release|x64.Build.0 = Release|x64
+		{8CAF4F50-CE0B-4D6B-948C-C7B83CD59E27}.Release|x86.ActiveCfg = Release|x86
+		{8CAF4F50-CE0B-4D6B-948C-C7B83CD59E27}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -276,6 +296,8 @@ Global
 		{739EDCF5-37F4-4F99-84BF-797C062BEE94} = {17EE14A7-7F7A-4D40-9216-BB8C561DBF49}
 		{4F3B87B3-4820-4F08-90A2-0C90410E911C} = {7D2653BF-3D84-44F4-8158-21179F8EE206}
 		{2C126598-F933-4F0B-AF12-BD4642A37EFF} = {7D2653BF-3D84-44F4-8158-21179F8EE206}
+		{391E9157-81A9-47D1-A757-D110C6D2D375} = {7D2653BF-3D84-44F4-8158-21179F8EE206}
+		{8CAF4F50-CE0B-4D6B-948C-C7B83CD59E27} = {7D2653BF-3D84-44F4-8158-21179F8EE206}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		RESX_NeutralResourcesLanguage = ja-JP

@@ -22,6 +22,9 @@ Pe リポジトリからいい感じのあれこれを取ってきてあれこ�
 .PARAMETER AppTargetBranch
 対象 Pe のブランチ
 
+.PARAMETER AppRevision
+対象 Pe のリビジョン(原則指定しない, 開発内部的な使用を目的としている)
+
 .PARAMETER GitPath
 環境変数PATH に割り当てる git がインストールされているパス
 
@@ -38,6 +41,7 @@ Param(
 	[Guid] $PluginId,
 	[string] $DefaultNamespace,
 	[string] $AppTargetBranch = 'master',
+	[string] $AppRevision = '',
 	[string] $GitPath = '%PROGRAMFILES%\Git\bin',
 	[string] $DotNetPath = '%PROGRAMFILES%\dotnet\'
 )
@@ -255,7 +259,8 @@ function New-Submodule {
 	param (
 		[string] $Path,
 		[uri] $Uri,
-		[string] $Branch
+		[string] $Branch,
+		[string] $Revision
 	)
 
 	try {
@@ -265,6 +270,12 @@ function New-Submodule {
 		Write-Information "サブモジュール親ディレクトリ生成: $targetPath"
 		if ($PSCmdlet.ShouldProcess('Path', "$Path のテンプレート文字列を置き換え")) {
 			& $parameters.git submodule add --branch $Branch $Uri $Path
+			if(${Revision}) {
+				Push-Location -LiteralPath $Path
+				&	$parameters.git checkout "${Revision}"
+				Pop-Location
+				& $parameters.git add .
+			}
 		} else {
 			Write-Verbose "`[DRY`] $($parameters.git) submodule add --branch $Branch $Uri $Path"
 		}
@@ -276,7 +287,7 @@ function New-Submodule {
 
 # Pe をサブモジュールとしてとってくる
 if (!$suppressScm) {
-	New-Submodule -Path $parameters.repository.application.path -Uri $parameters.repository.application.url -Branch $AppTargetBranch
+	New-Submodule -Path $parameters.repository.application.path -Uri $parameters.repository.application.url -Branch $AppTargetBranch -Revision $AppRevision
 }
 
 try {
@@ -305,6 +316,14 @@ try {
 		},
 		@{
 			project = 'Pe.Standard.Base'
+			directory = 'Pe\lib\standard'
+		},
+		@{
+			project = 'Pe.Standard.CliProxy'
+			directory = 'Pe\lib\standard'
+		},
+		@{
+			project = 'Pe.Standard.Property'
 			directory = 'Pe\lib\standard'
 		},
 		@{

@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database
         }
 
         [Fact]
-        public void ToTest_A()
+        public void ToString_A_Test()
         {
             var expected = "test-enum";
             var enumTransfer = new EnumTransfer<A>();
@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database
         }
 
         [Fact]
-        public void ToTest_B()
+        public void ToString_B_Test()
         {
             var expected = "abc";
             var enumTransfer = new EnumTransfer<B>();
@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database
         }
 
         [Fact]
-        public void FromTest_C()
+        public void ToEnum_C_Test()
         {
             var enumTransfer = new EnumTransfer<C>();
             Assert.Equal(C.TestMember1, enumTransfer.ToEnum("testmember1"));
@@ -77,9 +77,13 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database
         }
 
         [Fact]
-        public void FromTest_D()
+        public void ToEnum_D_Test()
         {
             var enumTransfer = new EnumTransfer<D>();
+            Assert.Equal(D.TestMember1, enumTransfer.ToEnum(null!));
+            Assert.Equal(D.TestMember1, enumTransfer.ToEnum(""));
+            Assert.Equal(D.TestMember1, enumTransfer.ToEnum(" "));
+            Assert.Equal(D.TestMember1, enumTransfer.ToEnum("z"));
             Assert.Equal(D.TestMember1, enumTransfer.ToEnum("test1"));
             Assert.Equal(D.TestMember2, enumTransfer.ToEnum("TEST2"));
             Assert.Equal(D.TestMember3, enumTransfer.ToEnum("3"));
@@ -106,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database
             D,
         }
         [Fact]
-        public void FromTest_E()
+        public void ToEnum_E_Test()
         {
             var enumTransfer = new EnumTransfer<E>();
             Assert.Equal(E.A, enumTransfer.ToEnum(enumTransfer.ToString(E.A)));

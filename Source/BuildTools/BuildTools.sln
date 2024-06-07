@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.DependencyInjec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Property", "..\Pe\Pe.Standard.Property\Pe.Standard.Property.csproj", "{B2924289-C9F2-41AC-A0AC-467EEE01874F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.CliProxy", "..\Pe\Pe.Standard.CliProxy\Pe.Standard.CliProxy.csproj", "{87CF83B3-06A8-4594-A287-D159A727C85E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -123,6 +125,14 @@ Global
 		{B2924289-C9F2-41AC-A0AC-467EEE01874F}.Release|x64.Build.0 = Release|x64
 		{B2924289-C9F2-41AC-A0AC-467EEE01874F}.Release|x86.ActiveCfg = Release|x86
 		{B2924289-C9F2-41AC-A0AC-467EEE01874F}.Release|x86.Build.0 = Release|x86
+		{87CF83B3-06A8-4594-A287-D159A727C85E}.Debug|x64.ActiveCfg = Debug|x64
+		{87CF83B3-06A8-4594-A287-D159A727C85E}.Debug|x64.Build.0 = Debug|x64
+		{87CF83B3-06A8-4594-A287-D159A727C85E}.Debug|x86.ActiveCfg = Debug|x86
+		{87CF83B3-06A8-4594-A287-D159A727C85E}.Debug|x86.Build.0 = Debug|x86
+		{87CF83B3-06A8-4594-A287-D159A727C85E}.Release|x64.ActiveCfg = Release|x64
+		{87CF83B3-06A8-4594-A287-D159A727C85E}.Release|x64.Build.0 = Release|x64
+		{87CF83B3-06A8-4594-A287-D159A727C85E}.Release|x86.ActiveCfg = Release|x86
+		{87CF83B3-06A8-4594-A287-D159A727C85E}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +147,7 @@ Global
 		{103D0407-B9F8-4437-89D2-D034198147AC} = {C44D8F5B-8F4C-44B1-AD50-E1635FDAA67B}
 		{957D6AA0-9E8B-4A70-9F71-C18F9D05FA4D} = {C44D8F5B-8F4C-44B1-AD50-E1635FDAA67B}
 		{B2924289-C9F2-41AC-A0AC-467EEE01874F} = {C44D8F5B-8F4C-44B1-AD50-E1635FDAA67B}
+		{87CF83B3-06A8-4594-A287-D159A727C85E} = {C44D8F5B-8F4C-44B1-AD50-E1635FDAA67B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F52DE156-059A-48B8-9DF3-E3834C34FEA9}

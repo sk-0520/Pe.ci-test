@@ -295,6 +295,7 @@
     <ClCompile Include="fsio.test.cpp" />
     <ClCompile Include="fsio.z.resource.test.cpp" />
     <ClCompile Include="fsio.z.textfile.test.cpp" />
+    <ClCompile Include="hash.test.cpp" />
     <ClCompile Include="map.test.cpp" />
     <ClCompile Include="lib_math.test.cpp" />
     <ClCompile Include="linked_list.test.cpp" />

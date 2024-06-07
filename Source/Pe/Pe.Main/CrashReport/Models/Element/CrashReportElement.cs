@@ -17,7 +17,7 @@ using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 {
-    internal class CrashReportElement: ElementBase
+    public class CrashReportElement: ElementBase
     {
         public CrashReportElement(CrashReportOptions options, ILoggerFactory loggerFactory)
             : base(loggerFactory)

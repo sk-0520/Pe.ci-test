@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.ExtendsExecute
         #region property
         private DialogRequestReceiver DialogRequestReceiver { get; }
 
-        [Inject]
+        [DiInjection]
         private ILogger? Logger { get; set; }
 
         #endregion

@@ -84,21 +84,16 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Serialization
             var data = CreateData();
             var test = CreateSerializer(serializerType);
 
-            var dir = TestIO.InitializeMethod(this, serializerType.Name);
+            using var stream = new MemoryStream();
 
-            var saveFile = TestIO.CreateEmptyFile(dir, "data.dat");
+            test.Save(data, stream);
+            stream.Position = 0;
 
-            using(var stream = saveFile.OpenWrite()) {
-                test.Save(data, stream);
-            }
-
-            using(var stream = saveFile.OpenRead()) {
-                var actual = test.Load<SerializableData>(stream);
-                Assert.Equal(data.Int, actual.Int);
-                Assert.Equal(data.Decimal, actual.Decimal);
-                Assert.Equal(data.TimeSpan, actual.TimeSpan);
-                Assert.Equal(data.DateTime, actual.DateTime);
-            }
+            var actual = test.Load<SerializableData>(stream);
+            Assert.Equal(data.Int, actual.Int);
+            Assert.Equal(data.Decimal, actual.Decimal);
+            Assert.Equal(data.TimeSpan, actual.TimeSpan);
+            Assert.Equal(data.DateTime, actual.DateTime);
         }
 
         [Theory]

@@ -93,6 +93,9 @@
     <ClCompile Include="text.test.z.parse.test.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="hash.test.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">

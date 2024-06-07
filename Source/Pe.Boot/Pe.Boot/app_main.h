@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <windows.h>
+#include <Windows.h>
 
 #include "app_common.h"
 #include "../Pe.Library/command_line.h"

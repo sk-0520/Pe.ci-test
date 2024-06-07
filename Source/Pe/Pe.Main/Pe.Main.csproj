@@ -31,7 +31,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2478.35" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2535.41" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.3.11" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
     <PackageReference Include="SevenZipExtractor" Version="1.0.17" />
@@ -43,6 +43,7 @@
     <ProjectReference Include="..\Pe.Core\Pe.Core.csproj" />
     <ProjectReference Include="..\Pe.Plugins.DefaultTheme\Pe.Plugins.DefaultTheme.csproj" />
     <ProjectReference Include="..\Pe.Standard.Base\Pe.Standard.Base.csproj" />
+    <ProjectReference Include="..\Pe.Standard.CliProxy\Pe.Standard.CliProxy.csproj" />
     <ProjectReference Include="..\Pe.Standard.Database\Pe.Standard.Database.csproj" />
     <ProjectReference Include="..\Pe.Standard.DependencyInjection\Pe.Standard.DependencyInjection.csproj" />
   </ItemGroup>

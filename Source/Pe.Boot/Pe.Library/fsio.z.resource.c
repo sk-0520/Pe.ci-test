@@ -15,10 +15,7 @@ FILE_RESOURCE create_invalid_file_resource()
 
 FILE_RESOURCE RC_FILE_FUNC(new_file_resource, const TEXT* path, FILE_ACCESS_MODE access_mode, FILE_SHARE_MODE shared_mode, FILE_OPEN_MODE open_mode, DWORD attributes, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
-    if (!path) {
-        return create_invalid_file_resource();
-    }
-    if (!path->value) {
+    if (!is_enabled_text(path)) {
         return create_invalid_file_resource();
     }
 
@@ -59,10 +56,6 @@ FILE_RESOURCE RC_FILE_FUNC(open_or_create_file_resource, const TEXT* path, const
 
 bool RC_FILE_FUNC(release_file_resource, FILE_RESOURCE* file_resource)
 {
-    if (!file_resource) {
-        return false;
-    }
-
     if (!is_enabled_file_resource(file_resource)) {
         return false;
     }
@@ -89,6 +82,10 @@ bool is_enabled_file_resource(const FILE_RESOURCE* file_resource)
     }
 
     if (!file_resource->handle) {
+        return false;
+    }
+
+    if (file_resource->handle == INVALID_HANDLE_VALUE) {
         return false;
     }
 

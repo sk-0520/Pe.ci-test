@@ -21,11 +21,11 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
 
         #region property
 
-        [Inject]
+        [DiInjection]
         private WebViewInitializer WebViewInitializer { get; set; } = default!;
-        [Inject]
+        [DiInjection]
         private EnvironmentParameters EnvironmentParameters { get; set; } = default!;
-        [Inject]
+        [DiInjection]
         private ICultureService CultureService { get; set; } = default!;
 
         #endregion
