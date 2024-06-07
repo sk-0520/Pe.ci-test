@@ -130,69 +130,71 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         {
             if(valueType.IsSubclassOf(typeof(ConfigurationBase))) {
                 var childSection = conf.GetSection(memberKey);
-                var result = Activator.CreateInstance(valueType, new[] { childSection });
-                return result;
-            } else if(valueType == typeof(string)) {
+                var subclassResult = Activator.CreateInstance(valueType, new[] { childSection });
+                return subclassResult;
+            }
+
+            if(valueType == typeof(string)) {
                 if(string.IsNullOrEmpty(memberKey)) {
                     var getResult = conf.Get(typeof(string));
                     return getResult;
                 }
-                var result = conf.GetValue(valueType, memberKey);
-                return result;
-            } else {
-                var result = conf.GetValue(valueType, memberKey);
-                if(result == null) {
-                    var childSection = conf.GetSection(memberKey);
-                    if(childSection.Value == null) {
-                        if(valueType.IsGenericType) {
-                            // ReadOnlyList<T>, IReadOnlyDictionary<string|Enum,T> のみサポートする
-                            var genArgs = valueType.GetGenericArguments();
-                            Debug.Assert(genArgs != null);
-                            var genIndex = valueType.Name.IndexOf('`');
-                            var genName = valueType.Name.Substring(0, genIndex);
-                            switch(genName) {
-                                case "IReadOnlyList": {
-                                        var rawChildren = childSection.GetChildren().ToList();
-                                        var array = Array.CreateInstance(genArgs[0], rawChildren.Count);
-                                        foreach(var child in rawChildren.Counting()) {
-                                            var childValue = GetValue(methodParent, child.Value, string.Empty, genArgs[0], methodInfo);
-                                            array.SetValue(childValue, child.Number);
-                                        }
-                                        return array;
+                var stringResult = conf.GetValue(valueType, memberKey);
+                return stringResult;
+            }
+
+            var result = conf.GetValue(valueType, memberKey);
+            if(result == null) {
+                var childSection = conf.GetSection(memberKey);
+                if(childSection.Value == null) {
+                    if(valueType.IsGenericType) {
+                        // ReadOnlyList<T>, IReadOnlyDictionary<string|Enum,T> のみサポートする
+                        var genArgs = valueType.GetGenericArguments();
+                        Debug.Assert(genArgs != null);
+                        var genIndex = valueType.Name.IndexOf('`');
+                        var genName = valueType.Name.Substring(0, genIndex);
+                        switch(genName) {
+                            case "IReadOnlyList": {
+                                    var rawChildren = childSection.GetChildren().ToList();
+                                    var array = Array.CreateInstance(genArgs[0], rawChildren.Count);
+                                    foreach(var child in rawChildren.Counting()) {
+                                        var childValue = GetValue(methodParent, child.Value, string.Empty, genArgs[0], methodInfo);
+                                        array.SetValue(childValue, child.Number);
                                     }
+                                    return array;
+                                }
 
-                                case "IReadOnlyDictionary": {
-                                        var rawChildren = childSection.GetChildren().ToList();
-                                        var dictionaryType = typeof(Dictionary<,>).MakeGenericType(genArgs);
-                                        var dictionary = (IDictionary)Activator.CreateInstance(dictionaryType)!;
-                                        foreach(var raw in rawChildren) {
-                                            var value = GetValue(methodParent, raw, string.Empty, genArgs[1], methodInfo);
+                            case "IReadOnlyDictionary": {
+                                    var rawChildren = childSection.GetChildren().ToList();
+                                    var dictionaryType = typeof(Dictionary<,>).MakeGenericType(genArgs);
+                                    var dictionary = (IDictionary)Activator.CreateInstance(dictionaryType)!;
+                                    foreach(var raw in rawChildren) {
+                                        var value = GetValue(methodParent, raw, string.Empty, genArgs[1], methodInfo);
 
-                                            if(genArgs[0] == typeof(string)) {
-                                                dictionary.Add(raw.Key, value);
-                                            } else if(genArgs[0].IsEnum) {
-                                                var key = Enum.Parse(genArgs[0], raw.Key, true);
-                                                dictionary.Add(key, value);
-                                            } else {
-                                                break;
-                                            }
+                                        if(genArgs[0] == typeof(string)) {
+                                            dictionary.Add(raw.Key, value);
+                                        } else if(genArgs[0].IsEnum) {
+                                            var key = Enum.Parse(genArgs[0], raw.Key, true);
+                                            dictionary.Add(key, value);
+                                        } else {
+                                            break;
                                         }
-                                        return dictionary;
                                     }
+                                    return dictionary;
+                                }
 
-                                default:
-                                    break;
-                            }
+                            default:
+                                break;
                         }
                     }
-                    if(methodInfo != null) {
-                        var customResult = GetCustomValue(methodParent, conf, memberKey, valueType, methodInfo);
-                        return customResult;
-                    }
-                    throw new Exception($"{childSection.Path}: {valueType}");
-                } else {
-                    return result;
                 }
+                if(methodInfo != null) {
+                    var customResult = GetCustomValue(methodParent, conf, memberKey, valueType, methodInfo);
+                    return customResult;
+                }
+                throw new Exception($"{childSection.Path}: {valueType}");
+            } else {
+                return result;
             }
         }
 
