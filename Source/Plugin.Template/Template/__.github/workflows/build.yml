@@ -55,11 +55,6 @@ jobs:
         shell: pwsh
         run: .\FullTest.ps1 -InformationAction Continue
 
-  abc:
-    steps:
-      - name: abc
-        run: echo ${{ github.ref }}
-
   deploy:
     needs:
       - build
