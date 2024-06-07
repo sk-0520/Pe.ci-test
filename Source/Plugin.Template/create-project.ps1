@@ -319,6 +319,10 @@ try {
 			directory = 'Pe\lib\standard'
 		},
 		@{
+			project = 'Pe.Standard.CliProxy'
+			directory = 'Pe\lib\standard'
+		},
+		@{
 			project = 'Pe.Standard.Property'
 			directory = 'Pe\lib\standard'
 		},

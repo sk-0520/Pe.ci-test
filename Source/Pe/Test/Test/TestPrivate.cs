@@ -2,13 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
-using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic.FileIO;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-using Moq;
-using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace ContentTypeTextNet.Pe.Test
