@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 var totalSize = SIZEOF_ICONDIR + SIZEOF_ICONDIRENTRY * iconCount;
                 for(var i = 0; i < iconCount; i++) {
                     var readOffset = SIZEOF_ICONDIR + (SIZEOF_GRPICONDIRENTRY * i) + OFFSET_GRPICONDIRENTRY_dwBytesInRes;
-                    if(binaryGroupIconData.Length < 0 && readOffset + sizeof(Int32) < binaryGroupIconData.Length) {
+                    if(binaryGroupIconData.Length == 0 && readOffset + sizeof(Int32) < binaryGroupIconData.Length) {
                         break;
                     }
                     if(binaryGroupIconData.Length < readOffset) {
