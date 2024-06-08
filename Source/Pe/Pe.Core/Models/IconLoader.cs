@@ -97,25 +97,25 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             var hGroup = NativeMethods.FindResource(hModule, name, new IntPtr((int)resType));
             if(hGroup == IntPtr.Zero) {
-                Logger.LogTrace($"return {nameof(NativeMethods.FindResource)}");
+                Logger.LogTrace("return {FUNC}", nameof(NativeMethods.FindResource));
                 return null;
             }
 
             var hLoadGroup = NativeMethods.LoadResource(hModule, hGroup);
             if(hLoadGroup == IntPtr.Zero) {
-                Logger.LogTrace($"return {nameof(NativeMethods.LoadResource)}");
+                Logger.LogTrace("return {FUNC}", nameof(NativeMethods.LoadResource));
                 return null;
             }
 
             var resData = NativeMethods.LockResource(hLoadGroup);
             if(resData == IntPtr.Zero) {
-                Logger.LogTrace($"return {nameof(NativeMethods.LockResource)}");
+                Logger.LogTrace("return {FUNC}", nameof(NativeMethods.LockResource));
                 return null;
             }
 
             var resSize = NativeMethods.SizeofResource(hModule, hGroup);
             if(resSize == 0) {
-                Logger.LogTrace($"return {nameof(NativeMethods.SizeofResource)}");
+                Logger.LogTrace("return {FUNC}", nameof(NativeMethods.SizeofResource));
                 return null;
             }
 
@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 var totalSize = SIZEOF_ICONDIR + SIZEOF_ICONDIRENTRY * iconCount;
                 for(var i = 0; i < iconCount; i++) {
                     var readOffset = SIZEOF_ICONDIR + (SIZEOF_GRPICONDIRENTRY * i) + OFFSET_GRPICONDIRENTRY_dwBytesInRes;
-                    if(binaryGroupIconData.Length < 0 && readOffset + sizeof(Int32) < binaryGroupIconData.Length) {
+                    if(binaryGroupIconData.Length == 0 && readOffset + sizeof(Int32) < binaryGroupIconData.Length) {
                         break;
                     }
                     if(binaryGroupIconData.Length < readOffset) {
