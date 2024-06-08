@@ -40,10 +40,10 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         IDisposable PauseConnection();
 
         /// <inheritdoc cref="IDatabaseReader.GetDataReader(string, object?)"/>
-        IDataReader GetDataReader(IDatabaseTransaction? transaction, string statement, object? parameter);
+        IDataReader GetDataReader(IDatabaseTransaction? transaction, string statement, object? parameter = null);
 
-        /// <inheritdoc cref="IDatabaseReader.GetDataReaderAsync(string, object?, CancellationToken)"/>
-        Task<IDataReader> GetDataReaderAsync(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
+        /// <inheritdoc cref="IDatabaseReader.GetDataReaderAsync(string, object?, CancellationToken = default)"/>
+        Task<IDataReader> GetDataReaderAsync(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default);
 
         /// <inheritdoc cref="IDatabaseReader.GetDataTable(string, object?)"/>
         DataTable GetDataTable(IDatabaseTransaction? transaction, string statement, object? parameter);
@@ -52,41 +52,41 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         Task<TResult?> GetScalarAsync<TResult>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default);
 
         /// <inheritdoc cref="IDatabaseReader.Query{T}(string, object?, bool)"/>
-        IEnumerable<T> Query<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered);
+        IEnumerable<T> Query<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null, bool buffered = true);
 
         /// <inheritdoc cref="IDatabaseReader.QueryAsync{T}(string, object?, bool, CancellationToken)"/>
-        Task<IEnumerable<T>> QueryAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered, CancellationToken cancellationToken);
+        Task<IEnumerable<T>> QueryAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default);
 
         /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
-        IEnumerable<dynamic> Query(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered);
+        IEnumerable<dynamic> Query(IDatabaseTransaction? transaction, string statement, object? parameter = null, bool buffered = true);
         /// <inheritdoc cref="IDatabaseReader.QueryFirst{T}(string, object?)"/>
-        T QueryFirst<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
+        T QueryFirst<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null);
 
         /// <inheritdoc cref="IDatabaseReader.QueryFirstAsync{T}(string, object?, CancellationToken)"/>
-        Task<T> QueryFirstAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
+        Task<T> QueryFirstAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default);
 
         /// <inheritdoc cref="IDatabaseReader.QueryFirstOrDefault{T}(string, object?)"/>
         [return: MaybeNull]
-        T QueryFirstOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
+        T QueryFirstOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null);
 
         /// <inheritdoc cref="IDatabaseReader.QueryFirstOrDefaultAsync{T}(string, object?, CancellationToken)"/>
-        Task<T?> QueryFirstOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
+        Task<T?> QueryFirstOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default);
 
         /// <inheritdoc cref="IDatabaseReader.QuerySingle{T}(string, object?)"/>
         T QuerySingle<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
 
         /// <inheritdoc cref="IDatabaseReader.QuerySingleOrDefault{T}(string, object?)"/>
         [return: MaybeNull]
-        T QuerySingleOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter);
+        T QuerySingleOrDefault<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null);
 
         /// <inheritdoc cref="IDatabaseReader.QuerySingleOrDefaultAsync{T}(string, object?, CancellationToken)"/>
-        Task<T?> QuerySingleOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
+        Task<T?> QuerySingleOrDefaultAsync<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default);
 
         /// <inheritdoc cref="IDatabaseWriter.Execute(string, object?)"/>
-        int Execute(IDatabaseTransaction? transaction, string statement, object? parameter);
+        int Execute(IDatabaseTransaction? transaction, string statement, object? parameter = null);
 
         /// <inheritdoc cref="IDatabaseWriter.ExecuteAsync(string, object?, CancellationToken)"/>
-        Task<int> ExecuteAsync(IDatabaseTransaction? transaction, string statement, object? parameter, CancellationToken cancellationToken);
+        Task<int> ExecuteAsync(IDatabaseTransaction? transaction, string statement, object? parameter = null, CancellationToken cancellationToken = default);
 
         /// <inheritdoc cref="BeginTransaction(IsolationLevel)"/>
         IDatabaseTransaction BeginTransaction();
