@@ -57,6 +57,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     }
                     break;
 
+                case LauncherItemKind.Separator: {
+                        var separator= new LauncherItemCustomizeSeparatorViewModel(Model, DispatcherWrapper, LoggerFactory);
+                        items.Add(separator);
+                    }
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }

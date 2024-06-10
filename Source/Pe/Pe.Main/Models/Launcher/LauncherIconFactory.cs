@@ -68,6 +68,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                         return addon;
                     }
 
+                case LauncherItemKind.Separator: {
+                        return default!;
+                    }
+
                 default:
                     throw new NotImplementedException();
             }
