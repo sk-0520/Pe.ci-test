@@ -10,8 +10,8 @@ create table [LauncherSeparators] (
 	[UpdatedProgramName] text not null /* 更新プログラム名  */,
 	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
-	[SeparatorKind] text not null /* 区切り種別  */,
-	[SeparatorWidth] integer not null /* 区切り幅 SeparatorKind に依存 */,
+	[Kind] text not null /* 区切り種別  */,
+	[Width] integer not null /* 区切り幅 Kind に依存 */,
 	primary key(
 		[LauncherItemId]
 	),

@@ -22,8 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             public Guid LauncherItemId { get; set; }
 
-            public string SeparatorKind { get; set; } = string.Empty;
-            public long SeparatorWidth { get; set; }
+            public string Kind { get; set; } = string.Empty;
+            public long Width { get; set; }
 
             #endregion
         }
@@ -42,8 +42,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var dto = new LauncherSeparatorsEntityDto() {
                 LauncherItemId = launcherItemId.Id,
-                SeparatorKind = launcherSeparatorKindTransfer.ToString(data.Kind),
-                SeparatorWidth = data.Width,
+                Kind = launcherSeparatorKindTransfer.ToString(data.Kind),
+                Width = data.Width,
             };
 
             commonStatus.WriteCommonTo(dto);
@@ -56,8 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var launcherSeparatorKindTransfer = new EnumTransfer<LauncherSeparatorKind>();
 
             var data = new LauncherSeparatorData() {
-                Kind = launcherSeparatorKindTransfer.ToEnum(dto.SeparatorKind),
-                Width = (int)dto.SeparatorWidth,
+                Kind = launcherSeparatorKindTransfer.ToEnum(dto.Kind),
+                Width = (int)dto.Width,
             };
 
             return data;
