@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -61,6 +62,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
 
             return data;
+        }
+
+        public LauncherSeparatorData SelectSeparator(LauncherItemId launcherItemId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+
+            var dto = Context.QuerySingle<LauncherSeparatorsEntityDto>(statement, parameter);
+            var data = ConvertFromDto(dto);
+            return data;
+        }
+
+        public void InsertSeparator(LauncherItemId launcherItemId, LauncherSeparatorData data, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(launcherItemId, data, databaseCommonStatus);
+
+            Context.InsertSingle(statement, dto);
         }
 
 

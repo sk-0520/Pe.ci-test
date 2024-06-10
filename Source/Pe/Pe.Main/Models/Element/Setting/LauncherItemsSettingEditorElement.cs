@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             SettingNotifyManager.SendLauncherItemRemove(launcherItemId);
         }
 
-        public async Task<LauncherItemId> AddNewItemAsync(LauncherItemKind kind, PluginId pluginId)
+        public async Task<LauncherItemId> AddNewItemAsync(LauncherItemKind kind, LauncherSeparatorKind launcherSeparatorKind, PluginId pluginId)
         {
             ThrowIfDisposed();
 
@@ -111,6 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 switch(kind) {
                     case LauncherItemKind.File: {
                             Debug.Assert(pluginId == PluginId.Empty);
+                            Debug.Assert(launcherSeparatorKind == LauncherSeparatorKind.None);
 
                             var launcherFilesDao = new LauncherFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                             var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
@@ -123,6 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
                     case LauncherItemKind.StoreApp: {
                             Debug.Assert(pluginId == PluginId.Empty);
+                            Debug.Assert(launcherSeparatorKind == LauncherSeparatorKind.None);
 
                             var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
 
@@ -133,10 +135,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
                     case LauncherItemKind.Addon: {
                             Debug.Assert(pluginId != PluginId.Empty);
+                            Debug.Assert(launcherSeparatorKind == LauncherSeparatorKind.None);
 
                             var launcherAddonsEntityDao = new LauncherAddonsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
 
                             launcherAddonsEntityDao.InsertAddonPluginId(item.LauncherItemId, pluginId, DatabaseCommonStatus.CreateCurrentAccount());
+                        }
+                        break;
+
+                    case LauncherItemKind.Separator: {
+                            Debug.Assert(pluginId == PluginId.Empty);
+
+                            var launcherSeparatorsEntityDao = new LauncherSeparatorsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+
+                            var data = new LauncherSeparatorData() {
+                                Kind = launcherSeparatorKind,
+                                Width = 1,
+                            };
+                            launcherSeparatorsEntityDao.InsertSeparator(item.LauncherItemId, data, DatabaseCommonStatus.CreateCurrentAccount());
                         }
                         break;
 

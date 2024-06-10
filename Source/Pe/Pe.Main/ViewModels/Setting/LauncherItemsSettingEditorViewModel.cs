@@ -118,20 +118,25 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         private ICommand? _AddNewFileItemCommand;
         public ICommand AddNewFileItemCommand => this._AddNewFileItemCommand ??= new DelegateCommand(async () => {
-            await AddNewItemAsync(LauncherItemKind.File, PluginId.Empty);
+            await AddNewItemAsync(LauncherItemKind.File, LauncherSeparatorKind.None, PluginId.Empty);
         });
 
         private ICommand? _AddNewStoreAppItemCommand;
         public ICommand AddNewStoreAppItemCommand => this._AddNewStoreAppItemCommand ??= new DelegateCommand(async () => {
-            await AddNewItemAsync(LauncherItemKind.StoreApp, PluginId.Empty);
+            await AddNewItemAsync(LauncherItemKind.StoreApp, LauncherSeparatorKind.None, PluginId.Empty);
         });
 
         private ICommand? _AddNewAddonItemCommand;
         public ICommand AddNewAddonItemCommand => this._AddNewAddonItemCommand ??= new DelegateCommand<LauncherItemAddonViewModel>(
             async o => {
-                await AddNewItemAsync(LauncherItemKind.Addon, o.PluginId);
+                await AddNewItemAsync(LauncherItemKind.Addon, LauncherSeparatorKind.None, o.PluginId);
             }
         );
+
+        private ICommand? _AddNewSeparatorItemCommand;
+        public ICommand AddNewSeparatorItemCommand => this._AddNewSeparatorItemCommand ??= new DelegateCommand(async () => {
+            await AddNewItemAsync(LauncherItemKind.Separator, LauncherSeparatorKind.Line, PluginId.Empty);
+        });
 
         private ICommand? _RemoveItemCommand;
         public ICommand RemoveItemCommand => this._RemoveItemCommand ??= new DelegateCommand(
@@ -146,10 +151,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        private async Task AddNewItemAsync(LauncherItemKind kind, PluginId pluginId)
+        private async Task AddNewItemAsync(LauncherItemKind kind, LauncherSeparatorKind launcherSeparatorKind, PluginId pluginId)
         {
             IsPopupAddItemMenu = false;
-            var newLauncherItemId = await Model.AddNewItemAsync(kind, pluginId);
+            var newLauncherItemId = await Model.AddNewItemAsync(kind, launcherSeparatorKind, pluginId);
             var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);
             SelectedItem = newItem;
             ScrollSelectedItemRequest.Send();

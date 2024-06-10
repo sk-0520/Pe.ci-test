@@ -6168,6 +6168,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   セパレータ追加(_S) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherItems_Add_Separator_A {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherItems_Add_Separator_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   アイテム に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_LauncherItems_Header {

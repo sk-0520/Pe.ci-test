@@ -2339,4 +2339,7 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_Note_Operation_Search_A" xml:space="preserve">
     <value>検索(_F)</value>
   </data>
+  <data name="String_Setting_LauncherItems_Add_Separator_A" xml:space="preserve">
+    <value>セパレータ追加(_S)</value>
+  </data>
 </root>
