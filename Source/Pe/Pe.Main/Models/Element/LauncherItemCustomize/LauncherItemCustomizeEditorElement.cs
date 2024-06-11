@@ -411,6 +411,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                     }
                     break;
 
+                case LauncherItemKind.Separator: {
+                        Debug.Assert(Separator != null);
+
+                        var launcherSeparatorsEntityDao = new LauncherSeparatorsEntityDao(commandsPack.Main.Context, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
+
+                        var data = new LauncherSeparatorData() {
+                            Kind = Separator.Kind,
+                            Width = Separator.Width,
+                        };
+
+                        launcherSeparatorsEntityDao.UpdateSeparator(itemData.LauncherItemId, data, commandsPack.CommonStatus);
+                    }
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }

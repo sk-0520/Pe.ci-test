@@ -84,6 +84,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.InsertSingle(statement, dto);
         }
 
+        public void UpdateSeparator(LauncherItemId launcherItemId, LauncherSeparatorData data, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(launcherItemId, data, databaseCommonStatus);
+
+            Context.UpdateByKey(statement, dto);
+        }
 
         #endregion
     }
