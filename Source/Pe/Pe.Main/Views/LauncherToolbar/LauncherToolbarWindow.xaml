@@ -324,7 +324,7 @@
     </DataTemplate>
     <!--#endregion-->
 
-    <!--#region ランチャーアドオン -->
+    <!--#region セパレータ -->
     <DataTemplate DataType="{x:Type app_main_viewmodels_item:LauncherSeparatorViewModel}">
       <ContentControl>
         <ContentControl.Style>
@@ -343,6 +343,7 @@
                 <Setter Property="Content" Value="{Binding VerticalSeparator}" />
               </DataTrigger>
             </Style.Triggers>
+            <Setter Property="Content" Value="{x:Null}" />
           </Style>
         </ContentControl.Style>
         <behaviors:Interaction.Triggers>

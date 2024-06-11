@@ -72,7 +72,10 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme.Theme
         {
             switch(kind) {
                 case LauncherSeparatorKind.None: {
-                        return new DependencyObject();
+                        return new Rectangle() {
+                            Width = width,
+                            Height = width,
+                        };
                     }
 
                 case LauncherSeparatorKind.Line: {

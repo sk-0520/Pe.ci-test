@@ -1,7 +1,6 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -71,14 +70,17 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         public DependencyObject GetLauncherSeparator(bool isHorizontal, LauncherSeparatorKind kind, int width)
         {
+            if(kind == LauncherSeparatorKind.None) {
+                return new Rectangle() {
+                    Width = width,
+                    Height = width,
+                };
+            }
+
             var color = PlatformTheme.GetTaskbarColor();
             var autoColor = MediaUtility.GetAutoColor(color);
 
             switch(kind) {
-                case LauncherSeparatorKind.None: {
-                        return new DependencyObject();
-                    }
-
                 case LauncherSeparatorKind.Line: {
                         var rectangle = new Rectangle();
 

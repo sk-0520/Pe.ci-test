@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         protected override object GetIcon(IconKind iconKind)
         {
-            return default!;
+            throw new NotSupportedException();
         }
 
         #endregion
