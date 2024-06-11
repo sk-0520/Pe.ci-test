@@ -66,10 +66,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// 単純線。
         /// </summary>
+        [EnumResource]
         Line,
         /// <summary>
         /// 空白。
         /// </summary>
+        [EnumResource]
         Space,
     }
 
@@ -191,9 +193,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        public LauncherSeparatorKind Kind { get; set; }
+        public LauncherSeparatorKind Kind { get; set; } = LauncherSeparatorKind.Line;
 
-        public int Width { get; set; }
+        public int Width { get; set; } = 1;
 
         #endregion
     }

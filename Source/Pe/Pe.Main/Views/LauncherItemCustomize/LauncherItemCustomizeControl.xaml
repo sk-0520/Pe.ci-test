@@ -315,6 +315,68 @@
       <!--#endregion -->
 
       <!--#region 組み込み -->
+
+      <DataTemplate DataType="{x:Type app_main_viewmodels_launcher_item_customize:LauncherItemCustomizeSeparatorViewModel}">
+        <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_File_Header, Source={x:Static app_main:CultureService.Instance}}">
+          <StackPanel>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="0" Target="{Binding ElementName=selectSeparator}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Separator_Kind_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <ComboBox
+                x:Name="selectSeparator"
+                Grid.Column="1"
+                Style="{StaticResource Horizontal-ComboBox}"
+                ItemsSource="{Binding KindItems}"
+                SelectedItem="{Binding SelectedKind}"
+              >
+                <ComboBox.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource EnumToCultureConverter}}" />
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="0" Target="{Binding ElementName=inputWidth}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Separator_Width_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="100" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <app_views:NumericUpDown
+                  x:Name="inputWidth"
+                  Grid.Column="0"
+                  Margin="{StaticResource HorizontalContrlMargin}"
+                  Value="{Binding Width}"
+                  Minimum="1"
+                  Maximum="100"
+                />
+                <Slider
+                  Grid.Column="1"
+                  Margin="{StaticResource HorizontalContrlMargin}"
+                  Minimum="{Binding Minimum, ElementName=inputWidth}"
+                  Maximum="{Binding Maximum, ElementName=inputWidth}"
+                  Value="{Binding Width}"
+                  VerticalAlignment="Center"
+                />
+              </Grid>
+            </Grid>
+
+          </StackPanel>
+        </GroupBox>
+      </DataTemplate>
+
       <!--#endregion -->
 
       <!--#region アドイン -->

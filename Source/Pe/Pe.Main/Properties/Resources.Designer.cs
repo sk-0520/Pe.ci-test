@@ -1833,6 +1833,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   罫線 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherSeparatorKind_Line {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherSeparatorKind.Line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   スペース に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherSeparatorKind_Space {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherSeparatorKind.Space", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   直接実行 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarContentDropMode_DirectExecute {
@@ -4217,6 +4235,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_LauncherItemCustomizeControl_RedoEditor_Header {
             get {
                 return ResourceManager.GetString("String_LauncherItemCustomizeControl_RedoEditor_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   種類(_K) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Separator_Kind_A {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Separator_Kind_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   幅(_W) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Separator_Width_A {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Separator_Width_A", resourceCulture);
             }
         }
         

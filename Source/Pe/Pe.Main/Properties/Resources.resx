@@ -2339,6 +2339,18 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_Note_Operation_Search_A" xml:space="preserve">
     <value>検索(_F)</value>
   </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherSeparatorKind.Line" xml:space="preserve">
+    <value>罫線</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherSeparatorKind.Space" xml:space="preserve">
+    <value>スペース</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Separator_Kind_A" xml:space="preserve">
+    <value>種類(_K)</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Separator_Width_A" xml:space="preserve">
+    <value>幅(_W)</value>
+  </data>
   <data name="String_Setting_LauncherItems_Add_Separator_A" xml:space="preserve">
     <value>セパレータ追加(_S)</value>
   </data>
