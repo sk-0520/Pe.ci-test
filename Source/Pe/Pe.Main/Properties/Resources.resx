@@ -2339,10 +2339,10 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_Note_Operation_Search_A" xml:space="preserve">
     <value>検索(_F)</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherSeparatorKind.Line" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.Line" xml:space="preserve">
     <value>罫線</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherSeparatorKind.Space" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.Space" xml:space="preserve">
     <value>スペース</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_Separator_Kind_A" xml:space="preserve">

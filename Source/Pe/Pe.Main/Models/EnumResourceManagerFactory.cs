@@ -16,6 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 .Register<Bridge.Models.Data.ShowMode>()
                 .Register<Bridge.Models.Data.IconBox>()
                 .Register<Bridge.Models.Data.CommandItemKind>()
+                .Register<Bridge.Models.Data.LauncherSeparatorKind>()
                 .Register<Key>()
                 .Register<ModifierKeys>()
             //.Register<Key>(GetKeys())

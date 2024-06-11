@@ -29,8 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         public LauncherSeparatorKind Kind => Separator?.Kind ?? LauncherSeparatorKind.Line;
         public int Width => Separator?.Width ?? 1;
 
-        public DependencyObject HorizontalSeparator => LauncherToolbarTheme.GetLauncherSeparator(true, Width);
-        public DependencyObject VerticalSeparator => LauncherToolbarTheme.GetLauncherSeparator(false, Width);
+        public DependencyObject HorizontalSeparator => LauncherToolbarTheme.GetLauncherSeparator(true, Kind, Width);
+        public DependencyObject VerticalSeparator => LauncherToolbarTheme.GetLauncherSeparator(false, Kind, Width);
 
         #endregion
 
