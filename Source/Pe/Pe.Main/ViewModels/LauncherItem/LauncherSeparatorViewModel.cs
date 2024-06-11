@@ -26,11 +26,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         public LauncherSeparatorData? Separator { get; set; }
 
-        public LauncherSeparatorKind Kind => Separator?.Kind ?? LauncherSeparatorKind.Line;
-        public int Width => Separator?.Width ?? 1;
-
-        public DependencyObject HorizontalSeparator => LauncherToolbarTheme.GetLauncherSeparator(true, Kind, Width);
-        public DependencyObject VerticalSeparator => LauncherToolbarTheme.GetLauncherSeparator(false, Kind, Width);
+        public DependencyObject HorizontalSeparator => LauncherToolbarTheme.GetLauncherSeparator(true, Separator?.Kind ?? LauncherSeparatorKind.None, Separator?.Width ?? 0);
+        public DependencyObject VerticalSeparator => LauncherToolbarTheme.GetLauncherSeparator(false, Separator?.Kind ?? LauncherSeparatorKind.None, Separator?.Width ?? 0);
 
         #endregion
 
@@ -48,8 +45,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         {
             return Task.Run(() => {
                 Separator = Model.LoadSeparator();
-                RaisePropertyChanged(nameof(Kind));
-                RaisePropertyChanged(nameof(Width));
                 RaisePropertyChanged(nameof(HorizontalSeparator));
                 RaisePropertyChanged(nameof(VerticalSeparator));
             });

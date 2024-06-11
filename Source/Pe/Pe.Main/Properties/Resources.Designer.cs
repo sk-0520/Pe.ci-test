@@ -1455,9 +1455,18 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   罫線 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_Line {
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_LauncherSeparatorKind_Line {
             get {
-                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.Line", resourceCulture);
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.LauncherSeparatorKind.Line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   スペース に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_LauncherSeparatorKind_Space {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.LauncherSeparatorKind.Space", resourceCulture);
             }
         }
         
@@ -1603,15 +1612,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_ShowMode_Normal_A {
             get {
                 return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.ShowMode.Normal_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   スペース に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_Space {
-            get {
-                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.Space", resourceCulture);
             }
         }
         
