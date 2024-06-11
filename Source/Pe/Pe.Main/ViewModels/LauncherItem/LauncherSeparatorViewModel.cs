@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
 using System.IO;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using System.Windows;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
@@ -24,6 +25,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         #region property
 
         public LauncherSeparatorData? Separator { get; set; }
+
+        public LauncherSeparatorKind Kind => Separator?.Kind ?? LauncherSeparatorKind.Line;
+        public int Width => Separator?.Width ?? 1;
+
+        public DependencyObject HorizontalSeparator => LauncherToolbarTheme.GetLauncherSeparator(true, Width);
+        public DependencyObject VerticalSeparator => LauncherToolbarTheme.GetLauncherSeparator(false, Width);
 
         #endregion
 
@@ -39,7 +46,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         protected override Task LoadImplAsync()
         {
-            return Task.CompletedTask;
+            return Task.Run(() => {
+                Separator = Model.LoadSeparator();
+                RaisePropertyChanged(nameof(Kind));
+                RaisePropertyChanged(nameof(Width));
+                RaisePropertyChanged(nameof(HorizontalSeparator));
+                RaisePropertyChanged(nameof(VerticalSeparator));
+            });
         }
 
         protected override Task UnloadImplAsync()
@@ -51,7 +64,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         {
             return default!;
         }
-
 
         #endregion
     }

@@ -81,6 +81,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// <returns></returns>
         Brush GetToolbarForeground();
 
+        DependencyObject GetLauncherSeparator(bool isHorizontal, int width);
+
         #endregion
     }
 }

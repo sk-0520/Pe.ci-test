@@ -324,6 +324,39 @@
     </DataTemplate>
     <!--#endregion-->
 
+    <!--#region ランチャーアドオン -->
+    <DataTemplate DataType="{x:Type app_main_viewmodels_item:LauncherSeparatorViewModel}">
+      <ContentControl>
+        <ContentControl.Style>
+          <Style TargetType="ContentControl">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left">
+                <Setter Property="Content" Value="{Binding HorizontalSeparator}" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right">
+                <Setter Property="Content" Value="{Binding HorizontalSeparator}" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Top">
+                <Setter Property="Content" Value="{Binding VerticalSeparator}" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Bottom">
+                <Setter Property="Content" Value="{Binding VerticalSeparator}" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </ContentControl.Style>
+        <behaviors:Interaction.Triggers>
+          <behaviors:EventTrigger EventName="Loaded">
+            <behaviors:InvokeCommandAction Command="{Binding LoadCommand}" />
+          </behaviors:EventTrigger>
+          <behaviors:EventTrigger EventName="Unloaded">
+            <behaviors:InvokeCommandAction Command="{Binding UnloadCommand}" />
+          </behaviors:EventTrigger>
+        </behaviors:Interaction.Triggers>
+      </ContentControl>
+    </DataTemplate>
+    <!--#endregion-->
+
     <!--#endregion-->
 
   </Window.Resources>

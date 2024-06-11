@@ -65,6 +65,12 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return new SolidColorBrush(MediaUtility.GetAutoColor(color));
         }
 
+        public DependencyObject GetLauncherSeparator(bool isHorizontal, int width)
+        {
+            var color = PlatformTheme.GetTaskbarColor();
+            return new SolidColorBrush(MediaUtility.GetAutoColor(color));
+        }
+
         #endregion
     }
 }
