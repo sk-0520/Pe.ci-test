@@ -338,8 +338,8 @@
   <data name="String_LauncherItemCustomizeWindow_Caption" xml:space="preserve">
     <value>${ITEM} を編集</value>
   </data>
-  <data name="String_LauncherItem_NewItem_Name" xml:space="preserve">
-    <value>新しいアイテム</value>
+  <data name="String_LauncherItem_NewItem_FileName" xml:space="preserve">
+    <value>新しいファイルアイテム</value>
   </data>
   <data name="String_LauncherToolbar_AppMenu_Groups_Header" xml:space="preserve">
     <value>グループ</value>
@@ -2353,5 +2353,11 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   </data>
   <data name="String_Setting_LauncherItems_Add_Separator_A" xml:space="preserve">
     <value>セパレータ追加(_S)</value>
+  </data>
+  <data name="String_LauncherItem_NewItem_AddonName" xml:space="preserve">
+    <value>新しいアドオンアイテム</value>
+  </data>
+  <data name="String_LauncherItem_NewItem_SeparatorName" xml:space="preserve">
+    <value>新しいセパレータアイテム</value>
   </data>
 </root>

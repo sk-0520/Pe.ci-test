@@ -4022,11 +4022,29 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   新しいアイテム に類似しているローカライズされた文字列を検索します。
+        ///   新しいアドオンアイテム に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItem_NewItem_Name {
+        public static string String_LauncherItem_NewItem_AddonName {
             get {
-                return ResourceManager.GetString("String_LauncherItem_NewItem_Name", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItem_NewItem_AddonName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新しいファイルアイテム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItem_NewItem_FileName {
+            get {
+                return ResourceManager.GetString("String_LauncherItem_NewItem_FileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新しいセパレータアイテム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItem_NewItem_SeparatorName {
+            get {
+                return ResourceManager.GetString("String_LauncherItem_NewItem_SeparatorName", resourceCulture);
             }
         }
         

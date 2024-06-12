@@ -90,15 +90,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             var newLauncherItemId = IdFactory.CreateLauncherItemId();
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
+            var launcherItemManager = new LauncherItemManager();
 
             using(var context = MainDatabaseBarrier.WaitWrite()) {
                 var launcherItemsDao = new LauncherItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
 
-                //TODO: 名前の自動設定
                 var item = new LauncherItemData() {
                     LauncherItemId = newLauncherItemId,
                     Kind = kind,
-                    Name = TextUtility.ToUnique(Properties.Resources.String_LauncherItem_NewItem_Name, AllLauncherItems.Select(i => i.Name).ToList(), StringComparison.OrdinalIgnoreCase, (s, n) => $"{s}({n})"),
+                    Name = launcherItemManager.CreateNewName(kind, AllLauncherItems.Select(i => i.Name).ToList()),
                 };
 
                 var newCode = EnumUtility.ToString(kind) + "-item-code";
