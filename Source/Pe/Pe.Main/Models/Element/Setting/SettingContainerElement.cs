@@ -159,6 +159,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 ;
                 launcherItemElements.Add(element);
             }
+            //launcherItemElements.Sort((a,b) => {
+            //    if(a.Kind == LauncherItemKind.Separator 
+            //})
 
 
             /* パラで回しても1秒くらいしか変わらんかった

@@ -15,6 +15,7 @@
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:datacontext="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting" d:DataContext="{d:DesignInstance Type=datacontext:LauncherItemsSettingEditorViewModel}"
   mc:Ignorable="d"
   d:DesignWidth="800"
   d:DesignHeight="450"
