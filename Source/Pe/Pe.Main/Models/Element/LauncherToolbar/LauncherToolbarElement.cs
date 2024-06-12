@@ -42,6 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         private bool _isOpenedFileItemMenu;
         private bool _isOpenedStoreAppItemMenu;
         private bool _isOpenedAddonItemMenu;
+        private bool _isOpenedSeparatorItemMenu;
 
         private bool _isHiding;
 
@@ -182,7 +183,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 PausingAutoHide = IsOpenedAddonItemMenu;
             }
         }
-
+        public bool IsOpenedSeparatorItemMenu
+        {
+            get => this._isOpenedSeparatorItemMenu;
+            set
+            {
+                SetProperty(ref this._isOpenedSeparatorItemMenu, value);
+                PausingAutoHide = IsOpenedSeparatorItemMenu;
+            }
+        }
         NotifyLogId RestoreVisibleNotifyLogId { get; set; }
 
         public LauncherToolbarContentDropMode ContentDropMode { get; private set; }

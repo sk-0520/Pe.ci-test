@@ -325,36 +325,59 @@
     <!--#endregion-->
 
     <!--#region セパレータ -->
+    <ContextMenu x:Key="SeparatorContextMenu" IsOpen="{Binding DataContext.IsOpenedSeparatorItemMenu, Source={x:Reference root}}">
+      <ContextMenu.Resources>
+        <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, Source={x:Reference root}}" />
+        <!-- グループメニューアイテムのスタイルを上書きする普通のメニュー -->
+        <Style x:Key="LauncherMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}" />
+        <!-- CollectionContainer で使用するグループメニューアイテム -->
+        <Style TargetType="MenuItem" BasedOn="{StaticResource GroupMenuItem}" />
+      </ContextMenu.Resources>
+      <ContextMenu.ItemsSource>
+        <CompositeCollection>
+          <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Header, Source={x:Static app_main:CultureService.Instance}}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Customize_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CustomizeCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Remove_Confirm_A, Source={x:Static app_main:CultureService.Instance}}">
+            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Remove_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding DataContext.RemoveCommand, Source={x:Reference root}}" CommandParameter="{Binding}" />
+          </MenuItem>
+
+          <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Groups_Header, Source={x:Static app_main:CultureService.Instance}}" />
+          <CollectionContainer Collection="{Binding Source={StaticResource LauncherGroupItems}}" />
+        </CompositeCollection>
+      </ContextMenu.ItemsSource>
+    </ContextMenu>
     <DataTemplate DataType="{x:Type app_main_viewmodels_item:LauncherSeparatorViewModel}">
-      <ContentControl>
-        <ContentControl.Style>
-          <Style TargetType="ContentControl">
-            <Style.Triggers>
-              <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left">
-                <Setter Property="Content" Value="{Binding HorizontalSeparator}" />
-              </DataTrigger>
-              <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right">
-                <Setter Property="Content" Value="{Binding HorizontalSeparator}" />
-              </DataTrigger>
-              <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Top">
-                <Setter Property="Content" Value="{Binding VerticalSeparator}" />
-              </DataTrigger>
-              <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Bottom">
-                <Setter Property="Content" Value="{Binding VerticalSeparator}" />
-              </DataTrigger>
-            </Style.Triggers>
-            <Setter Property="Content" Value="{x:Null}" />
-          </Style>
-        </ContentControl.Style>
-        <behaviors:Interaction.Triggers>
-          <behaviors:EventTrigger EventName="Loaded">
-            <behaviors:InvokeCommandAction Command="{Binding LoadCommand}" />
-          </behaviors:EventTrigger>
-          <behaviors:EventTrigger EventName="Unloaded">
-            <behaviors:InvokeCommandAction Command="{Binding UnloadCommand}" />
-          </behaviors:EventTrigger>
-        </behaviors:Interaction.Triggers>
-      </ContentControl>
+      <Border Background="Transparent" ContextMenu="{StaticResource SeparatorContextMenu}">
+        <ContentControl>
+          <ContentControl.Style>
+            <Style TargetType="ContentControl">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Left">
+                  <Setter Property="Content" Value="{Binding HorizontalSeparator}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Right">
+                  <Setter Property="Content" Value="{Binding HorizontalSeparator}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Top">
+                  <Setter Property="Content" Value="{Binding VerticalSeparator}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding DataContext.ToolbarPosition, ElementName=root}" Value="Bottom">
+                  <Setter Property="Content" Value="{Binding VerticalSeparator}" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="Content" Value="{x:Null}" />
+            </Style>
+          </ContentControl.Style>
+          <behaviors:Interaction.Triggers>
+            <behaviors:EventTrigger EventName="Loaded">
+              <behaviors:InvokeCommandAction Command="{Binding LoadCommand}" />
+            </behaviors:EventTrigger>
+            <behaviors:EventTrigger EventName="Unloaded">
+              <behaviors:InvokeCommandAction Command="{Binding UnloadCommand}" />
+            </behaviors:EventTrigger>
+          </behaviors:Interaction.Triggers>
+        </ContentControl>
+      </Border>
     </DataTemplate>
     <!--#endregion-->
 

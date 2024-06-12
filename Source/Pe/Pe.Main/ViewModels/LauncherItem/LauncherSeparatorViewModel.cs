@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Standard.Base;
 using System.IO;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using System.Windows;
+using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
@@ -26,8 +27,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         public LauncherSeparatorData? Separator { get; set; }
 
-        public DependencyObject HorizontalSeparator => LauncherToolbarTheme.GetLauncherSeparator(true, Separator?.Kind ?? LauncherSeparatorKind.None, Separator?.Width ?? 0);
-        public DependencyObject VerticalSeparator => LauncherToolbarTheme.GetLauncherSeparator(false, Separator?.Kind ?? LauncherSeparatorKind.None, Separator?.Width ?? 0);
+        public DependencyObject HorizontalSeparator
+        {
+            get
+            {
+                return DispatcherWrapper.Get(() => {
+                    return LauncherToolbarTheme.GetLauncherSeparator(true, Separator?.Kind ?? LauncherSeparatorKind.None, Separator?.Width ?? 0);
+                });
+            }
+        }
+        public DependencyObject VerticalSeparator
+        {
+            get
+            {
+                return DispatcherWrapper.Get(() => {
+                    return LauncherToolbarTheme.GetLauncherSeparator(false, Separator?.Kind ?? LauncherSeparatorKind.None, Separator?.Width ?? 0);
+                });
+            }
+        }
 
         #endregion
 
