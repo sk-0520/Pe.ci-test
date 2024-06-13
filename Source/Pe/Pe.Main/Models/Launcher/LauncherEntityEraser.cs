@@ -54,6 +54,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 case LauncherItemKind.Addon:
                     break;
 
+                case LauncherItemKind.Separator: {
+                        var launcherSeparatorsEntityDao = new LauncherSeparatorsEntityDao(context, statementLoader, implementation, LoggerFactory);
+                        launcherSeparatorsEntityDao.DeleteSeparatorByLauncherItemId(LauncherItemId);
+                    }
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }
