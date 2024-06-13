@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -43,6 +44,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
         #endregion
     }
 
+    public sealed class DependencyObjectViewModel: ViewModelBase
+    {
+        public DependencyObjectViewModel(DependencyObject icon, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
+        {
+            Icon = icon;
+        }
+
+        #region property
+
+        public DependencyObject Icon { get; }
+
+        #endregion
+    }
+
     public class IconViewerViewModel: ViewModelBase
     {
         #region define
@@ -51,6 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
         {
             IconImageLoader,
             LauncherItemExtension,
+            DependencyObject,
         }
 
         #endregion
@@ -87,6 +104,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
             DispatcherWrapper = dispatcherWrapper;
         }
 
+        public IconViewerViewModel(DependencyObject dependencyObject, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
+        {
+            IconKind = IconImageKind.DependencyObject;
+
+            DependencyObject = dependencyObject;
+            DispatcherWrapper = dispatcherWrapper;
+        }
+
         #region property
 
         private IconImageKind IconKind { get; }
@@ -110,6 +136,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         LauncherItemId LauncherItemId { get; }
         ILauncherItemExtension? LauncherItemExtension { get; }
+
+        #endregion
+
+        #region DependencyObject
+
+        private DependencyObject? DependencyObject { get; }
 
         #endregion
 
@@ -154,6 +186,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
                     }
                     break;
 
+                case IconImageKind.DependencyObject: {
+                        Debug.Assert(DependencyObject != null);
+
+                        this._icon = new IconObjectViewModel(DependencyObject, LoggerFactory);
+                        RaisePropertyChanged(nameof(Icon));
+                    }
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }
@@ -178,6 +218,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
                     case IconImageKind.LauncherItemExtension:
                         Debug.Assert(LauncherItemExtension != null);
+                        break;
+
+                    case IconImageKind.DependencyObject:
+                        Debug.Assert(DependencyObject != null);
                         break;
 
                     default:

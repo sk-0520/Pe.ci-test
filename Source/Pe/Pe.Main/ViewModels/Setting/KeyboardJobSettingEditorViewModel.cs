@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using Microsoft.Extensions.Logging;
+using NLog.Filters;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
@@ -301,6 +302,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             AllLauncherItemCollection = allLauncherItemCollection;
             AllLauncherItems = AllLauncherItemCollection.CreateView();
+            AllLauncherItems.Filter = FilterLauncherItems;
         }
 
         #region property
@@ -329,6 +331,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     lioc.WriteLauncherItemId(Model.Options, LauncherItemId.Empty);
                 }
             }
+        }
+
+        #endregion
+
+        #region function
+
+        private bool FilterLauncherItems(object obj)
+        {
+            if(obj is LauncherItemSettingEditorViewModel item) {
+                if(item.Common.Kind == LauncherItemKind.Separator) {
+                    return false;
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         #endregion

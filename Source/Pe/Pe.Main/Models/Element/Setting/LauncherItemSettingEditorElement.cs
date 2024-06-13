@@ -62,6 +62,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                     LoadAddon();
                     break;
 
+                case LauncherItemKind.Separator:
+                    LoadSeparator();
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }

@@ -1,10 +1,13 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
@@ -63,6 +66,65 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         {
             var color = PlatformTheme.GetTaskbarColor();
             return new SolidColorBrush(MediaUtility.GetAutoColor(color));
+        }
+
+        public DependencyObject GetLauncherSeparator(bool isHorizontal, LauncherSeparatorKind kind, int width)
+        {
+            if(kind == LauncherSeparatorKind.None) {
+                return new Rectangle() {
+                    Width = width,
+                    Height = width,
+                };
+            }
+
+            var color = PlatformTheme.GetTaskbarColor();
+            var autoColor = MediaUtility.GetAutoColor(color);
+
+            switch(kind) {
+                case LauncherSeparatorKind.Line: {
+                        var rectangle = new Rectangle();
+                        var edgeThickness = 2;
+
+                        using(Initializer.Begin(rectangle)) {
+                            const int separatorWidth = 1;
+                            var separatorBrush = new SolidColorBrush(autoColor);
+                            rectangle.Fill = separatorBrush;
+
+                            double directionThickness = width <= separatorWidth ? 0 : ((width - separatorWidth) / 2.0);
+
+                            if(isHorizontal) {
+                                rectangle.Height = separatorWidth;
+                                rectangle.Margin = new Thickness(
+                                    edgeThickness, directionThickness, edgeThickness, directionThickness
+                                );
+                            } else {
+                                rectangle.Width = separatorWidth;
+                                rectangle.Margin = new Thickness(
+                                    directionThickness, edgeThickness, directionThickness, edgeThickness
+                                );
+                            }
+                        }
+
+                        return rectangle;
+                    }
+
+                case LauncherSeparatorKind.Space: {
+                        var rectangle = new Rectangle();
+
+                        using(Initializer.Begin(rectangle)) {
+                            if(isHorizontal) {
+                                rectangle.Height = width;
+                            } else {
+                                rectangle.Width = width;
+                            }
+                        }
+
+                        return rectangle;
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         #endregion

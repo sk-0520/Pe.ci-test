@@ -105,6 +105,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #endregion
 
+        #region separator
+
+        public LauncherSeparatorData? Separator { get; private set; }
+
+        #endregion
+
         #endregion
 
         #region function
@@ -171,6 +177,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         {
             using var pack = PersistenceHelper.WaitReadPack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
             LoadAddonCore(pack);
+        }
+
+        private void LoadSeparatorCore(IDatabaseContext context, IDatabaseImplementation implementation)
+        {
+            Debug.Assert(Kind == LauncherItemKind.Separator);
+
+            var launcherSeparatorsEntityDao = new LauncherSeparatorsEntityDao(context, DatabaseStatementLoader, implementation, LoggerFactory);
+            Separator = launcherSeparatorsEntityDao.SelectSeparator(LauncherItemId);
+        }
+
+        protected void LoadSeparator()
+        {
+            using var pack = PersistenceHelper.WaitReadPack(MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
+            LoadSeparatorCore(pack.Main.Context, pack.Main.Implementation);
         }
 
         internal UserControl BeginLauncherItemPreferences()
@@ -271,6 +291,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
                 case LauncherItemKind.Addon: {
                         LoadAddonCore(pack);
+                    }
+                    break;
+
+                case LauncherItemKind.Separator: {
+                        LoadSeparatorCore(pack.Main.Context, pack.Main.Implementation);
                     }
                     break;
 
@@ -383,6 +408,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
                             SaveLauncherPreferences(commandsPack);
                         }
+                    }
+                    break;
+
+                case LauncherItemKind.Separator: {
+                        Debug.Assert(Separator != null);
+
+                        var launcherSeparatorsEntityDao = new LauncherSeparatorsEntityDao(commandsPack.Main.Context, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
+
+                        var data = new LauncherSeparatorData() {
+                            Kind = Separator.Kind,
+                            Width = Separator.Width,
+                        };
+
+                        launcherSeparatorsEntityDao.UpdateSeparator(itemData.LauncherItemId, data, commandsPack.CommonStatus);
                     }
                     break;
 

@@ -21,6 +21,7 @@ using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
@@ -154,6 +155,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             var launcherItemElements = ids
                 .Select(i => OrderManager.GetOrCreateLauncherItemElement(i))
                 .Where(i => i.IsEnabledCommandLauncher)
+                .Where(a => a.Kind != LauncherItemKind.Separator)
                 .ToList()
             ;
             LauncherItemElements.SetRange(launcherItemElements);
