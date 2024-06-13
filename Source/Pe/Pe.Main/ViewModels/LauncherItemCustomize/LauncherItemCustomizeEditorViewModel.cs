@@ -67,10 +67,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     throw new NotImplementedException();
             }
 
-            Tag = new LauncherItemCustomizeTagViewModel(Model, DispatcherWrapper, LoggerFactory);
-            Comment = new LauncherItemCustomizeCommentViewModel(Model, DispatcherWrapper, LoggerFactory);
+            if(Model.Kind != LauncherItemKind.Separator) {
+                Tag = new LauncherItemCustomizeTagViewModel(Model, DispatcherWrapper, LoggerFactory);
+                items.Add(Tag);
+            }
 
-            items.Add(Tag);
+            Comment = new LauncherItemCustomizeCommentViewModel(Model, DispatcherWrapper, LoggerFactory);
             items.Add(Comment);
 
             CustomizeItems = items;
@@ -108,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public List<LauncherItemCustomizeDetailViewModelBase> CustomizeItems { get; }
 
         public LauncherItemCustomizeCommonViewModel Common { get; }
-        public LauncherItemCustomizeTagViewModel Tag { get; }
+        public LauncherItemCustomizeTagViewModel? Tag { get; }
         public LauncherItemCustomizeCommentViewModel Comment { get; }
 
         public bool IsChanged

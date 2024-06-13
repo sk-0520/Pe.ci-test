@@ -88,10 +88,9 @@
 
               <Label Grid.Column="0" Target="{Binding ElementName=inputCode}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Code_A, Source={x:Static app_main:CultureService.Instance}}" />
               <TextBox x:Name="inputCode" Grid.Column="1" Style="{StaticResource Horizontal-TextBox}" Text="{Binding Code}" />
-
             </Grid>
 
-            <Grid>
+            <Grid IsEnabled="{Binding IsEnabledIconSetting}">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Style="{StaticResource LabelDefinition}" />
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
@@ -119,7 +118,7 @@
               </Grid>
             </Grid>
 
-            <Grid>
+            <Grid IsEnabled="{Binding IsEnabledCommandLauncherSetting}">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Style="{StaticResource LabelDefinition}" />
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
