@@ -21,6 +21,10 @@
       <DataTemplate DataType="{x:Type app_main_viewmodels_iconviewer:IconObjectViewModel}">
         <ContentControl IsTabStop="False" Content="{Binding Icon, Mode=OneTime}" />
       </DataTemplate>
+      <DataTemplate DataType="{x:Type DependencyObject}">
+        <!--<ContentControl IsTabStop="False" Content="{Binding Mode=OneTime}" />-->
+        <TextBlock>asd</TextBlock>
+      </DataTemplate>
     </ContentControl.Resources>
   </ContentControl>
 </UserControl>
