@@ -285,7 +285,14 @@
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Header, Source={x:Static app_main:CultureService.Instance}}" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Customize_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CustomizeCommand}" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Remove_Confirm_A, Source={x:Static app_main:CultureService.Instance}}">
-            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Remove_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding DataContext.RemoveCommand, Source={x:Reference root}}" CommandParameter="{Binding}" />
+            <MenuItem.Icon>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Warning}" />
+            </MenuItem.Icon>
+            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Remove_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding DataContext.RemoveCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
+              <MenuItem.Icon>
+                <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+              </MenuItem.Icon>
+            </MenuItem>
           </MenuItem>
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Groups_Header, Source={x:Static app_main:CultureService.Instance}}" />
@@ -338,7 +345,14 @@
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Header, Source={x:Static app_main:CultureService.Instance}}" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Customize_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CustomizeCommand}" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Remove_Confirm_A, Source={x:Static app_main:CultureService.Instance}}">
-            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Remove_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding DataContext.RemoveCommand, Source={x:Reference root}}" CommandParameter="{Binding}" />
+            <MenuItem.Icon>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Warning}" />
+            </MenuItem.Icon>
+            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Remove_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding DataContext.RemoveCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
+              <MenuItem.Icon>
+                <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+              </MenuItem.Icon>
+            </MenuItem>
           </MenuItem>
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Groups_Header, Source={x:Static app_main:CultureService.Instance}}" />

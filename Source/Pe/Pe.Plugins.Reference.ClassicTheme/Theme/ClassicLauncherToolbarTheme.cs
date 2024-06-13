@@ -80,23 +80,24 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme.Theme
 
                 case LauncherSeparatorKind.Line: {
                         var rectangle = new Rectangle();
+                        var edgeThickness = 2;
 
                         rectangle.BeginInit();
                         const int separatorWidth = 1;
                         var separatorBrush = SystemColors.ControlTextBrush;
                         rectangle.Fill = separatorBrush;
 
-                        double p = width <= separatorWidth ? 0 : ((width - separatorWidth) / 2.0);
+                        double directionThickness = width <= separatorWidth ? 0 : ((width - separatorWidth) / 2.0);
 
                         if(isHorizontal) {
                             rectangle.Height = separatorWidth;
                             rectangle.Margin = new Thickness(
-                                0, p, 0, p
+                                edgeThickness, directionThickness, edgeThickness, directionThickness
                             );
                         } else {
                             rectangle.Width = separatorWidth;
                             rectangle.Margin = new Thickness(
-                                p, 0, p, 0
+                                directionThickness, edgeThickness, directionThickness, edgeThickness
                             );
                         }
                         rectangle.EndInit();
