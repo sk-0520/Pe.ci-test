@@ -105,7 +105,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 var codes = launcherItemsDao.SelectFuzzyCodes(newCode).ToList();
                 item.Code = launcherFactory.GetUniqueCode(newCode, codes);
                 item.IsEnabledCommandLauncher = true;
+                switch(kind) {
+                    case LauncherItemKind.File:
+                    case LauncherItemKind.Addon:
+                        break;
 
+                    case LauncherItemKind.Separator:
+                        item.IsEnabledCommandLauncher = false;
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
                 launcherItemsDao.InsertLauncherItem(item, DatabaseCommonStatus.CreateCurrentAccount());
 
                 switch(kind) {
