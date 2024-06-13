@@ -2360,4 +2360,7 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_LauncherItem_NewItem_SeparatorName" xml:space="preserve">
     <value>新しいセパレータアイテム</value>
   </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.Separator" xml:space="preserve">
+    <value>セパレータ</value>
+  </data>
 </root>
