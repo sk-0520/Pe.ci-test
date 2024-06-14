@@ -7,6 +7,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Standard.Base.Linq;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {

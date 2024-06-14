@@ -20,6 +20,7 @@ using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using ContentTypeTextNet.Pe.Standard.Base.Linq;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
