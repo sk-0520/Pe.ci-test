@@ -53,6 +53,33 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             var actual = source.OrderBy(order, a => a);
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData(false, new object[] {1, 2, 3 })]
+        [InlineData(false, new object[] { "a", "b", "c" })]
+        [InlineData(true, new object[] { })]
+        [InlineData(true, new object[] { "a" })]
+        [InlineData(true, new object[] { "a", "a" })]
+        [InlineData(false, new object?[] { "a", null })]
+        [InlineData(true, new object[] { 1 })]
+        [InlineData(true, new object[] { 1, 1 })]
+        [InlineData(false, new object?[] { 1, null })]
+        [InlineData(true, new object?[] { null })]
+        [InlineData(true, new object?[] { null, null })]
+        [InlineData(false, new object?[] { null, "str" })]
+        [InlineData(false, new object?[] { null, 1 })]
+        public void AllEqualsTest<T>(bool expected, IEnumerable<object?> source)
+        {
+            var actual = source.AllEquals();
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void AllEquals_throw_Test()
+        {
+            IEnumerable<object> source = null!;
+            Assert.Throws<ArgumentNullException>(() => source.AllEquals());
+        }
     }
 
     public class CollectionExtensionsTest

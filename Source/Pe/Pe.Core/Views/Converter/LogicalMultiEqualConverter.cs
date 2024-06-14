@@ -1,16 +1,19 @@
 using System;
 using System.Windows.Data;
+using ContentTypeTextNet.Pe.Standard.Base;
 
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
-    [Obsolete("なんだこれ")]
+    /// <summary>
+    /// 指定された値が全て同じか。
+    /// </summary>
     public class LogicalMultiEqualConverter: IMultiValueConverter
     {
         #region IValueConverter
 
         public virtual object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return values[0] == values[1];
+            return values.AllEquals();
         }
 
         public virtual object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)

@@ -60,6 +60,8 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// </summary>
     public static class IEnumerableExtensions
     {
+        #region function
+
         /// <summary>
         /// 0基点のインデックスと値ペア列挙。
         /// </summary>
@@ -126,6 +128,44 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 _ => throw new NotImplementedException(),
             };
         }
+
+        /// <summary>
+        /// シーケンスの要素が全て同じか。
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="source"></param>
+        /// <returns>同じか。</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static bool AllEquals<TSource>(this IEnumerable<TSource> source)
+        {
+            if(source is null) {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            var enumerator = source.GetEnumerator();
+            if(enumerator.MoveNext()) {
+                var baseElement = enumerator.Current;
+                if(baseElement is null) {
+                    while(enumerator.MoveNext()) {
+                        var currentElement = enumerator.Current;
+                        if(currentElement is not null) {
+                            return false;
+                        }
+                    }
+                } else {
+                    while(enumerator.MoveNext()) {
+                        var currentElement = enumerator.Current;
+                        if(!baseElement.Equals(currentElement)) {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 
     /// <summary>
