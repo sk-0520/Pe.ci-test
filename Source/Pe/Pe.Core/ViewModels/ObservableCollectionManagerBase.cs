@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Core.ViewModels
 {
     /// <summary>
     /// <see cref="ObservableCollection{TValue}"/> の変更通知を処理する。
