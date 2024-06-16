@@ -30,6 +30,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## AppGeneralSetting
@@ -56,6 +58,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## AppUpdateSetting
@@ -80,6 +84,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -108,6 +114,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -139,6 +147,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## AppNoteHiddenSetting
@@ -163,8 +173,10 @@ ___
 ### index
 
 | UK | 名前 | カラム(CSV)            |
-|:--:|------|:-----------------------|
+|:--:|:-----|:-----------------------|
 | o  | 1    | Generation, HiddenMode |
+
+
 
 ___
 
@@ -195,6 +207,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## AppLauncherToolbarSetting
@@ -217,7 +231,7 @@ ___
 |    | o  |              | 方向                     | Direction             | text         | System.String   |              | アイコンの並びの基点 |
 |    | o  |              | アイコンサイズ           | IconBox               | text         | System.String   |              |                      |
 |    | o  | Fonts.FontId | フォント                 | FontId                | text         | System.Guid     |              |                      |
-|    | o  |              | 表示するまでの抑制時間   | DisplayDelayTime      | text         | System.TimeSpan |              |                                              |
+|    | o  |              | 表示するまでの抑制時間   | DisplayDelayTime      | text         | System.TimeSpan |              |                      |
 |    | o  |              | 自動的に隠す時間         | AutoHideTime          | text         | System.TimeSpan |              |                      |
 |    | o  |              | 文字幅                   | TextWidth             | integer      | System.Int64    |              |                      |
 |    | o  |              | 表示                     | IsVisible             | boolean      | System.Boolean  |              |                      |
@@ -230,6 +244,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -255,6 +271,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -284,6 +302,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## AppNotifyLogSetting
@@ -308,6 +328,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -340,8 +362,10 @@ ___
 ### index
 
 | UK | 名前 | カラム(CSV) |
-|:--:|------|:------------|
+|:--:|:-----|:------------|
 | o  | 1    | Code        |
+
+
 
 ___
 
@@ -374,6 +398,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## LauncherRedoItems
@@ -400,6 +426,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## LauncherRedoSuccessExitCodes
@@ -418,6 +446,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -444,6 +474,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## LauncherAddons
@@ -468,6 +500,35 @@ ___
 
 *NONE*
 
+
+
+___
+
+## LauncherSeparators
+
+### layout
+
+| PK | NN | FK                           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント    |
+|:--:|:--:|:-----------------------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:------------|
+| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID     | LauncherItemId        | text         | System.Guid     |              |             |
+|    | o  |                              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC         |
+|    | o  |                              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |             |
+|    | o  |                              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |             |
+|    | o  |                              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |             |
+|    | o  |                              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC         |
+|    | o  |                              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |             |
+|    | o  |                              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |             |
+|    | o  |                              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |             |
+|    | o  |                              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり     |
+|    | o  |                              | 区切り種別               | Kind                  | text         | System.String   |              |             |
+|    | o  |                              | 区切り幅                 | Width                 | integer      |                 |              | Kind に依存 |
+
+### index
+
+*NONE*
+
+
+
 ___
 
 ## LauncherEnvVars
@@ -488,6 +549,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## LauncherTags
@@ -506,6 +569,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -527,6 +592,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -557,6 +624,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## LauncherGroups
@@ -585,6 +654,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## LauncherGroupItems
@@ -604,6 +675,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -631,6 +704,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -667,6 +742,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -705,6 +782,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## NoteLayouts
@@ -732,6 +811,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -765,32 +846,36 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## NoteFiles
 
 ### layout
 
-| PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
-|:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
-| o  | o  | Notes.NoteId | ノートID                 | NoteId                | text         | System.Guid     |              |                      |
-| o  | o  |              | ノートファイルID         | NoteFileId            | text         | System.Guid     |              |                      |
-|    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
-|    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
-|    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
-|    | o  |              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
-|    | o  |              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
-|    | o  |              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                      |
-|    | o  |              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                      |
-|    | o  |              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                      |
-|    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり              |
-|    | o  |              | ファイル種別             | FileKind              | text         | System.String   |              | リンク, 埋め込み     |
-|    | o  |              | ファイルパス             | FilePath              | text         | System.String   |              |                      |
-|    | o  |              | 並び順                   | Sequence              | integer      | System.Int64    |              |                      |
+| PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント         |
+|:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:-----------------|
+| o  | o  | Notes.NoteId | ノートID                 | NoteId                | text         | System.Guid     |              |                  |
+| o  | o  |              | ノートファイルID         | NoteFileId            | text         | System.Guid     |              |                  |
+|    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC              |
+|    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                  |
+|    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                  |
+|    | o  |              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                  |
+|    | o  |              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC              |
+|    | o  |              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                  |
+|    | o  |              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                  |
+|    | o  |              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                  |
+|    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり          |
+|    | o  |              | ファイル種別             | FileKind              | text         | System.String   |              | リンク, 埋め込み |
+|    | o  |              | ファイルパス             | FilePath              | text         | System.String   |              |                  |
+|    | o  |              | 並び順                   | Sequence              | integer      | System.Int64    |              |                  |
 
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -819,6 +904,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## KeyOptions
@@ -838,6 +925,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -862,6 +951,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -892,6 +983,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## PluginVersionChecks
@@ -911,6 +1004,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -938,6 +1033,8 @@ ___
 
 *NONE*
 
+
+
 ___
 
 ## PluginLauncherItemSettings
@@ -964,6 +1061,8 @@ ___
 ### index
 
 *NONE*
+
+
 
 ___
 
@@ -993,3 +1092,4 @@ ___
 ### index
 
 *NONE*
+

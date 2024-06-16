@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Standard.Base.Linq;
 
 namespace ContentTypeTextNet.Pe.Standard.Database
 {

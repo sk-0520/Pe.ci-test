@@ -219,11 +219,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             Debug.Assert(proxySetting.ProxyIsEnabled);
 
             if(!Uri.TryCreate(proxySetting.ProxyUrl, UriKind.Absolute, out var proxyUri)) {
-                Logger.LogWarning("プロキシURLが不正: {0}", proxySetting.ProxyUrl);
+                Logger.LogWarning("プロキシURLが不正: {Uri}", proxySetting.ProxyUrl);
                 return;
             }
 
-            Logger.LogInformation("プロキシを使用: {0}, {1}", proxyUri, proxySetting.CredentialIsEnabled);
+            Logger.LogInformation("プロキシを使用: Url = {Uri}, 認証 = {CredentialIsEnabled}", proxyUri, proxySetting.CredentialIsEnabled);
             var proxy = new WebProxy(proxyUri);
             if(proxySetting.CredentialIsEnabled) {
                 proxy.Credentials = new NetworkCredential(proxySetting.CredentialUser, proxySetting.CredentialPassword);

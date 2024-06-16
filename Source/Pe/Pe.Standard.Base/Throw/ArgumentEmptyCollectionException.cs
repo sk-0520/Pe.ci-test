@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Throw
@@ -19,6 +20,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Throw
 
         public ArgumentEmptyCollectionException(string paramName, string message)
             : base(message, paramName)
+        { }
+
+        protected ArgumentEmptyCollectionException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         { }
 
         #region function

@@ -33,11 +33,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 
         #region function
 
-        //private void ThrowIfDisposed()
-        //{
-        //    ObjectDisposedException.ThrowIf(IsInvalid, this);
-        //}
-
         public static GlobalAlloc Create<T>()
         {
             return new GlobalAlloc(Marshal.SizeOf<T>());

@@ -66,6 +66,7 @@ using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting.Factory;
+using ContentTypeTextNet.Pe.Standard.Base.Linq;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {

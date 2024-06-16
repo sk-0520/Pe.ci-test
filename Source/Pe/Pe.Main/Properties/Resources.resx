@@ -338,8 +338,8 @@
   <data name="String_LauncherItemCustomizeWindow_Caption" xml:space="preserve">
     <value>${ITEM} を編集</value>
   </data>
-  <data name="String_LauncherItem_NewItem_Name" xml:space="preserve">
-    <value>新しいアイテム</value>
+  <data name="String_LauncherItem_NewItem_FileName" xml:space="preserve">
+    <value>新しいファイルアイテム</value>
   </data>
   <data name="String_LauncherToolbar_AppMenu_Groups_Header" xml:space="preserve">
     <value>グループ</value>
@@ -2338,5 +2338,29 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   </data>
   <data name="String_Note_Operation_Search_A" xml:space="preserve">
     <value>検索(_F)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.LauncherSeparatorKind.Line" xml:space="preserve">
+    <value>罫線</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.LauncherSeparatorKind.Space" xml:space="preserve">
+    <value>スペース</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Separator_Kind_A" xml:space="preserve">
+    <value>種類(_K)</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Separator_Width_A" xml:space="preserve">
+    <value>幅(_W)</value>
+  </data>
+  <data name="String_Setting_LauncherItems_Add_Separator_A" xml:space="preserve">
+    <value>セパレータ追加(_S)</value>
+  </data>
+  <data name="String_LauncherItem_NewItem_AddonName" xml:space="preserve">
+    <value>新しいアドオンアイテム</value>
+  </data>
+  <data name="String_LauncherItem_NewItem_SeparatorName" xml:space="preserve">
+    <value>新しいセパレータアイテム</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.Separator" xml:space="preserve">
+    <value>セパレータ</value>
   </data>
 </root>

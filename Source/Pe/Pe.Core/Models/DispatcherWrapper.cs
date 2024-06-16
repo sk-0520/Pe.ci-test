@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             #endregion
         }
 
-        private class WaitParameter<TResult>: WaitParameterBase<TResult>
+        private sealed class WaitParameter<TResult>: WaitParameterBase<TResult>
         {
             public WaitParameter(Func<TResult> function, CancellationToken cancellationToken)
                 : base(cancellationToken)
@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             #endregion
         }
 
-        private class WaitParameter<TArgument, TResult>: WaitParameterBase<TResult>
+        private sealed class WaitParameter<TArgument, TResult>: WaitParameterBase<TResult>
         {
             public WaitParameter(Func<TArgument, TResult> function, TArgument argument, CancellationToken cancellationToken)
                 : base(cancellationToken)

@@ -32,6 +32,7 @@ using Prism.Commands;
 using ContentTypeTextNet.Pe.Standard.Base;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Standard.Base.Linq;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -172,7 +173,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             get => Model.IsOpenedAddonItemMenu;
             set => SetModelValue(value);
         }
-
+        public bool IsOpenedSeparatorItemMenu
+        {
+            get => Model.IsOpenedSeparatorItemMenu;
+            set => SetModelValue(value);
+        }
 
         public LauncherDetailViewModelBase? ContextMenuOpenedItem
         {

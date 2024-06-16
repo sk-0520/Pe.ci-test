@@ -340,7 +340,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         }
 
         /// <inheritdoc cref="IDatabaseAccessor.Query{T}(IDatabaseTransaction?, string, object?, bool)"/>
-        public virtual IEnumerable<T> Query<T>(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered)
+        public virtual IEnumerable<T> Query<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null, bool buffered = true)
         {
             ThrowIfDisposed();
 
@@ -393,7 +393,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         }
 
         /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
-        public virtual IEnumerable<dynamic> Query(IDatabaseTransaction? transaction, string statement, object? parameter, bool buffered)
+        public virtual IEnumerable<dynamic> Query(IDatabaseTransaction? transaction, string statement, object? parameter = null, bool buffered = true)
         {
             ThrowIfDisposed();
 
@@ -446,7 +446,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         }
 
         /// <inheritdoc cref="IDatabaseAccessor.QueryFirst{T}(IDatabaseTransaction?, string, object?)"/>
-        public virtual T QueryFirst<T>(IDatabaseTransaction? transaction, string statement, object? parameter)
+        public virtual T QueryFirst<T>(IDatabaseTransaction? transaction, string statement, object? parameter=null)
         {
             ThrowIfDisposed();
 

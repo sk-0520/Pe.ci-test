@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Standard.Base.Linq;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {

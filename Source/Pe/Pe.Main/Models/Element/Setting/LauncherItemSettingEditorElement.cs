@@ -10,7 +10,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
-using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Standard.Base.Linq;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
@@ -60,6 +60,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
                 case LauncherItemKind.Addon:
                     LoadAddon();
+                    break;
+
+                case LauncherItemKind.Separator:
+                    LoadSeparator();
                     break;
 
                 default:

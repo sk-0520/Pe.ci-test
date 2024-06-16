@@ -25,6 +25,7 @@ using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using ContentTypeTextNet.Pe.Standard.Base;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Standard.Base.Linq;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 {

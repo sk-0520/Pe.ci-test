@@ -1,7 +1,9 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Setting
 {
@@ -42,6 +44,19 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
         #endregion
 
         #region property
+
+        #endregion
+
+        #region command
+
+        private ICommand? _ScrollSelectedLauncherItemCommand;
+        public ICommand ScrollSelectedLauncherItemCommand => this._ScrollSelectedLauncherItemCommand ??= new DelegateCommand(
+            () => {
+                if(this.items.SelectedItem is not null) {
+                    this.items.ScrollIntoView(this.items.SelectedItem);
+                }
+            }
+        );
 
         #endregion
     }

@@ -20,10 +20,10 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
-using ContentTypeTextNet.Pe.Standard.Base;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting.Factory;
+using ContentTypeTextNet.Pe.Standard.Base.Linq;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
@@ -159,6 +159,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 ;
                 launcherItemElements.Add(element);
             }
+            //launcherItemElements.Sort((a,b) => {
+            //    if(a.Kind == LauncherItemKind.Separator 
+            //})
 
 
             /* パラで回しても1秒くらいしか変わらんかった

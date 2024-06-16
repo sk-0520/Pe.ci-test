@@ -4,10 +4,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.ViewModels;
 using Xunit;
 
-namespace ContentTypeTextNet.Pe.Core.Test.Models
+namespace ContentTypeTextNet.Pe.Core.Test.ViewModels
 {
     // 保守したくはないけどテストくらいはまぁ。。。 という気持ち
     public class ObservableCollectionManagerBaseTest

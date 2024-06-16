@@ -1,4 +1,6 @@
 using System;
+using System.Windows;
+using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
@@ -68,6 +70,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                         return addon;
                     }
 
+                case LauncherItemKind.Separator: {
+                        var control = new Control() {
+                            Template = (ControlTemplate)Application.Current.Resources["App-Image-Separator"],
+                        };
+                        return control;
+                    }
+
                 default:
                     throw new NotImplementedException();
             }
@@ -89,6 +98,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                 case ILauncherItemExtension launcherItemExtension:
                     return new IconViewerViewModel(LauncherItemId, launcherItemExtension, dispatcherWrapper, LoggerFactory) {
+                        UseCache = useCache,
+                    };
+
+                case DependencyObject dependencyObject:
+                    return new IconViewerViewModel(dependencyObject, dispatcherWrapper, LoggerFactory) {
                         UseCache = useCache,
                     };
 

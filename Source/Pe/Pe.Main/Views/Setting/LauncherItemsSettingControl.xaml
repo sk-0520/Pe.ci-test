@@ -15,6 +15,7 @@
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:datacontext="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting" d:DataContext="{d:DesignInstance Type=datacontext:LauncherItemsSettingEditorViewModel}"
   mc:Ignorable="d"
   d:DesignWidth="800"
   d:DesignHeight="450"
@@ -61,58 +62,42 @@
           </Grid.ColumnDefinitions>
 
 
-          <Grid Grid.Column="0">
-            <Grid x:Name="multiMenu" >
-              <Grid.Style>
-                <Style TargetType="Grid">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding Editor.LauncherItemAddonItems.Count, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0">
-                      <Setter Property="Visibility" Value="Collapsed" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </Grid.Style>
+          <Grid x:Name="multiMenu" Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
+              <Button Command="{Binding Editor.AddNewFileItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" ToolTip="{Binding Resources.String_Setting_LauncherItems_Add_File_A, Source={x:Static app_main:CultureService.Instance}}">
+                <Button.Style>
+                  <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <Setter Property="Padding" Value="0" />
+                  </Style>
+                </Button.Style>
+                <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
+              </Button>
               <ToggleButton x:Name="switchAddItem" IsChecked="{Binding Editor.IsPopupAddItemMenu, RelativeSource={RelativeSource AncestorType=UserControl}}" ToolTip="{Binding Resources.String_Setting_LauncherItems_Add, Source={x:Static app_main:CultureService.Instance}}" Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
                 <StackPanel Orientation="Horizontal">
-                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
                   <ContentControl IsTabStop="False" Background="{Binding Foreground, ElementName=switchAddItem}" Template="{StaticResource Path-Small}" Content="{StaticResource App-Path-DropMenu}" />
                 </StackPanel>
               </ToggleButton>
-              <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchAddItem}">
-                <Border Style="{StaticResource PopupMenuBorder}">
-                  <StackPanel>
-                    <MenuItem Header="{Binding Resources.String_Setting_LauncherItems_Add_File_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNewFileItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                    <ItemsControl IsTabStop="False" ItemsSource="{Binding Editor.LauncherItemAddonItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                      <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                          <StackPanel />
-                        </ItemsPanelTemplate>
-                      </ItemsControl.ItemsPanel>
-                      <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                          <MenuItem Header="{Binding AddonName, Converter={StaticResource EscapeAccessKeyConverter}}" Command="{Binding Editor.AddNewAddonItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
-                        </DataTemplate>
-                      </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                  </StackPanel>
-                </Border>
-              </Popup>
-            </Grid>
-
-            <Button ToolTip="{Binding Resources.String_Setting_LauncherItems_Add, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNewFileItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
-              <Button.Style>
-                <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding Visibility ,ElementName=multiMenu}" Value="Collapsed">
-                      <Setter Property="Visibility" Value="Visible" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                  <Setter Property="Visibility" Value="Collapsed" />
-                </Style>
-              </Button.Style>
-              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
-            </Button>
-
+            </StackPanel>
+            <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchAddItem}">
+              <Border Style="{StaticResource PopupMenuBorder}">
+                <StackPanel>
+                  <MenuItem Header="{Binding Resources.String_Setting_LauncherItems_Add_File_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNewFileItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                  <ItemsControl IsTabStop="False" ItemsSource="{Binding Editor.LauncherItemAddonItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <ItemsControl.ItemsPanel>
+                      <ItemsPanelTemplate>
+                        <StackPanel />
+                      </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate>
+                        <MenuItem Header="{Binding AddonName, Converter={StaticResource EscapeAccessKeyConverter}}" Command="{Binding Editor.AddNewAddonItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                  <MenuItem Header="{Binding Resources.String_Setting_LauncherItems_Add_Separator_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNewSeparatorItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                </StackPanel>
+              </Border>
+            </Popup>
           </Grid>
 
           <Button Grid.Column="1" ToolTip="{Binding Resources.String_Setting_LauncherItems_Remove, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">

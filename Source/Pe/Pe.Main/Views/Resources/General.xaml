@@ -414,6 +414,14 @@
     <Setter Property="Orientation" Value="Horizontal" />
   </Style>
 
+  <Style x:Key="ToolbarRepeatButton" TargetType="RepeatButton">
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="SnapsToDevicePixels" Value="true" />
+    <Setter Property="MinHeight" Value="23" />
+    <Setter Property="MinWidth" Value="23" />
+  </Style>
+
   <DataTemplate x:Key="Setting-LauncherGroups">
     <StackPanel Style="{StaticResource ImageLabel-Small}">
       <Control IsTabStop="False">

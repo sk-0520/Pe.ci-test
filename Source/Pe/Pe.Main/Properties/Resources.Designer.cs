@@ -1453,6 +1453,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   罫線 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_LauncherSeparatorKind_Line {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.LauncherSeparatorKind.Line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   スペース に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_LauncherSeparatorKind_Space {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.LauncherSeparatorKind.Space", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   下 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Bottom {
@@ -1820,6 +1838,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherItemKind_File {
             get {
                 return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   セパレータ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherItemKind_Separator {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.Separator", resourceCulture);
             }
         }
         
@@ -4004,11 +4031,29 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   新しいアイテム に類似しているローカライズされた文字列を検索します。
+        ///   新しいアドオンアイテム に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItem_NewItem_Name {
+        public static string String_LauncherItem_NewItem_AddonName {
             get {
-                return ResourceManager.GetString("String_LauncherItem_NewItem_Name", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItem_NewItem_AddonName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新しいファイルアイテム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItem_NewItem_FileName {
+            get {
+                return ResourceManager.GetString("String_LauncherItem_NewItem_FileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新しいセパレータアイテム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItem_NewItem_SeparatorName {
+            get {
+                return ResourceManager.GetString("String_LauncherItem_NewItem_SeparatorName", resourceCulture);
             }
         }
         
@@ -4217,6 +4262,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_LauncherItemCustomizeControl_RedoEditor_Header {
             get {
                 return ResourceManager.GetString("String_LauncherItemCustomizeControl_RedoEditor_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   種類(_K) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Separator_Kind_A {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Separator_Kind_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   幅(_W) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Separator_Width_A {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Separator_Width_A", resourceCulture);
             }
         }
         
@@ -6164,6 +6227,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_LauncherItems_Add_File_A {
             get {
                 return ResourceManager.GetString("String_Setting_LauncherItems_Add_File_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   セパレータ追加(_S) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherItems_Add_Separator_A {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherItems_Add_Separator_A", resourceCulture);
             }
         }
         

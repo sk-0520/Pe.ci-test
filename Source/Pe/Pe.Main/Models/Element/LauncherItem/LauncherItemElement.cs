@@ -20,6 +20,7 @@ using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Standard.Base.Linq;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 {
@@ -141,6 +142,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
 
             return result;
+        }
+
+        internal LauncherSeparatorData LoadSeparator()
+        {
+            LauncherSeparatorData launcherSeparatorData;
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var launcherSeparatorsEntityDao = new LauncherSeparatorsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                launcherSeparatorData = launcherSeparatorsEntityDao.SelectSeparator(LauncherItemId);
+            }
+
+            return launcherSeparatorData;
         }
 
         private List<LauncherEnvironmentVariableData> GetMergeEnvironmentVariableItems(IDatabaseContext context, IDatabaseImplementation implementation)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -58,8 +59,12 @@ values
         {
             using var readerWriterLocker = new ReaderWriterLocker();
             var test = new DatabaseBarrier(DatabaseAccessor, readerWriterLocker);
-            using var transaction = test.WaitWrite();
-            transaction.Insert("insert into TestTable1(ColKey, ColVal) values (5, 'E')");
+            using(var transaction = test.WaitWrite()) {
+                transaction.Insert("insert into TestTable1(ColKey, ColVal) values (5, 'E')");
+                var value = transaction.QueryFirst<string>("select ColVal from TestTable1 where ColKey = 5");
+                Assert.Equal("E", value);
+            }
+            Assert.Null(DatabaseAccessor.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = 5"));
         }
 
         [Fact]
@@ -67,8 +72,12 @@ values
         {
             using var readerWriterLocker = new ReaderWriterLocker();
             var test = new DatabaseBarrier(DatabaseAccessor, readerWriterLocker);
-            using var transaction = test.WaitWrite(Timeout.InfiniteTimeSpan);
-            transaction.Insert("insert into TestTable1(ColKey, ColVal) values (5, 'E')");
+            using(var transaction = test.WaitWrite(Timeout.InfiniteTimeSpan)) {
+                transaction.Insert("insert into TestTable1(ColKey, ColVal) values (5, 'E')");
+                var value = transaction.QueryFirst<string>("select ColVal from TestTable1 where ColKey = 5");
+                Assert.Equal("E", value);
+            }
+            Assert.Null(DatabaseAccessor.QueryFirstOrDefault<string>("select ColVal from TestTable1 where ColKey = 5"));
         }
 
         [Fact]

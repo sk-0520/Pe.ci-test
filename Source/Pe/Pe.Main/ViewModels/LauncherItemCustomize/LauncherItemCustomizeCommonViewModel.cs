@@ -72,11 +72,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             }
         }
 
+        public bool IsEnabledIconSetting => Model.Kind != LauncherItemKind.Separator;
+
         public bool IsEnabledCommandLauncher
         {
             get => Model.IsEnabledCommandLauncher;
             set => SetModelValue(value);
         }
+
+        public bool IsEnabledCommandLauncherSetting=> Model.Kind != LauncherItemKind.Separator;
 
         #endregion
 

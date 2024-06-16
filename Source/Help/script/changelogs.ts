@@ -7,6 +7,7 @@
 import './changelog-link'
 import changelogs from '../../../Define/changelogs.json';
 import changelogsArchives from '../../../Define/changelogs-archive.json';
+import { hasString } from './core/types';
 
 Array.prototype.push.apply(changelogs, changelogsArchives);
 
@@ -21,20 +22,41 @@ window.addEventListener('load', () => {
 	const listElement = document.getElementById('list') as HTMLSelectElement;
 	listElement.addEventListener("change", _ => {
 		const listOptionElement = document.getElementById(listElement.value);
-		if(listOptionElement) {
+		if (listOptionElement) {
 			listOptionElement.scrollIntoView();
 		}
 	});
 
 	const changelogElement = document.getElementById('changelogs')!;
+
+	const changelogGroupFirstItems = new Map<object, string>();
+	let prevGroupChangelogGroup: string | undefined = undefined;
+	for (const changelog of [...changelogs].reverse()) {
+		if (hasString(changelog, "group")) {
+			prevGroupChangelogGroup = changelog.group;
+		}
+		changelogGroupFirstItems.set(changelog, prevGroupChangelogGroup!);
+	}
+
+	let optionGroupElement: HTMLOptGroupElement | undefined = undefined;
+
 	for (const changelog of changelogs) {
 		const versionSection = document.createElement('section');
 		versionSection.id = changelog.version;
 
+		if (optionGroupElement === undefined || changelogGroupFirstItems.get(changelog) !== optionGroupElement.label) {
+			optionGroupElement = document.createElement('optgroup');
+			optionGroupElement.label = changelogGroupFirstItems.get(changelog)!;
+			listElement.appendChild(optionGroupElement)
+		}
+		if (!optionGroupElement) {
+			throw new Error('optionGroupElement');
+		}
+
 		const listOptionElement = document.createElement("option");
 		listOptionElement.value = changelog.version
 		listOptionElement.text = `${changelog['date']}, ${changelog['version']}`;
-		listElement.appendChild(listOptionElement)
+		optionGroupElement.appendChild(listOptionElement);
 
 		const versionHeader = document.createElement('h2');
 		versionHeader.textContent = `${changelog['date']}, ${changelog['version']}`;

@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
@@ -65,6 +66,62 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme.Theme
         public Brush GetToolbarForeground()
         {
             return SystemColors.ControlTextBrush;
+        }
+
+        public DependencyObject GetLauncherSeparator(bool isHorizontal, LauncherSeparatorKind kind, int width)
+        {
+            switch(kind) {
+                case LauncherSeparatorKind.None: {
+                        return new Rectangle() {
+                            Width = width,
+                            Height = width,
+                        };
+                    }
+
+                case LauncherSeparatorKind.Line: {
+                        var rectangle = new Rectangle();
+                        var edgeThickness = 2;
+
+                        rectangle.BeginInit();
+                        const int separatorWidth = 1;
+                        var separatorBrush = SystemColors.ControlTextBrush;
+                        rectangle.Fill = separatorBrush;
+
+                        double directionThickness = width <= separatorWidth ? 0 : ((width - separatorWidth) / 2.0);
+
+                        if(isHorizontal) {
+                            rectangle.Height = separatorWidth;
+                            rectangle.Margin = new Thickness(
+                                edgeThickness, directionThickness, edgeThickness, directionThickness
+                            );
+                        } else {
+                            rectangle.Width = separatorWidth;
+                            rectangle.Margin = new Thickness(
+                                directionThickness, edgeThickness, directionThickness, edgeThickness
+                            );
+                        }
+                        rectangle.EndInit();
+
+                        return rectangle;
+                    }
+
+                case LauncherSeparatorKind.Space: {
+                        var rectangle = new Rectangle();
+
+                        rectangle.BeginInit();
+                        if(isHorizontal) {
+                            rectangle.Height = width;
+                        } else {
+                            rectangle.Width = width;
+                        }
+                        rectangle.EndInit();
+
+                        return rectangle;
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         #endregion

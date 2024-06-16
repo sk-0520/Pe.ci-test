@@ -1426,6 +1426,32 @@
     </Viewbox>
   </ControlTemplate>
 
+  <!-- Visual Studio 2022 Image Library: MenuSeparator -->
+  <ControlTemplate x:Key="App-Image-Separator">
+    <Viewbox>
+      <Rectangle Width="16 " Height="16">
+        <Rectangle.Resources>
+          <SolidColorBrush x:Key="canvas" Opacity="0" />
+          <SolidColorBrush x:Key="light-defaultgrey" Color="#212121" Opacity="1" />
+        </Rectangle.Resources>
+        <Rectangle.Fill>
+          <DrawingBrush Stretch="None">
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup x:Name="canvas">
+                  <GeometryDrawing Brush="{DynamicResource canvas}" Geometry="F1M16,16H0V0H16Z" />
+                </DrawingGroup>
+                <DrawingGroup x:Name="level_1">
+                  <GeometryDrawing Brush="{DynamicResource light-defaultgrey}" Geometry="F1M15,8H1V7H15Z" />
+                </DrawingGroup>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
   <!--#region Windows -->
   <!-- https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_logo_-_2012.svg -->
   <ControlTemplate x:Key="App-Image-Windows"  TargetType="Control">

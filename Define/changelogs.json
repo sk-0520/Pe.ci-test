@@ -1,5 +1,50 @@
 [
 	{
+		"date": "2024/06/16",
+		"version": "0.99.236",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "b405e193ae4b71b3f4addd6b7d85fd293b00d4aa",
+						"subject": "#288: ランチャーアイテムのボタン間に区切りを表示",
+						"comments": [
+							"遅延読み込みせず即時読み込みでもうちょっといい感じにできるとは思うけどまぁまぁ、諦め",
+							"※グループアイテムに紐づけるかランチャーアイテムとするかで結構悩んだが工数の少ないランチャーアイテムに落ち着いた感あるけどどうなんですかねこれ"
+						]
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "7b1dced96452800ec353d1f077f6240ae8e1c11a",
+						"subject": "#939: グループ設定画面で選択されているランチャーアイテムの移動に表示位置を追従させる"
+					},
+					{
+						"revision": "715ab5a5402d4d0ce83cf2b8b354ff23e5eee32d",
+						"subject": "#938: ツールバーに置いている RepeatButton/TogleButton のデザインなんとかなんないですかね"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "4e0880774ea621afc5d991522351672007210a9c",
+						"subject": "#935: ワークフロー Build CI/CD が PR で動いている"
+					},
+					{
+						"revision": "4969e9d62284853e9b50c210cdbfa48f6b7e0068",
+						"subject": "更新履歴のプルダウンに大まかなグループを追加"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2024/06/07",
 		"version": "0.99.234",
 		"contents": [
@@ -7,14 +52,14 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "f6a169faa1973965e18adfc23734b383475690f4",
 						"subject": "#933: DI の型よわよわ生成処理を Factory 作って早め対応できるようにする",
 						"comments": [
 							"リファクタしないと無理なので気になるところだけ対応"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "3433ca1faf00fd4e201c2f81d7e902542d6b2ce8",
 						"subject": "Microsoft.Web.WebView2 1.0.2478.35 -> 1.0.2535.41"
 					}
 				]

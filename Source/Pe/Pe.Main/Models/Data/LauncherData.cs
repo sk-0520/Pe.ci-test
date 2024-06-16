@@ -56,6 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Separator,
     }
 
+
     /// <summary>
     /// ランチャーツールバーのアイコン(ボタン)位置。
     /// </summary>
@@ -167,6 +168,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public string ProtocolAlias { get; set; } = string.Empty;
         public string Option { get; set; } = string.Empty;
+        #endregion
+    }
+
+    public class LauncherSeparatorData
+    {
+        #region property
+
+        public LauncherSeparatorKind Kind { get; set; } = LauncherSeparatorKind.Line;
+
+        public int Width { get; set; } = 1;
+
         #endregion
     }
 
@@ -478,6 +490,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
     }
+
+
 
     public class LauncherIconStatus
     {
