@@ -1,52 +1,18 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.235(+)",
+		"date": "2024/06/16",
+		"version": "0.99.236",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "b405e193ae4b71b3f4addd6b7d85fd293b00d4aa",
 						"subject": "#288: ランチャーアイテムのボタン間に区切りを表示",
 						"comments": [
 							"遅延読み込みせず即時読み込みでもうちょっといい感じにできるとは思うけどまぁまぁ、諦め",
 							"※グループアイテムに紐づけるかランチャーアイテムとするかで結構悩んだが工数の少ないランチャーアイテムに落ち着いた感あるけどどうなんですかねこれ"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -54,20 +20,12 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "7b1dced96452800ec353d1f077f6240ae8e1c11a",
 						"subject": "#939: グループ設定画面で選択されているランチャーアイテムの移動に表示位置を追従させる"
 					},
 					{
-						"revision": "",
+						"revision": "715ab5a5402d4d0ce83cf2b8b354ff23e5eee32d",
 						"subject": "#938: ツールバーに置いている RepeatButton/TogleButton のデザインなんとかなんないですかね"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -75,20 +33,12 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "4e0880774ea621afc5d991522351672007210a9c",
 						"subject": "#935: ワークフロー Build CI/CD が PR で動いている"
 					},
 					{
-						"revision": "",
+						"revision": "4969e9d62284853e9b50c210cdbfa48f6b7e0068",
 						"subject": "更新履歴のプルダウンに大まかなグループを追加"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
