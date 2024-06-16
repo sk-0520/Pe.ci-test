@@ -868,10 +868,12 @@ jobs:
       matrix:
         OS:
           - windows-2019
+          - ubuntu-24.04
           - ubuntu-22.04
           - ubuntu-20.04
+          # - macos-14
+          - macos-13
           - macos-12
-          - macos-11
         TARGET:
           - Pe.Standard.CliProxy.Test
           - Pe.Standard.Property.Test
