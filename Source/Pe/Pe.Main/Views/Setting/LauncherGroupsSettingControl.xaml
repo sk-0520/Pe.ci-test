@@ -26,6 +26,13 @@
     </ResourceDictionary>
   </UserControl.Resources>
 
+  <behaviors:Interaction.Triggers>
+    <app_views:RequestTrigger SourceObject="{Binding Editor.ScrollSelectedLauncherItemRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <prism:InvokeCommandAction Command="{Binding ScrollSelectedLauncherItemCommand,ElementName=root}" />
+    </app_views:RequestTrigger>
+  </behaviors:Interaction.Triggers>
+
+
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="40*" />

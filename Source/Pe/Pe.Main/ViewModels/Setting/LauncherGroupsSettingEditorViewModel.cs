@@ -98,6 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region property
 
         private SimpleRegexFactory SimpleRegexFactory { get; }
+        public RequestSender ScrollSelectedLauncherItemRequest { get; } = new RequestSender();
 
         public IDragAndDrop GroupsDragAndDrop { get; }
         public IDragAndDrop LauncherItemDragAndDrop { get; }
@@ -583,6 +584,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             if(e.PropertyName == nameof(SelectedGroup.ImageColor)) {
                 ChangeGroupIconColorFromCurrentGroup();
+            }
+            if(e.PropertyName == nameof(SelectedGroup.SelectedLauncherItem)) {
+                ScrollSelectedLauncherItemRequest.Send();
             }
         }
     }
