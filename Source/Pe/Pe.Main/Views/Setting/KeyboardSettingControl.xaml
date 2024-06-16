@@ -153,7 +153,7 @@
       <ToolBar Grid.Row="0" Style="{StaticResource Horizontal-Toolbar}">
         <Label  Content="{Binding Resources.String_Setting_Keyboard_Pressed_Header, Source={x:Static app_main:CultureService.Instance}}" />
         <Grid>
-          <ToggleButton x:Name="switchCreateJob" IsChecked="{Binding Editor.IsPopupCreateJobMenu, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="{Binding Resources.String_Setting_Keyboard_Pressed_Add_A, Source={x:Static app_main:CultureService.Instance}}" />
+          <ToggleButton x:Name="switchCreateJob" IsChecked="{Binding Editor.IsPopupCreateJobMenu, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="{Binding Resources.String_Setting_Keyboard_Pressed_Add_A, Source={x:Static app_main:CultureService.Instance}}" Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}" />
           <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateJob}">
             <Border Style="{StaticResource PopupMenuBorder}">
               <StackPanel>

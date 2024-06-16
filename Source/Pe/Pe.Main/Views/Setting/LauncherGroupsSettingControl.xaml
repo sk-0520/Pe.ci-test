@@ -72,10 +72,10 @@
 
         <Separator />
 
-        <RepeatButton ToolTip="{Binding Resources.String_Common_Up, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.UpSelectedGroupCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <RepeatButton Style="{StaticResource ToolbarRepeatButton}" ToolTip="{Binding Resources.String_Common_Up, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.UpSelectedGroupCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Up}" />
         </RepeatButton>
-        <RepeatButton ToolTip="{Binding Resources.String_Common_Down, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.DownSelectedGroupCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <RepeatButton Style="{StaticResource ToolbarRepeatButton}" ToolTip="{Binding Resources.String_Common_Down, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.DownSelectedGroupCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Down}" />
         </RepeatButton>
       </ToolBar>
@@ -189,10 +189,10 @@
 
         <Separator />
 
-        <RepeatButton ToolTip="{Binding Resources.String_Common_Up, Source={x:Static app_main:CultureService.Instance}}"  Command="{Binding Editor.UpSelectedLauncherItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <RepeatButton Style="{StaticResource ToolbarRepeatButton}" ToolTip="{Binding Resources.String_Common_Up, Source={x:Static app_main:CultureService.Instance}}"  Command="{Binding Editor.UpSelectedLauncherItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Up}" />
         </RepeatButton>
-        <RepeatButton ToolTip="{Binding Resources.String_Common_Down, Source={x:Static app_main:CultureService.Instance}}"  Command="{Binding Editor.DownSelectedLauncherItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <RepeatButton Style="{StaticResource ToolbarRepeatButton}" ToolTip="{Binding Resources.String_Common_Down, Source={x:Static app_main:CultureService.Instance}}"  Command="{Binding Editor.DownSelectedLauncherItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Down}" />
         </RepeatButton>
       </ToolBar>
