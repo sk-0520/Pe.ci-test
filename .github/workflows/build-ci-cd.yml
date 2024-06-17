@@ -21,6 +21,7 @@ jobs:
   build:
     name: Build
     uses: ./.github/workflows/_build-template.yml
+    secrets: inherit
     with:
       APPLICATION_ARCHIVE: 7z
       PLUGINS_ARCHIVE: 7z
@@ -28,7 +29,6 @@ jobs:
       PE_RELEASE_ARCHIVE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@ARCHIVENAME@
       PE_RELEASE_NOTE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@NOTENAME@
       INVOKE_PLUGIN_TEMPLATE: true
-
 
   deploy:
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/ci-test'
