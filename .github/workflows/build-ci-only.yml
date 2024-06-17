@@ -19,6 +19,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/_build-template.yml
+    secrets: inherit
     with:
       APPLICATION_ARCHIVE: tar
       PLUGINS_ARCHIVE: 7z
