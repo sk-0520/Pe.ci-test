@@ -456,9 +456,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
 
-                var codes = launcherItemsDao.SelectFuzzyCodes(data.Item.Code).ToList();
-                data.Item.Code = launcherFactory.GetUniqueCode(data.Item.Code, codes);
-
                 launcherItemsDao.InsertLauncherItem(data.Item, DatabaseCommonStatus.CreateCurrentAccount());
                 launcherFilesDao.InsertFile(data.Item.LauncherItemId, data.File, DatabaseCommonStatus.CreateCurrentAccount());
                 launcherTagsDao.InsertTags(data.Item.LauncherItemId, tags, DatabaseCommonStatus.CreateCurrentAccount());

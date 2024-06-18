@@ -11,5 +11,4 @@ order by
 		else -1
 	end,
 	LauncherItems.Name,
-	LauncherItems.Code,
 	LauncherItems.LauncherItemId

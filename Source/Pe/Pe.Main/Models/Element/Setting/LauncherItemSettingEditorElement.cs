@@ -18,7 +18,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     {
         #region property
         string Name { get; }
-        string Code { get; }
         LauncherItemKind Kind { get; }
         string Comment { get; }
 
@@ -37,7 +36,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IsLazyLoad = true;
 
             Name = setting.Name;
-            Code = setting.Code;
             Kind = setting.Kind;
             IconData = setting.Icon;
             IsEnabledCommandLauncher = setting.IsEnabledCommandLauncher;

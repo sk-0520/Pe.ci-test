@@ -72,7 +72,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         }
 
         public string Name { get; set; } = string.Empty;
-        public string Code { get; protected private set; } = string.Empty;
         public LauncherItemKind Kind { get; protected private set; }
         public bool IsEnabledCommandLauncher { get; set; }
 
@@ -268,7 +267,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
 
             Name = launcherItemData.Name;
-            Code = launcherItemData.Code;
             Kind = launcherItemData.Kind;
             IconData = launcherItemData.Icon;
             IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
@@ -346,7 +344,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             var itemData = new LauncherItemData() {
                 LauncherItemId = LauncherItemId,
                 Kind = Kind,
-                Code = Code,
                 Name = Name,
                 IsEnabledCommandLauncher = IsEnabledCommandLauncher,
                 Comment = Comment,

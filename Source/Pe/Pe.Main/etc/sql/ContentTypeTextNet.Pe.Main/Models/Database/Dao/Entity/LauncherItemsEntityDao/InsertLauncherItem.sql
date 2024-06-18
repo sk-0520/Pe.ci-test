@@ -2,7 +2,6 @@ insert into
 	LauncherItems
 	(
 		[LauncherItemId],
-		[Code],
 		[Name],
 		[Kind],
 		[IconPath],
@@ -25,7 +24,6 @@ insert into
 	values
 	(
 /* LauncherItemId           */ @LauncherItemId,
-/* Code                     */ @Code,
 /* Name                     */ @Name,
 /* Kind                     */ @Kind,
 /* IconPath                 */ @IconPath,
