@@ -136,7 +136,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                     var setting = new LauncherSettingCommonData() {
                         LauncherItemId = data.LauncherItemId,
                         Kind = data.Kind,
-                        Code = data.Code,
                         Name = data.Name,
                         Icon = data.Icon,
                         IsEnabledCommandLauncher = data.IsEnabledCommandLauncher,

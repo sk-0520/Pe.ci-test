@@ -19,10 +19,11 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/_build-template.yml
+    secrets: inherit
     with:
       APPLICATION_ARCHIVE: tar
       PLUGINS_ARCHIVE: 7z
       IS_PRODUCT: false
       PE_RELEASE_ARCHIVE_BASE_URL: https://example.com
       PE_RELEASE_NOTE_BASE_URL: https://example.com
-      INVOKE_PLUGIN_TEMPLATE: true
+      INVOKE_PLUGIN_TEMPLATE: false

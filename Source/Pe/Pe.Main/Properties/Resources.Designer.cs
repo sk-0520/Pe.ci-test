@@ -4067,15 +4067,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   コード(_C) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_LauncherItemCustomizeControl_Common_Code_A {
-            get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Code_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   共通 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_Common_Header {

@@ -40,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region function
 
+        [Obsolete]
         public IReadOnlyCollection<string> GetTagItems()
         {
             return TextUtility.ReadLines(TagDocument!.Text)

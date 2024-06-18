@@ -199,10 +199,9 @@ jobs:
           path: plugin-template.tar
           if-no-files-found: error
 
-  invake-plugin-template:
-    name: Invake Plugin Template
-    # if: inputs.INVOKE_PLUGIN_TEMPLATE
-    if: ${{ false }}
+  invoke-plugin-template:
+    name: Invoke Plugin Template
+    if: inputs.INVOKE_PLUGIN_TEMPLATE
     needs:
       - plugin-template
       - powershell-source

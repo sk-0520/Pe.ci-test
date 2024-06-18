@@ -1,5 +1,36 @@
 [
 	{
+		"date": "2024/06/18",
+		"version": "0.99.237",
+		"contents": [
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "c55f26206b6df69ec6cf944ea56b37c6ebf94488",
+						"subject": "#936: ランチャーアイテムのコードって多分いらない",
+						"comments": [
+							"べつにバグじゃないけど機能追加でもないから修正とする"
+						]
+					},
+					{
+						"revision": "71f13eb316f8dbef60339497bed1473ddba55971",
+						"subject": "#942: DB上一意なランチャータグに対する同一文言の登録が可能で挙句死ぬ"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "788e411a044938d2c0cb80fb34a508dba74a727b",
+						"subject": "#941: node のバージョンを v20.14.0 に変更する"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2024/06/16",
 		"version": "0.99.236",
 		"contents": [

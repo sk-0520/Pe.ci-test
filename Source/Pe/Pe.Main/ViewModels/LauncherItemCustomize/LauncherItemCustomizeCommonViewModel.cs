@@ -46,17 +46,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             }
         }
 
-        [Required]
-        [CustomValidation(typeof(LauncherItemCustomizeCommonViewModel), nameof(LauncherItemCustomizeCommonViewModel.ValidateCode))]
-        public string Code
-        {
-            get => Model.Code;
-            set
-            {
-                SetModelValue(value);
-                ValidateProperty(value);
-            }
-        }
         public string? IconPath
         {
             get => IconData!.ToString();

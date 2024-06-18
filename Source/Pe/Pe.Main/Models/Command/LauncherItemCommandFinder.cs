@@ -209,12 +209,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                     continue;
                 }
 
-                var codeItem = await GetHitItemAsync(CommandItemKind.LauncherItemCode, element, element.Code, "コード一致", inputValue, inputRegex, hitValuesCreator, cancellationToken);
-                if(codeItem != null) {
-                    yield return codeItem;
-                    continue;
-                }
-
                 if(!FindTag) {
                     continue;
                 }
