@@ -272,9 +272,6 @@
   <data name="String_LauncherItemCustomizeControl_Common_Header" xml:space="preserve">
     <value>共通</value>
   </data>
-  <data name="String_LauncherItemCustomizeControl_Common_Code_A" xml:space="preserve">
-    <value>コード(_C)</value>
-  </data>
   <data name="String_LauncherItemCustomizeControl_Common_Id" xml:space="preserve">
     <value>ID</value>
   </data>

@@ -68,7 +68,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         private IDispatcherWrapper DispatcherWrapper { get; }
         private EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
         public string Name { get; private set; } = string.Empty;
-        public string Code { get; private set; } = string.Empty;
         public LauncherItemKind Kind { get; private set; }
         public bool IsEnabledCommandLauncher { get; private set; }
         public string? Comment { get; private set; }
@@ -92,7 +91,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
 
                 Name = launcherItemData.Name;
-                Code = launcherItemData.Code;
                 Kind = launcherItemData.Kind;
                 IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
                 Comment = launcherItemData.Comment;

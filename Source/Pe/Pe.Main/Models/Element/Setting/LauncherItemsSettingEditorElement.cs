@@ -101,7 +101,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                     Name = launcherItemManager.CreateNewName(kind, AllLauncherItems.Select(i => i.Name).ToList()),
                 };
 
-                item.Code = string.Empty;
                 item.IsEnabledCommandLauncher = true;
                 switch(kind) {
                     case LauncherItemKind.File:
@@ -203,8 +202,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 var launcherFilesDao = new LauncherFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-
-                data.Item.Code = string.Empty;
 
                 launcherItemsDao.InsertLauncherItem(data.Item, DatabaseCommonStatus.CreateCurrentAccount());
                 launcherFilesDao.InsertFile(data.Item.LauncherItemId, data.File, DatabaseCommonStatus.CreateCurrentAccount());

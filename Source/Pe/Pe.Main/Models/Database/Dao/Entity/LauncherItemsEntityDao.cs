@@ -20,7 +20,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             LauncherItemId LauncherItemId { get; }
 
-            string Code { get; }
             string Name { get; }
             string Kind { get; }
             string IconPath { get; }
@@ -40,7 +39,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             public LauncherItemId LauncherItemId { get; set; }
 
-            public string Code { get; set; } = string.Empty;
             public string Name { get; set; } = string.Empty;
             public string Kind { get; set; } = string.Empty;
             public string IconPath { get; set; } = string.Empty;
@@ -77,7 +75,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var dto = new LauncherItemsRowDto() {
                 LauncherItemId = data.LauncherItemId,
-                Code = data.Code,
                 Name = data.Name,
                 Kind = kindEnumTransfer.ToString(data.Kind),
                 IconPath = data.Icon.Path,
@@ -98,7 +95,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var data = new LauncherItemData() {
                 LauncherItemId = dto.LauncherItemId,
                 Name = dto.Name,
-                Code = dto.Code,
                 Kind = kindEnumTransfer.ToEnum(dto.Kind),
                 IsEnabledCommandLauncher = dto.IsEnabledCommandLauncher,
                 Icon = new IconData() {

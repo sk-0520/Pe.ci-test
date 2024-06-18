@@ -146,8 +146,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
                 foreach(var importItem in importItems) {
                     // db ランチャーアイテム突っ込んで
-                    importItem.Data.Item.Code = string.Empty;
-
                     launcherItemsDao.InsertLauncherItem(importItem.Data.Item, DatabaseCommonStatus.CreateCurrentAccount());
 
                     // ランチャー種別で突っ込むデータ追加して
