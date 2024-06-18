@@ -64,7 +64,30 @@ from
 	[LauncherItems2]
 ;
 
--- TODO: コードをタグに移動
+-- コードをタグに移動(単純に移動は被るので存在しない場合のみに限定)
+insert into
+	[LauncherTags]
+select
+	[LauncherItems2].[LauncherItemId],
+	[LauncherItems2].[Code],
+	[LauncherItems2].[CreatedTimestamp],
+	[LauncherItems2].[CreatedAccount],
+	[LauncherItems2].[CreatedProgramName],
+	[LauncherItems2].[CreatedProgramVersion]
+from
+	[LauncherItems2]
+where
+	not exists (
+		select
+			*
+		from
+			[LauncherTags]
+		where
+			[LauncherTags].[LauncherItemId] = [LauncherItems2].[LauncherItemId]
+			and
+			[LauncherTags].[TagName] = [LauncherItems2].[Code]
+	)
+;
 
 --// [#936] 退避テーブル破棄
 drop table [LauncherItems2]
