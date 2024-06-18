@@ -428,7 +428,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
 
             launcherTagsEntityDao.DeleteTagByLauncherItemId(itemData.LauncherItemId);
-            launcherTagsEntityDao.InsertTags(itemData.LauncherItemId, TagItems, commandsPack.CommonStatus);
+            var tagItems = TagItems
+                .Where(a => !string.IsNullOrEmpty(a))
+                .Select(a => a.Trim())
+                .Distinct()
+                .ToArray()
+            ;
+            launcherTagsEntityDao.InsertTags(itemData.LauncherItemId, tagItems, commandsPack.CommonStatus);
 
             return iconChangedResult;
         }
