@@ -349,7 +349,6 @@ ___
 |    | o  |    | 更新プログラム名         | UpdatedProgramName       | text         | System.String   |              |          |
 |    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion    | text         | System.Version  |              |          |
 |    | o  |    | 更新回数                 | UpdatedCount             | integer      | System.Int64    |              | 0始まり  |
-|    | o  |    | ランチャーアイテムコード | Code                     | text         | System.String   |              |          |
 |    | o  |    | 名称                     | Name                     | text         | System.String   |              |          |
 |    | o  |    | ランチャー種別           | Kind                     | text         | System.String   |              |          |
 |    | o  |    | アイコンパス             | IconPath                 | text         | System.String   |              |          |
