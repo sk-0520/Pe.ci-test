@@ -111,17 +111,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        /// <summary>
-        /// 同じようなコード一覧を取得。
-        /// </summary>
-        /// <param name="baseCode"></param>
-        /// <returns></returns>
-        public IEnumerable<string> SelectFuzzyCodes(string baseCode)
-        {
-            var statement = LoadStatement();
-            return Context.Query<string>(statement, new { BaseCode = baseCode });
-        }
-
         public IEnumerable<LauncherItemId> SelectAllLauncherItemIds()
         {
             var statement = LoadStatement();

@@ -206,12 +206,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return result;
         }
 
-        public string GetUniqueCode(string code, IReadOnlyList<string> codes)
-        {
-            return TextUtility.ToUnique(code, codes, StringComparison.OrdinalIgnoreCase, (s, n) => $"{s}-{n}");
-
-        }
-
         /// <summary>
         /// グループ名から重複しないグループ名を生成。
         /// </summary>

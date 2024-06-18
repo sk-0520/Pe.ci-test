@@ -1,7 +1,6 @@
-﻿update
+update
 	LauncherItems
 set
-	[Code] = @Code,
 	[Name] = @Name,
 	[IconPath] = @IconPath,
 	[IconIndex] = @IconIndex,
