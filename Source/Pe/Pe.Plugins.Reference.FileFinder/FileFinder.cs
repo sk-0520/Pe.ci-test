@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder
     {
         #region variable
 
-        private FileFinderAddonImpl _addon;
+        private readonly FileFinderAddonImpl _addon;
 
         #endregion
 

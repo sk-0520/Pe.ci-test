@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock
     {
         #region variable
 
-        private ClockAddonImpl _addon;
+        private readonly ClockAddonImpl _addon;
 
         #endregion
 
