@@ -13,6 +13,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <summary>
         /// 知らん。
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S2346:Flags enumerations zero-value members should be named \"None\"", Justification = "<保留中>")]
         Unknown = 0b_0000,
         /// <summary>
         /// <see cref="IDisposable.Dispose"/> 時に null 設定する目的でセッターを公開。
