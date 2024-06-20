@@ -339,7 +339,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                         continue;
                     }
 
-                    var pair = map.FirstOrDefault(i => arg.StartsWith(i.Key));
+                    var pair = Array.Find(map, i => arg.StartsWith(i.Key));
                     if(pair != null) {
                         var separatorIndex = arg.IndexOf('=');
                         if(separatorIndex == -1) {
