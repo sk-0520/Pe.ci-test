@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         }
                     )
                 );
-                Logger.LogInformation("check app update: {uri}", uri);
+                Logger.LogInformation("check app update: {Uri}", uri);
 
                 try {
                     var response = await agent.GetAsync(uri, cancellationToken);
