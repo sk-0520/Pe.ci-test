@@ -344,7 +344,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             }
         );
 
-        public ICommand? _ViewActivatedCommand;
+        private ICommand? _ViewActivatedCommand;
         public ICommand ViewActivatedCommand => this._ViewActivatedCommand ??= new DelegateCommand(
             () => {
                 HideWaitTimer.Stop();
