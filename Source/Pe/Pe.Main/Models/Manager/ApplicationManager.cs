@@ -1064,7 +1064,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             infoCollector.Indent = string.Empty;
 
             var s = infoCollector.GetLongInformation();
-            Logger.LogInformation("[各種情報]" + Environment.NewLine + s);
+            Logger.LogInformation("[各種情報]{NewLine}{Information}", Environment.NewLine, s);
         }
 
         public async Task<bool> StartupAsync(App app, StartupEventArgs e)
@@ -1288,7 +1288,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
 #if DEBUG
             if(IsDevDebug) {
-                Logger.LogWarning($"{nameof(IsDevDebug)}が有効");
+                Logger.LogWarning("{IsDevDebug}が有効", nameof(IsDevDebug));
                 return;
             }
 #endif
