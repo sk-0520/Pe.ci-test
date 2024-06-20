@@ -238,6 +238,9 @@ dotnet_diagnostic.S6605.severity = suggestion
 dotnet_diagnostic.S6617.severity = suggestion
 # S6603: The collection-specific "TrueForAll" method should be used instead of the "All" extension
 dotnet_diagnostic.S6603.severity = suggestion
+# S2139: Exceptions should be either logged or rethrown but not both
+dotnet_diagnostic.S2139.severity = silent
+
 
 
 # S3011: Reflection should not be used to increase accessibility of classes, methods, or fields
