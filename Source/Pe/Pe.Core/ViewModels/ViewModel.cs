@@ -482,7 +482,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         protected void AttachModelEvents()
         {
-            if(Model != null) {
+            if(Model is not null) {
                 ThrowIfDisposed();
 
                 AttachModelEventsImpl();
@@ -500,7 +500,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         protected void DetachModelEvents()
         {
-            if(Model != null) {
+            if(Model is not null) {
                 DetachModelEventsImpl();
             }
         }
