@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 try {
                     result = func(item.Action.KeyActionId, item);
                 } catch(Exception ex) {
-                    Logger.LogError(ex, ex.Message + " {0}", item.Action.KeyActionId);
+                    Logger.LogError(ex, "{Message} {KeyActionId}", ex.Message, item.Action.KeyActionId);
                     continue;
                 }
                 yield return result;
