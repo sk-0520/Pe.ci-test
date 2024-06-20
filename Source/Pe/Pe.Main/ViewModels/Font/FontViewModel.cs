@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
             : base(model, loggerFactory)
         {
             if(!Model.IsInitialized) {
-                throw new ArgumentException(null, nameof(Model) + "." + nameof(Model.InitializeAsync));
+                throw new ArgumentException(nameof(Model) + "." + nameof(Model.InitializeAsync), nameof(model));
             }
 
             PropertyChangedHooker = new PropertyChangedHooker(dispatcherWrapper, LoggerFactory);
