@@ -228,6 +228,10 @@ dotnet_diagnostic.S3923.severity = warning
 dotnet_diagnostic.S3400.severity = none
 # S108: Nested blocks of code should not be left empty
 dotnet_diagnostic.S108.severity = suggestion
+# S6602: "Find" method should be used instead of the "FirstOrDefault" extension
+dotnet_diagnostic.S6602.severity = suggestion
+
+
 csharp_using_directive_placement = outside_namespace:silent
 csharp_style_conditional_delegate_call = true:suggestion
 csharp_style_var_for_built_in_types = false:silent
