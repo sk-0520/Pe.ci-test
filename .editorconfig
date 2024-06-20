@@ -230,6 +230,8 @@ dotnet_diagnostic.S3400.severity = none
 dotnet_diagnostic.S108.severity = suggestion
 # S6602: "Find" method should be used instead of the "FirstOrDefault" extension
 dotnet_diagnostic.S6602.severity = suggestion
+# S6608: Prefer indexing instead of "Enumerable" methods on types implementing "IList"
+dotnet_diagnostic.S6608.severity = suggestion
 
 
 csharp_using_directive_placement = outside_namespace:silent
