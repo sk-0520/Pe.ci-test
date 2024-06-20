@@ -258,7 +258,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return kind switch {
                 "zip" => "zip",
                 "7z" => "7z",
-                _ => kind ?? string.Empty,
+                _ => kind,
             };
         }
 
