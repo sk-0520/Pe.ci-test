@@ -234,6 +234,9 @@ dotnet_diagnostic.S6602.severity = suggestion
 dotnet_diagnostic.S6608.severity = suggestion
 # S6605: Collection-specific "Exists" method should be used instead of the "Any" extension
 dotnet_diagnostic.S6605.severity = suggestion
+# S6617: "Contains" should be used instead of "Any" for simple equality checks
+dotnet_diagnostic.S6617.severity = suggestion
+
 # S3011: Reflection should not be used to increase accessibility of classes, methods, or fields
 dotnet_diagnostic.S3011.severity = silent
 # S3267: Loops should be simplified with "LINQ" expressions
