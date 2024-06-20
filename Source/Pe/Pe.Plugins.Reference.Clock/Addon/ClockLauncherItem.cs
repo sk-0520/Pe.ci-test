@@ -148,7 +148,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
                                 Text = ClockUtility.GetClockEmoji(CurrentTime),
                             }
                         };
-                    };
+                    }
 
                 case LauncherItemIconMode.Command:
                 case LauncherItemIconMode.Setting:

@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class KeyMappingsEntityDto: CreateDtoBase
+        private sealed class KeyMappingsEntityDto: CreateDtoBase
         {
             #region property
 

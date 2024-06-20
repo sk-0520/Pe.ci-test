@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class AppCommandSettingEntityDto: CommonDtoBase
+        private sealed class AppCommandSettingEntityDto: CommonDtoBase
         {
             #region property
 

@@ -186,7 +186,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                     return;
                 }
 
-                Logger.LogDebug("add: " + rawValue);
+                Logger.LogDebug("add: {RawValue}", rawValue);
                 // 入力履歴
                 var element = new StandardInputOutputHistoryViewModel(rawValue, DateTime.UtcNow, LoggerFactory);
                 var item = InputtedHistories.FirstOrDefault(i => i.Value == rawValue);

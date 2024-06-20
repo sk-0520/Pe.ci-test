@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         }
 
         /// <inheritdoc cref="WinForms.SendKeys.Flush"/>
-        public static void Flush() => WinForms.SendKeys.Flush();
+        public void Flush() => WinForms.SendKeys.Flush();
 
         #endregion
     }

@@ -10,6 +10,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     /// <summary>
     /// <see cref="System.Windows.Forms.FolderBrowserDialog"/>互換クラス。
     /// </summary>
+    [Obsolete("気が向いたら破棄する")]
     public class FolderBrowserDialog: DisposerBase
     {
         public FolderBrowserDialog()

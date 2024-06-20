@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class InstallPluginRowDto: CreateDtoBase
+        private sealed class InstallPluginRowDto: CreateDtoBase
         {
             #region property
 

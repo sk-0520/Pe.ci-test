@@ -627,7 +627,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         public async Task ConvertContentKindAsync(NoteContentKind toContentKind)
         {
             if(ContentKind == toContentKind) {
-                throw new ArgumentException(null, $"{nameof(ContentKind)} == {nameof(toContentKind)}");
+                throw new ArgumentException($"{nameof(ContentKind)} == {nameof(toContentKind)}", nameof(toContentKind));
             }
             if(IsLink) {
                 throw new InvalidOperationException(nameof(IsLink));
@@ -895,7 +895,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             var file = Files.FirstOrDefault(a => a.NoteFileId == noteFileId);
             if(file is null) {
-                Logger.LogWarning("削除失敗: {noteFileId}", noteFileId);
+                Logger.LogWarning("削除失敗: {NoteFileId}", noteFileId);
                 return false;
             }
 

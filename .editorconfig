@@ -228,6 +228,28 @@ dotnet_diagnostic.S3923.severity = warning
 dotnet_diagnostic.S3400.severity = none
 # S108: Nested blocks of code should not be left empty
 dotnet_diagnostic.S108.severity = suggestion
+# S6602: "Find" method should be used instead of the "FirstOrDefault" extension
+dotnet_diagnostic.S6602.severity = suggestion
+# S6608: Prefer indexing instead of "Enumerable" methods on types implementing "IList"
+dotnet_diagnostic.S6608.severity = suggestion
+# S6605: Collection-specific "Exists" method should be used instead of the "Any" extension
+dotnet_diagnostic.S6605.severity = suggestion
+# S6617: "Contains" should be used instead of "Any" for simple equality checks
+dotnet_diagnostic.S6617.severity = suggestion
+# S6603: The collection-specific "TrueForAll" method should be used instead of the "All" extension
+dotnet_diagnostic.S6603.severity = suggestion
+# S2139: Exceptions should be either logged or rethrown but not both
+dotnet_diagnostic.S2139.severity = silent
+
+
+
+# S3011: Reflection should not be used to increase accessibility of classes, methods, or fields
+dotnet_diagnostic.S3011.severity = silent
+# S3267: Loops should be simplified with "LINQ" expressions
+dotnet_diagnostic.S3267.severity = silent
+
+
+
 csharp_using_directive_placement = outside_namespace:silent
 csharp_style_conditional_delegate_call = true:suggestion
 csharp_style_var_for_built_in_types = false:silent

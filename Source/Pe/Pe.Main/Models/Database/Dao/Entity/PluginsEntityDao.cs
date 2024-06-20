@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class PluginStateDto: CommonDtoBase
+        private sealed class PluginStateDto: CommonDtoBase
         {
             #region property
 

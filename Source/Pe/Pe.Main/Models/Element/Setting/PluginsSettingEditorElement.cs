@@ -27,56 +27,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginsSettingEditorElement: SettingEditorElementBase
     {
-        #region define
-
-        private class StringProgress: IProgress<string>
-        {
-            public StringProgress(ILoggerFactory loggerFactory)
-            {
-                Logger = loggerFactory.CreateLogger(GetType());
-            }
-
-            #region property
-
-            private ILogger Logger { get; }
-
-            #endregion
-
-            #region IProgress
-
-            public void Report(string value)
-            {
-                Logger.LogInformation("{0}", value);
-            }
-
-            #endregion
-        }
-
-        private class DoubleProgress: IProgress<double>
-        {
-            public DoubleProgress(ILoggerFactory loggerFactory)
-            {
-                Logger = loggerFactory.CreateLogger(GetType());
-            }
-
-            #region property
-
-            private ILogger Logger { get; }
-
-            #endregion
-
-            #region IProgress
-
-            public void Report(double value)
-            {
-                Logger.LogInformation("{0}", value);
-            }
-
-            #endregion
-        }
-
-        #endregion
-
         internal PluginsSettingEditorElement(PluginContainer pluginContainer, NewVersionChecker newVersionChecker, NewVersionDownloader newVersionDownloader, IPluginConstructorContext pluginConstructorContext, PauseReceiveLogDelegate pauseReceiveLog, PreferencesContextFactory preferencesContextFactory, IWindowManager windowManager, IUserTracker userTracker, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, GeneralConfiguration generalConfiguration, ApiConfiguration apiConfiguration, IHttpUserAgentFactory userAgentFactory, IViewManager viewManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IPolicy policy, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, largeDatabaseBarrier, temporaryDatabaseBarrier, statementLoader, idFactory, imageLoader, mediaConverter, policy, dispatcherWrapper, loggerFactory)
         {

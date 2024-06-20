@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             DryRun,
         }
 
-        private class ConsoleLifetime: DisposerBase
+        private sealed class ConsoleLifetime: DisposerBase
         {
             public ConsoleLifetime()
             {

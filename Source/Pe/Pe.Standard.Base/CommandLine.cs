@@ -251,7 +251,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             }
 
             if(key.IsEnabledLongKey && key.LongKey.Length == 1) {
-                throw new ArgumentException(null, nameof(key.LongKey));
+                throw new ArgumentException($"{nameof(key.IsEnabledLongKey)} and {nameof(key.LongKey)}.{key.LongKey.Length} == 1", nameof(key));
             }
 
             if(KeyItems.Where(k => k.IsEnabledShortKey).Any(k => k.ShortKey == key.ShortKey)) {
@@ -339,7 +339,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                         continue;
                     }
 
-                    var pair = map.FirstOrDefault(i => arg.StartsWith(i.Key));
+                    var pair = Array.Find(map, i => arg.StartsWith(i.Key));
                     if(pair != null) {
                         var separatorIndex = arg.IndexOf('=');
                         if(separatorIndex == -1) {

@@ -430,9 +430,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             OnCustomizeLauncherItemExited(launcherItemId);
         }
 
-        public void SendLauncherGroupItemRegistered(LauncherGroupId launcherGroupItemId)
+        public void SendLauncherGroupItemRegistered(LauncherGroupId launcherGroupId)
         {
-            OnLauncherGroupItemRegistered(launcherGroupItemId);
+            OnLauncherGroupItemRegistered(launcherGroupId);
         }
 
         public void SendSettingChanged()

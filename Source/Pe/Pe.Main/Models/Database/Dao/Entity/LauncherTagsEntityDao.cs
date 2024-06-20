@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class LauncherTagsRowDto: RowDtoBase
+        private sealed class LauncherTagsRowDto: RowDtoBase
         {
             #region property
 

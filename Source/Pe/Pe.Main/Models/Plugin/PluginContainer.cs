@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 return new FileInfo(pluginFilePath);
             }
 
-            Logger.LogInformation("格納ファイルからプラグインファイル取得(やけくそ), {pluginName}", pluginName);
+            Logger.LogInformation("格納ファイルからプラグインファイル取得(やけくそ), {PluginName}", pluginName);
             foreach(var extension in extensions) {
                 var pluginFileName = PathUtility.AddExtension(pluginName, extension);
                 var pluginPath = Path.Combine(pluginDirectory.FullName, pluginFileName);

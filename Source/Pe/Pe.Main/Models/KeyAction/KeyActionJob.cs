@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 throw new ArgumentException(null, nameof(actionData) + "." + nameof(actionData.ReplaceKey));
             }
             if(ActionData.ReplaceKey == Mappings[0].Key) {
-                throw new ArgumentException(null, nameof(actionData.ReplaceKey) + " == " + nameof(IReadOnlyKeyMappingData.Key));
+                throw new ArgumentException(nameof(actionData.ReplaceKey) + " == " + nameof(IReadOnlyKeyMappingData.Key), nameof(mapping));
             }
             if(ActionData.ReplaceKey.IsModifierKey()) {
                 var mods = new[] {

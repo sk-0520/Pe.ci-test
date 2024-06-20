@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         }
                     )
                 );
-                Logger.LogInformation("check app update: {uri}", uri);
+                Logger.LogInformation("check app update: {Uri}", uri);
 
                 try {
                     var response = await agent.GetAsync(uri, cancellationToken);
@@ -258,7 +258,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return kind switch {
                 "zip" => "zip",
                 "7z" => "7z",
-                _ => kind ?? string.Empty,
+                _ => kind,
             };
         }
 

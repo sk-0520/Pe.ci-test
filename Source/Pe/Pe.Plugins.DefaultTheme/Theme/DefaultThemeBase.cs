@@ -81,9 +81,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         {
             var key = parentName + '.' + targetName;
             var result = (TValue)Application.Current.Resources[key];
-            Debug.Assert(result != null);
+            Debug.Assert(result is not null);
             return result;
-
         }
 
         #endregion

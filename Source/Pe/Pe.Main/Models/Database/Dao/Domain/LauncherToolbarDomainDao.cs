@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
         #region define
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed", Justification = "<保留中>")]
-        private class LauncherToolbarScreenRowDto: CommonDtoBase
+        private sealed class LauncherToolbarScreenRowDto: CommonDtoBase
         {
             #region property
 
