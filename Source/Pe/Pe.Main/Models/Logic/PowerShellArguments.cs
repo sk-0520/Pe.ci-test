@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return CommandLine.Escape(value);
             }
 
-            if(input.Key.StartsWith("-")) {
+            if(input.Key.StartsWith('-')) {
                 return KeyValuePair.Create(input.Key, Escape(input.Value));
             }
 
