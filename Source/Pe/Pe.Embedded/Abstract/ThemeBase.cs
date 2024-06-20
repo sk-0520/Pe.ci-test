@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
     /// </summary>
     internal abstract class ThemeBase: ExtensionBase, ITheme
     {
-        public ThemeBase(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
+        protected ThemeBase(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
             : base(pluginConstructorContext, plugin)
         { }
 
