@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class LauncherSeparatorsEntityDto: CommonDtoBase
+        private sealed class LauncherSeparatorsEntityDto: CommonDtoBase
         {
             #region property
 

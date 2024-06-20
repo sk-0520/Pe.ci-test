@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class NoteLayoutsEntityDto: CommonDtoBase
+        private sealed class NoteLayoutsEntityDto: CommonDtoBase
         {
             #region property
 

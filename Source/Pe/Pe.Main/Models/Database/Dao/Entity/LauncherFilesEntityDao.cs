@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class LauncherFilesEntityPathDto: DtoBase
+        private sealed class LauncherFilesEntityPathDto: DtoBase
         {
             #region property
 
@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed", Justification = "<保留中>")]
-        private class LauncherFilesEntityDto: CommonDtoBase
+        private sealed class LauncherFilesEntityDto: CommonDtoBase
         {
             #region property
 

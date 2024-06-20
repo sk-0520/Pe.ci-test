@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class LauncherEnvVarsEntityDto: CommonDtoBase
+        private sealed class LauncherEnvVarsEntityDto: CommonDtoBase
         {
             #region property
 

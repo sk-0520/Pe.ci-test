@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class LauncherRedoItemsDto: CommonDtoBase
+        private sealed class LauncherRedoItemsDto: CommonDtoBase
         {
             #region property
 

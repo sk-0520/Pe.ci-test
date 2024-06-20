@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class NoteContentsEntityDto: RowDtoBase
+        private sealed class NoteContentsEntityDto: RowDtoBase
         {
             #region property
 

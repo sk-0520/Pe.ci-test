@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class AppPlatformSettingEntityDto: CommonDtoBase
+        private sealed class AppPlatformSettingEntityDto: CommonDtoBase
         {
             #region property
 

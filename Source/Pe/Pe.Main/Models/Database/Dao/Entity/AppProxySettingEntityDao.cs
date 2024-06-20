@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class SettingAppProxySettingDto: CommonDtoBase
+        private sealed class SettingAppProxySettingDto: CommonDtoBase
         {
             #region property
 

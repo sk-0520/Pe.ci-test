@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class LauncherToolbarsDisplayRowDto: CommonDtoBase
+        private sealed class LauncherToolbarsDisplayRowDto: CommonDtoBase
         {
             #region property
 
