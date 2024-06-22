@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
         public override UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext, IPreferencesParameter preferencesParameter)
         {
             ClockWidgetSetting? clockWidgetSetting;
-            if(!preferencesLoadContext.Storage.Persistence.Normal.TryGet<ClockWidgetSetting>(ClockConstants.WidgetSettengKey, out clockWidgetSetting)) {
+            if(!preferencesLoadContext.Storage.Persistence.Normal.TryGet<ClockWidgetSetting>(ClockConstants.WidgetSettingKey, out clockWidgetSetting)) {
                 clockWidgetSetting = new ClockWidgetSetting();
             }
 
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
         {
             Debug.Assert(SettingViewModel != null);
 
-            preferencesSaveContext.Storage.Persistence.Normal.Set(ClockConstants.WidgetSettengKey, SettingViewModel.WidgetSetting);
+            preferencesSaveContext.Storage.Persistence.Normal.Set(ClockConstants.WidgetSettingKey, SettingViewModel.WidgetSetting);
         }
 
         public override void EndPreferences(IPreferencesEndContext preferencesEndContext)

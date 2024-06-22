@@ -8,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock
     {
         #region proprety
 
-        public static string WidgetSettengKey => "widget";
+        public static string WidgetSettingKey => "widget";
 
         #endregion
     }
