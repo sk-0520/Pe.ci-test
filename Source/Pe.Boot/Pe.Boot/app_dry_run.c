@@ -16,11 +16,6 @@ static EXIT_CODE dry_run_core(HINSTANCE hInstance, const CONSOLE_RESOURCE* conso
     set_memory(&startupinfo, 0, sizeof(startupinfo));
     startupinfo.cb = sizeof(startupinfo);
 
-    //startupinfo.hStdInput = console_resource->handle.input;
-    //startupinfo.hStdOutput = console_resource->handle.output;
-    //startupinfo.hStdError = console_resource->handle.error;
-
-
     PROCESS_INFORMATION process_information;
 
     TCHAR* argument = NULL;
@@ -73,7 +68,6 @@ EXIT_CODE dry_run(HINSTANCE hInstance, const COMMAND_LINE_OPTION* command_line_o
     TEXT env_special_key = wrap_text(_T("PE_SPECIAL_MODE"));
     TEXT value = wrap_text(_T("DRY-RUN"));
     set_environment_variable(&env_special_key, &value);
-    //output_console_text(&console_resource, &value, true);
 
     logger_format_debug(_T("[ENV] %t = %t"), &env_special_key, &value);
 
