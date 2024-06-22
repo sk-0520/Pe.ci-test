@@ -8,11 +8,11 @@ using ICSharpCode.AvalonEdit.Document;
 namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 {
     /// <summary>
-    /// EnvironmentValieableEditor.xaml の相互作用ロジック
+    /// EnvironmentVariableEditor.xaml の相互作用ロジック
     /// </summary>
-    public partial class EnvironmentValieableEditor: UserControl
+    public partial class EnvironmentVariableEditor: UserControl
     {
-        public EnvironmentValieableEditor()
+        public EnvironmentVariableEditor()
         {
             InitializeComponent();
         }
@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
         public static readonly DependencyProperty MergeTextDocumentProperty = DependencyProperty.Register(
             nameof(MergeTextDocument),
             typeof(TextDocument),
-            typeof(EnvironmentValieableEditor),
+            typeof(EnvironmentVariableEditor),
             new PropertyMetadata(
                 new TextDocument(),
                 OnMergeTextDocumentChanged
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 
         private static void OnMergeTextDocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if(d is EnvironmentValieableEditor control) {
+            if(d is EnvironmentVariableEditor control) {
                 control.MergeTextDocument = (TextDocument)e.NewValue;
             }
         }
@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
         public static readonly DependencyProperty RemoveTextDocumentProperty = DependencyProperty.Register(
             nameof(RemoveTextDocument),
             typeof(TextDocument),
-            typeof(EnvironmentValieableEditor),
+            typeof(EnvironmentVariableEditor),
             new PropertyMetadata(
                 new TextDocument(),
                 OnRemoveTextDocumentChanged
@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 
         private static void OnRemoveTextDocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if(d is EnvironmentValieableEditor control) {
+            if(d is EnvironmentVariableEditor control) {
                 control.RemoveTextDocument = (TextDocument)e.NewValue;
             }
         }
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
         public static readonly DependencyProperty MergeErrorItemsSourceProperty = DependencyProperty.Register(
             nameof(MergeErrorItemsSource),
             typeof(IEnumerable),
-            typeof(EnvironmentValieableEditor),
+            typeof(EnvironmentVariableEditor),
             new PropertyMetadata(
                 new PropertyChangedCallback(OnMergeErrorItemsSourcePropertyChanged)
             )
@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 
         private static void OnMergeErrorItemsSourcePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if(sender is EnvironmentValieableEditor control) {
+            if(sender is EnvironmentVariableEditor control) {
                 control.OnMergeErrorItemsSourceChanged((IEnumerable)e.OldValue, (IEnumerable)e.NewValue);
             }
         }
@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
         public static readonly DependencyProperty RemoveErrorItemsSourceProperty = DependencyProperty.Register(
             nameof(RemoveErrorItemsSource),
             typeof(IEnumerable),
-            typeof(EnvironmentValieableEditor),
+            typeof(EnvironmentVariableEditor),
             new PropertyMetadata(
                 new PropertyChangedCallback(OnRemoveErrorItemsSourcePropertyChanged)
             )
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 
         private static void OnRemoveErrorItemsSourcePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if(sender is EnvironmentValieableEditor control) {
+            if(sender is EnvironmentVariableEditor control) {
                 control.OnRemoveErrorItemsSourceChanged((IEnumerable)e.OldValue, (IEnumerable)e.NewValue);
             }
         }

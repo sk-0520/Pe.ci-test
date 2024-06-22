@@ -413,7 +413,7 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="1">
-              <app_main_views_launcher_item_customize:EnvironmentValieableEditor
+              <app_main_views_launcher_item_customize:EnvironmentVariableEditor
                 MergeTextDocument="{Binding MergeTextDocument}"
                 MergeErrorItemsSource="{Binding MergeErrors}"
                 RemoveTextDocument="{Binding RemoveTextDocument}"

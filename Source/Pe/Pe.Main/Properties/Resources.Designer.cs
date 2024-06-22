@@ -3550,18 +3550,18 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   変更(_G) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_EnvironmentValieableEditor_Merge_A {
+        public static string String_EnvironmentVariableEditor_Merge_A {
             get {
-                return ResourceManager.GetString("String_EnvironmentValieableEditor_Merge_A", resourceCulture);
+                return ResourceManager.GetString("String_EnvironmentVariableEditor_Merge_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   削除(_V) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_EnvironmentValieableEditor_Remove_A {
+        public static string String_EnvironmentVariableEditor_Remove_A {
             get {
-                return ResourceManager.GetString("String_EnvironmentValieableEditor_Remove_A", resourceCulture);
+                return ResourceManager.GetString("String_EnvironmentVariableEditor_Remove_A", resourceCulture);
             }
         }
         
