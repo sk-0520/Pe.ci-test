@@ -55,7 +55,7 @@ TEXT RC_HEAP_FUNC(new_text_with_length, const TCHAR* source, size_t length, cons
     }
 
     TCHAR* buffer = RC_HEAP_CALL(allocate_string, length, memory_arena_resource);
-    copy_memory(buffer, (void*)source, length * sizeof(TCHAR));
+    copy_memory(buffer, (const void*)source, length * sizeof(TCHAR));
     buffer[length] = 0;
 
     TEXT result = {
@@ -133,7 +133,7 @@ TEXT RC_HEAP_FUNC(clone_text, const TEXT* source, const MEMORY_ARENA_RESOURCE* m
     }
 
     TCHAR* buffer = RC_HEAP_CALL(allocate_string, source->length, memory_arena_resource);
-    copy_memory(buffer, (void*)source->value, source->length * sizeof(TCHAR));
+    copy_memory(buffer, (const void*)source->value, source->length * sizeof(TCHAR));
     buffer[source->length] = 0;
 
     TEXT result = {
