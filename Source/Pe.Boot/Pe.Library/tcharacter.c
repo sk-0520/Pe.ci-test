@@ -41,7 +41,6 @@ TCHAR to_lower_character(TCHAR c)
     }
 
     return c;
-
 }
 
 TCHAR to_upper_character(TCHAR c)
