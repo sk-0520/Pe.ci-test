@@ -67,7 +67,7 @@ bool is_enabled_file_reader(const FILE_READER* file_reader)
     return is_enabled_file_resource(&file_reader->resource);
 }
 
-static size_t get_bom_info(FILE_READER* file_reader, uint8_t* buffer, size_t length)
+static size_t get_bom_info(const FILE_READER* file_reader, const uint8_t* buffer, size_t length)
 {
     const uint8_t* bom = NULL;
     size_t bom_length = 0;
