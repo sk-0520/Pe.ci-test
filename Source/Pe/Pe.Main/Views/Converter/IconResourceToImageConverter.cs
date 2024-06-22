@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 namespace ContentTypeTextNet.Pe.Main.Views.Converter
 {
     [ValueConversion(typeof(string), typeof(ImageSource))]
-    public class IconResourceToImageConveter: IValueConverter, IMultiValueConverter
+    public class IconResourceToImageConverter: IValueConverter, IMultiValueConverter
     {
         #region IValueConverter
 
