@@ -182,7 +182,6 @@ byte_t library_extend_capacity_if_not_enough_bytes(void** target, byte_t current
         return 0;
     }
 
-    //byte_t old_capacity_bytes = current_capacity_bytes;
     byte_t new_capacity_bytes = current_capacity_bytes ? current_capacity_bytes : default_capacity_bytes;
     do {
         new_capacity_bytes = calc_extend_capacity(new_capacity_bytes);
@@ -196,7 +195,6 @@ byte_t library_extend_capacity_if_not_enough_bytes(void** target, byte_t current
 
     *target = new_buffer;
 
-    //return new_capacity_bytes - old_capacity_bytes;
     return new_capacity_bytes;
 }
 
