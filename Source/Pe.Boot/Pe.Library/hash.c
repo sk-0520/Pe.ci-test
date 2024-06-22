@@ -26,5 +26,5 @@ size_t calc_hash_fnv1_from_text(const TEXT* text)
     }
     
     size_t length = text->length * sizeof(TCHAR);
-    return calc_hash_fnv1((uint8_t*)text->value, length);
+    return calc_hash_fnv1((const uint8_t*)text->value, length);
 }
