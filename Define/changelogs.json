@@ -1,91 +1,19 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.237+",
+		"date": "2024/06/23",
+		"version": "0.99.238",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "8dff0ff7fe7ae9b9aef904fb6fe07a4c7693d747",
 						"subject": "#945: CodeQL GithubActions 最新化"
 					},
 					{
-						"revision": "",
+						"revision": "a506e1154d4e15c52741c4f1204ef25f221d90e1",
 						"class": "nuget",
 						"subject": "Microsoft.Web.WebView2 1.0.2535.41 -> 1.0.2592.51"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
