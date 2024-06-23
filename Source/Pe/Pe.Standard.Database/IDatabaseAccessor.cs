@@ -59,6 +59,8 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
         /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
         IEnumerable<dynamic> Query(IDatabaseTransaction? transaction, string statement, object? parameter = null, bool buffered = true);
+        /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
+        Task<IEnumerable<dynamic>> QueryAsync(IDatabaseTransaction? transaction, string statement, object? parameter = null, bool buffered = true, CancellationToken cancellationToken = default);
         /// <inheritdoc cref="IDatabaseReader.QueryFirst{T}(string, object?)"/>
         T QueryFirst<T>(IDatabaseTransaction? transaction, string statement, object? parameter = null);
 

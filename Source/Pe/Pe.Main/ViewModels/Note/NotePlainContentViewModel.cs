@@ -79,8 +79,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public override void SearchContent(string searchValue, bool searchNext)
         {
-            Logger.LogDebug("text: {searchValue}, {searchNext}", searchValue, searchNext);
-            Logger.LogDebug("selection: {start}, {length}", ControlElement.SelectionStart, ControlElement.SelectionLength);
+            Logger.LogDebug("text: {SearchValue}, {SearchNext}", searchValue, searchNext);
+            Logger.LogDebug("selection: {SelectionStart}, {SelectionLength}", ControlElement.SelectionStart, ControlElement.SelectionLength);
 
             var content = ControlElement.Text;
             var comparisonType = StringComparison.OrdinalIgnoreCase;

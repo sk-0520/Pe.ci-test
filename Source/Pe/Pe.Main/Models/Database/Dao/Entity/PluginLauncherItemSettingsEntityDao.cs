@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class PluginLauncherItemSettingDto: CommonDtoBase
+        private sealed class PluginLauncherItemSettingDto: CommonDtoBase
         {
             #region property
 

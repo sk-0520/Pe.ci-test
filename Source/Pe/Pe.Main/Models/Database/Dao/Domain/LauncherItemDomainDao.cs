@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
         #region define
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed", Justification = "<保留中>")]
-        private class LauncherItemIconRowDto: RowDtoBase
+        private sealed class LauncherItemIconRowDto: RowDtoBase
         {
             #region property
 

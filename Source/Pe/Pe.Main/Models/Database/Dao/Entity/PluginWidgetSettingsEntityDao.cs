@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class PluginWidgetSettingDto: CommonDtoBase
+        private sealed class PluginWidgetSettingDto: CommonDtoBase
         {
             #region property
 

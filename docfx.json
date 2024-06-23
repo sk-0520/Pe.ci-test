@@ -8,6 +8,7 @@
 						"Source/Pe/Pe.Bridge/Pe.Bridge.csproj",
 						"Source/Pe/Pe.Embedded/Pe.Embedded.csproj",
 						"Source/Pe/Pe.Standard.Property/Pe.Standard.Property.csproj",
+						"Source/Pe/Pe.Standard.CliProxy/Pe.Standard.CliProxy.csproj",
 						"Source/Pe/Pe.Standard.Base/Pe.Standard.Base.csproj",
 						"Source/Pe/Pe.Standard.Database/Pe.Standard.Database.csproj",
 						"Source/Pe/Pe.Standard.DependencyInjection/Pe.Standard.DependencyInjection.csproj",

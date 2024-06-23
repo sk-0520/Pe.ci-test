@@ -293,7 +293,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 ;
             while(start != null) {
                 var runText = start.GetTextInRun(LogicalDirection.Forward);
-                Logger.LogDebug("runText: {runText}", runText);
+                Logger.LogDebug("runText: {RunText}", runText);
                 if(0 < runText.Length) {
                     int index = searchNext
                         ? runText.IndexOf(searchValue, comparisonType)
@@ -406,7 +406,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public override void SearchContent(string searchValue, bool searchNext)
         {
-            Logger.LogDebug("text: {value}, {toNext}", searchValue, searchNext);
+            Logger.LogDebug("text: {SearchValue}, {SearchNext}", searchValue, searchNext);
 
             var comparisonType = StringComparison.OrdinalIgnoreCase;
 

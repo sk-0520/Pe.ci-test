@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class LauncherGroupItemsRowDto: RowDtoBase
+        private sealed class LauncherGroupItemsRowDto: RowDtoBase
         {
             #region property
 

@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class AppNoteHiddenSettingEntityDto: CommonDtoBase
+        private sealed class AppNoteHiddenSettingEntityDto: CommonDtoBase
         {
             #region property
             public string HiddenMode { get; set; } = string.Empty;

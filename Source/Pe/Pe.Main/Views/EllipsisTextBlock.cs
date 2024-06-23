@@ -92,25 +92,25 @@ namespace ContentTypeTextNet.Pe.Main.Views
             var markIndex = text.LastIndexOfAny(markChars);
             if(markIndex != -1) {
                 var markChar = text[markIndex];
-                var lasIndex = text.LastIndexOf(markChar);
+                var lastIndex = text.LastIndexOf(markChar);
 
-                if(lasIndex < ellipsis.Length) {
+                if(lastIndex < ellipsis.Length) {
                     drawingContext.DrawText(formattedText, new Point(0, 0));
                     return;
                 }
 
-                markedText = text.Substring(lasIndex);
-                frontLength = lasIndex - 1;
+                markedText = text.Substring(lastIndex);
+                frontLength = lastIndex - 1;
             } else {
-                var lasIndex = text.Length / 2;
+                var lastIndex = text.Length / 2;
 
-                if(lasIndex < 2) {
+                if(lastIndex < 2) {
                     drawingContext.DrawText(formattedText, new Point(0, 0));
                     return;
                 }
 
-                markedText = text.Substring(lasIndex);
-                frontLength = lasIndex - 1;
+                markedText = text.Substring(lastIndex);
+                frontLength = lastIndex - 1;
             }
 
             while(true) {

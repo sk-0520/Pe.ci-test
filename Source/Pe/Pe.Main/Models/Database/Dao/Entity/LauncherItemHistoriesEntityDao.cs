@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class LauncherItemHistoriesEntityDto: CreateDtoBase
+        private sealed class LauncherItemHistoriesEntityDto: CreateDtoBase
         {
             #region property
 

@@ -484,7 +484,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             }
 
             if(value == null) {
-                Logger.LogWarning($"{nameof(value)} は null のため処理終了");
+                Logger.LogWarning("{Value} は null のため処理終了", nameof(value));
                 return false;
             }
 
@@ -522,7 +522,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
                 case PluginPersistenceFormat.Text: {
                         if(typeof(TValue) != typeof(string)) {
-                            Logger.LogWarning($"文字列であるべきデータ: {nameof(value)} -> {typeof(TValue)}");
+                            Logger.LogWarning("文字列であるべきデータ: {Value} -> {TValue}", nameof(value), typeof(TValue));
                             textValue = value.ToString()! ?? string.Empty;
                         } else {
                             textValue = (string)(object)value;

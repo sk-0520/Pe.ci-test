@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class AppNotifyLogSettingEntityDto: CommonDtoBase
+        private sealed class AppNotifyLogSettingEntityDto: CommonDtoBase
         {
             #region property
 

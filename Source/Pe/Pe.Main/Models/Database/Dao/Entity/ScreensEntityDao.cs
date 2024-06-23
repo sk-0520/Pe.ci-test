@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class ScreensRowDto: CommonDtoBase
+        private sealed class ScreensRowDto: CommonDtoBase
         {
             #region property
 

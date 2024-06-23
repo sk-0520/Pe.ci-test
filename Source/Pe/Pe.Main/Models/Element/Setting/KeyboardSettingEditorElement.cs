@@ -54,10 +54,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             #endregion
         }
 
-        private class ReplaceComparer: KeyboardJobSettingBaseComparer
+        private sealed class ReplaceComparer: KeyboardJobSettingBaseComparer
         { }
 
-        private class DisableComparer: KeyboardJobSettingBaseComparer
+        private sealed class DisableComparer: KeyboardJobSettingBaseComparer
         { }
 
         #endregion

@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class AppLauncherToolbarSettingEntityDto: CommonDtoBase
+        private sealed class AppLauncherToolbarSettingEntityDto: CommonDtoBase
         {
             #region property
             public string ContentDropMode { get; set; } = string.Empty;

@@ -67,7 +67,7 @@ bool is_enabled_file_reader(const FILE_READER* file_reader)
     return is_enabled_file_resource(&file_reader->resource);
 }
 
-static size_t get_bom_info(FILE_READER* file_reader, uint8_t* buffer, size_t length)
+static size_t get_bom_info(const FILE_READER* file_reader, const uint8_t* buffer, size_t length)
 {
     const uint8_t* bom = NULL;
     size_t bom_length = 0;
@@ -110,7 +110,7 @@ TEXT RC_FILE_FUNC(read_content_file_reader, FILE_READER* file_reader)
         return new_empty_text(file_reader->resource.library.memory_arena_resource);
     }
 
-    //TODO: x86は32bit値が限界
+    //NOTE: x86は32bit値が限界
     size_t file_length = (size_t)file_size.plain;
 
     const MEMORY_ARENA_RESOURCE* memory_arena_resource = file_reader->resource.library.memory_arena_resource;

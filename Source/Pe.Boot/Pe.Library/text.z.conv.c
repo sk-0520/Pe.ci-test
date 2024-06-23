@@ -17,8 +17,8 @@ static TEXT RC_HEAP_FUNC(to_lower_or_upper_text, bool to_lower, const TEXT* text
     TCHAR* edit_characters = RC_HEAP_CALL(clone_string_with_length, text->value, length, memory_arena_resource);
 
     const TCHAR(*to_character_func)(TCHAR) = to_lower
-        ? to_lower_character
-        : to_upper_character
+        ? &to_lower_character
+        : &to_upper_character
         ;
 
     for (size_t i = 0; i < length; i++) {

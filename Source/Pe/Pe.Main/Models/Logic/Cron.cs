@@ -493,7 +493,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region define
 
-        private class CronExecutorWrapper: ICronExecutor
+        private sealed class CronExecutorWrapper: ICronExecutor
         {
             public CronExecutorWrapper(Func<CancellationToken, Task> executor)
             {

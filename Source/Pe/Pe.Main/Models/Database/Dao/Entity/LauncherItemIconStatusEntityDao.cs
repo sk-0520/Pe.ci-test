@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class LauncherItemIconLastUpdatedStatusDto: DtoBase
+        private sealed class LauncherItemIconLastUpdatedStatusDto: DtoBase
         {
             #region property
 

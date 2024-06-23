@@ -1305,7 +1305,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     Logger.LogDebug("A");
                     await DispatcherWrapper.BeginAsync(async () => {
                         var result = await Model.AddFileAsync(filePaths[0], NoteFileKind.Reference, CancellationToken.None);
-                        Logger.LogDebug("C: {result}", result);
+                        Logger.LogDebug("C: {Result}", result);
                     }, DispatcherPriority.ApplicationIdle);
                     Logger.LogDebug("B");
                 }

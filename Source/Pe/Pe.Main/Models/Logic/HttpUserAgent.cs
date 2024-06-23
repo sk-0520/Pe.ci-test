@@ -275,7 +275,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     Logger.LogDebug("再生成: {0}, {1} < {2}", name, ClearTime, ua.LastElapsed);
                     // 参照がなければ完全破棄、参照が残っていればGCに任せる
                     if(ua.ReferenceCount == 0) {
-                        Logger.LogInformation("完全破棄: {name}", name);
+                        Logger.LogInformation("完全破棄: {Name}", name);
                         ua.ReleaseClient();
                     }
                     ua.Dispose();

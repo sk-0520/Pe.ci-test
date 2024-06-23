@@ -1,5 +1,25 @@
 [
 	{
+		"date": "2024/06/23",
+		"version": "0.99.238",
+		"contents": [
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "8dff0ff7fe7ae9b9aef904fb6fe07a4c7693d747",
+						"subject": "#945: CodeQL GithubActions 最新化"
+					},
+					{
+						"revision": "a506e1154d4e15c52741c4f1204ef25f221d90e1",
+						"class": "nuget",
+						"subject": "Microsoft.Web.WebView2 1.0.2535.41 -> 1.0.2592.51"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2024/06/18",
 		"version": "0.99.237",
 		"contents": [

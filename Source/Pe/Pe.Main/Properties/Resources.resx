@@ -218,10 +218,10 @@
   <data name="String_Common_Up" xml:space="preserve">
     <value>上へ</value>
   </data>
-  <data name="String_EnvironmentValieableEditor_Merge_A" xml:space="preserve">
+  <data name="String_EnvironmentVariableEditor_Merge_A" xml:space="preserve">
     <value>変更(_G)</value>
   </data>
-  <data name="String_EnvironmentValieableEditor_Remove_A" xml:space="preserve">
+  <data name="String_EnvironmentVariableEditor_Remove_A" xml:space="preserve">
     <value>削除(_V)</value>
   </data>
   <data name="String_ExtendsExecute_Caption_Format" xml:space="preserve">

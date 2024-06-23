@@ -204,7 +204,7 @@
           <Label Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_ExtendsExecute_EnvironmentVariables, Source={x:Static app_main:CultureService.Instance}, Converter={StaticResource EscapeAccessKeyConverter}}" />
           <StackPanel Grid.Column="1" Margin="{StaticResource TopMargin}" >
             <CheckBox Style="{StaticResource Vertical-CheckBox}" Content="{Binding Resources.String_ExtendsExecute_EnvironmentVariables_Edit_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsEnabledCustomEnvironmentVariable}" />
-            <app_main_views_launcher_item_customize:EnvironmentValieableEditor
+            <app_main_views_launcher_item_customize:EnvironmentVariableEditor
               MergeTextDocument="{Binding MergeTextDocument}"
               MergeErrorItemsSource="{Binding MergeErrors}"
               RemoveTextDocument="{Binding RemoveTextDocument}"

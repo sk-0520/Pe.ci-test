@@ -95,7 +95,7 @@ bool is_enabled_file_resource(const FILE_RESOURCE* file_resource)
 ssize_t read_file_resource(const FILE_RESOURCE* file_resource, void* buffer, byte_t bytes)
 {
     DWORD read_length = 0;
-    if (ReadFile(file_resource->handle, (void*)buffer, (DWORD)bytes, &read_length, NULL)) {
+    if (ReadFile(file_resource->handle, buffer, (DWORD)bytes, &read_length, NULL)) {
         return read_length;
     }
 
@@ -105,7 +105,7 @@ ssize_t read_file_resource(const FILE_RESOURCE* file_resource, void* buffer, byt
 ssize_t write_file_resource(const FILE_RESOURCE* file_resource, const void* buffer, byte_t bytes)
 {
     DWORD write_length = 0;
-    if (WriteFile(file_resource->handle, (void*)buffer, (DWORD)bytes, &write_length, NULL)) {
+    if (WriteFile(file_resource->handle, buffer, (DWORD)bytes, &write_length, NULL)) {
         return write_length;
     }
 

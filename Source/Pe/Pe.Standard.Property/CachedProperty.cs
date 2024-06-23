@@ -49,8 +49,8 @@ namespace ContentTypeTextNet.Pe.Standard.Property
         #region function
 
         private PropertyAccessor GetAccessor(string propertyName) => AccessorCache.GetOrAdd(propertyName, s => {
-            if(!Properties.TryGetValue(propertyName, out var accessor)) {
-                throw new PropertyNotFoundException(propertyName);
+            if(!Properties.TryGetValue(s, out var accessor)) {
+                throw new PropertyNotFoundException(s);
             }
             var propertyInfo = Properties[s];
             return new PropertyAccessor(OwnerExpression, propertyInfo);

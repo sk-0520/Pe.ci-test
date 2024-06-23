@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class AppExecuteSettingEntityDto: CommonDtoBase
+        private sealed class AppExecuteSettingEntityDto: CommonDtoBase
         {
             #region property
             public bool Accepted { get; set; }
@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        private class AppGeneralFirstEntityDto: CommonDtoBase
+        private sealed class AppGeneralFirstEntityDto: CommonDtoBase
         {
             #region property
 

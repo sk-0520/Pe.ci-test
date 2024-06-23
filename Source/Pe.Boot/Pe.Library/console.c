@@ -4,8 +4,6 @@
 CONSOLE_RESOURCE begin_console(const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     bool attached = false;
-    //HANDLE sdt_output_handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    //logger_format_debug(_T("sdt_output_handle: %p"), sdt_output_handle);
     if (AttachConsole(ATTACH_PARENT_PROCESS)) {
         attached = true;
     }
@@ -22,15 +20,15 @@ CONSOLE_RESOURCE begin_console(const MEMORY_ARENA_RESOURCE* memory_arena_resourc
             .input = GetStdHandle(STD_INPUT_HANDLE),
             .output = GetStdHandle(STD_OUTPUT_HANDLE),
             .error = GetStdHandle(STD_ERROR_HANDLE),
-        },
-        .stdio = {
-            .input = open_file_resource(&stdio_input_test, memory_arena_resource),
-            .output = open_file_resource(&stdio_output_test, memory_arena_resource),
-            .error = open_file_resource(&stdio_error_test, memory_arena_resource),
-        },
-        .library = {
-            .attached = attached,
-        }
+    },
+    .stdio = {
+        .input = open_file_resource(&stdio_input_test, memory_arena_resource),
+        .output = open_file_resource(&stdio_output_test, memory_arena_resource),
+        .error = open_file_resource(&stdio_error_test, memory_arena_resource),
+    },
+    .library = {
+        .attached = attached,
+    }
     };
 
     DWORD consoleMode;
@@ -57,8 +55,8 @@ size_t output_console_text(const CONSOLE_RESOURCE* console_resource, const TEXT*
 
     if (newline) {
         DWORD newline_length;
-        TEXT newlinet = wrap_text(NEWLINET);
-        WriteConsole(console_resource->handle.output, newlinet.value, (DWORD)newlinet.length, &newline_length, NULL);
+        TEXT new_line = wrap_text(NEWLINET);
+        WriteConsole(console_resource->handle.output, new_line.value, (DWORD)new_line.length, &newline_length, NULL);
         write_length += newline_length;
     }
 
@@ -68,12 +66,10 @@ size_t output_console_text(const CONSOLE_RESOURCE* console_resource, const TEXT*
 size_t write_console_text(const CONSOLE_RESOURCE* console_resource, const TEXT* text, bool newline)
 {
     DWORD write_length = (DWORD)write_file_resource(&console_resource->stdio.output, text->value, (text->length * sizeof(TCHAR)));
-    //WriteConsole(console_resource->handle.output, text->value, (DWORD)text->length, &write_length, NULL);
 
     if (newline) {
-        TEXT newlinet = wrap_text(NEWLINET);
-        //WriteConsole(console_resource->handle.output, newlinet.value, (DWORD)newlinet.length, &newline_length, NULL);
-        write_length += (DWORD)write_file_resource(&console_resource->stdio.output, newlinet.value, (newlinet.length * sizeof(TCHAR)));
+        TEXT new_line = wrap_text(NEWLINET);
+        write_length += (DWORD)write_file_resource(&console_resource->stdio.output, new_line.value, (new_line.length * sizeof(TCHAR)));
     }
 
     return (size_t)write_length;

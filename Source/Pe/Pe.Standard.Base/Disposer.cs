@@ -254,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public TDisposable Add<TDisposable>(TDisposable disposable)
             where TDisposable : IDisposable
         {
-            if(disposable == null) {
+            if(disposable is null) {
                 throw new ArgumentNullException(nameof(disposable));
             }
 

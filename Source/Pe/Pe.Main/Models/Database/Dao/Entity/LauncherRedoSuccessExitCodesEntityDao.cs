@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region define
 
-        private class LauncherRedoSuccessExitCodesDto: CommonDtoBase
+        private sealed class LauncherRedoSuccessExitCodesDto: CommonDtoBase
         {
             #region property
 

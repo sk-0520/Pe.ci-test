@@ -12,15 +12,6 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     /// </summary>
     public static class DrawingUtility
     {
-        #region define
-
-        [Obsolete]
-        private const double Dpi = 96;
-        [Obsolete]
-        private const double Point = 72;
-
-        #endregion
-
         /// <summary>
         /// <see cref="System.Windows.Size"/> から <see cref="System.Drawing.Size"/> に変換。
         /// </summary>
@@ -76,17 +67,6 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         public static System.Windows.Rect Convert(System.Drawing.Rectangle rectangle)
         {
             return new System.Windows.Rect(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-        }
-
-        [Obsolete]
-        public static double ConvertFontSizeFromDrawing(double drawingFontPoint)
-        {
-            return drawingFontPoint * Dpi / Point;
-        }
-        [Obsolete]
-        public static float ConvertFontSizeFromWpf(double wpfFontSize)
-        {
-            return (float)(wpfFontSize / Dpi * Point);
         }
 
         /// <summary>

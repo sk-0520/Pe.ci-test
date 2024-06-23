@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 if(parameterResult.Success) {
                     var parameter = parameterResult.SuccessValue;
                     if(parameter == null) {
-                        Logger.LogWarning(nameof(parameter) + " is null, 後続D&D処理スキップ");
+                        Logger.LogWarning("{Parameter} is null, 後続D&D処理スキップ", nameof(parameter));
                     } else {
                         IsDragging = true;
                         try {

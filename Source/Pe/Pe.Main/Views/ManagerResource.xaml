@@ -11,7 +11,7 @@
   xmlns:app_main_viewmodel_manager="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Manager"
 >
   <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-  <app_main_views_converter:IconResourceToImageConveter x:Key="IconResourceToImageConveter" />
+  <app_main_views_converter:IconResourceToImageConverter x:Key="IconResourceToImageConverter" />
   <ContextMenu x:Key="ContextMenu" IsOpen="{Binding IsOpenContextMenu, Mode=OneWayToSource}">
     <ContextMenu.Resources>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -208,7 +208,7 @@
       </MenuItem>
       <MenuItem Header="{Binding Resources.String_AppManager_About_Version_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding OpenAboutCommand}">
         <MenuItem.Icon>
-          <Image Source="{Binding Source='pack://application:,,,/Resources/Icon/App.ico', Converter={StaticResource IconResourceToImageConveter}, ConverterParameter=16}" Width="16" Height="16" />
+          <Image Source="{Binding Source='pack://application:,,,/Resources/Icon/App.ico', Converter={StaticResource IconResourceToImageConverter}, ConverterParameter=16}" Width="16" Height="16" />
         </MenuItem.Icon>
       </MenuItem>
     </MenuItem>

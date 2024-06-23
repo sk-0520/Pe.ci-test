@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
     {
         #region define
 
-        private  class PathItem
+        private class PathItem
         {
             public PathItem(string path)
             {
@@ -235,7 +235,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
 
         /// <inheritdoc cref="ICommandFinder.EnumerateCommandItemsAsync(string, Regex, IHitValuesCreator, CancellationToken)"/>
 #pragma warning disable CS1998 // 非同期メソッドは、'await' 演算子がないため、同期的に実行されます
-        public async IAsyncEnumerable<ICommandItem> EnumerateCommandItemsAsync(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, [EnumeratorCancellation] CancellationToken cancellationToken)
+        public async IAsyncEnumerable<ICommandItem> EnumerateCommandItemsAsync(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, [EnumeratorCancellation] CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // 非同期メソッドは、'await' 演算子がないため、同期的に実行されます
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {

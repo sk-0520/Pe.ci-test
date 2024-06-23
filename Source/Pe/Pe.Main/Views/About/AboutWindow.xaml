@@ -41,7 +41,7 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
-    <app_main_views_converter:IconResourceToImageConveter x:Key="IconResourceToImageConveter" />
+    <app_main_views_converter:IconResourceToImageConverter x:Key="IconResourceToImageConverter" />
   </Window.Resources>
   <Window.Title>
     <Binding Path="Resources.String_About_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
@@ -70,7 +70,7 @@
             </StackPanel.Resources>
             <Image Width="128" Height="128">
               <Image.Source>
-                <MultiBinding Converter="{StaticResource IconResourceToImageConveter}" ConverterParameter="128">
+                <MultiBinding Converter="{StaticResource IconResourceToImageConverter}" ConverterParameter="128">
                   <MultiBinding.Bindings>
                     <Binding Source="pack://application:,,,/Resources/Icon/App.ico" />
                     <Binding RelativeSource="{RelativeSource AncestorType=Window}" />

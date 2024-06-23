@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #endregion
         }
 
-        private class LauncherItemsRowDto: RowDtoBase, IReadOnlyLauncherItemsRowDto
+        private sealed class LauncherItemsRowDto: RowDtoBase, IReadOnlyLauncherItemsRowDto
         {
             #region IReadOnlyLauncherItemRowDto
 

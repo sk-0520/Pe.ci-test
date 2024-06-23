@@ -214,9 +214,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
                 logItem.Callback();
                 NotifyManager.ClearLog(logItem.NotifyLogId);
             } catch(Exception ex) {
-#pragma warning disable CA2017 // パラメーター カウントが不一致
-                Logger.LogError(ex, "ログ実行失敗: [{0}] {1], {2}", ex.Message, notifyLogId, logItem.Kind);
-#pragma warning restore CA2017 // パラメーター カウントが不一致
+                Logger.LogError(ex, "ログ実行失敗: [{Message}] {NotifyLogId}, {Kind}", ex.Message, notifyLogId, logItem.Kind);
             }
         }
 
