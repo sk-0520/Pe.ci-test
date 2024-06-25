@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
@@ -113,9 +115,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var indent = "    ";
 
-            var lines = TextUtility.ReadLines(statement).ToList();
+            var lines = TextUtility.ReadLines(statement).ToArray();
 
-            var sb = new StringBuilder(lines.Sum(s => s.Length) * 2);
+            var sb = new StringBuilder((int)(lines.Sum(s => s.Length) * 1.5));
 
             void Logging(ObjectDumpItem dumpItem, int nest)
             {
@@ -162,11 +164,85 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             using(Logger.BeginScope(nameof(LoggingStatement))) {
-                Logger.LogTrace("{0}", sb.ToString());
+                Logger.LogTrace("{Statement}", sb.ToString());
             }
 #else
-            base.LoggingStatement(statement, parameter);
+            if(Logger.IsEnabled(LogLevel.Trace)) {
+                Logger.LogTrace("{Statement}{NewLine}{Parameters}", statement, Environment.NewLine, ObjectDumper.GetDumpString(parameter));
+            }
 #endif
+        }
+
+        protected override void LoggingExecuteScalarResult<TResult>(TResult result, DateTime startUtcTime, DateTime endUtcTime)
+        {
+            if(Logger.IsEnabled(LogLevel.Trace)) {
+                Logger.LogTrace("result: {Result}, {Time}", result, endUtcTime - startUtcTime);
+            }
+        }
+
+        /// <summary>
+        /// 単体結果の問い合わせ結果のログ出力。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="result"></param>
+        /// <param name="startUtcTime"></param>
+        /// <param name="endUtcTime"></param>
+        protected override void LoggingQueryResult<T>([MaybeNull] T result, DateTime startUtcTime, DateTime endUtcTime)
+        {
+            if(Logger.IsEnabled(LogLevel.Trace)) {
+                Logger.LogTrace("{Type} -> {Result}, {Time}", typeof(T), result, endUtcTime - startUtcTime);
+            }
+        }
+
+        /// <summary>
+        /// 複数結果の問い合わせ結果のログ出力。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="result"></param>
+        /// <param name="buffered">偽の場合、<paramref name="result"/>に全数は存在しない。</param>
+        /// <param name="startUtcTime"></param>
+        /// <param name="endUtcTime"></param>
+        protected override void LoggingQueryResults<T>(IEnumerable<T> result, bool buffered, DateTime startUtcTime, DateTime endUtcTime)
+        {
+            if(Logger.IsEnabled(LogLevel.Trace)) {
+                if(buffered) {
+                    Logger.LogTrace("{Collection}<{Type}> -> {Count}, {Time}", nameof(IEnumerable), typeof(T), result.Count(), endUtcTime - startUtcTime);
+                } else {
+                    Logger.LogTrace("{Collection}<{Type}> -> no buffered, {Time}", nameof(IEnumerable), typeof(T), endUtcTime - startUtcTime);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 実行結果のログ出力。
+        /// </summary>
+        /// <remarks>
+        /// <para><see cref="IDatabaseWriter.Execute(string, object?)"/>で使用される。</para>
+        /// </remarks>
+        /// <param name="result"></param>
+        /// <param name="startUtcTime"></param>
+        /// <param name="endUtcTime"></param>
+        protected override void LoggingExecuteResult(int result, DateTime startUtcTime, DateTime endUtcTime)
+        {
+            if(Logger.IsEnabled(LogLevel.Trace)) {
+                Logger.LogTrace("result: {Result}, {Time}", result, endUtcTime - startUtcTime);
+            }
+        }
+
+        /// <summary>
+        /// 問い合わせ結果のログ出力。
+        /// </summary>
+        /// <remarks>
+        /// <para><see cref="IDatabaseReader.GetDataTable(string, object?)"/>で使用される。</para>
+        /// </remarks>
+        /// <param name="table"></param>
+        /// <param name="startUtcTime"></param>
+        /// <param name="endUtcTime"></param>
+        protected override void LoggingDataTable(DataTable table, DateTime startUtcTime, DateTime endUtcTime)
+        {
+            if(Logger.IsEnabled(LogLevel.Trace)) {
+                Logger.LogTrace("table: {TableName} -> {ColumnsCount} * {RowsCount} = {Count}, {Time}", table.TableName, table.Columns.Count, table.Rows.Count, table.Columns.Count * table.Rows.Count, endUtcTime - startUtcTime);
+            }
         }
 
         #endregion
