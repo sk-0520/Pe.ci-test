@@ -1,7 +1,3 @@
-#if BETA
-#   define BETA_MODE
-#endif
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -43,6 +39,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
 
         #region property
+
+        private bool BetaMode { get; } =
+#if BETA
+            true
+#else
+    false
+#endif
+;
 
         public static string CommandLineKeyRunMode { get; } = "run-mode";
         private string CommandLineKeyAppLogLimit { get; } = "app-log-limit";
@@ -127,8 +131,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return commandLine;
         }
 
-#if BETA_MODE
-        private bool ShowCommandLineMessageIfUnspecified(CommandLine commandLine)
+        private bool ShowCommandLineBetaMessageIfUnspecified(CommandLine commandLine)
         {
             var knownBetaVersion = commandLine.ExistsSwitch(CommandLineSwitchBetaVersion);
             if(knownBetaVersion) {
@@ -157,7 +160,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             return result == MessageBoxResult.OK;
         }
-#endif
+
         private bool ShowCommandLineTestPlugin(CommandLine commandLine, EnvironmentParameters environmentParameters)
         {
             var testPluginDirectoryPath = commandLine.GetValue(CommandLineTestPluginDirectoryPath, string.Empty);
@@ -511,13 +514,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var commandLine = CreateCommandLine(e.Args);
             RunMode = RunModeUtility.Parse(commandLine.GetValue(CommandLineKeyRunMode, string.Empty));
-#if BETA_MODE
-            if(RunModeUtility.CheckBetaModeAlert(RunMode)) {
-                if(!ShowCommandLineMessageIfUnspecified(commandLine)) {
-                    return false;
+
+            if(BetaMode) {
+                if(RunModeUtility.CheckBetaModeAlert(RunMode)) {
+                    if(!ShowCommandLineBetaMessageIfUnspecified(commandLine)) {
+                        return false;
+                    }
                 }
             }
-#endif
 
 #if DEBUG
             IsDebugDevelopMode = commandLine.ExistsSwitch(CommandLineSwitchDebugDevelopMode);
