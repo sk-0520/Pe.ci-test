@@ -136,7 +136,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
             }
 
-            var method = new StackTrace(4)?.GetFrame(0)?.GetMethod();
+            var method = new StackTrace(4).GetFrame(0)?.GetMethod();
             if(method != null) {
                 sb.AppendLine(method.ReflectedType!.Name + "." + method.Name);
             } else {
