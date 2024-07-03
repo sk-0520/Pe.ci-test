@@ -161,7 +161,7 @@ static void RC_HEAP_FUNC(extend_map_if_over_load_factor, MAP* map)
     size_t flat_list_length = 0;
 
     for (size_t i = 0; i < current_capacity; i++) {
-        LINKED_LIST* current_chain = current_items + i;
+        const LINKED_LIST* current_chain = current_items + i;
         if (current_chain->length) {
             OBJECT_LIST current_chain_list = RC_HEAP_CALL(to_object_list_from_linked_list, current_chain);
             const KEY_VALUE_PAIR* current_chain_items = reference_value_object_list(KEY_VALUE_PAIR, current_chain_list);
@@ -218,7 +218,7 @@ MAP_RESULT_VALUE get_map(const MAP* map, const TEXT* key)
 
     size_t index = get_hash_index(map, key);
 
-    LINKED_LIST* linked_list = map->library.items + index;
+    const LINKED_LIST* linked_list = map->library.items + index;
     const LINK_NODE* node = search_map_from_key(linked_list, key, map);
     if (!node) {
         MAP_RESULT_VALUE not_found_item = {
@@ -307,7 +307,7 @@ typedef struct
 static bool foreach_map_core(const void* value, size_t index, size_t length, void* data, void* arg)
 {
     FOREACH_MAP_DATA* foreach_arg = arg;
-    KEY_VALUE_PAIR* pair = (KEY_VALUE_PAIR*)value;
+    const KEY_VALUE_PAIR* pair = (const KEY_VALUE_PAIR*)value;
 
     foreach_arg->func(pair, *foreach_arg->index, foreach_arg->length, foreach_arg->arg);
 
@@ -329,7 +329,7 @@ void foreach_map(const MAP* map, func_foreach_map func, void* arg)
     };
 
     for (size_t i = 0; i < length; i++) {
-        LINKED_LIST* linked_list = map->library.items + i;
+        const LINKED_LIST* linked_list = map->library.items + i;
         foreach_linked_list(linked_list, foreach_map_core, &data);
     }
 }
