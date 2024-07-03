@@ -153,7 +153,7 @@ COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, b
 
     TEXT* arguments = allocate_raw_memory(argc * sizeof(TEXT), false, memory_arena_resource);
     for (size_t i = 0; i < argc; i++) {
-        TCHAR* arg = argv[i];
+        const TCHAR* arg = argv[i];
         arguments[i] = wrap_text(arg);
     }
 
