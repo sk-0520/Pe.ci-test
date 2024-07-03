@@ -213,7 +213,7 @@ const COMMAND_LINE_ITEM* get_command_line_item(const COMMAND_LINE_OPTION* comman
 {
     MAP_RESULT_VALUE result_value = get_map(&command_line_option->library.map, key);
     if (result_value.exists) {
-        return (COMMAND_LINE_ITEM*)result_value.value;
+        return (const COMMAND_LINE_ITEM*)result_value.value;
     }
 
     return NULL;
