@@ -61,7 +61,7 @@ do { \
         cpp_name.elements = cpp_name.library.buffer; \
     } \
 } while(0); \
-type* var_name = cpp_name.elements; \
+type* var_name = cpp_name.elements
 
 /// <summary>
 /// <c>new_stack_or_heap_array</c> で作成したデータはスタック上に確保されたか。
