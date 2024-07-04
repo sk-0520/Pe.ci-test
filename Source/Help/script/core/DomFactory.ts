@@ -1,18 +1,16 @@
-
 /**
  * 要素の追加位置。
  */
-export const enum AttachPosition {
+export enum AttachPosition {
 	/** 最後。 */
-	Last,
+	Last = 0,
 	/** 最初。 */
-	First,
+	First = 1,
 	/** 直前。 */
-	Previous,
+	Previous = 2,
 	/** 直後。 */
-	Next,
+	Next = 3,
 }
-
 
 /**
  * ノード生成処理。
@@ -29,22 +27,32 @@ export interface NodeFactory {
  * テキストノード生成処理。
  */
 export class TextFactory implements NodeFactory {
-	constructor(public readonly element: Text) {
-	}
+	constructor(public readonly element: Text) {}
 }
 
 /**
  * 要素生成処理。
  */
 export class TagFactory<TElement extends Element> implements NodeFactory {
-	constructor(public readonly element: TElement) {
-	}
+	constructor(public readonly element: TElement) {}
 
-	public createTag<K extends keyof HTMLElementTagNameMap>(tagName: K, options?: ElementCreationOptions): TagFactory<HTMLElementTagNameMap[K]>;
+	public createTag<K extends keyof HTMLElementTagNameMap>(
+		tagName: K,
+		options?: ElementCreationOptions,
+	): TagFactory<HTMLElementTagNameMap[K]>;
 	/** @deprecated */
-	public createTag<K extends keyof HTMLElementDeprecatedTagNameMap>(tagName: K, options?: ElementCreationOptions): TagFactory<HTMLElementDeprecatedTagNameMap[K]>;
-	public createTag<THTMLElement extends HTMLElement>(tagName: string, options?: ElementCreationOptions): TagFactory<THTMLElement>;
-	public createTag(tagName: string, options?: ElementCreationOptions): TagFactory<HTMLElement> {
+	public createTag<K extends keyof HTMLElementDeprecatedTagNameMap>(
+		tagName: K,
+		options?: ElementCreationOptions,
+	): TagFactory<HTMLElementDeprecatedTagNameMap[K]>;
+	public createTag<THTMLElement extends HTMLElement>(
+		tagName: string,
+		options?: ElementCreationOptions,
+	): TagFactory<THTMLElement>;
+	public createTag(
+		tagName: string,
+		options?: ElementCreationOptions,
+	): TagFactory<HTMLElement> {
 		const createdElement = document.createElement(tagName, options);
 		this.element.appendChild(createdElement);
 

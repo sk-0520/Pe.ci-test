@@ -377,6 +377,7 @@ indent_style = tab
 
 [*.{ts,js}]
 indent_style = tab
+end_of_line = lf
 
 [*.{scss,css}]
 indent_style = tab

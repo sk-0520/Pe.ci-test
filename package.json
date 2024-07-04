@@ -4,8 +4,9 @@
 	"description": "Pe documents",
 	"//main": "Source/Help/index.pug",
 	"scripts": {
-		"lint": "eslint Source/Help/script",
-		"lint-fix": "eslint Source/Help/script --fix",
+		"lint": "biome ci Source/Help/script",
+		"lint-fix": "biome check --write Source/Help/script",
+		"lint-fix-unsafe": "biome check --write --unsafe Source/Help/script",
 		"test:help": "jest",
 		"test": "npm-run-all test:*",
 		"archive:plugin-template": "npm-build-zip --source=Source/Plugin.Template --destination=Source/Help/archives --name=../../plugin-template",
@@ -42,6 +43,7 @@
 		"coverageDirectory": "@coverage/script"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "1.8.1",
 		"@parcel/transformer-pug": "^2.12.0",
 		"@parcel/transformer-sass": "^2.12.0",
 		"@types/jest": "^29.5.12",

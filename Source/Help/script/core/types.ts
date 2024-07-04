@@ -7,7 +7,7 @@ export type PropertyKey = string | symbol;
 
 /** クラス的な。 */
 export type Constructor<T extends object> = {
-	prototype: T,
+	prototype: T;
 };
 
 declare const _Strong: unique symbol;
@@ -110,7 +110,7 @@ export function isObject(arg: unknown): arg is object {
  * @param arg
  * @returns
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
+// biome-ignore lint/complexity/noBannedTypes: <explanation>
 export function isFunction(arg: unknown): arg is Function {
 	return typeof arg === "function";
 }
@@ -121,8 +121,13 @@ export function isFunction(arg: unknown): arg is Function {
  * @param key プロパティ名。
  * @returns
  */
-export function hasProperty(arg: unknown, key: PropertyKey): arg is Record<PropertyKey, unknown> {
-	return arg !== undefined && arg !== null && typeof arg === "object" && key in arg;
+export function hasProperty(
+	arg: unknown,
+	key: PropertyKey,
+): arg is Record<PropertyKey, unknown> {
+	return (
+		arg !== undefined && arg !== null && typeof arg === "object" && key in arg
+	);
 }
 
 /**
@@ -131,7 +136,10 @@ export function hasProperty(arg: unknown, key: PropertyKey): arg is Record<Prope
  * @param key プロパティ名。
  * @returns
  */
-export function hasUndefined(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, undefined> {
+export function hasUndefined(
+	obj: unknown,
+	key: PropertyKey,
+): obj is Record<PropertyKey, undefined> {
 	return hasProperty(obj, key) && isUndefined(obj[key]);
 }
 
@@ -141,7 +149,10 @@ export function hasUndefined(obj: unknown, key: PropertyKey): obj is Record<Prop
  * @param key プロパティ名。
  * @returns
  */
-export function hasNull(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, null> {
+export function hasNull(
+	obj: unknown,
+	key: PropertyKey,
+): obj is Record<PropertyKey, null> {
 	return hasProperty(obj, key) && isNull(obj[key]);
 }
 
@@ -151,7 +162,10 @@ export function hasNull(obj: unknown, key: PropertyKey): obj is Record<PropertyK
  * @param key プロパティ名。
  * @returns
  */
-export function hasNullish(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, null | undefined> {
+export function hasNullish(
+	obj: unknown,
+	key: PropertyKey,
+): obj is Record<PropertyKey, null | undefined> {
 	return hasProperty(obj, key) && (isUndefined(obj[key]) || isNull(obj[key]));
 }
 
@@ -161,7 +175,10 @@ export function hasNullish(obj: unknown, key: PropertyKey): obj is Record<Proper
  * @param key プロパティ名。
  * @returns
  */
-export function hasSymbol(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, symbol> {
+export function hasSymbol(
+	obj: unknown,
+	key: PropertyKey,
+): obj is Record<PropertyKey, symbol> {
 	return hasProperty(obj, key) && isSymbol(obj[key]);
 }
 
@@ -171,7 +188,10 @@ export function hasSymbol(obj: unknown, key: PropertyKey): obj is Record<Propert
  * @param key プロパティ名。
  * @returns
  */
-export function hasString(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, string> {
+export function hasString(
+	obj: unknown,
+	key: PropertyKey,
+): obj is Record<PropertyKey, string> {
 	return hasProperty(obj, key) && isString(obj[key]);
 }
 
@@ -181,7 +201,10 @@ export function hasString(obj: unknown, key: PropertyKey): obj is Record<Propert
  * @param key プロパティ名。
  * @returns
  */
-export function hasNumber(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, number> {
+export function hasNumber(
+	obj: unknown,
+	key: PropertyKey,
+): obj is Record<PropertyKey, number> {
 	return hasProperty(obj, key) && isNumber(obj[key]);
 }
 
@@ -191,7 +214,10 @@ export function hasNumber(obj: unknown, key: PropertyKey): obj is Record<Propert
  * @param key プロパティ名。
  * @returns
  */
-export function hasBigInt(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, bigint> {
+export function hasBigInt(
+	obj: unknown,
+	key: PropertyKey,
+): obj is Record<PropertyKey, bigint> {
 	return hasProperty(obj, key) && isBigInt(obj[key]);
 }
 
@@ -201,7 +227,10 @@ export function hasBigInt(obj: unknown, key: PropertyKey): obj is Record<Propert
  * @param key プロパティ名。
  * @returns
  */
-export function hasBoolean(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, boolean> {
+export function hasBoolean(
+	obj: unknown,
+	key: PropertyKey,
+): obj is Record<PropertyKey, boolean> {
 	return hasProperty(obj, key) && isBoolean(obj[key]);
 }
 
@@ -211,7 +240,10 @@ export function hasBoolean(obj: unknown, key: PropertyKey): obj is Record<Proper
  * @param key プロパティ名。
  * @returns
  */
-export function hasObject(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, object> {
+export function hasObject(
+	obj: unknown,
+	key: PropertyKey,
+): obj is Record<PropertyKey, object> {
 	return hasProperty(obj, key) && isObject(obj[key]);
 }
 
@@ -221,7 +253,10 @@ export function hasObject(obj: unknown, key: PropertyKey): obj is Record<Propert
  * @param key プロパティ名。
  * @returns
  */
-export function hasArray(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, Array<unknown>> {
+export function hasArray(
+	obj: unknown,
+	key: PropertyKey,
+): obj is Record<PropertyKey, Array<unknown>> {
 	return hasProperty(obj, key) && isArray(obj[key]);
 }
 
@@ -231,8 +266,11 @@ export function hasArray(obj: unknown, key: PropertyKey): obj is Record<Property
  * @param key プロパティ名。
  * @returns
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
-export function hasFunction(obj: unknown, key: PropertyKey): obj is Record<PropertyKey, Function> {
+export function hasFunction(
+	obj: unknown,
+	key: PropertyKey,
+	// biome-ignore lint/complexity/noBannedTypes: <explanation>
+): obj is Record<PropertyKey, Function> {
 	return hasProperty(obj, key) && isFunction(obj[key]);
 }
 
@@ -243,7 +281,11 @@ export function hasFunction(obj: unknown, key: PropertyKey): obj is Record<Prope
  * @param fallbackValue 失敗時の値。対象の値の型と合わない場合にも使用される。
  * @returns
  */
-export function getPropertyOr<TResult>(obj: unknown, key: string, fallbackValue: TResult): TResult {
+export function getPropertyOr<TResult>(
+	obj: unknown,
+	key: string,
+	fallbackValue: TResult,
+): TResult {
 	if (hasProperty(obj, key)) {
 		if (typeof fallbackValue === typeof obj[key]) {
 			return obj[key] as TResult;
@@ -259,7 +301,10 @@ export function getPropertyOr<TResult>(obj: unknown, key: string, fallbackValue:
  * @param guard 型ガード。
  * @returns
  */
-export function isTArray<T>(arg: unknown, guard: (item: unknown) => item is T): arg is Array<T> {
+export function isTArray<T>(
+	arg: unknown,
+	guard: (item: unknown) => item is T,
+): arg is Array<T> {
 	if (!isArray(arg)) {
 		return false;
 	}
@@ -269,7 +314,7 @@ export function isTArray<T>(arg: unknown, guard: (item: unknown) => item is T): 
 		return true;
 	}
 
-	return arg.every(i => guard(i));
+	return arg.every((i) => guard(i));
 }
 
 /**
@@ -305,7 +350,10 @@ export function isBooleanArray(arg: unknown): arg is Array<string> {
  * @param guard
  * @returns
  */
-export function filterTArray<T>(arg: unknown, guard: (item: unknown) => item is T): Array<T> {
+export function filterTArray<T>(
+	arg: unknown,
+	guard: (item: unknown) => item is T,
+): Array<T> {
 	if (!isArray(arg)) {
 		return [];
 	}
@@ -353,7 +401,10 @@ export function filterBooleanArray(arg: unknown): Array<boolean> {
  * @param type
  * @returns
  */
-export function instanceOf<T extends object>(arg: unknown, type: Constructor<T>): arg is T {
+export function instanceOf<T extends object>(
+	arg: unknown,
+	type: Constructor<T>,
+): arg is T {
 	return arg instanceof type.prototype.constructor;
 }
 
@@ -363,7 +414,10 @@ export function instanceOf<T extends object>(arg: unknown, type: Constructor<T>)
  * @param type
  * @returns
  */
-export function isEqual<T extends object>(arg: unknown, type: Constructor<T>): arg is T {
+export function isEqual<T extends object>(
+	arg: unknown,
+	type: Constructor<T>,
+): arg is T {
 	if (!hasProperty(arg, "constructor")) {
 		return false;
 	}
@@ -388,8 +442,10 @@ export function getProperties<T extends object>(obj: T): Set<keyof T> {
 			break;
 		}
 
-		const currentPropertyNames = Object.getOwnPropertyNames(prototype) as Array<keyof T>;
-		const targets = currentPropertyNames.filter(i => {
+		const currentPropertyNames = Object.getOwnPropertyNames(prototype) as Array<
+			keyof T
+		>;
+		const targets = currentPropertyNames.filter((i) => {
 			const descriptor = Object.getOwnPropertyDescriptor(prototype, i);
 			return i !== "__proto__" && descriptor?.get instanceof Function;
 		});
@@ -413,18 +469,23 @@ export function getProperties<T extends object>(obj: T): Set<keyof T> {
  * @param source
  * @returns
  */
-export function flatClone<TResult extends { [K in keyof TResult]: TResult[K] }, TSource extends TResult = TResult>(source: TSource): TResult {
+export function flatClone<
+	TResult extends { [K in keyof TResult]: TResult[K] },
+	TSource extends TResult = TResult,
+>(source: TSource): TResult {
 	const properties = getProperties(source);
 
-	const result = Object.fromEntries([...properties].map(i => [i, source[i]]));
+	const result = Object.fromEntries([...properties].map((i) => [i, source[i]]));
 
 	return result as unknown as TResult;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// biome-ignore lint/complexity/noBannedTypes: <explanation>
 export function nameof(name: Function): string;
-export function nameof<T extends object>(name: Extract<keyof T, string>): string;
-// eslint-disable-next-line @typescript-eslint/ban-types
+export function nameof<T extends object>(
+	name: Extract<keyof T, string>,
+): string;
+// biome-ignore lint/complexity/noBannedTypes: <explanation>
 export function nameof<T>(name: Extract<keyof T, string> | Function): string {
 	if (typeof name === "function") {
 		return name.name;
@@ -433,6 +494,7 @@ export function nameof<T>(name: Extract<keyof T, string> | Function): string {
 	return name;
 }
 
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 export function toString(input: unknown): string {
 	switch (typeof input) {
 		case "object":
@@ -451,5 +513,5 @@ export function toString(input: unknown): string {
 			break;
 	}
 
-	return input + "";
+	return `${input}`;
 }
