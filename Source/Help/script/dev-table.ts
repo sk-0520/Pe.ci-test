@@ -270,11 +270,11 @@ class Entity {
 					break;
 
 				default:
-					throw "こねーよ！";
+					throw Error("こねーよ！");
 			}
 		}
 
-		throw `はい、定義ミス:${JSON.stringify(lines)}`;
+		throw Error(`はい、定義ミス:${JSON.stringify(lines)}`);
 	}
 
 	private trimMarkdownTable(
