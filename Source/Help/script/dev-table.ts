@@ -106,7 +106,7 @@ const LayoutMarkdownHeaders = (() => {
 		[LayoutColumn.Comment, "コメント"],
 	]);
 	// biome-ignore lint/style/noNonNullAssertion: <explanation>
-	return [...map.keys()].sort().map((i) => map.get(i)!);
+	return [...map.keys()].sort((a, b) => a - b).map((i) => map.get(i)!);
 })();
 
 const IndexMarkdownHeaders = ["UK", "名前", "カラム(CSV)"];
@@ -452,7 +452,7 @@ class Entity {
 		]);
 
 		// biome-ignore lint/style/noNonNullAssertion: <explanation>
-		return [...map.keys()].sort().map((i) => map.get(i)!);
+		return [...map.keys()].sort((a, b) => a - b).map((i) => map.get(i)!);
 	}
 
 	private buildLayout(
@@ -729,7 +729,7 @@ class Entity {
 	}
 
 	private getTableNamesFromEntities(entities: ReadonlyArray<Entity>) {
-		return entities.map((i) => i.getTableName()).sort();
+		return entities.map((i) => i.getTableName()).sort((a, b) => a.localeCompare(b));
 	}
 
 	private changedTableElement(
@@ -1098,7 +1098,7 @@ class EntityRelationManager {
 			[LayoutColumn.Comment, row.comment],
 		]);
 		// biome-ignore lint/style/noNonNullAssertion: <explanation>
-		return [...map.keys()].sort().map((i) => map.get(i)!);
+		return [...map.keys()].sort((a, b) => a - b).map((i) => map.get(i)!);
 	}
 
 	private toLayoutDatabase(row: LayoutRowData): string {
