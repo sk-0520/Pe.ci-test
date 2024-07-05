@@ -167,14 +167,8 @@ bool is_equals_text(const TEXT* a, const TEXT* b, bool ignore_case)
 
     if (ignore_case) {
         for (size_t i = 0; i < a->length; i++) {
-            TCHAR a1 = a->value[i];
-            TCHAR b1 = b->value[i];
-            if ('a' <= a1 && a1 <= 'z') {
-                a1 = a1 - 'a' + 'A';
-            }
-            if ('a' <= b1 && b1 <= 'z') {
-                b1 = b1 - 'a' + 'A';
-            }
+            TCHAR a1 = to_upper_character(a->value[i]);
+            TCHAR b1 = to_upper_character(b->value[i]);
             if (a1 != b1) {
                 return false;
             }
