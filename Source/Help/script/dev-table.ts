@@ -1170,7 +1170,7 @@ class EntityRelationManager {
 	): ReadonlyArray<string> {
 		const result = new Array<string>(cells.length);
 		for (let i = 0; i < cells.length; i++) {
-			const position = positions.get(i) || MarkdownTablePosition.left;
+			const position = positions.get(i) ?? MarkdownTablePosition.left;
 			const value = this.toMarkdownCell(cells[i], space[i], position);
 			result[i] = value;
 		}
@@ -1191,7 +1191,7 @@ class EntityRelationManager {
 		);
 		let sep = "|";
 		for (let i = 0; i < header.length; i++) {
-			const position = positions.get(i) || MarkdownTablePosition.left;
+			const position = positions.get(i) ?? MarkdownTablePosition.left;
 			switch (position) {
 				case MarkdownTablePosition.center:
 					sep += `:${"-".repeat(cellSpace[i])}:`;
