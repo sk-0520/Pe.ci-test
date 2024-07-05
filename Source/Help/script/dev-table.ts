@@ -425,7 +425,7 @@ class Entity {
 			clonedTemplate,
 			LayoutBlockName.Delete,
 		).addEventListener("click", (ev) => {
-			let element = ev.srcElement as HTMLElement;
+			let element = ev.target as HTMLElement;
 			while (element.getAttribute("name") !== LayoutBlockName.LayoutRowRoot) {
 				element = element.parentElement as HTMLElement;
 			}
@@ -475,7 +475,7 @@ class Entity {
 			clonedTemplate,
 			LayoutBlockName.LayoutRowAdd,
 		).addEventListener("click", (ev) => {
-			let element = ev.srcElement as HTMLElement;
+			let element = ev.target as HTMLElement;
 			while (element.tagName !== "TABLE") {
 				element = element.parentElement as HTMLElement;
 			}
@@ -528,7 +528,7 @@ class Entity {
 			IndexBlockName.DeleteColumn,
 		).addEventListener("click", (ev) => {
 			const parent = getClosest(
-				ev.srcElement as HTMLElement,
+				ev.target as HTMLElement,
 				(e) => e.getAttribute("name") === IndexBlockName.IndexRowColumnRoot,
 			);
 			parent?.remove();
@@ -589,7 +589,7 @@ class Entity {
 			IndexBlockName.DeleteIndex,
 		).addEventListener("click", (ev) => {
 			const parent = getClosest(
-				ev.srcElement as HTMLElement,
+				ev.target as HTMLElement,
 				(e) => e.getAttribute("name") === IndexBlockName.IndexRowRoot,
 			);
 			parent?.remove();
@@ -736,7 +736,7 @@ class Entity {
 		ev: Event,
 		targetEntities: ReadonlyArray<Entity>,
 	) {
-		const currentTableElement = ev.srcElement as HTMLSelectElement;
+		const currentTableElement = ev.target as HTMLSelectElement;
 		const currentColumnElement = getElementByName<HTMLSelectElement>(
 			// biome-ignore lint/style/noNonNullAssertion: <explanation>
 			currentTableElement.parentElement!,
