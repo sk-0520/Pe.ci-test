@@ -53,4 +53,4 @@ Pe は Windows 10 以上で動作するデスクトップユーティリティ�
 1. reportgenerator のローカルインストール  
    `PS> dotnet tool install docfx --tool-path _tools`
 1. 生成
-   `PS1> .\_tools\docfx docfx.json --template statictoc
+   `PS1> .\_tools\docfx docfx.json --template statictoc`
