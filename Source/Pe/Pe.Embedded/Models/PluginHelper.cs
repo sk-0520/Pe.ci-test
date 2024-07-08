@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Models
     /// <summary>
     /// プラグインヘルパー。
     /// </summary>
-    internal static class PluginHelper
+    public static class PluginHelper
     {
         #region function
 
