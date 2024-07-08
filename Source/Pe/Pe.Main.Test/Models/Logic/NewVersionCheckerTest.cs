@@ -120,16 +120,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             Assert.Null(actual);
         }
 
-        public static IEnumerable<object[]> RequestUpdateDataAsyncData()
-        {
-            var result = new List<object[]>();
-
-            result.Add(new object[] {
+        public static TheoryData<NewVersionData, string> RequestUpdateDataAsyncData => new() {
+            {
                 new NewVersionData() {},
                 "{}"
-            });
-
-            result.Add(new object[] {
+            },
+            {
                 new NewVersionData() {
                     Items = []
                 },
@@ -137,9 +133,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                     ""items"": [
                     ]
                 }"
-            });
-
-            result.Add(new object[] {
+            },
+            {
                 new NewVersionData() {
                     Items = [
                         new NewVersionItemData() {
@@ -174,11 +169,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                         }
                     ]
                 }"
-            });
-
-            return result;
-        }
-
+            }
+        };
         [Theory]
         [MemberData(nameof(RequestUpdateDataAsyncData))]
         public async Task RequestUpdateDataAsyncTest(NewVersionData expected, string json)
@@ -451,29 +443,24 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             Assert.Equal(expectedUrl, actual?.ToString());
         }
 
-        public static IEnumerable<object[]> GetPluginNewVersionItem_null_Data()
+        public static TheoryData<Version, IEnumerable<NewVersionItemData>> GetPluginNewVersionItem_null_Data => new()
         {
-            var result = new List<object[]>();
-
             // なし
-            result.Add(new object[] {
+            {
                 new Version(),
-                Array.Empty<NewVersionItemData>(),
-            });
-
+                Array.Empty<NewVersionItemData>()
+            },
             // アーキテクチャ未達
-            result.Add(new object[] {
+            {
                 new Version(),
                 new NewVersionItemData[] {
                     new NewVersionItemData() {
                         Platform = "x128",
                     }
-                },
-            });
-
-
+                }
+            },
             // アプリケーション最小バージョン未達
-            result.Add(new object[] {
+            {
                 new Version(),
                 new NewVersionItemData[] {
                     new NewVersionItemData() {
@@ -481,10 +468,9 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                         MinimumVersion = new Version(1, 2, 3, 5)
                     }
                 }
-            });
-
+            },
             // プラグインバージョン未達
-            result.Add(new object[] {
+            {
                 new Version(2, 3, 4, 5),
                 new NewVersionItemData[] {
                     new NewVersionItemData() {
@@ -493,8 +479,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                         Version = new Version(2, 3, 4, 5)
                     }
                 }
-            });
-            result.Add(new object[] {
+            },
+            {
                 new Version(2, 3, 4, 6),
                 new NewVersionItemData[] {
                     new NewVersionItemData() {
@@ -503,10 +489,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                         Version = new Version(2, 3, 4, 5)
                     }
                 }
-            });
-
-            return result;
-        }
+            }
+        };
 
         [Theory]
         [MemberData(nameof(GetPluginNewVersionItem_null_Data))]

@@ -35,12 +35,12 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test.Throw
             Assert.Throws<ArgumentNullException>(() => ArgumentEmptyCollectionException.ThrowIfEmpty((IEnumerable<int>)null!, "param"));
         }
 
-        public static IEnumerable<object[]> ThrowIfEmpty_zero_Data()
+        public static TheoryData<IEnumerable<int>> ThrowIfEmpty_zero_Data => new()
         {
-            yield return new object[] { Array.Empty<int>() };
-            yield return new object[] { new Collection<int>() };
-            yield return new object[] { new List<int>() };
-        }
+            { Array.Empty<int>() },
+            { new Collection<int>() },
+            { new List<int>() }
+        };
 
         [Theory]
         [MemberData(nameof(ThrowIfEmpty_zero_Data))]
