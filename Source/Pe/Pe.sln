@@ -68,11 +68,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.CliProxy", "Pe.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.CliProxy.Test", "Pe.Standard.CliProxy.Test\Pe.Standard.CliProxy.Test.csproj", "{8CAF4F50-CE0B-4D6B-948C-C7B83CD59E27}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{0A9EE77F-5AB6-4D3C-8493-145E5122DD0E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common-test", "common-test", "{0A9EE77F-5AB6-4D3C-8493-145E5122DD0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pe.CommonTest", "Pe.CommonTest\Pe.CommonTest.csproj", "{38A690D9-40AA-44EF-89C7-ADB957D3D244}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.CommonTest", "Pe.CommonTest\Pe.CommonTest.csproj", "{38A690D9-40AA-44EF-89C7-ADB957D3D244}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pe.CommonTest.Test", "Pe.CommonTest.Test\Pe.CommonTest.Test.csproj", "{A038DE95-CF05-49C1-890D-D602088F8983}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.CommonTest.Test", "Pe.CommonTest.Test\Pe.CommonTest.Test.csproj", "{A038DE95-CF05-49C1-890D-D602088F8983}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -324,8 +324,8 @@ Global
 		{A038DE95-CF05-49C1-890D-D602088F8983} = {0A9EE77F-5AB6-4D3C-8493-145E5122DD0E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_PrefixTranslations = False
-		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
 		RESX_NeutralResourcesLanguage = ja-JP
+		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
+		RESX_PrefixTranslations = False
 	EndGlobalSection
 EndGlobal
