@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
 using ContentTypeTextNet.Pe.Core.Models.Serialization;
-using ContentTypeTextNet.Pe.Test;
+using ContentTypeTextNet.Pe.CommonTest;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 using Xunit;
 

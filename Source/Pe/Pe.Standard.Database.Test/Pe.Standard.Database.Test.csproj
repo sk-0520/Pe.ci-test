@@ -11,10 +11,6 @@
     <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteFactory.cs" Link="TestImpl\Vender\Public\SQLite\SqliteFactory.cs" />
     <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteImplementation.cs" Link="TestImpl\Vender\Public\SQLite\SqliteImplementation.cs" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\Test\**\*.cs" />
-  </ItemGroup>
   
   <ItemGroup>
     <Compile Remove="TestResults\**" />
@@ -38,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pe.CommonTest\Pe.CommonTest.csproj" />
     <ProjectReference Include="..\Pe.Standard.Database\Pe.Standard.Database.csproj" />
   </ItemGroup>
 

@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pe.CommonTest\Pe.CommonTest.csproj" />
     <ProjectReference Include="..\Pe.Standard.Property\Pe.Standard.Property.csproj" />
   </ItemGroup>
 

@@ -22,7 +22,7 @@ using ContentTypeTextNet.Pe.Core.Models.Serialization;
 using System.Net.Http.Json;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Test;
+using ContentTypeTextNet.Pe.CommonTest;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Element.Feedback

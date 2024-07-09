@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <AssemblyName>Pe.Embedded.Test</AssemblyName>
@@ -23,16 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\Test\**\*.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="TestResults\**" />
     <EmbeddedResource Remove="TestResults\**" />
     <None Remove="TestResults\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pe.CommonTest\Pe.CommonTest.csproj" />
     <ProjectReference Include="..\Pe.Embedded\Pe.Embedded.csproj" />
   </ItemGroup>
 </Project>

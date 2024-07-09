@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Test\**\*.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="TestResults\**" />
     <EmbeddedResource Remove="TestResults\**" />
     <None Remove="TestResults\**" />
@@ -32,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pe.CommonTest\Pe.CommonTest.csproj" />
     <ProjectReference Include="..\Pe.Standard.Base\Pe.Standard.Base.csproj" />
   </ItemGroup>
 

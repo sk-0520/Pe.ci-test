@@ -1,11 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>Pe.Bridge.Test</AssemblyName>
-    <RootNamespace>ContentTypeTextNet.Pe.Bridge.Test</RootNamespace>
-    
+    <AssemblyName>Pe.CommonTest.Test</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.CommonTest.Test</RootNamespace>
     <IsTestProject>true</IsTestProject>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +13,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
     <PackageReference Include="xunit" Version="2.8.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.1">
       <PrivateAssets>all</PrivateAssets>
@@ -27,10 +26,9 @@
     <EmbeddedResource Remove="TestResults\**" />
     <None Remove="TestResults\**" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\Pe.Bridge\Pe.Bridge.csproj" />
-  </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Pe.CommonTest\Pe.CommonTest.csproj" />
+  </ItemGroup>
 
 </Project>

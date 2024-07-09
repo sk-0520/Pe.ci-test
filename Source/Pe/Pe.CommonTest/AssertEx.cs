@@ -6,7 +6,7 @@ using System.IO;
 
 using Xunit;
 
-namespace ContentTypeTextNet.Pe.Test
+namespace ContentTypeTextNet.Pe.CommonTest
 {
     /// <summary>
     /// テスト拡張系。

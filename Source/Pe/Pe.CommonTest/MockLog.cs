@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Moq;
 
-namespace ContentTypeTextNet.Pe.Test
+namespace ContentTypeTextNet.Pe.CommonTest
 {
     /// <summary>
     /// ログ系のモック。

@@ -22,10 +22,6 @@
     </PackageReference>
     <PackageReference Include="Xunit.StaFact" Version="1.1.11" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Include="..\Test\**\*.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="TestResults\**" />
@@ -40,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pe.CommonTest\Pe.CommonTest.csproj" />
     <ProjectReference Include="..\Pe.Core\Pe.Core.csproj" />
     <ProjectReference Include="..\Pe.Standard.DependencyInjection\Pe.Standard.DependencyInjection.csproj" />
   </ItemGroup>

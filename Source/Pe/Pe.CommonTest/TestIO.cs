@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 
-namespace ContentTypeTextNet.Pe.Test
+namespace ContentTypeTextNet.Pe.CommonTest
 {
     /// <summary>
     /// IO系のテスト系インフラ。
@@ -136,9 +136,7 @@ namespace ContentTypeTextNet.Pe.Test
         public static FileInfo CreateEmptyFile(DirectoryInfo directory, string name)
         {
             var filePath = Path.Combine(directory.FullName, name);
-            using(File.Create(filePath)) {
-            }
-
+            File.Create(filePath).Dispose();
             return new FileInfo(filePath);
         }
 

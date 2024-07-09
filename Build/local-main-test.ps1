@@ -80,6 +80,7 @@ foreach ($dir in $targetProjectDirs) {
 $sources = @(
 	Get-SourceDirectory -Kind main
 	Join-Path -Path (Get-SourceDirectory -Kind main) -ChildPath Pe.Bridge
+	Join-Path -Path (Get-SourceDirectory -Kind main) -ChildPath Pe.CommonTest
 )
 
 $assemblyfilters = @()
