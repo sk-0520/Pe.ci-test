@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.CommonTest
             if(Fields.TryGetValue(name, out var member)) {
                 return member.GetValue(Instance);
             }
-            throw new TestPrivateObjectFieldException(name);
+            throw new PrivateObjectFieldException(name);
         }
 
         public void SetField(string name, object? value)
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.CommonTest
                 member.SetValue(Instance, value);
                 return;
             }
-            throw new TestPrivateObjectFieldException(name);
+            throw new PrivateObjectFieldException(name);
         }
 
         public object? GetProperty(string name)
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.CommonTest
             if(Properties.TryGetValue(name, out var member)) {
                 return member.GetValue(Instance);
             }
-            throw new TestPrivateObjectPropertyException(name);
+            throw new PrivateObjectPropertyException(name);
         }
 
         public void SetProperty(string name, object? value)
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.CommonTest
                 member.SetValue(Instance, value);
                 return;
             }
-            throw new TestPrivateObjectPropertyException(name);
+            throw new PrivateObjectPropertyException(name);
         }
 
         public object? Invoke(string name, params object[] arguments)
@@ -83,10 +83,10 @@ namespace ContentTypeTextNet.Pe.CommonTest
                     }
                 }
 
-                throw new TestPrivateObjectMethodParametersException(name);
+                throw new PrivateObjectMethodParametersException(name);
             }
 
-            throw new TestPrivateObjectMethodException(name);
+            throw new PrivateObjectMethodException(name);
         }
 
         #endregion

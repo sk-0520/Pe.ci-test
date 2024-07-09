@@ -58,8 +58,8 @@ namespace Pe.CommonTest.Test
             var obj = new Class();
             var test = new PrivateObject(obj);
 
-            Assert.Throws<TestPrivateObjectFieldException>(() => test.SetField("<Field>", null));
-            Assert.Throws<TestPrivateObjectFieldException>(() => test.GetField("<Field>"));
+            Assert.Throws<PrivateObjectFieldException>(() => test.SetField("<Field>", null));
+            Assert.Throws<PrivateObjectFieldException>(() => test.GetField("<Field>"));
 
             Assert.Equal(0, test.GetField("Field"));
             test.SetField("Field", 123);
@@ -72,8 +72,8 @@ namespace Pe.CommonTest.Test
             var obj = new Class();
             var test = new PrivateObject(obj);
 
-            Assert.Throws<TestPrivateObjectPropertyException>(() => test.SetProperty("<Property>", null));
-            Assert.Throws<TestPrivateObjectPropertyException>(() => test.GetProperty("<Property>"));
+            Assert.Throws<PrivateObjectPropertyException>(() => test.SetProperty("<Property>", null));
+            Assert.Throws<PrivateObjectPropertyException>(() => test.GetProperty("<Property>"));
 
             Assert.Equal(0, test.GetProperty("Property"));
             test.SetProperty("Property", 123);
@@ -90,13 +90,13 @@ namespace Pe.CommonTest.Test
             Assert.Equal(2, test.Invoke("Method", 1));
             Assert.Equal(2, test.Invoke("Method", 1));
 
-            Assert.Throws<TestPrivateObjectMethodException>(() => test.Invoke("<Method>"));
-            Assert.Throws<TestPrivateObjectMethodParametersException>(() => test.Invoke("Method", (short)1));
-            Assert.Throws<TestPrivateObjectMethodParametersException>(() => test.Invoke("Method", (long)1));
-            Assert.Throws<TestPrivateObjectMethodParametersException>(() => test.Invoke("Method", (float)1));
-            Assert.Throws<TestPrivateObjectMethodParametersException>(() => test.Invoke("Method", (double)1));
-            Assert.Throws<TestPrivateObjectMethodParametersException>(() => test.Invoke("Method", (decimal)1));
-            Assert.Throws<TestPrivateObjectMethodParametersException>(() => test.Invoke("Method", "A"));
+            Assert.Throws<PrivateObjectMethodException>(() => test.Invoke("<Method>"));
+            Assert.Throws<PrivateObjectMethodParametersException>(() => test.Invoke("Method", (short)1));
+            Assert.Throws<PrivateObjectMethodParametersException>(() => test.Invoke("Method", (long)1));
+            Assert.Throws<PrivateObjectMethodParametersException>(() => test.Invoke("Method", (float)1));
+            Assert.Throws<PrivateObjectMethodParametersException>(() => test.Invoke("Method", (double)1));
+            Assert.Throws<PrivateObjectMethodParametersException>(() => test.Invoke("Method", (decimal)1));
+            Assert.Throws<PrivateObjectMethodParametersException>(() => test.Invoke("Method", "A"));
         }
 
         #endregion

@@ -18,72 +18,72 @@ namespace ContentTypeTextNet.Pe.CommonTest
     #region PrivateObject
 
     [Serializable]
-    public class TestPrivateObjectException: TestException
+    public class PrivateObjectException: TestException
     {
-        public TestPrivateObjectException()
+        public PrivateObjectException()
         { }
 
-        public TestPrivateObjectException(string message)
+        public PrivateObjectException(string message)
             : base(message)
         { }
 
-        public TestPrivateObjectException(string message, Exception inner)
+        public PrivateObjectException(string message, Exception inner)
             : base(message, inner)
         { }
     }
 
-    public class TestPrivateObjectFieldException: TestPrivateObjectException
+    public class PrivateObjectFieldException: PrivateObjectException
     {
-        public TestPrivateObjectFieldException()
+        public PrivateObjectFieldException()
         { }
 
-        public TestPrivateObjectFieldException(string message)
+        public PrivateObjectFieldException(string message)
             : base(message)
         { }
 
-        public TestPrivateObjectFieldException(string message, Exception inner)
+        public PrivateObjectFieldException(string message, Exception inner)
             : base(message, inner)
         { }
     }
 
-    public class TestPrivateObjectPropertyException: TestPrivateObjectException
+    public class PrivateObjectPropertyException: PrivateObjectException
     {
-        public TestPrivateObjectPropertyException()
+        public PrivateObjectPropertyException()
         { }
 
-        public TestPrivateObjectPropertyException(string message)
+        public PrivateObjectPropertyException(string message)
             : base(message)
         { }
 
-        public TestPrivateObjectPropertyException(string message, Exception inner)
+        public PrivateObjectPropertyException(string message, Exception inner)
             : base(message, inner)
         { }
     }
 
-    public class TestPrivateObjectMethodException: TestPrivateObjectException
+    public class PrivateObjectMethodException: PrivateObjectException
     {
-        public TestPrivateObjectMethodException()
+        public PrivateObjectMethodException()
         { }
 
-        public TestPrivateObjectMethodException(string message)
+        public PrivateObjectMethodException(string message)
             : base(message)
         { }
 
-        public TestPrivateObjectMethodException(string message, Exception inner)
+        public PrivateObjectMethodException(string message, Exception inner)
             : base(message, inner)
         { }
     }
 
-    public class TestPrivateObjectMethodParametersException: TestPrivateObjectException
+    public class PrivateObjectMethodParametersException: PrivateObjectException
     {
-        public TestPrivateObjectMethodParametersException()
+        public PrivateObjectMethodParametersException()
         { }
 
-        public TestPrivateObjectMethodParametersException(string message)
+        public PrivateObjectMethodParametersException(string message)
             : base(message)
         { }
 
-        public TestPrivateObjectMethodParametersException(string message, Exception inner)
+        public PrivateObjectMethodParametersException(string message, Exception inner)
             : base(message, inner)
         { }
     }
