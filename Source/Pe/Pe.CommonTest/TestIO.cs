@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 
-namespace ContentTypeTextNet.Pe.Test
+namespace ContentTypeTextNet.Pe.CommonTest
 {
     /// <summary>
     /// IO系のテスト系インフラ。

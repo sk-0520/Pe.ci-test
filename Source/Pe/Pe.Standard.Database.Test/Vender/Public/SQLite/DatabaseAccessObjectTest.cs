@@ -7,7 +7,7 @@ using Castle.Core.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
-using ContentTypeTextNet.Pe.Test;
+using ContentTypeTextNet.Pe.CommonTest;
 using System.Runtime.CompilerServices;
 
 namespace ContentTypeTextNet.Pe.Standard.Database.Test.Vender.Public.SQLite

@@ -1,6 +1,6 @@
 using System;
 
-namespace ContentTypeTextNet.Pe.Test
+namespace ContentTypeTextNet.Pe.CommonTest
 {
     [Serializable]
     public class TestException: System.Exception

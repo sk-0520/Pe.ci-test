@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.CliProxy.System.IO;
-using ContentTypeTextNet.Pe.Test;
+using ContentTypeTextNet.Pe.CommonTest;
 using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.CliProxy.Test.System.IO
