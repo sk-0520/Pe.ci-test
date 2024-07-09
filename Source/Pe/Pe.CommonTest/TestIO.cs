@@ -136,9 +136,7 @@ namespace ContentTypeTextNet.Pe.CommonTest
         public static FileInfo CreateEmptyFile(DirectoryInfo directory, string name)
         {
             var filePath = Path.Combine(directory.FullName, name);
-            using(File.Create(filePath)) {
-            }
-
+            File.Create(filePath).Dispose();
             return new FileInfo(filePath);
         }
 
