@@ -113,7 +113,7 @@ order by
 COL3
 
 ";
-            AssertEx.EqualMultiLineTextWithoutNewline(expected1, actual1);
+            AssertEx.EqualMultiLineTextIgnoreNewline(expected1, actual1);
         }
 
         [Fact]
@@ -135,7 +135,7 @@ order by
     COL2
 
 ";
-            AssertEx.EqualMultiLineTextWithoutNewline(expected2, actual2);
+            AssertEx.EqualMultiLineTextIgnoreNewline(expected2, actual2);
         }
 
         [Fact]
@@ -156,7 +156,7 @@ order by
 COL3
 
 ";
-            AssertEx.EqualMultiLineTextWithoutNewline(expected3, actual3);
+            AssertEx.EqualMultiLineTextIgnoreNewline(expected3, actual3);
         }
 
         #endregion

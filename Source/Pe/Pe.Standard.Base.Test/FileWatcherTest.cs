@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
                     case 1: {
                             using var r = e.File.OpenText();
                             var data = r.ReadToEnd();
-                            AssertEx.EqualMultiLineTextWithoutNewline("abc", data);
+                            AssertEx.EqualMultiLineTextIgnoreNewline("abc", data);
                             called.Add(step);
                         }
                         break;
@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
                     case 2: {
                             using var r = e.File.OpenText();
                             var data = r.ReadToEnd();
-                            AssertEx.EqualMultiLineTextWithoutNewline("abc\ndef", data);
+                            AssertEx.EqualMultiLineTextIgnoreNewline("abc\ndef", data);
                             called.Add(step);
                             ev.Reset();
                         }
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
                     case 4: {
                             using var r = e.File.OpenText();
                             var data = r.ReadToEnd();
-                            AssertEx.EqualMultiLineTextWithoutNewline("abc\ndef\rghi\r\njkl", data);
+                            AssertEx.EqualMultiLineTextIgnoreNewline("abc\ndef\rghi\r\njkl", data);
                             called.Add(step);
                             ev.Reset();
                         }
