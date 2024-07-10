@@ -36,8 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Test
     {
         #region define
 
-        [Serializable]
-        private class NotFoundApplicationConfigurationException: Exception
+        public sealed class NotFoundApplicationConfigurationException: Exception
         {
             public NotFoundApplicationConfigurationException(string message) : base(message) { }
         }
