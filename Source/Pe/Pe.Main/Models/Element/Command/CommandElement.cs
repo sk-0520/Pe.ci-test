@@ -228,7 +228,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         {
             var diff = Math.Abs(Width - width);
             if(diff < double.Epsilon) {
-                Logger.LogTrace("{Width} - {width}: {Abs} < {Epsilon}", Width, width, diff, double.Epsilon);
+                Logger.LogTrace("{ElementWidth} - {Width}: {Diff} < {Epsilon}", Width, width, diff, double.Epsilon);
                 return;
             }
             Width = width;
