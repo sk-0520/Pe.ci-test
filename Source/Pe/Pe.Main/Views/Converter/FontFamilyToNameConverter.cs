@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
         {
             if(value is FontFamily fontFamily) {
                 var currentLang = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
-                return fontFamily.FamilyNames.FirstOrDefault(o => o.Key == currentLang).Value ?? fontFamily?.Source ?? string.Empty;
+                return fontFamily.FamilyNames.FirstOrDefault(o => o.Key == currentLang).Value ?? fontFamily.Source;
             }
 
             return DependencyProperty.UnsetValue;
