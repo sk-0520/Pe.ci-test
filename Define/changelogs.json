@@ -84,10 +84,12 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "Microsoft.Extensions.Configuration.Binder 8.0.1 -> 8.0.2"
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "xunit 2.8.1 -> 2.9.0"
 					},
 					{
