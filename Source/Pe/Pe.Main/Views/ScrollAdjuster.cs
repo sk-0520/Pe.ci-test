@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
                 var scrollLineCount = (Math.Abs(e.Delta) / ScrollNotch) * SystemParameters.WheelScrollLines;
                 if(e.Delta > 0) { // ↑
-                    if(textEditor.VerticalOffset == 0) {
+                    if((int)textEditor.VerticalOffset == 0) {
                         // 一番上なので親側をスクロールさせる
                         foreach(var counter in new Counter(scrollLineCount)) {
                             parentScrollViewer.LineUp();
@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
                         e.Handled = true;
                     }
                 } else if(e.Delta < 0) { // ↓
-                    if(childScrollViewer.VerticalOffset == childScrollViewer.ScrollableHeight) {
+                    if((int)childScrollViewer.VerticalOffset == (int)childScrollViewer.ScrollableHeight) {
                         // 一番下なので親側をスクロールさせる
                         foreach(var counter in new Counter(scrollLineCount)) {
                             parentScrollViewer.LineDown();
