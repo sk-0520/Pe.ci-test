@@ -345,12 +345,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     var newVersion = await CheckPluginNewVersionAsync(lastUsePlugin.PluginId, lastUsePlugin.Version);
                     newVersionPlugins[lastUsePlugin.PluginId] = newVersion;
                 } catch(Exception ex) {
-                    Logger.LogError(ex, $"[{lastUsePlugin.PluginId}] {ex.Message}");
+                    Logger.LogError(ex, "[{PluginId}] {Message}", lastUsePlugin.PluginId, ex.Message);
                     newVersionPlugins[lastUsePlugin.PluginId] = false;
                 }
             }
             foreach(var pair in newVersionPlugins) {
-                Logger.LogInformation("{0}: {1}", pair.Key, pair.Value);
+                Logger.LogInformation("{Key}: {Value}", pair.Key, pair.Value);
             }
 
             return newVersionPlugins.Any(i => i.Value);
