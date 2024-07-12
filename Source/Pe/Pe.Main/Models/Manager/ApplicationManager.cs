@@ -215,8 +215,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         public bool ExistsPluginChanges { get; private set; }
 
-        public bool CanCallNotifyAreaMenu { get; private set; }
-
         public bool CanSendCrashReport => ApplicationDiContainer.Get<GeneralConfiguration>().CanSendCrashReport;
         public bool UnhandledExceptionHandled => ApplicationDiContainer.Get<GeneralConfiguration>().UnhandledExceptionHandled;
 
