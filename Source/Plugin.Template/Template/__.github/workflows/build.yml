@@ -75,7 +75,7 @@ jobs:
           path: Output
 
       - name: <Add> get-net-sdk-project-versions-action
-        uses: kzrnm/get-net-sdk-project-versions-action@v1
+        uses: kzrnm/get-net-sdk-project-versions-action@v2
         id: version
         with:
           proj-path: Source/Directory.Build.props
