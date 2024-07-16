@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element
@@ -23,7 +24,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
         /// ビューが閉じられた。
         /// </summary>
         /// <param name="isUserOperation">ユーザー操作によって閉じられたか。</param>
-        Task ReceiveViewClosedAsync(bool isUserOperation);
+        /// <param name="cancellationToken"></param>
+        Task ReceiveViewClosedAsync(bool isUserOperation, CancellationToken cancellationToken);
 
         #endregion
     }

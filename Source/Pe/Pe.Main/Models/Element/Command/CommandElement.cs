@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             StopViewClose();
         }
 
-        private async Task RefreshSettingAsync()
+        private async Task RefreshSettingAsync(CancellationToken cancellationToken)
         {
             SettingAppCommandSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -160,7 +160,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             }
 
             Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            await Font.InitializeAsync();
+            await Font.InitializeAsync(cancellationToken);
 
             IconBox = setting.IconBox;
             Width = setting.Width;
@@ -168,10 +168,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             FindTag = setting.FindTag;
         }
 
-        public async Task RefreshAsync()
+        public async Task RefreshAsync(CancellationToken cancellationToken)
         {
             // アイテム一覧とったりなんかしたりあれこれしたり
-            await RefreshSettingAsync();
+            await RefreshSettingAsync(cancellationToken);
 
             if(LauncherItemCommandFinder != null) {
                 // 諦め
@@ -256,7 +256,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         #region ElementBase
 
-        protected override async Task InitializeCoreAsync()
+        protected override async Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             foreach(var commandFinder in CommandFinders) {
                 if(!commandFinder.IsInitialized) {
@@ -264,7 +264,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 }
             }
 
-            await RefreshAsync();
+            await RefreshAsync(cancellationToken);
         }
 
         protected override void Dispose(bool disposing)
@@ -346,8 +346,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
-        public Task ReceiveViewClosedAsync(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool, CancellationToken)"/>
+        public Task ReceiveViewClosedAsync(bool isUserOperation, CancellationToken cancellationToken)
         {
             ViewCreated = false;
             return Task.CompletedTask;

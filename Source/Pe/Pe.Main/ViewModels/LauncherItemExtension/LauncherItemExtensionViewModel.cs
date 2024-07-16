@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -30,9 +31,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemExtension
         public void ReceiveViewClosing(Window window, CancelEventArgs e)
         { }
 
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
-            return Model.ReceiveViewClosedAsync(window, isUserOperation);
+            return Model.ReceiveViewClosedAsync(window, isUserOperation, cancellationToken);
         }
 
         #endregion

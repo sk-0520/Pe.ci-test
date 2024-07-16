@@ -6,6 +6,7 @@ using ContentTypeTextNet.Pe.Main.Models.Command;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -32,12 +33,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 factory.CreateParameter(ApplicationCommand.About, p => {
                     Debug.Assert(CommandElement != null);
                     CommandElement.HideView(false);
-                    _ = ShowAboutViewAsync();
+                    _ = ShowAboutViewAsync(CancellationToken.None);
                 }),
                 factory.CreateParameter(ApplicationCommand.Setting, p => {
                     Debug.Assert(CommandElement != null);
                     CommandElement.HideView(false);
-                     _ = ShowSettingViewAsync();
+                     _ = ShowSettingViewAsync(CancellationToken.None);
                 }),
                 factory.CreateParameter(ApplicationCommand.GarbageCollection, p => {
                     GarbageCollection(p.IsExtend);
@@ -58,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         Properties.Resources.String_Proxy_Toggle_Header,
                         new NotifyLogContent(isEnabledProxy ? Properties.Resources.String_Proxy_Toggle_Content_IsEnabled: Properties.Resources.String_Proxy_Toggle_Content_IsDisabled)
                     );
-                    NotifyManager.AppendLogAsync(log);
+                    NotifyManager.AppendLogAsync(log, CancellationToken.None);
                 }),
                 factory.CreateParameter(ApplicationCommand.Help, p => {
                     ShowHelp();

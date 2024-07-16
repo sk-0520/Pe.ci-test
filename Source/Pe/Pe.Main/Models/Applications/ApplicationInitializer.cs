@@ -244,7 +244,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return !file.Exists;
         }
 
-        private async Task<AcceptResult> ShowAcceptViewAsync(IDiScopeContainerFactory scopeContainerCreator, EnvironmentParameters environmentParameters, ICultureService cultureService, ILoggerFactory? loggerFactory)
+        private async Task<AcceptResult> ShowAcceptViewAsync(IDiScopeContainerFactory scopeContainerCreator, EnvironmentParameters environmentParameters, ICultureService cultureService, ILoggerFactory? loggerFactory, CancellationToken cancellationToken)
         {
             using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
                 if(loggerFactory != null) {
@@ -259,7 +259,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 ;
                 using(var windowManager = new WindowManager(diContainer, cultureService, diContainer.Get<ILoggerFactory>())) {
                     using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
-                    await acceptModel.InitializeAsync();
+                    await acceptModel.InitializeAsync(cancellationToken);
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
                     windowManager.Register(new WindowItem(Manager.WindowKind.Accept, acceptModel, view));
                     view.ShowDialog();
@@ -507,7 +507,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
-        public async Task<bool> InitializeAsync(App app, StartupEventArgs e)
+        public async Task<bool> InitializeAsync(App app, StartupEventArgs e, CancellationToken cancellationToken)
         {
             InitializeEnvironmentVariable();
             InitializeClr();
@@ -591,7 +591,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     logger.LogInformation("初回実行");
                     if(!skipAccept) {
                         // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                        acceptResult = await ShowAcceptViewAsync(new DiContainer(false), environmentParameters, cultureService, loggerFactory);
+                        acceptResult = await ShowAcceptViewAsync(new DiContainer(false), environmentParameters, cultureService, loggerFactory, cancellationToken);
                         if(!acceptResult.Accepted) {
                             // 初回の使用許諾を得られなかったのでばいちゃ
                             logger.LogInformation("使用許諾得られず");

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
@@ -193,7 +194,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 var deviceCursorPosition = PodStructUtility.Convert(rawCursorPosition);
                 var currentScreen = Screen.FromDevicePoint(deviceCursorPosition);
 
-                var noteElement = await ApplicationManager.CreateNoteAsync(currentScreen, Models.Data.NoteStartupPosition.CenterScreen);
+                var noteElement = await ApplicationManager.CreateNoteAsync(currentScreen, Models.Data.NoteStartupPosition.CenterScreen, CancellationToken.None);
                 noteElement.StartView();
             }
         );
@@ -222,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         private ICommand? _ShowCommandViewCommand;
         public ICommand ShowCommandViewCommand => this._ShowCommandViewCommand ??= new DelegateCommand(
            async () => {
-               await ApplicationManager.ShowCommandViewAsync();
+               await ApplicationManager.ShowCommandViewAsync(CancellationToken.None);
            }
        );
 
@@ -230,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public ICommand OpenSettingCommand => this._OpenSettingCommand ??= new DelegateCommand(
             async () => {
                 // めんどいし直接ビュー開くよ
-                await ApplicationManager.ShowSettingViewAsync();
+                await ApplicationManager.ShowSettingViewAsync(CancellationToken.None);
             }
         );
 
@@ -238,7 +239,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public ICommand OpenStartupCommand => this._OpenStartupCommand ??= new DelegateCommand(
             async () => {
                 // めんどいし直接ビュー開くよ
-                await ApplicationManager.ShowStartupViewAsync(false);
+                await ApplicationManager.ShowStartupViewAsync(false, CancellationToken.None);
             }
         );
 
@@ -253,14 +254,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public ICommand OpenAboutCommand => this._OpenAboutCommand ??= new DelegateCommand(
             async () => {
                 // めんどいし直接ビュー開くよ
-                await ApplicationManager.ShowAboutViewAsync();
+                await ApplicationManager.ShowAboutViewAsync(CancellationToken.None);
             }
         );
 
         private ICommand? _UpdateCommand;
         public ICommand UpdateCommand => this._UpdateCommand ??= new DelegateCommand(
              () => {
-                 ApplicationManager.CheckNewVersionsAsync(false);
+                 ApplicationManager.CheckNewVersionsAsync(false, CancellationToken.None);
              }
          );
 
@@ -316,7 +317,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         private ICommand? _ShowFeedbackViewCommand;
         public ICommand ShowFeedbackViewCommand => this._ShowFeedbackViewCommand ??= new DelegateCommand(
             async () => {
-                await ApplicationManager.ShowFeedbackViewAsync();
+                await ApplicationManager.ShowFeedbackViewAsync(CancellationToken.None);
             }
         );
 

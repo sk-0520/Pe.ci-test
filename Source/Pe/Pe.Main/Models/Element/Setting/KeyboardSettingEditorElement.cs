@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
@@ -91,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
 
-        public async Task AddReplaceJobAsync()
+        public async Task AddReplaceJobAsync(CancellationToken cancellationToken)
         {
             var keyActionData = new KeyActionData() {
                 KeyActionId = IdFactory.CreateKeyActionId(),
@@ -99,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             };
 
             var editor = new KeyboardReplaceJobSettingEditorElement(keyActionData, true, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            await editor.InitializeAsync();
+            await editor.InitializeAsync(cancellationToken);
             ReplaceJobEditors.Add(editor);
         }
 
@@ -110,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             StockRemoveItemIfSavedJob(editor);
         }
 
-        public async Task AddDisableJobAsync()
+        public async Task AddDisableJobAsync(CancellationToken cancellationToken)
         {
             var keyActionData = new KeyActionData() {
                 KeyActionId = IdFactory.CreateKeyActionId(),
@@ -118,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             };
 
             var editor = new KeyboardDisableJobSettingEditorElement(keyActionData, true, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            await editor.InitializeAsync();
+            await editor.InitializeAsync(cancellationToken);
 
             DisableJobEditors.Add(editor);
         }
@@ -130,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             StockRemoveItemIfSavedJob(editor);
         }
 
-        public async Task AddPressedJobAsync(KeyActionKind kind)
+        public async Task AddPressedJobAsync(KeyActionKind kind, CancellationToken cancellationToken)
         {
             if(kind == KeyActionKind.Replace || kind == KeyActionKind.Disable) {
                 throw new ArgumentException(null, nameof(kind));
@@ -142,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             };
 
             var editor = new KeyboardPressedJobSettingEditorElement(keyActionData, true, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            await editor.InitializeAsync();
+            await editor.InitializeAsync(cancellationToken);
 
             PressedJobEditors.Add(editor);
         }
@@ -158,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region SettingEditorElementBase
 
-        protected override async Task LoadCoreAsync()
+        protected override async Task LoadCoreAsync(CancellationToken cancellationToken)
         {
             IReadOnlyList<KeyActionData> replaceKeyActions;
             IReadOnlyList<KeyActionData> disableKeyActions;
@@ -180,7 +181,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 .Concat(pressedJobEditor)
             ;
             foreach(var editor in editors) {
-                await editor.InitializeAsync();
+                await editor.InitializeAsync(cancellationToken);
             }
 
             Array.Sort(replaceJobEditor, new ReplaceComparer());

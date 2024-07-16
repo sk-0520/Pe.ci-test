@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -429,7 +430,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             base.Dispose(disposing);
         }
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             if(!Exists()) {
                 return Task.CompletedTask;

@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationUpdateInfo = ApplicationDiContainer.Build<NewVersionInfo>();
 
             NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
-            _ = NotifyLogElement.InitializeAsync();
+            _ = NotifyLogElement.InitializeAsync(CancellationToken.None);
 
             DelayScreenElementReset = ApplicationDiContainer.Build<DelayAction>(nameof(DelayScreenElementReset), customConfiguration.Platform.ScreenElementsResetWaitTime);
 
@@ -233,7 +233,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <summary>
         /// すべてここで完結する神の所業。
         /// </summary>
-        public async Task ShowSettingViewAsync()
+        public async Task ShowSettingViewAsync(CancellationToken cancellationToken)
         {
             SaveWidgets();
             using var viewPausing = PauseAllViews();
@@ -282,7 +282,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             PersistenceHelper.Copy(workingDatabasePack.Temporary, settingDatabasePack.Temporary);
 
             var settingElement = new SettingContainerElement(container, Logging.PauseReceiveLog, container.Build<ISettingElementFactory>(), container.Build<ILoggerFactory>());
-            await settingElement.InitializeAsync();
+            await settingElement.InitializeAsync(cancellationToken);
             var windowItem = OrderManager.CreateSettingWindow(settingElement);
             WindowManager.Register(windowItem);
             var dialogResult = windowItem.Window.ShowDialog();
@@ -341,14 +341,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 RebuildHook();
                 RebuildSchedulerSetting();
                 ResetNotifyArea();
-                await ExecuteElementsAsync();
+                await ExecuteElementsAsync(cancellationToken);
 
                 if(CommandElement != null) {
                     if(CommandElement.IsInitialized) {
-                        await CommandElement.RefreshAsync();
+                        await CommandElement.RefreshAsync(cancellationToken);
                     }
                 }
-                await NotifyLogElement.RefreshAsync();
+                await NotifyLogElement.RefreshAsync(cancellationToken);
                 NotifyManager.SendSettingChanged();
 
                 ExistsPluginChanges = CheckPluginChanges();
@@ -429,7 +429,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             });
         }
 
-        public async Task ShowStartupViewAsync(bool isFirstSetup)
+        public async Task ShowStartupViewAsync(bool isFirstSetup, CancellationToken cancellationToken)
         {
             using var viewPausing = isFirstSetup
                 ? new ActionDisposer(d => { Logger.LogInformation("初回スタートアップ終了"); })
@@ -441,7 +441,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     .RegisterMvvm<Element.Startup.StartupElement, ViewModels.Startup.StartupViewModel, Views.Startup.StartupWindow>()
                 ;
                 var startupModel = diContainer.New<Element.Startup.StartupElement>();
-                await startupModel.InitializeAsync();
+                await startupModel.InitializeAsync(cancellationToken);
                 var view = diContainer.Build<Views.Startup.StartupWindow>();
 
                 var windowManager = diContainer.Get<IWindowManager>();
@@ -451,18 +451,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 if(!isFirstSetup) {
                     if(startupModel.IsRegisteredLauncher) {
-                        await ResetScreenViewElementsAsync();
+                        await ResetScreenViewElementsAsync(cancellationToken);
                     }
                 }
             }
         }
 
 #if DEBUG
-        private async Task StartDebugDevelopModeAsync()
+        private async Task StartDebugDevelopModeAsync(CancellationToken cancellationToken)
         {
             var importProgramsElement = ApplicationDiContainer.Build<Element.Startup.ImportProgramsElement>();
-            await importProgramsElement.LoadProgramsAsync();
-            await importProgramsElement.ImportAsync();
+            await importProgramsElement.LoadProgramsAsync(cancellationToken);
+            await importProgramsElement.ImportAsync(cancellationToken);
 
             var mainBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
@@ -541,7 +541,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 #endif
 
-        public async Task ShowAboutViewAsync()
+        public async Task ShowAboutViewAsync(CancellationToken cancellationToken)
         {
             using var viewPausing = PauseAllViews();
 
@@ -550,7 +550,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     .RegisterMvvm<Element.About.AboutElement, ViewModels.About.AboutViewModel, Views.About.AboutWindow>()
                 ;
                 var model = diContainer.New<Element.About.AboutElement>();
-                await model.InitializeAsync();
+                await model.InitializeAsync(cancellationToken);
 
                 var view = diContainer.Build<Views.About.AboutWindow>();
 
@@ -572,17 +572,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        private async Task ShowNewVersionReleaseNoteCoreAsync(NewVersionItemData updateItem, bool isCheckOnly)
+        private async Task ShowNewVersionReleaseNoteCoreAsync(NewVersionItemData updateItem, bool isCheckOnly, CancellationToken cancellationToken)
         {
             var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(ApplicationUpdateInfo, updateItem, isCheckOnly);
-            await element.InitializeAsync();
+            await element.InitializeAsync(cancellationToken);
             var view = ApplicationDiContainer.Build<Views.ReleaseNote.ReleaseNoteWindow>();
             view.DataContext = ApplicationDiContainer.Build<ViewModels.ReleaseNote.ReleaseNoteViewModel>(element);
             WindowManager.Register(new WindowItem(WindowKind.Release, element, view));
             view.Show();
         }
 
-        private async Task ShowNewVersionReleaseNoteAsync(NewVersionItemData updateItem, bool isCheckOnly)
+        private async Task ShowNewVersionReleaseNoteAsync(NewVersionItemData updateItem, bool isCheckOnly, CancellationToken cancellationToken)
         {
             var windowItem = WindowManager.GetWindowItems(WindowKind.Release);
             if(windowItem.Any()) {
@@ -592,14 +592,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     if(window != null) {
                         window.Window.Activate();
                     } else {
-                        await ShowNewVersionReleaseNoteCoreAsync(updateItem, isCheckOnly);
+                        await ShowNewVersionReleaseNoteCoreAsync(updateItem, isCheckOnly, cancellationToken);
                     }
                 }, DispatcherPriority.ApplicationIdle);
                 return;
             }
 
             await ApplicationDiContainer.Build<IDispatcherWrapper>().BeginAsync(async () => {
-                await ShowNewVersionReleaseNoteCoreAsync(updateItem, isCheckOnly);
+                await ShowNewVersionReleaseNoteCoreAsync(updateItem, isCheckOnly, cancellationToken);
             }, DispatcherPriority.ApplicationIdle);
         }
 
@@ -1065,7 +1065,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogInformation("[各種情報]{NewLine}{Information}", Environment.NewLine, s);
         }
 
-        public async Task<bool> StartupAsync(App app, StartupEventArgs e)
+        public async Task<bool> StartupAsync(App app, StartupEventArgs e, CancellationToken cancellationToken)
         {
             StartupUsageStatistics();
             LoggingInformation();
@@ -1097,12 +1097,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 // 初期登録の画面を表示
 #if DEBUG
                 if(IsDebugDevelopMode) {
-                    await StartDebugDevelopModeAsync();
+                    await StartDebugDevelopModeAsync(cancellationToken);
                 } else {
-                    await ShowStartupViewAsync(true);
+                    await ShowStartupViewAsync(true, cancellationToken);
                 }
 #else
-                await ShowStartupViewAsync(true);
+                await ShowStartupViewAsync(true, cancellationToken);
 #endif
             }
 
@@ -1118,7 +1118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return viewModel;
         }
 
-        private async Task<IReadOnlyList<LauncherGroupElement>> CreateLauncherGroupElementsAsync()
+        private async Task<IReadOnlyList<LauncherGroupElement>> CreateLauncherGroupElementsAsync(CancellationToken cancellationToken)
         {
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
@@ -1131,27 +1131,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var result = new List<LauncherGroupElement>(launcherGroupIds.Count);
             foreach(var launcherGroupId in launcherGroupIds) {
-                var element = await CreateLauncherGroupElementAsync(launcherGroupId);
+                var element = await CreateLauncherGroupElementAsync(launcherGroupId, cancellationToken);
                 result.Add(element);
             }
 
             return result;
         }
 
-        private async Task<IReadOnlyList<LauncherToolbarElement>> CreateLauncherToolbarElementsAsync(ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
+        private async Task<IReadOnlyList<LauncherToolbarElement>> CreateLauncherToolbarElementsAsync(ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, CancellationToken cancellationToken)
         {
             var screens = Screen.AllScreens;
             var result = new List<LauncherToolbarElement>(screens.Length);
 
             foreach(var screen in screens.OrderByDescending(i => i.Primary)) {
-                var element = await CreateLauncherToolbarElementAsync(screen, launcherGroups);
+                var element = await CreateLauncherToolbarElementAsync(screen, launcherGroups, cancellationToken);
                 result.Add(element);
             }
 
             return result;
         }
 
-        private async Task<IReadOnlyList<NoteElement>> CreateNoteElementsAsync()
+        private async Task<IReadOnlyList<NoteElement>> CreateNoteElementsAsync(CancellationToken cancellationToken)
         {
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
@@ -1164,7 +1164,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var result = new List<NoteElement>(noteIds.Count);
             foreach(var noteId in noteIds) {
-                var element = await CreateNoteElementAsync(noteId, default(IScreen), NoteStartupPosition.Setting);
+                var element = await CreateNoteElementAsync(noteId, default(IScreen), NoteStartupPosition.Setting, cancellationToken);
                 result.Add(element);
             }
 
@@ -1195,12 +1195,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return collection;
         }
 
-        public async Task<NoteElement> CreateNoteAsync(IScreen dockScreen, NoteStartupPosition noteStartupPosition)
+        public async Task<NoteElement> CreateNoteAsync(IScreen dockScreen, NoteStartupPosition noteStartupPosition, CancellationToken cancellationToken)
         {
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
             var noteId = idFactory.CreateNoteId();
             Logger.LogInformation("new note id: {0}, {1}", noteId, ObjectDumper.GetDumpString(dockScreen));
-            var noteElement = await CreateNoteElementAsync(noteId, dockScreen, noteStartupPosition);
+            var noteElement = await CreateNoteElementAsync(noteId, dockScreen, noteStartupPosition, cancellationToken);
 
             NoteElements.Add(noteElement);
 
@@ -1253,7 +1253,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        private async Task ExecuteElementsAsync()
+        private async Task ExecuteElementsAsync(CancellationToken cancellationToken)
         {
             var currentActiveWindowHandle = NativeMethods.GetActiveWindow();
             //if(currentActiveWindowHandle == IntPtr.Zero) {
@@ -1261,15 +1261,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //}
 
             // グループ構築
-            var launcherGroups = await CreateLauncherGroupElementsAsync();
+            var launcherGroups = await CreateLauncherGroupElementsAsync(cancellationToken);
             LauncherGroupElements.AddRange(launcherGroups);
 
             // ツールバーの生成
-            var launcherToolbars = await CreateLauncherToolbarElementsAsync(new ReadOnlyObservableCollection<LauncherGroupElement>(LauncherGroupElements));
+            var launcherToolbars = await CreateLauncherToolbarElementsAsync(new ReadOnlyObservableCollection<LauncherGroupElement>(LauncherGroupElements), cancellationToken);
             LauncherToolbarElements.AddRange(launcherToolbars);
 
             // ノートの生成
-            var notes = await CreateNoteElementsAsync();
+            var notes = await CreateNoteElementsAsync(cancellationToken);
             NoteElements.AddRange(notes);
 
             var viewShowStaters = Enumerable.Empty<IViewShowStarter>()
@@ -1282,7 +1282,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 viewShowStater.StartView();
             }
 
-            await ExecuteWidgetsAsync();
+            await ExecuteWidgetsAsync(cancellationToken);
 
 #if DEBUG
             if(IsDevDebug) {
@@ -1299,7 +1299,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }, DispatcherPriority.SystemIdle);
         }
 
-        private async Task ExecuteWidgetsAsync()
+        private async Task ExecuteWidgetsAsync(CancellationToken cancellationToken)
         {
             //TODO: 表示・非表示状態を読み込んだりの諸々が必要
             if(Widgets.Count == 0) {
@@ -1314,7 +1314,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 foreach(var widget in PluginContainer.Addon.GetWidgets()) {
                     var element = new WidgetElement(widget, widget.Addon, widgetAddonContextFactory, mainDatabaseBarrier, mainDatabaseDelayWriter, databaseStatementLoader, cultureService, WindowManager, NotifyManager, environmentParameters, dispatcherWrapper, LoggerFactory);
-                    await element.InitializeAsync();
+                    await element.InitializeAsync(cancellationToken);
                     Widgets.Add(element);
                 }
             }
@@ -1360,7 +1360,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        public async Task ExecuteAsync()
+        public async Task ExecuteAsync(CancellationToken cancellationToken)
         {
             Logger.LogInformation("がんばる！");
 #if DEBUG
@@ -1372,7 +1372,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             StartPlatform();
 
-            await ExecuteElementsAsync();
+            await ExecuteElementsAsync(cancellationToken);
 
 #if DEBUG
             await DebugExecuteAfterAsync();
@@ -1603,11 +1603,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Exit(true);
         }
 
-        public async Task ShowCommandViewAsync()
+        public async Task ShowCommandViewAsync(CancellationToken cancellationToken)
         {
             if(CommandElement == null) {
                 CommandElement = ApplicationDiContainer.Build<CommandElement>();
-                await CommandElement.InitializeAsync();
+                await CommandElement.InitializeAsync(cancellationToken);
 
                 var commandFinders = new ICommandFinder[] {
                     ApplicationDiContainer.Build<LauncherItemCommandFinder>(),
@@ -1618,13 +1618,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 foreach(var commandFinder in commandFinders) {
                     CommandElement.AddCommandFinder(commandFinder);
                 }
-                await CommandElement.RefreshAsync();
+                await CommandElement.RefreshAsync(cancellationToken);
             }
 
             CommandElement.StartView();
         }
 
-        public async Task ShowFeedbackViewAsync()
+        public async Task ShowFeedbackViewAsync(CancellationToken cancellationToken)
         {
             var items = WindowManager.GetWindowItems(WindowKind.Feedback).ToList();
             if(items.Count != 0) {
@@ -1635,7 +1635,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var feedbackElement = ApplicationDiContainer.Build<FeedbackElement>();
-            await feedbackElement.InitializeAsync();
+            await feedbackElement.InitializeAsync(cancellationToken);
             var windowItem = OrderManager.CreateFeedbackWindow(feedbackElement);
             WindowManager.Register(windowItem);
             windowItem.Window.Show();
@@ -1700,13 +1700,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DisposeNoteElements();
         }
 
-        private async Task ResetScreenViewElementsAsync()
+        private async Task ResetScreenViewElementsAsync(CancellationToken cancellationToken)
         {
             ClearScreenViewElements();
 
             ResetNotifyArea();
 
-            await ExecuteElementsAsync();
+            await ExecuteElementsAsync(cancellationToken);
         }
 
         private void ResetNotifyArea()
@@ -1727,7 +1727,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             void DelayExecuteElements()
             {
                 DelayScreenElementReset.Callback(() => {
-                    ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(async () => await ResetScreenViewElementsAsync(), DispatcherPriority.SystemIdle);
+                    ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(async () => await ResetScreenViewElementsAsync(CancellationToken.None), DispatcherPriority.SystemIdle);
                     ResetWaiting = false;
                 });
             }
@@ -1866,7 +1866,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #if DEBUG
             }
 #endif
-            CheckNewVersionsAsync(true).ConfigureAwait(false);
+            CheckNewVersionsAsync(true, CancellationToken.None).ConfigureAwait(false);
 #if DEBUG
             DebugBoot();
             DebugCompleteStartup();
@@ -1943,7 +1943,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             switch(process) {
                 case UpdateProcess.Download:
-                    CheckApplicationNewVersionAsync(UpdateCheckKind.Update).ConfigureAwait(false);
+                    CheckApplicationNewVersionAsync(UpdateCheckKind.Update, CancellationToken.None).ConfigureAwait(false);
                     break;
 
                 case UpdateProcess.Update:
@@ -1955,13 +1955,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        public Task<LauncherGroupElement> CreateLauncherGroupElementAsync(LauncherGroupId launcherGroupId)
+        public Task<LauncherGroupElement> CreateLauncherGroupElementAsync(LauncherGroupId launcherGroupId, CancellationToken cancellationToken)
         {
-            return OrderManager.CreateLauncherGroupElementAsync(launcherGroupId);
+            return OrderManager.CreateLauncherGroupElementAsync(launcherGroupId, cancellationToken);
         }
-        public Task<LauncherToolbarElement> CreateLauncherToolbarElementAsync(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
+        public Task<LauncherToolbarElement> CreateLauncherToolbarElementAsync(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, CancellationToken cancellationToken)
         {
-            return OrderManager.CreateLauncherToolbarElementAsync(dockScreen, launcherGroups);
+            return OrderManager.CreateLauncherToolbarElementAsync(dockScreen, launcherGroups, cancellationToken);
         }
 
         public LauncherItemElement GetOrCreateLauncherItemElement(LauncherItemId launcherItemId)
@@ -1970,25 +1970,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
         public void RefreshLauncherItemElement(LauncherItemId launcherItemId) => OrderManager.RefreshLauncherItemElement(launcherItemId);
 
-        public Task<LauncherItemCustomizeContainerElement> CreateCustomizeLauncherItemContainerElementAsync(LauncherItemId launcherItemId, IScreen screen)
+        public Task<LauncherItemCustomizeContainerElement> CreateCustomizeLauncherItemContainerElementAsync(LauncherItemId launcherItemId, IScreen screen, CancellationToken cancellationToken)
         {
-            return OrderManager.CreateCustomizeLauncherItemContainerElementAsync(launcherItemId, screen);
+            return OrderManager.CreateCustomizeLauncherItemContainerElementAsync(launcherItemId, screen, cancellationToken);
         }
 
-        public Task<ExtendsExecuteElement> CreateExtendsExecuteElementAsync(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen)
+        public Task<ExtendsExecuteElement> CreateExtendsExecuteElementAsync(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen, CancellationToken cancellationToken)
         {
-            return OrderManager.CreateExtendsExecuteElementAsync(captionName, launcherFileData, launcherEnvironmentVariables, screen);
+            return OrderManager.CreateExtendsExecuteElementAsync(captionName, launcherFileData, launcherEnvironmentVariables, screen, cancellationToken);
         }
 
-        public Task<LauncherExtendsExecuteElement> CreateLauncherExtendsExecuteElementAsync(LauncherItemId launcherItemId, IScreen screen)
+        public Task<LauncherExtendsExecuteElement> CreateLauncherExtendsExecuteElementAsync(LauncherItemId launcherItemId, IScreen screen, CancellationToken cancellationToken)
         {
-            return OrderManager.CreateLauncherExtendsExecuteElementAsync(launcherItemId, screen);
+            return OrderManager.CreateLauncherExtendsExecuteElementAsync(launcherItemId, screen, cancellationToken);
         }
 
 
-        public Task<NoteElement> CreateNoteElementAsync(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition)
+        public Task<NoteElement> CreateNoteElementAsync(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition, CancellationToken cancellationToken)
         {
-            return OrderManager.CreateNoteElementAsync(noteId, screen, startupPosition);
+            return OrderManager.CreateNoteElementAsync(noteId, screen, startupPosition, cancellationToken);
         }
         public bool RemoveNoteElement(NoteId noteId)
         {
@@ -2016,28 +2016,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return false;
         }
 
-        public Task<NoteContentElement> CreateNoteContentElementAsync(NoteId noteId, NoteContentKind contentKind)
+        public Task<NoteContentElement> CreateNoteContentElementAsync(NoteId noteId, NoteContentKind contentKind, CancellationToken cancellationToken)
         {
-            return OrderManager.CreateNoteContentElementAsync(noteId, contentKind);
+            return OrderManager.CreateNoteContentElementAsync(noteId, contentKind, cancellationToken);
         }
 
-        public Task<SavingFontElement> CreateFontElementAsync(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater)
+        public Task<SavingFontElement> CreateFontElementAsync(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater, CancellationToken cancellationToken)
         {
-            return OrderManager.CreateFontElementAsync(defaultFontKind, fontId, parentUpdater);
+            return OrderManager.CreateFontElementAsync(defaultFontKind, fontId, parentUpdater, cancellationToken);
         }
 
         /// <inheritdoc cref="IOrderManager.CreateStandardInputOutputElementAsync(string, Process, IScreen)"/>
-        public async Task<StandardInputOutputElement> CreateStandardInputOutputElementAsync(string caption, Process process, IScreen screen)
+        public async Task<StandardInputOutputElement> CreateStandardInputOutputElementAsync(string caption, Process process, IScreen screen, CancellationToken cancellationToken)
         {
-            var element = await OrderManager.CreateStandardInputOutputElementAsync(caption, process, screen);
+            var element = await OrderManager.CreateStandardInputOutputElementAsync(caption, process, screen, cancellationToken);
             StandardInputOutputs.Add(element);
             return element;
         }
 
         /// <inheritdoc cref="IOrderManager.CreateLauncherItemExtensionElementAsync(IPluginInformation, LauncherItemId)"/>
-        public async Task<LauncherItemExtensionElement> CreateLauncherItemExtensionElementAsync(IPluginInformation pluginInformation, LauncherItemId launcherItemId)
+        public async Task<LauncherItemExtensionElement> CreateLauncherItemExtensionElementAsync(IPluginInformation pluginInformation, LauncherItemId launcherItemId, CancellationToken cancellationToken)
         {
-            var element = await OrderManager.CreateLauncherItemExtensionElementAsync(pluginInformation, launcherItemId);
+            var element = await OrderManager.CreateLauncherItemExtensionElementAsync(pluginInformation, launcherItemId, cancellationToken);
             LauncherItemExtensions.Add(element);
             return element;
         }
@@ -2161,7 +2161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:命名スタイル", Justification = "<保留中>")]
         private async void NotifyManagerImpl_LauncherGroupItemRegistered(object? sender, LauncherGroupItemRegisteredEventArgs e)
         {
-            var launcherGroupElement = await OrderManager.CreateLauncherGroupElementAsync(e.LauncherGroupId);
+            var launcherGroupElement = await OrderManager.CreateLauncherGroupElementAsync(e.LauncherGroupId, CancellationToken.None);
             LauncherGroupElements.Add(launcherGroupElement);
         }
 

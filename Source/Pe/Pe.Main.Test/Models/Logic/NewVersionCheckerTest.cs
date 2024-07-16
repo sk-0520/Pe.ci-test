@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             ;
 
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
-            var actual = await test.RequestUpdateDataAsync(new Uri("http://localhost.invalid"));
+            var actual = await test.RequestUpdateDataAsync(new Uri("http://localhost.invalid"), CancellationToken.None);
             Assert.Null(actual);
         }
 
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                 }))
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
-            var actual = await test.RequestUpdateDataAsync(new Uri("http://localhost.invalid"));
+            var actual = await test.RequestUpdateDataAsync(new Uri("http://localhost.invalid"), CancellationToken.None);
             Assert.Null(actual);
         }
 
@@ -182,7 +182,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                 }))
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
-            var actual = await test.RequestUpdateDataAsync(new Uri("http://localhost.invalid"));
+            var actual = await test.RequestUpdateDataAsync(new Uri("http://localhost.invalid"), CancellationToken.None);
             Assert.NotNull(actual);
 
             Assert.Equal(expected.Items.Length, actual.Items.Length);
@@ -212,7 +212,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                 .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotFound)))
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
-            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" });
+            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" }, CancellationToken.None);
             Assert.Null(actual);
         }
 
@@ -230,7 +230,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
 
-            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" });
+            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" }, CancellationToken.None);
             Assert.Null(actual);
         }
 
@@ -263,7 +263,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
 
-            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" });
+            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" }, CancellationToken.None);
             Assert.Null(actual);
         }
 
@@ -296,7 +296,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
 
-            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" });
+            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" }, CancellationToken.None);
             Assert.Null(actual);
         }
 
@@ -329,7 +329,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
 
-            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" });
+            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" }, CancellationToken.None);
             Assert.Null(actual);
         }
 
@@ -375,7 +375,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             ;
             var test = new NewVersionChecker(new ApplicationInformation(new Version(1, 2, 3, 4), ProcessArchitecture.ApplicationArchitecture), Test.UserAgentManager, NullLoggerFactory.Instance);
 
-            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" });
+            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" }, CancellationToken.None);
             Assert.NotNull(actual);
             Assert.Equal(new Version(1, 2, 3, 6), actual.Version);
         }
@@ -422,7 +422,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                 "http://localhost.invalid/version_check_url_item/1",
                 "http://localhost.invalid/version_check_url_item/2",
                 "http://localhost.invalid/version_check_url_item/3"
-            });
+            }, CancellationToken.None);
             Assert.NotNull(actual);
             Assert.Equal(new Version(1, 2, 3, 6), actual.Version);
             Assert.Equal("!2!", actual.Revision);

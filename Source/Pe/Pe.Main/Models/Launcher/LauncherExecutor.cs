@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -157,7 +158,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        private async Task<ILauncherExecuteResult> ExecuteFilePathAsync(ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
+        private async Task<ILauncherExecuteResult> ExecuteFilePathAsync(ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen, CancellationToken cancellationToken)
         {
             var process = new Process();
             var startInfo = process.StartInfo;
@@ -246,7 +247,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             StandardInputOutputElement? stdIoElement = null;
             if(streamWatch) {
                 process.EnableRaisingEvents = true;
-                stdIoElement = await OrderManager.CreateStandardInputOutputElementAsync(customParameter.Caption, process, screen);
+                stdIoElement = await OrderManager.CreateStandardInputOutputElementAsync(customParameter.Caption, process, screen, cancellationToken);
                 //DispatcherWrapper.BeginAsync(element => {
                 //    element.StartView();
                 //    element!.PreparateReceiver();
@@ -276,7 +277,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return result;
         }
 
-        public Task<ILauncherExecuteResult> ExecuteAsync(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IReadOnlyCollection<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
+        public Task<ILauncherExecuteResult> ExecuteAsync(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IReadOnlyCollection<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen, CancellationToken cancellationToken)
         {
             if(pathParameter == null) {
                 throw new ArgumentNullException(nameof(pathParameter));
@@ -290,7 +291,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             switch(kind) {
                 case LauncherItemKind.File:
-                    return ExecuteFilePathAsync(pathParameter, customParameter, environmentVariableItems, redoData, screen);
+                    return ExecuteFilePathAsync(pathParameter, customParameter, environmentVariableItems, redoData, screen, cancellationToken);
 
                 default:
                     throw new NotImplementedException();

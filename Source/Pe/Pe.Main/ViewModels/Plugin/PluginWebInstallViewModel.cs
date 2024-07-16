@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -70,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Plugin
                 ExceptionMessage = string.Empty;
                 NowInstalling = true;
                 try {
-                    await Model.GetPluginAsync();
+                    await Model.GetPluginAsync(CancellationToken.None);
                     CloseRequest.Send();
                 } catch(Exception ex) {
                     ExceptionMessage = ex.Message;
@@ -108,9 +109,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Plugin
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
-            return Model.ReceiveViewClosedAsync(isUserOperation);
+            return Model.ReceiveViewClosedAsync(isUserOperation, cancellationToken);
         }
 
         #endregion

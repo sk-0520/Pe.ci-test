@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 {
@@ -77,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         #region ElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             NotifyManager.LauncherItemRegistered += NotifyManager_LauncherItemRegistered;
             NotifyManager.LauncherItemRemovedInLauncherGroup += NotifyManager_LauncherItemRemovedInLauncherGroup;

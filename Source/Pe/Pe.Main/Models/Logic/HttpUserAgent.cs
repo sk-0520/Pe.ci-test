@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region IUserAgent
 
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
+        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             return SendCoreAsync(request, cancellationToken);
         }

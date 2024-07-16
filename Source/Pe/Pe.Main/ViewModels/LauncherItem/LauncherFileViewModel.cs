@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -50,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         private ICommand? _ExecuteExtendsCommand;
         public ICommand ExecuteExtendsCommand => this._ExecuteExtendsCommand ??= new DelegateCommand(
             () => {
-                Model.OpenExtendsExecuteViewAsync(Screen);
+                Model.OpenExtendsExecuteViewAsync(Screen, CancellationToken.None);
             },
             () => !NowLoading && CanExecutePath
         );
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         private ICommand? _ExecuteSimpleCommand;
         public ICommand ExecuteSimpleCommand => this._ExecuteSimpleCommand ??= new DelegateCommand(
             () => {
-                ExecuteMainAsync().ConfigureAwait(false);
+                ExecuteMainAsync(CancellationToken.None).ConfigureAwait(false);
             },
             () => !NowLoading && CanExecutePath
         );
@@ -135,7 +136,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             DelayWaiting = true;
 
             if(!NowLoading) {
-                ExecuteMainAsync();
+                ExecuteMainAsync(CancellationToken.None);
             } else {
                 PropertyChanged += LauncherFileViewModel_PropertyChanged;
             }
@@ -214,7 +215,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             PropertyChanged -= LauncherFileViewModel_PropertyChanged;
         }
 
-        protected override Task ExecuteMainImplAsync()
+        protected override Task ExecuteMainImplAsync(CancellationToken cancellationToken)
         {
             if(NowLoading) {
                 Logger.LogWarning("読み込み中のため抑制: {0}", Model.LauncherItemId);
@@ -224,8 +225,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
             Logger.LogTrace("TODO: 起動準備 {0}, {1}", Model.LauncherItemId, Detail?.FullPath);
             return Task.Run(() => {
-                Model.ExecuteAsync(Screen);
-            });
+                Model.ExecuteAsync(Screen, cancellationToken);
+            }, cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +238,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         protected override bool CanExecuteMain => true;
 
 
-        protected override Task LoadImplAsync()
+        protected override Task LoadImplAsync(CancellationToken cancellationToken)
         {
             return Task.Run(() => {
                 if(Model == null) {
@@ -270,10 +271,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                     var expandedParentDirectoryPath = Environment.ExpandEnvironmentVariables(parentDirectoryPath);
                     CanOpenWorkingDirectory = !PathUtility.IsEquals(workingDirectoryPath, expandedParentDirectoryPath);
                 }
-            });
+            }, cancellationToken);
         }
 
-        protected override Task UnloadImplAsync()
+        protected override Task UnloadImplAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }
@@ -293,7 +294,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 if(NowLoading) {
                     PropertyChanged -= LauncherFileViewModel_PropertyChanged;
                     DelayWaiting = false;
-                    ExecuteMainAsync();
+                    ExecuteMainAsync(CancellationToken.None);
                 }
             }
         }

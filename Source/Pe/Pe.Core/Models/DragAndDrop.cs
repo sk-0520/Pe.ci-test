@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -216,7 +217,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public delegate bool CanDragStartDelegate(UIElement sender, MouseEventArgs e);
     public delegate IResultSuccess<DragParameter> GetDragParameterDelegate(UIElement sender, MouseEventArgs e);
     public delegate void DragAndDropDelegate(UIElement sender, DragEventArgs e);
-    public delegate Task DragAndDropAsyncDelegate(UIElement sender, DragEventArgs e);
+    public delegate Task DragAndDropAsyncDelegate(UIElement sender, DragEventArgs e, CancellationToken cancellationToken);
     
     public class DelegateDragAndDrop: DragAndDropBase
     {
@@ -282,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public override void Drop(UIElement sender, DragEventArgs e)
         {
-            DropActionAsync?.Invoke(sender, e);
+            DropActionAsync?.Invoke(sender, e, CancellationToken.None);
         }
 
         #endregion

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -106,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
                         Content = ContentDocument.Text,
                     };
 
-                    await Model.SendAsync(data);
+                    await Model.SendAsync(data, CancellationToken.None);
                 }
             }
         );
@@ -139,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
         public void ReceiveViewClosing(Window window, CancelEventArgs e)
         { }
 
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -111,21 +112,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         private ICommand? _LoadCommand;
         public ICommand LoadCommand => this._LoadCommand ??= new DelegateCommand(
             () => {
-                LoadAsync();
+                LoadAsync(CancellationToken.None);
             }
         );
 
         private ICommand? _UnloadCommand;
         public ICommand UnloadCommand => this._UnloadCommand ??= new DelegateCommand(
             () => {
-                UnloadAsync();
+                UnloadAsync(CancellationToken.None);
             }
         );
 
         private ICommand? _ExecuteMainCommand;
         public ICommand ExecuteMainCommand => this._ExecuteMainCommand ??= new DelegateCommand(
             () => {
-                ExecuteMainAsync();
+                ExecuteMainAsync(CancellationToken.None);
             },
             () => CanExecuteMain
         );
@@ -133,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         private ICommand? _CustomizeCommand;
         public ICommand CustomizeCommand => this._CustomizeCommand ??= new DelegateCommand(
             async () => {
-                await Model.OpenCustomizeViewAsync(Screen);
+                await Model.OpenCustomizeViewAsync(Screen, CancellationToken.None);
             }
         );
 
@@ -141,13 +142,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region function
 
-        protected abstract Task LoadImplAsync();
-        protected abstract Task UnloadImplAsync();
+        protected abstract Task LoadImplAsync(CancellationToken cancellationToken);
+        protected abstract Task UnloadImplAsync(CancellationToken cancellationToken);
 
-        private Task LoadAsync()
+        private Task LoadAsync(CancellationToken cancellationToken)
         {
             NowLoading = true;
-            return LoadImplAsync().ContinueWith(_ => {
+            return LoadImplAsync(cancellationToken).ContinueWith(_ => {
                 var keys = KeyGestureGuide.GetLauncherItemKeys(LauncherItemId);
                 ExecuteKeyGestures = new ObservableCollection<string>(keys);
                 HasExecuteKeyGestures = ExecuteKeyGestures.Any();
@@ -156,23 +157,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 RaisePropertyChanged(nameof(ExecuteKeyGestures));
 
                 NowLoading = false;
-            });
+            }, cancellationToken);
         }
 
-        private Task UnloadAsync()
+        private Task UnloadAsync(CancellationToken cancellationToken)
         {
-            return UnloadImplAsync();
+            return UnloadImplAsync(cancellationToken);
         }
 
-        protected abstract Task ExecuteMainImplAsync();
+        protected abstract Task ExecuteMainImplAsync(CancellationToken cancellationToken);
 
-        protected Task ExecuteMainAsync()
+        protected Task ExecuteMainAsync(CancellationToken cancellationToken)
         {
             if(CanExecuteMain) {
                 NowMainExecuting = true;
-                return ExecuteMainImplAsync().ContinueWith(_ => {
+                return ExecuteMainImplAsync(cancellationToken).ContinueWith(_ => {
                     NowMainExecuting = false;
-                });
+                }, cancellationToken);
             }
             return Task.CompletedTask;
         }

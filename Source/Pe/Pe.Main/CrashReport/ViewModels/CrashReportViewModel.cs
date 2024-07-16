@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows.Input;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -116,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
             () => {
                 StopAutoSend();
 
-                Model.SendAsync().ConfigureAwait(false);
+                Model.SendAsync(CancellationToken.None).ConfigureAwait(false);
             }
         );
 

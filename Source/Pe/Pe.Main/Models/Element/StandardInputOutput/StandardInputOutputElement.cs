@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -140,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         #region ElementBase
 
-        protected override async Task InitializeCoreAsync()
+        protected override async Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             SettingAppStandardInputOutputSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -149,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             }
 
             Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            await Font.InitializeAsync();
+            await Font.InitializeAsync(cancellationToken);
 
             OutputForegroundColor = setting.OutputForegroundColor;
             OutputBackgroundColor = setting.OutputBackgroundColor;
@@ -201,8 +202,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
-        public Task ReceiveViewClosedAsync(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool, CancellationToken)"/>
+        public Task ReceiveViewClosedAsync(bool isUserOperation, CancellationToken cancellationToken)
         {
             ViewCreated = false;
             return Task.CompletedTask;

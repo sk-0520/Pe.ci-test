@@ -234,7 +234,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
 
-        private async Task ExecuteKeyPressedJobAsync(KeyActionPressedJobBase job)
+        private async Task ExecuteKeyPressedJobAsync(KeyActionPressedJobBase job, CancellationToken cancellationToken)
         {
             void PutNotifyLog(string message)
             {
@@ -242,7 +242,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     NotifyManager.ClearLog(KeyboardNotifyLogId);
                     KeyboardNotifyLogId = NotifyLogId.Empty;
                 }
-                NotifyManager.AppendLogAsync(new NotifyMessage(NotifyLogKind.Normal, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(message)));
+                NotifyManager.AppendLogAsync(new NotifyMessage(NotifyLogKind.Normal, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(message)), cancellationToken);
             }
 
             switch(job) {
@@ -250,7 +250,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         Logger.LogInformation("キーからの起動: コマンドランチャー");
                         PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Command_Show);
                         await ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(async () => {
-                            await ShowCommandViewAsync();
+                            await ShowCommandViewAsync(cancellationToken);
                         }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
                     }
                     break;
@@ -268,11 +268,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         switch(launcherItemJob.PressedData.LauncherItemKind) {
                             case KeyActionContentLauncherItem.Execute:
                                 PutNotifyLog(TextUtility.ReplaceFromDictionary(Properties.Resources.String_Hook_Keyboard_Execute_LauncherItem_Normal_Format, map));
-                                await element.ExecuteAsync(screen);
+                                await element.ExecuteAsync(screen, cancellationToken);
                                 break;
                             case KeyActionContentLauncherItem.ExtendsExecute:
                                 PutNotifyLog(TextUtility.ReplaceFromDictionary(Properties.Resources.String_Hook_Keyboard_Execute_LauncherItem_Extends_Format, map));
-                                await element.OpenExtendsExecuteViewAsync(screen);
+                                await element.OpenExtendsExecuteViewAsync(screen, cancellationToken);
                                 break;
                             default:
                                 throw new NotImplementedException();
@@ -300,7 +300,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                                 var deviceCursorPos = MouseUtility.GetDevicePosition();
                                 var screen = Screen.FromDevicePoint(deviceCursorPos);
-                                var noteElement = await CreateNoteAsync(screen, NoteStartupPosition.CursorPosition);
+                                var noteElement = await CreateNoteAsync(screen, NoteStartupPosition.CursorPosition, cancellationToken);
 
                                 await ApplicationDiContainer.Get<IDispatcherWrapper>().BeginAsync(() => {
                                     noteElement.StartView();
@@ -335,7 +335,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        private Task ExecuteKeyDownJobsAsync(IReadOnlyCollection<KeyActionJobBase> jobs, in ModifierKeyStatus modifierKeyStatus)
+        private Task ExecuteKeyDownJobsAsync(IReadOnlyCollection<KeyActionJobBase> jobs, in ModifierKeyStatus modifierKeyStatus, CancellationToken cancellationToken)
         {
             var localModifierKeyStatus = modifierKeyStatus;
             return Task.Run(async () => {
@@ -373,7 +373,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                                 }
 
                                 pressedJob.Reset();
-                                await ExecuteKeyPressedJobAsync(pressedJob);
+                                await ExecuteKeyPressedJobAsync(pressedJob, cancellationToken);
                                 UpdateKeyExecuteCount(job.CommonData);
 
                                 break;
@@ -391,12 +391,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     if(KeyboardNotifyLogId == NotifyLogId.Empty) {
                         var logContent = new NotifyLogContent(keyMessage);
-                        KeyboardNotifyLogId = await NotifyManager.AppendLogAsync(new NotifyMessage(NotifyLogKind.Topmost, Properties.Resources.String_Hook_Keyboard_Header, logContent));
+                        KeyboardNotifyLogId = await NotifyManager.AppendLogAsync(new NotifyMessage(NotifyLogKind.Topmost, Properties.Resources.String_Hook_Keyboard_Header, logContent), cancellationToken);
                     } else {
                         NotifyManager.ReplaceLog(KeyboardNotifyLogId, keyMessage);
                     }
                 }
-            });
+            }, cancellationToken);
         }
 
         private Task ExecuteKeyUpJobsAsync(IReadOnlyCollection<KeyActionJobBase> jobs, Key key, in ModifierKeyStatus modifierKeyStatus)
@@ -636,14 +636,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var jobs = KeyActionChecker.Find(e.IsDown, e.Key, e.modifierKeyStatus, e.kbdll);
             if(0 < jobs.Count) {
                 e.Handled = !IsThroughSystem(jobs);
-                ExecuteKeyDownJobsAsync(jobs, e.modifierKeyStatus).ConfigureAwait(false);
+                ExecuteKeyDownJobsAsync(jobs, e.modifierKeyStatus, CancellationToken.None).ConfigureAwait(false);
             } else {
                 if(KeyboardNotifyLogId != NotifyLogId.Empty) {
                     if(!e.Key.IsModifierKey()) {
                         Logger.LogTrace("キー入力該当なし");
                         NotifyManager.ClearLog(KeyboardNotifyLogId);
                         KeyboardNotifyLogId = NotifyLogId.Empty;
-                        NotifyManager.AppendLogAsync(new NotifyMessage(NotifyLogKind.Normal, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(Properties.Resources.String_Hook_Keyboard_NotFound)));
+                        NotifyManager.AppendLogAsync(new NotifyMessage(NotifyLogKind.Normal, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(Properties.Resources.String_Hook_Keyboard_NotFound)), CancellationToken.None);
                     }
                 }
             }
@@ -737,7 +737,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 DelayResetScreenViewElements();
                 if(e.Reason == SessionSwitchReason.SessionUnlock) {
                     // アップデート処理とかとか
-                    CheckNewVersionsAsync(true).ConfigureAwait(false);
+                    CheckNewVersionsAsync(true, CancellationToken.None).ConfigureAwait(false);
                 }
             } else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
                 BackupSettingsDefault(ApplicationDiContainer);

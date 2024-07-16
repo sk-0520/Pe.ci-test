@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -104,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             });
         }
 
-        private Task RefreshSettingAsync()
+        private Task RefreshSettingAsync(CancellationToken cancellationToken)
         {
             var setting = MainDatabaseBarrier.ReadData(c => {
                 var dao = new AppNotifyLogSettingEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
@@ -116,18 +117,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             return Task.CompletedTask;
         }
 
-        public Task RefreshAsync()
+        public Task RefreshAsync(CancellationToken cancellationToken)
         {
-            return RefreshSettingAsync();
+            return RefreshSettingAsync(cancellationToken);
         }
 
         #endregion
 
         #region ElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
-            return RefreshAsync();
+            return RefreshAsync(cancellationToken);
         }
 
         protected override void Dispose(bool disposing)
@@ -276,8 +277,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
-        public Task ReceiveViewClosedAsync(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool, CancellationToken)"/>
+        public Task ReceiveViewClosedAsync(bool isUserOperation, CancellationToken cancellationToken)
         {
             ViewCreated = false;
             return Task.CompletedTask;

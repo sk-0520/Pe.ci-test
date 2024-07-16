@@ -4,6 +4,7 @@ using ContentTypeTextNet.Pe.Standard.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element
 {
@@ -35,9 +36,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
 
         #region function
 
-        protected abstract Task InitializeCoreAsync();
+        protected abstract Task InitializeCoreAsync(CancellationToken cancellationToken);
 
-        public async Task InitializeAsync()
+        public async Task InitializeAsync(CancellationToken cancellationToken)
         {
             if(IsInitialized) {
                 throw new InvalidOperationException(nameof(IsInitialized));
@@ -45,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
 
             ThrowIfDisposed();
 
-            await InitializeCoreAsync();
+            await InitializeCoreAsync(cancellationToken);
 
             IsInitialized = true;
         }

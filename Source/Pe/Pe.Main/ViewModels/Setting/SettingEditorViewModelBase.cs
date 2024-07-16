@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -23,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         /// <summary>
         /// データ読み込み。
         /// </summary>
-        Task LoadAsync();
+        Task LoadAsync(CancellationToken cancellationToken);
         /// <summary>
         /// 情報更新。
         /// </summary>
@@ -72,13 +73,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetProperty(ref this._isSelected, value);
         }
 
-        public virtual async Task LoadAsync()
+        public virtual async Task LoadAsync(CancellationToken cancellationToken)
         {
             if(Model.IsLoaded) {
                 Refresh();
                 return;
             }
-            await Model.LoadAsync();
+            await Model.LoadAsync(cancellationToken);
         }
 
         public abstract void Flush();

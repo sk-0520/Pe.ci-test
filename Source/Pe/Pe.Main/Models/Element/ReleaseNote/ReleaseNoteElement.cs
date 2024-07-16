@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -38,10 +39,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         /// </summary>
         /// <remarks>ブラウザ機能でダウンロードしちゃう可能性があるので本体機能で落とす。</remarks>
         /// <returns></returns>
-        public async Task<string> LoadReleaseNoteDocumentAsync()
+        public async Task<string> LoadReleaseNoteDocumentAsync(CancellationToken cancellationToken)
         {
             using(var userAgent = UserAgentManager.CreateAppHttpUserAgent()) {
-                return await userAgent.GetStringAsync(NewVersionItem.NoteUri);
+                return await userAgent.GetStringAsync(NewVersionItem.NoteUri, cancellationToken);
             }
         }
 
@@ -60,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
 
         #region ElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }

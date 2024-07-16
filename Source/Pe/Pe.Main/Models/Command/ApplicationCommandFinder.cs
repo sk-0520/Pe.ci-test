@@ -264,7 +264,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 foreach(var parameter in Parameters) {
                     var element = new ApplicationCommandItemElement(parameter, DispatcherWrapper, LoggerFactory);
-                    await element.InitializeAsync();
+                    await element.InitializeAsync(cancellationToken);
                     element.EditableScore = hitValuesCreator.GetScore(ScoreKind.Initial, hitValuesCreator.NoBonus) - 1;
                     yield return element;
                 }
@@ -283,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                     var hitValue = hitValuesCreator.ConvertHitValues(parameter.Header, ranges);
 
                     var element = new ApplicationCommandItemElement(parameter, DispatcherWrapper, LoggerFactory);
-                    await element.InitializeAsync();
+                    await element.InitializeAsync(cancellationToken);
 
                     element.EditableHeaderValues.SetRange(hitValue);
                     element.EditableScore = hitValuesCreator.CalcScore(parameter.Header, element.EditableHeaderValues);

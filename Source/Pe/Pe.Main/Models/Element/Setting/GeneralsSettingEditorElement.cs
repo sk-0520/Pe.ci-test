@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
@@ -62,10 +63,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region SettingEditorElementBase
 
-        protected override async Task LoadCoreAsync()
+        protected override async Task LoadCoreAsync(CancellationToken cancellationToken)
         {
             foreach(var editor in Editors) {
-                await editor.InitializeAsync();
+                await editor.InitializeAsync(cancellationToken);
             }
         }
 

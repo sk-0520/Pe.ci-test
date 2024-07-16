@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -57,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             return information.UserClosing();
         }
 
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
             var information = InformationItems.FirstOrDefault(i => i.WindowItem.Window == window);
             if(information == null) {
@@ -75,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #region LauncherItemExtensionElement
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             Logger.LogTrace("ランチャーアイテムアドオン初期化: {0}", PluginInformation.PluginIdentifiers);
             return Task.CompletedTask;

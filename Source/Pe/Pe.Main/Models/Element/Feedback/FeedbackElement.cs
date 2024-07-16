@@ -19,6 +19,7 @@ using ContentTypeTextNet.Pe.Main.Models.WebView;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 {
@@ -69,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
             SendStatus.State = RunningState.None;
         }
 
-        public async Task SendAsync(FeedbackInputData inputData)
+        public async Task SendAsync(FeedbackInputData inputData, CancellationToken cancellationToken)
         {
             ErrorMessage = string.Empty;
             SendStatus.State = RunningState.Running;
@@ -116,10 +117,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
             foreach(var counter in new Counter(5)) {
                 try {
                     using var userAgent = UserAgentManager.CreateUserAgent();
-                    var result = await userAgent.PostAsync(ApiConfiguration.FeedbackUri, content);
+                    var result = await userAgent.PostAsync(ApiConfiguration.FeedbackUri, content, cancellationToken);
                     if(result.IsSuccessStatusCode) {
                         Logger.LogInformation("送信完了");
-                        var rawResponse = await result.Content.ReadAsStringAsync();
+                        var rawResponse = await result.Content.ReadAsStringAsync(cancellationToken);
                         var response = JsonSerializer.Deserialize<FeedbackResponse>(rawResponse);
 
                         if(response != null && response.Success) {
@@ -136,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                         return;
                     }
                     Logger.LogWarning("HTTP: {0}", result.StatusCode);
-                    Logger.LogWarning("{0}", await result.Content.ReadAsStringAsync());
+                    Logger.LogWarning("{0}", await result.Content.ReadAsStringAsync(cancellationToken));
                     if(!result.IsSuccessStatusCode && counter.IsLast) {
                         ErrorMessage = result.StatusCode.ToString();
                         SendStatus.State = RunningState.Error;
@@ -145,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                     Logger.LogWarning(ex, ex.Message);
                     if(!counter.IsLast) {
                         Logger.LogDebug("待機中: {0}", RetryWaitTime);
-                        await Task.Delay(RetryWaitTime);
+                        await Task.Delay(RetryWaitTime, cancellationToken);
                     } else {
                         Logger.LogError(ex, ex.Message);
                         ErrorMessage = ex.Message;
@@ -161,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 
         #region WebViewElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }

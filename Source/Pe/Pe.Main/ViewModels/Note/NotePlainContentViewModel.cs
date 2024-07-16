@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -47,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region NoteContentViewModelBase
 
-        protected override Task<bool> LoadContentAsync()
+        protected override Task<bool> LoadContentAsync(CancellationToken cancellationToken)
         {
             return Task.Run(() => {
                 try {

@@ -351,6 +351,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     /// <summary>
     /// 状態を持ち歩くジョブ。
+    /// <para>TODO: 内部で<see cref="CancellationTokenSource"/>をどうこうするのはなんかちゃうよなぁ。</para>
     /// </summary>
     internal class CronJob: DisposerBase
     {

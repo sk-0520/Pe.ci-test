@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Threading;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -82,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     }
                     var file = new FileInfo(r.ResponseFilePaths[0]);
                     try {
-                        await Model.InstallPluginArchiveAsync(file);
+                        await Model.InstallPluginArchiveAsync(file, CancellationToken.None);
                     } catch(Exception ex) {
                         var parameter = new CommonMessageDialogRequestParameter() {
                             Message = ex.ToString(),
@@ -98,8 +99,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         private ICommand? _WebInstallCommand;
         public ICommand WebInstallCommand => this._WebInstallCommand ??= new DelegateCommand(
-            async () => {
-                var parameter = await Model.CreatePluginWebInstallRequestParameterAsync();
+        async () => {
+                var parameter = await Model.CreatePluginWebInstallRequestParameterAsync(CancellationToken.None);
                 WebInstallRequest.Send(parameter, async r => {
                     var response = (PluginWebInstallRequestResponse)r;
                     if(response.ResponseIsCancel) {
@@ -107,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                         return;
                     }
                     try {
-                        await Model.InstallPluginArchiveAsync(response.ArchiveFile);
+                        await Model.InstallPluginArchiveAsync(response.ArchiveFile, CancellationToken.None);
                     } catch(Exception ex) {
                         var parameter = new CommonMessageDialogRequestParameter() {
                             Message = ex.ToString(),

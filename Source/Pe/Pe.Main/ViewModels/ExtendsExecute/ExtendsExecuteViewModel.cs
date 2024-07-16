@@ -26,6 +26,7 @@ using Prism.Commands;
 using ContentTypeTextNet.Pe.Standard.Base;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 {
@@ -222,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         public ICommand ExecuteCommand => this._ExecuteCommand ??= new DelegateCommand(
             () => {
                 if(Validate()) {
-                    ExecuteAsync();
+                    ExecuteAsync(CancellationToken.None);
                     CloseRequest.Send();
                 }
             }
@@ -297,7 +298,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         #region function
 
-        private Task ExecuteAsync()
+        private Task ExecuteAsync(CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -339,7 +340,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
             var screen = DpiScaleOutpour.GetOwnerScreen();
 
-            return Model.ExecuteAsync(launcherFileData, envItems, redo, screen);
+            return Model.ExecuteAsync(launcherFileData, envItems, redo, screen, cancellationToken);
         }
 
         #endregion
@@ -366,7 +367,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         private void OptionDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private Task OptionDropAsync(UIElement sender, DragEventArgs e)
+        private Task OptionDropAsync(UIElement sender, DragEventArgs e, CancellationToken cancellationToken)
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -407,7 +408,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         private void WorkDirectoryDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private Task WorkDirectoryDropAsync(UIElement sender, DragEventArgs e)
+        private Task WorkDirectoryDropAsync(UIElement sender, DragEventArgs e, CancellationToken cancellationToken)
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -484,9 +485,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
-            return Model.ReceiveViewClosedAsync(isUserOperation);
+            return Model.ReceiveViewClosedAsync(isUserOperation, cancellationToken);
         }
 
         #endregion

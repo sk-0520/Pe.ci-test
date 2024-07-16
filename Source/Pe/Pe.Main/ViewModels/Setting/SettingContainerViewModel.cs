@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -80,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 var prev = this._selectedEditor;
                 SetProperty(ref this._selectedEditor, value);
                 if(this._selectedEditor != null) {
-                    this._selectedEditor.LoadAsync();
+                    this._selectedEditor.LoadAsync(CancellationToken.None);
                 }
             }
         }
@@ -122,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public void ReceiveViewLoaded(Window window)
         {
             RaisePropertyChanged(nameof(SelectedEditor));
-            SelectedEditor.LoadAsync();
+            SelectedEditor.LoadAsync(CancellationToken.None);
         }
 
         public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
@@ -131,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public void ReceiveViewClosing(Window window, CancelEventArgs e)
         { }
 
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }

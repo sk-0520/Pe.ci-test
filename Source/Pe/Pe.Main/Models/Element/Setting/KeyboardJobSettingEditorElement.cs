@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
@@ -61,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region ElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             using(var context = MainDatabaseBarrier.WaitRead()) {
                 var keyOptionsEntityDao = new KeyOptionsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
@@ -162,9 +163,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region KeyboardJobSettingEditorElementBase
 
-        protected override async Task InitializeCoreAsync()
+        protected override async Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
-            await base.InitializeCoreAsync();
+            await base.InitializeCoreAsync(cancellationToken);
 
             var doc = new DisableOptionConverter();
             if(!doc.TryGetForever(Options, out _)) {
@@ -207,9 +208,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region KeyboardJobSettingEditorElementBase
 
-        protected override async Task InitializeCoreAsync()
+        protected override async Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
-            await base.InitializeCoreAsync();
+            await base.InitializeCoreAsync(cancellationToken);
 
             var poc = new PressedOptionConverter();
             if(!poc.TryGetThroughSystem(Options, out _)) {

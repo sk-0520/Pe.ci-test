@@ -68,13 +68,13 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Element.Feedback
                 Test.UserAgentManager,
                 mockLog.Factory.Object
             );
-            await test.InitializeAsync();
+            await test.InitializeAsync(CancellationToken.None);
 
             await test.SendAsync(new Main.Models.Data.FeedbackInputData() {
                 Kind = Main.Models.Data.FeedbackKind.Others,
                 Subject = "Subject",
                 Content = "Content",
-            });
+            }, CancellationToken.None);
 
             Assert.Equal(RunningState.End, test.SendStatus.State);
 

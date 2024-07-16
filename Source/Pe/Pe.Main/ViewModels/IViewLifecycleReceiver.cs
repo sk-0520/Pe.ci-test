@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -47,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels
         /// </remarks>
         /// <param name="window">対象ウィンドウ。</param>
         /// <param name="isUserOperation">ユーザー操作によって閉じられたか。</param>
-        Task ReceiveViewClosedAsync(Window window, bool isUserOperation);
+        Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken);
 
         #endregion
     }

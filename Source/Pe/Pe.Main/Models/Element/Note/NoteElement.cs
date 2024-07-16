@@ -320,7 +320,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             return Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null");
         }
 
-        private async Task LoadNoteAsync()
+        private async Task LoadNoteAsync(CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -338,7 +338,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 }
                 var fileElements = files.Select(a => new NoteFileElement(a, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory));
                 foreach(var fileElement in fileElements) {
-                    await fileElement.InitializeAsync();
+                    await fileElement.InitializeAsync(cancellationToken);
                     Files.Add(fileElement);
                 }
             }
@@ -358,9 +358,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             HiddenMode = noteData.HiddenMode;
             CaptionPosition = noteData.CaptionPosition;
 
-            FontElement = await OrderManager.CreateFontElementAsync(DefaultFontKind.Note, noteData.FontId, UpdateFontId);
+            FontElement = await OrderManager.CreateFontElementAsync(DefaultFontKind.Note, noteData.FontId, UpdateFontId, cancellationToken);
             var oldContentElement = ContentElement;
-            ContentElement = await OrderManager.CreateNoteContentElementAsync(NoteId, ContentKind);
+            ContentElement = await OrderManager.CreateNoteContentElementAsync(NoteId, ContentKind, cancellationToken);
             oldContentElement?.Dispose();
         }
 
@@ -624,7 +624,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        public async Task ConvertContentKindAsync(NoteContentKind toContentKind)
+        public async Task ConvertContentKindAsync(NoteContentKind toContentKind, CancellationToken cancellationToken)
         {
             if(ContentKind == toContentKind) {
                 throw new ArgumentException($"{nameof(ContentKind)} == {nameof(toContentKind)}", nameof(toContentKind));
@@ -665,7 +665,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
 
             ContentKind = toContentKind;
-            ContentElement = await OrderManager.CreateNoteContentElementAsync(NoteId, ContentKind);
+            ContentElement = await OrderManager.CreateNoteContentElementAsync(NoteId, ContentKind, cancellationToken);
 
             oldContentElement?.Dispose();
         }
@@ -832,8 +832,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
                 cancellationToken.ThrowIfCancellationRequested();
 
-                NoteFileData? noteFileData = null;
-
+                NoteFileData noteFileData;
                 using(var mainContext = MainDatabaseBarrier.WaitWrite()) {
                     var noteFilesEntityDao = new NoteFilesEntityDao(mainContext, DatabaseStatementLoader, mainContext.Implementation, LoggerFactory);
 
@@ -873,11 +872,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                     mainContext.Commit();
                 }
 
-                if(noteFileData is not null) {
-                    var noteFileElement = new NoteFileElement(noteFileData, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory);
-                    await noteFileElement.InitializeAsync();
-                    Files.Add(noteFileElement);
-                }
+                var noteFileElement = new NoteFileElement(noteFileData, MainDatabaseBarrier, LargeDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory);
+                await noteFileElement.InitializeAsync(cancellationToken);
+                Files.Add(noteFileElement);
 
                 return true;
             }, cancellationToken);
@@ -927,9 +924,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #region ElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
-            return LoadNoteAsync();
+            return LoadNoteAsync(cancellationToken);
         }
 
         protected override void Dispose(bool disposing)
@@ -1003,7 +1000,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         }
 
         /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
-        public async Task ReceiveViewClosedAsync(bool isUserOperation)
+        public async Task ReceiveViewClosedAsync(bool isUserOperation, CancellationToken cancellationToken)
         {
             if(isUserOperation) {
                 if(!IsVisible) {
@@ -1026,7 +1023,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                             }
                         }
                     );
-                    RestoreVisibleNotifyLogId = await NotifyManager.AppendLogAsync(notifyMessage);
+                    RestoreVisibleNotifyLogId = await NotifyManager.AppendLogAsync(notifyMessage, cancellationToken);
                 }
             }
 

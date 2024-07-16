@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -172,9 +173,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
-            return Model.ReceiveViewClosedAsync(isUserOperation);
+            return Model.ReceiveViewClosedAsync(isUserOperation, cancellationToken);
         }
 
         #endregion

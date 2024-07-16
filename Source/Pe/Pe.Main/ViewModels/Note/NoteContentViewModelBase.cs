@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -68,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
                 try {
                     Logger.LogDebug("読み込み開始");
-                    Model.IsLinkLoadError = !await LoadContentAsync();
+                    Model.IsLinkLoadError = !await LoadContentAsync(CancellationToken.None);
                     Logger.LogDebug("読み込み終了");
                     CanVisible = true;
                 } catch(Exception ex) {
@@ -114,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         /// </remarks>
         /// <param name="baseElement"></param>
         /// <returns>正常に読み込めたか</returns>
-        protected abstract Task<bool> LoadContentAsync();
+        protected abstract Task<bool> LoadContentAsync(CancellationToken cancellationToken);
         /// <summary>
         /// コンテンツが不要になった際に呼び出される。
         /// </summary>
@@ -175,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Logger.LogDebug("リンク先内容変更検知");
             EnabledUpdate = false;
             UnloadContent();
-            LoadContentAsync().ContinueWith(t => {
+            LoadContentAsync(CancellationToken.None).ContinueWith(t => {
                 if(t.IsCompletedSuccessfully) {
                     Model.IsLinkLoadError = !t.Result;
                 }
