@@ -1,69 +1,18 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.238+",
+		"date": "2024/07/17",
+		"version": "0.99.239",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "2cc299438092ec4709862101dcb332ea2c01a1aa",
 						"subject": "指定して実行のオプションラベルの指定漏れ対応"
 					},
 					{
-						"revision": "",
+						"revision": "0284bb95418454f24b934cf35c1fbe82d31a7f7e",
 						"subject": "#950: バージョン情報に git のリビジョンが自動付与されている"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -71,34 +20,30 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "d08fcdcc2a2184ae9ef0f56c686b29e28ab8f10f",
 						"subject": "eslint 周りを biome に差し替え"
 					},
 					{
-						"revision": "",
+						"revision": "4d23bc968cce56bdb662ae0ab539611b4dc694f7",
 						"subject": "update npm"
 					},
 					{
-						"revision": "",
+						"revision": "bff32028559d554b5576b85e5cc546cfd37ea3f9",
 						"subject": "#946: テストの共通処理はテスト用プロジェクトにしておく"
 					},
 					{
-						"revision": "",
+						"revision": "b216abfd07d46101c85789fc734b006630502002",
 						"class": "nuget",
 						"subject": "Microsoft.Extensions.Configuration.Binder 8.0.1 -> 8.0.2"
 					},
 					{
-						"revision": "",
+						"revision": "b348c50afc515219a15f6714eab1e11fc3bb6b7d",
 						"class": "nuget",
 						"subject": "xunit 2.8.1 -> 2.9.0"
 					},
 					{
-						"revision": "",
+						"revision": "df8524e519673b18f513ff21e95d40a61cb73f2b",
 						"subject": "#948: プラグインのデバッグ処理が出来なくなってる疑惑"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
