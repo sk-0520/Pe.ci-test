@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -28,18 +29,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region LauncherDetailViewModelBase
 
-        protected override Task ExecuteMainImplAsync()
+        protected override Task ExecuteMainImplAsync(CancellationToken cancellationToken)
         {
-            return Task.Run(() => {
-
-            });
+            return Task.CompletedTask;
         }
 
-        protected override Task LoadImplAsync()
+        protected override Task LoadImplAsync(CancellationToken cancellationToken)
         {
-            return Task.Run(() => {
-
-            });
+            return Task.CompletedTask;
         }
 
         #endregion

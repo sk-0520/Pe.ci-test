@@ -6,6 +6,7 @@ using ContentTypeTextNet.Pe.Main.ViewModels.Startup;
 using ContentTypeTextNet.Pe.Main.Views.Startup;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 {
@@ -43,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             return startupRegister.Register(new StartupParameter());
         }
 
-        public async Task ShowImportProgramsViewAsync()
+        public async Task ShowImportProgramsViewAsync(CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -52,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                     .RegisterMvvm<ImportProgramsElement, ImportProgramsViewModel, ImportProgramsWindow>()
                 ;
                 var importProgramsModel = diContainer.New<ImportProgramsElement>();
-                await importProgramsModel.InitializeAsync();
+                await importProgramsModel.InitializeAsync(cancellationToken);
                 var view = diContainer.Build<ImportProgramsWindow>();
 
                 WindowManager.Register(new WindowItem(WindowKind.ImportPrograms, importProgramsModel, view));
@@ -68,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         #region ContextElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             Logger.LogTrace("not impl");
             return Task.CompletedTask;

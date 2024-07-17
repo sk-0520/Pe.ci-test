@@ -153,7 +153,7 @@ COMMAND_LINE_OPTION RC_HEAP_FUNC(parse_command_line, const TEXT* command_line, b
 
     TEXT* arguments = allocate_raw_memory(argc * sizeof(TEXT), false, memory_arena_resource);
     for (size_t i = 0; i < argc; i++) {
-        TCHAR* arg = argv[i];
+        const TCHAR* arg = argv[i];
         arguments[i] = wrap_text(arg);
     }
 
@@ -213,7 +213,7 @@ const COMMAND_LINE_ITEM* get_command_line_item(const COMMAND_LINE_OPTION* comman
 {
     MAP_RESULT_VALUE result_value = get_map(&command_line_option->library.map, key);
     if (result_value.exists) {
-        return (COMMAND_LINE_ITEM*)result_value.value;
+        return (const COMMAND_LINE_ITEM*)result_value.value;
     }
 
     return NULL;

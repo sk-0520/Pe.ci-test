@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting.Factory;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
@@ -115,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region ContextElementBase
 
-        protected override async Task InitializeCoreAsync()
+        protected override async Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             IReadOnlyList<LauncherItemId> launcherItemIds;
             IReadOnlyList<LauncherGroupId> groupIds;
@@ -173,7 +174,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
             */
             foreach(var element in launcherItemElements) {
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
             }
             AllLauncherItems.SetRange(launcherItemElements);
 
@@ -188,12 +189,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 launcherGroupElements.Add(element);
             }
             foreach(var element in launcherGroupElements) {
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
             }
             AllLauncherGroups.SetRange(launcherGroupElements);
 
             foreach(var editor in Editors) {
-                await editor.InitializeAsync();
+                await editor.InitializeAsync(cancellationToken);
             }
         }
 

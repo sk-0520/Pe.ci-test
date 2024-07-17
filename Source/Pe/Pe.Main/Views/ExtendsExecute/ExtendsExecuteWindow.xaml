@@ -124,7 +124,7 @@
             <ColumnDefinition Style="{StaticResource ContentDefinition}" />
           </Grid.ColumnDefinitions>
 
-          <Label Grid.Column="0" Target="{Binding ElementName=inputOption}" Content="{Binding Resources.String_ExtendsExecute_Options_A, Source={x:Static app_main:CultureService.Instance}}" />
+          <Label Grid.Column="0" Target="{Binding ElementName=inputOption}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_ExtendsExecute_Options_A, Source={x:Static app_main:CultureService.Instance}}" />
           <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="*" />

@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -72,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #region ElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }
@@ -132,8 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
-        public Task ReceiveViewClosedAsync(bool isUserOperation)
+        public Task ReceiveViewClosedAsync(bool isUserOperation, CancellationToken cancellationToken)
         {
             NotifyManager.SendCustomizeLauncherItemExited(LauncherItemId);
 

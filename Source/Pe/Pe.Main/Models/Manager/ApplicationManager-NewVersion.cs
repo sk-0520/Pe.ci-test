@@ -18,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -29,22 +30,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region function
 
-        public Task CheckNewVersionsAsync(bool isDelay)
+        public Task CheckNewVersionsAsync(bool isDelay, CancellationToken cancellationToken)
         {
             return isDelay
-                ? CheckNewVersionsCoreAsync(DelayCheckApplicationNewVersionAsync)
-                : CheckNewVersionsCoreAsync(() => CheckApplicationNewVersionAsync(Models.Data.UpdateCheckKind.CheckOnly))
+                ? CheckNewVersionsCoreAsync(() => DelayCheckApplicationNewVersionAsync(cancellationToken), cancellationToken)
+                : CheckNewVersionsCoreAsync(() => CheckApplicationNewVersionAsync(Models.Data.UpdateCheckKind.CheckOnly, cancellationToken), cancellationToken)
             ;
         }
 
-        private Task CheckNewVersionsCoreAsync(Func<Task> newVersionChecker)
+        private Task CheckNewVersionsCoreAsync(Func<Task> newVersionChecker, CancellationToken cancellationToken)
         {
             var checkTask = newVersionChecker();
             checkTask.ConfigureAwait(false);
             return checkTask.ContinueWith(t => {
                 if(t.IsCompletedSuccessfully) {
                     if(ApplicationUpdateInfo.NewVersionItem is null && !ExistsPluginChanges) {
-                        var pluginTask = CheckPluginsNewVersionAsync();
+                        var pluginTask = CheckPluginsNewVersionAsync(cancellationToken);
                         pluginTask.ConfigureAwait(false);
                         pluginTask.ContinueWith(t => {
                             if(t.IsCompletedSuccessfully && t.Result) {
@@ -53,14 +54,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         });
                     }
                 }
-            });
+            }, cancellationToken);
         }
 
         /// <summary>
         /// アプリケーション新バージョン遅延チェック。
         /// </summary>
         /// <returns></returns>
-        private async Task DelayCheckApplicationNewVersionAsync()
+        private async Task DelayCheckApplicationNewVersionAsync(CancellationToken cancellationToken)
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             UpdateKind updateKind;
@@ -74,12 +75,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var updateWait = ApplicationDiContainer.Build<ApplicationConfiguration>().General.UpdateWait;
-            await Task.Delay(updateWait).ConfigureAwait(false);
+            await Task.Delay(updateWait, cancellationToken).ConfigureAwait(false);
             var updateCheckKind = updateKind switch {
                 UpdateKind.Notify => UpdateCheckKind.CheckOnly,
                 _ => UpdateCheckKind.Update,
             };
-            await CheckApplicationNewVersionAsync(updateCheckKind).ConfigureAwait(false);
+            await CheckApplicationNewVersionAsync(updateCheckKind, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         /// <param name="updateCheckKind"></param>
         /// <returns></returns>
-        private async Task CheckApplicationNewVersionAsync(UpdateCheckKind updateCheckKind)
+        private async Task CheckApplicationNewVersionAsync(UpdateCheckKind updateCheckKind, CancellationToken cancellationToken)
         {
             if(ApplicationUpdateInfo.State == NewVersionState.None || ApplicationUpdateInfo.State == NewVersionState.Error) {
                 if(ApplicationUpdateInfo.State == NewVersionState.Error) {
@@ -101,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
 
                 if(ApplicationUpdateInfo.NewVersionItem != null) {
-                    await ShowNewVersionReleaseNoteAsync(ApplicationUpdateInfo.NewVersionItem, false);
+                    await ShowNewVersionReleaseNoteAsync(ApplicationUpdateInfo.NewVersionItem, false, cancellationToken);
                 } else {
                     Logger.LogInformation("アップデート情報未取得");
                 }
@@ -114,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationUpdateInfo.State = NewVersionState.Checking;
             {
                 var generalConfiguration = ApplicationDiContainer.Build<GeneralConfiguration>();
-                var appVersion = await newVersionChecker.CheckApplicationNewVersionAsync(generalConfiguration.UpdateCheckUrlItems).ConfigureAwait(false);
+                var appVersion = await newVersionChecker.CheckApplicationNewVersionAsync(generalConfiguration.UpdateCheckUrlItems, cancellationToken).ConfigureAwait(false);
                 if(appVersion == null) {
                     Logger.LogInformation("アップデートなし");
                     ApplicationUpdateInfo.State = NewVersionState.None;
@@ -138,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(updateCheckKind != UpdateCheckKind.ForceUpdate) {
                 try {
-                    await ShowNewVersionReleaseNoteAsync(ApplicationUpdateInfo.NewVersionItem, updateCheckKind == UpdateCheckKind.CheckOnly);
+                    await ShowNewVersionReleaseNoteAsync(ApplicationUpdateInfo.NewVersionItem, updateCheckKind == UpdateCheckKind.CheckOnly, cancellationToken);
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
                     ApplicationUpdateInfo.SetError(ex.Message);
@@ -160,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 downloadFile.Refresh();
                 if(downloadFile.Exists) {
                     ApplicationUpdateInfo.State = NewVersionState.Checksumming;
-                    skipDownload = await newVersionDownloader.ChecksumAsync(ApplicationUpdateInfo.NewVersionItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
+                    skipDownload = await newVersionDownloader.ChecksumAsync(ApplicationUpdateInfo.NewVersionItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress), cancellationToken);
                     if(!skipDownload) {
                         downloadFile.Delete(); // ゴミは消しとく
                     }
@@ -171,13 +172,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     progress.Report(1);
                 } else {
                     ApplicationUpdateInfo.State = NewVersionState.Downloading;
-                    await newVersionDownloader.DownloadArchiveAsync(ApplicationUpdateInfo.NewVersionItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.DownloadProgress, ApplicationUpdateInfo.CurrentLogProgress)).ConfigureAwait(false);
+                    await newVersionDownloader.DownloadArchiveAsync(ApplicationUpdateInfo.NewVersionItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.DownloadProgress, ApplicationUpdateInfo.CurrentLogProgress), cancellationToken).ConfigureAwait(false);
 
                     // ここで更新しないとチェックサムでファイル無し判定を食らう
                     downloadFile.Refresh();
 
                     ApplicationUpdateInfo.State = NewVersionState.Checksumming;
-                    var checksumOk = await newVersionDownloader.ChecksumAsync(ApplicationUpdateInfo.NewVersionItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
+                    var checksumOk = await newVersionDownloader.ChecksumAsync(ApplicationUpdateInfo.NewVersionItem, downloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress), cancellationToken);
                     if(!checksumOk) {
                         Logger.LogError("チェックサム異常あり");
                         ApplicationUpdateInfo.SetError(Properties.Resources.String_Download_ChecksumError);
@@ -240,7 +241,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 );
 
                 // リリースノート再表示
-                await ShowNewVersionReleaseNoteAsync(ApplicationUpdateInfo.NewVersionItem, false);
+                await ShowNewVersionReleaseNoteAsync(ApplicationUpdateInfo.NewVersionItem, false, cancellationToken);
 
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
@@ -262,7 +263,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return pluginInstaller;
         }
 
-        private async Task<bool> CheckPluginNewVersionAsync(PluginId pluginId, Version pluginVersion)
+        private async Task<bool> CheckPluginNewVersionAsync(PluginId pluginId, Version pluginVersion, CancellationToken cancellationToken)
         {
             var apiConfiguration = ApplicationDiContainer.Build<ApiConfiguration>();
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
@@ -278,7 +279,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 urls = pluginVersionChecksEntityDao.SelectPluginVersionCheckUrls(pluginId).ToList();
             }
 
-            var newVersionItem = await newVersionChecker.CheckPluginNewVersionAsync(apiConfiguration.ServerPluginInformation, pluginId, pluginVersion, urls);
+            var newVersionItem = await newVersionChecker.CheckPluginNewVersionAsync(apiConfiguration.ServerPluginInformation, pluginId, pluginVersion, urls, cancellationToken);
             if(newVersionItem is null) {
                 return false;
             }
@@ -295,7 +296,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             pluginArchiveFile.Refresh();
             var skipDownload = false;
             if(pluginArchiveFile.Exists) {
-                skipDownload = await newVersionDownloader.ChecksumAsync(newVersionItem, pluginArchiveFile, notifyProgress);
+                skipDownload = await newVersionDownloader.ChecksumAsync(newVersionItem, pluginArchiveFile, notifyProgress, cancellationToken);
                 if(skipDownload) {
                     Logger.LogInformation("[{0}] 既存ファイルのチェックサムは正常", pluginId);
                 } else {
@@ -304,12 +305,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
             if(!skipDownload) {
                 IOUtility.MakeFileParentDirectory(pluginArchiveFile);
-                await newVersionDownloader.DownloadArchiveAsync(newVersionItem, pluginArchiveFile, notifyProgress);
+                await newVersionDownloader.DownloadArchiveAsync(newVersionItem, pluginArchiveFile, notifyProgress, cancellationToken);
 
                 // ここで更新しないとチェックサムでファイル無し判定を食らう(知らんけど CheckApplicationNewVersionAsync でそう言ってる)
                 pluginArchiveFile.Refresh();
 
-                var checksumOk = await newVersionDownloader.ChecksumAsync(newVersionItem, pluginArchiveFile, notifyProgress);
+                var checksumOk = await newVersionDownloader.ChecksumAsync(newVersionItem, pluginArchiveFile, notifyProgress, cancellationToken);
                 if(!checksumOk) {
                     Logger.LogError("[{0}] チェックサム異常あり", pluginId);
                     return false;
@@ -331,7 +332,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return true;
         }
 
-        private async Task<bool> CheckPluginsNewVersionAsync()
+        private async Task<bool> CheckPluginsNewVersionAsync(CancellationToken cancellationToken)
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Get<IMainDatabaseBarrier>();
             IList<PluginLastUsedData> lastUsedPlugins;
@@ -342,15 +343,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var newVersionPlugins = new Dictionary<PluginId, bool>(lastUsedPlugins.Count);
             foreach(var lastUsePlugin in lastUsedPlugins) {
                 try {
-                    var newVersion = await CheckPluginNewVersionAsync(lastUsePlugin.PluginId, lastUsePlugin.Version);
+                    var newVersion = await CheckPluginNewVersionAsync(lastUsePlugin.PluginId, lastUsePlugin.Version, cancellationToken);
                     newVersionPlugins[lastUsePlugin.PluginId] = newVersion;
                 } catch(Exception ex) {
-                    Logger.LogError(ex, $"[{lastUsePlugin.PluginId}] {ex.Message}");
+                    Logger.LogError(ex, "[{PluginId}] {Message}", lastUsePlugin.PluginId, ex.Message);
                     newVersionPlugins[lastUsePlugin.PluginId] = false;
                 }
             }
             foreach(var pair in newVersionPlugins) {
-                Logger.LogInformation("{0}: {1}", pair.Key, pair.Value);
+                Logger.LogInformation("{Key}: {Value}", pair.Key, pair.Value);
             }
 
             return newVersionPlugins.Any(i => i.Value);

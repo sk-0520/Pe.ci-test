@@ -61,7 +61,7 @@ static TEXT search_text_ignore_case_core(const TEXT* haystack, const TEXT* needl
             const TCHAR* needle_character = needle->value + 1;
 
             bool is_equal = false;
-            for(size_t i = 1; i < haystack->length; i++) {
+            for (size_t i = 1; i < haystack->length; i++) {
                 if (to_lower_character(*haystack_character++) == to_lower_character(*needle_character++)) {
                     is_equal = true;
                     continue;
@@ -102,29 +102,31 @@ TEXT search_text(const TEXT* haystack, const TEXT* needle, bool ignore_case)
 
 static const TCHAR* search_character_core(const TEXT* haystack, TCHAR needle, INDEX_START_POSITION index_start_position)
 {
-    if (haystack->length) {
-        switch (index_start_position) {
-            case INDEX_START_POSITION_HEAD:
-                for (size_t i = 0; i < haystack->length; i++) {
-                    const TCHAR* c = haystack->value + i;
-                    if (*c == needle) {
-                        return c;
-                    }
-                }
-                break;
+    if (!haystack->length) {
+        return NULL;
+    }
 
-            case INDEX_START_POSITION_TAIL:
-                for (size_t i = 0; i < haystack->length; i++) {
-                    const TCHAR* c = haystack->value + (haystack->length - i) - 1;
-                    if (*c == needle) {
-                        return c;
-                    }
+    switch (index_start_position) {
+        case INDEX_START_POSITION_HEAD:
+            for (size_t i = 0; i < haystack->length; i++) {
+                const TCHAR* c = haystack->value + i;
+                if (*c == needle) {
+                    return c;
                 }
-                break;
+            }
+            break;
 
-            default:
-                assert(false);
-        }
+        case INDEX_START_POSITION_TAIL:
+            for (size_t i = 0; i < haystack->length; i++) {
+                const TCHAR* c = haystack->value + (haystack->length - i) - 1;
+                if (*c == needle) {
+                    return c;
+                }
+            }
+            break;
+
+        default:
+            assert(false);
     }
 
     return NULL;
@@ -165,14 +167,8 @@ bool is_equals_text(const TEXT* a, const TEXT* b, bool ignore_case)
 
     if (ignore_case) {
         for (size_t i = 0; i < a->length; i++) {
-            TCHAR a1 = a->value[i];
-            TCHAR b1 = b->value[i];
-            if ('a' <= a1 && a1 <= 'z') {
-                a1 = a1 - 'a' + 'A';
-            }
-            if ('a' <= b1 && b1 <= 'z') {
-                b1 = b1 - 'a' + 'A';
-            }
+            TCHAR a1 = to_upper_character(a->value[i]);
+            TCHAR b1 = to_upper_character(b->value[i]);
             if (a1 != b1) {
                 return false;
             }

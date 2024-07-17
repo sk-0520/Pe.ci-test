@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -242,7 +243,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
         #region ElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             IsTopmost = MainDatabaseBarrier.ReadData(c => {
                 var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
@@ -270,8 +271,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
-        public Task ReceiveViewClosedAsync(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool, CancellationToken)"/>
+        public Task ReceiveViewClosedAsync(bool isUserOperation, CancellationToken cancellationToken)
         {
             if(WindowItem == null) {
                 throw new InvalidOperationException(nameof(WindowItem));

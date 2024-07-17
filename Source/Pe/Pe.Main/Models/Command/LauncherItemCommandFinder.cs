@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                 var result = new LauncherCommandItemElement(element, DispatcherWrapper, LoggerFactory) {
                     EditableKind = kind,
                 };
-                await result.InitializeAsync();
+                await result.InitializeAsync(cancellationToken);
                 var ranges = hitValuesCreator.ConvertRanges(nameMatches);
                 var hitValue = hitValuesCreator.ConvertHitValues(targetValue, ranges);
                 if(kind == CommandItemKind.LauncherItemName) {

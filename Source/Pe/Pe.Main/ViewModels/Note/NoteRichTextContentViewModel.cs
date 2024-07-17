@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -315,7 +316,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region NoteContentViewModelBase
 
-        protected override Task<bool> LoadContentAsync()
+        protected override Task<bool> LoadContentAsync(CancellationToken cancellationToken)
         {
             return DispatcherWrapper.InvokeAsync(() => {
 

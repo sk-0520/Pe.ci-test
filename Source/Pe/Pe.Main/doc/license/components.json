@@ -84,7 +84,7 @@
 	],
 	"resource": [
 		{
-			"name": "Visual Studio 2017/2019 Image Library",
+			"name": "Visual Studio 2017/2019/2022 Image Library",
 			"uri": "https://docs.microsoft.com/ja-jp/visualstudio/designers/the-visual-studio-image-library",
 			"license": {
 				"name": "MICROSOFT SOFTWARE LICENSE TERMS",

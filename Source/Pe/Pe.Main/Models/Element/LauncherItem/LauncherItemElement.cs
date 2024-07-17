@@ -21,6 +21,7 @@ using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 {
@@ -161,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
         }
 
-        private async Task<ILauncherExecuteResult> ExecuteFileAsync(string? customArgument, IScreen screen)
+        private async Task<ILauncherExecuteResult> ExecuteFileAsync(string? customArgument, IScreen screen, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -194,21 +195,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             fileData.Caption = Name;
 
             var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
-            var result = await launcherExecutor.ExecuteAsync(Kind, fileData, fileData, envItems, redoData, screen);
+            var result = await launcherExecutor.ExecuteAsync(Kind, fileData, fileData, envItems, redoData, screen, cancellationToken);
 
             return result;
         }
 
-        private LauncherAddonExecuteResult ExecuteAddon(string? customArgument, IScreen screen)
+        private Task<LauncherAddonExecuteResult> ExecuteAddonAsync(string? customArgument, IScreen screen, CancellationToken cancellationToken)
         {
             if(LauncherItemAddonViewSupporterCollection.ExistsInformation(LauncherItemId)) {
                 Logger.LogInformation("ランチャーアイテムはすでに起動している: {0}", LauncherItemId);
                 LauncherItemAddonViewSupporterCollection.Foreground(LauncherItemId);
-                return new LauncherAddonExecuteResult() {
+
+                return Task.FromResult(new LauncherAddonExecuteResult() {
                     Kind = LauncherItemKind.Addon,
                     Data = LauncherAddonExecuteKind.Duplicate,
                     Success = false,
-                };
+                });
             }
 
             var pluginId = MainDatabaseBarrier.ReadData(c => {
@@ -228,14 +230,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 }
             });
 
-            return new LauncherAddonExecuteResult() {
+            return Task.FromResult(new LauncherAddonExecuteResult() {
                 Kind = LauncherItemKind.Addon,
                 Data = LauncherAddonExecuteKind.Execute,
                 Success = true,
-            };
+            });
         }
 
-        private async Task<ILauncherExecuteResult> ExecuteCoreAsync(string? argument, IScreen screen)
+        private async Task<ILauncherExecuteResult> ExecuteCoreAsync(string? argument, IScreen screen, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -243,11 +245,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 ILauncherExecuteResult result;
                 switch(Kind) {
                     case LauncherItemKind.File:
-                        result = await ExecuteFileAsync(argument, screen);
+                        result = await ExecuteFileAsync(argument, screen, cancellationToken);
                         break;
 
                     case LauncherItemKind.Addon:
-                        result = ExecuteAddon(argument, screen);
+                        result = await ExecuteAddonAsync(argument, screen, cancellationToken);
                         break;
 
                     default:
@@ -266,14 +268,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
         }
 
-        public Task<ILauncherExecuteResult> ExecuteAsync(IScreen screen)
+        public Task<ILauncherExecuteResult> ExecuteAsync(IScreen screen, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
-            return ExecuteCoreAsync(null, screen);
+            return ExecuteCoreAsync(null, screen, cancellationToken);
         }
 
-        public async Task<ILauncherExecuteResult> DirectExecuteAsync(string argument, IScreen screen)
+        public async Task<ILauncherExecuteResult> DirectExecuteAsync(string argument, IScreen screen, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -281,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 return new LauncherExecuteErrorResult(Kind, new ArgumentNullException(nameof(argument)));
             }
 
-            return await ExecuteCoreAsync(argument, screen);
+            return await ExecuteCoreAsync(argument, screen, cancellationToken);
         }
 
         private void IncrementExecuteCount()
@@ -293,21 +295,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
         }
 
-        public Task OpenExtendsExecuteViewAsync(IScreen screen)
+        public Task OpenExtendsExecuteViewAsync(IScreen screen, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
             return DispatcherWrapper.BeginAsync(async () => {
-                var element = await OrderManager.CreateLauncherExtendsExecuteElementAsync(LauncherItemId, screen);
+                var element = await OrderManager.CreateLauncherExtendsExecuteElementAsync(LauncherItemId, screen, cancellationToken);
                 element.StartView();
             });
         }
 
-        public async Task OpenExtendsExecuteViewWidthArgumentAsync(string argument, IScreen screen)
+        public async Task OpenExtendsExecuteViewWidthArgumentAsync(string argument, IScreen screen, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
-            var element = await OrderManager.CreateLauncherExtendsExecuteElementAsync(LauncherItemId, screen);
+            var element = await OrderManager.CreateLauncherExtendsExecuteElementAsync(LauncherItemId, screen, cancellationToken);
             element.SetOption(argument);
             element.StartView();
         }
@@ -415,7 +417,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ClipboardManager.CopyText(pathData.WorkDirectoryPath, ClipboardNotify.None);
         }
 
-        public async Task OpenCustomizeViewAsync(IScreen screen)
+        public async Task OpenCustomizeViewAsync(IScreen screen, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -434,7 +436,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             //TODO: 確定時の処理
             NowCustomizing = true;
             NotifyManager.CustomizeLauncherItemExited += NotifyManager_CustomizeLauncherItemExited;
-            var element = await OrderManager.CreateCustomizeLauncherItemContainerElementAsync(LauncherItemId, screen);
+            var element = await OrderManager.CreateCustomizeLauncherItemContainerElementAsync(LauncherItemId, screen, cancellationToken);
             element.StartView();
         }
 
@@ -468,7 +470,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         #region ElementBase
 
-        override protected Task InitializeCoreAsync()
+        override protected Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             LoadLauncherItem();
 

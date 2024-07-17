@@ -162,7 +162,7 @@ bool pop_list_<#= item.BaseName #>(<#= item.ValueType #>* result, <#= item.Alias
     }
 
     if(result) {
-        <#= item.ValueType #>* items = (<#= item.ValueType #>*)list->items;
+        const <#= item.ValueType #>* items = (const <#= item.ValueType #>*)list->items;
         *result = items[--list->length];
     } else {
         list->length -= 1;
@@ -180,7 +180,7 @@ bool get_list_<#= item.BaseName #>(<#= item.ValueType #>* result, const <#= item
     }
 
     if(index < list->length) {
-        <#= item.ValueType #>* items = (<#= item.ValueType #>*)list->items;
+        const <#= item.ValueType #>* items = (const <#= item.ValueType #>*)list->items;
         *result = items[index];
         return true;
     }

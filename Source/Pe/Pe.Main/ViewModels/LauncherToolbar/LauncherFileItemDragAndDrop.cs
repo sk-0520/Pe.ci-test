@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -40,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             }
         }
 
-        public async Task DropAsync(UIElement sender, DragEventArgs e, Action<string> action)
+        public async Task DropAsync(UIElement sender, DragEventArgs e, Action<string> action, CancellationToken cancellationToken)
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);

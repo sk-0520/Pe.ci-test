@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -28,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="userClosing">ユーザー操作により閉じられようとしている。真: 閉じてOK, 偽: 閉じない。null の場合は閉じる。</param>
         /// <param name="closedWindow">ウィンドウが閉じた。null の場合は何もしない。</param>
         /// <returns>真: 登録成功。</returns>
-        Task<bool> RegisterWindowAsync(Window window, Func<bool>? userClosing, Action? closedWindow);
+        Task<bool> RegisterWindowAsync(Window window, Func<bool>? userClosing, Action? closedWindow, CancellationToken cancellationToken);
 
         #endregion
     }

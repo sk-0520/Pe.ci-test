@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
@@ -55,9 +56,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <param name="targetFile"></param>
         /// <param name="userNotifyProgress"></param>
         /// <returns>[非同期] 真: チェックサムOK。</returns>
-        public async Task<bool> ChecksumAsync(IReadOnlyNewVersionItemData updateItem, FileInfo targetFile, UserNotifyProgress userNotifyProgress)
+        public async Task<bool> ChecksumAsync(IReadOnlyNewVersionItemData updateItem, FileInfo targetFile, UserNotifyProgress userNotifyProgress, CancellationToken cancellationToken)
         {
-            await Task.Delay(0);
+            await Task.Delay(0, cancellationToken);
             userNotifyProgress.Start();
 
             if(!targetFile.Exists) {
@@ -82,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 using var CheckSumBuffer = new ArrayPoolObject<byte>(ChecksumSize);
                 long totalReadSize = 0;
                 while(true) {
-                    var readSize = await stream.ReadAsync(CheckSumBuffer.Items, 0, CheckSumBuffer.Items.Length);
+                    var readSize = await stream.ReadAsync(CheckSumBuffer.Items, 0, CheckSumBuffer.Items.Length, cancellationToken);
                     if(readSize == 0) {
                         break;
                     }
@@ -109,13 +110,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <param name="downloadFile"></param>
         /// <param name="userNotifyProgress"></param>
         /// <returns></returns>
-        public async Task DownloadArchiveAsync(NewVersionItemData updateItem, FileInfo downloadFile, UserNotifyProgress userNotifyProgress)
+        public async Task DownloadArchiveAsync(NewVersionItemData updateItem, FileInfo downloadFile, UserNotifyProgress userNotifyProgress, CancellationToken cancellationToken)
         {
             Logger.LogInformation("アップデートファイルダウンロード: {0}, {1}", updateItem.ArchiveUri, downloadFile);
             userNotifyProgress.Start();
 
             using(var userAgent = UserAgentManager.CreateAppHttpUserAgent()) {
-                var content = await userAgent.GetAsync(updateItem.ArchiveUri);
+                var content = await userAgent.GetAsync(updateItem.ArchiveUri, cancellationToken);
 
                 //NOTE: long が使えない！
                 int totalDownloadedSize = 0;
@@ -123,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
                 sizePerTime.Start();
 
-                using(var networkStream = await content.Content.ReadAsStreamAsync()) {
+                using(var networkStream = await content.Content.ReadAsStreamAsync(cancellationToken)) {
                     using var downloadChunkBuffer = new ArrayPoolObject<byte>(DownloadChunkSize);
                     using var localStream = downloadFile.Create();
                     var sizeConverter = new SizeConverter();
@@ -135,9 +136,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         };
                     var format = Properties.Resources.String_Download_Seconds_Format_DOTNET;
                     while(true) {
-                        var downloadSize = await networkStream.ReadAsync(downloadChunkBuffer.Items, 0, downloadChunkBuffer.Length);
+                        var downloadSize = await networkStream.ReadAsync(downloadChunkBuffer.Items, 0, downloadChunkBuffer.Length, cancellationToken);
                         if(0 < downloadSize) {
-                            await localStream.WriteAsync(downloadChunkBuffer.Items, 0, downloadSize);
+                            await localStream.WriteAsync(downloadChunkBuffer.Items, 0, downloadSize, cancellationToken);
                             totalDownloadedSize += downloadSize;
                             sizePerTime.Add(downloadSize);
                             var size = sizeConverter.ConvertHumanReadableByte(sizePerTime.Size, format, units);

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -103,21 +104,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
-        internal async Task InstallPluginArchiveAsync(FileInfo archiveFile)
+        internal async Task InstallPluginArchiveAsync(FileInfo archiveFile, CancellationToken cancellationToken)
         {
             var ext = PluginInstaller.GetArchiveExtension(archiveFile);
             var pluginFileName = PluginInstaller.GetPluginName(archiveFile);
 
             var pluginInstallData = await PluginInstaller.InstallPluginArchiveAsync(archiveFile, ext, true, InstallPluginItemsImpl.Select(i => i.Data), PluginInstallAssemblyMode.Process, TemporaryDatabaseBarrier);
             var element = new PluginInstallItemElement(pluginInstallData, LoggerFactory);
-            await element.InitializeAsync();
+            await element.InitializeAsync(cancellationToken);
             MergeInstallPlugin(element);
         }
 
-        internal async Task<PluginWebInstallRequestParameter> CreatePluginWebInstallRequestParameterAsync()
+        internal async Task<PluginWebInstallRequestParameter> CreatePluginWebInstallRequestParameterAsync(CancellationToken cancellationToken)
         {
             var element = new Plugin.PluginWebInstallElement(PluginContainer, EnvironmentParameters, ApiConfiguration, NewVersionChecker, NewVersionDownloader, UserAgentFactory, LoggerFactory);
-            await element.InitializeAsync();
+            await element.InitializeAsync(cancellationToken);
 
             return new PluginWebInstallRequestParameter() {
                 Element = element,
@@ -132,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region SettingEditorElementBase
 
-        protected override async Task LoadCoreAsync()
+        protected override async Task LoadCoreAsync(CancellationToken cancellationToken)
         {
             IList<PluginStateData> pluginStates;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -148,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             foreach(var installDataItem in installDataItems) {
                 var element = new PluginInstallItemElement(installDataItem, LoggerFactory);
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
                 InstallPluginItemsImpl.Add(element);
             }
 
@@ -164,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             foreach(var pluginState in pluginStates) {
                 var plugin = PluginContainer.Plugins.FirstOrDefault(i => pluginState.PluginId == i.PluginInformation.PluginIdentifiers.PluginId);
                 var element = new PluginSettingEditorElement(pluginState, plugin, PreferencesContextFactory, MainDatabaseBarrier, DatabaseStatementLoader, UserAgentFactory, ViewManager, PlatformTheme, ImageLoader, MediaConverter, Policy, DispatcherWrapper, LoggerFactory);
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
                 PluginItemsImpl.Add(element);
             }
         }

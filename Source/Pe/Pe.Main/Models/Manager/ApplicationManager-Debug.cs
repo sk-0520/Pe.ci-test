@@ -31,6 +31,8 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
 #if DEBUG
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1144:Unused private types or members should be removed", Justification = "<保留中>")]
     partial class ApplicationManager
     {
         #region property
@@ -77,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // LauncherGroups.Sequence を調整すること
             var i = LauncherToolbarElements.First().LauncherItems.FirstOrDefault();
             if(i != null) {
-                var task = i.OpenCustomizeViewAsync(Screen.PrimaryScreen!);
+                var task = i.OpenCustomizeViewAsync(Screen.PrimaryScreen!, CancellationToken.None);
                 task.ConfigureAwait(false);
                 task.Wait();
             }
@@ -87,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var i = LauncherToolbarElements.First().LauncherItems.FirstOrDefault();
             if(i != null) {
-                i.OpenExtendsExecuteViewAsync(Screen.PrimaryScreen!);
+                i.OpenExtendsExecuteViewAsync(Screen.PrimaryScreen!, CancellationToken.None);
             }
         }
 
@@ -116,7 +118,7 @@ echo end
                 IsEnabledStandardInputOutput = true,
             };
             var env = new List<LauncherEnvironmentVariableData>();
-            var result = launcherExecutor.ExecuteAsync(LauncherItemKind.File, data, data, env, LauncherRedoData.GetDisable(), Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null"));
+            var result = launcherExecutor.ExecuteAsync(LauncherItemKind.File, data, data, env, LauncherRedoData.GetDisable(), Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null"), CancellationToken.None);
         }
 
         private KeyboardHooker? dbgKeyboardHooker { get; set; }
@@ -206,7 +208,7 @@ echo end
 
         private Task DebugSettingAsync()
         {
-            return ShowSettingViewAsync();
+            return ShowSettingViewAsync(CancellationToken.None);
         }
         private void DebugColorPicker()
         {
@@ -252,7 +254,7 @@ echo end
 
                         NativeMethods.GetCursorPos(out var podDevicePoint);
                         var screen = Screen.FromDevicePoint(new Point(podDevicePoint.X, podDevicePoint.Y));
-                        launcherItemElement.ExecuteAsync(screen);
+                        launcherItemElement.ExecuteAsync(screen, CancellationToken.None);
                     }
                     break;
 

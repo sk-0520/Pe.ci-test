@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -303,13 +304,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
             if(Terminal != null) {
                 Terminal.TextChanged -= Terminal_TextChanged;
             }
 
-            return Model.ReceiveViewClosedAsync(isUserOperation);
+            return Model.ReceiveViewClosedAsync(isUserOperation, cancellationToken);
         }
 
         #endregion

@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using ContentTypeTextNet.Pe.Standard.Base;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
@@ -118,24 +119,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         private ICommand? _AddNewFileItemCommand;
         public ICommand AddNewFileItemCommand => this._AddNewFileItemCommand ??= new DelegateCommand(async () => {
-            await AddNewItemAsync(LauncherItemKind.File, LauncherSeparatorKind.None, PluginId.Empty);
+            await AddNewItemAsync(LauncherItemKind.File, LauncherSeparatorKind.None, PluginId.Empty, CancellationToken.None);
         });
 
         private ICommand? _AddNewStoreAppItemCommand;
         public ICommand AddNewStoreAppItemCommand => this._AddNewStoreAppItemCommand ??= new DelegateCommand(async () => {
-            await AddNewItemAsync(LauncherItemKind.StoreApp, LauncherSeparatorKind.None, PluginId.Empty);
+            await AddNewItemAsync(LauncherItemKind.StoreApp, LauncherSeparatorKind.None, PluginId.Empty, CancellationToken.None);
         });
 
         private ICommand? _AddNewAddonItemCommand;
         public ICommand AddNewAddonItemCommand => this._AddNewAddonItemCommand ??= new DelegateCommand<LauncherItemAddonViewModel>(
             async o => {
-                await AddNewItemAsync(LauncherItemKind.Addon, LauncherSeparatorKind.None, o.PluginId);
+                await AddNewItemAsync(LauncherItemKind.Addon, LauncherSeparatorKind.None, o.PluginId, CancellationToken.None);
             }
         );
 
         private ICommand? _AddNewSeparatorItemCommand;
         public ICommand AddNewSeparatorItemCommand => this._AddNewSeparatorItemCommand ??= new DelegateCommand(async () => {
-            await AddNewItemAsync(LauncherItemKind.Separator, LauncherSeparatorKind.Line, PluginId.Empty);
+            await AddNewItemAsync(LauncherItemKind.Separator, LauncherSeparatorKind.Line, PluginId.Empty, CancellationToken.None);
         });
 
         private ICommand? _RemoveItemCommand;
@@ -151,10 +152,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        private async Task AddNewItemAsync(LauncherItemKind kind, LauncherSeparatorKind launcherSeparatorKind, PluginId pluginId)
+        private async Task AddNewItemAsync(LauncherItemKind kind, LauncherSeparatorKind launcherSeparatorKind, PluginId pluginId, CancellationToken cancellationToken)
         {
             IsPopupAddItemMenu = false;
-            var newLauncherItemId = await Model.AddNewItemAsync(kind, launcherSeparatorKind, pluginId);
+            var newLauncherItemId = await Model.AddNewItemAsync(kind, launcherSeparatorKind, pluginId, cancellationToken);
             var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);
             SelectedItem = newItem;
             ScrollSelectedItemRequest.Send();
@@ -180,15 +181,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             dd.DragOverOrEnter(sender, e);
         }
 
-        private async Task DropAsync(UIElement sender, DragEventArgs e)
+        private async Task DropAsync(UIElement sender, DragEventArgs e, CancellationToken cancellationToken)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
             await dd.DropAsync(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, async (path, expand) => {
-                var launcherItemId = await Model.RegisterFileAsync(path, expand);
+                var launcherItemId = await Model.RegisterFileAsync(path, expand, cancellationToken);
                 var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == launcherItemId);
                 SelectedItem = newItem;
                 ScrollSelectedItemRequest.Send();
-            }));
+            }), cancellationToken);
         }
 
         private void DragLeave(UIElement sender, DragEventArgs e)

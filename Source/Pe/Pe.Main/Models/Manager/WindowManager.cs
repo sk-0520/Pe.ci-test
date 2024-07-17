@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using System.Windows.Data;
 using Microsoft.Web.WebView2.Wpf;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -431,7 +432,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
-                await viewLifecycleReceiver.ReceiveViewClosedAsync(item.Window, item.IsUserClosed);
+                await viewLifecycleReceiver.ReceiveViewClosedAsync(item.Window, item.IsUserClosed, CancellationToken.None);
             }
 
             if(item.CloseToDispose) {

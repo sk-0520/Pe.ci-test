@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -84,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             SettingNotifyManager.SendLauncherItemRemove(launcherItemId);
         }
 
-        public async Task<LauncherItemId> AddNewItemAsync(LauncherItemKind kind, LauncherSeparatorKind launcherSeparatorKind, PluginId pluginId)
+        public async Task<LauncherItemId> AddNewItemAsync(LauncherItemKind kind, LauncherSeparatorKind launcherSeparatorKind, PluginId pluginId, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -172,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             var customizeEditor = new LauncherItemSettingEditorElement(newLauncherItemId, new LauncherItemAddonFinder(PluginContainer.Addon, LoggerFactory), LauncherItemAddonContextFactory, ClipboardManager, MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            await customizeEditor.InitializeAsync();
+            await customizeEditor.InitializeAsync(cancellationToken);
 
             AllLauncherItems.Add(customizeEditor);
 
@@ -187,7 +188,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         /// </remarks>
         /// <param name="filePath">対象ファイルパス。</param>
         /// <param name="expandShortcut"><paramref name="filePath"/>がショートカットの場合にショートカットの内容を登録するか</param>
-        public async Task<LauncherItemId> RegisterFileAsync(string filePath, bool expandShortcut)
+        public async Task<LauncherItemId> RegisterFileAsync(string filePath, bool expandShortcut, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -212,7 +213,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             var customizeEditor = new LauncherItemSettingEditorElement(data.Item.LauncherItemId, new LauncherItemAddonFinder(PluginContainer.Addon, LoggerFactory), LauncherItemAddonContextFactory, ClipboardManager, MainDatabaseBarrier, LargeDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            await customizeEditor.InitializeAsync();
+            await customizeEditor.InitializeAsync(cancellationToken);
 
             AllLauncherItems.Add(customizeEditor);
 
@@ -223,7 +224,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region SettingEditorElementBase
 
-        protected override Task LoadCoreAsync()
+        protected override Task LoadCoreAsync(CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 

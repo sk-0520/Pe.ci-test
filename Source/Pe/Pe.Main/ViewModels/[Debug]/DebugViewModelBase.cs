@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -34,10 +35,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels._Debug_
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        /// <inheritdoc cref="IViewLifecycleReceiver.ReceiveViewClosedAsync(Window, bool, CancellationToken)"/>
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
-            return Model.ReceiveViewClosedAsync(isUserOperation);
+            return Model.ReceiveViewClosedAsync(isUserOperation, cancellationToken);
         }
 
         #endregion

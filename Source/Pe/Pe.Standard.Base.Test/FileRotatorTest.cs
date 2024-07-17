@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Test;
+using ContentTypeTextNet.Pe.CommonTest;
 using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test

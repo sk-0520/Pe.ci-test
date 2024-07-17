@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
@@ -123,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
         public void ReceiveViewClosing(Window window, CancelEventArgs e)
         { }
 
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }

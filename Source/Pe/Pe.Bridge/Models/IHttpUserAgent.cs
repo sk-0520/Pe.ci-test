@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>HTTP 応答。</returns>
-        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default);
+        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken);
 
         #endregion
     }

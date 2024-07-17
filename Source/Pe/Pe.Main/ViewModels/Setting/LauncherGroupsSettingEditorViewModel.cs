@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -179,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private ICommand? _AddNewNormalGroupCommand;
         public ICommand AddNewNormalGroupCommand => this._AddNewNormalGroupCommand ??= new DelegateCommand(
             async () => {
-                await AddNewGroupAsync(LauncherGroupKind.Normal);
+                await AddNewGroupAsync(LauncherGroupKind.Normal, CancellationToken.None);
             }
         );
 
@@ -269,11 +270,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        private async Task AddNewGroupAsync(LauncherGroupKind kind)
+        private async Task AddNewGroupAsync(LauncherGroupKind kind, CancellationToken cancellationToken)
         {
             IsPopupCreateGroupMenu = false;
 
-            var launcherGroupId = await Model.AddNewGroupAsync(kind);
+            var launcherGroupId = await Model.AddNewGroupAsync(kind, cancellationToken);
             /*
             var newLauncherGroupId = Model.CreateNewGroup(kind);
             var newItem = ItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);
@@ -336,7 +337,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private void LauncherItemDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private Task LauncherItemDropAsync(UIElement sender, DragEventArgs e)
+        private Task LauncherItemDropAsync(UIElement sender, DragEventArgs e, CancellationToken cancellationToken)
         {
             if(SelectedGroup == null) {
                 return Task.CompletedTask;
@@ -439,7 +440,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private void GroupsDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private Task GroupsDropAsync(UIElement sender, DragEventArgs e)
+        private Task GroupsDropAsync(UIElement sender, DragEventArgs e, CancellationToken cancellationToken)
         {
             if(SelectedGroup == null) {
                 return Task.CompletedTask;
@@ -506,7 +507,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private void LauncherItemsDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private Task LauncherItemsDropAsync(UIElement sender, DragEventArgs e)
+        private Task LauncherItemsDropAsync(UIElement sender, DragEventArgs e, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }

@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -172,7 +173,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
                 () => {
                     view.DataContext = null;
                     viewModel.Dispose();
-                }
+                },
+                CancellationToken.None
             );
         }
 

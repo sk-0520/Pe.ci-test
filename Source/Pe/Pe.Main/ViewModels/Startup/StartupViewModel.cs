@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Startup;
@@ -35,8 +36,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 
         private ICommand? _ImportProgramsCommand;
         public ICommand ImportProgramsCommand => this._ImportProgramsCommand ??= new DelegateCommand(
-            async () => {
-                await Model.ShowImportProgramsViewAsync();
+        async () => {
+                await Model.ShowImportProgramsViewAsync(CancellationToken.None);
                 if(Model.IsRegisteredLauncher) {
                     RaisePropertyChanged(nameof(IsRegisteredLauncher));
                 }

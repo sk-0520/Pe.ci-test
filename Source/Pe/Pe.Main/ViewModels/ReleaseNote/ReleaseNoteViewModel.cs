@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -76,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         {
             var view = (ReleaseNoteWindow)window;
 
-            Model.LoadReleaseNoteDocumentAsync().ContinueWith(t => {
+            Model.LoadReleaseNoteDocumentAsync(CancellationToken.None).ContinueWith(t => {
                 if(IsDisposed) {
                     Logger.LogTrace("close");
                     return;
@@ -101,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         { }
 
 
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Castle.Core.Logging;
-using ContentTypeTextNet.Pe.Test;
+using ContentTypeTextNet.Pe.CommonTest;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 

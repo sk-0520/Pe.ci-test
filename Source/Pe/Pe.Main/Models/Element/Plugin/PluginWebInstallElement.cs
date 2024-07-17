@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -63,10 +64,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
             return PluginArchiveFile;
         }
 
-        private async Task<Uri> GetCheckUriAsync(string pluginIdOrInfoUrl)
+        private async Task<Uri> GetCheckUriAsync(string pluginIdOrInfoUrl, CancellationToken cancellationToken)
         {
             if(Guid.TryParse(pluginIdOrInfoUrl, out var guid)) {
-                var info = await NewVersionChecker.GetPluginVersionInfoByApiAsync(ApiConfiguration.ServerPluginInformation, new PluginId(guid));
+                var info = await NewVersionChecker.GetPluginVersionInfoByApiAsync(ApiConfiguration.ServerPluginInformation, new PluginId(guid), cancellationToken);
                 if(info is null) {
                     throw new Exception(Properties.Resources.String_PluginWebInstall_NotFoundByPluginId);
                 }
@@ -83,11 +84,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
             return uri;
         }
 
-        private async Task GetPluginAsync(string pluginIdOrInfoUrl)
+        private async Task GetPluginAsync(string pluginIdOrInfoUrl, CancellationToken cancellationToken)
         {
             var notifyProgress = new NullNotifyProgress(LoggerFactory);
-            var checkUri = await GetCheckUriAsync(pluginIdOrInfoUrl);
-            var updateData = await NewVersionChecker.RequestUpdateDataAsync(checkUri);
+            var checkUri = await GetCheckUriAsync(pluginIdOrInfoUrl, cancellationToken);
+            var updateData = await NewVersionChecker.RequestUpdateDataAsync(checkUri, cancellationToken);
             if(updateData is null) {
                 throw new Exception(Properties.Resources.String_PluginWebInstall_NewVersionData_NotFound);
             }
@@ -106,11 +107,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
             pluginArchiveFile.Refresh();
 
             IOUtility.MakeFileParentDirectory(pluginArchiveFile);
-            await NewVersionDownloader.DownloadArchiveAsync(newVersionItem, pluginArchiveFile, notifyProgress);
+            await NewVersionDownloader.DownloadArchiveAsync(newVersionItem, pluginArchiveFile, notifyProgress, cancellationToken);
 
             pluginArchiveFile.Refresh();
 
-            var checksumOk = await NewVersionDownloader.ChecksumAsync(newVersionItem, pluginArchiveFile, notifyProgress);
+            var checksumOk = await NewVersionDownloader.ChecksumAsync(newVersionItem, pluginArchiveFile, notifyProgress, cancellationToken);
             if(!checksumOk) {
                 throw new Exception("チェックサム異常あり");
             }
@@ -118,13 +119,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
             PluginArchiveFile = pluginArchiveFile;
         }
 
-        public Task GetPluginAsync()
+        public Task GetPluginAsync(CancellationToken cancellationToken)
         {
             if(string.IsNullOrWhiteSpace(PluginIdOrInfoUrl)) {
                 throw new Exception(Properties.Resources.String_PluginWebInstall_PluginIdOrInfoUrl_Empty);
             }
 
-            return GetPluginAsync(PluginIdOrInfoUrl);
+            return GetPluginAsync(PluginIdOrInfoUrl, cancellationToken);
         }
 
         internal void OpenProjectPluginsUri()
@@ -141,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
 
         #region ElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }
@@ -181,8 +182,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Plugin
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
-        public Task ReceiveViewClosedAsync(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool, CancellationToken)"/>
+        public Task ReceiveViewClosedAsync(bool isUserOperation, CancellationToken cancellationToken)
         {
             ViewCreated = false;
             return Task.CompletedTask;

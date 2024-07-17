@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -30,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         private ICommand? _ExecuteSimpleCommand;
         public ICommand ExecuteSimpleCommand => this._ExecuteSimpleCommand ??= new DelegateCommand(
             () => {
-                ExecuteMainAsync().ConfigureAwait(false);
+                ExecuteMainAsync(CancellationToken.None).ConfigureAwait(false);
             },
             () => !NowLoading
         );
@@ -64,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             base.Dispose(disposing);
         }
 
-        protected override Task LoadImplAsync()
+        protected override Task LoadImplAsync(CancellationToken cancellationToken)
         {
             Detail = Model.LoadAddonDetail(this);
             if(Detail.IsEnabled) {
@@ -83,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             return Task.CompletedTask;
         }
 
-        protected override Task UnloadImplAsync()
+        protected override Task UnloadImplAsync(CancellationToken cancellationToken)
         {
             if(Detail?.Extension != null) {
                 Detail.Extension.ChangeDisplay(Bridge.Plugin.Addon.LauncherItemIconMode.Toolbar, false, this);
@@ -92,11 +93,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             return Task.CompletedTask;
         }
 
-        protected override Task ExecuteMainImplAsync()
+        protected override Task ExecuteMainImplAsync(CancellationToken cancellationToken)
         {
             return Task.Run(() => {
-                Model.ExecuteAsync(Screen);
-            });
+                Model.ExecuteAsync(Screen, cancellationToken);
+            }, cancellationToken);
         }
 
         protected override object GetIcon(IconKind iconKind)

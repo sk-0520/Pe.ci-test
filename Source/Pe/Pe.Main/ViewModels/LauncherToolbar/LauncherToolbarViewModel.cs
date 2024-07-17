@@ -33,6 +33,7 @@ using ContentTypeTextNet.Pe.Standard.Base;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -406,10 +407,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             dd.DragOverOrEnter(sender, e);
         }
 
-        private Task ViewDropAsync(UIElement sender, DragEventArgs e)
+        private Task ViewDropAsync(UIElement sender, DragEventArgs e, CancellationToken cancellationToken)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
-            return dd.DropAsync(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, Model.RegisterFile));
+            return dd.DropAsync(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, Model.RegisterFile), cancellationToken);
         }
 
         private void ViewDragLeave(UIElement sender, DragEventArgs e)
@@ -449,7 +450,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             e.Handled = true;
         }
 
-        private async Task ItemDropAsync(UIElement sender, DragEventArgs e)
+        private async Task ItemDropAsync(UIElement sender, DragEventArgs e, CancellationToken cancellationToken)
         {
             LauncherItemId launcherItemId = LauncherItemId.Empty;
             var frameworkElement = (FrameworkElement)sender;
@@ -470,17 +471,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 if(appButton.Name != nameof(LauncherToolbarWindow.appButton.Name)) {
                     return;
                 }
-                await ViewDropAsync(sender, e);
+                await ViewDropAsync(sender, e,cancellationToken);
                 return;
             }
 
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 var argument = string.Join(' ', filePaths.Select(i => CommandLine.Escape(i)));
-                await DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument));
+                await DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument, cancellationToken));
             } else if(e.Data.IsTextPresent()) {
                 var argument = TextUtility.JoinLines(e.Data.RequireText());
-                await DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument));
+                await DispatcherWrapper.BeginAsync(async () => await ExecuteExtendDropDataAsync(launcherItemId, argument, cancellationToken));
             }
 
             e.Handled = true;
@@ -491,15 +492,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        private async Task ExecuteExtendDropDataAsync(LauncherItemId launcherItemId, string argument)
+        private async Task ExecuteExtendDropDataAsync(LauncherItemId launcherItemId, string argument, CancellationToken cancellationToken)
         {
             switch(ContentDropMode) {
                 case LauncherToolbarContentDropMode.ExtendsExecute:
-                    await Model.OpenExtendsExecuteViewAsync(launcherItemId, argument, DockScreen);
+                    await Model.OpenExtendsExecuteViewAsync(launcherItemId, argument, DockScreen, cancellationToken);
                     break;
 
                 case LauncherToolbarContentDropMode.DirectExecute:
-                    await Model.ExecuteWithArgumentAsync(launcherItemId, argument);
+                    await Model.ExecuteWithArgumentAsync(launcherItemId, argument, cancellationToken);
                     break;
             }
         }
@@ -641,9 +642,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
-            return Model.ReceiveViewClosedAsync(isUserOperation);
+            return Model.ReceiveViewClosedAsync(isUserOperation, cancellationToken);
         }
 
 

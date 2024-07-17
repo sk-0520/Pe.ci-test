@@ -17,7 +17,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Standard.Base;
 using ContentTypeTextNet.Pe.Standard.Property;
-using ContentTypeTextNet.Pe.Test;
+using ContentTypeTextNet.Pe.CommonTest;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             ;
 
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
-            var actual = await test.RequestUpdateDataAsync(new Uri("http://localhost.invalid"));
+            var actual = await test.RequestUpdateDataAsync(new Uri("http://localhost.invalid"), CancellationToken.None);
             Assert.Null(actual);
         }
 
@@ -116,20 +116,16 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                 }))
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
-            var actual = await test.RequestUpdateDataAsync(new Uri("http://localhost.invalid"));
+            var actual = await test.RequestUpdateDataAsync(new Uri("http://localhost.invalid"), CancellationToken.None);
             Assert.Null(actual);
         }
 
-        public static IEnumerable<object[]> RequestUpdateDataAsyncData()
-        {
-            var result = new List<object[]>();
-
-            result.Add(new object[] {
+        public static TheoryData<NewVersionData, string> RequestUpdateDataAsyncData => new() {
+            {
                 new NewVersionData() {},
                 "{}"
-            });
-
-            result.Add(new object[] {
+            },
+            {
                 new NewVersionData() {
                     Items = []
                 },
@@ -137,9 +133,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                     ""items"": [
                     ]
                 }"
-            });
-
-            result.Add(new object[] {
+            },
+            {
                 new NewVersionData() {
                     Items = [
                         new NewVersionItemData() {
@@ -174,11 +169,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                         }
                     ]
                 }"
-            });
-
-            return result;
-        }
-
+            }
+        };
         [Theory]
         [MemberData(nameof(RequestUpdateDataAsyncData))]
         public async Task RequestUpdateDataAsyncTest(NewVersionData expected, string json)
@@ -190,7 +182,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                 }))
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
-            var actual = await test.RequestUpdateDataAsync(new Uri("http://localhost.invalid"));
+            var actual = await test.RequestUpdateDataAsync(new Uri("http://localhost.invalid"), CancellationToken.None);
             Assert.NotNull(actual);
 
             Assert.Equal(expected.Items.Length, actual.Items.Length);
@@ -220,7 +212,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                 .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotFound)))
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
-            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" });
+            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" }, CancellationToken.None);
             Assert.Null(actual);
         }
 
@@ -238,7 +230,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
 
-            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" });
+            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" }, CancellationToken.None);
             Assert.Null(actual);
         }
 
@@ -271,7 +263,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
 
-            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" });
+            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" }, CancellationToken.None);
             Assert.Null(actual);
         }
 
@@ -304,7 +296,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
 
-            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" });
+            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" }, CancellationToken.None);
             Assert.Null(actual);
         }
 
@@ -337,7 +329,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             ;
             var test = new NewVersionChecker(IgnoreApplicationProcessInformation, Test.UserAgentManager, NullLoggerFactory.Instance);
 
-            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" });
+            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" }, CancellationToken.None);
             Assert.Null(actual);
         }
 
@@ -383,7 +375,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             ;
             var test = new NewVersionChecker(new ApplicationInformation(new Version(1, 2, 3, 4), ProcessArchitecture.ApplicationArchitecture), Test.UserAgentManager, NullLoggerFactory.Instance);
 
-            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" });
+            var actual = await test.CheckApplicationNewVersionAsync(new[] { "http://localhost.invalid/version_check_url_item/1" }, CancellationToken.None);
             Assert.NotNull(actual);
             Assert.Equal(new Version(1, 2, 3, 6), actual.Version);
         }
@@ -430,7 +422,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                 "http://localhost.invalid/version_check_url_item/1",
                 "http://localhost.invalid/version_check_url_item/2",
                 "http://localhost.invalid/version_check_url_item/3"
-            });
+            }, CancellationToken.None);
             Assert.NotNull(actual);
             Assert.Equal(new Version(1, 2, 3, 6), actual.Version);
             Assert.Equal("!2!", actual.Revision);
@@ -451,29 +443,24 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             Assert.Equal(expectedUrl, actual?.ToString());
         }
 
-        public static IEnumerable<object[]> GetPluginNewVersionItem_null_Data()
+        public static TheoryData<Version, IEnumerable<NewVersionItemData>> GetPluginNewVersionItem_null_Data => new()
         {
-            var result = new List<object[]>();
-
             // なし
-            result.Add(new object[] {
+            {
                 new Version(),
-                Array.Empty<NewVersionItemData>(),
-            });
-
+                Array.Empty<NewVersionItemData>()
+            },
             // アーキテクチャ未達
-            result.Add(new object[] {
+            {
                 new Version(),
                 new NewVersionItemData[] {
                     new NewVersionItemData() {
                         Platform = "x128",
                     }
-                },
-            });
-
-
+                }
+            },
             // アプリケーション最小バージョン未達
-            result.Add(new object[] {
+            {
                 new Version(),
                 new NewVersionItemData[] {
                     new NewVersionItemData() {
@@ -481,10 +468,9 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                         MinimumVersion = new Version(1, 2, 3, 5)
                     }
                 }
-            });
-
+            },
             // プラグインバージョン未達
-            result.Add(new object[] {
+            {
                 new Version(2, 3, 4, 5),
                 new NewVersionItemData[] {
                     new NewVersionItemData() {
@@ -493,8 +479,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                         Version = new Version(2, 3, 4, 5)
                     }
                 }
-            });
-            result.Add(new object[] {
+            },
+            {
                 new Version(2, 3, 4, 6),
                 new NewVersionItemData[] {
                     new NewVersionItemData() {
@@ -503,10 +489,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                         Version = new Version(2, 3, 4, 5)
                     }
                 }
-            });
-
-            return result;
-        }
+            }
+        };
 
         [Theory]
         [MemberData(nameof(GetPluginNewVersionItem_null_Data))]

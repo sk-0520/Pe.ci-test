@@ -70,16 +70,13 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Database.Vender.Public.SQLite
     {
         #region function
 
-        public static IEnumerable<object[]> Data()
-        {
-            return new[] {
-                new {
-                    ExpectedValue = new Version(1,2,3),
-                    ExpectedRaw = "1.2.3",
-                    Input = new Version(1,2,3,4),
-                }
-            }.Select(a => new object[] { a.ExpectedValue, a.ExpectedRaw, a.Input });
-        }
+        public static TheoryData<Version, string, Version> Data => new() {
+            {
+                new Version(1,2,3),
+                "1.2.3",
+                new Version(1,2,3,4)
+            }
+        };
 
         [Theory]
         [MemberData(nameof(Data))]

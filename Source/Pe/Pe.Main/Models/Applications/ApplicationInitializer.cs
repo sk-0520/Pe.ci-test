@@ -1,7 +1,3 @@
-#if BETA
-#   define BETA_MODE
-#endif
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -43,6 +39,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
 
         #region property
+
+        private bool BetaMode { get; } =
+#if BETA
+            true
+#else
+    false
+#endif
+;
 
         public static string CommandLineKeyRunMode { get; } = "run-mode";
         private string CommandLineKeyAppLogLimit { get; } = "app-log-limit";
@@ -127,8 +131,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return commandLine;
         }
 
-#if BETA_MODE
-        private bool ShowCommandLineMessageIfUnspecified(CommandLine commandLine)
+        private bool ShowCommandLineBetaMessageIfUnspecified(CommandLine commandLine)
         {
             var knownBetaVersion = commandLine.ExistsSwitch(CommandLineSwitchBetaVersion);
             if(knownBetaVersion) {
@@ -157,7 +160,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             return result == MessageBoxResult.OK;
         }
-#endif
+
         private bool ShowCommandLineTestPlugin(CommandLine commandLine, EnvironmentParameters environmentParameters)
         {
             var testPluginDirectoryPath = commandLine.GetValue(CommandLineTestPluginDirectoryPath, string.Empty);
@@ -241,7 +244,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return !file.Exists;
         }
 
-        private async Task<AcceptResult> ShowAcceptViewAsync(IDiScopeContainerFactory scopeContainerCreator, EnvironmentParameters environmentParameters, ICultureService cultureService, ILoggerFactory? loggerFactory)
+        private async Task<AcceptResult> ShowAcceptViewAsync(IDiScopeContainerFactory scopeContainerCreator, EnvironmentParameters environmentParameters, ICultureService cultureService, ILoggerFactory? loggerFactory, CancellationToken cancellationToken)
         {
             using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
                 if(loggerFactory != null) {
@@ -256,7 +259,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 ;
                 using(var windowManager = new WindowManager(diContainer, cultureService, diContainer.Get<ILoggerFactory>())) {
                     using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
-                    await acceptModel.InitializeAsync();
+                    await acceptModel.InitializeAsync(cancellationToken);
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
                     windowManager.Register(new WindowItem(Manager.WindowKind.Accept, acceptModel, view));
                     view.ShowDialog();
@@ -504,20 +507,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
-        public async Task<bool> InitializeAsync(App app, StartupEventArgs e)
+        public async Task<bool> InitializeAsync(App app, StartupEventArgs e, CancellationToken cancellationToken)
         {
             InitializeEnvironmentVariable();
             InitializeClr();
 
             var commandLine = CreateCommandLine(e.Args);
             RunMode = RunModeUtility.Parse(commandLine.GetValue(CommandLineKeyRunMode, string.Empty));
-#if BETA_MODE
-            if(RunModeUtility.CheckBetaModeAlert(RunMode)) {
-                if(!ShowCommandLineMessageIfUnspecified(commandLine)) {
-                    return false;
+
+            if(BetaMode) {
+                if(RunModeUtility.CheckBetaModeAlert(RunMode)) {
+                    if(!ShowCommandLineBetaMessageIfUnspecified(commandLine)) {
+                        return false;
+                    }
                 }
             }
-#endif
 
 #if DEBUG
             IsDebugDevelopMode = commandLine.ExistsSwitch(CommandLineSwitchDebugDevelopMode);
@@ -587,7 +591,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     logger.LogInformation("初回実行");
                     if(!skipAccept) {
                         // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                        acceptResult = await ShowAcceptViewAsync(new DiContainer(false), environmentParameters, cultureService, loggerFactory);
+                        acceptResult = await ShowAcceptViewAsync(new DiContainer(false), environmentParameters, cultureService, loggerFactory, cancellationToken);
                         if(!acceptResult.Accepted) {
                             // 初回の使用許諾を得られなかったのでばいちゃ
                             logger.LogInformation("使用許諾得られず");

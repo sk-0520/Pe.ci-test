@@ -44,6 +44,7 @@ using ContentTypeTextNet.Pe.Main.Views.StandardInputOutput;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -85,23 +86,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void StartUpdate(UpdateTarget target, UpdateProcess process);
 
-        Task<LauncherGroupElement> CreateLauncherGroupElementAsync(LauncherGroupId launcherGroupId);
-        Task<LauncherToolbarElement> CreateLauncherToolbarElementAsync(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
+        Task<LauncherGroupElement> CreateLauncherGroupElementAsync(LauncherGroupId launcherGroupId, CancellationToken cancellationToken);
+        Task<LauncherToolbarElement> CreateLauncherToolbarElementAsync(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, CancellationToken cancellationToken);
         LauncherItemElement GetOrCreateLauncherItemElement(LauncherItemId launcherItemId);
         void RefreshLauncherItemElement(LauncherItemId launcherItemId);
 
-        Task<LauncherItemCustomizeContainerElement> CreateCustomizeLauncherItemContainerElementAsync(LauncherItemId launcherItemId, IScreen screen);
-        Task<ExtendsExecuteElement> CreateExtendsExecuteElementAsync(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen);
-        Task<LauncherExtendsExecuteElement> CreateLauncherExtendsExecuteElementAsync(LauncherItemId launcherItemId, IScreen screen);
+        Task<LauncherItemCustomizeContainerElement> CreateCustomizeLauncherItemContainerElementAsync(LauncherItemId launcherItemId, IScreen screen, CancellationToken cancellationToken);
+        Task<ExtendsExecuteElement> CreateExtendsExecuteElementAsync(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen, CancellationToken cancellationToken);
+        Task<LauncherExtendsExecuteElement> CreateLauncherExtendsExecuteElementAsync(LauncherItemId launcherItemId, IScreen screen, CancellationToken cancellationToken);
 
-        Task<NoteElement> CreateNoteElementAsync(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition);
+        Task<NoteElement> CreateNoteElementAsync(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition, CancellationToken cancellationToken);
         bool RemoveNoteElement(NoteId noteId);
-        Task<NoteContentElement> CreateNoteContentElementAsync(NoteId noteId, NoteContentKind contentKind);
-        Task<SavingFontElement> CreateFontElementAsync(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater);
+        Task<NoteContentElement> CreateNoteContentElementAsync(NoteId noteId, NoteContentKind contentKind, CancellationToken cancellationToken);
+        Task<SavingFontElement> CreateFontElementAsync(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater, CancellationToken cancellationToken);
 
-        Task<StandardInputOutputElement> CreateStandardInputOutputElementAsync(string caption, Process process, IScreen screen);
+        Task<StandardInputOutputElement> CreateStandardInputOutputElementAsync(string caption, Process process, IScreen screen, CancellationToken cancellationToken);
 
-        Task<LauncherItemExtensionElement> CreateLauncherItemExtensionElementAsync(IPluginInformation pluginInformation, LauncherItemId launcherItemId);
+        Task<LauncherItemExtensionElement> CreateLauncherItemExtensionElementAsync(IPluginInformation pluginInformation, LauncherItemId launcherItemId, CancellationToken cancellationToken);
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeContainerElement element);
@@ -149,17 +150,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
 
-            public async Task<LauncherGroupElement> CreateLauncherGroupElementAsync(LauncherGroupId launcherGroupId)
+            public async Task<LauncherGroupElement> CreateLauncherGroupElementAsync(LauncherGroupId launcherGroupId, CancellationToken cancellationToken)
             {
                 var element = DiContainer.Build<LauncherGroupElement>(launcherGroupId);
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
                 return element;
             }
 
-            public async Task<LauncherToolbarElement> CreateLauncherToolbarElementAsync(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
+            public async Task<LauncherToolbarElement> CreateLauncherToolbarElementAsync(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, CancellationToken cancellationToken)
             {
                 var element = DiContainer.Build<LauncherToolbarElement>(dockScreen, launcherGroups);
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
                 return element;
             }
 
@@ -168,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return LauncherItems.GetOrAdd(launcherItemId, launcherItemIdKey => {
                     var launcherItemElement = DiContainer.Build<LauncherItemElement>(launcherItemIdKey);
                     // これたまたま動いてるだけだと思う
-                    var task = launcherItemElement.InitializeAsync();
+                    var task = launcherItemElement.InitializeAsync(CancellationToken.None);
                     task.ConfigureAwait(false);
                     task.Wait();
                     return launcherItemElement;
@@ -183,35 +184,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
 
-            public async Task<LauncherItemCustomizeContainerElement> CreateCustomizeLauncherItemContainerElementAsync(LauncherItemId launcherItemId, IScreen screen)
+            public async Task<LauncherItemCustomizeContainerElement> CreateCustomizeLauncherItemContainerElementAsync(LauncherItemId launcherItemId, IScreen screen, CancellationToken cancellationToken)
             {
                 var customizeLauncherEditorElement = DiContainer.Build<LauncherItemCustomizeEditorElement>(launcherItemId);
-                await customizeLauncherEditorElement.InitializeAsync();
+                await customizeLauncherEditorElement.InitializeAsync(cancellationToken);
                 var customizeLauncherItemContainerElement = DiContainer.Build<LauncherItemCustomizeContainerElement>(screen, customizeLauncherEditorElement);
-                await customizeLauncherItemContainerElement.InitializeAsync();
+                await customizeLauncherItemContainerElement.InitializeAsync(cancellationToken);
                 return customizeLauncherItemContainerElement;
             }
 
-            public async Task<ExtendsExecuteElement> CreateExtendsExecuteElementAsync(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen)
+            public async Task<ExtendsExecuteElement> CreateExtendsExecuteElementAsync(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen, CancellationToken cancellationToken)
             {
                 var element = DiContainer.Build<ExtendsExecuteElement>(captionName, launcherFileData, launcherEnvironmentVariables, screen);
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
                 return element;
             }
-            public async Task<LauncherExtendsExecuteElement> CreateLauncherExtendsExecuteElementAsync(LauncherItemId launcherItemId, IScreen screen)
+            public async Task<LauncherExtendsExecuteElement> CreateLauncherExtendsExecuteElementAsync(LauncherItemId launcherItemId, IScreen screen, CancellationToken cancellationToken)
             {
                 var element = DiContainer.Build<LauncherExtendsExecuteElement>(launcherItemId, screen);
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
                 return element;
             }
 
-            public async Task<NoteElement> CreateNoteElementAsync(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition)
+            public async Task<NoteElement> CreateNoteElementAsync(NoteId noteId, IScreen? screen, NoteStartupPosition startupPosition, CancellationToken cancellationToken)
             {
                 var element = screen == null
                     ? DiContainer.Build<NoteElement>(noteId, DiDefaultParameter.Create<IScreen>(), startupPosition)
                     : DiContainer.Build<NoteElement>(noteId, screen, startupPosition)
                 ;
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
                 return element;
             }
 
@@ -220,31 +221,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 throw new NotSupportedException($"{nameof(ApplicationManager)}.{nameof(RemoveNoteElement)}");
             }
 
-            public async Task<NoteContentElement> CreateNoteContentElementAsync(NoteId noteId, NoteContentKind contentKind)
+            public async Task<NoteContentElement> CreateNoteContentElementAsync(NoteId noteId, NoteContentKind contentKind, CancellationToken cancellationToken)
             {
                 var element = DiContainer.Build<NoteContentElement>(noteId, contentKind);
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
                 return element;
             }
 
-            public async Task<SavingFontElement> CreateFontElementAsync(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater)
+            public async Task<SavingFontElement> CreateFontElementAsync(DefaultFontKind defaultFontKind, FontId fontId, ParentUpdater parentUpdater, CancellationToken cancellationToken)
             {
                 var element = DiContainer.Build<SavingFontElement>(defaultFontKind, fontId, parentUpdater);
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
                 return element;
             }
 
-            public async Task<StandardInputOutputElement> CreateStandardInputOutputElementAsync(string caption, Process process, IScreen screen)
+            public async Task<StandardInputOutputElement> CreateStandardInputOutputElementAsync(string caption, Process process, IScreen screen, CancellationToken cancellationToken)
             {
                 var element = DiContainer.Build<StandardInputOutputElement>(caption, process, screen);
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
                 return element;
             }
 
-            public async Task<LauncherItemExtensionElement> CreateLauncherItemExtensionElementAsync(IPluginInformation pluginInformation, LauncherItemId launcherItemId)
+            public async Task<LauncherItemExtensionElement> CreateLauncherItemExtensionElementAsync(IPluginInformation pluginInformation, LauncherItemId launcherItemId, CancellationToken cancellationToken)
             {
                 var element = DiContainer.Build<LauncherItemExtensionElement>(pluginInformation, launcherItemId);
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
                 return element;
             }
 

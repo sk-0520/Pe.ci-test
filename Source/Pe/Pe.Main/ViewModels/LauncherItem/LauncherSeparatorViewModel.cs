@@ -14,6 +14,7 @@ using System.IO;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
@@ -50,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region LauncherItemViewModelBase
 
-        protected override Task ExecuteMainImplAsync()
+        protected override Task ExecuteMainImplAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }
@@ -58,16 +59,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         protected override bool CanExecuteMain => false;
 
 
-        protected override Task LoadImplAsync()
+        protected override Task LoadImplAsync(CancellationToken cancellationToken)
         {
             return Task.Run(() => {
                 Separator = Model.LoadSeparator();
                 RaisePropertyChanged(nameof(HorizontalSeparator));
                 RaisePropertyChanged(nameof(VerticalSeparator));
-            });
+            }, cancellationToken);
         }
 
-        protected override Task UnloadImplAsync()
+        protected override Task UnloadImplAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }

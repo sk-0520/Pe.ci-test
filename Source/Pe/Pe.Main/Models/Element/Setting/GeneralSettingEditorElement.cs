@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -82,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             SettingAppExecuteSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -142,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             SettingAppGeneralSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -221,7 +222,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             SettingAppUpdateSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -264,7 +265,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             var setting = MainDatabaseBarrier.ReadData(c => {
                 var dao = new AppNotifyLogSettingEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
@@ -308,7 +309,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             var setting = MainDatabaseBarrier.ReadData(c => {
                 var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
@@ -357,7 +358,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override async Task InitializeCoreAsync()
+        protected override async Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             SettingAppCommandSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -366,7 +367,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            await Font.InitializeAsync();
+            await Font.InitializeAsync(cancellationToken);
 
             IconBox = setting.IconBox;
             Width = setting.Width;
@@ -432,7 +433,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override async Task InitializeCoreAsync()
+        protected override async Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             SettingAppNoteSettingData setting;
             WaitTimes.Clear();
@@ -447,7 +448,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            await Font.InitializeAsync();
+            await Font.InitializeAsync(cancellationToken);
 
             TitleKind = setting.TitleKind;
             LayoutKind = setting.LayoutKind;
@@ -517,7 +518,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorBase
 
-        protected override async Task InitializeCoreAsync()
+        protected override async Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             SettingAppStandardInputOutputSettingData setting;
             using(var context = MainDatabaseBarrier.WaitRead()) {
@@ -526,7 +527,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            await Font.InitializeAsync();
+            await Font.InitializeAsync(cancellationToken);
 
             OutputForegroundColor = setting.OutputForegroundColor;
             OutputBackgroundColor = setting.OutputBackgroundColor;
@@ -586,7 +587,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region GeneralSettingEditorElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             AppProxySettingData data;
             using(var context = MainDatabaseBarrier.WaitRead()) {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -68,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             if(Parameter.RedoData.RedoMode == RedoMode.Timeout || Parameter.RedoData.RedoMode == RedoMode.TimeoutOrCount) {
                 Stopwatch = Stopwatch.StartNew();
-                WaitEndTimer = new Timer() {
+                WaitEndTimer = new System.Timers.Timer() {
                     Interval = (int)(Parameter.RedoData.WaitTime + Stopwatch.Elapsed).TotalMilliseconds,
                     AutoReset = false,
                 };
@@ -76,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 WaitEndTimer.Start();
             }
             if(FirstResult.Process != null) {
-                _ = WatchingAsync(FirstResult.Process, false).ConfigureAwait(false);
+                _ = WatchingAsync(FirstResult.Process, false, CancellationToken.None).ConfigureAwait(false);
             }
         }
 
@@ -95,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         private Stopwatch? Stopwatch { get; }
 
         private Process? CurrentProcess { get; set; }
-        private Timer? WaitEndTimer { get; set; }
+        private System.Timers.Timer? WaitEndTimer { get; set; }
 
         private int RetryCount { get; set; }
 
@@ -118,21 +119,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        private async Task PutNotifyLogAsync(bool isComplete, string message)
+        private async Task PutNotifyLogAsync(bool isComplete, string message, CancellationToken cancellationToken)
         {
             if(isComplete) {
                 if(NotifyLogId != NotifyLogId.Empty) {
                     NotifyManager.ClearLog(NotifyLogId);
                 }
-                NotifyLogId = await NotifyManager.AppendLogAsync(new NotifyMessage(NotifyLogKind.Normal, NotifyLogHeader, new NotifyLogContent(message)));
+                NotifyLogId = await NotifyManager.AppendLogAsync(new NotifyMessage(NotifyLogKind.Normal, NotifyLogHeader, new NotifyLogContent(message)), cancellationToken);
             } else {
                 if(NotifyLogId == NotifyLogId.Empty) {
-                    NotifyLogId = await NotifyManager.AppendLogAsync(new NotifyMessage(NotifyLogKind.Command, NotifyLogHeader, new NotifyLogContent(message), StopWatch));
+                    NotifyLogId = await NotifyManager.AppendLogAsync(new NotifyMessage(NotifyLogKind.Command, NotifyLogHeader, new NotifyLogContent(message), StopWatch), cancellationToken);
                 } else {
                     if(NotifyManager.ExistsLog(NotifyLogId)) {
                         NotifyManager.ReplaceLog(NotifyLogId, message);
                     } else {
-                        NotifyLogId = await NotifyManager.AppendLogAsync(new NotifyMessage(NotifyLogKind.Command, NotifyLogHeader, new NotifyLogContent(message), StopWatch));
+                        NotifyLogId = await NotifyManager.AppendLogAsync(new NotifyMessage(NotifyLogKind.Command, NotifyLogHeader, new NotifyLogContent(message), StopWatch), cancellationToken);
                     }
                 }
             }
@@ -157,14 +158,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             Dispose();
         }
 
-        private async Task WatchingAsync(Process process, bool isContinue)
+        private async Task WatchingAsync(Process process, bool isContinue, CancellationToken cancellationToken)
         {
             CurrentProcess = process;
             CurrentProcess.EnableRaisingEvents = true;
 
             if(isContinue && CurrentProcess.HasExited) {
-                if(await CheckAsync(CurrentProcess)) {
-                    await ExecuteAsync();
+                if(await CheckAsync(CurrentProcess, cancellationToken)) {
+                    await ExecuteAsync(cancellationToken);
                 } else {
                     OnExited();
                 }
@@ -178,7 +179,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         /// </summary>
         /// <param name="process"></param>
         /// <returns>真: 再試行が可能。</returns>
-        private async Task<bool> CheckAsync(Process process)
+        private async Task<bool> CheckAsync(Process process, CancellationToken cancellationToken)
         {
             if(!process.HasExited) {
                 Logger.LogWarning("到達不可");
@@ -188,7 +189,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(Parameter.RedoData.SuccessExitCodes.Any(i => i == process.ExitCode)) {
                 Logger.LogInformation("正常終了コードのため再試行不要: {0}", process.ExitCode);
                 if(NotifyLogId != NotifyLogId.Empty) {
-                    await PutNotifyLogAsync(true, Properties.Resources.String_RedoExecutor_SuccessExit);
+                    await PutNotifyLogAsync(true, Properties.Resources.String_RedoExecutor_SuccessExit, cancellationToken);
                 }
 
                 return false;
@@ -197,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             switch(Parameter.RedoData.RedoMode) {
                 case RedoMode.Timeout:
                     if(IsTimeout()) {
-                        await PutNotifyLogAsync(true, Properties.Resources.String_RedoExecutor_Timeout);
+                        await PutNotifyLogAsync(true, Properties.Resources.String_RedoExecutor_Timeout, cancellationToken);
                         Logger.LogInformation("タイムアウト");
                         return false;
                     }
@@ -205,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                 case RedoMode.Count:
                     if(IsMaxRetry()) {
-                        await PutNotifyLogAsync(true, Properties.Resources.String_RedoExecutor_CountMax);
+                        await PutNotifyLogAsync(true, Properties.Resources.String_RedoExecutor_CountMax, cancellationToken);
                         Logger.LogInformation("試行回数超過");
                         return false;
                     }
@@ -213,7 +214,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                 case RedoMode.TimeoutOrCount:
                     if(IsTimeout() || IsMaxRetry()) {
-                        await PutNotifyLogAsync(true, Properties.Resources.String_RedoExecutor_TimeoutOrCountMax);
+                        await PutNotifyLogAsync(true, Properties.Resources.String_RedoExecutor_TimeoutOrCountMax, cancellationToken);
                         Logger.LogInformation("タイムアウト/試行回数超過");
                         return false;
                     }
@@ -267,13 +268,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             );
         }
 
-        private async Task ExecuteAsync()
+        private async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            await PutNotifyLogAsync(false, CreateRedoNotifyLogMessage());
+            await PutNotifyLogAsync(false, CreateRedoNotifyLogMessage(),cancellationToken);
 
-            var result = (LauncherFileExecuteResult) await Executor.ExecuteAsync(FirstResult.Kind, Parameter.Path, Parameter.Custom, Parameter.EnvironmentVariableItems, LauncherRedoData.GetDisable(), Parameter.Screen);
+            var result = (LauncherFileExecuteResult) await Executor.ExecuteAsync(FirstResult.Kind, Parameter.Path, Parameter.Custom, Parameter.EnvironmentVariableItems, LauncherRedoData.GetDisable(), Parameter.Screen, cancellationToken);
             RetryCount += 1;
-            await WatchingAsync(result.Process!, true);
+            await WatchingAsync(result.Process!, true, cancellationToken);
         }
 
         #endregion
@@ -308,8 +309,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             CurrentProcess.Exited -= Process_Exited;
 
-            if(await CheckAsync(CurrentProcess)) {
-                await ExecuteAsync();
+            if(await CheckAsync(CurrentProcess, CancellationToken.None)) {
+                await ExecuteAsync(CancellationToken.None);
             } else {
                 OnExited();
             }
@@ -322,7 +323,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             Debug.Assert(WaitEndTimer != null);
 
             if(NotifyLogId != NotifyLogId.Empty) {
-                await PutNotifyLogAsync(true, Properties.Resources.String_RedoExecutor_CancelWatch);
+                await PutNotifyLogAsync(true, Properties.Resources.String_RedoExecutor_CancelWatch, CancellationToken.None);
             }
 
             OnExited();

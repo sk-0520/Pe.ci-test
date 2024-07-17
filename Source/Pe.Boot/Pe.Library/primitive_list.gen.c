@@ -423,7 +423,7 @@ bool pop_list_int8(int8_t* result, PRIMITIVE_LIST_INT8* list)
     }
 
     if(result) {
-        int8_t* items = (int8_t*)list->items;
+        const int8_t* items = (const int8_t*)list->items;
         *result = items[--list->length];
     } else {
         list->length -= 1;
@@ -442,7 +442,7 @@ bool pop_list_uint8(uint8_t* result, PRIMITIVE_LIST_UINT8* list)
     }
 
     if(result) {
-        uint8_t* items = (uint8_t*)list->items;
+        const uint8_t* items = (const uint8_t*)list->items;
         *result = items[--list->length];
     } else {
         list->length -= 1;
@@ -461,7 +461,7 @@ bool pop_list_int16(int16_t* result, PRIMITIVE_LIST_INT16* list)
     }
 
     if(result) {
-        int16_t* items = (int16_t*)list->items;
+        const int16_t* items = (const int16_t*)list->items;
         *result = items[--list->length];
     } else {
         list->length -= 1;
@@ -480,7 +480,7 @@ bool pop_list_uint16(uint16_t* result, PRIMITIVE_LIST_UINT16* list)
     }
 
     if(result) {
-        uint16_t* items = (uint16_t*)list->items;
+        const uint16_t* items = (const uint16_t*)list->items;
         *result = items[--list->length];
     } else {
         list->length -= 1;
@@ -499,7 +499,7 @@ bool pop_list_int32(int32_t* result, PRIMITIVE_LIST_INT32* list)
     }
 
     if(result) {
-        int32_t* items = (int32_t*)list->items;
+        const int32_t* items = (const int32_t*)list->items;
         *result = items[--list->length];
     } else {
         list->length -= 1;
@@ -518,7 +518,7 @@ bool pop_list_uint32(uint32_t* result, PRIMITIVE_LIST_UINT32* list)
     }
 
     if(result) {
-        uint32_t* items = (uint32_t*)list->items;
+        const uint32_t* items = (const uint32_t*)list->items;
         *result = items[--list->length];
     } else {
         list->length -= 1;
@@ -537,7 +537,7 @@ bool pop_list_size(size_t* result, PRIMITIVE_LIST_SIZE* list)
     }
 
     if(result) {
-        size_t* items = (size_t*)list->items;
+        const size_t* items = (const size_t*)list->items;
         *result = items[--list->length];
     } else {
         list->length -= 1;
@@ -556,7 +556,7 @@ bool pop_list_ssize(ssize_t* result, PRIMITIVE_LIST_SSIZE* list)
     }
 
     if(result) {
-        ssize_t* items = (ssize_t*)list->items;
+        const ssize_t* items = (const ssize_t*)list->items;
         *result = items[--list->length];
     } else {
         list->length -= 1;
@@ -575,7 +575,7 @@ bool pop_list_tchar(TCHAR* result, PRIMITIVE_LIST_TCHAR* list)
     }
 
     if(result) {
-        TCHAR* items = (TCHAR*)list->items;
+        const TCHAR* items = (const TCHAR*)list->items;
         *result = items[--list->length];
     } else {
         list->length -= 1;
@@ -591,7 +591,7 @@ bool get_list_int8(int8_t* result, const PRIMITIVE_LIST_INT8* list, size_t index
     }
 
     if(index < list->length) {
-        int8_t* items = (int8_t*)list->items;
+        const int8_t* items = (const int8_t*)list->items;
         *result = items[index];
         return true;
     }
@@ -605,7 +605,7 @@ bool get_list_uint8(uint8_t* result, const PRIMITIVE_LIST_UINT8* list, size_t in
     }
 
     if(index < list->length) {
-        uint8_t* items = (uint8_t*)list->items;
+        const uint8_t* items = (const uint8_t*)list->items;
         *result = items[index];
         return true;
     }
@@ -619,7 +619,7 @@ bool get_list_int16(int16_t* result, const PRIMITIVE_LIST_INT16* list, size_t in
     }
 
     if(index < list->length) {
-        int16_t* items = (int16_t*)list->items;
+        const int16_t* items = (const int16_t*)list->items;
         *result = items[index];
         return true;
     }
@@ -633,7 +633,7 @@ bool get_list_uint16(uint16_t* result, const PRIMITIVE_LIST_UINT16* list, size_t
     }
 
     if(index < list->length) {
-        uint16_t* items = (uint16_t*)list->items;
+        const uint16_t* items = (const uint16_t*)list->items;
         *result = items[index];
         return true;
     }
@@ -647,7 +647,7 @@ bool get_list_int32(int32_t* result, const PRIMITIVE_LIST_INT32* list, size_t in
     }
 
     if(index < list->length) {
-        int32_t* items = (int32_t*)list->items;
+        const int32_t* items = (const int32_t*)list->items;
         *result = items[index];
         return true;
     }
@@ -661,7 +661,7 @@ bool get_list_uint32(uint32_t* result, const PRIMITIVE_LIST_UINT32* list, size_t
     }
 
     if(index < list->length) {
-        uint32_t* items = (uint32_t*)list->items;
+        const uint32_t* items = (const uint32_t*)list->items;
         *result = items[index];
         return true;
     }
@@ -675,7 +675,7 @@ bool get_list_size(size_t* result, const PRIMITIVE_LIST_SIZE* list, size_t index
     }
 
     if(index < list->length) {
-        size_t* items = (size_t*)list->items;
+        const size_t* items = (const size_t*)list->items;
         *result = items[index];
         return true;
     }
@@ -689,7 +689,7 @@ bool get_list_ssize(ssize_t* result, const PRIMITIVE_LIST_SSIZE* list, size_t in
     }
 
     if(index < list->length) {
-        ssize_t* items = (ssize_t*)list->items;
+        const ssize_t* items = (const ssize_t*)list->items;
         *result = items[index];
         return true;
     }
@@ -703,7 +703,7 @@ bool get_list_tchar(TCHAR* result, const PRIMITIVE_LIST_TCHAR* list, size_t inde
     }
 
     if(index < list->length) {
-        TCHAR* items = (TCHAR*)list->items;
+        const TCHAR* items = (const TCHAR*)list->items;
         *result = items[index];
         return true;
     }

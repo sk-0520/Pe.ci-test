@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 {
@@ -61,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
             Options.AutoSend = false;
         }
 
-        public async Task SendAsync()
+        public async Task SendAsync(CancellationToken cancellationToken)
         {
             ErrorMessage = string.Empty;
             SendStatus.State = RunningState.Running;
@@ -92,10 +93,10 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
                 // 失敗時にリフレッシュしたいので毎回生成する
                 try {
                     using(var httpClient = new HttpClient()) {
-                        var result = await httpClient.PostAsync(Options.PostUri, content);
+                        var result = await httpClient.PostAsync(Options.PostUri, content, cancellationToken);
                         if(result.IsSuccessStatusCode) {
                             Logger.LogInformation("送信完了");
-                            var rawResponse = await result.Content.ReadAsStringAsync();
+                            var rawResponse = await result.Content.ReadAsStringAsync(cancellationToken);
                             var response = JsonSerializer.Deserialize<CrashReportResponse>(rawResponse);
 
                             if(response != null && response.Success) {
@@ -108,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 
                             return;
                         }
-                        var s = await result.Content.ReadAsStringAsync();
+                        var s = await result.Content.ReadAsStringAsync(cancellationToken);
                         Logger.LogWarning("HTTP: {0}", result.StatusCode);
                         Logger.LogWarning("{0}", s);
                         if(!result.IsSuccessStatusCode && counter.IsLast) {
@@ -120,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
                     Logger.LogWarning(ex, ex.Message);
                     if(!counter.IsLast) {
                         Logger.LogDebug("待機中: {0}", RetryWaitTime);
-                        await Task.Delay(RetryWaitTime);
+                        await Task.Delay(RetryWaitTime, cancellationToken);
                     } else {
                         ErrorMessage = ex.Message;
                         SendStatus.State = RunningState.Error;
@@ -153,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 
         #region ElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             var rawData = LoadRawData();
 

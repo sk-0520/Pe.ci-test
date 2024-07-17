@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 {
@@ -69,13 +70,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #region function
 
-        public virtual async Task<ILauncherExecuteResult> ExecuteAsync(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IReadOnlyLauncherRedoData redoData, IScreen screen)
+        public virtual async Task<ILauncherExecuteResult> ExecuteAsync(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IReadOnlyLauncherRedoData redoData, IScreen screen, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
             try {
                 var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache.Instance, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
-                var result = await launcherExecutor.ExecuteAsync(LauncherItemKind.File, fileData, fileData, environmentVariables, redoData, screen);
+                var result = await launcherExecutor.ExecuteAsync(LauncherItemKind.File, fileData, fileData, environmentVariables, redoData, screen, cancellationToken);
                 return result;
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
@@ -92,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #region ElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             // 独立した何かなのでここでは何もしない
             return Task.CompletedTask;
@@ -135,8 +136,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             return true;
         }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool)"/>
-        public Task ReceiveViewClosedAsync(bool isUserOperation)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosedAsync(bool, CancellationToken)"/>
+        public Task ReceiveViewClosedAsync(bool isUserOperation, CancellationToken cancellationToken)
         {
             ViewCreated = false;
             return Task.CompletedTask;
@@ -223,7 +224,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #region ExtendsExecuteElement
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             LauncherItemData launcherItem;
             LauncherFileData fileData;
@@ -265,9 +266,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             return Task.CompletedTask;
         }
 
-        public override async Task<ILauncherExecuteResult> ExecuteAsync(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IReadOnlyLauncherRedoData redoData, IScreen screen)
+        public override async Task<ILauncherExecuteResult> ExecuteAsync(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IReadOnlyLauncherRedoData redoData, IScreen screen, CancellationToken cancellationToken)
         {
-            var result = await base.ExecuteAsync(fileData, environmentVariables, redoData, screen);
+            var result = await base.ExecuteAsync(fileData, environmentVariables, redoData, screen, cancellationToken);
 
             if(result.Success) {
                 using(var context = MainDatabaseBarrier.WaitWrite()) {

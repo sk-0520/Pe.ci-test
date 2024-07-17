@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, NoteConfiguration noteConfiguration, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, ApplicationConfiguration applicationConfiguration, IOrderManager orderManager, ICultureService cultureService,  IClipboardManager clipboardManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, NoteConfiguration noteConfiguration, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, ApplicationConfiguration applicationConfiguration, IOrderManager orderManager, ICultureService cultureService, IClipboardManager clipboardManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
             NoteConfiguration = noteConfiguration;
@@ -355,7 +355,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     ShowContentKindChangeConfirm = true;
                 } else {
                     // 変換するがユーザー選択は不要
-                    _ = Model.ConvertContentKindAsync(value);
+                    _ = Model.ConvertContentKindAsync(value, CancellationToken.None);
                 }
             }
         }
@@ -601,7 +601,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             async () => {
                 Flush();
 
-                await Model.ConvertContentKindAsync(ChangingContentKind);
+                await Model.ConvertContentKindAsync(ChangingContentKind, CancellationToken.None);
                 ShowContentKindChangeConfirm = false;
             }
         );
@@ -1296,7 +1296,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private void FileDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private async Task FileDropAsync(UIElement sender, DragEventArgs e)
+        private async Task FileDropAsync(UIElement sender, DragEventArgs e, CancellationToken cancellationToken)
         {
             if(e.Effects.HasFlag(DragDropEffects.Copy) && e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -1304,7 +1304,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     e.Handled = true;
                     Logger.LogDebug("A");
                     await DispatcherWrapper.BeginAsync(async () => {
-                        var result = await Model.AddFileAsync(filePaths[0], NoteFileKind.Reference, CancellationToken.None);
+                        var result = await Model.AddFileAsync(filePaths[0], NoteFileKind.Reference, cancellationToken);
                         Logger.LogDebug("C: {Result}", result);
                     }, DispatcherPriority.ApplicationIdle);
                     Logger.LogDebug("B");
@@ -1371,11 +1371,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public async Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public async Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
             window.Deactivated -= Window_Deactivated;
 
-            await Model.ReceiveViewClosedAsync(isUserOperation);
+            await Model.ReceiveViewClosedAsync(isUserOperation, cancellationToken);
 
             if(PrepareToRemove) {
                 Flush();

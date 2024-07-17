@@ -477,9 +477,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
-            Model.ReceiveViewClosedAsync(isUserOperation);
+            Model.ReceiveViewClosedAsync(isUserOperation, cancellationToken);
             HideWaitTimer.Stop();
             return Task.CompletedTask;
         }

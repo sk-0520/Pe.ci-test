@@ -61,7 +61,7 @@ do { \
         cpp_name.elements = cpp_name.library.buffer; \
     } \
 } while(0); \
-type* var_name = cpp_name.elements; \
+type* var_name = cpp_name.elements
 
 /// <summary>
 /// <c>new_stack_or_heap_array</c> で作成したデータはスタック上に確保されたか。
@@ -74,9 +74,11 @@ type* var_name = cpp_name.elements; \
 /// </summary>
 /// <param name="stack_or_heap_array">プリプロセッサ変数名(<c>new_stack_or_heap_array</c>の<c>cpp_name</c>)。</param>
 #define release_stack_or_heap_array(stack_or_heap_array) \
+do \
 if(!is_stack_array(stack_or_heap_array)) { \
     release_memory(stack_or_heap_array.elements, stack_or_heap_array.library.mr); \
-}
+} \
+while(false)
 
 /// <summary>
 /// デフォルトのメモリアリーナリソースを取得。

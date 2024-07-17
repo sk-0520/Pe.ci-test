@@ -15,8 +15,8 @@ void release_object_list_value_null(void* value, void* data, const MEMORY_ARENA_
 
 int compare_object_list_value_text(const void* a, const void* b, void* data)
 {
-    const TEXT* aa = (TEXT*)a;
-    const TEXT* bb = (TEXT*)b;
+    const TEXT* aa = (const TEXT*)a;
+    const TEXT* bb = (const TEXT*)b;
     return compare_text(aa, bb, false);
 }
 

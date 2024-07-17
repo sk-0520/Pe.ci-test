@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -48,8 +49,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 
         private ICommand? _ViewLoadedCommand;
         public ICommand ViewLoadedCommand => this._ViewLoadedCommand ??= new DelegateCommand(
-            () => {
-                Model.LoadProgramsAsync().ConfigureAwait(false);
+        () => {
+                Model.LoadProgramsAsync(CancellationToken.None).ConfigureAwait(false);
             }
         );
 
@@ -70,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
                 });
                 try {
                     NowImporting = true;
-                    await Model.ImportAsync();
+                    await Model.ImportAsync(CancellationToken.None);
                     CloseRequest.Send();
                 } finally {
                     NowImporting = false;
@@ -114,8 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         public void ReceiveViewClosing(Window window, CancelEventArgs e)
         { }
 
-        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
-        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation)
+        public Task ReceiveViewClosedAsync(Window window, bool isUserOperation, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }

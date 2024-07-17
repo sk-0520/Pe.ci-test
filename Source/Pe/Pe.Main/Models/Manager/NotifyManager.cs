@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -220,7 +221,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         /// <param name="notifyMessage"></param>
         /// <returns></returns>
-        Task<NotifyLogId> AppendLogAsync(NotifyMessage notifyMessage);
+        Task<NotifyLogId> AppendLogAsync(NotifyMessage notifyMessage, CancellationToken cancellationToken);
         /// <summary>
         ///通知ログ置き換え。
         /// </summary>
@@ -272,7 +273,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 //[NotifyLogKind.Platform] = TimeSpan.Zero,
             };
 
-            StreamTimer = new Timer() {
+            StreamTimer = new System.Timers.Timer() {
                 Interval = TimeSpan.FromSeconds(1).TotalMilliseconds,
                 AutoReset = true,
             };
@@ -282,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region property
 
-        Timer StreamTimer { get; }
+        System.Timers.Timer StreamTimer { get; }
         IReadOnlyDictionary<NotifyLogKind, TimeSpan> NotifyLogLifeTimes { get; }
 
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -480,14 +481,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
         /// <inheritdoc cref="INotifyManager.AppendLogAsync(NotifyMessage)" />
-        public async Task<NotifyLogId> AppendLogAsync(NotifyMessage notifyMessage)
+        public async Task<NotifyLogId> AppendLogAsync(NotifyMessage notifyMessage, CancellationToken cancellationToken)
         {
             if(notifyMessage == null) {
                 throw new ArgumentNullException(nameof(notifyMessage));
             }
 
             var element = DiContainer.Build<NotifyLogItemElement>(NotifyLogId.NewId(), notifyMessage);
-            await element.InitializeAsync();
+            await element.InitializeAsync(cancellationToken);
 
             Logger.LogDebug("[{0}] {1}: {2}, {3}", notifyMessage.Header, notifyMessage.Kind, notifyMessage.Content.Message, element.NotifyLogId);
 

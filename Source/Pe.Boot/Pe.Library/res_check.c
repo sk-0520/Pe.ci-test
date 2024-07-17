@@ -22,7 +22,7 @@ typedef enum
     RES_CHECK_TYPE_FILE = 1,
 } RES_CHECK_TYPE;
 
-static const struct RES_CHECK_FORAMT
+static const struct RES_CHECK_FORMAT
 {
     const TCHAR* alloc_msg;
     const TCHAR* alloc_err;
@@ -57,7 +57,7 @@ typedef struct tag_RES_CHECK_ITEM
     RES_CHECK_STOCK_ITEM* stock_items;
     size_t stock_items_length;
     size_t* stock_item_count;
-    const struct RES_CHECK_FORAMT* formats;
+    const struct RES_CHECK_FORMAT* formats;
 } RES_CHECK_ITEM;
 
 static library_func_rc_output library_rc_output;

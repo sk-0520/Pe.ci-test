@@ -4,6 +4,7 @@
 			"src": [
 				{
 					"files": [
+						"Source/Pe/Pe.CommonTest/Pe.CommonTest.csproj",
 						"Source/Pe/Pe.PInvoke/Pe.PInvoke.csproj",
 						"Source/Pe/Pe.Bridge/Pe.Bridge.csproj",
 						"Source/Pe/Pe.Embedded/Pe.Embedded.csproj",

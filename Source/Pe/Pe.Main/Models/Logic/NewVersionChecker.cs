@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        public async Task<NewVersionData?> RequestUpdateDataAsync(Uri uri)
+        public async Task<NewVersionData?> RequestUpdateDataAsync(Uri uri, CancellationToken cancellationToken)
         {
             using var agent = UserAgentManager.CreateUserAgent();
             try {
@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     Logger.LogWarning("GetAsync: {0}, {1}", response.StatusCode, uri);
                     return null;
                 }
-                var content = await response.Content.ReadAsStringAsync();
+                var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
                 //TODO: Serializer.cs に統合したい
                 var updateData = System.Text.Json.JsonSerializer.Deserialize<NewVersionData>(content);
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// アプリケーションの新バージョン確認。
         /// </summary>
         /// <returns>新バージョンがあれば新情報。なければ<see langword="null" />。</returns>
-        public async Task<NewVersionItemData?> CheckApplicationNewVersionAsync(IEnumerable<string> updateCheckUrlItems, CancellationToken cancellationToken = default)
+        public async Task<NewVersionItemData?> CheckApplicationNewVersionAsync(IEnumerable<string> updateCheckUrlItems, CancellationToken cancellationToken)
         {
             using var agent = UserAgentManager.CreateUserAgent();
             foreach(var updateCheckUrl in updateCheckUrlItems) {
@@ -169,14 +169,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             ;
         }
 
-
-
         /// <summary>
         /// プラグインの新バージョン確認。
         /// </summary>
         /// <param name="plugin">プラグイン。</param>
         /// <returns>新バージョンがあれば新情報。なければ<see langword="null" />。</returns>
-        public async Task<NewVersionItemData?> CheckPluginNewVersionAsync(Uri apiServerPluginInformation, PluginId pluginId, Version pluginVersion, IEnumerable<string> urls)
+        public async Task<NewVersionItemData?> CheckPluginNewVersionAsync(Uri apiServerPluginInformation, PluginId pluginId, Version pluginVersion, IEnumerable<string> urls, CancellationToken cancellationToken)
         {
             Debug.Assert(pluginId != ContentTypeTextNet.Pe.Plugins.DefaultTheme.DefaultTheme.Information.PluginIdentifiers.PluginId);
 
@@ -186,7 +184,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     continue;
                 }
 
-                var updateData = await RequestUpdateDataAsync(uri);
+                var updateData = await RequestUpdateDataAsync(uri, cancellationToken);
                 if(updateData == null) {
                     continue;
                 }
@@ -195,12 +193,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return result;
             }
 
-            var apiResult = await CheckPluginNewVersionByApiAsync(apiServerPluginInformation, pluginId, pluginVersion);
+            var apiResult = await CheckPluginNewVersionByApiAsync(apiServerPluginInformation, pluginId, pluginVersion, cancellationToken);
 
             return apiResult;
         }
 
-        public async Task<PluginInformationItemData?> GetPluginVersionInfoByApiAsync(Uri apiServerPluginInformation, PluginId pluginId)
+        public async Task<PluginInformationItemData?> GetPluginVersionInfoByApiAsync(Uri apiServerPluginInformation, PluginId pluginId, CancellationToken cancellationToken)
         {
             var json = JsonSerializer.Serialize(new {
                 plugin_ids = new[] {
@@ -214,13 +212,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             );
 
             using var agent = UserAgentManager.CreateUserAgent();
-            var response = await agent.PostAsync(apiServerPluginInformation, content);
+            var response = await agent.PostAsync(apiServerPluginInformation, content, cancellationToken);
 
             if(!response.IsSuccessStatusCode) {
                 return null;
             }
 
-            using var stream = await response.Content.ReadAsStreamAsync();
+            using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
             var serializer = new JsonTextSerializer();
             var result = serializer.Load<ServerApiResultData<PluginInformationResultData>>(stream);
             if(result.Data is not null && result.Data.Plugins.TryGetValue(pluginId.Id, out var item)) {
@@ -230,15 +228,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return null;
         }
 
-        private async Task<NewVersionItemData?> CheckPluginNewVersionByApiAsync(Uri apiServerPluginInformation, PluginId pluginId, Version pluginVersion)
+        private async Task<NewVersionItemData?> CheckPluginNewVersionByApiAsync(Uri apiServerPluginInformation, PluginId pluginId, Version pluginVersion, CancellationToken cancellationToken)
         {
-            var item = await GetPluginVersionInfoByApiAsync(apiServerPluginInformation, pluginId);
+            var item = await GetPluginVersionInfoByApiAsync(apiServerPluginInformation, pluginId, cancellationToken);
             if(item is null) {
                 return null;
             }
 
             var uri = new Uri(item.CheckUrl);
-            var updateData = await RequestUpdateDataAsync(uri);
+            var updateData = await RequestUpdateDataAsync(uri, cancellationToken);
             if(updateData is null) {
                 return null;
             }

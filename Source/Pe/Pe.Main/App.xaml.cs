@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main
 #endif
 
             var initializer = new ApplicationInitializer();
-            var accepted = await initializer.InitializeAsync(this, e);
+            var accepted = await initializer.InitializeAsync(this, e, CancellationToken.None);
             if(!accepted) {
                 Shutdown();
                 return;
@@ -76,13 +76,13 @@ namespace ContentTypeTextNet.Pe.Main
                 case Models.Data.RunMode.Normal: {
                         ApplicationManager = new ApplicationManager(initializer);
 
-                        if(! await ApplicationManager.StartupAsync(this, e)) {
+                        if(! await ApplicationManager.StartupAsync(this, e, CancellationToken.None)) {
                             Shutdown();
                             return;
                         }
 
                         var viewModel = ApplicationManager.CreateViewModel();
-                        await ApplicationManager.ExecuteAsync();
+                        await ApplicationManager.ExecuteAsync(CancellationToken.None);
 
                         await Dispatcher.BeginInvoke(new Action(() => {
                             Logger.LogInformation("つかえるよ！ 所要時間: {0}", stopwatch.Elapsed);
@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main
                             return;
                         }
                         var model = new CrashReport.Models.Element.CrashReportElement(options, initializer.Logging.Factory);
-                        await model.InitializeAsync();
+                        await model.InitializeAsync(CancellationToken.None);
                         var viewModel = new CrashReport.ViewModels.CrashReportViewModel(model, new Models.Telemetry.UserTracker(initializer.Logging.Factory), new ApplicationDispatcherWrapper(Timeout.InfiniteTimeSpan), initializer.Logging.Factory);
                         MainWindow = new CrashReport.Views.CrashReportWindow() {
                             DataContext = viewModel,

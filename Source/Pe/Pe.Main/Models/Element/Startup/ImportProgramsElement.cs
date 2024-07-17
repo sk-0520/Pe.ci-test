@@ -19,6 +19,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 {
@@ -82,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             ;
         }
 
-        public async Task LoadProgramsAsync()
+        public async Task LoadProgramsAsync(CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -105,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             ;
 
             foreach(var element in elements) {
-                await element.InitializeAsync();
+                await element.InitializeAsync(cancellationToken);
                 ProgramItems.Add(element);
             }
 
@@ -178,11 +179,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             IsRegisteredLauncher = true;
         }
 
-        public Task ImportAsync()
+        public Task ImportAsync(CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
-            return Task.Run(() => Import());
+            return Task.Run(() => Import(), cancellationToken);
             //Import();
             //return Task.CompletedTask;
         }
@@ -191,7 +192,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         #region ContextElementBase
 
-        protected override Task InitializeCoreAsync()
+        protected override Task InitializeCoreAsync(CancellationToken cancellationToken)
         {
             Logger.LogTrace("not impl");
             return Task.CompletedTask;

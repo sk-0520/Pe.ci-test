@@ -526,10 +526,11 @@ jobs:
         run: |
           dotnet tool install -g dotnet-reportgenerator-globaltool
           $files = @(Get-ChildItem -Filter coverage.cobertura.xml -Recurse)
-          # ソースファイルの位置を渡しておかないとソースが読めない問題対応(Pe.Bridgeは一人ではしゃいでるのでこれだけ単独補正)
+          # ソースファイルの位置を渡しておかないとソースが読めない問題対応(Pe.Bridge/Pe.CommonTestがはしゃいでるので補正)
           $sources = @(
             Join-Path -Path (Get-Location) -ChildPath Source | Join-Path -ChildPath Pe
             Join-Path -Path (Get-Location) -ChildPath Source | Join-Path -ChildPath Pe | Join-Path -ChildPath Pe.Bridge
+            Join-Path -Path (Get-Location) -ChildPath Source | Join-Path -ChildPath Pe | Join-Path -ChildPath Pe.CommonTest
           )
           reportgenerator `
             -reports:$($files -join ';') `

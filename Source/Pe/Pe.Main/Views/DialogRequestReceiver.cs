@@ -40,8 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
             }
 
             var messageParameter = (CommonMessageDialogRequestParameter)o.Parameter;
-            var response = MessageBox.Show(OwnerWindow, messageParameter.Message, messageParameter.Caption, messageParameter.Button, messageParameter.Icon, messageParameter.DefaultResult, messageParameter.Options);
-            //TODO: Callback ないんか
+            MessageBox.Show(OwnerWindow, messageParameter.Message, messageParameter.Caption, messageParameter.Button, messageParameter.Icon, messageParameter.DefaultResult, messageParameter.Options);
         }
 
         public void ReceiveFileSystemSelectDialogRequest(RequestEventArgs o)
