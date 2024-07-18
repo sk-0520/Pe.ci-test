@@ -25,4 +25,35 @@ jobs:
         with:
           name: package-${{ matrix.PLATFORM }}
           path: package/*
+          compression-level: 1
+          if-no-files-found: error
+
+  archive:
+    name: "Archive"
+    runs-on: ubuntu-latest
+
+    needs:
+      - package
+
+    steps:
+      - name: <Download> x86
+        uses: actions/download-artifact@v4
+        with:
+          name: package-x86
+
+      - name: <Download> x64
+        uses: actions/download-artifact@v4
+        with:
+          name: package-x64
+
+      - name: <ls>
+        shell: pwsh
+        run: Get-ChildItem -Recurse
+
+      - name: <Upload>
+        uses: actions/upload-artifact@v4
+        with:
+          name: archive
+          path: ./**/*.exe
+          compression-level: 9
           if-no-files-found: error
