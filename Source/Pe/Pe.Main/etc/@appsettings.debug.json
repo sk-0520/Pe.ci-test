@@ -21,5 +21,10 @@
 	},
 	"hook": {
 		"mouse": false
+	},
+	"command": {
+		"application_command": {
+			"is_enabled_exception": true
+		}
 	}
 }

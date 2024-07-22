@@ -12,7 +12,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// 別段指定しない<see cref="Throws"/>処理で継続できない場合に投げられる例外。
     /// </summary>
-    [Serializable]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public sealed class LogicException: Exception
     {
