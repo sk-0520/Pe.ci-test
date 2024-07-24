@@ -30,7 +30,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#957: ヘルプに対して全文検索を追加する",
+						"comments": [
+							"適当実装なのでくっそ甘い"
+						]
 					},
 					{
 						"revision": "",

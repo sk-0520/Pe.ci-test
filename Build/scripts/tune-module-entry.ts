@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 
 import * as tune_module from './tune-module';
 
