@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
     /// <summary>
     /// <see cref="ReaderWriterLockSlim"/>のラッパー。
     /// </summary>
-    public interface IReaderWriterLocker
+    public interface IReadWriteLockHelper
     {
         #region property
 
@@ -136,12 +136,11 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public IDisposable WaitWriteByDefaultTimeout();
 
         #endregion
-
     }
 
-    /// <inheritdoc cref="IReaderWriterLocker"/>
+    /// <inheritdoc cref="IReadWriteLockHelper"/>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0603:Delegate allocation from a method group")]
-    public class ReaderWriterLocker: DisposerBase, IReaderWriterLocker
+    public class ReadWriteLockHelper: DisposerBase, IReadWriteLockHelper
     {
         /// <summary>
         /// 再帰ロック不可で作成。
@@ -149,7 +148,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// <remarks>
         /// <para>通常はこっちでいいはず。</para>
         /// </remarks>
-        public ReaderWriterLocker()
+        public ReadWriteLockHelper()
         {
             Locker = new ReaderWriterLockSlim();
         }
@@ -158,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         /// 再帰指定でロック指定で作成。
         /// </summary>
         /// <param name="recursionPolicy"></param>
-        public ReaderWriterLocker(LockRecursionPolicy recursionPolicy)
+        public ReadWriteLockHelper(LockRecursionPolicy recursionPolicy)
         {
             Locker = new ReaderWriterLockSlim(recursionPolicy);
         }
@@ -246,15 +245,15 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
         #region IReaderWriterLocker
 
-        /// <inheritdoc cref="IReaderWriterLocker"/>
+        /// <inheritdoc cref="IReadWriteLockHelper"/>
         public virtual TimeSpan DefaultReadTimeout { get; set; } = TimeSpan.FromSeconds(5);
-        /// <inheritdoc cref="IReaderWriterLocker"/>
+        /// <inheritdoc cref="IReadWriteLockHelper"/>
         public virtual TimeSpan DefaultUpdateTimeout { get; set; } = TimeSpan.FromSeconds(3);
-        /// <inheritdoc cref="IReaderWriterLocker"/>
+        /// <inheritdoc cref="IReadWriteLockHelper"/>
         public virtual TimeSpan DefaultWriteTimeout { get; set; } = TimeSpan.FromSeconds(3);
 
 
-        /// <inheritdoc cref="IReaderWriterLocker.BeginRead"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.BeginRead"/>
         public IDisposable BeginRead()
         {
             ThrowIfDisposed();
@@ -263,7 +262,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         }
 
 
-        /// <inheritdoc cref="IReaderWriterLocker.BeginUpdate"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.BeginUpdate"/>
         public IDisposable BeginUpdate()
         {
             ThrowIfDisposed();
@@ -272,7 +271,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return BeginCore(Locker.EnterUpgradeableReadLock, Locker.ExitUpgradeableReadLock);
         }
 
-        /// <inheritdoc cref="IReaderWriterLocker.BeginWrite"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.BeginWrite"/>
         public IDisposable BeginWrite()
         {
             ThrowIfDisposed();
@@ -280,7 +279,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return BeginCore(Locker.EnterWriteLock, Locker.ExitWriteLock);
         }
 
-        /// <inheritdoc cref="IReaderWriterLocker.TryRead(TimeSpan, Action)"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.TryRead(TimeSpan, Action)"/>
         public bool TryRead(TimeSpan timeout, Action lockedAction)
         {
             if(lockedAction == null) {
@@ -291,7 +290,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return TryCore(timeout, lockedAction, Locker.TryEnterReadLock, Locker.ExitReadLock);
         }
 
-        /// <inheritdoc cref="IReaderWriterLocker.TryReadByDefaultTimeout(Action)"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.TryReadByDefaultTimeout(Action)"/>
         public bool TryReadByDefaultTimeout(Action lockedAction)
         {
             ThrowIfDisposed();
@@ -299,7 +298,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return TryUpdate(DefaultReadTimeout, lockedAction);
         }
 
-        /// <inheritdoc cref="IReaderWriterLocker.TryUpdate(TimeSpan, Action)"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.TryUpdate(TimeSpan, Action)"/>
         public bool TryUpdate(TimeSpan timeout, Action lockedAction)
         {
             if(lockedAction == null) {
@@ -310,7 +309,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return TryCore(timeout, lockedAction, Locker.TryEnterUpgradeableReadLock, Locker.ExitUpgradeableReadLock);
         }
 
-        /// <inheritdoc cref="IReaderWriterLocker.TryUpdateByDefaultTimeout(Action)"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.TryUpdateByDefaultTimeout(Action)"/>
         public bool TryUpdateByDefaultTimeout(Action lockedAction)
         {
             ThrowIfDisposed();
@@ -318,7 +317,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return TryUpdate(DefaultUpdateTimeout, lockedAction);
         }
 
-        /// <inheritdoc cref="IReaderWriterLocker.TryWrite(TimeSpan, Action)"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.TryWrite(TimeSpan, Action)"/>
         public bool TryWrite(TimeSpan timeout, Action lockedAction)
         {
             if(lockedAction == null) {
@@ -329,7 +328,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return TryCore(timeout, lockedAction, Locker.TryEnterWriteLock, Locker.ExitWriteLock);
         }
 
-        /// <inheritdoc cref="IReaderWriterLocker.TryWriteByDefaultTimeout(Action)"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.TryWriteByDefaultTimeout(Action)"/>
         public bool TryWriteByDefaultTimeout(Action lockedAction)
         {
             ThrowIfDisposed();
@@ -337,7 +336,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return TryWrite(DefaultWriteTimeout, lockedAction);
         }
 
-        /// <inheritdoc cref="IReaderWriterLocker.WaitRead(TimeSpan)"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.WaitRead(TimeSpan)"/>
         public IDisposable WaitRead(TimeSpan timeout)
         {
             ThrowIfDisposed();
@@ -345,7 +344,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return WaitCore(timeout, Locker.TryEnterReadLock, Locker.ExitReadLock);
         }
 
-        /// <inheritdoc cref="IReaderWriterLocker.WaitReadByDefaultTimeout"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.WaitReadByDefaultTimeout"/>
         public IDisposable WaitReadByDefaultTimeout()
         {
             ThrowIfDisposed();
@@ -353,7 +352,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return WaitRead(DefaultReadTimeout);
         }
 
-        /// <inheritdoc cref="IReaderWriterLocker.WaitUpdate(TimeSpan)"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.WaitUpdate(TimeSpan)"/>
         public IDisposable WaitUpdate(TimeSpan timeout)
         {
             ThrowIfDisposed();
@@ -361,7 +360,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return WaitCore(timeout, Locker.TryEnterUpgradeableReadLock, Locker.ExitUpgradeableReadLock);
         }
 
-        /// <inheritdoc cref="IReaderWriterLocker.WaitUpdateByDefaultTimeout"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.WaitUpdateByDefaultTimeout"/>
         public IDisposable WaitUpdateByDefaultTimeout()
         {
             ThrowIfDisposed();
@@ -369,7 +368,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return WaitUpdate(DefaultUpdateTimeout);
         }
 
-        /// <inheritdoc cref="IReaderWriterLocker.WaitWrite(TimeSpan)"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.WaitWrite(TimeSpan)"/>
         public IDisposable WaitWrite(TimeSpan timeout)
         {
             ThrowIfDisposed();
@@ -377,7 +376,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return WaitCore(timeout, Locker.TryEnterWriteLock, Locker.ExitWriteLock);
         }
 
-        /// <inheritdoc cref="IReaderWriterLocker.WaitWriteByDefaultTimeout"/>
+        /// <inheritdoc cref="IReadWriteLockHelper.WaitWriteByDefaultTimeout"/>
         public IDisposable WaitWriteByDefaultTimeout()
         {
             ThrowIfDisposed();

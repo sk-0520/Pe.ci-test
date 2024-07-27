@@ -71,10 +71,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory);
 
-            var readerWriterLockerPack = new ApplicationReaderWriterLockerPack(
-                new ApplicationMainReaderWriterLocker(),
-                new ApplicationLargeReaderWriterLocker(),
-                new ApplicationTemporaryReaderWriterLocker()
+            var readerWriterLockerPack = new ApplicationReadWriteLockHelperPack(
+                new ApplicationMainReadWriteLockHelper(),
+                new ApplicationLargeReadWriteLockHelper(),
+                new ApplicationTemporaryReadWriteLockHelper()
             );
             var barrierPack = new ApplicationDatabaseBarrierPack(
                 new ApplicationDatabaseBarrier(accessorPack.Main, readerWriterLockerPack.Main),
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<ITemporaryDatabaseAccessor, ApplicationDatabaseAccessor>(accessorPack.Temporary)
 
                 .Register<IDatabaseBarrierPack, ApplicationDatabaseBarrierPack>(barrierPack)
-                .Register<IReaderWriterLockerPack, ApplicationReaderWriterLockerPack>(readerWriterLockerPack)
+                .Register<IReadWriteLockHelperPack, ApplicationReadWriteLockHelperPack>(readerWriterLockerPack)
                 .Register<IDatabaseDelayWriterPack, ApplicationDatabaseDelayWriterPack>(delayWriterPack)
 
                 .Register<IMainDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.Main)
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 () => container.Unregister<IDatabaseFactoryPack>(),
                 () => container.Unregister<IDatabaseAccessorPack>(),
                 () => container.Unregister<IDatabaseBarrierPack>(),
-                () => container.Unregister<IReaderWriterLockerPack>(),
+                () => container.Unregister<IReadWriteLockHelperPack>(),
                 () => container.Unregister<IDatabaseDelayWriterPack>(),
 
                 () => container.Unregister<IMainDatabaseBarrier>(),

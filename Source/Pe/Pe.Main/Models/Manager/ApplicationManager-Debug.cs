@@ -121,11 +121,11 @@ echo end
             var result = launcherExecutor.ExecuteAsync(LauncherItemKind.File, data, data, env, LauncherRedoData.GetDisable(), Screen.PrimaryScreen ?? throw new InvalidOperationException("Screen.PrimaryScreen is null"), CancellationToken.None);
         }
 
-        private KeyboardHooker? dbgKeyboardHooker { get; set; }
-        private MouseHooker? dbgMouseHooker { get; set; }
+        private KeyboardHook? dbgKeyboardHooker { get; set; }
+        private MouseHook? dbgMouseHooker { get; set; }
         private void DebugHook()
         {
-            dbgKeyboardHooker = new KeyboardHooker(LoggerFactory);
+            dbgKeyboardHooker = new KeyboardHook(LoggerFactory);
             dbgKeyboardHooker.KeyDown += (sender, e) => {
                 Logger.LogTrace("UP: key = {0}, mods = {1}, {2}", e.Key, e.modifierKeyStatus, e.kbdll);
             };
@@ -134,7 +134,7 @@ echo end
             };
             dbgKeyboardHooker.Register();
 
-            dbgMouseHooker = new MouseHooker(LoggerFactory);
+            dbgMouseHooker = new MouseHook(LoggerFactory);
             //dbgMouseHooker.Register();
         }
 
@@ -178,7 +178,7 @@ echo end
                 }
             ));
 
-            dbgKeyboardHooker = new KeyboardHooker(LoggerFactory);
+            dbgKeyboardHooker = new KeyboardHook(LoggerFactory);
             dbgKeyboardHooker.KeyDown += (sender, e) => {
                 var jobs = dbgKeyActionChecker.Find(true, e.Key, e.modifierKeyStatus, e.kbdll);
                 if(jobs.Any()) {

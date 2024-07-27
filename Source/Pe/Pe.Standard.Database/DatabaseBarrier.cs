@@ -212,7 +212,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
     /// <inheritdoc cref="IDatabaseBarrier" />
     public class DatabaseBarrier: IDatabaseBarrier
     {
-        public DatabaseBarrier(IDatabaseAccessor accessor, ReaderWriterLocker locker)
+        public DatabaseBarrier(IDatabaseAccessor accessor, ReadWriteLockHelper locker)
         {
             Accessor = accessor;
             Locker = locker;
@@ -221,7 +221,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         #region property
 
         protected IDatabaseAccessor Accessor { get; }
-        protected ReaderWriterLocker Locker { get; }
+        protected ReadWriteLockHelper Locker { get; }
 
         #endregion
 
@@ -231,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="IDatabaseBarrier.WaitWrite" />
         /// </summary>
         /// <remarks>
-        /// <para><see cref="ReaderWriterLocker.WaitWriteByDefaultTimeout()"/>が規定時間。</para>
+        /// <para><see cref="ReadWriteLockHelper.WaitWriteByDefaultTimeout()"/>が規定時間。</para>
         /// </remarks>
         public virtual IDatabaseTransaction WaitWrite()
         {
@@ -254,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <inheritdoc cref="IDatabaseBarrier.WaitRead" />
         /// </summary>
         /// <remarks>
-        /// <para><see cref="ReaderWriterLocker.WaitReadByDefaultTimeout()"/>が規定時間。</para>
+        /// <para><see cref="ReadWriteLockHelper.WaitReadByDefaultTimeout()"/>が規定時間。</para>
         /// </remarks>
         /// <returns></returns>
         public virtual IDatabaseTransaction WaitRead()

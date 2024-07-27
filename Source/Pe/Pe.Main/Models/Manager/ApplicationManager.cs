@@ -142,8 +142,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             fullscreenWatcher.ExcludeToolWindow = fullscreen.ExcludeToolWindow;
             ApplicationDiContainer.Register<IFullscreenWatcher, FullscreenWatcher>(fullscreenWatcher);
 
-            KeyboradHooker = new KeyboardHooker(LoggerFactory);
-            MouseHooker = new MouseHooker(LoggerFactory);
+            KeyboradHooker = new KeyboardHook(LoggerFactory);
+            MouseHooker = new MouseHook(LoggerFactory);
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
 
@@ -200,8 +200,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private HwndSource? MessageWindowHandleSource { get; set; }
         //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
 
-        private KeyboardHooker KeyboradHooker { get; }
-        private MouseHooker MouseHooker { get; }
+        private KeyboardHook KeyboradHooker { get; }
+        private MouseHook MouseHooker { get; }
         private KeyActionChecker KeyActionChecker { get; }
         private KeyActionAssistant KeyActionAssistant { get; }
 

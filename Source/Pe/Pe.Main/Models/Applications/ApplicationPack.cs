@@ -111,12 +111,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public interface IReaderWriterLockerPack: IApplicationPack<IReaderWriterLocker>
+    public interface IReadWriteLockHelperPack: IApplicationPack<IReadWriteLockHelper>
     { }
 
-    internal sealed class ApplicationReaderWriterLockerPack: TApplicationPackBase<IReaderWriterLocker, ApplicationReaderWriterLockerBase>, IReaderWriterLockerPack
+    internal sealed class ApplicationReadWriteLockHelperPack: TApplicationPackBase<IReadWriteLockHelper, ApplicationReadWriteLockHelperBase>, IReadWriteLockHelperPack
     {
-        public ApplicationReaderWriterLockerPack(ApplicationMainReaderWriterLocker main, ApplicationLargeReaderWriterLocker large, ApplicationTemporaryReaderWriterLocker temporary)
+        public ApplicationReadWriteLockHelperPack(ApplicationMainReadWriteLockHelper main, ApplicationLargeReadWriteLockHelper large, ApplicationTemporaryReadWriteLockHelper temporary)
             : base(main, large, temporary)
         { }
     }

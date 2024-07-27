@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
     internal sealed class ApplicationDatabaseBarrier: DatabaseBarrier, IMainDatabaseBarrier, ILargeDatabaseBarrier, ITemporaryDatabaseBarrier
     {
-        public ApplicationDatabaseBarrier(IDatabaseAccessor accessor, ReaderWriterLocker locker)
+        public ApplicationDatabaseBarrier(IDatabaseAccessor accessor, ReadWriteLockHelper locker)
             : base(accessor, locker)
         { }
     }

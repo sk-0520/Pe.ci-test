@@ -9,14 +9,14 @@ using Xunit;
 
 namespace ContentTypeTextNet.Pe.Standard.Base.Test
 {
-    public class ReaderWriterLockerTest
+    public class ReadWriteLockHelper
     {
         [Fact]
         public void ReadLockTest()
         {
-            var rwl = new ReaderWriterLocker();
+            var test = new Base.ReadWriteLockHelper();
             Parallel.For(0, 1000, n => {
-                using(rwl.BeginRead()) {
+                using(test.BeginRead()) {
                     Assert.True(true);
                     //Console.WriteLine(n);
                 }
@@ -26,10 +26,10 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         [Fact]
         public void WriteLockTest()
         {
-            var rwl = new ReaderWriterLocker();
-            using(rwl.BeginWrite()) {
+            var test = new Base.ReadWriteLockHelper();
+            using(test.BeginWrite()) {
                 try {
-                    using(rwl.BeginRead()) {
+                    using(test.BeginRead()) {
                         Assert.True(false);
                     }
                 } catch(LockRecursionException) {
@@ -38,5 +38,4 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
             }
         }
     }
-
 }
