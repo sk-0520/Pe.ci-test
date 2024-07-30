@@ -1,0 +1,132 @@
+{
+	"general": {
+		"project_name": "",
+		"mutex_name": "",
+		"log_conf_file_name": "",
+		"support_cultures": [
+		],
+		"license_name": "",
+		"license_uri": "http://localhost.invalid",
+		"project_repository_uri": "http://localhost.invalid",
+		"project_forum_uri": "http://localhost.invalid",
+		"project_website_uri": "http://localhost.invalid",
+		"project_plugins_uri": "http://localhost.invalid",
+		"author_website_uri": "http://localhost.invalid",
+		"version_check_url_items": [
+			"http://localhost.invalid/version_check_url_item/1"
+		],
+		"update_wait": "0.00:00:00.0",
+		"dispatcher_wait": "0.00:00:00.0",
+		"ipc_wait": "0.00:00:00.0",
+		"can_send_crash_report": false,
+		"unhandled_exception_handled": false
+	},
+	"web": {
+		"view_useragent_format": "",
+		"client_useragent_format": "",
+		"developer_tools": false
+	},
+	"api": {
+		"crash_report_uri": "http://localhost.invalid",
+		"crash_report_source_uri": "http://localhost.invalid",
+		"feedback_uri": "http://localhost.invalid",
+		"feedback_source_uri": "http://localhost.invalid",
+		"server_plugin_information": "http://localhost.invalid"
+	},
+	"backup": {
+		"setting_count": 0,
+		"archive_count": 0
+	},
+	"file": {
+		"directory_remove_wait_count": 0,
+		"directory_remove_wait_time": "0.00:00:00.0",
+		"give_priority_to_file": false
+	},
+	"display": {
+		"changed_retry_count": 0,
+		"changed_retry_wait_time": "0.00:00:00.0"
+	},
+	"hook": {
+		"keyboard": false,
+		"mouse": false
+	},
+	"notify_log": {
+		"normal_log_display_time": "0.00:00:00.0",
+		"undo_log_display_time": "0.00:00:00.0",
+		"command_log_display_time": "0.00:00:00.0",
+		"fadeout_time": "0.00:00:00.0"
+	},
+	"launcher_item": {
+		"icon_refresh_time": "0.00:00:00.0",
+		"auto_import_exclude_patterns": [
+		]
+	},
+	"launcher_toolbar": {
+		"auto_hide_show_wait_time": "0.00:00:00.0"
+	},
+	"launcher_group": {},
+	"note": {
+		"moving_opacity": 0,
+		"layout_absolute_size": {
+			"width": 0,
+			"height": 0
+		},
+		"layout_relative_size": {
+			"width": 0,
+			"height": 0
+		},
+		"font_size": {
+			"minimum": 0,
+			"maximum": 0,
+			"default": 0
+		},
+		"hidden_blind_wait_time": {
+			"minimum": "0.00:00:00.0",
+			"maximum": "0.00:00:00.0"
+		},
+		"hidden_compact_wait_time": {
+			"minimum": "0.00:00:00.0",
+			"maximum": "0.00:00:00.0"
+		}
+	},
+	"command": {
+		"icon_clear_wait_time": "0.00:00:00.0",
+		"view_close_wait_time": "0.00:00:00.0",
+		"application_command": {
+			"prefix": "",
+			"separator": "",
+			"mapping": {
+			},
+			"is_enabled_exception": false
+		}
+	},
+	"platform": {
+		"theme_accent_color_minimum_alpha": 0,
+		"theme_accent_color_default_alpha": 0,
+		"explorer_supporter_refresh_time": "0.00:00:00.0",
+		"explorer_supporter_cache_size": 0,
+		"screen_elements_reset_wait_time": "0.00:00:00.0",
+		"idle_disable_cycle_time": "0.00:00:00.0",
+		"idle_check_cycle_time": "0.00:00:00.0",
+		"fullscreen": {
+			"": "",
+			"ignore_window_class": [
+			],
+			"ignore_window_class_text": [
+			],
+			"topmost_only": false,
+			"exclude_noactive": false,
+			"exclude_toolwindow": false
+		}
+	},
+	"schedule": {
+		"low_scheduler_time": "0.00:00:00.0",
+		"launcher_item_icon_refresh": ""
+	},
+	"plugin": {
+		"extensions": [
+		],
+		"ignore_base_file_names": [
+		]
+	}
+}

@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             userNotifyProgress.Start();
 
             if(!targetFile.Exists) {
-                Logger.LogWarning("検査ファイルが存在しない: {0}", targetFile);
+                Logger.LogWarning("検査ファイルが存在しない: {File}", targetFile);
                 return false;
             }
 
@@ -73,25 +73,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             Logger.LogInformation("ハッシュ: {0}, {1}", updateItem.ArchiveHashKind, updateItem.ArchiveHashValue);
             using(var hashAlgorithm = HashUtility.Create(updateItem.ArchiveHashKind)) {
-                if(hashAlgorithm == null) {
-                    Logger.LogError("ハッシュ不明: {0}", updateItem.ArchiveHashKind);
-                    return false;
-                }
-
                 using var stream = targetFile.OpenRead();
-
-                using var CheckSumBuffer = new ArrayPoolObject<byte>(ChecksumSize);
+                using var checkSumBuffer = new ArrayPoolObject<byte>(ChecksumSize);
                 long totalReadSize = 0;
                 while(true) {
-                    var readSize = await stream.ReadAsync(CheckSumBuffer.Items, 0, CheckSumBuffer.Items.Length, cancellationToken);
+                    var readSize = await stream.ReadAsync(checkSumBuffer.Items, 0, checkSumBuffer.Items.Length, cancellationToken);
                     if(readSize == 0) {
                         break;
                     }
-                    hashAlgorithm.TransformBlock(CheckSumBuffer.Items, 0, readSize, CheckSumBuffer.Items, 0);
+                    hashAlgorithm.TransformBlock(checkSumBuffer.Items, 0, readSize, checkSumBuffer.Items, 0);
                     totalReadSize += readSize;
                     userNotifyProgress.Report(totalReadSize / (double)updateItem.ArchiveSize, string.Empty);
                 }
-                hashAlgorithm.TransformFinalBlock(CheckSumBuffer.Items, 0, 0);
+                hashAlgorithm.TransformFinalBlock(checkSumBuffer.Items, 0, 0);
                 var hash = ToCompareValue(BitConverter.ToString(hashAlgorithm.Hash!));
 
                 Logger.LogInformation("算出ハッシュ: {0}", hash);

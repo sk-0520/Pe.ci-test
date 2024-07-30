@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models
             ;
             using var stream = await mock.Object.GetStreamAsync(default!);
             var actual = new byte[stream.Length];
-            stream.Read(actual);
+            await stream.ReadAsync(actual);
             Assert.Equal(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, actual);
         }
 
