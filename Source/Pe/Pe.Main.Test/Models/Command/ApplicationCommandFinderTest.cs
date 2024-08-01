@@ -1,5 +1,7 @@
 using System;
 using System.Reflection;
+using System.Security.Cryptography;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Command;
 using Xunit;
 
@@ -7,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Command
 {
     public class ApplicationCommandTest
     {
-        #region property
+        #region function
 
         [Fact]
         public void EnumCheck()
@@ -21,6 +23,31 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Command
             }
         }
 
+
+        #endregion
+    }
+
+    public class ApplicationCommandParameterFactoryTest
+    {
+        #region property
+
+        //private Test Test = Test.Create();
+
+        #endregion
+
+        #region function
+
+        [Fact]
+        public void CreateParameterTest()
+        {
+            var applicationConfiguration = Test.GetApplicationConfiguration(this);
+
+            var test = new ApplicationCommandParameterFactory(applicationConfiguration.Command, new CurrentDispatcherWrapper());
+            var actual = test.CreateParameter(ApplicationCommand.Help, a => {
+                Assert.Fail();
+            });
+            Assert.Equal("help", actual.Header);
+        }
 
         #endregion
     }

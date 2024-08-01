@@ -96,12 +96,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         }
 
         public bool Set<TValue>(string key, TValue value, PluginPersistenceFormat format)
+            where TValue : notnull
         {
             Logger.LogTrace("{0}({1}): {2} = {3}, {4} = {5}, {6} = {7}", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId, nameof(key), key, nameof(value), value, nameof(format), format);
             return true;
         }
 
-        public bool Set<TValue>(string key, TValue value) => Set(key, value, PluginPersistenceFormat.Text);
+        public bool Set<TValue>(string key, TValue value)
+            where TValue : notnull
+        {
+            return Set(key, value, PluginPersistenceFormat.Text);
+        }
 
         public bool TryGet<TValue>(string key, [MaybeNullWhen(returnValue: false)] out TValue value)
         {

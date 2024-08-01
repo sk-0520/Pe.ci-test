@@ -106,6 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         }
 
         public bool Set<TValue>(LauncherItemId launcherItemId, string key, TValue value, PluginPersistenceFormat format)
+            where TValue : notnull
         {
             return SetImpl(value, format, (launcherItemId, key), (p, d, v) => {
                 var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
@@ -117,7 +118,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 }
             });
         }
-        public bool Set<TValue>(LauncherItemId launcherItemId, string key, TValue value) => Set(launcherItemId, key, value, PluginPersistenceFormat.Json);
+        public bool Set<TValue>(LauncherItemId launcherItemId, string key, TValue value)
+            where TValue : notnull
+        {
+            return Set(launcherItemId, key, value, PluginPersistenceFormat.Json);
+        }
 
         public bool Delete(LauncherItemId launcherItemId, string key)
         {

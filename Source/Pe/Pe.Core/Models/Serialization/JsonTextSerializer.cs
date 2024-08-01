@@ -39,15 +39,37 @@ namespace ContentTypeTextNet.Pe.Core.Models.Serialization
 
         #region property
 
-        public JsonReaderOptions ReaderOptions { get; set; } = new JsonReaderOptions() {
+        /// <summary>
+        /// デフォルト読み込み設定。
+        /// </summary>
+        public static JsonSerializerOptions DefaultReaderOptions { get; set; } = new JsonSerializerOptions() {
             AllowTrailingCommas = true,
-            CommentHandling = JsonCommentHandling.Skip,
+            ReadCommentHandling = JsonCommentHandling.Skip,
         };
 
-        public JsonWriterOptions WriterOptions { get; set; } = new JsonWriterOptions() {
+        /// <summary>
+        /// デフォルト書き込み設定。
+        /// </summary>
+        public static JsonWriterOptions DefaultWriterOptions { get; set; } = new JsonWriterOptions() {
             Indented = true,
             Encoder = JavaScriptEncoder.Default,
         };
+
+        /// <summary>
+        /// 読み込み設定。
+        /// </summary>
+        /// <remarks>
+        /// <see langword="null" />の場合はデフォルト設定(<see cref="DefaultReaderOptions"/>)を使用する。
+        /// </remarks>
+        public JsonSerializerOptions? ReaderOptions { get; set; }
+
+        /// <summary>
+        /// 書き込み設定。
+        /// </summary>
+        /// <remarks>
+        /// <see langword="null" />の場合はデフォルト設定(<see cref="DefaultWriterOptions"/>)を使用する。
+        /// </remarks>
+        public JsonWriterOptions? WriterOptions { get; set; }
 
         #endregion
 
@@ -55,12 +77,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Serialization
 
         protected override TResult LoadImpl<TResult>(Stream stream)
         {
-            var options = new JsonSerializerOptions() {
-                AllowTrailingCommas = ReaderOptions.AllowTrailingCommas,
-                ReadCommentHandling = ReaderOptions.CommentHandling,
-            };
-
-            var rawResult = JsonSerializer.Deserialize(stream, typeof(TResult), options);
+            var rawResult = JsonSerializer.Deserialize(stream, typeof(TResult), ReaderOptions ?? DefaultReaderOptions);
             if(rawResult is TResult result) {
                 return result;
             }
@@ -68,9 +85,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Serialization
             throw new SerializationException();
         }
 
-        protected override void SaveImpl(object value, Stream stream)
+        protected override void SaveImpl<TValue>(TValue value, Stream stream)
         {
-            using(var writer = new Utf8JsonWriter(stream, WriterOptions)) {
+            using(var writer = new Utf8JsonWriter(stream, WriterOptions ?? DefaultWriterOptions)) {
                 JsonSerializer.Serialize(writer, value);
             }
         }

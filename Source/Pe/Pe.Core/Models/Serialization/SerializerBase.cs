@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Standard.Base;
 
 
@@ -65,9 +66,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Serialization
         /// <param name="source">複製したいオブジェクト。</param>
         /// <returns></returns>
         public T Clone<T>(T source)
+            where T : notnull
         {
-            ArgumentNullException.ThrowIfNull(source);
-
             using(var stream = CreateInnerStream()) {
                 SaveImpl(source, stream);
                 stream.Position = 0;
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Serialization
         }
 
         /// <inheritdoc cref="Clone{T}(T)"/>
-        public T Clone<T>(object source) => Clone((T)source);
+        public T Clone<T>(object source) => Clone<T>(source);
 
         /// <inheritdoc cref="Load{TResult}(Stream)"/>
         protected abstract TResult LoadImpl<TResult>(Stream stream);
@@ -97,8 +97,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Serialization
             }
         }
 
-        /// <inheritdoc cref="Save(object, Stream)"/>
-        protected abstract void SaveImpl(object value, Stream stream);
+        /// <inheritdoc cref="Save{TValue}(TValue, Stream)"/>
+        protected abstract void SaveImpl<TValue>(TValue value, Stream stream)
+            where TValue : notnull
+        ;
 
         /// <summary>
         /// 保存処理。
@@ -106,7 +108,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Serialization
         /// <param name="value"></param>
         /// <param name="stream">保存先ストリーム。</param>
         /// <exception cref="SerializationException"></exception>
-        public void Save(object value, Stream stream)
+        public void Save<TValue>(TValue value, Stream stream)
+            where TValue : notnull
         {
             try {
                 SaveImpl(value, stream);

@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models
             return result;
         }
 
-        protected override void SaveImpl(object value, Stream stream)
+        protected override void SaveImpl<TValue>(TValue value, Stream stream)
         {
             using var writer = CreateWriter(stream);
             var json = System.Text.Json.JsonSerializer.Serialize(value); // TODO: ストリーム直接でいいと思う

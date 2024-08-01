@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 
@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Serialization
             throw new SerializationException();
         }
 
-        protected override void SaveImpl(object value, Stream stream)
+        protected override void SaveImpl<TValue>(TValue value, Stream stream)
         {
             var serializer = new DataContractJsonSerializer(value.GetType());
             serializer.WriteObject(stream, value);

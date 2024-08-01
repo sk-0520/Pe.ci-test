@@ -478,14 +478,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         }
 
         protected bool SetImpl<TValue, TParameter>(TValue value, PluginPersistenceFormat format, TParameter parameter, Action<TParameter, DatabaseParameter, PluginSettingRawValue> action)
+            where TValue : notnull
         {
             if(IsReadOnly) {
                 throw new InvalidOperationException(nameof(IsReadOnly));
-            }
-
-            if(value == null) {
-                Logger.LogWarning("{Value} は null のため処理終了", nameof(value));
-                return false;
             }
 
             string textValue;
@@ -684,6 +680,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         /// <inheritdoc cref="IPluginPersistenceStorage.Set{TValue}(string, TValue, PluginPersistenceFormat)"/>
         public bool Set<TValue>(string key, TValue value, PluginPersistenceFormat format)
+            where TValue : notnull
         {
             return SetImpl(value, format, key, (p, d, v) => {
                 var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
@@ -696,7 +693,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             });
         }
         /// <inheritdoc cref="IPluginPersistenceStorage.Set{TValue}(string, TValue)"/>
-        public bool Set<TValue>(string key, TValue value) => Set(key, value, PluginPersistenceFormat.Json);
+        public bool Set<TValue>(string key, TValue value)
+            where TValue : notnull
+        {
+            return Set(key, value, PluginPersistenceFormat.Json);
+        }
 
         /// <inheritdoc cref="IPluginPersistenceStorage.Delete(string)"/>
         public bool Delete(string key)
