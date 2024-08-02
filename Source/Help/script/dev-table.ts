@@ -287,7 +287,7 @@ class Entity {
 
 	private trimDefine(rawDefine: EntityDefine): EntityDefine {
 		const result = {
-			table: rawDefine.table.substr(this.tableNamePrefix.length),
+			table: rawDefine.table.substring(this.tableNamePrefix.length),
 			layout: this.trimMarkdownTable(rawDefine.layout),
 			index: this.trimMarkdownTable(rawDefine.index),
 		} as EntityDefine;
@@ -729,7 +729,9 @@ class Entity {
 	}
 
 	private getTableNamesFromEntities(entities: ReadonlyArray<Entity>) {
-		return entities.map((i) => i.getTableName()).sort((a, b) => a.localeCompare(b));
+		return entities
+			.map((i) => i.getTableName())
+			.sort((a, b) => a.localeCompare(b));
 	}
 
 	private changedTableElement(
