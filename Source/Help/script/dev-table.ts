@@ -299,7 +299,7 @@ class Entity {
 		markdownTableLines: ReadonlyArray<string>,
 	): ReadonlyArray<ReadonlyArray<string>> {
 		const rows = markdownTableLines
-			.map((i) => i.replace(/(^\|)|(|$)/, ""))
+			.map((i) => i.replace(/(^\|)|(\|$)/, ""))
 			.map((i) => i.split("|").map((s) => s.trim()));
 		if (2 < rows.length) {
 			return rows.slice(2);
