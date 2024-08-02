@@ -392,7 +392,9 @@ class Entity {
 					logicalDataElement.parentElement?.parentElement?.classList.add(
 						"error-row",
 					);
-					throw `clrValues が取得できない, たぶん 論理型 が不明: ${logicalDataElement.value}:${physicalValue}`;
+					throw new Error(
+						`clrValues が取得できない, たぶん 論理型 が不明: ${logicalDataElement.value}:${physicalValue}`,
+					);
 				}
 				optionElement.disabled = !clrValues.some(
 					(i) => i === optionElement.value,
