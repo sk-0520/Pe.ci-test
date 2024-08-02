@@ -75,9 +75,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Serialization
             }
         }
 
-        /// <inheritdoc cref="Clone{T}(T)"/>
-        public T Clone<T>(object source) => Clone<T>(source);
-
         /// <inheritdoc cref="Load{TResult}(Stream)"/>
         protected abstract TResult LoadImpl<TResult>(Stream stream);
 
