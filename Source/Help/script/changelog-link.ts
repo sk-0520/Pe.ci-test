@@ -13,8 +13,8 @@ window.makeChangelogLink = makeChangelogLink;
 
 function makeAutoLink() {
 	const itemList = document.getElementsByTagName("li");
-	for (let i = 0; i < itemList.length; i++) {
-		const li = itemList[i];
+	for (const element of itemList) {
+		const li = element;
 		li.innerHTML = li.innerHTML.replace(
 			/((http|https|ftp):\/\/[\w?=&./\-;#~%]+(?![\w\s?&./;#~%"=-]*>))/g,
 			`<a href="$1" href="${targetName}">$1</a>`,
@@ -24,8 +24,8 @@ function makeAutoLink() {
 
 function makeIssueLink() {
 	const itemList = document.getElementsByTagName("li");
-	for (let i = 0; i < itemList.length; i++) {
-		const li = itemList[i];
+	for (const element of itemList) {
+		const li = element;
 
 		const linkElements = li.getElementsByTagName("a");
 		if (linkElements.length === 1 && linkElements[0].className === "revision") {
