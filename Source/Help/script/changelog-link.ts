@@ -38,7 +38,7 @@ function makeIssueLink() {
 
 		let text = li.innerHTML;
 		text = text.replace(
-			/#([0-9]+)/g,
+			/#(\d+)/g,
 			`<a href='${issueLink}$1' target='${targetName}'>#$1</a>`,
 		);
 		li.innerHTML = text;
