@@ -377,7 +377,7 @@ class Entity {
 		clrDataElement.value = columns[LayoutColumn.ClrType];
 		logicalDataElement.addEventListener("change", (_) => {
 			const physicalValue = DatabaseTypeMap.get(logicalDataElement.value);
-			physicalDataElement.value = physicalValue || "なんかデータ変";
+			physicalDataElement.value = physicalValue ?? "なんかデータ変";
 
 			// CLR に対して Pe で出来る範囲で型を限定
 			const optionElements = clrDataElement.querySelectorAll("option");
