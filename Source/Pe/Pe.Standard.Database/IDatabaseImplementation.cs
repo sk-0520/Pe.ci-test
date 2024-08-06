@@ -107,6 +107,13 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         /// <returns>変換された値。</returns>
         string EscapeLike(string word);
 
+        /// <summary>
+        /// 実装依存問い合わせ処理の生成。
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        IDatabaseManagement CreateManagement(IDatabaseContext context);
+
         #endregion
     }
 }

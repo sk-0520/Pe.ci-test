@@ -117,6 +117,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
         public override string ToStatementColumnName(string columnName) => "[" + columnName + "]";
         public override string ToStatementParameterName(string parameterName, int index) => "@" + parameterName;
 
+        public override IDatabaseManagement CreateManagement(IDatabaseContext context)
+        {
+            return new SqliteManagement(context, this);
+        }
+
         #endregion
     }
 }

@@ -34,6 +34,13 @@ namespace ContentTypeTextNet.Pe.Main.Test
         Database = 0b0010,
     }
 
+    public enum AccessorKind
+    {
+        Main,
+        Large,
+        Temporary,
+    }
+
     public class Test
     {
         #region define
@@ -200,11 +207,16 @@ namespace ContentTypeTextNet.Pe.Main.Test
             return new ApplicationConfiguration(configurationRoot);
         }
 
-        public TDao BuildMainDao<TDao>()
+        public TDao BuildDao<TDao>(AccessorKind kind)
             where TDao : DatabaseAccessObjectBase
         {
-            var mainDatabaseAccessor = DiContainer.New<IMainDatabaseAccessor>();
-            var result = DiContainer.Build<TDao>(mainDatabaseAccessor, mainDatabaseAccessor.DatabaseFactory.CreateImplementation());
+            IApplicationDatabaseAccessor databaseAccessor = kind switch {
+                AccessorKind.Main => DiContainer.New<IMainDatabaseAccessor>(),
+                AccessorKind.Large => DiContainer.New<ILargeDatabaseAccessor>(),
+                AccessorKind.Temporary => DiContainer.New<ITemporaryDatabaseAccessor>(),
+                _ => throw new NotImplementedException(),
+            };
+            var result = DiContainer.Build<TDao>(databaseAccessor, databaseAccessor.DatabaseFactory.CreateImplementation());
             return result;
         }
 

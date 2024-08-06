@@ -126,6 +126,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
                 throw new NotImplementedException();
             }
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S927:Parameter names should match base declaration and other partial definitions", Justification = "<保留中>")]
             public string LoadStatementByCurrent(Type caller, [CallerMemberName] string callerMemberName = "")
             {
                 throw new NotImplementedException();
@@ -177,6 +178,11 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
             }
 
             public string EscapeLike(string word) => throw new NotSupportedException();
+
+            public IDatabaseManagement CreateManagement(IDatabaseContext context)
+            {
+                return new DatabaseManagement();
+            }
         }
 
         class Adao: ApplicationDatabaseObjectBase

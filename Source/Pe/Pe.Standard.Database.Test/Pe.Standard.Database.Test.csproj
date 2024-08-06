@@ -10,6 +10,7 @@
     <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteAccessor.cs" Link="TestImpl\Vender\Public\SQLite\SqliteAccessor.cs" />
     <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteFactory.cs" Link="TestImpl\Vender\Public\SQLite\SqliteFactory.cs" />
     <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteImplementation.cs" Link="TestImpl\Vender\Public\SQLite\SqliteImplementation.cs" />
+    <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteManagement.cs" Link="TestImpl\Vender\Public\SQLite\SqliteManagement.cs" />
   </ItemGroup>
   
   <ItemGroup>

@@ -7,5 +7,5 @@ from
 where
 	0 < LENGTH(TRIM(LauncherTags.TagName))
 order by
-	LauncherTags.TagName
+	TRIM(LauncherTags.TagName)
 

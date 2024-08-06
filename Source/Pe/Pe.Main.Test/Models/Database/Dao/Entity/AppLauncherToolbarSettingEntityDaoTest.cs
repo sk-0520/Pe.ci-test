@@ -12,7 +12,7 @@ using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
 {
-    public class AppGeneralSettingEntityDaoTest
+    public class AppLauncherToolbarSettingEntityDaoTest
     {
         #region property
 
@@ -23,40 +23,30 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
         #region function
 
         [Fact]
-        public void SelectSettingGeneralSettingTest()
+        public void SelectAppLauncherToolbarSettingFontIdTest()
         {
-            var test = Test.BuildDao<AppGeneralSettingEntityDao>(AccessorKind.Main);
+            var test = Test.BuildDao<AppLauncherToolbarSettingEntityDao>(AccessorKind.Main);
 
-            var actual = test.SelectSettingGeneralSetting();
-            Assert.Empty(actual.Language);
-            Assert.Empty(actual.UserBackupDirectoryPath);
-            Assert.NotEqual(PluginId.Empty, actual.ThemePluginId);
+            var actual = test.SelectAppLauncherToolbarSettingFontId();
+            Assert.NotEqual(FontId.Empty, actual);
         }
 
         [Fact]
         public void Update_Select_Test()
         {
-            var test = Test.BuildDao<AppGeneralSettingEntityDao>(AccessorKind.Main);
+            var test = Test.BuildDao<AppLauncherToolbarSettingEntityDao>(AccessorKind.Main);
 
-            var expected = new {
-                Language = "Language",
-                ThemePluginId = PluginId.NewId(),
-                UserBackupDirectoryPath = "UserBackupDirectoryPath",
+            var expected = new AppLauncherToolbarSettingData() {
+                ContentDropMode = LauncherToolbarContentDropMode.ExtendsExecute,
+                GroupMenuPosition = LauncherGroupPosition.Bottom,
             };
 
-            test.UpdateSettingGeneralSetting(new SettingAppGeneralSettingData() {
-                Language = expected.Language,
-                ThemePluginId = expected.ThemePluginId,
-                UserBackupDirectoryPath = expected.UserBackupDirectoryPath,
-            }, Test.DiContainer.New<IDatabaseCommonStatus>());
+            test.UpdateSettingLauncherToolbarSetting(expected, Test.DiContainer.New<IDatabaseCommonStatus>());
 
-            var actual = new {
-                Language = test.SelectLanguage(),
-                ThemePluginId = test.SelectThemePluginId(),
-                UserBackupDirectoryPath = test.SelectUserBackupDirectoryPath(),
-            };
+            var actual = test.SelectSettingLauncherToolbarSetting();
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected.ContentDropMode, actual.ContentDropMode);
+            Assert.Equal(expected.GroupMenuPosition, actual.GroupMenuPosition);
         }
 
 
@@ -64,13 +54,13 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
         public void Select_Latest_Test()
         {
             var mainDatabaseAccessor = Test.DiContainer.New<IMainDatabaseAccessor>();
-            var test = Test.DiContainer.Build<AppGeneralSettingEntityDao>(mainDatabaseAccessor, mainDatabaseAccessor.DatabaseFactory.CreateImplementation());
+            var test = Test.DiContainer.Build<AppLauncherToolbarSettingEntityDao>(mainDatabaseAccessor, mainDatabaseAccessor.DatabaseFactory.CreateImplementation());
             var entityDaoHelper = new EntityDaoHelper(mainDatabaseAccessor, mainDatabaseAccessor.DatabaseFactory.CreateImplementation());
             entityDaoHelper.CloneRecord(
                 test.TableName,
                 new Dictionary<string, string>() {
                     ["Generation"] = "-10",
-                    ["Language"] = "'OLD'"
+                    ["GroupMenuPosition"] = "'top'"
                 },
                 new Dictionary<string, string>() {
                     ["Generation"] = "1",
@@ -81,15 +71,15 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
                 test.TableName,
                 new Dictionary<string, string>() {
                     ["Generation"] = "20",
-                    ["Language"] = "'NEW'"
+                    ["GroupMenuPosition"] = "'bottom'"
                 },
                 new Dictionary<string, string>() {
                     ["Generation"] = "1",
                 }
             );
 
-            var actual = test.SelectLanguage();
-            Assert.Equal("NEW", actual);
+            var actual = test.SelectSettingLauncherToolbarSetting();
+            Assert.Equal(LauncherGroupPosition.Bottom, actual.GroupMenuPosition);
         }
 
         #endregion

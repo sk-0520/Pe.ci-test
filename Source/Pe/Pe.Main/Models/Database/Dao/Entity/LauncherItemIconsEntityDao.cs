@@ -45,6 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
+        //TODO: 戻り値が辛い
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
         public IReadOnlyList<byte[]>? SelectImageBinary(LauncherItemId launcherItemId, IconScale iconScale)
         {

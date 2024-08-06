@@ -93,6 +93,11 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             .Replace("_", @"\_")
         ;
 
+        public virtual IDatabaseManagement CreateManagement(IDatabaseContext context)
+        {
+            return new DatabaseManagementWithContext(context, this);
+        }
+
         #endregion
     }
 }
