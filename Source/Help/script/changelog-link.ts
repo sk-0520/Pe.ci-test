@@ -16,7 +16,7 @@ function makeAutoLink() {
 	for (let i = 0; i < itemList.length; i++) {
 		const li = itemList[i];
 		li.innerHTML = li.innerHTML.replace(
-			/((http|https|ftp):\/\/[\w?=&./\-;#~%-]+(?![\w\s?&./;#~%"=-]*>))/g,
+			/((http|https|ftp):\/\/[\w?=&./\-;#~%]+(?![\w\s?&./;#~%"=-]*>))/g,
 			`<a href="$1" href="${targetName}">$1</a>`,
 		); //'"
 	}
@@ -38,7 +38,7 @@ function makeIssueLink() {
 
 		let text = li.innerHTML;
 		text = text.replace(
-			/#([0-9]+)/g,
+			/#(\d+)/g,
 			`<a href='${issueLink}$1' target='${targetName}'>#$1</a>`,
 		);
 		li.innerHTML = text;

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
@@ -33,9 +34,13 @@ namespace ContentTypeTextNet.Pe.CommonTest
         /// </summary>
         /// <remarks>原則これを使用する。</remarks>
         /// <returns></returns>
-        public static MockLog Create()
+        public static MockLog Create(LogLevel logLevel = LogLevel.None)
         {
             var mockLogger = new Mock<ILogger>();
+            mockLogger
+                .Setup(a => a.IsEnabled(logLevel))
+                .Returns(true)
+            ;
 
             var mockLoggerFactory = new Mock<ILoggerFactory>();
             mockLoggerFactory

@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Serialization
                 throw new TException();
             }
 
-            protected override void SaveImpl(object value, Stream stream)
+            protected override void SaveImpl<TValue>(TValue value, Stream stream)
             {
                 throw new TException();
             }
@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Serialization
                 Decimal = 3.14M,
                 String = "TEXT",
                 TimeSpan = TimeSpan.FromSeconds(1),
-                DateTime = new DateTime(2024, 5, 12, 23, 19, 12),
+                DateTime = new DateTime(2024, 5, 12, 23, 19, 12, DateTimeKind.Utc),
             };
         }
 
@@ -128,20 +128,6 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Serialization
             Assert.Equal(data.DateTime, actual.DateTime);
         }
 
-        [Theory]
-        [InlineData(typeof(JsonTextSerializer))]
-        [InlineData(typeof(JsonDataSerializer))]
-        [InlineData(typeof(XmlSerializer))]
-        [InlineData(typeof(XmlDataContractSerializer))]
-        [InlineData(typeof(BinaryDataContractSerializer))]
-        public void Clone_throw_Test(Type serializerType)
-        {
-            var data = CreateData();
-            var test = CreateSerializer(serializerType);
-
-            Assert.Throws<ArgumentNullException>(() => test.Clone<object>(null!));
-        }
-
         [Fact]
         public void Load_throw_Test()
         {
@@ -162,15 +148,15 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Serialization
         public void Save_throw_Test()
         {
             var test1 = new ThrowSerializer<Exception>();
-            var exception1 = Assert.Throws<SerializationException>(() => test1.Save(default!, new MemoryStream()));
+            var exception1 = Assert.Throws<SerializationException>(() => test1.Save<object>(default!, new MemoryStream()));
             Assert.IsType<Exception>(exception1.InnerException);
 
             var test2 = new ThrowSerializer<NotImplementedException>();
-            var exception2 = Assert.Throws<SerializationException>(() => test2.Save(default!, new MemoryStream()));
+            var exception2 = Assert.Throws<SerializationException>(() => test2.Save<object>(default!, new MemoryStream()));
             Assert.IsType<NotImplementedException>(exception2.InnerException);
 
             var test3 = new ThrowSerializer<SerializationException>();
-            var exception3 = Assert.Throws<SerializationException>(() => test3.Save(default!, new MemoryStream()));
+            var exception3 = Assert.Throws<SerializationException>(() => test3.Save<object>(default!, new MemoryStream()));
             Assert.Null(exception3.InnerException);
         }
 

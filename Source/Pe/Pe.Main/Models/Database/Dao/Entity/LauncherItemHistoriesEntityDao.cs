@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public void InsertHistory(LauncherItemId launcherItemId, LauncherHistoryKind kind, string value, IDatabaseCommonStatus commonStatus)
+        public void InsertHistory(LauncherItemId launcherItemId, LauncherHistoryKind kind, string value, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
         {
             var launcherHistoryKindTransfer = new EnumTransfer<LauncherHistoryKind>();
 
@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 LauncherItemId = launcherItemId,
                 Kind = launcherHistoryKindTransfer.ToString(kind),
                 Value = value,
-                LastExecuteTimestamp = DateTime.UtcNow,
+                LastExecuteTimestamp = timestamp,
             };
             commonStatus.WriteCreateTo(dto);
 

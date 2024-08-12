@@ -27,6 +27,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             [Configuration]
             public IReadOnlyDictionary<ApplicationCommand, string> Mapping { get; } = default!;
 
+            /// <summary>
+            /// 例外送出機能を有効にするか。
+            /// </summary>
+            [Configuration]
+            public bool IsEnabledException { get; }
+
             #endregion
         }
 

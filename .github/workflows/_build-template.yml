@@ -861,8 +861,22 @@ jobs:
           if-no-files-found: error
 
 
-  test-library:
-    name: Test .NET Library
+  check-dotnet-standard-library:
+    name: Check .NET Standard Library
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v4
+
+      - name: <Check> .NET Standard Library + workflow
+        shell: pwsh
+        run: Build/dotnet-standard-library-workflow.ps1
+
+  test-dotnet-standard-library:
+    name: Test .NET Standard Library
+    needs:
+      - check-dotnet-standard-library
 
     strategy:
       matrix:
@@ -903,6 +917,7 @@ jobs:
         run: |
           cd Source/Pe/${{ matrix.TARGET }}
           dotnet test
+
 
   st-powershell:
     name: System Test PowerShell

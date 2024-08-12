@@ -139,7 +139,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// <param name="value">値。</param>
         /// <param name="format">変換種別。</param>
         /// <returns>保存成功・失敗。</returns>
-        bool Set<TValue>(string key, TValue value, PluginPersistenceFormat format);
+        bool Set<TValue>(string key, TValue value, PluginPersistenceFormat format)
+            where TValue : notnull
+        ;
         /// <summary>
         /// 現行バージョンにおける最適な型を使用して指定データを保存する。
         /// </summary>
@@ -147,7 +149,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// <param name="key">キー。</param>
         /// <param name="value">値。</param>
         /// <returns>保存成功・失敗。</returns>
-        bool Set<TValue>(string key, TValue value);
+        bool Set<TValue>(string key, TValue value)
+            where TValue : notnull
+        ;
 
         /// <summary>
         /// 指定データを破棄する。

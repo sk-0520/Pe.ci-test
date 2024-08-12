@@ -123,15 +123,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public string SelectScreenName(Guid launcherToolbarId)
-        {
-            var statement = LoadStatement();
-            var parameter = new {
-                LauncherToolbarId = launcherToolbarId,
-            };
-            return Context.QueryFirst<string>(statement, parameter);
-        }
-
         public void InsertNewToolbar(LauncherToolbarId toolbarId, FontId fontId, string? screenName, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();

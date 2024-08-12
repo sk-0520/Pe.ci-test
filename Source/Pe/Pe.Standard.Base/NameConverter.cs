@@ -130,6 +130,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return builder.ToString();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S127:\"for\" loop stop conditions should be invariant", Justification = "<保留中>")]
         private string ToPascalCore(string source, char separator)
         {
             Debug.Assert(!string.IsNullOrWhiteSpace(source));

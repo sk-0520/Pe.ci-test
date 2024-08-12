@@ -284,12 +284,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
                         launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option);
                         if(launcherFileData.Option != fileData.Option) {
-                            launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option, DatabaseCommonStatus.CreateCurrentAccount());
+                            launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.Option, fileData.Option, DateTime.UtcNow, DatabaseCommonStatus.CreateCurrentAccount());
                         }
 
                         launcherItemHistoriesEntityDao.DeleteHistory(LauncherItemId, LauncherHistoryKind.WorkDirectory, fileData.WorkDirectoryPath);
                         if(launcherFileData.WorkDirectoryPath != fileData.WorkDirectoryPath) {
-                            launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.WorkDirectory, fileData.WorkDirectoryPath, DatabaseCommonStatus.CreateCurrentAccount());
+                            launcherItemHistoriesEntityDao.InsertHistory(LauncherItemId, LauncherHistoryKind.WorkDirectory, fileData.WorkDirectoryPath, DateTime.UtcNow, DatabaseCommonStatus.CreateCurrentAccount());
                         }
                     }
 

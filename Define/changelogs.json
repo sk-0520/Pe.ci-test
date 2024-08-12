@@ -1,5 +1,71 @@
 [
 	{
+		"date": "2024/08/12",
+		"version": "0.99.240",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"subject": "特に何もしてないけど一旦ここでバージョン上げておきたい感"
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "",
+						"subject": "#957: ヘルプに対して全文検索を追加する",
+						"comments": [
+							"適当実装なのでくっそ甘い"
+						]
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "c265222f4455954115d50d1800b9b3834dc594ce",
+						"subject": "#956: 設定ファイル位置がヘルプにない"
+					},
+					{
+						"revision": "d7cd3aae47d91b5294c9655338a56bdcaff25996",
+						"subject": "#955: コマンドランチャーからの例外送出をなんらか整理する"
+					},
+					{
+						"revision": "9be909df5e65e948645fdb4f8dcff558fec1cf06",
+						"subject": "Windows 11 だとスクロールバーが消えるのでヘルプのメニュー部分が不明瞭なので適当になんやした",
+						"comments": [
+							"ださい"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "0fc9f12b922c5883f35ee9925b326d0689113d3c",
+						"subject": "Vector 提出用 EXE 作成処理の成果物を1アーカイブにまとめた"
+					},
+					{
+						"revision": "7bdcc414936b38e1fb9ea72bb3f1b19f8471e961",
+						"subject": "update npm"
+					},
+					{
+						"revision": "b4c9c6ff764e8b230b9d78486b98e1d2079d56c5",
+						"subject": "update npm",
+						"comments": [
+							"二回やってる時点でもうダメだと思った"
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2024/07/17",
 		"version": "0.99.239",
 		"contents": [

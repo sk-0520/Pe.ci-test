@@ -21,6 +21,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 
 namespace ContentTypeTextNet.Pe.Main.Test
 {
@@ -30,6 +32,13 @@ namespace ContentTypeTextNet.Pe.Main.Test
         None = 0b0000,
         Http = 0b0001,
         Database = 0b0010,
+    }
+
+    public enum AccessorKind
+    {
+        Main,
+        Large,
+        Temporary,
     }
 
     public class Test
@@ -105,6 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Test
 
             diContainer
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(new DirectoryInfo(sqlRootDirPath), TimeSpan.FromMinutes(6), null, true, diContainer.Build<LoggerFactory>()))
+                .Register<IDatabaseCommonStatus>(DatabaseCommonStatus.CreateCurrentAccount())
                 .RegisterDatabase(factoryPack, delayWriterWaitTimePack, diContainer.Build<ILoggerFactory>())
             ;
 
@@ -195,6 +205,19 @@ namespace ContentTypeTextNet.Pe.Main.Test
             configurationBuilder.AddJsonFile(configurationPath);
             var configurationRoot = configurationBuilder.Build();
             return new ApplicationConfiguration(configurationRoot);
+        }
+
+        public TDao BuildDao<TDao>(AccessorKind kind)
+            where TDao : DatabaseAccessObjectBase
+        {
+            IApplicationDatabaseAccessor databaseAccessor = kind switch {
+                AccessorKind.Main => DiContainer.New<IMainDatabaseAccessor>(),
+                AccessorKind.Large => DiContainer.New<ILargeDatabaseAccessor>(),
+                AccessorKind.Temporary => DiContainer.New<ITemporaryDatabaseAccessor>(),
+                _ => throw new NotImplementedException(),
+            };
+            var result = DiContainer.Build<TDao>(databaseAccessor, databaseAccessor.DatabaseFactory.CreateImplementation());
+            return result;
         }
 
         #endregion

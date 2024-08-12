@@ -55,7 +55,7 @@ values
         [Fact]
         public void ReadDataTest()
         {
-            using var readerWriterLocker = new ReaderWriterLocker();
+            using var readerWriterLocker = new ReadWriteLockHelper();
             var test = new DatabaseBarrier(DatabaseAccessor, readerWriterLocker);
             var actual = test.ReadData(transaction => {
                 return transaction.QueryFirst<string>("select ColVal from TestTable1 where ColKey = 4");
@@ -66,7 +66,7 @@ values
         [Fact]
         public void ReadData_param_Test()
         {
-            using var readerWriterLocker = new ReaderWriterLocker();
+            using var readerWriterLocker = new ReadWriteLockHelper();
             var test = new DatabaseBarrier(DatabaseAccessor, readerWriterLocker);
             var actual = test.ReadData((transaction, arg) => {
                 return transaction.QueryFirst<string>("select ColVal from TestTable1 where ColKey = :ColKey", arg);

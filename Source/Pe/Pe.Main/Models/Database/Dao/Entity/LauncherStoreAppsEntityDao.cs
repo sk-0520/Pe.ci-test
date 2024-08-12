@@ -83,6 +83,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.UpdateByKey(statement, dto);
         }
 
+        public bool DeleteStoreApp(LauncherItemId launcherItemId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+
+            return Context.DeleteByKeyOrNothing(statement, parameter);
+        }
+
+
         #endregion
     }
 }

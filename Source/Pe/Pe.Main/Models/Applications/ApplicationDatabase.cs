@@ -94,10 +94,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     /// </summary>
     internal class ApplicationDatabaseAccessor: SqliteAccessor, IMainDatabaseAccessor, ILargeDatabaseAccessor, ITemporaryDatabaseAccessor
     {
-        public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILogger logger)
-            : base(connectionCreator, logger)
-        { }
-
         public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILoggerFactory loggerFactory)
             : base(connectionCreator, loggerFactory)
         { }

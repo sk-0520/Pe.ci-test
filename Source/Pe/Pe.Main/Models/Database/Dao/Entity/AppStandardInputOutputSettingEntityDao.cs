@@ -3,6 +3,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Standard.Database;
+using ContentTypeTextNet.Pe.Standard.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
@@ -41,10 +42,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public Guid SelectStandardInputOutputSettingFontId()
+        public FontId SelectStandardInputOutputSettingFontId()
         {
             var statement = LoadStatement();
-            return Context.QueryFirst<Guid>(statement);
+            return Context.QueryFirst<FontId>(statement);
         }
 
         public SettingAppStandardInputOutputSettingData SelectSettingStandardInputOutputSetting()

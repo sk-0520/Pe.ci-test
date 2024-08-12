@@ -287,7 +287,7 @@ class Entity {
 
 	private trimDefine(rawDefine: EntityDefine): EntityDefine {
 		const result = {
-			table: rawDefine.table.substr(this.tableNamePrefix.length),
+			table: rawDefine.table.substring(this.tableNamePrefix.length),
 			layout: this.trimMarkdownTable(rawDefine.layout),
 			index: this.trimMarkdownTable(rawDefine.index),
 		} as EntityDefine;
@@ -299,7 +299,7 @@ class Entity {
 		markdownTableLines: ReadonlyArray<string>,
 	): ReadonlyArray<ReadonlyArray<string>> {
 		const rows = markdownTableLines
-			.map((i) => i.replace(/(^\|)|(|$)/, ""))
+			.map((i) => i.replace(/(^\|)|(\|$)/, ""))
 			.map((i) => i.split("|").map((s) => s.trim()));
 		if (2 < rows.length) {
 			return rows.slice(2);
@@ -377,7 +377,7 @@ class Entity {
 		clrDataElement.value = columns[LayoutColumn.ClrType];
 		logicalDataElement.addEventListener("change", (_) => {
 			const physicalValue = DatabaseTypeMap.get(logicalDataElement.value);
-			physicalDataElement.value = physicalValue || "なんかデータ変";
+			physicalDataElement.value = physicalValue ?? "なんかデータ変";
 
 			// CLR に対して Pe で出来る範囲で型を限定
 			const optionElements = clrDataElement.querySelectorAll("option");
@@ -392,7 +392,9 @@ class Entity {
 					logicalDataElement.parentElement?.parentElement?.classList.add(
 						"error-row",
 					);
-					throw `clrValues が取得できない, たぶん 論理型 が不明: ${logicalDataElement.value}:${physicalValue}`;
+					throw new Error(
+						`clrValues が取得できない, たぶん 論理型 が不明: ${logicalDataElement.value}:${physicalValue}`,
+					);
 				}
 				optionElement.disabled = !clrValues.some(
 					(i) => i === optionElement.value,
@@ -729,7 +731,9 @@ class Entity {
 	}
 
 	private getTableNamesFromEntities(entities: ReadonlyArray<Entity>) {
-		return entities.map((i) => i.getTableName()).sort((a, b) => a.localeCompare(b));
+		return entities
+			.map((i) => i.getTableName())
+			.sort((a, b) => a.localeCompare(b));
 	}
 
 	private changedTableElement(

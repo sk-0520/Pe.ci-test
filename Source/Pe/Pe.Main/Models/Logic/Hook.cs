@@ -12,9 +12,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
-    public abstract class HookerBase: DisposerBase
+    public abstract class HookBase: DisposerBase
     {
-        protected HookerBase(ILoggerFactory loggerFactory)
+        protected HookBase(ILoggerFactory loggerFactory)
         {
             HookProc = HookProcedure;
             Logger = loggerFactory.CreateLogger(GetType());
@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    public class KeyboardHooker: HookerBase
+    public class KeyboardHook: HookBase
     {
         #region event
 
@@ -218,7 +218,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #endregion
 
-        public KeyboardHooker(ILoggerFactory loggerFactory)
+        public KeyboardHook(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }
 
@@ -353,8 +353,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-
-    public partial class MouseHooker: HookerBase
+    public partial class MouseHook: HookBase
     {
         #region event
 
@@ -364,7 +363,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #endregion
 
-        public MouseHooker(ILoggerFactory loggerFactory)
+        public MouseHook(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }
 

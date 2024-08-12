@@ -11,3 +11,5 @@ set
 	UpdatedCount          = UpdatedCount + 1
 where
 	KeyActionId           = @KeyActionId
+	and
+	KeyActionKind         = @KeyActionKind

@@ -1,6 +1,7 @@
-﻿using System.IO;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Xml;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 
 namespace ContentTypeTextNet.Pe.Core.Models.Serialization
@@ -26,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Serialization
             }
         }
 
-        protected override void SaveImpl(object value, Stream stream)
+        protected override void SaveImpl<TValue>(TValue value, Stream stream)
         {
             using(var writer = XmlWriter.Create(stream, CreateXmlWriterSettings())) {
                 var serializer = new DataContractSerializer(value.GetType());

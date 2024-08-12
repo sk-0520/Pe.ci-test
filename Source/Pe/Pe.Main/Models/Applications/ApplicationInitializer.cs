@@ -30,6 +30,21 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Setting.Factory;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
+
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    public class ApplicationInitializerException: Exception
+    {
+        public ApplicationInitializerException()
+        { }
+        public ApplicationInitializerException(string message)
+            : base(message)
+        { }
+
+        public ApplicationInitializerException(string message, Exception inner)
+            : base(message, inner)
+        { }
+    }
+
     internal class ApplicationInitializer
     {
         #region define
@@ -632,7 +647,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     var retryResult = NormalSetup(out pack, environmentParameters, loggerFactory, logger);
                     if(!retryResult) {
                         logger.LogWarning("あかんかったわ");
-                        throw new ApplicationException();
+                        throw new ApplicationInitializerException();
                     }
                 }
 

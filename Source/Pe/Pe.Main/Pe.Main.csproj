@@ -53,10 +53,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Models\Logic\Observer.MouseHooker.cs">
+    <None Include="Models\Logic\Hook.MouseHook.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Observer.MouseHooker.tt</DependentUpon>
+      <DependentUpon>Hook.MouseHook.tt</DependentUpon>
     </None>
     <None Include="Models\Plugin\PluginException.cs">
       <DesignTime>True</DesignTime>
@@ -77,6 +77,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>IdImpl.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Models\Logic\Hook.MouseHook.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Hook.MouseHook.tt</DependentUpon>
     </Compile>
     <Compile Update="Models\Logic\Hooker.MouseHooker.cs">
       <DesignTime>True</DesignTime>
@@ -132,9 +137,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IdImpl.cs</LastGenOutput>
     </None>
-    <None Update="Models\Logic\Observer.MouseHooker.tt">
+    <None Update="Models\Logic\Hook.MouseHook.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Observer.MouseHooker.cs</LastGenOutput>
+      <LastGenOutput>Hook.MouseHook.cs</LastGenOutput>
     </None>
     <None Update="Models\Plugin\PluginException.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

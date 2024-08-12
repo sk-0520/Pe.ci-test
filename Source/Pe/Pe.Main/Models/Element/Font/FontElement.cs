@@ -209,6 +209,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         #region FontElementBase
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Bug", "S4275:Getters and setters should access the expected fields", Justification = "意図した挙動")]
         public override string FamilyName
         {
             get => base.FamilyName;
@@ -219,6 +220,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Bug", "S4275:Getters and setters should access the expected fields", Justification = "意図した挙動")]
         public override bool IsItalic
         {
             get => base.IsItalic;
@@ -228,6 +230,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
                 UpdateValueDelaySave((d, s) => d.UpdateItalic(FontId, IsItalic, s), UniqueKeyPool.Get());
             }
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Bug", "S4275:Getters and setters should access the expected fields", Justification = "意図した挙動")]
         public override bool IsBold
         {
             get => base.IsBold;
@@ -238,6 +242,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Bug", "S4275:Getters and setters should access the expected fields", Justification = "意図した挙動")]
         public override double Size
         {
             get => base.Size;

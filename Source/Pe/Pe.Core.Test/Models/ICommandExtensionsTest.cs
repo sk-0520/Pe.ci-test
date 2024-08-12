@@ -17,9 +17,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         {
             #region variable
 
-            private bool _canExecute;
+            private readonly bool _canExecute;
 
             #endregion
+
             public Command(bool canExecute)
             {
                 this._canExecute = canExecute;

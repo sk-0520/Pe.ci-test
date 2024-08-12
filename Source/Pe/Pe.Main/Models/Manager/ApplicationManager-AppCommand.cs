@@ -7,9 +7,26 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System.Threading;
+using ContentTypeTextNet.Pe.Bridge.Models;
+using System;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    public class ApplicationExceptionCommandException: Exception
+    {
+        public ApplicationExceptionCommandException()
+        { }
+        public ApplicationExceptionCommandException(string message)
+            : base(message)
+        { }
+        public ApplicationExceptionCommandException(string message, Exception inner)
+            : base(message, inner)
+        { }
+    }
+
     partial class ApplicationManager
     {
         #region function
@@ -18,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var factory = ApplicationDiContainer.Build<ApplicationCommandParameterFactory>();
 
-            var result = new ApplicationCommandParameter[] {
+            var result = new List<ApplicationCommandParameter> {
                 factory.CreateParameter(ApplicationCommand.Close, p => {
                     Debug.Assert(CommandElement != null);
                     CommandElement.HideView(false);
@@ -64,12 +81,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 factory.CreateParameter(ApplicationCommand.Help, p => {
                     ShowHelp();
                 }),
-                factory.CreateParameter(ApplicationCommand.Exception, p => {
-                    System.Windows.Application.Current.Dispatcher.Invoke(() => {
-                        throw new System.Exception($"{nameof(ApplicationCommand)}.{nameof(ApplicationCommand.Exception)}");
-                    });
-                }),
             };
+
+            var commandConfiguration = ApplicationDiContainer.Build<CommandConfiguration>();
+            if(commandConfiguration.Application.IsEnabledException) {
+                result.Add(factory.CreateParameter(ApplicationCommand.Exception, p => {
+                    var dispatcherWrapper = ApplicationDiContainer.Build<IDispatcherWrapper>();
+                    dispatcherWrapper.BeginAsync(() => {
+#if DEBUG
+                        // デバッグ時に例外ぶん投げるとVSが死ぬけどブレークポイント設定しとくと死なないのでこれで濁している
+                        if(Debugger.IsAttached) {
+                            Debugger.Break();
+                        }
+#endif
+                        throw new ApplicationExceptionCommandException($"{nameof(ApplicationCommand)}.{nameof(ApplicationCommand.Exception)}");
+                    }, System.Windows.Threading.DispatcherPriority.SystemIdle);
+                }));
+            }
 
             return result;
         }

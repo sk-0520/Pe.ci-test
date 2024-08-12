@@ -57,7 +57,7 @@ values
         [Fact]
         public void WaitWrite_default_Test()
         {
-            using var readerWriterLocker = new ReaderWriterLocker();
+            using var readerWriterLocker = new ReadWriteLockHelper();
             var test = new DatabaseBarrier(DatabaseAccessor, readerWriterLocker);
             using(var transaction = test.WaitWrite()) {
                 transaction.Insert("insert into TestTable1(ColKey, ColVal) values (5, 'E')");
@@ -70,7 +70,7 @@ values
         [Fact]
         public void WaitWrite_timeout_Test()
         {
-            using var readerWriterLocker = new ReaderWriterLocker();
+            using var readerWriterLocker = new ReadWriteLockHelper();
             var test = new DatabaseBarrier(DatabaseAccessor, readerWriterLocker);
             using(var transaction = test.WaitWrite(Timeout.InfiniteTimeSpan)) {
                 transaction.Insert("insert into TestTable1(ColKey, ColVal) values (5, 'E')");
@@ -83,7 +83,7 @@ values
         [Fact]
         public void WaitRead_default_Test()
         {
-            using var readerWriterLocker = new ReaderWriterLocker();
+            using var readerWriterLocker = new ReadWriteLockHelper();
             var test = new DatabaseBarrier(DatabaseAccessor, readerWriterLocker);
             using var transaction = test.WaitRead();
             var value = transaction.QueryFirst<string>("select ColVal from TestTable1 where ColKey = 4");
@@ -93,7 +93,7 @@ values
         [Fact]
         public void WaitRead_timeout_Test()
         {
-            using var readerWriterLocker = new ReaderWriterLocker();
+            using var readerWriterLocker = new ReadWriteLockHelper();
             var test = new DatabaseBarrier(DatabaseAccessor, readerWriterLocker);
             using var transaction = test.WaitRead(Timeout.InfiniteTimeSpan);
             var value = transaction.QueryFirst<string>("select ColVal from TestTable1 where ColKey = 4");
