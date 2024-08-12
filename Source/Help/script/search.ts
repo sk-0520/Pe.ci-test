@@ -183,7 +183,7 @@ searchFormElement.addEventListener("submit", (ev) => {
 		);
 		const errorsElement = Dom.cloneTemplate(templateErrorsElement);
 		const errorElement = Dom.requireSelector(errorsElement, "[name=error]");
-		if(ex instanceof Error) {
+		if (ex instanceof Error) {
 			errorElement.textContent = ex.message;
 		} else {
 			errorElement.textContent = `なんかエラー: ${JSON.stringify(ex)}`;
