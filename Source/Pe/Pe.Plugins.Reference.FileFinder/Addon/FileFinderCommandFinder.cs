@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
                 yield return ownerItem;
             }
 
-            var fileNameRegex = new Regex(Regex.Escape(filePattern).Replace("\\?", ".").Replace("\\*", ".*"), RegexOptions.IgnoreCase);
+            var fileNameRegex = new Regex(Regex.Escape(filePattern).Replace("\\?", ".").Replace("\\*", ".*"), RegexOptions.IgnoreCase, Timeout.InfiniteTimeSpan);
             var searchPattern = ConvertSearchPattern(filePattern);
             var dir = new DirectoryInfo(directoryPath);
             IEnumerable<FileSystemInfo>? files = null;
@@ -203,7 +203,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
             if(!string.IsNullOrWhiteSpace(path)) {
                 var executableExtensions = new[] { "exe", "bat", "com" };
 
-                var extRegex = new Regex(@".*\." + string.Join("|", executableExtensions) + "$");
+                var extRegex = new Regex(@".*\." + string.Join("|", executableExtensions) + "$", default, Timeout.InfiniteTimeSpan);
                 var dirPaths = path
                     .Split(';')
                     .Where(i => !string.IsNullOrWhiteSpace(i))

@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
         private IReadOnlyList<Regex> GetAutoImportExcludeRegexItems()
         {
             return LauncherItemConfiguration.AutoImportExcludePatterns
-                .Select(i => new Regex(i, RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace))
+                .Select(i => new Regex(i, RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace, Timeout.InfiniteTimeSpan))
                 .ToList()
             ;
         }

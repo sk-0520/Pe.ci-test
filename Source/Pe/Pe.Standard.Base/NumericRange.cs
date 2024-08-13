@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
@@ -130,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 return true;
             }
 
-            var reg = new Regex(@"\s*(?<HEAD>[+\-]?\d+)\s*((?<RANGE>.+?)(?<TAIL>[+\-]?\d+))?\s*");
+            var reg = new Regex(@"\s*(?<HEAD>[+\-]?\d+)\s*((?<RANGE>.+?)(?<TAIL>[+\-]?\d+))?\s*", default, Timeout.InfiniteTimeSpan);
 
             var workValues = new List<int>();
 

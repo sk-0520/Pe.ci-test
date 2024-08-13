@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                 .Select(i => $"({Regex.Escape(i)})")
             ;
 
-            var extRegex = new Regex(@".*\." + string.Join("|", rawExtensions) + "$");
+            var extRegex = new Regex(@".*\." + string.Join("|", rawExtensions) + "$", default, TimeSpan.FromSeconds(30));
             var dirPaths = path
                 .Split(';')
                 .Where(i => !string.IsNullOrWhiteSpace(i))

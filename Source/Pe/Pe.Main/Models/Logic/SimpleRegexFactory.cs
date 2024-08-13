@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
@@ -18,7 +19,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         private ILogger Logger { get; }
 
-        public Regex AllMatchRegex { get; } = new Regex("");
+        public Regex AllMatchRegex { get; } = new Regex("", default, Timeout.InfiniteTimeSpan);
+
+        public TimeSpan RegexTimeout { get; } = TimeSpan.FromSeconds(10);
 
         #endregion
 
@@ -64,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     regOption |= RegexOptions.IgnoreCase;
                 }
                 try {
-                    return new Regex(patternBody, regOption);
+                    return new Regex(patternBody, regOption, RegexTimeout);
                 } catch(Exception ex) {
                     // 正規表現が変な場合は全件一致させる
                     Logger.LogWarning(ex, "正規表現パターン異常: {0}", ex.Message);
@@ -80,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     regOption |= RegexOptions.IgnoreCase;
                 }
 
-                return new Regex(wildcard, regOption);
+                return new Regex(wildcard, regOption, RegexTimeout);
             }
 
             // とりあえずの部分一致
@@ -88,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 ? RegexOptions.None
                 : RegexOptions.IgnoreCase
             ;
-            return new Regex(Regex.Escape(pattern), option);
+            return new Regex(Regex.Escape(pattern), option, RegexTimeout);
         }
 
         #endregion

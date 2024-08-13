@@ -2,6 +2,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Standard.Base;
@@ -38,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return false;
             }
 
-            return Regex.IsMatch(userId, @"[a-z0-9]{128}", RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+            return Regex.IsMatch(userId, @"[a-z0-9]{128}", RegexOptions.ExplicitCapture | RegexOptions.Singleline, Timeout.InfiniteTimeSpan);
         }
 
         private HashAlgorithm CreateHash()

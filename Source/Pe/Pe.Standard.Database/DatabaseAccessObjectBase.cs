@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Standard.Database
 {
@@ -106,7 +107,8 @@ namespace ContentTypeTextNet.Pe.Standard.Database
 
                     this._processBodyRegex = new Regex(
                         process.begin + @$"{block.begin}(?<KEY>\w+)\s*(?<BODY>[.\s\S]*?)" + process.end,
-                        RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace
+                        RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace,
+                        Timeout.InfiniteTimeSpan
                     );
                 }
 
@@ -125,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             get
             {
                 if(this._processContentRegex is null) {
-                    this._processContentRegex = new Regex(@"^\s*(?<NAME>\w+)\s*:\s*(?<KIND>(CODE)|(LOAD))\s*$", RegexOptions.Compiled);
+                    this._processContentRegex = new Regex(@"^\s*(?<NAME>\w+)\s*:\s*(?<KIND>(CODE)|(LOAD))\s*$", RegexOptions.Compiled, Timeout.InfiniteTimeSpan);
                 }
 
                 return this._processContentRegex;

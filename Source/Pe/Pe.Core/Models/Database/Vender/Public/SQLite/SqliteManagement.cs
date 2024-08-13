@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Database;
 
@@ -35,7 +36,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
                 \s*
             \)
             ",
-            RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
+            RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture,
+            Timeout.InfiniteTimeSpan
         );
         #endregion
 

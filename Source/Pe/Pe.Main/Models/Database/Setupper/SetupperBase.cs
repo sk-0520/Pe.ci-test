@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 {
@@ -48,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
         private const string TitleMark = "--//";
         private const string TitleCapture = "TITLE";
-        private Regex TitleRegex { get; } = new Regex($@"^{TitleMark}\s*(?<{TitleCapture}>.+)", RegexOptions.ExplicitCapture);
+        private Regex TitleRegex { get; } = new Regex($@"^{TitleMark}\s*(?<{TitleCapture}>.+)", RegexOptions.ExplicitCapture, Timeout.InfiniteTimeSpan);
 
         #endregion
 
