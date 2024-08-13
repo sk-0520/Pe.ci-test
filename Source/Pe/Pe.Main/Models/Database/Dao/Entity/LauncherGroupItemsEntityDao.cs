@@ -48,12 +48,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.QuerySingle<long>(statement, new { LauncherGroupId = groupId });
         }
 
-        public IEnumerable<LauncherGroupId> SelectAllLauncherGroupItemIds()
-        {
-            var statement = LoadStatement();
-            return Context.Query<LauncherGroupId>(statement);
-        }
-
         public IEnumerable<LauncherItemId> SelectLauncherItemIds(LauncherGroupId launcherGroupId)
         {
             var statement = LoadStatement();

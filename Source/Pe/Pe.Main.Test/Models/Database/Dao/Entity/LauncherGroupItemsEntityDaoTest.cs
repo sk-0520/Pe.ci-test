@@ -69,6 +69,9 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
                 new LauncherItemData() {
                     LauncherItemId = LauncherItemId.NewId(),
                 },
+                new LauncherItemData() {
+                    LauncherItemId = LauncherItemId.NewId(),
+                },
             };
             foreach(var item in items) {
                 testItem.InsertLauncherItem(item, Test.DiContainer.Build<IDatabaseCommonStatus>());
@@ -88,6 +91,21 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
             );
 
             Assert.Equal(items.Select(a => a.LauncherItemId), testGroupItem.SelectLauncherItemIds(launcherGroupId));
+
+            var deleteItem1 = items[1];
+            Assert.Equal(1, testGroupItem.DeleteGroupItemsByLauncherItemId(deleteItem1.LauncherItemId));
+            var actual1 = testGroupItem.SelectLauncherItemIds(launcherGroupId).ToArray();
+            Assert.Contains(items[0].LauncherItemId, actual1);
+            Assert.DoesNotContain(items[1].LauncherItemId, actual1);
+            Assert.Contains(items[2].LauncherItemId, actual1);
+            Assert.Equal(0, testGroupItem.DeleteGroupItemsByLauncherItemId(deleteItem1.LauncherItemId));
+
+            var deleteItem2 = items[2];
+            testGroupItem.DeleteGroupItemsLauncherItem(launcherGroupId, deleteItem2.LauncherItemId, 0);
+            var actual2 = testGroupItem.SelectLauncherItemIds(launcherGroupId).ToArray();
+            Assert.Equal(2, actual2.Length);
+
+            Assert.Equal(2, testGroupItem.DeleteGroupItemsByLauncherGroupId(launcherGroupId));
         }
 
         #endregion
