@@ -1,3 +1,6 @@
 [sqlfluff]
 dialect = sqlite
 sql_file_exts = .sql
+
+[sqlfluff:indentation]
+indent_unit = tab
