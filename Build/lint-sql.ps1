@@ -1,5 +1,6 @@
 Param(
-	[switch] $Fix
+	[switch] $Fix,
+	[switch] $RunCi
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -11,15 +12,22 @@ $sqlDir = Join-Path -Path (Get-RootDirectory) -ChildPath 'Source/Pe/Pe.Main/etc/
 $versionTag = '3.1.0'
 
 $mode = 'lint'
-if($Fix) {
+if ($Fix) {
 	$mode = 'fix'
 }
 
-docker run `
-	--interactive `
-	--tty `
-	--rm `
-	--volume ${sqlDir}:/sql `
-	sqlfluff/sqlfluff:${versionTag} `
-	${mode} `
-	/sql
+$params = @()
+
+if (! $RunCi) {
+	$params += '--tty'
+	$params += '--interactive'
+}
+
+$params += '--rm'
+$params += '--volume'
+$params += "${sqlDir}:/sql"
+$params += "sqlfluff/sqlfluff:${versionTag}"
+$params += ${mode}
+$params += '/sql'
+
+docker run ($params)
