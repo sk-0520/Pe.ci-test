@@ -4,3 +4,8 @@ sql_file_exts = .sql
 
 [sqlfluff:indentation]
 indent_unit = tab
+
+[sqlfluff:layout:type:alias_expression]
+spacing_before = align
+align_within = select_clause
+align_scope = bracketed
