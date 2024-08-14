@@ -9,3 +9,12 @@ indent_unit = tab
 spacing_before = align
 align_within = select_clause
 align_scope = bracketed
+
+[sqlfluff:rules:capitalisation.identifiers]
+extended_capitalisation_policy = pascal
+
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = lower
+
+[sqlfluff:rules:capitalisation.functions]
+extended_capitalisation_policy = upper
