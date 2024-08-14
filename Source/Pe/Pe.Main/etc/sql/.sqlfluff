@@ -4,6 +4,9 @@ sql_file_exts = .sql
 
 [sqlfluff:indentation]
 indent_unit = tab
+indented_joins = True
+indented_using_on = True
+template_blocks_indent = True
 
 [sqlfluff:layout:type:alias_expression]
 spacing_before = align
