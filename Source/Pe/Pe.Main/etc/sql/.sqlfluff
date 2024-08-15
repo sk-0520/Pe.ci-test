@@ -7,6 +7,7 @@ exclude_rules =
     layout.spacing,
     layout.indent,
     convention.terminator,
+    convention.count_rows,
 
 [sqlfluff:indentation]
 indent_unit = tab
