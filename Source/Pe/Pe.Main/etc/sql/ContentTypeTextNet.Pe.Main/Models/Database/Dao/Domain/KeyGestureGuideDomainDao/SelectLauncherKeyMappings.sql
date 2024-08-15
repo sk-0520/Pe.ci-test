@@ -12,13 +12,13 @@ from
 		KeyMappings
 		on
 		(
-			KeyMappings.KeyActionId = KeyActions.KeyActionId
+			KeyActions.KeyActionId = KeyMappings.KeyActionId
 		)
 	inner join
 		KeyOptions
 		on
 		(
-			KeyOptions.KeyActionId = KeyActions.KeyActionId
+			KeyActions.KeyActionId = KeyOptions.KeyActionId
 		)
 where
 	KeyActions.KeyActionKind = @KeyActionKind

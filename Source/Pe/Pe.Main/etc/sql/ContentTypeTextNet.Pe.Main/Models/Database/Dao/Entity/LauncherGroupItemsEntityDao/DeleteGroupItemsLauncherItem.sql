@@ -3,11 +3,11 @@ delete from
 where
 	LauncherGroupItems.RowId = (
 		select
-			Indexed_LauncherGroupItems.RowId
+			AliasIndexedLauncherGroupItems.RowId
 		from
 			(
 				-- グループID + ランチャーアイテムIDの並び順から行番号(0基点)を取得する
-				select
+				select -- noqa: ST06
 					ROW_NUMBER() over(
 						order by
 							LauncherGroupItems.Sequence asc
@@ -20,7 +20,7 @@ where
 					LauncherGroupItems.LauncherGroupId = @LauncherGroupId
 					and
 					LauncherGroupItems.LauncherItemId = @LauncherItemId
-			) as Indexed_LauncherGroupItems
+			) as AliasIndexedLauncherGroupItems
 		where
-			Indexed_LauncherGroupItems.ItemIndex = @ItemIndex
+			AliasIndexedLauncherGroupItems.ItemIndex = @ItemIndex
 	)
