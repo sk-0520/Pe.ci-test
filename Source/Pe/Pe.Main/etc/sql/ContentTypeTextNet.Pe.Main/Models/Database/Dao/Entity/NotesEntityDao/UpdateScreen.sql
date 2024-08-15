@@ -10,4 +10,3 @@ set
 	UpdatedCount          = UpdatedCount + 1
 where
 	NoteId = @NoteId
-

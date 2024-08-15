@@ -8,4 +8,3 @@ where
 	0 < LENGTH(TRIM(LauncherTags.TagName))
 order by
 	TRIM(LauncherTags.TagName)
-

@@ -14,5 +14,3 @@ where
 	IconBox = @IconBox
 	and
 	IconScale = @IconScale
-
-

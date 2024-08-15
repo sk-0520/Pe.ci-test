@@ -5,4 +5,3 @@ from
 	LauncherItems
 where
 	LauncherItems.LauncherItemId = @LauncherItemId
-

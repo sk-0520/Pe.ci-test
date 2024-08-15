@@ -7,4 +7,3 @@ where
 	LauncherItemHistories.Kind = @Kind
 	and
 	LauncherItemHistories.LastExecuteTimestamp = @LastExecuteTimestamp
-

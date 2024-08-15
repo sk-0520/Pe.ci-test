@@ -25,4 +25,3 @@ order by
 		else
 			100
 	end
-

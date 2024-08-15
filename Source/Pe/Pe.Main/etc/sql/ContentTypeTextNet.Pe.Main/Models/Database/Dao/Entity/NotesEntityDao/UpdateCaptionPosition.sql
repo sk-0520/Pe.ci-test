@@ -12,4 +12,3 @@ where
 	NoteId = @NoteId
 	and
 	CaptionPosition <> @CaptionPosition
-

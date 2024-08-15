@@ -11,7 +11,3 @@ set
 	UpdatedCount = UpdatedCount + 1
 where
 	LauncherItemId = @LauncherItemId
-
-
-
-

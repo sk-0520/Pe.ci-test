@@ -7,4 +7,3 @@ where
 	LauncherItemIcons.IconBox = @IconBox
 	and
 	LauncherItemIcons.IconScale = @IconScale
-

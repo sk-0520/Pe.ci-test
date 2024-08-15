@@ -3,5 +3,3 @@ from
 	LauncherItems
 where
 	LauncherItemId = @LauncherItemId
-
-

@@ -15,4 +15,3 @@ from
 		)
 where
 	LauncherItems.LauncherItemId = @LauncherItemId
-

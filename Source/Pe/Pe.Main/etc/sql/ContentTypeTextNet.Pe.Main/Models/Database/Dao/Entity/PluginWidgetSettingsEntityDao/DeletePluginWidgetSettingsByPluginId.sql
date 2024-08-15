@@ -3,4 +3,3 @@ from
 	PluginWidgetSettings
 where
 	PluginId = @PluginId
-

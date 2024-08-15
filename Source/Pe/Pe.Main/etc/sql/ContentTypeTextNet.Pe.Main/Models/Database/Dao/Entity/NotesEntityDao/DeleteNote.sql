@@ -3,4 +3,3 @@ from
 	Notes
 where
 	NoteId = @NoteId
-

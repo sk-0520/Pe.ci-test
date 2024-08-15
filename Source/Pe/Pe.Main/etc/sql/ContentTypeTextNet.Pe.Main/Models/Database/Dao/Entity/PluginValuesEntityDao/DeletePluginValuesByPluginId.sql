@@ -3,4 +3,3 @@ from
 	PluginValues
 where
 	PluginId = @PluginId
-
