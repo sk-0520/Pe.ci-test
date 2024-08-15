@@ -1,5 +1,4 @@
-select
-	distinct
+select distinct
 	LauncherTags.LauncherItemId,
 	TRIM(LauncherTags.TagName)
 from
