@@ -3,4 +3,4 @@ select
 from
 	PluginWidgetSettings
 where
-	PluginId = @PluginId
+	PluginWidgetSettings.PluginId = @PluginId

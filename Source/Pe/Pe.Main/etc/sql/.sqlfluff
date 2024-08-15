@@ -28,3 +28,6 @@ capitalisation_policy = lower
 
 [sqlfluff:rules:capitalisation.functions]
 extended_capitalisation_policy = upper
+
+[sqlfluff:rules:references.consistent]
+single_table_references = qualified
