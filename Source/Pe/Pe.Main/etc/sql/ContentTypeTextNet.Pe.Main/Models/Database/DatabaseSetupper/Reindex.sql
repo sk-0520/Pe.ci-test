@@ -1,1 +1,1 @@
-reindex
+reindex -- noqa: PRS

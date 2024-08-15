@@ -1,1 +1,1 @@
-vacuum
+vacuum -- noqa: PRS
