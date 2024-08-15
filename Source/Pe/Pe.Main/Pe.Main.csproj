@@ -136,6 +136,9 @@
     <None Update="etc\sql\.sqlfluff">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+    <None Update="etc\sql\.sqlfluffignore">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
     <None Update="IdImpl.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IdImpl.cs</LastGenOutput>
