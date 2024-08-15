@@ -1,7 +1,7 @@
 update
 	NoteFiles as AliasNoteFilesTarget
 set
-	[Sequence] = (
+	Sequence = (
 		select
 			COUNT(AliasNoteFilesCurrent.Sequence) + 1
 		from
@@ -9,7 +9,7 @@ set
 		where
 			AliasNoteFilesTarget.NoteId = AliasNoteFilesCurrent.NoteId
 			and
-			AliasNoteFilesCurrent.[Sequence] < AliasNoteFilesTarget.[Sequence]
+			AliasNoteFilesCurrent.Sequence < AliasNoteFilesTarget.Sequence
 	),
 
 	UpdatedTimestamp      = @UpdatedTimestamp,
