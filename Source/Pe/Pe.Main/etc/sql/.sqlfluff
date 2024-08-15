@@ -2,6 +2,11 @@
 dialect = sqlite
 sql_file_exts = .sql
 
+exclude_rules =
+    layout.select_targets,
+    layout.spacing,
+    layout.indent,
+
 [sqlfluff:indentation]
 indent_unit = tab
 indented_joins = True

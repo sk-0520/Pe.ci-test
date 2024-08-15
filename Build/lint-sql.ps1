@@ -1,6 +1,7 @@
 Param(
 	[switch] $Fix,
-	[switch] $RunCi
+	[switch] $RunCi,
+	[string] $File = ''
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -28,6 +29,11 @@ $params += '--volume'
 $params += "${sqlDir}:/sql"
 $params += "sqlfluff/sqlfluff:${versionTag}"
 $params += ${mode}
-$params += '/sql'
+if($File) {
+	$sqlPath = $File.Replace('\', '/').TrimStart('/')
+	$params += "/sql/${sqlPath}"
+} else {
+	$params += '/sql'
+}
 
 docker run ($params)
