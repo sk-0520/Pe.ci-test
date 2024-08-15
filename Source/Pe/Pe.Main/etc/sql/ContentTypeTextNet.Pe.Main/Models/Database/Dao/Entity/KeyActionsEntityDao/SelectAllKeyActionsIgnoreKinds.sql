@@ -1,4 +1,3 @@
-
 select
 	KeyActions.KeyActionId,
 	KeyActions.KeyActionKind,

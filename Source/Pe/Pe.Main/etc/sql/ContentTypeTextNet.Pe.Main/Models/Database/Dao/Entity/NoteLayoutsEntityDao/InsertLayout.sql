@@ -1,5 +1,4 @@
-﻿
-insert into
+﻿insert into
 	NoteLayouts
 	(
 		NoteId,

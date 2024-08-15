@@ -1,5 +1,4 @@
-﻿
-select
+﻿select
 	LauncherItems.Kind,
 	IFNULL(LauncherFiles.File, '') as FilePath,
 	0 as CommandIndex,

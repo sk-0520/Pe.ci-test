@@ -1,4 +1,3 @@
-
 insert into
 	Notes
 	(

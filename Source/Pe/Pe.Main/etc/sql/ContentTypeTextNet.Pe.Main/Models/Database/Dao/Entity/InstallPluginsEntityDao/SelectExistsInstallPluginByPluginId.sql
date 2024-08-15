@@ -1,4 +1,3 @@
-
 select
 	COUNT(1) = 1
 from
