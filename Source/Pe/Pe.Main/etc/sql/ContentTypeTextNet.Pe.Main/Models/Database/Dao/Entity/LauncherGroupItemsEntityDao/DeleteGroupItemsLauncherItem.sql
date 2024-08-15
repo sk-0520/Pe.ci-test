@@ -10,7 +10,7 @@ where
 				select
 					ROW_NUMBER() over(
 						order by
-							LauncherGroupItems.Sequence
+							LauncherGroupItems.Sequence asc
 					) - 1 as ItemIndex, -- 1基点なのでずらす
 					LauncherGroupItems.RowId,
 					LauncherGroupItems.*
