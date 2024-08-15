@@ -1,9 +1,9 @@
 delete from
 	LauncherGroupItems
 where
-	LauncherGroupItems.rowid = (
+	LauncherGroupItems.RowId = (
 		select
-			Indexed_LauncherGroupItems.rowid
+			Indexed_LauncherGroupItems.RowId
 		from
 			(
 				-- グループID + ランチャーアイテムIDの並び順から行番号(0基点)を取得する
@@ -12,7 +12,7 @@ where
 						order by
 							LauncherGroupItems.Sequence
 					) - 1 as ItemIndex, -- 1基点なのでずらす
-					LauncherGroupItems.rowid,
+					LauncherGroupItems.RowId,
 					LauncherGroupItems.*
 				from
 					LauncherGroupItems
