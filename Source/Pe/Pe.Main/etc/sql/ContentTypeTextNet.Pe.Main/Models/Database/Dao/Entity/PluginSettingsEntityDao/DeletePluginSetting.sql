@@ -1,5 +1,4 @@
-delete
-from
+delete from
 	PluginSettings
 where
 	PluginSettings.PluginId = @PluginId

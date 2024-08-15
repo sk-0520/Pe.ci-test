@@ -1,5 +1,4 @@
-delete
-from
+delete from
 	LauncherItemIconStatus
 where
 	LauncherItemId = @LauncherItemId

@@ -1,5 +1,4 @@
-delete
-from
+delete from
 	LauncherGroupItems
 where
 	LauncherGroupItems.LauncherGroupId = @LauncherGroupId
