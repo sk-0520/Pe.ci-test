@@ -23,7 +23,7 @@ from
 where
 	KeyActions.KeyActionKind = @KeyActionKind
 	and
-	KeyActions.KeyActionContent in @KeyActionContents
+	KeyActions.KeyActionContent in @KeyActionContents -- noqa: PRS
 	and
 	KeyOptions.KeyOptionName = 'LauncherItemId'
 	and

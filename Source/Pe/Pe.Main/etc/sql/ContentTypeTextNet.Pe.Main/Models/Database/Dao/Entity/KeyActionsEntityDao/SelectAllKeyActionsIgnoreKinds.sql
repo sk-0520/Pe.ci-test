@@ -6,7 +6,7 @@ select
 from
 	KeyActions
 where
-	KeyActions.KeyActionKind not in @IgnoreKinds
+	KeyActions.KeyActionKind not in @IgnoreKinds -- noqa: PRS
 order by
 	case KeyActions.KeyActionKind
 		when 'replace' then
