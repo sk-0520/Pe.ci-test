@@ -42,9 +42,9 @@ insert into
 /* Title                 */
 		case AppNoteSetting.TitleKind
 			when 'timestamp' then
-				strftime('%Y/%m/%d %H:%M:%S', CURRENT_TIMESTAMP, 'localtime')
+				STRFTIME('%Y/%m/%d %H:%M:%S', CURRENT_TIMESTAMP, 'localtime')
 			else
-				(select count(NoteId) + 1 from Notes)
+				(select COUNT(NoteId) + 1 from Notes)
 		end,
 /* LayoutKind            */ AppNoteSetting.LayoutKind,
 /* FontId                */ AppNoteSetting.FontId,
