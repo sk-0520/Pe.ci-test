@@ -1,4 +1,4 @@
 ﻿select
-	IFNULL(MAX(LauncherGroups.Sequence), 0)
+	COALESCE(MAX(LauncherGroups.Sequence), 0)
 from
 	LauncherGroups

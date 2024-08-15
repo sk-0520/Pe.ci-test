@@ -1,5 +1,5 @@
 select
-	IFNULL(NoteFile.Sequence, 0) as Sequence
+	COALESCE(NoteFile.Sequence, 0) as Sequence
 from
 	(
 		select
