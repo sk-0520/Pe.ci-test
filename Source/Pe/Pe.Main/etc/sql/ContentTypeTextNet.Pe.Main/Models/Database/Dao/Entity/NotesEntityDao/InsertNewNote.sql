@@ -19,15 +19,15 @@ insert into
 		IsTopmost,
 		CaptionPosition,
 
-		[CreatedTimestamp],
-		[CreatedAccount],
-		[CreatedProgramName],
-		[CreatedProgramVersion],
-		[UpdatedTimestamp],
-		[UpdatedAccount],
-		[UpdatedProgramName],
-		[UpdatedProgramVersion],
-		[UpdatedCount]
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
 
 	)
 	select

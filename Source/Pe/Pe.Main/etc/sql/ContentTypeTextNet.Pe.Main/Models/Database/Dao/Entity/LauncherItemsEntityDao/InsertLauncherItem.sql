@@ -1,25 +1,25 @@
 insert into
 	LauncherItems
 	(
-		[LauncherItemId],
-		[Name],
-		[Kind],
-		[IconPath],
-		[IconIndex],
-		[IsEnabledCommandLauncher],
-		[ExecuteCount],
-		[LastExecuteTimestamp],
-		[Comment],
+		LauncherItemId,
+		Name,
+		Kind,
+		IconPath,
+		IconIndex,
+		IsEnabledCommandLauncher,
+		ExecuteCount,
+		LastExecuteTimestamp,
+		Comment,
 
-		[CreatedTimestamp],
-		[CreatedAccount],
-		[CreatedProgramName],
-		[CreatedProgramVersion],
-		[UpdatedTimestamp],
-		[UpdatedAccount],
-		[UpdatedProgramName],
-		[UpdatedProgramVersion],
-		[UpdatedCount]
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
 	)
 	values
 	(

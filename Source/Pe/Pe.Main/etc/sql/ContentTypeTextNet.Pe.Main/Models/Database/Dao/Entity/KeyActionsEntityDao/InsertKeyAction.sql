@@ -7,15 +7,15 @@ insert into
 		UsageCount,
 		Comment,
 
-		[CreatedTimestamp],
-		[CreatedAccount],
-		[CreatedProgramName],
-		[CreatedProgramVersion],
-		[UpdatedTimestamp],
-		[UpdatedAccount],
-		[UpdatedProgramName],
-		[UpdatedProgramVersion],
-		[UpdatedCount]
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
 	)
 	values
 	(

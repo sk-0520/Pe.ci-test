@@ -13,15 +13,15 @@ insert into
 		RefreshTime,
 		IsEnabledRefresh,
 
-		[CreatedTimestamp],
-		[CreatedAccount],
-		[CreatedProgramName],
-		[CreatedProgramVersion],
-		[UpdatedTimestamp],
-		[UpdatedAccount],
-		[UpdatedProgramName],
-		[UpdatedProgramVersion],
-		[UpdatedCount]
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
 
 	)
 	values

@@ -1,21 +1,21 @@
 ﻿insert into
 	Screens
 	(
-		[ScreenName],
-		[ScreenX],
-		[ScreenY],
-		[ScreenWidth],
-		[ScreenHeight],
+		ScreenName,
+		ScreenX,
+		ScreenY,
+		ScreenWidth,
+		ScreenHeight,
 
-		[CreatedTimestamp],
-		[CreatedAccount],
-		[CreatedProgramName],
-		[CreatedProgramVersion],
-		[UpdatedTimestamp],
-		[UpdatedAccount],
-		[UpdatedProgramName],
-		[UpdatedProgramVersion],
-		[UpdatedCount]
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
 	)
 	values
 	(

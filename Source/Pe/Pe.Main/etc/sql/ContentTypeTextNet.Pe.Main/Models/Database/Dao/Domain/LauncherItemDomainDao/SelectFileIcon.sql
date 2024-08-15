@@ -1,7 +1,7 @@
 ﻿
 select
 	LauncherItems.Kind,
-	IFNULL(LauncherFiles.[File], '') as FilePath,
+	IFNULL(LauncherFiles.File, '') as FilePath,
 	0 as CommandIndex,
 	LauncherItems.IconPath,
 	LauncherItems.IconIndex

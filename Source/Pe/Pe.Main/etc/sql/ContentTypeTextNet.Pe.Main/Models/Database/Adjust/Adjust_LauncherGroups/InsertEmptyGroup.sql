@@ -1,22 +1,22 @@
 insert into
 	LauncherGroups
 	(
-		[LauncherGroupId],
-		[Name],
-		[Kind],
-		[ImageName],
-		[ImageColor],
-		[Sequence],
+		LauncherGroupId,
+		Name,
+		Kind,
+		ImageName,
+		ImageColor,
+		Sequence,
 
-		[CreatedTimestamp],
-		[CreatedAccount],
-		[CreatedProgramName],
-		[CreatedProgramVersion],
-		[UpdatedTimestamp],
-		[UpdatedAccount],
-		[UpdatedProgramName],
-		[UpdatedProgramVersion],
-		[UpdatedCount]
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
 	)
 	values
 	(
