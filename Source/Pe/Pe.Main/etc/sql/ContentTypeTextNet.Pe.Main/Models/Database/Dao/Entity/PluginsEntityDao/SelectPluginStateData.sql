@@ -6,4 +6,3 @@ from
 	Plugins
 order by
 	Plugins.Name
-
