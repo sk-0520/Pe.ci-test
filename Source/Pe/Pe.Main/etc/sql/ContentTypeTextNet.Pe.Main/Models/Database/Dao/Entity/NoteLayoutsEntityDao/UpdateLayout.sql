@@ -6,11 +6,11 @@ set
 	Width = @Width,
 	Height = @Height,
 
-	UpdatedTimestamp      = @UpdatedTimestamp,
-	UpdatedAccount        = @UpdatedAccount,
-	UpdatedProgramName    = @UpdatedProgramName,
+	UpdatedTimestamp = @UpdatedTimestamp,
+	UpdatedAccount = @UpdatedAccount,
+	UpdatedProgramName = @UpdatedProgramName,
 	UpdatedProgramVersion = @UpdatedProgramVersion,
-	UpdatedCount          = UpdatedCount + 1
+	UpdatedCount = UpdatedCount + 1
 where
 	NoteId = @NoteId
 	and

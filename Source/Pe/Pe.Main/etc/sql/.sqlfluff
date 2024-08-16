@@ -14,7 +14,6 @@ rules = all
 exclude_rules =
     # 単独カラムでも改行したいけどダメっぽい
     layout.select_targets,
-    layout.spacing,
     layout.indent,
 
 # Below controls SQLFluff output, see max_line_length for SQL output
@@ -428,3 +427,6 @@ forbid_subquery_in = join
 
 [sqlfluff:rules:structure.join_condition_order]
 preferred_first_table_in_join_clause = earlier
+
+#[sqlfluff:rules:layout.spacing]
+

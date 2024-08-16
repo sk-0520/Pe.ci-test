@@ -8,7 +8,7 @@ where
 			(
 				-- グループID + ランチャーアイテムIDの並び順から行番号(0基点)を取得する
 				select -- noqa: ST06
-					ROW_NUMBER() over(
+					ROW_NUMBER() over (
 						order by
 							LauncherGroupItems.Sequence asc
 					) - 1 as ItemIndex, -- 1基点なのでずらす

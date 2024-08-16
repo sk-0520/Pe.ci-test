@@ -1,14 +1,14 @@
 update
 	LauncherRedoItems
 set
-	RedoMode              = @RedoMode,
-	WaitTime              = @WaitTime,
-	RetryCount            = @RetryCount,
+	RedoMode = @RedoMode,
+	WaitTime = @WaitTime,
+	RetryCount = @RetryCount,
 
-	UpdatedTimestamp      = @UpdatedTimestamp,
-	UpdatedAccount        = @UpdatedAccount,
-	UpdatedProgramName    = @UpdatedProgramName,
+	UpdatedTimestamp = @UpdatedTimestamp,
+	UpdatedAccount = @UpdatedAccount,
+	UpdatedProgramName = @UpdatedProgramName,
 	UpdatedProgramVersion = @UpdatedProgramVersion,
-	UpdatedCount          = UpdatedCount + 1
+	UpdatedCount = UpdatedCount + 1
 where
 	LauncherItemId = @LauncherItemId

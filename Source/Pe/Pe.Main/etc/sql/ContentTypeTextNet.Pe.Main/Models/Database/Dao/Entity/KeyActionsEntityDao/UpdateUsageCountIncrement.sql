@@ -1,12 +1,12 @@
 update
 	KeyActions
 set
-	UsageCount            = UsageCount + 1,
+	UsageCount = UsageCount + 1,
 
-	UpdatedTimestamp      = @UpdatedTimestamp,
-	UpdatedAccount        = @UpdatedAccount,
-	UpdatedProgramName    = @UpdatedProgramName,
+	UpdatedTimestamp = @UpdatedTimestamp,
+	UpdatedAccount = @UpdatedAccount,
+	UpdatedProgramName = @UpdatedProgramName,
 	UpdatedProgramVersion = @UpdatedProgramVersion,
-	UpdatedCount          = UpdatedCount + 1
+	UpdatedCount = UpdatedCount + 1
 where
-	KeyActionId           = @KeyActionId
+	KeyActionId = @KeyActionId

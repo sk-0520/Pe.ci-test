@@ -1,15 +1,15 @@
 update
 	Plugins
 set
-	LastUseTimestamp     = @LastUseTimestamp,
+	LastUseTimestamp = @LastUseTimestamp,
 	LastUsePluginVersion = @LastUsePluginVersion,
-	LastUseAppVersion    = @LastUseAppVersion,
-	ExecuteCount         = ExecuteCount + 1,
+	LastUseAppVersion = @LastUseAppVersion,
+	ExecuteCount = ExecuteCount + 1,
 
-	UpdatedTimestamp      = @UpdatedTimestamp,
-	UpdatedAccount        = @UpdatedAccount,
-	UpdatedProgramName    = @UpdatedProgramName,
+	UpdatedTimestamp = @UpdatedTimestamp,
+	UpdatedAccount = @UpdatedAccount,
+	UpdatedProgramName = @UpdatedProgramName,
 	UpdatedProgramVersion = @UpdatedProgramVersion,
-	UpdatedCount          = UpdatedCount + 1
+	UpdatedCount = UpdatedCount + 1
 where
 	PluginId = @PluginId

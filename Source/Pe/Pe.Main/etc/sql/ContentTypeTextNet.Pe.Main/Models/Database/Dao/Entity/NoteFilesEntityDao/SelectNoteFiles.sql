@@ -4,7 +4,7 @@ select
 	NoteFiles.FileKind,
 	NoteFiles.FilePath,
 	NoteFiles.Sequence,
-	
+
 	NoteFiles.CreatedTimestamp,
 	NoteFiles.CreatedAccount,
 	NoteFiles.CreatedProgramName,
