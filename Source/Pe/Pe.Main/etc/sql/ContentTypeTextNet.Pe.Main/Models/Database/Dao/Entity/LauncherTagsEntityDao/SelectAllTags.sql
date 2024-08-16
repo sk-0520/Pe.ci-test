@@ -1,6 +1,6 @@
 select distinct
 	LauncherTags.LauncherItemId,
-	TRIM(LauncherTags.TagName)
+	TRIM(LauncherTags.TagName) as TagName
 from
 	LauncherTags
 where

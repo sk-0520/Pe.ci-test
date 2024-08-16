@@ -1,3 +1,4 @@
+-- noqa: disable=AL03
 insert into
 	LauncherToolbars
 	(
