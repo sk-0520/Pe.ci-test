@@ -1,8 +1,9 @@
+-- noqa: disable=CP02
 select
 	COUNT(*) = 1
 from
-	sqlite_master -- noqa: CP02
+	sqlite_master
 where
-	sqlite_master.type = 'table' -- noqa: CP02
+	sqlite_master.type = 'table'
 	and
-	sqlite_master.name = 'AppExecuteSetting' -- noqa: CP02
+	sqlite_master.name = 'AppExecuteSetting'
