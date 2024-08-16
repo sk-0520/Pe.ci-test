@@ -1,4 +1,4 @@
-﻿select
+﻿select -- noqa: ST06
 	LauncherItems.Kind,
 	COALESCE(LauncherFiles.File, '') as FilePath,
 	0 as CommandIndex,
