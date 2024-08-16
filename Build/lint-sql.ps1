@@ -31,6 +31,10 @@ $params += "sqlfluff/sqlfluff:${versionTag}"
 $params += ${mode}
 if($File) {
 	$sqlPath = $File.Replace('\', '/').TrimStart('/')
+	$prefix = 'sql/'
+	if($sqlPath.StartsWith($prefix)) {
+		$sqlPath = $sqlPath.Substring($prefix.Length)
+	}
 	$params += "/sql/${sqlPath}"
 } else {
 	$params += '/sql'
