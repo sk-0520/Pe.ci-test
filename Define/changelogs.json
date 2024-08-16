@@ -72,7 +72,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#963: SQL に対して Lint を実行する",
+						"comments": [
+							"インデント・改行が一切解決できていないけど仕組みを構築したので OK"
+						]
 					},
 					{
 						"revision": "",
