@@ -16,7 +16,6 @@ exclude_rules =
     layout.select_targets,
     layout.spacing,
     layout.indent,
-    convention.terminator,
     convention.count_rows,
 
 # Below controls SQLFluff output, see max_line_length for SQL output
