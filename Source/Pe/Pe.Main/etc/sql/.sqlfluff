@@ -12,6 +12,7 @@ templater = jinja
 rules = all
 # Comma separated list of rules to exclude, or None
 exclude_rules =
+    # 単独カラムでも改行したいけどダメっぽい
     layout.select_targets,
     layout.spacing,
     layout.indent,
@@ -418,7 +419,7 @@ ignore_comment_lines = True
 ignore_comment_clauses = False
 
 [sqlfluff:rules:layout.select_targets]
-wildcard_policy = single
+wildcard_policy = multiple
 
 [sqlfluff:rules:structure.subquery]
 # By default, allow subqueries in from clauses, but not join clauses
