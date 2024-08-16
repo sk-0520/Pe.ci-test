@@ -7,7 +7,7 @@ nocolor = False
 # Or run 'sqlfluff dialects'
 dialect = sqlite
 # One of [raw|jinja|python|placeholder]
-templater = jinja
+templater = placeholder
 # Comma separated list of rules to check, default to all
 rules = all
 # Comma separated list of rules to exclude, or None
@@ -64,6 +64,9 @@ max_line_length = 80
 # Only set `render_variant_limit` to more than 1 if you know what you're doing!
 # Implementation of this will also depend on your templater.
 render_variant_limit = 1
+
+[sqlfluff:templater:placeholder]
+param_regex = (?P<param_name>[\w_]+)
 
 [sqlfluff:indentation]
 # See https://docs.sqlfluff.com/en/stable/layout.html#configuring-indent-locations
