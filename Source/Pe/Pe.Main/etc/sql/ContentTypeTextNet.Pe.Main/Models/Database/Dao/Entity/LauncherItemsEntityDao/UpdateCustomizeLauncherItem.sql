@@ -1,11 +1,11 @@
 update
 	LauncherItems
 set
-	[Name] = @Name,
-	[IconPath] = @IconPath,
-	[IconIndex] = @IconIndex,
-	[IsEnabledCommandLauncher] = @IsEnabledCommandLauncher,
-	[Comment] = @Comment,
+	Name = @Name,
+	IconPath = @IconPath,
+	IconIndex = @IconIndex,
+	IsEnabledCommandLauncher = @IsEnabledCommandLauncher,
+	Comment = @Comment,
 
 	UpdatedTimestamp = @UpdatedTimestamp,
 	UpdatedAccount = @UpdatedAccount,
@@ -14,5 +14,3 @@ set
 	UpdatedCount = UpdatedCount + 1
 where
 	LauncherItemId = @LauncherItemId
-
-

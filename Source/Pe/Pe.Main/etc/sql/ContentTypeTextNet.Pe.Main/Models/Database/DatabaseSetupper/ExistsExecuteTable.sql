@@ -1,3 +1,4 @@
+-- noqa: disable=CP02
 select
 	COUNT(*) = 1
 from
@@ -6,4 +7,3 @@ where
 	sqlite_master.type = 'table'
 	and
 	sqlite_master.name = 'AppExecuteSetting'
-;

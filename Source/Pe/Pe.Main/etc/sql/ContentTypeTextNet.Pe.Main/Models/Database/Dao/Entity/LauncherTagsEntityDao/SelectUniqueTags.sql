@@ -1,5 +1,5 @@
-select
-	distinct TRIM(LauncherTags.TagName)
+select distinct
+	TRIM(LauncherTags.TagName)
 from
 	LauncherTags
 where
@@ -8,4 +8,3 @@ where
 	0 < LENGTH(TRIM(LauncherTags.TagName))
 order by
 	TRIM(LauncherTags.TagName)
-

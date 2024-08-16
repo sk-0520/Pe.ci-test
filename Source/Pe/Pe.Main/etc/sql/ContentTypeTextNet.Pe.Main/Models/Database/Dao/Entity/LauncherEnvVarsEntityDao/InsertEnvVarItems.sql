@@ -1,14 +1,14 @@
 ﻿insert into
 	LauncherEnvVars
 	(
-		[LauncherItemId],
-		[EnvName],
-		[EnvValue],
+		LauncherItemId,
+		EnvName,
+		EnvValue,
 
-		[CreatedTimestamp],
-		[CreatedAccount],
-		[CreatedProgramName],
-		[CreatedProgramVersion]
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion
 	)
 	values
 	(

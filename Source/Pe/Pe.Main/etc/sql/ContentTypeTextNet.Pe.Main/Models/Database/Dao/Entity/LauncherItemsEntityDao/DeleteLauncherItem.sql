@@ -1,7 +1,4 @@
-delete
-from
+delete from
 	LauncherItems
 where
 	LauncherItemId = @LauncherItemId
-
-

@@ -1,5 +1,5 @@
 select
-	COUNT(1) == 1
+	COUNT(1) = 1
 from
 	LauncherItemIconStatus
 where

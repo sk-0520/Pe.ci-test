@@ -1,5 +1,4 @@
-delete
-from
+delete from
 	KeyOptions
 where
 	KeyOptions.KeyActionId = @KeyActionId

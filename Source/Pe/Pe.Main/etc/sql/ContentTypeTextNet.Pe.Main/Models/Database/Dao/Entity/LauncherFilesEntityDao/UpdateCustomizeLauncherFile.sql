@@ -1,19 +1,19 @@
 update
 	LauncherFiles
 set
-	File                  = @File,
-	Option                = @Option,
-	WorkDirectory         = @WorkDirectory,
+	File = @File,
+	Option = @Option,
+	WorkDirectory = @WorkDirectory,
 	IsEnabledCustomEnvVar = @IsEnabledCustomEnvVar,
-	ShowMode              = @ShowMode,
-	IsEnabledStandardIo   = @IsEnabledStandardIo,
-	StandardIoEncoding    = @StandardIoEncoding,
-	RunAdministrator      = @RunAdministrator,
+	ShowMode = @ShowMode,
+	IsEnabledStandardIo = @IsEnabledStandardIo,
+	StandardIoEncoding = @StandardIoEncoding,
+	RunAdministrator = @RunAdministrator,
 
-	UpdatedTimestamp      = @UpdatedTimestamp,
-	UpdatedAccount        = @UpdatedAccount,
-	UpdatedProgramName    = @UpdatedProgramName,
+	UpdatedTimestamp = @UpdatedTimestamp,
+	UpdatedAccount = @UpdatedAccount,
+	UpdatedProgramName = @UpdatedProgramName,
 	UpdatedProgramVersion = @UpdatedProgramVersion,
-	UpdatedCount          = UpdatedCount + 1
+	UpdatedCount = UpdatedCount + 1
 where
 	LauncherItemId = @LauncherItemId

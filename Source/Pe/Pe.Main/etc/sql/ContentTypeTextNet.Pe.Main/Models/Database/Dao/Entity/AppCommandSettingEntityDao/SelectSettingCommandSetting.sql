@@ -13,4 +13,3 @@ where
 		from
 			AppCommandSetting
 	)
-

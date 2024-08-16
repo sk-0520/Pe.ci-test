@@ -33,4 +33,3 @@ insert into
 /* UpdatedProgramVersion    */ @UpdatedProgramVersion,
 /* UpdatedCount             */ 0
 	)
-

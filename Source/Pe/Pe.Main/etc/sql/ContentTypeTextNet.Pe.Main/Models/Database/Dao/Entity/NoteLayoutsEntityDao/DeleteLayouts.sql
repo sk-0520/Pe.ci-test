@@ -1,5 +1,4 @@
-delete
-from
+delete from
 	NoteLayouts
 where
 	NoteId = @NoteId

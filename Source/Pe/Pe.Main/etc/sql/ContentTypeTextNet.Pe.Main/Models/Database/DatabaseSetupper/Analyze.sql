@@ -1,1 +1,1 @@
-analyze
+analyze -- noqa: PRS

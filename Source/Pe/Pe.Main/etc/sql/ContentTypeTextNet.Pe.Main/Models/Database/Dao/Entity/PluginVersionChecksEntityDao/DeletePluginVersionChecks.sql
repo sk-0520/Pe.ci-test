@@ -1,5 +1,4 @@
-delete
-from
+delete from
 	PluginVersionChecks
 where
 	PluginId = @PluginId

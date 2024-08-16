@@ -1,5 +1,4 @@
-﻿delete
-from
+﻿delete from
 	LauncherItemHistories
 where
 	LauncherItemHistories.LauncherItemId = @LauncherItemId
@@ -7,4 +6,3 @@ where
 	LauncherItemHistories.Kind = @Kind
 	and
 	LauncherItemHistories.Value = @Value
-

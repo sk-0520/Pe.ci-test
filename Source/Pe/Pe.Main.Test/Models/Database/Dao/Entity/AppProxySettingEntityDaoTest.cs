@@ -57,10 +57,13 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
         public void UpdateToggleProxyIsEnabled()
         {
             var test = Test.BuildDao<AppProxySettingEntityDao>(AccessorKind.Main);
-            var temp = test.SelectProxyIsEnabled();
+            var firstActual = test.SelectProxyIsEnabled();
             test.UpdateToggleProxyIsEnabled(Test.DiContainer.Build<IDatabaseCommonStatus>());
-            var actual = test.SelectProxyIsEnabled();
-            Assert.NotEqual(temp, actual);
+            var secondActual = test.SelectProxyIsEnabled();
+            test.UpdateToggleProxyIsEnabled(Test.DiContainer.Build<IDatabaseCommonStatus>());
+            var thirdActual = test.SelectProxyIsEnabled();
+            Assert.NotEqual(firstActual, secondActual);
+            Assert.Equal(firstActual, thirdActual);
         }
 
         #endregion

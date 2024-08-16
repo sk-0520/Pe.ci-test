@@ -1,5 +1,5 @@
 ﻿select
-	IFNULL(MAX(LauncherGroupItems.Sequence), 0)
+	COALESCE(MAX(LauncherGroupItems.Sequence), 0)
 from
 	LauncherGroupItems
 where

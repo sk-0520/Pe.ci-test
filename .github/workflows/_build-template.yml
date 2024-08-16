@@ -296,10 +296,23 @@ jobs:
           path: Output\tools
           if-no-files-found: error
 
+  lint-sql:
+    name: "Lint: SQL"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: <Checkout> Repository
+        uses: actions/checkout@v4
+
+      - name: <Lint> SQL
+        shell: pwsh
+        run: .\Build\lint-sql.ps1 -InformationAction Continue -RunCi
+
   build-tools-sql:
     name: "BuildTools: SQL"
     needs:
       - build-tools
+      - lint-sql
     runs-on: ${{ inputs.OS_WINDOWS }}
 
     steps:

@@ -1,14 +1,14 @@
 ﻿insert into
 	LauncherGroupItems
 	(
-		[LauncherGroupId],
-		[LauncherItemId],
-		[Sequence],
+		LauncherGroupId,
+		LauncherItemId,
+		Sequence,
 
-		[CreatedTimestamp],
-		[CreatedAccount],
-		[CreatedProgramName],
-		[CreatedProgramVersion]
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion
 	)
 	values
 	(

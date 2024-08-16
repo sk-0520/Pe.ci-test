@@ -1,5 +1,4 @@
-delete
-from
+delete from
 	NoteFiles
 where
 	NoteId = @NoteId

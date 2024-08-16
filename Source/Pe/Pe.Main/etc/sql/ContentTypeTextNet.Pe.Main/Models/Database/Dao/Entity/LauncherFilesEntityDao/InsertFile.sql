@@ -1,25 +1,25 @@
 insert into
 	LauncherFiles
 	(
-		[LauncherItemId],
-		[File],
-		[Option],
-		[WorkDirectory],
-		[ShowMode],
-		[IsEnabledCustomEnvVar],
-		[IsEnabledStandardIo],
-		[StandardIoEncoding],
-		[RunAdministrator],
+		LauncherItemId,
+		File,
+		Option,
+		WorkDirectory,
+		ShowMode,
+		IsEnabledCustomEnvVar,
+		IsEnabledStandardIo,
+		StandardIoEncoding,
+		RunAdministrator,
 
-		[CreatedTimestamp],
-		[CreatedAccount],
-		[CreatedProgramName],
-		[CreatedProgramVersion],
-		[UpdatedTimestamp],
-		[UpdatedAccount],
-		[UpdatedProgramName],
-		[UpdatedProgramVersion],
-		[UpdatedCount]
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
 	)
 	values
 	(

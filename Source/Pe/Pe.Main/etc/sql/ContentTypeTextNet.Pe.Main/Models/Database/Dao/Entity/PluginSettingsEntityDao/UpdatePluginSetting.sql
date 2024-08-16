@@ -1,14 +1,14 @@
 update
 	PluginSettings
 set
-	DataType  = @DataType,
+	DataType = @DataType,
 	DataValue = @DataValue,
 
-	UpdatedTimestamp      = @UpdatedTimestamp,
-	UpdatedAccount        = @UpdatedAccount,
-	UpdatedProgramName    = @UpdatedProgramName,
+	UpdatedTimestamp = @UpdatedTimestamp,
+	UpdatedAccount = @UpdatedAccount,
+	UpdatedProgramName = @UpdatedProgramName,
 	UpdatedProgramVersion = @UpdatedProgramVersion,
-	UpdatedCount          = UpdatedCount + 1
+	UpdatedCount = UpdatedCount + 1
 where
 	PluginId = @PluginId
 	and
