@@ -166,9 +166,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
                 throw new ArgumentException($"{tableResource.Kind}", nameof(tableResource));
             }
 
-            var parameter = new {
-                TableName = tableResource.Name,
-            };
             var rows = Context.Query($@"
                 PRAGMA table_info('{Implementation.Escape(tableResource.Name)}')
             ");
