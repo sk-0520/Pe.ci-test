@@ -170,15 +170,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
                 PRAGMA table_info('{Implementation.Escape(tableResource.Name)}')
             ");
 
-            var items = rows.Select(a => new DatabaseColumnItem(
-                tableResource,
-                a.name,
-                (int)a.cid,
-                (int)a.pk == 1,
-                (int)a.notnull != 1,
-                a.dflt_value ?? string.Empty,
-                ToDatabaseColumnType(a.type)
-            ))
+            var items = rows
+                .Select(a => new DatabaseColumnItem(
+                    tableResource,
+                    a.name,
+                    (int)a.cid,
+                    (int)a.pk == 1,
+                    (int)a.notnull != 1,
+                    a.dflt_value ?? string.Empty,
+                    ToDatabaseColumnType(a.type)
+                ))
                 .OrderBy(a => a.Position)
                 .ToList()
             ;
