@@ -55,7 +55,7 @@ large_file_skip_byte_limit = 20000
 # If positive, just implies number of processes.
 # If negative or zero, implies number_of_cpus - specified_number.
 # e.g. -1 means use all processors but one. 0  means all cpus.
-processes = 1
+processes = -1
 # Max line length is set by default to be in line with the dbt style guide.
 # https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md
 # Set to zero or negative to disable checks.
@@ -67,10 +67,10 @@ render_variant_limit = 1
 
 [sqlfluff:indentation]
 # See https://docs.sqlfluff.com/en/stable/layout.html#configuring-indent-locations
-indent_unit = space
+indent_unit = tab
 tab_space_size = 4
-indented_joins = False
-indented_ctes = False
+indented_joins = True
+indented_ctes = True
 indented_using_on = True
 indented_on_contents = True
 indented_then = True
@@ -283,28 +283,28 @@ ignore_words_regex = None
 
 [sqlfluff:rules:capitalisation.identifiers]
 # Unquoted identifiers
-extended_capitalisation_policy = consistent
+extended_capitalisation_policy = pascal
 # Comma separated list of words to ignore for this rule
 ignore_words = None
 ignore_words_regex = None
 
 [sqlfluff:rules:capitalisation.functions]
 # Function names
-extended_capitalisation_policy = consistent
+extended_capitalisation_policy = upper
 # Comma separated list of words to ignore for this rule
 ignore_words = None
 ignore_words_regex = None
 
 [sqlfluff:rules:capitalisation.literals]
 # Null & Boolean Literals
-capitalisation_policy = consistent
+capitalisation_policy = lower
 # Comma separated list of words to ignore for this rule
 ignore_words = None
 ignore_words_regex = None
 
 [sqlfluff:rules:capitalisation.types]
 # Data Types
-extended_capitalisation_policy = consistent
+extended_capitalisation_policy = upper
 # Comma separated list of words to ignore for this rule
 ignore_words = None
 ignore_words_regex = None
@@ -340,7 +340,7 @@ force_enable = False
 
 [sqlfluff:rules:convention.not_equal]
 # Consistent usage of preferred "not equal to" comparison
-preferred_not_equal_style = consistent
+preferred_not_equal_style = ansi
 
 [sqlfluff:rules:convention.select_trailing_comma]
 # Trailing commas

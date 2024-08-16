@@ -11,4 +11,4 @@ set
 where
 	LauncherToolbarId = @LauncherToolbarId
 	and
-	IsTopmost != @IsTopmost
+	IsTopmost <> @IsTopmost
