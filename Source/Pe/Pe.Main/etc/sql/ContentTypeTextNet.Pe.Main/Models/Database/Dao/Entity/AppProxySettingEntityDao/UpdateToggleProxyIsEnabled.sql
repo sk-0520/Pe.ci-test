@@ -1,10 +1,7 @@
 update
 	AppProxySetting
 set
-	ProxyIsEnabled       = case
-		when ProxyIsEnabled then false
-		else true
-	end,
+	ProxyIsEnabled       = not ProxyIsEnabled,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,
 	UpdatedAccount        = @UpdatedAccount,
