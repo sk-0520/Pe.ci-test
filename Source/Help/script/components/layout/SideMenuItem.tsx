@@ -2,11 +2,11 @@ import type { FC } from "react";
 import React from "react";
 import type { PageElement } from "../../pages";
 
-type MenuItemProps = {
+type SideMenuItemProps = {
 	page: PageElement;
 };
 
-export const MenuItem: FC<MenuItemProps> = (props: MenuItemProps) => {
+export const SideMenuItem: FC<SideMenuItemProps> = (props: SideMenuItemProps) => {
 	const { page } = props;
 	return (
 		<li>
@@ -14,7 +14,7 @@ export const MenuItem: FC<MenuItemProps> = (props: MenuItemProps) => {
 			{page.nodes && 0 < page.nodes.length && (
 				<ul>
 					{page.nodes.map((a) => (
-						<MenuItem key={a.key} page={a} />
+						<SideMenuItem key={a.key} page={a} />
 					))}
 				</ul>
 			)}
