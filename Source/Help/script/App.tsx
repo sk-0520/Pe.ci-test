@@ -1,11 +1,14 @@
+import { ThemeProvider, createTheme } from "@mui/material";
 import { useAtom } from "jotai";
 import type { FC } from "react";
 import React from "react";
 import { SideMenu } from "./components/layout/SideMenu";
 import type { PageKey } from "./pages";
 import { SideMenuStoreAtom } from "./store/SideMenuStore";
+import { AppTheme } from "./theme/AppTheme";
 
 export const App: FC = () => {
+	const theme = createTheme(AppTheme);
 	const [sideMenuStoreAtom, setSideMenuStoreAtom] = useAtom(SideMenuStoreAtom);
 
 	const handleSelectPageKey = (pageKey: PageKey) => {
@@ -16,9 +19,11 @@ export const App: FC = () => {
 	};
 
 	return (
-		<SideMenu
-			selectedPageKey={sideMenuStoreAtom.selectedPageKey}
-			handleSelectPageKey={handleSelectPageKey}
-		/>
+		<ThemeProvider theme={theme}>
+			<SideMenu
+				selectedPageKey={sideMenuStoreAtom.selectedPageKey}
+				handleSelectPageKey={handleSelectPageKey}
+			/>
+		</ThemeProvider>
 	);
 };
