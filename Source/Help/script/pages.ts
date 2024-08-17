@@ -1,5 +1,14 @@
+
+export const PageKeys = [
+"help.top",
+"help.install-uninstall-data",
+"help.notifyarea",
+"help.launcher"
+] as const
+export type PageKey = typeof PageKeys[number]
+
 export interface PageElement {
-	key: string;
+	key: PageKey;
 	title: string;
 	nodes?: PageElement[];
 }
