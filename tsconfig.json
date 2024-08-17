@@ -16,6 +16,7 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true, /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
     "resolveJsonModule": true,
+	"jsx": "react-native",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -27,7 +28,7 @@
   },
   "include": [
     "**/*.ts"
-  ],
+, "Source/Help/script/help.tsx"  ],
   "exclude": [
     "node_modules"
   ]
