@@ -1,10 +1,13 @@
 import type { FC } from "react";
+import {HelpMarkdown} from "../../components/HelpMarkdown"
 import type { PageProps } from "../../types/PageProps";
 
 export const HelpIndexPage: FC<PageProps> = (props: PageProps) => {
-	return <>{markdown}</>;
+	return <HelpMarkdown>{markdown}</HelpMarkdown>;
 };
 
-const markdown = `
-# asda
+const markdown = /* markdown */ `
+
+# asd
+
 `;

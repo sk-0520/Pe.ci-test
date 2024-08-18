@@ -47,7 +47,7 @@ export const App: FC = () => {
 
 		// トップっぽくなければ画面遷移
 		const url = new URL(location.href);
-		if (url.searchParams.has('page')) {
+		if (url.searchParams.has("page")) {
 			try {
 				const pageKey = getPageKey(url.searchParams);
 				setSideMenuStoreAtom({

@@ -1,5 +1,4 @@
 import { type PageElement, type PageKey, PageKeys } from "../pages";
-import { trim } from "./string";
 
 function getPageCore(
 	pageKey: PageKey,

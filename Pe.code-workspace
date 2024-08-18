@@ -91,7 +91,8 @@
     },
     "extensions": {
         "recommendations": [
-            "biomejs.biome"
+            "biomejs.biome",
+            "bierner.comment-tagged-templates"
         ]
     }
 }
