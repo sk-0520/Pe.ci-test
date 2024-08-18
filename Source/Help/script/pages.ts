@@ -1,11 +1,10 @@
-
 export const PageKeys = [
-"help.top",
-"help.install-uninstall-data",
-"help.notifyarea",
-"help.launcher"
-] as const
-export type PageKey = typeof PageKeys[number]
+	"help.top",
+	"help.install-uninstall-data",
+	"help.notifyarea",
+	"help.launcher",
+] as const;
+export type PageKey = (typeof PageKeys)[number];
 
 export interface PageElement {
 	key: PageKey;
@@ -26,10 +25,10 @@ export const Pages: PageElement[] = [
 	},
 	{
 		key: "help.notifyarea",
-		title: "通知領域"
+		title: "通知領域",
 	},
 	{
 		key: "help.launcher",
-		title: "ランチャー"
+		title: "ランチャー",
 	},
 ] as const;
