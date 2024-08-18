@@ -1,5 +1,5 @@
-import { List, ListItemButton } from "@mui/material";
-import React, { type FC, type MouseEvent } from "react";
+import { List, ListItemButton, Typography } from "@mui/material";
+import type { FC, MouseEvent } from "react";
 import type { PageElement, PageKey } from "../../pages";
 
 type SideMenuItemProps = {
@@ -20,7 +20,9 @@ export const SideMenuItem: FC<SideMenuItemProps> = (
 
 	return (
 		<>
-			<ListItemButton onClick={handleSelectMenu}>{page.title}</ListItemButton>
+			<ListItemButton onClick={handleSelectMenu}>
+				<Typography paddingLeft={nestLevel * 1.5}>{page.title}</Typography>
+			</ListItemButton>
 			{page.nodes && 0 < page.nodes.length && (
 				<List disablePadding>
 					{page.nodes.map((a) => (

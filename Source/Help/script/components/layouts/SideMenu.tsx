@@ -14,7 +14,6 @@ export const SideMenu: FC<SideMenuProps> = (props: SideMenuProps) => {
 
 	return (
 		<List disablePadding>
-			<span>{selectedPageKey}</span>
 			{Pages.map((a) => (
 				<SideMenuItem
 					key={a.key}
