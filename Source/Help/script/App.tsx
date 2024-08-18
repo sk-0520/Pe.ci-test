@@ -31,7 +31,7 @@ export const App: FC = () => {
 					...sideMenuStoreAtom,
 					selectedPageKey: pageKey,
 				});
-			} catch(ex) {
+			} catch (ex) {
 				console.warn(ex);
 			}
 		};
@@ -45,14 +45,14 @@ export const App: FC = () => {
 		);
 
 		// トップっぽくなければ画面遷移
-		if(location.pathname !== '/') {
+		if (location.pathname !== "/") {
 			try {
 				const pageKey = convertPathToPageKey(location.pathname);
 				setSideMenuStoreAtom({
 					...sideMenuStoreAtom,
 					selectedPageKey: pageKey,
 				});
-			} catch(ex) {
+			} catch (ex) {
 				console.warn(ex);
 			}
 		}
@@ -63,6 +63,7 @@ export const App: FC = () => {
 			...sideMenuStoreAtom,
 			selectedPageKey: pageKey,
 		});
+		//TODO: ローカルファイルはクエリじゃないと無理そう
 		history.pushState({}, "", pageKey);
 	};
 

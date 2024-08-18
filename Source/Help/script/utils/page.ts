@@ -32,14 +32,11 @@ export function getPage(
 }
 
 export function convertPathToPageKey(pathName: string): PageKey {
-	const rawPageKey = trim(
-		pathName,
-		new Set([" ", "/"]),
-	) as PageKey;
+	const rawPageKey = trim(pathName, new Set([" ", "/"])) as PageKey;
 
 	if (PageKeys.includes(rawPageKey)) {
 		return rawPageKey;
 	}
 
-	throw new Error('pathName')
+	throw new Error("pathName");
 }

@@ -1,6 +1,3 @@
-
-
-
 /**
  * トリムの未指定時の対象文字。
  */
@@ -50,7 +47,7 @@ export function trimStart(s: string, characters?: ReadonlySet<string>): string {
 		return s.substring(i);
 	}
 
-	return '';
+	return "";
 }
 
 /**
@@ -74,7 +71,7 @@ export function trimEnd(s: string, characters?: ReadonlySet<string>): string {
 		return s.substring(0, s.length - i);
 	}
 
-	return '';
+	return "";
 }
 
 /**

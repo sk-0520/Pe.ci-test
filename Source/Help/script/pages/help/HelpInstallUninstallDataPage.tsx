@@ -9,4 +9,4 @@ export const HelpInstallUninstallDataPage: FC<PageProps> = (
 
 const markdown = `
 # HelpInstallUninstallData
-`
+`;

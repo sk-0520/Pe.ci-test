@@ -7,7 +7,7 @@ interface SideMenuItemProps {
 	handleSelectPageKey: (pageKey: PageKey) => void;
 	page: PageElement;
 	nestLevel: number;
-};
+}
 
 export const SideMenuItem: FC<SideMenuItemProps> = (
 	props: SideMenuItemProps,
