@@ -14,13 +14,11 @@ import { PageContent } from "./components/layouts/PageContent";
 import { SideMenu } from "./components/layouts/SideMenu";
 import { type PageKey, Pages } from "./pages";
 import { SideMenuStoreAtom } from "./stores/SideMenuStore";
-import { AppTheme } from "./theme/AppTheme";
 import { getPage } from "./utils/page";
 
 const sidebarWidth = 240;
 
 export const App: FC = () => {
-	const theme = createTheme(AppTheme);
 	const [sideMenuStoreAtom, setSideMenuStoreAtom] = useAtom(SideMenuStoreAtom);
 
 	const handleSelectPageKey = (pageKey: PageKey) => {
@@ -33,7 +31,6 @@ export const App: FC = () => {
 	const currentPage = getPage(sideMenuStoreAtom.selectedPageKey, Pages)
 
 	return (
-		<ThemeProvider theme={theme}>
 			<Box sx={{ display: "flex" }}>
 				<AppBar
 					position="fixed"
@@ -77,6 +74,5 @@ export const App: FC = () => {
 					/>
 				</Box>
 			</Box>
-		</ThemeProvider>
 	);
 };
