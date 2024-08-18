@@ -3,19 +3,16 @@ import {
 	Box,
 	Divider,
 	Drawer,
-	ThemeProvider,
 	Toolbar,
 	Typography,
-	createTheme,
 } from "@mui/material";
 import { useAtom } from "jotai";
 import { type FC, useEffect } from "react";
 import { PageContent } from "./components/layouts/PageContent";
 import { SideMenu } from "./components/layouts/SideMenu";
-import { type PageKey, PageKeys, Pages } from "./pages";
+import { type PageKey, Pages } from "./pages";
 import { SideMenuStoreAtom } from "./stores/SideMenuStore";
 import { getPage, getPageKey } from "./utils/page";
-import { trim } from "./utils/string";
 
 const sidebarWidth = 240;
 
@@ -79,7 +76,7 @@ export const App: FC = () => {
 				sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
 			>
 				<Toolbar>
-					<Typography variant="h6" noWrap component="div">
+					<Typography variant="h6" noWrap component="h1">
 						{currentPage.title}
 					</Typography>
 				</Toolbar>
