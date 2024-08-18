@@ -14,7 +14,7 @@ import { PageContent } from "./components/layouts/PageContent";
 import { SideMenu } from "./components/layouts/SideMenu";
 import { type PageKey, PageKeys, Pages } from "./pages";
 import { SideMenuStoreAtom } from "./stores/SideMenuStore";
-import { convertPathToPageKey, getPage } from "./utils/page";
+import { getPage, getPageKey } from "./utils/page";
 import { trim } from "./utils/string";
 
 const sidebarWidth = 240;
@@ -24,9 +24,9 @@ export const App: FC = () => {
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: 初回にイベント設定
 	useEffect(() => {
-		const handleHistory = (pathName: string) => {
+		const handleHistory = (pathName: URLSearchParams) => {
 			try {
-				const pageKey = convertPathToPageKey(pathName);
+				const pageKey = getPageKey(pathName);
 				setSideMenuStoreAtom({
 					...sideMenuStoreAtom,
 					selectedPageKey: pageKey,
@@ -39,15 +39,17 @@ export const App: FC = () => {
 		window.addEventListener(
 			"popstate",
 			(ev) => {
-				handleHistory(location.pathname);
+				const url = new URL(location.href);
+				handleHistory(url.searchParams);
 			},
 			false,
 		);
 
 		// トップっぽくなければ画面遷移
-		if (location.pathname !== "/") {
+		const url = new URL(location.href);
+		if (url.searchParams.has('page')) {
 			try {
-				const pageKey = convertPathToPageKey(location.pathname);
+				const pageKey = getPageKey(url.searchParams);
 				setSideMenuStoreAtom({
 					...sideMenuStoreAtom,
 					selectedPageKey: pageKey,
@@ -63,8 +65,9 @@ export const App: FC = () => {
 			...sideMenuStoreAtom,
 			selectedPageKey: pageKey,
 		});
-		//TODO: ローカルファイルはクエリじゃないと無理そう
-		history.pushState({}, "", pageKey);
+		const url = new URL(location.href);
+		url.searchParams.set("page", pageKey);
+		history.pushState({}, "", url);
 	};
 
 	const currentPage = getPage(sideMenuStoreAtom.selectedPageKey, Pages);

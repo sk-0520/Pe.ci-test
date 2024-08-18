@@ -31,11 +31,13 @@ export function getPage(
 	return page;
 }
 
-export function convertPathToPageKey(pathName: string): PageKey {
-	const rawPageKey = trim(pathName, new Set([" ", "/"])) as PageKey;
-
-	if (PageKeys.includes(rawPageKey)) {
-		return rawPageKey;
+export function getPageKey(quey: URLSearchParams): PageKey {
+	const pageValue = quey.get("page");
+	if (pageValue) {
+		const rawPageKey = pageValue as PageKey;
+		if (PageKeys.includes(rawPageKey)) {
+			return rawPageKey;
+		}
 	}
 
 	throw new Error("pathName");
