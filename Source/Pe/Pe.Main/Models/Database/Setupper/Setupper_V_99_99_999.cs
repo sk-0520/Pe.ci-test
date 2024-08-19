@@ -20,11 +20,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
         #region SetupBase
 
-        /// <summary>
-        /// ここまでこない :-)
-        /// </summary>
-        public override Version Version { get; } = new Version(99, 99, 99);
-
         public override void ExecuteMainDDL(IDatabaseContext context, IReadOnlySetupDto dto)
         { }
 

@@ -22,8 +22,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
         #region SetupBase
 
-        public override Version Version { get; } = new Version(0, 84, 0);
-
         public override void ExecuteMainDDL(IDatabaseContext context, IReadOnlySetupDto dto)
         {
             ExecuteStatement(context, StatementLoader.LoadStatementByCurrent(GetType()), dto);

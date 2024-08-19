@@ -19,10 +19,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
         #region SetupBase
 
-
-        /// <inheritdoc cref="SetupperBase.Version"/>
-        public override Version Version { get; } = new Version(0, 99, 241);
-
         public override void ExecuteMainDDL(IDatabaseContext context, IReadOnlySetupDto dto)
         {
             ExecuteStatement(context, StatementLoader.LoadStatementByCurrent(GetType()), dto);

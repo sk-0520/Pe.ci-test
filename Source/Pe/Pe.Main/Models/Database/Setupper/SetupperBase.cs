@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Standard.Database;
 using ContentTypeTextNet.Pe.Standard.Base;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
 using System.Threading;
+using System.Reflection;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 {
@@ -31,25 +32,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         protected IDatabaseStatementLoader StatementLoader { get; }
         protected ILogger Logger { get; }
 
-        /// <summary>
-        /// 対象バージョン。
-        /// </summary>
-        /// <remarks>
-        /// <para>最終実行バージョンがこのバージョン未満であれば処理実行対象となる。</para>
-        /// <para>開発メモ: リリース時のバージョンとクラス名に変更すること。</para>
-        /// </remarks>
-        public abstract Version Version { get; }
-        /*
-#if DEBUG || BETA
-        = new Version(0, 99, 60); // そん時のバージョンを設定する
-#else
-//#error SQL VERSION
-#endif
-        */
-
         private const string TitleMark = "--//";
         private const string TitleCapture = "TITLE";
         private Regex TitleRegex { get; } = new Regex($@"^{TitleMark}\s*(?<{TitleCapture}>.+)", RegexOptions.ExplicitCapture, Timeout.InfiniteTimeSpan);
+
+        public Version Version
+        {
+            get
+            {
+                var databaseSetupVersion = GetType().GetCustomAttribute<DatabaseSetupVersionAttribute>();
+                Throws.ThrowIfNull(databaseSetupVersion);
+                return databaseSetupVersion.Version;
+            }
+        }
 
         #endregion
 
