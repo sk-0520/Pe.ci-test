@@ -340,7 +340,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public LauncherToolbarShortcutDropMode ShortcutDropMode
         {
-            get;set;
+            get => Model.ShortcutDropMode;
+            set => SetModelValue(value);
         }
 
         public LauncherGroupPosition GroupMenuPosition

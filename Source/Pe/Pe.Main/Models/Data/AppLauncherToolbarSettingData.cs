@@ -16,6 +16,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// </summary>
         public LauncherToolbarContentDropMode ContentDropMode { get; set; }
         /// <summary>
+        /// D&amp;Dファイルがショートカットの場合の処理方法。
+        /// </summary>
+        public LauncherToolbarShortcutDropMode ShortcutDropMode { get; set; }
+        /// <summary>
         /// グループメニューの位置。
         /// </summary>
         public LauncherGroupPosition GroupMenuPosition { get; set; }

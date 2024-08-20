@@ -15,6 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
             public string ContentDropMode { get; set; } = string.Empty;
+            public string ShortcutDropMode { get; set; } = string.Empty;
             public string GroupMenuPosition { get; set; } = string.Empty;
             #endregion
         }
@@ -44,12 +45,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public AppLauncherToolbarSettingData SelectSettingLauncherToolbarSetting()
         {
             var launcherToolbarContentDropModeTransfer = new EnumTransfer<LauncherToolbarContentDropMode>();
+            var launcherToolbarShortcutDropModeTransfer = new EnumTransfer<LauncherToolbarShortcutDropMode>();
             var launcherGroupPositionTransfer = new EnumTransfer<LauncherGroupPosition>();
 
             var statement = LoadStatement();
             var dto = Context.QueryFirst<AppLauncherToolbarSettingEntityDto>(statement);
             var result = new AppLauncherToolbarSettingData() {
                 ContentDropMode = launcherToolbarContentDropModeTransfer.ToEnum(dto.ContentDropMode),
+                ShortcutDropMode = launcherToolbarShortcutDropModeTransfer.ToEnum(dto.ShortcutDropMode),
                 GroupMenuPosition = launcherGroupPositionTransfer.ToEnum(dto.GroupMenuPosition),
             };
             return result;
@@ -58,11 +61,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public void UpdateSettingLauncherToolbarSetting(AppLauncherToolbarSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var launcherToolbarContentDropModeTransfer = new EnumTransfer<LauncherToolbarContentDropMode>();
+            var launcherToolbarShortcutDropModeTransfer = new EnumTransfer<LauncherToolbarShortcutDropMode>();
             var launcherGroupPositionTransfer = new EnumTransfer<LauncherGroupPosition>();
 
             var statement = LoadStatement();
             var dto = new AppLauncherToolbarSettingEntityDto() {
                 ContentDropMode = launcherToolbarContentDropModeTransfer.ToString(data.ContentDropMode),
+                ShortcutDropMode = launcherToolbarShortcutDropModeTransfer.ToString(data.ShortcutDropMode),
                 GroupMenuPosition = launcherGroupPositionTransfer.ToString(data.GroupMenuPosition),
             };
             commonStatus.WriteCommonTo(dto);
