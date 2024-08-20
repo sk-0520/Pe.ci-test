@@ -1,5 +1,6 @@
 select
 	AppLauncherToolbarSetting.ContentDropMode,
+	AppLauncherToolbarSetting.ShortcutDropMode,
 	AppLauncherToolbarSetting.GroupMenuPosition
 from
 	AppLauncherToolbarSetting

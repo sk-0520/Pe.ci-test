@@ -2,6 +2,7 @@ update
 	AppLauncherToolbarSetting
 set
 	ContentDropMode = @ContentDropMode,
+	ShortcutDropMode = @ShortcutDropMode,
 	GroupMenuPosition = @GroupMenuPosition,
 
 	UpdatedTimestamp = @UpdatedTimestamp,

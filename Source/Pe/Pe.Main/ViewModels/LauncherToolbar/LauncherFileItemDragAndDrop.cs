@@ -6,6 +6,8 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Standard.Base;
 using Microsoft.Extensions.Logging;
 
@@ -16,6 +18,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public LauncherFileItemDragAndDrop(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(dispatcherWrapper, loggerFactory)
         { }
+
+        #region property
+
+        public LauncherToolbarShortcutDropMode ShortcutDropMode { get; init; } = LauncherToolbarShortcutDropMode.Confirm;
+
+        #endregion
 
         #region function
 
@@ -58,20 +66,28 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public void RegisterDropFile(IRequestSender requestSender, string path, Action<string, bool> register)
         {
             if(PathUtility.IsShortcut(path)) {
-                var request = new CommonMessageDialogRequestParameter() {
-                    Message = Properties.Resources.String_LauncherFileItemDragAndDrop_Shortcut_Message,
-                    Caption = Properties.Resources.String_LauncherFileItemDragAndDrop_Shortcut_Caption,
-                    Button = MessageBoxButton.YesNoCancel,
-                    DefaultResult = MessageBoxResult.Yes,
-                    Icon = MessageBoxImage.Question,
-                };
-                requestSender.Send<YesNoResponse>(request, r => {
-                    if(r.ResponseIsCancel) {
-                        Logger.LogTrace("ショートカット登録取り消し");
-                        return;
-                    }
-                    register(path, r.ResponseIsYes);
-                });
+                if(ShortcutDropMode == LauncherToolbarShortcutDropMode.Confirm) {
+                    var request = new CommonMessageDialogRequestParameter() {
+                        Message = Properties.Resources.String_LauncherFileItemDragAndDrop_Shortcut_Message,
+                        Caption = Properties.Resources.String_LauncherFileItemDragAndDrop_Shortcut_Caption,
+                        Button = MessageBoxButton.YesNoCancel,
+                        DefaultResult = MessageBoxResult.Yes,
+                        Icon = MessageBoxImage.Question,
+                    };
+                    requestSender.Send<YesNoResponse>(request, r => {
+                        if(r.ResponseIsCancel) {
+                            Logger.LogTrace("ショートカット登録取り消し");
+                            return;
+                        }
+                        register(path, r.ResponseIsYes);
+                    });
+                } else {
+                    var registerTarget = ShortcutDropMode switch {
+                        LauncherToolbarShortcutDropMode.Target => true,
+                        _ => false,
+                    };
+                    register(path, registerTarget);
+                }
             } else {
                 register(path, false);
             }
