@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;SyntaxDefinition xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot; name=&quot;EnvVar_Remove&quot;&gt;
-        ///	&lt;!--きちんとする--&gt;
+        ///	&lt;!--縺阪■繧薙→縺吶ｋ--&gt;
         ///	&lt;Color name=&quot;Key&quot; /&gt;
         ///	&lt;RuleSet ignoreCase=&quot;true&quot;&gt;
         ///		&lt;Rule color=&quot;Key&quot;&gt;
@@ -1956,6 +1956,36 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
             get {
                 return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.R" +
                         "ightBottom_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   確認する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarShortcutDropMode_Confirm_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarShortcutDropMod" +
+                        "e.Confirm_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ショートカット自体を登録する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarShortcutDropMode_Shortcut_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarShortcutDropMod" +
+                        "e.Shortcut_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ショートカットのリンク先を登録する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarShortcutDropMode_Target_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarShortcutDropMod" +
+                        "e.Target_A", resourceCulture);
             }
         }
         
@@ -5525,6 +5555,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_Generals_LauncherToolbar_Header {
             get {
                 return ResourceManager.GetString("String_Setting_Generals_LauncherToolbar_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   D&amp;Dファイルがショートカットの場合 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_LauncherToolbar_ShortcutModeDropMode_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_LauncherToolbar_ShortcutModeDropMode_A", resourceCulture);
             }
         }
         
