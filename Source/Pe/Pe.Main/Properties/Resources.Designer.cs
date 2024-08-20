@@ -5334,24 +5334,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   検索条件 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_Command_Find_A {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_Command_Find_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   タグを検索する に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_Command_Find_Tag_A {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_Command_Find_Tag_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   フォント に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_Command_Font_A {

@@ -352,7 +352,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public IconBox IconBox { get; set; }
         public double Width { get; set; }
         public TimeSpan HideWaitTime { get; set; }
-        public bool FindTag { get; set; }
 
         #endregion
 
@@ -375,7 +374,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IconBox = setting.IconBox;
             Width = setting.Width;
             HideWaitTime = setting.HideWaitTime;
-            FindTag = setting.FindTag;
         }
 
         protected override void SaveImpl(IDatabaseContextsPack contextsPack)
@@ -388,7 +386,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 IconBox = IconBox,
                 Width = Width,
                 HideWaitTime = HideWaitTime,
-                FindTag = FindTag,
             };
             appCommandSettingEntityDao.UpdateSettingCommandSetting(data, contextsPack.CommonStatus);
 

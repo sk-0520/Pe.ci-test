@@ -508,12 +508,6 @@
   <data name="String_Setting_Generals_Command_Header" xml:space="preserve">
     <value>コマンド型ランチャー</value>
   </data>
-  <data name="String_Setting_Generals_Command_Find_A" xml:space="preserve">
-    <value>検索条件</value>
-  </data>
-  <data name="String_Setting_Generals_Command_Find_Tag_A" xml:space="preserve">
-    <value>タグを検索する</value>
-  </data>
   <data name="String_Setting_Generals_Command_Font_A" xml:space="preserve">
     <value>フォント</value>
   </data>
