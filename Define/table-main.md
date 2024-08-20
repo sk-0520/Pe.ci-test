@@ -109,7 +109,6 @@ ___
 |    | o  |              | アイコンサイズ           | IconBox               | text         | System.String   |              |                      |
 |    | o  |              | 横幅                     | Width                 | real         | System.Double   |              |                      |
 |    | o  |              | 非表示待機時間           | HideWaitTime          | text         | System.TimeSpan |              |                      |
-|    | o  |              | タグ検索                 | FindTag               | boolean      | System.Boolean  |              |                      |
 
 ### index
 
