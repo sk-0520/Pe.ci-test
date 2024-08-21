@@ -40,9 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
                     test.InsertImageBinary(id, iconScale, binary, Test.DiContainer.Build<IDatabaseCommonStatus>());
                     var actual = test.SelectImageBinary(id, iconScale);
                     using var stream = new MemoryStream();
-                    foreach(var b in actual!) {
-                        stream.Write(b);
-                    }
+                    stream.Write(actual);
                     Assert.Equal(binary, stream.ToArray());
                 }
             }

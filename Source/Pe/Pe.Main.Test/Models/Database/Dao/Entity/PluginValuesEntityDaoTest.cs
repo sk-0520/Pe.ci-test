@@ -38,7 +38,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
                     (
                         PluginId,
                         PluginSettingKey,
-                        Sequence,
                         Data,
                         CreatedTimestamp, CreatedAccount, CreatedProgramName, CreatedProgramVersion
                     )
@@ -46,7 +45,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
                     (
                         @PluginId,
                         @PluginSettingKey,
-                        @Sequence,
                         @Data,
                         @CreatedTimestamp, @CreatedAccount, @CreatedProgramName, @CreatedProgramVersion
                     )
@@ -57,7 +55,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
                 new {
                     PluginId = pluginId,
                     PluginSettingKey = string.Empty,
-                    Sequence = 0,
                     Data = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 },
                     CreatedTimestamp = DateTime.UtcNow,
                     CreatedAccount = "CreatedAccount",
@@ -71,7 +68,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
                 new {
                     PluginId = pluginId,
                     PluginSettingKey = "key",
-                    Sequence = 0,
                     Data = new byte[] { 10, 20, 30, 40, 50, 60, 70, 80 },
                     CreatedTimestamp = DateTime.UtcNow,
                     CreatedAccount = "CreatedAccount",
