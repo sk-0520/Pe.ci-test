@@ -19,7 +19,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public string IconBox { get; set; } = string.Empty;
             public double Width { get; set; }
             public TimeSpan HideWaitTime { get; set; }
-            public bool FindTag { get; set; }
 
             #endregion
         }
@@ -59,7 +58,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconBox = iconBoxTransfer.ToEnum(dto.IconBox),
                 Width = dto.Width,
                 HideWaitTime = dto.HideWaitTime,
-                FindTag = dto.FindTag,
             };
             return result;
         }
@@ -74,7 +72,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconBox = iconBoxTransfer.ToString(data.IconBox),
                 Width = data.Width,
                 HideWaitTime = data.HideWaitTime,
-                FindTag = data.FindTag,
             };
             commonStatus.WriteCommonTo(dto);
             Context.UpdateByKey(statement, dto);

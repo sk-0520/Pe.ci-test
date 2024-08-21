@@ -53,7 +53,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         private INotifyManager NotifyManager { get; }
         private IDispatcherWrapper DispatcherWrapper { get; }
 
-        internal bool FindTag { get; set; }
         internal IconBox IconBox { get; set; }
 
         private IList<LauncherItemElement> LauncherItemElements { get; } = new List<LauncherItemElement>();
@@ -100,15 +99,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         {
             LauncherItemElements.Add(launcherItemElement);
             LauncherItemElementMap.Add(launcherItemElement.LauncherItemId, launcherItemElement);
-            if(FindTag) {
-                LoadTag(launcherItemElement.LauncherItemId);
-            }
+            LoadTag(launcherItemElement.LauncherItemId);
         }
 
         private void LoadTag(LauncherItemId launcherItemId)
         {
-            Debug.Assert(FindTag);
-
             // タグ情報再構築
             Logger.LogTrace("タグ情報再構築");
             var tags = MainDatabaseBarrier.ReadData(c => {
@@ -165,23 +160,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                 LauncherItemElementMap.Add(LauncherItemElement.LauncherItemId, LauncherItemElement);
             }
 
-            if(FindTag) {
-                var tagItems = new Dictionary<LauncherItemId, IReadOnlyCollection<string>>(ids.Count);
-                using(var context = MainDatabaseBarrier.WaitRead()) {
-                    var launcherTagsEntityDao = new LauncherTagsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                    foreach(var id in ids) {
-                        var tags = launcherTagsEntityDao.SelectUniqueTags(id).ToHashSet();
-                        if(tags.Count != 0) {
-                            tagItems.Add(id, tags);
-                        }
+            var tagItems = new Dictionary<LauncherItemId, IReadOnlyCollection<string>>(ids.Count);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var launcherTagsEntityDao = new LauncherTagsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                foreach(var id in ids) {
+                    var tags = launcherTagsEntityDao.SelectUniqueTags(id).ToHashSet();
+                    if(tags.Count != 0) {
+                        tagItems.Add(id, tags);
                     }
                 }
-                LauncherTags.Clear();
-                foreach(var pair in tagItems) {
-                    LauncherTags.Add(pair.Key, pair.Value);
-                }
-            } else {
-                LauncherTags.Clear();
+            }
+            LauncherTags.Clear();
+            foreach(var pair in tagItems) {
+                LauncherTags.Add(pair.Key, pair.Value);
             }
         }
 
@@ -206,10 +197,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                 var nameItem = await GetHitItemAsync(CommandItemKind.LauncherItemName, element, element.Name, "名前一致", inputValue, inputRegex, hitValuesCreator, cancellationToken);
                 if(nameItem != null) {
                     yield return nameItem;
-                    continue;
-                }
-
-                if(!FindTag) {
                     continue;
                 }
 
@@ -253,9 +240,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                     LauncherItemElementMap.Remove(element.LauncherItemId);
                     LauncherTags.Remove(element.LauncherItemId);
                 } else {
-                    if(FindTag) {
-                        LoadTag(e.LauncherItemId);
-                    }
+                    LoadTag(e.LauncherItemId);
                 }
             } else {
                 // 該当アイテムの投入

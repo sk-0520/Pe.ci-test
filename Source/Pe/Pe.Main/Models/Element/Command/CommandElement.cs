@@ -68,7 +68,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         private UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
         public FontElement? Font { get; private set; }
 
-        public bool FindTag { get; private set; }
         public double Width { get; private set; }
         public TimeSpan HideWaitTime { get; private set; }
         public IconBox IconBox { get; private set; }
@@ -165,7 +164,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             IconBox = setting.IconBox;
             Width = setting.Width;
             HideWaitTime = setting.HideWaitTime;
-            FindTag = setting.FindTag;
         }
 
         public async Task RefreshAsync(CancellationToken cancellationToken)
@@ -175,7 +173,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
             if(LauncherItemCommandFinder != null) {
                 // 諦め
-                LauncherItemCommandFinder.FindTag = FindTag;
                 LauncherItemCommandFinder.IconBox = IconBox;
             }
 

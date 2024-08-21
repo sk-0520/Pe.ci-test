@@ -31,10 +31,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// 非表示までの時間。
         /// </summary>
         public TimeSpan HideWaitTime { get; set; }
-        /// <summary>
-        /// タグ検索を行うか。
-        /// </summary>
-        public bool FindTag { get; set; }
 
         #endregion
     }

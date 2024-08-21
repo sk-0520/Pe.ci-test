@@ -5,7 +5,6 @@ set
 	IconBox = @IconBox,
 	Width = @Width,
 	HideWaitTime = @HideWaitTime,
-	FindTag = @FindTag,
 
 	UpdatedTimestamp = @UpdatedTimestamp,
 	UpdatedAccount = @UpdatedAccount,

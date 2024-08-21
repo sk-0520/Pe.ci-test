@@ -80,3 +80,8 @@ from
 --// [#953] 退避テーブル破棄
 drop table [AppLauncherToolbarSetting2]
 ;
+
+
+--// [#958] カラム破棄
+alter table AppCommandSetting drop column FindTag
+;

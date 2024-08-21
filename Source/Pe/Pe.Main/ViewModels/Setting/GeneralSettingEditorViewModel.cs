@@ -406,12 +406,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetModelValue(TimeSpan.FromSeconds(value), nameof(Model.HideWaitTime));
         }
 
-        public bool FindTag
-        {
-            get => Model.FindTag;
-            set => SetModelValue(value);
-        }
-
         #endregion
 
         #region command

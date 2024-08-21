@@ -40,7 +40,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
             Assert.NotEqual(FontId.Empty, actual.FontId);
             Assert.True(0 < actual.Width);
             Assert.True(TimeSpan.Zero < actual.HideWaitTime);
-            Assert.True(actual.FindTag);
         }
 
         [Fact]
@@ -53,7 +52,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
                 Width = 123,
                 HideWaitTime = new TimeSpan(1, 2, 3, 4, 5, 6),
                 IconBox = IconBox.Large,
-                FindTag = true,
             };
 
             test.UpdateSettingCommandSetting(new SettingAppCommandSettingData() {
@@ -61,7 +59,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
                 Width = expected.Width,
                 HideWaitTime = expected.HideWaitTime,
                 IconBox = expected.IconBox,
-                FindTag = expected.FindTag,
             }, Test.DiContainer.New<IDatabaseCommonStatus>());
 
             var actual = test.SelectSettingCommandSetting();
@@ -70,7 +67,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
             Assert.Equal(expected.Width, actual.Width);
             Assert.Equal(expected.HideWaitTime, actual.HideWaitTime);
             Assert.Equal(expected.IconBox, actual.IconBox);
-            Assert.Equal(expected.FindTag, actual.FindTag);
         }
 
         [Fact]
