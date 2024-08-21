@@ -46,16 +46,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         Event.Dispose();
                     }
 
-                    // TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、ファイナライザーをオーバーライドします
-                    // TODO: 大きなフィールドを null に設定します
                     this._disposedValue = true;
                 }
             }
 
             public void Dispose()
             {
-                // このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
-                Dispose(disposing: true);
+                Dispose(true);
                 GC.SuppressFinalize(this);
             }
 

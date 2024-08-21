@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main
         private static CultureInfo StartupCulture { get; } = CultureInfo.CurrentCulture;
 
         /// <summary>
-        /// TODO: あまり使わない方針で行きたい
+        /// あまり使わない方針で行きたい
         /// </summary>
         public static CultureService Instance { get; private set; } = null!;
 

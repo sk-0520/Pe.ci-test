@@ -900,9 +900,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 var noteFilesEntityDao = new NoteFilesEntityDao(mainContext, DatabaseStatementLoader, mainContext.Implementation, LoggerFactory);
                 // 削除処理
                 noteFilesEntityDao.DeleteNoteFilesById(NoteId, noteFileId);
-                //TODO: SQLおもいつかない
-                //// シーケンス整理
-                //noteFilesEntityDao.UpdateRefreshSequenceNoteFiles(NoteId, DatabaseCommonStatus.CreateCurrentAccount());
 
                 var todo = false;
                 if(todo) {

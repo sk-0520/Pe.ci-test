@@ -332,21 +332,17 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
         {
             if(!this.disposedValue) {
                 if(disposing) {
-                    // TODO: マネージド状態を破棄します (マネージド オブジェクト)
+                    // nop
                 }
 
-                // TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、ファイナライザーをオーバーライドします
-                // TODO: 大きなフィールドを null に設定します
                 this.disposedValue = true;
             }
         }
 
-        // // TODO: 'Dispose(bool disposing)' にアンマネージド リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします
-        // ~FileCommandFinder()
-        // {
-        //     // このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
-        //     Dispose(disposing: false);
-        // }
+        ~FileFinderCommandFinder()
+        {
+            Dispose(disposing: false);
+        }
 
         public void Dispose()
         {

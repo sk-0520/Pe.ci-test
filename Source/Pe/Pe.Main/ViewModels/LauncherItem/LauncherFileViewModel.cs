@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 return Task.CompletedTask;
             }
 
-            Logger.LogTrace("TODO: 起動準備 {0}, {1}", Model.LauncherItemId, Detail?.FullPath);
+            Logger.LogTrace("起動準備 {LauncherItemId}, {FullPath}", Model.LauncherItemId, Detail?.FullPath);
             return Task.Run(() => {
                 Model.ExecuteAsync(Screen, cancellationToken);
             }, cancellationToken);
