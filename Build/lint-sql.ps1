@@ -6,11 +6,13 @@ Param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
+$imageName = 'sqlfluff/sqlfluff'
+$versionTag = '3.1.1'
+
+
 Import-Module "${PSScriptRoot}/Modules/Project"
 
 $sqlDir = Join-Path -Path (Get-RootDirectory) -ChildPath 'Source/Pe/Pe.Main/etc/sql'
-
-$versionTag = '3.1.0'
 
 $mode = 'lint'
 if ($Fix) {
@@ -27,7 +29,7 @@ if (! $RunCi) {
 $params += '--rm'
 $params += '--volume'
 $params += "${sqlDir}:/sql"
-$params += "sqlfluff/sqlfluff:${versionTag}"
+$params += "${imageName}:${versionTag}"
 $params += ${mode}
 if($File) {
 	$sqlPath = $File.Replace('\', '/').TrimStart('/')
