@@ -1,31 +1,3 @@
---// [#959] 退避テーブル作成
-create table
-	LauncherItemIcons2
-as
-	select
-		*
-	from
-		LauncherItemIcons
-;
-
-create table
-	NoteFiles2
-as
-	select
-		*
-	from
-		NoteFiles
-;
-
-create table
-	PluginValues2
-as
-	select
-		*
-	from
-		PluginValues
-;
-
 --// [#959] 現行テーブル破棄
 drop table
 	LauncherItemIcons
@@ -86,42 +58,4 @@ create table [PluginValues] (
 		[PluginSettingKey]
 	)
 )
-;
-
-
-insert into
-	LauncherItemIcons
-select
-	*
-from
-	LauncherItemIcons2
-;
-
-insert into
-	NoteFiles
-select
-	*
-from
-	NoteFiles2
-;
-
-insert into
-	PluginValues
-select
-	*
-from
-	PluginValues2
-;
-
---// [#959] 退避テーブル破棄
-drop table
-	LauncherItemIcons2
-;
-
-drop table
-	NoteFiles2
-;
-
-drop table
-	PluginValues2
 ;
