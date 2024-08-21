@@ -53,15 +53,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             ThrowIfDisposed();
 
             return Task.Run((Func<ResultSuccess<BitmapSource>>)(() => {
-                IReadOnlyList<byte[]>? imageBinary;
+                byte[] imageBinary;
                 using(var context = LargeDatabaseBarrier.WaitRead()) {
                     var dao = new LauncherItemIconsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                     imageBinary = dao.SelectImageBinary(LauncherItemId, iconScale);
                 }
 
-                if(imageBinary != null && imageBinary.Count == 0) {
+                if(imageBinary.Length == 0) {
                     return Result.CreateFailure<BitmapSource>();
                 }
+
                 var image = ToImage(imageBinary);
 
                 if(image == null) {
@@ -176,10 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                     launcherItemIconsEntityDao.InsertImageBinary(LauncherItemId, iconScale, stream.GetBuffer().Take((int)stream.Position), DatabaseCommonStatus.CreateCurrentAccount());
                     context.Commit();
                 }
-
             }
-
-
         }
 
         private async Task<BitmapSource?> MakeImageAsync(IconScale iconScale, CancellationToken cancellationToken)

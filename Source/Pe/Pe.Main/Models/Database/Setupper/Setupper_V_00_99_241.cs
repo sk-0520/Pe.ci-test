@@ -29,10 +29,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         { }
 
         public override void ExecuteFileDDL(IDatabaseContext context, IReadOnlySetupDto dto)
-        { }
+        {
+            ExecuteStatement(context, StatementLoader.LoadStatementByCurrent(GetType()), dto);
+        }
 
         public override void ExecuteFileDML(IDatabaseContext context, IReadOnlySetupDto dto)
-        { }
+        {
+            ExecuteStatement(context, StatementLoader.LoadStatementByCurrent(GetType()), dto);
+        }
 
         public override void ExecuteTemporaryDDL(IDatabaseContext context, IReadOnlySetupDto dto)
         { }

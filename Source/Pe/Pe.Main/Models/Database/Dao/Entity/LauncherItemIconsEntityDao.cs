@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Buffers;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
@@ -22,8 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public LauncherItemId LauncherItemId { get; set; }
             public string IconBox { get; set; } = string.Empty;
             public double IconScale { get; set; }
-            public long Sequence { get; set; }
-            public byte[]? Image { get; set; }
+            public byte[] Image { get; set; } = Array.Empty<byte>();
 
             #endregion
 
@@ -45,9 +45,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        //TODO: 戻り値が辛い
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
-        public IReadOnlyList<byte[]>? SelectImageBinary(LauncherItemId launcherItemId, IconScale iconScale)
+        public byte[] SelectImageBinary(LauncherItemId launcherItemId, IconScale iconScale)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
@@ -57,12 +56,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconBox = iconBoxTransfer.ToString(iconScale.Box),
                 IconScale = iconScale.Dpi.X,
             };
-            var rows = Context.Query<byte[]>(statement, param);
-            if(rows != null) {
-                return rows.ToArray();
+            var result = Context.QueryFirstOrDefault<byte[]>(statement, param);
+            if(result != null) {
+                return result;
             }
 
-            return null;
+            return Array.Empty<byte>();
         }
 
         public void InsertImageBinary(LauncherItemId launcherItemId, in IconScale iconScale, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
@@ -70,19 +69,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
             var statement = LoadStatement();
-            var binaryImageItems = imageBinary.Chunk(80 * 1024).ToArray();
             var dto = new LauncherItemIconsDto() {
                 LauncherItemId = launcherItemId,
                 IconBox = iconBoxTransfer.ToString(iconScale.Box),
                 IconScale = iconScale.Dpi.X,
+                Image = imageBinary.ToArray(),
             };
-            
-            for(var i = 0; i < binaryImageItems.Length; i++) {
-                commonStatus.WriteCreateTo(dto);
-                dto.Sequence = i;
-                dto.Image = binaryImageItems[i].ToArray();
-                Context.InsertSingle(statement, dto);
-            }
+            commonStatus.WriteCreateTo(dto);
+
+            Context.InsertSingle(statement, dto);
         }
 
         public int DeleteAllSizeImageBinary(LauncherItemId launcherItemId)
@@ -95,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Delete(statement, param);
         }
 
-        public int DeleteImageBinary(LauncherItemId launcherItemId, in IconScale iconScale)
+        public bool DeleteImageBinary(LauncherItemId launcherItemId, in IconScale iconScale)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
@@ -106,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconScale = iconScale.Dpi.X,
             };
 
-            return Context.Delete(statement, param);
+            return Context.DeleteByKeyOrNothing(statement, param);
         }
 
         #endregion

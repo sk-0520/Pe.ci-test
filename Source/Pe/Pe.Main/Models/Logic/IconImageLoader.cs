@@ -61,13 +61,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return bitmapImage;
         }
 
-        protected BitmapSource? ToImage(IReadOnlyList<byte[]>? imageBinaryItems)
+        protected BitmapSource ToImage(byte[] imageBinaryItems)
         {
+            ArgumentNullException.ThrowIfNull(imageBinaryItems);
             ThrowIfDisposed();
-
-            if(imageBinaryItems == null || imageBinaryItems.Count == 0) {
-                return null;
-            }
 
             using(var stream = new MemoryReleaseStream()) {
                 using(var writer = new BinaryWriter(new KeepStream(stream))) {
