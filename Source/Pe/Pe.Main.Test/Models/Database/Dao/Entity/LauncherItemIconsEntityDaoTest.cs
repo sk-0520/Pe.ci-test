@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
                     var iconScale = new IconScale(iconBox, new System.Windows.Point(pointX, pointX));
                     var binary = new byte[(int)(size * pointX)];
                     Random.Shared.NextBytes(binary);
-                    test.InsertImageBinary(id, iconScale, binary, Test.DiContainer.Build<IDatabaseCommonStatus>());
+                    test.InsertImageBinary(id, iconScale, binary, DateTime.UtcNow, Test.DiContainer.Build<IDatabaseCommonStatus>());
                     var actual = test.SelectImageBinary(id, iconScale);
                     using var stream = new MemoryStream();
                     stream.Write(actual);

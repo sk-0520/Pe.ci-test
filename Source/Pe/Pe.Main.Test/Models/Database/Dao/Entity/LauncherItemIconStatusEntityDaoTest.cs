@@ -1,3 +1,4 @@
+#if false
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,3 +63,4 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
         #endregion
     }
 }
+#endif

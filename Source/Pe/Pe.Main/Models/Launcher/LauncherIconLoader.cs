@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                     var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                     launcherItemIconsEntityDao.DeleteImageBinary(LauncherItemId, iconScale);
-                    launcherItemIconsEntityDao.InsertImageBinary(LauncherItemId, iconScale, stream.GetBuffer().Take((int)stream.Position), DatabaseCommonStatus.CreateCurrentAccount());
+                    launcherItemIconsEntityDao.InsertImageBinary(LauncherItemId, iconScale, stream.GetBuffer().Take((int)stream.Position), iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
                     context.Commit();
                 }
             }
