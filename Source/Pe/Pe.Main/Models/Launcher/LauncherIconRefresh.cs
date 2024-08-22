@@ -100,14 +100,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         private bool IsNeedUpdate(LauncherIconStatus launcherIconStatus, [DateTimeKind(DateTimeKind.Utc)] DateTime dateTime)
         {
-            return RefreshTime < (dateTime - launcherIconStatus.LastUpdatedTimestamp);
+            return true;// RefreshTime < (dateTime - launcherIconStatus.LastUpdatedTimestamp);
         }
 
         private IReadOnlyList<LauncherIconStatus> GetUpdateTarget(LauncherItemId launcherItemIs)
         {
             using var context = LargeDatabaseBarrier.WaitRead();
-            var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-            var status = launcherItemIconStatusEntityDao.SelectLauncherItemIconAllSizeStatus(launcherItemIs)
+            var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+            var status = launcherItemIconsEntityDao.SelectLauncherItemIconAllStatus(launcherItemIs)
                 .Where(i => IsNeedUpdate(i, DateTime.UtcNow))
                 .ToList()
             ;
@@ -117,8 +117,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         private Task UpdateTargetAsync(LauncherItemId launcherItemId, LauncherIconStatus target, CancellationToken cancellationToken)
         {
             using(var context = LargeDatabaseBarrier.WaitRead()) {
-                var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                var nowStatus = launcherItemIconStatusEntityDao.SelectLauncherItemIconSingleSizeStatus(launcherItemId, target.IconScale);
+                var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                var nowStatus = launcherItemIconsEntityDao.SelectLauncherItemIconKeyStatus(launcherItemId, target.IconScale);
                 if(nowStatus == null) {
                     // 対象アイテムは破棄された
                     return Task.CompletedTask;

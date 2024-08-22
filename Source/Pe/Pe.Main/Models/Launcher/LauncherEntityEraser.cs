@@ -87,9 +87,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         {
             var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(context, statementLoader, implementation, LoggerFactory);
             launcherItemIconsEntityDao.DeleteAllSizeImageBinary(LauncherItemId);
-
-            var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, statementLoader, implementation, LoggerFactory);
-            launcherItemIconStatusEntityDao.DeleteAllSizeLauncherItemIconState(LauncherItemId);
         }
 
         protected override void ExecuteTemporaryImpl(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)

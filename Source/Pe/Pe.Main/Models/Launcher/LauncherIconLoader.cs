@@ -164,17 +164,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                 DateTime iconUpdatedTimestamp = DateTime.UtcNow;
                 using(var context = LargeDatabaseBarrier.WaitWrite()) {
-                    var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
-                    var existIconState = launcherItemIconStatusEntityDao.SelectExistsLauncherItemIconState(LauncherItemId, iconScale);
-                    if(existIconState) {
-                        launcherItemIconStatusEntityDao.UpdateLastUpdatedIconTimestamp(LauncherItemId, iconScale, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
-                    } else {
-                        launcherItemIconStatusEntityDao.InsertLastUpdatedIconTimestamp(LauncherItemId, iconScale, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
-                    }
-
                     var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                     launcherItemIconsEntityDao.DeleteImageBinary(LauncherItemId, iconScale);
-                    launcherItemIconsEntityDao.InsertImageBinary(LauncherItemId, iconScale, stream.GetBuffer().Take((int)stream.Position), DatabaseCommonStatus.CreateCurrentAccount());
+                    launcherItemIconsEntityDao.InsertImageBinary(LauncherItemId, iconScale, stream.GetBuffer().Take((int)stream.Position), iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
                     context.Commit();
                 }
             }

@@ -11,6 +11,11 @@ drop table
 	PluginValues
 ;
 
+--// [#965] 現行テーブル破棄
+drop table
+	LauncherItemIconStatus
+;
+
 
 --// table: LauncherItemIcons
 create table [LauncherItemIcons] (
@@ -22,6 +27,7 @@ create table [LauncherItemIcons] (
 	[CreatedProgramName] text not null /* 作成プログラム名  */,
 	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
 	[Image] blob not null /* 画像  */,
+	[LastUpdatedTimestamp] datetime not null /* 画像最終更新日時 UTC */,
 	primary key(
 		[LauncherItemId],
 		[IconBox],

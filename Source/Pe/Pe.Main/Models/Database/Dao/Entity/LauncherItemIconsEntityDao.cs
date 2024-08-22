@@ -9,6 +9,8 @@ using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
 using System.Buffers;
+using ContentTypeTextNet.Pe.Bridge.Models;
+using System.Windows;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
@@ -25,14 +27,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public double IconScale { get; set; }
             public byte[] Image { get; set; } = Array.Empty<byte>();
 
-            #endregion
+            [DateTimeKind(DateTimeKind.Utc)]
+            public DateTime LastUpdatedTimestamp { get; set; }
 
+            #endregion
         }
 
-        private static class Column
+        private sealed class LauncherItemIconLastUpdatedStatusDto: DtoBase
         {
             #region property
 
+            public Guid LauncherItemId { get; set; }
+            public string IconBox { get; set; } = string.Empty;
+            public double IconScale { get; set; } = 1;
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed")]
+            public DateTime LastUpdatedTimestamp { get; set; }
 
             #endregion
         }
@@ -44,6 +54,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         { }
 
         #region function
+
+        private LauncherIconStatus ConvertFromDto(LauncherItemIconLastUpdatedStatusDto dto)
+        {
+            var iconBoxTransfer = new EnumTransfer<IconBox>();
+            return new LauncherIconStatus(
+                iconBoxTransfer.ToEnum(dto.IconBox),
+                new Point(dto.IconScale, dto.IconScale),
+                dto.LastUpdatedTimestamp
+            );
+        }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
         public byte[] SelectImageBinary(LauncherItemId launcherItemId, IconScale iconScale)
@@ -64,7 +84,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Array.Empty<byte>();
         }
 
-        public void InsertImageBinary(LauncherItemId launcherItemId, in IconScale iconScale, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
+        public LauncherIconStatus? SelectLauncherItemIconKeyStatus(LauncherItemId launcherItemId, in IconScale iconScale)
+        {
+            var iconBoxTransfer = new EnumTransfer<IconBox>();
+
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+                IconBox = iconBoxTransfer.ToString(iconScale.Box),
+                IconScale = iconScale.Dpi.X,
+            };
+            var dto = Context.QueryFirstOrDefault<LauncherItemIconLastUpdatedStatusDto>(statement, parameter);
+            if(dto == null) {
+                return null;
+            }
+            return ConvertFromDto(dto);
+        }
+
+        public IEnumerable<LauncherIconStatus> SelectLauncherItemIconAllStatus(LauncherItemId launcherItemId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            return Context.Query<LauncherItemIconLastUpdatedStatusDto>(statement, parameter)
+                .Select(i => ConvertFromDto(i))
+            ;
+        }
+
+
+        public void InsertImageBinary(LauncherItemId launcherItemId, in IconScale iconScale, IEnumerable<byte> imageBinary, [DateTimeKind(DateTimeKind.Utc)] DateTime lastUpdatedTimestamp, IDatabaseCommonStatus commonStatus)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
@@ -74,6 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconBox = iconBoxTransfer.ToString(iconScale.Box),
                 IconScale = iconScale.Dpi.X,
                 Image = imageBinary.ToArray(),
+                LastUpdatedTimestamp = lastUpdatedTimestamp,
             };
             commonStatus.WriteCreateTo(dto);
 
