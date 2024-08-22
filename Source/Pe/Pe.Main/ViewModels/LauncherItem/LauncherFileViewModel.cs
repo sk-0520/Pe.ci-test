@@ -136,7 +136,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             DelayWaiting = true;
 
             if(!NowLoading) {
-                ExecuteMainAsync(CancellationToken.None);
+                _ = ExecuteMainAsync(CancellationToken.None);
             } else {
                 PropertyChanged += LauncherFileViewModel_PropertyChanged;
             }
@@ -294,7 +294,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 if(NowLoading) {
                     PropertyChanged -= LauncherFileViewModel_PropertyChanged;
                     DelayWaiting = false;
-                    ExecuteMainAsync(CancellationToken.None);
+                    _ = ExecuteMainAsync(CancellationToken.None);
                 }
             }
         }
