@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        private LauncherIconStatus ConvertFromDto(LauncherItemIconLastUpdatedStatusDto dto)
+        private static LauncherIconStatus ConvertFromDto(LauncherItemIconLastUpdatedStatusDto dto)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
             return new LauncherIconStatus(
