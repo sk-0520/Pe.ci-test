@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    [Obsolete]
     public class LauncherItemIconStatusEntityDao: EntityDaoBase
     {
         #region define

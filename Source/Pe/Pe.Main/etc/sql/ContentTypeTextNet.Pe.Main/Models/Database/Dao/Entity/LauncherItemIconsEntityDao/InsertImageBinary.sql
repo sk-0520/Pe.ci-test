@@ -5,6 +5,7 @@ insert into
 		IconBox,
 		IconScale,
 		Image,
+		LastUpdatedTimestamp,
 
 		CreatedTimestamp,
 		CreatedAccount,
@@ -17,6 +18,7 @@ insert into
 /* IconBox                  */ @IconBox,
 /* IconScale                */ @IconScale,
 /* Image                    */ @Image,
+/* LastUpdatedTimestamp     */ @LastUpdatedTimestamp,
 
 /* CreatedTimestamp         */ @CreatedTimestamp,
 /* CreatedAccount           */ @CreatedAccount,

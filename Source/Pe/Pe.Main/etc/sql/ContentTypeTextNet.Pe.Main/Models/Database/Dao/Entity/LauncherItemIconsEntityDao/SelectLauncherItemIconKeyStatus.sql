@@ -1,11 +1,11 @@
 select
-	LauncherItemIconStatus.IconBox,
-	LauncherItemIconStatus.LastUpdatedTimestamp
+	LauncherItemIcons.IconBox,
+	LauncherItemIcons.LastUpdatedTimestamp
 from
-	LauncherItemIconStatus
+	LauncherItemIcons
 where
-	LauncherItemIconStatus.LauncherItemId = @LauncherItemId
+	LauncherItemIcons.LauncherItemId = @LauncherItemId
 	and
-	LauncherItemIconStatus.IconBox = @IconBox
+	LauncherItemIcons.IconBox = @IconBox
 	and
-	LauncherItemIconStatus.IconScale = @IconScale
+	LauncherItemIcons.IconScale = @IconScale

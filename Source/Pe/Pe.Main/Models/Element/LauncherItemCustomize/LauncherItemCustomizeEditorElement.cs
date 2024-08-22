@@ -445,10 +445,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             ThrowIfDisposed();
 
             var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(context, DatabaseStatementLoader, implementation, LoggerFactory);
-            var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, implementation, LoggerFactory);
-
             launcherItemIconsEntityDao.DeleteAllSizeImageBinary(LauncherItemId);
-            launcherItemIconStatusEntityDao.DeleteAllSizeLauncherItemIconState(LauncherItemId);
         }
 
         public void Save()
