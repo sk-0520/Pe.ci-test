@@ -12,7 +12,7 @@ from
 		KeyMappings
 		on
 		(
-			KeyMappings.KeyActionId = KeyActions.KeyActionId
+			KeyActions.KeyActionId = KeyMappings.KeyActionId
 		)
 where
 	KeyActions.KeyActionKind = @KeyActionKind

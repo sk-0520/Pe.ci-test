@@ -8,6 +8,9 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Standard.Base;
+using System.Buffers;
+using ContentTypeTextNet.Pe.Bridge.Models;
+using System.Windows;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
@@ -22,17 +25,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public LauncherItemId LauncherItemId { get; set; }
             public string IconBox { get; set; } = string.Empty;
             public double IconScale { get; set; }
-            public long Sequence { get; set; }
-            public byte[]? Image { get; set; }
+            public byte[] Image { get; set; } = Array.Empty<byte>();
+
+            [DateTimeKind(DateTimeKind.Utc)]
+            public DateTime LastUpdatedTimestamp { get; set; }
 
             #endregion
-
         }
 
-        private static class Column
+        private sealed class LauncherItemIconLastUpdatedStatusDto: DtoBase
         {
             #region property
 
+            public Guid LauncherItemId { get; set; }
+            public string IconBox { get; set; } = string.Empty;
+            public double IconScale { get; set; } = 1;
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed")]
+            public DateTime LastUpdatedTimestamp { get; set; }
 
             #endregion
         }
@@ -45,9 +55,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        //TODO: 戻り値が辛い
+        private static LauncherIconStatus ConvertFromDto(LauncherItemIconLastUpdatedStatusDto dto)
+        {
+            var iconBoxTransfer = new EnumTransfer<IconBox>();
+            return new LauncherIconStatus(
+                iconBoxTransfer.ToEnum(dto.IconBox),
+                new Point(dto.IconScale, dto.IconScale),
+                dto.LastUpdatedTimestamp
+            );
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
-        public IReadOnlyList<byte[]>? SelectImageBinary(LauncherItemId launcherItemId, IconScale iconScale)
+        public byte[] SelectImageBinary(LauncherItemId launcherItemId, IconScale iconScale)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
@@ -57,32 +76,58 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconBox = iconBoxTransfer.ToString(iconScale.Box),
                 IconScale = iconScale.Dpi.X,
             };
-            var rows = Context.Query<byte[]>(statement, param);
-            if(rows != null) {
-                return rows.ToArray();
+            var result = Context.QueryFirstOrDefault<byte[]>(statement, param);
+            if(result != null) {
+                return result;
             }
 
-            return null;
+            return Array.Empty<byte>();
         }
 
-        public void InsertImageBinary(LauncherItemId launcherItemId, in IconScale iconScale, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
+        public LauncherIconStatus? SelectLauncherItemIconKeyStatus(LauncherItemId launcherItemId, in IconScale iconScale)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
             var statement = LoadStatement();
-            var binaryImageItems = imageBinary.Chunk(80 * 1024).ToArray();
-            var dto = new LauncherItemIconsDto() {
+            var parameter = new {
                 LauncherItemId = launcherItemId,
                 IconBox = iconBoxTransfer.ToString(iconScale.Box),
                 IconScale = iconScale.Dpi.X,
             };
-            
-            for(var i = 0; i < binaryImageItems.Length; i++) {
-                commonStatus.WriteCreateTo(dto);
-                dto.Sequence = i;
-                dto.Image = binaryImageItems[i].ToArray();
-                Context.InsertSingle(statement, dto);
+            var dto = Context.QueryFirstOrDefault<LauncherItemIconLastUpdatedStatusDto>(statement, parameter);
+            if(dto == null) {
+                return null;
             }
+            return ConvertFromDto(dto);
+        }
+
+        public IEnumerable<LauncherIconStatus> SelectLauncherItemIconAllStatus(LauncherItemId launcherItemId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            return Context.Query<LauncherItemIconLastUpdatedStatusDto>(statement, parameter)
+                .Select(i => ConvertFromDto(i))
+            ;
+        }
+
+
+        public void InsertImageBinary(LauncherItemId launcherItemId, in IconScale iconScale, IEnumerable<byte> imageBinary, [DateTimeKind(DateTimeKind.Utc)] DateTime lastUpdatedTimestamp, IDatabaseCommonStatus commonStatus)
+        {
+            var iconBoxTransfer = new EnumTransfer<IconBox>();
+
+            var statement = LoadStatement();
+            var dto = new LauncherItemIconsDto() {
+                LauncherItemId = launcherItemId,
+                IconBox = iconBoxTransfer.ToString(iconScale.Box),
+                IconScale = iconScale.Dpi.X,
+                Image = imageBinary.ToArray(),
+                LastUpdatedTimestamp = lastUpdatedTimestamp,
+            };
+            commonStatus.WriteCreateTo(dto);
+
+            Context.InsertSingle(statement, dto);
         }
 
         public int DeleteAllSizeImageBinary(LauncherItemId launcherItemId)
@@ -95,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Delete(statement, param);
         }
 
-        public int DeleteImageBinary(LauncherItemId launcherItemId, in IconScale iconScale)
+        public bool DeleteImageBinary(LauncherItemId launcherItemId, in IconScale iconScale)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
@@ -106,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconScale = iconScale.Dpi.X,
             };
 
-            return Context.Delete(statement, param);
+            return Context.DeleteByKeyOrNothing(statement, param);
         }
 
         #endregion

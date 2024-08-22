@@ -8,10 +8,12 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemExtension;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
@@ -69,7 +71,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// <param name="launcherItemId"></param>
         public void Foreground(LauncherItemId launcherItemId)
         {
-            // TODO: ウィンドウ位置移動
+            var target = LauncherItemAddonViewSupporters.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
+            if(target is null || target.Element is null) {
+                Logger.LogDebug("[{LauncherItemId}] 対象が存在しない", launcherItemId);
+                return;
+            }
+
+            var windowItems = WindowManager.GetWindowItems(WindowKind.LauncherItemExtension);
+            var windowItem = windowItems.FirstOrDefault(a => a.Element == target.Element);
+            if(windowItem is null) {
+                Logger.LogDebug("[{LauncherItemId}] ウィンドウアイテム未登録", launcherItemId);
+                return;
+            }
+            DispatcherWrapper.BeginAsync(() => {
+                Logger.LogDebug("[{LauncherItemId}] 最前面化", launcherItemId);
+                var hWnd = HandleUtility.GetWindowHandle(windowItem.Window);
+                WindowsUtility.ShowActiveForeground(hWnd);
+            });
         }
 
         public ILauncherItemAddonViewSupporter Create(IPluginInformation pluginInformation, LauncherItemId launcherItemId)

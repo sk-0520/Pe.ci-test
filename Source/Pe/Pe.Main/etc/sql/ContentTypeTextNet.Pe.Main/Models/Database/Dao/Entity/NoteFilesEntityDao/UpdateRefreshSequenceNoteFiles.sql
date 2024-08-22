@@ -1,22 +1,21 @@
 update
-	NoteFiles as alias_NoteFiles_target
+	NoteFiles as AliasNoteFilesTarget
 set
-	[Sequence] = (
+	Sequence = (
 		select
-			COUNT(alias_NoteFiles_current.Sequence) + 1
+			COUNT(AliasNoteFilesCurrent.Sequence) + 1
 		from
-			NoteFiles as alias_NoteFiles_current
+			NoteFiles as AliasNoteFilesCurrent
 		where
-			alias_NoteFiles_target.NoteId = alias_NoteFiles_current.NoteId
+			AliasNoteFilesTarget.NoteId = AliasNoteFilesCurrent.NoteId
 			and
-			alias_NoteFiles_current.[Sequence] < alias_NoteFiles_target.[Sequence]
+			AliasNoteFilesCurrent.Sequence < AliasNoteFilesTarget.Sequence
 	),
 
-	UpdatedTimestamp      = @UpdatedTimestamp,
-	UpdatedAccount        = @UpdatedAccount,
-	UpdatedProgramName    = @UpdatedProgramName,
+	UpdatedTimestamp = @UpdatedTimestamp,
+	UpdatedAccount = @UpdatedAccount,
+	UpdatedProgramName = @UpdatedProgramName,
 	UpdatedProgramVersion = @UpdatedProgramVersion,
-	UpdatedCount          = UpdatedCount + 1
+	UpdatedCount = UpdatedCount + 1
 where
 	NoteId = @NoteId
-

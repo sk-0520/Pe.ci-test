@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
     public readonly struct EnumResource
     {
-        //TODO: uintとかlongとか来ないことを信じて...
+        // uintとか long とか来ないことを信じて...
         public EnumResource(int rawMember, string resourceName)
         {
             RawMember = rawMember;

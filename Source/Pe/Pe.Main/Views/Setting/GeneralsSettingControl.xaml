@@ -304,18 +304,36 @@
             <GroupBox Header="{Binding Header}" Style="{StaticResource HeaderGroupBox}">
               <StackPanel>
                 <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                  </Grid.RowDefinitions>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Style="{StaticResource LabelDefinition}" />
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_LauncherToolbar_ContentDropMode_A, Source={x:Static app_main:CultureService.Instance}}" />
-                  <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                  <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_LauncherToolbar_ContentDropMode_A, Source={x:Static app_main:CultureService.Instance}}" />
+                  <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:LauncherToolbarContentDropMode.ExtendsExecute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ContentDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarContentDropMode.ExtendsExecute}}" />
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:LauncherToolbarContentDropMode.DirectExecute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ContentDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarContentDropMode.DirectExecute}}" />
                   </WrapPanel>
-                </Grid>
 
+                  <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_LauncherToolbar_ShortcutModeDropMode_A, Source={x:Static app_main:CultureService.Instance}}" />
+                    <WrapPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0">
+                      <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:LauncherToolbarShortcutDropMode.Confirm}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ShortcutDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarShortcutDropMode.Confirm}}" />
+                      <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:LauncherToolbarShortcutDropMode.Target}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ShortcutDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarShortcutDropMode.Target}}" />
+                      <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:LauncherToolbarShortcutDropMode.Shortcut}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ShortcutDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarShortcutDropMode.Shortcut}}" />
+                    </WrapPanel>
+                  </Grid>
+                </Grid>
+                
                 <!--
                 <Grid>
                   <Grid.ColumnDefinitions>
@@ -406,18 +424,6 @@
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Small}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Small}}" />
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Normal}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Normal}}" />
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Big}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Big}}" />
-                  </WrapPanel>
-                </Grid>
-
-                <Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
-                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
-                  </Grid.ColumnDefinitions>
-
-                  <Label Grid.Column="0"  Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Find_A, Source={x:Static app_main:CultureService.Instance}}" />
-                  <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_Command_Find_Tag_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding FindTag}" />
                   </WrapPanel>
                 </Grid>
 

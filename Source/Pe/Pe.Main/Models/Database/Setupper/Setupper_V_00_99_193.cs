@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 {
     [DatabaseSetupVersion(0, 99, 193)]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase")]
     public class Setupper_V_00_99_193: SetupperBase
     {
         public Setupper_V_00_99_193(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
@@ -19,10 +20,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         { }
 
         #region SetupBase
-
-
-        /// <inheritdoc cref="SetupperBase.Version"/>
-        public override Version Version { get; } = new Version(0, 99, 193);
 
         public override void ExecuteMainDDL(IDatabaseContext context, IReadOnlySetupDto dto)
         {

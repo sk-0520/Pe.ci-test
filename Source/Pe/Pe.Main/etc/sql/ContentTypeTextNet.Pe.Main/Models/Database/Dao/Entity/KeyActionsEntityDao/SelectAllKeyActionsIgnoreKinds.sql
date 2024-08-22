@@ -1,4 +1,3 @@
-
 select
 	KeyActions.KeyActionId,
 	KeyActions.KeyActionKind,
@@ -7,7 +6,7 @@ select
 from
 	KeyActions
 where
-	KeyActions.KeyActionKind not in @IgnoreKinds
+	KeyActions.KeyActionKind not in @IgnoreKinds -- noqa: PRS
 order by
 	case KeyActions.KeyActionKind
 		when 'replace' then
@@ -25,4 +24,3 @@ order by
 		else
 			100
 	end
-

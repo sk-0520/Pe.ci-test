@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
@@ -49,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
             //NOTE: GetInvalidFileNameChars だけでいいと思うけど一応ね
             var pattern = Regex.Escape(string.Concat(Path.GetInvalidPathChars().Concat(Path.GetInvalidFileNameChars())));
-            var reg = new Regex("([" + pattern + "])");
+            var reg = new Regex("([" + pattern + "])", default, Timeout.InfiniteTimeSpan);
             return reg.Replace(name.Trim(), m => fn(m.Groups[0].Value[0]));
         }
 

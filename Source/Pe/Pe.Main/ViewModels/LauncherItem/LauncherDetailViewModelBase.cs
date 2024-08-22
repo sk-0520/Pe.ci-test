@@ -126,7 +126,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         private ICommand? _ExecuteMainCommand;
         public ICommand ExecuteMainCommand => this._ExecuteMainCommand ??= new DelegateCommand(
             () => {
-                ExecuteMainAsync(CancellationToken.None);
+                _ = ExecuteMainAsync(CancellationToken.None);
             },
             () => CanExecuteMain
         );
@@ -167,15 +167,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         protected abstract Task ExecuteMainImplAsync(CancellationToken cancellationToken);
 
-        protected Task ExecuteMainAsync(CancellationToken cancellationToken)
+        protected async Task ExecuteMainAsync(CancellationToken cancellationToken)
         {
             if(CanExecuteMain) {
                 NowMainExecuting = true;
-                return ExecuteMainImplAsync(cancellationToken).ContinueWith(_ => {
+                try {
+                    await ExecuteMainImplAsync(cancellationToken);
+                } finally {
                     NowMainExecuting = false;
-                }, cancellationToken);
+                }
             }
-            return Task.CompletedTask;
         }
 
         protected abstract object GetIcon(IconKind iconKind);

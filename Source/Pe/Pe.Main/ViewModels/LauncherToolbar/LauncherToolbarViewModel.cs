@@ -34,6 +34,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
 using System.Threading;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Standard.Database;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -46,11 +49,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, IKeyGestureGuide keyGestureGuide, LauncherToolbarConfiguration launcherToolbarConfiguration, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, IGeneralTheme generalTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, IKeyGestureGuide keyGestureGuide, LauncherToolbarConfiguration launcherToolbarConfiguration, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, IGeneralTheme generalTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
             KeyGestureGuide = keyGestureGuide;
             LauncherToolbarConfiguration = launcherToolbarConfiguration;
+            MainDatabaseBarrier = mainDatabaseBarrier;
+            DatabaseStatementLoader = databaseStatementLoader;
             PlatformThemeLoader = platformThemeLoader;
             LauncherToolbarTheme = launcherToolbarTheme;
             GeneralTheme = generalTheme;
@@ -108,6 +113,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public AppDesktopToolbarExtend? AppDesktopToolbarExtend { get; set; }
         private IKeyGestureGuide KeyGestureGuide { get; }
         private LauncherToolbarConfiguration LauncherToolbarConfiguration { get; }
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
         private IPlatformTheme PlatformThemeLoader { get; }
         private ILauncherToolbarTheme LauncherToolbarTheme { get; }
         private IGeneralTheme GeneralTheme { get; }
@@ -409,7 +416,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         private Task ViewDropAsync(UIElement sender, DragEventArgs e, CancellationToken cancellationToken)
         {
-            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            var shortcutDropMode = LauncherToolbarShortcutDropMode.Confirm;
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var dao = new AppLauncherToolbarSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                var setting = dao.SelectSettingLauncherToolbarSetting();
+                shortcutDropMode = setting.ShortcutDropMode;
+            }
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory) {
+                ShortcutDropMode = shortcutDropMode,
+            };
             return dd.DropAsync(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, Model.RegisterFile), cancellationToken);
         }
 
@@ -471,7 +486,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 if(appButton.Name != nameof(LauncherToolbarWindow.appButton.Name)) {
                     return;
                 }
-                await ViewDropAsync(sender, e,cancellationToken);
+                await ViewDropAsync(sender, e, cancellationToken);
                 return;
             }
 

@@ -6,4 +6,3 @@ where
 	LauncherTags.LauncherItemId = @LauncherItemId
 order by
 	LauncherTags.TagName
-

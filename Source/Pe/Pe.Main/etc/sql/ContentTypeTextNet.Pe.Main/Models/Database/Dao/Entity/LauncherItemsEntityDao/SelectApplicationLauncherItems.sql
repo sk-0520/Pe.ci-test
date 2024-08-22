@@ -1,4 +1,3 @@
-
 select
 	LauncherItems.LauncherItemId,
 	LauncherItems.Name,
@@ -12,4 +11,3 @@ from
 -- こいつの存在が良く分からん（元の where 動いてないし、名前が分からんし、なんもわからん）
 --where
 --	LauncherItems.Kind != 'Addon'
-

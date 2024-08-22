@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Database;
 
@@ -35,7 +36,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
                 \s*
             \)
             ",
-            RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture
+            RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture,
+            Timeout.InfiniteTimeSpan
         );
         #endregion
 
@@ -164,22 +166,20 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
                 throw new ArgumentException($"{tableResource.Kind}", nameof(tableResource));
             }
 
-            var parameter = new {
-                TableName = tableResource.Name,
-            };
             var rows = Context.Query($@"
                 PRAGMA table_info('{Implementation.Escape(tableResource.Name)}')
             ");
 
-            var items = rows.Select(a => new DatabaseColumnItem(
-                tableResource,
-                a.name,
-                (int)a.cid,
-                (int)a.pk == 1,
-                (int)a.notnull != 1,
-                a.dflt_value ?? string.Empty,
-                ToDatabaseColumnType(a.type)
-            ))
+            var items = rows
+                .Select(a => new DatabaseColumnItem(
+                    tableResource,
+                    a.name,
+                    (int)a.cid,
+                    (int)a.pk == 1,
+                    (int)a.notnull != 1,
+                    a.dflt_value ?? string.Empty,
+                    ToDatabaseColumnType(a.type)
+                ))
                 .OrderBy(a => a.Position)
                 .ToList()
             ;

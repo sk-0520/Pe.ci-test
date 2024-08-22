@@ -1,5 +1,4 @@
-delete
-from
+delete from
 	LauncherItemIcons
 where
 	LauncherItemIcons.LauncherItemId = @LauncherItemId
@@ -7,4 +6,3 @@ where
 	LauncherItemIcons.IconBox = @IconBox
 	and
 	LauncherItemIcons.IconScale = @IconScale
-

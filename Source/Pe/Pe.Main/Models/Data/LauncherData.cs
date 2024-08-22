@@ -96,6 +96,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         DirectExecute,
     }
 
+    public enum LauncherToolbarShortcutDropMode
+    {
+        /// <summary>
+        /// 登録方法を確認する。
+        /// </summary>
+        [EnumResource]
+        Confirm,
+        /// <summary>
+        /// ショートカットのリンク先を登録する。
+        /// </summary>
+        [EnumResource]
+        Target,
+        /// <summary>
+        /// ショートカット自体を登録する。
+        /// </summary>
+        [EnumResource]
+        Shortcut,
+    }
+
     public interface ILauncherExecutePathParameter
     {
         #region property

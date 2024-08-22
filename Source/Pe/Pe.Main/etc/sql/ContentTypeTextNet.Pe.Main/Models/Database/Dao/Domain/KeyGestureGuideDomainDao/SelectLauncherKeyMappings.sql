@@ -12,18 +12,18 @@ from
 		KeyMappings
 		on
 		(
-			KeyMappings.KeyActionId = KeyActions.KeyActionId
+			KeyActions.KeyActionId = KeyMappings.KeyActionId
 		)
 	inner join
 		KeyOptions
 		on
 		(
-			KeyOptions.KeyActionId = KeyActions.KeyActionId
+			KeyActions.KeyActionId = KeyOptions.KeyActionId
 		)
 where
 	KeyActions.KeyActionKind = @KeyActionKind
 	and
-	KeyActions.KeyActionContent in @KeyActionContents
+	KeyActions.KeyActionContent in @KeyActionContents -- noqa: PRS
 	and
 	KeyOptions.KeyOptionName = 'LauncherItemId'
 	and

@@ -38,6 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
 
             var expected = new AppLauncherToolbarSettingData() {
                 ContentDropMode = LauncherToolbarContentDropMode.ExtendsExecute,
+                ShortcutDropMode = LauncherToolbarShortcutDropMode.Target,
                 GroupMenuPosition = LauncherGroupPosition.Bottom,
             };
 
@@ -46,6 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
             var actual = test.SelectSettingLauncherToolbarSetting();
 
             Assert.Equal(expected.ContentDropMode, actual.ContentDropMode);
+            Assert.Equal(expected.ShortcutDropMode, actual.ShortcutDropMode);
             Assert.Equal(expected.GroupMenuPosition, actual.GroupMenuPosition);
         }
 

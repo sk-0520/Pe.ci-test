@@ -12,8 +12,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
     /// <summary>
     /// 誰が何と言おうと新生初期バージョン。
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase")]
     [DatabaseSetupVersion(0, 84, 0)]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase")]
     public class Setupper_V_00_84_000: SetupperBase
     {
         public Setupper_V_00_84_000(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
@@ -21,8 +21,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         { }
 
         #region SetupBase
-
-        public override Version Version { get; } = new Version(0, 84, 0);
 
         public override void ExecuteMainDDL(IDatabaseContext context, IReadOnlySetupDto dto)
         {

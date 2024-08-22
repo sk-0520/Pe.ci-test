@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,8 +21,8 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         #region property
 
-        private Regex IntegerRegex { get; } = new Regex(@"[\+\-,0-9]");
-        private Regex DecimalRegex { get; } = new Regex(@"[\+\-,0-9\.]");
+        private Regex IntegerRegex { get; } = new Regex(@"[\+\-,0-9]", default, Timeout.InfiniteTimeSpan);
+        private Regex DecimalRegex { get; } = new Regex(@"[\+\-,0-9\.]", default, Timeout.InfiniteTimeSpan);
 
         public int ScrollNotch { get; set; } = 120;
         //public int ScrollLines { get; set; } = SystemParameters.WheelScrollLines;

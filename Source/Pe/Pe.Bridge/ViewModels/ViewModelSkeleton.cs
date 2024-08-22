@@ -128,11 +128,9 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    // TODO: マネージド状態を破棄します (マネージド オブジェクト)
+                    //nop
                 }
 
-                // TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、ファイナライザーをオーバーライドします
-                // TODO: 大きなフィールドを null に設定します
                 IsDisposed = true;
             }
         }
@@ -140,18 +138,15 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
         /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
-            // このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        // TODO: 'Dispose(bool disposing)' にアンマネージド リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします
         ~ViewModelSkeleton()
         {
             // このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
-            Dispose(disposing: false);
+            Dispose(false);
         }
-
 
         #endregion
     }

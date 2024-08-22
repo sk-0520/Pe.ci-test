@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -125,22 +126,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #endregion
 
         #region function
-
-        public static ValidationResult? ValidateCode(string value, ValidationContext context)
-        {
-            if(string.IsNullOrWhiteSpace(value)) {
-                return new ValidationResult(null);
-            }
-
-            var codeSymbols = string.Join(string.Empty, LauncherFactory.CodeSymbols.Select(c => new string(c, 1)));
-            var pattern = "^[A-Za-z0-9" + Regex.Escape(codeSymbols).Replace("]", @"\]") + "]*$";
-            var isMatch = Regex.IsMatch(value, pattern);
-            if(!isMatch) {
-                return new ValidationResult(null);
-            }
-
-            return ValidationResult.Success;
-        }
 
         #endregion
 

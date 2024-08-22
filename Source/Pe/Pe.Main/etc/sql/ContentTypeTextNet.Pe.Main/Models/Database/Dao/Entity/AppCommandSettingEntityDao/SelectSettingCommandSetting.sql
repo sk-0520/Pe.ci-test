@@ -2,8 +2,7 @@ select
 	AppCommandSetting.FontId,
 	AppCommandSetting.IconBox,
 	AppCommandSetting.Width,
-	AppCommandSetting.HideWaitTime,
-	AppCommandSetting.FindTag
+	AppCommandSetting.HideWaitTime
 from
 	AppCommandSetting
 where
@@ -13,4 +12,3 @@ where
 		from
 			AppCommandSetting
 	)
-

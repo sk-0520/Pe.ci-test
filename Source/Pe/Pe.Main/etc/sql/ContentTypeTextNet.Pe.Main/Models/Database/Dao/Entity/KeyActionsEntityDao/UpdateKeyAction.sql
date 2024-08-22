@@ -1,15 +1,15 @@
 update
 	KeyActions
 set
-	KeyActionContent      = @KeyActionContent,
-	Comment               = @Comment,
+	KeyActionContent = @KeyActionContent,
+	Comment = @Comment,
 
-	UpdatedTimestamp      = @UpdatedTimestamp,
-	UpdatedAccount        = @UpdatedAccount,
-	UpdatedProgramName    = @UpdatedProgramName,
+	UpdatedTimestamp = @UpdatedTimestamp,
+	UpdatedAccount = @UpdatedAccount,
+	UpdatedProgramName = @UpdatedProgramName,
 	UpdatedProgramVersion = @UpdatedProgramVersion,
-	UpdatedCount          = UpdatedCount + 1
+	UpdatedCount = UpdatedCount + 1
 where
-	KeyActionId           = @KeyActionId
+	KeyActionId = @KeyActionId
 	and
-	KeyActionKind         = @KeyActionKind
+	KeyActionKind = @KeyActionKind

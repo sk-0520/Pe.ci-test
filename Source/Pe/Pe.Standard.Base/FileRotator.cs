@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
@@ -110,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         public int ExecuteWildcard(DirectoryInfo parentDirectory, string wildCard, int leaveCount, Order order, Func<Exception, bool> exceptionCatcher)
         {
             var wildcardPattern = "^" + Regex.Escape(wildCard).Replace("\\?", ".").Replace("\\*", ".*") + "$";
-            var wildcardRegex = new Regex(wildcardPattern, RegexOptions.IgnoreCase);
+            var wildcardRegex = new Regex(wildcardPattern, RegexOptions.IgnoreCase, Timeout.InfiniteTimeSpan);
 
             return ExecuteCore(parentDirectory, wildcardRegex, leaveCount, order, exceptionCatcher);
         }
@@ -147,7 +148,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
                 .JoinString("|")
             ;
             var extensionPattern = "(" + extensionPatterns + ")";
-            var extensionRegex = new Regex(extensionPattern, RegexOptions.IgnoreCase);
+            var extensionRegex = new Regex(extensionPattern, RegexOptions.IgnoreCase, Timeout.InfiniteTimeSpan);
 
             return ExecuteCore(parentDirectory, extensionRegex, leaveCount, order, exceptionCatcher);
         }

@@ -11,4 +11,4 @@ set
 where
 	LauncherToolbarId = @LauncherToolbarId
 	and
-	IsVisible != @IsVisible
+	IsVisible <> @IsVisible

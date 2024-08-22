@@ -1,5 +1,4 @@
-delete
-from
+delete from
 	LauncherEnvVars
 where
 	LauncherEnvVars.LauncherItemId = @LauncherItemId

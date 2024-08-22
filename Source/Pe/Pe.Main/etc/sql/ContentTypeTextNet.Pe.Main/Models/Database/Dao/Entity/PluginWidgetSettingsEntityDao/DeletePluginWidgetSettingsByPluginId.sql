@@ -1,6 +1,4 @@
-delete
-from
+delete from
 	PluginWidgetSettings
 where
 	PluginId = @PluginId
-

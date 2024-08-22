@@ -338,6 +338,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetModelValue(value);
         }
 
+        public LauncherToolbarShortcutDropMode ShortcutDropMode
+        {
+            get => Model.ShortcutDropMode;
+            set => SetModelValue(value);
+        }
+
         public LauncherGroupPosition GroupMenuPosition
         {
             get => Model.GroupMenuPosition;
@@ -398,12 +404,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             get => Model.HideWaitTime.TotalSeconds;
             set => SetModelValue(TimeSpan.FromSeconds(value), nameof(Model.HideWaitTime));
-        }
-
-        public bool FindTag
-        {
-            get => Model.FindTag;
-            set => SetModelValue(value);
         }
 
         #endregion

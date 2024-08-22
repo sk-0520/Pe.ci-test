@@ -95,9 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         protected override Task ExecuteMainImplAsync(CancellationToken cancellationToken)
         {
-            return Task.Run(() => {
-                Model.ExecuteAsync(Screen, cancellationToken);
-            }, cancellationToken);
+            return Model.ExecuteAsync(Screen, cancellationToken);
         }
 
         protected override object GetIcon(IconKind iconKind)

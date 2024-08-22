@@ -8,10 +8,10 @@ insert into
 		ExtractedDirectoryPath,
 		PluginDirectoryPath,
 
-		[CreatedTimestamp],
-		[CreatedAccount],
-		[CreatedProgramName],
-		[CreatedProgramVersion]
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion
 	)
 	values
 	(

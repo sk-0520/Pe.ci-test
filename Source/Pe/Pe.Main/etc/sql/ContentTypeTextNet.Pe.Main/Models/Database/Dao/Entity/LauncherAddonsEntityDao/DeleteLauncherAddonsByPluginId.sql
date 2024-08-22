@@ -1,5 +1,4 @@
-delete
-from
+delete from
 	LauncherAddons
 where
 	PluginId = @PluginId

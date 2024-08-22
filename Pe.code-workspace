@@ -43,7 +43,8 @@
             "msbuild",
             "pwsh",
             "THTML",
-            "biomejs"
+            "biomejs",
+            "noqa"
         ],
         "powershell.scriptAnalysis.enable": true,
         "powershell.scriptAnalysis.settingsPath": "./PSScriptAnalyzerSettings.psd1",

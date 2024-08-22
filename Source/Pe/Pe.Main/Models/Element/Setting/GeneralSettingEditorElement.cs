@@ -300,6 +300,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
 
         public LauncherToolbarContentDropMode ContentDropMode { get; set; }
+        public LauncherToolbarShortcutDropMode ShortcutDropMode { get; set; }
         public LauncherGroupPosition GroupMenuPosition { get; set; }
 
         #endregion
@@ -317,6 +318,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             });
 
             ContentDropMode = setting.ContentDropMode;
+            ShortcutDropMode = setting.ShortcutDropMode;
             GroupMenuPosition = setting.GroupMenuPosition;
 
             return Task.CompletedTask;
@@ -327,6 +329,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(contextsPack.Main.Context, DatabaseStatementLoader, contextsPack.Main.Implementation, LoggerFactory);
             var data = new AppLauncherToolbarSettingData() {
                 ContentDropMode = ContentDropMode,
+                ShortcutDropMode = ShortcutDropMode,
                 GroupMenuPosition = GroupMenuPosition,
             };
 
@@ -349,7 +352,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public IconBox IconBox { get; set; }
         public double Width { get; set; }
         public TimeSpan HideWaitTime { get; set; }
-        public bool FindTag { get; set; }
 
         #endregion
 
@@ -372,7 +374,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IconBox = setting.IconBox;
             Width = setting.Width;
             HideWaitTime = setting.HideWaitTime;
-            FindTag = setting.FindTag;
         }
 
         protected override void SaveImpl(IDatabaseContextsPack contextsPack)
@@ -385,7 +386,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 IconBox = IconBox,
                 Width = Width,
                 HideWaitTime = HideWaitTime,
-                FindTag = FindTag,
             };
             appCommandSettingEntityDao.UpdateSettingCommandSetting(data, contextsPack.CommonStatus);
 

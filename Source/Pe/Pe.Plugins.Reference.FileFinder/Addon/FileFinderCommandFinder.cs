@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
                 yield return ownerItem;
             }
 
-            var fileNameRegex = new Regex(Regex.Escape(filePattern).Replace("\\?", ".").Replace("\\*", ".*"), RegexOptions.IgnoreCase);
+            var fileNameRegex = new Regex(Regex.Escape(filePattern).Replace("\\?", ".").Replace("\\*", ".*"), RegexOptions.IgnoreCase, Timeout.InfiniteTimeSpan);
             var searchPattern = ConvertSearchPattern(filePattern);
             var dir = new DirectoryInfo(directoryPath);
             IEnumerable<FileSystemInfo>? files = null;
@@ -203,7 +203,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
             if(!string.IsNullOrWhiteSpace(path)) {
                 var executableExtensions = new[] { "exe", "bat", "com" };
 
-                var extRegex = new Regex(@".*\." + string.Join("|", executableExtensions) + "$");
+                var extRegex = new Regex(@".*\." + string.Join("|", executableExtensions) + "$", default, Timeout.InfiniteTimeSpan);
                 var dirPaths = path
                     .Split(';')
                     .Where(i => !string.IsNullOrWhiteSpace(i))
@@ -332,21 +332,17 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
         {
             if(!this.disposedValue) {
                 if(disposing) {
-                    // TODO: マネージド状態を破棄します (マネージド オブジェクト)
+                    // nop
                 }
 
-                // TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、ファイナライザーをオーバーライドします
-                // TODO: 大きなフィールドを null に設定します
                 this.disposedValue = true;
             }
         }
 
-        // // TODO: 'Dispose(bool disposing)' にアンマネージド リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします
-        // ~FileCommandFinder()
-        // {
-        //     // このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
-        //     Dispose(disposing: false);
-        // }
+        ~FileFinderCommandFinder()
+        {
+            Dispose(disposing: false);
+        }
 
         public void Dispose()
         {

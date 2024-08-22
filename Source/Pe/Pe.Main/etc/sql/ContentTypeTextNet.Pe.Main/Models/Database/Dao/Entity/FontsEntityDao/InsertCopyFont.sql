@@ -1,23 +1,23 @@
 insert into
 	Fonts
 	(
-		[FontId],
-		[FamilyName],
-		[Height],
-		[IsBold],
-		[IsItalic],
-		[IsUnderline],
-		[IsStrikeThrough],
+		FontId,
+		FamilyName,
+		Height,
+		IsBold,
+		IsItalic,
+		IsUnderline,
+		IsStrikeThrough,
 
-		[CreatedTimestamp],
-		[CreatedAccount],
-		[CreatedProgramName],
-		[CreatedProgramVersion],
-		[UpdatedTimestamp],
-		[UpdatedAccount],
-		[UpdatedProgramName],
-		[UpdatedProgramVersion],
-		[UpdatedCount]
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
 	)
 	select
 /* FontId                   */ @DstFontId,

@@ -136,7 +136,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             DelayWaiting = true;
 
             if(!NowLoading) {
-                ExecuteMainAsync(CancellationToken.None);
+                _ = ExecuteMainAsync(CancellationToken.None);
             } else {
                 PropertyChanged += LauncherFileViewModel_PropertyChanged;
             }
@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 return Task.CompletedTask;
             }
 
-            Logger.LogTrace("TODO: 起動準備 {0}, {1}", Model.LauncherItemId, Detail?.FullPath);
+            Logger.LogTrace("起動準備 {LauncherItemId}, {FullPath}", Model.LauncherItemId, Detail?.FullPath);
             return Task.Run(() => {
                 Model.ExecuteAsync(Screen, cancellationToken);
             }, cancellationToken);
@@ -294,7 +294,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 if(NowLoading) {
                     PropertyChanged -= LauncherFileViewModel_PropertyChanged;
                     DelayWaiting = false;
-                    ExecuteMainAsync(CancellationToken.None);
+                    _ = ExecuteMainAsync(CancellationToken.None);
                 }
             }
         }

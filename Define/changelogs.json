@@ -1,5 +1,90 @@
 [
 	{
+		"date": "2024/08/22",
+		"version": "0.99.241",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "a2267a973ffc3e5138a200ebf6100729bd967ec3",
+						"subject": "#953: [FB:14] ショートカットの登録処理方法を固定可能にする"
+					},
+					{
+						"revision": "48165e0cc8cd7cd88925f6c1bcee1fa740143f13",
+						"subject": "#958: コマンド型ランチャーのタグ検索設定を破棄する",
+						"comments": [
+							"ON/OFF切り替える意義があんまりなさそうなので判定処理自体なくした"
+						]
+					},
+					{
+						"revision": "6b7c8791b536819f4a374781f84ddfcd1cae174f",
+						"subject": "#947: 表示中のランチャーアイテムアドオンを実行した際にアクティブ化させる",
+						"comments": [
+							"ソース上 TODO だったので機能追加よりバグ修正に近い"
+						]
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "3fb50cfd8f149178804048defca616c6d0b254d9",
+						"subject": "#959: バイナリ保存データの分割処理は多分メモリ的に意味ないからわかりやすくすべし",
+						"comments": [
+							"ユーザー機能的には影響ないはずだけどダメだったらデータ消すなりなんなりしてね、っていう気持ちでバグ対応に記載"
+						]
+					},
+					{
+						"revision": "2196a50f26ec3688e5604e85223d955ebc3520ac",
+						"subject": "#964: コマンド型ランチャーのウィンドウサイズは設定アイコンサイズを無視するべき"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "26fac5d7012914347cfd0740fee0b2eb398c6b5f",
+						"subject": "#963: SQL に対して Lint を実行する",
+						"comments": [
+							"インデント・改行が一切解決できていないけど仕組みを構築したので OK"
+						]
+					},
+					{
+						"revision": "b5c82cd63b3f2b93049561f8c2934897515d9559",
+						"subject": "#965: たぶん LauncherItemIconStatus はもういらない"
+					},
+					{
+						"revision": "b1bf850540917f020d9863ec227ca2b8a42b97a8",
+						"class": "nuget",
+						"subject": "Microsoft.NET.Test.Sdk 17.10.0 -> 17.11.0"
+					},
+					{
+						"revision": "510f591ca3e685770e47695901faca0c8805db61",
+						"class": "nuget",
+						"subject": "Microsoft.Web.WebView2 1.0.2592.51 -> 1.0.2651.64"
+					},
+					{
+						"revision": "d0ef11bef5fc6bb21ee3cda7ff2edaa8f3724e5d",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 5.3.11 -> 5.3.12"
+					},
+					{
+						"revision": "13a21f231b6b19356fa99c03f4088fc61a79cf21",
+						"class": "nuget",
+						"subject": "Prism.Wpf 8.1.97 -> 9.0.537",
+						"comments": [
+							"しれっと変えていいライブラリ(メジャーバージョン変わってるし)じゃないけどなんとなく動かした感じ動いたからもういいわ",
+							"早いこと #843 やりたい気持ちだけが動く想い"
+						]
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2024/08/12",
 		"version": "0.99.240",
 		"contents": [
@@ -15,7 +100,7 @@
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "736901f5432e82b1981ffd3b67e8ed1f22b95c36",
 						"subject": "#957: ヘルプに対して全文検索を追加する",
 						"comments": [
 							"適当実装なのでくっそ甘い"

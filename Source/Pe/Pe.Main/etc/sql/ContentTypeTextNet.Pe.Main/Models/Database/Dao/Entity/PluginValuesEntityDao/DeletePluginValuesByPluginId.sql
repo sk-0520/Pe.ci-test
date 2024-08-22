@@ -1,6 +1,4 @@
-delete
-from
+delete from
 	PluginValues
 where
 	PluginId = @PluginId
-

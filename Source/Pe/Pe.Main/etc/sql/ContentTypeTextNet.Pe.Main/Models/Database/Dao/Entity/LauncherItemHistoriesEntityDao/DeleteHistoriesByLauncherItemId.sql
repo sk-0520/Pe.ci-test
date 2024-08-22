@@ -1,6 +1,4 @@
-delete
-from
+delete from
 	LauncherItemHistories
 where
 	LauncherItemHistories.LauncherItemId = @LauncherItemId
-

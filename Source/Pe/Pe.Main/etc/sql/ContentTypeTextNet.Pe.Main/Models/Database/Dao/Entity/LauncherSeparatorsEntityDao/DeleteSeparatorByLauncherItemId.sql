@@ -1,5 +1,4 @@
-delete
-from
+delete from
 	LauncherSeparators
 where
 	LauncherSeparators.LauncherItemId = @LauncherItemId

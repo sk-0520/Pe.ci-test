@@ -1,5 +1,4 @@
-delete
-from
+delete from
 	LauncherRedoItems
 where
 	LauncherRedoItems.LauncherItemId = @LauncherItemId

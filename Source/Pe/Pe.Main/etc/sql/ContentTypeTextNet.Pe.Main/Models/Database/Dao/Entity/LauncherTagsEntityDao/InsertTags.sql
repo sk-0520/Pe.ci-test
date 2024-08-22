@@ -1,13 +1,13 @@
 ﻿insert into
 	LauncherTags
 	(
-		[LauncherItemId],
-		[TagName],
+		LauncherItemId,
+		TagName,
 
-		[CreatedTimestamp],
-		[CreatedAccount],
-		[CreatedProgramName],
-		[CreatedProgramVersion]
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion
 	)
 	values
 	(

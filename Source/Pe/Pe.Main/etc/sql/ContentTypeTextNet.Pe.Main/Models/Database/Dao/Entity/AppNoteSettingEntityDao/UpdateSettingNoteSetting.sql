@@ -1,19 +1,19 @@
 update
 	AppNoteSetting
 set
-	FontId                = @FontId,
-	TitleKind             = @TitleKind,
-	LayoutKind            = @LayoutKind,
-	ForegroundColor       = @ForegroundColor,
-	BackgroundColor       = @BackgroundColor,
-	IsTopmost             = @IsTopmost,
-	CaptionPosition       = @CaptionPosition,
+	FontId = @FontId,
+	TitleKind = @TitleKind,
+	LayoutKind = @LayoutKind,
+	ForegroundColor = @ForegroundColor,
+	BackgroundColor = @BackgroundColor,
+	IsTopmost = @IsTopmost,
+	CaptionPosition = @CaptionPosition,
 
-	UpdatedTimestamp      = @UpdatedTimestamp,
-	UpdatedAccount        = @UpdatedAccount,
-	UpdatedProgramName    = @UpdatedProgramName,
+	UpdatedTimestamp = @UpdatedTimestamp,
+	UpdatedAccount = @UpdatedAccount,
+	UpdatedProgramName = @UpdatedProgramName,
 	UpdatedProgramVersion = @UpdatedProgramVersion,
-	UpdatedCount          = UpdatedCount + 1
+	UpdatedCount = UpdatedCount + 1
 where
 	AppNoteSetting.Generation = (
 		select

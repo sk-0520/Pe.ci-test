@@ -117,51 +117,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
 
         #region function
 
-        //void SelectLinkFile(NoteLinkSelectNotification context, Action callback)
-        //{
-        //    var dialog = new CommonSaveFileDialog() {
-        //        EnsurePathExists = true,
-        //        EnsureValidNames = true,
-        //    };
-
-        //    dialog.SetFilters(context.Filter, true, LoggerFactory);
-
-        //    //TODO: メモ帳程度には合わせたい
-        //    var encodings = new[] {
-        //        EncodingUtility.UTF8n,
-        //        Encoding.Unicode,
-        //        Encoding.UTF32,
-        //        Encoding.Default,
-        //        Encoding.UTF8,
-        //    };
-        //    var encodingControl = new CommonFileDialogComboBox();
-        //    foreach(var encoding in encodings) {
-        //        var item = new CommonFileDialogComboBoxItem(EncodingUtility.ToString(encoding));
-        //        encodingControl.Items.Add(item);
-        //    }
-        //    encodingControl.SelectedIndex = 0;
-
-        //    dialog.Controls.Add(encodingControl);
-
-        //    using(dialog) {
-        //        var popupIsOpen = this.popup.IsOpen;
-        //        if(popupIsOpen) {
-        //            this.popup.Visibility = Visibility.Collapsed;
-        //        }
-        //        var result = dialog.ShowDialog();
-        //        context.ResponseIsCancel = result != CommonFileDialogResult.Ok;
-        //        if(!context.ResponseIsCancel) {
-        //            context.ResponseEncoding = encodings[encodingControl.SelectedIndex];
-        //            context.ResponseFilePaths = new[] { dialog.FileName };
-        //        }
-        //        if(popupIsOpen) {
-        //            this.popup.Visibility = Visibility.Visible;
-        //        }
-        //    }
-
-        //    callback();
-        //}
-
         #endregion
 
         #region Window

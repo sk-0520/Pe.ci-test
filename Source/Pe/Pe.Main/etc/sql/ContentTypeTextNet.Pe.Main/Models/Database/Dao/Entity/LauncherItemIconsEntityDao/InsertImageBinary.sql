@@ -1,24 +1,24 @@
 insert into
 	LauncherItemIcons
 	(
-		[LauncherItemId],
-		[IconBox],
-		[IconScale],
-		[Sequence],
-		[Image],
+		LauncherItemId,
+		IconBox,
+		IconScale,
+		Image,
+		LastUpdatedTimestamp,
 
-		[CreatedTimestamp],
-		[CreatedAccount],
-		[CreatedProgramName],
-		[CreatedProgramVersion]
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion
 	)
 	values
 	(
 /* LauncherItemId           */ @LauncherItemId,
 /* IconBox                  */ @IconBox,
 /* IconScale                */ @IconScale,
-/* Sequence                 */ @Sequence,
 /* Image                    */ @Image,
+/* LastUpdatedTimestamp     */ @LastUpdatedTimestamp,
 
 /* CreatedTimestamp         */ @CreatedTimestamp,
 /* CreatedAccount           */ @CreatedAccount,
