@@ -11,23 +11,20 @@ import { type FC, useEffect } from "react";
 import { PageContent } from "./components/layouts/PageContent";
 import { SideMenu } from "./components/layouts/SideMenu";
 import { type PageKey, Pages } from "./pages";
-import { SideMenuStoreAtom } from "./stores/SideMenuStore";
+import { SelectedPageKeyAtom } from "./stores/SideMenuStore";
 import { getPage, getPageKey } from "./utils/page";
 
 const sidebarWidth = 240;
 
 export const App: FC = () => {
-	const [sideMenuStoreAtom, setSideMenuStoreAtom] = useAtom(SideMenuStoreAtom);
+	const [selectedPageKey, setSelectedPageKey] = useAtom(SelectedPageKeyAtom);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: 初回にイベント設定
 	useEffect(() => {
 		const handleHistory = (pathName: URLSearchParams) => {
 			try {
 				const pageKey = getPageKey(pathName);
-				setSideMenuStoreAtom({
-					...sideMenuStoreAtom,
-					selectedPageKey: pageKey,
-				});
+				setSelectedPageKey(pageKey);
 			} catch (ex) {
 				console.warn(ex);
 			}
@@ -47,10 +44,7 @@ export const App: FC = () => {
 		if (url.searchParams.has("page")) {
 			try {
 				const pageKey = getPageKey(url.searchParams);
-				setSideMenuStoreAtom({
-					...sideMenuStoreAtom,
-					selectedPageKey: pageKey,
-				});
+				setSelectedPageKey(pageKey);
 			} catch (ex) {
 				console.warn(ex);
 			}
@@ -58,16 +52,13 @@ export const App: FC = () => {
 	}, []);
 
 	const handleSelectPageKey = (pageKey: PageKey) => {
-		setSideMenuStoreAtom({
-			...sideMenuStoreAtom,
-			selectedPageKey: pageKey,
-		});
+		setSelectedPageKey(pageKey);
 		const url = new URL(location.href);
 		url.searchParams.set("page", pageKey);
 		history.pushState({}, "", url);
 	};
 
-	const currentPage = getPage(sideMenuStoreAtom.selectedPageKey, Pages);
+	const currentPage = getPage(selectedPageKey, Pages);
 
 	return (
 		<Box sx={{ display: "flex" }}>
@@ -96,7 +87,7 @@ export const App: FC = () => {
 				<Toolbar />
 				<Divider />
 				<SideMenu
-					selectedPageKey={sideMenuStoreAtom.selectedPageKey}
+					selectedPageKey={selectedPageKey}
 					handleSelectPageKey={handleSelectPageKey}
 				/>
 			</Drawer>
@@ -107,7 +98,7 @@ export const App: FC = () => {
 			>
 				<Toolbar />
 				<PageContent
-					selectedPageKey={sideMenuStoreAtom.selectedPageKey}
+					selectedPageKey={selectedPageKey}
 					handleSelectPageKey={handleSelectPageKey}
 					currentPage={currentPage}
 				/>
