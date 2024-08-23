@@ -1,4 +1,4 @@
-import { ThemeProvider, createTheme } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";

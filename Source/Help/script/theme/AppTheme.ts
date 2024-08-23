@@ -1,12 +1,13 @@
-import type { ThemeOptions } from "@mui/material";
+import type { ThemeOptions } from "@mui/material/styles";
 
 export const AppTheme: ThemeOptions = {
 	palette: {
+		mode: "light",
 		primary: {
-			main: "#373737",
+			main: "#795548",
 		},
 		secondary: {
-			main: "#000000",
+			main: "#f50057",
 		},
 	},
 };

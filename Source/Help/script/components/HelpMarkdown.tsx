@@ -1,3 +1,4 @@
+import { Typography, type TypographyProps, useTheme } from "@mui/material";
 import { MuiMarkdown, getOverrides } from "mui-markdown";
 import { Highlight, themes } from "prism-react-renderer";
 import type { FC } from "react";
@@ -9,6 +10,8 @@ type HelpMarkdownProps = {
 export const HelpMarkdown: FC<HelpMarkdownProps> = (
 	props: HelpMarkdownProps,
 ) => {
+	const theme = useTheme();
+
 	return (
 		<MuiMarkdown
 			Highlight={Highlight}
@@ -17,25 +20,33 @@ export const HelpMarkdown: FC<HelpMarkdownProps> = (
 			overrides={{
 				...getOverrides({}),
 				h1: {
-					component: "h2",
+					component: Typography,
 					props: {
-						style: {
+						variant: "h2",
+						sx: {
 							padding: "0.2ex 0.5ex",
-							background: "#ccc",
+							marginBlock: "1rem",
+							background: theme.palette.primary.light,
+							fontSize: "18pt",
+							fontWeight: "bold",
 							lineHeight: "1.5em",
 						},
-					},
+					} satisfies TypographyProps,
 				},
 				h2: {
-					component: "h3",
+					component: Typography,
 					props: {
-						style: {
+						variant: "h3",
+						sx: {
 							padding: "0.2ex 0.5ex",
-							borderLeft: "1ex solid #fff5bc",
-							borderBottom: "3px double #fff5bc",
-							lineHeight: "1.5em",
+							marginBlock: "1rem",
+							borderLeft: `1ex solid ${theme.palette.primary.light}`,
+							borderBottom: `3px double ${theme.palette.primary.light}`,
+							fontSize: "16pt",
+							fontWeight: "bold",
+							lineHeight: "1.25em",
 						},
-					},
+					} satisfies TypographyProps,
 				},
 			}}
 		>
