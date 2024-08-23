@@ -13,6 +13,8 @@
 
 Peの配置されているディレクトリをそのまま削除すればアンインストールは完了します。
 
+> [!NOTE] スタートアップに登録している場合はアンインストール前に登録を解除してください。
+
 ## レジストリ
 
 0.84.0 以降ではレジストリは使用されません。
@@ -44,3 +46,32 @@ Peの配置されているディレクトリをそのまま削除すればアン
 | 端末データ | `%APPDATA%\Pe\settings` |
 | 一時データ | `%TEMP%\Pe` |
 
+Pe 格納ディレクトリを移動する場合、スタートアップに登録している場合はディレクトリ移動前に登録を解除してください。
+
+<!-- ---
+
+2
+
+> [!NOTE]
+> Highlights information that users should take into account, even when skimming.
+
+> [!TIP]
+> AAA
+> 
+> BBB
+
+> [!IMPORTANT]
+> Crucial information necessary for users to succeed.
+
+> [!WARNING]
+> Critical content demanding immediate user attention due to potential risks.
+
+> [!CAUTION]
+> あ
+>
+> い
+
+> [!NOTE]
+> note
+> * a
+ -->

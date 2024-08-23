@@ -1,7 +1,8 @@
 import { Typography, type TypographyProps, useTheme } from "@mui/material";
-import { MuiMarkdown, getOverrides } from "mui-markdown";
+import { MuiMarkdown } from "mui-markdown";
 import { Highlight, themes } from "prism-react-renderer";
 import type { FC } from "react";
+import { renderAlert } from "./markdown/renderAlert";
 
 type HelpMarkdownProps = {
 	children: string;
@@ -10,6 +11,7 @@ type HelpMarkdownProps = {
 export const HelpMarkdown: FC<HelpMarkdownProps> = (
 	props: HelpMarkdownProps,
 ) => {
+	const { children } = props;
 	const theme = useTheme();
 
 	return (
@@ -17,49 +19,58 @@ export const HelpMarkdown: FC<HelpMarkdownProps> = (
 			Highlight={Highlight}
 			themes={themes}
 			prismTheme={themes.github}
-			overrides={{
-				...getOverrides({}),
-				h1: {
-					component: Typography,
-					props: {
-						variant: "h2",
-						sx: {
-							padding: "0.2ex 0.5ex",
-							marginBlock: "1rem",
-							background: theme.palette.primary.light,
-							fontSize: "18pt",
-							fontWeight: "bold",
-							lineHeight: "1.5em",
-						},
-					} satisfies TypographyProps,
+			options={{
+				overrides: {
+					h1: {
+						component: Typography,
+						props: {
+							variant: "h2",
+							sx: {
+								padding: "0.2ex 0.5ex",
+								marginBlock: "1rem",
+								background: theme.palette.primary.light,
+								fontSize: "18pt",
+								fontWeight: "bold",
+								lineHeight: "1.5em",
+							},
+						} satisfies TypographyProps,
+					},
+					h2: {
+						component: Typography,
+						props: {
+							variant: "h3",
+							sx: {
+								padding: "0.2ex 0.5ex",
+								marginBlock: "1rem",
+								borderLeft: `1ex solid ${theme.palette.primary.light}`,
+								borderBottom: `3px double ${theme.palette.primary.light}`,
+								fontSize: "16pt",
+								fontWeight: "bold",
+								lineHeight: "1.25em",
+							},
+						} satisfies TypographyProps,
+					},
+					p: {
+						component: Typography,
+						props: {
+							variant: "body1",
+							sx: {
+								marginBlock: "0.5em",
+							},
+						} satisfies TypographyProps,
+					},
 				},
-				h2: {
-					component: Typography,
-					props: {
-						variant: "h3",
-						sx: {
-							padding: "0.2ex 0.5ex",
-							marginBlock: "1rem",
-							borderLeft: `1ex solid ${theme.palette.primary.light}`,
-							borderBottom: `3px double ${theme.palette.primary.light}`,
-							fontSize: "16pt",
-							fontWeight: "bold",
-							lineHeight: "1.25em",
-						},
-					} satisfies TypographyProps,
-				},
-				p: {
-					component: Typography,
-					props: {
-						variant: "body1",
-						sx: {
-							marginBlock: "0.5em"
-						}
-					} satisfies TypographyProps,
+				renderRule: (next, node, renderChildren, state) => {
+					const child = renderAlert(next, node, renderChildren, state);
+					if (child) {
+						return child;
+					}
+
+					return next();
 				},
 			}}
 		>
-			{props.children}
+			{children}
 		</MuiMarkdown>
 	);
 };
