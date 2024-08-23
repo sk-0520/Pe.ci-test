@@ -48,6 +48,15 @@ export const HelpMarkdown: FC<HelpMarkdownProps> = (
 						},
 					} satisfies TypographyProps,
 				},
+				p: {
+					component: Typography,
+					props: {
+						variant: "body1",
+						sx: {
+							marginBlock: "0.5em"
+						}
+					} satisfies TypographyProps,
+				},
 			}}
 		>
 			{props.children}
