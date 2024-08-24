@@ -20,7 +20,19 @@ Peの配置されているディレクトリをそのまま削除すればアン
 
 0.84.0 以降ではレジストリは使用されません。
 
+> [!NOTE]
+> 0.83.0 からバージョンアップした場合、以下のレジストリに PeMain.exe が残っている可能性があります。
+> 
+> * `HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION`
+> * `HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_DOCUMENT_COMPATIBLE_MODE`
+> 
+> 実稼働に影響はありませんが、気になる場合は削除しても問題ありません。
+
+
 # 保存データ
+
+> [!TIP]
+> 明示的なパス指定は[@help.others_commandline#]を参照してください
 
 設定データは大まかに3種類あります。
 
@@ -47,32 +59,6 @@ Peの配置されているディレクトリをそのまま削除すればアン
 | 端末データ | `%APPDATA%\Pe\settings` |
 | 一時データ | `%TEMP%\Pe` |
 
-Pe 格納ディレクトリを移動する場合、スタートアップに登録している場合はディレクトリ移動前に登録を解除してください。
-
----
-
-2
-
-> [!NOTE]
-> Highlights information that users should take into account, even when skimming.
-
-> [!TIP]
-> AAA
-> 
-> BBB
-
 > [!IMPORTANT]
-> Crucial information necessary for users to succeed.
-
-> [!WARNING]
-> Critical content demanding immediate user attention due to potential risks.
-
-> [!CAUTION]
-> あ
->
-> い
-
-> [!NOTE]
-> note
-> * a
+> Pe 格納ディレクトリを移動する場合、スタートアップに登録している場合はディレクトリ移動前に登録を解除してください。
 

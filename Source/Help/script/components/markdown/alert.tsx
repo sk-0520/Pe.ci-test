@@ -67,15 +67,23 @@ export const renderAlert: MarkdownRule = (node, renderChildren, state) => {
 			console.debug(node);
 			const rawKind = firstChildren[1].text.substring(1) as AlertKind;
 
+			// [!xxxx] の末尾 ] を破棄
+			const firstElements = firstChildren.splice(2);
+			if (
+				1 <= firstElements.length &&
+				firstElements[0].type === RuleType.text &&
+				firstElements[0].text.startsWith("]")
+			) {
+				firstElements[0].text = firstElements[0].text.substring(1).trimStart();
+			}
+
 			const children = (
 				<>
 					<AlertTitle sx={{ fontWeight: "bold" }}>
 						{AlertDisplays[rawKind]}
 					</AlertTitle>
-					<Typography>
-						{firstChildren[2].text.substring(1).trimStart()}
-					</Typography>
-					{node.children.splice(2).map((a, i) => renderChildren(a, state))}
+					<Typography>{renderChildren(firstElements, state)}</Typography>
+					{renderChildren(node.children.splice(paragraphIndex + 1), state)}
 				</>
 			);
 

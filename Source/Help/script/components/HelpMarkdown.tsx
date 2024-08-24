@@ -1,5 +1,5 @@
 import { Typography, type TypographyProps, useTheme } from "@mui/material";
-import { MuiMarkdown } from "mui-markdown";
+import { MuiMarkdown, defaultOverrides } from "mui-markdown";
 import { Highlight, themes } from "prism-react-renderer";
 import type { FC } from "react";
 import { renderAlert } from "./markdown/alert";
@@ -21,6 +21,7 @@ export const HelpMarkdown: FC<HelpMarkdownProps> = (
 			prismTheme={themes.github}
 			options={{
 				overrides: {
+					...defaultOverrides,
 					h1: {
 						component: Typography,
 						props: {
