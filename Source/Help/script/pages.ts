@@ -1,7 +1,7 @@
 export const PageKeys = [
 	"help.index",
 	"help.install_uninstall_data",
-	"help.x86_x64",
+	"help.cpu",
 	"help.privacy",
 	"help.notifyarea",
 	"help.launcher",
@@ -45,7 +45,7 @@ export const Pages: PageElement[] = [
 				title: "インストール・アンインストール・保存データについて",
 			},
 			{
-				key: "help.x86_x64",
+				key: "help.cpu",
 				title: "32/64bitについて",
 			},
 			{

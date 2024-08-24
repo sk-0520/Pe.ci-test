@@ -1,5 +1,6 @@
 import { type FC, type MouseEvent, type ReactNode, useEffect } from "react";
 import { type PageElement, type PageKey, PageKeys, Pages } from "../../pages";
+import { HelpCpuPage } from "../../pages/help/HelpCpuPage";
 import { HelpIndexPage } from "../../pages/help/HelpIndexPage";
 import { HelpInstallUninstallDataPage } from "../../pages/help/HelpInstallUninstallDataPage";
 import type { PageProps } from "../../types/PageProps";
@@ -12,9 +13,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"help.install_uninstall_data": (props: PageProps) => (
 		<HelpInstallUninstallDataPage {...props} />
 	),
-	"help.x86_x64": (props: PageProps) => {
-		throw new Error("not impl");
-	},
+	"help.cpu": (props: PageProps) => <HelpCpuPage {...props} />,
 	"help.privacy": (props: PageProps) => {
 		throw new Error("not impl");
 	},
