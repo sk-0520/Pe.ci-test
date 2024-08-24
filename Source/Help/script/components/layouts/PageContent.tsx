@@ -16,6 +16,7 @@ import {
 	HelpOthersPluginPage,
 	HelpOthersProxyPage,
 	HelpPrivacyPage,
+	HelpSearchPage,
 } from "../../pages/help";
 
 import type { PageProps } from "../../types/PageProps";
@@ -34,7 +35,9 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"help.launcher_toolbar": (props: PageProps) => (
 		<HelpLauncherToolbarPage {...props} />
 	),
-	"help.launcher_command": (props: PageProps) => <HelpLauncherCommandPage {...props} />,
+	"help.launcher_command": (props: PageProps) => (
+		<HelpLauncherCommandPage {...props} />
+	),
 	"help.launcher_extends_execute": (props: PageProps) => (
 		<HelpLauncherExtendsExecutePage {...props} />
 	),
@@ -43,12 +46,14 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"help.others_appsettings": (props: PageProps) => (
 		<HelpOthersAppSettingsPage {...props} />
 	),
-	"help.others_commandline": (props: PageProps) => <HelpOthersCommandLinePage {...props} />,
-	"help.others_proxy": (props: PageProps) =><HelpOthersProxyPage {...props} />,
-	"help.others_plugin": (props: PageProps) => <HelpOthersPluginPage {...props} />,
-	"help.search": (props: PageProps) => {
-		throw new Error("not impl");
-	},
+	"help.others_commandline": (props: PageProps) => (
+		<HelpOthersCommandLinePage {...props} />
+	),
+	"help.others_proxy": (props: PageProps) => <HelpOthersProxyPage {...props} />,
+	"help.others_plugin": (props: PageProps) => (
+		<HelpOthersPluginPage {...props} />
+	),
+	"help.search": (props: PageProps) => <HelpSearchPage {...props} />,
 	"help.changelogs": (props: PageProps) => {
 		throw new Error("not impl");
 	},
