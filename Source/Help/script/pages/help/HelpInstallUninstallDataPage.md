@@ -32,7 +32,7 @@ Peの配置されているディレクトリをそのまま削除すればアン
 # 保存データ
 
 > [!TIP]
-> 明示的なパス指定は[@help.others_commandline#]を参照してください
+> 明示的なパス指定は <MdLink page="help.others_commandline" /> を参照してください
 
 設定データは大まかに3種類あります。
 

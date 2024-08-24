@@ -41,3 +41,10 @@ export function getPageKey(quey: URLSearchParams): PageKey {
 
 	throw new Error("pathName");
 }
+
+export function makeUrl(pageKey: PageKey): URL {
+	const url = new URL(location.href);
+	url.searchParams.set("page", pageKey);
+
+	return url;
+}

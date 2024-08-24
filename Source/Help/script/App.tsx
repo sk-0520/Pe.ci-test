@@ -12,7 +12,7 @@ import { PageContent } from "./components/layouts/PageContent";
 import { SideMenu } from "./components/layouts/SideMenu";
 import { type PageKey, Pages } from "./pages";
 import { SelectedPageKeyAtom } from "./stores/SideMenuStore";
-import { getPage, getPageKey } from "./utils/page";
+import { getPage, getPageKey, makeUrl } from "./utils/page";
 
 const sidebarWidth = 240;
 
@@ -53,8 +53,7 @@ export const App: FC = () => {
 
 	const handleSelectPageKey = (pageKey: PageKey) => {
 		setSelectedPageKey(pageKey);
-		const url = new URL(location.href);
-		url.searchParams.set("page", pageKey);
+		const url = makeUrl(pageKey);
 		history.pushState({}, "", url);
 	};
 

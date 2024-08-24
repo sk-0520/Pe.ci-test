@@ -2,6 +2,7 @@ import { Typography, type TypographyProps, useTheme } from "@mui/material";
 import { MuiMarkdown, defaultOverrides } from "mui-markdown";
 import { Highlight, themes } from "prism-react-renderer";
 import type { FC } from "react";
+import { MdLink } from "./markdown/MdLink";
 import { renderAlert } from "./markdown/alert";
 
 type HelpMarkdownProps = {
@@ -60,12 +61,15 @@ export const HelpMarkdown: FC<HelpMarkdownProps> = (
 							},
 						} satisfies TypographyProps,
 					},
+					MdLink,
 				},
 				renderRule: (next, node, renderChildren, state) => {
 					const child = renderAlert(node, renderChildren, state);
 					if (child) {
 						return child;
 					}
+
+					console.debug(node);
 
 					return next();
 				},
