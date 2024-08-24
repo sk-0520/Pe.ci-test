@@ -31,6 +31,7 @@ export const HelpMarkdown: FC<HelpMarkdownProps> = (
 								padding: "0.2ex 0.5ex",
 								marginBlock: "1rem",
 								background: theme.palette.primary.light,
+								color: theme.palette.primary.contrastText,
 								fontSize: "18pt",
 								fontWeight: "bold",
 								lineHeight: "1.5em",
