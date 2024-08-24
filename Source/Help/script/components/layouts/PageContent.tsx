@@ -1,6 +1,14 @@
 import type { FC, ReactNode } from "react";
 import type { PageKey } from "../../pages";
-import { DevIndexPage } from "../../pages/dev";
+import {
+	DevBranchPage,
+	DevBuildPage,
+	DevCiPage,
+	DevIndexPage,
+	DevPluginPage,
+	DevPluginReferencePage,
+	DevPluginTemplatePage,
+} from "../../pages/dev";
 import {
 	HelpCpuPage,
 	HelpHistoryPage,
@@ -61,15 +69,9 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"help.search": (props: PageProps) => <HelpSearchPage {...props} />,
 	"help.changelogs": (props: PageProps) => <HelpHistoryPage {...props} />,
 	"dev.index": (props: PageProps) => <DevIndexPage {...props} />,
-	"dev.build": (props: PageProps) => {
-		throw new NotImplError("not impl");
-	},
-	"dev.branch": (props: PageProps) => {
-		throw new NotImplError("not impl");
-	},
-	"dev.ci": (props: PageProps) => {
-		throw new NotImplError("not impl");
-	},
+	"dev.build": (props: PageProps) => <DevBuildPage {...props} />,
+	"dev.branch": (props: PageProps) => <DevBranchPage {...props} />,
+	"dev.ci": (props: PageProps) => <DevCiPage {...props} />,
 	"dev.table_main": (props: PageProps) => {
 		throw new NotImplError("not impl");
 	},
@@ -79,15 +81,13 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"dev.table_temporary": (props: PageProps) => {
 		throw new NotImplError("not impl");
 	},
-	"dev.plugin": (props: PageProps) => {
-		throw new NotImplError("not impl");
-	},
-	"dev.plugin_reference": (props: PageProps) => {
-		throw new NotImplError("not impl");
-	},
-	"dev.plugin_template": (props: PageProps) => {
-		throw new NotImplError("not impl");
-	},
+	"dev.plugin": (props: PageProps) => <DevPluginPage {...props} />,
+	"dev.plugin_reference": (props: PageProps) => (
+		<DevPluginReferencePage {...props} />
+	),
+	"dev.plugin_template": (props: PageProps) => (
+		<DevPluginTemplatePage {...props} />
+	),
 } as const;
 
 export const PageContent: FC<PageContentProps> = (props: PageContentProps) => {
