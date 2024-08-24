@@ -10,6 +10,7 @@ import {
 	HelpLauncherToolbarPage,
 	HelpNotePage,
 	HelpNotifyAreaPage,
+	HelpOthersPage,
 	HelpPrivacyPage,
 } from "../../pages/help";
 
@@ -36,9 +37,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 		<HelpLauncherExtendsExecutePage {...props} />
 	),
 	"help.note": (props: PageProps) => <HelpNotePage {...props} />,
-	"help.others": (props: PageProps) => {
-		throw new Error("not impl");
-	},
+	"help.others": (props: PageProps) => <HelpOthersPage {...props} />,
 	"help.others_appsettings": (props: PageProps) => {
 		throw new Error("not impl");
 	},

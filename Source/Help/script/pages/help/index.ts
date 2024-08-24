@@ -8,3 +8,4 @@ export * from "./HelpNotifyAreaPage";
 export * from "./HelpPrivacyPage";
 export * from "./HelpLauncherExtendsExecutePage";
 export * from "./HelpNotePage";
+export * from "./HelpOthersPage";
