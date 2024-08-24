@@ -3,6 +3,7 @@ import { type PageElement, type PageKey, PageKeys, Pages } from "../../pages";
 import { HelpCpuPage } from "../../pages/help/HelpCpuPage";
 import { HelpIndexPage } from "../../pages/help/HelpIndexPage";
 import { HelpInstallUninstallDataPage } from "../../pages/help/HelpInstallUninstallDataPage";
+import { HelpPrivacyPage } from "../../pages/help/HelpPrivacyPage";
 import type { PageProps } from "../../types/PageProps";
 import { getPage } from "../../utils/page";
 
@@ -14,9 +15,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 		<HelpInstallUninstallDataPage {...props} />
 	),
 	"help.cpu": (props: PageProps) => <HelpCpuPage {...props} />,
-	"help.privacy": (props: PageProps) => {
-		throw new Error("not impl");
-	},
+	"help.privacy": (props: PageProps) => <HelpPrivacyPage {...props} />,
 	"help.notifyarea": (props: PageProps) => {
 		throw new Error("not impl");
 	},
