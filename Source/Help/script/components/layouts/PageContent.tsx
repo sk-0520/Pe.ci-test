@@ -1,5 +1,6 @@
 import type { FC, ReactNode } from "react";
 import type { PageKey } from "../../pages";
+import { DevIndexPage } from "../../pages/dev";
 import {
 	HelpCpuPage,
 	HelpHistoryPage,
@@ -59,9 +60,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	),
 	"help.search": (props: PageProps) => <HelpSearchPage {...props} />,
 	"help.changelogs": (props: PageProps) => <HelpHistoryPage {...props} />,
-	"dev.index": (props: PageProps) => {
-		throw new NotImplError("not impl");
-	},
+	"dev.index": (props: PageProps) => <DevIndexPage {...props} />,
 	"dev.build": (props: PageProps) => {
 		throw new NotImplError("not impl");
 	},
