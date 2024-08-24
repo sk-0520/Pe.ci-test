@@ -3,6 +3,7 @@ import type { PageKey } from "../../pages";
 import { HelpCpuPage } from "../../pages/help/HelpCpuPage";
 import { HelpIndexPage } from "../../pages/help/HelpIndexPage";
 import { HelpInstallUninstallDataPage } from "../../pages/help/HelpInstallUninstallDataPage";
+import { HelpLauncherPage } from "../../pages/help/HelpLauncherPage";
 import { HelpNotifyAreaPage } from "../../pages/help/HelpNotifyAreaPage";
 import { HelpPrivacyPage } from "../../pages/help/HelpPrivacyPage";
 import type { PageProps } from "../../types/PageProps";
@@ -17,9 +18,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"help.cpu": (props: PageProps) => <HelpCpuPage {...props} />,
 	"help.privacy": (props: PageProps) => <HelpPrivacyPage {...props} />,
 	"help.notifyarea": (props: PageProps) => <HelpNotifyAreaPage {...props} />,
-	"help.launcher": (props: PageProps) => {
-		throw new Error("not impl");
-	},
+	"help.launcher": (props: PageProps) => <HelpLauncherPage {...props} />,
 	"help.launcher_toolbar": (props: PageProps) => {
 		throw new Error("not impl");
 	},
