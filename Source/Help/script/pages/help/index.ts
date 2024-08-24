@@ -6,3 +6,4 @@ export * from "./HelpLauncherPage";
 export * from "./HelpLauncherToolbarPage";
 export * from "./HelpNotifyAreaPage";
 export * from "./HelpPrivacyPage";
+export * from "./HelpLauncherExtendsExecutePage";

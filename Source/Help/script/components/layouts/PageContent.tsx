@@ -5,6 +5,7 @@ import {
 	HelpIndexPage,
 	HelpInstallUninstallDataPage,
 	HelpLauncherCommandPage,
+	HelpLauncherExtendsExecutePage,
 	HelpLauncherPage,
 	HelpLauncherToolbarPage,
 	HelpNotifyAreaPage,
@@ -22,7 +23,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	),
 	"help.cpu": (props: PageProps) => <HelpCpuPage {...props} />,
 	"help.privacy": (props: PageProps) => <HelpPrivacyPage {...props} />,
-	"help.notifyarea": (props: PageProps) => <HelpNotifyAreaPage {...props} />,
+	"help.notify_area": (props: PageProps) => <HelpNotifyAreaPage {...props} />,
 	"help.launcher": (props: PageProps) => <HelpLauncherPage {...props} />,
 	"help.launcher_toolbar": (props: PageProps) => (
 		<HelpLauncherToolbarPage {...props} />
@@ -30,9 +31,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"help.launcher_command": (props: PageProps) => (
 		<HelpLauncherCommandPage {...props} />
 	),
-	"help.launcher_extends_execute": (props: PageProps) => {
-		throw new Error("not impl");
-	},
+	"help.launcher_extends_execute": (props: PageProps) => <HelpLauncherExtendsExecutePage {...props} />,
 	"help.note": (props: PageProps) => {
 		throw new Error("not impl");
 	},

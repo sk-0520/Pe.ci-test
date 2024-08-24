@@ -3,7 +3,7 @@ export const PageKeys = [
 	"help.install_uninstall_data",
 	"help.cpu",
 	"help.privacy",
-	"help.notifyarea",
+	"help.notify_area",
 	"help.launcher",
 	"help.launcher_toolbar",
 	"help.launcher_command",
@@ -55,7 +55,7 @@ export const Pages: PageElement[] = [
 		],
 	},
 	{
-		key: "help.notifyarea",
+		key: "help.notify_area",
 		title: "通知領域",
 	},
 	{
