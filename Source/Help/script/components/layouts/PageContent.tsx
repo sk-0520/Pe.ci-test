@@ -11,6 +11,7 @@ import {
 	HelpNotePage,
 	HelpNotifyAreaPage,
 	HelpOthersAppSettingsPage,
+	HelpOthersCommandLinePage,
 	HelpOthersPage,
 	HelpPrivacyPage,
 } from "../../pages/help";
@@ -31,9 +32,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"help.launcher_toolbar": (props: PageProps) => (
 		<HelpLauncherToolbarPage {...props} />
 	),
-	"help.launcher_command": (props: PageProps) => (
-		<HelpLauncherCommandPage {...props} />
-	),
+	"help.launcher_command": (props: PageProps) => <HelpLauncherCommandPage {...props} />,
 	"help.launcher_extends_execute": (props: PageProps) => (
 		<HelpLauncherExtendsExecutePage {...props} />
 	),
@@ -42,9 +41,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"help.others_appsettings": (props: PageProps) => (
 		<HelpOthersAppSettingsPage {...props} />
 	),
-	"help.others_commandline": (props: PageProps) => {
-		throw new Error("not impl");
-	},
+	"help.others_commandline": (props: PageProps) => <HelpOthersCommandLinePage {...props} />,
 	"help.others_proxy": (props: PageProps) => {
 		throw new Error("not impl");
 	},

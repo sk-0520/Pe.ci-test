@@ -10,3 +10,4 @@ export * from "./HelpLauncherExtendsExecutePage";
 export * from "./HelpNotePage";
 export * from "./HelpOthersPage";
 export * from "./HelpOthersAppSettingsPage";
+export * from "./HelpOthersCommandLinePage";
