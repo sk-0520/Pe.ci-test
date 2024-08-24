@@ -19,9 +19,12 @@ import {
 	HelpSearchPage,
 } from "../../pages/help";
 
+import { Typography } from "@mui/material";
 import type { PageProps } from "../../types/PageProps";
 
 interface PageContentProps extends PageProps {}
+
+class NotImplError extends Error {}
 
 const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"help.index": (props: PageProps) => <HelpIndexPage {...props} />,
@@ -55,37 +58,37 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	),
 	"help.search": (props: PageProps) => <HelpSearchPage {...props} />,
 	"help.changelogs": (props: PageProps) => {
-		throw new Error("not impl");
+		throw new NotImplError("not impl");
 	},
 	"dev.index": (props: PageProps) => {
-		throw new Error("not impl");
+		throw new NotImplError("not impl");
 	},
 	"dev.build": (props: PageProps) => {
-		throw new Error("not impl");
+		throw new NotImplError("not impl");
 	},
 	"dev.branch": (props: PageProps) => {
-		throw new Error("not impl");
+		throw new NotImplError("not impl");
 	},
 	"dev.ci": (props: PageProps) => {
-		throw new Error("not impl");
+		throw new NotImplError("not impl");
 	},
 	"dev.table_main": (props: PageProps) => {
-		throw new Error("not impl");
+		throw new NotImplError("not impl");
 	},
 	"dev.table_large": (props: PageProps) => {
-		throw new Error("not impl");
+		throw new NotImplError("not impl");
 	},
 	"dev.table_temporary": (props: PageProps) => {
-		throw new Error("not impl");
+		throw new NotImplError("not impl");
 	},
 	"dev.plugin": (props: PageProps) => {
-		throw new Error("not impl");
+		throw new NotImplError("not impl");
 	},
 	"dev.plugin_reference": (props: PageProps) => {
-		throw new Error("not impl");
+		throw new NotImplError("not impl");
 	},
 	"dev.plugin_template": (props: PageProps) => {
-		throw new Error("not impl");
+		throw new NotImplError("not impl");
 	},
 } as const;
 
@@ -93,7 +96,13 @@ export const PageContent: FC<PageContentProps> = (props: PageContentProps) => {
 	const { selectedPageKey } = props;
 
 	const factory = pageFactory[selectedPageKey];
-	const page = factory(props);
-
-	return page;
+	try {
+		const page = factory(props);
+		return page;
+	} catch (ex: unknown) {
+		if (ex instanceof NotImplError) {
+			return <Typography color="error">Not Impl: <strong>{selectedPageKey}</strong></Typography>;
+		}
+		throw ex;
+	}
 };
