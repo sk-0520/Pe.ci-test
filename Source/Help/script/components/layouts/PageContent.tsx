@@ -1,13 +1,16 @@
 import type { FC, ReactNode } from "react";
 import type { PageKey } from "../../pages";
-import { HelpCpuPage } from "../../pages/help/HelpCpuPage";
-import { HelpIndexPage } from "../../pages/help/HelpIndexPage";
-import { HelpInstallUninstallDataPage } from "../../pages/help/HelpInstallUninstallDataPage";
-import { HelpLauncherCommandPage } from "../../pages/help/HelpLauncherCommandPage";
-import { HelpLauncherPage } from "../../pages/help/HelpLauncherPage";
-import { HelpLauncherToolbarPage } from "../../pages/help/HelpLauncherToolbarPage";
-import { HelpNotifyAreaPage } from "../../pages/help/HelpNotifyAreaPage";
-import { HelpPrivacyPage } from "../../pages/help/HelpPrivacyPage";
+import {
+	HelpCpuPage,
+	HelpIndexPage,
+	HelpInstallUninstallDataPage,
+	HelpLauncherCommandPage,
+	HelpLauncherPage,
+	HelpLauncherToolbarPage,
+	HelpNotifyAreaPage,
+	HelpPrivacyPage,
+} from "../../pages/help";
+
 import type { PageProps } from "../../types/PageProps";
 
 interface PageContentProps extends PageProps {}
@@ -21,8 +24,12 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"help.privacy": (props: PageProps) => <HelpPrivacyPage {...props} />,
 	"help.notifyarea": (props: PageProps) => <HelpNotifyAreaPage {...props} />,
 	"help.launcher": (props: PageProps) => <HelpLauncherPage {...props} />,
-	"help.launcher_toolbar": (props: PageProps) =><HelpLauncherToolbarPage {...props} />,
-	"help.launcher_command": (props: PageProps) => <HelpLauncherCommandPage {...props} />,
+	"help.launcher_toolbar": (props: PageProps) => (
+		<HelpLauncherToolbarPage {...props} />
+	),
+	"help.launcher_command": (props: PageProps) => (
+		<HelpLauncherCommandPage {...props} />
+	),
 	"help.launcher_extends_execute": (props: PageProps) => {
 		throw new Error("not impl");
 	},
