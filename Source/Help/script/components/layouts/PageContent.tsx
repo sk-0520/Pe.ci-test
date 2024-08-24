@@ -2,6 +2,7 @@ import type { FC, ReactNode } from "react";
 import type { PageKey } from "../../pages";
 import {
 	HelpCpuPage,
+	HelpHistoryPage,
 	HelpIndexPage,
 	HelpInstallUninstallDataPage,
 	HelpLauncherCommandPage,
@@ -57,9 +58,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 		<HelpOthersPluginPage {...props} />
 	),
 	"help.search": (props: PageProps) => <HelpSearchPage {...props} />,
-	"help.changelogs": (props: PageProps) => {
-		throw new NotImplError("not impl");
-	},
+	"help.changelogs": (props: PageProps) => <HelpHistoryPage {...props} />,
 	"dev.index": (props: PageProps) => {
 		throw new NotImplError("not impl");
 	},
@@ -101,7 +100,11 @@ export const PageContent: FC<PageContentProps> = (props: PageContentProps) => {
 		return page;
 	} catch (ex: unknown) {
 		if (ex instanceof NotImplError) {
-			return <Typography color="error">Not Impl: <strong>{selectedPageKey}</strong></Typography>;
+			return (
+				<Typography color="error">
+					Not Impl: <strong>{selectedPageKey}</strong>
+				</Typography>
+			);
 		}
 		throw ex;
 	}
