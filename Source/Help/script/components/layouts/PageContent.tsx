@@ -1,11 +1,11 @@
-import { type FC, type MouseEvent, type ReactNode, useEffect } from "react";
-import { type PageElement, type PageKey, PageKeys, Pages } from "../../pages";
+import type { FC, ReactNode } from "react";
+import type { PageKey } from "../../pages";
 import { HelpCpuPage } from "../../pages/help/HelpCpuPage";
 import { HelpIndexPage } from "../../pages/help/HelpIndexPage";
 import { HelpInstallUninstallDataPage } from "../../pages/help/HelpInstallUninstallDataPage";
+import { HelpNotifyAreaPage } from "../../pages/help/HelpNotifyAreaPage";
 import { HelpPrivacyPage } from "../../pages/help/HelpPrivacyPage";
 import type { PageProps } from "../../types/PageProps";
-import { getPage } from "../../utils/page";
 
 interface PageContentProps extends PageProps {}
 
@@ -16,9 +16,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	),
 	"help.cpu": (props: PageProps) => <HelpCpuPage {...props} />,
 	"help.privacy": (props: PageProps) => <HelpPrivacyPage {...props} />,
-	"help.notifyarea": (props: PageProps) => {
-		throw new Error("not impl");
-	},
+	"help.notifyarea": (props: PageProps) => <HelpNotifyAreaPage {...props} />,
 	"help.launcher": (props: PageProps) => {
 		throw new Error("not impl");
 	},
