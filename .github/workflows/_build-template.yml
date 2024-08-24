@@ -67,7 +67,7 @@ jobs:
 
   help:
     name: Help
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     steps:
       - name: <Checkout> Repository
