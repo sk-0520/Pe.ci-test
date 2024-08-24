@@ -13,6 +13,7 @@ import {
 	HelpOthersAppSettingsPage,
 	HelpOthersCommandLinePage,
 	HelpOthersPage,
+	HelpOthersPluginPage,
 	HelpPrivacyPage,
 } from "../../pages/help";
 
@@ -45,9 +46,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"help.others_proxy": (props: PageProps) => {
 		throw new Error("not impl");
 	},
-	"help.others_plugin": (props: PageProps) => {
-		throw new Error("not impl");
-	},
+	"help.others_plugin": (props: PageProps) => <HelpOthersPluginPage {...props} />,
 	"help.search": (props: PageProps) => {
 		throw new Error("not impl");
 	},

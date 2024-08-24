@@ -11,3 +11,5 @@ export * from "./HelpNotePage";
 export * from "./HelpOthersPage";
 export * from "./HelpOthersAppSettingsPage";
 export * from "./HelpOthersCommandLinePage";
+export * from "./HelpOthersPluginPage";
+
