@@ -23,4 +23,7 @@ export interface ChangelogContents {
 	date: string;
 	version: string;
 	group?: string;
+	contents: ChangelogContent;
 }
+
+export type Changelogs = ChangelogContents[];
