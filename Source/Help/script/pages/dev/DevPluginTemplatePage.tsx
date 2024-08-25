@@ -13,38 +13,10 @@ import {
 	TextField,
 	Typography,
 } from "@mui/material";
-import { type FC, useEffect, useState } from "react";
+import { type FC, type MouseEvent, useEffect, useState } from "react";
 import { HelpMarkdown } from "../../components/HelpMarkdown";
 import type { PageProps } from "../../types/PageProps";
-
-function makeParameter(
-	projectDirectory: string,
-	pluginId: string,
-	pluginName: string,
-	projectNamespace: string,
-): string {
-	const items = {
-		ProjectDirectory: projectDirectory,
-		PluginId: pluginId,
-		PluginName: pluginName,
-		DefaultNamespace: projectNamespace,
-	};
-
-	const targetItems = Object.entries(items)
-		.filter(([_, v]) => 0 < v.trim().length)
-	;
-	if(targetItems.length !== Object.keys(items).length) {
-		return "";
-	}
-
-	return targetItems.map(([k, v]) => {
-			const key = `-${k}`;
-			const value = v.indexOf(" ") !== -1 ? `"${v}"` : v;
-
-			return `${key} ${value}`;
-		})
-		.join(" ");
-}
+import { generatePluginId, makeParameter } from "../../utils/plugin";
 
 export const DevPluginTemplatePage: FC<PageProps> = (props: PageProps) => {
 	const [projectDirectory, setProjectDirectory] = useState("");
@@ -60,12 +32,17 @@ export const DevPluginTemplatePage: FC<PageProps> = (props: PageProps) => {
 			pluginName,
 			projectNamespace,
 		);
-		if(result) {
+		if (result) {
 			setParameter(`.\\create-project.ps1 ${result}`);
 		} else {
 			setParameter("");
 		}
 	}, [projectDirectory, pluginId, pluginName, projectNamespace]);
+
+	async function handleGeneratePluginIdClick(event: MouseEvent) {
+		const id = await generatePluginId();
+		setPluginId(id);
+	}
 
 	return (
 		<>
@@ -85,7 +62,12 @@ export const DevPluginTemplatePage: FC<PageProps> = (props: PageProps) => {
 					InputProps={{
 						endAdornment: (
 							<InputAdornment position="end">
-								<IconButton title="自動生成" edge="end" color="primary">
+								<IconButton
+									title="自動生成"
+									edge="end"
+									color="primary"
+									onClick={handleGeneratePluginIdClick}
+								>
 									<ApiIcon />
 								</IconButton>
 							</InputAdornment>
