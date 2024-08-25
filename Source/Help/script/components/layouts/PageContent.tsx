@@ -10,8 +10,8 @@ import {
 	DevPluginTemplatePage,
 } from "../../pages/dev";
 import {
+	HelpChangelogPage,
 	HelpCpuPage,
-	HelpHistoryPage,
 	HelpIndexPage,
 	HelpInstallUninstallDataPage,
 	HelpLauncherCommandPage,
@@ -67,7 +67,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 		<HelpOthersPluginPage {...props} />
 	),
 	"help.search": (props: PageProps) => <HelpSearchPage {...props} />,
-	"help.changelogs": (props: PageProps) => <HelpHistoryPage {...props} />,
+	"help.changelog": (props: PageProps) => <HelpChangelogPage {...props} />,
 	"dev.index": (props: PageProps) => <DevIndexPage {...props} />,
 	"dev.build": (props: PageProps) => <DevBuildPage {...props} />,
 	"dev.branch": (props: PageProps) => <DevBranchPage {...props} />,

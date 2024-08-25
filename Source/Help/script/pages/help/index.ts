@@ -14,4 +14,4 @@ export * from "./HelpOthersCommandLinePage";
 export * from "./HelpOthersPluginPage";
 export * from "./HelpOthersProxyPage";
 export * from "./HelpSearchPage";
-export * from "./HelpHistoryPage";
+export * from "./HelpChangelogPage";

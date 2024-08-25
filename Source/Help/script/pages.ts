@@ -15,7 +15,7 @@ export const PageKeys = [
 	"help.others_proxy",
 	"help.others_plugin",
 	"help.search",
-	"help.changelogs",
+	"help.changelog",
 	"dev.index",
 	"dev.build",
 	"dev.branch",
@@ -107,7 +107,7 @@ export const Pages: PageElement[] = [
 		],
 	},
 	{
-		key: "help.changelogs",
+		key: "help.changelog",
 		title: "更新履歴",
 	},
 	{
